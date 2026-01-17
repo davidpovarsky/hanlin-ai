@@ -32,6 +32,7 @@ class APIKeys {
     private var apiTypeRawValue: String = APIType.openAI.rawValue
     private var fromRawValue: String = APIFrom.system.rawValue
     var timestamp: Date = Date()
+    var autoProbeCapabilities: Bool = true
 
     var apiType: APIType {
         get { APIType(rawValue: apiTypeRawValue) ?? .openAI }
@@ -52,7 +53,8 @@ class APIKeys {
         help: String = "",
         apiType: APIType = .openAI,
         from: APIFrom = .system,
-        timestamp: Date = Date()
+        timestamp: Date = Date(),
+        autoProbeCapabilities: Bool = true
     ) {
         self.name = name
         self.company = company
@@ -63,5 +65,6 @@ class APIKeys {
         self.apiTypeRawValue = apiType.rawValue
         self.fromRawValue = from.rawValue
         self.timestamp = timestamp
+        self.autoProbeCapabilities = autoProbeCapabilities
     }
 }

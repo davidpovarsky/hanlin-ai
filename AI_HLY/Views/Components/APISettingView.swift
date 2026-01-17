@@ -158,6 +158,53 @@ struct APIKeysView: View {
     @ViewBuilder
     private func editKeyView(for key: APIKeys) -> some View {
         NavigationView {
+            EditKeyContent(
+                key: key,
+                modelContext: modelContext,
+                allModels: allModels,
+                selectedKey: $selectedKey
+            )
+        }
+    }
+}
+
+// MARK: - 密钥编辑内容视图
+private struct EditKeyContent: View {
+    let key: APIKeys
+    let modelContext: ModelContext
+    let allModels: [AllModels]
+    @Binding var selectedKey: APIKeys?
+
+    @State private var testResult: Bool? = nil
+    @State private var isTesting = false
+    @State private var isInquiring = false
+    @State private var inquiryResult: Double? = nil
+    @State private var showModelManagement = false
+
+    // 获取当前厂商的所有模型（包括系统预置和用户添加的）
+    private var currentCompanyModels: [AllModels] {
+        allModels.filter { model in
+            // 检查是否是当前厂商的模型
+            if let modelCompany = model.company, modelCompany == key.company {
+                return true
+            }
+            // 检查是否是通过 _repeat_ 添加的当前厂商模型
+            if let modelName = model.name,
+               modelName.contains("_repeat_\(key.company ?? "")") {
+                return true
+            }
+            return false
+        }.sorted { model1, model2 in
+            // 系统预置的模型排在前面
+            if model1.systemProvision != model2.systemProvision {
+                return model1.systemProvision
+            }
+            // 按名称排序
+            return (model1.displayName ?? model1.name ?? "") < (model2.displayName ?? model2.name ?? "")
+        }
+    }
+
+    var body: some View {
             Form {
                 Section {
                     VStack(alignment: .center) {
@@ -254,6 +301,26 @@ struct APIKeysView: View {
                         }
                     }
                 }
+                // 刷新模型列表按钮和已添加模型展示（仅对支持的厂商显示）
+                if shouldShowModelRefresh(for: key) {
+                    Section(header: Text("模型管理")) {
+                        // 刷新模型列表按钮
+                        Button {
+                            showModelManagement = true
+                        } label: {
+                            HStack(spacing: 6) {
+                                Image(systemName: "arrow.triangle.2.circlepath")
+                                    .foregroundColor(.hlBluefont)
+                                Text("刷新模型列表")
+                                Spacer()
+                                Image(systemName: "chevron.right")
+                                    .foregroundColor(.secondary)
+                            }
+                        }
+                        .buttonStyle(PlainButtonStyle())
+                    }
+                }
+
                 Section {
                     Text("⚠️ 注意：配置API后，厂商将自动开启，如需修改，可以在菜单中关闭厂商")
                         .font(.footnote)
@@ -278,9 +345,26 @@ struct APIKeysView: View {
             .onAppear {
                 testResult = nil
             }
-        }
+            .sheet(isPresented: $showModelManagement) {
+                ModelManagementView(apiKey: key)
+            }
     }
     
+    /// 判断是否应该显示模型刷新按钮
+    private func shouldShowModelRefresh(for key: APIKeys) -> Bool {
+        // 自定义供应商和 LAN 不显示
+        if key.from == .custom || key.company == "LAN" {
+            return false
+        }
+        // 本地、翰林等特殊厂商不显示
+        guard let company = key.company?.uppercased() else { return false }
+        if company == "LOCAL" || company == "HANLIN" || company == "HANLIN_OPEN" {
+            return false
+        }
+        // 支持 OpenAI 兼容接口的厂商
+        return true
+    }
+
     // MARK: - API 测试与查询
     /// 点击测试 API 时调用
     private func testAPI(for key: APIKeys) {
@@ -320,7 +404,10 @@ struct APIKeysView: View {
             }
         }
     }
-    
+}
+
+// MARK: - APIKeysView 扩展方法
+extension APIKeysView {
     // MARK: - 厂商隐藏/显示处理
     /// 处理厂商开关逻辑，并增加加载状态
     private func toggleVendor(key: APIKeys, company: String, newValue: Bool) {
@@ -380,6 +467,21 @@ struct APIKeysView: View {
     private func isAPISettingAllowed(for key: APIKeys) -> Bool {
         guard let company = key.company?.uppercased() else { return false }
         return !(company == "LOCAL" || company == "HANLIN" || company == "HANLIN_OPEN")
+    }
+
+    /// 判断是否应该显示模型刷新按钮
+    private func shouldShowModelRefresh(for key: APIKeys) -> Bool {
+        // 自定义供应商和 LAN 不显示
+        if key.from == .custom || key.company == "LAN" {
+            return false
+        }
+        // 本地、翰林等特殊厂商不显示
+        guard let company = key.company?.uppercased() else { return false }
+        if company == "LOCAL" || company == "HANLIN" || company == "HANLIN_OPEN" {
+            return false
+        }
+        // 支持 OpenAI 兼容接口的厂商
+        return true
     }
 
     // MARK: 新增自定义供应商界面
