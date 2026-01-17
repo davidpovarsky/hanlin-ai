@@ -217,7 +217,14 @@
       }
     },
     "💡 提示：此功能适用于兼容 OpenAI API 格式的服务，如 LocalAI、Ollama 等本地部署服务，或其他第三方 API 服务" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "💡 Tip: This feature is compatible with services that support the OpenAI API format, such as locally deployed services like LocalAI and Ollama, or other third-party API services."
+          }
+        }
+      }
     },
     "🔗 点此获取 %@ API 密钥" : {
       "localizations" : {
@@ -1545,7 +1552,14 @@
       }
     },
     "例如：https://api.example.com/v1/chat/completions" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "For example: https://api.example.com/v1/chat/completions"
+          }
+        }
+      }
     },
     "供应商名称" : {
       "localizations" : {
@@ -1658,7 +1672,14 @@
       }
     },
     "关闭" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Close"
+          }
+        }
+      }
     },
     "内容1" : {
       "localizations" : {
@@ -1761,7 +1782,14 @@
       }
     },
     "列表" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "List"
+          }
+        }
+      }
     },
     "创建信息画布" : {
       "localizations" : {
@@ -1824,7 +1852,14 @@
       }
     },
     "刷新模型列表" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Refresh Model List"
+          }
+        }
+      }
     },
     "功能列表" : {
       "localizations" : {
@@ -1927,7 +1962,14 @@
       }
     },
     "可用模型 (%lld)" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Available Models (%lld)"
+          }
+        }
+      }
     },
     "名称冲突" : {
       "localizations" : {
@@ -2400,7 +2442,14 @@
       }
     },
     "已添加的模型 (%lld)" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Added model (%lld)"
+          }
+        }
+      }
     },
     "已经写入健康" : {
       "localizations" : {
@@ -2663,7 +2712,14 @@
       }
     },
     "提供者: %@" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Provider: %@"
+          }
+        }
+      }
     },
     "提示词库" : {
       "localizations" : {
@@ -2736,7 +2792,14 @@
       }
     },
     "搜索模型..." : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Search model..."
+          }
+        }
+      }
     },
     "搜索知识文档" : {
       "localizations" : {
@@ -3049,7 +3112,14 @@
       }
     },
     "暂无可用模型" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No available models"
+          }
+        }
+      }
     },
     "暂无消息" : {
       "localizations" : {
@@ -3372,10 +3442,24 @@
       }
     },
     "模型管理" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Model Management"
+          }
+        }
+      }
     },
     "模型能力自动探测" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Automatic Model Capability Detection"
+          }
+        }
+      }
     },
     "模型选择" : {
       "localizations" : {
@@ -3438,7 +3522,14 @@
       }
     },
     "正在获取模型列表..." : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fetching model list..."
+          }
+        }
+      }
     },
     "正在请求" : {
       "localizations" : {
@@ -3470,8 +3561,15 @@
         }
       }
     },
-    "注意：自动模型能力探测中可能有一定的费用消耗" : {
-
+    "注意：自动模型能力探测中可能有一定的API费用消耗" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Note: API fees may be incurred during automatic model capability detection."
+          }
+        }
+      }
     },
     "测试 API" : {
       "localizations" : {
@@ -3554,7 +3652,14 @@
       }
     },
     "添加" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add"
+          }
+        }
+      }
     },
     "添加在线模型" : {
       "localizations" : {
@@ -4523,7 +4628,14 @@
       }
     },
     "补全 /v1/chat/completions" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Complete /v1/chat/completions"
+          }
+        }
+      }
     },
     "要求描述..." : {
       "localizations" : {

@@ -38,6 +38,9 @@ struct AddOnlineModelView: View {
     @State private var selectedCompany: String = ""
     @State private var showAlert = false
     @State private var alertMessage = ""
+    @State private var showProbeSheet = false
+    @State private var probeItems: [CapabilityProbeItem] = []
+    @State private var isProbing = false
     
     let availableIcons = getIconList()
     
@@ -91,6 +94,36 @@ struct AddOnlineModelView: View {
                             .foregroundColor(.hlBluefont)
                         Toggle("默认隐藏模型", isOn: $isHidden)
                     }
+                    
+                    // 自动模型能力探测按钮
+                    Button {
+                        Task {
+                            await startProbe()
+                        }
+                    } label: {
+                        HStack(spacing: 10) {
+                            Image(systemName: "wand.and.stars")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 20, height: 20)
+                            Text("自动模型能力探测")
+                            Spacer()
+                            if isProbing {
+                                ProgressView()
+                                    .scaleEffect(0.8)
+                            } else {
+                                Image(systemName: "chevron.right")
+                                    .font(.caption)
+                                    .foregroundColor(.secondary)
+                            }
+                        }
+                    }
+                    .disabled(name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || selectedCompany.isEmpty || isProbing)
+                    
+                    Text("注意：自动模型能力探测中可能有一定的API费用消耗")
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                    
                     HStack(spacing: 10) {
                         Image(systemName: "character")
                             .resizable()
@@ -160,12 +193,65 @@ struct AddOnlineModelView: View {
             } message: {
                 Text(alertMessage)
             }
+            .sheet(isPresented: $showProbeSheet) {
+                CapabilityProbeSheet(
+                    items: probeItems,
+                    onClose: { showProbeSheet = false }
+                )
+            }
         }
     }
     
     /// 获取当前最大 position 并 +1
     private var nextPosition: Int {
         return (allModels.map { $0.position ?? 999 }.max() ?? 0) + 1
+    }
+    
+    /// 开始自动探测
+    private func startProbe() async {
+        let baseName = name.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !baseName.isEmpty, !selectedCompany.isEmpty else { return }
+        
+        // 初始化探测项
+        probeItems = ModelCapabilityProbeStep.allCases.map { step in
+            CapabilityProbeItem(step: step, status: .pending, message: nil)
+        }
+        
+        isProbing = true
+        showProbeSheet = true
+        
+        do {
+            let summary = try await ModelRefreshService.probeModelCapabilities(
+                modelId: baseName,
+                company: selectedCompany,
+                context: context
+            ) { step, status, message in
+                // 更新探测状态
+                Task { @MainActor in
+                    if let index = probeItems.firstIndex(where: { $0.step == step }) {
+                        probeItems[index].status = status
+                        probeItems[index].message = message
+                    }
+                }
+            }
+            
+            // 根据探测结果更新开关
+            await MainActor.run {
+                supportsTextGen = summary.capabilities.supportsTextGen
+                supportsMultimodal = summary.capabilities.supportsMultimodal
+                supportsReasoning = summary.capabilities.supportsReasoning
+                supportsReasoningChange = summary.capabilities.supportReasoningChange
+                supportsToolUse = summary.capabilities.supportsToolUse
+                supportsImageGen = summary.capabilities.supportsImageGen
+                isProbing = false
+            }
+        } catch {
+            await MainActor.run {
+                alertMessage = "探测失败: \(error.localizedDescription)"
+                showAlert = true
+                isProbing = false
+            }
+        }
     }
     
     private func saveModel() {

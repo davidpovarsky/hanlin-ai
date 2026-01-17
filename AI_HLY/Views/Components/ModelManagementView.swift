@@ -165,7 +165,7 @@ struct ModelManagementView: View {
                             }
                         }
 
-                        Section(footer: Text("注意：自动模型能力探测中可能有一定的费用消耗")) {
+                        Section(footer: Text("注意：自动模型能力探测中可能有一定的API费用消耗")) {
                             Toggle("自动模型能力探测", isOn: Binding(
                                 get: { apiKey.autoProbeCapabilities },
                                 set: { newValue in
@@ -280,24 +280,24 @@ struct ModelManagementView: View {
                     .listStyle(.insetGrouped)
                 }
             }
-        }
-        .navigationTitle("模型管理")
-        .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            ToolbarItem(placement: .navigationBarLeading) {
-                Button("关闭") {
-                    dismiss()
-                }
-            }
-            ToolbarItem(placement: .navigationBarTrailing) {
-                Button {
-                    Task {
-                        await fetchModels()
+            .navigationTitle("模型管理")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button("关闭") {
+                        dismiss()
                     }
-                } label: {
-                    Image(systemName: "arrow.clockwise")
                 }
-                .disabled(isLoading)
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button {
+                        Task {
+                            await fetchModels()
+                        }
+                    } label: {
+                        Image(systemName: "arrow.clockwise")
+                    }
+                    .disabled(isLoading)
+                }
             }
         }
         .alert("错误", isPresented: $showError) {
