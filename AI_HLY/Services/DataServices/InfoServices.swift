@@ -32,6 +32,14 @@ func getModelList() -> [AllModels] {
         // 0
         AllModels(name: "google/gemini-2.5-pro_repeat_cherryin", displayName: "Gemini2.5-Pro(CherryIN)", identity: "model", position: 105, company: "CHERRY_IN", price: 3, isHidden: true, supportsSearch: true, supportsMultimodal: true, supportsReasoning: true),
         
+        // MARK: n1n
+        // 0
+        AllModels(name: "gpt-4o_repeat_n1n", displayName: "GPT-4o(n1n)", identity: "model", position: 106, company: "N1N", price: 3, isHidden: true, supportsSearch: true, supportsMultimodal: true, supportsToolUse: true),
+        // 0
+        AllModels(name: "claude-3-5-sonnet-20240620_repeat_n1n", displayName: "Claude3.5-Sonnet(n1n)", identity: "model", position: 106, company: "N1N", price: 3, isHidden: true, supportsSearch: true, supportsMultimodal: true, supportsReasoning: true, supportReasoningChange: true, supportsToolUse: true),
+        // 0
+        AllModels(name: "gemini-1.5-pro-latest_repeat_n1n", displayName: "Gemini1.5-Pro(n1n)", identity: "model", position: 106, company: "N1N", price: 3, isHidden: true, supportsSearch: true, supportsMultimodal: true, supportsReasoning: true, supportsToolUse: true),
+        
         // MARK: 通义
         // 0.00015
         AllModels(name: "qwen-flash", displayName: "Qwen-Flash", identity: "model", position: 1, company: "QWEN", price: 1, isHidden: true, supportsSearch: true, supportsReasoning: true, supportReasoningChange: true, supportsToolUse: true),
@@ -604,6 +612,14 @@ func getKeyList() -> [APIKeys] {
             key: getEnvironmentVariable("HANLIN_API_KEY"),
             requestURL: "https://open.bigmodel.cn/api/paas/v4/chat/completions",
             isHidden: false,
+            from: .system
+        ),
+        APIKeys(
+            name: "N1N_API_KEY",
+            company: "N1N",
+            key: "",
+            requestURL: "https://api.n1n.ai/v1/chat/completions",
+            help: "https://n1n.ai",
             from: .system
         ),
         APIKeys(
