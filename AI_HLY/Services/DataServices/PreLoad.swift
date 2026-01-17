@@ -177,16 +177,6 @@ func preloadAPIKeysIfNeeded(context: ModelContext) {
             if let predefinedKey = predefinedAPIKeys.first(where: { $0.name == name }),
                existingKey.from == .system,
                predefinedKey.from == .system {
-                // 对于 HANLIN_API_KEY 和 HANLIN_OPEN_API_KEY，始终更新密钥
-                if name == "HANLIN_API_KEY" || name == "HANLIN_OPEN_API_KEY" {
-                    if let newKey = predefinedKey.key, !newKey.isEmpty {
-                        if existingKey.key != newKey {
-                            existingKey.key = newKey
-                            print("强制更新 API Key \(name) 的密钥为：\(newKey)")
-                        }
-                    }
-                }
-                
                 // 对于 company 不为 "LAN" 或 "LOCAL" 的记录，若 requestURL 不同且预定义数据中有有效 URL，则更新 requestURL
                 if let company = existingKey.company?.uppercased(), company != "LAN", company != "LOCAL" {
                     if existingKey.requestURL != predefinedKey.requestURL,
@@ -209,7 +199,24 @@ func preloadAPIKeysIfNeeded(context: ModelContext) {
                 }
             }
         }
-        
+
+        // 第四阶段：删除数据库中多余的系统预置 API Keys
+        // 构建预定义 API Keys 名称的集合
+        let predefinedNames = Set(predefinedAPIKeys.compactMap { $0.name })
+
+        // 遍历保留的记录，删除不在预定义列表中的系统预置记录
+        for (name, existingKey) in retainedMap {
+            // 仅删除系统预置的记录，且不在预定义列表中，且不是 LAN 或 LOCAL 类型
+            if existingKey.from == .system,
+               !predefinedNames.contains(name),
+               let company = existingKey.company?.uppercased(),
+               company != "LAN",
+               company != "LOCAL" {
+                context.delete(existingKey)
+                print("删除冗余系统 API Key：\(name)")
+            }
+        }
+
         // 保存更改
         try context.save()
         print("API 密钥同步完成")
@@ -446,6 +453,28 @@ func preloadUserInfoIfNeeded(context: ModelContext) {
             )
             context.insert(defaultUserInfo)
             print("新增默认 UserInfo")
+        }
+
+        // 清理含有 hanlin（不区分大小写）的模型配置
+        if let userInfo = existingData.first {
+            // 检测 chooseEmbeddingModel
+            if let embeddingModel = userInfo.chooseEmbeddingModel,
+               embeddingModel.lowercased().contains("hanlin") {
+                userInfo.chooseEmbeddingModel = ""
+                print("清除 chooseEmbeddingModel（含有 hanlin）: \(embeddingModel)")
+            }
+            // 检测 optimizationTextModel
+            if userInfo.optimizationTextModel.lowercased().contains("hanlin") {
+                let oldValue = userInfo.optimizationTextModel
+                userInfo.optimizationTextModel = ""
+                print("清除 optimizationTextModel（含有 hanlin）: \(oldValue)")
+            }
+            // 检测 optimizationVisualModel
+            if userInfo.optimizationVisualModel.lowercased().contains("hanlin") {
+                let oldValue = userInfo.optimizationVisualModel
+                userInfo.optimizationVisualModel = ""
+                print("清除 optimizationVisualModel（含有 hanlin）: \(oldValue)")
+            }
         }
 
         try context.save()

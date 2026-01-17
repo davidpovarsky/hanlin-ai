@@ -3207,7 +3207,9 @@ struct ActionButtonsView: View {
     @State private var bounceTrigger = false
     @State private var audioTrigger = false
     @State private var showToolReminder = false
-    
+    @State private var showEmbeddingSettingSheet = false
+    @State private var isEmbeddingModelError = false
+
     private let lengthDescriptions: [String: [Int: String]] = [
         "zh": [
             0: "默认",
@@ -3378,9 +3380,26 @@ struct ActionButtonsView: View {
                         .disabled(isResponding)
                         .sensoryFeedback(.impact, trigger: isFeedBack)
                         .alert("知识背包错误", isPresented: $showKnowledgeAlert) {
-                            Button("确定", role: .cancel) { }
+                            if isEmbeddingModelError {
+                                Button("前往设置") {
+                                    showEmbeddingSettingSheet = true
+                                }
+                            }
+                            Button("取消", role: .cancel) { }
                         } message: {
                             Text(knowledgeAlertMessage)
+                        }
+                        .sheet(isPresented: $showEmbeddingSettingSheet) {
+                            NavigationStack {
+                                SelectEmbeddingModelView()
+                                    .toolbar {
+                                        ToolbarItem(placement: .navigationBarTrailing) {
+                                            Button("完成") {
+                                                showEmbeddingSettingSheet = false
+                                            }
+                                        }
+                                    }
+                            }
                         }
                         .background(bgColorKnowledge)
                         .cornerRadius(20)
@@ -3747,12 +3766,14 @@ struct ActionButtonsView: View {
             let userF = FetchDescriptor<UserInfo>()
             guard let u = try context.fetch(userF).first,
                   let m = u.chooseEmbeddingModel, !m.isEmpty else {
-                knowledgeAlertMessage = "当前没有启用向量模型，请前往 设置-模型-向量模型 中启用向量模型。"
+                knowledgeAlertMessage = "当前没有启用向量模型，请前往“设置-模型-向量模型“中启用向量模型。"
+                isEmbeddingModelError = true
                 return false
             }
             let kf = FetchDescriptor<KnowledgeChunk>()
             if try context.fetch(kf).isEmpty {
                 knowledgeAlertMessage = "当前没有知识内容或知识内容没有进行向量化，请前往知识背包中添加知识内容并选择模型对其向量化。"
+                isEmbeddingModelError = false
                 return false
             }
             return true

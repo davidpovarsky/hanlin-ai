@@ -859,6 +859,23 @@
         }
       }
     },
+    "company_N1N" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "N1N.AI"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "N1N.AI"
+          }
+        }
+      }
+    },
     "company_OPENAI" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1861,6 +1878,9 @@
         }
       }
     },
+    "前往设置" : {
+
+    },
     "功能列表" : {
       "localizations" : {
         "en" : {
@@ -2341,16 +2361,6 @@
         }
       }
     },
-    "密钥设置" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "API Key Settings"
-          }
-        }
-      }
-    },
     "对选中内容提出修改意见…" : {
       "localizations" : {
         "en" : {
@@ -2681,22 +2691,42 @@
         }
       }
     },
+    "指引：暂无开启的大模型厂商，点击下方“模型”中的“模型密钥”设置大模型密钥和厂商的启用状态" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Guidance: No large model providers are currently enabled. Click \"Model\" below, then \"Model Key\" to set up the large model key and the provider's enabled status."
+          }
+        }
+      }
+    },
+    "指引：点击下方“优化模型”设置文本优化模型和视觉优化模型，以启用提示词优化、系统消息优化、图片内容识别等功能" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Instructions: Click \"Optimize Model\" below to configure the text optimization model and visual optimization model, enabling features such as prompt optimization, system message optimization, and image content recognition."
+          }
+        }
+      }
+    },
+    "指引：点击下方“向量模型“设置向量嵌入模型，以启用知识背包检索功能" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Instructions: Click \"Vector Model\" below to configure the vector embedding model and enable the knowledge backpack retrieval function."
+          }
+        }
+      }
+    },
     "指引：点击下方“工具”中的“联网搜索”设置搜索引擎密钥和需要使用的搜索引擎" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Guide: Click “Network Search” under “Tools” to set the search engine key and select the search engine to use."
-          }
-        }
-      }
-    },
-    "指引：点击下方“模型”中的“模型密钥”设置大模型密钥和厂商的启用状态" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Guideline: Click on \"Model Key\" in the \"Model\" section below to set the large model key and enable the vendor status."
           }
         }
       }
@@ -3030,6 +3060,9 @@
           }
         }
       }
+    },
+    "无法新建对话" : {
+
     },
     "日历提醒" : {
       "localizations" : {
@@ -3421,16 +3454,6 @@
         }
       }
     },
-    "模型密钥" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Model Keys"
-          }
-        }
-      }
-    },
     "模型应该怎么称呼你？" : {
       "localizations" : {
         "en" : {
@@ -3801,12 +3824,12 @@
         }
       }
     },
-    "点击名称或钥匙设置厂商密钥并打开该厂商以使用该厂商的模型" : {
+    "点击名称或钥匙设置厂商密钥，并打开厂商开关以使用该厂商的模型" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Tap a vendor name or key to set its API key and enable its model."
+            "value" : "Click the name or key to set the manufacturer's key, and turn on the manufacturer switch to use the manufacturer's model."
           }
         }
       }
@@ -4575,7 +4598,14 @@
       }
     },
     "自动模型能力探测" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Automatic model capability detection"
+          }
+        }
+      }
     },
     "自动路线规划" : {
       "localizations" : {

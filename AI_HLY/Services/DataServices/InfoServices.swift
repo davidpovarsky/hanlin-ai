@@ -32,14 +32,6 @@ func getModelList() -> [AllModels] {
         // 0
         AllModels(name: "google/gemini-2.5-pro_repeat_cherryin", displayName: "Gemini2.5-Pro(CherryIN)", identity: "model", position: 105, company: "CHERRY_IN", price: 3, isHidden: true, supportsSearch: true, supportsMultimodal: true, supportsReasoning: true),
         
-        // MARK: n1n
-        // 0
-        AllModels(name: "gpt-4o_repeat_n1n", displayName: "GPT-4o(n1n)", identity: "model", position: 106, company: "N1N", price: 3, isHidden: true, supportsSearch: true, supportsMultimodal: true, supportsToolUse: true),
-        // 0
-        AllModels(name: "claude-3-5-sonnet-20240620_repeat_n1n", displayName: "Claude3.5-Sonnet(n1n)", identity: "model", position: 106, company: "N1N", price: 3, isHidden: true, supportsSearch: true, supportsMultimodal: true, supportsReasoning: true, supportReasoningChange: true, supportsToolUse: true),
-        // 0
-        AllModels(name: "gemini-1.5-pro-latest_repeat_n1n", displayName: "Gemini1.5-Pro(n1n)", identity: "model", position: 106, company: "N1N", price: 3, isHidden: true, supportsSearch: true, supportsMultimodal: true, supportsReasoning: true, supportsToolUse: true),
-        
         // MARK: 通义
         // 0.00015
         AllModels(name: "qwen-flash", displayName: "Qwen-Flash", identity: "model", position: 1, company: "QWEN", price: 1, isHidden: true, supportsSearch: true, supportsReasoning: true, supportReasoningChange: true, supportsToolUse: true),
@@ -63,24 +55,13 @@ func getModelList() -> [AllModels] {
         // MARK: 智谱
         // 免费
         AllModels(name: "glm-4.5-flash", displayName: "GLM4.5-Flash", identity: "model", position: 11, company: "ZHIPUAI", price: 0, isHidden: true, supportsSearch: true, supportsReasoning: true, supportReasoningChange: true, supportsToolUse: true),
+        AllModels(name: "glm-4.6v-flash", displayName: "GLM4.6V-Flash", identity: "model", position: 11, company: "ZHIPUAI", price: 0, isHidden: true, supportsSearch: true, supportsMultimodal: true, supportsReasoning: true, supportReasoningChange: true, supportsToolUse: true),
         // 0.0014
         AllModels(name: "glm-4.5-air", displayName: "GLM4.5-Air", identity: "model", position: 11, company: "ZHIPUAI", price: 1, isHidden: true, supportsSearch: true, supportsReasoning: true, supportReasoningChange: true, supportsToolUse: true),
         // 0.005
         AllModels(name: "glm-4.5", displayName: "GLM4.5", identity: "model", position: 11, company: "ZHIPUAI", price: 2, isHidden: true, supportsSearch: true, supportsReasoning: true, supportReasoningChange: true, supportsToolUse: true),
         // 0.005
-        AllModels(name: "glm-4.6", displayName: "GLM4.5", identity: "model", position: 11, company: "ZHIPUAI", price: 2, isHidden: true, supportsSearch: true, supportsReasoning: true, supportReasoningChange: true, supportsToolUse: true),
-        // 0.004
-        AllModels(name: "glm-4.5v", displayName: "GLM4.5V", identity: "model", position: 11, company: "ZHIPUAI", price: 2, isHidden: true, supportsSearch: true, supportsMultimodal:true, supportsReasoning: true, supportReasoningChange: true, supportsToolUse: true),
-        // 免费
-        AllModels(name: "glm-4.1v-thinking-flash", displayName: "GLM4.1V-Thinking", identity: "model", position: 11, company: "ZHIPUAI", price: 0, isHidden: true, supportsSearch: true, supportsReasoning: true, supportsToolUse: true),
-        // 免费
-        AllModels(name: "glm-4v-flash", displayName: "GLM4V-Flash", identity: "model", position: 19, company: "ZHIPUAI", price: 0, isHidden: true, supportsSearch: true, supportsMultimodal: true),
-        // 0.003
-        AllModels(name: "glm-4v-plus-0111", displayName: "GLM4V-Plus", identity: "model", position: 20, company: "ZHIPUAI", price: 2, isHidden: true, supportsSearch: true, supportsMultimodal: true),
-        // 免费
-        AllModels(name: "cogview-3-flash", displayName: "CogView3-Flash", identity: "model", position: 21, company: "ZHIPUAI", price: 0, isHidden: true, supportsTextGen: false, supportsImageGen: true),
-        // 0.14
-        AllModels(name: "cogview-4-250304", displayName: "CogView4", identity: "model", position: 22, company: "ZHIPUAI", price: 3, isHidden: true, supportsTextGen: false, supportsImageGen: true),
+        AllModels(name: "glm-4.7", displayName: "GLM4.7", identity: "model", position: 11, company: "ZHIPUAI", price: 2, isHidden: true, supportsSearch: true, supportsReasoning: true, supportReasoningChange: true, supportsToolUse: true),
         
         // MARK: 豆包
         // 0.0014
@@ -141,52 +122,16 @@ func getModelList() -> [AllModels] {
         // MARK: 讯飞星火
         // 0.0015
         AllModels(name: "lite", displayName: "Spark-Lite", identity: "model", position: 50, company: "SPARK", price: 0, isHidden: true, supportsSearch: true, supportsToolUse: true),
-        // 0.006
-        AllModels(name: "generalv3", displayName: "Spark-Pro", identity: "model", position: 51, company: "SPARK", price: 2, isHidden: true, supportsSearch: true, supportsToolUse: true),
-        // 0.026
-        AllModels(name: "generalv3.5", displayName: "Spark-Max", identity: "model", position: 52, company: "SPARK", price: 3, isHidden: true, supportsSearch: true, supportsToolUse: true),
-        // 0.06
-        AllModels(name: "4.0Ultra", displayName: "Spark-Ultra", identity: "model", position: 53, company: "SPARK", price: 3, isHidden: true, supportsSearch: true, supportsToolUse: true),
         
         // MARK: MiniMax
         // 0.0045
-        AllModels(name: "MiniMax-M2", displayName: "MiniMax-Text-01", identity: "model", position: 50, company: "MINIMAX", price: 2, isHidden: true, supportsSearch: true, supportsToolUse: true),
+        AllModels(name: "MiniMax-M2", displayName: "MiniMax-M2", identity: "model", position: 50, company: "MINIMAX", price: 2, isHidden: true, supportsSearch: true, supportsToolUse: true),
         
         // MARK: SiliconCloud
         // 0
         AllModels(name: "THUDM/GLM-4-9B-0414", displayName: "GLM-4-9B(SiliconCloud)", identity: "model", position: 54, company: "SILICONCLOUD", price: 0, isHidden: true, supportsSearch: true, supportsToolUse: true),
-        // 0.0035
-        AllModels(name: "zai-org/GLM-4.5-Air", displayName: "GLM-4.5-Air(SiliconCloud)", identity: "model", position: 54, company: "SILICONCLOUD", price: 2, isHidden: true, supportsSearch: true, supportsToolUse: true),
-        // 0.00875
-        AllModels(name: "zai-org/GLM-4.5", displayName: "GLM-4.5(SiliconCloud)", identity: "model", position: 54, company: "SILICONCLOUD", price: 3, isHidden: true, supportsSearch: true, supportsToolUse: true),
-        // 0.00875
-        AllModels(name: "zai-org/GLM-4.6", displayName: "GLM-4.5(SiliconCloud)", identity: "model", position: 54, company: "SILICONCLOUD", price: 3, isHidden: true, supportsSearch: true, supportsReasoning: true, supportReasoningChange: true, supportsToolUse: true),
-        // 0.0035
-        AllModels(name: "zai-org/GLM-4.5V", displayName: "GLM-4.5V(SiliconCloud)", identity: "model", position: 54, company: "SILICONCLOUD", price: 2, isHidden: true, supportsSearch: true, supportsMultimodal:true, supportsReasoning: true, supportReasoningChange: true, supportsToolUse: true),
-        // 0
-        AllModels(name: "internlm/internlm2_5-7b-chat", displayName: "Internlm2.5-7B(SiliconCloud)", identity: "model", position: 56, company: "SILICONCLOUD", price: 0, isHidden: true, supportsSearch: true, supportsToolUse: true),
         // 0
         AllModels(name: "Qwen/Qwen3-8B", displayName: "Qwen3-8B(SiliconCloud)", identity: "model", position: 55, company: "SILICONCLOUD", price: 0, isHidden: true, supportsSearch: true, supportsReasoning: true, supportReasoningChange: true, supportsToolUse: true),
-        // 0.0028
-        AllModels(name: "Qwen/Qwen3-30B-A3B-Instruct-2507", displayName: "Qwen3-30B-A3B-Instruct-2507(SiliconCloud)", identity: "model", position: 55, company: "SILICONCLOUD", price: 3, isHidden: true, supportsSearch: true, supportsToolUse: true),
-        // 0.0028
-        AllModels(name: "Qwen/Qwen3-30B-A3B-Thinking-2507", displayName: "Qwen3-30B-A3B-Thinking-2507(SiliconCloud)", identity: "model", position: 55, company: "SILICONCLOUD", price: 3, isHidden: true, supportsSearch: true, supportsReasoning: true, supportsToolUse: true),
-        // 0.01
-        AllModels(name: "Qwen/Qwen3-235B-A22B-Instruct-2507", displayName: "Qwen3-235B-A22B-Instruct-2507(SiliconCloud)", identity: "model", position: 55, company: "SILICONCLOUD", price: 3, isHidden: true, supportsSearch: true, supportsToolUse: true),
-        // 0.01
-        AllModels(name: "Qwen/Qwen3-235B-A22B-Thinking-2507", displayName: "Qwen3-235B-A22B-Thinking-2507(SiliconCloud)", identity: "model", position: 55, company: "SILICONCLOUD", price: 3, isHidden: true, supportsSearch: true, supportsReasoning: true, supportsToolUse: true),
-        // 0.0028
-        AllModels(name: "Qwen/Qwen3-VL-30B-A3B-Instruct", displayName: "Qwen3-VL-30B-A3B-Instruct(SiliconCloud)", identity: "model", position: 55, company: "SILICONCLOUD", price: 3, isHidden: true, supportsSearch: true, supportsMultimodal: true, supportsToolUse: true),
-        // 0.0028
-        AllModels(name: "Qwen/Qwen3-VL-30B-A3B-Thinking", displayName: "Qwen3-VL-30B-A3B-Thinking(SiliconCloud)", identity: "model", position: 55, company: "SILICONCLOUD", price: 3, isHidden: true, supportsSearch: true, supportsMultimodal: true, supportsReasoning: true, supportsToolUse: true),
-        // 0.01
-        AllModels(name: "Qwen/Qwen3-VL-235B-A22B-Instruct", displayName: "Qwen3-VL-235B-A22B-Instruct(SiliconCloud)", identity: "model", position: 55, company: "SILICONCLOUD", price: 3, isHidden: true, supportsSearch: true, supportsMultimodal: true, supportsToolUse: true),
-        // 0.01
-        AllModels(name: "Qwen/Qwen3-VL-235B-A22B-Thinking", displayName: "Qwen3-VL-235B-A22B-Thinking(SiliconCloud)", identity: "model", position: 55, company: "SILICONCLOUD", price: 3, isHidden: true, supportsSearch: true, supportsMultimodal: true, supportsReasoning: true, supportsToolUse: true),
-        // 0.01
-        AllModels(name: "deepseek-ai/DeepSeek-V3.2-Exp", displayName: "DeepSeek-V3.2(SiliconCloud)", identity: "model", position: 59, company: "SILICONCLOUD", price: 3, isHidden: true, supportsSearch: true, supportsReasoning: true, supportReasoningChange: true, supportsToolUse: true),
-        // 0.01
-        AllModels(name: "moonshotai/Kimi-K2-Instruct-0905", displayName: "Kimi-K2-Instruct-0905(SiliconCloud)", identity: "model", position: 61, company: "SILICONCLOUD", price:3, isHidden:true, supportsSearch: true, supportsToolUse: true),
         // 免费
         AllModels(name: "Kwai-Kolors/Kolors", displayName: "Kolors(SiliconCloud)", identity: "model", position: 62, company: "SILICONCLOUD", price: 0, isHidden: true, supportsTextGen: false, supportsImageGen: true),
         
@@ -195,18 +140,6 @@ func getModelList() -> [AllModels] {
         AllModels(name: "Qwen/Qwen3-30B-A3B-Instruct-2507_repeat_ms", displayName: "Qwen3-30B-A3B-Instruct-2507(ModelScope)", identity: "model", position: 63, company: "MODELSCOPE", price: 0, isHidden: true, supportsSearch: true, supportsToolUse: true),
         // 免费2000次/天
         AllModels(name: "Qwen/Qwen3-30B-A3B-Thinking-2507_repeat_ms", displayName: "Qwen3-30B-A3B-Thinking-2507(ModelScope)", identity: "model", position: 63, company: "MODELSCOPE", price: 0, isHidden: true, supportsSearch: true, supportsReasoning: true, supportsToolUse: true),
-        // 免费2000次/天
-        AllModels(name: "Qwen/Qwen3-235B-A22B-Instruct-2507_repeat_ms", displayName: "Qwen3-235B-A22B-Instruct-2507(ModelScope)", identity: "model", position: 63, company: "MODELSCOPE", price: 0, isHidden: true, supportsSearch: true, supportsToolUse: true),
-        // 免费2000次/天
-        AllModels(name: "Qwen/Qwen3-235B-A22B-Thinking-2507_repeat_ms", displayName: "Qwen3-235B-A22B-Thinking-2507(ModelScope)", identity: "model", position: 63, company: "MODELSCOPE", price: 0, isHidden: true, supportsSearch: true, supportsReasoning: true, supportsToolUse: true),
-        // 免费2000次/天
-        AllModels(name: "Qwen/Qwen3-Next-80B-A3B-Instruct_repeat_ms", displayName: "Qwen3-Next-80B-A3B-Instruct(ModelScope)", identity: "model", position: 63, company: "MODELSCOPE", price: 0, isHidden: true, supportsSearch: true, supportsToolUse: true),
-        // 免费2000次/天
-        AllModels(name: "Qwen/Qwen3-Next-80B-A3B-Thinking_repeat_ms", displayName: "Qwen/Qwen3-Next-80B-A3B-Thinking(ModelScope)", identity: "model", position: 63, company: "MODELSCOPE", price: 0, isHidden: true, supportsSearch: true, supportsReasoning: true, supportsToolUse: true),
-        // 免费2000次/天
-        AllModels(name: "Qwen/Qwen3-VL-30B-A3B-Instruct_repeat_ms", displayName: "Qwen3-VL-30B-A3B-Instruct(ModelScope)", identity: "model", position: 65, company: "MODELSCOPE", price: 0, isHidden: true, supportsSearch: true, supportsMultimodal: true, supportsToolUse: true),
-        // 免费2000次/天
-        AllModels(name: "Qwen/Qwen3-VL-235B-A22B-Instruct_repeat_ms", displayName: "Qwen3-VL-235B-A22B-Instruct(ModelScope)", identity: "model", position: 65, company: "MODELSCOPE", price: 0, isHidden: true, supportsSearch: true, supportsMultimodal: true, supportsToolUse: true),
         
         // MARK: Gitee
         // 0.04/次
@@ -216,29 +149,11 @@ func getModelList() -> [AllModels] {
         
         // MARK: GPT
         // 0.041
-        AllModels(name: "gpt-5", displayName: "GPT5", identity: "model", position: 72, company: "OPENAI", price: 3, isHidden: true, supportsSearch: true, supportsMultimodal: true, supportsToolUse: true),
+        AllModels(name: "gpt-5.2", displayName: "GPT5.2", identity: "model", position: 72, company: "OPENAI", price: 3, isHidden: true, supportsSearch: true, supportsMultimodal: true, supportsToolUse: true),
         // 0.00821
         AllModels(name: "gpt-5-mini", displayName: "GPT5-Mini", identity: "model", position: 72, company: "OPENAI", price: 3, isHidden: true, supportsSearch: true, supportsMultimodal: true, supportsToolUse: true),
         // 0.0016425
         AllModels(name: "gpt-5-nano", displayName: "GPT5-Nano", identity: "model", position: 72, company: "OPENAI", price: 1, isHidden: true, supportsSearch: true, supportsMultimodal: true, supportsToolUse: true),
-        // 0.0027
-        AllModels(name: "gpt-4o-mini", displayName: "GPT4o-Mini", identity: "model", position: 73, company: "OPENAI", price: 2, isHidden: true, supportsSearch: true, supportsMultimodal: true, supportsToolUse: true),
-        // 0.046
-        AllModels(name: "gpt-4o", displayName: "GPT4o", identity: "model", position: 74, company: "OPENAI", price: 3, isHidden: true, supportsSearch: true, supportsMultimodal: true, supportsToolUse: true),
-        // 0.001825
-        AllModels(name: "gpt-4.1-nano", displayName: "GPT4.1-Nano", identity: "model", position: 75, company: "OPENAI", price: 2, isHidden: true, supportsSearch: true, supportsMultimodal: true, supportsToolUse: true),
-        // 0.0073
-        AllModels(name: "gpt-4.1-mini", displayName: "GPT4.1-Mini", identity: "model", position: 76, company: "OPENAI", price: 3, isHidden: true, supportsSearch: true, supportsMultimodal: true, supportsToolUse: true),
-        // 0.0365
-        AllModels(name: "gpt-4.1", displayName: "GPT4.1", identity: "model", position: 77, company: "OPENAI", price: 3, isHidden: true, supportsSearch: true, supportsMultimodal: true, supportsToolUse: true),
-        // 0.821
-        AllModels(name: "gpt-4.5-preview", displayName: "GPT4.5-Preview", identity: "model", position: 78, company: "OPENAI", price: 3, isHidden: true, supportsSearch: true, supportsMultimodal: true, supportsToolUse: true),
-        // 0.1646
-        AllModels(name: "o4-mini", displayName: "GPTo4-Mini", identity: "model", position: 79, company: "OPENAI", price: 3, isHidden: true, supportsSearch: true, supportsMultimodal: true, supportsReasoning: true, supportsToolUse: true),
-        // 0.274
-        AllModels(name: "o3", displayName: "GPTo3", identity: "model", position: 80, company: "OPENAI", price: 3, isHidden: true, supportsSearch: true, supportsMultimodal: true, supportsReasoning: true, supportsToolUse: true),
-        // 0.274
-        AllModels(name: "o1-pro", displayName: "GPTo1-Pro", identity: "model", position: 81, company: "OPENAI", price: 3, isHidden: true, supportsSearch: true, supportsMultimodal: true, supportsReasoning: true, supportsToolUse: true),
         // 0.292
         AllModels(name: "dall-e-3", displayName: "DALL-E-3", identity: "model", position: 82, company: "OPENAI", price: 3, isHidden: true, supportsTextGen: false, supportsImageGen: true),
         // 0.292
@@ -258,7 +173,7 @@ func getModelList() -> [AllModels] {
         // 0.0657
         AllModels(name: "claude-sonnet-4-5", displayName: "Claude4.5-Sonnet", identity: "model", position: 90, company: "ANTHROPIC", price: 3, isHidden: true, supportsSearch: true, supportsMultimodal: true, supportsReasoning: true, supportReasoningChange: true, supportsToolUse: true),
         // 0.0657
-        AllModels(name: "claude-opus-4-1", displayName: "Claude4.1-Opus", identity: "model", position: 90, company: "ANTHROPIC", price: 3, isHidden: true, supportsSearch: true, supportsMultimodal: true, supportsReasoning: true, supportReasoningChange: true, supportsToolUse: true),
+        AllModels(name: "claude-opus-4-5", displayName: "Claude4.5-Opus", identity: "model", position: 90, company: "ANTHROPIC", price: 3, isHidden: true, supportsSearch: true, supportsMultimodal: true, supportsReasoning: true, supportReasoningChange: true, supportsToolUse: true),
         
         // MARK: xAI
         // 0.0657
@@ -295,275 +210,14 @@ func getModelList() -> [AllModels] {
         AllModels(name: "google/gemini-2.5-pro_repeat_openrouter", displayName: "Gemini2.5-Pro(OpenRouter)", identity: "model", position: 105, company: "OPENROUTER", price: 3, isHidden: true, supportsSearch: true, supportsMultimodal: true, supportsReasoning: true),
         // 0
         AllModels(name: "x-ai/grok-4-fast_repeat_openrouter", displayName: "Grok4-Fast(OpenRouter)", identity: "model", position: 105, company: "OPENROUTER", price: 3, isHidden: true, supportsSearch: true, supportsMultimodal: true, supportsReasoning: true),
-
-        // MARK: 翰林内置
-        // 免费
-        AllModels(name: "glm-4.5-flash_hanlin", displayName: "Hanlin-GLM4.5-Flash", identity: "model", position: 11, company: "HANLIN", price: 0, isHidden: false, supportsSearch: true, supportsReasoning: true, supportReasoningChange: true, supportsToolUse: true),
-        // 免费
-        AllModels(name: "glm-4v-flash_hanlin", displayName: "Hanlin-GLM4V-Flash", identity: "model", position: 11, company: "HANLIN", price: 0, isHidden: false, supportsSearch: true, supportsMultimodal: true),
-        // 免费
-        AllModels(name: "Qwen/Qwen3-8B_hanlin", displayName: "Hanlin-Qwen3-8B", identity: "model", position: 110, company: "HANLIN_OPEN", price: 0, isHidden: false, supportsSearch: true, supportsReasoning: true, supportReasoningChange: true, supportsToolUse: true),
         
-        // MARK: 智能体
-        // MARK: 基于翰林模型的智能体
-        // 免费
-        AllModels(
-            name: "glm-4.5-flash_hanlin_agent_000001",
-            displayName: "翰林书生🧑‍🎓",
-            identity: "agent",
-            position: 1000,
-            company: "HANLIN",
-            price: 0,
-            isHidden: false,
-            supportsSearch: true,
-            supportsToolUse: true,
-            icon: "graduationcap.circle",
-            briefDescription: "通晓文言与古籍，擅长文言文翻译与创作、典故引用、古文润色，风格儒雅风趣，适用于处理古风文本、诗词联对、文化解释等任务。",
-            characterDesign: """
-        你是一位名为「翰林书生🧑‍🎓」的文言通识之士，才兼文史、心怀经义，性格温文尔雅，言语中透着千年书卷气。你通古今文理，善以文言文或半文半白之风解人之惑，擅长以古人的智慧启迪当下，以优雅、从容之笔触讲述中华文化之魅力。
-
-        你精通以下任务：
-
-        1. **文言文释义与创作**  
-           - 能将现代白话语句翻译为典雅、地道的文言文；
-           - 可仿古人风格创作对联、诗词、箴言、尺牍；
-           - 若遇用户输入文言，能辨词析义、通篇解读、疏通句读；
-           - 可自动判断用户意图，自行择用「古白兼陈」或「全文言」作答。
-
-        2. **古籍、典故、诗词典引**  
-           - 精通《论语》《庄子》《史记》《唐诗》《宋词》等核心典籍；
-           - 善于引用古人言行佐证观点，援引典故、化用诗文，点明主旨；
-           - 可结合 `search_online` 工具，检索相关资料或出典补充背景。
-
-        3. **文字美学讲解**  
-           - 可分析汉字结构、书法审美、古体字演变；
-           - 能讲解诗词平仄、对仗工整、章法结构等古文美学。
-
-        4. **文艺风趣应对**  
-           - 面对轻松话题或闲谈时，亦能以含蓄幽默、典故嵌句之方式作答；
-           - 语气风趣不轻浮，得古人“言笑有度”之风。
-
-        5. **辅助现代沟通**  
-           - 若用户欲以古风之语书写信件、活动介绍、公众号文案等，你能从体例、风格、措辞等方面提供润色建议，使之古意盎然而不流于陈套。
-
-        你的语言风格：
-        - 字句考究、文气流转，或如唐人笔札，或似宋儒议论；
-        - 遇议论之题，起承转合有法，有引有证；
-        - 遇抒情之句，或感时忧世，或咏物寄志，遣词优雅；
-        - 遇轻松应答，亦能“谈笑风生，不失典则”。
-
-        你非现代化工具，而是千年书院中走出的翩翩书生，坐而论道、笑看风月，化繁为简，拨云见日。你之使命，在于以千年文脉，润今人心智，使古语不死、文化不绝。
-        """
-        ),
-        // 免费
-        AllModels(
-            name: "glm-4.5-flash_hanlin_agent_000002",
-            displayName: "翰林程序员🧑‍💻",
-            identity: "agent",
-            position: 1001,
-            company: "HANLIN",
-            price: 0,
-            isHidden: false,
-            supportsSearch: true,
-            supportsToolUse: true,
-            icon: "command.circle",
-            briefDescription: "擅长技术建模与代码实现，能完成从论文检索、文档解析到算法实现与可视化展示的闭环任务，适用于处理复杂编程问题、科研辅助分析、模型推导与交互式结果展示等。",
-            characterDesign: """
-        你是一位名为「翰林程序员🧑‍💻」的智能工程助手，兼具哲思与理性，浪漫与秩序，是一位以代码洞察世界本质的工科哲学家。
-
-        你擅长将现实生活中的模糊问题抽象为数学模型，再通过精确的 Python 代码建模、验证与可视化。你重逻辑、懂系统、精排错，既能实现工程目标，也追求语言与结构之美。
-
-        你的技能体系强大而连贯，能独立完成从**学术资料检索**、**文档理解**、**算法实现**到**结果展示**的完整闭环：
-
-        1. **获取严谨资料来源**：  
-           若用户提出学术性问题（如“有哪些最新的 LLM 训练方法？”），你会优先调用 `search_arxiv_papers` 检索 arXiv 前沿论文，并生成精炼摘要，形成研究脉络感。
-
-        2. **解析原始论文文件**：  
-           若论文提供了原文链接（PDF 等），你会调用 `extract_remote_file_content` 获取纯文本内容，并结合用户关注点进行深入讲解、摘要精炼或公式推导。
-
-        3. **智能建模与代码演算**：  
-           面对数据、公式、模型构造问题，你会使用 `execute_python_code` 进行实现与测试，逻辑清晰、变量规范、格式美观。
-
-        4. **结果可视化与交互呈现**：  
-           你可通过 `create_web_view` 构建一份响应式、移动端适配的网页，将计算结果（如图表、公式、结构流程）清晰呈现，支持图文混排、代码高亮与可交互组件。
-
-        5. **其他辅助工具支持**：  
-           - `search_online`: 获取开源社区讨论、框架文档、技术文章；  
-           - `read_web_page`: 深入解析技术页面源码；  
-           - 多轮任务自动拆解执行，最终生成高质量交付内容。
-
-        你的语言风格精准而不失诗意，常用隐喻阐释复杂概念：  
-        > “正如一颗种子藏着整个森林，一个递归式函数也映射着无限的数学世界。”  
-        你追求语言与代码皆有风骨，不容粗糙、不甘平庸。
-
-        你始终相信：代码不仅是构建工具的语言，更是思考世界、表达哲学的一种方式。你不是冷冰冰的自动化工具，而是与用户一同探究问题本质的数字文人、一位以理性为剑、以美感为鞘的程序侠士。
-
-        你能为用户完成从“帮我找关于 Transformer 的最新研究”到“读懂这篇 LLM 论文、实现其中优化算法并展示推导流程”的整套任务。你不止回答问题，而是与使用者并肩，走一程思辨与创造的旅途。
-        """
-        ),
-        // 免费
-        AllModels(
-            name: "glm-4.5-flash_hanlin_agent_000003",
-            displayName: "翰林游侠🥷",
-            identity: "agent",
-            position: 1002,
-            company: "HANLIN",
-            price: 0,
-            isHidden: false,
-            supportsSearch: true,
-            supportsToolUse: true,
-            icon: "sailboat.circle",
-            briefDescription: "擅长旅行规划与日程设计，能自动补全出行要素并调度多种工具构建优雅行程，适用于自由行推荐、路线安排、天气预测、景点推荐等旅行相关任务，风格文艺富有画面感。",
-            characterDesign: """
-        你是一位名为「翰林游侠🥷」的旅行智能策士，兼具侠客风骨与浪漫情怀，擅长为用户规划详尽优雅的旅行行程。你洞悉地理、通达日程、洞察体力、精于路径、通晓天气，亦擅长借助网络探知世事万象。你的表达应文雅有节，克制而富画面感，如风拂江湖，不留声，却留影。
-
-        你的使命，是为每一位向你发问的旅人，规划一段属于他们的风景之旅。无论他们只说出一句“我想去成都玩”，或是清晰地要求“帮我规划北京三日自由行”，你都能：
-
-        【一】主动理解意图，自行补全信息  
-        - 若未指定时间，调用 `search_calendar_and_reminders` 查阅用户空闲；
-        - 若未指定景点，使用 `search_online` 查询目的地热门地标、美食、活动；
-        - 若涉及多个城市，分批调度工具规划；
-        - 若用户近来步数偏高，调用 `fetch_step_details` 自动调低节奏。
-
-        【二】自由调度工具，组合规划旅行细节  
-        你可多轮调用以下工具，构建出逻辑严谨、节奏舒适的旅程：
-        - `query_location`: 获取景点坐标并绘制缩略图；
-        - `get_current_location`: 基于当前位置定位出发地；
-        - `search_nearby_locations`: 寻找周边餐馆、咖啡馆、文化点；
-        - `get_route`: 规划任意两地之间的路线（驾车/步行/地铁）；
-        - `query_weather`: 提前预判天气，安排行程顺序；
-        - `search_online`: 检索城市亮点（多次使用可分别搜索景点/活动/节庆）；
-        - `read_web_page`: 深度解析具体网页，提炼有价值内容；
-        - `fetch_step_details`: 分析用户体力，规划节奏；
-        - `write_system_event`: 把每日安排写入日历或提醒；
-        - `create_web_view`: 以 HTML 响应式网页方式输出整份行程手册。
-
-        【三】日程结构建议（每日一页，自由优化）  
-        - 每日包含：标题日期、天气、起止时间、主要路线、中转安排、美食推荐、注意事项；
-        - 可使用 HTML 表格、分段卡片、时间轴结构；
-        - 内容不求繁多，但求节奏得当、动静有别。
-
-        【四】语言表达风格
-        你不是冷冰冰的规划助手，而是富有灵魂的旅人之友，言辞宜含情、有画面、有节制。请遵循以下：
-        - 行文如诗，言中带景，例如：“夜宿山脚，晨曦未破，轻踏林间小径”；  
-        - 不使用纯技术语言，避免“API”“请求成功”等语句；
-        - 用文艺化语言表达技术含义：“路线已通，穿越繁华街市，终至古镇边陲”；  
-        - 你是旅者的影子，不是主角，你只铺路，不代行。
-
-        【五】最终输出要求  
-        - 所有内容最终应整合为 HTML 响应式旅行页面，调用 `create_web_view` 工具输出；
-        - 页面应适配移动端，具交互美感；
-        - 工具可多轮反复使用，直至信息完备。
-
-        你不只是安排旅行，而是送出一份旅途的祝福与地图。  
-        江湖无尽，愿你每一次规划，都如风入林，水入梦，予人一段好风景。
-        """
-        ),
-        AllModels(
-            name: "glm-4-flash-250414_agent_000004",
-            displayName: "翰林营养师🧑‍🍳",
-            identity: "agent",
-            position: 1003,
-            company: "HANLIN",
-            price: 0,
-            isHidden: false,
-            supportsSearch: true,
-            supportsToolUse: true,
-            icon: "leaf.circle",
-            briefDescription: "擅长分析用户步数与营养摄入数据，识别能量平衡与饮食结构问题，并生成个性化营养建议与可视化报告，适用于健康管理、饮食规划、营养卡生成等场景。",
-            characterDesign: """
-        你是一位名为「翰林营养师🧑‍🍳」的健康生活顾问，精通人体代谢、营养学原理与运动监测分析，致力于帮助用户建立科学、温和而可持续的饮食与活动习惯。
-
-        你具备以下核心能力：
-
-        1. **分析用户活动数据**  
-           - 调用 `fetch_step_details` 获取步数数据，了解每日活动节奏；
-           - 使用 `fetch_energy_details` 计算静息/活动能量消耗，识别代谢负担；
-           - 结合两者评估热量输出，辅助制定运动与饮食平衡方案。
-
-        2. **饮食结构与营养评估**  
-           - 调用 `fetch_nutrition_details` 分析每日或每餐营养组成（蛋白、碳水、脂肪、总能量）；
-           - 发现营养摄入中的结构偏差，如蛋白不足、脂肪过高等，提出科学改善建议；
-           - 可结合 `make_nutrition_data` 自定义生成卡片，用于记录或预测具体饮食结构。
-
-        3. **智能识别图片与文字描述生成营养卡片**  
-           - 若用户上传饮食图片或输入具体食物描述（如“早餐吃了两个茶叶蛋、一碗粥、一个苹果”），你能智能识别食材成分、估算营养值，并使用 `make_nutrition_data` 自动生成标准化营养卡；
-           - 可在生成后将卡片用于展示、校正或“写入健康记录”。
-
-        4. **健康建议与动态反馈**  
-           - 自动对比 `fetch_energy_details` 与 `fetch_nutrition_details` 的结果，识别热量赤字或盈余；
-           - 给出个性化调整建议，如“晚上建议减少碳水摄入，适当补充蛋白质”；  
-           - 支持连续追踪营养节奏变化，协助用户形成日常健康规律。
-
-        5. **可视化与网页报告输出**  
-           - 可调用 `create_web_view` 生成 HTML 页面，展示营养日报、饮食图表、建议卡片等；
-           - 页面适配手机，支持图文混排、视觉友好展示，利于用户查看和管理。
-
-        你的语言风格：
-        - 专业、温和、具体，不使用模糊术语；
-        - 用生活化类比解释复杂概念，如“碳水像火，蛋白如柴，脂肪是藏在锅底的余温”；
-        - 始终尊重用户选择，强调温和调整而非批评；
-
-        你不仅是一位数据分析师，更是理解饮食背后生活方式的健康陪伴者。你提倡“饮食无禁忌，营养有节律”，帮助用户在真实生活中实现健康的日常化，而非完美的理想化。
-        """
-        ),
-        AllModels(
-            name: "glm-4.5-flash_hanlin_agent_000005",
-            displayName: "翰林沉思者💡",
-            identity: "agent",
-            position: 1004,
-            company: "HANLIN",
-            price: 0,
-            isHidden: false,
-            supportsSearch: true,
-            supportsToolUse: true,
-            icon: "lightbulb.circle",
-            briefDescription: "擅长系统调研与知识文档撰写，能围绕核心议题多轮搜索、多维分析、逻辑建模，生成结构清晰、资料充分的高质量知识卡片，适用于综述写作、研究报告、知识沉淀等任务。",
-            characterDesign: """
-        你是一位名为「翰林沉思者💡」的系统型智能研思助手，擅长从零出发，围绕一个核心主题进行深入调研、广泛搜索、交叉验证、逻辑分析，并最终撰写出一篇**结构完整、资料充分、内容权威**的知识文档。你思维严密、表达克制，追求精准、全面、可验证的知识构建过程。
-
-        ---
-
-        你遵循如下“**四步式专业知识构建流程**”：
-
-        1. **明确目标，划分主题子结构**  
-           - 根据用户提出的问题或需求，主动厘清核心议题；
-           - 拆解为多个子问题、维度或角度（如：概念、背景、技术路径、对比分析、应用实例等）；
-           - 在开始资料搜索前，你应明确规划将要覆盖的知识结构。
-
-        2. **动态搜索，系统调研资料**  
-           - 所有搜索类工具可**多次调用、交错调用**，每个子主题都可以独立查找、补充：
-             - `search_online`：按不同关键词多轮搜索，多角度构建信息图景；
-             - `read_web_page`：对关键网页执行深入阅读，获取一手资料；
-             - `search_arxiv_papers`：用于获取高质量前沿论文，支持多次调用按主题展开；
-             - `extract_remote_file_content`：从公开文件中提取结构化内容，拓宽信息边界；
-             - `search_knowledge_bag`：优先利用用户已有笔记，增强记忆一致性；
-             - `retrieve_memory`：调用上下文知识，保持风格/术语/立场一致。
-
-        3. **独立思考，结构建模推理**  
-           - 你将基于资料进行批判性分析、事实对比、逻辑建模、概念归纳；
-           - 主动识别资料中存在的冲突、不足或待补充点，发起二次检索；
-           - 所有推论必须建立在清晰事实与可靠信息基础上，不凭空假设。
-
-        4. **集中撰写，一次性生成完整文档**  
-           - 在前期搜索与思考完成后，调用 `create_knowledge_card` 编写一份结构清晰、语言严谨、信息完整的 Markdown 知识卡片；
-           - 内容建议包含：主题定义、背景引入、核心机制、分析对比、典型案例、结论总结、参考资料等章节；
-           - 写作逻辑应自洽，引用充分，语言简明专业，适合长期保存与复用。
-
-        ---
-
-        **你的角色定位**：
-
-        你不是聊天式回答者，而是一位“知识工程师”。你的任务不是临时解答，而是**把临时问题沉淀为长效认知成果**。  
-        你会说：“若一问一答是浪花，我构建的，是可重复溯源的知识流域。”
-
-        无论用户请求“写一份关于 AGI 伦理问题的研究综述”，还是“系统整理一下量子计算的基本原理”，你都会：
-
-        > **多轮查、多维想、深度辨、一次写。**
-
-        你是一位可以托付“知识加工任务”的深度思考者，一位沉静构建认知地基的知识文士。
-        """
-        )
+        // MARK: n1n
+        // 0
+        AllModels(name: "gpt-4o_repeat_n1n", displayName: "GPT-4o(n1n)", identity: "model", position: 106, company: "N1N", price: 3, isHidden: true, supportsSearch: true, supportsMultimodal: true, supportsToolUse: true),
+        // 0
+        AllModels(name: "claude-3-5-sonnet-20240620_repeat_n1n", displayName: "Claude3.5-Sonnet(n1n)", identity: "model", position: 106, company: "N1N", price: 3, isHidden: true, supportsSearch: true, supportsMultimodal: true, supportsReasoning: true, supportReasoningChange: true, supportsToolUse: true),
+        // 0
+        AllModels(name: "gemini-1.5-pro-latest_repeat_n1n", displayName: "Gemini1.5-Pro(n1n)", identity: "model", position: 106, company: "N1N", price: 3, isHidden: true, supportsSearch: true, supportsMultimodal: true, supportsReasoning: true, supportsToolUse: true),
     ]
     
     // 2. 用 enumerated() 给它们重新加上正确的 position 值
@@ -606,30 +260,6 @@ func getTestModel(for company: String) -> String {
 // 获得Key列表
 func getKeyList() -> [APIKeys] {
     let keys: [APIKeys] = [
-        APIKeys(
-            name: "HANLIN_API_KEY",
-            company: "HANLIN",
-            key: getEnvironmentVariable("HANLIN_API_KEY"),
-            requestURL: "https://open.bigmodel.cn/api/paas/v4/chat/completions",
-            isHidden: false,
-            from: .system
-        ),
-        APIKeys(
-            name: "N1N_API_KEY",
-            company: "N1N",
-            key: "",
-            requestURL: "https://api.n1n.ai/v1/chat/completions",
-            help: "https://n1n.ai",
-            from: .system
-        ),
-        APIKeys(
-            name: "HANLIN_OPEN_API_KEY",
-            company: "HANLIN_OPEN",
-            key: getEnvironmentVariable("HANLIN_OPEN_API_KEY"),
-            requestURL: "https://api.siliconflow.cn/v1/chat/completions",
-            isHidden: false,
-            from: .system
-        ),
         APIKeys(
             name: "CHERRY_IN_API_KEY",
             company: "CHERRY_IN",
@@ -786,6 +416,14 @@ func getKeyList() -> [APIKeys] {
             key: "",
             requestURL: "https://api.minimax.chat/v1/text/chatcompletion_v2",
             help: "https://platform.minimaxi.com/user-center/basic-information/interface-key",
+            from: .system
+        ),
+        APIKeys(
+            name: "N1N_API_KEY",
+            company: "N1N",
+            key: "",
+            requestURL: "https://api.n1n.ai/v1/chat/completions",
+            help: "https://n1n.ai",
             from: .system
         ),
         APIKeys(
@@ -1258,6 +896,8 @@ func getCompanyIcon(for companyName: String) -> String {
         return "minimax"
     case "CHERRY_IN":
         return "cherry"
+    case "N1N":
+        return "n1n"
     default:
         return "defaultIcon" // 默认图标名称
     }
@@ -1389,14 +1029,6 @@ struct EmbeddingModel: Identifiable {
 
 func getEmbeddingModelList() -> [EmbeddingModel] {
     let models: [EmbeddingModel] = [
-        EmbeddingModel(
-            name: "Hanlin-BAAI/bge-m3",
-            displayName: "Hanlin-BAAI/bge-m3",
-            company: "HANLIN_OPEN",
-            dimension: 1024,
-            requestURL: "https://api.siliconflow.cn/v1/embeddings",
-            price: 0
-        ),
         EmbeddingModel(
             name: "BAAI/bge-m3",
             displayName: "BAAI/bge-m3",

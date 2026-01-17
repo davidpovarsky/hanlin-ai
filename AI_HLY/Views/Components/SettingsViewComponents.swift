@@ -951,18 +951,16 @@ struct SelectOptimizationModelView: View {
         allModels.filter {
             ($0.identity == "model") &&
             ($0.company != "LOCAL") &&
-            ($0.supportsReasoning == false) &&
             ($0.supportsTextGen == true) &&
             hasValidAPIKey(for: $0)
         }
     }
-    
+
     // 过滤出符合视觉优化要求的模型
     private var visualOptimizationModels: [AllModels] {
         allModels.filter {
             ($0.identity == "model") &&
             ($0.supportsMultimodal == true) &&
-            ($0.supportsReasoning == false) &&
             ($0.supportsTextGen == true) &&
             ($0.company != "LOCAL") &&
             hasValidAPIKey(for: $0)

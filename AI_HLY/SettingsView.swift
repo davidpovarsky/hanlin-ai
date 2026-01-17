@@ -17,16 +17,25 @@ struct SettingsView: View {
     
     @Query var apiKeys: [APIKeys]
     @Query var searchKeys: [SearchKeys]
+    @Query var userInfos: [UserInfo]
     
     var body: some View {
         
         let noAPIKeys = apiKeys
             .filter { $0.company != "LOCAL" }
-            .allSatisfy { $0.key?.isEmpty ?? true }
+            .allSatisfy { $0.isHidden || ($0.key?.isEmpty ?? true) }
         
         let noSearchKeys = searchKeys
             .allSatisfy { $0.key?.isEmpty ?? true }
-        
+
+        // 检测是否缺少优化模型
+        let userInfo = userInfos.first
+        let noOptimizationModel = (userInfo?.optimizationTextModel.isEmpty ?? true) ||
+                                  (userInfo?.optimizationVisualModel.isEmpty ?? true)
+
+        // 检测是否缺少向量模型
+        let noEmbeddingModel = userInfo?.chooseEmbeddingModel?.isEmpty ?? true
+
         NavigationStack {
             List {
                 Section(header: Text("个性化")) {
@@ -45,14 +54,28 @@ struct SettingsView: View {
                 }
                 if noAPIKeys {
                     Section {
-                        Text("指引：点击下方“模型”中的“模型密钥”设置大模型密钥和厂商的启用状态")
+                        Text("指引：暂无开启的大模型厂商，点击下方“模型”中的“模型密钥”设置大模型密钥和厂商的启用状态")
                             .font(.caption)
-                            .foregroundColor(.hlBluefont)
+                            .foregroundColor(.hlRed)
+                    }
+                }
+                if noOptimizationModel {
+                    Section {
+                        Text("指引：点击下方“优化模型”设置文本优化模型和视觉优化模型，以启用提示词优化、系统消息优化、图片内容识别等功能")
+                            .font(.caption)
+                            .foregroundColor(.hlRed)
+                    }
+                }
+                if noEmbeddingModel {
+                    Section {
+                        Text("指引：点击下方“向量模型“设置向量嵌入模型，以启用知识背包检索功能")
+                            .font(.caption)
+                            .foregroundColor(.hlRed)
                     }
                 }
                 Section(header: Text("模型")) {
                     NavigationLink(destination: APIKeysView().onAppear { isPushed = true }.onDisappear { isPushed = false }.toolbar(.hidden, for: .tabBar)) {
-                        Label("模型密钥", systemImage: "key.2.on.ring")
+                        Label("模型厂商", systemImage: "key.2.on.ring")
                     }
                     NavigationLink(destination: SelectEmbeddingModelView().onAppear { isPushed = true }.onDisappear { isPushed = false }.toolbar(.hidden, for: .tabBar)) {
                         Label("向量模型", systemImage: "compass.drawing")
@@ -68,7 +91,7 @@ struct SettingsView: View {
                     Section {
                         Text("指引：点击下方“工具”中的“联网搜索”设置搜索引擎密钥和需要使用的搜索引擎")
                             .font(.caption)
-                            .foregroundColor(.hlBluefont)
+                            .foregroundColor(.hlRed)
                     }
                 }
                 Section(header: Text("工具")) {

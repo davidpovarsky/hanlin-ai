@@ -67,7 +67,7 @@ struct APIKeysView: View {
                         .foregroundColor(.hlBluefont)
                         .padding()
                     
-                    Text("点击名称或钥匙设置厂商密钥并打开该厂商以使用该厂商的模型")
+                    Text("点击名称或钥匙设置厂商密钥，并打开厂商开关以使用该厂商的模型")
                         .font(.footnote)
                         .multilineTextAlignment(.center)
                         .padding(.bottom)
@@ -130,7 +130,7 @@ struct APIKeysView: View {
                 }
             }
         }
-        .navigationTitle("密钥设置")
+        .navigationTitle("模型厂商")
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button {

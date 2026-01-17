@@ -5,6 +5,8 @@ struct ListView: View {
     @Environment(\.modelContext) private var modelContext
     @Query private var chatRecords: [ChatRecords]
     @Query private var allModels: [AllModels]
+    @Query private var apiKeys: [APIKeys]
+    @Query private var userInfos: [UserInfo]
     
     @State private var searchText: String = ""
     @State private var loadHistoryMessages: Bool = false
@@ -24,10 +26,36 @@ struct ListView: View {
     @State private var matchedSnippets: [UUID: (AttributedString, UUID)] = [:]
     
     @State private var showSafariGuide: Bool = false
-    
+
+    @State private var showValidationAlert: Bool = false
+    @State private var validationAlertMessage: String = ""
+    @State private var validationSettingType: SettingType? = nil
+    @State private var showSettingSheet: Bool = false
+
+    // 设置类型枚举
+    enum SettingType {
+        case apiKeys        // 模型厂商
+        case optimization   // 优化模型
+        case embedding      // 向量模型
+    }
+
     // 添加一个强制刷新状态，当需要更新列表时切换该状态
     @State private var forceRefresh: Bool = false
-    
+
+    // 检测是否有开启且有有效密钥的大模型厂商
+    private var noAPIKeys: Bool {
+        apiKeys
+            .filter { $0.company != "LOCAL" }
+            .allSatisfy { $0.isHidden || ($0.key?.isEmpty ?? true) }
+    }
+
+    // 检测是否缺少优化模型
+    private var noOptimizationModel: Bool {
+        let userInfo = userInfos.first
+        return (userInfo?.optimizationTextModel.isEmpty ?? true) ||
+               (userInfo?.optimizationVisualModel.isEmpty ?? true)
+    }
+
     // 修改计算属性，让置顶的记录始终显示在上方
     private var filteredChatRecords: [ChatRecords] {
         if searchText.isEmpty {
@@ -134,6 +162,37 @@ struct ListView: View {
                     SafariView(url: URL(string: "https://docs.qq.com/aio/DT2pMUFRVWVNsZmtj")!)
                         .background(BlurView(style: .systemThinMaterial))
                         .edgesIgnoringSafeArea(.all)
+                }
+                .alert("无法新建对话", isPresented: $showValidationAlert) {
+                    Button("前往设置") {
+                        showSettingSheet = true
+                    }
+                    Button("取消", role: .cancel) { }
+                } message: {
+                    Text(validationAlertMessage)
+                }
+                .sheet(isPresented: $showSettingSheet) {
+                    NavigationStack {
+                        Group {
+                            switch validationSettingType {
+                            case .apiKeys:
+                                APIKeysView()
+                            case .optimization:
+                                SelectOptimizationModelView()
+                            case .embedding:
+                                SelectEmbeddingModelView()
+                            case .none:
+                                EmptyView()
+                            }
+                        }
+                        .toolbar {
+                            ToolbarItem(placement: .navigationBarTrailing) {
+                                Button("完成") {
+                                    showSettingSheet = false
+                                }
+                            }
+                        }
+                    }
                 }
         }
     }
@@ -456,8 +515,24 @@ struct ListView: View {
     }
     
     private func addNewChat() {
+        // 验证是否有开启的大模型厂商
+        if noAPIKeys {
+            validationAlertMessage = "暂无开启的大模型厂商，请前往“设置-模型-模型厂商”设置大模型密钥并启用厂商。"
+            validationSettingType = .apiKeys
+            showValidationAlert = true
+            return
+        }
+
+        // 验证是否选择了优化模型
+        if noOptimizationModel {
+            validationAlertMessage = "暂未设置优化模型，请前往“设置-模型-优化模型”设置文本优化模型和视觉优化模型。"
+            validationSettingType = .optimization
+            showValidationAlert = true
+            return
+        }
+
         let currentLanguage = Locale.preferredLanguages.first ?? "zh-Hans"
-        
+
         let chatName: String = currentLanguage.hasPrefix("zh") ? "新群聊" : "New Group Chat"
         let welcomeText: String = currentLanguage.hasPrefix("zh") ? "欢迎加入新群聊👏" : "Welcome to the new group chat! 👏"
         
