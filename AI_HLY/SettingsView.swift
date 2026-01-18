@@ -120,6 +120,11 @@ struct SettingsView: View {
                         Label("代码执行", systemImage: "apple.terminal")
                     }
                 }
+                Section(header: Text("通用")) {
+                    NavigationLink(destination: GeneralSettingsView().onAppear { isPushed = true }.onDisappear { isPushed = false }.toolbar(.hidden, for: .tabBar)) {
+                        Label("通用", systemImage: "gearshape")
+                    }
+                }
                 Section(header: Text("帮助")) {
                     Button(action: {
                         showSafariGuide = true
@@ -140,19 +145,6 @@ struct SettingsView: View {
                         } icon: {
                             Image(systemName: "creditcard")
                         }
-                    }
-                }
-                Section(header: Text("通用")) {
-                    Button(action: openLanguageSettings) {
-                        Label {
-                            Text("语言设置")
-                                .foregroundColor(.primary)
-                        } icon: {
-                            Image(systemName: "globe")
-                        }
-                    }
-                    NavigationLink(destination: FeedBackView().onAppear { isPushed = true }.onDisappear { isPushed = false }.toolbar(.hidden, for: .tabBar)) {
-                        Label("触感反馈", systemImage: "iphone.gen3.radiowaves.left.and.right")
                     }
                 }
                 Section(header: Text("软件")) {
@@ -189,15 +181,6 @@ struct SettingsView: View {
                 .background(BlurView(style: .systemThinMaterial))
                 .edgesIgnoringSafeArea(.all)
         }
-    }
-    
-    /// 打开系统的“语言与地区”设置
-    private func openLanguageSettings() {
-        guard let url = URL(string: UIApplication.openSettingsURLString),
-              UIApplication.shared.canOpenURL(url) else {
-            return
-        }
-        UIApplication.shared.open(url)
     }
 }
 

@@ -924,6 +924,56 @@ struct MailView: UIViewControllerRepresentable {
     }
 }
 
+// MARK: 通用设置界面
+struct GeneralSettingsView: View {
+    @State private var isPushed: Bool = false
+
+    var body: some View {
+        List {
+            Section {
+                VStack(alignment: .center) {
+                    Image(systemName: "gearshape")
+                        .font(.largeTitle)
+                        .fontWeight(.bold)
+                        .foregroundColor(.hlBluefont)
+                        .padding()
+
+                    Text("通用设置包含语言和触感反馈等基础配置项。")
+                        .font(.footnote)
+                        .multilineTextAlignment(.center)
+                        .padding(.bottom)
+                }
+                .frame(maxWidth: .infinity, alignment: .center)
+            }
+
+            Section {
+                Button(action: openLanguageSettings) {
+                    Label {
+                        Text("语言设置")
+                            .foregroundColor(.primary)
+                    } icon: {
+                        Image(systemName: "globe")
+                    }
+                }
+
+                NavigationLink(destination: FeedBackView().onAppear { isPushed = true }.onDisappear { isPushed = false }) {
+                    Label("触感反馈", systemImage: "iphone.gen3.radiowaves.left.and.right")
+                }
+            }
+        }
+        .navigationTitle("通用")
+    }
+
+    /// 打开系统的"语言与地区"设置
+    private func openLanguageSettings() {
+        guard let url = URL(string: UIApplication.openSettingsURLString),
+              UIApplication.shared.canOpenURL(url) else {
+            return
+        }
+        UIApplication.shared.open(url)
+    }
+}
+
 // 优化模型选择
 struct SelectOptimizationModelView: View {
     @Environment(\.modelContext) private var modelContext

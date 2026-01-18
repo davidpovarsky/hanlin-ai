@@ -419,6 +419,54 @@ func getKeyList() -> [APIKeys] {
             from: .system
         ),
         APIKeys(
+            name: "MIMO_API_KEY",
+            company: "MIMO",
+            key: "",
+            requestURL: "https://api.xiaomimimo.com/v1/chat/completions",
+            help: "https://platform.xiaomimimo.com/#/console/api-keys",
+            from: .system
+        ),
+        APIKeys(
+            name: "LONGCAT_API_KEY",
+            company: "LONGCAT",
+            key: "",
+            requestURL: "https://api.longcat.chat/openai/v1/chat/completions",
+            help: "https://longcat.chat/platform/api_keys",
+            from: .system
+        ),
+        APIKeys(
+            name: "AI302_API_KEY",
+            company: "AI302",
+            key: "",
+            requestURL: "https://api.302.ai/v1/chat/completions",
+            help: "https://302.ai/apis/list",
+            from: .system
+        ),
+        APIKeys(
+            name: "AIHUBMIX_API_KEY",
+            company: "AIHUBMIX",
+            key: "",
+            requestURL: "https://aihubmix.com/v1/chat/completions",
+            help: "https://console.aihubmix.com/token",
+            from: .system
+        ),
+        APIKeys(
+            name: "POE_API_KEY",
+            company: "POE",
+            key: "",
+            requestURL: "https://api.poe.com/v1/chat/completions",
+            help: "https://poe.com/api/keys",
+            from: .system
+        ),
+        APIKeys(
+            name: "IFLOW_API_KEY",
+            company: "IFLOW",
+            key: "",
+            requestURL: "https://apis.iflow.cn/v1/chat/completions",
+            help: "https://platform.iflow.cn/profile?tab=apiKey",
+            from: .system
+        ),
+        APIKeys(
             name: "N1N_API_KEY",
             company: "N1N",
             key: "",
@@ -896,6 +944,18 @@ func getCompanyIcon(for companyName: String) -> String {
         return "minimax"
     case "CHERRY_IN":
         return "cherry"
+    case "MIMO":
+        return isDarkMode ? "mimo_dark" : "mimo"
+    case "LONGCAT":
+        return isDarkMode ? "longcat_dark" : "longcat"
+    case "AI302":
+        return "ai302"
+    case "POE":
+        return isDarkMode ? "poe_dark" : "poe"
+    case "AIHUBMIX":
+        return "aihubmix"
+    case "IFLOW":
+        return "iflow"
     case "N1N":
         return "n1n"
     default:

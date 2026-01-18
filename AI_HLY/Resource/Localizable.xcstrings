@@ -400,6 +400,40 @@
         }
       }
     },
+    "company_AI302" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "302.AI"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "302.AI"
+          }
+        }
+      }
+    },
+    "company_AIHUBMIX" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "AiHubMix"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "推理时代"
+          }
+        }
+      }
+    },
     "company_AMAP" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -757,6 +791,23 @@
         }
       }
     },
+    "company_IFLOW" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "iFlow"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "心流"
+          }
+        }
+      }
+    },
     "company_KIMI" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -821,6 +872,40 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "本地模型"
+          }
+        }
+      }
+    },
+    "company_LONGCAT" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "LongCat"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "美团LongCat"
+          }
+        }
+      }
+    },
+    "company_MIMO" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "MIMO"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "小米MIMO"
           }
         }
       }
@@ -940,6 +1025,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Perplexity"
+          }
+        }
+      }
+    },
+    "company_POE" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Poe"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Poe"
           }
         }
       }
@@ -1900,6 +2002,9 @@
           }
         }
       }
+    },
+    "加载模型中..." : {
+
     },
     "匹配度阈值（范围：0.05 - 1.0）" : {
       "localizations" : {
@@ -3153,6 +3258,9 @@
           }
         }
       }
+    },
+    "暂无可用模型，请前往模型界面开启模型。" : {
+
     },
     "暂无消息" : {
       "localizations" : {
@@ -5466,6 +5574,9 @@
           }
         }
       }
+    },
+    "通用设置包含语言和触感反馈等基础配置项。" : {
+
     },
     "通过选择新的基础模型复制该智能体" : {
       "localizations" : {
