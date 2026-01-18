@@ -337,11 +337,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = AI_HLY/Views;
-				DEVELOPMENT_TEAM = 4UU5YZ4GWN;
+				DEVELOPMENT_TEAM = 87242QY66T;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "AI-HLY-Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "AI翰林院";
+				INFOPLIST_KEY_CFBundleDisplayName = Hylic.AI;
 				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				INFOPLIST_KEY_NSCalendarsFullAccessUsageDescription = "需要访问您的日历以读取和添加事件。";
@@ -370,9 +370,9 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
-				MARKETING_VERSION = 0.7.2;
+				MARKETING_VERSION = 0.7.3;
 				ONLY_ACTIVE_ARCH = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = "zhiyuan20002.com.AI-Hanlin";
+				PRODUCT_BUNDLE_IDENTIFIER = "cherryai.com.AI-Hanlin";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -396,11 +396,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = AI_HLY/Views;
-				DEVELOPMENT_TEAM = 4UU5YZ4GWN;
+				DEVELOPMENT_TEAM = 87242QY66T;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "AI-HLY-Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "AI翰林院";
+				INFOPLIST_KEY_CFBundleDisplayName = Hylic.AI;
 				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				INFOPLIST_KEY_NSCalendarsFullAccessUsageDescription = "需要访问您的日历以读取和添加事件。";
@@ -429,9 +429,9 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
-				MARKETING_VERSION = 0.7.2;
+				MARKETING_VERSION = 0.7.3;
 				ONLY_ACTIVE_ARCH = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = "zhiyuan20002.com.AI-Hanlin";
+				PRODUCT_BUNDLE_IDENTIFIER = "cherryai.com.AI-Hanlin";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";

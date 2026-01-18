@@ -32,6 +32,7 @@ class UserInfo {
     var searchCount: Int = 10                                      // 默认搜索结果数量
     var knowledgeCount: Int = 10                                   // 默认知识数量
     var knowledgeSimilarity: Double = 0.5                          // 默认知识相似度
+    var modelSelectorStyle: String = "scroll"                       // 模型选择器样式: scroll=横向滑动, menu=菜单选择
     var timestamp: Date = Date()
 
     public init(
@@ -56,6 +57,7 @@ class UserInfo {
         searchCount: Int = 10,
         knowledgeCount: Int = 10,
         knowledgeSimilarity: Double = 0.45,
+        modelSelectorStyle: String = "scroll",
         timestamp: Date = Date()
     ) {
         self.name = name
@@ -79,6 +81,7 @@ class UserInfo {
         self.searchCount = searchCount
         self.knowledgeCount = knowledgeCount
         self.knowledgeSimilarity = knowledgeSimilarity
+        self.modelSelectorStyle = modelSelectorStyle
         self.timestamp = timestamp
     }
 }

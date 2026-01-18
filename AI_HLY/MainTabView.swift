@@ -49,7 +49,7 @@ struct MainTabView: View {
             // 第五个Tab: SettingsView
             SettingsView()
                 .tabItem {
-                    Label("设置", systemImage: "gear")
+                    Label("设置", systemImage: "gearshape")
                 }
                 .tag(4)
         }

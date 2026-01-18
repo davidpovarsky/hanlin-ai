@@ -136,12 +136,12 @@
         }
       }
     },
-    "© 2025 HLY 保留所有权利" : {
+    "© 2026 Hylic.AI 保留所有权利" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "© 2025 HLY All Rights Reserved"
+            "value" : "© 2026 Hylic.AI All rights reserved"
           }
         }
       }
@@ -312,26 +312,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "2000 free uses/month"
-          }
-        }
-      }
-    },
-    "2025年2月·新加坡" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "February 2025 · Singapore"
-          }
-        }
-      }
-    },
-    "AI翰林院" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "AI Hanlin"
           }
         }
       }
@@ -1294,6 +1274,16 @@
         }
       }
     },
+    "Hylic.AI" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hylic.AI"
+          }
+        }
+      }
+    },
     "JSON文件 (.json)（多模态）" : {
       "localizations" : {
         "en" : {
@@ -1981,7 +1971,14 @@
       }
     },
     "前往设置" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Go to Settings"
+          }
+        }
+      }
     },
     "功能列表" : {
       "localizations" : {
@@ -2004,7 +2001,14 @@
       }
     },
     "加载模型中..." : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Loading model..."
+          }
+        }
+      }
     },
     "匹配度阈值（范围：0.05 - 1.0）" : {
       "localizations" : {
@@ -2052,6 +2056,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Reverse Prompts"
+          }
+        }
+      }
+    },
+    "发送栏" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Send field"
           }
         }
       }
@@ -2746,12 +2760,12 @@
         }
       }
     },
-    "感谢您使用 AI 翰林院" : {
+    "感谢您使用 Hylic.AI" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Thank You for Using AI 翰林院 Products"
+            "value" : "Thank you for using Hylic.AI."
           }
         }
       }
@@ -3260,7 +3274,14 @@
       }
     },
     "暂无可用模型，请前往模型界面开启模型。" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No models available. Please go to the models interface to enable a model."
+          }
+        }
+      }
     },
     "暂无消息" : {
       "localizations" : {
@@ -3572,6 +3593,16 @@
         }
       }
     },
+    "模型显示方式" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Model Display Mode"
+          }
+        }
+      }
+    },
     "模型管理" : {
       "localizations" : {
         "en" : {
@@ -3611,6 +3642,9 @@
           }
         }
       }
+    },
+    "横向滑动" : {
+
     },
     "横向画幅" : {
       "localizations" : {
@@ -4103,7 +4137,14 @@
       }
     },
     "知识库" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Knowledge"
+          }
+        }
+      }
     },
     "知识文档撰写" : {
       "localizations" : {
@@ -4751,6 +4792,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Setting up a translation dictionary will make the results of \"instant translation\" more personalized, especially for certain proprietary translation knowledge. Adding collocations to the translation dictionary can quickly optimize your translation results."
+          }
+        }
+      }
+    },
+    "菜单选择" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Menu Selection"
           }
         }
       }
@@ -5535,6 +5586,16 @@
         }
       }
     },
+    "选择模型" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Select Model"
+          }
+        }
+      }
+    },
     "选择视觉优化模型" : {
       "localizations" : {
         "en" : {
@@ -5654,6 +5715,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Voice"
+          }
+        }
+      }
+    },
+    "项目创建于2025年2月·新加坡" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Project created in February 2025, Singapore."
           }
         }
       }

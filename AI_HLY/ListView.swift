@@ -90,7 +90,7 @@ struct ListView: View {
     var body: some View {
         NavigationStack(path: $navigationPath) {
             content
-                .navigationTitle("AI翰林院")
+                .navigationTitle("Hylic.AI")
                 .safeAreaInset(edge: .bottom) {
                     Color.clear.frame(height: 75)
                 }

@@ -183,7 +183,7 @@ struct VersionInfoView: View {
                     .frame(width: 140, height: 140)
                     .cornerRadius(20)
                     
-                Text("AI翰林院")
+                Text("Hylic.AI")
                     .font(.largeTitle)
                     .bold()
                     .foregroundColor(.primary)
@@ -208,7 +208,7 @@ struct VersionInfoView: View {
                     .foregroundColor(.secondary)
                     .multilineTextAlignment(.center)
                 
-                Text("感谢您使用 AI 翰林院")
+                Text("感谢您使用 Hylic.AI")
                     .font(.footnote)
                     .foregroundColor(.secondary)
                     .multilineTextAlignment(.center)
@@ -216,11 +216,11 @@ struct VersionInfoView: View {
                 Spacer()
                 
                 VStack(spacing: 8) {
-                    Text("2025年2月·新加坡")
+                    Text("项目创建于2025年2月·新加坡")
                         .font(.footnote)
                         .foregroundColor(.secondary)
                     
-                    Text("© 2025 HLY 保留所有权利")
+                    Text("© 2026 Hylic.AI 保留所有权利")
                         .font(.footnote)
                         .foregroundColor(.secondary)
                 }
@@ -668,7 +668,7 @@ struct SoftwareIntroView: View {
                     .frame(width: 45, height: 45)
                     .cornerRadius(20)
                     
-                Text("AI翰林院")
+                Text("Hylic.AI")
                     .font(.largeTitle)
                     .bold()
             }
@@ -927,6 +927,10 @@ struct MailView: UIViewControllerRepresentable {
 // MARK: 通用设置界面
 struct GeneralSettingsView: View {
     @State private var isPushed: Bool = false
+    @Environment(\.modelContext) private var modelContext
+    @Query private var userInfos: [UserInfo]
+
+    @State private var modelSelectorStyle: String = "scroll"
 
     var body: some View {
         List {
@@ -960,8 +964,23 @@ struct GeneralSettingsView: View {
                     Label("触感反馈", systemImage: "iphone.gen3.radiowaves.left.and.right")
                 }
             }
+
+            Section(header: Text("发送栏")) {
+                Picker(selection: $modelSelectorStyle) {
+                    Text("横向滑动").tag("scroll")
+                    Text("菜单选择").tag("menu")
+                } label: {
+                    Label("模型显示方式", systemImage: "rectangle.stack")
+                }
+                .onChange(of: modelSelectorStyle) {
+                    saveModelSelectorStyle()
+                }
+            }
         }
         .navigationTitle("通用")
+        .onAppear {
+            loadModelSelectorStyle()
+        }
     }
 
     /// 打开系统的"语言与地区"设置
@@ -971,6 +990,25 @@ struct GeneralSettingsView: View {
             return
         }
         UIApplication.shared.open(url)
+    }
+
+    /// 加载模型选择器样式
+    private func loadModelSelectorStyle() {
+        if let user = userInfos.first {
+            modelSelectorStyle = user.modelSelectorStyle
+        }
+    }
+
+    /// 保存模型选择器样式
+    private func saveModelSelectorStyle() {
+        if let user = userInfos.first {
+            user.modelSelectorStyle = modelSelectorStyle
+            do {
+                try modelContext.save()
+            } catch {
+                print("保存模型选择器样式失败：\(error.localizedDescription)")
+            }
+        }
     }
 }
 

@@ -260,10 +260,12 @@ struct ChatViewBottom: View {
 
     @Environment(\.modelContext) private var context
     @Query(sort: [SortDescriptor(\PromptRepo.position, order: .forward)]) private var promptTemps: [PromptRepo]
+    @Query private var userInfos: [UserInfo]
 
     @State private var isViewLoaded = false
     @State private var showCanvas = false
     @State private var inputExpanded = false
+    @State private var showModelMenuSheet = false
     @State private var voiceExpanded = false
     @State private var showImagePicker = false
     @State private var showCameraPicker = false
@@ -1000,6 +1002,9 @@ struct ChatViewBottom: View {
                     chatTemps: $chatTemps,
                     respondIndex: respondIndex,
                     TemporaryRecord: TemporaryRecord,
+                    isMenuMode: isMenuMode,
+                    showModelMenuSheet: $showModelMenuSheet,
+                    onSelectModel: onSelectModel,
                     size32: size_32,
                     size30: size_30,
                     onSendUser: onSendUser,
@@ -1026,8 +1031,24 @@ struct ChatViewBottom: View {
         }
     }
 
+    // MARK: - 判断是否使用菜单模式
+    private var isMenuMode: Bool {
+        userInfos.first?.modelSelectorStyle == "menu"
+    }
+
     // MARK: 模型选择区域
     private var modelSelector: some View {
+        Group {
+            if isMenuMode {
+                menuStyleSelector
+            } else {
+                scrollStyleSelector
+            }
+        }
+    }
+
+    // MARK: - 横向滑动模式选择器
+    private var scrollStyleSelector: some View {
         HStack {
             let visibleIndices = modelTemp.indices.filter { !modelTemp[$0].isHidden }
 
@@ -1073,6 +1094,33 @@ struct ChatViewBottom: View {
                     }
                 }
             }
+        }
+        .padding(.horizontal, 12)
+    }
+
+    // MARK: - 菜单选择模式选择器（模型按钮已移至 ActionButtonsView，此处仅处理无模型时的提示）
+    private var menuStyleSelector: some View {
+        HStack {
+            let visibleIndices = modelTemp.indices.filter { !modelTemp[$0].isHidden }
+
+            if modelTemp.isEmpty {
+                // 数据未加载，显示占位符
+                HStack {
+                    ProgressView()
+                        .scaleEffect(0.8)
+                    Text("加载模型中...")
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                }
+                .frame(height: 36)
+            } else if visibleIndices.isEmpty {
+                // 没有可用模型
+                Text("暂无可用模型，请前往模型界面开启模型。")
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+                    .frame(height: 36)
+            }
+            // 有模型时不显示任何内容，模型按钮在 ActionButtonsView 中
         }
         .padding(.horizontal, 12)
     }
@@ -1510,6 +1558,11 @@ struct ActionButtonsView: View {
     let respondIndex: Int
     let TemporaryRecord: Bool
 
+    // 菜单模式相关
+    let isMenuMode: Bool
+    @Binding var showModelMenuSheet: Bool
+    let onSelectModel: (Int) -> Void
+
     // 尺寸
     let size32: CGFloat
     let size30: CGFloat
@@ -1587,6 +1640,62 @@ struct ActionButtonsView: View {
         : Color.clear
 
         HStack(spacing: 6) {
+            // 菜单模式下的模型选择按钮
+            if isMenuMode && valid {
+                Button {
+                    isFeedBack.toggle()
+                    showModelMenuSheet = true
+                } label: {
+                    if model?.identity == "model" {
+                        Image(getCompanyIcon(for: model?.company ?? "Unknown"))
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: size32 * 0.5, height: size32 * 0.5)
+                            .frame(width: size32, height: size32)
+                            .background(
+                                Circle()
+                                    .fill(TemporaryRecord ? Color.primary.opacity(0.1) : Color.hlBlue.opacity(0.1))
+                            )
+                            .overlay(
+                                Circle()
+                                    .stroke(TemporaryRecord ? Color.primary : Color.hlBluefont, lineWidth: 2)
+                            )
+                    } else {
+                        Image(systemName: model?.icon ?? "circle.dotted.circle")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: size32 * 0.45, height: size32 * 0.45)
+                            .foregroundColor(TemporaryRecord ? .primary : .hlBluefont)
+                            .frame(width: size32, height: size32)
+                            .background(
+                                Circle()
+                                    .fill(TemporaryRecord ? Color.primary.opacity(0.1) : Color.hlBlue.opacity(0.1))
+                            )
+                            .overlay(
+                                Circle()
+                                    .stroke(TemporaryRecord ? Color.primary : Color.hlBluefont, lineWidth: 2)
+                            )
+                    }
+                }
+                .sensoryFeedback(.selection, trigger: isFeedBack)
+                .sheet(isPresented: $showModelMenuSheet) {
+                    ModelMenuSheetView(
+                        models: modelTemp,
+                        selectedModelIndex: $selectedModelIndex,
+                        onSelectModel: { index in
+                            onSelectModel(index)
+                            showModelMenuSheet = false
+                        },
+                        TemporaryRecord: TemporaryRecord,
+                        ifToolUse: ifToolUse,
+                        ifThink: ifThink,
+                        ifAudio: ifAudio
+                    )
+                    .presentationDetents([.medium, .large])
+                    .presentationDragIndicator(.visible)
+                }
+            }
+
             // 附件
             if model?.supportsTextGen == true {
                 Button {
@@ -2084,7 +2193,7 @@ struct ActionButtonsView: View {
             let userF = FetchDescriptor<UserInfo>()
             guard let u = try context.fetch(userF).first,
                   let m = u.chooseEmbeddingModel, !m.isEmpty else {
-                knowledgeAlertMessage = "当前没有启用向量模型，请前往“设置-模型-向量模型“中启用向量模型。"
+                knowledgeAlertMessage = "当前没有启用向量模型，请前往“设置-模型-向量模型”中启用向量模型。"
                 isEmbeddingModelError = true
                 return false
             }
@@ -2096,5 +2205,177 @@ struct ActionButtonsView: View {
             }
             return true
         } catch { return false }
+    }
+}
+
+
+// MARK: - 模型菜单选择底部抽屉
+struct ModelMenuSheetView: View {
+    let models: [AllModels]
+    @Binding var selectedModelIndex: Int
+    let onSelectModel: (Int) -> Void
+    let TemporaryRecord: Bool
+    let ifToolUse: Bool
+    let ifThink: Bool
+    let ifAudio: Bool
+
+    @State private var searchText: String = ""
+    @ScaledMetric(relativeTo: .body) var size_30: CGFloat = 30
+
+    // 过滤后的可见模型索引
+    private var visibleIndices: [Int] {
+        let indices = models.indices.filter { !models[$0].isHidden }
+
+        if searchText.isEmpty {
+            return indices.sorted { (models[$0].position ?? 0) < (models[$1].position ?? 0) }
+        } else {
+            let lowercasedSearch = searchText.lowercased()
+            return indices.filter { index in
+                let model = models[index]
+                guard let displayName = model.displayName, !displayName.isEmpty else { return false }
+                let pinyinName = displayName.toPinyin()
+                return displayName.lowercased().contains(lowercasedSearch) ||
+                       pinyinName.lowercased().contains(lowercasedSearch)
+            }.sorted { (models[$0].position ?? 0) < (models[$1].position ?? 0) }
+        }
+    }
+
+    var body: some View {
+        NavigationStack {
+            List {
+                ForEach(visibleIndices, id: \.self) { index in
+                    let model = models[index]
+                    let isSelected = index == selectedModelIndex
+
+                    Button(action: {
+                        onSelectModel(index)
+                    }) {
+                        HStack {
+                            // 模型图标
+                            if model.identity == "model" {
+                                Image(getCompanyIcon(for: model.company ?? "Unknown"))
+                                    .resizable()
+                                    .frame(width: size_30, height: size_30)
+                            } else {
+                                Image(systemName: model.icon ?? "circle.dotted.circle")
+                                    .resizable()
+                                    .scaledToFill()
+                                    .frame(width: size_30, height: size_30)
+                                    .clipShape(Circle())
+                                    .overlay(
+                                        gradient(for: 0)
+                                            .mask(
+                                                Image(systemName: model.icon ?? "circle.dotted.circle")
+                                                    .resizable()
+                                                    .scaledToFit()
+                                                    .frame(width: size_30, height: size_30)
+                                            )
+                                    )
+                            }
+
+                            // 模型信息
+                            VStack(alignment: .leading, spacing: 4) {
+                                Text(model.displayName ?? "Unknown")
+                                    .font(.headline)
+                                    .foregroundColor(isSelected ? (TemporaryRecord ? .primary : .hlBluefont) : .primary)
+
+                                // 能力标签
+                                HStack(spacing: 6) {
+                                    if model.supportsToolUse {
+                                        Text("工具")
+                                            .font(.caption)
+                                            .foregroundColor(ifToolUse ? .hlBrown : .gray)
+                                    }
+
+                                    if model.supportsMultimodal {
+                                        Text("视觉")
+                                            .font(.caption)
+                                            .foregroundColor(.hlTeal)
+                                    } else if model.supportsTextGen {
+                                        Text("文本")
+                                            .font(.caption)
+                                            .foregroundColor(.gray)
+                                    }
+
+                                    if model.supportsImageGen {
+                                        Text("生图")
+                                            .font(.caption)
+                                            .foregroundColor(.hlGreen)
+                                    }
+
+                                    if model.supportsVoiceGen {
+                                        Text("语音")
+                                            .font(.caption)
+                                            .foregroundColor(ifAudio ? .hlPink : .gray)
+                                    }
+
+                                    if model.supportsReasoning {
+                                        Text("思考")
+                                            .font(.caption)
+                                            .foregroundColor(ifThink ? .hlPurple : .gray)
+                                    }
+
+                                    if model.company?.uppercased() == "LOCAL" {
+                                        Text("本地")
+                                            .font(.caption)
+                                            .foregroundColor(.hlOrange)
+                                    }
+
+                                    Text(priceText(for: model.price))
+                                        .font(.caption)
+                                        .foregroundColor(priceColor(for: model.price))
+                                }
+                            }
+
+                            Spacer()
+
+                            // 选中标记
+                            if isSelected {
+                                Image(systemName: "checkmark.circle.fill")
+                                    .foregroundColor(TemporaryRecord ? .primary : .hlBluefont)
+                            }
+                        }
+                        .padding(.vertical, 4)
+                    }
+                    .listRowBackground(
+                        isSelected
+                            ? (TemporaryRecord ? Color.primary.opacity(0.1) : Color.hlBlue.opacity(0.1))
+                            : Color.clear
+                    )
+                }
+            }
+            .navigationTitle("选择模型")
+            .navigationBarTitleDisplayMode(.inline)
+            .searchable(text: $searchText, prompt: "搜索模型")
+        }
+    }
+
+    // MARK: - 辅助函数
+    private func priceText(for price: Int16) -> String {
+        let currentLanguage = Locale.preferredLanguages.first ?? "zh-Hans"
+        if currentLanguage.hasPrefix("zh") {
+            switch price {
+            case 0: return "免费"
+            case 1: return "廉价"
+            case 2: return "适中"
+            default: return "昂贵"
+            }
+        } else {
+            switch price {
+            case 0: return "Free"
+            case 1: return "Cheap"
+            case 2: return "Moderate"
+            default: return "Expensive"
+            }
+        }
+    }
+
+    private func priceColor(for price: Int16) -> Color {
+        switch price {
+        case 0: return .green
+        case 1: return .yellow
+        case 2: return .orange
+        default: return .red
+        }
     }
 }
