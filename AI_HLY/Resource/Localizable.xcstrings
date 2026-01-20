@@ -337,7 +337,14 @@
       }
     },
     "API 测试" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Test API"
+          }
+        }
+      }
     },
     "APPLEMAP 不需要配置 API Key" : {
       "localizations" : {
@@ -1449,6 +1456,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "设置"
+          }
+        }
+      }
+    },
+    "thinking" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Thinking"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "思考中"
           }
         }
       }
@@ -3174,10 +3197,24 @@
       }
     },
     "无可用模型" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No available models."
+          }
+        }
+      }
     },
     "无法使用视觉功能" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unable to use visual features."
+          }
+        }
+      }
     },
     "无法开启厂商" : {
       "localizations" : {
@@ -3190,7 +3227,14 @@
       }
     },
     "无法新建对话" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unable to create a new conversation."
+          }
+        }
+      }
     },
     "日历提醒" : {
       "localizations" : {
@@ -3293,7 +3337,14 @@
       }
     },
     "暂无启用的多模态模型，请前往“设置-模型-模型管理”添加并启用支持视觉的模型。" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No multimodal models are currently enabled. Please go to \"Settings - Models - Model Management\" to add and enable models that support vision."
+          }
+        }
+      }
     },
     "暂无消息" : {
       "localizations" : {
@@ -3769,7 +3820,14 @@
       }
     },
     "测试模型" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Test Model"
+          }
+        }
+      }
     },
     "测试通过" : {
       "localizations" : {
@@ -5655,7 +5713,14 @@
       }
     },
     "通用设置包含语言和触感反馈等基础配置项。" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "General settings include basic configuration items like language and haptic feedback"
+          }
+        }
+      }
     },
     "通过选择新的基础模型复制该智能体" : {
       "localizations" : {

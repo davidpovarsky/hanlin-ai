@@ -18,8 +18,8 @@ class SystemOptimizer {
     
     /// 封装从数据库查询 API 配置和模型信息
     /// - Parameter isVisual: 是否为视觉（多模态）模型
-    /// - Returns: (模型名称, 模型所属厂商, API Key, 请求 URL)
-    private func fetchAPIConfig(isVisual: Bool) throws -> (modelName: String, company: String, apiKey: String, url: URL) {
+    /// - Returns: (模型名称, 模型所属厂商, API Key, 请求 URL, 支持可控思考)
+    private func fetchAPIConfig(isVisual: Bool) throws -> (modelName: String, company: String, apiKey: String, url: URL, supportReasoningChange: Bool) {
         print("[SystemOptimizer] 开始获取API配置，isVisual: \(isVisual)")
         let userFetchDescriptor = FetchDescriptor<UserInfo>()
         let user = try context.fetch(userFetchDescriptor).first
@@ -63,7 +63,37 @@ class SystemOptimizer {
         }
 
         print("[SystemOptimizer] API配置获取成功 - URL: \(requestURLString)")
-        return (optimizationModelName, modelCompany, apiKey, url)
+        return (optimizationModelName, modelCompany, apiKey, url, modelEntry.supportReasoningChange)
+    }
+
+    private func applyThinkingParametersIfNeeded(
+        supportReasoningChange: Bool,
+        company: String,
+        requestBody: inout [String: Any],
+        messages: inout [[String: Any]]
+    ) {
+        guard supportReasoningChange else { return }
+        let normalizedCompany = company.uppercased()
+
+        switch normalizedCompany {
+        case "QWEN", "MODELSCOPE", "SILICONCLOUD", "WENXIN":
+            requestBody["enable_thinking"] = false
+        case "ANTHROPIC":
+            requestBody["think"] = ["type": "disabled"]
+        case "ZHIPUAI", "HANLIN", "DOUBAO", "OPENROUTER":
+            requestBody["thinking"] = ["type": "disabled"]
+        default:
+            if var lastMessage = messages.last,
+               lastMessage["role"] as? String == "user",
+               var content = lastMessage["content"] as? String,
+               !content.contains("/think"),
+               !content.contains("/no_think") {
+                content += " /no_think"
+                lastMessage["content"] = content
+                messages[messages.count - 1] = lastMessage
+            }
+            requestBody["messages"] = messages
+        }
     }
     
     /// 根据图片数组构造多模态请求中的图片消息（适配不同厂商）
@@ -173,19 +203,26 @@ class SystemOptimizer {
                 """
         ]
         let systemMessage = systemMessages[languageKey] ?? systemMessages["zh-Hans"]!
-        let messages: [[String: Any]] = [
+        var messages: [[String: Any]] = [
             [
                 "role": "user",
                 "content": "\(systemMessage)\n\n\(inputPrompt)"
             ]
         ]
         
-        let requestBody: [String: Any] = [
+        var requestBody: [String: Any] = [
             "model": optimizationModelName,
             "messages": messages,
             "temperature": 0.5,
             "stream": false
         ]
+
+        applyThinkingParametersIfNeeded(
+            supportReasoningChange: apiConfig.supportReasoningChange,
+            company: apiConfig.company,
+            requestBody: &requestBody,
+            messages: &messages
+        )
         
         var request = URLRequest(url: apiConfig.url)
         request.httpMethod = "POST"
@@ -279,19 +316,26 @@ class SystemOptimizer {
                 """
         ]
         let systemMessage = systemMessages[languageKey] ?? systemMessages["zh-Hans"]!
-        let messages: [[String: Any]] = [
+        var messages: [[String: Any]] = [
             [
                 "role": "user",
                 "content": "\(systemMessage)\n\n\(inputContent)"
             ]
         ]
         
-        let requestBody: [String: Any] = [
+        var requestBody: [String: Any] = [
             "model": optimizationModelName,
             "messages": messages,
             "temperature": 0.6,
             "stream": false
         ]
+
+        applyThinkingParametersIfNeeded(
+            supportReasoningChange: apiConfig.supportReasoningChange,
+            company: apiConfig.company,
+            requestBody: &requestBody,
+            messages: &messages
+        )
         
         var request = URLRequest(url: apiConfig.url)
         request.httpMethod = "POST"
@@ -433,12 +477,19 @@ class SystemOptimizer {
             messages.append(textMessage)
         }
         
-        let requestBody: [String: Any] = [
+        var requestBody: [String: Any] = [
             "model": optimizationModelName,
             "messages": messages,
             "temperature": 0.6,
             "stream": false
         ]
+
+        applyThinkingParametersIfNeeded(
+            supportReasoningChange: apiConfig.supportReasoningChange,
+            company: apiConfig.company,
+            requestBody: &requestBody,
+            messages: &messages
+        )
         
         var request = URLRequest(url: apiConfig.url)
         request.httpMethod = "POST"
@@ -578,12 +629,19 @@ class SystemOptimizer {
             messages.append(textMessage)
         }
         
-        let requestBody: [String: Any] = [
+        var requestBody: [String: Any] = [
             "model": optimizationModelName,
             "messages": messages,
             "temperature": 0.5,
             "stream": false
         ]
+
+        applyThinkingParametersIfNeeded(
+            supportReasoningChange: apiConfig.supportReasoningChange,
+            company: apiConfig.company,
+            requestBody: &requestBody,
+            messages: &messages
+        )
         
         var request = URLRequest(url: apiConfig.url)
         request.httpMethod = "POST"
@@ -694,12 +752,19 @@ class SystemOptimizer {
             messages.append(textMessage)
         }
         
-        let requestBody: [String: Any] = [
+        var requestBody: [String: Any] = [
             "model": optimizationModelName,
             "messages": messages,
             "temperature": 1.0,
             "stream": false
         ]
+
+        applyThinkingParametersIfNeeded(
+            supportReasoningChange: apiConfig.supportReasoningChange,
+            company: apiConfig.company,
+            requestBody: &requestBody,
+            messages: &messages
+        )
         
         var request = URLRequest(url: apiConfig.url)
         request.httpMethod = "POST"
@@ -841,7 +906,7 @@ class SystemOptimizer {
             imageUrlValue["url"] = "data:image/jpeg;base64,\(base64String)"
         }
         
-        let messages: [[String: Any]] = [
+        var messages: [[String: Any]] = [
             [
                 "role": "user",
                 "content": [
@@ -851,12 +916,19 @@ class SystemOptimizer {
             ]
         ]
         
-        let requestBody: [String: Any] = [
+        var requestBody: [String: Any] = [
             "model": optimizationModelName,
             "messages": messages,
             "temperature": 0.6,
             "stream": false
         ]
+
+        applyThinkingParametersIfNeeded(
+            supportReasoningChange: apiConfig.supportReasoningChange,
+            company: apiConfig.company,
+            requestBody: &requestBody,
+            messages: &messages
+        )
         
         var request = URLRequest(url: apiConfig.url)
         request.httpMethod = "POST"
@@ -912,19 +984,26 @@ class SystemOptimizer {
             "en": "Please give a title for the group chat based on the content of the group chat below, you can add emoji as appropriate to the content and the occasion, with a total character count of no more than 6 words. Just give the title directly in plain text, no extra explanation is needed."
         ]
         let systemMessage = systemMessages[languageKey] ?? systemMessages["zh-Hans"]!
-        let messages: [[String: Any]] = [
+        var messages: [[String: Any]] = [
             [
                 "role": "user",
                 "content": "\(systemMessage):\n\n\(historyMessage)"
             ]
         ]
         
-        let requestBody: [String: Any] = [
+        var requestBody: [String: Any] = [
             "model": optimizationModelName,
             "messages": messages,
             "temperature": 1.0,
             "stream": false
         ]
+
+        applyThinkingParametersIfNeeded(
+            supportReasoningChange: apiConfig.supportReasoningChange,
+            company: apiConfig.company,
+            requestBody: &requestBody,
+            messages: &messages
+        )
         
         var request = URLRequest(url: apiConfig.url)
         request.httpMethod = "POST"
@@ -979,16 +1058,23 @@ class SystemOptimizer {
             "en": "Please write a character profile for the agent named “\(inputName)”, including personality, hobbies, and response style. Return the result directly without adding any extra explanations."
         ]
         let promptContent = systemPrompt[currentLanguage.hasPrefix("zh") ? "zh-Hans" : "en"]!
-        let messages: [[String: Any]] = [
+        var messages: [[String: Any]] = [
             [ "role": "user", "content": promptContent ]
         ]
         
-        let requestBody: [String: Any] = [
+        var requestBody: [String: Any] = [
             "model": optimizationModelName,
             "messages": messages,
             "temperature": 1.0,
             "stream": false
         ]
+
+        applyThinkingParametersIfNeeded(
+            supportReasoningChange: apiConfig.supportReasoningChange,
+            company: apiConfig.company,
+            requestBody: &requestBody,
+            messages: &messages
+        )
         
         var request = URLRequest(url: apiConfig.url)
         request.httpMethod = "POST"
@@ -1043,17 +1129,24 @@ class SystemOptimizer {
         ]
         let currentLanguage = Locale.preferredLanguages.first ?? "zh-Hans"
         let promptContent = systemPrompt[currentLanguage.hasPrefix("zh") ? "zh-Hans" : "en"]!
-        let messages: [[String: Any]] = [
+        var messages: [[String: Any]] = [
             [ "role": "system", "content": promptContent ],
             [ "role": "user", "content": inputPrompt ]
         ]
         
-        let requestBody: [String: Any] = [
+        var requestBody: [String: Any] = [
             "model": optimizationModelName,
             "messages": messages,
             "temperature": 0.9,
             "stream": false
         ]
+
+        applyThinkingParametersIfNeeded(
+            supportReasoningChange: apiConfig.supportReasoningChange,
+            company: apiConfig.company,
+            requestBody: &requestBody,
+            messages: &messages
+        )
         
         var request = URLRequest(url: apiConfig.url)
         request.httpMethod = "POST"
@@ -1123,7 +1216,7 @@ class SystemOptimizer {
         ]
         let currentLanguage = Locale.preferredLanguages.first ?? "zh-Hans"
         let promptText = extractionPrompts[currentLanguage.hasPrefix("zh") ? "zh-Hans" : "en"]!
-        let messages: [[String: Any]] = [
+        var messages: [[String: Any]] = [
             [
                 "role": "user",
                 "content": [
@@ -1133,11 +1226,18 @@ class SystemOptimizer {
             ]
         ]
         
-        let requestBody: [String: Any] = [
+        var requestBody: [String: Any] = [
             "model": optimizationModelName,
             "messages": messages,
             "stream": false
         ]
+
+        applyThinkingParametersIfNeeded(
+            supportReasoningChange: apiConfig.supportReasoningChange,
+            company: apiConfig.company,
+            requestBody: &requestBody,
+            messages: &messages
+        )
         
         var request = URLRequest(url: apiConfig.url)
         request.httpMethod = "POST"

@@ -42,6 +42,12 @@ struct VisionView: View {
     @State private var isTextSelectionSheetPresented: Bool = false // 文本选择
     @State private var isCameraReady = false
     @State private var pulseEffect: Bool = false
+
+    @State private var visionErrorMessage: String? = nil
+    @State private var lastRequestImage: UIImage? = nil
+    @State private var lastRequestFollowAsk: String = ""
+    @State private var lastConversationContext: [(role: String, image: UIImage?, text: String?)] = []
+    @State private var lastQueryKeyword: String = ""
     
     @State private var showNoModelAlert = false // 控制无多模态模型提示弹窗
     
@@ -81,7 +87,8 @@ struct VisionView: View {
             VStack {
                 topButtons
                 
-                if photoAnalysis != nil {
+                // 当有正文内容或有推理内容时显示信息栏
+                if photoAnalysis != nil || !reasoning.isEmpty || visionErrorMessage != nil {
                     topInfoBar
                         .animation(.easeInOut(duration: 0.4), value: showModelSelection)
                 }
@@ -288,9 +295,14 @@ extension VisionView {
         showInput = false
         showModelSelection = false
         photoAnalysis = nil
+        visionErrorMessage = nil
         lastZoomFactor = 1.0
         showImagePicker = false
         conversationContext.removeAll()
+        lastConversationContext.removeAll()
+        lastRequestImage = nil
+        lastRequestFollowAsk = ""
+        lastQueryKeyword = ""
         // 重置推理相关状态
         reasoning = ""
         isReasoningExpanded = false
@@ -405,6 +417,37 @@ extension VisionView {
             }
         }
     }
+
+    private var visionErrorView: some View {
+        return VStack(alignment: .leading) {
+            Text(visionErrorMessage ?? "")
+                .font(.caption)
+                .foregroundColor(.hlOrange)
+                .multilineTextAlignment(.leading)
+
+            Button(action: {
+                isFeedBack.toggle()
+                retryLastRequest()
+            }) {
+                Text("重新请求")
+                    .font(.caption)
+                    .frame(maxWidth: .infinity)
+                    .padding(6)
+                    .background(.hlOrange)
+                    .foregroundColor(.white)
+                    .cornerRadius(20)
+            }
+            .sensoryFeedback(.impact, trigger: isFeedBack)
+        }
+        .frame(maxWidth: .infinity)
+        .padding()
+        .background(Color.hlOrange.opacity(0.1))
+        .overlay(
+            RoundedRectangle(cornerRadius: 20)
+                .stroke(Color.hlOrange.opacity(0.3), lineWidth: 1)
+        )
+        .cornerRadius(20)
+    }
     
     // 顶部信息
     private var topInfoBar: some View {
@@ -413,7 +456,24 @@ extension VisionView {
         
         return ScrollViewReader { proxy in
             ScrollView (.vertical, showsIndicators: false) {
-                if photoAnalysis == "" {
+                if let errorMessage = visionErrorMessage, !errorMessage.isEmpty {
+                    VStack {
+                        if !currentAsk.isEmpty {
+                            HStack {
+                                Image(systemName: "pencil.line")
+                                Text(currentAsk)
+                                Spacer()
+                            }
+                            .font(.caption)
+                            .foregroundColor(Color(.systemGray))
+                            .multilineTextAlignment(.leading)
+                            .padding(.bottom, 5)
+                        }
+                        visionErrorView
+                    }
+                    .id("bottom")
+                    .padding()
+                } else if reasoning.isEmpty && photoAnalysis == "" {
                     VStack {
                         if !currentAsk.isEmpty {
                             HStack {
@@ -460,6 +520,7 @@ extension VisionView {
                     .padding()
                     
                 } else {
+                    // 有推理内容或有正文内容时显示
                     
                     VStack {
                         if !currentAsk.isEmpty {
@@ -477,11 +538,25 @@ extension VisionView {
                         // 推理过程展示区
                         visionReasoningView()
                         
-                        Markdown(photoAnalysis ?? "正在加载...")
-                            .font(.body)
-                            .multilineTextAlignment(.leading) // 文本左对齐
-                            .fixedSize(horizontal: false, vertical: true) // 允许文本高度自适应
-                            .sensoryFeedback(.increase, trigger: isOutPut)
+                        // 正文内容区域
+                        if let analysis = photoAnalysis, !analysis.isEmpty {
+                            Markdown(analysis)
+                                .font(.body)
+                                .multilineTextAlignment(.leading) // 文本左对齐
+                                .fixedSize(horizontal: false, vertical: true) // 允许文本高度自适应
+                                .sensoryFeedback(.increase, trigger: isOutPut)
+                        } else if isProcessing && !reasoning.isEmpty {
+                            // 正在思考中，还没有正文内容
+                            HStack {
+                                Image(systemName: "sparkle")
+                                    .foregroundColor(.hlBluefont)
+                                    .symbolEffect(.breathe.pulse.byLayer, options: .repeat(.continuous))
+                                Text(String(localized: "thinking"))
+                                    .font(.caption)
+                                    .foregroundColor(.secondary)
+                            }
+                            .padding(.top, 5)
+                        }
                         
                         if !isProcessing {
                             HStack {
@@ -585,6 +660,16 @@ extension VisionView {
             .fixedSize(horizontal: false, vertical: true)
             .padding(6)
             .onChange(of: photoAnalysis) {
+                withAnimation {
+                    proxy.scrollTo("bottom", anchor: .bottom)
+                }
+            }
+            .onChange(of: visionErrorMessage) {
+                withAnimation {
+                    proxy.scrollTo("bottom", anchor: .bottom)
+                }
+            }
+            .onChange(of: reasoning) {
                 withAnimation {
                     proxy.scrollTo("bottom", anchor: .bottom)
                 }
@@ -804,9 +889,9 @@ extension VisionView {
         .padding(.horizontal)
     }
     
-    private func sendImageToAPI() {
-        
-        guard let image = capturedImage else {
+    private func sendImageToAPI(useLastRequest: Bool = false) {
+
+        guard let image = useLastRequest ? (lastRequestImage ?? capturedImage) : capturedImage else {
             print("无法获取图片数据")
             return
         }
@@ -821,6 +906,7 @@ extension VisionView {
         isProcessing = true
         photoAnalysis = ""
         currentAsk = ""
+        visionErrorMessage = nil
         // 重置推理状态
         reasoning = ""
         isReasoningExpanded = false
@@ -833,17 +919,30 @@ extension VisionView {
         isCopied = false
         showImagePicker = false
         
-        if conversationContext.isEmpty {
-            conversationContext.append((role: "user", image: image, text: nil))
-        } else if !followAsk.isEmpty {
-            conversationContext.append((role: "user", image: nil, text: followAsk))
+        if useLastRequest {
+            conversationContext = lastConversationContext
         } else {
-            conversationContext.removeAll()
-            conversationContext.append((role: "user", image: image, text: nil))
+            if conversationContext.isEmpty {
+                conversationContext.append((role: "user", image: image, text: nil))
+            } else if !followAsk.isEmpty {
+                conversationContext.append((role: "user", image: nil, text: followAsk))
+            } else {
+                conversationContext.removeAll()
+                conversationContext.append((role: "user", image: image, text: nil))
+            }
+            lastConversationContext = conversationContext
         }
-        
+
+        if !useLastRequest {
+            lastRequestImage = image
+            lastRequestFollowAsk = followAsk
+        }
+
         // 构建记忆检索关键词（使用用户追问或默认关键词）
-        let queryKeyword = followAsk.isEmpty ? "图片分析 视觉" : followAsk
+        let queryKeyword = useLastRequest ? lastQueryKeyword : (followAsk.isEmpty ? "图片分析 视觉" : followAsk)
+        if !useLastRequest {
+            lastQueryKeyword = queryKeyword
+        }
         
         print(conversationContext)
         
@@ -880,17 +979,27 @@ extension VisionView {
                 }
                 
                 await MainActor.run {
+                    visionErrorMessage = nil
                     conversationContext.append((role: "assistant", image: nil, text: photoAnalysis))
                     isProcessing = false
                 }
-                
+
             } catch {
                 await MainActor.run {
-                    photoAnalysis = "⚠️ 识别失败：\(error.localizedDescription)"
+                    let isZh = Locale.preferredLanguages.first?.hasPrefix("zh") ?? true
+                    let message = error.localizedDescription
+                    visionErrorMessage = isZh ? "⚠️ 识别失败：\(message)" : "⚠️ Vision request failed: \(message)"
+                    photoAnalysis = nil
                     isProcessing = false
                 }
             }
         }
+    }
+
+    private func retryLastRequest() {
+        guard !isProcessing else { return }
+        visionErrorMessage = nil
+        sendImageToAPI(useLastRequest: true)
     }
     
     /// 轮播式模型选择

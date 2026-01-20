@@ -21,6 +21,7 @@ struct APIKeysView: View {
     @State private var selectedKey: APIKeys?
     @State private var testResult: Bool? = nil
     @State private var isTesting = false
+    @State private var testErrorMessage: String? = nil
     @State private var isInquiring = false
     @State private var inquiryResult: Double? = nil
 
@@ -177,10 +178,15 @@ private struct EditKeyContent: View {
 
     @State private var testResult: Bool? = nil
     @State private var isTesting = false
+    @State private var testErrorMessage: String? = nil
     @State private var isInquiring = false
     @State private var inquiryResult: Double? = nil
     @State private var showModelManagement = false
     @State private var selectedTestModelName: String = ""
+
+    private var isZh: Bool {
+        Locale.preferredLanguages.first?.hasPrefix("zh") ?? true
+    }
 
     // 获取当前厂商支持文本生成的模型（用于API测试）
     private var testableModels: [AllModels] {
@@ -322,6 +328,11 @@ private struct EditKeyContent: View {
                                     .foregroundColor(.secondary)
                             }
                         }
+                        if let errorMessage = testErrorMessage, !errorMessage.isEmpty {
+                            Text(errorMessage)
+                                .font(.caption)
+                                .foregroundColor(.hlOrange)
+                        }
                     }
                 }
                 if key.company == "DEEPSEEK" || key.company == "SILICONCLOUD" {
@@ -385,6 +396,7 @@ private struct EditKeyContent: View {
             }
             .onAppear {
                 testResult = nil
+                testErrorMessage = nil
                 // 初始化选中的测试模型为第一个可用模型
                 if selectedTestModelName.isEmpty, let firstModel = testableModels.first {
                     selectedTestModelName = firstModel.name ?? ""
@@ -415,6 +427,7 @@ private struct EditKeyContent: View {
     private func testAPI(for key: APIKeys) {
         isTesting = true
         testResult = nil
+        testErrorMessage = nil
         
         // 使用选中的模型，如果没有选中则使用第一个可用模型
         let modelToTest = selectedTestModelName.isEmpty 
@@ -428,7 +441,8 @@ private struct EditKeyContent: View {
                 company: key.company ?? "",
                 modelName: modelToTest
             )
-            testResult = result
+            testResult = result.0
+            testErrorMessage = result.1
             isTesting = false
         }
     }

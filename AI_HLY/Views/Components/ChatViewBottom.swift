@@ -368,12 +368,8 @@ struct ChatViewBottom: View {
                 }
             }
         }
-        .onChange(of: isMultiSelectMode) { newValue in
-            if newValue {
-                isViewLoaded = false
-            } else {
-                isViewLoaded = true
-            }
+        .onChange(of: isMultiSelectMode) {
+            isViewLoaded = !isMultiSelectMode
         }
     }
 

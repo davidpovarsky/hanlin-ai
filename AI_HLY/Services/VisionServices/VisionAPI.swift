@@ -43,6 +43,51 @@ class ImageAPIManager {
     
     private var currentTask: URLSessionDataTask? // 记录当前的流式请求任务
     private var isCancelled = false // 标记请求是否被取消
+
+    private func parseRequestErrorMessage(from data: Data) -> String? {
+        if let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any] {
+            if let error = json["error"] as? [String: Any] {
+                if let message = error["message"] as? String, !message.isEmpty {
+                    return message
+                }
+                if let detail = error["detail"] as? String, !detail.isEmpty {
+                    return detail
+                }
+            }
+            if let message = json["message"] as? String, !message.isEmpty {
+                return message
+            }
+            if let detail = json["detail"] as? String, !detail.isEmpty {
+                return detail
+            }
+            if let errorDescription = json["error_description"] as? String, !errorDescription.isEmpty {
+                return errorDescription
+            }
+            if let errors = json["errors"] as? [String], !errors.isEmpty {
+                return errors.joined(separator: "\n")
+            }
+        }
+
+        if let text = String(data: data, encoding: .utf8) {
+            let trimmed = text.trimmingCharacters(in: .whitespacesAndNewlines)
+            if !trimmed.isEmpty {
+                return trimmed
+            }
+        }
+
+        return nil
+    }
+
+    private func readErrorBody(from bytes: URLSession.AsyncBytes, limit: Int = 4096) async throws -> Data {
+        var data = Data()
+        for try await byte in bytes {
+            data.append(byte)
+            if data.count >= limit {
+                break
+            }
+        }
+        return data
+    }
     
     // 终止当前的流式请求
     func cancelCurrentRequest() {
@@ -451,7 +496,12 @@ class ImageAPIManager {
         }
         
         guard 200...299 ~= response.statusCode else {
-            throw NSError(domain: "NetworkError", code: -1, userInfo: [NSLocalizedDescriptionKey: "请求错误"])
+            let data = try await readErrorBody(from: result)
+            let message = parseRequestErrorMessage(from: data)
+            let description = message == nil || message?.isEmpty == true
+            ? "请求错误（HTTP \(response.statusCode)）"
+            : "请求错误（HTTP \(response.statusCode)）：\(message ?? "")"
+            throw NSError(domain: "NetworkError", code: response.statusCode, userInfo: [NSLocalizedDescriptionKey: description])
         }
         
         let supportsReasoning = modelInfo.supportsReasoning
