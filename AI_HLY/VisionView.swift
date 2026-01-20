@@ -47,6 +47,11 @@ struct VisionView: View {
     
     @State private var conversationContext: [(role: String, image: UIImage?, text: String?)] = [] //多轮对话管理
     
+    // MARK: - 推理相关状态
+    @State private var reasoning: String = ""              // 推理内容
+    @State private var isReasoningExpanded: Bool = false   // 推理区域是否展开
+    @State private var displayReasoningLines: [String] = [] // 收起时显示的最后3行
+    
     @Environment(\.modelContext) private var context
     
     @Query var allModels: [AllModels] // 直接查询数据库
@@ -286,6 +291,10 @@ extension VisionView {
         lastZoomFactor = 1.0
         showImagePicker = false
         conversationContext.removeAll()
+        // 重置推理相关状态
+        reasoning = ""
+        isReasoningExpanded = false
+        displayReasoningLines = []
         cameraManager.startSession()
     }
     
@@ -318,6 +327,83 @@ extension VisionView {
     private func toggleFlash() {
         isFlashOn.toggle() // 切换状态
         cameraManager.setFlash(isFlashOn) // 让 CameraManager 控制闪光灯
+    }
+    
+    // MARK: - 更新推理显示行
+    private func updateDisplayReasoningLines() {
+        let lines = reasoning.split(separator: "\n").map(String.init)
+        let last3 = Array(lines.suffix(3))
+        if !last3.isEmpty && last3.count < 3 {
+            displayReasoningLines = Array(repeating: " ", count: 3 - last3.count) + last3
+        } else {
+            displayReasoningLines = last3
+        }
+    }
+    
+    // MARK: - 推理过程视图
+    @ViewBuilder
+    private func visionReasoningView() -> some View {
+        if !reasoning.isEmpty {
+            VStack(alignment: .leading) {
+                // 折叠按钮
+                Button(action: {
+                    withAnimation { isReasoningExpanded.toggle() }
+                }) {
+                    HStack {
+                        Text(String(localized: "reasoning_chain"))
+                            .font(.caption)
+                            .foregroundColor(Color(.systemGray))
+                        Spacer()
+                        Image(systemName: "chevron.down")
+                            .foregroundColor(Color(.systemGray))
+                            .rotationEffect(.degrees(isReasoningExpanded ? 180 : 0))
+                    }
+                    .padding(.vertical, 5)
+                    .padding(.horizontal, 5)
+                }
+                
+                if isReasoningExpanded {
+                    // 展开：显示完整推理内容
+                    Text(reasoning)
+                        .font(.footnote)
+                        .foregroundColor(.secondary)
+                        .padding(.horizontal, 8)
+                        .transition(.opacity.combined(with: .scale))
+                        .textSelection(.enabled)
+                        .padding(.bottom, 5)
+                } else {
+                    // 收起 + 正在处理：显示最后3行滚动效果
+                    if isProcessing {
+                        VStack(alignment: .leading, spacing: 2) {
+                            ForEach(Array(displayReasoningLines.enumerated()), id: \.offset) { idx, line in
+                                Text(line)
+                                    .id(String(line.prefix(1)))
+                                    .font(.system(size: idx == 2 ? 10 : (idx == 1 ? 9 : 8)))
+                                    .lineLimit(1)
+                                    .truncationMode(.head)
+                                    .foregroundColor(idx == 2 ? .hlBluefont : .gray)
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                    .opacity(idx == 0 ? 0.4 : idx == 1 ? 0.7 : 1.0)
+                                    .blur(radius: idx == 0 ? 1 : 0)
+                                    .padding(.horizontal, 5)
+                                    .transition(
+                                        .asymmetric(
+                                            insertion: .move(edge: .bottom).combined(with: .opacity),
+                                            removal: .move(edge: .top).combined(with: .opacity)
+                                        )
+                                    )
+                            }
+                        }
+                        .padding(.bottom, 5)
+                        .animation(
+                            .spring(response: 0.8, dampingFraction: 0.95, blendDuration: 0.5),
+                            value: displayReasoningLines
+                        )
+                        .transition(.opacity.combined(with: .move(edge: .top)))
+                    }
+                }
+            }
+        }
     }
     
     // 顶部信息
@@ -387,6 +473,10 @@ extension VisionView {
                             .multilineTextAlignment(.leading)
                             .padding(.bottom, 5)
                         }
+                        
+                        // 推理过程展示区
+                        visionReasoningView()
+                        
                         Markdown(photoAnalysis ?? "正在加载...")
                             .font(.body)
                             .multilineTextAlignment(.leading) // 文本左对齐
@@ -731,6 +821,11 @@ extension VisionView {
         isProcessing = true
         photoAnalysis = ""
         currentAsk = ""
+        // 重置推理状态
+        reasoning = ""
+        isReasoningExpanded = false
+        displayReasoningLines = []
+        
         currentModelName = multimodalModels[selectedModelIndex].name
         currentModelCompany = multimodalModels[selectedModelIndex].company
         currentModelIdentity = multimodalModels[selectedModelIndex].identity
@@ -747,6 +842,9 @@ extension VisionView {
             conversationContext.append((role: "user", image: image, text: nil))
         }
         
+        // 构建记忆检索关键词（使用用户追问或默认关键词）
+        let queryKeyword = followAsk.isEmpty ? "图片分析 视觉" : followAsk
+        
         print(conversationContext)
         
         Task {
@@ -755,12 +853,22 @@ extension VisionView {
                 
                 let stream = try await imageAPIManager.sendPhotoStreamRequest(
                     message: conversationContext,
-                    modelDisplayName: multimodalModels[selectedModelIndex].name
+                    modelDisplayName: multimodalModels[selectedModelIndex].name,
+                    query: queryKeyword
                 )
                 
-                for try await data in stream {
+                for try await streamData in stream {
                     await MainActor.run {
-                        photoAnalysis?.append(data)
+                        // 处理推理内容
+                        if let reasoningText = streamData.reasoning {
+                            reasoning.append(reasoningText)
+                            updateDisplayReasoningLines()
+                        }
+                        
+                        // 处理正文内容
+                        if let contentText = streamData.content {
+                            photoAnalysis?.append(contentText)
+                        }
                         
                         // 仅在用户启用了振动时触发
                         let currentTime = Date()
@@ -771,8 +879,10 @@ extension VisionView {
                     }
                 }
                 
-                conversationContext.append((role: "assistant", image: nil, text: photoAnalysis))
-                isProcessing = false
+                await MainActor.run {
+                    conversationContext.append((role: "assistant", image: nil, text: photoAnalysis))
+                    isProcessing = false
+                }
                 
             } catch {
                 await MainActor.run {

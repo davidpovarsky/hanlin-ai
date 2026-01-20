@@ -39,21 +39,23 @@ enum ModelCapabilityProbeStep: String, CaseIterable, Identifiable {
     var id: String { rawValue }
 
     var title: String {
+        let currentLanguage = Locale.preferredLanguages.first ?? "zh-Hans"
+        let isZh = currentLanguage.hasPrefix("zh")
         switch self {
         case .textGen:
-            return "文本生成"
+            return isZh ? "文本生成" : "Text Generation"
         case .vision:
-            return "视觉理解"
+            return isZh ? "视觉理解" : "Vision"
         case .reasoning:
-            return "深度思考"
+            return isZh ? "深度思考" : "Reasoning"
         case .reasoningControl:
-            return "思考模式可控"
+            return isZh ? "思考模式可控" : "Reasoning Control"
         case .toolUse:
-            return "工具使用"
+            return isZh ? "工具使用" : "Tool Use"
         case .imageGen:
-            return "图像生成"
+            return isZh ? "图像生成" : "Image Generation"
         case .voiceGen:
-            return "语音生成"
+            return isZh ? "语音生成" : "Voice Generation"
         }
     }
 }
@@ -76,15 +78,17 @@ enum ModelCapabilityProbeError: LocalizedError {
     case httpError(statusCode: Int)
 
     var errorDescription: String? {
+        let currentLanguage = Locale.preferredLanguages.first ?? "zh-Hans"
+        let isZh = currentLanguage.hasPrefix("zh")
         switch self {
         case .invalidAPIKey:
-            return "无效的 API Key"
+            return isZh ? "无效的 API Key" : "Invalid API Key"
         case .invalidURL:
-            return "无效的请求地址"
+            return isZh ? "无效的请求地址" : "Invalid URL"
         case .invalidResponse:
-            return "响应解析失败"
+            return isZh ? "响应解析失败" : "Failed to parse response"
         case .httpError(let statusCode):
-            return "HTTP 错误: \(statusCode)"
+            return isZh ? "HTTP 错误: \(statusCode)" : "HTTP Error: \(statusCode)"
         }
     }
 }
@@ -120,6 +124,11 @@ struct AnthropicModelsResponse: Codable {
 
 // MARK: - 模型刷新服务
 class ModelRefreshService {
+
+    private static var isZhLanguage: Bool {
+        let currentLanguage = Locale.preferredLanguages.first ?? "zh-Hans"
+        return currentLanguage.hasPrefix("zh")
+    }
 
     // MARK: 获取模型列表
     static func fetchModelsFromAPI(apiKey: APIKeys) async throws -> [APIModelResponse] {
@@ -283,6 +292,9 @@ class ModelRefreshService {
         context: ModelContext,
         update: @escaping (ModelCapabilityProbeStep, ModelCapabilityProbeStatus, String?) -> Void
     ) async throws -> ModelCapabilityProbeSummary {
+        let currentLanguage = Locale.preferredLanguages.first ?? "zh-Hans"
+        let isZh = currentLanguage.hasPrefix("zh")
+        
         let config = try fetchAPIConfig(company: company, context: context)
         let baseName = restoreBaseModelName(from: modelId)
         var capabilities = ModelCapabilities(
@@ -316,7 +328,7 @@ class ModelRefreshService {
                 update(.vision, .failure, message)
             }
         } else {
-            update(.vision, .failure, "文本生成不可用，已跳过")
+            update(.vision, .failure, isZh ? "文本生成不可用，已跳过" : "Text generation unavailable, skipped")
         }
 
         update(.reasoning, .running, nil)
@@ -330,7 +342,7 @@ class ModelRefreshService {
                 update(.reasoning, .failure, message)
             }
         } else {
-            update(.reasoning, .failure, "文本生成不可用，已跳过")
+            update(.reasoning, .failure, isZh ? "文本生成不可用，已跳过" : "Text generation unavailable, skipped")
         }
 
         update(.reasoningControl, .running, nil)
@@ -344,7 +356,7 @@ class ModelRefreshService {
                 update(.reasoningControl, .failure, message)
             }
         } else {
-            update(.reasoningControl, .failure, "深度思考不可用，已跳过")
+            update(.reasoningControl, .failure, isZh ? "深度思考不可用，已跳过" : "Reasoning unavailable, skipped")
         }
 
         update(.toolUse, .running, nil)
@@ -358,7 +370,7 @@ class ModelRefreshService {
                 update(.toolUse, .failure, message)
             }
         } else {
-            update(.toolUse, .failure, "文本生成不可用，已跳过")
+            update(.toolUse, .failure, isZh ? "文本生成不可用，已跳过" : "Text generation unavailable, skipped")
         }
 
         update(.imageGen, .running, nil)
@@ -382,7 +394,7 @@ class ModelRefreshService {
                 update(.voiceGen, .failure, message)
             }
         } else {
-            update(.voiceGen, .failure, "文本生成不可用，已跳过")
+            update(.voiceGen, .failure, isZh ? "文本生成不可用，已跳过" : "Text generation unavailable, skipped")
         }
 
         return ModelCapabilityProbeSummary(capabilities: capabilities)
@@ -404,8 +416,9 @@ class ModelRefreshService {
     }
 
     private static func probeTextGen(baseName: String, company: String, requestURL: String, apiKey: String) async -> ModelCapabilityProbeResult {
+        let prompt = isZhLanguage ? "测试" : "Test"
         let messages: [[String: Any]] = [
-            ["role": "user", "content": "测试"]
+            ["role": "user", "content": prompt]
         ]
         let requestBody: [String: Any] = [
             "model": baseName,
@@ -417,6 +430,12 @@ class ModelRefreshService {
     }
 
     private static func probeVision(baseName: String, company: String, requestURL: String, apiKey: String) async -> ModelCapabilityProbeResult {
+        let promptText = isZhLanguage
+            ? "请识别图片中的文字内容，直接输出文字即可"
+            : "Please read the text in the image and output it directly."
+        let failureMessage = isZhLanguage
+            ? "未能正确识别图像内容"
+            : "Failed to recognize image content"
         // 包含 "AI-HLY" 文字的测试图像 (200x80 白底黑字)
         let base64Image = "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"
         
@@ -432,7 +451,7 @@ class ModelRefreshService {
 
         let content: [[String: Any]] = [
             ["type": "image_url", "image_url": imageUrlValue],
-            ["type": "text", "text": "请识别图片中的文字内容，直接输出文字即可"]
+            ["type": "text", "text": promptText]
         ]
         let messages: [[String: Any]] = [
             ["role": "user", "content": content]
@@ -451,7 +470,7 @@ class ModelRefreshService {
             if hasVisionContent(in: data) {
                 return .success
             } else {
-                return .failure("未能正确识别图像内容")
+                return .failure(failureMessage)
             }
         case .failure(let message):
             return .failure(message)
@@ -482,8 +501,9 @@ class ModelRefreshService {
     }
 
     private static func probeReasoning(baseName: String, company: String, requestURL: String, apiKey: String) async -> ModelCapabilityProbeResult {
+        let prompt = isZhLanguage ? "1+1等于几?请简单思考后作答" : "What is 1+1? Please think briefly and answer."
         var messages: [[String: Any]] = [
-            ["role": "user", "content": "1+1等于几?请简单思考后作答"]
+            ["role": "user", "content": prompt]
         ]
         var requestBody: [String: Any] = [
             "model": baseName,
@@ -500,8 +520,9 @@ class ModelRefreshService {
     
     /// 流式探测思考能力，一旦检测到思考内容立即返回成功
     private static func performStreamingReasoningProbe(requestURL: String, apiKey: String, body: [String: Any]) async -> ModelCapabilityProbeResult {
+        let isZh = isZhLanguage
         guard let url = URL(string: requestURL) else {
-            return .failure("无效的请求地址")
+            return .failure(isZh ? "无效的请求地址" : "Invalid request URL")
         }
         
         var request = URLRequest(url: url)
@@ -515,7 +536,7 @@ class ModelRefreshService {
             let (bytes, response) = try await URLSession.shared.bytes(for: request)
             
             guard let httpResponse = response as? HTTPURLResponse else {
-                return .failure("响应格式错误")
+                return .failure(isZh ? "响应格式错误" : "Invalid response format")
             }
             
             guard (200...299).contains(httpResponse.statusCode) else {
@@ -546,7 +567,7 @@ class ModelRefreshService {
             }
             
             // 流结束但未检测到思考内容
-            return .failure("未检测到思考内容")
+            return .failure(isZh ? "未检测到思考内容" : "No reasoning content detected")
         } catch {
             return .failure(error.localizedDescription)
         }
@@ -584,9 +605,10 @@ class ModelRefreshService {
     }
 
     private static func probeReasoningControl(baseName: String, company: String, requestURL: String, apiKey: String) async -> ModelCapabilityProbeResult {
+        let prompt = isZhLanguage ? "1+1等于几?" : "What is 1+1?"
         // 第一步：测试开启思考模式，应该返回思考内容（使用流式快速检测）
         var messagesOn: [[String: Any]] = [
-            ["role": "user", "content": "1+1等于几?"]
+            ["role": "user", "content": prompt]
         ]
         var requestBodyOn: [String: Any] = [
             "model": baseName,
@@ -602,12 +624,12 @@ class ModelRefreshService {
         case .success:
             break // 开启时有思考内容，继续测试关闭
         case .failure(let message):
-            return .failure("开启模式测试失败: \(message)")
+            return .failure(isZhLanguage ? "开启模式测试失败: \(message)" : "Failed to test enabled mode: \(message)")
         }
 
         // 第二步：测试关闭思考模式，应该不返回思考内容
         var messagesOff: [[String: Any]] = [
-            ["role": "user", "content": "1+1等于几?"]
+            ["role": "user", "content": prompt]
         ]
         var requestBodyOff: [String: Any] = [
             "model": baseName,
@@ -631,8 +653,9 @@ class ModelRefreshService {
     
     /// 流式探测关闭思考模式，确认没有思考内容
     private static func performStreamingReasoningProbeForOff(requestURL: String, apiKey: String, body: [String: Any]) async -> ModelCapabilityProbeResult {
+        let isZh = isZhLanguage
         guard let url = URL(string: requestURL) else {
-            return .failure("无效的请求地址")
+            return .failure(isZh ? "无效的请求地址" : "Invalid request URL")
         }
         
         var request = URLRequest(url: url)
@@ -646,7 +669,7 @@ class ModelRefreshService {
             let (bytes, response) = try await URLSession.shared.bytes(for: request)
             
             guard let httpResponse = response as? HTTPURLResponse else {
-                return .failure("响应格式错误")
+                return .failure(isZh ? "响应格式错误" : "Invalid response format")
             }
             
             guard (200...299).contains(httpResponse.statusCode) else {
@@ -674,7 +697,7 @@ class ModelRefreshService {
                 
                 // 如果检测到思考内容，说明关闭模式失败
                 if hasReasoningContentInStreamChunk(json) {
-                    return .failure("关闭思考模式后仍有思考内容")
+                    return .failure(isZh ? "关闭思考模式后仍有思考内容" : "Reasoning content still present after disabling")
                 }
                 
                 // 检查是否有普通内容（说明模型正常响应）
@@ -696,7 +719,7 @@ class ModelRefreshService {
             if hasReceivedContent {
                 return .success
             } else {
-                return .failure("未收到有效响应")
+                return .failure(isZh ? "未收到有效响应" : "No valid response received")
             }
         } catch {
             return .failure(error.localizedDescription)
@@ -704,12 +727,15 @@ class ModelRefreshService {
     }
 
     private static func probeToolUse(baseName: String, company: String, requestURL: String, apiKey: String) async -> ModelCapabilityProbeResult {
+        let isZh = isZhLanguage
         // 定义一个简单的测试工具
         let testTool: [String: Any] = [
             "type": "function",
             "function": [
                 "name": "get_current_time",
-                "description": "获取当前时间。当用户询问现在几点或当前时间时，调用此工具。",
+                "description": isZh
+                    ? "获取当前时间。当用户询问现在几点或当前时间时，调用此工具。"
+                    : "Get the current time. Call this tool when the user asks for the current time.",
                 "parameters": [
                     "type": "object",
                     "properties": [:],
@@ -719,7 +745,9 @@ class ModelRefreshService {
         ]
         
         let messages: [[String: Any]] = [
-            ["role": "user", "content": "现在几点了？请调用工具获取当前时间。"]
+            ["role": "user", "content": isZh
+                ? "现在几点了？请调用工具获取当前时间。"
+                : "What time is it? Please call the tool to get the current time."]
         ]
         let requestBody: [String: Any] = [
             "model": baseName,
@@ -737,7 +765,7 @@ class ModelRefreshService {
             if hasToolCalls(in: data) {
                 return .success
             } else {
-                return .failure("未检测到工具调用")
+                return .failure(isZh ? "未检测到工具调用" : "No tool call detected")
             }
         case .failure(let message):
             return .failure(message)
@@ -767,12 +795,12 @@ class ModelRefreshService {
     }
 
     private static func probeImageGen(baseName: String, company: String, requestURL: String, apiKey: String) async -> ModelCapabilityProbeResult {
-        let prompt = "生成一张测试图片"
+        let prompt = isZhLanguage ? "生成一张测试图片" : "Generate a test image"
         let resolvedURLString = requestURL.contains("chat/completions")
             ? requestURL.replacingOccurrences(of: "chat/completions", with: "images/generations")
             : requestURL
         guard let requestURL = URL(string: resolvedURLString) else {
-            return .failure("无效的请求地址")
+            return .failure(isZhLanguage ? "无效的请求地址" : "Invalid request URL")
         }
 
         var url = requestURL
@@ -869,8 +897,9 @@ class ModelRefreshService {
     }
 
     private static func probeVoiceGen(baseName: String, company: String, requestURL: String, apiKey: String) async -> ModelCapabilityProbeResult {
+        let prompt = isZhLanguage ? "你好" : "Hello"
         let messages: [[String: Any]] = [
-            ["role": "user", "content": "你好"]
+            ["role": "user", "content": prompt]
         ]
         let requestBody: [String: Any] = [
             "model": baseName,
@@ -890,8 +919,9 @@ class ModelRefreshService {
     
     /// 流式探测语音生成能力，一旦检测到音频分片立即返回成功
     private static func performStreamingVoiceProbe(requestURL: String, apiKey: String, body: [String: Any]) async -> ModelCapabilityProbeResult {
+        let isZh = isZhLanguage
         guard let url = URL(string: requestURL) else {
-            return .failure("无效的请求地址")
+            return .failure(isZh ? "无效的请求地址" : "Invalid request URL")
         }
         
         var request = URLRequest(url: url)
@@ -905,7 +935,7 @@ class ModelRefreshService {
             let (bytes, response) = try await URLSession.shared.bytes(for: request)
             
             guard let httpResponse = response as? HTTPURLResponse else {
-                return .failure("响应格式错误")
+                return .failure(isZh ? "响应格式错误" : "Invalid response format")
             }
             
             guard (200...299).contains(httpResponse.statusCode) else {
@@ -936,7 +966,7 @@ class ModelRefreshService {
             }
             
             // 流结束但未检测到音频内容
-            return .failure("未检测到音频数据")
+            return .failure(isZh ? "未检测到音频数据" : "No audio data detected")
         } catch {
             return .failure(error.localizedDescription)
         }
@@ -990,7 +1020,7 @@ class ModelRefreshService {
 
     private static func performChatRequest(requestURL: String, apiKey: String, body: [String: Any]) async -> ModelCapabilityProbeResult {
         guard let url = URL(string: requestURL) else {
-            return .failure("无效的请求地址")
+            return .failure(isZhLanguage ? "无效的请求地址" : "Invalid request URL")
         }
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
@@ -1004,7 +1034,7 @@ class ModelRefreshService {
     /// 执行 Chat 请求并返回响应数据（用于需要验证响应内容的探测）
     private static func performChatRequestWithData(requestURL: String, apiKey: String, body: [String: Any]) async -> ModelCapabilityProbeResultWithData {
         guard let url = URL(string: requestURL) else {
-            return .failure("无效的请求地址")
+            return .failure(isZhLanguage ? "无效的请求地址" : "Invalid request URL")
         }
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
@@ -1019,7 +1049,7 @@ class ModelRefreshService {
         do {
             let (_, response) = try await URLSession.shared.data(for: request)
             guard let httpResponse = response as? HTTPURLResponse else {
-                return .failure("响应格式错误")
+                return .failure(isZhLanguage ? "响应格式错误" : "Invalid response format")
             }
             if (200...299).contains(httpResponse.statusCode) {
                 return .success
@@ -1035,7 +1065,7 @@ class ModelRefreshService {
         do {
             let (data, response) = try await URLSession.shared.data(for: request)
             guard let httpResponse = response as? HTTPURLResponse else {
-                return .failure("响应格式错误")
+                return .failure(isZhLanguage ? "响应格式错误" : "Invalid response format")
             }
             if (200...299).contains(httpResponse.statusCode) {
                 return .success(data: data)
@@ -1142,23 +1172,25 @@ enum ModelFetchError: LocalizedError {
     case systemModelCannotBeDeleted
 
     var errorDescription: String? {
+        let currentLanguage = Locale.preferredLanguages.first ?? "zh-Hans"
+        let isZh = currentLanguage.hasPrefix("zh")
         switch self {
         case .invalidAPIKey:
-            return "无效的 API 密钥"
+            return isZh ? "无效的 API 密钥" : "Invalid API key"
         case .invalidCompany:
-            return "无效的厂商信息"
+            return isZh ? "无效的厂商信息" : "Invalid provider"
         case .invalidURL:
-            return "无效的请求地址"
+            return isZh ? "无效的请求地址" : "Invalid request URL"
         case .invalidResponse:
-            return "无效的响应"
+            return isZh ? "无效的响应" : "Invalid response"
         case .httpError(let statusCode):
-            return "HTTP 错误: \(statusCode)"
+            return isZh ? "HTTP 错误: \(statusCode)" : "HTTP error: \(statusCode)"
         case .decodingError:
-            return "解析响应失败"
+            return isZh ? "解析响应失败" : "Failed to decode response"
         case .modelAlreadyExists:
-            return "模型已存在"
+            return isZh ? "模型已存在" : "Model already exists"
         case .systemModelCannotBeDeleted:
-            return "系统预置模型无法删除"
+            return isZh ? "系统预置模型无法删除" : "System model cannot be deleted"
         }
     }
 }
