@@ -1,6 +1,11 @@
 {
   "zh-Hans": [
       {
+          "version": "AI翰林院 0.7.3（公测）",
+          "releaseDate": "发布日期：2026年1月21日",
+          "content": "#### 🚀 主要更新：\n- 视觉功能加入记忆检索与推理过程展示，回答更可追溯；\n- 模型管理升级：支持自动拉取模型列表、模型能力自动检测，新增模型选择器与设置入口；\n- 首次使用流程优化：新增初始化提醒与交互引导，减少误操作；\n- 新增/更新服务商与模型信息，加入AI302、小米MIMO、美团LONGCAT等内置厂商；\n- 优化聊天界面性能与翻译体验，修复数组越界等已知问题。"
+      },
+      {
           "version": "AI翰林院 0.7.2（公测）",
           "releaseDate": "发布日期：2025年10月26日",
           "content": "#### 🚀 主要更新：\n- 新增自定义添加第三方模型API服务商功能，系统默认服务商新增CherryIN；\n- 优化知识库编辑时文档上传的体验；\n- 优化添加在线模型时报错会重复的问题；\n- 搜索服务商增加Perplexity；\n- 适配Qwen Image生图及谷歌官方生图模型；\n- 适配iOS26液态玻璃效果；\n- 修复其他已知问题与错误；"
@@ -232,6 +237,11 @@
     }
   ],
   "en": [
+      {
+        "version": "AI Hanlin 0.7.3 (Beta)",
+        "releaseDate": "Release Date: January 21, 2026",
+        "content": "#### 🚀 Major Updates:\n- Vision now shows memory retrieval and reasoning steps for more transparent answers;\n- Model management upgrade: auto-fetch model lists, auto-detect capabilities, plus a new model picker and settings entry;\n- Onboarding improvements with initial reminders and guided setup to reduce mis-operations;\n- Added/updated providers and model metadata, including AI302, Xiaomi MIMO, and Meituan LONGCAT;\n- Improved chat performance and translation quality, fixed out-of-bounds crash and other issues."
+      },
       {
         "version": "AI Hanlin 0.7.2 (Beta)",
         "releaseDate": "Release Date: October 26, 2025",
