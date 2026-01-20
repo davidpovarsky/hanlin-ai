@@ -24,13 +24,7 @@ func getModelList() -> [AllModels] {
     let rawModels: [AllModels] = [
         // MARK: Cherry_IN
         // 0
-        AllModels(name: "openai/gpt-5-chat_repeat_cherryin", displayName: "GPT5(CherryIN)", identity: "model", position: 103, company: "CHERRY_IN", price: 3, isHidden: true, supportsSearch: true, supportsMultimodal: true, supportsReasoning: true),
-        // 0
-        AllModels(name: "anthropic/claude-sonnet-4.5_repeat_cherryin", displayName: "Claude-Sonnet-4.5(CherryIN)", identity: "model", position: 103, company: "CHERRY_IN", price: 3, isHidden: true, supportsSearch: true, supportsMultimodal: true, supportsReasoning: true),
-        // 0
-        AllModels(name: "gemini/gemini-2.5-flash_repeat_cherryin", displayName: "Gemini2.5-Flash(CherryIN)", identity: "model", position: 104, company: "CHERRY_IN", price: 3, isHidden: true, supportsSearch: true, supportsMultimodal: true),
-        // 0
-        AllModels(name: "google/gemini-2.5-pro_repeat_cherryin", displayName: "Gemini2.5-Pro(CherryIN)", identity: "model", position: 105, company: "CHERRY_IN", price: 3, isHidden: true, supportsSearch: true, supportsMultimodal: true, supportsReasoning: true),
+        AllModels(name: "google/gemini-3-flash-preview_repeat_cherryin", displayName: "Gemini3-Flash(CherryIN)", identity: "model", position: 104, company: "CHERRY_IN", price: 3, isHidden: true, supportsSearch: true, supportsMultimodal: true, supportsReasoning: true),
         
         // MARK: 通义
         // 0.00015
@@ -54,7 +48,7 @@ func getModelList() -> [AllModels] {
         
         // MARK: 智谱
         // 免费
-        AllModels(name: "glm-4.5-flash", displayName: "GLM4.5-Flash", identity: "model", position: 11, company: "ZHIPUAI", price: 0, isHidden: true, supportsSearch: true, supportsReasoning: true, supportReasoningChange: true, supportsToolUse: true),
+        AllModels(name: "glm-4.7-flash", displayName: "GLM4.7-Flash", identity: "model", position: 11, company: "ZHIPUAI", price: 0, isHidden: true, supportsSearch: true, supportsReasoning: true, supportReasoningChange: true, supportsToolUse: true),
         AllModels(name: "glm-4.6v-flash", displayName: "GLM4.6V-Flash", identity: "model", position: 11, company: "ZHIPUAI", price: 0, isHidden: true, supportsSearch: true, supportsMultimodal: true, supportsReasoning: true, supportReasoningChange: true, supportsToolUse: true),
         // 0.0014
         AllModels(name: "glm-4.5-air", displayName: "GLM4.5-Air", identity: "model", position: 11, company: "ZHIPUAI", price: 1, isHidden: true, supportsSearch: true, supportsReasoning: true, supportReasoningChange: true, supportsToolUse: true),
@@ -65,7 +59,7 @@ func getModelList() -> [AllModels] {
         
         // MARK: 豆包
         // 0.0014
-        AllModels(name: "doubao-seed-1-6-251015", displayName: "Doubao1.6", identity: "model", position: 11, company: "DOUBAO", price: 2, isHidden: true, supportsSearch: true, supportsMultimodal:true, supportsReasoning: true, supportReasoningChange: true, supportsToolUse: true),
+        AllModels(name: "doubao-seed-1-8-251228", displayName: "Doubao1.6", identity: "model", position: 11, company: "DOUBAO", price: 2, isHidden: true, supportsSearch: true, supportsMultimodal:true, supportsReasoning: true, supportReasoningChange: true, supportsToolUse: true),
         // 0.00045
         AllModels(name: "doubao-seed-1-6-lite-251015", displayName: "Doubao1.6-Lite", identity: "model", position: 23, company: "DOUBAO", price: 1, isHidden: true, supportsSearch: true, supportsReasoning: true, supportReasoningChange: true, supportsToolUse: true),
         // 0.0014
@@ -84,12 +78,8 @@ func getModelList() -> [AllModels] {
         AllModels(name: "ernie-4.5-turbo-128k", displayName: "ERNIE4.5-Turbo", identity: "model", position: 32, company: "WENXIN", price: 2, isHidden: true, supportsSearch: true, supportsToolUse: true),
         // 0.006
         AllModels(name: "ernie-4.5-turbo-vl-32k", displayName: "ERNIE4.5-Turbo-VL", identity: "model", position: 33, company: "WENXIN", price: 3, isHidden: true, supportsSearch: true, supportsMultimodal: true, supportsToolUse: true),
-        // 0.01
-        AllModels(name: "ernie-4.5-8k-preview", displayName: "ERNIE4.5-Preview", identity: "model", position: 34, company: "WENXIN", price: 3, isHidden: true, supportsSearch: true, supportsMultimodal: true, supportsToolUse: true),
         // 0.0025
         AllModels(name: "ernie-x1-turbo-32k", displayName: "ERNIE-X1-Turbo", identity: "model", position: 35, company: "WENXIN", price: 2, isHidden: true, supportsSearch: true, supportsReasoning: true),
-        // 0.005
-        AllModels(name: "ernie-x1-32k", displayName: "ERNIE-X1", identity: "model", position: 36, company: "WENXIN", price: 2, isHidden: true, supportsSearch: true, supportsReasoning: true),
         
         // MARK: 混元
         // 免费
@@ -129,11 +119,11 @@ func getModelList() -> [AllModels] {
         
         // MARK: SiliconCloud
         // 0
-        AllModels(name: "THUDM/GLM-4-9B-0414", displayName: "GLM-4-9B(SiliconCloud)", identity: "model", position: 54, company: "SILICONCLOUD", price: 0, isHidden: true, supportsSearch: true, supportsToolUse: true),
+        AllModels(name: "Qwen/Qwen3-30B-A3B-Instruct-2507_repeat_sc", displayName: "GLM-4-9B(SiliconCloud)", identity: "model", position: 54, company: "SILICONCLOUD", price: 1, isHidden: true, supportsSearch: true, supportsToolUse: true),
         // 0
-        AllModels(name: "Qwen/Qwen3-8B", displayName: "Qwen3-8B(SiliconCloud)", identity: "model", position: 55, company: "SILICONCLOUD", price: 0, isHidden: true, supportsSearch: true, supportsReasoning: true, supportReasoningChange: true, supportsToolUse: true),
+        AllModels(name: "Qwen/Qwen3-8B_repeat_sc", displayName: "Qwen3-8B(SiliconCloud)", identity: "model", position: 55, company: "SILICONCLOUD", price: 0, isHidden: true, supportsSearch: true, supportsReasoning: true, supportReasoningChange: true, supportsToolUse: true),
         // 免费
-        AllModels(name: "Kwai-Kolors/Kolors", displayName: "Kolors(SiliconCloud)", identity: "model", position: 62, company: "SILICONCLOUD", price: 0, isHidden: true, supportsTextGen: false, supportsImageGen: true),
+        AllModels(name: "Kwai-Kolors/Kolors_repeat_sc", displayName: "Kolors(SiliconCloud)", identity: "model", position: 62, company: "SILICONCLOUD", price: 0, isHidden: true, supportsTextGen: false, supportsImageGen: true),
         
         // MARK: ModelScope
         // 免费2000次/天Qwen/Qwen3-14B
@@ -143,7 +133,7 @@ func getModelList() -> [AllModels] {
         
         // MARK: Gitee
         // 0.04/次
-        AllModels(name: "GLM-4.6", displayName: "GLM-4.6(Gitee)", identity: "model", position: 70, company: "GITEE", price: 0, isHidden: true, supportsSearch: true, supportsReasoning: true, supportsToolUse: true),
+        AllModels(name: "GLM-4.7", displayName: "GLM-4.7(Gitee)", identity: "model", position: 70, company: "GITEE", price: 0, isHidden: true, supportsSearch: true, supportsReasoning: true, supportsToolUse: true),
         // 0.05/次
         AllModels(name: "kimi-k2-instruct", displayName: "kimi-k2-instruct(Gitee)", identity: "model", position: 71, company: "GITEE", price: 0, isHidden: true, supportsSearch: true),
         
@@ -160,12 +150,10 @@ func getModelList() -> [AllModels] {
         AllModels(name: "gpt-image-1", displayName: "GPT-Image-1", identity: "model", position: 83, company: "OPENAI", price: 3, isHidden: true, supportsTextGen: false, supportsImageGen: true),
         
         // MARK: Gemini
-        // 0.00146
-        AllModels(name: "gemini-2.5-flash-lite", displayName: "Gemini2.0-Flash-Lite", identity: "model", position: 84, company: "GOOGLE", price: 1, isHidden: true, supportsSearch: true, supportsMultimodal: true, supportsToolUse: true),
         // 0.004745
-        AllModels(name: "gemini-2.5-flash", displayName: "Gemini2.5-Flash", identity: "model", position: 85, company: "GOOGLE", price: 2, isHidden: true, supportsSearch: true, supportsMultimodal: true, supportsToolUse: true),
+        AllModels(name: "gemini-3-flash-preview", displayName: "Gemini3-Flash", identity: "model", position: 85, company: "GOOGLE", price: 2, isHidden: true, supportsSearch: true, supportsMultimodal: true, supportsToolUse: true),
         // 0.0136875
-        AllModels(name: "gemini-2.5-pro", displayName: "Gemini2.5-Pro", identity: "model", position: 87, company: "GOOGLE", price: 3, isHidden: true, supportsSearch: true, supportsMultimodal: true, supportsToolUse: true),
+        AllModels(name: "gemini-3-pro-preview", displayName: "Gemini3-Pro", identity: "model", position: 87, company: "GOOGLE", price: 3, isHidden: true, supportsSearch: true, supportsMultimodal: true, supportsToolUse: true),
         
         // MARK: Claude
         // 0.035
@@ -190,26 +178,14 @@ func getModelList() -> [AllModels] {
         AllModels(name: "sonar", displayName: "Sonar", identity: "model", position: 98, company: "PERPLEXITY", price: 3, isHidden: true, supportsSearch: true, supportsMultimodal: false, supportsReasoning: false),
         // 0.0657
         AllModels(name: "sonar-pro", displayName: "Sonar-Pro", identity: "model", position: 99, company: "PERPLEXITY", price: 3, isHidden: true, supportsSearch: true, supportsMultimodal: false, supportsReasoning: false),
-        // 0.0219
-        AllModels(name: "sonar-reasoning", displayName: "Sonar-Reasoning", identity: "model", position: 100, company: "PERPLEXITY", price: 3, isHidden: true, supportsSearch: true, supportsMultimodal: false, supportsReasoning: true),
-        // 0.0365
-        AllModels(name: "sonar-reasoning-pro", displayName: "Sonar-Reasoning-Pro", identity: "model", position: 101, company: "PERPLEXITY", price: 3, isHidden: true, supportsSearch: true, supportsMultimodal: false, supportsReasoning: true),
-        // 0.0475
-        AllModels(name: "sonar-deep-research", displayName: "Sonar-DeepSearch", identity: "model", position: 102, company: "PERPLEXITY", price: 3, isHidden: true, supportsSearch: true, supportsMultimodal: false, supportsReasoning: true),
         
         // MARK: OPENROUTER
         // 0
-        AllModels(name: "x-ai/grok-code-fast-1_repeat_openrouter", displayName: "Grok-Code-Fast-1(OpenRouter)", identity: "model", position: 103, company: "OPENROUTER", price: 3, isHidden: true, supportsSearch: true),
+        AllModels(name: "anthropic/claude-opus-4.5_repeat_openrouter", displayName: "Claude4.5-Opus(OpenRouter)", identity: "model", position: 103, company: "OPENROUTER", price: 3, isHidden: true, supportsSearch: true, supportsMultimodal: true, supportsReasoning: true, supportReasoningChange: true),
         // 0
-        AllModels(name: "anthropic/claude-haiku-4.5_repeat_openrouter", displayName: "Claude4.5-Haiku(OpenRouter)", identity: "model", position: 103, company: "OPENROUTER", price: 3, isHidden: true, supportsSearch: true, supportsMultimodal: true),
+        AllModels(name: "google/gemini-3-pro-preview_repeat_openrouter", displayName: "Gemini3-Pro(OpenRouter)", identity: "model", position: 105, company: "OPENROUTER", price: 3, isHidden: true, supportsSearch: true, supportsMultimodal: true, supportsReasoning: true),
         // 0
-        AllModels(name: "anthropic/claude-sonnet-4.5_repeat_openrouter", displayName: "Claude4.5-Sonnet(OpenRouter)", identity: "model", position: 103, company: "OPENROUTER", price: 3, isHidden: true, supportsSearch: true, supportsMultimodal: true, supportsReasoning: true, supportReasoningChange: true),
-        // 0
-        AllModels(name: "google/gemini-2.5-flash_repeat_openrouter", displayName: "Gemini2.5-Flash(OpenRouter)", identity: "model", position: 104, company: "OPENROUTER", price: 3, isHidden: true, supportsSearch: true, supportsMultimodal: true),
-        // 0
-        AllModels(name: "google/gemini-2.5-pro_repeat_openrouter", displayName: "Gemini2.5-Pro(OpenRouter)", identity: "model", position: 105, company: "OPENROUTER", price: 3, isHidden: true, supportsSearch: true, supportsMultimodal: true, supportsReasoning: true),
-        // 0
-        AllModels(name: "x-ai/grok-4-fast_repeat_openrouter", displayName: "Grok4-Fast(OpenRouter)", identity: "model", position: 105, company: "OPENROUTER", price: 3, isHidden: true, supportsSearch: true, supportsMultimodal: true, supportsReasoning: true),
+        AllModels(name: "openai/gpt-5.2_repeat_openrouter", displayName: "GPT5.2(OpenRouter)", identity: "model", position: 105, company: "OPENROUTER", price: 3, isHidden: true, supportsSearch: true, supportsMultimodal: true, supportsReasoning: true),
         
         // MARK: n1n
         // 0
@@ -218,6 +194,24 @@ func getModelList() -> [AllModels] {
         AllModels(name: "claude-3-5-sonnet-20240620_repeat_n1n", displayName: "Claude3.5-Sonnet(n1n)", identity: "model", position: 106, company: "N1N", price: 3, isHidden: true, supportsSearch: true, supportsMultimodal: true, supportsReasoning: true, supportReasoningChange: true, supportsToolUse: true),
         // 0
         AllModels(name: "gemini-1.5-pro-latest_repeat_n1n", displayName: "Gemini1.5-Pro(n1n)", identity: "model", position: 106, company: "N1N", price: 3, isHidden: true, supportsSearch: true, supportsMultimodal: true, supportsReasoning: true, supportsToolUse: true),
+        
+        // MARK: XIAOMI MIMO
+        AllModels(name: "mimo-v2-flash", displayName: "MIMO-V2-Flash", identity: "model", position: 106, company: "MIMO", price: 1, isHidden: true, supportsSearch: true, supportsToolUse: true),
+        
+        // MARK: LONGCAT
+        AllModels(name: "LongCat-Flash-Chat", displayName: "LongCat-Flash-Chat", identity: "model", position: 106, company: "LONGCAT", price: 0, isHidden: true, supportsSearch: true, supportsToolUse: true),
+        
+        // MARK: AI302
+        AllModels(name: "gemini-3-pro-preview_repeat_ai302", displayName: "Gemini3-Pro(AI302)", identity: "model", position: 106, company: "AI302", price: 3, isHidden: true, supportsSearch: true, supportsMultimodal: true, supportsReasoning: true, supportsToolUse: true),
+        
+        // MARK: AIHUBMIX
+        AllModels(name: "gemini-3-flash-preview_repeat_aihubmix", displayName: "Gemini3-Pro(AIHUBMIX)", identity: "model", position: 106, company: "AIHUBMIX", price: 3, isHidden: true, supportsSearch: true, supportsMultimodal: true, supportsReasoning: true, supportsToolUse: true),
+        
+        // MARK: POE
+        AllModels(name: "gemini-3-pro_repeat_poe", displayName: "Gemini3-Pro(POE)", identity: "model", position: 106, company: "POE", price: 3, isHidden: true, supportsSearch: true, supportsMultimodal: true, supportsReasoning: true, supportsToolUse: true),
+        
+        // MARK: IFLOW
+        AllModels(name: "qwen3-max_repeat_iflow", displayName: "Qwen3-Max(iFlow)", identity: "model", position: 106, company: "IFLOW", price: 3, isHidden: true, supportsSearch: true, supportsReasoning: true, supportsToolUse: true),
     ]
     
     // 2. 用 enumerated() 给它们重新加上正确的 position 值

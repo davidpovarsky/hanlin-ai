@@ -5429,7 +5429,11 @@ struct AudioMessageView: View {
         }
         try? file.read(into: buffer)
 
-        let channelData = buffer.floatChannelData![0]
+        guard let floatChannelData = buffer.floatChannelData,
+              buffer.frameLength > 0 else {
+            return []
+        }
+        let channelData = floatChannelData[0]
         let frameCount = Int(buffer.frameLength)
         let chunkSize = max(1, frameCount / samples)
 

@@ -875,53 +875,89 @@ class ModelRefreshService {
         let requestBody: [String: Any] = [
             "model": baseName,
             "messages": messages,
-            "stream": false,
+            "stream": true,  // 使用流式请求检测音频
             "max_tokens": 64,
             "modalities": ["text", "audio"],
-            "audio": ["voice": "Cherry", "format": "wav"]
+            "audio": [
+                "voice": "Cherry",
+                "format": "wav"
+            ]
         ]
         
-        let result = await performChatRequestWithData(requestURL: requestURL, apiKey: apiKey, body: requestBody)
-        switch result {
-        case .success(let data):
-            // 验证返回是否包含音频数据
-            if hasAudioContent(in: data) {
-                return .success
-            } else {
-                return .failure("未检测到音频数据")
+        // 使用流式请求，一旦检测到音频分片就中断
+        return await performStreamingVoiceProbe(requestURL: requestURL, apiKey: apiKey, body: requestBody)
+    }
+    
+    /// 流式探测语音生成能力，一旦检测到音频分片立即返回成功
+    private static func performStreamingVoiceProbe(requestURL: String, apiKey: String, body: [String: Any]) async -> ModelCapabilityProbeResult {
+        guard let url = URL(string: requestURL) else {
+            return .failure("无效的请求地址")
+        }
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.timeoutInterval = 60
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue("Bearer \(apiKey)", forHTTPHeaderField: "Authorization")
+        request.httpBody = try? JSONSerialization.data(withJSONObject: body, options: [])
+        
+        do {
+            let (bytes, response) = try await URLSession.shared.bytes(for: request)
+            
+            guard let httpResponse = response as? HTTPURLResponse else {
+                return .failure("响应格式错误")
             }
-        case .failure(let message):
-            return .failure(message)
+            
+            guard (200...299).contains(httpResponse.statusCode) else {
+                return .failure("HTTP \(httpResponse.statusCode)")
+            }
+            
+            // 逐行读取流式响应
+            for try await line in bytes.lines {
+                // SSE 格式: data: {...}
+                guard line.hasPrefix("data: ") else { continue }
+                let jsonString = String(line.dropFirst(6))
+                
+                // 跳过 [DONE] 标记
+                if jsonString.trimmingCharacters(in: .whitespaces) == "[DONE]" {
+                    continue
+                }
+                
+                guard let data = jsonString.data(using: .utf8),
+                      let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any] else {
+                    continue
+                }
+                
+                // 检查流式响应中的音频内容
+                if hasAudioContentInStreamChunk(json) {
+                    // 检测到音频内容，立即返回成功（取消剩余流）
+                    return .success
+                }
+            }
+            
+            // 流结束但未检测到音频内容
+            return .failure("未检测到音频数据")
+        } catch {
+            return .failure(error.localizedDescription)
         }
     }
     
-    /// 检查响应数据中是否包含音频内容
-    private static func hasAudioContent(in data: Data) -> Bool {
-        guard let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
-              let choices = json["choices"] as? [[String: Any]],
+    /// 检查流式响应块中是否包含音频内容
+    private static func hasAudioContentInStreamChunk(_ json: [String: Any]) -> Bool {
+        guard let choices = json["choices"] as? [[String: Any]],
               let firstChoice = choices.first,
-              let message = firstChoice["message"] as? [String: Any] else {
+              let delta = firstChoice["delta"] as? [String: Any] else {
             return false
         }
         
-        // 检查 audio 字段是否存在且包含数据
-        if let audio = message["audio"] as? [String: Any] {
-            // 检查是否有 data 或 url 字段
-            if let audioData = audio["data"] as? String, !audioData.isEmpty {
+        // 检查 delta["audio"] 字段（流式音频分片）
+        if let audioDelta = delta["audio"] as? [String: Any] {
+            // 检查是否有 data 分片
+            if let audioData = audioDelta["data"] as? String, !audioData.isEmpty {
                 return true
             }
-            if let audioUrl = audio["url"] as? String, !audioUrl.isEmpty {
-                return true
-            }
-            // 某些厂商可能使用 base64 字段
-            if let base64 = audio["base64"] as? String, !base64.isEmpty {
-                return true
-            }
-        }
-        
-        // 某些厂商可能在顶层放置 audio 字段
-        if let audio = json["audio"] as? [String: Any] {
-            if let audioData = audio["data"] as? String, !audioData.isEmpty {
+            // 检查是否有 transcript 转录文本
+            if let transcript = audioDelta["transcript"] as? String, !transcript.isEmpty {
                 return true
             }
         }

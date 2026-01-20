@@ -43,6 +43,8 @@ struct VisionView: View {
     @State private var isCameraReady = false
     @State private var pulseEffect: Bool = false
     
+    @State private var showNoModelAlert = false // 控制无多模态模型提示弹窗
+    
     @State private var conversationContext: [(role: String, image: UIImage?, text: String?)] = [] //多轮对话管理
     
     @Environment(\.modelContext) private var context
@@ -83,6 +85,18 @@ struct VisionView: View {
             }
         }
         .onAppear {
+            // 检查是否有可用的多模态模型，没有则显示提示弹窗
+            if multimodalModels.isEmpty {
+                print("没有可用的多模态模型，显示提示弹窗")
+                showNoModelAlert = true
+                return
+            }
+            
+            // 确保 selectedModelIndex 在有效范围内
+            if selectedModelIndex >= multimodalModels.count {
+                selectedModelIndex = 0
+            }
+            
             // 隐藏TabView
             NotificationCenter.default.post(name: .hideTabBar, object: true)
             
@@ -135,6 +149,13 @@ struct VisionView: View {
                 }
             }
         )
+        .alert("无法使用视觉功能", isPresented: $showNoModelAlert) {
+            Button("返回", role: .cancel) {
+                selectedTab = 0
+            }
+        } message: {
+            Text("暂无启用的多模态模型，请前往“设置-模型-模型管理”添加并启用支持视觉的模型。")
+        }
     }
 }
 
@@ -700,6 +721,13 @@ extension VisionView {
             return
         }
         
+        // 边界检查：确保有可用的多模态模型
+        guard !multimodalModels.isEmpty, selectedModelIndex < multimodalModels.count else {
+            print("没有可用的多模态模型")
+            photoAnalysis = "⚠️ 没有可用的多模态模型，请先在设置中添加支持视觉的模型。"
+            return
+        }
+        
         isProcessing = true
         photoAnalysis = ""
         currentAsk = ""
@@ -756,25 +784,28 @@ extension VisionView {
     }
     
     /// 轮播式模型选择
+    @ViewBuilder
     private var modelCarouselView: some View {
-        TabView(selection: $selectedModelIndex) {
-            ForEach(multimodalModels.indices, id: \.self) { index in
-                modelItem(for: index)
-                    .tag(index)
-                    .padding(6)
-                    .sensoryFeedback(.selection, trigger: isSelect) // 触发轻微振动
+        if !multimodalModels.isEmpty {
+            TabView(selection: $selectedModelIndex) {
+                ForEach(multimodalModels.indices, id: \.self) { index in
+                    modelItem(for: index)
+                        .tag(index)
+                        .padding(6)
+                        .sensoryFeedback(.selection, trigger: isSelect) // 触发轻微振动
+                }
             }
-        }
-        .frame(width: 180, height: 80)
-        .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
-        .background(
-            GlassView(style: .systemUltraThinMaterial) // 毛玻璃背景
-                .clipShape(Capsule()) // 胶囊形
-                .shadow(color: Color(.systemBackground), radius: 1)
-        )
-        .clipShape(Capsule())
-        .onChange(of: selectedModelIndex) {
-            isSelect.toggle()
+            .frame(width: 180, height: 80)
+            .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
+            .background(
+                GlassView(style: .systemUltraThinMaterial) // 毛玻璃背景
+                    .clipShape(Capsule()) // 胶囊形
+                    .shadow(color: Color(.systemBackground), radius: 1)
+            )
+            .clipShape(Capsule())
+            .onChange(of: selectedModelIndex) {
+                isSelect.toggle()
+            }
         }
     }
     
@@ -784,19 +815,22 @@ extension VisionView {
         let scaleFactor: CGFloat = index == selectedModelIndex ? 1.0 : 0.6
         let opacityFactor: Double = index == selectedModelIndex ? 1.0 : 0.4
         
+        // 边界检查
+        let model = index < multimodalModels.count ? multimodalModels[index] : (name: "未知", company: "", identity: "model", icon: "circle.dotted.circle")
+        
         return VStack {
             Spacer()
             HStack {
                 Spacer()
-                if multimodalModels[index].identity == "model" {
-                    Image(getCompanyIcon(for: multimodalModels[index].company))
+                if model.identity == "model" {
+                    Image(getCompanyIcon(for: model.company))
                         .resizable()
                         .scaledToFit()
                         .frame(width: 25 * scaleFactor, height: 25 * scaleFactor)
                         .opacity(opacityFactor)
                         .animation(.easeInOut(duration: 0.3), value: selectedModelIndex)
                 } else {
-                    Image(systemName: multimodalModels[index].icon)
+                    Image(systemName: model.icon)
                         .resizable()
                         .scaledToFill()
                         .frame(width: 25 * scaleFactor, height: 25 * scaleFactor)
@@ -805,7 +839,7 @@ extension VisionView {
                             Group {
                                 gradient(for: 0)
                                 .mask(
-                                    Image(systemName: multimodalModels[index].icon)
+                                    Image(systemName: model.icon)
                                         .resizable()
                                         .scaledToFit()
                                         .frame(width: 25 * scaleFactor, height: 25 * scaleFactor)
@@ -815,7 +849,7 @@ extension VisionView {
                         .opacity(opacityFactor)
                         .animation(.easeInOut(duration: 0.3), value: selectedModelIndex)
                 }
-                Text(multimodalModels[index].name)
+                Text(model.name)
                     .font(.caption)
                     .foregroundColor(index == selectedModelIndex ? .hlBluefont : Color(.systemGray))
                     .opacity(opacityFactor)
@@ -1012,21 +1046,41 @@ class CameraManager: NSObject, ObservableObject, AVCapturePhotoCaptureDelegate {
     
     /// **拍照**
     func capturePhoto(completion: @escaping (UIImage?) -> Void) {
-        let settings = AVCapturePhotoSettings()
-        completionHandler = completion
-        output.capturePhoto(with: settings, delegate: self)
+        // 检查相机会话是否正在运行
+        guard session.isRunning else {
+            print("相机会话未运行，无法拍照")
+            DispatchQueue.main.async {
+                completion(nil)
+            }
+            return
+        }
+        
+        queue.async { [weak self] in
+            guard let self = self else {
+                DispatchQueue.main.async { completion(nil) }
+                return
+            }
+            let settings = AVCapturePhotoSettings()
+            self.completionHandler = completion
+            self.output.capturePhoto(with: settings, delegate: self)
+        }
     }
     
     /// **处理照片**
     func photoOutput(_ output: AVCapturePhotoOutput, didFinishProcessingPhoto photo: AVCapturePhoto, error: Error?) {
-        guard let imageData = photo.fileDataRepresentation(),
-              let image = UIImage(data: imageData) else {
-            print("无法获取照片")
-            completionHandler?(nil)
-            return
+        // 确保在主线程回调
+        DispatchQueue.main.async { [weak self] in
+            guard let imageData = photo.fileDataRepresentation(),
+                  let image = UIImage(data: imageData) else {
+                print("无法获取照片")
+                self?.completionHandler?(nil)
+                self?.completionHandler = nil
+                return
+            }
+            self?.completionHandler?(image)
+            self?.completionHandler = nil
+            self?.stopSession()
         }
-        completionHandler?(image)
-        self.stopSession()
     }
     
     /// **手电筒模式**

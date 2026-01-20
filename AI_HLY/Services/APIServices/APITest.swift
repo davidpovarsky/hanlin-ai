@@ -8,7 +8,24 @@
 import Foundation
 
 /// 用于测试当前填写的 API Key 和 URL 是否可用，返回布尔值
+/// - Parameters:
+///   - apiKey: API密钥
+///   - requestURL: 请求地址
+///   - company: 厂商名称
+/// - Returns: 测试是否通过
 func testAIAPI(apiKey: String, requestURL: String, company: String) async -> Bool {
+    let testModel = getTestModel(for: company)
+    return await testAIAPIWithModel(apiKey: apiKey, requestURL: requestURL, company: company, modelName: testModel)
+}
+
+/// 用于测试当前填写的 API Key 和 URL 是否可用，使用指定的模型名称
+/// - Parameters:
+///   - apiKey: API密钥
+///   - requestURL: 请求地址
+///   - company: 厂商名称
+///   - modelName: 用于测试的模型名称
+/// - Returns: 测试是否通过
+func testAIAPIWithModel(apiKey: String, requestURL: String, company: String, modelName: String) async -> Bool {
     // 1. 检查 API Key 和 URL 是否有效
     guard !apiKey.isEmpty,
           !requestURL.isEmpty,
@@ -24,7 +41,8 @@ func testAIAPI(apiKey: String, requestURL: String, company: String) async -> Boo
         ]
     ]
     
-    let testModel = getTestModel(for: company)
+    // 处理模型名称，去除后缀
+    let testModel = restoreBaseModelName(from: modelName)
     
     let requestBody: [String: Any] = [
         "model": testModel,

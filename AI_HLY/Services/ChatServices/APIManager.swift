@@ -2682,6 +2682,7 @@ class APIManager {
                                         accumulatedToolCalls[index] = currentToolCall
                                     }
                                 }
+                                
                             }
                             
                             if let finishReason = choices.first?["finish_reason"] as? String {

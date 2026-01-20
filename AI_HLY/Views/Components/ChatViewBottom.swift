@@ -1074,13 +1074,15 @@ struct ChatViewBottom: View {
                     ScrollView(.horizontal, showsIndicators: false) {
                         HStack(spacing: 6) {
                             ForEach(visibleIndices, id: \.self) { index in
-                                Button(action: {
-                                    isSelect.toggle()
-                                    onSelectModel(index)
-                                }) {
-                                    modelButton(for: modelTemp[index], isSelected: index == selectedModelIndex)
+                                if let model = modelTemp[safe: index] {
+                                    Button(action: {
+                                        isSelect.toggle()
+                                        onSelectModel(index)
+                                    }) {
+                                        modelButton(for: model, isSelected: index == selectedModelIndex)
+                                    }
+                                    .sensoryFeedback(.selection, trigger: isSelect)
                                 }
-                                .sensoryFeedback(.selection, trigger: isSelect)
                             }
                         }
                     }
@@ -2275,9 +2277,11 @@ struct ModelMenuSheetView: View {
 
                             // 模型信息
                             VStack(alignment: .leading, spacing: 4) {
-                                Text(model.displayName ?? "Unknown")
-                                    .font(.headline)
-                                    .foregroundColor(isSelected ? (TemporaryRecord ? .primary : .hlBluefont) : .primary)
+                                ScrollView(.horizontal, showsIndicators: false) {
+                                    Text(model.displayName ?? "Unknown")
+                                        .font(.subheadline)
+                                        .foregroundColor(isSelected ? (TemporaryRecord ? .primary : .hlBluefont) : .primary)
+                                }
 
                                 // 能力标签
                                 HStack(spacing: 6) {
@@ -2345,8 +2349,6 @@ struct ModelMenuSheetView: View {
                 }
             }
             .navigationTitle("选择模型")
-            .navigationBarTitleDisplayMode(.inline)
-            .searchable(text: $searchText, prompt: "搜索模型")
         }
     }
 

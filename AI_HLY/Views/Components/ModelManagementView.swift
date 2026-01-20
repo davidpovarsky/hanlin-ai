@@ -232,8 +232,10 @@ struct ModelManagementView: View {
                                         .frame(width: size_30, height: size_30)
 
                                     VStack(alignment: .leading, spacing: 4) {
-                                        Text(model.id)
-                                            .font(.headline)
+                                        ScrollView(.horizontal, showsIndicators: false) {
+                                            Text(model.id)
+                                                .font(.subheadline)
+                                        }
                                         Text("提供者: \(providerName)")
                                             .font(.caption)
                                             .foregroundColor(.secondary)
@@ -332,8 +334,10 @@ struct ModelManagementView: View {
 
     private func highlightDisplayName(for model: AllModels) -> AnyView {
         AnyView(
-            Text(displayNameForAddedModel(model))
-                .font(.headline)
+            ScrollView(.horizontal, showsIndicators: false) {
+                Text(displayNameForAddedModel(model))
+                    .font(.subheadline)
+            }
         )
     }
 

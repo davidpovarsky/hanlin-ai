@@ -1070,6 +1070,14 @@ struct KnowledgeWritingView: View {
                 } else {
                     knowledgeRecord.chunks = []
                 }
+                
+                // 安全检查 embeddings 和 refinedChunks 数量匹配
+                guard embeddings.count == refinedChunks.count else {
+                    print("嵌入失败：embeddings 数量 (\(embeddings.count)) 与 chunks 数量 (\(refinedChunks.count)) 不匹配")
+                    isEmbedding = false
+                    return
+                }
+                
                 for (index, chunk) in refinedChunks.enumerated() {
                     let vector = embeddings[index]
                     let chunkModel = KnowledgeChunk(

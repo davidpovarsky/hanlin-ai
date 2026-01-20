@@ -9,6 +9,28 @@ import SwiftUI
 import SwiftData
 import AppIntents
 
+// MARK: - 安全数组访问扩展
+extension Collection {
+    /// 安全下标访问，越界时返回 nil 而非崩溃
+    subscript(safe index: Index) -> Element? {
+        return indices.contains(index) ? self[index] : nil
+    }
+}
+
+extension MutableCollection {
+    /// 安全下标访问（可变集合），越界时返回 nil
+    subscript(safe index: Index) -> Element? {
+        get {
+            return indices.contains(index) ? self[index] : nil
+        }
+        set {
+            if indices.contains(index), let newValue = newValue {
+                self[index] = newValue
+            }
+        }
+    }
+}
+
 class AppDataManager: ObservableObject {
     let modelContainer: ModelContainer
     

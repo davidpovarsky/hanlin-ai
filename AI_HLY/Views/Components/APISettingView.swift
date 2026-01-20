@@ -180,6 +180,32 @@ private struct EditKeyContent: View {
     @State private var isInquiring = false
     @State private var inquiryResult: Double? = nil
     @State private var showModelManagement = false
+    @State private var selectedTestModelName: String = ""
+
+    // 获取当前厂商支持文本生成的模型（用于API测试）
+    private var testableModels: [AllModels] {
+        allModels.filter { model in
+            // 必须支持文本生成
+            guard model.supportsTextGen else { return false }
+            // 检查是否是当前厂商的模型
+            if let modelCompany = model.company, modelCompany == key.company {
+                return true
+            }
+            // 检查是否是通过 _repeat_ 添加的当前厂商模型
+            if let modelName = model.name,
+               modelName.contains("_repeat_\(key.company ?? "")") {
+                return true
+            }
+            return false
+        }.sorted { model1, model2 in
+            // 系统预置的模型排在前面
+            if model1.systemProvision != model2.systemProvision {
+                return model1.systemProvision
+            }
+            // 按名称排序
+            return (model1.displayName ?? model1.name ?? "") < (model2.displayName ?? model2.name ?? "")
+        }
+    }
 
     // 获取当前厂商的所有模型（包括系统预置和用户添加的）
     private var currentCompanyModels: [AllModels] {
@@ -267,18 +293,33 @@ private struct EditKeyContent: View {
                 }
                 // 测试 API 按钮及状态显示（局域网模型和自定义供应商不显示）
                 if key.company != "LAN" && key.from != .custom {
-                    Section {
+                    Section(header: Text("API 测试")) {
+                        // 模型选择器（如果有可测试的模型）
+                        if !testableModels.isEmpty {
+                            Picker("测试模型", selection: $selectedTestModelName) {
+                                ForEach(testableModels, id: \.name) { model in
+                                    Text(model.displayName ?? model.name ?? "未知模型")
+                                        .tag(model.name ?? "")
+                                }
+                            }
+                        }
+                        
+                        // 测试按钮
                         HStack {
                             Button("测试 API") {
                                 testAPI(for: key)
                             }
-                            .disabled(isTesting)
+                            .disabled(isTesting || testableModels.isEmpty)
                             Spacer()
                             if isTesting {
                                 ProgressView()
                             } else if let result = testResult {
                                 Text(result ? "测试通过" : "测试失败")
                                     .foregroundColor(result ? .green : .red)
+                            } else if testableModels.isEmpty {
+                                Text("无可用模型")
+                                    .font(.caption)
+                                    .foregroundColor(.secondary)
                             }
                         }
                     }
@@ -344,6 +385,10 @@ private struct EditKeyContent: View {
             }
             .onAppear {
                 testResult = nil
+                // 初始化选中的测试模型为第一个可用模型
+                if selectedTestModelName.isEmpty, let firstModel = testableModels.first {
+                    selectedTestModelName = firstModel.name ?? ""
+                }
             }
             .sheet(isPresented: $showModelManagement) {
                 ModelManagementView(apiKey: key)
@@ -366,15 +411,22 @@ private struct EditKeyContent: View {
     }
 
     // MARK: - API 测试与查询
-    /// 点击测试 API 时调用
+    /// 点击测试 API 时调用，使用选中的模型进行测试
     private func testAPI(for key: APIKeys) {
         isTesting = true
         testResult = nil
+        
+        // 使用选中的模型，如果没有选中则使用第一个可用模型
+        let modelToTest = selectedTestModelName.isEmpty 
+            ? (testableModels.first?.name ?? "") 
+            : selectedTestModelName
+        
         Task {
-            let result = await testAIAPI(
+            let result = await testAIAPIWithModel(
                 apiKey: key.key ?? "",
                 requestURL: key.requestURL ?? "",
-                company: key.company ?? ""
+                company: key.company ?? "",
+                modelName: modelToTest
             )
             testResult = result
             isTesting = false

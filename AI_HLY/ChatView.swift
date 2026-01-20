@@ -727,7 +727,7 @@ struct ChatView: View {
     }
 
     // 创建聊天信息
-    private func createChatBubble(for msg: ChatMessages) -> some View {
+    private func createChatBubble(for msg: ChatMessages) -> AnyView {
         // 是否是最后一条助手消息
         let isLastAssistant = chatTemps.last(where: { $0.role == "assistant" })?.id == msg.id
         
@@ -757,12 +757,16 @@ struct ChatView: View {
         let splitMarker: Bool = {
             guard let idx = chatTemps.firstIndex(where: { $0.id == msg.id }) else { return true }
             if idx == 0 { return true }
-            let prev = chatTemps[idx - 1]
+            guard let prev = chatTemps[safe: idx - 1] else { return true }
             return !(prev.role == "assistant" && prev.groupID == msg.groupID)
         }()
         
-        // —— 计算当前消息所在的连续助手组，以及该组的“中点”位置 ——
-        let idx = chatTemps.firstIndex(where: { $0.id == msg.id })!
+        // —— 计算当前消息所在的连续助手组，以及该组的"中点"位置 ——
+        // 安全获取 idx，如果找不到则返回 EmptyView
+        guard let idx = chatTemps.firstIndex(where: { $0.id == msg.id }) else {
+            return AnyView(EmptyView())
+        }
+        
         // 收集同组连续 assistant 的所有 message IDs
         let groupIDs: [UUID] = {
             guard msg.role == "assistant" else { return [msg.id] }
@@ -770,7 +774,7 @@ struct ChatView: View {
             // 向前收集
             var i = idx
             while i >= 0 {
-                let m = chatTemps[i]
+                guard let m = chatTemps[safe: i] else { break }
                 guard m.role == "assistant", m.groupID == msg.groupID else { break }
                 ids.insert(m.id, at: 0)
                 i -= 1
@@ -778,7 +782,7 @@ struct ChatView: View {
             // 向后收集
             i = idx + 1
             while i < chatTemps.count {
-                let m = chatTemps[i]
+                guard let m = chatTemps[safe: i] else { break }
                 guard m.role == "assistant", m.groupID == msg.groupID else { break }
                 ids.append(m.id)
                 i += 1
@@ -789,8 +793,12 @@ struct ChatView: View {
         let groupIndices = chatTemps.enumerated()
             .filter { groupIDs.contains($0.element.id) }
             .map { $0.offset }
-        let isGroupCenter = groupIndices.count > 1
-        && idx == (groupIndices.first! + groupIndices.last!) / 2
+        let isGroupCenter: Bool = {
+            guard groupIndices.count > 1,
+                  let first = groupIndices.first,
+                  let last = groupIndices.last else { return false }
+            return idx == (first + last) / 2
+        }()
         
         // 1. 构造基础气泡
         let bubble = ChatBubbleView(
@@ -854,8 +862,8 @@ struct ChatView: View {
             }
         )
         
-        // 2. 多选模式下，只在“用户消息”或“助手中点”显示勾选框
-        return Group {
+        // 2. 多选模式下，只在"用户消息"或"助手中点"显示勾选框
+        return AnyView(Group {
             if isMultiSelectMode {
                 ZStack {
                     bubble
@@ -908,7 +916,7 @@ struct ChatView: View {
             } else {
                 bubble
             }
-        }
+        })
     }
     
     private func openHistory() {
@@ -1207,7 +1215,8 @@ struct ChatView: View {
                         
                         // 图像描述文本
                         if let imageText = data.image_text, !imageText.isEmpty {
-                            if let index = chatTemps.lastIndex(where: { !$0.imageArray.isEmpty && ($0.images_text?.isEmpty ?? true) }) {
+                            if let index = chatTemps.lastIndex(where: { !$0.imageArray.isEmpty && ($0.images_text?.isEmpty ?? true) }),
+                               index < chatTemps.count {
                                 chatTemps[index].images_text = imageText
                                 updated = true
                             }
@@ -1215,7 +1224,8 @@ struct ChatView: View {
 
                         // 文件内容文本
                         if let documentText = data.document_text, !documentText.isEmpty {
-                            if let index = chatTemps.lastIndex(where: { $0.documents != nil && ($0.document_text?.isEmpty ?? true) }) {
+                            if let index = chatTemps.lastIndex(where: { $0.documents != nil && ($0.document_text?.isEmpty ?? true) }),
+                               index < chatTemps.count {
                                 chatTemps[index].document_text = documentText
                                 updated = true
                             }
@@ -1449,81 +1459,84 @@ struct ChatView: View {
                     }
                 }
                 
-                isObserving = false
-                isResponding = false
-                respondIndex = 0
-                
-                // 最终判断：仅当助手消息既没有文本又没有图片时，视为请求异常
-                if chatTemps.firstIndex(where: { $0 === assistantMessage }) != nil {
-                    let textContent = assistantMessage.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
-                    let reasoningContent = assistantMessage.reasoning?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
-                    if textContent.isEmpty && reasoningContent.isEmpty && assistantMessage.imageArray.isEmpty {
-                        operationalState = ""
-                        operationalDescription = ""
-                        assistantMessage.text = currentLanguage.hasPrefix("zh") ? "⚠️ 生成内容为空，请重新尝试！" : "⚠️ Generated content is empty, please try again!"
-                        assistantMessage.role = "error"
-                        assistantMessage.modelName = "system"
-                        assistantMessage.modelDisplayName = "system"
-                    } else {
-                        
-                        // 一切正常，进行数据库保存操作
-                        do {
-                            if outPutFeedBackEnabled { isOutPut.toggle() }
+                // 流结束后的处理必须在主线程执行
+                await MainActor.run {
+                    isObserving = false
+                    isResponding = false
+                    respondIndex = 0
+                    
+                    // 最终判断：仅当助手消息既没有文本又没有图片时，视为请求异常
+                    if chatTemps.firstIndex(where: { $0 === assistantMessage }) != nil {
+                        let textContent = assistantMessage.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+                        let reasoningContent = assistantMessage.reasoning?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+                        if textContent.isEmpty && reasoningContent.isEmpty && assistantMessage.imageArray.isEmpty {
                             operationalState = ""
                             operationalDescription = ""
-                            // 去除文本两端的换行符
-                            assistantMessage.text = textContent
-                            assistantMessage.reasoning = assistantMessage.reasoning?.trimmingCharacters(in: .whitespacesAndNewlines)
+                            assistantMessage.text = currentLanguage.hasPrefix("zh") ? "⚠️ 生成内容为空，请重新尝试！" : "⚠️ Generated content is empty, please try again!"
+                            assistantMessage.role = "error"
+                            assistantMessage.modelName = "system"
+                            assistantMessage.modelDisplayName = "system"
+                        } else {
                             
-                            // 写入搜索消息（如果存在）
-                            if let searchMessage = chatTemps.last(where: { $0.role == "search" }), isSearch {
-                                searchMessage.record = chatRecord
-                                context.insert(searchMessage)
-                            }
-                            
-                            context.insert(assistantMessage)
-                            
-                            if let outputText = assistantMessage.text?
-                                .replacingOccurrences(of: "\n", with: " ")
-                                .trimmingCharacters(in: .whitespacesAndNewlines),
-                               !outputText.isEmpty {
-                                let previewText = outputText.prefix(80)
-                                chatRecord.infoDescription = "\(previewText)"
-                                chatRecord.lastEdited = assistantMessage.timestamp
-                            } else if !assistantMessage.imageArray.isEmpty {
-                                if chatTemps.count >= 2 {
-                                    let previousMessage = chatTemps[chatTemps.count - 2]
-                                    let previewText = previousMessage.text?
-                                        .replacingOccurrences(of: "\n", with: " ")
-                                        .trimmingCharacters(in: .whitespacesAndNewlines)
-                                        .prefix(80) ?? ""
-                                    chatRecord.infoDescription = "[图像] \(previewText)"
-                                    chatRecord.lastEdited = previousMessage.timestamp
-                                } else {
-                                    chatRecord.infoDescription = "[图像]"
-                                    chatRecord.lastEdited = assistantMessage.timestamp
+                            // 一切正常，进行数据库保存操作
+                            do {
+                                if outPutFeedBackEnabled { isOutPut.toggle() }
+                                operationalState = ""
+                                operationalDescription = ""
+                                // 去除文本两端的换行符
+                                assistantMessage.text = textContent
+                                assistantMessage.reasoning = assistantMessage.reasoning?.trimmingCharacters(in: .whitespacesAndNewlines)
+                                
+                                // 写入搜索消息（如果存在）
+                                if let searchMessage = chatTemps.last(where: { $0.role == "search" }), isSearch {
+                                    searchMessage.record = chatRecord
+                                    context.insert(searchMessage)
                                 }
+                                
+                                context.insert(assistantMessage)
+                                
+                                if let outputText = assistantMessage.text?
+                                    .replacingOccurrences(of: "\n", with: " ")
+                                    .trimmingCharacters(in: .whitespacesAndNewlines),
+                                   !outputText.isEmpty {
+                                    let previewText = outputText.prefix(80)
+                                    chatRecord.infoDescription = "\(previewText)"
+                                    chatRecord.lastEdited = assistantMessage.timestamp
+                                } else if !assistantMessage.imageArray.isEmpty {
+                                    if chatTemps.count >= 2,
+                                       let previousMessage = chatTemps[safe: chatTemps.count - 2] {
+                                        let previewText = previousMessage.text?
+                                            .replacingOccurrences(of: "\n", with: " ")
+                                            .trimmingCharacters(in: .whitespacesAndNewlines)
+                                            .prefix(80) ?? ""
+                                        chatRecord.infoDescription = "[图像] \(previewText)"
+                                        chatRecord.lastEdited = previousMessage.timestamp
+                                    } else {
+                                        chatRecord.infoDescription = "[图像]"
+                                        chatRecord.lastEdited = assistantMessage.timestamp
+                                    }
+                                }
+                                
+                                try context.save()
+                                
+                            } catch {
+                                let syncErrorText: String
+                                if currentLanguage.hasPrefix("zh") {
+                                    syncErrorText = "⚠️ 数据同步失败: \(error.localizedDescription)，本轮问答不会被同步。"
+                                } else {
+                                    syncErrorText = "⚠️ Data synchronization failed: \(error.localizedDescription). This round of Q&A will not be synchronized."
+                                }
+                                let errorMessageShow = ChatMessages(
+                                    role: "information",
+                                    text: syncErrorText,
+                                    modelDisplayName: "system",
+                                    timestamp: Date(),
+                                    record: chatRecord
+                                )
+                                chatTemps.append(errorMessageShow)
+                                operationalState = ""
+                                operationalDescription = ""
                             }
-                            
-                            try context.save()
-                            
-                        } catch {
-                            let syncErrorText: String
-                            if currentLanguage.hasPrefix("zh") {
-                                syncErrorText = "⚠️ 数据同步失败: \(error.localizedDescription)，本轮问答不会被同步。"
-                            } else {
-                                syncErrorText = "⚠️ Data synchronization failed: \(error.localizedDescription). This round of Q&A will not be synchronized."
-                            }
-                            let errorMessageShow = ChatMessages(
-                                role: "information",
-                                text: syncErrorText,
-                                modelDisplayName: "system",
-                                timestamp: Date(),
-                                record: chatRecord
-                            )
-                            chatTemps.append(errorMessageShow)
-                            operationalState = ""
-                            operationalDescription = ""
                         }
                     }
                 }
@@ -1531,7 +1544,8 @@ struct ChatView: View {
             } catch {
                 // 响应异常处理
                 await MainActor.run {
-                    if let index = chatTemps.lastIndex(where: { $0.role == "assistant" }) {
+                    if let index = chatTemps.lastIndex(where: { $0.role == "assistant" }),
+                       index < chatTemps.count {
                         operationalState = ""
                         operationalDescription = ""
                         let responseErrorText: String
@@ -1541,7 +1555,6 @@ struct ChatView: View {
                             responseErrorText = "⚠️ Response error: \(error.localizedDescription)"
                         }
                         chatTemps[index].text = responseErrorText
-                        chatTemps[index].role = "error"
                         chatTemps[index].role = "error"
                         chatTemps[index].modelDisplayName = "system"
                         isResponding = false
@@ -1631,7 +1644,7 @@ struct ChatView: View {
         var tempDeleteStart = tempIndex
         var tempBack = tempIndex - 1
         while tempBack >= 0 {
-            let prevTemp = chatTemps[tempBack]
+            guard let prevTemp = chatTemps[safe: tempBack] else { break }
             if prevTemp.role == "assistant" && prevTemp.groupID == targetGroupID {
                 tempDeleteStart = tempBack
                 tempBack -= 1
@@ -1658,11 +1671,16 @@ struct ChatView: View {
             return
         }
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-            if modelTemp[selectedModelIndex].supportsReasoning {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) { [self] in
+            // 安全检查索引边界
+            guard selectedModelIndex >= 0,
+                  selectedModelIndex < modelTemp.count else { return }
+            
+            let model = modelTemp[selectedModelIndex]
+            if model.supportsReasoning {
                 ifPlanning = false
                 thinkingLength = 0
-                if modelTemp[selectedModelIndex].supportReasoningChange {
+                if model.supportReasoningChange {
                     ifThink = false
                 } else {
                     ifThink = true
@@ -1670,7 +1688,7 @@ struct ChatView: View {
             } else {
                 ifThink = false
             }
-            if modelTemp[selectedModelIndex].supportsVoiceGen {
+            if model.supportsVoiceGen {
                 ifAudio = true
             } else {
                 ifAudio = false
