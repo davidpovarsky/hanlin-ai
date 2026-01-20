@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "ait_aizhushou.png",
+      "filename" : "sparkles.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "ait_aizhushou 1.png",
+      "filename" : "sparkles 1.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "ait_aizhushou 2.png",
+      "filename" : "sparkles 2.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
