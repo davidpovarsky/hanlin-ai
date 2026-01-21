@@ -923,13 +923,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Model Scope"
+            "value" : "ModelScope"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "魔塔社区"
+            "value" : "魔搭社区"
           }
         }
       }

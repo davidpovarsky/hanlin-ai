@@ -341,10 +341,17 @@ extension VisionView {
         cameraManager.setFlash(isFlashOn) // 让 CameraManager 控制闪光灯
     }
     
-    // MARK: - 更新推理显示行
+    // MARK: - 更新推理显示行（按句断句）
     private func updateDisplayReasoningLines() {
-        let lines = reasoning.split(separator: "\n").map(String.init)
-        let last3 = Array(lines.suffix(3))
+        // 按句号、问号、感叹号、分号、换行符等断句
+        let sentences = reasoning
+            .split(whereSeparator: { [".", "。", "!", "！", "?", "？", ";", "；", "\n"].contains(String($0)) })
+            .map(String.init)
+            .filter { !$0.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty }
+        
+        // 取最后 3 句
+        let last3 = Array(sentences.suffix(3))
+        // 不足 3 条时在前面补空
         if !last3.isEmpty && last3.count < 3 {
             displayReasoningLines = Array(repeating: " ", count: 3 - last3.count) + last3
         } else {
@@ -948,9 +955,9 @@ extension VisionView {
         
         Task {
             do {
-                let imageAPIManager = ImageAPIManager(context: context)
+                let visionAPIManager = VisionAPIManager(context: context)
                 
-                let stream = try await imageAPIManager.sendPhotoStreamRequest(
+                let stream = try await visionAPIManager.sendPhotoStreamRequest(
                     message: conversationContext,
                     modelDisplayName: multimodalModels[selectedModelIndex].name,
                     query: queryKeyword

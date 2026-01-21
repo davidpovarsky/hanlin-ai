@@ -82,7 +82,6 @@ class APIManager {
     private var canvasInfo: CanvasData?         // 画布信息
     private var toolMessage: String?            // 工具使用说明
     private var toolMessageReasoning: String?   // 工具使用思考
-    private var autoTitle: String?
     private var dataIndex: Int?
     
     private var context: ModelContext
@@ -1936,25 +1935,6 @@ class APIManager {
         }
     }
     
-    /// 自动生成标题：若历史消息正好为 3 条，则调用优化器生成自动标题
-    /// 自动生成标题：若历史消息正好为 1、3、11 条，则调用优化器生成自动标题
-    private func autoGenerateTitleIfNeeded(from messages: [RequestMessage]) async throws {
-        // 需要生成标题的历史消息条数
-        let autoTitleCounts: Set<Int> = [1, 3, 11]
-        // 只统计用户和助手的消息
-        let relevantMessages = messages.filter { $0.role == "user" || $0.role == "assistant" }
-        if autoTitleCounts.contains(relevantMessages.count) {
-            let historyMessage = relevantMessages
-                .suffix(relevantMessages.count)
-                .map { "- " + $0.text + ($0.imageText ?? "") + ($0.documentText ?? "") }
-                .joined(separator: "\n")
-            if !historyMessage.isEmpty {
-                let optimizer = SystemOptimizer(context: self.context)
-                self.autoTitle = try await optimizer.autoChatName(historyMessage: historyMessage)
-            }
-        }
-    }
-    
     /// 知识书包翻找相关内容
     /// 计算输入文本的向量表示
     private func computeEmbedding(for text: String) async throws -> [Float] {
@@ -2300,10 +2280,6 @@ class APIManager {
                             continuation.yield(StreamData(document_text: docText))
                         }
                         
-                        if let autoTitle = self.autoTitle, !autoTitle.isEmpty {
-                            continuation.yield(StreamData(autoTitle: autoTitle))
-                        }
-                        
                     } else {
                         
                         guard let fm = formattedMessages else {
@@ -2348,9 +2324,6 @@ class APIManager {
                             ])
                         }
                     }
-                    
-                    // 自动生成标题
-                    try await autoGenerateTitleIfNeeded(from: messages)
                     
                     continuation.yield(StreamData(operationalState: currentLanguagePrefix ? "正在发送请求" : "Sending request"))
                     

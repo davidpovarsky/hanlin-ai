@@ -1013,7 +1013,6 @@ struct ChatViewBottom: View {
             .animation(.spring(response: 0.5), value: isSourceOptionsVisible)
         }
         .padding(.horizontal, 12)
-        .padding(.bottom, 6)
         .padding(.top, 12)
         .sheet(isPresented: $inputExpanded) {
             BottomSheetView(message: $message, isExpanded: $inputExpanded)
@@ -1098,9 +1097,9 @@ struct ChatViewBottom: View {
 
     // MARK: - 菜单选择模式选择器（模型按钮已移至 ActionButtonsView，此处仅处理无模型时的提示）
     private var menuStyleSelector: some View {
-        HStack {
-            let visibleIndices = modelTemp.indices.filter { !modelTemp[$0].isHidden }
+        let visibleIndices = modelTemp.indices.filter { !modelTemp[$0].isHidden }
 
+        return Group {
             if modelTemp.isEmpty {
                 // 数据未加载，显示占位符
                 HStack {
@@ -1111,16 +1110,17 @@ struct ChatViewBottom: View {
                         .foregroundColor(.secondary)
                 }
                 .frame(height: 36)
+                .padding(.horizontal, 12)
             } else if visibleIndices.isEmpty {
                 // 没有可用模型
                 Text("暂无可用模型，请前往模型界面开启模型。")
                     .font(.caption)
                     .foregroundColor(.secondary)
                     .frame(height: 36)
+                    .padding(.horizontal, 12)
             }
-            // 有模型时不显示任何内容，模型按钮在 ActionButtonsView 中
+            // 有模型时不渲染任何内容（隐式 EmptyView）
         }
-        .padding(.horizontal, 12)
     }
 
     private func modelButton(for model: AllModels, isSelected: Bool) -> some View {

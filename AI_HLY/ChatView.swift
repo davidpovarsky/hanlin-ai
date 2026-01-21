@@ -1011,6 +1011,45 @@ struct ChatView: View {
         }
     }
     
+    // MARK: - 自动生成标题
+    /// 异步独立执行，不阻塞主对话
+    /// 触发条件：chatRecord.name == "新群聊" 且 user 消息数 >= 1 且 <= 3
+    private func autoGenerateTitleIfNeeded() {
+        // 检查是否为新群聊
+        guard chatRecord.name == "新群聊" else { return }
+        
+        // 统计用户消息数量
+        let userMessages = chatTemps.filter { $0.role == "user" }
+        let userCount = userMessages.count
+        guard userCount >= 1 && userCount <= 3 else { return }
+        
+        // 构建历史消息文本
+        let historyMessage = userMessages
+            .map { "- " + ($0.text ?? "") + ($0.images_text ?? "") + ($0.document_text ?? "") }
+            .joined(separator: "\n")
+        guard !historyMessage.isEmpty else { return }
+        
+        // 捕获需要的值，避免在 Task 中访问 MainActor 隔离属性
+        let currentContext = context
+        let record = chatRecord
+        
+        // 启动异步任务，不阻塞主对话
+        Task {
+            do {
+                let optimizer = SystemOptimizer(context: currentContext)
+                let title = try await optimizer.autoChatName(historyMessage: historyMessage)
+                if !title.isEmpty {
+                    await MainActor.run {
+                        chatTitle = title
+                        record.name = title
+                    }
+                }
+            } catch {
+                print("自动命名失败: \(error.localizedDescription)")
+            }
+        }
+    }
+    
     // 处理消息发送
     private func handleMessageSending(ifObservingMode: Bool) {
         
@@ -1044,6 +1083,8 @@ struct ChatView: View {
                 if let userMessage = userMessage, !isObserving, !isRetry {
                     chatTemps.append(userMessage)
                     context.insert(userMessage)
+                    // 异步自动命名（不阻塞主对话）
+                    autoGenerateTitleIfNeeded()
                 }
                 message = ""
                 selectedImages.removeAll()
@@ -1229,13 +1270,6 @@ struct ChatView: View {
                                 chatTemps[index].document_text = documentText
                                 updated = true
                             }
-                        }
-                        
-                        // 自动标题文本
-                        if let autoTitle = data.autoTitle, !autoTitle.isEmpty {
-                            chatTitle = autoTitle
-                            chatRecord.name = chatTitle
-                            updated = true
                         }
                         
                         // 搜索返回文本

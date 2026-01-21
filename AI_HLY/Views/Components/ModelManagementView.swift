@@ -516,13 +516,9 @@ struct CapabilityProbeSheet: View {
 
     var body: some View {
         VStack(spacing: 16) {
-            Capsule()
-                .fill(Color.secondary.opacity(0.5))
-                .frame(width: 44, height: 6)
-                .padding(.top, 8)
-
             Text("模型能力自动探测")
                 .font(.headline)
+                .padding(.top, 16)
 
             VStack(spacing: 12) {
                 ForEach(items) { item in
@@ -554,7 +550,6 @@ struct CapabilityProbeSheet: View {
         }
         .presentationDetents([.medium, .large])
         .presentationDragIndicator(.hidden)
-        .background(Color(.systemBackground))
     }
 
     @ViewBuilder
