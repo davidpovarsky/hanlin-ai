@@ -223,6 +223,8 @@ This project is licensed under the MIT License. See [LICENSE](LICENSE) for detai
 
 ---
 
+[![Star History Chart](https://api.star-history.com/svg?repos=CherryHQ/hanlin-ai&type=date&legend=top-left)](https://www.star-history.com/#CherryHQ/hanlin-ai&type=date&legend=top-left)
+
 <div align="center">
 
 **If this project helps you, please give it a ⭐️!**

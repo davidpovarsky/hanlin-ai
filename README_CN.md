@@ -225,6 +225,7 @@ AI_HLY/
 - 感谢所有贡献者的努力
 
 ---
+[![Star History Chart](https://api.star-history.com/svg?repos=CherryHQ/hanlin-ai&type=date&legend=top-left)](https://www.star-history.com/#CherryHQ/hanlin-ai&type=date&legend=top-left)
 
 <div align="center">
 
