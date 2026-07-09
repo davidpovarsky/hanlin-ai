@@ -44,6 +44,7 @@ struct StreamData {
     var operationalState: String?   // 运行状态信息
     var operationalDescription: String? // 运行描述
     var splitMarkers: splitMarkerGroup? // 分割标记组
+    var native_ui: [NativeUIBlock]?  // Native UI blocks
     var canvas_info: CanvasData?    // 画布数据
 }
 
@@ -80,6 +81,7 @@ class APIManager {
     private var codeBlock: [CodeBlock]?         // 代码块
     private var knowledgeCard: [KnowledgeCard]? // 知识卡片
     private var canvasInfo: CanvasData?         // 画布信息
+    private var nativeUIBlocks: [NativeUIBlock]? // Native UI blocks
     private var toolMessage: String?            // 工具使用说明
     private var toolMessageReasoning: String?   // 工具使用思考
     private var dataIndex: Int?
@@ -2203,6 +2205,7 @@ class APIManager {
                                     selectedURLs: [String]?,
                                     selectedPromptsContent: [String]?,
                                     systemMessage: String,
+                                    nativeLoadedToolNames: [String] = [],
                                     depth: Int = 0
     ) async throws -> AsyncThrowingStream<StreamData, Error> {
         
@@ -2374,7 +2377,7 @@ class APIManager {
                         let healthEnabled = isHealthEnabled()
                         let weatherEnabled = isWeatherEnabled()
                         let canvasEnabled = isCanvasEnabled()
-                        let tools = buildMemoryTools(
+                        var tools = buildMemoryTools(
                             memoryEnabled: memoryEnabled,
                             mapEnabled: mapEnabled,
                             calendarEnabled: calendarEnabled,
@@ -2385,6 +2388,7 @@ class APIManager {
                             weatherEnabled: weatherEnabled,
                             canvasEnabled: canvasEnabled,
                         )
+                        tools.append(contentsOf: await NativeToolBridge.schemasForRequest(loadedToolNames: nativeLoadedToolNames))
                         // 获得工具
                         requestBody["tools"] = tools
                     }
@@ -2664,6 +2668,7 @@ class APIManager {
                                     var toolResultFront = ""
                                     var useFunctionName = ""
                                     var toolID = ""
+                                    var nextNativeLoadedToolNames = nativeLoadedToolNames
                                     for toolCall in accumulatedToolCalls {
                                         if let toolCallID = toolCall["id"] as? String,
                                            let functionDict = toolCall["function"] as? [String: Any],
@@ -3596,6 +3601,34 @@ class APIManager {
                                                 toolResultFront = toolResult
                                                 
                                             default:
+                                                let nativeContext = NativeToolExecutionContext(
+                                                    localeIdentifier: currentLanguage,
+                                                    modelContext: self.context
+                                                )
+
+                                                if let nativeResult = await NativeToolBridge.executeIfNativeTool(
+                                                    name: functionName,
+                                                    argumentsJSON: functionArguments,
+                                                    context: nativeContext
+                                                ) {
+                                                    useFunctionName = functionName
+                                                    toolResult = nativeResult.modelText
+                                                    toolResultFront = nativeResult.userText ?? nativeResult.modelText
+
+                                                    if !nativeResult.uiBlocks.isEmpty {
+                                                        if self.nativeUIBlocks == nil {
+                                                            self.nativeUIBlocks = []
+                                                        }
+                                                        self.nativeUIBlocks?.append(contentsOf: nativeResult.uiBlocks)
+                                                    }
+
+                                                    if !nativeResult.deferredToolNames.isEmpty {
+                                                        nextNativeLoadedToolNames = nativeResult.deferredToolNames
+                                                    }
+
+                                                    break
+                                                }
+
                                                 toolResult = "Unknown"
                                                 useFunctionName = functionName
                                                 continuation.yield(StreamData(operationalState: currentLanguagePrefix ?  "工具不存在" : "Tool does not exist"))
@@ -3673,6 +3706,7 @@ class APIManager {
                                             splitMarkers: splitMarkerGroup(
                                                 groupID: groupID, modelName: modelInfo.name ?? "Unknown", modelDisplayName: modelInfo.displayName ?? "Unknown"
                                             ),
+                                            native_ui: self.nativeUIBlocks,
                                             canvas_info: self.canvasInfo,
                                         )
                                     )
@@ -3685,6 +3719,7 @@ class APIManager {
                                     self.codeBlock = nil
                                     self.knowledgeCard = nil
                                     self.canvasInfo = nil
+                                    self.nativeUIBlocks = nil
                                     
                                     // 递归处理
                                     let recursiveStream = try await self.processRemoteModel(messages: messages,
@@ -3708,6 +3743,7 @@ class APIManager {
                                                                                             selectedURLs: selectedURLs,
                                                                                             selectedPromptsContent: selectedPromptsContent,
                                                                                             systemMessage: systemMessage,
+                                                                                            nativeLoadedToolNames: nextNativeLoadedToolNames,
                                                                                             depth: depth + 1)
                                     for try await recursiveData in recursiveStream {
                                         continuation.yield(recursiveData)

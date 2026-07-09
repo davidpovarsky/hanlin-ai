@@ -92,6 +92,7 @@ struct ChatBubbleView: View {
     let healthCards: [HealthData]? // 健康卡片
     let codeBlocks: [CodeBlock]?   // 代码块
     let knowledgeCard: [KnowledgeCard]? // 知识卡片
+    let nativeUIBlocks: [NativeUIBlock]
     let searchEngine: String?
     let audioAssets: [AudioAsset]?
     @Binding var isVoiceExpanded: Bool // 语音消息折叠
@@ -151,6 +152,94 @@ struct ChatBubbleView: View {
     @ScaledMetric(relativeTo: .body) var size_38: CGFloat = 38
     @ScaledMetric(relativeTo: .body) var size_40: CGFloat = 40
     @ScaledMetric(relativeTo: .body) var size_80: CGFloat = 80
+
+    init(
+        temporaryRecord: Bool,
+        id: UUID,
+        text: String,
+        saveTranlatedText: String?,
+        images: [UIImage]?,
+        imagesText: String?,
+        reasoning: String,
+        reasoningTime: String?,
+        isReasoningExpanded: Binding<Bool>,
+        toolContent: String,
+        toolName: String,
+        isToolContentExpanded: Binding<Bool>,
+        uploadDocument: [URL]?,
+        documentText: String?,
+        resources: [Resource]?,
+        prompts: [PromptCard]?,
+        locations: [Location]?,
+        routes: [RouteInfo]?,
+        events: [EventItem]?,
+        htmlContent: String?,
+        healthCards: [HealthData]?,
+        codeBlocks: [CodeBlock]?,
+        knowledgeCard: [KnowledgeCard]?,
+        nativeUIBlocks: [NativeUIBlock] = [],
+        searchEngine: String?,
+        audioAssets: [AudioAsset]?,
+        isVoiceExpanded: Binding<Bool>,
+        showCanvas: Bool,
+        canvas: CanvasData?,
+        role: String,
+        model: String,
+        modelCompany: String,
+        modelIdentity: String,
+        modelIcon: String,
+        isLastAssistant: Bool,
+        isLastAssistantGroup: Bool,
+        splitMarker: Bool,
+        isResponding: Bool,
+        operationalState: String,
+        operationalDescription: String,
+        onRetry: (() -> Void)?,
+        onDelete: (() -> Void)?
+    ) {
+        self.temporaryRecord = temporaryRecord
+        self.id = id
+        self.text = text
+        self.saveTranlatedText = saveTranlatedText
+        self.images = images
+        self.imagesText = imagesText
+        self.reasoning = reasoning
+        self.reasoningTime = reasoningTime
+        self._isReasoningExpanded = isReasoningExpanded
+        self.toolContent = toolContent
+        self.toolName = toolName
+        self._isToolContentExpanded = isToolContentExpanded
+        self.uploadDocument = uploadDocument
+        self.documentText = documentText
+        self.resources = resources
+        self.prompts = prompts
+        self.locations = locations
+        self.routes = routes
+        self.events = events
+        self.htmlContent = htmlContent
+        self.healthCards = healthCards
+        self.codeBlocks = codeBlocks
+        self.knowledgeCard = knowledgeCard
+        self.nativeUIBlocks = nativeUIBlocks
+        self.searchEngine = searchEngine
+        self.audioAssets = audioAssets
+        self._isVoiceExpanded = isVoiceExpanded
+        self.showCanvas = showCanvas
+        self.canvas = canvas
+        self.role = role
+        self.model = model
+        self.modelCompany = modelCompany
+        self.modelIdentity = modelIdentity
+        self.modelIcon = modelIcon
+        self.isLastAssistant = isLastAssistant
+        self.isLastAssistantGroup = isLastAssistantGroup
+        self.splitMarker = splitMarker
+        self.isResponding = isResponding
+        self.operationalState = operationalState
+        self.operationalDescription = operationalDescription
+        self.onRetry = onRetry
+        self.onDelete = onDelete
+    }
     
     var body: some View {
         VStack(alignment: messageAlignment) {
@@ -418,7 +507,7 @@ struct ChatBubbleView: View {
     // MARK: 文本 & 各类工具输出
     @ViewBuilder
     private func assistantTextSection() -> some View {
-        if !text.isEmpty || !reasoning.isEmpty || !toolContent.isEmpty {
+        if !text.isEmpty || !reasoning.isEmpty || !toolContent.isEmpty || !nativeUIBlocks.isEmpty {
             VStack(alignment: .leading, spacing: 6) {
                 if showCanvas, canvas?.content.isEmpty == false {
                     canvasBubble(for: canvas)
@@ -462,6 +551,11 @@ struct ChatBubbleView: View {
                 // 地图
                 if (locations?.isEmpty == false) || (routes?.isEmpty == false) {
                     mapBubble(for: locations ?? [], routes: routes ?? [])
+                        .transition(.move(edge: .top).combined(with: .opacity))
+                }
+                // Native UI
+                if !nativeUIBlocks.isEmpty {
+                    NativeUIRenderer(blocks: nativeUIBlocks)
                         .transition(.move(edge: .top).combined(with: .opacity))
                 }
                 // 底部按钮

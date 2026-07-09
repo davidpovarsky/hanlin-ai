@@ -825,6 +825,7 @@ struct ChatView: View {
             healthCards: msg.healthData,
             codeBlocks: msg.codeBlockData,
             knowledgeCard: msg.knowledgeCard,
+            nativeUIBlocks: msg.nativeUIBlocks,
             searchEngine: msg.searchEngine,
             audioAssets: msg.audioAssets,
             isVoiceExpanded: audioExpandedBinding,
@@ -1335,6 +1336,12 @@ struct ChatView: View {
                             updated = true
                         }
                         
+                        // Native UI blocks
+                        if let nativeUI = data.native_ui, !nativeUI.isEmpty {
+                            assistantMessage.appendNativeUIBlocks(nativeUI)
+                            updated = true
+                        }
+
                         // 画布信息
                         if let canvasInfo = data.canvas_info {
                             do {
