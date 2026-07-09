@@ -46,12 +46,18 @@ struct MainTabView: View {
                 }
                 .tag(3)
             
+            NativeAppsHubView()
+                .tabItem {
+                    Label(String(localized: "Apps"), systemImage: "square.grid.2x2")
+                }
+                .tag(4)
+            
             // 第五个Tab: SettingsView
             SettingsView()
                 .tabItem {
                     Label(String(localized: "设置"), systemImage: "gearshape")
                 }
-                .tag(4)
+                .tag(5)
         }
         .animation(.easeInOut(duration: 0.4), value: selectedTab)
         .onReceive(NotificationCenter.default.publisher(for: .hideTabBar)) { notification in

@@ -25,6 +25,7 @@ final class NativeToolCatalog {
         register(WikipediaSearchTool())
         register(WikipediaSummaryTool())
         register(QuickCalculateTool())
+        registerNativeAppTools()
     }
 
     func register(_ tool: NativeTool) {
