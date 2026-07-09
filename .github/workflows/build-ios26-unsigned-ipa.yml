@@ -17,7 +17,8 @@ jobs:
 
     env:
       PROJECT_PATH: AI_HLY.xcodeproj
-      TARGET_NAME: AI_Hanlin
+      SCHEME_NAME: AI_HLY
+      APP_NAME: AI_Hanlin
       CONFIGURATION: Release
       DERIVED_DATA_PATH: build/DerivedData
       CLONED_PACKAGES_PATH: build/SourcePackages
@@ -190,10 +191,10 @@ jobs:
             xcodebuild -list -project "$PROJECT_PATH"
 
             echo
-            echo "Checking project settings..."
+            echo "Checking project settings by scheme..."
             xcodebuild \
               -project "$PROJECT_PATH" \
-              -target "$TARGET_NAME" \
+              -scheme "$SCHEME_NAME" \
               -configuration "$CONFIGURATION" \
               -showBuildSettings \
               IPHONEOS_DEPLOYMENT_TARGET="$IOS_DEPLOYMENT_TARGET" \
@@ -213,6 +214,7 @@ jobs:
 
             xcodebuild \
               -project "$PROJECT_PATH" \
+              -scheme "$SCHEME_NAME" \
               -resolvePackageDependencies \
               -clonedSourcePackagesDirPath "$CLONED_PACKAGES_PATH" \
               -skipPackagePluginValidation \
@@ -233,16 +235,19 @@ jobs:
           {
             echo "Starting unsigned iOS build..."
             echo "Project: $PROJECT_PATH"
-            echo "Target: $TARGET_NAME"
+            echo "Scheme: $SCHEME_NAME"
+            echo "App name: $APP_NAME"
             echo "Configuration: $CONFIGURATION"
             echo "Deployment target override: iOS $IOS_DEPLOYMENT_TARGET"
             echo "DerivedData: $DERIVED_DATA_PATH"
             echo "Packages: $CLONED_PACKAGES_PATH"
             echo
 
+            rm -rf "$LOG_DIR/BuildResult.xcresult"
+
             xcodebuild \
               -project "$PROJECT_PATH" \
-              -target "$TARGET_NAME" \
+              -scheme "$SCHEME_NAME" \
               -configuration "$CONFIGURATION" \
               -sdk iphoneos \
               -destination "generic/platform=iOS" \
@@ -374,7 +379,8 @@ jobs:
             echo
             echo "===== Project ====="
             echo "PROJECT_PATH=$PROJECT_PATH"
-            echo "TARGET_NAME=$TARGET_NAME"
+            echo "SCHEME_NAME=$SCHEME_NAME"
+            echo "APP_NAME=$APP_NAME"
             echo "CONFIGURATION=$CONFIGURATION"
             echo "IOS_DEPLOYMENT_TARGET=$IOS_DEPLOYMENT_TARGET"
 
