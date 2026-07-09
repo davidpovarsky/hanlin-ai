@@ -1,9 +1,7 @@
 {
   "sourceLanguage" : "zh-Hans",
   "strings" : {
-    "" : {
-
-    },
+    "" : {},
     " 临 时 对 话 模 式 " : {
       "localizations" : {
         "en" : {
@@ -233,6 +231,12 @@
             "state" : "translated",
             "value" : "🔗 Click here to get the %@ API key"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🔗 לחצו כאן לקבלת API Key של %@"
+          }
         }
       }
     },
@@ -242,6 +246,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "🔗 Click here to get the %@ API key"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🔗 לחצו כאן לקבלת API Key של %@"
           }
         }
       }
@@ -323,6 +333,12 @@
             "state" : "translated",
             "value" : "API Key"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "API Key"
+          }
         }
       }
     },
@@ -333,6 +349,12 @@
             "state" : "translated",
             "value" : "API Key Missing"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "חסר API Key"
+          }
         }
       }
     },
@@ -342,6 +364,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Test API"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "בדיקת API"
           }
         }
       }
@@ -386,6 +414,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "聊天"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "צ׳אטים"
           }
         }
       }
@@ -1328,6 +1362,12 @@
             "state" : "translated",
             "value" : "知识"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ידע"
+          }
         }
       }
     },
@@ -1362,6 +1402,12 @@
             "state" : "translated",
             "value" : "模型"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "מודלים"
+          }
         }
       }
     },
@@ -1379,6 +1425,12 @@
             "state" : "translated",
             "value" : "⚠️模型列表不可用，请前往 设置 - 密钥 进行配置并启用对应厂商"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "⚠️ רשימת המודלים אינה זמינה. עברו אל הגדרות - API Keys והפעילו את הספקים המתאימים."
+          }
         }
       }
     },
@@ -1395,6 +1447,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "⚠️您还没有配置任何密钥，请前往 设置 - 密钥 进行配置"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "⚠️ לא הגדרתם API Keys. עברו אל הגדרות - API Keys כדי להגדיר אותם."
           }
         }
       }
@@ -1456,6 +1514,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "设置"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "הגדרות"
           }
         }
       }
@@ -1539,6 +1603,12 @@
             "state" : "translated",
             "value" : "视觉"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ראייה"
+          }
         }
       }
     },
@@ -1555,6 +1625,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "⚠️视觉功能不可用，请前往 设置 - 密钥 进行配置并开启视觉模型"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "⚠️ יכולת הראייה אינה זמינה. עברו אל הגדרות - API Keys והפעילו מודלי ראייה."
           }
         }
       }
@@ -1633,6 +1709,12 @@
             "state" : "translated",
             "value" : "Bilingual Search (Chinese & English)"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "חיפוש דו-לשוני (סינית ואנגלית)"
+          }
         }
       }
     },
@@ -1662,6 +1744,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Optimization Models"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "מודלי אופטימיזציה"
           }
         }
       }
@@ -1712,6 +1800,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Save"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "שמירה"
           }
         }
       }
@@ -1923,6 +2017,12 @@
             "state" : "translated",
             "value" : "List"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "רשימה"
+          }
         }
       }
     },
@@ -1943,6 +2043,12 @@
             "state" : "translated",
             "value" : "Delete"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "מחיקה"
+          }
         }
       }
     },
@@ -1953,6 +2059,12 @@
             "state" : "translated",
             "value" : "Delete Message"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "מחיקת הודעה"
+          }
         }
       }
     },
@@ -1962,6 +2074,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Delete Knowledge"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "מחיקת ידע"
           }
         }
       }
@@ -1993,6 +2111,12 @@
             "state" : "translated",
             "value" : "Refresh Model List"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "רענון רשימת המודלים"
+          }
         }
       }
     },
@@ -2002,6 +2126,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Go to Settings"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "מעבר להגדרות"
           }
         }
       }
@@ -2053,6 +2183,12 @@
             "state" : "translated",
             "value" : "Summary"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "סיכום"
+          }
         }
       }
     },
@@ -2063,6 +2199,12 @@
             "state" : "translated",
             "value" : "Refinement"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ליטוש"
+          }
         }
       }
     },
@@ -2072,6 +2214,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Translation"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "תרגום"
           }
         }
       }
@@ -2113,6 +2261,12 @@
             "state" : "translated",
             "value" : "Cancel"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ביטול"
+          }
         }
       }
     },
@@ -2123,6 +2277,12 @@
             "state" : "translated",
             "value" : "Unpin"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ביטול הצמדה"
+          }
         }
       }
     },
@@ -2132,6 +2292,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Available Models (%lld)"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "מודלים זמינים (%lld)"
           }
         }
       }
@@ -2153,6 +2319,12 @@
             "state" : "translated",
             "value" : "Embedding Models"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "מודלי הטמעה"
+          }
         }
       }
     },
@@ -2173,6 +2345,12 @@
             "state" : "translated",
             "value" : "Activate Vision"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "הפעלת ראייה"
+          }
         }
       }
     },
@@ -2183,6 +2361,12 @@
             "state" : "translated",
             "value" : "Enable Active Search"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "הפעלת חיפוש יזום"
+          }
         }
       }
     },
@@ -2192,6 +2376,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Enable Active Search"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "הפעלת חיפוש יזום"
           }
         }
       }
@@ -2283,6 +2473,12 @@
             "state" : "translated",
             "value" : "Image Generation Model"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "מודל יצירת תמונות"
+          }
         }
       }
     },
@@ -2352,6 +2548,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Base Model"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "מודל בסיס"
           }
         }
       }
@@ -2463,6 +2665,12 @@
             "state" : "translated",
             "value" : "Save as Knowledge"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "שמירה כידע"
+          }
         }
       }
     },
@@ -2472,6 +2680,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Save to Knowledge Backpack"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "שמירה לתיק הידע"
           }
         }
       }
@@ -2483,6 +2697,12 @@
             "state" : "translated",
             "value" : "Academic Paper Search"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "חיפוש מאמרים אקדמיים"
+          }
         }
       }
     },
@@ -2493,12 +2713,24 @@
             "state" : "translated",
             "value" : "Done"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "סיום"
+          }
         }
       }
     },
     "密钥" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "API KEY"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "API KEY"
@@ -2602,6 +2834,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Added model (%lld)"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "מודלים שנוספו (%lld)"
           }
         }
       }
@@ -2893,6 +3131,12 @@
             "state" : "translated",
             "value" : "Provider: %@"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ספק: %@"
+          }
         }
       }
     },
@@ -2923,6 +3167,12 @@
             "state" : "translated",
             "value" : "Search engine selection (only one)"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "בחירת מנוע חיפוש (אחד לכל היותר)"
+          }
         }
       }
     },
@@ -2932,6 +3182,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Search Prompt"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "הנחיית חיפוש"
           }
         }
       }
@@ -2943,6 +3199,12 @@
             "state" : "translated",
             "value" : "Search Both Chinese and English Content"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "חיפוש תוכן בסינית ובאנגלית במקביל"
+          }
         }
       }
     },
@@ -2952,6 +3214,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Search Agent"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "סוכן חיפוש"
           }
         }
       }
@@ -2963,6 +3231,12 @@
             "state" : "translated",
             "value" : "Search Model"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "מודל חיפוש"
+          }
         }
       }
     },
@@ -2972,6 +3246,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Search model..."
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "חיפוש מודל..."
           }
         }
       }
@@ -2983,6 +3263,12 @@
             "state" : "translated",
             "value" : "Search Knowledge Documents"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "חיפוש במסמכי ידע"
+          }
         }
       }
     },
@@ -2992,6 +3278,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Number of Search Results: %lld"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "מספר תוצאות חיפוש: %lld"
           }
         }
       }
@@ -3003,6 +3295,12 @@
             "state" : "translated",
             "value" : "Number of Search Results (range: 5-20)"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "מספר תוצאות חיפוש (טווח: 5-20)"
+          }
         }
       }
     },
@@ -3013,6 +3311,12 @@
             "state" : "translated",
             "value" : "Search chat and message content"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "חיפוש בצ׳אטים ובהודעות"
+          }
         }
       }
     },
@@ -3022,6 +3326,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Search Memory"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "חיפוש בזיכרון"
           }
         }
       }
@@ -3113,6 +3423,12 @@
             "state" : "translated",
             "value" : "Text Optimization Model"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "מודל אופטימיזציית טקסט"
+          }
         }
       }
     },
@@ -3203,6 +3519,12 @@
             "state" : "translated",
             "value" : "No available models."
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "אין מודלים זמינים."
+          }
         }
       }
     },
@@ -3232,6 +3554,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Unable to create a new conversation."
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "לא ניתן ליצור שיחה חדשה"
           }
         }
       }
@@ -3323,6 +3651,12 @@
             "state" : "translated",
             "value" : "No available models"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "אין מודלים זמינים"
+          }
         }
       }
     },
@@ -3342,6 +3676,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "No multimodal models are currently enabled. Please go to \"Settings - Models - Model Management\" to add and enable models that support vision."
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "אין כרגע מודלים מולטימודליים פעילים. עברו אל \"הגדרות-מודלים-ניהול מודלים\" כדי להוסיף ולהפעיל מודלים שתומכים בראייה."
           }
         }
       }
@@ -3403,6 +3743,12 @@
             "state" : "translated",
             "value" : "No Search Engine Enabled"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "לא הופעל מנוע חיפוש"
+          }
         }
       }
     },
@@ -3432,6 +3778,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Local Models (Beta)"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "מודלים מקומיים (Beta)"
           }
         }
       }
@@ -3523,6 +3875,12 @@
             "state" : "translated",
             "value" : "Check API Balance"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "בדיקת יתרת API"
+          }
         }
       }
     },
@@ -3593,6 +3951,12 @@
             "state" : "translated",
             "value" : "Models"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "מודלים"
+          }
         }
       }
     },
@@ -3603,6 +3967,12 @@
             "state" : "translated",
             "value" : "Model Vendors"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ספקי מודלים"
+          }
         }
       }
     },
@@ -3612,6 +3982,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Model Name"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "שם המודל"
           }
         }
       }
@@ -3673,6 +4049,12 @@
             "state" : "translated",
             "value" : "Model Management"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ניהול מודלים"
+          }
         }
       }
     },
@@ -3693,6 +4075,12 @@
             "state" : "translated",
             "value" : "Model Selection"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "בחירת מודל"
+          }
         }
       }
     },
@@ -3706,9 +4094,7 @@
         }
       }
     },
-    "横向滑动" : {
-
-    },
+    "横向滑动" : {},
     "横向画幅" : {
       "localizations" : {
         "en" : {
@@ -3725,6 +4111,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Loading..."
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "טוען..."
           }
         }
       }
@@ -3805,6 +4197,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Test API"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "בדיקת API"
           }
         }
       }
@@ -3906,6 +4304,12 @@
             "state" : "translated",
             "value" : "Add Online Model"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "הוספת מודל מקוון"
+          }
         }
       }
     },
@@ -3935,6 +4339,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Add Local Models"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "הוספת מודלים מקומיים"
           }
         }
       }
@@ -4076,6 +4486,12 @@
             "state" : "translated",
             "value" : "Specific Location Search"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "חיפוש במיקום מסוים"
+          }
         }
       }
     },
@@ -4216,6 +4632,12 @@
             "state" : "translated",
             "value" : "Knowledge"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "מאגר ידע"
+          }
         }
       }
     },
@@ -4225,6 +4647,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Knowledge Document Creation"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "כתיבת מסמך ידע"
           }
         }
       }
@@ -4236,6 +4664,12 @@
             "state" : "translated",
             "value" : "Knowledge Backpack"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "תיק ידע"
+          }
         }
       }
     },
@@ -4245,6 +4679,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Knowledge Backpack Search"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "חיפוש בתיק הידע"
           }
         }
       }
@@ -4256,6 +4696,12 @@
             "state" : "translated",
             "value" : "Knowledge Backpack Error"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "שגיאת תיק ידע"
+          }
         }
       }
     },
@@ -4265,6 +4711,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Confirm"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "אישור"
           }
         }
       }
@@ -4346,6 +4798,12 @@
             "state" : "translated",
             "value" : "Vision"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ראייה"
+          }
         }
       }
     },
@@ -4355,6 +4813,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Visual Optimization Model"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "מודל אופטימיזציית ראייה"
           }
         }
       }
@@ -4496,6 +4960,12 @@
             "state" : "translated",
             "value" : "Edit"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "עריכה"
+          }
         }
       }
     },
@@ -4526,6 +4996,12 @@
             "state" : "translated",
             "value" : "Edit Icon"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "עריכת סמל"
+          }
         }
       }
     },
@@ -4545,6 +5021,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Edit API Key"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "עריכת API Key"
           }
         }
       }
@@ -4696,6 +5178,12 @@
             "state" : "translated",
             "value" : "Pin Message"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "הצמדת הודעה"
+          }
         }
       }
     },
@@ -4705,6 +5193,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Pin Knowledge"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "הצמדת ידע"
           }
         }
       }
@@ -4716,6 +5210,12 @@
             "state" : "translated",
             "value" : "Number of Search Results: %lld"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "מספר תוצאות חיפוש: %lld"
+          }
         }
       }
     },
@@ -4725,6 +5225,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Number of Search Results (range: 5-20)"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "מספר תוצאות חיפוש (טווח: 5-20)"
           }
         }
       }
@@ -4796,6 +5302,12 @@
             "state" : "translated",
             "value" : "Network Information Retrieval"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "אחזור מידע מהרשת"
+          }
         }
       }
     },
@@ -4805,6 +5317,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Network Search"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "חיפוש ברשת"
           }
         }
       }
@@ -4986,6 +5504,12 @@
             "state" : "translated",
             "value" : "Settings"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "הגדרות"
+          }
         }
       }
     },
@@ -4995,6 +5519,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Set the %@ API key to enable this weather service."
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "הגדירו API Key של %@ כדי להפעיל את שירות מזג האוויר הזה."
           }
         }
       }
@@ -5006,6 +5536,12 @@
             "state" : "translated",
             "value" : "Set the %@ API key to enable the vendor's model."
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "הגדירו API Key של %@ כדי להפעיל את מודלי הספק."
+          }
         }
       }
     },
@@ -5016,6 +5552,12 @@
             "state" : "translated",
             "value" : "Set the %@ API key to enable this map engine."
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "הגדירו API Key של %@ כדי להפעיל את מנוע המפות הזה."
+          }
         }
       }
     },
@@ -5025,6 +5567,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Set the %@ API key to enable this search engine."
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "הגדירו API Key של %@ כדי להפעיל את מנוע החיפוש הזה."
           }
         }
       }
@@ -5156,6 +5704,12 @@
             "state" : "translated",
             "value" : "Speech Model"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "מודל קול"
+          }
         }
       }
     },
@@ -5276,6 +5830,12 @@
             "state" : "translated",
             "value" : "Please enter the API Host"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "נא להזין API Host"
+          }
         }
       }
     },
@@ -5286,6 +5846,12 @@
             "state" : "translated",
             "value" : "Please enter the API key"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "נא להזין API Key"
+          }
         }
       }
     },
@@ -5295,6 +5861,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Please enter the API key."
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "נא להזין API Key."
           }
         }
       }
@@ -5326,6 +5898,12 @@
             "state" : "translated",
             "value" : "Please enter the API key"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "נא להזין API Key"
+          }
         }
       }
     },
@@ -5356,6 +5934,12 @@
             "state" : "translated",
             "value" : "Please enter the model name"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "נא להזין את שם המודל"
+          }
         }
       }
     },
@@ -5385,6 +5969,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Please enter the group chat name"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "נא להזין את שם הצ׳אט הקבוצתי"
           }
         }
       }
@@ -5496,6 +6086,12 @@
             "state" : "translated",
             "value" : "Software Guide"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "מדריך התוכנה"
+          }
         }
       }
     },
@@ -5549,9 +6145,7 @@
         }
       }
     },
-    "返回" : {
-
-    },
+    "返回" : {},
     "这是一段示例消息内容..." : {
       "localizations" : {
         "en" : {
@@ -5609,6 +6203,12 @@
             "state" : "translated",
             "value" : "Select an Embedding Model"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "בחירת מודל הטמעה"
+          }
         }
       }
     },
@@ -5628,6 +6228,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Select the Base Model"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "בחירת מודל בסיס"
           }
         }
       }
@@ -5659,6 +6265,12 @@
             "state" : "translated",
             "value" : "Select a Text Optimization Model"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "בחירת מודל אופטימיזציית טקסט"
+          }
         }
       }
     },
@@ -5678,6 +6290,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Select a Visual Optimization Model"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "בחירת מודל אופטימיזציית ראייה"
           }
         }
       }
@@ -5789,6 +6407,12 @@
             "state" : "translated",
             "value" : "Nearby Interests Search"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "חיפוש עניין בקרבת מקום"
+          }
         }
       }
     },
@@ -5858,6 +6482,70 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Default Hidden Model"
+          }
+        }
+      }
+    },
+    "新群聊" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "New Group Chat"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "צ׳אט קבוצתי חדש"
+          }
+        }
+      }
+    },
+    "欢迎加入新群聊👏" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Welcome to the new group chat! 👏"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ברוכים הבאים לצ׳אט הקבוצתי החדש! 👏"
+          }
+        }
+      }
+    },
+    "暂无开启的大模型厂商，请前往“设置-模型-模型厂商”设置大模型密钥并启用厂商。" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No large model providers are currently enabled. Please go to “Settings-Models-Model Vendors” to set a large model API key and enable a provider."
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "אין כרגע ספק מודלים גדול פעיל. עברו אל \"הגדרות-מודלים-ספקי מודלים\" כדי להגדיר API Key ולהפעיל ספק."
+          }
+        }
+      }
+    },
+    "暂未设置优化模型，请前往“设置-模型-优化模型”设置文本优化模型和视觉优化模型。" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No optimization model has been set. Please go to “Settings-Models-Optimization Models” to set a text optimization model and a visual optimization model."
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "עדיין לא הוגדר מודל אופטימיזציה. עברו אל \"הגדרות-מודלים-מודלי אופטימיזציה\" כדי להגדיר מודל אופטימיזציית טקסט ומודל אופטימיזציית ראייה."
           }
         }
       }

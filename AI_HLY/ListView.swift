@@ -106,7 +106,7 @@ struct ListView: View {
                         if loadHistoryMessages {
                             HStack {
                                 ProgressView().font(.caption)
-                                Text("正在加载...").font(.caption)
+                                Text(String(localized: "正在加载...")).font(.caption)
                             }
                         } else {
                             HStack {
@@ -114,7 +114,7 @@ struct ListView: View {
                                     showSafariGuide = true
                                 }) {
                                     Label {
-                                        Text("软件指南")
+                                        Text(String(localized: "软件指南"))
                                             .font(.caption)
                                     } icon: {
                                         Image(systemName: "text.rectangle.page")
@@ -163,11 +163,11 @@ struct ListView: View {
                         .background(BlurView(style: .systemThinMaterial))
                         .edgesIgnoringSafeArea(.all)
                 }
-                .alert("无法新建对话", isPresented: $showValidationAlert) {
-                    Button("前往设置") {
+                .alert(String(localized: "无法新建对话"), isPresented: $showValidationAlert) {
+                    Button(String(localized: "前往设置")) {
                         showSettingSheet = true
                     }
-                    Button("取消", role: .cancel) { }
+                    Button(String(localized: "取消"), role: .cancel) { }
                 } message: {
                     Text(validationAlertMessage)
                 }
@@ -187,7 +187,7 @@ struct ListView: View {
                         }
                         .toolbar {
                             ToolbarItem(placement: .navigationBarTrailing) {
-                                Button("完成") {
+                                Button(String(localized: "完成")) {
                                     showSettingSheet = false
                                 }
                             }
@@ -207,7 +207,7 @@ struct ListView: View {
             chatRecordsSection
         }
         .listStyle(.plain)
-        .searchable(text: $searchText, prompt: "搜索聊天与消息内容")
+        .searchable(text: $searchText, prompt: Text(String(localized: "搜索聊天与消息内容")))
         .onChange(of: searchText) {
             // 取消上一次搜索任务
             searchTask?.cancel()
@@ -251,7 +251,7 @@ struct ListView: View {
                             .scaledToFit()
                             .frame(width: 20, height: 20)
                             .foregroundColor(.hlBluefont)
-                        Text("即时翻译")
+                        Text(String(localized: "即时翻译"))
                             .foregroundColor(.hlBluefont)
                     }
                     .padding(.vertical, 10)
@@ -270,7 +270,7 @@ struct ListView: View {
                             .scaledToFit()
                             .frame(width: 18, height: 18)
                             .foregroundColor(.hlGreen)
-                        Text("即时润色")
+                        Text(String(localized: "即时润色"))
                             .foregroundColor(.hlGreen)
                     }
                     .padding(.vertical, 10)
@@ -289,7 +289,7 @@ struct ListView: View {
                             .scaledToFit()
                             .frame(width: 18, height: 18)
                             .foregroundColor(.hlCyanite)
-                        Text("即时摘要")
+                        Text(String(localized: "即时摘要"))
                             .foregroundColor(.hlCyanite)
                     }
                     .padding(.vertical, 10)
@@ -343,19 +343,22 @@ struct ListView: View {
                     editingTitle  = record.name ?? ""
                     showIconSheet = true
                 } label: {
-                    Label("编辑图标", systemImage: "paintbrush")
+                    Label(String(localized: "编辑图标"), systemImage: "paintbrush")
                 }
                 
                 Button {
                     togglePin(record)
                 } label: {
-                    Label(record.isPinned ? "取消置顶" : "置顶消息", systemImage: record.isPinned ? "pin.slash" : "pin")
+                    Label(
+                        record.isPinned ? String(localized: "取消置顶") : String(localized: "置顶消息"),
+                        systemImage: record.isPinned ? "pin.slash" : "pin"
+                    )
                 }
                 
                 Button(role: .destructive) {
                     deleteChat(record)
                 } label: {
-                    Label("删除消息", systemImage: "trash")
+                    Label(String(localized: "删除消息"), systemImage: "trash")
                 }
             }
         }
@@ -367,7 +370,7 @@ struct ListView: View {
             Button(role: .destructive) {
                 deleteChat(record)
             } label: {
-                Label("删除消息", systemImage: "trash")
+                Label(String(localized: "删除消息"), systemImage: "trash")
             }
             .tint(Color(.hlRed))
         }
@@ -376,7 +379,7 @@ struct ListView: View {
                 togglePin(record)
             } label: {
                 Label(
-                    record.isPinned ? "取消置顶" : "置顶消息",
+                    record.isPinned ? String(localized: "取消置顶") : String(localized: "置顶消息"),
                     systemImage: record.isPinned ? "pin.slash" : "pin"
                 )
             }
@@ -390,7 +393,7 @@ struct ListView: View {
                 editingTitle  = record.name ?? ""
                 showIconSheet = true
             } label: {
-                Label("编辑图标", systemImage: "paintbrush")
+                Label(String(localized: "编辑图标"), systemImage: "paintbrush")
             }
             .tint(.hlGreen)
         }
@@ -517,7 +520,7 @@ struct ListView: View {
     private func addNewChat() {
         // 验证是否有开启的大模型厂商
         if noAPIKeys {
-            validationAlertMessage = "暂无开启的大模型厂商，请前往“设置-模型-模型厂商”设置大模型密钥并启用厂商。"
+            validationAlertMessage = String(localized: "暂无开启的大模型厂商，请前往“设置-模型-模型厂商”设置大模型密钥并启用厂商。")
             validationSettingType = .apiKeys
             showValidationAlert = true
             return
@@ -525,16 +528,14 @@ struct ListView: View {
 
         // 验证是否选择了优化模型
         if noOptimizationModel {
-            validationAlertMessage = "暂未设置优化模型，请前往“设置-模型-优化模型”设置文本优化模型和视觉优化模型。"
+            validationAlertMessage = String(localized: "暂未设置优化模型，请前往“设置-模型-优化模型”设置文本优化模型和视觉优化模型。")
             validationSettingType = .optimization
             showValidationAlert = true
             return
         }
 
-        let currentLanguage = Locale.preferredLanguages.first ?? "zh-Hans"
-
-        let chatName: String = currentLanguage.hasPrefix("zh") ? "新群聊" : "New Group Chat"
-        let welcomeText: String = currentLanguage.hasPrefix("zh") ? "欢迎加入新群聊👏" : "Welcome to the new group chat! 👏"
+        let chatName: String = String(localized: "新群聊")
+        let welcomeText: String = String(localized: "欢迎加入新群聊👏")
         
         let newChat = ChatRecords(
             name: chatName,

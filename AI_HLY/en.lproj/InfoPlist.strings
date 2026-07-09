@@ -1,0 +1,12 @@
+"NSCalendarsFullAccessUsageDescription" = "Calendar access is needed to read and add events.";
+"NSCameraUsageDescription" = "Camera access is needed to take photos.";
+"NSHealthClinicalHealthRecordsShareUsageDescription" = "Health data access is needed to provide related services.";
+"NSHealthShareUsageDescription" = "Health data access is needed to provide related services.";
+"NSHealthUpdateUsageDescription" = "Health data write access is needed to record activity.";
+"NSLocationAlwaysAndWhenInUseUsageDescription" = "Location access is needed to provide nearby information.";
+"NSLocationWhenInUseUsageDescription" = "Location access is needed to provide nearby information.";
+"NSMicrophoneUsageDescription" = "Microphone access is needed for recording.";
+"NSPhotoLibraryAddUsageDescription" = "Photo library add access is needed to save images.";
+"NSPhotoLibraryUsageDescription" = "Photo library access is needed to select images.";
+"NSRemindersFullAccessUsageDescription" = "Reminders access is needed to read and add tasks.";
+"NSSpeechRecognitionUsageDescription" = "Speech recognition access is needed for voice input.";

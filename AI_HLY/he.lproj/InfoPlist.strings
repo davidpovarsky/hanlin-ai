@@ -1,0 +1,12 @@
+"NSCalendarsFullAccessUsageDescription" = "נדרשת גישה ללוח השנה כדי לקרוא ולהוסיף אירועים.";
+"NSCameraUsageDescription" = "נדרשת גישה למצלמה כדי לצלם תמונות.";
+"NSHealthClinicalHealthRecordsShareUsageDescription" = "נדרשת גישה לנתוני בריאות כדי לספק שירותים קשורים.";
+"NSHealthShareUsageDescription" = "נדרשת גישה לנתוני בריאות כדי לספק שירותים קשורים.";
+"NSHealthUpdateUsageDescription" = "נדרשת הרשאה לכתיבת נתוני בריאות כדי לתעד פעילות.";
+"NSLocationAlwaysAndWhenInUseUsageDescription" = "נדרשת גישה למיקום כדי לספק מידע על הסביבה הקרובה.";
+"NSLocationWhenInUseUsageDescription" = "נדרשת גישה למיקום כדי לספק מידע על הסביבה הקרובה.";
+"NSMicrophoneUsageDescription" = "נדרשת גישה למיקרופון לצורך הקלטה.";
+"NSPhotoLibraryAddUsageDescription" = "נדרשת גישה להוספה לספריית התמונות כדי לשמור תמונות.";
+"NSPhotoLibraryUsageDescription" = "נדרשת גישה לספריית התמונות כדי לבחור תמונות.";
+"NSRemindersFullAccessUsageDescription" = "נדרשת גישה לתזכורות כדי לקרוא ולהוסיף משימות.";
+"NSSpeechRecognitionUsageDescription" = "נדרשת גישה לזיהוי דיבור לצורך קלט קולי.";
