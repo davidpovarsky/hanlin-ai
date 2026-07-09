@@ -49,11 +49,10 @@ struct ListView: View {
             .allSatisfy { $0.isHidden || ($0.key?.isEmpty ?? true) }
     }
 
-    // 检测是否缺少优化模型
-    private var noOptimizationModel: Bool {
+    // 检测是否缺少文本优化模型。普通文本聊天不需要视觉优化模型。
+    private var noTextOptimizationModel: Bool {
         let userInfo = userInfos.first
-        return (userInfo?.optimizationTextModel.isEmpty ?? true) ||
-               (userInfo?.optimizationVisualModel.isEmpty ?? true)
+        return userInfo?.optimizationTextModel.isEmpty ?? true
     }
 
     // 修改计算属性，让置顶的记录始终显示在上方
@@ -523,9 +522,9 @@ struct ListView: View {
             return
         }
 
-        // 验证是否选择了优化模型
-        if noOptimizationModel {
-            validationAlertMessage = "暂未设置优化模型，请前往“设置-模型-优化模型”设置文本优化模型和视觉优化模型。"
+        // 验证是否选择了文本优化模型。视觉优化模型只在视觉功能中需要。
+        if noTextOptimizationModel {
+            validationAlertMessage = "暂未设置文本优化模型，请前往“设置-模型-优化模型”设置文本优化模型。视觉优化模型仅在视觉功能中需要。"
             validationSettingType = .optimization
             showValidationAlert = true
             return
