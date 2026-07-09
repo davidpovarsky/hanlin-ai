@@ -63,7 +63,7 @@ struct ChatRowView: View {
                             .truncationMode(.tail)
                             .multilineTextAlignment(.leading)
                     } else {
-                        Text("暂无消息")
+                        Text(String(localized: "暂无消息"))
                             .font(.caption)
                             .foregroundColor(Color(.systemGray))
                             .lineLimit(2)
@@ -190,12 +190,12 @@ struct IconAndColorPicker: View {
                         .clipShape(Circle())
                     
                     VStack(alignment: .leading) {
-                        TextField("请输入标题", text: $title)
+                        TextField(String(localized: "请输入标题"), text: $title)
                             .font(.headline)
                             .foregroundColor(.primary)
                             .textFieldStyle(PlainTextFieldStyle())
                         
-                        Text("这是一段示例消息内容...")
+                        Text(String(localized: "这是一段示例消息内容..."))
                             .font(.caption)
                             .foregroundColor(.secondary)
                             .lineLimit(1)
@@ -272,8 +272,8 @@ struct IconAndColorPicker: View {
                 .padding(.bottom)
             }
             .background(.background)
-            .navigationTitle("自定义")
-            .navigationBarItems(trailing: Button("完成") {
+            .navigationTitle(String(localized: "自定义"))
+            .navigationBarItems(trailing: Button(String(localized: "完成")) {
                 if let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
                    let window = scene.windows.first {
                     window.rootViewController?.dismiss(animated: true)

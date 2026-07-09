@@ -24,7 +24,7 @@ struct ChatView: View {
     @State private var isObserving = false                 // 是否处于观察模式
     @State private var isRetry = false                     // 是否为重试请求
 
-    @State private var chatTitle = "新群聊"                 // 群聊标题
+    @State private var chatTitle = String(localized: "新群聊")                 // 群聊标题
     @State private var isEditingTitle = false              // 是否正在编辑群聊标题
     @State private var newChatTitle = ""                   // 编辑群聊标题时的临时变量
 
@@ -306,7 +306,7 @@ struct ChatView: View {
             ToolbarItem(placement: .principal) {
                 if TemporaryRecord {
                     HStack {
-                        Text(" 临 时 对 话 模 式 ")
+                        Text(String(localized: " 临 时 对 话 模 式 "))
                             .font(.caption)
                             .padding(6)
                     }
@@ -332,7 +332,7 @@ struct ChatView: View {
                             }
                         
                         // 编辑模式
-                        TextField("请输入群聊名称", text: $newChatTitle, onCommit: {
+                        TextField(String(localized: "请输入群聊名称"), text: $newChatTitle, onCommit: {
                             if !newChatTitle.isEmpty {
                                 if chatTitle != newChatTitle {
                                     chatTitle = newChatTitle
@@ -340,7 +340,7 @@ struct ChatView: View {
                                     
                                     let text: String
                                     if currentLanguage.hasPrefix("zh") {
-                                        text = "群聊名称被修改为“\(chatTitle)”"
+                                        text = String(format: String(localized: "群聊名称被修改为“%@”"), chatTitle)
                                     } else {
                                         text = "Group chat name has been changed to \"\(chatTitle)\""
                                     }
@@ -398,14 +398,14 @@ struct ChatView: View {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Menu {
                     // ------ 调整参数 ------
-                    Menu("调整模型参数", systemImage: "slider.horizontal.3"){
+                    Menu(String(localized: "调整模型参数"), systemImage: "slider.horizontal.3"){
                         Button(action: {
                             showTopPSlider = false
                             showMaxTokensSlider = false
                             showMaxMessagesNumSlider = false
                             showTemperatureSlider.toggle()
                         }) {
-                            Label("调整采样温度", systemImage: "thermometer.variable")
+                            Label(String(localized: "调整采样温度"), systemImage: "thermometer.variable")
                         }
                         
                         Button(action: {
@@ -414,7 +414,7 @@ struct ChatView: View {
                             showMaxMessagesNumSlider = false
                             showTopPSlider.toggle()
                         }) {
-                            Label("调整累积概率", systemImage: "percent")
+                            Label(String(localized: "调整累积概率"), systemImage: "percent")
                         }
                         
                         Button(action: {
@@ -423,7 +423,7 @@ struct ChatView: View {
                             showMaxMessagesNumSlider = false
                             showMaxTokensSlider.toggle()
                         }) {
-                            Label("最大回复长度", systemImage: "textformat.characters.arrow.left.and.right")
+                            Label(String(localized: "最大回复长度"), systemImage: "textformat.characters.arrow.left.and.right")
                         }
                         
                         Button(action: {
@@ -432,39 +432,39 @@ struct ChatView: View {
                             showMaxTokensSlider = false
                             showMaxMessagesNumSlider.toggle()
                         }) {
-                            Label("消息数量上限", systemImage: "arrow.up.and.down.text.horizontal")
+                            Label(String(localized: "消息数量上限"), systemImage: "arrow.up.and.down.text.horizontal")
                         }
                     }
                     
                     // ------ 聊天记录管理 ------
-                    Menu("聊天记录管理", systemImage: "bubble.left.and.bubble.right"){
+                    Menu(String(localized: "聊天记录管理"), systemImage: "bubble.left.and.bubble.right"){
                         Button(action: {
                             showSystemMessageSheet = true
                         }) {
-                            Label("设置系统消息", systemImage: "paintbrush.pointed")
+                            Label(String(localized: "设置系统消息"), systemImage: "paintbrush.pointed")
                         }
                         Button(action: {
                             isMultiSelectMode.toggle()
                         }) {
-                            Label(isMultiSelectMode ? "退出编辑模式" : "编辑聊天记录", systemImage: "checkmark.circle")
+                            Label(isMultiSelectMode ? String(localized: "退出编辑模式") : String(localized: "编辑聊天记录"), systemImage: "checkmark.circle")
                         }
                         
                         Button(action: {
                             showingExportOptions = true
                         }) {
-                            Label("导出聊天记录", systemImage: "square.and.arrow.up")
+                            Label(String(localized: "导出聊天记录"), systemImage: "square.and.arrow.up")
                         }
                         
                         Button(action: {
                             showImportExplanationAlert = true
                         }) {
-                            Label("导入聊天记录", systemImage: "square.and.arrow.down")
+                            Label(String(localized: "导入聊天记录"), systemImage: "square.and.arrow.down")
                         }
                         
                         Button(action: {
                             showClearChatConfirmation = true
                         }) {
-                            Label("清空聊天记录", systemImage: "eraser.line.dashed")
+                            Label(String(localized: "清空聊天记录"), systemImage: "eraser.line.dashed")
                         }
                     }
                 } label: {
@@ -475,8 +475,8 @@ struct ChatView: View {
                 }
             }
         }
-        .confirmationDialog("选择导出格式", isPresented: $showingExportOptions, titleVisibility: .visible) {
-            Button("纯文本 (.txt)") {
+        .confirmationDialog(String(localized: "选择导出格式"), isPresented: $showingExportOptions, titleVisibility: .visible) {
+            Button(String(localized: "纯文本 (.txt)")) {
                 exportUTType = UTType.plainText
                 let exportText = generateExportText(for: .txt)
                 let fileName = "ChatExport.txt"
@@ -489,7 +489,7 @@ struct ChatView: View {
                     print("写入临时文件失败：\(error)")
                 }
             }
-            Button("JSON文件 (.json)（文本）") {
+            Button(String(localized: "JSON文件 (.json)（文本）")) {
                 exportUTType = UTType.json
                 let exportText = generateExportText(for: .json, includeImages: false)
                 let fileName = "ChatExport_text.json"
@@ -502,7 +502,7 @@ struct ChatView: View {
                     print("写入临时文件失败：\(error)")
                 }
             }
-            Button("JSON文件 (.json)（多模态）") {
+            Button(String(localized: "JSON文件 (.json)（多模态）")) {
                 exportUTType = UTType.json
                 let exportText = generateExportText(for: .json, includeImages: true)
                 let fileName = "ChatExport_multimodal.json"
@@ -515,7 +515,7 @@ struct ChatView: View {
                     print("写入临时文件失败：\(error)")
                 }
             }
-            Button("取消", role: .cancel) { }
+            Button(String(localized: "取消"), role: .cancel) { }
         }
         .sheet(isPresented: $showShareSheet, onDismiss: {
             // 分享结束后清除临时文件 URL
@@ -540,7 +540,7 @@ struct ChatView: View {
             case .success(let urls):
                 if let url = urls.first {
                     guard url.startAccessingSecurityScopedResource() else {
-                        importError = "无法访问所选文件的权限。"
+                        importError = String(localized: "无法访问所选文件的权限。")
                         isShowingImportErrorAlert = true
                         return
                     }
@@ -555,7 +555,7 @@ struct ChatView: View {
                         else if let simpleMessages = try? JSONDecoder().decode([[String: String]].self, from: data) {
                             importSimpleMessages(simpleMessages: simpleMessages)
                         } else {
-                            importError = "文件格式错误，请检查文件是否为导出时的正确格式。"
+                            importError = String(localized: "文件格式错误，请检查文件是否为导出时的正确格式。")
                             isShowingImportErrorAlert = true
                         }
                     } catch {
@@ -569,26 +569,26 @@ struct ChatView: View {
             }
         }
         .alert(isPresented: $isShowingImportErrorAlert) {
-            Alert(title: Text("导入错误"),
-                  message: Text(importError ?? "未知错误"),
-                  dismissButton: .default(Text("确定")))
+            Alert(title: Text(String(localized: "导入错误")),
+                  message: Text(importError ?? String(localized: "未知错误")),
+                  dismissButton: .default(Text(String(localized: "确定"))))
         }
-        .alert("确认清空聊天记录", isPresented: $showClearChatConfirmation) {
-            Button("删除", role: .destructive) {
+        .alert(String(localized: "确认清空聊天记录"), isPresented: $showClearChatConfirmation) {
+            Button(String(localized: "删除"), role: .destructive) {
                 newConversation()
             }
-            Button("取消", role: .cancel) { }
+            Button(String(localized: "取消"), role: .cancel) { }
         } message: {
-            Text("是否要删除所有聊天记录？删除后不可恢复。")
+            Text(String(localized: "是否要删除所有聊天记录？删除后不可恢复。"))
                 .multilineTextAlignment(.leading)
         }
-        .alert("导入聊天记录说明", isPresented: $showImportExplanationAlert) {
-            Button("继续") {
+        .alert(String(localized: "导入聊天记录说明"), isPresented: $showImportExplanationAlert) {
+            Button(String(localized: "继续")) {
                 isShowingImportPicker = true
             }
-            Button("取消", role: .cancel) { }
+            Button(String(localized: "取消"), role: .cancel) { }
         } message: {
-            Text("请提供 JSON 文件，格式要求与本软件导出的 JSON 文件格式一致，本软件采用 OpenAI 的请求 JSON 格式，包括文本对话和含图片的多模态对话，图片使用 base64 数据。")
+            Text(String(localized: "请提供 JSON 文件，格式要求与本软件导出的 JSON 文件格式一致，本软件采用 OpenAI 的请求 JSON 格式，包括文本对话和含图片的多模态对话，图片使用 base64 数据。"))
                     .multilineTextAlignment(.leading)
         }
         .tint(TemporaryRecord ? .primary : nil)
@@ -970,7 +970,7 @@ struct ChatView: View {
         // 适配清空聊天记录的提示
         let clearChatText: String
         if currentLanguage.hasPrefix("zh") {
-            clearChatText = "一切都是崭新的✨"
+            clearChatText = String(localized: "一切都是崭新的✨")
         } else {
             clearChatText = "Everything is brand new ✨"
         }
@@ -980,7 +980,7 @@ struct ChatView: View {
             role: "information",
             text: clearChatText,
             reasoning: "",
-            modelDisplayName: "系统",
+            modelDisplayName: String(localized: "系统"),
             timestamp: Date(),
             record: chatRecord
         )
@@ -1016,7 +1016,7 @@ struct ChatView: View {
     /// 触发条件：chatRecord.name == "新群聊" 且 user 消息数 >= 1 且 <= 3
     private func autoGenerateTitleIfNeeded() {
         // 检查是否为新群聊
-        guard chatRecord.name == "新群聊" else { return }
+        guard ["新群聊", "New Group Chat", String(localized: "新群聊")].contains(chatRecord.name ?? "") else { return }
         
         // 统计用户消息数量
         let userMessages = chatTemps.filter { $0.role == "user" }
@@ -1076,7 +1076,7 @@ struct ChatView: View {
                     record: chatRecord
                 )
                 if !selectedPrompts.isEmpty {
-                    let promptCards = selectedPrompts.map { PromptCard(name: $0.name ?? "无名称", content: $0.content ?? "无内容") }
+        let promptCards = selectedPrompts.map { PromptCard(name: $0.name ?? String(localized: "无名称"), content: $0.content ?? String(localized: "无内容")) }
                     userMessage?.promptUse = promptCards
                 }
                 // 写入用户发送的信息
@@ -1409,18 +1409,18 @@ struct ChatView: View {
                                 let text: String
                                 if currentLanguage.hasPrefix("zh") {
                                     if totalSeconds < 60 {
-                                        text = String(format: "已思考%.1f秒", totalSeconds)
+            text = String(format: String(localized: "已思考%.1f秒"), totalSeconds)
                                     } else if totalSeconds < 3600 {
                                         let minutes = Int(totalSeconds) / 60
                                         let seconds = totalSeconds - Double(minutes * 60)
-                                        text = String(format: "已思考%d分钟%.1f秒", minutes, seconds)
+            text = String(format: String(localized: "已思考%d分钟%.1f秒"), minutes, seconds)
                                     } else {
                                         // 支持小时
                                         let hours = Int(totalSeconds) / 3600
                                         let remainder = Int(totalSeconds) % 3600
                                         let minutes = remainder / 60
                                         let seconds = Double(remainder % 60)
-                                        text = String(format: "已思考%d小时%d分钟%.1f秒", hours, minutes, seconds)
+            text = String(format: String(localized: "已思考%d小时%d分钟%.1f秒"), hours, minutes, seconds)
                                     }
                                 } else {
                                     if totalSeconds < 60 {
@@ -1468,9 +1468,9 @@ struct ChatView: View {
                         if let error = data.errorInfo, !error.isEmpty {
                             var errorMessage = ""
                             if error == "length" {
-                                errorMessage = currentLanguage.hasPrefix("zh") ? "⚠️ 输出长度到达模型最大输出长度！可在右上角模型参数中重新设置输出长度。" : "⚠️ The output length has reached the model's maximum output length! You can reset the output length in the model parameters at the top right corner."
+                errorMessage = String(localized: "⚠️ 输出长度到达模型最大输出长度！可在右上角模型参数中重新设置输出长度。")
                             } else if error == "sensitive" {
-                                errorMessage = currentLanguage.hasPrefix("zh") ? "⚠️ 包含敏感内容！" : "⚠️ Contains sensitive content!"
+                errorMessage = String(localized: "⚠️ 包含敏感内容！")
                             } else {
                                 errorMessage = error
                             }
@@ -1506,7 +1506,7 @@ struct ChatView: View {
                         if textContent.isEmpty && reasoningContent.isEmpty && assistantMessage.imageArray.isEmpty {
                             operationalState = ""
                             operationalDescription = ""
-                            assistantMessage.text = currentLanguage.hasPrefix("zh") ? "⚠️ 生成内容为空，请重新尝试！" : "⚠️ Generated content is empty, please try again!"
+            assistantMessage.text = String(localized: "⚠️ 生成内容为空，请重新尝试！")
                             assistantMessage.role = "error"
                             assistantMessage.modelName = "system"
                             assistantMessage.modelDisplayName = "system"
@@ -1556,7 +1556,7 @@ struct ChatView: View {
                             } catch {
                                 let syncErrorText: String
                                 if currentLanguage.hasPrefix("zh") {
-                                    syncErrorText = "⚠️ 数据同步失败: \(error.localizedDescription)，本轮问答不会被同步。"
+                syncErrorText = String(format: String(localized: "⚠️ 数据同步失败: %@，本轮问答不会被同步。"), error.localizedDescription)
                                 } else {
                                     syncErrorText = "⚠️ Data synchronization failed: \(error.localizedDescription). This round of Q&A will not be synchronized."
                                 }
@@ -1584,7 +1584,7 @@ struct ChatView: View {
                         operationalDescription = ""
                         let responseErrorText: String
                         if currentLanguage.hasPrefix("zh") {
-                            responseErrorText = "⚠️ 响应错误：\(error.localizedDescription)"
+                responseErrorText = String(format: String(localized: "⚠️ 响应错误：%@"), error.localizedDescription)
                         } else {
                             responseErrorText = "⚠️ Response error: \(error.localizedDescription)"
                         }
@@ -1615,7 +1615,7 @@ struct ChatView: View {
         let currentLanguage = Locale.preferredLanguages.first ?? "zh-Hans"
         let responseInterruptedText: String
         if currentLanguage.hasPrefix("zh") {
-            responseInterruptedText = "🛑 响应已打断"
+            responseInterruptedText = String(localized: "🛑 响应已打断")
         } else {
             responseInterruptedText = "🛑 Response interrupted"
         }

@@ -38,99 +38,99 @@ struct SettingsView: View {
 
         NavigationStack {
             List {
-                Section(header: Text("个性化")) {
+                Section(header: Text(String(localized: "个性化"))) {
                     NavigationLink(destination: UserInfoView().onAppear { isPushed = true }.onDisappear { isPushed = false }.toolbar(.hidden, for: .tabBar)) {
-                        Label("用户信息", systemImage: "person")
+                        Label(String(localized: "用户信息"), systemImage: "person")
                     }
                     NavigationLink(destination: PromptRepoView().onAppear { isPushed = true }.onDisappear { isPushed = false}.toolbar(.hidden, for: .tabBar)) {
-                        Label("提示词库", systemImage: "tray.full")
+                        Label(String(localized: "提示词库"), systemImage: "tray.full")
                     }
                     NavigationLink(destination: MemoryArchiveView().onAppear { isPushed = true }.onDisappear { isPushed = false}.toolbar(.hidden, for: .tabBar)) {
-                        Label("记忆档案", systemImage: "archivebox")
+                        Label(String(localized: "记忆档案"), systemImage: "archivebox")
                     }
                     NavigationLink(destination: TranslationDicView().onAppear { isPushed = true }.onDisappear { isPushed = false}.toolbar(.hidden, for: .tabBar)) {
-                        Label("翻译词典", systemImage: "character.book.closed")
+                        Label(String(localized: "翻译词典"), systemImage: "character.book.closed")
                     }
                 }
                 if noAPIKeys {
                     Section {
-                        Text("指引：暂无开启的大模型厂商，点击下方“模型”中的“模型密钥”设置大模型密钥和厂商的启用状态")
+                        Text(String(localized: "指引：暂无开启的大模型厂商，点击下方“模型”中的“模型密钥”设置大模型密钥和厂商的启用状态"))
                             .font(.caption)
                             .foregroundColor(.hlRed)
                     }
                 }
                 if noOptimizationModel {
                     Section {
-                        Text("指引：点击下方“优化模型”设置文本优化模型和视觉优化模型，以启用提示词优化、系统消息优化、图片内容识别等功能")
+                        Text(String(localized: "指引：点击下方“优化模型”设置文本优化模型和视觉优化模型，以启用提示词优化、系统消息优化、图片内容识别等功能"))
                             .font(.caption)
                             .foregroundColor(.hlRed)
                     }
                 }
                 if noEmbeddingModel {
                     Section {
-                        Text("指引：点击下方“向量模型“设置向量嵌入模型，以启用知识背包检索功能")
+                        Text(String(localized: "指引：点击下方“向量模型“设置向量嵌入模型，以启用知识背包检索功能"))
                             .font(.caption)
                             .foregroundColor(.hlRed)
                     }
                 }
-                Section(header: Text("模型")) {
+                Section(header: Text(String(localized: "模型"))) {
                     NavigationLink(destination: APIKeysView().onAppear { isPushed = true }.onDisappear { isPushed = false }.toolbar(.hidden, for: .tabBar)) {
-                        Label("模型厂商", systemImage: "key.2.on.ring")
+                        Label(String(localized: "模型厂商"), systemImage: "key.2.on.ring")
                     }
                     NavigationLink(destination: SelectEmbeddingModelView().onAppear { isPushed = true }.onDisappear { isPushed = false }.toolbar(.hidden, for: .tabBar)) {
-                        Label("向量模型", systemImage: "compass.drawing")
+                        Label(String(localized: "向量模型"), systemImage: "compass.drawing")
                     }
                     NavigationLink(destination: SelectOptimizationModelView().onAppear { isPushed = true }.onDisappear { isPushed = false }.toolbar(.hidden, for: .tabBar)) {
-                        Label("优化模型", systemImage: "hammer")
+                        Label(String(localized: "优化模型"), systemImage: "hammer")
                     }
                     NavigationLink(destination: SelectTTSModelView().onAppear { isPushed = true }.onDisappear { isPushed = false }.toolbar(.hidden, for: .tabBar)) {
-                        Label("语音模型", systemImage: "waveform")
+                        Label(String(localized: "语音模型"), systemImage: "waveform")
                     }
                 }
                 if noSearchKeys {
                     Section {
-                        Text("指引：点击下方“工具”中的“联网搜索”设置搜索引擎密钥和需要使用的搜索引擎")
+                        Text(String(localized: "指引：点击下方“工具”中的“联网搜索”设置搜索引擎密钥和需要使用的搜索引擎"))
                             .font(.caption)
                             .foregroundColor(.hlRed)
                     }
                 }
-                Section(header: Text("工具")) {
+                Section(header: Text(String(localized: "工具"))) {
                     NavigationLink(destination: SearchSettingView().onAppear { isPushed = true }.onDisappear { isPushed = false }.toolbar(.hidden, for: .tabBar)) {
-                        Label("联网搜索", systemImage: "magnifyingglass")
+                        Label(String(localized: "联网搜索"), systemImage: "magnifyingglass")
                     }
                     NavigationLink(destination: KnowledgeSettingView().onAppear { isPushed = true }.onDisappear { isPushed = false }.toolbar(.hidden, for: .tabBar)) {
-                        Label("知识背包", systemImage: "backpack")
+                        Label(String(localized: "知识背包"), systemImage: "backpack")
                     }
                     NavigationLink(destination: CanvasSettingView().onAppear { isPushed = true }.onDisappear { isPushed = false }.toolbar(.hidden, for: .tabBar)) {
-                        Label("信息画布", systemImage: "pencil.and.outline")
+                        Label(String(localized: "信息画布"), systemImage: "pencil.and.outline")
                     }
                     NavigationLink(destination: MapSettingView().onAppear { isPushed = true }.onDisappear { isPushed = false }.toolbar(.hidden, for: .tabBar)) {
-                        Label("地图规划", systemImage: "map")
+                        Label(String(localized: "地图规划"), systemImage: "map")
                     }
                     NavigationLink(destination: WeatherSettingView().onAppear { isPushed = true }.onDisappear { isPushed = false }.toolbar(.hidden, for: .tabBar)) {
-                        Label("天气查询", systemImage: "cloud.sun")
+                        Label(String(localized: "天气查询"), systemImage: "cloud.sun")
                     }
                     NavigationLink(destination: CalendarSettingView().onAppear { isPushed = true }.onDisappear { isPushed = false }.toolbar(.hidden, for: .tabBar)) {
-                        Label("日历提醒", systemImage: "calendar")
+                        Label(String(localized: "日历提醒"), systemImage: "calendar")
                     }
                     NavigationLink(destination: HealthSettingView().onAppear { isPushed = true }.onDisappear { isPushed = false }.toolbar(.hidden, for: .tabBar)) {
-                        Label("健康生活", systemImage: "heart")
+                        Label(String(localized: "健康生活"), systemImage: "heart")
                     }
                     NavigationLink(destination: CodeSettingView().onAppear { isPushed = true }.onDisappear { isPushed = false }.toolbar(.hidden, for: .tabBar)) {
-                        Label("代码执行", systemImage: "apple.terminal")
+                        Label(String(localized: "代码执行"), systemImage: "apple.terminal")
                     }
                 }
-                Section(header: Text("通用")) {
+                Section(header: Text(String(localized: "通用"))) {
                     NavigationLink(destination: GeneralSettingsView().onAppear { isPushed = true }.onDisappear { isPushed = false }.toolbar(.hidden, for: .tabBar)) {
-                        Label("通用", systemImage: "gearshape")
+                        Label(String(localized: "通用"), systemImage: "gearshape")
                     }
                 }
-                Section(header: Text("帮助")) {
+                Section(header: Text(String(localized: "帮助"))) {
                     Button(action: {
                         showSafariGuide = true
                     }) {
                         Label {
-                            Text("软件指南")
+                            Text(String(localized: "软件指南"))
                                 .foregroundColor(.primary)
                         } icon: {
                             Image(systemName: "text.rectangle.page")
@@ -140,29 +140,29 @@ struct SettingsView: View {
                         showSafariCost = true
                     }) {
                         Label {
-                            Text("成本参考")
+                            Text(String(localized: "成本参考"))
                                 .foregroundColor(.primary)
                         } icon: {
                             Image(systemName: "creditcard")
                         }
                     }
                 }
-                Section(header: Text("软件")) {
+                Section(header: Text(String(localized: "软件"))) {
                     NavigationLink(destination: SoftwareIntroView().onAppear { isPushed = true }.onDisappear { isPushed = false }.toolbar(.hidden, for: .tabBar)) {
-                        Label("软件介绍", systemImage: "text.book.closed")
+                        Label(String(localized: "软件介绍"), systemImage: "text.book.closed")
                     }
                     NavigationLink(destination: UpdateNotesView().onAppear { isPushed = true }.onDisappear { isPushed = false }.toolbar(.hidden, for: .tabBar)) {
-                        Label("更新说明", systemImage: "newspaper")
+                        Label(String(localized: "更新说明"), systemImage: "newspaper")
                     }
                     NavigationLink(destination: VersionInfoView().onAppear { isPushed = true }.onDisappear { isPushed = false }.toolbar(.hidden, for: .tabBar)) {
-                        Label("软件信息", systemImage: "info.circle")
+                        Label(String(localized: "软件信息"), systemImage: "info.circle")
                     }
                     NavigationLink(destination: ContactUsView().onAppear { isPushed = true }.onDisappear { isPushed = false }.toolbar(.hidden, for: .tabBar)) {
-                        Label("联系我们", systemImage: "envelope")
+                        Label(String(localized: "联系我们"), systemImage: "envelope")
                     }
                 }
             }
-            .navigationTitle("设置")
+            .navigationTitle(String(localized: "设置"))
             .onChange(of: isPushed) {
                 NotificationCenter.default.post(name: .hideTabBar, object: isPushed)  // 发送通知，控制TabBar显示/隐藏
             }

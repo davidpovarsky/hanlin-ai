@@ -117,7 +117,7 @@ struct ModelManagementView: View {
                     VStack(spacing: 20) {
                         ProgressView()
                             .scaleEffect(1.5)
-                        Text("正在获取模型列表...")
+                        Text(String(localized: "正在获取模型列表..."))
                             .font(.headline)
                             .foregroundColor(.secondary)
                     }
@@ -128,10 +128,10 @@ struct ModelManagementView: View {
                         Image(systemName: "list.bullet.rectangle")
                             .font(.system(size: 60))
                             .foregroundColor(.secondary)
-                        Text("暂无可用模型")
+                        Text(String(localized: "暂无可用模型"))
                             .font(.headline)
                             .foregroundColor(.secondary)
-                        Button("刷新模型列表") {
+                        Button(String(localized: "刷新模型列表")) {
                             Task {
                                 await fetchModels()
                             }
@@ -149,7 +149,7 @@ struct ModelManagementView: View {
                                 HStack {
                                     Image(systemName: "magnifyingglass")
                                         .foregroundColor(.secondary)
-                                    TextField("搜索模型...", text: $searchText)
+                                    TextField(String(localized: "搜索模型..."), text: $searchText)
                                         .textFieldStyle(.plain)
                                     if !searchText.isEmpty {
                                         Button {
@@ -165,8 +165,8 @@ struct ModelManagementView: View {
                             }
                         }
 
-                        Section(footer: Text("注意：自动模型能力探测中可能有一定的API费用消耗")) {
-                            Toggle("自动模型能力探测", isOn: Binding(
+                        Section(footer: Text(String(localized: "注意：自动模型能力探测中可能有一定的API费用消耗"))) {
+                            Toggle(String(localized: "自动模型能力探测"), isOn: Binding(
                                 get: { apiKey.autoProbeCapabilities },
                                 set: { newValue in
                                     apiKey.autoProbeCapabilities = newValue
@@ -252,7 +252,7 @@ struct ModelManagementView: View {
                                                     removeModelByName(modelName)
                                                 }
                                             } label: {
-                                                Text("删除")
+                                                Text(String(localized: "删除"))
                                                     .foregroundColor(.red)
                                                     .font(.caption)
                                             }
@@ -267,7 +267,7 @@ struct ModelManagementView: View {
                                         } label: {
                                             HStack(spacing: 4) {
                                                 Image(systemName: "plus.circle")
-                                                Text("添加")
+                                                Text(String(localized: "添加"))
                                             }
                                             .font(.caption)
                                         }
@@ -282,11 +282,11 @@ struct ModelManagementView: View {
                     .listStyle(.insetGrouped)
                 }
             }
-            .navigationTitle("模型管理")
+            .navigationTitle(String(localized: "模型管理"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
-                    Button("关闭") {
+                    Button(String(localized: "关闭")) {
                         dismiss()
                     }
                 }
@@ -302,13 +302,13 @@ struct ModelManagementView: View {
                 }
             }
         }
-        .alert("错误", isPresented: $showError) {
-            Button("确定", role: .cancel) {}
+        .alert(String(localized: "错误"), isPresented: $showError) {
+            Button(String(localized: "确定"), role: .cancel) {}
         } message: {
-            Text(errorMessage ?? "未知错误")
+            Text(errorMessage ?? String(localized: "未知错误"))
         }
-        .alert("API Key 缺失", isPresented: $showAPIKeyError) {
-            Button("确定", role: .cancel) {}
+        .alert(String(localized: "API Key 缺失"), isPresented: $showAPIKeyError) {
+            Button(String(localized: "确定"), role: .cancel) {}
         } message: {
             Text(apiKeyErrorMessage)
         }
@@ -494,7 +494,7 @@ struct QuickModelRefreshButton: View {
         } label: {
             HStack {
                 Image(systemName: "arrow.triangle.2.circlepath")
-                Text("刷新模型列表")
+                Text(String(localized: "刷新模型列表"))
             }
         }
         .sheet(isPresented: $showModelManagement) {
@@ -516,7 +516,7 @@ struct CapabilityProbeSheet: View {
 
     var body: some View {
         VStack(spacing: 16) {
-            Text("模型能力自动探测")
+            Text(String(localized: "模型能力自动探测"))
                 .font(.headline)
                 .padding(.top, 16)
 
@@ -541,7 +541,7 @@ struct CapabilityProbeSheet: View {
             }
             .padding(.horizontal)
 
-            Button("完成") {
+            Button(String(localized: "完成")) {
                 onClose()
             }
             .buttonStyle(.borderedProminent)

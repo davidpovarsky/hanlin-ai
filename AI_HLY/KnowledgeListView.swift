@@ -29,7 +29,7 @@ struct KnowledgeListView: View {
     var body: some View {
         NavigationStack(path: $navigationPath) {
             content
-                .navigationTitle("知识背包")
+                .navigationTitle(String(localized: "知识背包"))
                 .safeAreaInset(edge: .bottom) {
                     Color.clear.frame(height: 75)
                 }
@@ -45,7 +45,7 @@ struct KnowledgeListView: View {
                         if loadHistoryMessages {
                             HStack {
                                 ProgressView().font(.caption)
-                                Text("正在加载...").font(.caption)
+                                Text(String(localized: "正在加载...")).font(.caption)
                             }
                         }
                     }
@@ -82,7 +82,7 @@ struct KnowledgeListView: View {
             knowledgeRecordsSection
         }
         .listStyle(.plain)
-        .searchable(text: $searchText, prompt: "搜索知识文档")
+        .searchable(text: $searchText, prompt: String(localized: "搜索知识文档"))
         .onChange(of: searchText) { searchRecords() }
         .refreshable {
             handleOnAppear()
@@ -117,10 +117,10 @@ struct KnowledgeListView: View {
             dateFormatter.dateFormat = "HH:mm"
             return dateFormatter.string(from: date)
         } else if calendar.isDateInYesterday(date) {
-            return "昨天"
+            return String(localized: "昨天")
         } else if let twoDaysAgo = calendar.date(byAdding: .day, value: -2, to: Date()),
                   calendar.isDate(date, inSameDayAs: twoDaysAgo) {
-            return "前天"
+            return String(localized: "前天")
         } else {
             // 超过前天，显示“月-日”
             dateFormatter.dateFormat = "MM-dd"
@@ -194,19 +194,19 @@ struct KnowledgeListView: View {
                     editingTitle  = record.name
                     showIconSheet = true
                 } label: {
-                    Label("编辑图标", systemImage: "paintbrush")
+                    Label(String(localized: "编辑图标"), systemImage: "paintbrush")
                 }
                 
                 Button {
                     togglePin(record)
                 } label: {
-                    Label(record.isPinned ? "取消置顶" : "置顶知识", systemImage: record.isPinned ? "pin.slash" : "pin")
+                    Label(record.isPinned ? String(localized: "取消置顶") : String(localized: "置顶知识"), systemImage: record.isPinned ? "pin.slash" : "pin")
                 }
                 
                 Button(role: .destructive) {
                     deleteKnowledge(record)
                 } label: {
-                    Label("删除知识", systemImage: "trash")
+                    Label(String(localized: "删除知识"), systemImage: "trash")
                 }
             }
         }
@@ -218,7 +218,7 @@ struct KnowledgeListView: View {
             Button(role: .destructive) {
                 deleteKnowledge(record)
             } label: {
-                Label("删除知识", systemImage: "trash")
+                Label(String(localized: "删除知识"), systemImage: "trash")
             }
             .tint(.hlRed)
         }
@@ -226,7 +226,7 @@ struct KnowledgeListView: View {
             Button {
                 togglePin(record)
             } label: {
-                Label(record.isPinned ? "取消置顶" : "置顶知识", systemImage: record.isPinned ? "pin.slash" : "pin")
+                Label(record.isPinned ? String(localized: "取消置顶") : String(localized: "置顶知识"), systemImage: record.isPinned ? "pin.slash" : "pin")
             }
             .tint(.hlBlue)
             
@@ -237,7 +237,7 @@ struct KnowledgeListView: View {
                 editingTitle  = record.name
                 showIconSheet = true
             } label: {
-                Label("编辑图标", systemImage: "paintbrush")
+                Label(String(localized: "编辑图标"), systemImage: "paintbrush")
             }
             .tint(.hlGreen)
         }
@@ -396,7 +396,7 @@ struct KnowledgeListView: View {
     private func addNewKnowledge() {
         
         let newKnowledge = KnowledgeRecords(
-            name: "新知识",
+            name: String(localized: "新知识"),
             lastEdited: Date(),
             content: ""
         )

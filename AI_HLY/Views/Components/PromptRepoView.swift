@@ -31,8 +31,8 @@ struct PromptRepoView: View {
             backgroundView
             promptListView
         }
-        .navigationTitle("提示词库")
-        .searchable(text: $searchText, prompt: "搜索提示词")
+        .navigationTitle(String(localized: "提示词库"))
+        .searchable(text: $searchText, prompt: String(localized: "搜索提示词"))
         .toolbar { toolbarContent }
         .sheet(isPresented: $showRenameDialog) {
             renameSheet
@@ -86,7 +86,7 @@ struct PromptRepoView: View {
                         .foregroundColor(.hlBluefont)
                         .padding()
                     
-                    Text("在提示词库中提前编辑好提示词，在群聊中快速应用，提升对话效率并保持聊天记录的简洁清晰。")
+                    Text(String(localized: "在提示词库中提前编辑好提示词，在群聊中快速应用，提升对话效率并保持聊天记录的简洁清晰。"))
                         .font(.footnote)
                         .multilineTextAlignment(.center)
                         .padding(.bottom)
@@ -110,7 +110,7 @@ struct PromptRepoView: View {
                     .listRowSeparator(.hidden)
                     .swipeActions(edge: .trailing, allowsFullSwipe: true) {
                         Button(role: .destructive) { deleteItem(item) } label: {
-                            Label("删除", systemImage: "trash")
+                            Label(String(localized: "删除"), systemImage: "trash")
                         }
                         .tint(Color(.hlRed))
                     }
@@ -141,7 +141,7 @@ struct PromptRepoView: View {
                 modelContext.insert(newPrompt)
                 try? modelContext.save()
             }) {
-                Text("新增")
+                Text(String(localized: "新增"))
             }
         }
     }
@@ -294,7 +294,7 @@ struct PromptRepoView: View {
             .sensoryFeedback(.impact, trigger: isFeedBack)
             
             // 内容简介
-            Text(item.content ?? "暂无内容")
+            Text(item.content ?? String(localized: "暂无内容"))
                 .font(.body)
                 .foregroundColor(.secondary)
                 .lineLimit(2) // 限制最多 2 行
@@ -316,7 +316,7 @@ struct PromptRepoView: View {
                         showDetail = true
                     }
                 }) {
-                    Text("编辑内容")
+                    Text(String(localized: "编辑内容"))
                         .font(.footnote)
                         .fontWeight(.bold)
                         .padding(.horizontal, 20)
@@ -358,24 +358,24 @@ struct PromptTitleEditView: View {
     var body: some View {
         NavigationView {
             Form {
-                Section(header: Text("标题")) {
+                Section(header: Text(String(localized: "标题"))) {
                     // 使用 TextField 编辑标题
-                    TextField("请输入新的标题", text: $title)
+                    TextField(String(localized: "请输入新的标题"), text: $title)
                         .autocapitalization(.none)
                 }
             }
-            .navigationTitle("编辑标题")
+            .navigationTitle(String(localized: "编辑标题"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 // 左侧：取消按钮
                 ToolbarItem(placement: .navigationBarLeading) {
-                    Button("取消") {
+                    Button(String(localized: "取消")) {
                         isPresented = false
                     }
                 }
                 // 右侧：保存按钮
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("保存") {
+                    Button(String(localized: "保存")) {
                         isPresented = false
                     }
                 }
@@ -463,7 +463,7 @@ struct PromptDetailView: View {
                 tokenCounter()
             }
             if showPhotoSourceOptions {
-                Text("选择OCR的图片来源")
+                Text(String(localized: "选择OCR的图片来源"))
                     .font(.caption.bold())
                     .foregroundColor(.hlBluefont)
                     .frame(maxWidth: .infinity, alignment: .leading)
@@ -595,9 +595,9 @@ struct PromptDetailView: View {
                 .frame(width: size_30, height: size_30)
                 .foregroundColor(Color(.systemGray))
         }
-        .alert("确认清空所有文本？", isPresented: $showAlert) {
-            Button("取消", role: .cancel) { }
-            Button("清空", role: .destructive) { content = "" }
+        .alert(String(localized: "确认清空所有文本？"), isPresented: $showAlert) {
+            Button(String(localized: "取消"), role: .cancel) { }
+            Button(String(localized: "清空"), role: .destructive) { content = "" }
         }
     }
 
@@ -728,7 +728,7 @@ struct PromptDetailView: View {
                         .frame(width: 30, height: 30)
                         .foregroundColor(.hlBluefont)
                         .symbolEffect(.bounce, value: showCameraPicker)
-                    Text("拍摄照片")
+                    Text(String(localized: "拍摄照片"))
                         .font(.caption.bold())
                         .foregroundColor(.hlBluefont)
                         .padding(.top, 3)
@@ -758,7 +758,7 @@ struct PromptDetailView: View {
                         .frame(width: 30, height: 30)
                         .foregroundColor(.hlBluefont)
                         .symbolEffect(.bounce, value: showImagePicker)
-                    Text("相册选择")
+                    Text(String(localized: "相册选择"))
                         .font(.caption.bold())
                         .foregroundColor(.hlBluefont)
                         .padding(.top, 3)

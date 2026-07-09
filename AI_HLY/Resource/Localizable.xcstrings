@@ -9,12 +9,24 @@
             "state" : "translated",
             "value" : "Temporary Dialogue Mode"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Temporary Dialogue Mode"
+          }
         }
       }
     },
     " 现有文本" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Existing text"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Existing text"
@@ -29,12 +41,24 @@
             "state" : "translated",
             "value" : "Target text"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Target text"
+          }
         }
       }
     },
     "--:--" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "--:--"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "--:--"
@@ -49,6 +73,12 @@
             "state" : "translated",
             "value" : "[%lld]"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "[%lld]"
+          }
         }
       }
     },
@@ -59,12 +89,24 @@
             "state" : "translated",
             "value" : "Smart Companion, AI on the Go"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Smart Companion, AI בדרכים"
+          }
         }
       }
     },
     "%@" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "%@"
@@ -85,6 +127,12 @@
             "state" : "new",
             "value" : "%1$@ %2$@"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ %2$@"
+          }
         }
       }
     },
@@ -101,12 +149,24 @@
             "state" : "new",
             "value" : "%1$@/%2$@"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@/%2$@"
+          }
         }
       }
     },
     "%lld" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "%lld"
@@ -121,12 +181,24 @@
             "state" : "translated",
             "value" : "%lld characters"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld characters"
+          }
         }
       }
     },
     "%lld%%" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld%%"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "%lld%%"
@@ -141,6 +213,12 @@
             "state" : "translated",
             "value" : "© 2026 Hylic.AI All rights reserved"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "© 2026 Hylic.AI כל הזכויות שמורות"
+          }
         }
       }
     },
@@ -150,6 +228,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "⚠️ Image analysis is recommended to use visual models."
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "⚠️ ניתוח תמונה מומלץ להשתמש במודלים חזותיים."
           }
         }
       }
@@ -161,6 +245,12 @@
             "state" : "translated",
             "value" : "⚠️ Note: After configuring the API, enable your desired search engine in the menu."
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "⚠️ הערה: לאחר הגדרת ה-API, הפעל את מנוע החיפוש הרצוי בתפריט."
+          }
         }
       }
     },
@@ -170,6 +260,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "⚠️ Note: Once configured, the vendor is enabled automatically. To change it, disable it in the menu."
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "⚠️ הערה: לאחר ההגדרה, הספק מופעל באופן אוטומטי. כדי לשנות אותו, השבת אותו בתפריט."
           }
         }
       }
@@ -181,6 +277,12 @@
             "state" : "translated",
             "value" : "⚠️ External Link"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "⚠️ קישור חיצוני"
+          }
         }
       }
     },
@@ -190,6 +292,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "⚠️ The default agent's description cannot be changed."
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "⚠️ לא ניתן לשנות את תיאור ברירת המחדל של הסוכן."
           }
         }
       }
@@ -201,6 +309,12 @@
             "state" : "translated",
             "value" : "⚠️ The default agent cannot be renamed."
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "⚠️ לא ניתן לשנות את שמו של סוכן ברירת המחדל."
+          }
         }
       }
     },
@@ -211,6 +325,12 @@
             "state" : "translated",
             "value" : "✅ Image Saved"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "✅ תמונה נשמרה"
+          }
         }
       }
     },
@@ -220,6 +340,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "💡 Tip: This feature is compatible with services that support the OpenAI API format, such as locally deployed services like LocalAI and Ollama, or other third-party API services."
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "💡 טיפ: תכונה זו תואמת לשירותים התומכים בפורמט OpenAI API, כגון שירותים בפריסה מקומית כמו LocalAI ו-Ollama, או שירותי API אחרים של צד שלישי."
           }
         }
       }
@@ -263,12 +389,24 @@
             "state" : "translated",
             "value" : "¥%@/Ktokens"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "¥%@/Ktokens"
+          }
         }
       }
     },
     "¥%@/分钟" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "¥%@/min"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "¥%@/min"
@@ -283,12 +421,24 @@
             "state" : "translated",
             "value" : "¥%@/request"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "¥%@/request"
+          }
         }
       }
     },
     "¥%lf" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "¥%lf"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "¥%lf"
@@ -303,6 +453,12 @@
             "state" : "translated",
             "value" : "100 free uses/day"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "100 free uses/day"
+          }
         }
       }
     },
@@ -313,12 +469,24 @@
             "state" : "translated",
             "value" : "1000 free points/month"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1000 free points/month"
+          }
         }
       }
     },
     "2000次免费/月" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "2000 free uses/month"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "2000 free uses/month"
@@ -381,6 +549,12 @@
             "state" : "translated",
             "value" : "APPLEMAP does not require API Key configuration."
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "APPLEMAP does not require API Key configuration."
+          }
         }
       }
     },
@@ -397,6 +571,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "AI翰林院"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "AI Hanlin"
           }
         }
       }
@@ -438,6 +618,12 @@
             "state" : "translated",
             "value" : "302.AI"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "302.AI"
+          }
         }
       }
     },
@@ -454,6 +640,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "推理时代"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "AiHubMix"
           }
         }
       }
@@ -472,6 +664,12 @@
             "state" : "translated",
             "value" : "高德地图"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Amap"
+          }
         }
       }
     },
@@ -485,6 +683,12 @@
           }
         },
         "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Anthropic"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Anthropic"
@@ -506,6 +710,12 @@
             "state" : "translated",
             "value" : "苹果地图"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apple Map"
+          }
         }
       }
     },
@@ -519,6 +729,12 @@
           }
         },
         "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "arXiv"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "arXiv"
@@ -540,6 +756,12 @@
             "state" : "translated",
             "value" : "百度地图"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Baidu Map"
+          }
         }
       }
     },
@@ -556,6 +778,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "微软必应"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Microsoft Bing"
           }
         }
       }
@@ -574,6 +802,12 @@
             "state" : "translated",
             "value" : "博查AI"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bocha AI"
+          }
         }
       }
     },
@@ -587,6 +821,12 @@
           }
         },
         "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Brave"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Brave"
@@ -608,6 +848,12 @@
             "state" : "translated",
             "value" : "CherryIN"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "CherryIN"
+          }
         }
       }
     },
@@ -624,6 +870,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "深度求索"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "DeepSeek"
           }
         }
       }
@@ -642,6 +894,12 @@
             "state" : "translated",
             "value" : "字节豆包"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ByteDance Doubao"
+          }
         }
       }
     },
@@ -655,6 +913,12 @@
           }
         },
         "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "EXA AI"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "EXA AI"
@@ -676,6 +940,12 @@
             "state" : "translated",
             "value" : "模力方舟"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gitee AI"
+          }
         }
       }
     },
@@ -692,6 +962,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "谷歌Gemini"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Google Gemini"
           }
         }
       }
@@ -710,6 +986,12 @@
             "state" : "translated",
             "value" : "谷歌"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Google"
+          }
         }
       }
     },
@@ -726,6 +1008,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "谷歌地图"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Google Map"
           }
         }
       }
@@ -744,6 +1032,12 @@
             "state" : "translated",
             "value" : "翰林内置"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hanlin"
+          }
         }
       }
     },
@@ -760,6 +1054,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "翰林开源"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hanlin-Open"
           }
         }
       }
@@ -778,6 +1078,12 @@
             "state" : "translated",
             "value" : "翰林知识背包"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hanlin Knowledge Backpack"
+          }
         }
       }
     },
@@ -794,6 +1100,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "翰林网页阅读"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hanlin Web Reader"
           }
         }
       }
@@ -812,6 +1124,12 @@
             "state" : "translated",
             "value" : "腾讯混元"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tencent Hunyuan"
+          }
         }
       }
     },
@@ -828,6 +1146,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "心流"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "iFlow"
           }
         }
       }
@@ -846,6 +1170,12 @@
             "state" : "translated",
             "value" : "月之暗面"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Moonshot"
+          }
         }
       }
     },
@@ -863,6 +1193,12 @@
             "state" : "translated",
             "value" : "局域网模型"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "LAN"
+          }
         }
       }
     },
@@ -876,6 +1212,12 @@
           }
         },
         "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "LangSearch"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "LangSearch"
@@ -897,6 +1239,12 @@
             "state" : "translated",
             "value" : "本地模型"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Local"
+          }
         }
       }
     },
@@ -913,6 +1261,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "美团LongCat"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "LongCat"
           }
         }
       }
@@ -931,6 +1285,12 @@
             "state" : "translated",
             "value" : "小米MIMO"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "MIMO"
+          }
         }
       }
     },
@@ -944,6 +1304,12 @@
           }
         },
         "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "MiniMax"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "MiniMax"
@@ -965,6 +1331,12 @@
             "state" : "translated",
             "value" : "魔搭社区"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ModelScope"
+          }
         }
       }
     },
@@ -978,6 +1350,12 @@
           }
         },
         "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "N1N.AI"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "N1N.AI"
@@ -999,6 +1377,12 @@
             "state" : "translated",
             "value" : "OpenAI"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OpenAI"
+          }
         }
       }
     },
@@ -1012,6 +1396,12 @@
           }
         },
         "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OpenRouter"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "OpenRouter"
@@ -1033,6 +1423,12 @@
             "state" : "translated",
             "value" : "OpenWeather"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OpenWeather"
+          }
         }
       }
     },
@@ -1046,6 +1442,12 @@
           }
         },
         "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Perplexity"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Perplexity"
@@ -1067,6 +1469,12 @@
             "state" : "translated",
             "value" : "Poe"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Poe"
+          }
         }
       }
     },
@@ -1083,6 +1491,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "和风天气"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Qweather"
           }
         }
       }
@@ -1101,6 +1515,12 @@
             "state" : "translated",
             "value" : "阿里通义"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alibaba Tongyi"
+          }
         }
       }
     },
@@ -1117,6 +1537,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "硅基流动"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SiliconCloud"
           }
         }
       }
@@ -1135,6 +1561,12 @@
             "state" : "translated",
             "value" : "讯飞星火"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "iFlytek Spark"
+          }
         }
       }
     },
@@ -1152,6 +1584,12 @@
             "state" : "translated",
             "value" : "阶跃星辰"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "StepFun"
+          }
         }
       }
     },
@@ -1165,6 +1603,12 @@
           }
         },
         "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tavily"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Tavily"
@@ -1186,6 +1630,12 @@
             "state" : "translated",
             "value" : "天工AI"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tiangong AI"
+          }
         }
       }
     },
@@ -1202,6 +1652,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "未知"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unknown"
           }
         }
       }
@@ -1220,6 +1676,12 @@
             "state" : "translated",
             "value" : "百度文心"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Baidu Wenxin"
+          }
         }
       }
     },
@@ -1233,6 +1695,12 @@
           }
         },
         "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "xAI"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "xAI"
@@ -1254,6 +1722,12 @@
             "state" : "translated",
             "value" : "零一万物"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "01.AI"
+          }
         }
       }
     },
@@ -1270,6 +1744,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "智谱华章"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Z.AI"
           }
         }
       }
@@ -1288,6 +1768,12 @@
             "state" : "translated",
             "value" : "🚀 **超多模型接入**  \n集成超100款大模型，覆盖通义千问、DeepSeek、智谱清言、字节豆包、OpenAI、Gemini、xAI等20家主流厂商，兼容博查AI、EXA AI、Tavily等搜索引擎，一站式满足多元智能需求，AI触手可及！\n\n💾 **本地模型支持**  \n支持本地加载GGUF模型，完美兼容LM Studio局域网模型配置，无需联网也能畅享AI服务，随时随地体验高效智能，全面开启本地大模型新时代。\n\n🧠 **智能协作新范式**  \n创新引入「群聊式对话」与「观察按钮」机制，支持多模型协同发言，融合AI专家智慧；内置提示词库可自定义，随取随用，打造高效便捷的智能工作流。\n\n🔗 **全场景交互**  \n支持文本、图像理解与联网搜索，兼容本地文件与图片上传，多模态协作无缝连接；集成地图、记忆、日历等工具，AI全面融入你的数字日常。\n\n🔍 **超级搜索系统**  \n融合多引擎搜索能力，自动优化提问上下文，支持中英文双语及图像提问，解析网页链接内容，构建个人知识库，助你高效跨越信息鸿沟。\n\n👀 **视觉智能中心**  \n独立图像处理界面，支持50倍变焦、相机翻转、手电筒、补光等功能，智能识别图片意图并快速响应，支持自定义快捷指令，解锁AI视觉全新体验。\n\n⚡ **即时即享工具**  \n提供翻译、润色、摘要等即用功能，支持19语言互译、12文风润色、9种格式规范、3类长度选择，网页与长文本也能秒速处理，解放你的双手。\n\n🎛️ **参数自定义调节**  \n支持采样温度、回复长度、上下文数量等核心参数配置，用户背景可设定，支持导出导入历史对话，让高级用户操作化繁为简、自由掌控。"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🚀 **שילוב דגמים נרחב**  \\nמשלב בצורה חלקה למעלה מ-100 דגמי AI מ-20 ספקים מובילים, כולל Qwen, DeepSeek, ZhipuAI, Doubao, OpenAI, Gemini, xAI ועוד. תואם למנועי חיפוש בינה מלאכותית כמו Perplexity, EXA AI ו- Tavily - גישה חד פעמית ליכולות אינטליגנטיות מגוונות, מה שהופך AI באמת בהישג יד!\\n\\n💾 **תמיכה בדוגמניות מקומיות**  \\nתומך באופן מלא בדגמים מקומיים מבוססי GGUF ובשילוב LM Studio LAN. תיהנו מיכולות בינה מלאכותית עוצמתיות ללא גישה לאינטרנט, בכל זמן ובכל מקום - היכנסו בקלות לעידן של AI לא מקוון.\\n\\n🧠 **פרדיגמה חדשה של שיתוף פעולה בינה מלאכותית**  \\nהצגת תכונות \"צ'אט קבוצתי רב-מודלים\" ו\"לחצן התבוננות\" עבור זרימות עבודה משותפות של AI. שלב את החוזקות של דגמי מומחים מרובים, עם ספריות בקשות הניתנות להתאמה אישית לגישה מיידית - שיתוף הפעולה מעולם לא היה כה חכם ויעיל.\\n\\n🔗 **אינטראקציה בכל התרחישים**  \\nמיועד לטקסט, הבנת תמונה וחיפוש באינטרנט. תומך בהעלאת תמונות וקבצים מקומיים לאינטראקציה מולטי-מודאלית. תוך שילוב כלים כמו מפות, זיכרון ולוחות שנה, AI משתלבת במלואה בחיי היומיום הדיגיטליים שלך.\\n\\n🔍 **מנוע חיפוש מוטען**  \\nמשולב עם מספר ספקי חיפוש, הכולל אופטימיזציה של שאלות מודעות להקשר, שאילתות דו לשוניות והנחיות מבוססות תמונה. נתח קישורי אינטרנט, בנה מאגרי ידע אישיים וגשר על פערי מידע בקלות.\\n\\n👀 **רכזת בינה חזותית**  \\nממשק אינטראקציה תמונה אופטימלית עם זום פי 50, היפוך מצלמה, פנס, אור קדמי ועוד. מבין את כוונת התמונה, מגיב במהירות לשאלות המשך ותומך בפקודות מהירות מותאמות אישית - מביא את הראייה המופעלת על ידי בינה מלאכותית ישירות לקצות אצבעותיך.\\n\\n⚡ **כלי שירות מיידי**  \\nמציע תרגום, ליטוש וסיכום בזמן אמת. תומך ב-19 שפות, 12 צלילי כתיבה, 9 סגנונות עיצוב ו-3 אפשרויות אורך. עבד בקלות טקסטים ארוכים או תוכן אינטרנט - ניקוי אוטומטי הופך את זרימת העבודה שלך לחלקה ללא מאמץ.\\n\\n🎛️ **פרמטרים הניתנים להתאמה אישית**  \\nכוונן פרמטרים הליבה כמו טמפרטורת הדגימה, אורך התגובה המקסימלי ועומק ההקשר. הגדר פרופילי רקע למשתמש, ייבוא/ייצא היסטוריית צ'אט - מה שהופך תצורות מתקדמות לפשוטות וידידותיות למשתמש."
+          }
         }
       }
     },
@@ -1305,12 +1791,24 @@
             "state" : "translated",
             "value" : "🌟 核心功能一览"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🌟 סקירה כללית של תכונות הליבה"
+          }
         }
       }
     },
     "HTML代码" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "HTML Code"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "HTML Code"
@@ -1325,6 +1823,12 @@
             "state" : "translated",
             "value" : "Hylic.AI"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hylic.AI"
+          }
         }
       }
     },
@@ -1335,6 +1839,12 @@
             "state" : "translated",
             "value" : "JSON File (.json) (Multimodal)"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "קובץ JSON (.json) (מולטימודאלי)"
+          }
         }
       }
     },
@@ -1344,6 +1854,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "JSON File (.json) (Only Text)"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "קובץ JSON (.json) (טקסט בלבד)"
           }
         }
       }
@@ -1384,6 +1900,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "询问任何问题"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ask any questions."
           }
         }
       }
@@ -1464,6 +1986,12 @@
             "state" : "translated",
             "value" : "Python Code"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Python Code"
+          }
         }
       }
     },
@@ -1481,6 +2009,12 @@
             "state" : "translated",
             "value" : "🧐 推理思维链"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🧐 שרשרת הנמקה"
+          }
         }
       }
     },
@@ -1497,6 +2031,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "📚 参考资料"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "📚 התייחסות"
           }
         }
       }
@@ -1537,6 +2077,12 @@
             "state" : "translated",
             "value" : "思考中"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "חושבים"
+          }
         }
       }
     },
@@ -1554,6 +2100,12 @@
             "state" : "translated",
             "value" : "🔧 工具消息"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🔧 הודעת כלי"
+          }
         }
       }
     },
@@ -1570,6 +2122,12 @@
             "state" : "translated",
             "value" : "📋 译文内容"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "📋 תרגומים"
+          }
         }
       }
     },
@@ -1585,6 +2143,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "未知"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "לא ידוע"
           }
         }
       }
@@ -1649,12 +2213,24 @@
             "state" : "translated",
             "value" : "🎤 语音消息"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🎤 הודעה קולית"
+          }
         }
       }
     },
     "上传 GGUF 文件以使用本地模型" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Upload a GGUF file to use a local model"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Upload a GGUF file to use a local model"
@@ -1669,12 +2245,24 @@
             "state" : "translated",
             "value" : "Upload local model file (.gguf)"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "העלה קובץ דגם מקומי (.gguf)"
+          }
         }
       }
     },
     "下载源" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Download Source"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Download Source"
@@ -1689,12 +2277,24 @@
             "state" : "translated",
             "value" : "Unsettled"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unsettled"
+          }
         }
       }
     },
     "个性化" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Personalization"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Personalization"
@@ -1725,12 +2325,24 @@
             "state" : "translated",
             "value" : "Code Execution"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Code Execution"
+          }
         }
       }
     },
     "价格" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Price"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Price"
@@ -1761,12 +2373,24 @@
             "state" : "translated",
             "value" : "Using Tools"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Using Tools"
+          }
         }
       }
     },
     "使用默认提示词" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Use Default Prompt Words"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Use Default Prompt Words"
@@ -1781,12 +2405,24 @@
             "state" : "translated",
             "value" : "For example: https://api.example.com/v1/chat/completions"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "For example: https://api.example.com/v1/chat/completions"
+          }
         }
       }
     },
     "供应商名称" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Supplier Name"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Supplier Name"
@@ -1817,12 +2453,24 @@
             "state" : "translated",
             "value" : "Save Image"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Save Image"
+          }
         }
       }
     },
     "保存失败" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Save Failed"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Save Failed"
@@ -1837,12 +2485,24 @@
             "state" : "translated",
             "value" : "Save Successful"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Save Successful"
+          }
         }
       }
     },
     "保存翻译搭配" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Save Translation Mappings"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Save Translation Mappings"
@@ -1857,6 +2517,12 @@
             "state" : "translated",
             "value" : "Information Canvas"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Information Canvas"
+          }
         }
       }
     },
@@ -1866,6 +2532,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Introduce Yourself!"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "הצג את עצמך!"
           }
         }
       }
@@ -1877,12 +2549,24 @@
             "state" : "translated",
             "value" : "Healthy & Living"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "בריא וחיים"
+          }
         }
       }
     },
     "免费" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Free"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Free"
@@ -1897,12 +2581,24 @@
             "state" : "translated",
             "value" : "Copy all"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copy all"
+          }
         }
       }
     },
     "关闭" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Close"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Close"
@@ -1917,12 +2613,24 @@
             "state" : "translated",
             "value" : "Content 1"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Content 1"
+          }
         }
       }
     },
     "内容2" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Content 2"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Content 2"
@@ -1937,6 +2645,12 @@
             "state" : "translated",
             "value" : "Content generated by the AI “%@”."
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "תוכן שנוצר על ידי ה-AI \"%@\"."
+          }
         }
       }
     },
@@ -1947,12 +2661,24 @@
             "state" : "translated",
             "value" : "Content generated by agent “%@”."
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "תוכן שנוצר על ידי הסוכן \"%@\"."
+          }
         }
       }
     },
     "内容长度" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Content Length"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Content Length"
@@ -1967,12 +2693,24 @@
             "state" : "translated",
             "value" : "Content Styles"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Content Styles"
+          }
         }
       }
     },
     "最大回复长度" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Maximum Response Length"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Maximum Response Length"
@@ -1987,6 +2725,12 @@
             "state" : "translated",
             "value" : "Maximum Response Length Adjustment (max_tokens)"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "התאמת אורך תגובה מקסימלי (max_tokens)"
+          }
         }
       }
     },
@@ -1997,12 +2741,24 @@
             "state" : "translated",
             "value" : "Write to Health"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Write to Health"
+          }
         }
       }
     },
     "写入营养摄入" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nutritional Intake"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Nutritional Intake"
@@ -2029,6 +2785,12 @@
     "创建信息画布" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Create an Information Canvas"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Create an Information Canvas"
@@ -2091,12 +2853,24 @@
             "state" : "translated",
             "value" : "Delete Translation"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete Translation"
+          }
         }
       }
     },
     "删除资料" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete Information"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Delete Information"
@@ -2143,12 +2917,24 @@
             "state" : "translated",
             "value" : "Function List"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Function List"
+          }
         }
       }
     },
     "功能支持" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Feature Support"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Feature Support"
@@ -2163,6 +2949,12 @@
             "state" : "translated",
             "value" : "Loading model..."
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Loading model..."
+          }
         }
       }
     },
@@ -2172,6 +2964,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Match threshold (range: 0.05 - 1.0)"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "סף התאמה (טווח: 0.05 - 1.0)"
           }
         }
       }
@@ -2231,6 +3029,12 @@
             "state" : "translated",
             "value" : "Reverse Prompts"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reverse Prompts"
+          }
         }
       }
     },
@@ -2241,12 +3045,24 @@
             "state" : "translated",
             "value" : "Send field"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Send field"
+          }
         }
       }
     },
     "发送邮件" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Send Email"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Send Email"
@@ -2309,6 +3125,12 @@
             "state" : "translated",
             "value" : "Name conflict"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Name conflict"
+          }
         }
       }
     },
@@ -2334,6 +3156,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Embedding models power document indexing and search in the Knowledge Backpack, ensuring precise and comprehensive retrieval and improving information recall."
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "הטמעת מודלים מאפשרת יצירת אינדקס וחיפוש של מסמכים בתרמיל הידע, ומבטיחה שליפה מדויקת ומקיפה ושיפור זכירת המידע."
           }
         }
       }
@@ -2393,12 +3221,24 @@
             "state" : "translated",
             "value" : "Enable Code"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enable Code"
+          }
         }
       }
     },
     "启用健康" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enable Health"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Enable Health"
@@ -2413,12 +3253,24 @@
             "state" : "translated",
             "value" : "Enable Maps"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enable Maps"
+          }
         }
       }
     },
     "启用天气" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enable Weather"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Enable Weather"
@@ -2433,12 +3285,24 @@
             "state" : "translated",
             "value" : "Enable Calendar"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enable Calendar"
+          }
         }
       }
     },
     "启用画布" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enable Canvas"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Enable Canvas"
@@ -2453,12 +3317,24 @@
             "state" : "translated",
             "value" : "Enable Memory Function"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enable Memory Function"
+          }
         }
       }
     },
     "图像生成" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Image Generation"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Image Generation"
@@ -2489,6 +3365,12 @@
             "state" : "translated",
             "value" : "Edit the prompts in advance in the prompt library, apply them quickly in group chats to enhance conversation efficiency and keep chat records concise and clear."
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ערוך את ההנחיות מראש בספריית ההנחיות, החל אותן במהירות בצ'אטים קבוצתיים כדי לשפר את יעילות השיחה ולשמור על רישומי צ'אט תמציתיים וברורים."
+          }
         }
       }
     },
@@ -2498,6 +3380,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Map Engine Selection (max one)"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "בחירת מנוע מפה (מקסימום אחד)"
           }
         }
       }
@@ -2509,12 +3397,24 @@
             "state" : "translated",
             "value" : "Map & Planning"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "מפה ותכנון"
+          }
         }
       }
     },
     "地点: %@" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Location: %@"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Location: %@"
@@ -2529,12 +3429,24 @@
             "state" : "translated",
             "value" : "Based on the %@"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Based on the %@"
+          }
         }
       }
     },
     "基本信息" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Basic Information"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Basic Information"
@@ -2565,12 +3477,24 @@
             "state" : "translated",
             "value" : "Note: %@"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Note: %@"
+          }
         }
       }
     },
     "复制" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copy"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Copy"
@@ -2585,12 +3509,24 @@
             "state" : "translated",
             "value" : "Copy code"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copy code"
+          }
         }
       }
     },
     "复制内容" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copy Content"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Copy Content"
@@ -2605,12 +3541,24 @@
             "state" : "translated",
             "value" : "Copy Image"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copy Image"
+          }
         }
       }
     },
     "复制智能体" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copy Agent"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Copy Agent"
@@ -2625,6 +3573,12 @@
             "state" : "translated",
             "value" : "Copy Link"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copy Link"
+          }
         }
       }
     },
@@ -2635,12 +3589,24 @@
             "state" : "translated",
             "value" : "Weather service provider selection (only one can be enabled)"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "בחירת ספק שירותי מזג אוויר (אפשר להפעיל רק אחד)"
+          }
         }
       }
     },
     "天气查询" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Weather Enquiry"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Weather Enquiry"
@@ -2654,6 +3620,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "If you have any questions or suggestions, please contact us by email. We also have a WeChat group — email us if you’d like to join.\n"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "אם יש לך שאלות או הצעות, אנא צור איתנו קשר בדוא\"ל. יש לנו גם קבוצת WeChat - שלח לנו דוא\"ל אם תרצה להצטרף."
           }
         }
       }
@@ -2745,12 +3717,24 @@
             "state" : "translated",
             "value" : "Propose revisions for the selected content…"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "הצע תיקונים עבור התוכן שנבחר..."
+          }
         }
       }
     },
     "导入聊天记录" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Import Chat History"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Import Chat History"
@@ -2765,12 +3749,24 @@
             "state" : "translated",
             "value" : "Importing Chat History Instructions"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Importing Chat History Instructions"
+          }
         }
       }
     },
     "导入错误" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Import Error"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Import Error"
@@ -2785,12 +3781,24 @@
             "state" : "translated",
             "value" : "Export Chat History"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Export Chat History"
+          }
         }
       }
     },
     "工具" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tools"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Tools"
@@ -2805,6 +3813,12 @@
             "state" : "translated",
             "value" : "Downloaded"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Downloaded"
+          }
         }
       }
     },
@@ -2815,12 +3829,24 @@
             "state" : "translated",
             "value" : "Copied"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copied"
+          }
         }
       }
     },
     "已成功构建向量" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Embeddings Ready"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Embeddings Ready"
@@ -2851,12 +3877,24 @@
             "state" : "translated",
             "value" : "Written to Health"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Written to Health"
+          }
         }
       }
     },
     "已经存入背包" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Saved to Backpack"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Saved to Backpack"
@@ -2871,6 +3909,12 @@
             "state" : "translated",
             "value" : "Help"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Help"
+          }
         }
       }
     },
@@ -2881,12 +3925,24 @@
             "state" : "translated",
             "value" : "Cheap (≤¥0.001 / Ktokens)"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "זול (≤¥0.001 / Ktokens)"
+          }
         }
       }
     },
     "建议进入其开放平台获取 API 密钥" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "It is recommended to access its open platform to obtain the API key."
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "It is recommended to access its open platform to obtain the API key."
@@ -2901,12 +3957,24 @@
             "state" : "translated",
             "value" : "It is recommended to access its open platform to obtain the API key."
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "It is recommended to access its open platform to obtain the API key."
+          }
         }
       }
     },
     "开启智能生活的次世代AI工作台" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Next-Gen AI Workbench for Smart Living"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Next-Gen AI Workbench for Smart Living"
@@ -2921,6 +3989,12 @@
             "state" : "translated",
             "value" : "Current:"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Current:"
+          }
         }
       }
     },
@@ -2931,12 +4005,24 @@
             "state" : "translated",
             "value" : "No search engine is currently enabled. Please go to Settings > Tools > Search Settings to enable one."
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "אין מנוע חיפוש מופעל כרגע. אנא עבור אל הגדרות > כלים > הגדרות חיפוש כדי להפעיל אחת."
+          }
         }
       }
     },
     "忘记" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Forget"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Forget"
@@ -2951,12 +4037,24 @@
             "state" : "translated",
             "value" : "Quick Download Local Models"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Quick Download Local Models"
+          }
         }
       }
     },
     "思考" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Thinking"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Thinking"
@@ -2971,12 +4069,24 @@
             "state" : "translated",
             "value" : "Controllable Thinking Mode"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Controllable Thinking Mode"
+          }
         }
       }
     },
     "恢复默认排序" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Restore Default Sorting"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Restore Default Sorting"
@@ -2991,6 +4101,12 @@
             "state" : "translated",
             "value" : "Your optimization model has been successfully updated."
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your optimization model has been successfully updated."
+          }
         }
       }
     },
@@ -3001,12 +4117,24 @@
             "state" : "translated",
             "value" : "Your optimization model update failed!"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "עדכון מודל האופטימיזציה שלך נכשל!"
+          }
         }
       }
     },
     "您的用户信息已成功更新。" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your user information has been successfully updated."
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Your user information has been successfully updated."
@@ -3021,12 +4149,24 @@
             "state" : "translated",
             "value" : "Your user information update failed!"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "עדכון פרטי המשתמש שלך נכשל!"
+          }
         }
       }
     },
     "感谢您使用 Hylic.AI" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Thank you for using Hylic.AI."
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Thank you for using Hylic.AI."
@@ -3041,6 +4181,12 @@
             "state" : "translated",
             "value" : "Cost"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cost"
+          }
         }
       }
     },
@@ -3051,12 +4197,24 @@
             "state" : "translated",
             "value" : "Open App’s Visual Page"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "פתח את הדף הוויזואלי של האפליקציה"
+          }
         }
       }
     },
     "打开链接" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open Link"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Open Link"
@@ -3071,6 +4229,12 @@
             "state" : "translated",
             "value" : "Take Photos"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Take Photos"
+          }
         }
       }
     },
@@ -3080,6 +4244,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Guidance: No large model providers are currently enabled. Click \"Model\" below, then \"Model Key\" to set up the large model key and the provider's enabled status."
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "הדרכה: אין כרגע ספקי דגמים גדולים מופעלים. לחץ על \"דגם\" למטה ולאחר מכן על \"מפתח דגם\" כדי להגדיר את מפתח הדגם הגדול ואת הסטטוס המופעל של הספק."
           }
         }
       }
@@ -3091,6 +4261,12 @@
             "state" : "translated",
             "value" : "Instructions: Click \"Optimize Model\" below to configure the text optimization model and visual optimization model, enabling features such as prompt optimization, system message optimization, and image content recognition."
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "הוראות: לחץ על \"בצע אופטימיזציה של מודל\" למטה כדי להגדיר את מודל אופטימיזציית הטקסט ואת מודל האופטימיזציה החזותית, המאפשרים תכונות כגון אופטימיזציה מהירה, אופטימיזציה של הודעות מערכת וזיהוי תוכן תמונה."
+          }
         }
       }
     },
@@ -3100,6 +4276,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Instructions: Click \"Vector Model\" below to configure the vector embedding model and enable the knowledge backpack retrieval function."
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "הוראות: לחץ על \"מודל וקטור\" למטה כדי להגדיר את מודל ההטמעה הווקטורית ולאפשר את פונקציית אחזור תרמיל הידע."
           }
         }
       }
@@ -3111,6 +4293,12 @@
             "state" : "translated",
             "value" : "Guide: Click “Network Search” under “Tools” to set the search engine key and select the search engine to use."
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "מדריך: לחץ על \"חיפוש רשת\" תחת \"כלים\" כדי להגדיר את מפתח מנוע החיפוש ובחר את מנוע החיפוש לשימוש."
+          }
         }
       }
     },
@@ -3120,6 +4308,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "It is recommended to use the default system message, as AI Hanlin Academy is optimized for group chat dialogue mode."
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "מומלץ להשתמש בהודעת מערכת ברירת המחדל, שכן האקדמיה של AI Hanlin מותאמת למצב דיאלוג צ'אט קבוצתי."
           }
         }
       }
@@ -3147,12 +4341,24 @@
             "state" : "translated",
             "value" : "Prompt Library"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Prompt Library"
+          }
         }
       }
     },
     "提示词设置" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Prompt Settings"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Prompt Settings"
@@ -3343,12 +4549,24 @@
             "state" : "translated",
             "value" : "Summarized Text"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Summarized Text"
+          }
         }
       }
     },
     "撤销填写" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Undo Fill In"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Undo Fill In"
@@ -3363,12 +4581,24 @@
             "state" : "translated",
             "value" : "Support Tool Usage"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Support Tool Usage"
+          }
         }
       }
     },
     "支持文本生成" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Support Text Generation"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Support Text Generation"
@@ -3383,12 +4613,24 @@
             "state" : "translated",
             "value" : "Support Deep Thinking"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Support Deep Thinking"
+          }
         }
       }
     },
     "支持视觉理解" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Support Visual Understanding"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Support Visual Understanding"
@@ -3403,12 +4645,24 @@
             "state" : "translated",
             "value" : "Document Text"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Document Text"
+          }
         }
       }
     },
     "文本" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Text"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Text"
@@ -3439,12 +4693,24 @@
             "state" : "translated",
             "value" : "Text optimization models are widely used for prompt & content optimization, online search enhancement, Knowledge Backpack retrieval, image-generation prompting, auto-generating group titles, agent creation, translation, and more. An excellent text-optimization model provides a better user experience."
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "מודלים של אופטימיזציה של טקסט נמצאים בשימוש נרחב עבור אופטימיזציה של הודעות ותוכן, שיפור חיפוש מקוון, אחזור תרמיל ידע, הנחיות ליצירת תמונות, יצירה אוטומטית של כותרות קבוצות, יצירת סוכן, תרגום ועוד. מודל אופטימיזציית טקסט מעולה מספק חווית משתמש טובה יותר."
+          }
         }
       }
     },
     "文本内容生成反馈" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Text Content Generation Feedback"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Text Content Generation Feedback"
@@ -3459,12 +4725,24 @@
             "state" : "translated",
             "value" : "Markdown"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Markdown"
+          }
         }
       }
     },
     "新增" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Add"
@@ -3479,12 +4757,24 @@
             "state" : "translated",
             "value" : "Add New Reminder"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add New Reminder"
+          }
         }
       }
     },
     "新增日历事件" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add Calendar Events"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Add Calendar Events"
@@ -3499,12 +4789,24 @@
             "state" : "translated",
             "value" : "Add Custom Supplier"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add Custom Supplier"
+          }
         }
       }
     },
     "方形画幅" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Square Format"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Square Format"
@@ -3535,12 +4837,24 @@
             "state" : "translated",
             "value" : "Unable to use visual features."
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unable to use visual features."
+          }
         }
       }
     },
     "无法开启厂商" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unable to Enable Vendor"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Unable to Enable Vendor"
@@ -3571,6 +4885,12 @@
             "state" : "translated",
             "value" : "Calendar & Reminder"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "לוח שנה ותזכורת"
+          }
         }
       }
     },
@@ -3580,6 +4900,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Expensive (≥¥0.006 / Ktokens)"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "יקר (≥¥0.006 / Ktokens)"
           }
         }
       }
@@ -3591,6 +4917,12 @@
             "state" : "translated",
             "value" : "Do you want to delete all chat history? Once deleted, it cannot be recovered."
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "האם אתה רוצה למחוק את כל היסטוריית הצ'אט? לאחר המחיקה, לא ניתן לשחזר אותו."
+          }
         }
       }
     },
@@ -3601,12 +4933,24 @@
             "state" : "translated",
             "value" : "Display Name (Custom)"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "שם תצוגה (מותאם אישית)"
+          }
         }
       }
     },
     "显示设置" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Display Settings"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Display Settings"
@@ -3621,6 +4965,12 @@
             "state" : "translated",
             "value" : "Agent"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Agent"
+          }
         }
       }
     },
@@ -3631,12 +4981,24 @@
             "state" : "translated",
             "value" : "Agent Name"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Agent Name"
+          }
         }
       }
     },
     "智能体设定" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Agent Settings"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Agent Settings"
@@ -3667,6 +5029,12 @@
             "state" : "translated",
             "value" : "No models available. Please go to the models interface to enable a model."
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No models available. Please go to the models interface to enable a model."
+          }
         }
       }
     },
@@ -3693,12 +5061,24 @@
             "state" : "translated",
             "value" : "No Messages Yet"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No Messages Yet"
+          }
         }
       }
     },
     "暂无翻译记录" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No translation record"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "No translation record"
@@ -3713,6 +5093,12 @@
             "state" : "translated",
             "value" : "Update"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Update"
+          }
         }
       }
     },
@@ -3723,12 +5109,24 @@
             "state" : "translated",
             "value" : "Updated: %@"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Updated: %@"
+          }
         }
       }
     },
     "更新说明" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Update Notes"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Update Notes"
@@ -3759,12 +5157,24 @@
             "state" : "translated",
             "value" : "Future Weather Forecast"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Future Weather Forecast"
+          }
         }
       }
     },
     "本地" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Local"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Local"
@@ -3795,12 +5205,24 @@
             "state" : "translated",
             "value" : "The local model is still in the testing phase and does not currently support visual functions, and there may be issues with the output that will be fixed and optimized later. If you need to delete it after downloading, you can do so directly from the model list, and the local files will be deleted as well. The model files come from the Mo Tower community or Hugging Face, and this software assumes no responsibility for the output results of the models. Please download reasonably based on your device's performance; exceeding your device's capacity may result in crashes or freezes."
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "המודל המקומי עדיין בשלב הבדיקה ואינו תומך כרגע בפונקציות חזותיות, וייתכנו בעיות בפלט שיתוקנו ויוטבו בהמשך. אם אתה צריך למחוק אותו לאחר ההורדה, אתה יכול לעשות זאת ישירות מרשימת הדגמים, וגם הקבצים המקומיים יימחקו. קבצי המודל מגיעים מקהילת Mo Tower או Hugging Face, ותוכנה זו אינה לוקחת אחריות על תוצאות הפלט של הדגמים. אנא הורד באופן סביר בהתבסס על ביצועי המכשיר שלך; חריגה מהקיבולת של המכשיר שלך עלולה לגרום לקריסות או להקפאה."
+          }
         }
       }
     },
     "本地运行" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Run Locally"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Run Locally"
@@ -3815,12 +5237,24 @@
             "state" : "translated",
             "value" : "The software is not responsible for the generated results."
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The software is not responsible for the generated results."
+          }
         }
       }
     },
     "构建以允许聊天召回" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Build for Chat Recall"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Build for Chat Recall"
@@ -3835,12 +5269,24 @@
             "state" : "translated",
             "value" : "Find Reminders"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Find Reminders"
+          }
         }
       }
     },
     "查找日历事件" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Find Calendar Events"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Find Calendar Events"
@@ -3855,12 +5301,24 @@
             "state" : "translated",
             "value" : "Source Code"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Source Code"
+          }
         }
       }
     },
     "查看资料" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Read Information"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Read Information"
@@ -3891,12 +5349,24 @@
             "state" : "translated",
             "value" : "Check Real-time Weather"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Check Real-time Weather"
+          }
         }
       }
     },
     "查询步数距离" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Query Step Distance"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Query Step Distance"
@@ -3911,12 +5381,24 @@
             "state" : "translated",
             "value" : "Query Energy Consumption"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Query Energy Consumption"
+          }
         }
       }
     },
     "查询营养摄入" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enquire Nutritional Intake"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Enquire Nutritional Intake"
@@ -3931,12 +5413,24 @@
             "state" : "translated",
             "value" : "Title"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Title"
+          }
         }
       }
     },
     "格式规范" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Formatting Standards"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Formatting Standards"
@@ -3999,12 +5493,24 @@
             "state" : "translated",
             "value" : "The model name already exists, please modify the name and try again."
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "שם הדגם כבר קיים, אנא שנה את השם ונסה שוב."
+          }
         }
       }
     },
     "模型在需要时主动搜索" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Models actively search when needed"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Models actively search when needed"
@@ -4019,6 +5525,12 @@
             "state" : "translated",
             "value" : "The model actively searches through its knowledge base when needed."
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The model actively searches through its knowledge base when needed."
+          }
         }
       }
     },
@@ -4029,12 +5541,24 @@
             "state" : "translated",
             "value" : "How Should Models Address You?"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "כיצד צריכות דוגמניות לפנות אליך?"
+          }
         }
       }
     },
     "模型显示方式" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Model Display Mode"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Model Display Mode"
@@ -4065,6 +5589,12 @@
             "state" : "translated",
             "value" : "Automatic Model Capability Detection"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Automatic Model Capability Detection"
+          }
         }
       }
     },
@@ -4091,13 +5621,40 @@
             "state" : "translated",
             "value" : "What Should Be Noted About Models?"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "מה צריך לשים לב לגבי דגמים?"
+          }
         }
       }
     },
-    "横向滑动" : {},
+    "横向滑动" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Slide horizontally"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "החלק אופקית"
+          }
+        }
+      }
+    },
     "横向画幅" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Horizontal format"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Horizontal format"
@@ -4128,12 +5685,24 @@
             "state" : "translated",
             "value" : "Filling in…"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ממלא…"
+          }
         }
       }
     },
     "正在翻译" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Translating..."
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Translating..."
@@ -4148,12 +5717,24 @@
             "state" : "translated",
             "value" : "Fetching model list..."
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fetching model list..."
+          }
         }
       }
     },
     "正在请求" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Requesting..."
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Requesting..."
@@ -4168,6 +5749,12 @@
             "state" : "translated",
             "value" : "This operation will clear the current canvas content and cannot be undone."
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This operation will clear the current canvas content and cannot be undone."
+          }
         }
       }
     },
@@ -4178,12 +5765,24 @@
             "state" : "translated",
             "value" : "Note: Setting user information will make model responses more tailored to your preferences but will consume more tokens."
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Note: Setting user information will make model responses more tailored to your preferences but will consume more tokens."
+          }
         }
       }
     },
     "注意：自动模型能力探测中可能有一定的API费用消耗" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Note: API fees may be incurred during automatic model capability detection."
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Note: API fees may be incurred during automatic model capability detection."
@@ -4214,12 +5813,24 @@
             "state" : "translated",
             "value" : "Test Failed"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Test Failed"
+          }
         }
       }
     },
     "测试模型" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Test Model"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Test Model"
@@ -4234,12 +5845,24 @@
             "state" : "translated",
             "value" : "Test Passed"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Test Passed"
+          }
         }
       }
     },
     "消息" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Message"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Message"
@@ -4254,12 +5877,24 @@
             "state" : "translated",
             "value" : "Message Quantity Limit"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Message Quantity Limit"
+          }
         }
       }
     },
     "润色文本" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Refine Text"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Refine Text"
@@ -4274,6 +5909,12 @@
             "state" : "translated",
             "value" : "Refinement Requirements"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Refinement Requirements"
+          }
         }
       }
     },
@@ -4284,12 +5925,24 @@
             "state" : "translated",
             "value" : "Deep Thinking"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Deep Thinking"
+          }
         }
       }
     },
     "添加" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Add"
@@ -4320,12 +5973,24 @@
             "state" : "translated",
             "value" : "Add New Agent"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add New Agent"
+          }
         }
       }
     },
     "添加智能体" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add New Agent"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Add New Agent"
@@ -4356,12 +6021,24 @@
             "state" : "translated",
             "value" : "Add a custom API provider that uses an API service compatible with the OpenAI format."
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add a custom API provider that uses an API service compatible with the OpenAI format."
+          }
         }
       }
     },
     "清空" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Clear All"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Clear All"
@@ -4376,12 +6053,24 @@
             "state" : "translated",
             "value" : "Clear All"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Clear All"
+          }
         }
       }
     },
     "清空聊天记录" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Clear Chat History"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Clear Chat History"
@@ -4396,6 +6085,12 @@
             "state" : "translated",
             "value" : "Clear"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Clear"
+          }
         }
       }
     },
@@ -4406,12 +6101,24 @@
             "state" : "translated",
             "value" : "Reminder: Instant features do not save your data. Please back up important information in time!"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "תזכורת: תכונות מיידיות אינן שומרות את הנתונים שלך. נא לגבות מידע חשוב בזמן!"
+          }
         }
       }
     },
     "渲染画布网页" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Render Canvas Webpage"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Render Canvas Webpage"
@@ -4426,12 +6133,24 @@
             "state" : "translated",
             "value" : "Render Web Content"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Render Web Content"
+          }
         }
       }
     },
     "灌输新记忆" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Instill New Memories"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Instill New Memories"
@@ -4446,6 +6165,12 @@
             "state" : "translated",
             "value" : "Click the \"Canvas\" button at the bottom right to view and edit content."
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "לחץ על כפתור \"קנבס\" בפינה השמאלית התחתונה כדי להציג ולערוך תוכן."
+          }
         }
       }
     },
@@ -4455,6 +6180,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Click the name or key to set the manufacturer's key, and turn on the manufacturer switch to use the manufacturer's model."
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "לחץ על השם או המקש כדי להגדיר את מפתח היצרן, והפעל את מתג היצרן כדי להשתמש בדגם היצרן."
           }
         }
       }
@@ -4466,12 +6197,24 @@
             "state" : "translated",
             "value" : "Version: %@"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Version: %@"
+          }
         }
       }
     },
     "特别要求" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Special Requests"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Special Requests"
@@ -4502,12 +6245,24 @@
             "state" : "translated",
             "value" : "Existing Text"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Existing Text"
+          }
         }
       }
     },
     "现有文本或网页链接" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Existing Text or Web Links"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Existing Text or Web Links"
@@ -4522,12 +6277,24 @@
             "state" : "translated",
             "value" : "Generate Image"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Generate Image"
+          }
         }
       }
     },
     "生成语音" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Generate Speech"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Generate Speech"
@@ -4542,12 +6309,24 @@
             "state" : "translated",
             "value" : "User Information"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "User Information"
+          }
         }
       }
     },
     "用户定位查询" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "User Location Search"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "User Location Search"
@@ -4562,12 +6341,24 @@
             "state" : "translated",
             "value" : "Refinement Provided by %@"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Refinement Provided by %@"
+          }
         }
       }
     },
     "由 %@ 提供翻译" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Translation Provided by %@"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Translation Provided by %@"
@@ -4582,6 +6373,12 @@
             "state" : "translated",
             "value" : "Summarized by %@"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Summarized by %@"
+          }
         }
       }
     },
@@ -4592,12 +6389,24 @@
             "state" : "translated",
             "value" : "Due to the need to copy model files, after uploading, you will see the uploaded local model in the database only after waiting for a while based on the size of the uploaded model."
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "עקב הצורך בהעתקת קבצי דגם, לאחר ההעלאה, תראה את הדגם המקומי שהועלה במאגר רק לאחר המתנה של זמן מה בהתאם לגודל הדגם שהועלה."
+          }
         }
       }
     },
     "画布 %@" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Canvas %@"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Canvas %@"
@@ -4612,12 +6421,24 @@
             "state" : "translated",
             "value" : "A hundred AI scholars stand by, awaiting your command. As the keeper of the imperial seal in the era of intelligence, you will witness the grand strategies presented by the Cabinet of Thought amidst the most surging tide of computational power in the 21st century. And you, the most eagerly anticipated pioneer of this century’s technological revolution, are cordially invited by the AI Academy to review the wisdom of a hundred models. In this unprecedented cognitive feast, let us compose a new chapter that belongs to you in the digital age!"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "מאה חוקרי בינה מלאכותית עומדים מנגד, ממתינים לפקודתך. בתור שומר החותם הקיסרי בעידן המודיעין, אתה תהיה עד לאסטרטגיות הגדולות שהציג קבינט המחשבה בתוך הגאות הגואה ביותר של כוח חישוב במאה ה-21. ואתה, החלוץ המצופה ביותר במהפכה הטכנולוגית של המאה הנוכחית, מוזמן באהבה על ידי האקדמיה לבינה מלאכותית לסקור את החוכמה של מאה דגמים. בחגיגה קוגניטיבית חסרת תקדים זו, הרשו לנו לחבר פרק חדש ששייך לכם בעידן הדיגיטלי!"
+          }
         }
       }
     },
     "相册选择" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Camera Selection"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Camera Selection"
@@ -4728,6 +6549,12 @@
             "state" : "translated",
             "value" : "Are you sure you want to delete it? This action cannot be undone."
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "האם אתה בטוח שברצונך למחוק אותו? לא ניתן לבטל פעולה זו."
+          }
         }
       }
     },
@@ -4737,6 +6564,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Are You Sure You Want to Delete This Model?"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "האם אתה בטוח שאתה רוצה למחוק את הדגם הזה?"
           }
         }
       }
@@ -4748,6 +6581,12 @@
             "state" : "translated",
             "value" : "Are you sure you want to clear all memories?"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "האם אתה בטוח שאתה רוצה לנקות את כל הזכרונות?"
+          }
         }
       }
     },
@@ -4757,6 +6596,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Confirm Deletion?"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "לאשר את המחיקה?"
           }
         }
       }
@@ -4768,6 +6613,12 @@
             "state" : "translated",
             "value" : "Confirm deletion of canvas content?"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "לאשר מחיקה של תוכן בד?"
+          }
         }
       }
     },
@@ -4778,12 +6629,24 @@
             "state" : "translated",
             "value" : "Confirm Clearing All Text?"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "לאשר את ניקוי כל הטקסט?"
+          }
         }
       }
     },
     "确认清空聊天记录" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Confirm Clearing Chat History"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Confirm Clearing Chat History"
@@ -4830,12 +6693,24 @@
             "state" : "translated",
             "value" : "Visual optimization models are widely used for online search query optimization, Knowledge Backpack retrieval, image-generation prompts, OCR text scanning, and image analysis with text & reasoning. High-quality visual optimization models deliver a superior user experience."
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "מודלים של אופטימיזציה חזותית נמצאים בשימוש נרחב עבור אופטימיזציה של שאילתות חיפוש מקוונות, אחזור תרמיל ידע, הנחיות ליצירת תמונות, סריקת טקסט OCR וניתוח תמונה עם טקסט והיגיון. מודלים של אופטימיזציה חזותית באיכות גבוהה מספקים חווית משתמש מעולה."
+          }
         }
       }
     },
     "禁用工具" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Disable Tools"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Disable Tools"
@@ -4850,12 +6725,24 @@
             "state" : "translated",
             "value" : "Latex"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Latex"
+          }
         }
       }
     },
     "程序源码" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Source Code"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Source Code"
@@ -4870,6 +6757,12 @@
             "state" : "translated",
             "value" : "Program Results"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Program Results"
+          }
         }
       }
     },
@@ -4880,12 +6773,24 @@
             "state" : "translated",
             "value" : "System Name (For API Requests, Refer to Official API)"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "שם מערכת (עבור בקשות API, עיין ב-API הרשמי)"
+          }
         }
       }
     },
     "系统消息设置" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "System Message Settings"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "System Message Settings"
@@ -4900,12 +6805,24 @@
             "state" : "translated",
             "value" : "Approx. %lld tokens"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Approx. %lld tokens"
+          }
         }
       }
     },
     "纯文本" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Plain Text"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Plain Text"
@@ -4920,12 +6837,24 @@
             "state" : "translated",
             "value" : "Plain Text (.txt)"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "טקסט רגיל (.txt)"
+          }
         }
       }
     },
     "纵向画幅" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vertical"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Vertical"
@@ -4940,12 +6869,24 @@
             "state" : "translated",
             "value" : "Cumulative Probability Adjustment (top_p)"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "התאמת הסתברות מצטברת (top_p)"
+          }
         }
       }
     },
     "继续" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Continue"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Continue"
@@ -4976,12 +6917,24 @@
             "state" : "translated",
             "value" : "Edit System Role Message"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Edit System Role Message"
+          }
         }
       }
     },
     "编辑内容" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Edit Content"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Edit Content"
@@ -5012,6 +6965,12 @@
             "state" : "translated",
             "value" : "Edit the Basic Model"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Edit the Basic Model"
+          }
         }
       }
     },
@@ -5038,12 +6997,24 @@
             "state" : "translated",
             "value" : "Edit Agent"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Edit Agent"
+          }
         }
       }
     },
     "编辑智能体名称" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Edit Agent Name"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Edit Agent Name"
@@ -5058,12 +7029,24 @@
             "state" : "translated",
             "value" : "Edit Agent Description"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Edit Agent Description"
+          }
         }
       }
     },
     "编辑智能体设定" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Edit Agent Character"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Edit Agent Character"
@@ -5078,12 +7061,24 @@
             "state" : "translated",
             "value" : "Edit Title"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Edit Title"
+          }
         }
       }
     },
     "编辑模型" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Edit Model"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Edit Model"
@@ -5098,12 +7093,24 @@
             "state" : "translated",
             "value" : "Edit Model Name"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Edit Model Name"
+          }
         }
       }
     },
     "编辑画布内容" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Edit Canvas Contents"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Edit Canvas Contents"
@@ -5118,12 +7125,24 @@
             "state" : "translated",
             "value" : "Edit Translation"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Edit Translation"
+          }
         }
       }
     },
     "编辑翻译词汇" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Edit Translation"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Edit Translation"
@@ -5138,12 +7157,24 @@
             "state" : "translated",
             "value" : "Edit Chat History"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Edit Chat History"
+          }
         }
       }
     },
     "网络文件阅读" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Online Document Reading"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Online Document Reading"
@@ -5158,12 +7189,24 @@
             "state" : "translated",
             "value" : "Web Content Reading"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Web Content Reading"
+          }
         }
       }
     },
     "网页地址" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Web URL"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Web URL"
@@ -5242,12 +7285,24 @@
             "state" : "translated",
             "value" : "Translating..."
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Translating..."
+          }
         }
       }
     },
     "翻译内容" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Translation Content"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Translation Content"
@@ -5262,12 +7317,24 @@
             "state" : "translated",
             "value" : "Translation Failed"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Translation Failed"
+          }
         }
       }
     },
     "翻译词典" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Translation Dictionary"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Translation Dictionary"
@@ -5282,12 +7349,24 @@
             "state" : "translated",
             "value" : "Chat Record Management"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Chat Record Management"
+          }
         }
       }
     },
     "联系我们" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Contact Us"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Contact Us"
@@ -5334,12 +7413,24 @@
             "state" : "translated",
             "value" : "Autofill"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Autofill"
+          }
         }
       }
     },
     "自动模型能力探测" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Automatic model capability detection"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Automatic model capability detection"
@@ -5354,12 +7445,24 @@
             "state" : "translated",
             "value" : "Automatic Route Planning"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Automatic Route Planning"
+          }
         }
       }
     },
     "自定义" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Customization"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Customization"
@@ -5374,6 +7477,12 @@
             "state" : "translated",
             "value" : "Custom System Message"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Custom System Message"
+          }
         }
       }
     },
@@ -5384,12 +7493,24 @@
             "state" : "translated",
             "value" : "Setting up a translation dictionary will make the results of \"instant translation\" more personalized, especially for certain proprietary translation knowledge. Adding collocations to the translation dictionary can quickly optimize your translation results."
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "הגדרת מילון תרגום תהפוך את התוצאות של \"תרגום מיידי\" לאישיות יותר, במיוחד עבור ידע תרגום קנייני מסוים. הוספת קולוקציות למילון התרגום יכולה לייעל במהירות את תוצאות התרגום שלך."
+          }
         }
       }
     },
     "菜单选择" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Menu Selection"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Menu Selection"
@@ -5404,12 +7525,24 @@
             "state" : "translated",
             "value" : "Nutrition Card"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nutrition Card"
+          }
         }
       }
     },
     "补全 /v1/chat/completions" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Complete /v1/chat/completions"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Complete /v1/chat/completions"
@@ -5424,12 +7557,24 @@
             "state" : "translated",
             "value" : "Request Description…"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "בקש תיאור..."
+          }
         }
       }
     },
     "规划执行" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Planning"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Planning"
@@ -5444,12 +7589,24 @@
             "state" : "translated",
             "value" : "Haptic Feedback"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Haptic Feedback"
+          }
         }
       }
     },
     "记忆功能已关闭" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Memory function has been disabled."
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Memory function has been disabled."
@@ -5464,12 +7621,24 @@
             "state" : "translated",
             "value" : "Memory Archive"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Memory Archive"
+          }
         }
       }
     },
     "记忆档案功能用于聊天，受支持的模型会自动在聊天时记住你的喜好并在需要的时候主动回忆这些喜好。" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The Memory Archive feature works in chat: supported models will automatically remember your preferences during conversations and proactively recall them when needed."
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "The Memory Archive feature works in chat: supported models will automatically remember your preferences during conversations and proactively recall them when needed."
@@ -5484,6 +7653,12 @@
             "state" : "translated",
             "value" : "Memory Editing"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Memory Editing"
+          }
         }
       }
     },
@@ -5493,6 +7668,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Set personalized content so that the model understands your needs and preferences during conversations, allowing for better responses."
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "הגדר תוכן מותאם אישית כך שהמודל יבין את הצרכים וההעדפות שלך במהלך השיחות, מה שמאפשר תגובות טובות יותר."
           }
         }
       }
@@ -5584,12 +7765,24 @@
             "state" : "translated",
             "value" : "Enable the code function to allow supported models to run Python code or generate web content during conversations."
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enable the code function to allow supported models to run Python code or generate web content during conversations."
+          }
         }
       }
     },
     "设置健康功能，以便在与支持工具的模型对话时，模型能够获取你的健康信息或帮你记录健康、饮食等信息。" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enable health functions so supported models can access or record your health and dietary information."
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Enable health functions so supported models can access or record your health and dietary information."
@@ -5604,12 +7797,24 @@
             "state" : "translated",
             "value" : "Enable the map function to allow the model to access location-related information and display maps during conversations."
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enable the map function to allow the model to access location-related information and display maps during conversations."
+          }
         }
       }
     },
     "设置天气功能，以便在与支持工具的模型对话时，获取实时天气信息和未来天气预报" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enable the weather feature to obtain real-time weather information and future forecasts when conversing with models that support this tool."
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Enable the weather feature to obtain real-time weather information and future forecasts when conversing with models that support this tool."
@@ -5624,12 +7829,24 @@
             "state" : "translated",
             "value" : "Enable the search function to allow models to fetch internet content during chats, improving response quality; personalized settings balance your needs and retrieval costs."
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "אפשר את פונקציית החיפוש כדי לאפשר לדגמים להביא תוכן אינטרנט במהלך צ'אטים, ולשפר את איכות התגובה; הגדרות מותאמות אישית מאזנות את הצרכים שלך ועלויות האחזור שלך."
+          }
         }
       }
     },
     "设置日历功能，以便在与支持工具的模型对话时，获取日历日程、提醒事项信息或者让模型写入日历日程、提醒事项" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enable calendar functions to let supported models retrieve schedules and reminders or add events to your calendar."
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Enable calendar functions to let supported models retrieve schedules and reminders or add events to your calendar."
@@ -5644,6 +7861,12 @@
             "state" : "translated",
             "value" : "Enable canvas function so that when interacting with models that support tools, the model can use the canvas tool to provide a better editing experience for long texts, large paragraphs, or structured content output."
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "אפשר את פונקציית הקנבס כך שבעת אינטראקציה עם מודלים התומכים בכלים, המודל יכול להשתמש בכלי הקנבס כדי לספק חווית עריכה טובה יותר עבור טקסטים ארוכים, פסקאות גדולות או פלט תוכן מובנה."
+          }
         }
       }
     },
@@ -5654,12 +7877,24 @@
             "state" : "translated",
             "value" : "Enable the knowledge function to let models search your knowledge backpack for private content during chats, enhancing response effectiveness."
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "אפשר את פונקציית הידע כדי לאפשר לדוגמניות לחפש בתרמיל הידע שלך תוכן פרטי במהלך צ'אטים, ולשפר את יעילות התגובה."
+          }
         }
       }
     },
     "设置系统消息" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Set System Message"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Set System Message"
@@ -5674,6 +7909,12 @@
             "state" : "translated",
             "value" : "Not Supported"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Not Supported"
+          }
         }
       }
     },
@@ -5684,12 +7925,24 @@
             "state" : "translated",
             "value" : "Language Settings"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Language Settings"
+          }
         }
       }
     },
     "语音" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Speech"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Speech"
@@ -5720,12 +7973,24 @@
             "state" : "translated",
             "value" : "Speech models will be used to synthesize speech. Selecting the Siri model will use native synthesis, while selecting Large Model Synthesis will generate speech via API requests, the latter requiring a valid API Key to be configured."
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "מודלים של דיבור ישמשו לסינתזה של דיבור. בחירה במודל של Siri תשתמש בסינתזה מקורית, בעוד שבחירה בסינתזה של מודלים גדולים תיצור דיבור באמצעות בקשות API, שהאחרונות מחייבות להגדיר מפתח API חוקי."
+          }
         }
       }
     },
     "语音生成" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Speech Generation"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Speech Generation"
@@ -5740,12 +8005,24 @@
             "state" : "translated",
             "value" : "Generated by %@"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Generated by %@"
+          }
         }
       }
     },
     "说明" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Note"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Note"
@@ -5760,6 +8037,12 @@
             "state" : "translated",
             "value" : "Note: The message limit is used to control the number of incoming conversations, aiming to reasonably manage context length and avoid issues such as complex system processing, high resource consumption, and negative impacts on user experience due to excessive messages. The default value is 20."
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "הערה: מגבלת ההודעות משמשת לשליטה במספר השיחות הנכנסות, במטרה לנהל את אורך ההקשר באופן סביר ולהימנע מבעיות כגון עיבוד מערכת מורכב, צריכת משאבים גבוהה והשפעות שליליות על חווית המשתמש עקב הודעות מוגזמות. ערך ברירת המחדל הוא 20."
+          }
         }
       }
     },
@@ -5769,6 +8052,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Description: Used to control how many word elements (tokens) are included in the maximum number of responses generated by the model. By setting max_tokens, you can limit the length of the generated text to ensure it meets the expected length requirements. The default is not set."
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "תיאור: משמש כדי לשלוט בכמה רכיבי מילים (אסימונים) כלולים במספר המרבי של תגובות שנוצרות על ידי המודל. על ידי הגדרת max_tokens, אתה יכול להגביל את אורך הטקסט שנוצר כדי להבטיח שהוא עומד בדרישות האורך הצפויות. ברירת המחדל אינה מוגדרת."
           }
         }
       }
@@ -5780,6 +8069,12 @@
             "state" : "translated",
             "value" : "Description: cumulative probability controls the range of words selected, lower limits the diversity of generation, higher generates more open and diverse text. The default is not set."
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "תיאור: הסתברות מצטברת שולטת בטווח המילים הנבחרות, נמוכה יותר מגבילה את גיוון הדור, גבוהה יותר מייצרת טקסט פתוח ומגוון יותר. ברירת המחדל אינה מוגדרת."
+          }
         }
       }
     },
@@ -5789,6 +8084,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Description: the sampling temperature parameter affects the creativity and stability of the model: the higher the temperature, the more creative but error-prone the generated content; the lower the temperature, the more conservative and stable the answers. The default is not set."
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "תיאור: פרמטר טמפרטורת הדגימה משפיע על היצירתיות והיציבות של המודל: ככל שהטמפרטורה גבוהה יותר, כך התוכן שנוצר יותר יצירתי אך מועד לשגיאות; ככל שהטמפרטורה נמוכה יותר, התשובות שמרניות ויציבות יותר. ברירת המחדל אינה מוגדרת."
           }
         }
       }
@@ -5800,6 +8101,12 @@
             "state" : "translated",
             "value" : "Please provide a JSON file that matches the format exported by this software: OpenAI’s request JSON format, including text dialogues and multimodal dialogues with images encoded in base64.\n"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "אנא ספק קובץ JSON התואם לפורמט המיוצא על ידי תוכנה זו: פורמט JSON הבקשה של OpenAI, כולל דיאלוגים של טקסט ודיאלוגים מולטי-מודאליים עם תמונות מקודדות ב-base64."
+          }
         }
       }
     },
@@ -5810,12 +8117,24 @@
             "state" : "translated",
             "value" : "Request Address"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Request Address"
+          }
         }
       }
     },
     "请求地址（URL）" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Request URLs"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Request URLs"
@@ -5878,12 +8197,24 @@
             "state" : "translated",
             "value" : "Please enter your nickname"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Please enter your nickname"
+          }
         }
       }
     },
     "请输入供应商名称" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Please enter the supplier name."
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Please enter the supplier name."
@@ -5914,12 +8245,24 @@
             "state" : "translated",
             "value" : "Please enter a new title"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Please enter a new title"
+          }
         }
       }
     },
     "请输入标题" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Please enter the title"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Please enter the title"
@@ -5950,12 +8293,24 @@
             "state" : "translated",
             "value" : "Please enter the name for the knowledge"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Please enter the name for the knowledge"
+          }
         }
       }
     },
     "请输入网页 URL" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Please enter the webpage URL"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Please enter the webpage URL"
@@ -5986,12 +8341,24 @@
             "state" : "translated",
             "value" : "Please enter the request URLs"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Please enter the request URLs"
+          }
         }
       }
     },
     "调整模型参数" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Adjust Model Parameters"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Adjust Model Parameters"
@@ -6006,12 +8373,24 @@
             "state" : "translated",
             "value" : "Adjust Cumulative Probability"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Adjust Cumulative Probability"
+          }
         }
       }
     },
     "调整采样温度" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Adjust Sampling Temperature"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Adjust Sampling Temperature"
@@ -6026,12 +8405,24 @@
             "state" : "translated",
             "value" : "Information Content"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Information Content"
+          }
         }
       }
     },
     "身份选择" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Identity Selection"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Identity Selection"
@@ -6046,12 +8437,24 @@
             "state" : "translated",
             "value" : "Software"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Software"
+          }
         }
       }
     },
     "软件介绍" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Software Introduction"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Software Introduction"
@@ -6066,6 +8469,12 @@
             "state" : "translated",
             "value" : "Software Information"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Software Information"
+          }
         }
       }
     },
@@ -6075,6 +8484,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "This software contains AI-generated content; please verify its authenticity."
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "תוכנה זו מכילה תוכן שנוצר בינה מלאכותית; נא לאמת את האותנטיות שלו."
           }
         }
       }
@@ -6102,12 +8517,24 @@
             "state" : "translated",
             "value" : "Enter the name here"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enter the name here"
+          }
         }
       }
     },
     "输入工具" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Input Tools"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Input Tools"
@@ -6122,12 +8549,24 @@
             "state" : "translated",
             "value" : "Input Translation Dictionary"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Input Translation Dictionary"
+          }
         }
       }
     },
     "运行画布代码" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Run Canvas Codes"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Run Canvas Codes"
@@ -6142,13 +8581,40 @@
             "state" : "translated",
             "value" : "Run Program Codes"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Run Program Codes"
+          }
         }
       }
     },
-    "返回" : {},
+    "返回" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "return"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "לַחֲזוֹר"
+          }
+        }
+      }
+    },
     "这是一段示例消息内容..." : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This is a Sample Message..."
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "This is a Sample Message..."
@@ -6163,12 +8629,24 @@
             "state" : "translated",
             "value" : "The messages of the System role set here play a crucial role in the large model, typically used to establish the context, style, identity, and behavioral boundaries of the conversation. It is one of the key mechanisms for building high-quality dialogue systems."
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "המסרים של תפקיד המערכת המוגדרים כאן ממלאים תפקיד מכריע במודל הגדול, המשמש בדרך כלל לביסוס ההקשר, הסגנון, הזהות והגבולות ההתנהגותיים של השיחה. זהו אחד המנגנונים המרכזיים לבניית מערכות דיאלוג איכותיות."
+          }
         }
       }
     },
     "退出编辑模式" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Exit Edit Mode"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Exit Edit Mode"
@@ -6183,12 +8661,24 @@
             "state" : "translated",
             "value" : "Moderate (¥0.001–¥0.006 / Ktokens)"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "בינוני (¥0.001–¥0.006 / Ktokens)"
+          }
         }
       }
     },
     "选择OCR的图片来源" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Select OCR Image Source"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Select OCR Image Source"
@@ -6219,6 +8709,12 @@
             "state" : "translated",
             "value" : "Select the Icon"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Select the Icon"
+          }
         }
       }
     },
@@ -6245,12 +8741,24 @@
             "state" : "translated",
             "value" : "Select Export Format"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Select Export Format"
+          }
         }
       }
     },
     "选择文本" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Select Text"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Select Text"
@@ -6281,6 +8789,12 @@
             "state" : "translated",
             "value" : "Select Model"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Select Model"
+          }
         }
       }
     },
@@ -6307,12 +8821,24 @@
             "state" : "translated",
             "value" : "Select System Prompts"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Select System Prompts"
+          }
         }
       }
     },
     "选择语音模型（仅启用一个）" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Select a Speech Model"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Select a Speech Model"
@@ -6327,12 +8853,24 @@
             "state" : "translated",
             "value" : "General"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "General"
+          }
         }
       }
     },
     "通用设置包含语言和触感反馈等基础配置项。" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "General settings include basic configuration items like language and haptic feedback"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "General settings include basic configuration items like language and haptic feedback"
@@ -6347,12 +8885,24 @@
             "state" : "translated",
             "value" : "By selecting a new base model to replicate the agent."
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "By selecting a new base model to replicate the agent."
+          }
         }
       }
     },
     "邮箱已复制到剪贴板" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The email has been copied to the clipboard."
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "The email has been copied to the clipboard."
@@ -6367,12 +8917,24 @@
             "state" : "translated",
             "value" : "Sampling temperature parameter adjustment (temperature)"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "התאמת פרמטר של טמפרטורת דגימה (טמפרטורה)"
+          }
         }
       }
     },
     "重新请求" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Request Again"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Request Again"
@@ -6387,12 +8949,24 @@
             "state" : "translated",
             "value" : "The link contains unknown information. Opening it will take you away from AI Hanlin."
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The link contains unknown information. Opening it will take you away from AI Hanlin."
+          }
         }
       }
     },
     "错误" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Error"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Error"
@@ -6423,6 +8997,12 @@
             "state" : "translated",
             "value" : "Voice"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Voice"
+          }
         }
       }
     },
@@ -6433,12 +9013,24 @@
             "state" : "translated",
             "value" : "Project created in February 2025, Singapore."
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "הפרויקט נוצר בפברואר 2025, סינגפור."
+          }
         }
       }
     },
     "验证失败" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verification Failed"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Verification Failed"
@@ -6453,12 +9045,24 @@
             "state" : "translated",
             "value" : "Default"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Default"
+          }
         }
       }
     },
     "默认系统消息" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Default System Message"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Default System Message"
@@ -6473,12 +9077,24 @@
             "state" : "translated",
             "value" : "Default Hidden Agent"
           }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Default Hidden Agent"
+          }
         }
       }
     },
     "默认隐藏模型" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Default Hidden Model"
+          }
+        },
+        "he" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Default Hidden Model"
@@ -6546,6 +9162,780 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "עדיין לא הוגדר מודל אופטימיזציה. עברו אל \"הגדרות-מודלים-מודלי אופטימיזציה\" כדי להגדיר מודל אופטימיזציית טקסט ומודל אופטימיזציית ראייה."
+          }
+        }
+      }
+    },
+    ") 提供润色" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : ") provides polish"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : ") מספק פולנית"
+          }
+        }
+      }
+    },
+    ") 提供翻译" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : ") provides translation"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : ") מספק תרגום"
+          }
+        }
+      }
+    },
+    ") 进行摘要" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : ") to summarize"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : ") לסיכום"
+          }
+        }
+      }
+    },
+    ")) API密钥，以开启该搜索引擎" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : ")) API key to open the search engine"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : ")) מפתח API לפתיחת מנוע החיפוש"
+          }
+        }
+      }
+    },
+    ", model.price))/分钟" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : ", model.price))/minute"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : ", model.price))/דקה"
+          }
+        }
+      }
+    },
+    ", price))/次" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : ", price))/times"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : ", מחיר))/פעמים"
+          }
+        }
+      }
+    },
+    "例如：http://127.0.0.1:1234/v1/chat/completions" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "For example: http://127.0.0.1:1234/v1/chat/completions"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "לדוגמה: http://127.0.0.1:1234/v1/chat/completions"
+          }
+        }
+      }
+    },
+    "匹配度阈值：%.2f" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Matching threshold: %.2f"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "סף התאמה: %.2f"
+          }
+        }
+      }
+    },
+    "提示词" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "prompt word"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "מילה מהירה"
+          }
+        }
+      }
+    },
+    "暂无内容" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No content yet"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "עדיין אין תוכן"
+          }
+        }
+      }
+    },
+    "未命名提示词" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "unnamed prompt word"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "מילת הנחיה ללא שם"
+          }
+        }
+      }
+    },
+    "未知" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "unknown"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "לא ידוע"
+          }
+        }
+      }
+    },
+    "未知模型" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "unknown model"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "דגם לא ידוע"
+          }
+        }
+      }
+    },
+    "未知错误" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "unknown error"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "שגיאה לא ידועה"
+          }
+        }
+      }
+    },
+    "链接包含未知信息\\n打开链接将离开AI翰林院" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Link contains unknown information\\nOpening the link will leave the AI Hanlin Academy"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "הקישור מכיל מידע לא ידוע\\nפתיחת הקישור תעזוב את האקדמיה של AI Hanlin"
+          }
+        }
+      }
+    },
+    "¥%.4f/分钟" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "¥%.4f/minute"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "¥%.4f לדקה"
+          }
+        }
+      }
+    },
+    "¥%.4f/次" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "¥%.4f/time"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "¥%.4f לזמן"
+          }
+        }
+      }
+    },
+    "%@ 需要有效的 API Key，请先设置密钥。" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ requires a valid API Key, please set the key first."
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ דורש מפתח API חוקי, אנא הגדר תחילה את המפתח."
+          }
+        }
+      }
+    },
+    "%@ 需要配置 API Key 才能启用。" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ needs to be configured with an API Key to enable it."
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "יש להגדיר את %@ עם מפתח API כדי להפעיל אותו."
+          }
+        }
+      }
+    },
+    "API Key 不能为空" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "API Key cannot be empty"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "מפתח API לא יכול להיות ריק"
+          }
+        }
+      }
+    },
+    "⚠️ 包含敏感内容！" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "⚠️Contains sensitive content!"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "⚠️מכיל תוכן רגיש!"
+          }
+        }
+      }
+    },
+    "⚠️ 响应错误：%@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "⚠️ Response error: %@"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "⚠️ שגיאת תגובה: %@"
+          }
+        }
+      }
+    },
+    "⚠️ 数据同步失败: %@，本轮问答不会被同步。" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "⚠️ Data synchronization failed: %@, this round of questions and answers will not be synchronized."
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "⚠️ סנכרון הנתונים נכשל: %@, סבב השאלות והתשובות הזה לא יסונכרן."
+          }
+        }
+      }
+    },
+    "⚠️ 没有可用的多模态模型，请先在设置中添加支持视觉的模型。" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "⚠️ There is no multi-modal model available, please add a vision-enabled model in settings first."
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "⚠️ אין דגם רב-מודאלי זמין, אנא הוסף תחילה דגם המותאם לראייה בהגדרות."
+          }
+        }
+      }
+    },
+    "⚠️ 生成内容为空，请重新尝试！" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "⚠️ The generated content is empty, please try again!"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "⚠️ התוכן שנוצר ריק, אנא נסה שוב!"
+          }
+        }
+      }
+    },
+    "⚠️ 识别失败：%@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "⚠️ Recognition failed: %@"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "⚠️ זיהוי נכשל: %@"
+          }
+        }
+      }
+    },
+    "⚠️ 输出长度到达模型最大输出长度！可在右上角模型参数中重新设置输出长度。" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "⚠️ The output length reaches the maximum output length of the model! The output length can be reset in the model parameters in the upper right corner."
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "⚠️ אורך הפלט מגיע לאורך הפלט המקסימלי של הדגם! ניתן לאפס את אורך הפלט בפרמטרים של הדגם בפינה הימנית העליונה."
+          }
+        }
+      }
+    },
+    "一切都是崭新的✨" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Everything is brand new✨"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "הכל חדש לגמרי✨"
+          }
+        }
+      }
+    },
+    "供应商名称不能为空" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Supplier name cannot be empty"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "שם הספק לא יכול להיות ריק"
+          }
+        }
+      }
+    },
+    "保存失败: %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Failed to save: %@"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "השמירה נכשלה: %@"
+          }
+        }
+      }
+    },
+    "保存失败：%@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Save failed: %@"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "השמירה נכשלה: %@"
+          }
+        }
+      }
+    },
+    "前天" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "the day before yesterday"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "שלשום"
+          }
+        }
+      }
+    },
+    "已思考%.1f秒" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Thought for %.1f seconds"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "מחשבה במשך %.1f שניות"
+          }
+        }
+      }
+    },
+    "已思考%d分钟%.1f秒" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Thought %d minutes %.1f seconds"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "מחשבה %d דקות %.1f שניות"
+          }
+        }
+      }
+    },
+    "已思考%d小时%d分钟%.1f秒" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Thought %d hours %d minutes %.1f seconds"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "מחשבה %d שעות %d דקות %.1f שניות"
+          }
+        }
+      }
+    },
+    "文件格式错误，请检查文件是否为导出时的正确格式。" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "File format error. Please check whether the file is in the correct format for export."
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "שגיאה בפורמט הקובץ. אנא בדוק אם הקובץ בפורמט הנכון לייצוא."
+          }
+        }
+      }
+    },
+    "新知识" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "new knowledge"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ידע חדש"
+          }
+        }
+      }
+    },
+    "无内容" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No content"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "אין תוכן"
+          }
+        }
+      }
+    },
+    "无名称" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "no name"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ללא שם"
+          }
+        }
+      }
+    },
+    "无文本" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "no text"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ללא טקסט"
+          }
+        }
+      }
+    },
+    "无法访问所选文件的权限。" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unable to access permissions for the selected file."
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "לא ניתן לגשת להרשאות עבור הקובץ שנבחר."
+          }
+        }
+      }
+    },
+    "昨天" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "yesterday"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "אֶתמוֹל"
+          }
+        }
+      }
+    },
+    "系统" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "system"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "מַעֲרֶכֶת"
+          }
+        }
+      }
+    },
+    "群聊名称被修改为“%@”" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The group chat name was changed to \"%@\""
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "שם הצ'אט הקבוצתי השתנה ל-\"%@\""
+          }
+        }
+      }
+    },
+    "请求地址不能为空" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The request address cannot be empty"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "כתובת הבקשה אינה יכולה להיות ריקה"
+          }
+        }
+      }
+    },
+    "请求地址必须以 http:// 或 https:// 开头" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The request address must start with http:// or https://"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "כתובת הבקשה חייבת להתחיל ב-http:// או https://"
+          }
+        }
+      }
+    },
+    "🛑 响应已打断" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🛑 Response interrupted"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🛑 התגובה נקטעה"
+          }
+        }
+      }
+    },
+    "暂未设置文本优化模型，请前往“设置-模型-优化模型”设置文本优化模型。视觉优化模型仅在视觉功能中需要。" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No text optimization model has been set. Go to Settings - Models - Optimization Models and select a text optimization model. A visual optimization model is only required for Vision features."
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "לא הוגדר מודל אופטימיזציה לטקסט. עברו אל הגדרות - מודלים - מודלי אופטימיזציה ובחרו מודל טקסט. מודל ראייה נדרש רק עבור יכולות Vision."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "暂未设置文本优化模型，请前往“设置-模型-优化模型”设置文本优化模型。视觉优化模型仅在视觉功能中需要。"
           }
         }
       }

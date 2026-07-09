@@ -47,9 +47,9 @@ struct AddOnlineModelView: View {
     var body: some View {
         NavigationStack {
             Form {
-                Section(header: Text("基本信息")) {
-                    TextField("系统名称（用于API请求，参考官方API）", text: $name)
-                    TextField("显示名称（自定义）", text: $displayName)
+                Section(header: Text(String(localized: "基本信息"))) {
+                    TextField(String(localized: "系统名称（用于API请求，参考官方API）"), text: $name)
+                    TextField(String(localized: "显示名称（自定义）"), text: $displayName)
                     
                     HStack(spacing: 10) {
                         Image(systemName: "building.2")
@@ -58,7 +58,7 @@ struct AddOnlineModelView: View {
                             .frame(width: 20, height: 20)
                             .foregroundColor(.hlBluefont)
 
-                        Picker("模型厂商", selection: $selectedCompany) {
+                        Picker(String(localized: "模型厂商"), selection: $selectedCompany) {
                             ForEach(apiKeys, id: \.company) { apiKey in
                                 Text(getCompanyName(for: apiKey))
                                     .tag(apiKey.company ?? "Unknown")
@@ -68,31 +68,31 @@ struct AddOnlineModelView: View {
                     }
                 }
                 
-                Section(header: Text("价格")) {
+                Section(header: Text(String(localized: "价格"))) {
                     HStack(spacing: 10) {
                         Image(systemName: "yensign")
                             .resizable()
                             .scaledToFit()
                             .frame(width: 20, height: 20)
                             .foregroundColor(.hlBluefont)
-                        Picker("价格", selection: $price) {
-                            Text("免费").tag(Int16(0))
-                            Text("廉价 (≤0.001/千tokens)").tag(Int16(1))
-                            Text("适中 (0.001-0.006/千tokens)").tag(Int16(2))
-                            Text("昂贵 (≥0.006/千tokens)").tag(Int16(3))
+                        Picker(String(localized: "价格"), selection: $price) {
+                            Text(String(localized: "免费")).tag(Int16(0))
+                            Text(String(localized: "廉价 (≤0.001/千tokens)")).tag(Int16(1))
+                            Text(String(localized: "适中 (0.001-0.006/千tokens)")).tag(Int16(2))
+                            Text(String(localized: "昂贵 (≥0.006/千tokens)")).tag(Int16(3))
                         }
                         .pickerStyle(.menu)
                     }
                 }
                 
-                Section(header: Text("功能支持")) {
+                Section(header: Text(String(localized: "功能支持"))) {
                     HStack(spacing: 10) {
                         Image(systemName: "eye.slash")
                             .resizable()
                             .scaledToFit()
                             .frame(width: 20, height: 20)
                             .foregroundColor(.hlBluefont)
-                        Toggle("默认隐藏模型", isOn: $isHidden)
+                        Toggle(String(localized: "默认隐藏模型"), isOn: $isHidden)
                     }
                     
                     // 自动模型能力探测按钮
@@ -106,7 +106,7 @@ struct AddOnlineModelView: View {
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 20, height: 20)
-                            Text("自动模型能力探测")
+                            Text(String(localized: "自动模型能力探测"))
                             Spacer()
                             if isProbing {
                                 ProgressView()
@@ -120,7 +120,7 @@ struct AddOnlineModelView: View {
                     }
                     .disabled(name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || selectedCompany.isEmpty || isProbing)
                     
-                    Text("注意：自动模型能力探测中可能有一定的API费用消耗")
+                    Text(String(localized: "注意：自动模型能力探测中可能有一定的API费用消耗"))
                         .font(.caption)
                         .foregroundColor(.secondary)
                     
@@ -130,7 +130,7 @@ struct AddOnlineModelView: View {
                             .scaledToFit()
                             .frame(width: 20, height: 20)
                             .foregroundColor(.hlBluefont)
-                        Toggle("支持文本生成", isOn: $supportsTextGen)
+                        Toggle(String(localized: "支持文本生成"), isOn: $supportsTextGen)
                     }
                     HStack(spacing: 10) {
                         Image(systemName: "photo.on.rectangle.angled")
@@ -138,7 +138,7 @@ struct AddOnlineModelView: View {
                             .scaledToFit()
                             .frame(width: 20, height: 20)
                             .foregroundColor(.hlBluefont)
-                        Toggle("支持视觉理解", isOn: $supportsMultimodal)
+                        Toggle(String(localized: "支持视觉理解"), isOn: $supportsMultimodal)
                     }
                     HStack(spacing: 10) {
                         Image(systemName: "atom")
@@ -146,7 +146,7 @@ struct AddOnlineModelView: View {
                             .scaledToFit()
                             .frame(width: 20, height: 20)
                             .foregroundColor(.hlBluefont)
-                        Toggle("支持深度思考", isOn: $supportsReasoning)
+                        Toggle(String(localized: "支持深度思考"), isOn: $supportsReasoning)
                     }
                     HStack(spacing: 10) {
                         Image(systemName: "lightbulb")
@@ -154,7 +154,7 @@ struct AddOnlineModelView: View {
                             .scaledToFit()
                             .frame(width: 20, height: 20)
                             .foregroundColor(.hlBluefont)
-                        Toggle("思考模式可控", isOn: $supportsReasoningChange)
+                        Toggle(String(localized: "思考模式可控"), isOn: $supportsReasoningChange)
                     }
                     HStack(spacing: 10) {
                         Image(systemName: "hammer")
@@ -162,7 +162,7 @@ struct AddOnlineModelView: View {
                             .scaledToFit()
                             .frame(width: 20, height: 20)
                             .foregroundColor(.hlBluefont)
-                        Toggle("支持工具使用", isOn: $supportsToolUse)
+                        Toggle(String(localized: "支持工具使用"), isOn: $supportsToolUse)
                     }
                     HStack(spacing: 10) {
                         Image(systemName: "camera.aperture")
@@ -170,26 +170,26 @@ struct AddOnlineModelView: View {
                             .scaledToFit()
                             .frame(width: 20, height: 20)
                             .foregroundColor(.hlBluefont)
-                        Toggle("图像生成模型", isOn: $supportsImageGen)
+                        Toggle(String(localized: "图像生成模型"), isOn: $supportsImageGen)
                     }
                 }
                 .tint(.hlBlue)
             }
-            .navigationTitle("添加在线模型")
+            .navigationTitle(String(localized: "添加在线模型"))
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
-                    Button("取消") {
+                    Button(String(localized: "取消")) {
                         isPresented = false
                     }
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("保存") {
+                    Button(String(localized: "保存")) {
                         saveModel()
                     }
                 }
             }
-            .alert("错误", isPresented: $showAlert) {
-                Button("确定", role: .cancel) {}
+            .alert(String(localized: "错误"), isPresented: $showAlert) {
+                Button(String(localized: "确定"), role: .cancel) {}
             } message: {
                 Text(alertMessage)
             }
@@ -417,7 +417,7 @@ struct LocalModelDownloadView: View {
                             .foregroundColor(.hlBluefont)
                             .padding()
                         
-                        Text("本地模型还属于测试阶段，暂不支持视觉功能等，输出也可能存在问题，将在后期修复优化。如果下载后需要删除，可以直接在模型列表进行删除，本地文件会随之一起删除。模型文件来自于魔塔社区或HuggingFace，本软件对模型输出结果不负有任何责任。请结合自己的设备性能合理下载，若超出设备承受能力，可能会出现闪退、卡死等现象。")
+                        Text(String(localized: "本地模型还属于测试阶段，暂不支持视觉功能等，输出也可能存在问题，将在后期修复优化。如果下载后需要删除，可以直接在模型列表进行删除，本地文件会随之一起删除。模型文件来自于魔塔社区或HuggingFace，本软件对模型输出结果不负有任何责任。请结合自己的设备性能合理下载，若超出设备承受能力，可能会出现闪退、卡死等现象。"))
                             .font(.footnote)
                             .multilineTextAlignment(.center)
                             .padding(.bottom)
@@ -425,8 +425,8 @@ struct LocalModelDownloadView: View {
                     .frame(maxWidth: .infinity, alignment: .center)
                 }
                 
-                Section(header: Text("快速下载本地模型")) {
-                    Picker("下载源", selection: $selectedSource) {
+                Section(header: Text(String(localized: "快速下载本地模型"))) {
+                    Picker(String(localized: "下载源"), selection: $selectedSource) {
                         ForEach(DownloadSource.allCases, id: \.self) { source in
                             Text(source.rawValue)
                         }
@@ -464,13 +464,13 @@ struct LocalModelDownloadView: View {
                     }
                 }
                 
-                Section(header: Text("上传 GGUF 文件以使用本地模型")){
+                Section(header: Text(String(localized: "上传 GGUF 文件以使用本地模型"))){
                     Button(action: {
                         isShowingFileImporter = true
                     }) {
                         HStack {
                             Image(systemName: "externaldrive.badge.plus")
-                            Text("上传本地模型文件(.gguf)")
+                            Text(String(localized: "上传本地模型文件(.gguf)"))
                         }
                     }
                     .fileImporter(
@@ -538,15 +538,15 @@ struct LocalModelDownloadView: View {
                             }
                         })
                         .alert(isPresented: $showConflictAlert) {
-                            Alert(title: Text("名称冲突"),
-                                  message: Text("模型名称已存在，请修改名称后重试。"),
-                                  dismissButton: .default(Text("确定")))
+                            Alert(title: Text(String(localized: "名称冲突")),
+                                  message: Text(String(localized: "模型名称已存在，请修改名称后重试。")),
+                                  dismissButton: .default(Text(String(localized: "确定"))))
                         }
                     }
                 }
                 
             }
-            .navigationTitle("本地模型(Beta)")
+            .navigationTitle(String(localized: "本地模型(Beta)"))
             .onReceive(NotificationCenter.default.publisher(for: .downloadCompleted)) { notification in
                 if let modelName = notification.object as? String {
                     saveModelToDatabase(name: modelName)
@@ -606,12 +606,12 @@ struct RenameModelView: View {
         NavigationStack {
             VStack(alignment: .leading, spacing: 20) {
                 
-                Text("请输入模型名称")
+                Text(String(localized: "请输入模型名称"))
                     .font(.system(size: 20, weight: .semibold))
                     .foregroundColor(.primary)
                     .padding(.horizontal)
                 
-                TextField("模型名称", text: $newModelName)
+                TextField(String(localized: "模型名称"), text: $newModelName)
                     .padding()
                     .background(Color(.systemGray6))
                     .cornerRadius(10)
@@ -619,7 +619,7 @@ struct RenameModelView: View {
                 
                 HStack(spacing: 20) {
                     Button(action: onCancel) {
-                        Text("取消")
+                        Text(String(localized: "取消"))
                             .foregroundColor(.hlBlue)
                             .frame(maxWidth: .infinity)
                             .padding(.vertical, 10)
@@ -629,7 +629,7 @@ struct RenameModelView: View {
                     .buttonStyle(.plain)
                     
                     Button(action: onConfirm) {
-                        Text("确定")
+                        Text(String(localized: "确定"))
                             .foregroundColor(.white)
                             .frame(maxWidth: .infinity)
                             .padding(.vertical, 10)
@@ -640,12 +640,12 @@ struct RenameModelView: View {
                 }
                 .padding(.horizontal)
                 
-                Text("由于需要拷贝模型文件，上传后根据上传的模型大小，等待一段时间后才会在数据库中看见上传的本地模型。")
+                Text(String(localized: "由于需要拷贝模型文件，上传后根据上传的模型大小，等待一段时间后才会在数据库中看见上传的本地模型。"))
                     .padding(.horizontal)
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
             .padding()
-            .navigationTitle("编辑模型名称")
+            .navigationTitle(String(localized: "编辑模型名称"))
             .navigationBarTitleDisplayMode(.inline)
         }
     }
@@ -668,7 +668,7 @@ struct DownloadButtonView: View {
             }
             
             if isDownloaded {
-                Text("已下载")
+                Text(String(localized: "已下载"))
                     .foregroundColor(.gray)
                     .font(.caption)
             } else {
@@ -785,12 +785,12 @@ struct AddAgentView: View {
                 }
                 
                 // 智能体名称
-                Section(header: Text("智能体名称")) {
-                    TextField("输入名称", text: $displayName)
+                Section(header: Text(String(localized: "智能体名称"))) {
+                    TextField(String(localized: "输入名称"), text: $displayName)
                 }
                 
                 // 智能体名称与人物设定
-                Section(header: Text("智能体设定")) {
+                Section(header: Text(String(localized: "智能体设定"))) {
                     
                     TextEditor(text: $characterDesign)
                         .frame(height: 150)
@@ -826,7 +826,7 @@ struct AddAgentView: View {
                                 ProgressView() // 显示加载指示器
                                     .frame(width: 25, height: 25)
                                     .background(Capsule().fill(Color(.hlBluefont).opacity(0.1)))
-                                Text("正在填写")
+                                Text(String(localized: "正在填写"))
                                     .font(.caption)
                                     .foregroundColor(.hlBluefont)
                                 
@@ -838,7 +838,7 @@ struct AddAgentView: View {
                                     .frame(width: 25, height: 25)
                                     .foregroundColor(.hlBluefont)
                                 
-                                Text("撤销填写")
+                                Text(String(localized: "撤销填写"))
                                     .font(.caption)
                                     .foregroundColor(.hlBluefont)
                                 
@@ -850,7 +850,7 @@ struct AddAgentView: View {
                                     .frame(width: 25, height: 25)
                                     .foregroundColor(displayName.isEmpty ? .gray : .hlBluefont)
                                 
-                                Text("自动填写")
+                                Text(String(localized: "自动填写"))
                                     .font(.caption)
                                     .foregroundColor(displayName.isEmpty ? .gray : .hlBluefont)
                                 
@@ -862,7 +862,7 @@ struct AddAgentView: View {
                         
                         Spacer()
                         
-                        Text("输入工具")
+                        Text(String(localized: "输入工具"))
                             .font(.caption)
                             .foregroundColor(.gray)
                         
@@ -896,8 +896,8 @@ struct AddAgentView: View {
                 }
                 
                 // 基座模型选择
-                Section(header: Text("基础模型")) {
-                    Picker("选择基础模型", selection: $selectedModel) {
+                Section(header: Text(String(localized: "基础模型"))) {
+                    Picker(String(localized: "选择基础模型"), selection: $selectedModel) {
                         ForEach(filteredBaseModel, id: \.id) { model in
                             Text(model.displayName ?? "Unknown")
                                 .tag(model as AllModels?)
@@ -909,27 +909,27 @@ struct AddAgentView: View {
                 }
                 
                 // 默认隐藏设置
-                Section(header: Text("显示设置")) {
-                    Toggle("默认隐藏智能体", isOn: $isHidden)
+                Section(header: Text(String(localized: "显示设置"))) {
+                    Toggle(String(localized: "默认隐藏智能体"), isOn: $isHidden)
                 }
                 .tint(.hlBlue)
             }
-            .navigationTitle("添加智能体")
+            .navigationTitle(String(localized: "添加智能体"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
-                    Button("取消") {
+                    Button(String(localized: "取消")) {
                         isPresented = false
                     }
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("保存") {
+                    Button(String(localized: "保存")) {
                         saveModel()
                     }
                 }
             }
-            .alert("错误", isPresented: $showAlert) {
-                Button("确定", role: .cancel) { }
+            .alert(String(localized: "错误"), isPresented: $showAlert) {
+                Button(String(localized: "确定"), role: .cancel) { }
             } message: {
                 Text(alertMessage)
             }
@@ -1078,11 +1078,11 @@ struct IconSelectionView: View {
                 }
                 .padding()
             }
-            .navigationTitle("选择图标")
+            .navigationTitle(String(localized: "选择图标"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("取消") {
+                    Button(String(localized: "取消")) {
                         dismiss()
                     }
                 }
@@ -1155,38 +1155,38 @@ struct EditModelSheetView: View {
         NavigationStack {
             Form {
                 // 名称编辑
-                Section(header: Text(model.identity == "agent" ? "编辑智能体名称" : "编辑模型名称")) {
+                Section(header: Text(model.identity == "agent" ? String(localized: "编辑智能体名称") : String(localized: "编辑模型名称"))) {
                     if model.systemProvision == true && model.identity == "agent" {
                         VStack(alignment: .leading, spacing: 6) {
                             Text(editedDisplayName)
-                            Text("⚠️ 默认智能体不可重命名")
+                            Text(String(localized: "⚠️ 默认智能体不可重命名"))
                                 .font(.caption)
                                 .foregroundColor(.hlBluefont)
                         }
                     } else {
-                        TextField(model.identity == "agent" ? "智能体名称" : "模型名称", text: $editedDisplayName)
+                        TextField(model.identity == "agent" ? String(localized: "智能体名称") : String(localized: "模型名称"), text: $editedDisplayName)
                     }
                 }
 
                 // 功能支持开关（模型专用）
                 if model.identity?.lowercased() == "model", model.systemProvision == false, model.company != "LOCAL" {
-                    Section(header: Text("功能支持")) {
-                        Toggle("支持文本生成", isOn: $editedSupportsTextGen).iconLabel("character")
-                        Toggle("支持视觉理解", isOn: $editedSupportsMultimodal).iconLabel("photo.on.rectangle.angled")
-                        Toggle("支持深度思考", isOn: $editedSupportsReasoning).iconLabel("atom")
-                        Toggle("思考模式可控", isOn: $editedSupportsReasoningChange).iconLabel("lightbulb")
-                        Toggle("支持工具使用", isOn: $editedSupportsToolUse).iconLabel("hammer")
-                        Toggle("图像生成模型", isOn: $editedSupportsImageGen).iconLabel("camera.aperture")
+                    Section(header: Text(String(localized: "功能支持"))) {
+                        Toggle(String(localized: "支持文本生成"), isOn: $editedSupportsTextGen).iconLabel("character")
+                        Toggle(String(localized: "支持视觉理解"), isOn: $editedSupportsMultimodal).iconLabel("photo.on.rectangle.angled")
+                        Toggle(String(localized: "支持深度思考"), isOn: $editedSupportsReasoning).iconLabel("atom")
+                        Toggle(String(localized: "思考模式可控"), isOn: $editedSupportsReasoningChange).iconLabel("lightbulb")
+                        Toggle(String(localized: "支持工具使用"), isOn: $editedSupportsToolUse).iconLabel("hammer")
+                        Toggle(String(localized: "图像生成模型"), isOn: $editedSupportsImageGen).iconLabel("camera.aperture")
                     }
                     .tint(.hlBlue)
                 }
                 
                 // 智能体人物概述
                 if model.identity == "agent", model.systemProvision == true {
-                    Section(header: Text("编辑智能体描述")) {
+                    Section(header: Text(String(localized: "编辑智能体描述"))) {
                         VStack(alignment: .leading, spacing: 6) {
                             Text(editedBriefDescription)
-                            Text("⚠️ 默认智能体不可更改描述")
+                            Text(String(localized: "⚠️ 默认智能体不可更改描述"))
                                 .font(.caption)
                                 .foregroundColor(.hlBluefont)
                         }
@@ -1195,7 +1195,7 @@ struct EditModelSheetView: View {
 
                 // 智能体人物设定
                 if model.identity == "agent", model.systemProvision == false {
-                    Section(header: Text("编辑智能体设定")) {
+                    Section(header: Text(String(localized: "编辑智能体设定"))) {
                         TextEditor(text: $editedCharacterDesign)
                             .frame(height: 150)
                         autoFillAndInputToolbar
@@ -1204,8 +1204,8 @@ struct EditModelSheetView: View {
                 
                 // 智能体可选基座模型
                 if model.identity == "agent", model.systemProvision == false {
-                    Section(header: Text("编辑基础模型")) {
-                        Picker("选择基础模型", selection: $selectedBaseModel) {
+                    Section(header: Text(String(localized: "编辑基础模型"))) {
+                        Picker(String(localized: "选择基础模型"), selection: $selectedBaseModel) {
                             ForEach(filteredBaseModels, id: \.id) { model in
                                 Text(model.displayName ?? "Unknown")
                                     .tag(model as AllModels?)
@@ -1220,9 +1220,9 @@ struct EditModelSheetView: View {
                 
                 // 复制智能体
                 if model.identity == "agent", model.systemProvision == true {
-                    Section(header: Text("复制智能体")) {
-                        Text("通过选择新的基础模型复制该智能体")
-                        Picker("选择基础模型", selection: $selectedCopyBaseModel) {
+                    Section(header: Text(String(localized: "复制智能体"))) {
+                        Text(String(localized: "通过选择新的基础模型复制该智能体"))
+                        Picker(String(localized: "选择基础模型"), selection: $selectedCopyBaseModel) {
                             ForEach(filteredBaseModels, id: \.id) { model in
                                 Text(model.displayName ?? "Unknown")
                                     .tag(model as AllModels?)
@@ -1236,13 +1236,13 @@ struct EditModelSheetView: View {
                 }
                 
             }
-            .navigationTitle(model.identity == "agent" ? "编辑智能体" : "编辑模型")
+            .navigationTitle(model.identity == "agent" ? String(localized: "编辑智能体") : String(localized: "编辑模型"))
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("取消") { dismiss() }
+                    Button(String(localized: "取消")) { dismiss() }
                 }
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("保存") {
+                    Button(String(localized: "保存")) {
                         model.displayName = editedDisplayName
                         if model.identity == "model", model.company != "LOCAL" {
                             model.supportsTextGen = editedSupportsTextGen
@@ -1355,7 +1355,7 @@ struct EditModelSheetView: View {
                     ProgressView() // 显示加载指示器
                         .frame(width: 25, height: 25)
                         .background(Capsule().fill(Color(.hlBluefont).opacity(0.1)))
-                    Text("正在填写")
+                    Text(String(localized: "正在填写"))
                         .font(.caption)
                         .foregroundColor(.hlBluefont)
                     
@@ -1367,7 +1367,7 @@ struct EditModelSheetView: View {
                         .frame(width: 25, height: 25)
                         .foregroundColor(.hlBluefont)
                     
-                    Text("撤销填写")
+                    Text(String(localized: "撤销填写"))
                         .font(.caption)
                         .foregroundColor(.hlBluefont)
                     
@@ -1379,7 +1379,7 @@ struct EditModelSheetView: View {
                         .frame(width: 25, height: 25)
                         .foregroundColor(editedDisplayName.isEmpty ? .gray : .hlBluefont)
                     
-                    Text("自动填写")
+                    Text(String(localized: "自动填写"))
                         .font(.caption)
                         .foregroundColor(editedDisplayName.isEmpty ? .gray : .hlBluefont)
                     
@@ -1391,7 +1391,7 @@ struct EditModelSheetView: View {
 
             Spacer()
 
-            Text("输入工具")
+            Text(String(localized: "输入工具"))
                 .font(.caption)
                 .foregroundColor(.gray)
 
@@ -1455,36 +1455,36 @@ struct BaseModelCardView: View {
                 }
                 HStack(spacing: 6) {
                     if model.supportsToolUse {
-                        Text("工具")
+                        Text(String(localized: "工具"))
                             .font(.caption)
                             .foregroundColor(.hlBrown)
                     }
                     if model.supportsMultimodal {
-                        Text("视觉")
+                        Text(String(localized: "视觉"))
                             .font(.caption)
                             .foregroundColor(.hlTeal)
                     } else if model.supportsTextGen {
-                        Text("文本")
+                        Text(String(localized: "文本"))
                             .font(.caption)
                             .foregroundColor(.gray)
                     }
                     if model.supportsImageGen {
-                        Text("生图")
+                        Text(String(localized: "生图"))
                             .font(.caption)
                             .foregroundColor(.hlGreen)
                     }
                     if model.supportsVoiceGen {
-                        Text("语音")
+                        Text(String(localized: "语音"))
                             .font(.caption)
                             .foregroundColor(.hlPink)
                     }
                     if model.supportsReasoning {
-                        Text("思考")
+                        Text(String(localized: "思考"))
                             .font(.caption)
                             .foregroundColor(.hlPurple)
                     }
                     if model.company?.uppercased() == "LOCAL" {
-                        Text("本地")
+                        Text(String(localized: "本地"))
                             .font(.caption)
                             .foregroundColor(.hlOrange)
                     }

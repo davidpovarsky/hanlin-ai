@@ -12,7 +12,7 @@ import SwiftUI
 struct OpenVisionIntent: AppIntent {
     static var openAppWhenRun: Bool = true
     static var title: LocalizedStringResource = "启动视觉"
-    static var description = IntentDescription("打开应用的视觉页面")
+    static var description = IntentDescription(LocalizedStringResource("打开应用的视觉页面"))
     static var supportsWidget: Bool = true
     static var supportsForegroundExecution: Bool = true
     static var suggestedInvocationPhrase: String? = "启动视觉"

@@ -68,7 +68,7 @@ struct APIKeysView: View {
                         .foregroundColor(.hlBluefont)
                         .padding()
                     
-                    Text("点击名称或钥匙设置厂商密钥，并打开厂商开关以使用该厂商的模型")
+                    Text(String(localized: "点击名称或钥匙设置厂商密钥，并打开厂商开关以使用该厂商的模型"))
                         .font(.footnote)
                         .multilineTextAlignment(.center)
                         .padding(.bottom)
@@ -131,7 +131,7 @@ struct APIKeysView: View {
                 }
             }
         }
-        .navigationTitle("模型厂商")
+        .navigationTitle(String(localized: "模型厂商"))
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button {
@@ -148,8 +148,8 @@ struct APIKeysView: View {
         .sheet(isPresented: $showAddCustomProvider) {
             addCustomProviderView()
         }
-        .alert("无法开启厂商", isPresented: $showAPIKeyError) {
-            Button("确定", role: .cancel) {}
+        .alert(String(localized: "无法开启厂商"), isPresented: $showAPIKeyError) {
+            Button(String(localized: "确定"), role: .cancel) {}
         } message: {
             Text(errorMessage)
         }
@@ -262,13 +262,13 @@ private struct EditKeyContent: View {
                         // 自定义供应商不显示获取API密钥的链接
                         if key.from != .custom {
                             if let url = URL(string: key.help) {
-                                Link("🔗 点此获取 \(getCompanyName(for: key)) API密钥", destination: url)
+                            Link(String(format: String(localized: "🔗 点此获取 %@ API密钥"), getCompanyName(for: key)), destination: url)
                                     .font(.footnote)
                                     .multilineTextAlignment(.center)
                                     .padding(.bottom)
                             } else {
                                 // 当 URL 无效时可以提供一个备用视图
-                                Text("建议进入其开放平台获取API密钥")
+                                Text(String(localized: "建议进入其开放平台获取API密钥"))
                                     .font(.footnote)
                                     .multilineTextAlignment(.center)
                                     .padding(.bottom)
@@ -278,17 +278,17 @@ private struct EditKeyContent: View {
                     .frame(maxWidth: .infinity, alignment: .center)
                 }
                 Section(header: Text("API Key")) {
-                    SecureField("请输入密钥", text: Binding(
+                    SecureField(String(localized: "请输入密钥"), text: Binding(
                         get: { key.key ?? "" },
                         set: { key.key = $0 }
                     ))
                 }
                 // 自定义供应商或LAN供应商显示请求地址设置
                 if key.company == "LAN" || key.from == .custom {
-                    Section(header: Text("请求地址（URL）")) {
-                        Text(verbatim: "例如：http://127.0.0.1:1234/v1/chat/completions")
+                    Section(header: Text(String(localized: "请求地址（URL）"))) {
+                        Text(verbatim: String(localized: "例如：http://127.0.0.1:1234/v1/chat/completions"))
                             .font(.caption)
-                        TextField("请输入请求地址", text: Binding(
+                        TextField(String(localized: "请输入请求地址"), text: Binding(
                             get: { key.requestURL ?? "" },
                             set: { key.requestURL = $0 }
                         ))
@@ -299,12 +299,12 @@ private struct EditKeyContent: View {
                 }
                 // 测试 API 按钮及状态显示（局域网模型和自定义供应商不显示）
                 if key.company != "LAN" && key.from != .custom {
-                    Section(header: Text("API 测试")) {
+                    Section(header: Text(String(localized: "API 测试"))) {
                         // 模型选择器（如果有可测试的模型）
                         if !testableModels.isEmpty {
-                            Picker("测试模型", selection: $selectedTestModelName) {
+                            Picker(String(localized: "测试模型"), selection: $selectedTestModelName) {
                                 ForEach(testableModels, id: \.name) { model in
-                                    Text(model.displayName ?? model.name ?? "未知模型")
+                                    Text(model.displayName ?? model.name ?? String(localized: "未知模型"))
                                         .tag(model.name ?? "")
                                 }
                             }
@@ -312,7 +312,7 @@ private struct EditKeyContent: View {
                         
                         // 测试按钮
                         HStack {
-                            Button("测试 API") {
+                            Button(String(localized: "测试 API")) {
                                 testAPI(for: key)
                             }
                             .disabled(isTesting || testableModels.isEmpty)
@@ -320,10 +320,10 @@ private struct EditKeyContent: View {
                             if isTesting {
                                 ProgressView()
                             } else if let result = testResult {
-                                Text(result ? "测试通过" : "测试失败")
+                                Text(result ? String(localized: "测试通过") : String(localized: "测试失败"))
                                     .foregroundColor(result ? .green : .red)
                             } else if testableModels.isEmpty {
-                                Text("无可用模型")
+                                Text(String(localized: "无可用模型"))
                                     .font(.caption)
                                     .foregroundColor(.secondary)
                             }
@@ -339,7 +339,7 @@ private struct EditKeyContent: View {
                     // 余额查询及状态显示
                     Section {
                         HStack {
-                            Button("查询 API 余额") {
+                            Button(String(localized: "查询 API 余额")) {
                                 queryBalance(for: key)
                             }
                             .disabled(isInquiring)
@@ -347,7 +347,7 @@ private struct EditKeyContent: View {
                             if isInquiring {
                                 ProgressView()
                             } else if let result = inquiryResult {
-                                Text(result == -999 ? "该厂商暂未支持" : "¥\(result)")
+                                Text(result == -999 ? String(localized: "该厂商暂未支持") : "¥\(result)")
                                     .foregroundColor(result < 10 ? .red : .green)
                             }
                         }
@@ -355,7 +355,7 @@ private struct EditKeyContent: View {
                 }
                 // 刷新模型列表按钮和已添加模型展示（仅对支持的厂商显示）
                 if shouldShowModelRefresh(for: key) {
-                    Section(header: Text("模型管理")) {
+                    Section(header: Text(String(localized: "模型管理"))) {
                         // 刷新模型列表按钮
                         Button {
                             showModelManagement = true
@@ -363,7 +363,7 @@ private struct EditKeyContent: View {
                             HStack(spacing: 6) {
                                 Image(systemName: "arrow.triangle.2.circlepath")
                                     .foregroundColor(.hlBluefont)
-                                Text("刷新模型列表")
+                                Text(String(localized: "刷新模型列表"))
                                 Spacer()
                                 Image(systemName: "chevron.right")
                                     .foregroundColor(.secondary)
@@ -374,19 +374,19 @@ private struct EditKeyContent: View {
                 }
 
                 Section {
-                    Text("⚠️ 注意：配置API后，厂商将自动开启，如需修改，可以在菜单中关闭厂商")
+                    Text(String(localized: "⚠️ 注意：配置API后，厂商将自动开启，如需修改，可以在菜单中关闭厂商"))
                         .font(.footnote)
                 }
             }
-            .navigationTitle("编辑密钥")
+            .navigationTitle(String(localized: "编辑密钥"))
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("取消") {
+                    Button(String(localized: "取消")) {
                         selectedKey = nil
                     }
                 }
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("保存") {
+                    Button(String(localized: "保存")) {
                         key.timestamp = Date()
                         key.isHidden = false
                         try? modelContext.save()
@@ -489,7 +489,7 @@ extension APIKeysView {
                     key.isHidden = false
                 } else {
                     // API Key 为空时阻止开启，并显示错误提示
-                    errorMessage = "\(getCompanyName(for: key)) 需要有效的 API Key，请先设置密钥。"
+            errorMessage = String(format: String(localized: "%@ 需要有效的 API Key，请先设置密钥。"), getCompanyName(for: key))
                     showAPIKeyError = true
                 }
                 saveChanges()
@@ -580,7 +580,7 @@ struct AddCustomProviderForm: View {
                         .frame(width: 50, height: 50)
                         .padding()
 
-                    Text("添加自定义 API 供应商，使用兼容 OpenAI 格式的 API 服务")
+                    Text(String(localized: "添加自定义 API 供应商，使用兼容 OpenAI 格式的 API 服务"))
                         .font(.footnote)
                         .multilineTextAlignment(.center)
                         .padding(.bottom)
@@ -588,26 +588,26 @@ struct AddCustomProviderForm: View {
                 .frame(maxWidth: .infinity, alignment: .center)
             }
 
-            Section(header: Text("供应商名称")) {
-                TextField("请输入供应商名称", text: $providerName)
+            Section(header: Text(String(localized: "供应商名称"))) {
+                TextField(String(localized: "请输入供应商名称"), text: $providerName)
             }
 
             Section(header: Text("API Key")) {
-                SecureField("请输入 API 密钥", text: $apiKey)
+                SecureField(String(localized: "请输入 API 密钥"), text: $apiKey)
             }
 
-            Section(header: Text("请求地址（URL）")) {
-                Text("例如：https://api.example.com/v1/chat/completions")
+            Section(header: Text(String(localized: "请求地址（URL）"))) {
+                Text(String(localized: "例如：https://api.example.com/v1/chat/completions"))
                     .font(.caption)
                     .foregroundColor(.secondary)
 
-                TextField("请输入请求地址", text: $requestURL)
+                TextField(String(localized: "请输入请求地址"), text: $requestURL)
                     .keyboardType(.URL)
                     .autocapitalization(.none)
                     .autocorrectionDisabled()
 
                 if !requestURL.isEmpty && !requestURL.hasSuffix("/v1/chat/completions") {
-                    Button("补全 /v1/chat/completions") {
+                    Button(String(localized: "补全 /v1/chat/completions")) {
                         completeURL()
                     }
                     .font(.caption)
@@ -616,28 +616,28 @@ struct AddCustomProviderForm: View {
             }
 
             Section {
-                Text("💡 提示：此功能适用于兼容 OpenAI API 格式的服务，如 LocalAI、Ollama 等本地部署服务，或其他第三方 API 服务")
+                Text(String(localized: "💡 提示：此功能适用于兼容 OpenAI API 格式的服务，如 LocalAI、Ollama 等本地部署服务，或其他第三方 API 服务"))
                     .font(.footnote)
                     .foregroundColor(.secondary)
             }
         }
-        .navigationTitle("新增自定义供应商")
+        .navigationTitle(String(localized: "新增自定义供应商"))
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .cancellationAction) {
-                Button("取消") {
+                Button(String(localized: "取消")) {
                     isPresented = false
                 }
             }
             ToolbarItem(placement: .confirmationAction) {
-                Button("保存") {
+                Button(String(localized: "保存")) {
                     saveCustomProvider()
                 }
                 .disabled(!isFormValid)
             }
         }
-        .alert("验证失败", isPresented: $showValidationError) {
-            Button("确定", role: .cancel) {}
+        .alert(String(localized: "验证失败"), isPresented: $showValidationError) {
+            Button(String(localized: "确定"), role: .cancel) {}
         } message: {
             Text(validationMessage)
         }
@@ -673,25 +673,25 @@ struct AddCustomProviderForm: View {
 
         // 验证
         guard !trimmedName.isEmpty else {
-            validationMessage = "供应商名称不能为空"
+                validationMessage = String(localized: "供应商名称不能为空")
             showValidationError = true
             return
         }
 
         guard !trimmedKey.isEmpty else {
-            validationMessage = "API Key 不能为空"
+                validationMessage = String(localized: "API Key 不能为空")
             showValidationError = true
             return
         }
 
         guard !trimmedURL.isEmpty else {
-            validationMessage = "请求地址不能为空"
+                validationMessage = String(localized: "请求地址不能为空")
             showValidationError = true
             return
         }
 
         guard trimmedURL.hasPrefix("http://") || trimmedURL.hasPrefix("https://") else {
-            validationMessage = "请求地址必须以 http:// 或 https:// 开头"
+                validationMessage = String(localized: "请求地址必须以 http:// 或 https:// 开头")
             showValidationError = true
             return
         }
@@ -715,7 +715,7 @@ struct AddCustomProviderForm: View {
             try modelContext.save()
             isPresented = false
         } catch {
-            validationMessage = "保存失败：\(error.localizedDescription)"
+            validationMessage = String(format: String(localized: "保存失败：%@"), error.localizedDescription)
             showValidationError = true
         }
     }
@@ -765,7 +765,7 @@ struct SearchSettingView: View {
                         .foregroundColor(.hlBluefont)
                         .padding()
                     
-                    Text("设置搜索功能，以便在聊天对话时获取互联网内容，提升回答效果。个性化的设置能最大程度的平衡你的需求与检索带来的成本消耗")
+                    Text(String(localized: "设置搜索功能，以便在聊天对话时获取互联网内容，提升回答效果。个性化的设置能最大程度的平衡你的需求与检索带来的成本消耗"))
                         .font(.footnote)
                         .multilineTextAlignment(.center)
                         .padding(.bottom)
@@ -774,26 +774,26 @@ struct SearchSettingView: View {
             }
             
             // 检索设置部分
-            Section(header: Text("模型在需要时主动搜索")) {
-                Toggle("启用主动搜索", isOn: Binding(
+            Section(header: Text(String(localized: "模型在需要时主动搜索"))) {
+                Toggle(String(localized: "启用主动搜索"), isOn: Binding(
                     get: { searchEnable },
                     set: { searchEnable = $0 }))
                 .tint(.hlBlue)
             }
             
-            Section(header: Text("搜索结果数量（范围：5-20）")) {
+            Section(header: Text(String(localized: "搜索结果数量（范围：5-20）"))) {
                 Stepper(value: $searchCount, in: 5...20) {
                     Text("搜索结果数量：\(searchCount)")
                 }
             }
             
-            Section(header: Text("搜索时同时搜索中英文内容")) {
-                Toggle("中英文双语检索", isOn: $bilingualSearch)
+            Section(header: Text(String(localized: "搜索时同时搜索中英文内容"))) {
+                Toggle(String(localized: "中英文双语检索"), isOn: $bilingualSearch)
                     .tint(.hlBlue)
             }
             
             // 搜索 API 配置及厂商选择部分
-            Section(header: Text("搜索引擎选择（最多只能开启一个）")) {
+            Section(header: Text(String(localized: "搜索引擎选择（最多只能开启一个）"))) {
                 ForEach(sortedSearchKeys) { key in
                     HStack {
                         // 点击左侧区域进入编辑 API 配置界面
@@ -810,24 +810,24 @@ struct SearchSettingView: View {
                                 // 显示各厂商的计费或免费说明
                                 switch key.company?.uppercased() {
                                 case "GOOGLE_SEARCH":
-                                    Text("100次免费/日")
+                                    Text(String(localized: "100次免费/日"))
                                         .font(.caption)
                                         .foregroundColor(.green)
                                 case "TAVILY":
-                                    Text("1000免费积分/月")
+                                    Text(String(localized: "1000免费积分/月"))
                                         .font(.caption)
                                         .foregroundColor(.green)
                                 case "LANGSEARCH":
-                                    Text("免费")
+                                    Text(String(localized: "免费"))
                                         .font(.caption)
                                         .foregroundColor(.green)
                                 case "BRAVE":
-                                    Text("2000次免费/月")
+                                    Text(String(localized: "2000次免费/月"))
                                         .font(.caption)
                                         .foregroundColor(.green)
                                 default:
                                     if let price = key.price {
-                                        Text("¥\(String(format: "%.4f", price))/次")
+                                        Text(String(format: String(localized: "¥%.4f/次"), price))
                                             .font(.caption)
                                             .foregroundColor(.orange)
                                     }
@@ -858,21 +858,21 @@ struct SearchSettingView: View {
                 }
             }
             
-            Section(header: Text("功能列表")) {
-                Label("联网信息检索", systemImage: "network")
-                Label("学术论文检索", systemImage: "graduationcap")
-                Label("网页信息阅读", systemImage: "text.and.command.macwindow")
-                Label("网络文件阅读", systemImage: "text.document")
+            Section(header: Text(String(localized: "功能列表"))) {
+                Label(String(localized: "联网信息检索"), systemImage: "network")
+                Label(String(localized: "学术论文检索"), systemImage: "graduationcap")
+                Label(String(localized: "网页信息阅读"), systemImage: "text.and.command.macwindow")
+                Label(String(localized: "网络文件阅读"), systemImage: "text.document")
             }
         }
-        .navigationTitle("联网搜索")
+        .navigationTitle(String(localized: "联网搜索"))
         // 编辑 API 配置界面（SearchKeysView 部分）的弹出 sheet
         .sheet(item: $selectedKey) { key in
             editKeyView(for: key)
         }
         // 出现错误时弹出警告
         .alert(errorMessage, isPresented: $showError) {
-            Button("确定", role: .cancel) { }
+            Button(String(localized: "确定"), role: .cancel) { }
         }
         // 加载/保存双语检索相关的用户信息
         .onAppear {
@@ -929,17 +929,17 @@ struct SearchSettingView: View {
                             .frame(width: 50, height: 50)
                             .padding()
 
-                        Text("设置 \(getCompanyName(for: key.company ?? "Unknown")) API密钥，以开启该搜索引擎")
+                        Text(String(format: String(localized: "设置 %@ API密钥，以开启该搜索引擎"), getCompanyName(for: key.company ?? "Unknown")))
                             .font(.footnote)
                             .multilineTextAlignment(.center)
 
                         if let url = URL(string: key.help) {
-                            Link("🔗 点此获取 \(getCompanyName(for: key.company ?? "Unknown")) API密钥", destination: url)
+                            Link(String(format: String(localized: "🔗 点此获取 %@ API密钥"), getCompanyName(for: key.company ?? "Unknown")), destination: url)
                                 .font(.footnote)
                                 .multilineTextAlignment(.center)
                                 .padding(.bottom)
                         } else {
-                            Text("建议进入其开放平台获取API密钥")
+                            Text(String(localized: "建议进入其开放平台获取API密钥"))
                                 .font(.footnote)
                                 .multilineTextAlignment(.center)
                                 .padding(.bottom)
@@ -947,8 +947,8 @@ struct SearchSettingView: View {
                     }
                     .frame(maxWidth: .infinity, alignment: .center)
                 }
-                Section(header: Text("密钥")) {
-                    SecureField("请输入密钥", text: Binding(
+                Section(header: Text(String(localized: "密钥"))) {
+                    SecureField(String(localized: "请输入密钥"), text: Binding(
                         get: { key.key ?? "" },
                         set: { key.key = $0 }
                     ))
@@ -956,7 +956,7 @@ struct SearchSettingView: View {
                 // 测试 API 部分
                 Section {
                     HStack {
-                        Button("测试 API") {
+                        Button(String(localized: "测试 API")) {
                             testAPI(for: key)
                         }
                         .disabled(isTesting)
@@ -966,25 +966,25 @@ struct SearchSettingView: View {
                         if isTesting {
                             ProgressView()
                         } else if let result = testResult {
-                            Text(result ? "测试通过" : "测试失败")
+                            Text(result ? String(localized: "测试通过") : String(localized: "测试失败"))
                                 .foregroundColor(result ? .green : .red)
                         }
                     }
                 }
                 Section {
-                    Text("⚠️ 注意：配置 API 后，请在菜单中打开您要使用的搜索引擎")
+                    Text(String(localized: "⚠️ 注意：配置 API 后，请在菜单中打开您要使用的搜索引擎"))
                         .font(.footnote)
                 }
             }
-            .navigationTitle("编辑密钥")
+            .navigationTitle(String(localized: "编辑密钥"))
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("取消") {
+                    Button(String(localized: "取消")) {
                         selectedKey = nil
                     }
                 }
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("保存") {
+                    Button(String(localized: "保存")) {
                         key.timestamp = Date()
                         try? modelContext.save()
                         selectedKey = nil
@@ -1024,7 +1024,7 @@ struct SearchSettingView: View {
             if newValue {
                 // 开启前检查是否已配置 API Key
                 if key.key?.isEmpty ?? true {
-                    errorMessage = "\(getCompanyName(for: key.company ?? "Unknown")) 需要配置 API Key 才能启用。"
+            errorMessage = String(format: String(localized: "%@ 需要配置 API Key 才能启用。"), getCompanyName(for: key.company ?? "Unknown"))
                     showError = true
                     loadingCompany = nil
                     return
@@ -1041,7 +1041,7 @@ struct SearchSettingView: View {
             do {
                 try modelContext.save()
             } catch {
-                errorMessage = "保存失败: \(error.localizedDescription)"
+            errorMessage = String(format: String(localized: "保存失败: %@"), error.localizedDescription)
                 showError = true
             }
             loadingCompany = nil
@@ -1076,7 +1076,7 @@ struct KnowledgeSettingView: View {
                         .foregroundColor(.hlBluefont)
                         .padding()
                     
-                    Text("设置知识功能，以便在聊天对话时翻找知识背包，获取私有知识库内容，提升回答效果。")
+                    Text(String(localized: "设置知识功能，以便在聊天对话时翻找知识背包，获取私有知识库内容，提升回答效果。"))
                         .font(.footnote)
                         .multilineTextAlignment(.center)
                         .padding(.bottom)
@@ -1084,31 +1084,31 @@ struct KnowledgeSettingView: View {
                 .frame(maxWidth: .infinity, alignment: .center)
             }
             
-            Section(header: Text("模型在需要时主动翻找知识背包")) {
-                Toggle("启用主动翻找", isOn: Binding(
+            Section(header: Text(String(localized: "模型在需要时主动翻找知识背包"))) {
+                Toggle(String(localized: "启用主动翻找"), isOn: Binding(
                     get: { knowledgeEnable },
                     set: { knowledgeEnable = $0 }))
                 .tint(.hlBlue)
             }
             
-            Section(header: Text("翻找结果数量（范围：5-20）")) {
+            Section(header: Text(String(localized: "翻找结果数量（范围：5-20）"))) {
                 Stepper(value: $knowledgeCount, in: 5...20) {
                     Text("翻找结果数量：\(knowledgeCount)")
                 }
             }
             
-            Section(header: Text("匹配度阈值（范围：0.05 - 1.0）")) {
+            Section(header: Text(String(localized: "匹配度阈值（范围：0.05 - 1.0）"))) {
                 Stepper(value: $knowledgeSimilarity, in: 0.05...1.0, step: 0.05) {
-                    Text(String(format: "匹配度阈值：%.2f", knowledgeSimilarity))
+                    Text(String(format: String(localized: "匹配度阈值：%.2f"), knowledgeSimilarity))
                 }
             }
             
-            Section(header: Text("功能列表")) {
-                Label("知识背包翻找", systemImage: "backpack")
-                Label("知识文档撰写", systemImage: "text.document")
+            Section(header: Text(String(localized: "功能列表"))) {
+                Label(String(localized: "知识背包翻找"), systemImage: "backpack")
+                Label(String(localized: "知识文档撰写"), systemImage: "text.document")
             }
         }
-        .navigationTitle("知识背包")
+        .navigationTitle(String(localized: "知识背包"))
         .onAppear {
             loadUserInfo()
         }
@@ -1185,7 +1185,7 @@ struct MapSettingView: View {
                         .foregroundColor(.hlBluefont)
                         .padding()
                     
-                    Text("设置地图功能，以便在与支持工具的模型对话时，更好的获取位置相关的信息并让模型向你展示地图")
+                    Text(String(localized: "设置地图功能，以便在与支持工具的模型对话时，更好的获取位置相关的信息并让模型向你展示地图"))
                         .font(.footnote)
                         .multilineTextAlignment(.center)
                         .padding(.bottom)
@@ -1195,13 +1195,13 @@ struct MapSettingView: View {
             }
             
             Section {
-                Toggle("启用地图", isOn: Binding(
+                Toggle(String(localized: "启用地图"), isOn: Binding(
                     get: { mapEnable },
                     set: { mapEnable = $0 }))
                 .tint(.hlBlue)
             }
             
-            Section(header: Text("地图引擎选择（最多只能开启一个）")) { 
+            Section(header: Text(String(localized: "地图引擎选择（最多只能开启一个）"))) {
                 ForEach(sortedMapKeys) { key in
                     HStack {
                         // 左侧区域：点击可进入 API 配置界面（APPLEMAPP 不可配置 API）
@@ -1220,7 +1220,7 @@ struct MapSettingView: View {
                                 Spacer()
                                 // 对于默认的 APPLEMAP，显示"默认"标识
                                 if key.company.uppercased() == "APPLEMAP" {
-                                    Text("默认")
+                                    Text(String(localized: "默认"))
                                         .font(.caption)
                                         .foregroundColor(.gray)
                                 } else {
@@ -1248,14 +1248,14 @@ struct MapSettingView: View {
                 }
             }
             
-            Section(header: Text("功能列表")) {
-                Label("用户定位查询", systemImage: "location")
-                Label("特定位置搜索", systemImage: "mappin.and.ellipse")
-                Label("附近兴趣搜索", systemImage: "mecca")
-                Label("自动路线规划", systemImage: "point.bottomleft.forward.to.point.topright.filled.scurvepath")
+            Section(header: Text(String(localized: "功能列表"))) {
+                Label(String(localized: "用户定位查询"), systemImage: "location")
+                Label(String(localized: "特定位置搜索"), systemImage: "mappin.and.ellipse")
+                Label(String(localized: "附近兴趣搜索"), systemImage: "mecca")
+                Label(String(localized: "自动路线规划"), systemImage: "point.bottomleft.forward.to.point.topright.filled.scurvepath")
             }
         }
-        .navigationTitle("地图规划")
+        .navigationTitle(String(localized: "地图规划"))
         .onAppear {
             loadUserInfo()
         }
@@ -1267,7 +1267,7 @@ struct MapSettingView: View {
             editMapKeyView(for: key)
         }
         .alert(errorMessage, isPresented: $showError) {
-            Button("确定", role: .cancel) { }
+            Button(String(localized: "确定"), role: .cancel) { }
         }
     }
     
@@ -1305,7 +1305,7 @@ struct MapSettingView: View {
             if newValue {
                 // 对于非 AppleMap 必须配置 API Key 才能启用
                 if key.company.uppercased() != "APPLEMAP" && key.key.isEmpty {
-                    errorMessage = "\(getCompanyName(for: key.company)) 需要配置 API Key 才能启用。"
+            errorMessage = String(format: String(localized: "%@ 需要配置 API Key 才能启用。"), getCompanyName(for: key.company))
                     showError = true
                     loadingMapCompany = nil
                     return
@@ -1322,7 +1322,7 @@ struct MapSettingView: View {
             do {
                 try modelContext.save()
             } catch {
-                errorMessage = "保存失败: \(error.localizedDescription)"
+            errorMessage = String(format: String(localized: "保存失败: %@"), error.localizedDescription)
                 showError = true
             }
             ensureDefaultEngine()
@@ -1355,7 +1355,7 @@ struct MapSettingView: View {
                 // APPLEMAP 无需配置 API
                 if key.company.uppercased() == "APPLEMAP" {
                     Section {
-                        Text("APPLEMAP 不需要配置 API Key")
+                        Text(String(localized: "APPLEMAP 不需要配置 API Key"))
                             .foregroundColor(.gray)
                     }
                 } else {
@@ -1372,13 +1372,13 @@ struct MapSettingView: View {
                                 .multilineTextAlignment(.center)
 
                             if let url = URL(string: key.help) {
-                                Link("🔗 点此获取 \(getCompanyName(for: key.company)) API密钥", destination: url)
+                            Link(String(format: String(localized: "🔗 点此获取 %@ API密钥"), getCompanyName(for: key.company)), destination: url)
                                     .font(.footnote)
                                     .multilineTextAlignment(.center)
                                     .padding(.bottom)
                             } else {
                                 // 当 URL 无效时可以提供一个备用视图
-                                Text("建议进入其开放平台获取API密钥")
+                                Text(String(localized: "建议进入其开放平台获取API密钥"))
                                     .font(.footnote)
                                     .multilineTextAlignment(.center)
                                     .padding(.bottom)
@@ -1387,23 +1387,23 @@ struct MapSettingView: View {
                         .frame(maxWidth: .infinity, alignment: .center)
                     }
                     
-                    Section(header: Text("密钥")) {
-                        SecureField("请输入 API Key", text: Binding(
+                    Section(header: Text(String(localized: "密钥"))) {
+                        SecureField(String(localized: "请输入 API Key"), text: Binding(
                             get: { key.key },
                             set: { key.key = $0 }
                         ))
                     }
                 }
             }
-            .navigationTitle("编辑密钥")
+            .navigationTitle(String(localized: "编辑密钥"))
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("取消") {
+                    Button(String(localized: "取消")) {
                         selectedMapKey = nil
                     }
                 }
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("保存") {
+                    Button(String(localized: "保存")) {
                         key.timestamp = Date()
                         try? modelContext.save()
                         selectedMapKey = nil
@@ -1432,7 +1432,7 @@ struct CalendarSettingView: View {
                         .foregroundColor(.hlBluefont)
                         .padding()
                     
-                    Text("设置日历功能，以便在与支持工具的模型对话时，获取日历日程、提醒事项信息或者让模型写入日历日程、提醒事项")
+                    Text(String(localized: "设置日历功能，以便在与支持工具的模型对话时，获取日历日程、提醒事项信息或者让模型写入日历日程、提醒事项"))
                         .font(.footnote)
                         .multilineTextAlignment(.center)
                         .padding(.bottom)
@@ -1441,20 +1441,20 @@ struct CalendarSettingView: View {
             }
             
             Section {
-                Toggle("启用日历", isOn: Binding(
+                Toggle(String(localized: "启用日历"), isOn: Binding(
                     get: { calendarEnable },
                     set: { calendarEnable = $0 }))
                 .tint(.hlBlue)
             }
             
-            Section(header: Text("功能列表")) {
-                Label("查找日历事件", systemImage: "calendar.badge.checkmark")
-                Label("查找提醒事项", systemImage: "checklist")
-                Label("新增日历事件", systemImage: "calendar.badge.plus")
-                Label("新增提醒事项", systemImage: "text.badge.plus")
+            Section(header: Text(String(localized: "功能列表"))) {
+                Label(String(localized: "查找日历事件"), systemImage: "calendar.badge.checkmark")
+                Label(String(localized: "查找提醒事项"), systemImage: "checklist")
+                Label(String(localized: "新增日历事件"), systemImage: "calendar.badge.plus")
+                Label(String(localized: "新增提醒事项"), systemImage: "text.badge.plus")
             }
         }
-        .navigationTitle("日历提醒")
+        .navigationTitle(String(localized: "日历提醒"))
         .onAppear {
             loadUserInfo()
         }
@@ -1508,7 +1508,7 @@ struct CodeSettingView: View {
                         .foregroundColor(.hlBluefont)
                         .padding()
                     
-                    Text("设置代码功能，以便在与支持工具的模型对话时，模型为你运行Python代码，或查看模型为你制作网页内容，并与其交互。")
+                    Text(String(localized: "设置代码功能，以便在与支持工具的模型对话时，模型为你运行Python代码，或查看模型为你制作网页内容，并与其交互。"))
                         .font(.footnote)
                         .multilineTextAlignment(.center)
                         .padding(.bottom)
@@ -1517,18 +1517,18 @@ struct CodeSettingView: View {
             }
             
             Section {
-                Toggle("启用代码", isOn: Binding(
+                Toggle(String(localized: "启用代码"), isOn: Binding(
                     get: { CodeEnable },
                     set: { CodeEnable = $0 }))
                 .tint(.hlBlue)
             }
             
-            Section(header: Text("功能列表")) {
-                Label("渲染网页内容", systemImage: "macwindow.badge.plus")
-                Label("运行程序代码", systemImage: "apple.terminal")
+            Section(header: Text(String(localized: "功能列表"))) {
+                Label(String(localized: "渲染网页内容"), systemImage: "macwindow.badge.plus")
+                Label(String(localized: "运行程序代码"), systemImage: "apple.terminal")
             }
         }
-        .navigationTitle("代码执行")
+        .navigationTitle(String(localized: "代码执行"))
         .onAppear {
             loadUserInfo()
         }
@@ -1582,7 +1582,7 @@ struct HealthSettingView: View {
                         .foregroundColor(.hlBluefont)
                         .padding()
                     
-                    Text("设置健康功能，以便在与支持工具的模型对话时，模型能够获取你的健康信息或帮你记录健康、饮食等信息。")
+                    Text(String(localized: "设置健康功能，以便在与支持工具的模型对话时，模型能够获取你的健康信息或帮你记录健康、饮食等信息。"))
                         .font(.footnote)
                         .multilineTextAlignment(.center)
                         .padding(.bottom)
@@ -1591,20 +1591,20 @@ struct HealthSettingView: View {
             }
             
             Section {
-                Toggle("启用健康", isOn: Binding(
+                Toggle(String(localized: "启用健康"), isOn: Binding(
                     get: { healthEnable },
                     set: { healthEnable = $0 }))
                 .tint(.hlBlue)
             }
             
-            Section(header: Text("功能列表")) {
-                Label("查询步数距离", systemImage: "figure.walk")
-                Label("查询能量消耗", systemImage: "flame")
-                Label("查询营养摄入", systemImage: "bubbles.and.sparkles")
-                Label("写入营养摄入", systemImage: "pencil.and.list.clipboard")
+            Section(header: Text(String(localized: "功能列表"))) {
+                Label(String(localized: "查询步数距离"), systemImage: "figure.walk")
+                Label(String(localized: "查询能量消耗"), systemImage: "flame")
+                Label(String(localized: "查询营养摄入"), systemImage: "bubbles.and.sparkles")
+                Label(String(localized: "写入营养摄入"), systemImage: "pencil.and.list.clipboard")
             }
         }
-        .navigationTitle("健康生活")
+        .navigationTitle(String(localized: "健康生活"))
         .onAppear {
             loadUserInfo()
         }
@@ -1658,7 +1658,7 @@ struct CanvasSettingView: View {
                         .foregroundColor(.hlBluefont)
                         .padding()
                     
-                    Text("设置画布功能，以便在与支持工具的模型对话时，模型能够使用画布工具，带来更好的长文本、大段落或结构化内容的输出编辑体验。")
+                    Text(String(localized: "设置画布功能，以便在与支持工具的模型对话时，模型能够使用画布工具，带来更好的长文本、大段落或结构化内容的输出编辑体验。"))
                         .font(.footnote)
                         .multilineTextAlignment(.center)
                         .padding(.bottom)
@@ -1667,20 +1667,20 @@ struct CanvasSettingView: View {
             }
             
             Section {
-                Toggle("启用画布", isOn: Binding(
+                Toggle(String(localized: "启用画布"), isOn: Binding(
                     get: { canvasEnable },
                     set: { canvasEnable = $0 }))
                 .tint(.hlBlue)
             }
             
-            Section(header: Text("功能列表")) {
-                Label("创建信息画布", systemImage: "pencil.and.outline")
-                Label("编辑画布内容", systemImage: "pencil.and.scribble")
-                Label("运行画布代码", systemImage: "play.circle")
-                Label("渲染画布网页", systemImage: "macwindow")
+            Section(header: Text(String(localized: "功能列表"))) {
+                Label(String(localized: "创建信息画布"), systemImage: "pencil.and.outline")
+                Label(String(localized: "编辑画布内容"), systemImage: "pencil.and.scribble")
+                Label(String(localized: "运行画布代码"), systemImage: "play.circle")
+                Label(String(localized: "渲染画布网页"), systemImage: "macwindow")
             }
         }
-        .navigationTitle("信息画布")
+        .navigationTitle(String(localized: "信息画布"))
         .onAppear {
             loadUserInfo()
         }
@@ -1750,7 +1750,7 @@ struct WeatherSettingView: View {
                         .foregroundColor(.hlBluefont)
                         .padding()
                     
-                    Text("设置天气功能，以便在与支持工具的模型对话时，获取实时天气信息和未来天气预报")
+                    Text(String(localized: "设置天气功能，以便在与支持工具的模型对话时，获取实时天气信息和未来天气预报"))
                         .font(.footnote)
                         .multilineTextAlignment(.center)
                         .padding(.bottom)
@@ -1759,14 +1759,14 @@ struct WeatherSettingView: View {
             }
             
             Section {
-                Toggle("启用天气", isOn: Binding(
+                Toggle(String(localized: "启用天气"), isOn: Binding(
                     get: { weatherEnable },
                     set: { weatherEnable = $0 }
                 ))
                 .tint(.hlBlue)
             }
             
-            Section(header: Text("天气服务商选择（最多只能开启一个）")) {
+            Section(header: Text(String(localized: "天气服务商选择（最多只能开启一个）"))) {
                 ForEach(sortedWeatherKeys) { key in
                     HStack {
                         // 点击进入 API 配置界面
@@ -1804,12 +1804,12 @@ struct WeatherSettingView: View {
                 }
             }
             
-            Section(header: Text("功能列表")) {
-                Label("查询实时天气", systemImage: "cloud.sun")
-                Label("未来天气预报", systemImage: "calendar")
+            Section(header: Text(String(localized: "功能列表"))) {
+                Label(String(localized: "查询实时天气"), systemImage: "cloud.sun")
+                Label(String(localized: "未来天气预报"), systemImage: "calendar")
             }
         }
-        .navigationTitle("天气查询")
+        .navigationTitle(String(localized: "天气查询"))
         .onAppear {
             loadUserInfo()
         }
@@ -1821,7 +1821,7 @@ struct WeatherSettingView: View {
             editWeatherKeyView(for: key)
         }
         .alert(errorMessage, isPresented: $showError) {
-            Button("确定", role: .cancel) { }
+            Button(String(localized: "确定"), role: .cancel) { }
         }
     }
     
@@ -1905,7 +1905,7 @@ struct WeatherSettingView: View {
                                 .multilineTextAlignment(.center)
                                 .padding(.bottom)
                         } else {
-                            Text("建议进入其开放平台获取 API 密钥")
+                            Text(String(localized: "建议进入其开放平台获取 API 密钥"))
                                 .font(.footnote)
                                 .multilineTextAlignment(.center)
                                 .padding(.bottom)
@@ -1914,29 +1914,29 @@ struct WeatherSettingView: View {
                     .frame(maxWidth: .infinity, alignment: .center)
                 }
                 
-                Section(header: Text("密钥")) {
-                    SecureField("请输入 API Key", text: Binding(
+                Section(header: Text(String(localized: "密钥"))) {
+                    SecureField(String(localized: "请输入 API Key"), text: Binding(
                         get: { key.key },
                         set: { key.key = $0 }
                     ))
                 }
                 
-                Section(header: Text("请求地址")) {
-                    TextField("请输入 API Host", text: Binding(
+                Section(header: Text(String(localized: "请求地址"))) {
+                    TextField(String(localized: "请输入 API Host"), text: Binding(
                         get: { key.requestURL },
                         set: { key.requestURL = $0 }
                     ))
                 }
             }
-            .navigationTitle("编辑密钥")
+            .navigationTitle(String(localized: "编辑密钥"))
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("取消") {
+                    Button(String(localized: "取消")) {
                         selectedWeatherKey = nil
                     }
                 }
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("保存") {
+                    Button(String(localized: "保存")) {
                         key.timestamp = Date()
                         try? modelContext.save()
                         selectedWeatherKey = nil

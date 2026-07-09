@@ -51,20 +51,20 @@ struct MemoryArchiveView: View {
             backgroundView
             memoryListView
         }
-        .navigationTitle("记忆档案")
-        .searchable(text: $searchText, prompt: "搜索记忆")
+        .navigationTitle(String(localized: "记忆档案"))
+        .searchable(text: $searchText, prompt: String(localized: "搜索记忆"))
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button(action: {
                     showClearAllAlert = true
                 }) {
-                    Text("清空所有")
+                    Text(String(localized: "清空所有"))
                 }
             }
         }
-        .alert("确定要清除所有记忆吗？", isPresented: $showClearAllAlert) {
-            Button("取消", role: .cancel) {}
-            Button("清除", role: .destructive, action: clearAllMemories)
+        .alert(String(localized: "确定要清除所有记忆吗？"), isPresented: $showClearAllAlert) {
+            Button(String(localized: "取消"), role: .cancel) {}
+            Button(String(localized: "清除"), role: .destructive, action: clearAllMemories)
         }
         .sheet(isPresented: $showMemorySheet) {
             NavigationView {
@@ -87,7 +87,7 @@ struct MemoryArchiveView: View {
                         content.hueRotation(Angle(degrees: proxy.frame(in: .global).origin.y / 20))
                     }
                 }
-                .navigationTitle("记忆编辑")
+                .navigationTitle(String(localized: "记忆编辑"))
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbar {
                     ToolbarItemGroup(placement: .navigationBarLeading) {
@@ -99,7 +99,7 @@ struct MemoryArchiveView: View {
                         } label: {
                             HStack {
                                 Image(systemName: "xmark")
-                                Text("取消")
+                                Text(String(localized: "取消"))
                             }
                             .font(.caption)
                             .foregroundColor(.hlBluefont)
@@ -126,7 +126,7 @@ struct MemoryArchiveView: View {
                         } label: {
                             HStack {
                                 Image(systemName: "checkmark")
-                                Text("保存")
+                                Text(String(localized: "保存"))
                             }
                             .font(.caption)
                             .foregroundColor(.white)
@@ -175,13 +175,13 @@ struct MemoryArchiveView: View {
                         .foregroundColor(.hlBluefont)
                         .padding()
                     
-                    Text("记忆档案功能用于聊天，受支持的模型会自动在聊天时记住你的喜好并在需要的时候主动回忆这些喜好。")
+                    Text(String(localized: "记忆档案功能用于聊天，受支持的模型会自动在聊天时记住你的喜好并在需要的时候主动回忆这些喜好。"))
                         .font(.footnote)
                         .multilineTextAlignment(.center)
                         .padding(.bottom)
                     
                     HStack {
-                        Toggle("启用记忆功能", isOn: memoryEnabledBinding)
+                        Toggle(String(localized: "启用记忆功能"), isOn: memoryEnabledBinding)
                             .tint(.hlBlue)
                     }
                     
@@ -213,7 +213,7 @@ struct MemoryArchiveView: View {
                             Button(role: .destructive) {
                                 deleteMemory(memory)
                             } label: {
-                                Label("忘记", systemImage: "heart.slash")
+                                Label(String(localized: "忘记"), systemImage: "heart.slash")
                             }
                             .tint(Color(.hlRed))
                         }
@@ -223,7 +223,7 @@ struct MemoryArchiveView: View {
                                 memoryContent = memory.content ?? ""
                                 showMemorySheet = true
                             } label: {
-                                Label("更新", systemImage: "arrow.trianglehead.clockwise.heart")
+                                Label(String(localized: "更新"), systemImage: "arrow.trianglehead.clockwise.heart")
                             }
                             .tint(Color(.hlGreen))
                         }
@@ -237,7 +237,7 @@ struct MemoryArchiveView: View {
                     VStack {
                         HStack {
                             Image(systemName: "arrow.up.heart")
-                            Text("灌输新记忆")
+                            Text(String(localized: "灌输新记忆"))
                         }
                         .foregroundColor(.hlBluefont)
                         .padding()
@@ -258,7 +258,7 @@ struct MemoryArchiveView: View {
             } else {
                 HStack {
                     Image(systemName: "heart.slash")
-                    Text("记忆功能已关闭")
+                    Text(String(localized: "记忆功能已关闭"))
                 }
                 .foregroundColor(.hlBluefont)
                 .listRowSeparator(.hidden)

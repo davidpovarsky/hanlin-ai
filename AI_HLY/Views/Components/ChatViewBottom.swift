@@ -592,14 +592,14 @@ struct ChatViewBottom: View {
                                     showPhotoSourceOptions = true
                                     showCameraPicker = true
                                 }) {
-                                    Label("拍摄照片", systemImage: "camera")
+                                    Label(String(localized: "拍摄照片"), systemImage: "camera")
                                 }
                                 Button(action: {
                                     isFeedBack.toggle()
                                     showPhotoSourceOptions = true
                                     showImagePicker = true
                                 }) {
-                                    Label("相册选择", systemImage: "photo")
+                                    Label(String(localized: "相册选择"), systemImage: "photo")
                                 }
                             } label: {
                                 VStack {
@@ -736,7 +736,7 @@ struct ChatViewBottom: View {
                                         .scaledToFit()
                                         .frame(width: 20, height: 20)
                                         .foregroundColor(TemporaryRecord ? .primary : .hlBluefont)
-                                    Text(item.name ?? "未命名提示词")
+                                    Text(item.name ?? String(localized: "未命名提示词"))
                                         .font(.body)
                                         .foregroundColor(TemporaryRecord ? .primary : .hlBluefont)
                                         .lineLimit(1)
@@ -784,7 +784,7 @@ struct ChatViewBottom: View {
                 VStack {
                     // 针对部分公司显示反向提示词输入框
                     if ["QWEN", "MODELSCOPE", "ZHIPUAI", "HANLIN", "HANLIN_OPEN", "SILICONCLOUD"].contains(modelTemp[selectedModelIndex].company) {
-                        TextField("反向提示词", text: $imageReversePrompt)
+                        TextField(String(localized: "反向提示词"), text: $imageReversePrompt)
                             .font(.footnote)
                             .padding(8)
                             .background(.background.opacity(0.6))
@@ -803,7 +803,7 @@ struct ChatViewBottom: View {
                                             Image(systemName: "square")
                                                 .foregroundColor(selectedImageSize == "square" ? .white : (TemporaryRecord ? .primary : .hlBluefont))
                                                 .font(.footnote)
-                                            Text("方形画幅")
+                                            Text(String(localized: "方形画幅"))
                                                 .font(.footnote)
                                                 .foregroundColor(selectedImageSize == "square" ? .white : .primary)
                                                 .lineLimit(1)
@@ -823,7 +823,7 @@ struct ChatViewBottom: View {
                                             Image(systemName: "rectangle")
                                                 .foregroundColor(selectedImageSize == "landscape" ? .white : (TemporaryRecord ? .primary : .hlBluefont))
                                                 .font(.footnote)
-                                            Text("横向画幅")
+                                            Text(String(localized: "横向画幅"))
                                                 .font(.footnote)
                                                 .foregroundColor(selectedImageSize == "landscape" ? .white : .primary)
                                                 .lineLimit(1)
@@ -843,7 +843,7 @@ struct ChatViewBottom: View {
                                             Image(systemName: "rectangle.portrait")
                                                 .foregroundColor(selectedImageSize == "portrait" ? .white : (TemporaryRecord ? .primary : .hlBluefont))
                                                 .font(.footnote)
-                                            Text("纵向画幅")
+                                            Text(String(localized: "纵向画幅"))
                                                 .font(.footnote)
                                                 .foregroundColor(selectedImageSize == "portrait" ? .white : .primary)
                                                 .lineLimit(1)
@@ -887,7 +887,7 @@ struct ChatViewBottom: View {
                                     Image(systemName: "at")
                                         .foregroundColor(TemporaryRecord ? .primary : .hlBluefont)
                                         .font(.footnote)
-                                    highlightedModelText(for: model.displayName ?? model.name ?? "未知")
+                                    highlightedModelText(for: model.displayName ?? model.name ?? String(localized: "未知"))
                                         .font(.footnote)
                                         .foregroundColor(.primary)
                                         .lineLimit(1)
@@ -1052,14 +1052,14 @@ struct ChatViewBottom: View {
                 HStack {
                     ProgressView()
                         .scaleEffect(0.8)
-                    Text("加载模型中...")
+                    Text(String(localized: "加载模型中..."))
                         .font(.caption)
                         .foregroundColor(.secondary)
                 }
                 .frame(height: 36)
             } else if visibleIndices.isEmpty {
                 // 没有可用模型
-                Text("暂无可用模型，请前往模型界面开启模型。")
+                Text(String(localized: "暂无可用模型，请前往模型界面开启模型。"))
                     .font(.caption)
                     .foregroundColor(.secondary)
                     .frame(height: 36)
@@ -1105,7 +1105,7 @@ struct ChatViewBottom: View {
                 HStack {
                     ProgressView()
                         .scaleEffect(0.8)
-                    Text("加载模型中...")
+                    Text(String(localized: "加载模型中..."))
                         .font(.caption)
                         .foregroundColor(.secondary)
                 }
@@ -1113,7 +1113,7 @@ struct ChatViewBottom: View {
                 .padding(.horizontal, 12)
             } else if visibleIndices.isEmpty {
                 // 没有可用模型
-                Text("暂无可用模型，请前往模型界面开启模型。")
+                Text(String(localized: "暂无可用模型，请前往模型界面开启模型。"))
                     .font(.caption)
                     .foregroundColor(.secondary)
                     .frame(height: 36)
@@ -1182,43 +1182,43 @@ struct ChatViewBottom: View {
                     .foregroundColor(TemporaryRecord ? .primary : Color(.hlBluefont))
                     .transition(.opacity.combined(with: .move(edge: .leading)))
                 if model.supportsToolUse {
-                    Text("工具")
+                    Text(String(localized: "工具"))
                         .font(.caption)
                         .foregroundColor(ifToolUse ? .hlBrown : .gray)
                         .transition(.opacity)
                 }
                 if model.company?.uppercased() == "LOCAL" {
-                    Text("本地")
+                    Text(String(localized: "本地"))
                         .font(.caption)
                         .foregroundColor(.hlOrange)
                         .transition(.opacity)
                 }
                 if model.supportsMultimodal {
-                    Text("视觉")
+                    Text(String(localized: "视觉"))
                         .font(.caption)
                         .foregroundColor(.hlTeal)
                         .transition(.opacity)
                 }
                 if model.supportsReasoning {
-                    Text("思考")
+                    Text(String(localized: "思考"))
                         .font(.caption)
                         .foregroundColor(ifThink ? .hlPurple : .gray)
                         .transition(.opacity)
                 }
                 if model.supportsVoiceGen {
-                    Text("语音")
+                    Text(String(localized: "语音"))
                         .font(.caption)
                         .foregroundColor(ifAudio ? .hlPink : .gray)
                         .transition(.opacity)
                 }
                 if model.supportsImageGen {
-                    Text("生图")
+                    Text(String(localized: "生图"))
                         .font(.caption)
                         .foregroundColor(.hlGreen)
                         .transition(.opacity)
                 }
                 if model.price == 0 {
-                    Text("免费")
+                    Text(String(localized: "免费"))
                         .font(.caption)
                         .foregroundColor(.green)
                         .transition(.opacity)
@@ -1310,7 +1310,7 @@ struct ChatViewBottom: View {
                                             .frame(width: 20, height: 20) // 调整大小
                                             .foregroundColor(TemporaryRecord ? .primary : .hlBluefont) // 颜色变为 .hlBlue
 
-                                        Text(item.name ?? "提示词")
+                                        Text(item.name ?? String(localized: "提示词"))
                                             .font(.body)
                                             .foregroundColor(TemporaryRecord ? .primary : .hlBluefont)
                                             .lineLimit(1) // 限制为 1 行
@@ -1331,7 +1331,7 @@ struct ChatViewBottom: View {
             .transition(.opacity.combined(with: .move(edge: .bottom)))
 
             if !modelTemp[selectedModelIndex].supportsMultimodal && modelTemp[selectedModelIndex].company != "LOCAL" {
-                Text("⚠️ 当前不是视觉模型，分析图片建议使用视觉模型")
+                Text(String(localized: "⚠️ 当前不是视觉模型，分析图片建议使用视觉模型"))
                     .font(.caption.bold())
                     .foregroundColor(TemporaryRecord ? .primary : .hlBluefont)
                     .frame(maxWidth: .infinity, alignment: .leading)
@@ -1353,7 +1353,7 @@ struct ChatViewBottom: View {
                                 .frame(width: 30, height: 30)
                                 .foregroundColor(TemporaryRecord ? .primary : .hlBluefont)
                                 .symbolEffect(.bounce, value: showCameraPicker)
-                            Text("拍摄照片")
+                            Text(String(localized: "拍摄照片"))
                                 .font(.caption.bold())
                                 .foregroundColor(TemporaryRecord ? .primary : .hlBluefont)
                                 .padding(.top, 3)
@@ -1385,7 +1385,7 @@ struct ChatViewBottom: View {
                                 .frame(width: 30, height: 30)
                                 .foregroundColor(TemporaryRecord ? .primary : .hlBluefont)
                                 .symbolEffect(.bounce, value: showImagePicker)
-                            Text("相册选择")
+                            Text(String(localized: "相册选择"))
                                 .font(.caption.bold())
                                 .foregroundColor(TemporaryRecord ? .primary : .hlBluefont)
                                 .padding(.top, 3)
@@ -1418,7 +1418,7 @@ struct ChatViewBottom: View {
                             .frame(width: 30, height: 30)
                             .foregroundColor(selectedDocumentURLs.count >= 5 ? .gray : (TemporaryRecord ? .primary : .hlBluefont))
                             .symbolEffect(.bounce, value: showDocumentPicker)
-                        Text("文件文本")
+                        Text(String(localized: "文件文本"))
                             .font(.caption.bold())
                             .foregroundColor(selectedDocumentURLs.count >= 5 ? .gray : (TemporaryRecord ? .primary : .hlBluefont))
                             .padding(.top, 3)
@@ -1746,7 +1746,7 @@ struct ActionButtonsView: View {
                                     )
 
                                 if showToolReminder {
-                                    Text(ifToolUse ? "使用工具" : "禁用工具")
+                                    Text(ifToolUse ? String(localized: "使用工具") : String(localized: "禁用工具"))
                                         .font(.caption)
                                         .foregroundColor(
                                             ifToolUse
@@ -1794,7 +1794,7 @@ struct ActionButtonsView: View {
                                         : .gray
                                     )
                                 if ifKnowledge {
-                                    Text("知识背包")
+                                    Text(String(localized: "知识背包"))
                                         .font(.caption)
                                         .foregroundColor(TemporaryRecord ? .primary : .hlBluefont)
                                         .padding(.trailing, 12)
@@ -1804,13 +1804,13 @@ struct ActionButtonsView: View {
                         }
                         .disabled(isResponding)
                         .sensoryFeedback(.impact, trigger: isFeedBack)
-                        .alert("知识背包错误", isPresented: $showKnowledgeAlert) {
+                        .alert(String(localized: "知识背包错误"), isPresented: $showKnowledgeAlert) {
                             if isEmbeddingModelError {
-                                Button("前往设置") {
+                                Button(String(localized: "前往设置")) {
                                     showEmbeddingSettingSheet = true
                                 }
                             }
-                            Button("取消", role: .cancel) { }
+                            Button(String(localized: "取消"), role: .cancel) { }
                         } message: {
                             Text(knowledgeAlertMessage)
                         }
@@ -1819,7 +1819,7 @@ struct ActionButtonsView: View {
                                 SelectEmbeddingModelView()
                                     .toolbar {
                                         ToolbarItem(placement: .navigationBarTrailing) {
-                                            Button("完成") {
+                                            Button(String(localized: "完成")) {
                                                 showEmbeddingSettingSheet = false
                                             }
                                         }
@@ -1856,7 +1856,7 @@ struct ActionButtonsView: View {
                                         : .gray
                                     )
                                 if ifSearch {
-                                    Text("联网搜索")
+                                    Text(String(localized: "联网搜索"))
                                         .font(.caption)
                                         .foregroundColor(TemporaryRecord ? .primary : .hlAzure)
                                         .padding(.trailing, 12)
@@ -1866,10 +1866,10 @@ struct ActionButtonsView: View {
                         }
                         .disabled(isResponding)
                         .sensoryFeedback(.impact, trigger: isFeedBack)
-                        .alert("未启用搜索引擎", isPresented: $showSearchAlert) {
-                            Button("确定", role: .cancel) { }
+                        .alert(String(localized: "未启用搜索引擎"), isPresented: $showSearchAlert) {
+                            Button(String(localized: "确定"), role: .cancel) { }
                         } message: {
-                            Text("当前未启用任何搜索引擎，请前往 设置-工具-搜索设置 中开启。")
+                            Text(String(localized: "当前未启用任何搜索引擎，请前往 设置-工具-搜索设置 中开启。"))
                         }
                         .background(bgColorSearch)
                         .cornerRadius(20)
@@ -1899,7 +1899,7 @@ struct ActionButtonsView: View {
                                     )
 
                                 if ifPlanning {
-                                    Text("规划执行")
+                                    Text(String(localized: "规划执行"))
                                         .font(.caption)
                                         .foregroundColor(TemporaryRecord ? .primary : .hlIndigo)
                                         .padding(.trailing, 12)
@@ -1954,7 +1954,7 @@ struct ActionButtonsView: View {
                                     }
 
                                 if ifThink {
-                                    Text("深度思考")
+                                    Text(String(localized: "深度思考"))
                                         .font(.caption)
                                         .foregroundColor(TemporaryRecord ? .primary : .hlPurple)
                                         .transition(.opacity.combined(with: .move(edge: .leading)))
@@ -2026,7 +2026,7 @@ struct ActionButtonsView: View {
                                     .symbolEffect(.variableColor, value: audioTrigger)
 
                                 if ifAudio {
-                                    Text("语音生成")
+                                    Text(String(localized: "语音生成"))
                                         .font(.caption)
                                         .foregroundColor(TemporaryRecord ? .primary : .hlPink)
                                         .padding(.trailing, 12)
@@ -2061,7 +2061,7 @@ struct ActionButtonsView: View {
                                     .frame(width: size32, height: size32)
                                     .foregroundColor(TemporaryRecord ? .primary : .hlGreen)
                                     .symbolEffect(.rotate, value: isFeedBack)
-                                Text("图像生成")
+                                Text(String(localized: "图像生成"))
                                     .font(.caption)
                                     .foregroundColor(TemporaryRecord ? .primary : .hlGreen)
                                     .padding(.trailing, 12)
@@ -2088,7 +2088,7 @@ struct ActionButtonsView: View {
                                     .frame(width: size32, height: size32)
                                     .foregroundColor(TemporaryRecord ? .primary : .hlOrange)
                                     .symbolEffect(.wiggle, value: isFeedBack)
-                                Text("本地运行")
+                                Text(String(localized: "本地运行"))
                                     .font(.caption)
                                     .foregroundColor(TemporaryRecord ? .primary : .hlOrange)
                                     .padding(.trailing, 12)
@@ -2282,41 +2282,41 @@ struct ModelMenuSheetView: View {
                                 // 能力标签
                                 HStack(spacing: 6) {
                                     if model.supportsToolUse {
-                                        Text("工具")
+                                        Text(String(localized: "工具"))
                                             .font(.caption)
                                             .foregroundColor(ifToolUse ? .hlBrown : .gray)
                                     }
 
                                     if model.supportsMultimodal {
-                                        Text("视觉")
+                                        Text(String(localized: "视觉"))
                                             .font(.caption)
                                             .foregroundColor(.hlTeal)
                                     } else if model.supportsTextGen {
-                                        Text("文本")
+                                        Text(String(localized: "文本"))
                                             .font(.caption)
                                             .foregroundColor(.gray)
                                     }
 
                                     if model.supportsImageGen {
-                                        Text("生图")
+                                        Text(String(localized: "生图"))
                                             .font(.caption)
                                             .foregroundColor(.hlGreen)
                                     }
 
                                     if model.supportsVoiceGen {
-                                        Text("语音")
+                                        Text(String(localized: "语音"))
                                             .font(.caption)
                                             .foregroundColor(ifAudio ? .hlPink : .gray)
                                     }
 
                                     if model.supportsReasoning {
-                                        Text("思考")
+                                        Text(String(localized: "思考"))
                                             .font(.caption)
                                             .foregroundColor(ifThink ? .hlPurple : .gray)
                                     }
 
                                     if model.company?.uppercased() == "LOCAL" {
-                                        Text("本地")
+                                        Text(String(localized: "本地"))
                                             .font(.caption)
                                             .foregroundColor(.hlOrange)
                                     }
@@ -2344,7 +2344,7 @@ struct ModelMenuSheetView: View {
                     )
                 }
             }
-            .navigationTitle("选择模型")
+            .navigationTitle(String(localized: "选择模型"))
         }
     }
 

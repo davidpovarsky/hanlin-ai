@@ -74,7 +74,7 @@ struct VisionView: View {
         ZStack {
             
             if showSaveToast {
-                Text("✅ 图片已保存")
+                Text(String(localized: "✅ 图片已保存"))
                     .font(.body)
                     .padding()
                     .background(Color.black.opacity(0.6))
@@ -161,12 +161,12 @@ struct VisionView: View {
                 }
             }
         )
-        .alert("无法使用视觉功能", isPresented: $showNoModelAlert) {
-            Button("返回", role: .cancel) {
+        .alert(String(localized: "无法使用视觉功能"), isPresented: $showNoModelAlert) {
+            Button(String(localized: "返回"), role: .cancel) {
                 selectedTab = 0
             }
         } message: {
-            Text("暂无启用的多模态模型，请前往“设置-模型-模型管理”添加并启用支持视觉的模型。")
+            Text(String(localized: "暂无启用的多模态模型，请前往“设置-模型-模型管理”添加并启用支持视觉的模型。"))
         }
     }
 }
@@ -436,7 +436,7 @@ extension VisionView {
                 isFeedBack.toggle()
                 retryLastRequest()
             }) {
-                Text("重新请求")
+                Text(String(localized: "重新请求"))
                     .font(.caption)
                     .frame(maxWidth: .infinity)
                     .padding(6)
@@ -610,7 +610,7 @@ extension VisionView {
                                 }
                                 .buttonStyle(.plain)
                                 .sheet(isPresented: $isTextSelectionSheetPresented) {
-                                    TextSelectionView(text: photoAnalysis ?? "无文本")
+            TextSelectionView(text: photoAnalysis ?? String(localized: "无文本"))
                                 }
                                 
                                 // 复制按钮
@@ -720,7 +720,7 @@ extension VisionView {
         HStack {
             if showInput {
                 HStack {
-                    TextField("消息", text: $followAsk)
+                    TextField(String(localized: "消息"), text: $followAsk)
                         .padding(.leading, 12)
                         .frame(height: 44)
                         .focused($isInputActive) // 绑定焦点状态
@@ -906,7 +906,7 @@ extension VisionView {
         // 边界检查：确保有可用的多模态模型
         guard !multimodalModels.isEmpty, selectedModelIndex < multimodalModels.count else {
             print("没有可用的多模态模型")
-            photoAnalysis = "⚠️ 没有可用的多模态模型，请先在设置中添加支持视觉的模型。"
+            photoAnalysis = String(localized: "⚠️ 没有可用的多模态模型，请先在设置中添加支持视觉的模型。")
             return
         }
         
@@ -995,7 +995,7 @@ extension VisionView {
                 await MainActor.run {
                     let isZh = Locale.preferredLanguages.first?.hasPrefix("zh") ?? true
                     let message = error.localizedDescription
-                    visionErrorMessage = isZh ? "⚠️ 识别失败：\(message)" : "⚠️ Vision request failed: \(message)"
+            visionErrorMessage = String(format: String(localized: "⚠️ 识别失败：%@"), message)
                     photoAnalysis = nil
                     isProcessing = false
                 }
@@ -1042,7 +1042,7 @@ extension VisionView {
         let opacityFactor: Double = index == selectedModelIndex ? 1.0 : 0.4
         
         // 边界检查
-        let model = index < multimodalModels.count ? multimodalModels[index] : (name: "未知", company: "", identity: "model", icon: "circle.dotted.circle")
+        let model = index < multimodalModels.count ? multimodalModels[index] : (name: String(localized: "未知"), company: "", identity: "model", icon: "circle.dotted.circle")
         
         return VStack {
             Spacer()

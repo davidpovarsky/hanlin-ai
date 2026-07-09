@@ -85,18 +85,18 @@ struct ModelsView: View {
                     modelsListSection
                 }
             }
-            .navigationTitle(selectedIdentity.lowercased() == "agent" ? "智能体" : "模型")
+            .navigationTitle(selectedIdentity.lowercased() == "agent" ? String(localized: "智能体") : String(localized: "模型"))
             .safeAreaInset(edge: .bottom) {
                 // 底部额外留白区域
                 Color.clear.frame(height: 75)
             }
-            .searchable(text: $searchText, prompt: selectedIdentity.lowercased() == "agent" ? "搜索智能体" : "搜索模型")
+            .searchable(text: $searchText, prompt: selectedIdentity.lowercased() == "agent" ? String(localized: "搜索智能体") : String(localized: "搜索模型"))
             .toolbar {
                 // 中间 Picker 选择身份
                 ToolbarItem(placement: .principal) {
-                    Picker("身份选择", selection: $selectedIdentity) {
-                        Text("模型").tag("model")
-                        Text("智能体").tag("agent")
+                    Picker(String(localized: "身份选择"), selection: $selectedIdentity) {
+                        Text(String(localized: "模型")).tag("model")
+                        Text(String(localized: "智能体")).tag("agent")
                     }
                     .pickerStyle(SegmentedPickerStyle())
                     .frame(width: 200)
@@ -113,24 +113,24 @@ struct ModelsView: View {
                         Button {
                             resetModelPositionToDefault(context: context)
                         } label: {
-                            Label("恢复默认排序", systemImage: "arrow.up.arrow.down")
+                            Label(String(localized: "恢复默认排序"), systemImage: "arrow.up.arrow.down")
                         }
                     } else {
                         Menu {
                             Button {
                                 showOnlineModelView = true
                             } label: {
-                                Label("添加在线模型", systemImage: "link.badge.plus")
+                                Label(String(localized: "添加在线模型"), systemImage: "link.badge.plus")
                             }
                             Button {
                                 showLocalModelDownloadView = true
                             } label: {
-                                Label("添加本地模型", systemImage: "externaldrive.badge.plus")
+                                Label(String(localized: "添加本地模型"), systemImage: "externaldrive.badge.plus")
                             }
                             Button {
                                 showAddAgentView = true
                             } label: {
-                                Label("添加新智能体", systemImage: "person.badge.plus")
+                                Label(String(localized: "添加新智能体"), systemImage: "person.badge.plus")
                             }
                         } label: {
                             Image(systemName: "plus")
@@ -140,9 +140,9 @@ struct ModelsView: View {
             }
             .environment(\.editMode, .constant(isEditing ? .active : .inactive))
             // 删除确认弹窗
-            .alert("确定要删除此模型吗？", isPresented: $showDeleteAlert, presenting: modelToDelete) { model in
-                Button("取消", role: .cancel) {}
-                Button("删除", role: .destructive) {
+            .alert(String(localized: "确定要删除此模型吗？"), isPresented: $showDeleteAlert, presenting: modelToDelete) { model in
+                Button(String(localized: "取消"), role: .cancel) {}
+                Button(String(localized: "删除"), role: .destructive) {
                     deleteModel(model)
                 }
             }
@@ -182,8 +182,8 @@ struct ModelsView: View {
         .onAppear {
             initializeModelStates()
         }
-        .alert("API Key 缺失", isPresented: $showAPIKeyError) {
-            Button("确定", role: .cancel) {}
+        .alert(String(localized: "API Key 缺失"), isPresented: $showAPIKeyError) {
+            Button(String(localized: "确定"), role: .cancel) {}
         } message: {
             Text(errorMessage)
         }
@@ -396,41 +396,41 @@ struct ModelRowView: View {
                 HStack {
                     
                     if model.supportsToolUse {
-                        Text("工具")
+                        Text(String(localized: "工具"))
                             .font(.caption)
                             .foregroundColor(.hlBrown)
                     }
                     
                     if model.supportsMultimodal {
-                        Text("视觉")
+                        Text(String(localized: "视觉"))
                             .font(.caption)
                             .foregroundColor(.hlTeal)
                     } else if model.supportsTextGen {
-                        Text("文本")
+                        Text(String(localized: "文本"))
                             .font(.caption)
                             .foregroundColor(.gray)
                     }
                     
                     if model.supportsImageGen {
-                        Text("生图")
+                        Text(String(localized: "生图"))
                             .font(.caption)
                             .foregroundColor(.hlGreen)
                     }
                     
                     if model.supportsVoiceGen {
-                        Text("语音")
+                        Text(String(localized: "语音"))
                             .font(.caption)
                             .foregroundColor(.hlPink)
                     }
                     
                     if model.supportsReasoning {
-                        Text("思考")
+                        Text(String(localized: "思考"))
                             .font(.caption)
                             .foregroundColor(.hlPurple)
                     }
                     
                     if model.company?.uppercased() == "LOCAL" {
-                        Text("本地")
+                        Text(String(localized: "本地"))
                             .font(.caption)
                             .foregroundColor(.hlOrange)
                     }
@@ -464,7 +464,7 @@ struct ModelRowView: View {
                 Button(role: .destructive) {
                     onDelete()
                 } label: {
-                    Label("删除", systemImage: "trash")
+                    Label(String(localized: "删除"), systemImage: "trash")
                 }
                 .tint(Color(.hlRed))
             }
@@ -474,7 +474,7 @@ struct ModelRowView: View {
                 // 直接打开本行的编辑 sheet
                 showEditSheet = true
             } label: {
-                Label("编辑", systemImage: "square.and.pencil")
+                Label(String(localized: "编辑"), systemImage: "square.and.pencil")
             }
             .tint(Color(.hlBlue))
         }

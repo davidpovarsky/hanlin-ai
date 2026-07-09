@@ -34,7 +34,7 @@ struct UserInfoView: View {
                         .foregroundColor(.hlBluefont)
                         .padding()
                     
-                    Text("设定个性化内容，使得模型在对话时了解你的需求与偏好，更好的进行回复。")
+                    Text(String(localized: "设定个性化内容，使得模型在对话时了解你的需求与偏好，更好的进行回复。"))
                         .font(.footnote)
                         .multilineTextAlignment(.center)
                         .padding(.bottom)
@@ -42,41 +42,41 @@ struct UserInfoView: View {
                 .frame(maxWidth: .infinity, alignment: .center)
             }
             
-            Section(header: Text("模型应该怎么称呼你？")) {
-                TextField("请输入你的昵称", text: $name)
+            Section(header: Text(String(localized: "模型应该怎么称呼你？"))) {
+                TextField(String(localized: "请输入你的昵称"), text: $name)
             }
 
-            Section(header: Text("做一段自我介绍吧！")) {
+            Section(header: Text(String(localized: "做一段自我介绍吧！"))) {
                 TextEditor(text: $userInfo)
                     .frame(height: 100)
             }
 
-            Section(header: Text("模型需要注意什么？")) {
+            Section(header: Text(String(localized: "模型需要注意什么？"))) {
                 TextEditor(text: $userRequirements)
                     .frame(height: 160)
             }
 
-            Section(header: Text("注意：用户信息的设置会让模型的回复更符合你的习惯，但是会消耗更多的tokens。")) {
-                Button("保存") {
+            Section(header: Text(String(localized: "注意：用户信息的设置会让模型的回复更符合你的习惯，但是会消耗更多的tokens。"))) {
+                Button(String(localized: "保存")) {
                     saveUserInfo()
                 }
             }
         }
-        .navigationTitle("用户信息")
+        .navigationTitle(String(localized: "用户信息"))
         .onAppear {
             loadUserInfo()
         }
         // 弹窗反馈
-        .alert("保存成功", isPresented: $showToast) {
-            Button("确定", role: .cancel) { }
+        .alert(String(localized: "保存成功"), isPresented: $showToast) {
+            Button(String(localized: "确定"), role: .cancel) { }
         } message: {
-            Text("您的用户信息已成功更新。")
+            Text(String(localized: "您的用户信息已成功更新。"))
         }
         // 弹窗反馈
-        .alert("保存失败", isPresented: $showToast) {
-            Button("确定", role: .cancel) { }
+        .alert(String(localized: "保存失败"), isPresented: $showToast) {
+            Button(String(localized: "确定"), role: .cancel) { }
         } message: {
-            Text("您的用户信息更新失败！")
+            Text(String(localized: "您的用户信息更新失败！"))
         }
     }
 
@@ -122,13 +122,13 @@ struct FeedBackView: View {
     var body: some View {
         Form {
             Section {
-                Toggle("文本内容生成反馈", isOn: Binding(
+                Toggle(String(localized: "文本内容生成反馈"), isOn: Binding(
                     get: { outPutFeedBack },
                     set: { outPutFeedBack = $0 }))
                 .tint(.hlBlue)
             }
         }
-        .navigationTitle("触感反馈")
+        .navigationTitle(String(localized: "触感反馈"))
         .onAppear {
             loadUserInfo()
         }
@@ -198,17 +198,17 @@ struct VersionInfoView: View {
                     .frame(width: 200)
                     .background(Color.gray.opacity(0.5))
                 
-                Text("软件含有AI生成信息，请注意鉴别")
+                Text(String(localized: "软件含有AI生成信息，请注意鉴别"))
                     .font(.footnote)
                     .foregroundColor(.secondary)
                     .multilineTextAlignment(.center)
                 
-                Text("本软件对生成结果不负有任何责任")
+                Text(String(localized: "本软件对生成结果不负有任何责任"))
                     .font(.footnote)
                     .foregroundColor(.secondary)
                     .multilineTextAlignment(.center)
                 
-                Text("感谢您使用 Hylic.AI")
+                Text(String(localized: "感谢您使用 Hylic.AI"))
                     .font(.footnote)
                     .foregroundColor(.secondary)
                     .multilineTextAlignment(.center)
@@ -216,18 +216,18 @@ struct VersionInfoView: View {
                 Spacer()
                 
                 VStack(spacing: 8) {
-                    Text("项目创建于2025年2月·新加坡")
+                    Text(String(localized: "项目创建于2025年2月·新加坡"))
                         .font(.footnote)
                         .foregroundColor(.secondary)
                     
-                    Text("© 2026 Hylic.AI 保留所有权利")
+                    Text(String(localized: "© 2026 Hylic.AI 保留所有权利"))
                         .font(.footnote)
                         .foregroundColor(.secondary)
                 }
             }
             .padding()
         }
-        .navigationTitle("软件信息")
+        .navigationTitle(String(localized: "软件信息"))
         .navigationBarTitleDisplayMode(.inline)
     }
     
@@ -267,14 +267,14 @@ struct SelectEmbeddingModelView: View {
                         .foregroundColor(.hlBluefont)
                         .padding()
                     
-                    Text("向量模型将被用于知识背包文档索引的构建与知识背包查找功能，优秀的向量模型能带来精确、全面的查找效果，提高信息的召回率。")
+                    Text(String(localized: "向量模型将被用于知识背包文档索引的构建与知识背包查找功能，优秀的向量模型能带来精确、全面的查找效果，提高信息的召回率。"))
                         .font(.footnote)
                         .multilineTextAlignment(.center)
                         .padding(.bottom)
                 }
                 .frame(maxWidth: .infinity, alignment: .center)
             }
-            Section(header: Text("选择向量模型（仅启用一个）")) {
+            Section(header: Text(String(localized: "选择向量模型（仅启用一个）"))) {
                 ForEach(models, id: \.name) { model in
                     HStack {
                         
@@ -295,7 +295,7 @@ struct SelectEmbeddingModelView: View {
                                     .font(.caption)
                                     .foregroundColor(.orange)
                             } else {
-                                Text("免费")
+                                Text(String(localized: "免费"))
                                     .font(.caption)
                                     .foregroundColor(.green)
                             }
@@ -322,9 +322,9 @@ struct SelectEmbeddingModelView: View {
                 }
             }
         }
-        .navigationTitle("向量模型")
+        .navigationTitle(String(localized: "向量模型"))
         .alert(errorMessage, isPresented: $showError) {
-            Button("确定", role: .cancel) { }
+            Button(String(localized: "确定"), role: .cancel) { }
         }
     }
     
@@ -402,7 +402,7 @@ struct SelectTTSModelView: View {
                         .foregroundColor(.hlBluefont)
                         .padding()
                     
-                    Text("语音模型将用于合成语音。选择 Siri 模型可使用本地合成，而选择大模型合成将通过 API 请求生成语音，后者需要配置有效的 API Key。")
+                    Text(String(localized: "语音模型将用于合成语音。选择 Siri 模型可使用本地合成，而选择大模型合成将通过 API 请求生成语音，后者需要配置有效的 API Key。"))
                         .font(.footnote)
                         .multilineTextAlignment(.center)
                         .padding(.bottom)
@@ -411,7 +411,7 @@ struct SelectTTSModelView: View {
             }
             
             // 列表选择区域
-            Section(header: Text("选择语音模型（仅启用一个）")) {
+            Section(header: Text(String(localized: "选择语音模型（仅启用一个）"))) {
                 ForEach(models, id: \.name) { model in
                     HStack {
                         
@@ -428,11 +428,11 @@ struct SelectTTSModelView: View {
                         
                         ScrollView(.horizontal, showsIndicators: false) {
                             if model.price > 0 {
-                                Text("¥\(String(format: "%.4f", model.price))/分钟")
+                                Text(String(format: String(localized: "¥%.4f/分钟"), model.price))
                                     .font(.caption)
                                     .foregroundColor(.orange)
                             } else {
-                                Text("免费")
+                                Text(String(localized: "免费"))
                                     .font(.caption)
                                     .foregroundColor(.green)
                             }
@@ -459,9 +459,9 @@ struct SelectTTSModelView: View {
                 }
             }
         }
-        .navigationTitle("语音模型")
+        .navigationTitle(String(localized: "语音模型"))
         .alert(errorMessage, isPresented: $showError) {
-            Button("确定", role: .cancel) { }
+            Button(String(localized: "确定"), role: .cancel) { }
         }
     }
     
@@ -549,7 +549,7 @@ struct UpdateNotesView: View {
                 .padding(.horizontal, 5)
             }
         }
-        .navigationTitle("更新说明")
+        .navigationTitle(String(localized: "更新说明"))
         .navigationBarTitleDisplayMode(.inline)
         .onAppear {
             loadUpdateNotes()
@@ -653,7 +653,7 @@ struct SoftwareIntroView: View {
                 .padding()
             }
         }
-        .navigationTitle("软件介绍")
+        .navigationTitle(String(localized: "软件介绍"))
         .navigationBarTitleDisplayMode(.inline)
     }
     
@@ -673,7 +673,7 @@ struct SoftwareIntroView: View {
                     .bold()
             }
             
-            Text("开启智能生活的次世代AI工作台")
+            Text(String(localized: "开启智能生活的次世代AI工作台"))
                 .font(.subheadline)
         }
         .padding(.top, 30)
@@ -704,12 +704,12 @@ struct SoftwareIntroView: View {
     @ViewBuilder
     private func betaInvitationView() -> some View {
         VStack(spacing: 10) {
-            Text("「群智秒启，AI随行」")
+            Text(String(localized: "「群智秒启，AI随行」"))
                 .font(.title3)
                 .bold()
                 .padding(.vertical)
             
-            Text("百位AI翰林待诏候旨，作为智能时代的掌玺者，您将在21世纪最澎湃的算力浪潮中，见证思维内阁呈递的万方策论。而你，21世纪最富期待的科技革命的亲历者，AI翰林院诚邀您检阅百模智囊团，在史无前例的认知盛宴中，谱写您那属于数字时代的新华章！")
+            Text(String(localized: "百位AI翰林待诏候旨，作为智能时代的掌玺者，您将在21世纪最澎湃的算力浪潮中，见证思维内阁呈递的万方策论。而你，21世纪最富期待的科技革命的亲历者，AI翰林院诚邀您检阅百模智囊团，在史无前例的认知盛宴中，谱写您那属于数字时代的新华章！"))
                 .font(.body)
                 .multilineTextAlignment(.leading)
         }
@@ -746,7 +746,7 @@ struct ContactUsView: View {
                     .frame(width: 120, height: 120)
                     .cornerRadius(20)
                 
-                Text("如果您有任何问题或建议，可以通过邮件联系我们。此外，我们有一个微信社群，如果您感兴趣您可以邮件联系我，我将邀请您加入社群。")
+                Text(String(localized: "如果您有任何问题或建议，可以通过邮件联系我们。此外，我们有一个微信社群，如果您感兴趣您可以邮件联系我，我将邀请您加入社群。"))
                     .font(.body)
                     .foregroundColor(.secondary)
                     .multilineTextAlignment(.center)
@@ -762,7 +762,7 @@ struct ContactUsView: View {
                         .foregroundColor(.hlBluefont)
                         .contextMenu {
                             Button(action: copyEmailToClipboard) {
-                                Label("复制", systemImage: "doc.on.doc")
+                                Label(String(localized: "复制"), systemImage: "doc.on.doc")
                             }
                         }
                 }
@@ -778,7 +778,7 @@ struct ContactUsView: View {
                 }) {
                     HStack {
                         Image(systemName: "envelope.fill")
-                        Text("发送邮件")
+                        Text(String(localized: "发送邮件"))
                     }
                     .font(.headline)
                     .foregroundColor(.white)
@@ -795,10 +795,10 @@ struct ContactUsView: View {
             }
             .padding()
             .alert(isPresented: $showCopyAlert) {
-                Alert(title: Text("已复制"), message: Text("邮箱已复制到剪贴板"), dismissButton: .default(Text("确定")))
+                Alert(title: Text(String(localized: "已复制")), message: Text(String(localized: "邮箱已复制到剪贴板")), dismissButton: .default(Text(String(localized: "确定"))))
             }
         }
-        .navigationTitle("联系我们")
+        .navigationTitle(String(localized: "联系我们"))
         .navigationBarTitleDisplayMode(.inline)
     }
     
@@ -942,7 +942,7 @@ struct GeneralSettingsView: View {
                         .foregroundColor(.hlBluefont)
                         .padding()
 
-                    Text("通用设置包含语言和触感反馈等基础配置项。")
+                    Text(String(localized: "通用设置包含语言和触感反馈等基础配置项。"))
                         .font(.footnote)
                         .multilineTextAlignment(.center)
                         .padding(.bottom)
@@ -953,7 +953,7 @@ struct GeneralSettingsView: View {
             Section {
                 Button(action: openLanguageSettings) {
                     Label {
-                        Text("语言设置")
+                        Text(String(localized: "语言设置"))
                             .foregroundColor(.primary)
                     } icon: {
                         Image(systemName: "globe")
@@ -961,23 +961,23 @@ struct GeneralSettingsView: View {
                 }
 
                 NavigationLink(destination: FeedBackView().onAppear { isPushed = true }.onDisappear { isPushed = false }) {
-                    Label("触感反馈", systemImage: "iphone.gen3.radiowaves.left.and.right")
+                    Label(String(localized: "触感反馈"), systemImage: "iphone.gen3.radiowaves.left.and.right")
                 }
             }
 
-            Section(header: Text("发送栏")) {
+            Section(header: Text(String(localized: "发送栏"))) {
                 Picker(selection: $modelSelectorStyle) {
-                    Text("横向滑动").tag("scroll")
-                    Text("菜单选择").tag("menu")
+                    Text(String(localized: "横向滑动")).tag("scroll")
+                    Text(String(localized: "菜单选择")).tag("menu")
                 } label: {
-                    Label("模型显示方式", systemImage: "rectangle.stack")
+                    Label(String(localized: "模型显示方式"), systemImage: "rectangle.stack")
                 }
                 .onChange(of: modelSelectorStyle) {
                     saveModelSelectorStyle()
                 }
             }
         }
-        .navigationTitle("通用")
+        .navigationTitle(String(localized: "通用"))
         .onAppear {
             loadModelSelectorStyle()
         }
@@ -1057,7 +1057,7 @@ struct SelectOptimizationModelView: View {
     
     var body: some View {
         Form {
-            Section(header: Text("文本优化模型")) {
+            Section(header: Text(String(localized: "文本优化模型"))) {
                 
                 VStack(alignment: .center) {
                     Image(systemName: "paintbrush.pointed")
@@ -1066,14 +1066,14 @@ struct SelectOptimizationModelView: View {
                         .foregroundColor(.hlBluefont)
                         .padding()
                     
-                    Text("文本优化模型将被广泛用于软件的提示词优化、文章内容优化、联网搜索提问优化、知识背包检索优化、图片生成提示词优化、自动生成群聊标题、自动生成智能体设定、翻译文本等功能上，优秀的文本优化模型能带来更好的产品体验。")
+                    Text(String(localized: "文本优化模型将被广泛用于软件的提示词优化、文章内容优化、联网搜索提问优化、知识背包检索优化、图片生成提示词优化、自动生成群聊标题、自动生成智能体设定、翻译文本等功能上，优秀的文本优化模型能带来更好的产品体验。"))
                         .font(.footnote)
                         .multilineTextAlignment(.center)
                         .padding(.bottom)
                 }
                 .frame(maxWidth: .infinity, alignment: .center)
                 
-                Picker("选择文本优化模型", selection: $selectedTextModel) {
+                Picker(String(localized: "选择文本优化模型"), selection: $selectedTextModel) {
                     ForEach(textOptimizationModels, id: \.id) { model in
                         Text(model.displayName ?? "Unknown")
                             .tag(model as AllModels?)
@@ -1091,11 +1091,11 @@ struct SelectOptimizationModelView: View {
                             }
                             HStack {
                                 if model.supportsMultimodal {
-                                    Text("视觉")
+                                    Text(String(localized: "视觉"))
                                         .font(.caption)
                                         .foregroundColor(.teal)
                                 } else {
-                                    Text("文本")
+                                    Text(String(localized: "文本"))
                                         .font(.caption)
                                         .foregroundColor(.gray)
                                 }
@@ -1111,7 +1111,7 @@ struct SelectOptimizationModelView: View {
                 }
             }
             
-            Section(header: Text("视觉优化模型")) {
+            Section(header: Text(String(localized: "视觉优化模型"))) {
                 VStack(alignment: .center) {
                     Image(systemName: "paintbrush")
                         .font(.largeTitle)
@@ -1119,14 +1119,14 @@ struct SelectOptimizationModelView: View {
                         .foregroundColor(.hlBluefont)
                         .padding()
                     
-                    Text("视觉优化模型将被广泛用于软件的联网搜索提问优化、知识背包检索优化、图片生成提示词优化、OCR扫描文本、文本及推理模型分析图片等功能上，优秀的视觉优化模型能带来更好的产品体验。")
+                    Text(String(localized: "视觉优化模型将被广泛用于软件的联网搜索提问优化、知识背包检索优化、图片生成提示词优化、OCR扫描文本、文本及推理模型分析图片等功能上，优秀的视觉优化模型能带来更好的产品体验。"))
                         .font(.footnote)
                         .multilineTextAlignment(.center)
                         .padding(.bottom)
                 }
                 .frame(maxWidth: .infinity, alignment: .center)
                 
-                Picker("选择视觉优化模型", selection: $selectedVisualModel) {
+                Picker(String(localized: "选择视觉优化模型"), selection: $selectedVisualModel) {
                     ForEach(visualOptimizationModels, id: \.id) { model in
                         Text(model.displayName ?? "Unknown")
                             .tag(model as AllModels?)
@@ -1142,7 +1142,7 @@ struct SelectOptimizationModelView: View {
                                 Text(model.displayName ?? "Unknown")
                             }
                             HStack {
-                                Text("视觉")
+                                Text(String(localized: "视觉"))
                                     .font(.caption)
                                     .foregroundColor(.teal)
                                 
@@ -1157,7 +1157,7 @@ struct SelectOptimizationModelView: View {
                 }
             }
         }
-        .navigationTitle("优化模型")
+        .navigationTitle(String(localized: "优化模型"))
         .onAppear {
             // 从 UserInfo 中加载已保存的模型名称，并在当前模型列表中查找对应模型
             if let user = try? modelContext.fetch(FetchDescriptor<UserInfo>()).first {
@@ -1171,7 +1171,7 @@ struct SelectOptimizationModelView: View {
         }
         .toolbar {
             ToolbarItem(placement: .confirmationAction) {
-                Button("保存") {
+                Button(String(localized: "保存")) {
                     // 保存选择到 UserInfo 中
                     if let user = try? modelContext.fetch(FetchDescriptor<UserInfo>()).first {
                         user.optimizationTextModel = selectedTextModel?.name ?? user.optimizationTextModel
@@ -1185,16 +1185,16 @@ struct SelectOptimizationModelView: View {
             }
         }
         // 弹窗反馈
-        .alert("保存成功", isPresented: $showSaveSuccessAlert) {
-            Button("确定", role: .cancel) { }
+        .alert(String(localized: "保存成功"), isPresented: $showSaveSuccessAlert) {
+            Button(String(localized: "确定"), role: .cancel) { }
         } message: {
-            Text("您的优化模型已成功更新。")
+            Text(String(localized: "您的优化模型已成功更新。"))
         }
         // 弹窗反馈
-        .alert("保存失败", isPresented: $showSaveErrorAlert) {
-            Button("确定", role: .cancel) { }
+        .alert(String(localized: "保存失败"), isPresented: $showSaveErrorAlert) {
+            Button(String(localized: "确定"), role: .cancel) { }
         } message: {
-            Text("您的优化模型更新失败！")
+            Text(String(localized: "您的优化模型更新失败！"))
         }
     }
 }
