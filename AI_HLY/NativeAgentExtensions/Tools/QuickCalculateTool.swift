@@ -36,7 +36,8 @@ struct QuickCalculateTool: NativeTool {
         do {
             let arguments = try NativeToolJSON.dictionary(from: argumentsJSON)
             let expression = try NativeToolJSON.requiredString(arguments, "expression")
-            let value = try NativeExpressionEvaluator(expression: expression).parse()
+            var evaluator = NativeExpressionEvaluator(expression: expression)
+            let value = try evaluator.parse()
             let formatted = Self.format(value)
 
             let block = NativeUIBlock(
