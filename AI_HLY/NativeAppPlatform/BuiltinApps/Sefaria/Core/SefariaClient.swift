@@ -3,7 +3,7 @@ import Foundation
 struct SefariaClient {
     var baseURL = URL(string: "https://www.sefaria.org")!
 
-    func search(query: String, limit: Int) async throws -> [SefariaSearchResult] {
+    func search(query: String, limit: Int) async throws -> [NativeAppSefariaSearchResult] {
         var components = URLComponents(url: baseURL.appendingPathComponent("api/search-wrapper"), resolvingAgainstBaseURL: false)!
         components.queryItems = [
             URLQueryItem(name: "query", value: query),
@@ -31,7 +31,7 @@ struct SefariaClient {
                 ?? (hit["snippet"] as? String)
                 ?? ""
 
-            return SefariaSearchResult(
+            return NativeAppSefariaSearchResult(
                 ref: ref,
                 title: source["title"] as? String ?? ref,
                 snippet: snippet.replacingOccurrences(of: "<[^>]+>", with: "", options: .regularExpression),
@@ -40,7 +40,7 @@ struct SefariaClient {
         }
     }
 
-    func source(ref: String) async throws -> SefariaSource {
+    func source(ref: String) async throws -> NativeAppSefariaSource {
         let encodedRef = ref.replacingOccurrences(of: " ", with: "_").addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ref
         var components = URLComponents(url: baseURL.appendingPathComponent("api/texts/\(encodedRef)"), resolvingAgainstBaseURL: false)!
         components.queryItems = [URLQueryItem(name: "context", value: "0")]
@@ -51,7 +51,7 @@ struct SefariaClient {
         let text = Self.flattenText(json["text"]) ?? ""
         let heText = Self.flattenText(json["he"])
         let normalizedRef = json["ref"] as? String ?? ref
-        return SefariaSource(
+        return NativeAppSefariaSource(
             ref: normalizedRef,
             text: text,
             heText: heText,

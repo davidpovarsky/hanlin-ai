@@ -2,11 +2,11 @@ import SwiftUI
 
 struct SefariaRootView: View {
     let searchService: SefariaSearchService
-    let sourceService: SefariaSourceService
+    let sourceService: NativeAppSefariaSourceService
     let context: NativeAppContext
 
     @State private var query = ""
-    @State private var results: [SefariaSearchResult] = []
+    @State private var results: [NativeAppSefariaSearchResult] = []
     @State private var isLoading = false
     @State private var errorMessage: String?
 
@@ -35,7 +35,7 @@ struct SefariaRootView: View {
             Section("Results") {
                 ForEach(results) { result in
                     NavigationLink {
-                        SefariaSourceLoaderView(result: result, sourceService: sourceService)
+                        NativeAppSefariaSourceLoaderView(result: result, sourceService: sourceService)
                     } label: {
                         VStack(alignment: .leading, spacing: 4) {
                             Text(result.title).font(.headline)
@@ -65,16 +65,16 @@ struct SefariaRootView: View {
     }
 }
 
-private struct SefariaSourceLoaderView: View {
-    let result: SefariaSearchResult
-    let sourceService: SefariaSourceService
-    @State private var source: SefariaSource?
+private struct NativeAppSefariaSourceLoaderView: View {
+    let result: NativeAppSefariaSearchResult
+    let sourceService: NativeAppSefariaSourceService
+    @State private var source: NativeAppSefariaSource?
     @State private var errorMessage: String?
 
     var body: some View {
         Group {
             if let source {
-                SefariaSourceCard(source: source, mode: .fullApp)
+                NativeAppSefariaSourceCard(source: source, mode: .fullApp)
                     .padding()
             } else if let errorMessage {
                 VStack(spacing: 12) {

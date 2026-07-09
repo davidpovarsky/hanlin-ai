@@ -2,11 +2,11 @@ import SwiftUI
 
 struct WikipediaRootView: View {
     let searchService: WikipediaSearchService
-    let summaryService: WikipediaSummaryService
+    let summaryService: NativeAppWikipediaSummaryService
     let context: NativeAppContext
 
     @State private var query = ""
-    @State private var results: [WikipediaSearchResult] = []
+    @State private var results: [NativeAppWikipediaSearchResult] = []
     @State private var isLoading = false
     @State private var errorMessage: String?
 
@@ -28,7 +28,7 @@ struct WikipediaRootView: View {
             Section("Results") {
                 ForEach(results) { result in
                     NavigationLink {
-                        WikipediaSummaryLoaderView(title: result.title, summaryService: summaryService)
+                        NativeAppWikipediaSummaryLoaderView(title: result.title, summaryService: summaryService)
                     } label: {
                         VStack(alignment: .leading, spacing: 4) {
                             Text(result.title).font(.headline)
@@ -55,16 +55,16 @@ struct WikipediaRootView: View {
     }
 }
 
-private struct WikipediaSummaryLoaderView: View {
+private struct NativeAppWikipediaSummaryLoaderView: View {
     let title: String
-    let summaryService: WikipediaSummaryService
-    @State private var summary: WikipediaSummary?
+    let summaryService: NativeAppWikipediaSummaryService
+    @State private var summary: NativeAppWikipediaSummary?
     @State private var errorMessage: String?
 
     var body: some View {
         Group {
             if let summary {
-                WikipediaSummaryCard(summary: summary, mode: .fullApp).padding()
+                NativeAppWikipediaSummaryCard(summary: summary, mode: .fullApp).padding()
             } else if let errorMessage {
                 VStack(spacing: 12) {
                     Image(systemName: "exclamationmark.triangle")

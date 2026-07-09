@@ -10,8 +10,8 @@ enum SefariaExports {
         SefariaSearchService(client: client())
     }
 
-    static func sourceService() -> SefariaSourceService {
-        SefariaSourceService(client: client())
+    static func sourceService() -> NativeAppSefariaSourceService {
+        NativeAppSefariaSourceService(client: client())
     }
 
     static func rootView(context: NativeAppContext) -> AnyView {
@@ -31,7 +31,7 @@ enum SefariaExports {
         ]
     }
 
-    static func sourceCard(source: SefariaSource, mode: NativePresentationMode) -> AnyView {
-        AnyView(SefariaSourceCard(source: source, mode: mode))
+    static func sourceCard(source: NativeAppSefariaSource, mode: NativePresentationMode) -> AnyView {
+        AnyView(NativeAppSefariaSourceCard(source: source, mode: mode))
     }
 }

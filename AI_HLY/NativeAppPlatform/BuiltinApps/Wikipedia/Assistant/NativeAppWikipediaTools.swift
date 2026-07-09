@@ -50,7 +50,7 @@ struct NativeAppWikipediaSearchTool: NativeTool {
 }
 
 struct NativeAppWikipediaSummaryTool: NativeTool {
-    let service: WikipediaSummaryService
+    let service: NativeAppWikipediaSummaryService
     let name = "app_wikipedia_summary"
 
     var catalogEntry: NativeToolCatalogEntry {

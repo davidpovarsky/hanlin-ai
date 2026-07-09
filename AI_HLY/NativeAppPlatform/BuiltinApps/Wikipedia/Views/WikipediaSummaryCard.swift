@@ -1,7 +1,7 @@
 import SwiftUI
 
-struct WikipediaSummaryCard: View {
-    let summary: WikipediaSummary
+struct NativeAppWikipediaSummaryCard: View {
+    let summary: NativeAppWikipediaSummary
     let mode: NativePresentationMode
 
     var body: some View {

@@ -5,7 +5,7 @@ struct WikipediaClient {
 
     private var apiBaseURL: URL { URL(string: "https://\(languageCode).wikipedia.org")! }
 
-    func search(query: String, limit: Int) async throws -> [WikipediaSearchResult] {
+    func search(query: String, limit: Int) async throws -> [NativeAppWikipediaSearchResult] {
         var components = URLComponents(url: apiBaseURL.appendingPathComponent("w/api.php"), resolvingAgainstBaseURL: false)!
         components.queryItems = [
             URLQueryItem(name: "action", value: "opensearch"),
@@ -21,7 +21,7 @@ struct WikipediaClient {
         let descriptions = array[2] as? [String] ?? []
         let urls = array[3] as? [String] ?? []
         return titles.enumerated().map { index, title in
-            WikipediaSearchResult(
+            NativeAppWikipediaSearchResult(
                 title: title,
                 description: descriptions.indices.contains(index) ? descriptions[index] : "",
                 url: urls.indices.contains(index) ? URL(string: urls[index]) : nil
@@ -29,7 +29,7 @@ struct WikipediaClient {
         }
     }
 
-    func summary(title: String) async throws -> WikipediaSummary {
+    func summary(title: String) async throws -> NativeAppWikipediaSummary {
         let encodedTitle = title.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? title
         let url = apiBaseURL.appendingPathComponent("api/rest_v1/page/summary/\(encodedTitle)")
         let (data, _) = try await URLSession.shared.data(from: url)
@@ -37,7 +37,7 @@ struct WikipediaClient {
         let contentURLs = json["content_urls"] as? [String: Any]
         let desktop = contentURLs?["desktop"] as? [String: Any]
         let thumbnail = json["thumbnail"] as? [String: Any]
-        return WikipediaSummary(
+        return NativeAppWikipediaSummary(
             title: json["title"] as? String ?? title,
             extract: json["extract"] as? String ?? "",
             description: json["description"] as? String,

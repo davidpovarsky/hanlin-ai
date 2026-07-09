@@ -1,13 +1,13 @@
 import Foundation
 
-struct WikipediaSearchResult: Identifiable, Hashable, Codable {
+struct NativeAppWikipediaSearchResult: Identifiable, Hashable, Codable {
     var id: String { title }
     let title: String
     let description: String
     let url: URL?
 }
 
-struct WikipediaSummary: Identifiable, Hashable, Codable {
+struct NativeAppWikipediaSummary: Identifiable, Hashable, Codable {
     var id: String { title }
     let title: String
     let extract: String

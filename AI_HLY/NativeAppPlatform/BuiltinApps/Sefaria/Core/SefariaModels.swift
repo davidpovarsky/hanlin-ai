@@ -1,6 +1,6 @@
 import Foundation
 
-struct SefariaSearchResult: Identifiable, Hashable, Codable {
+struct NativeAppSefariaSearchResult: Identifiable, Hashable, Codable {
     var id: String { ref }
     let ref: String
     let title: String
@@ -8,7 +8,7 @@ struct SefariaSearchResult: Identifiable, Hashable, Codable {
     let url: URL?
 }
 
-struct SefariaSource: Identifiable, Hashable, Codable {
+struct NativeAppSefariaSource: Identifiable, Hashable, Codable {
     var id: String { ref }
     let ref: String
     let text: String

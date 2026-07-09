@@ -68,7 +68,7 @@ struct NativeAppSefariaSearchTool: NativeTool {
 }
 
 struct NativeAppSefariaSourceTool: NativeTool {
-    let service: SefariaSourceService
+    let service: NativeAppSefariaSourceService
     let name = "app_sefaria_get_source"
 
     var catalogEntry: NativeToolCatalogEntry {

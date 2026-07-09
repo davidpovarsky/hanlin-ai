@@ -1,7 +1,7 @@
 import SwiftUI
 
-struct SefariaSourceCard: View {
-    let source: SefariaSource
+struct NativeAppSefariaSourceCard: View {
+    let source: NativeAppSefariaSource
     let mode: NativePresentationMode
 
     var body: some View {
