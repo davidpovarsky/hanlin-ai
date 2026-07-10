@@ -4,6 +4,7 @@ import SwiftUI
 
 typealias NativeOpenURLAction = @MainActor (URL) -> Void
 
+@MainActor
 struct NativeAppContext {
     var localeIdentifier: String
     var modelContext: ModelContext?

@@ -21,12 +21,24 @@ struct NativeAppTextStudioService {
         for word in words.map({ $0.lowercased() }).filter({ $0.count > 2 }) {
             frequency[word, default: 0] += 1
         }
-        let topWords = frequency
-            .map { NativeAppTextStudioWordFrequency(word: $0.key, count: $0.value) }
-            .sorted { lhs, rhs in
-                lhs.count == rhs.count ? lhs.word < rhs.word : lhs.count > rhs.count
+        let frequencyItems: [NativeAppTextStudioWordFrequency] = frequency.map { entry in
+            NativeAppTextStudioWordFrequency(
+                word: entry.key,
+                count: entry.value
+            )
+        }
+
+        let sortedWords: [NativeAppTextStudioWordFrequency] = frequencyItems.sorted { lhs, rhs in
+            if lhs.count == rhs.count {
+                return lhs.word < rhs.word
             }
-            .prefix(8)
+
+            return lhs.count > rhs.count
+        }
+
+        let topWords: [NativeAppTextStudioWordFrequency] = Array(
+            sortedWords.prefix(8)
+        )
 
         return NativeAppTextStudioAnalysis(
             characters: text.count,
@@ -38,7 +50,7 @@ struct NativeAppTextStudioService {
             links: links,
             emails: emails,
             numbers: numbers,
-            topWords: Array(topWords)
+            topWords: topWords
         )
     }
 
