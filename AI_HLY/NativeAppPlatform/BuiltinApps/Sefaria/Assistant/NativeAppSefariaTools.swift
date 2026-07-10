@@ -1,14 +1,14 @@
 import Foundation
 
 struct NativeAppSefariaSearchTool: NativeTool {
-    let service: SefariaSearchService
+    let service: NativeAppSefariaSearchService
     let name = "app_sefaria_search"
 
     var catalogEntry: NativeToolCatalogEntry {
         NativeToolCatalogEntry(
             name: name,
             title: "Sefaria App Search",
-            summary: "Search Jewish texts through the Sefaria native app module.",
+            summary: "Search Jewish texts through the same Core service used by the full Sefaria mini app.",
             categories: ["knowledge", "jewish texts", "sefaria", "native app"],
             keywords: ["torah", "talmud", "tanakh", "halacha", "source", "מקור", "ספריא"],
             examples: ["Search Sefaria for hashavat aveidah", "Find a Jewish source about charity"]
@@ -18,11 +18,11 @@ struct NativeAppSefariaSearchTool: NativeTool {
     func openAIToolSchema() -> [String: Any] {
         NativeToolSchema.function(
             name: name,
-            description: "Search Sefaria Jewish texts using the compiled Sefaria native app module.",
+            description: "Search Sefaria Jewish texts using the compiled Sefaria native app Core.",
             parameters: NativeToolSchema.object(
                 properties: [
                     "query": NativeToolSchema.string(description: "Search query, reference, topic, or phrase."),
-                    "limit": NativeToolSchema.number(description: "Maximum results, 1-10.", minimum: 1, maximum: 10)
+                    "limit": NativeToolSchema.number(description: "Maximum results, 1-20.", minimum: 1, maximum: 20)
                 ],
                 required: ["query"]
             )
@@ -32,7 +32,7 @@ struct NativeAppSefariaSearchTool: NativeTool {
     func execute(argumentsJSON: String, context: NativeToolExecutionContext) async -> NativeToolResult {
         let object = NativeAppJSON.decodeObject(from: argumentsJSON)
         let query = NativeAppJSON.string(object, "query")
-        let limit = NativeAppJSON.int(object, "limit", default: 5)
+        let limit = max(1, min(NativeAppJSON.int(object, "limit", default: 5), 20))
         guard !query.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
             return NativeToolResult(modelText: "Missing Sefaria query.", uiBlocks: [NativeUIBlock(type: .error, title: "Missing query")])
         }
@@ -46,7 +46,8 @@ struct NativeAppSefariaSearchTool: NativeTool {
                     body: result.snippet,
                     url: result.url?.absoluteString,
                     actions: [
-                        NativeUIAction(type: .copyText, title: "Copy Ref", systemImage: "doc.on.doc", text: result.ref)
+                        NativeUIAction(type: .copyText, title: "Copy Ref", systemImage: "doc.on.doc", text: result.ref),
+                        NativeUIAction(type: .openURL, title: "Open", systemImage: "safari", url: result.url?.absoluteString)
                     ]
                 )
             }
@@ -75,7 +76,7 @@ struct NativeAppSefariaSourceTool: NativeTool {
         NativeToolCatalogEntry(
             name: name,
             title: "Sefaria App Source",
-            summary: "Open a Sefaria source reference using the Sefaria native app module.",
+            summary: "Load a Sefaria reference through the same Core service used by the full reader.",
             categories: ["knowledge", "jewish texts", "sefaria", "native app"],
             keywords: ["source", "reference", "passage", "מקור", "פסוק"],
             examples: ["Open Genesis 1:1", "Get Bava Metzia 21a"]
@@ -85,7 +86,7 @@ struct NativeAppSefariaSourceTool: NativeTool {
     func openAIToolSchema() -> [String: Any] {
         NativeToolSchema.function(
             name: name,
-            description: "Open a Sefaria reference and return text using the compiled Sefaria native app module.",
+            description: "Open a Sefaria reference and return text using the compiled Sefaria mini app Core.",
             parameters: NativeToolSchema.object(
                 properties: ["ref": NativeToolSchema.string(description: "Sefaria reference, e.g. Genesis 1:1 or Bava Metzia 21a.")],
                 required: ["ref"]
@@ -101,25 +102,27 @@ struct NativeAppSefariaSourceTool: NativeTool {
         }
         do {
             let source = try await service.source(ref: ref)
-            var body = source.text
-            if let heText = source.heText, !heText.isEmpty {
-                body += "\n\n" + heText
-            }
             return NativeToolResult(
-                modelText: "\(source.ref)\n\(body)",
+                modelText: "\(source.ref)\n\(source.combinedText)",
                 userText: source.ref,
                 uiBlocks: [
                     NativeUIBlock(
                         type: .source,
                         title: source.ref,
-                        body: body,
+                        body: source.combinedText,
                         url: source.url?.absoluteString,
-                        actions: [NativeUIAction(type: .copyText, title: "Copy Source", systemImage: "doc.on.doc", text: body)]
+                        actions: [
+                            NativeUIAction(type: .copyText, title: "Copy Source", systemImage: "doc.on.doc", text: source.combinedText),
+                            NativeUIAction(type: .openURL, title: "Open", systemImage: "safari", url: source.url?.absoluteString)
+                        ]
                     )
                 ]
             )
         } catch {
-            return NativeToolResult(modelText: "Sefaria source failed: \(error.localizedDescription)", uiBlocks: [NativeUIBlock(type: .error, title: "Sefaria source failed", body: error.localizedDescription)])
+            return NativeToolResult(
+                modelText: "Sefaria source failed: \(error.localizedDescription)",
+                uiBlocks: [NativeUIBlock(type: .error, title: "Sefaria source failed", body: error.localizedDescription)]
+            )
         }
     }
 }

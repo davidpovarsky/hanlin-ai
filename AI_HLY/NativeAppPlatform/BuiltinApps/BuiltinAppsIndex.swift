@@ -4,9 +4,9 @@ import Foundation
 enum BuiltinAppsIndex {
     static func modules() -> [NativeAppModule] {
         [
-            SefariaIndex.module(),
-            WikipediaIndex.module(),
-            TextToolkitIndex.module()
+            NativeAppSefariaIndex.module(),
+            NativeAppWikipediaIndex.module(),
+            NativeAppTextStudioIndex.module()
         ]
     }
 }

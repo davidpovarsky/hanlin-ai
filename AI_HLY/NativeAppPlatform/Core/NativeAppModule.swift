@@ -5,7 +5,7 @@ import SwiftUI
 protocol NativeAppModule {
     var manifest: NativeAppManifest { get }
 
-    /// Full, user-facing app screen shown in the Apps tab.
+    /// Full, user-facing app screen shown directly from the Apps grid.
     func makeRootView(context: NativeAppContext) -> AnyView
 
     /// Thin AI adapters. These must reuse the same Core services as the full app.

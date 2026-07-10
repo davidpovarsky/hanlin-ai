@@ -9,6 +9,8 @@ struct NativeAppManifest: Identifiable, Hashable, Codable {
     let category: NativeAppCategory
     let entryPoints: Set<NativeAppEntryPointKind>
     let requiredCapabilities: [String]
+    let keywords: [String]
+    let appearance: NativeAppAppearance
     let isExperimental: Bool
 
     init(
@@ -20,6 +22,8 @@ struct NativeAppManifest: Identifiable, Hashable, Codable {
         category: NativeAppCategory,
         entryPoints: Set<NativeAppEntryPointKind>,
         requiredCapabilities: [String] = [],
+        keywords: [String] = [],
+        appearance: NativeAppAppearance,
         isExperimental: Bool = false
     ) {
         self.id = id
@@ -30,6 +34,17 @@ struct NativeAppManifest: Identifiable, Hashable, Codable {
         self.category = category
         self.entryPoints = entryPoints
         self.requiredCapabilities = requiredCapabilities
+        self.keywords = keywords
+        self.appearance = appearance
         self.isExperimental = isExperimental
+    }
+
+    func matches(searchText: String) -> Bool {
+        let value = searchText.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
+        guard !value.isEmpty else { return true }
+        return ([title, subtitle, description, category.title] + keywords)
+            .joined(separator: " ")
+            .lowercased()
+            .contains(value)
     }
 }
