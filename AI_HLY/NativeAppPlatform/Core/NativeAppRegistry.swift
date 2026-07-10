@@ -31,12 +31,22 @@ final class NativeAppRegistry {
         return modulesByID[id]
     }
 
-    func allAssistantTools(context: NativeAppContext = NativeAppContext()) -> [NativeTool] {
+    func allAssistantTools() -> [NativeTool] {
+        let context = NativeAppContext()
+        return allAssistantTools(context: context)
+    }
+
+    func allAssistantTools(context: NativeAppContext) -> [NativeTool] {
         ensureBuiltinsRegistered()
         return allModules().flatMap { $0.assistantTools(context: context) }
     }
 
-    func allCapabilities(context: NativeAppContext = NativeAppContext()) -> [NativeCapabilityRequest] {
+    func allCapabilities() -> [NativeCapabilityRequest] {
+        let context = NativeAppContext()
+        return allCapabilities(context: context)
+    }
+
+    func allCapabilities(context: NativeAppContext) -> [NativeCapabilityRequest] {
         ensureBuiltinsRegistered()
         return allModules().flatMap { $0.capabilities(context: context) }
     }

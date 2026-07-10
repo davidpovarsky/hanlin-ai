@@ -15,12 +15,12 @@ struct NativeAppContext {
         localeIdentifier: String = Locale.current.identifier,
         modelContext: ModelContext? = nil,
         openURL: NativeOpenURLAction? = nil,
-        capabilityRegistry: NativeCapabilityRegistry = .shared
+        capabilityRegistry: NativeCapabilityRegistry? = nil
     ) {
         self.localeIdentifier = localeIdentifier
         self.modelContext = modelContext
         self.openURL = openURL
-        self.capabilityRegistry = capabilityRegistry
+        self.capabilityRegistry = capabilityRegistry ?? .shared
     }
 
     var isHebrew: Bool { localeIdentifier.hasPrefix("he") }
