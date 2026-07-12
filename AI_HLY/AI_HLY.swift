@@ -90,6 +90,20 @@ struct MyApp: App {
                     }
                 }
         }
+
+        WindowGroup("Mini App", for: NativeAppLaunchRequest.self) { $request in
+            if let request {
+                NativeAppSessionContainerView(request: request)
+                    .modelContainer(appDataManager.modelContainer)
+            } else {
+                ContentUnavailableView(
+                    "No App Selected",
+                    systemImage: "square.grid.2x2",
+                    description: Text("Choose a mini app from Hanlin.")
+                )
+                .modelContainer(appDataManager.modelContainer)
+            }
+        }
     }
 }
 

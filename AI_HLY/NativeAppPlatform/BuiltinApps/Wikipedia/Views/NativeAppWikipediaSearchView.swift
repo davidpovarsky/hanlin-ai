@@ -4,11 +4,13 @@ struct NativeAppWikipediaSearchView: View {
     let searchService: NativeAppWikipediaSearchService
     let summaryService: NativeAppWikipediaSummaryService
     @ObservedObject var store: NativeAppWikipediaStore
+    @Environment(\.nativeAppSession) private var nativeAppSession
 
     @State private var query: String
     @State private var results: [NativeAppWikipediaSearchResult] = []
     @State private var isLoading = false
     @State private var errorMessage: String?
+    @State private var searchTask: Task<Void, Never>?
 
     init(
         initialQuery: String = "",
@@ -27,11 +29,11 @@ struct NativeAppWikipediaSearchView: View {
             Section {
                 TextField("Search Wikipedia", text: $query)
                     .textInputAutocapitalization(.never)
-                    .onSubmit { Task { await search() } }
+                    .onSubmit { startSearch() }
 
                 HStack {
                     Button {
-                        Task { await search() }
+                        startSearch()
                     } label: {
                         Label("Search", systemImage: "magnifyingglass")
                     }
@@ -85,9 +87,21 @@ struct NativeAppWikipediaSearchView: View {
         .navigationTitle("Search")
         .task {
             if !query.isEmpty && results.isEmpty {
-                await search()
+                startSearch()
             }
         }
+        .onDisappear {
+            searchTask?.cancel()
+        }
+    }
+
+    private func startSearch() {
+        searchTask?.cancel()
+        let task = Task {
+            await search()
+        }
+        searchTask = task
+        nativeAppSession?.track(task)
     }
 
     @MainActor
@@ -99,12 +113,15 @@ struct NativeAppWikipediaSearchView: View {
         errorMessage = nil
         defer { isLoading = false }
         do {
-            results = try await searchService.search(
+            let newResults = try await searchService.search(
                 query: trimmed,
                 limit: 15,
                 languageCode: store.language.rawValue
             )
+            guard !Task.isCancelled else { return }
+            results = newResults
         } catch {
+            guard !Task.isCancelled else { return }
             results = []
             errorMessage = error.localizedDescription
         }

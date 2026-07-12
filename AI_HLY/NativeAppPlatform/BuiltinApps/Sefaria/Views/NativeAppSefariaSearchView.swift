@@ -4,11 +4,13 @@ struct NativeAppSefariaSearchView: View {
     let searchService: NativeAppSefariaSearchService
     let sourceService: NativeAppSefariaSourceService
     @ObservedObject var store: NativeAppSefariaStore
+    @Environment(\.nativeAppSession) private var nativeAppSession
 
     @State private var query: String
     @State private var results: [NativeAppSefariaSearchResult] = []
     @State private var isLoading = false
     @State private var errorMessage: String?
+    @State private var searchTask: Task<Void, Never>?
 
     init(
         initialQuery: String = "",
@@ -27,10 +29,10 @@ struct NativeAppSefariaSearchView: View {
             Section {
                 TextField("Reference, topic or phrase", text: $query)
                     .textInputAutocapitalization(.never)
-                    .onSubmit { Task { await search() } }
+                    .onSubmit { startSearch() }
 
                 Button {
-                    Task { await search() }
+                    startSearch()
                 } label: {
                     Label("Search Sefaria", systemImage: "magnifyingglass")
                 }
@@ -77,9 +79,21 @@ struct NativeAppSefariaSearchView: View {
         .navigationTitle("Search")
         .task {
             if !query.isEmpty && results.isEmpty {
-                await search()
+                startSearch()
             }
         }
+        .onDisappear {
+            searchTask?.cancel()
+        }
+    }
+
+    private func startSearch() {
+        searchTask?.cancel()
+        let task = Task {
+            await search()
+        }
+        searchTask = task
+        nativeAppSession?.track(task)
     }
 
     @MainActor
@@ -91,8 +105,11 @@ struct NativeAppSefariaSearchView: View {
         errorMessage = nil
         defer { isLoading = false }
         do {
-            results = try await searchService.search(query: trimmed, limit: 15)
+            let newResults = try await searchService.search(query: trimmed, limit: 15)
+            guard !Task.isCancelled else { return }
+            results = newResults
         } catch {
+            guard !Task.isCancelled else { return }
             results = []
             errorMessage = error.localizedDescription
         }
