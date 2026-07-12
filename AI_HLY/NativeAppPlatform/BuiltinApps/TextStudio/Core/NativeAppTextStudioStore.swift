@@ -4,18 +4,18 @@ import Combine
 @MainActor
 final class NativeAppTextStudioStore: ObservableObject {
     @Published var draft: String {
-        didSet { defaults.set(draft, forKey: draftKey) }
+        didSet { storage.setPersistentString(draft, forKey: draftKey) }
     }
     @Published private(set) var history: [NativeAppTextStudioHistoryItem]
 
-    private let defaults: UserDefaults
-    private let draftKey = "nativeapp.textstudio.draft"
-    private let historyKey = "nativeapp.textstudio.history"
+    private let storage: NativeAppStorageBroker
+    private let draftKey = "draft"
+    private let historyKey = "history"
 
-    init(defaults: UserDefaults = .standard) {
-        self.defaults = defaults
-        self.draft = defaults.string(forKey: draftKey) ?? ""
-        if let data = defaults.data(forKey: historyKey),
+    init(storage: NativeAppStorageBroker) {
+        self.storage = storage
+        self.draft = storage.persistentString(forKey: draftKey) ?? ""
+        if let data = storage.persistentData(forKey: historyKey),
            let decoded = try? JSONDecoder().decode([NativeAppTextStudioHistoryItem].self, from: data) {
             self.history = decoded
         } else {
@@ -31,7 +31,7 @@ final class NativeAppTextStudioStore: ObservableObject {
 
     func clearHistory() {
         history = []
-        defaults.removeObject(forKey: historyKey)
+        storage.removePersistentValue(forKey: historyKey)
     }
 
     func removeHistory(at offsets: IndexSet) {
@@ -43,7 +43,7 @@ final class NativeAppTextStudioStore: ObservableObject {
 
     private func persistHistory() {
         if let data = try? JSONEncoder().encode(history) {
-            defaults.set(data, forKey: historyKey)
+            storage.setPersistentData(data, forKey: historyKey)
         }
     }
 }

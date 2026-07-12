@@ -6,6 +6,7 @@ final class NativeAppSession: ObservableObject, Identifiable {
     let id: UUID
     let appID: String
     let presentationStyle: NativeAppPresentationStyle
+    let initialRoute: NativeAppRoute?
     let createdAt: Date
 
     @Published private(set) var isClosed = false
@@ -15,11 +16,13 @@ final class NativeAppSession: ObservableObject, Identifiable {
     init(
         id: UUID = UUID(),
         appID: String,
-        presentationStyle: NativeAppPresentationStyle
+        presentationStyle: NativeAppPresentationStyle,
+        initialRoute: NativeAppRoute? = nil
     ) {
         self.id = id
         self.appID = appID
         self.presentationStyle = presentationStyle
+        self.initialRoute = initialRoute
         self.createdAt = Date()
     }
 

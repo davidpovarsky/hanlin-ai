@@ -8,6 +8,8 @@ protocol NativeAppModule {
     /// Full, user-facing app screen shown directly from the Apps grid.
     func makeRootView(context: NativeAppContext) -> AnyView
 
+    func makeRootView(context: NativeAppContext, route: NativeAppRoute?) -> AnyView
+
     /// Thin AI adapters. These must reuse the same Core services as the full app.
     func assistantTools(context: NativeAppContext) -> [NativeTool]
 
@@ -19,6 +21,12 @@ protocol NativeAppModule {
 }
 
 extension NativeAppModule {
+    func makeRootView(context: NativeAppContext, route: NativeAppRoute?) -> AnyView {
+        var routedContext = context
+        routedContext.initialRoute = route ?? context.initialRoute
+        return makeRootView(context: routedContext)
+    }
+
     func assistantTools(context: NativeAppContext) -> [NativeTool] { [] }
     func chatCards(context: NativeAppContext) -> [NativeChatCardProvider] { [] }
     func capabilities(context: NativeAppContext) -> [NativeCapabilityRequest] { [] }

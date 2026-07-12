@@ -1,8 +1,8 @@
 import SwiftUI
-import UIKit
 
 struct NativeAppTextStudioEditorView: View {
     @ObservedObject var store: NativeAppTextStudioStore
+    let platform: NativeAppPlatformServices
 
     private let sample = "Hanlin Native Apps share one Core between the full app and Assistant tools. Visit https://example.com or email hello@example.com to test extraction."
 
@@ -17,7 +17,7 @@ struct NativeAppTextStudioEditorView: View {
 
             HStack {
                 Button("Paste") {
-                    store.draft = UIPasteboard.general.string ?? store.draft
+                    store.draft = platform.pasteboard.readString() ?? store.draft
                 }
                 Button("Sample") {
                     store.draft = sample
@@ -30,7 +30,7 @@ struct NativeAppTextStudioEditorView: View {
                     .font(.caption)
                     .foregroundStyle(.secondary)
                 Button {
-                    UIPasteboard.general.string = store.draft
+                    platform.pasteboard.writeString(store.draft)
                 } label: {
                     Image(systemName: "doc.on.doc")
                 }

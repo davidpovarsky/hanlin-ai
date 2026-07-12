@@ -49,7 +49,8 @@ struct NativeAppWikipediaSearchTool: NativeTool {
                     url: result.url?.absoluteString,
                     actions: [
                         NativeUIAction(type: .openURL, title: "Open", systemImage: "safari", url: result.url?.absoluteString),
-                        NativeUIAction(type: .copyText, title: "Copy Title", systemImage: "doc.on.doc", text: result.title)
+                        NativeUIAction(type: .copyText, title: "Copy Title", systemImage: "doc.on.doc", text: result.title),
+                        NativeUIAction(type: .openAppRoute, title: "Open in Wikipedia App", systemImage: "arrow.up.forward.app", route: .wikipediaArticle(title: result.title, languageCode: result.languageCode), presentationStyle: .fullScreen)
                     ]
                 )
             }
@@ -121,7 +122,8 @@ struct NativeAppWikipediaSummaryTool: NativeTool {
                         url: summary.url?.absoluteString,
                         actions: [
                             NativeUIAction(type: .openURL, title: "Open", systemImage: "safari", url: summary.url?.absoluteString),
-                            NativeUIAction(type: .copyText, title: "Copy Summary", systemImage: "doc.on.doc", text: summary.extract)
+                            NativeUIAction(type: .copyText, title: "Copy Summary", systemImage: "doc.on.doc", text: summary.extract),
+                            NativeUIAction(type: .openAppRoute, title: "Open in Wikipedia App", systemImage: "arrow.up.forward.app", route: .wikipediaArticle(title: summary.title, languageCode: language), presentationStyle: .fullScreen)
                         ]
                     )
                 ]

@@ -47,7 +47,8 @@ struct NativeAppSefariaSearchTool: NativeTool {
                     url: result.url?.absoluteString,
                     actions: [
                         NativeUIAction(type: .copyText, title: "Copy Ref", systemImage: "doc.on.doc", text: result.ref),
-                        NativeUIAction(type: .openURL, title: "Open", systemImage: "safari", url: result.url?.absoluteString)
+                        NativeUIAction(type: .openURL, title: "Open", systemImage: "safari", url: result.url?.absoluteString),
+                        NativeUIAction(type: .openAppRoute, title: "Open in Sefaria", systemImage: "arrow.up.forward.app", route: .sefariaSource(ref: result.ref), presentationStyle: .fullScreen)
                     ]
                 )
             }
@@ -113,7 +114,8 @@ struct NativeAppSefariaSourceTool: NativeTool {
                         url: source.url?.absoluteString,
                         actions: [
                             NativeUIAction(type: .copyText, title: "Copy Source", systemImage: "doc.on.doc", text: source.combinedText),
-                            NativeUIAction(type: .openURL, title: "Open", systemImage: "safari", url: source.url?.absoluteString)
+                            NativeUIAction(type: .openURL, title: "Open", systemImage: "safari", url: source.url?.absoluteString),
+                            NativeUIAction(type: .openAppRoute, title: "Open in Sefaria", systemImage: "arrow.up.forward.app", route: .sefariaSource(ref: source.ref), presentationStyle: .fullScreen)
                         ]
                     )
                 ]

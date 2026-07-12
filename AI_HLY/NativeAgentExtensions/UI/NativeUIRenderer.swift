@@ -11,16 +11,23 @@ import UIKit
 
 struct NativeUIRenderer: View {
     let blocks: [NativeUIBlock]
+    let onLaunchRequest: ((NativeAppLaunchRequest) -> Void)?
+
+    init(blocks: [NativeUIBlock], onLaunchRequest: ((NativeAppLaunchRequest) -> Void)? = nil) {
+        self.blocks = blocks
+        self.onLaunchRequest = onLaunchRequest
+    }
 
     var body: some View {
         ForEach(blocks) { block in
-            NativeUIBlockView(block: block)
+            NativeUIBlockView(block: block, onLaunchRequest: onLaunchRequest)
         }
     }
 }
 
 private struct NativeUIBlockView: View {
     let block: NativeUIBlock
+    let onLaunchRequest: ((NativeAppLaunchRequest) -> Void)?
 
     var body: some View {
         switch block.type {
@@ -32,17 +39,18 @@ private struct NativeUIBlockView: View {
         case .markdown:
             NativeMarkdownText(block.body ?? "")
         case .card, .source, .wikipediaSummary, .calculation, .error:
-            NativeCardView(block: block)
+            NativeCardView(block: block, onLaunchRequest: onLaunchRequest)
         case .searchResults:
-            NativeSearchResultsView(block: block)
+            NativeSearchResultsView(block: block, onLaunchRequest: onLaunchRequest)
         case .keyValueList:
-            NativeKeyValueListView(block: block)
+            NativeKeyValueListView(block: block, onLaunchRequest: onLaunchRequest)
         }
     }
 }
 
 private struct NativeCardView: View {
     let block: NativeUIBlock
+    let onLaunchRequest: ((NativeAppLaunchRequest) -> Void)?
 
     var body: some View {
         GroupBox {
@@ -57,13 +65,13 @@ private struct NativeCardView: View {
                     .textSelection(.enabled)
             }
             if !block.keyValues.isEmpty {
-                NativeKeyValueListView(block: block)
+                NativeKeyValueListView(block: block, onLaunchRequest: onLaunchRequest)
             }
             if !block.actions.isEmpty {
-                NativeActionControlGroup(actions: block.actions)
+                NativeActionControlGroup(actions: block.actions, onLaunchRequest: onLaunchRequest)
             }
             if !block.children.isEmpty {
-                NativeUIRenderer(blocks: block.children)
+                NativeUIRenderer(blocks: block.children, onLaunchRequest: onLaunchRequest)
             }
             if let footnote = block.footnote, !footnote.isEmpty {
                 Text(footnote)
@@ -100,6 +108,7 @@ private struct NativeCardView: View {
 
 private struct NativeSearchResultsView: View {
     let block: NativeUIBlock
+    let onLaunchRequest: ((NativeAppLaunchRequest) -> Void)?
 
     var body: some View {
         GroupBox {
@@ -115,7 +124,7 @@ private struct NativeSearchResultsView: View {
                         NativeMarkdownText(body)
                             .textSelection(.enabled)
                     }
-                    NativeActionControlGroup(actions: item.actions + defaultActions(for: item))
+                    NativeActionControlGroup(actions: item.actions + defaultActions(for: item), onLaunchRequest: onLaunchRequest)
                 } label: {
                     Label {
                         Text(item.title)
@@ -126,7 +135,7 @@ private struct NativeSearchResultsView: View {
                 }
             }
             if !block.actions.isEmpty {
-                NativeActionControlGroup(actions: block.actions)
+                NativeActionControlGroup(actions: block.actions, onLaunchRequest: onLaunchRequest)
             }
         } label: {
             Label(block.title ?? String(localized: "Search Results"), systemImage: block.systemImage ?? "magnifyingglass")
@@ -142,6 +151,7 @@ private struct NativeSearchResultsView: View {
 
 private struct NativeKeyValueListView: View {
     let block: NativeUIBlock
+    let onLaunchRequest: ((NativeAppLaunchRequest) -> Void)?
 
     var body: some View {
         GroupBox {
@@ -157,17 +167,21 @@ private struct NativeKeyValueListView: View {
                 Label(title, systemImage: block.systemImage ?? "list.bullet.rectangle")
             }
         }
+        if !block.actions.isEmpty {
+            NativeActionControlGroup(actions: block.actions, onLaunchRequest: onLaunchRequest)
+        }
     }
 }
 
 private struct NativeActionControlGroup: View {
     let actions: [NativeUIAction]
+    let onLaunchRequest: ((NativeAppLaunchRequest) -> Void)?
 
     var body: some View {
         if !actions.isEmpty {
             ControlGroup {
                 ForEach(actions) { action in
-                    NativeActionButton(action: action)
+                    NativeActionButton(action: action, onLaunchRequest: onLaunchRequest)
                 }
             }
             .controlGroupStyle(.automatic)
@@ -177,6 +191,7 @@ private struct NativeActionControlGroup: View {
 
 private struct NativeActionButton: View {
     let action: NativeUIAction
+    let onLaunchRequest: ((NativeAppLaunchRequest) -> Void)?
     @Environment(\.openURL) private var openURL
 
     var body: some View {
@@ -191,6 +206,7 @@ private struct NativeActionButton: View {
         switch action.type {
         case .openURL: return "arrow.up.right.square"
         case .copyText: return "doc.on.doc"
+        case .nativeAppAction, .openAppRoute: return "arrow.up.forward.app"
         }
     }
 
@@ -201,6 +217,25 @@ private struct NativeActionButton: View {
             openURL(url)
         case .copyText:
             UIPasteboard.general.string = action.text ?? action.url ?? ""
+        case .openAppRoute:
+            guard let route = action.route else { return }
+            onLaunchRequest?(NativeAppRouter().launchRequest(
+                route: route,
+                presentationStyle: action.presentationStyle ?? .fullScreen
+            ))
+        case .nativeAppAction:
+            guard let nativeAction = action.nativeAction else { return }
+            Task {
+                let platform = NativeAppPlatformServices.default(
+                    appID: nativeAction.appID ?? nativeAction.route?.appID,
+                    modelContext: nil,
+                    openURL: { url in openURL(url) },
+                    capabilityRegistry: .shared
+                )
+                if case .launchRequested(let request) = await platform.actionBus.perform(nativeAction) {
+                    onLaunchRequest?(request)
+                }
+            }
         }
     }
 }

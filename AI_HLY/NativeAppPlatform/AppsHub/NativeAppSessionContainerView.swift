@@ -16,7 +16,8 @@ struct NativeAppSessionContainerView: View {
             wrappedValue: NativeAppSession(
                 id: request.id,
                 appID: request.appID,
-                presentationStyle: request.presentationStyle
+                presentationStyle: request.presentationStyle,
+                initialRoute: request.initialRoute
             )
         )
     }
@@ -34,7 +35,7 @@ struct NativeAppSessionContainerView: View {
         Group {
             if let module = NativeAppRegistry.shared.module(id: request.appID) {
                 NavigationStack {
-                    module.makeRootView(context: context)
+                    module.makeRootView(context: context, route: request.initialRoute)
                         .toolbar {
                             ToolbarItem(placement: .topBarTrailing) {
                                 Button("Close") {

@@ -53,7 +53,18 @@ struct NativeAppTextStudioAnalyzeTool: NativeTool {
         return NativeToolResult(
             modelText: modelText,
             userText: "Analyzed \(analysis.words) word(s).",
-            uiBlocks: [NativeUIBlock(type: .keyValueList, title: "Text Analysis", keyValues: values)]
+            uiBlocks: [NativeUIBlock(
+                type: .keyValueList,
+                title: "Text Analysis",
+                keyValues: values,
+                actions: [NativeUIAction(
+                    type: .openAppRoute,
+                    title: "Continue in Text Studio",
+                    systemImage: "arrow.up.forward.app",
+                    route: .textStudioEditor(text: text),
+                    presentationStyle: .fullScreen
+                )]
+            )]
         )
     }
 }
@@ -108,7 +119,16 @@ struct NativeAppTextStudioTransformTool: NativeTool {
                     title: transform.title,
                     body: output,
                     systemImage: "wand.and.stars",
-                    actions: [NativeUIAction(type: .copyText, title: "Copy Result", systemImage: "doc.on.doc", text: output)]
+                    actions: [
+                        NativeUIAction(type: .copyText, title: "Copy Result", systemImage: "doc.on.doc", text: output),
+                        NativeUIAction(
+                            type: .openAppRoute,
+                            title: "Open Transform in Text Studio",
+                            systemImage: "arrow.up.forward.app",
+                            route: .textStudioTransform(text: output, transform: transform.rawValue),
+                            presentationStyle: .fullScreen
+                        )
+                    ]
                 )
             ]
         )

@@ -77,13 +77,6 @@ struct NativeAppDetailView: View {
                     }
                 }
 
-                Section {
-                    NavigationLink {
-                        module.makeRootView(context: context)
-                    } label: {
-                        Label("Open App", systemImage: "arrow.up.forward.app")
-                    }
-                }
             }
             .navigationTitle(module.manifest.title)
             .navigationBarTitleDisplayMode(.inline)

@@ -1,12 +1,26 @@
 import SwiftUI
-import UIKit
 
 struct NativeAppTextStudioTransformView: View {
     let service: NativeAppTextStudioService
     @ObservedObject var store: NativeAppTextStudioStore
+    let platform: NativeAppPlatformServices
+    let initialTransform: NativeAppTextStudioTransform?
 
-    @State private var transform: NativeAppTextStudioTransform = .trimWhitespace
+    @State private var transform: NativeAppTextStudioTransform
     @State private var output = ""
+
+    init(
+        service: NativeAppTextStudioService,
+        store: NativeAppTextStudioStore,
+        platform: NativeAppPlatformServices,
+        initialTransform: NativeAppTextStudioTransform? = nil
+    ) {
+        self.service = service
+        self.store = store
+        self.platform = platform
+        self.initialTransform = initialTransform
+        _transform = State(initialValue: initialTransform ?? .trimWhitespace)
+    }
 
     var body: some View {
         List {
@@ -41,12 +55,15 @@ struct NativeAppTextStudioTransformView: View {
                         store.draft = output
                     }
                     Button("Copy Result") {
-                        UIPasteboard.general.string = output
+                        platform.pasteboard.writeString(output)
                     }
                 }
             }
         }
         .navigationTitle("Transform")
+        .onChange(of: initialTransform, initial: true) { _, newValue in
+            if let newValue { transform = newValue }
+        }
     }
 
     private func runTransform() {

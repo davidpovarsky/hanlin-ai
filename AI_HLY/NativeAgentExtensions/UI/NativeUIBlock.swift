@@ -23,6 +23,8 @@ enum NativeUIBlockType: String, Codable, Hashable {
 enum NativeUIActionType: String, Codable, Hashable {
     case openURL
     case copyText
+    case nativeAppAction
+    case openAppRoute
 }
 
 struct NativeUIAction: Codable, Identifiable, Hashable {
@@ -32,6 +34,9 @@ struct NativeUIAction: Codable, Identifiable, Hashable {
     var systemImage: String?
     var url: String?
     var text: String?
+    var nativeAction: NativeAppAction?
+    var route: NativeAppRoute?
+    var presentationStyle: NativeAppPresentationStyle?
 
     init(
         id: String = UUID().uuidString,
@@ -39,7 +44,10 @@ struct NativeUIAction: Codable, Identifiable, Hashable {
         title: String,
         systemImage: String? = nil,
         url: String? = nil,
-        text: String? = nil
+        text: String? = nil,
+        nativeAction: NativeAppAction? = nil,
+        route: NativeAppRoute? = nil,
+        presentationStyle: NativeAppPresentationStyle? = nil
     ) {
         self.id = id
         self.type = type
@@ -47,6 +55,9 @@ struct NativeUIAction: Codable, Identifiable, Hashable {
         self.systemImage = systemImage
         self.url = url
         self.text = text
+        self.nativeAction = nativeAction
+        self.route = route
+        self.presentationStyle = presentationStyle
     }
 }
 

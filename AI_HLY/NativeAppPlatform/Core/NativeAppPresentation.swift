@@ -10,13 +10,13 @@ struct NativeAppLaunchRequest: Identifiable, Hashable, Codable {
     let id: UUID
     let appID: String
     let presentationStyle: NativeAppPresentationStyle
-    let initialRoute: String?
+    let initialRoute: NativeAppRoute?
 
     init(
         id: UUID = UUID(),
         appID: String,
         presentationStyle: NativeAppPresentationStyle,
-        initialRoute: String? = nil
+        initialRoute: NativeAppRoute? = nil
     ) {
         self.id = id
         self.appID = appID

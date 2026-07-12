@@ -116,12 +116,10 @@ struct NativeAppsHubView: View {
 
     private func launchRequest(
         for module: NativeAppModule,
-        style: NativeAppPresentationStyle
+        style: NativeAppPresentationStyle,
+        route: NativeAppRoute? = nil
     ) -> NativeAppLaunchRequest {
-        NativeAppLaunchRequest(
-            appID: module.manifest.id,
-            presentationStyle: style
-        )
+        NativeAppRouter().launchRequest(appID: module.manifest.id, presentationStyle: style, route: route)
     }
 
     private func openFullScreen(_ module: NativeAppModule) {
