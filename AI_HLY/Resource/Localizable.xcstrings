@@ -2,6 +2,160 @@
   "sourceLanguage" : "zh-Hans",
   "strings" : {
     "" : {},
+    "%lld more results" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "%lld more results" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "עוד %lld תוצאות" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "还有 %lld 个结果" } }
+      }
+    },
+    "Analyze Text" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Analyze Text" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "ניתוח טקסט" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "分析文本" } }
+      }
+    },
+    "Analyze, transform and continue working with text" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Analyze, transform and continue working with text" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "ניתוח, שינוי והמשך עבודה עם טקסט" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "分析、转换并继续处理文本" } }
+      }
+    },
+    "Apply a selected formatting transformation to text" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Apply a selected formatting transformation to text" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "החלת שינוי עיצוב נבחר על טקסט" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "对文本应用所选格式转换" } }
+      }
+    },
+    "Count and inspect text structure and extracted values" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Count and inspect text structure and extracted values" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "ספירה ובדיקת מבנה הטקסט והערכים שחולצו" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "统计并检查文本结构和提取值" } }
+      }
+    },
+    "Enable %@" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Enable %@" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "הפעלת %@" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "启用%@" } }
+      }
+    },
+    "Expand" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Expand" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "הרחבה" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "展开" } }
+      }
+    },
+    "Functions" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Functions" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "פונקציות" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "功能" } }
+      }
+    },
+    "Get Article Summary" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Get Article Summary" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "קבלת תקציר ערך" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "获取条目摘要" } }
+      }
+    },
+    "Get Source" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Get Source" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "קבלת מקור" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "获取原文" } }
+      }
+    },
+    "Load a concise summary for a Wikipedia article" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Load a concise summary for a Wikipedia article" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "טעינת תקציר קצר לערך ויקיפדיה" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "加载维基百科条目的简要摘要" } }
+      }
+    },
+    "Load exact Hebrew or English source text" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Load exact Hebrew or English source text" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "טעינת טקסט מקור מדויק בעברית או באנגלית" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "加载准确的希伯来语或英语原文" } }
+      }
+    },
+    "Search Articles" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Search Articles" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "חיפוש ערכים" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "搜索条目" } }
+      }
+    },
+    "Search articles and read encyclopedia summaries" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Search articles and read encyclopedia summaries" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "חיפוש ערכים וקריאת תקצירים אנציקלופדיים" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "搜索条目并阅读百科摘要" } }
+      }
+    },
+    "Search Texts" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Search Texts" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "חיפוש טקסטים" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "搜索文本" } }
+      }
+    },
+    "Search topics, phrases and references" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Search topics, phrases and references" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "חיפוש נושאים, ביטויים ומראי מקום" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "搜索主题、短语和引用" } }
+      }
+    },
+    "Search and read Jewish texts and sources" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Search and read Jewish texts and sources" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "חיפוש וקריאה של טקסטים ומקורות יהודיים" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "搜索和阅读犹太文本与来源" } }
+      }
+    },
+    "Search Wikipedia articles by title or topic" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Search Wikipedia articles by title or topic" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "חיפוש ערכי ויקיפדיה לפי כותרת או נושא" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "按标题或主题搜索维基百科条目" } }
+      }
+    },
+    "This app is disabled; function preferences are preserved" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "This app is disabled; function preferences are preserved" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "האפליקציה כבויה; העדפות הפונקציות נשמרות" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "此应用已停用；功能偏好将保留" } }
+      }
+    },
+    "This app's enabled functions are available to the model" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "This app's enabled functions are available to the model" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "הפונקציות הפעילות של האפליקציה זמינות למודל" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "此应用中启用的功能可供模型使用" } }
+      }
+    },
+    "Tool Result" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Tool Result" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "תוצאת כלי" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "工具结果" } }
+      }
+    },
+    "Transform Text" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Transform Text" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "שינוי טקסט" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "转换文本" } }
+      }
+    },
     "Assistant Tool" : {
       "localizations" : {
         "en" : { "stringUnit" : { "state" : "translated", "value" : "Assistant Tool" } },

@@ -20,6 +20,11 @@ enum NativeUIBlockType: String, Codable, Hashable {
     case error
 }
 
+enum NativeUIExpandedPresentation: String, Codable, Hashable {
+    case sheet
+    case fullScreen
+}
+
 enum NativeUIActionType: String, Codable, Hashable {
     case openURL
     case copyText
@@ -115,6 +120,10 @@ struct NativeUIBlock: Codable, Identifiable, Hashable {
     var keyValues: [NativeUIKeyValue]
     var actions: [NativeUIAction]
     var children: [NativeUIBlock]
+    var compactLineLimit: Int?
+    var compactItemLimit: Int?
+    var preferredExpandedPresentation: NativeUIExpandedPresentation?
+    var allowsExpansion: Bool?
 
     init(
         id: String = UUID().uuidString,
@@ -129,7 +138,11 @@ struct NativeUIBlock: Codable, Identifiable, Hashable {
         items: [NativeUIListItem] = [],
         keyValues: [NativeUIKeyValue] = [],
         actions: [NativeUIAction] = [],
-        children: [NativeUIBlock] = []
+        children: [NativeUIBlock] = [],
+        compactLineLimit: Int? = nil,
+        compactItemLimit: Int? = nil,
+        preferredExpandedPresentation: NativeUIExpandedPresentation? = nil,
+        allowsExpansion: Bool? = nil
     ) {
         self.id = id
         self.type = type
@@ -144,6 +157,10 @@ struct NativeUIBlock: Codable, Identifiable, Hashable {
         self.keyValues = keyValues
         self.actions = actions
         self.children = children
+        self.compactLineLimit = compactLineLimit
+        self.compactItemLimit = compactItemLimit
+        self.preferredExpandedPresentation = preferredExpandedPresentation
+        self.allowsExpansion = allowsExpansion
     }
 }
 

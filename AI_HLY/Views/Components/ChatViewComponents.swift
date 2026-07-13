@@ -69,6 +69,7 @@ struct LoadingGradientText: View {
 // MARK: - 组件化对话气泡
 struct ChatBubbleView: View {
     @Environment(\.modelContext) private var modelContext
+    @Environment(\.openWindow) private var openWindow
     let temporaryRecord: Bool
     let id: UUID
     let text: String               // 回复内容
@@ -137,6 +138,8 @@ struct ChatBubbleView: View {
     // 保存知识相关
     @State private var isKnowledgeWritingSheetPresented: Bool = false
     @State private var recordToWrite: KnowledgeRecords? = nil
+    @State private var nativeAppFullScreenRequest: NativeAppLaunchRequest?
+    @State private var nativeAppSheetRequest: NativeAppLaunchRequest?
     
     @ScaledMetric(relativeTo: .body) var size_5: CGFloat = 5
     @ScaledMetric(relativeTo: .body) var size_7: CGFloat = 7
@@ -255,12 +258,39 @@ struct ChatBubbleView: View {
             Text(String(localized: "确定要删除吗？删除后不可恢复！"))
                 .multilineTextAlignment(.leading)
         }
+        .sheet(item: $nativeAppSheetRequest) { request in
+            NativeAppSessionContainerView(request: request)
+                .presentationDetents([.large])
+                .presentationDragIndicator(.visible)
+        }
+        .fullScreenCover(item: $nativeAppFullScreenRequest) { request in
+            NativeAppSessionContainerView(request: request)
+        }
         .padding(.vertical, 2)
         .onAppear {
             translatedText = saveTranlatedText?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
             translated = !translatedText.isEmpty
         }
         .tint(temporaryRecord ? .primary : nil)
+    }
+
+    private func launchNativeApp(_ request: NativeAppLaunchRequest) {
+        NativeToolTraceLogger.shared.log(
+            "native_ui_app_route_requested",
+            [
+                "appID": request.appID,
+                "presentationStyle": request.presentationStyle.rawValue,
+                "hasInitialRoute": request.initialRoute != nil
+            ]
+        )
+        switch request.presentationStyle {
+        case .fullScreen:
+            nativeAppFullScreenRequest = request
+        case .largeSheet:
+            nativeAppSheetRequest = request
+        case .newWindow:
+            openWindow(value: request)
+        }
     }
 
     private var messageAlignment: HorizontalAlignment {
@@ -555,7 +585,11 @@ struct ChatBubbleView: View {
                 }
                 // Native UI
                 if !nativeUIBlocks.isEmpty {
-                    NativeUIRenderer(blocks: nativeUIBlocks)
+                    NativeUIToolResultContainer(
+                        blocks: nativeUIBlocks,
+                        temporaryRecord: temporaryRecord,
+                        onLaunchRequest: launchNativeApp
+                    )
                         .transition(.move(edge: .top).combined(with: .opacity))
                 }
                 // 底部按钮

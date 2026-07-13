@@ -6,7 +6,7 @@ struct NativeAppWikipediaAppModule: NativeAppModule {
         id: NativeAppWikipediaIndex.id,
         title: "Wikipedia",
         subtitle: "Explore, save and revisit knowledge",
-        description: "A multi-screen encyclopedia client with search, article pages, related results, saved articles, recent searches, language settings, chat cards and Assistant entry points.",
+        description: String(localized: "Search articles and read encyclopedia summaries"),
         systemImage: "globe.americas.fill",
         category: .knowledge,
         entryPoints: [.fullApp, .assistantTool, .chatCard],

@@ -7,8 +7,8 @@ struct NativeAppTextStudioAnalyzeTool: NativeTool {
     var catalogEntry: NativeToolCatalogEntry {
         NativeToolCatalogEntry(
             name: name,
-            title: String(localized: "Text Analyze"),
-            summary: "Analyze text using the same Core service as the Text Studio mini app.",
+            title: String(localized: "Analyze Text"),
+            summary: String(localized: "Count and inspect text structure and extracted values"),
             categories: ["text", "analysis", "native app"],
             keywords: ["word count", "sentences", "links", "emails", "numbers", "analyze"],
             examples: ["Analyze this text", "Count words and extract links"]
@@ -76,8 +76,8 @@ struct NativeAppTextStudioTransformTool: NativeTool {
     var catalogEntry: NativeToolCatalogEntry {
         NativeToolCatalogEntry(
             name: name,
-            title: String(localized: "Text Transform"),
-            summary: "Transform text using the same Core service as the Text Studio mini app.",
+            title: String(localized: "Transform Text"),
+            summary: String(localized: "Apply a selected formatting transformation to text"),
             categories: ["text", "formatting", "native app"],
             keywords: ["uppercase", "lowercase", "title case", "trim", "sort lines"],
             examples: ["Convert this to title case", "Trim whitespace from this text"]

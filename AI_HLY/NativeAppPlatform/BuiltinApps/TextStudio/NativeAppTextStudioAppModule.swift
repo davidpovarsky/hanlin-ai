@@ -6,7 +6,7 @@ struct NativeAppTextStudioAppModule: NativeAppModule {
         id: NativeAppTextStudioIndex.id,
         title: "Text Studio",
         subtitle: "Write, inspect, transform and keep history",
-        description: "A multi-screen text workspace with an editor, live analysis, transformations, before/after comparison, persistent history, clipboard actions, chat cards and Assistant entry points.",
+        description: String(localized: "Analyze, transform and continue working with text"),
         systemImage: "textformat.alt",
         category: .text,
         entryPoints: [.fullApp, .assistantTool, .chatCard],

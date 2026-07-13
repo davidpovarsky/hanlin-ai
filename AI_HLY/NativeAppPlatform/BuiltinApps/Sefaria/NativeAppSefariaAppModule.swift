@@ -6,7 +6,7 @@ struct NativeAppSefariaAppModule: NativeAppModule {
         id: NativeAppSefariaIndex.id,
         title: "Sefaria",
         subtitle: "Search, read, save and revisit sources",
-        description: "A multi-screen Jewish text reader with search, source pages, recent searches, saved sources, language preferences, chat cards and Assistant entry points.",
+        description: String(localized: "Search and read Jewish texts and sources"),
         systemImage: "books.vertical.fill",
         category: .knowledge,
         entryPoints: [.fullApp, .assistantTool, .chatCard],

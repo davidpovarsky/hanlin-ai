@@ -12,6 +12,7 @@ struct NativeAppManifest: Identifiable, Hashable, Codable {
     let keywords: [String]
     let appearance: NativeAppAppearance
     let isExperimental: Bool
+    let areAssistantToolsEnabledByDefault: Bool
 
     init(
         id: String,
@@ -24,7 +25,8 @@ struct NativeAppManifest: Identifiable, Hashable, Codable {
         requiredCapabilities: [String] = [],
         keywords: [String] = [],
         appearance: NativeAppAppearance,
-        isExperimental: Bool = false
+        isExperimental: Bool = false,
+        areAssistantToolsEnabledByDefault: Bool = true
     ) {
         self.id = id
         self.title = title
@@ -37,6 +39,7 @@ struct NativeAppManifest: Identifiable, Hashable, Codable {
         self.keywords = keywords
         self.appearance = appearance
         self.isExperimental = isExperimental
+        self.areAssistantToolsEnabledByDefault = areAssistantToolsEnabledByDefault
     }
 
     func matches(searchText: String) -> Bool {

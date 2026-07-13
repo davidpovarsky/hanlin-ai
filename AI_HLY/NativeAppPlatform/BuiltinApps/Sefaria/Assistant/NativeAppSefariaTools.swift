@@ -7,8 +7,8 @@ struct SefariaAssistantSearchTool: NativeTool {
     var catalogEntry: NativeToolCatalogEntry {
         NativeToolCatalogEntry(
             name: name,
-            title: String(localized: "Sefaria Search"),
-            summary: "Search Jewish texts through the same Core service used by the full Sefaria mini app.",
+            title: String(localized: "Search Texts"),
+            summary: String(localized: "Search topics, phrases and references"),
             categories: ["knowledge", "jewish texts", "sefaria", "native app"],
             keywords: ["torah", "talmud", "tanakh", "halacha", "source", "מקור", "ספריא"],
             examples: ["Search Sefaria for hashavat aveidah", "Find a Jewish source about charity"]
@@ -76,8 +76,8 @@ struct SefariaAssistantSourceTool: NativeTool {
     var catalogEntry: NativeToolCatalogEntry {
         NativeToolCatalogEntry(
             name: name,
-            title: String(localized: "Sefaria Source"),
-            summary: "Load a Sefaria reference through the same Core service used by the full reader.",
+            title: String(localized: "Get Source"),
+            summary: String(localized: "Load exact Hebrew or English source text"),
             categories: ["knowledge", "jewish texts", "sefaria", "native app"],
             keywords: ["source", "reference", "passage", "מקור", "פסוק"],
             examples: ["Open Genesis 1:1", "Get Bava Metzia 21a"]

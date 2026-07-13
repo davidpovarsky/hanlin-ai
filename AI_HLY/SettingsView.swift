@@ -15,7 +15,7 @@ struct SettingsView: View {
     @State private var isPushed: Bool = false  // 监听是否进入子页面
     @State private var showSafariGuide: Bool = false
     @State private var showSafariCost: Bool = false
-    @State private var nativeToolSettingsEntries: [NativeToolCatalogEntry] = []
+    @State private var nativeAssistantToolGroups: [NativeAssistantToolGroup] = []
     
     @Query var apiKeys: [APIKeys]
     @Query var searchKeys: [SearchKeys]
@@ -121,14 +121,14 @@ struct SettingsView: View {
                     NavigationLink(destination: CodeSettingView().onAppear { isPushed = true }.onDisappear { isPushed = false }.toolbar(.hidden, for: .tabBar)) {
                         Label(String(localized: "代码执行"), systemImage: "apple.terminal")
                     }
-                    ForEach(nativeToolSettingsEntries) { entry in
+                    ForEach(nativeAssistantToolGroups) { group in
                         NavigationLink {
-                            AssistantToolDetailSettingsView(toolName: entry.name)
+                            NativeAssistantToolGroupSettingsView(groupID: group.id)
                                 .onAppear { isPushed = true }
                                 .onDisappear { isPushed = false }
                                 .toolbar(.hidden, for: .tabBar)
                         } label: {
-                            NativeAssistantToolSettingsRow(entry: entry)
+                            Label(group.title, systemImage: group.systemImage)
                         }
                     }
                 }
@@ -176,12 +176,18 @@ struct SettingsView: View {
             }
             .navigationTitle(String(localized: "设置"))
             .onAppear {
-                nativeToolSettingsEntries = NativeToolCatalog.shared.settingsEntries()
+                nativeAssistantToolGroups = NativeToolCatalog.shared.settingsGroups()
                 NativeToolTraceLogger.shared.log(
-                    "native_app_tools_shown_in_settings",
+                    "native_assistant_tool_groups_shown_in_settings",
                     [
-                        "toolCount": nativeToolSettingsEntries.count,
-                        "toolNames": nativeToolSettingsEntries.map(\.name)
+                        "groupCount": nativeAssistantToolGroups.count,
+                        "groupIDs": nativeAssistantToolGroups.map(\.id),
+                        "toolsByGroup": nativeAssistantToolGroups.map {
+                            "\($0.id):\($0.toolEntries.map(\.name).joined(separator: ","))"
+                        },
+                        "groupStates": nativeAssistantToolGroups.map {
+                            "\($0.id):\(NativeToolCatalog.shared.isGroupEnabled($0))"
+                        }
                     ]
                 )
             }
