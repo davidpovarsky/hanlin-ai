@@ -108,6 +108,12 @@ final class NativeToolCatalog {
         return toolsByName.values.map(\.entry).sorted { $0.name < $1.name }
     }
 
+    func settingsEntries() -> [NativeToolCatalogEntry] {
+        allEntries().filter { entry in
+            entry.sourceAppID != nil && entry.isVisibleInSettings
+        }
+    }
+
     func schemasForEnabledTools() -> [[String: Any]] {
         ensureBuiltinsRegistered()
         let registrations = toolsByName.values.sorted { $0.entry.name < $1.entry.name }

@@ -24,6 +24,18 @@ struct NativeAppSefariaSearchResult: Identifiable, Hashable, Codable {
     let url: URL?
 }
 
+struct NativeAppSefariaNameResolution: Hashable {
+    let resolvedRef: String?
+    let completions: [NativeAppSefariaNameCompletion]
+}
+
+struct NativeAppSefariaNameCompletion: Hashable {
+    let title: String
+    let ref: String?
+    let type: String?
+    let url: URL?
+}
+
 struct NativeAppSefariaSource: Identifiable, Hashable, Codable {
     var id: String { ref }
     let ref: String

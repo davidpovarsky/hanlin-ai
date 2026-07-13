@@ -7,7 +7,7 @@ struct WikipediaAssistantSearchTool: NativeTool {
     var catalogEntry: NativeToolCatalogEntry {
         NativeToolCatalogEntry(
             name: name,
-            title: "Wikipedia Search",
+            title: String(localized: "Wikipedia Search"),
             summary: "Search Wikipedia through the same Core service used by the full mini app.",
             categories: ["encyclopedia", "knowledge", "wikipedia", "native app"],
             keywords: ["wikipedia", "encyclopedia", "article", "person", "place", "ויקיפדיה"],
@@ -78,7 +78,7 @@ struct WikipediaAssistantSummaryTool: NativeTool {
     var catalogEntry: NativeToolCatalogEntry {
         NativeToolCatalogEntry(
             name: name,
-            title: "Wikipedia Summary",
+            title: String(localized: "Wikipedia Summary"),
             summary: "Load a Wikipedia article summary through the same Core service used by the full mini app.",
             categories: ["encyclopedia", "knowledge", "wikipedia", "native app"],
             keywords: ["summary", "article", "page", "תקציר"],

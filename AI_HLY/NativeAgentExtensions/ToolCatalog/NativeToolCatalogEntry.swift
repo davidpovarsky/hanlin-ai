@@ -18,6 +18,7 @@ struct NativeToolCatalogEntry: Identifiable, Hashable {
     var sourceAppID: String?
     var sourceAppTitle: String?
     var isEnabledByDefault: Bool
+    var isVisibleInSettings: Bool
 
     init(
         name: String,
@@ -30,7 +31,8 @@ struct NativeToolCatalogEntry: Identifiable, Hashable {
         systemImage: String = "wrench.and.screwdriver",
         sourceAppID: String? = nil,
         sourceAppTitle: String? = nil,
-        isEnabledByDefault: Bool = true
+        isEnabledByDefault: Bool = true,
+        isVisibleInSettings: Bool = true
     ) {
         self.name = name
         self.title = title
@@ -43,5 +45,6 @@ struct NativeToolCatalogEntry: Identifiable, Hashable {
         self.sourceAppID = sourceAppID
         self.sourceAppTitle = sourceAppTitle
         self.isEnabledByDefault = isEnabledByDefault
+        self.isVisibleInSettings = isVisibleInSettings
     }
 }

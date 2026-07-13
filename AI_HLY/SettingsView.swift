@@ -9,11 +9,13 @@ import SwiftUI
 import SwiftData
 import SafariServices
 
+@MainActor
 struct SettingsView: View {
     
     @State private var isPushed: Bool = false  // 监听是否进入子页面
     @State private var showSafariGuide: Bool = false
     @State private var showSafariCost: Bool = false
+    @State private var nativeToolSettingsEntries: [NativeToolCatalogEntry] = []
     
     @Query var apiKeys: [APIKeys]
     @Query var searchKeys: [SearchKeys]
@@ -95,9 +97,6 @@ struct SettingsView: View {
                     }
                 }
                 Section(header: Text(String(localized: "工具"))) {
-                    NavigationLink(destination: AssistantToolsSettingsView().onAppear { isPushed = true }.onDisappear { isPushed = false }.toolbar(.hidden, for: .tabBar)) {
-                        Label("Assistant Tools", systemImage: "wrench.and.screwdriver")
-                    }
                     NavigationLink(destination: SearchSettingView().onAppear { isPushed = true }.onDisappear { isPushed = false }.toolbar(.hidden, for: .tabBar)) {
                         Label(String(localized: "联网搜索"), systemImage: "magnifyingglass")
                     }
@@ -121,6 +120,16 @@ struct SettingsView: View {
                     }
                     NavigationLink(destination: CodeSettingView().onAppear { isPushed = true }.onDisappear { isPushed = false }.toolbar(.hidden, for: .tabBar)) {
                         Label(String(localized: "代码执行"), systemImage: "apple.terminal")
+                    }
+                    ForEach(nativeToolSettingsEntries) { entry in
+                        NavigationLink {
+                            AssistantToolDetailSettingsView(toolName: entry.name)
+                                .onAppear { isPushed = true }
+                                .onDisappear { isPushed = false }
+                                .toolbar(.hidden, for: .tabBar)
+                        } label: {
+                            NativeAssistantToolSettingsRow(entry: entry)
+                        }
                     }
                 }
                 Section(header: Text(String(localized: "通用"))) {
@@ -166,6 +175,16 @@ struct SettingsView: View {
                 }
             }
             .navigationTitle(String(localized: "设置"))
+            .onAppear {
+                nativeToolSettingsEntries = NativeToolCatalog.shared.settingsEntries()
+                NativeToolTraceLogger.shared.log(
+                    "native_app_tools_shown_in_settings",
+                    [
+                        "toolCount": nativeToolSettingsEntries.count,
+                        "toolNames": nativeToolSettingsEntries.map(\.name)
+                    ]
+                )
+            }
             .onChange(of: isPushed) {
                 NotificationCenter.default.post(name: .hideTabBar, object: isPushed)  // 发送通知，控制TabBar显示/隐藏
             }

@@ -7,7 +7,7 @@ struct SefariaAssistantSearchTool: NativeTool {
     var catalogEntry: NativeToolCatalogEntry {
         NativeToolCatalogEntry(
             name: name,
-            title: "Sefaria Search",
+            title: String(localized: "Sefaria Search"),
             summary: "Search Jewish texts through the same Core service used by the full Sefaria mini app.",
             categories: ["knowledge", "jewish texts", "sefaria", "native app"],
             keywords: ["torah", "talmud", "tanakh", "halacha", "source", "מקור", "ספריא"],
@@ -18,7 +18,7 @@ struct SefariaAssistantSearchTool: NativeTool {
     func openAIToolSchema() -> [String: Any] {
         NativeToolSchema.function(
             name: name,
-            description: "Search Sefaria Jewish texts using the compiled Sefaria native app Core.",
+            description: "Search Sefaria for a topic or phrase. For an exact textual reference, use sefaria_get_source instead. If this tool returns no results, report that fact and do not supply remembered sources as tool results.",
             parameters: NativeToolSchema.object(
                 properties: [
                     "query": NativeToolSchema.string(description: "Search query, reference, topic, or phrase."),
@@ -76,7 +76,7 @@ struct SefariaAssistantSourceTool: NativeTool {
     var catalogEntry: NativeToolCatalogEntry {
         NativeToolCatalogEntry(
             name: name,
-            title: "Sefaria Source",
+            title: String(localized: "Sefaria Source"),
             summary: "Load a Sefaria reference through the same Core service used by the full reader.",
             categories: ["knowledge", "jewish texts", "sefaria", "native app"],
             keywords: ["source", "reference", "passage", "מקור", "פסוק"],
@@ -87,7 +87,7 @@ struct SefariaAssistantSourceTool: NativeTool {
     func openAIToolSchema() -> [String: Any] {
         NativeToolSchema.function(
             name: name,
-            description: "Open a Sefaria reference and return text using the compiled Sefaria mini app Core.",
+            description: "Resolve and load an exact Sefaria textual reference in Hebrew and/or English. Use sefaria_search for topics or phrases. If loading fails, report the tool failure and do not invent the source text.",
             parameters: NativeToolSchema.object(
                 properties: ["ref": NativeToolSchema.string(description: "Sefaria reference, e.g. Genesis 1:1 or Bava Metzia 21a.")],
                 required: ["ref"]

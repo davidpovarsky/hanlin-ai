@@ -2,6 +2,223 @@
   "sourceLanguage" : "zh-Hans",
   "strings" : {
     "" : {},
+    "Assistant Tool" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Assistant Tool" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "כלי עוזר" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "助手工具" } }
+      }
+    },
+    "Assistant Tool Unavailable" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Assistant Tool Unavailable" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "כלי העוזר אינו זמין" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "助手工具不可用" } }
+      }
+    },
+    "Assistant Tools" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Assistant Tools" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "כלי עוזר" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "助手工具" } }
+      }
+    },
+    "Categories" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Categories" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "קטגוריות" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "类别" } }
+      }
+    },
+    "Details" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Details" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "פרטים" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "详细信息" } }
+      }
+    },
+    "Disabled" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Disabled" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "כבוי" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "已停用" } }
+      }
+    },
+    "Enabled" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Enabled" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "מופעל" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "已启用" } }
+      }
+    },
+    "Examples" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Examples" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "דוגמאות" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "示例" } }
+      }
+    },
+    "Hanlin" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Hanlin" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "Hanlin" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "翰林" } }
+      }
+    },
+    "Keywords" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Keywords" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "מילות מפתח" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "关键词" } }
+      }
+    },
+    "No" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "No" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "לא" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "否" } }
+      }
+    },
+    "Sensitive" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Sensitive" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "רגיש" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "敏感" } }
+      }
+    },
+    "Sefaria result type: %@" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Sefaria result type: %@" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "סוג תוצאת ספריא: %@" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "Sefaria 结果类型：%@" } }
+      }
+    },
+    "Sefaria Search" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Sefaria Search" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "חיפוש בספריא" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "Sefaria 搜索" } }
+      }
+    },
+    "Sefaria Source" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Sefaria Source" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "מקור מספריא" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "Sefaria 来源" } }
+      }
+    },
+    "Source App" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Source App" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "יישום מקור" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "来源应用" } }
+      }
+    },
+    "Source App ID" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Source App ID" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "מזהה יישום המקור" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "来源应用 ID" } }
+      }
+    },
+    "The requested assistant tool could not be found." : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "The requested assistant tool could not be found." } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "כלי העוזר המבוקש לא נמצא." } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "找不到请求的助手工具。" } }
+      }
+    },
+    "The Sefaria reference is empty." : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "The Sefaria reference is empty." } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "ההפניה לספריא ריקה." } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "Sefaria 引用为空。" } }
+      }
+    },
+    "Sefaria could not resolve the reference: %@" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Sefaria could not resolve the reference: %@" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "ספריא לא הצליחה לזהות את ההפניה: %@" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "Sefaria 无法解析引用：%@" } }
+      }
+    },
+    "Sefaria returned an invalid response." : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Sefaria returned an invalid response." } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "ספריא החזירה תגובה לא תקינה." } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "Sefaria 返回了无效响应。" } }
+      }
+    },
+    "Sefaria returned no readable text for: %@" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Sefaria returned no readable text for: %@" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "ספריא לא החזירה טקסט קריא עבור: %@" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "Sefaria 未返回可读文本：%@" } }
+      }
+    },
+    "This tool is disabled" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "This tool is disabled" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "כלי זה כבוי" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "此工具已停用" } }
+      }
+    },
+    "This tool is disabled and is neither shared with the model nor available for execution" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "This tool is disabled and is neither shared with the model nor available for execution" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "כלי זה כבוי, אינו משותף עם המודל ואינו זמין להפעלה" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "此工具已停用，不会与模型共享，也无法执行" } }
+      }
+    },
+    "This tool is shared with the model when enabled" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "This tool is shared with the model when enabled" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "כאשר הכלי מופעל הוא משותף עם המודל" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "启用后，此工具会与模型共享" } }
+      }
+    },
+    "Text Analyze" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Text Analyze" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "ניתוח טקסט" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "文本分析" } }
+      }
+    },
+    "Text Transform" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Text Transform" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "שינוי טקסט" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "文本转换" } }
+      }
+    },
+    "Tool Name" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Tool Name" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "שם הכלי" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "工具名称" } }
+      }
+    },
+    "Yes" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Yes" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "כן" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "是" } }
+      }
+    },
+    "Wikipedia Search" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Wikipedia Search" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "חיפוש בוויקיפדיה" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "维基百科搜索" } }
+      }
+    },
+    "Wikipedia Summary" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Wikipedia Summary" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "תקציר מוויקיפדיה" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "维基百科摘要" } }
+      }
+    },
     " 临 时 对 话 模 式 " : {
       "localizations" : {
         "en" : {
