@@ -4,21 +4,35 @@
 //
 //  Requires one stored property to be added to ChatMessages in the original model:
 //      var nativeUIBlocksJSON: String?
-//  This extension keeps the decoding/encoding logic outside the original model file.
+//  This extension keeps the decoding/encoding and downstream compatibility logic
+//  outside the original model file.
 //
 
 import Foundation
 
 extension ChatMessages {
+    private var storedNativeUIBlocks: [NativeUIBlock] {
+        [NativeUIBlock].decode(from: nativeUIBlocksJSON)
+    }
+
     var nativeUIBlocks: [NativeUIBlock] {
-        get { [NativeUIBlock].decode(from: nativeUIBlocksJSON) }
-        set { nativeUIBlocksJSON = newValue.encodedJSONString() }
+        get {
+            LegacyToolActivityAdapter.blocks(
+                for: self,
+                storedBlocks: storedNativeUIBlocks
+            )
+        }
+        set {
+            nativeUIBlocksJSON = newValue.encodedJSONString()
+        }
     }
 
     func appendNativeUIBlocks(_ blocks: [NativeUIBlock]) {
         guard !blocks.isEmpty else { return }
-        var existing = nativeUIBlocks
-        existing.append(contentsOf: blocks)
-        nativeUIBlocks = existing
+        let merged = LegacyToolActivityAdapter.merging(
+            existing: storedNativeUIBlocks,
+            appended: blocks
+        )
+        nativeUIBlocksJSON = merged.encodedJSONString()
     }
 }
