@@ -45,8 +45,25 @@ struct ToolSearchTool: NativeTool {
             let intent = NativeToolJSON.optionalString(arguments, "intent")
             let maxResults = NativeToolJSON.int(arguments, "max_results", default: 5)
 
+            NativeToolTraceLogger.shared.log(
+                "tool_search_started",
+                [
+                    "query": query,
+                    "intent": intent as Any,
+                    "maxResults": maxResults
+                ]
+            )
+
             let hits = NativeToolCatalog.shared.search(query: query, intent: intent, maxResults: maxResults)
             if hits.isEmpty {
+                NativeToolTraceLogger.shared.log(
+                    "tool_search_completed",
+                    [
+                        "query": query,
+                        "hitCount": 0,
+                        "deferredToolNames": []
+                    ]
+                )
                 return NativeToolResult(
                     modelText: "No matching native tools were found for query: \(query). Continue without a native tool or ask the user for clarification.",
                     uiBlocks: [NativeUIBlock(type: .error, title: "No tools found", body: query, systemImage: "magnifyingglass")]
@@ -57,6 +74,15 @@ struct ToolSearchTool: NativeTool {
             let lines = hits.map { hit in
                 "- \(hit.entry.name): \(hit.entry.summary)"
             }.joined(separator: "\n")
+
+            NativeToolTraceLogger.shared.log(
+                "tool_search_completed",
+                [
+                    "query": query,
+                    "hitCount": hits.count,
+                    "deferredToolNames": names
+                ]
+            )
 
             let items = hits.map { hit in
                 NativeUIListItem(
@@ -81,6 +107,10 @@ struct ToolSearchTool: NativeTool {
                 deferredToolNames: names
             )
         } catch {
+            NativeToolTraceLogger.shared.log(
+                "tool_search_failed",
+                ["error": String(describing: error)]
+            )
             return NativeToolResult(
                 modelText: "tool_search failed: \(error.localizedDescription)",
                 uiBlocks: [NativeUIBlock(type: .error, title: "Tool search failed", body: error.localizedDescription)]
