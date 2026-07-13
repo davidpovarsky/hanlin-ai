@@ -17,38 +17,4 @@
 	</array>
 	<key>HANLIN_API_KEY</key>
 	<string>$(HANLIN_API_KEY)</string>
-	<key>HANLIN_OPEN_API_KEY</key>
-	<string>$(HANLIN_OPEN_API_KEY)</string>
-	<key>INIntentsSupported</key>
-	<array/>
-	<key>MKDirectionsApplicationSupportedModes</key>
-	<array>
-		<string>MKDirectionsModeBike</string>
-		<string>MKDirectionsModeBus</string>
-		<string>MKDirectionsModeCar</string>
-		<string>MKDirectionsModeFerry</string>
-		<string>MKDirectionsModeOther</string>
-		<string>MKDirectionsModePedestrian</string>
-		<string>MKDirectionsModePlane</string>
-		<string>MKDirectionsModeRideShare</string>
-		<string>MKDirectionsModeStreetCar</string>
-		<string>MKDirectionsModeSubway</string>
-		<string>MKDirectionsModeTaxi</string>
-		<string>MKDirectionsModeTrain</string>
-	</array>
-	<key>UIBackgroundModes</key>
-	<array>
-		<string>remote-notification</string>
-	</array>
-	<key>UTExportedTypeDeclarations</key>
-	<array>
-		<dict/>
-	</array>
-	<key>UTImportedTypeDeclarations</key>
-	<array>
-		<dict/>
-	</array>
-	<key>com.apple.developer.translation-ui-provider.network-access</key>
-	<true/>
-</dict>
-</plist>
+	<key>HAN
