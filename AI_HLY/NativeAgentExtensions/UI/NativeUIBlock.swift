@@ -149,12 +149,64 @@ struct NativeUIBlock: Codable, Identifiable, Hashable {
 
 extension Array where Element == NativeUIBlock {
     func encodedJSONString() -> String? {
-        guard let data = try? JSONEncoder().encode(self) else { return nil }
-        return String(data: data, encoding: .utf8)
+        NativeToolTraceLogger.shared.log(
+            "native_ui_encoding_started",
+            [
+                "blockCount": count,
+                "actionCount": flatActionCount,
+                "actionTypes": flatActionTypes.joined(separator: ",")
+            ]
+        )
+
+        do {
+            let data = try JSONEncoder().encode(self)
+            NativeToolTraceLogger.shared.log(
+                "native_ui_encoding_completed",
+                [
+                    "blockCount": count,
+                    "byteCount": data.count
+                ]
+            )
+            return String(data: data, encoding: .utf8)
+        } catch {
+            NativeToolTraceLogger.shared.logError(
+                "native_ui_encoding_failed",
+                error: error,
+                fields: [
+                    "blockCount": count,
+                    "actionCount": flatActionCount,
+                    "actionTypes": flatActionTypes.joined(separator: ",")
+                ]
+            )
+            return nil
+        }
     }
 
     static func decode(from json: String?) -> [NativeUIBlock] {
         guard let json, let data = json.data(using: .utf8) else { return [] }
-        return (try? JSONDecoder().decode([NativeUIBlock].self, from: data)) ?? []
+        do {
+            return try JSONDecoder().decode([NativeUIBlock].self, from: data)
+        } catch {
+            NativeToolTraceLogger.shared.logError(
+                "native_ui_decoding_failed",
+                error: error,
+                fields: ["byteCount": data.count]
+            )
+            return []
+        }
+    }
+
+    private var flatActionCount: Int {
+        reduce(0) { $0 + $1.allActions.count }
+    }
+
+    private var flatActionTypes: [String] {
+        flatMap { $0.allActions.map { $0.type.rawValue } }
+    }
+}
+
+private extension NativeUIBlock {
+    var allActions: [NativeUIAction] {
+        actions + items.flatMap(\.actions) + children.flatMap(\.allActions)
     }
 }
