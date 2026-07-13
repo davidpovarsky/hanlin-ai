@@ -124,7 +124,7 @@ private struct ToolActivityStepView: View {
 
                 if !isLast {
                     Rectangle()
-                        .fill(.separator)
+                        .fill(Color(uiColor: .separator))
                         .frame(width: 1)
                         .frame(minHeight: 38)
                 }
@@ -144,7 +144,7 @@ private struct ToolActivityStepView: View {
                             .textSelection(.enabled)
                             .padding(12)
                             .frame(maxWidth: .infinity, alignment: .leading)
-                            .background(.background.secondary, in: .rect(cornerRadius: 12))
+                            .background(Color(uiColor: .secondarySystemBackground), in: .rect(cornerRadius: 12))
                     }
                     if !step.keyValues.isEmpty {
                         VStack(alignment: .leading, spacing: 8) {
@@ -157,7 +157,7 @@ private struct ToolActivityStepView: View {
                             }
                         }
                         .padding(12)
-                        .background(.background.secondary, in: .rect(cornerRadius: 12))
+                        .background(Color(uiColor: .secondarySystemBackground), in: .rect(cornerRadius: 12))
                     }
                     if !step.children.isEmpty {
                         NativeUIRenderer(blocks: step.children, onLaunchRequest: onLaunchRequest)
