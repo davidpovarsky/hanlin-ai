@@ -18,6 +18,7 @@ enum NativeUIBlockType: String, Codable, Hashable {
     case calculation
     case keyValueList
     case error
+    case activityTimeline
 }
 
 enum NativeUIActionType: String, Codable, Hashable {
