@@ -216,7 +216,7 @@ struct NativeAppSefariaClient {
                 title: title,
                 ref: ref,
                 type: type,
-                url: providedURL ?? topicURL ?? ref.map { sefariaWebURL(for: $0, baseURL: baseURL) }
+                url: providedURL ?? topicURL ?? ref.flatMap { sefariaWebURL(for: $0, baseURL: baseURL) }
             )
         }
 
