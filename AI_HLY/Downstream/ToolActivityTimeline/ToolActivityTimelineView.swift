@@ -12,9 +12,34 @@ struct ToolActivityTimelineView: View {
         block.children.isEmpty ? [block] : block.children
     }
 
-    private var durationText: String {
-        guard let footnote = block.footnote, !footnote.isEmpty else { return String(localized: "Worked") }
-        return String(localized: "Worked for \(footnote)")
+    private var status: NativeUIActivityStatus {
+        block.activityStatus ?? aggregateStatus
+    }
+
+    private var aggregateStatus: NativeUIActivityStatus {
+        if steps.contains(where: { $0.activityStatus == .running || $0.activityStatus == .pending }) { return .running }
+        if steps.contains(where: { $0.activityStatus == .failed }) { return .failed }
+        if steps.contains(where: { $0.activityStatus == .cancelled }) { return .cancelled }
+        return .completed
+    }
+
+    private var headerText: String {
+        switch status {
+        case .pending, .running:
+            return String(localized: "Working…")
+        case .failed:
+            return String(localized: "Work failed")
+        case .cancelled:
+            return String(localized: "Work cancelled")
+        case .completed:
+            guard let footnote = block.footnote, !footnote.isEmpty else {
+                return String(localized: "Worked")
+            }
+            if footnote.localizedCaseInsensitiveContains("thought") || footnote.localizedCaseInsensitiveContains("worked") {
+                return footnote
+            }
+            return String(localized: "Worked for \(footnote)")
+        }
     }
 
     var body: some View {
@@ -22,9 +47,10 @@ struct ToolActivityTimelineView: View {
             isPresented = true
         } label: {
             VStack(alignment: .leading, spacing: 10) {
-                HStack(spacing: 5) {
-                    Text(durationText)
-                        .font(.subheadline)
+                HStack(spacing: 6) {
+                    statusIcon
+                    Text(headerText)
+                        .font(.subheadline.weight(.medium))
                         .foregroundStyle(.secondary)
                     Image(systemName: "chevron.down")
                         .font(.caption2.weight(.semibold))
@@ -32,19 +58,18 @@ struct ToolActivityTimelineView: View {
                 }
 
                 ForEach(steps.prefix(4)) { step in
-                    HStack(alignment: .firstTextBaseline, spacing: 10) {
-                        Image(systemName: step.systemImage ?? defaultSystemImage(for: step.type))
-                            .font(.subheadline)
-                            .foregroundStyle(.secondary)
-                            .frame(width: 18)
-                        Text(step.title ?? defaultTitle(for: step.type))
-                            .font(.subheadline)
-                            .foregroundStyle(.secondary)
-                            .lineLimit(2)
-                    }
+                    compactStep(step)
+                }
+
+                if steps.count > 4 {
+                    Text(String(localized: "+ \(steps.count - 4) more"))
+                        .font(.caption)
+                        .foregroundStyle(.tertiary)
+                        .padding(.leading, 28)
                 }
             }
             .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(.vertical, 4)
             .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
@@ -54,7 +79,45 @@ struct ToolActivityTimelineView: View {
                 .presentationDragIndicator(.visible)
                 .presentationBackground(.regularMaterial)
         }
+        .accessibilityElement(children: .combine)
         .accessibilityLabel(String(localized: "Open tool activity"))
+        .accessibilityHint(String(localized: "Shows the full sequence of tool actions"))
+    }
+
+    @ViewBuilder
+    private var statusIcon: some View {
+        switch status {
+        case .pending, .running:
+            ProgressView()
+                .controlSize(.small)
+        case .completed:
+            Image(systemName: "checkmark.circle.fill")
+                .foregroundStyle(.green)
+        case .failed:
+            Image(systemName: "exclamationmark.triangle.fill")
+                .foregroundStyle(.red)
+        case .cancelled:
+            Image(systemName: "stop.circle.fill")
+                .foregroundStyle(.secondary)
+        }
+    }
+
+    private func compactStep(_ step: NativeUIBlock) -> some View {
+        HStack(alignment: .firstTextBaseline, spacing: 10) {
+            Image(systemName: step.systemImage ?? defaultSystemImage(for: step.type))
+                .font(.subheadline)
+                .foregroundStyle(step.activityStatus == .failed ? .red : .secondary)
+                .frame(width: 18)
+            Text(step.title ?? defaultTitle(for: step.type))
+                .font(.subheadline)
+                .foregroundStyle(.secondary)
+                .lineLimit(2)
+            Spacer(minLength: 0)
+            if step.activityStatus == .running || step.activityStatus == .pending {
+                ProgressView()
+                    .controlSize(.mini)
+            }
+        }
     }
 
     private func defaultTitle(for type: NativeUIBlockType) -> String {
@@ -63,6 +126,7 @@ struct ToolActivityTimelineView: View {
         case .calculation: return String(localized: "Calculated result")
         case .source: return String(localized: "Read source")
         case .error: return String(localized: "Tool failed")
+        case .markdown: return String(localized: "Reasoned through the request")
         default: return String(localized: "Used a tool")
         }
     }
@@ -73,6 +137,7 @@ struct ToolActivityTimelineView: View {
         case .calculation: return "function"
         case .source: return "doc.text.magnifyingglass"
         case .error: return "exclamationmark.triangle"
+        case .markdown: return "sparkles"
         default: return "gearshape.2"
         }
     }
@@ -81,6 +146,8 @@ struct ToolActivityTimelineView: View {
 private struct ToolActivityInspectorView: View {
     let block: NativeUIBlock
     let onLaunchRequest: ((NativeAppLaunchRequest) -> Void)?
+
+    @Environment(\.dismiss) private var dismiss
 
     private var steps: [NativeUIBlock] {
         block.children.isEmpty ? [block] : block.children
@@ -103,6 +170,13 @@ private struct ToolActivityInspectorView: View {
             }
             .navigationTitle(String(localized: "Thinking"))
             .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .confirmationAction) {
+                    Button(String(localized: "Done")) {
+                        dismiss()
+                    }
+                }
+            }
         }
     }
 }
@@ -114,63 +188,160 @@ private struct ToolActivityStepView: View {
 
     @State private var isExpanded = true
 
+    private var status: NativeUIActivityStatus {
+        step.activityStatus ?? .completed
+    }
+
     var body: some View {
         HStack(alignment: .top, spacing: 12) {
             VStack(spacing: 0) {
-                Image(systemName: step.systemImage ?? "gearshape.2")
-                    .font(.subheadline.weight(.medium))
-                    .foregroundStyle(step.type == .error ? .red : .secondary)
+                stepStatusIcon
                     .frame(width: 24, height: 24)
 
                 if !isLast {
                     Rectangle()
                         .fill(Color(uiColor: .separator))
                         .frame(width: 1)
-                        .frame(minHeight: 38)
+                        .frame(minHeight: 44)
                 }
             }
 
             DisclosureGroup(isExpanded: $isExpanded) {
-                VStack(alignment: .leading, spacing: 10) {
+                VStack(alignment: .leading, spacing: 12) {
                     if let subtitle = step.subtitle, !subtitle.isEmpty {
                         Text(subtitle)
                             .font(.subheadline)
                             .foregroundStyle(.secondary)
                             .textSelection(.enabled)
                     }
-                    if let body = step.body, !body.isEmpty {
-                        Text(body)
-                            .font(.subheadline)
-                            .textSelection(.enabled)
-                            .padding(12)
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .background(Color(uiColor: .secondarySystemBackground), in: .rect(cornerRadius: 12))
+
+                    queryChips
+                    inputOutputContent
+
+                    if !step.items.isEmpty || !step.keyValues.isEmpty || !step.actions.isEmpty || !step.children.isEmpty {
+                        NativeUIRenderer(blocks: richResultBlocks, onLaunchRequest: onLaunchRequest)
                     }
-                    if !step.keyValues.isEmpty {
-                        VStack(alignment: .leading, spacing: 8) {
-                            ForEach(step.keyValues) { pair in
-                                LabeledContent(pair.key) {
-                                    Text(pair.value)
-                                        .multilineTextAlignment(.leading)
-                                        .textSelection(.enabled)
-                                }
-                            }
-                        }
-                        .padding(12)
-                        .background(Color(uiColor: .secondarySystemBackground), in: .rect(cornerRadius: 12))
-                    }
-                    if !step.children.isEmpty {
-                        NativeUIRenderer(blocks: step.children, onLaunchRequest: onLaunchRequest)
+
+                    if let footnote = step.footnote, !footnote.isEmpty {
+                        Text(footnote)
+                            .font(.caption)
+                            .foregroundStyle(.tertiary)
                     }
                 }
-                .padding(.top, 8)
+                .padding(.top, 10)
             } label: {
-                Text(step.title ?? String(localized: "Tool activity"))
-                    .font(.headline)
-                    .foregroundStyle(.primary)
-                    .multilineTextAlignment(.leading)
+                HStack(alignment: .firstTextBaseline, spacing: 8) {
+                    Text(step.title ?? String(localized: "Tool activity"))
+                        .font(.headline)
+                        .foregroundStyle(.primary)
+                        .multilineTextAlignment(.leading)
+                    Spacer(minLength: 0)
+                    statusLabel
+                }
             }
             .padding(.bottom, isLast ? 0 : 18)
         }
+    }
+
+    @ViewBuilder
+    private var stepStatusIcon: some View {
+        switch status {
+        case .pending, .running:
+            ProgressView()
+                .controlSize(.small)
+        case .completed:
+            Image(systemName: step.systemImage ?? "checkmark.circle.fill")
+                .font(.subheadline.weight(.medium))
+                .foregroundStyle(.secondary)
+        case .failed:
+            Image(systemName: "exclamationmark.triangle.fill")
+                .font(.subheadline.weight(.medium))
+                .foregroundStyle(.red)
+        case .cancelled:
+            Image(systemName: "stop.circle.fill")
+                .font(.subheadline.weight(.medium))
+                .foregroundStyle(.secondary)
+        }
+    }
+
+    @ViewBuilder
+    private var statusLabel: some View {
+        switch status {
+        case .pending: Text(String(localized: "Pending"))
+        case .running: Text(String(localized: "Running"))
+        case .completed: Text(String(localized: "Done"))
+        case .failed: Text(String(localized: "Failed"))
+        case .cancelled: Text(String(localized: "Cancelled"))
+        }
+    }
+
+    @ViewBuilder
+    private var queryChips: some View {
+        if !step.queryItems.isEmpty {
+            ScrollView(.horizontal) {
+                HStack(spacing: 8) {
+                    ForEach(step.queryItems, id: \.self) { query in
+                        Text(query)
+                            .font(.caption)
+                            .lineLimit(1)
+                            .padding(.horizontal, 10)
+                            .padding(.vertical, 6)
+                            .background(.thinMaterial, in: Capsule())
+                    }
+                }
+            }
+            .scrollIndicators(.hidden)
+        }
+    }
+
+    @ViewBuilder
+    private var inputOutputContent: some View {
+        if let input = step.input, !input.isEmpty {
+            detailCard(title: String(localized: "Input"), text: input, isCode: step.activityDetailStyle == .code)
+        }
+
+        if let output = step.output, !output.isEmpty {
+            detailCard(title: String(localized: "Output"), text: output, isCode: step.activityDetailStyle == .code)
+        } else if let body = step.body, !body.isEmpty {
+            detailCard(title: nil, text: body, isCode: step.activityDetailStyle == .code)
+        }
+    }
+
+    private func detailCard(title: String?, text: String, isCode: Bool) -> some View {
+        VStack(alignment: .leading, spacing: 8) {
+            if let title {
+                Text(title)
+                    .font(.caption.weight(.semibold))
+                    .foregroundStyle(.secondary)
+            }
+            Text(text)
+                .font(isCode ? .system(.footnote, design: .monospaced) : .subheadline)
+                .textSelection(.enabled)
+                .frame(maxWidth: .infinity, alignment: .leading)
+        }
+        .padding(12)
+        .background(Color(uiColor: .secondarySystemBackground), in: .rect(cornerRadius: 12))
+    }
+
+    private var richResultBlocks: [NativeUIBlock] {
+        var result: [NativeUIBlock] = []
+        if !step.items.isEmpty || !step.keyValues.isEmpty || !step.actions.isEmpty {
+            result.append(
+                NativeUIBlock(
+                    type: step.type == .activityTimeline ? .card : step.type,
+                    title: step.title,
+                    subtitle: nil,
+                    body: nil,
+                    systemImage: step.systemImage,
+                    imageURL: step.imageURL,
+                    url: step.url,
+                    items: step.items,
+                    keyValues: step.keyValues,
+                    actions: step.actions
+                )
+            )
+        }
+        result.append(contentsOf: step.children.filter { $0.type != .activityTimeline })
+        return result
     }
 }
