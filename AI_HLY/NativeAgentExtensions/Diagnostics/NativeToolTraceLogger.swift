@@ -25,11 +25,11 @@ final class NativeToolTraceLogger: @unchecked Sendable {
 
     func log(
         _ event: String,
+        _ fields: [String: Any] = [:],
         requestID: String? = nil,
         conversationID: String? = nil,
         modelStep: Int? = nil,
-        toolName: String? = nil,
-        fields: [String: String] = [:]
+        toolName: String? = nil
     ) {
         let record = TraceRecord(
             timestamp: Date(),
@@ -38,7 +38,7 @@ final class NativeToolTraceLogger: @unchecked Sendable {
             conversationID: conversationID,
             modelStep: modelStep,
             toolName: toolName,
-            fields: redact(fields)
+            fields: redact(stringify(fields))
         )
 
         queue.async { [weak self] in
@@ -67,19 +67,33 @@ final class NativeToolTraceLogger: @unchecked Sendable {
         _ event: String,
         error: Error,
         toolName: String? = nil,
-        fields: [String: String] = [:]
+        fields: [String: Any] = [:]
     ) {
         var values = fields
         values["error"] = String(describing: error)
         if let encodingError = error as? EncodingError {
             values["encodingError"] = describe(encodingError)
         }
-        log(event, toolName: toolName, fields: values)
+        log(event, values, toolName: toolName)
     }
 
     var diagnosticsDirectoryURL: URL? {
         fileManager.urls(for: .documentDirectory, in: .userDomainMask).first?
             .appendingPathComponent("Diagnostics", isDirectory: true)
+    }
+
+    func redactedJSONString(_ json: String) -> String {
+        guard let data = json.data(using: .utf8),
+              let object = try? JSONSerialization.jsonObject(with: data) else {
+            return json
+        }
+        let redacted = redactJSONValue(object)
+        guard JSONSerialization.isValidJSONObject(redacted),
+              let output = try? JSONSerialization.data(withJSONObject: redacted),
+              let string = String(data: output, encoding: .utf8) else {
+            return "<unserializable-json>"
+        }
+        return string
     }
 
     private func prepareDirectoryAndFile() {
@@ -119,12 +133,43 @@ final class NativeToolTraceLogger: @unchecked Sendable {
         }
     }
 
+    private func stringify(_ fields: [String: Any]) -> [String: String] {
+        fields.reduce(into: [:]) { result, item in
+            switch item.value {
+            case let value as String:
+                result[item.key] = value
+            case let value as CustomStringConvertible:
+                result[item.key] = value.description
+            default:
+                result[item.key] = String(describing: item.value)
+            }
+        }
+    }
+
     private func redact(_ fields: [String: String]) -> [String: String] {
         let sensitive = ["api_key", "apikey", "authorization", "token", "access_token", "refresh_token", "cookie", "secret", "password"]
         return fields.reduce(into: [:]) { result, item in
             let key = item.key.lowercased()
             result[item.key] = sensitive.contains(where: key.contains) ? "<redacted>" : item.value
         }
+    }
+
+    private func redactJSONValue(_ value: Any) -> Any {
+        let sensitive = ["api_key", "apikey", "authorization", "token", "access_token", "refresh_token", "cookie", "secret", "password"]
+        if let dict = value as? [String: Any] {
+            return dict.reduce(into: [String: Any]()) { result, item in
+                let key = item.key.lowercased()
+                if sensitive.contains(where: key.contains) {
+                    result[item.key] = "<redacted>"
+                } else {
+                    result[item.key] = redactJSONValue(item.value)
+                }
+            }
+        }
+        if let array = value as? [Any] {
+            return array.map { redactJSONValue($0) }
+        }
+        return value
     }
 
     private func describe(_ error: EncodingError) -> String {
