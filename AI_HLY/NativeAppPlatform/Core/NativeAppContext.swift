@@ -12,7 +12,19 @@ struct NativeAppContext {
     var capabilityRegistry: NativeCapabilityRegistry
     var session: NativeAppSession?
     var initialRoute: NativeAppRoute?
-    var platform: NativeAppPlatformServices
+
+    private var providedPlatform: NativeAppPlatformServices?
+
+    /// Lazily resolves platform services. Constructing a lightweight context for
+    /// assistant-tool registration no longer creates router/storage/pasteboard/network services.
+    var platform: NativeAppPlatformServices {
+        providedPlatform ?? NativeAppPlatformServices.default(
+            appID: session?.appID,
+            modelContext: modelContext,
+            openURL: openURL,
+            capabilityRegistry: capabilityRegistry
+        )
+    }
 
     init(
         localeIdentifier: String = Locale.current.identifier,
@@ -26,16 +38,10 @@ struct NativeAppContext {
         self.localeIdentifier = localeIdentifier
         self.modelContext = modelContext
         self.openURL = openURL
-        let capabilityRegistry = capabilityRegistry ?? .shared
-        self.capabilityRegistry = capabilityRegistry
+        self.capabilityRegistry = capabilityRegistry ?? .shared
         self.session = session
         self.initialRoute = initialRoute ?? session?.initialRoute
-        self.platform = platform ?? NativeAppPlatformServices.default(
-            appID: session?.appID,
-            modelContext: modelContext,
-            openURL: openURL,
-            capabilityRegistry: capabilityRegistry
-        )
+        self.providedPlatform = platform
     }
 
     var isHebrew: Bool { localeIdentifier.hasPrefix("he") }
