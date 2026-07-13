@@ -1,13 +1,13 @@
 import Foundation
 
-struct NativeAppWikipediaSearchTool: NativeTool {
+struct WikipediaAssistantSearchTool: NativeTool {
     let service: NativeAppWikipediaSearchService
-    let name = "app_wikipedia_search"
+    let name = "wikipedia_search"
 
     var catalogEntry: NativeToolCatalogEntry {
         NativeToolCatalogEntry(
             name: name,
-            title: "Wikipedia App Search",
+            title: "Wikipedia Search",
             summary: "Search Wikipedia through the same Core service used by the full mini app.",
             categories: ["encyclopedia", "knowledge", "wikipedia", "native app"],
             keywords: ["wikipedia", "encyclopedia", "article", "person", "place", "ויקיפדיה"],
@@ -71,14 +71,14 @@ struct NativeAppWikipediaSearchTool: NativeTool {
     }
 }
 
-struct NativeAppWikipediaSummaryTool: NativeTool {
+struct WikipediaAssistantSummaryTool: NativeTool {
     let service: NativeAppWikipediaSummaryService
-    let name = "app_wikipedia_summary"
+    let name = "wikipedia_get_summary"
 
     var catalogEntry: NativeToolCatalogEntry {
         NativeToolCatalogEntry(
             name: name,
-            title: "Wikipedia App Summary",
+            title: "Wikipedia Summary",
             summary: "Load a Wikipedia article summary through the same Core service used by the full mini app.",
             categories: ["encyclopedia", "knowledge", "wikipedia", "native app"],
             keywords: ["summary", "article", "page", "תקציר"],

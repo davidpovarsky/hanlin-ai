@@ -2,7 +2,7 @@ import Foundation
 
 struct NativeAppTextStudioAnalyzeTool: NativeTool {
     let service: NativeAppTextStudioService
-    let name = "app_text_analyze"
+    let name = "text_analyze"
 
     var catalogEntry: NativeToolCatalogEntry {
         NativeToolCatalogEntry(
@@ -71,7 +71,7 @@ struct NativeAppTextStudioAnalyzeTool: NativeTool {
 
 struct NativeAppTextStudioTransformTool: NativeTool {
     let service: NativeAppTextStudioService
-    let name = "app_text_transform"
+    let name = "text_transform"
 
     var catalogEntry: NativeToolCatalogEntry {
         NativeToolCatalogEntry(

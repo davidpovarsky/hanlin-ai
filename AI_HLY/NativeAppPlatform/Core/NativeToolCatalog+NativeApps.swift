@@ -11,22 +11,23 @@ extension NativeToolCatalog {
 
     @MainActor
     func registerNativeAppTools(context: NativeAppContext) {
-        let tools = NativeAppRegistry.shared.allAssistantTools(context: context)
+        let tools = NativeAppRegistry.shared.allAssistantToolsWithOwners(context: context)
         NativeToolTraceLogger.shared.log(
             "native_app_tools_registration_started",
             [
                 "toolCount": tools.count,
-                "toolNames": tools.map(\.name)
+                "toolNames": tools.map { $0.tool.name },
+                "sourceAppIDs": tools.map { $0.sourceApp.id }
             ]
         )
-        for tool in tools {
-            register(tool)
+        for registration in tools {
+            register(registration.tool, sourceApp: registration.sourceApp)
         }
         NativeToolTraceLogger.shared.log(
             "native_app_tools_registration_completed",
             [
                 "toolCount": tools.count,
-                "toolNames": tools.map(\.name)
+                "toolNames": tools.map { $0.tool.name }
             ]
         )
     }

@@ -15,7 +15,8 @@ struct QuickCalculateTool: NativeTool {
             summary: "Evaluate basic arithmetic expressions with +, -, *, /, parentheses and percentages.",
             categories: ["math", "calculation", "utility"],
             keywords: ["calculate", "calculator", "math", "percent", "percentage", "arithmetic", "כמה", "אחוז", "חשבון"],
-            examples: ["What is 17% of 340?", "Calculate (12 + 8) * 3", "כמה זה 17% מתוך 340"]
+            examples: ["What is 17% of 340?", "Calculate (12 + 8) * 3", "כמה זה 17% מתוך 340"],
+            systemImage: "function"
         )
     }
 

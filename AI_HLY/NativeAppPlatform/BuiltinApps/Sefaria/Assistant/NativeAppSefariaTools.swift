@@ -1,13 +1,13 @@
 import Foundation
 
-struct NativeAppSefariaSearchTool: NativeTool {
+struct SefariaAssistantSearchTool: NativeTool {
     let service: NativeAppSefariaSearchService
-    let name = "app_sefaria_search"
+    let name = "sefaria_search"
 
     var catalogEntry: NativeToolCatalogEntry {
         NativeToolCatalogEntry(
             name: name,
-            title: "Sefaria App Search",
+            title: "Sefaria Search",
             summary: "Search Jewish texts through the same Core service used by the full Sefaria mini app.",
             categories: ["knowledge", "jewish texts", "sefaria", "native app"],
             keywords: ["torah", "talmud", "tanakh", "halacha", "source", "מקור", "ספריא"],
@@ -69,14 +69,14 @@ struct NativeAppSefariaSearchTool: NativeTool {
     }
 }
 
-struct NativeAppSefariaSourceTool: NativeTool {
+struct SefariaAssistantSourceTool: NativeTool {
     let service: NativeAppSefariaSourceService
-    let name = "app_sefaria_get_source"
+    let name = "sefaria_get_source"
 
     var catalogEntry: NativeToolCatalogEntry {
         NativeToolCatalogEntry(
             name: name,
-            title: "Sefaria App Source",
+            title: "Sefaria Source",
             summary: "Load a Sefaria reference through the same Core service used by the full reader.",
             categories: ["knowledge", "jewish texts", "sefaria", "native app"],
             keywords: ["source", "reference", "passage", "מקור", "פסוק"],

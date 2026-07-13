@@ -12,7 +12,12 @@ final class NativeAppRegistry {
     func ensureBuiltinsRegistered() {
         guard !didRegisterBuiltins else { return }
         didRegisterBuiltins = true
-        for module in BuiltinAppsIndex.modules() {
+        let modules = BuiltinAppsIndex.modules()
+        NativeToolTraceLogger.shared.log(
+            "native_app_modules_discovered",
+            ["moduleCount": modules.count, "moduleIDs": modules.map(\.manifest.id)]
+        )
+        for module in modules {
             register(module)
         }
     }
@@ -37,8 +42,14 @@ final class NativeAppRegistry {
     }
 
     func allAssistantTools(context: NativeAppContext) -> [NativeTool] {
+        allAssistantToolsWithOwners(context: context).map { $0.tool }
+    }
+
+    func allAssistantToolsWithOwners(context: NativeAppContext) -> [(tool: NativeTool, sourceApp: NativeAppManifest)] {
         ensureBuiltinsRegistered()
-        return allModules().flatMap { $0.assistantTools(context: context) }
+        return allModules().flatMap { module in
+            module.assistantTools(context: context).map { (tool: $0, sourceApp: module.manifest) }
+        }
     }
 
     func allCapabilities() -> [NativeCapabilityRequest] {

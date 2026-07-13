@@ -9,38 +9,11 @@ import Foundation
 
 @MainActor
 enum NativeToolBridge {
-    static func schemasForRequest(loadedToolNames: [String]) -> [[String: Any]] {
+    static func schemasForRequest() -> [[String: Any]] {
         let catalog = NativeToolCatalog.shared
         catalog.ensureBuiltinsRegistered()
 
-        NativeToolTraceLogger.shared.log(
-            "schemas_for_request_started",
-            [
-                "loadedToolNames": loadedToolNames,
-                "loadedToolCount": loadedToolNames.count
-            ]
-        )
-
-        var schemas: [[String: Any]] = []
-        if let toolSearch = catalog.tool(named: ToolSearchTool.toolName) {
-            schemas.append(toolSearch.openAIToolSchema())
-        } else {
-            NativeToolTraceLogger.shared.log("tool_search_schema_missing")
-        }
-
-        let deferredSchemas = catalog.schemas(for: loadedToolNames)
-        schemas.append(contentsOf: deferredSchemas)
-
-        NativeToolTraceLogger.shared.log(
-            "schemas_for_request_completed",
-            [
-                "schemaCount": schemas.count,
-                "deferredSchemaCount": deferredSchemas.count,
-                "loadedToolNames": loadedToolNames
-            ]
-        )
-
-        return schemas
+        return catalog.schemasForEnabledTools()
     }
 
     static func executeIfNativeTool(
@@ -60,7 +33,7 @@ enum NativeToolBridge {
             ]
         )
 
-        guard let tool = catalog.tool(named: name) else {
+        guard let entry = catalog.entry(named: name) else {
             NativeToolTraceLogger.shared.log(
                 "tool_execution_lookup_failed",
                 ["toolName": name]
@@ -68,11 +41,31 @@ enum NativeToolBridge {
             return nil
         }
 
+        guard catalog.isEnabled(entry), let tool = catalog.tool(named: name) else {
+            NativeToolTraceLogger.shared.log(
+                "disabled_tool_execution_rejected",
+                ["toolName": name, "sourceAppID": entry.sourceAppID as Any]
+            )
+            return NativeToolResult(
+                modelText: "The assistant tool '\(name)' is unavailable because it is disabled in Settings.",
+                userText: "Tool unavailable: \(entry.title) is disabled.",
+                uiBlocks: [
+                    NativeUIBlock(
+                        type: .error,
+                        title: "Tool unavailable",
+                        body: "\(entry.title) is disabled in Settings.",
+                        systemImage: "wrench.and.screwdriver.fill"
+                    )
+                ]
+            )
+        }
+
         let start = Date()
         NativeToolTraceLogger.shared.log(
             "tool_execution_started",
             [
                 "toolName": name,
+                "sourceAppID": entry.sourceAppID as Any,
                 "arguments": NativeToolTraceLogger.shared.redactedJSONString(argumentsJSON)
             ]
         )
@@ -88,7 +81,7 @@ enum NativeToolBridge {
                 "modelTextLength": result.modelText.count,
                 "userTextLength": result.userText?.count ?? 0,
                 "uiBlockCount": result.uiBlocks.count,
-                "deferredToolNames": result.deferredToolNames
+                "sourceAppID": entry.sourceAppID as Any
             ]
         )
 

@@ -18,8 +18,8 @@ enum NativeAppSefariaExports {
 
     static func assistantTools(context: NativeAppContext) -> [NativeTool] {
         [
-            NativeAppSefariaSearchTool(service: searchService()),
-            NativeAppSefariaSourceTool(service: sourceService())
+            SefariaAssistantSearchTool(service: searchService()),
+            SefariaAssistantSourceTool(service: sourceService())
         ]
     }
 }

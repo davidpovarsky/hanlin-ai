@@ -14,6 +14,10 @@ struct NativeToolCatalogEntry: Identifiable, Hashable {
     var keywords: [String]
     var examples: [String]
     var isSensitive: Bool
+    var systemImage: String
+    var sourceAppID: String?
+    var sourceAppTitle: String?
+    var isEnabledByDefault: Bool
 
     init(
         name: String,
@@ -22,7 +26,11 @@ struct NativeToolCatalogEntry: Identifiable, Hashable {
         categories: [String] = [],
         keywords: [String] = [],
         examples: [String] = [],
-        isSensitive: Bool = false
+        isSensitive: Bool = false,
+        systemImage: String = "wrench.and.screwdriver",
+        sourceAppID: String? = nil,
+        sourceAppTitle: String? = nil,
+        isEnabledByDefault: Bool = true
     ) {
         self.name = name
         self.title = title
@@ -31,18 +39,9 @@ struct NativeToolCatalogEntry: Identifiable, Hashable {
         self.keywords = keywords
         self.examples = examples
         self.isSensitive = isSensitive
+        self.systemImage = systemImage
+        self.sourceAppID = sourceAppID
+        self.sourceAppTitle = sourceAppTitle
+        self.isEnabledByDefault = isEnabledByDefault
     }
-
-    var compactCatalogText: String {
-        ([name, title, summary] + categories + keywords + examples)
-            .joined(separator: "\n")
-            .lowercased()
-    }
-}
-
-struct NativeToolSearchHit: Identifiable, Hashable {
-    var id: String { entry.name }
-    var entry: NativeToolCatalogEntry
-    var score: Int
-    var matchedTerms: [String]
 }

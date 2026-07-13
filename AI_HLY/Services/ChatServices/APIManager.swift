@@ -2205,7 +2205,6 @@ class APIManager {
                                     selectedURLs: [String]?,
                                     selectedPromptsContent: [String]?,
                                     systemMessage: String,
-                                    nativeLoadedToolNames: [String] = [],
                                     depth: Int = 0
     ) async throws -> AsyncThrowingStream<StreamData, Error> {
         
@@ -2388,7 +2387,7 @@ class APIManager {
                             weatherEnabled: weatherEnabled,
                             canvasEnabled: canvasEnabled,
                         )
-                        tools.append(contentsOf: await NativeToolBridge.schemasForRequest(loadedToolNames: nativeLoadedToolNames))
+                        tools.append(contentsOf: await NativeToolBridge.schemasForRequest())
                         // 获得工具
                         requestBody["tools"] = tools
                     }
@@ -2668,7 +2667,6 @@ class APIManager {
                                     var toolResultFront = ""
                                     var useFunctionName = ""
                                     var toolID = ""
-                                    var nextNativeLoadedToolNames = nativeLoadedToolNames
                                     for toolCall in accumulatedToolCalls {
                                         if let toolCallID = toolCall["id"] as? String,
                                            let functionDict = toolCall["function"] as? [String: Any],
@@ -3622,10 +3620,6 @@ class APIManager {
                                                         self.nativeUIBlocks?.append(contentsOf: nativeResult.uiBlocks)
                                                     }
 
-                                                    if !nativeResult.deferredToolNames.isEmpty {
-                                                        nextNativeLoadedToolNames = nativeResult.deferredToolNames
-                                                    }
-
                                                     break
                                                 }
 
@@ -3743,7 +3737,6 @@ class APIManager {
                                                                                             selectedURLs: selectedURLs,
                                                                                             selectedPromptsContent: selectedPromptsContent,
                                                                                             systemMessage: systemMessage,
-                                                                                            nativeLoadedToolNames: nextNativeLoadedToolNames,
                                                                                             depth: depth + 1)
                                     for try await recursiveData in recursiveStream {
                                         continuation.yield(recursiveData)

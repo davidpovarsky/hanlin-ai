@@ -18,8 +18,8 @@ enum NativeAppWikipediaExports {
 
     static func assistantTools(context: NativeAppContext) -> [NativeTool] {
         [
-            NativeAppWikipediaSearchTool(service: searchService()),
-            NativeAppWikipediaSummaryTool(service: summaryService())
+            WikipediaAssistantSearchTool(service: searchService()),
+            WikipediaAssistantSummaryTool(service: summaryService())
         ]
     }
 }

@@ -95,6 +95,9 @@ struct SettingsView: View {
                     }
                 }
                 Section(header: Text(String(localized: "工具"))) {
+                    NavigationLink(destination: AssistantToolsSettingsView().onAppear { isPushed = true }.onDisappear { isPushed = false }.toolbar(.hidden, for: .tabBar)) {
+                        Label("Assistant Tools", systemImage: "wrench.and.screwdriver")
+                    }
                     NavigationLink(destination: SearchSettingView().onAppear { isPushed = true }.onDisappear { isPushed = false }.toolbar(.hidden, for: .tabBar)) {
                         Label(String(localized: "联网搜索"), systemImage: "magnifyingglass")
                     }
