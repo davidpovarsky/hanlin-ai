@@ -21,6 +21,23 @@ enum NativeUIBlockType: String, Codable, Hashable {
     case activityTimeline
 }
 
+enum NativeUIActivityStatus: String, Codable, Hashable {
+    case pending
+    case running
+    case completed
+    case failed
+    case cancelled
+}
+
+enum NativeUIActivityDetailStyle: String, Codable, Hashable {
+    case plain
+    case markdown
+    case code
+    case search
+    case keyValue
+    case richResult
+}
+
 enum NativeUIActionType: String, Codable, Hashable {
     case openURL
     case copyText
@@ -117,6 +134,15 @@ struct NativeUIBlock: Codable, Identifiable, Hashable {
     var actions: [NativeUIAction]
     var children: [NativeUIBlock]
 
+    // Activity timeline metadata. All fields are optional so previously stored blocks decode unchanged.
+    var activityStatus: NativeUIActivityStatus?
+    var activityDetailStyle: NativeUIActivityDetailStyle?
+    var startedAt: Date?
+    var completedAt: Date?
+    var input: String?
+    var output: String?
+    var queryItems: [String]
+
     init(
         id: String = UUID().uuidString,
         type: NativeUIBlockType,
@@ -130,7 +156,14 @@ struct NativeUIBlock: Codable, Identifiable, Hashable {
         items: [NativeUIListItem] = [],
         keyValues: [NativeUIKeyValue] = [],
         actions: [NativeUIAction] = [],
-        children: [NativeUIBlock] = []
+        children: [NativeUIBlock] = [],
+        activityStatus: NativeUIActivityStatus? = nil,
+        activityDetailStyle: NativeUIActivityDetailStyle? = nil,
+        startedAt: Date? = nil,
+        completedAt: Date? = nil,
+        input: String? = nil,
+        output: String? = nil,
+        queryItems: [String] = []
     ) {
         self.id = id
         self.type = type
@@ -145,6 +178,13 @@ struct NativeUIBlock: Codable, Identifiable, Hashable {
         self.keyValues = keyValues
         self.actions = actions
         self.children = children
+        self.activityStatus = activityStatus
+        self.activityDetailStyle = activityDetailStyle
+        self.startedAt = startedAt
+        self.completedAt = completedAt
+        self.input = input
+        self.output = output
+        self.queryItems = queryItems
     }
 }
 
