@@ -134,14 +134,15 @@ struct NativeUIBlock: Codable, Identifiable, Hashable {
     var actions: [NativeUIAction]
     var children: [NativeUIBlock]
 
-    // Activity timeline metadata. All fields are optional so previously stored blocks decode unchanged.
+    // Optional downstream activity metadata. Optional storage preserves decoding of
+    // blocks written by older app versions that do not contain these keys.
     var activityStatus: NativeUIActivityStatus?
     var activityDetailStyle: NativeUIActivityDetailStyle?
     var startedAt: Date?
     var completedAt: Date?
     var input: String?
     var output: String?
-    var queryItems: [String]
+    var queryItems: [String]?
 
     init(
         id: String = UUID().uuidString,
@@ -163,7 +164,7 @@ struct NativeUIBlock: Codable, Identifiable, Hashable {
         completedAt: Date? = nil,
         input: String? = nil,
         output: String? = nil,
-        queryItems: [String] = []
+        queryItems: [String]? = nil
     ) {
         self.id = id
         self.type = type
