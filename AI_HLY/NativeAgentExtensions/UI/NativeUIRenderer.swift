@@ -44,6 +44,8 @@ private struct NativeUIBlockView: View {
             NativeSearchResultsView(block: block, onLaunchRequest: onLaunchRequest)
         case .keyValueList:
             NativeKeyValueListView(block: block, onLaunchRequest: onLaunchRequest)
+        case .activityTimeline:
+            ToolActivityTimelineView(block: block, onLaunchRequest: onLaunchRequest)
         }
     }
 }
