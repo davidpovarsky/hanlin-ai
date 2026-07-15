@@ -19,7 +19,8 @@ struct AgentActivityStepView: View {
                 if !isLast {
                     Rectangle()
                         .fill(.quaternary)
-                        .frame(width: 2, minHeight: 36)
+                        .frame(width: 2)
+                        .frame(minHeight: 36)
                 }
             }
 
