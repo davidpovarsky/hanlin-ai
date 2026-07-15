@@ -94,6 +94,8 @@ struct ChatBubbleView: View {
     let codeBlocks: [CodeBlock]?   // 代码块
     let knowledgeCard: [KnowledgeCard]? // 知识卡片
     let nativeUIBlocks: [NativeUIBlock]
+    let agentRun: AgentRun?
+    let showsAgentActivitySummary: Bool
     let searchEngine: String?
     let audioAssets: [AudioAsset]?
     @Binding var isVoiceExpanded: Bool // 语音消息折叠
@@ -181,6 +183,8 @@ struct ChatBubbleView: View {
         codeBlocks: [CodeBlock]?,
         knowledgeCard: [KnowledgeCard]?,
         nativeUIBlocks: [NativeUIBlock] = [],
+        agentRun: AgentRun? = nil,
+        showsAgentActivitySummary: Bool = false,
         searchEngine: String?,
         audioAssets: [AudioAsset]?,
         isVoiceExpanded: Binding<Bool>,
@@ -224,6 +228,8 @@ struct ChatBubbleView: View {
         self.codeBlocks = codeBlocks
         self.knowledgeCard = knowledgeCard
         self.nativeUIBlocks = nativeUIBlocks
+        self.agentRun = agentRun
+        self.showsAgentActivitySummary = showsAgentActivitySummary
         self.searchEngine = searchEngine
         self.audioAssets = audioAssets
         self._isVoiceExpanded = isVoiceExpanded
@@ -477,6 +483,9 @@ struct ChatBubbleView: View {
     private func assistantMessageView() -> some View {
         VStack(alignment: .leading, spacing: 6) {
             assistantHeader()
+            if let agentRun, showsAgentActivitySummary {
+                AgentActivitySummaryView(run: agentRun, onLaunchRequest: launchNativeApp)
+            }
             assistantImageSection()
             assistantTextSection()
             assistantFooter()
@@ -604,8 +613,10 @@ struct ChatBubbleView: View {
     // MARK: 底部 Loading / 结束状态
     @ViewBuilder
     private func assistantFooter() -> some View {
-        if (!operationalState.isEmpty && isLastAssistant)
-            || (text.isEmpty && reasoning.isEmpty && toolContent.isEmpty && images == nil) {
+        if agentRun == nil && (
+            (!operationalState.isEmpty && isLastAssistant)
+            || (text.isEmpty && reasoning.isEmpty && toolContent.isEmpty && images == nil)
+        ) {
             loadingSection()
         }
         else if isResponding && isLastAssistant {
@@ -1672,8 +1683,10 @@ struct ChatBubbleView: View {
     @ViewBuilder
     private func messageContent() -> some View {
         VStack(alignment: .leading, spacing: 6) {
-            reasoningView()
-                .transition(.opacity.combined(with: .move(edge: .top)))
+            if agentRun == nil {
+                reasoningView()
+                    .transition(.opacity.combined(with: .move(edge: .top)))
+            }
             
             Group {
                 if mathMode {
@@ -1760,8 +1773,10 @@ struct ChatBubbleView: View {
                 }
             }
             
-            toolContentView()
-                .transition(.opacity.combined(with: .move(edge: .top)))
+            if agentRun == nil {
+                toolContentView()
+                    .transition(.opacity.combined(with: .move(edge: .top)))
+            }
             
             audioView()
                 .transition(.opacity.combined(with: .move(edge: .top)))
@@ -1769,8 +1784,10 @@ struct ChatBubbleView: View {
             translateView()
                 .transition(.opacity.combined(with: .move(edge: .top)))
             
-            resourcesView()
-                .transition(.opacity.combined(with: .move(edge: .top)))
+            if agentRun == nil {
+                resourcesView()
+                    .transition(.opacity.combined(with: .move(edge: .top)))
+            }
 
         }
         .padding(.bottom, 6)
@@ -2236,6 +2253,9 @@ struct ChatBubbleView: View {
     @ViewBuilder
     private func errorMessageView() -> some View {
         VStack(alignment: .leading) {
+            if let agentRun, showsAgentActivitySummary {
+                AgentActivitySummaryView(run: agentRun, onLaunchRequest: launchNativeApp)
+            }
             Text(text)
                 .font(.caption)
                 .foregroundColor(.hlOrange)

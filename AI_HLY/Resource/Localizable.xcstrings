@@ -2,6 +2,153 @@
   "sourceLanguage" : "zh-Hans",
   "strings" : {
     "" : {},
+    "Cancelled" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Cancelled" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "בוטל" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "已取消" } }
+      }
+    },
+    "Cancelled after %@" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Cancelled after %@" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "בוטל לאחר %@" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "已取消（%@）" } }
+      }
+    },
+    "Checking the calendar" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Checking the calendar" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "בודק את לוח השנה" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "正在查看日历" } }
+      }
+    },
+    "Close" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Close" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "סגירה" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "关闭" } }
+      }
+    },
+    "Done" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Done" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "הושלם" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "完成" } }
+      }
+    },
+    "Failed" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Failed" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "נכשל" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "失败" } }
+      }
+    },
+    "Input" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Input" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "קלט" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "输入" } }
+      }
+    },
+    "More steps" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "More steps" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "שלבים נוספים" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "更多步骤" } }
+      }
+    },
+    "Open activity" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Open activity" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "פתיחת הפעילות" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "打开活动" } }
+      }
+    },
+    "Output" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Output" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "פלט" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "输出" } }
+      }
+    },
+    "Progress update" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Progress update" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "עדכון התקדמות" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "进度更新" } }
+      }
+    },
+    "Reading a document" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Reading a document" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "קורא מסמך" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "正在读取文档" } }
+      }
+    },
+    "Reading a source" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Reading a source" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "קורא מקור" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "正在读取来源" } }
+      }
+    },
+    "Running code" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Running code" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "מריץ קוד" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "正在运行代码" } }
+      }
+    },
+    "Searching GitHub" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Searching GitHub" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "מחפש ב־GitHub" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "正在搜索 GitHub" } }
+      }
+    },
+    "Searching locations" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Searching locations" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "מחפש מיקומים" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "正在搜索地点" } }
+      }
+    },
+    "Searching the web" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Searching the web" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "מחפש באינטרנט" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "正在搜索网络" } }
+      }
+    },
+    "Stopped after %@" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Stopped after %@" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "נעצר לאחר %@" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "%@ 后停止" } }
+      }
+    },
+    "Using a tool" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Using a tool" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "משתמש בכלי" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "正在使用工具" } }
+      }
+    },
+    "Worked for %@" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Worked for %@" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "עבד במשך %@" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "已工作 %@" } }
+      }
+    },
+    "Working…" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Working…" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "עובד…" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "正在工作…" } }
+      }
+    },
     "%lld more results" : {
       "localizations" : {
         "en" : { "stringUnit" : { "state" : "translated", "value" : "%lld more results" } },

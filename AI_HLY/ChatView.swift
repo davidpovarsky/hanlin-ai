@@ -23,6 +23,7 @@ struct ChatView: View {
     @FocusState private var isInputActive: Bool            // 输入框是否聚焦
     @State private var isObserving = false                 // 是否处于观察模式
     @State private var isRetry = false                     // 是否为重试请求
+    @State private var retryMessagesOverride: [ChatMessages]?
 
     @State private var chatTitle = String(localized: "新群聊")                 // 群聊标题
     @State private var isEditingTitle = false              // 是否正在编辑群聊标题
@@ -83,6 +84,8 @@ struct ChatView: View {
     @State private var operationalState: String = ""        // 操作状态文本
     @State private var operationalDescription: String = ""  // 操作描述文本
     @State private var apiManager: APIManager?
+    @State private var activeAgentCoordinator: AgentRunCoordinator?
+    @State private var activeAgentMessage: ChatMessages?
 
     // URL解析与多选操作相关
     @State private var selectedURLs: [String] = []          // 解析出的 URL 列表
@@ -800,6 +803,22 @@ struct ChatView: View {
             return idx == (first + last) / 2
         }()
         
+        let groupMessages = groupIDs.compactMap { groupID in
+            chatTemps.first(where: { $0.id == groupID })
+        }
+        let precedingSearchMessages: [ChatMessages] = {
+            guard let firstGroupIndex = groupIndices.first, firstGroupIndex > 0 else { return [] }
+            var messages: [ChatMessages] = []
+            var index = firstGroupIndex - 1
+            while index >= 0, let candidate = chatTemps[safe: index], candidate.role == "search" {
+                messages.insert(candidate, at: 0)
+                index -= 1
+            }
+            return messages
+        }()
+        let activityRun = groupMessages.compactMap(\.agentRun).first
+            ?? LegacyAgentActivityAdapter.run(for: precedingSearchMessages + groupMessages)
+
         // 1. 构造基础气泡
         let bubble = ChatBubbleView(
             temporaryRecord: TemporaryRecord,
@@ -826,6 +845,8 @@ struct ChatView: View {
             codeBlocks: msg.codeBlockData,
             knowledgeCard: msg.knowledgeCard,
             nativeUIBlocks: msg.nativeUIBlocks,
+            agentRun: activityRun,
+            showsAgentActivitySummary: splitMarker,
             searchEngine: msg.searchEngine,
             audioAssets: msg.audioAssets,
             isVoiceExpanded: audioExpandedBinding,
@@ -1056,7 +1077,6 @@ struct ChatView: View {
         
         isFeedBack.toggle()
         var userMessage: ChatMessages?
-        var isSearch: Bool = false
         showPhotoSourceOptions = false
         operationalState = ""
         operationalDescription = ""
@@ -1109,7 +1129,8 @@ struct ChatView: View {
         if maxMessage < 0 {
             maxMessage = 999
         }
-        let messagesToSend = chatTemps.suffix(maxMessage).map { chat in
+        let requestHistory = retryMessagesOverride ?? chatTemps
+        let messagesToSend = requestHistory.suffix(maxMessage).map { chat in
             RequestMessage(
                 role: chat.role ?? "system",
                 text: chat.text ?? "",
@@ -1141,6 +1162,14 @@ struct ChatView: View {
         chatTemps.append(assistantPlaceholder)
         var assistantMessage = assistantPlaceholder  // 保存引用，避免反复查找
         let groupBeginMessage = assistantPlaceholder
+        let agentCoordinator = AgentRunCoordinator(
+            groupID: thisGroupID,
+            providerID: modelTemp[selectedModelIndex].company,
+            modelID: modelTemp[selectedModelIndex].name
+        )
+        groupBeginMessage.agentRun = agentCoordinator.run
+        activeAgentCoordinator = agentCoordinator
+        activeAgentMessage = groupBeginMessage
         
         // 进行API请求
         self.apiManager = APIManager(context: context)
@@ -1153,6 +1182,7 @@ struct ChatView: View {
         
         Task {
             do {
+                var eventAdapter = HanlinStreamEventAdapter(runID: agentCoordinator.runID)
                 let stream: AsyncThrowingStream<StreamData, Swift.Error> = try await apiManager!.sendStreamRequest(
                     messages: messagesToSend,
                     modelName: modelTemp[selectedModelIndex].name ?? "Unknown",
@@ -1178,8 +1208,12 @@ struct ChatView: View {
                 
                 // 接受流式数据
                 for try await data in stream {
+                    let agentEvents = eventAdapter.events(from: data)
                     await MainActor.run {
                         if isCancelled { return }
+
+                        agentCoordinator.consume(agentEvents)
+                        groupBeginMessage.agentRun = agentCoordinator.run
                         
                         var updated = false
                         
@@ -1274,23 +1308,7 @@ struct ChatView: View {
                         }
                         
                         // 搜索返回文本
-                        if let searchText = data.search_text, !searchText.isEmpty {
-                            let newSearchText = searchText.trimmingCharacters(in: .whitespacesAndNewlines)
-                            let searchMessage = ChatMessages(
-                                role: "search",
-                                text: newSearchText,
-                                searchEngine: data.searchEngine,
-                                modelName: "system",
-                                modelDisplayName: "system",
-                                timestamp: Date(),
-                                record: chatRecord
-                            )
-                            if let assistantIndex = chatTemps.lastIndex(where: { $0.role == "assistant" }) {
-                                chatTemps.insert(searchMessage, at: assistantIndex)
-                            } else {
-                                chatTemps.append(searchMessage)
-                            }
-                            isSearch = true
+                        if data.search_text?.isEmpty == false {
                             updated = true
                         }
                         
@@ -1500,8 +1518,10 @@ struct ChatView: View {
                     }
                 }
                 
+                let completionEvents = eventAdapter.completionEvents()
                 // 流结束后的处理必须在主线程执行
                 await MainActor.run {
+                    agentCoordinator.consume(completionEvents)
                     isObserving = false
                     isResponding = false
                     respondIndex = 0
@@ -1511,13 +1531,19 @@ struct ChatView: View {
                         let textContent = assistantMessage.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
                         let reasoningContent = assistantMessage.reasoning?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
                         if textContent.isEmpty && reasoningContent.isEmpty && assistantMessage.imageArray.isEmpty {
+                            agentCoordinator.fail(AgentSafeError(message: String(localized: "⚠️ 生成内容为空，请重新尝试！")))
+                            groupBeginMessage.agentRun = agentCoordinator.run
                             operationalState = ""
                             operationalDescription = ""
             assistantMessage.text = String(localized: "⚠️ 生成内容为空，请重新尝试！")
                             assistantMessage.role = "error"
                             assistantMessage.modelName = "system"
                             assistantMessage.modelDisplayName = "system"
+                            context.insert(groupBeginMessage)
+                            try? context.save()
                         } else {
+                            agentCoordinator.complete()
+                            groupBeginMessage.agentRun = agentCoordinator.run
                             
                             // 一切正常，进行数据库保存操作
                             do {
@@ -1527,12 +1553,6 @@ struct ChatView: View {
                                 // 去除文本两端的换行符
                                 assistantMessage.text = textContent
                                 assistantMessage.reasoning = assistantMessage.reasoning?.trimmingCharacters(in: .whitespacesAndNewlines)
-                                
-                                // 写入搜索消息（如果存在）
-                                if let searchMessage = chatTemps.last(where: { $0.role == "search" }), isSearch {
-                                    searchMessage.record = chatRecord
-                                    context.insert(searchMessage)
-                                }
                                 
                                 context.insert(assistantMessage)
                                 
@@ -1580,11 +1600,19 @@ struct ChatView: View {
                             }
                         }
                     }
+                    activeAgentCoordinator = nil
+                    activeAgentMessage = nil
                 }
                 
             } catch {
                 // 响应异常处理
                 await MainActor.run {
+                    agentCoordinator.fail(error)
+                    groupBeginMessage.agentRun = agentCoordinator.run
+                    context.insert(groupBeginMessage)
+                    try? context.save()
+                    activeAgentCoordinator = nil
+                    activeAgentMessage = nil
                     if let index = chatTemps.lastIndex(where: { $0.role == "assistant" }),
                        index < chatTemps.count {
                         operationalState = ""
@@ -1613,6 +1641,14 @@ struct ChatView: View {
         isCancelled = true
         
         apiManager?.cancelCurrentRequest()
+        activeAgentCoordinator?.cancel()
+        if let coordinator = activeAgentCoordinator {
+            activeAgentMessage?.agentRun = coordinator.run
+            if let activeAgentMessage { context.insert(activeAgentMessage) }
+            try? context.save()
+        }
+        activeAgentCoordinator = nil
+        activeAgentMessage = nil
         
         isObserving = false
         isResponding = false
@@ -1649,57 +1685,25 @@ struct ChatView: View {
     
     // 重新请求
     private func retryRequest(for message: ChatMessages) {
-        // 1. 获取 record.messages 和 chatTemps 中的索引
-        guard let recordMsgs = chatRecord.messages,
-              let startIndex = recordMsgs.lastIndex(where: { $0.id == message.id }),
-              let tempIndex  = chatTemps.lastIndex(where:     { $0.id == message.id })
-        else { return }
-
+        guard let tempIndex = chatTemps.lastIndex(where: { $0.id == message.id }) else { return }
         let targetGroupID = message.groupID
-
-        // 2. 向前回溯，寻找连续的 assistant 同组消息的起点
-        var deleteStartIndex = startIndex
-        var backIdx = startIndex - 1
-        while backIdx >= 0 {
-            let prev = recordMsgs[backIdx]
-            if prev.role == "assistant" && prev.groupID == targetGroupID {
-                deleteStartIndex = backIdx
-                backIdx -= 1
+        var groupStart = tempIndex
+        while groupStart > 0 {
+            guard let previous = chatTemps[safe: groupStart - 1] else { break }
+            if previous.role == "assistant" && previous.groupID == targetGroupID {
+                groupStart -= 1
             } else {
                 break
             }
         }
 
-        // 3. 删除 record 中从 deleteStartIndex 到末尾的所有消息
-        for idx in deleteStartIndex..<recordMsgs.count {
-            context.delete(recordMsgs[idx])
-        }
-        do {
-            try context.save()
-        } catch {
-            print("删除消息失败: \(error)")
-            return
-        }
-
-        // 4. 在 chatTemps 数组中，同样向前回溯再删除
-        var tempDeleteStart = tempIndex
-        var tempBack = tempIndex - 1
-        while tempBack >= 0 {
-            guard let prevTemp = chatTemps[safe: tempBack] else { break }
-            if prevTemp.role == "assistant" && prevTemp.groupID == targetGroupID {
-                tempDeleteStart = tempBack
-                tempBack -= 1
-            } else {
-                break
-            }
-        }
-        // 从 tempDeleteStart 到末尾一起移除
-        chatTemps.removeSubrange(tempDeleteStart...)
-
-        // 5. 标记重试并重新发送
+        // Preserve the previous run and build the retry request from the history
+        // that preceded it. The new response receives a new group and run ID.
+        retryMessagesOverride = Array(chatTemps.prefix(groupStart))
         isRetry = true
         handleMessageSending(ifObservingMode: isObserving)
         isRetry = false
+        retryMessagesOverride = nil
     }
     
     private func selectModel(at index: Int) {
