@@ -46,6 +46,7 @@ struct StreamData {
     var splitMarkers: splitMarkerGroup? // 分割标记组
     var native_ui: [NativeUIBlock]?  // Native UI blocks
     var canvas_info: CanvasData?    // 画布数据
+    var agentEvents: [AgentEvent] = [] // Provider-neutral activity events
 }
 
 struct RequestMessage {
@@ -84,6 +85,8 @@ class APIManager {
     private var nativeUIBlocks: [NativeUIBlock]? // Native UI blocks
     private var toolMessage: String?            // 工具使用说明
     private var toolMessageReasoning: String?   // 工具使用思考
+    private var reportProgressController = ReportProgressController()
+    private var latestToolProgressSummary: String?
     private var dataIndex: Int?
     
     private var context: ModelContext
@@ -1000,7 +1003,8 @@ class APIManager {
     private func getSystemMessageText(
         modelDisplayName: String,
         modelInfo: AllModels,
-        query: String
+        query: String,
+        toolUseEnabled: Bool
     ) -> String {
         let currentLanguage = Locale.preferredLanguages.first ?? "zh-Hans"
         let isZh = currentLanguage.hasPrefix("zh")
@@ -1076,7 +1080,7 @@ class APIManager {
             """
 
         var goalSection = ""
-        if modelInfo.supportsToolUse {
+        if toolUseEnabled {
             goalSection = isZh
                 ? "# 群聊目标：\n严格遵守规范，通过多元视角启发用户决策。\n# 工具提示：系统支持工具递归多次调用，你可以通过灵活的工具组合使用更好的解决任务，维持高效协作。"
                 : "# Chat Goal:\nStrictly adhere to standards and inspire user decisions through diverse perspectives.\n# Tool Tip: The system supports multiple recursive calls of tools, allowing you to flexibly combine tools to better solve tasks and maintain efficient collaboration."
@@ -1136,7 +1140,7 @@ class APIManager {
                 Information:
                 \(result)
                 """
-                if modelInfo.supportsToolUse {
+                if toolUseEnabled {
                     memorySection.append(
                         isZh ? "\n\n如果用户更新了记忆，你可以调用记忆工具重新记忆。"
                         : "\n\nIf the user updates the memory, you may call the memory tool to update it."
@@ -1155,14 +1159,19 @@ class APIManager {
             memorySection
         ].filter { !$0.isEmpty }
 
-        return sections.joined(separator: "\n\n")
+        var result = sections.joined(separator: "\n\n")
+        if toolUseEnabled && modelInfo.agentCapabilities.supportsReportProgressTool {
+            result += "\n\nFor multi-step tasks, you may use report_progress to provide a brief user-facing update between tool calls. Keep it to one short sentence. Describe only what has been found or what action will happen next. Never reveal private chain-of-thought or hidden reasoning."
+        }
+        return result
     }
     
     private func getCustomSystemMessageText(
         modelDisplayName: String,
         customSystemMessage: String,
         modelInfo: AllModels,
-        query: String
+        query: String,
+        toolUseEnabled: Bool
     ) -> String {
         
         let currentLanguage = Locale.preferredLanguages.first ?? "zh-Hans"
@@ -1277,7 +1286,7 @@ class APIManager {
                 Information:
                 \(result)
                 """
-                if modelInfo.supportsToolUse {
+                if toolUseEnabled {
                     memorySection.append(
                         isZh ? "\n\n如果用户更新了记忆，你可以调用记忆工具重新记忆。"
                         : "\n\nIf the user updates the memory, you may call the memory tool to update it."
@@ -1294,7 +1303,11 @@ class APIManager {
             memorySection
         ].filter { !$0.isEmpty }
         
-        return allSections.joined(separator: "\n\n")
+        var result = allSections.joined(separator: "\n\n")
+        if toolUseEnabled && modelInfo.agentCapabilities.supportsReportProgressTool {
+            result += "\n\nFor multi-step tasks, you may use report_progress to provide a brief user-facing update between tool calls. Keep it to one short sentence. Describe only what has been found or what action will happen next. Never reveal private chain-of-thought or hidden reasoning."
+        }
+        return result
     }
     
     // MARK: - 任务取消
@@ -1403,13 +1416,15 @@ class APIManager {
                     getSystemMessageText(
                         modelDisplayName: modelInfo.displayName ?? "Unknown",
                         modelInfo: modelInfo,
-                        query: messages.last?.text ?? ""
+                        query: messages.last?.text ?? "",
+                        toolUseEnabled: false
                     ) :
                     getCustomSystemMessageText(
                         modelDisplayName: modelInfo.displayName ?? "Unknown",
                         customSystemMessage: systemMessage,
                         modelInfo: modelInfo,
-                        query: messages.last?.text ?? ""
+                        query: messages.last?.text ?? "",
+                        toolUseEnabled: false
                     )
                     
                     // 利用模板格式化对话记录，转换为 Chat 数组
@@ -1543,6 +1558,7 @@ class APIManager {
                                         currentLanguage: String,
                                         selectedPromptsContent: [String]?,
                                         isObservation: Bool,
+                                        toolUseEnabled: Bool,
                                         systemMessage: String,
                                         canvasData: CanvasData,
                                         continuation: AsyncThrowingStream<StreamData, Error>.Continuation?
@@ -1565,14 +1581,16 @@ class APIManager {
             finalSystemMessage = getSystemMessageText(
                 modelDisplayName: modelInfo.displayName ?? "Unknown",
                 modelInfo: modelInfo,
-                query: messages.last?.text ?? ""
+                query: messages.last?.text ?? "",
+                toolUseEnabled: toolUseEnabled
             )
         } else {
             finalSystemMessage = getCustomSystemMessageText(
                 modelDisplayName: modelInfo.displayName ?? "Unknown",
                 customSystemMessage: systemMessage,
                 modelInfo: modelInfo,
-                query: messages.last?.text ?? ""
+                query: messages.last?.text ?? "",
+                toolUseEnabled: toolUseEnabled
             )
         }
         
@@ -2269,6 +2287,7 @@ class APIManager {
                             currentLanguage: currentLanguage,
                             selectedPromptsContent: selectedPromptsContent,
                             isObservation: isObservation,
+                            toolUseEnabled: modelInfo.agentCapabilities.supportsNativeToolCalling && ifToolUse,
                             systemMessage: systemMessage,
                             canvasData: canvasData,
                             continuation: continuation
@@ -2366,7 +2385,7 @@ class APIManager {
                     }
                     
                     // 工具设置
-                    if modelInfo.supportsToolUse && ifToolUse {
+                    if modelInfo.agentCapabilities.supportsNativeToolCalling && ifToolUse {
                         let memoryEnabled = isMemoryEnabled()
                         let mapEnabled = isMapEnabled()
                         let calendarEnabled = isCalendarEnabled()
@@ -2388,6 +2407,13 @@ class APIManager {
                             canvasEnabled: canvasEnabled,
                         )
                         tools.append(contentsOf: await NativeToolBridge.schemasForRequest())
+                        tools = ToolSchemaDecorator.addingHanlinProgressSummary(
+                            to: tools,
+                            required: modelInfo.agentCapabilities.supportsProgressSummaryField
+                        )
+                        if modelInfo.agentCapabilities.supportsReportProgressTool {
+                            tools.append(ToolSchemaDecorator.reportProgressSchema())
+                        }
                         // 获得工具
                         requestBody["tools"] = tools
                     }
@@ -2535,8 +2561,6 @@ class APIManager {
                                     if ifThink {
                                         responseData.reasoning = reasoningContent
                                         self.toolMessageReasoning?.append(reasoningContent)
-                                    } else {
-                                        continuation.yield(StreamData(operationalDescription: "\(reasoningContent)"))
                                     }
                                 }
                             }
@@ -2651,7 +2675,11 @@ class APIManager {
                                                 } else {
                                                     currentFunction["arguments"] = functionArguments
                                                 }
-                                                continuation.yield(StreamData(operationalDescription: "\(String(describing: currentFunction["arguments"]))"))
+                                                if let callID = currentToolCall["id"] as? String {
+                                                    continuation.yield(StreamData(agentEvents: [
+                                                        .toolCallArgumentsDelta(id: callID, delta: functionArguments)
+                                                    ]))
+                                                }
                                             }
                                             currentToolCall["function"] = currentFunction
                                         }
@@ -2667,14 +2695,61 @@ class APIManager {
                                     var toolResultFront = ""
                                     var useFunctionName = ""
                                     var toolID = ""
+                                    var toolResultsForModel: [(name: String, result: String)] = []
                                     for toolCall in accumulatedToolCalls {
                                         if let toolCallID = toolCall["id"] as? String,
                                            let functionDict = toolCall["function"] as? [String: Any],
                                            let functionName = functionDict["name"] as? String,
                                            let functionArguments = functionDict["arguments"] as? String {
                                             toolID = toolCallID
-                                            print("\n🔢 输入参数：\n\(functionArguments)")
-                                            continuation.yield(StreamData(operationalDescription: "\(functionName): \(functionArguments)"))
+                                            var parsedCall = AgentToolCall.parse(
+                                                id: toolCallID,
+                                                name: functionName,
+                                                argumentsJSON: functionArguments
+                                            )
+                                            if parsedCall.progressSummary == nil,
+                                               let providerSummary = ProgressSummarySanitizer.sanitizeProviderReasoningSummary(self.toolMessageReasoning) {
+                                                parsedCall.progressSummary = providerSummary
+                                                parsedCall.progressSummarySource = .providerReasoningSummary
+                                            }
+
+                                            if functionName == ToolSchemaDecorator.reportProgressName {
+                                                useFunctionName = functionName
+                                                toolResult = "Progress update delivered."
+                                                toolResultFront = ""
+                                                toolResultsForModel.append((functionName, toolResult))
+                                                let candidate = ToolProgressSummary.reportProgressMessage(from: functionArguments)
+                                                if let message = self.reportProgressController.accept(
+                                                    candidate,
+                                                    latestToolSummary: self.latestToolProgressSummary
+                                                ) {
+                                                    continuation.yield(StreamData(agentEvents: [
+                                                        .progressMessage(AgentProgressMessage(
+                                                            id: "progress:\(toolCallID)",
+                                                            message: message,
+                                                            source: .model,
+                                                            timestamp: Date()
+                                                        ))
+                                                    ]))
+                                                }
+                                                continue
+                                            }
+
+                                            let functionArguments = parsedCall.sanitizedArgumentsJSON
+                                            self.latestToolProgressSummary = parsedCall.progressSummary
+                                            let executionID = "\(toolCallID):execution"
+                                            let executionStart = Date()
+                                            var executionUIBlocks: [NativeUIBlock] = []
+                                            continuation.yield(StreamData(agentEvents: [
+                                                .toolCallStarted(parsedCall),
+                                                .toolCallCompleted(parsedCall),
+                                                .toolExecutionStarted(AgentToolExecution(
+                                                    id: executionID,
+                                                    callID: toolCallID,
+                                                    name: functionName,
+                                                    startedAt: executionStart
+                                                ))
+                                            ]))
                                             
                                             // 根据具体函数名称调用对应的本地函数
                                             switch functionName {
@@ -3614,6 +3689,7 @@ class APIManager {
                                                     toolResultFront = nativeResult.userText ?? nativeResult.modelText
 
                                                     if !nativeResult.uiBlocks.isEmpty {
+                                                        executionUIBlocks = nativeResult.uiBlocks
                                                         if self.nativeUIBlocks == nil {
                                                             self.nativeUIBlocks = []
                                                         }
@@ -3628,12 +3704,42 @@ class APIManager {
                                                 continuation.yield(StreamData(operationalState: currentLanguagePrefix ?  "工具不存在" : "Tool does not exist"))
                                                 toolResultFront = currentLanguagePrefix ?  "工具不存在" : "Tool does not exist"
                                             }
-                                            print("💡 输出结果：", toolResult)
+                                            let executionDuration = Date().timeIntervalSince(executionStart)
+                                            if toolResult == "Unknown" {
+                                                continuation.yield(StreamData(agentEvents: [
+                                                    .toolExecutionFailed(
+                                                        id: executionID,
+                                                        error: AgentSafeError(message: toolResultFront)
+                                                    )
+                                                ]))
+                                            } else {
+                                                continuation.yield(StreamData(agentEvents: [
+                                                    .toolExecutionCompleted(
+                                                        id: executionID,
+                                                        result: AgentToolResult(
+                                                            modelText: toolResult,
+                                                            userText: toolResultFront,
+                                                            richResultBlocks: executionUIBlocks,
+                                                            duration: executionDuration
+                                                        )
+                                                    )
+                                                ]))
+                                            }
+                                            toolResultsForModel.append((functionName, toolResult))
                                             continuation.yield(StreamData(
                                                 toolContent: "\(toolResultFront)",
                                                 toolName: "\(functionName)",
                                                 operationalDescription: "\(toolResultFront)")
                                             )
+                                        }
+                                    }
+
+                                    if !toolResultsForModel.isEmpty {
+                                        useFunctionName = toolResultsForModel.map(\.name).joined(separator: ", ")
+                                        if toolResultsForModel.count == 1 {
+                                            toolResult = toolResultsForModel[0].result
+                                        } else {
+                                            toolResult = toolResultsForModel.map { "[\($0.name)]\n\($0.result)" }.joined(separator: "\n\n")
                                         }
                                     }
                                     
@@ -4181,6 +4287,8 @@ class APIManager {
         currentTask?.cancel()
         currentTask = nil
         isCancelled = false
+        reportProgressController = ReportProgressController()
+        latestToolProgressSummary = nil
         
         let currentLanguage = Locale.preferredLanguages.first ?? "zh-Hans"
         

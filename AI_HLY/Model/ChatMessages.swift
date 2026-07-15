@@ -127,6 +127,7 @@ class ChatMessages {
     var codeBlockData: [CodeBlock]? = nil
     var knowledgeCard: [KnowledgeCard]? = nil
     var nativeUIBlocksJSON: String? = nil
+    var agentRunJSON: String? = nil
     var audioData: Data?
     var audioExpanded: Bool? = false
     var showCanvas: Bool? = false
@@ -221,6 +222,7 @@ class ChatMessages {
         codeBlockData: [CodeBlock]? = nil,
         knowledgeCard: [KnowledgeCard]? = nil,
         nativeUIBlocksJSON: String? = nil,
+        agentRunJSON: String? = nil,
         modelName: String? = nil,
         modelDisplayName: String? = nil,
         groupID: UUID = UUID(),
@@ -249,6 +251,7 @@ class ChatMessages {
         self.codeBlockData = codeBlockData
         self.knowledgeCard = knowledgeCard
         self.nativeUIBlocksJSON = nativeUIBlocksJSON
+        self.agentRunJSON = agentRunJSON
         self.modelName = modelName
         self.modelDisplayName = modelDisplayName
         self.groupID = groupID
