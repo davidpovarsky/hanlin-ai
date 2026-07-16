@@ -2778,14 +2778,12 @@ class APIManager {
                                     var toolResult = ""
                                     var toolResultFront = ""
                                     var useFunctionName = ""
-                                    var toolID = ""
                                     var toolResultsForModel: [(name: String, result: String)] = []
                                     for toolCall in accumulatedToolCalls {
                                         if let toolCallID = toolCall["id"] as? String,
                                            let functionDict = toolCall["function"] as? [String: Any],
                                            let functionName = functionDict["name"] as? String,
                                            let functionArguments = functionDict["arguments"] as? String {
-                                            toolID = toolCallID
                                             var parsedCall = AgentToolCall.parse(
                                                 id: toolCallID,
                                                 name: functionName,
