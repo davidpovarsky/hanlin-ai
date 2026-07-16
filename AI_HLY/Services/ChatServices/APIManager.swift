@@ -87,6 +87,7 @@ class APIManager {
     private var toolMessageReasoning: String?   // 工具使用思考
     private var reportProgressController = ReportProgressController()
     private var latestToolProgressSummary: String?
+    private var agentDiagnosticsRecorder: AgentDiagnosticsRecorder?
     private var dataIndex: Int?
     
     private var context: ModelContext
@@ -1316,6 +1317,12 @@ class APIManager {
         currentTask?.cancel()
         currentTask = nil
     }
+
+    func completeAgentDiagnostics(status: String, error: Error? = nil) async {
+        guard let recorder = agentDiagnosticsRecorder else { return }
+        await recorder.complete(status: status, error: error.map { AgentSafeError($0).message })
+        agentDiagnosticsRecorder = nil
+    }
     
     // MARK: - 本地模型处理相关
     /// 构建本地模型所需的格式化文本（封装消息内容、文件处理等）
@@ -1405,6 +1412,7 @@ class APIManager {
         
         return AsyncThrowingStream<StreamData, Error> { continuation in
             Task(priority: .userInitiated) {
+                var diagnosticsRoundID: UUID?
                 do {
                     let isChinese = currentLanguage.hasPrefix("zh")
                     
@@ -1464,6 +1472,24 @@ class APIManager {
                     }
                     if maxTokens > 0 {
                         maxtokens = maxTokens
+                    }
+
+                    if let recorder = self.agentDiagnosticsRecorder {
+                        diagnosticsRoundID = await recorder.beginRound(
+                            index: 1,
+                            trigger: "initialUserRequest",
+                            requestObject: [
+                                "system": finalSystemMessage,
+                                "messages": chats.map { String(describing: $0) },
+                                "currentInput": currentInput,
+                                "temperature": tem,
+                                "topP": topp,
+                                "maxTokens": maxtokens
+                            ]
+                        )
+                        if let diagnosticsRoundID {
+                            await recorder.responseStarted(roundID: diagnosticsRoundID, httpStatus: nil, providerRequestID: nil)
+                        }
                     }
                     
                     // 初始化 LLM.swift 本地模型及参数调节
@@ -1539,10 +1565,31 @@ class APIManager {
                         }
                         return ""
                     }
+
+                    if let recorder = self.agentDiagnosticsRecorder, let diagnosticsRoundID {
+                        await recorder.recordStreamEvent(
+                            roundID: diagnosticsRoundID,
+                            visibleContent: accumulatedOutput,
+                            visibleReasoningSummary: nil
+                        )
+                        await recorder.finishRound(
+                            roundID: diagnosticsRoundID,
+                            finishReason: "stop",
+                            usage: nil
+                        )
+                    }
                     
                     continuation.finish()
                     
                 } catch {
+                    if let recorder = self.agentDiagnosticsRecorder, let diagnosticsRoundID {
+                        await recorder.finishRound(
+                            roundID: diagnosticsRoundID,
+                            finishReason: nil,
+                            usage: nil,
+                            error: AgentSafeError(error).message
+                        )
+                    }
                     
                     continuation.finish(throwing: error)
                     
@@ -2231,6 +2278,10 @@ class APIManager {
         return AsyncThrowingStream<StreamData, Error> { continuation in
             
             Task(priority: .userInitiated) {
+                var diagnosticsRoundID: UUID?
+                var diagnosticsRoundFinished = false
+                var diagnosticsUsage: AgentTokenUsage?
+                var diagnosticsFinishReason: String?
                 do {
                     let currentLanguagePrefix = currentLanguage.hasPrefix("zh")
                     var tempFormattedMessages: [[String: Any]]
@@ -2347,8 +2398,6 @@ class APIManager {
                     }
                     
                     continuation.yield(StreamData(operationalState: currentLanguagePrefix ? "正在发送请求" : "Sending request"))
-                    
-                    print(finalFormattedMessages)
                     
                     // 获取 API Key 和请求 URL
                     guard let apiKey = getAPIKey(for: modelInfo.company ?? "Unknown") else {
@@ -2500,6 +2549,14 @@ class APIManager {
                             ]
                         }
                     }
+
+                    if let recorder = self.agentDiagnosticsRecorder {
+                        diagnosticsRoundID = await recorder.beginRound(
+                            index: depth + 1,
+                            trigger: depth == 0 ? "initialUserRequest" : "continueAfterToolResult",
+                            requestObject: requestBody
+                        )
+                    }
                     
                     request.httpBody = try? JSONSerialization.data(withJSONObject: requestBody, options: [])
                     
@@ -2508,6 +2565,15 @@ class APIManager {
                     
                     let (result, response) = try await URLSession.shared.bytes(for: request)
                     let httpResponse = response as? HTTPURLResponse
+                    if let recorder = self.agentDiagnosticsRecorder, let diagnosticsRoundID {
+                        let requestID = httpResponse?.value(forHTTPHeaderField: "x-request-id")
+                            ?? httpResponse?.value(forHTTPHeaderField: "request-id")
+                        await recorder.responseStarted(
+                            roundID: diagnosticsRoundID,
+                            httpStatus: httpResponse?.statusCode,
+                            providerRequestID: requestID
+                        )
+                    }
                     
                     if let httpResponse = httpResponse, !(200...299).contains(httpResponse.statusCode) {
                         var errorContent = ""
@@ -2548,8 +2614,18 @@ class APIManager {
                         if line.hasPrefix("data: ") {
                             let jsonString = line.replacingOccurrences(of: "data: ", with: "").trimmingCharacters(in: .whitespacesAndNewlines)
                             guard let jsonData = jsonString.data(using: .utf8),
-                                  let jsonObject = try? JSONSerialization.jsonObject(with: jsonData, options: []) as? [String: Any],
-                                  let choices = jsonObject["choices"] as? [[String: Any]],
+                                  let jsonObject = try? JSONSerialization.jsonObject(with: jsonData, options: []) as? [String: Any] else {
+                                continue
+                            }
+                            if let usage = self.agentTokenUsage(from: jsonObject) {
+                                diagnosticsUsage = usage
+                                NativeToolTraceLogger.shared.log(
+                                    "ModelUsageReceived",
+                                    ["inputTokens": usage.inputTokens as Any, "outputTokens": usage.outputTokens as Any],
+                                    modelStep: depth + 1
+                                )
+                            }
+                            guard let choices = jsonObject["choices"] as? [[String: Any]],
                                   let delta = choices.first?["delta"] as? [String: Any] else {
                                 continue
                             }
@@ -2640,6 +2716,13 @@ class APIManager {
                             }
                             
                             if responseData.content != nil || responseData.reasoning != nil {
+                                if let recorder = self.agentDiagnosticsRecorder, let diagnosticsRoundID {
+                                    await recorder.recordStreamEvent(
+                                        roundID: diagnosticsRoundID,
+                                        visibleContent: responseData.content,
+                                        visibleReasoningSummary: responseData.reasoning
+                                    )
+                                }
                                 continuation.yield(responseData)
                             }
                             
@@ -2690,6 +2773,7 @@ class APIManager {
                             }
                             
                             if let finishReason = choices.first?["finish_reason"] as? String {
+                                diagnosticsFinishReason = finishReason
                                 if finishReason == "tool_calls" {
                                     var toolResult = ""
                                     var toolResultFront = ""
@@ -2714,6 +2798,9 @@ class APIManager {
                                             }
 
                                             if functionName == ToolSchemaDecorator.reportProgressName {
+                                                if let recorder = self.agentDiagnosticsRecorder, let diagnosticsRoundID {
+                                                    await recorder.recordToolCall(roundID: diagnosticsRoundID, call: parsedCall)
+                                                }
                                                 useFunctionName = functionName
                                                 toolResult = "Progress update delivered."
                                                 toolResultFront = ""
@@ -2732,7 +2819,20 @@ class APIManager {
                                                         ))
                                                     ]))
                                                 }
+                                                if let recorder = self.agentDiagnosticsRecorder, let diagnosticsRoundID {
+                                                    await recorder.completeToolCall(
+                                                        roundID: diagnosticsRoundID,
+                                                        callID: toolCallID,
+                                                        resultForModel: toolResult,
+                                                        resultForUser: nil,
+                                                        duration: 0
+                                                    )
+                                                }
                                                 continue
+                                            }
+
+                                            if let recorder = self.agentDiagnosticsRecorder, let diagnosticsRoundID {
+                                                await recorder.recordToolCall(roundID: diagnosticsRoundID, call: parsedCall)
                                             }
 
                                             let functionArguments = parsedCall.sanitizedArgumentsJSON
@@ -3143,7 +3243,6 @@ class APIManager {
                                                         throw NSError(domain: "ToolArgumentError", code: -1,
                                                                       userInfo: [NSLocalizedDescriptionKey: "参数解析失败"])
                                                     }
-                                                    print("json", jsonData)
                                                     useFunctionName = functionName
                                                     
                                                     let startCoordinate = CLLocationCoordinate2D(latitude: startLatitude, longitude: startLongitude)
@@ -3725,6 +3824,16 @@ class APIManager {
                                                     )
                                                 ]))
                                             }
+                                            if let recorder = self.agentDiagnosticsRecorder, let diagnosticsRoundID {
+                                                await recorder.completeToolCall(
+                                                    roundID: diagnosticsRoundID,
+                                                    callID: toolCallID,
+                                                    resultForModel: toolResult,
+                                                    resultForUser: toolResultFront,
+                                                    duration: executionDuration,
+                                                    error: toolResult == "Unknown" ? toolResultFront : nil
+                                                )
+                                            }
                                             toolResultsForModel.append((functionName, toolResult))
                                             continuation.yield(StreamData(
                                                 toolContent: "\(toolResultFront)",
@@ -3744,8 +3853,6 @@ class APIManager {
                                     }
                                     
                                     try await Task.sleep(nanoseconds: 300_000_000)
-                                    
-                                    print("toolID:", toolID)
                                     
                                     var newFormattedMessages = finalFormattedMessages
                                     
@@ -3790,7 +3897,6 @@ class APIManager {
 
                                     }
                                     
-                                    print(newFormattedMessages)
                                     continuation.yield(StreamData(content: "\n\n"))
                                     if modelInfo.supportsReasoning && ifThink {continuation.yield(StreamData(reasoning: "\n\n"))}
                                     
@@ -3821,6 +3927,15 @@ class APIManager {
                                     self.canvasInfo = nil
                                     self.nativeUIBlocks = nil
                                     
+                                    if let recorder = self.agentDiagnosticsRecorder, let diagnosticsRoundID {
+                                        await recorder.finishRound(
+                                            roundID: diagnosticsRoundID,
+                                            finishReason: diagnosticsFinishReason,
+                                            usage: diagnosticsUsage
+                                        )
+                                        diagnosticsRoundFinished = true
+                                    }
+
                                     // 递归处理
                                     let recursiveStream = try await self.processRemoteModel(messages: messages,
                                                                                             formattedMessages: newFormattedMessages,
@@ -3931,10 +4046,29 @@ class APIManager {
                             }
                         }
                     }
+                    if let recorder = self.agentDiagnosticsRecorder,
+                       let diagnosticsRoundID,
+                       !diagnosticsRoundFinished {
+                        await recorder.finishRound(
+                            roundID: diagnosticsRoundID,
+                            finishReason: diagnosticsFinishReason,
+                            usage: diagnosticsUsage
+                        )
+                    }
                     // 流完成
                     continuation.finish()
                     self.isCancelled = false
                 } catch {
+                    if let recorder = self.agentDiagnosticsRecorder,
+                       let diagnosticsRoundID,
+                       !diagnosticsRoundFinished {
+                        await recorder.finishRound(
+                            roundID: diagnosticsRoundID,
+                            finishReason: diagnosticsFinishReason,
+                            usage: diagnosticsUsage,
+                            error: AgentSafeError(error).message
+                        )
+                    }
                     continuation.finish(throwing: error)
                 }
                 
@@ -4265,6 +4399,7 @@ class APIManager {
     func sendStreamRequest(messages: [RequestMessage],
                            modelName: String,
                            groupID: UUID,
+                           runID: UUID,
                            ifSearch: Bool,
                            ifKnowledge: Bool,
                            ifToolUse: Bool,
@@ -4298,6 +4433,13 @@ class APIManager {
         ).first else {
             throw NSError(domain: "DatabaseError", code: -1, userInfo: [NSLocalizedDescriptionKey: "无法获取模型信息"])
         }
+
+        agentDiagnosticsRecorder = await AgentDiagnosticsRecorder.start(
+            runID: runID,
+            groupID: groupID,
+            providerID: modelInfo.company ?? "Unknown",
+            modelID: modelInfo.name ?? modelName
+        )
         
         let company = modelInfo.company?.uppercased()
         if company == "LOCAL" {
@@ -4343,6 +4485,26 @@ class APIManager {
                 )
             }
         }
+    }
+
+    private func agentTokenUsage(from object: [String: Any]) -> AgentTokenUsage? {
+        guard let usage = object["usage"] as? [String: Any] else { return nil }
+        let input = usage["prompt_tokens"] as? Int ?? usage["input_tokens"] as? Int
+        let output = usage["completion_tokens"] as? Int ?? usage["output_tokens"] as? Int
+        let total = usage["total_tokens"] as? Int
+        let promptDetails = usage["prompt_tokens_details"] as? [String: Any]
+        let completionDetails = usage["completion_tokens_details"] as? [String: Any]
+        let cached = promptDetails?["cached_tokens"] as? Int
+        let reasoning = completionDetails?["reasoning_tokens"] as? Int
+        guard input != nil || output != nil || total != nil else { return nil }
+        return AgentTokenUsage(
+            inputTokens: input,
+            outputTokens: output,
+            reasoningTokens: reasoning,
+            cachedInputTokens: cached,
+            totalTokens: total,
+            source: .providerReported
+        )
     }
 }
 

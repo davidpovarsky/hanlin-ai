@@ -117,7 +117,7 @@ final class NativeToolTraceLogger: @unchecked Sendable {
                 options: [.skipsHiddenFiles]
               ) else { return }
 
-        let sorted = files.sorted {
+        let sorted = files.filter { $0.lastPathComponent.hasPrefix("Hanlin-Chat-") }.sorted {
             let left = (try? $0.resourceValues(forKeys: [.contentModificationDateKey]).contentModificationDate) ?? .distantPast
             let right = (try? $1.resourceValues(forKeys: [.contentModificationDateKey]).contentModificationDate) ?? .distantPast
             return left > right

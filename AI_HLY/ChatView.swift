@@ -1187,6 +1187,7 @@ struct ChatView: View {
                     messages: messagesToSend,
                     modelName: modelTemp[selectedModelIndex].name ?? "Unknown",
                     groupID: thisGroupID,
+                    runID: agentCoordinator.runID,
                     ifSearch: modelTemp[selectedModelIndex].supportsSearch && ifSearch,
                     ifKnowledge: modelTemp[selectedModelIndex].supportsSearch && ifKnowledge,
                     ifToolUse: modelTemp[selectedModelIndex].supportsToolUse && ifToolUse,
@@ -1532,6 +1533,7 @@ struct ChatView: View {
                         let reasoningContent = assistantMessage.reasoning?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
                         if textContent.isEmpty && reasoningContent.isEmpty && assistantMessage.imageArray.isEmpty {
                             agentCoordinator.fail(AgentSafeError(message: String(localized: "⚠️ 生成内容为空，请重新尝试！")))
+                            Task { await apiManager?.completeAgentDiagnostics(status: "failed") }
                             groupBeginMessage.agentRun = agentCoordinator.run
                             operationalState = ""
                             operationalDescription = ""
@@ -1543,6 +1545,7 @@ struct ChatView: View {
                             try? context.save()
                         } else {
                             agentCoordinator.complete()
+                            Task { await apiManager?.completeAgentDiagnostics(status: "completed") }
                             groupBeginMessage.agentRun = agentCoordinator.run
                             
                             // 一切正常，进行数据库保存操作
@@ -1608,6 +1611,7 @@ struct ChatView: View {
                 // 响应异常处理
                 await MainActor.run {
                     agentCoordinator.fail(error)
+                    Task { await apiManager?.completeAgentDiagnostics(status: "failed", error: error) }
                     groupBeginMessage.agentRun = agentCoordinator.run
                     context.insert(groupBeginMessage)
                     try? context.save()
@@ -1641,6 +1645,7 @@ struct ChatView: View {
         isCancelled = true
         
         apiManager?.cancelCurrentRequest()
+        Task { await apiManager?.completeAgentDiagnostics(status: "cancelled") }
         activeAgentCoordinator?.cancel()
         if let coordinator = activeAgentCoordinator {
             activeAgentMessage?.agentRun = coordinator.run

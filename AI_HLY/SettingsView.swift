@@ -137,6 +137,16 @@ struct SettingsView: View {
                         Label(String(localized: "通用"), systemImage: "gearshape")
                     }
                 }
+                Section(header: Text(String(localized: "Developer / Diagnostics"))) {
+                    NavigationLink {
+                        AgentDiagnosticsView()
+                            .onAppear { isPushed = true }
+                            .onDisappear { isPushed = false }
+                            .toolbar(.hidden, for: .tabBar)
+                    } label: {
+                        Label(String(localized: "Agent Diagnostics"), systemImage: "stethoscope")
+                    }
+                }
                 Section(header: Text(String(localized: "帮助"))) {
                     Button(action: {
                         showSafariGuide = true
