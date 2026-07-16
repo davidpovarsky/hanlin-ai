@@ -1,16 +1,26 @@
 import Foundation
 
 enum AgentDiagnosticsRedactor {
-    private static let sensitiveKeyFragments = [
-        "authorization", "api_key", "apikey", "token", "access_token", "refresh_token",
-        "cookie", "password", "private_key", "secret", "credential", "github_token", "mcp_auth"
+    private static let secretKeyNames: Set<String> = [
+        "access_token", "accesstoken", "refresh_token", "refreshtoken",
+        "api_key", "apikey", "x_api_key", "authorization", "proxy_authorization",
+        "cookie", "set_cookie", "password", "secret", "client_secret", "clientsecret",
+        "private_key", "privatekey", "credential", "github_token", "githubtoken",
+        "mcp_auth", "mcpauth", "auth_token", "bearer_token", "token", "signature", "sig"
+    ]
+
+    private static let secretKeySuffixes = [
+        "_access_token", "_refresh_token", "_auth_token", "_bearer_token",
+        "_api_key", "_client_secret", "_private_key", "_github_token"
     ]
 
     static func sanitizeJSONObject(_ value: Any) -> Any {
         if let dictionary = value as? [String: Any] {
             return dictionary.reduce(into: [String: Any]()) { result, item in
-                let key = item.key.lowercased()
-                result[item.key] = sensitiveKeyFragments.contains(where: key.contains)
+                let normalizedKey = item.key
+                    .lowercased()
+                    .replacingOccurrences(of: "-", with: "_")
+                result[item.key] = isSecretKey(normalizedKey)
                     ? "<redacted>"
                     : sanitizeJSONObject(item.value)
             }
@@ -18,6 +28,11 @@ enum AgentDiagnosticsRedactor {
         if let array = value as? [Any] { return array.map(sanitizeJSONObject) }
         if let string = value as? String { return sanitize(string) }
         return value
+    }
+
+    private static func isSecretKey(_ normalizedKey: String) -> Bool {
+        secretKeyNames.contains(normalizedKey)
+            || secretKeySuffixes.contains(where: normalizedKey.hasSuffix)
     }
 
     static func sanitize(_ value: String) -> String {

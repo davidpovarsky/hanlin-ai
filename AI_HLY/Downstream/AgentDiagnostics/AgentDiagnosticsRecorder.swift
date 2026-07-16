@@ -107,21 +107,30 @@ actor AgentDiagnosticsRecorder {
     }
 
     func responseStarted(roundID: UUID, httpStatus: Int?, providerRequestID: String?) async {
+        let responseStartedAt = Date()
         updateRound(roundID) { round in
             round.response.httpStatus = httpStatus
             round.response.providerRequestID = providerRequestID
-            round.response.timeToFirstToken = Date().timeIntervalSince(round.startedAt)
+            round.response.timeToFirstToken = responseStartedAt.timeIntervalSince(round.startedAt)
         }
         await persist()
         trace("ModelResponseStarted", roundID: roundID)
     }
 
     func recordStreamEvent(roundID: UUID, visibleContent: String?, visibleReasoningSummary: String?) {
+        let shouldStoreFullContent = session.level == .fullLocalDebug
+
         updateRound(roundID) { round in
             round.response.streamEventCount += 1
-            if self.session.level == .fullLocalDebug {
-                if let visibleContent { round.response.visibleContent = (round.response.visibleContent ?? "") + visibleContent }
-                if let visibleReasoningSummary { round.response.visibleReasoningSummary = (round.response.visibleReasoningSummary ?? "") + visibleReasoningSummary }
+
+            guard shouldStoreFullContent else { return }
+
+            if let visibleContent {
+                round.response.visibleContent = (round.response.visibleContent ?? "") + visibleContent
+            }
+            if let visibleReasoningSummary {
+                round.response.visibleReasoningSummary =
+                    (round.response.visibleReasoningSummary ?? "") + visibleReasoningSummary
             }
         }
     }
@@ -167,23 +176,35 @@ actor AgentDiagnosticsRecorder {
         duration: TimeInterval,
         error: String? = nil
     ) async {
+        let shouldStoreFullContent = session.level == .fullLocalDebug
+        let completedAt = Date()
+        let sanitizedError = error.map(AgentDiagnosticsRedactor.sanitize)
+        let sanitizedModelResult = shouldStoreFullContent
+            ? AgentDiagnosticsRedactor.sanitize(resultForModel)
+            : nil
+        let sanitizedUserResult = shouldStoreFullContent
+            ? resultForUser.map(AgentDiagnosticsRedactor.sanitize)
+            : nil
+        let resultByteCount = resultForModel.utf8.count
+
         updateRound(roundID) { round in
             guard let index = round.toolCalls.firstIndex(where: { $0.callID == callID }) else { return }
-            round.toolCalls[index].executionCompletedAt = Date()
-            round.toolCalls[index].status = error == nil ? "completed" : "failed"
-            round.toolCalls[index].resultByteCount = resultForModel.utf8.count
-            round.toolCalls[index].error = error.map(AgentDiagnosticsRedactor.sanitize)
-            if self.session.level == .fullLocalDebug {
-                round.toolCalls[index].resultForModel = AgentDiagnosticsRedactor.sanitize(resultForModel)
-                round.toolCalls[index].resultForUser = resultForUser.map(AgentDiagnosticsRedactor.sanitize)
-            }
+
+            var call = round.toolCalls[index]
+            call.executionCompletedAt = completedAt
+            call.status = error == nil ? "completed" : "failed"
+            call.resultByteCount = resultByteCount
+            call.error = sanitizedError
+            call.resultForModel = sanitizedModelResult
+            call.resultForUser = sanitizedUserResult
+            round.toolCalls[index] = call
         }
         updateDerivedValues()
         await persist()
         trace(
             error == nil ? "ToolExecutionCompleted" : "ToolExecutionFailed",
             roundID: roundID,
-            fields: ["callID": callID, "duration": duration, "resultBytes": resultForModel.utf8.count]
+            fields: ["callID": callID, "duration": duration, "resultBytes": resultByteCount]
         )
     }
 
@@ -193,11 +214,14 @@ actor AgentDiagnosticsRecorder {
         usage: AgentTokenUsage?,
         error: String? = nil
     ) async {
+        let completedAt = Date()
+        let sanitizedError = error.map(AgentDiagnosticsRedactor.sanitize)
+
         updateRound(roundID) { round in
-            round.completedAt = Date()
+            round.completedAt = completedAt
             round.response.finishReason = finishReason
-            round.response.error = error.map(AgentDiagnosticsRedactor.sanitize)
-            round.response.totalLatency = Date().timeIntervalSince(round.startedAt)
+            round.response.error = sanitizedError
+            round.response.totalLatency = completedAt.timeIntervalSince(round.startedAt)
             if let usage {
                 round.usage = usage
             } else {
@@ -226,7 +250,10 @@ actor AgentDiagnosticsRecorder {
 
     private func updateRound(_ id: UUID, update: (inout AgentDiagnosticsRound) -> Void) {
         guard let index = session.rounds.firstIndex(where: { $0.id == id }) else { return }
-        update(&session.rounds[index])
+
+        var round = session.rounds[index]
+        update(&round)
+        session.rounds[index] = round
         session.lastUpdatedAt = Date()
     }
 
@@ -257,11 +284,13 @@ actor AgentDiagnosticsRecorder {
     }
 
     private func persist() async {
+        let snapshot = session
+
         do {
             try FileManager.default.createDirectory(at: directoryURL, withIntermediateDirectories: true)
-            let data = try encoder.encode(session)
+            let data = try encoder.encode(snapshot)
             try data.write(to: jsonURL, options: [.atomic, .completeFileProtectionUnlessOpen])
-            let readable = Self.readableText(session)
+            let readable = Self.readableText(snapshot)
             try Data(readable.utf8).write(to: textURL, options: [.atomic, .completeFileProtectionUnlessOpen])
         } catch {
             NativeToolTraceLogger.shared.logError("AgentDiagnosticsWriteFailed", error: error)

@@ -8,6 +8,7 @@ struct AgentDiagnosticsView: View {
     @State private var confirmsDeleteAll = false
 
     private var directoryURL: URL? { NativeToolTraceLogger.shared.diagnosticsDirectoryURL }
+    private static let interruptedSessionThreshold: TimeInterval = 10 * 60
 
     var body: some View {
         List {
@@ -93,7 +94,12 @@ struct AgentDiagnosticsView: View {
         sessions = urls.filter { $0.lastPathComponent.hasPrefix("agent-session-") && $0.pathExtension == "json" }
             .compactMap { url in
                 guard let data = try? Data(contentsOf: url),
-                      let session = try? decoder.decode(AgentDiagnosticsSession.self, from: data) else { return nil }
+                      var session = try? decoder.decode(AgentDiagnosticsSession.self, from: data) else { return nil }
+                if !session.isComplete,
+                   session.status == "running",
+                   Date().timeIntervalSince(session.lastUpdatedAt) > Self.interruptedSessionThreshold {
+                    session.status = "interrupted"
+                }
                 return AgentDiagnosticsSessionFile(session: session, jsonURL: url, textURL: url.deletingPathExtension().appendingPathExtension("txt"))
             }
             .sorted { $0.session.startedAt > $1.session.startedAt }
