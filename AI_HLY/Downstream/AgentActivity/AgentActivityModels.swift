@@ -140,7 +140,7 @@ struct AgentActivityStep: Codable, Hashable, Identifiable {
 }
 
 struct AgentRun: Codable, Hashable, Identifiable {
-    static let currentSchemaVersion = 1
+    static let currentSchemaVersion = 2
 
     var schemaVersion: Int
     var id: UUID
@@ -151,6 +151,7 @@ struct AgentRun: Codable, Hashable, Identifiable {
     var completedAt: Date?
     var status: AgentActivityStatus
     var steps: [AgentActivityStep]
+    var transcriptItems: [AgentTranscriptItem]
     var finalAnswer: String?
 
     init(
@@ -163,6 +164,7 @@ struct AgentRun: Codable, Hashable, Identifiable {
         completedAt: Date? = nil,
         status: AgentActivityStatus = .running,
         steps: [AgentActivityStep] = [],
+        transcriptItems: [AgentTranscriptItem] = [],
         finalAnswer: String? = nil
     ) {
         self.schemaVersion = schemaVersion
@@ -174,6 +176,7 @@ struct AgentRun: Codable, Hashable, Identifiable {
         self.completedAt = completedAt
         self.status = status
         self.steps = steps
+        self.transcriptItems = transcriptItems
         self.finalAnswer = finalAnswer
     }
 
@@ -183,7 +186,7 @@ struct AgentRun: Codable, Hashable, Identifiable {
 
     private enum CodingKeys: String, CodingKey {
         case schemaVersion, id, groupID, providerID, modelID, startedAt, completedAt
-        case status, steps, finalAnswer
+        case status, steps, transcriptItems, finalAnswer
     }
 
     init(from decoder: Decoder) throws {
@@ -197,6 +200,11 @@ struct AgentRun: Codable, Hashable, Identifiable {
         completedAt = try container.decodeIfPresent(Date.self, forKey: .completedAt)
         status = try container.decodeIfPresent(AgentActivityStatus.self, forKey: .status) ?? .completed
         steps = try container.decodeIfPresent([AgentActivityStep].self, forKey: .steps) ?? []
+        let decodedTranscript = try container.decodeIfPresent(
+            [AgentTranscriptItem].self,
+            forKey: .transcriptItems
+        ) ?? []
+        transcriptItems = AgentTranscriptValidation.normalized(decodedTranscript)
         finalAnswer = try container.decodeIfPresent(String.self, forKey: .finalAnswer)
     }
 }

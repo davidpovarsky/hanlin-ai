@@ -85,6 +85,12 @@ struct AgentToolResult: @unchecked Sendable {
     var duration: TimeInterval
 }
 
+enum AgentAnswerDisposition: String, Codable, Hashable, Sendable {
+    case provisional
+    case interim
+    case final
+}
+
 enum AgentEvent: @unchecked Sendable {
     case runStarted(AgentRunMetadata)
     case reasoningStarted(AgentItemMetadata)
@@ -98,9 +104,9 @@ enum AgentEvent: @unchecked Sendable {
     case toolExecutionProgress(id: String, message: String)
     case toolExecutionCompleted(id: String, result: AgentToolResult)
     case toolExecutionFailed(id: String, error: AgentSafeError)
-    case answerStarted(AgentItemMetadata)
-    case answerDelta(id: String, text: String)
-    case answerCompleted(id: String)
+    case answerSegmentStarted(AgentItemMetadata)
+    case answerSegmentDelta(id: String, text: String)
+    case answerSegmentEnded(id: String, disposition: AgentAnswerDisposition)
     case searchStarted(id: String, title: String, query: String?)
     case searchCompleted(id: String, sources: [AgentActivitySource], output: String?)
     case runCompleted

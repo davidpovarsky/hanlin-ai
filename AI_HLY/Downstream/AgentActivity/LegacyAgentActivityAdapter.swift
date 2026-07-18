@@ -14,6 +14,7 @@ enum LegacyAgentActivityAdapter {
         guard let first = assistantMessages.first else { return nil }
 
         var run = AgentRun(
+            schemaVersion: 1,
             groupID: first.groupID,
             providerID: nil,
             modelID: first.modelName,

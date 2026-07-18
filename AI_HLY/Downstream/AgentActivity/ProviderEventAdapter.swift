@@ -10,63 +10,146 @@ protocol ProviderEventAdapter {
 }
 
 struct HanlinStreamEventAdapter: ProviderEventAdapter {
+    private enum SemanticEventKind {
+        case reasoning
+        case progress
+        case toolActivity
+        case search
+        case assistantText
+    }
+
     private let runID: UUID
-    private let reasoningID: String
-    private let answerID: String
-    private var reasoningStarted = false
-    private var answerStarted = false
+    private var reasoningSegmentSequence = 0
+    private var activeReasoningSegmentID: String?
+    private var answerSegmentSequence = 0
+    private var activeAnswerSegmentID: String?
+    private var lastSemanticEventKind: SemanticEventKind?
     private var searchSequence = 0
     private var activeSearchID: String?
 
     init(runID: UUID) {
         self.runID = runID
-        reasoningID = "reasoning:\(runID.uuidString)"
-        answerID = "answer:\(runID.uuidString)"
     }
 
     mutating func events(from data: StreamData) -> [AgentEvent] {
-        var events = data.agentEvents
+        var events: [AgentEvent] = []
+
+        if data.agentEvents.contains(where: isActivityBoundary) {
+            endActiveAnswerSegment(as: .interim, into: &events)
+            endActiveReasoning(into: &events)
+            lastSemanticEventKind = .toolActivity
+        }
+        events.append(contentsOf: data.agentEvents)
 
         if let reasoning = data.reasoning, !reasoning.isEmpty {
-            if !reasoningStarted {
-                reasoningStarted = true
-                events.append(.reasoningStarted(AgentItemMetadata(id: reasoningID, title: String(localized: "Thinking"), startedAt: Date())))
+            endActiveAnswerSegment(as: .interim, into: &events)
+            if activeReasoningSegmentID == nil {
+                reasoningSegmentSequence += 1
+                let id = "reasoning:\(runID.uuidString):\(reasoningSegmentSequence)"
+                activeReasoningSegmentID = id
+                events.append(.reasoningStarted(AgentItemMetadata(
+                    id: id,
+                    title: String(localized: "Thinking"),
+                    startedAt: Date()
+                )))
             }
-            events.append(.reasoningDelta(id: reasoningID, text: reasoning))
+            if let id = activeReasoningSegmentID {
+                events.append(.reasoningDelta(id: id, text: reasoning))
+            }
+            lastSemanticEventKind = .reasoning
         }
 
         if let content = data.content, !content.isEmpty {
-            if reasoningStarted {
-                events.append(.reasoningCompleted(id: reasoningID))
-                reasoningStarted = false
+            endActiveReasoning(into: &events)
+            if activeAnswerSegmentID == nil {
+                answerSegmentSequence += 1
+                let id = "answer:\(runID.uuidString):\(answerSegmentSequence)"
+                activeAnswerSegmentID = id
+                events.append(.answerSegmentStarted(AgentItemMetadata(
+                    id: id,
+                    title: String(localized: "Done"),
+                    startedAt: Date()
+                )))
             }
-            if !answerStarted {
-                answerStarted = true
-                events.append(.answerStarted(AgentItemMetadata(id: answerID, title: String(localized: "Done"), startedAt: Date())))
+            if let id = activeAnswerSegmentID {
+                events.append(.answerSegmentDelta(id: id, text: content))
             }
-            events.append(.answerDelta(id: answerID, text: content))
+            lastSemanticEventKind = .assistantText
         }
 
         if let state = data.operationalState,
            let sanitized = ProgressSummarySanitizer.sanitize(localizedOperationalState(state)),
            !sanitized.isEmpty {
-            events.append(.progressMessage(AgentProgressMessage(id: "status:\(runID.uuidString):\(sanitized)", message: sanitized, source: .applicationGenerated, timestamp: Date())))
+            endActiveAnswerSegment(as: .interim, into: &events)
+            events.append(.progressMessage(AgentProgressMessage(
+                id: "status:\(runID.uuidString):\(sanitized)",
+                message: sanitized,
+                source: .applicationGenerated,
+                timestamp: Date()
+            )))
+            lastSemanticEventKind = .progress
         }
 
         if data.searchEngine != nil || data.search_text != nil || data.resources != nil {
+            endActiveAnswerSegment(as: .interim, into: &events)
             if activeSearchID == nil {
                 searchSequence += 1
-                activeSearchID = "search:\(runID.uuidString):\(searchSequence)"
-                events.append(.searchStarted(id: activeSearchID!, title: String(localized: "Searching the web"), query: nil))
+                let id = "search:\(runID.uuidString):\(searchSequence)"
+                activeSearchID = id
+                events.append(.searchStarted(
+                    id: id,
+                    title: String(localized: "Searching the web"),
+                    query: nil
+                ))
             }
-            let sources = (data.resources ?? []).map {
-                AgentActivitySource(title: $0.title, url: $0.link, sourceName: data.searchEngine)
+            if let id = activeSearchID {
+                let sources = (data.resources ?? []).map {
+                    AgentActivitySource(title: $0.title, url: $0.link, sourceName: data.searchEngine)
+                }
+                events.append(.searchCompleted(id: id, sources: sources, output: data.search_text))
             }
-            events.append(.searchCompleted(id: activeSearchID!, sources: sources, output: data.search_text))
             if data.resources != nil { activeSearchID = nil }
+            lastSemanticEventKind = .search
         }
 
         return events
+    }
+
+    mutating func completionEvents() -> [AgentEvent] {
+        var events: [AgentEvent] = []
+        endActiveReasoning(into: &events)
+        endActiveAnswerSegment(as: .final, into: &events)
+        lastSemanticEventKind = nil
+        return events
+    }
+
+    private func isActivityBoundary(_ event: AgentEvent) -> Bool {
+        switch event {
+        case .reasoningStarted, .reasoningDelta, .reasoningCompleted,
+             .progressMessage, .toolCallStarted, .toolCallArgumentsDelta,
+             .toolCallCompleted, .toolExecutionStarted, .toolExecutionProgress,
+             .toolExecutionCompleted, .toolExecutionFailed,
+             .searchStarted, .searchCompleted:
+            return true
+        case .runStarted, .answerSegmentStarted, .answerSegmentDelta,
+             .answerSegmentEnded, .runCompleted, .runFailed, .runCancelled:
+            return false
+        }
+    }
+
+    private mutating func endActiveReasoning(into events: inout [AgentEvent]) {
+        guard let id = activeReasoningSegmentID else { return }
+        events.append(.reasoningCompleted(id: id))
+        activeReasoningSegmentID = nil
+    }
+
+    private mutating func endActiveAnswerSegment(
+        as disposition: AgentAnswerDisposition,
+        into events: inout [AgentEvent]
+    ) {
+        guard let id = activeAnswerSegmentID else { return }
+        events.append(.answerSegmentEnded(id: id, disposition: disposition))
+        activeAnswerSegmentID = nil
     }
 
     private func localizedOperationalState(_ state: String) -> String {
@@ -93,14 +176,5 @@ struct HanlinStreamEventAdapter: ProviderEventAdapter {
             return String(localized: "Searching the web")
         }
         return state
-    }
-
-    mutating func completionEvents() -> [AgentEvent] {
-        var events: [AgentEvent] = []
-        if reasoningStarted { events.append(.reasoningCompleted(id: reasoningID)) }
-        if answerStarted { events.append(.answerCompleted(id: answerID)) }
-        reasoningStarted = false
-        answerStarted = false
-        return events
     }
 }

@@ -7,53 +7,111 @@ import Foundation
 
 struct AgentEventAccumulator {
     private(set) var run: AgentRun
+    private var transcript: AgentTranscriptAccumulator
     private var stepIndexByExternalID: [String: Int] = [:]
-    private var nextSequence = 0
+    private var nextStepSequence: Int
     private var pendingToolArguments: [String: String] = [:]
+    private var toolTranscriptIDByCallID: [String: String] = [:]
+    private var callIDByExecutionID: [String: String] = [:]
 
     init(run: AgentRun) {
         self.run = run
+        transcript = AgentTranscriptAccumulator(items: run.transcriptItems)
+        nextStepSequence = (run.steps.map(\.sequence).max() ?? -1) + 1
+        for (index, step) in run.steps.enumerated() {
+            if let externalID = step.externalID {
+                stepIndexByExternalID[externalID] = index
+            }
+        }
     }
 
     mutating func apply(_ event: AgentEvent) {
+        defer {
+            run.transcriptItems = transcript.items
+            assert(AgentTranscriptValidation.hasStrictlyIncreasingSequence(run.transcriptItems))
+            assert(!AgentTranscriptValidation.containsDuplicateNativeUIResults(run.transcriptItems))
+        }
+
         switch event {
         case .runStarted(let metadata):
             guard metadata.id == run.id else { return }
             run.startedAt = metadata.startedAt
 
         case .reasoningStarted(let metadata):
-            upsertStep(externalID: metadata.id, kind: .reasoning, title: metadata.title, startedAt: metadata.startedAt)
+            let sequence = transcript.allocateSequence()
+            let stepID = appendStep(
+                externalID: metadata.id,
+                sequence: sequence,
+                kind: .reasoning,
+                title: metadata.title,
+                startedAt: metadata.startedAt
+            )
+            transcript.begin(
+                externalID: metadata.id,
+                kind: .reasoning,
+                activityStepID: stepID,
+                startedAt: metadata.startedAt,
+                visibility: .collapseIntoThinking,
+                sequence: sequence
+            )
 
         case .reasoningDelta(let id, let text):
             append(text, to: id, keyPath: \.output, kind: .reasoning, title: String(localized: "Thinking"))
+            transcript.appendText(text, to: id)
 
         case .reasoningCompleted(let id):
             completeStep(externalID: id)
+            transcript.complete(externalID: id)
 
         case .progressMessage(let progress):
             guard !hasDuplicateProgress(progress.message) else { return }
-            appendStep(
+            let sequence = transcript.allocateSequence()
+            let stepID = appendStep(
                 externalID: progress.id,
+                sequence: sequence,
                 kind: .progress,
-                title: String(localized: "Progress update"),
+                title: progress.message,
                 summary: progress.message,
                 source: progress.source,
                 status: .completed,
                 startedAt: progress.timestamp,
                 completedAt: progress.timestamp
             )
+            transcript.begin(
+                externalID: progress.id,
+                kind: .progress,
+                activityStepID: stepID,
+                startedAt: progress.timestamp,
+                status: .completed,
+                text: progress.message,
+                visibility: .collapseIntoThinking,
+                sequence: sequence
+            )
 
         case .toolCallStarted(let call):
             let presentation = ToolPresentationRegistry.presentation(for: call.name)
             let userFacingArguments = ToolProgressSummary.userFacingArguments(from: call.sanitizedArgumentsJSON)
-            appendStep(
+            let sequence = transcript.allocateSequence()
+            let stepID = appendStep(
                 externalID: "call:\(call.id)",
+                sequence: sequence,
                 kind: .toolCall,
                 title: presentation.title,
                 subtitle: call.name,
                 summary: call.progressSummary ?? presentation.runningDescription,
                 source: call.progressSummarySource ?? .applicationGenerated,
                 input: userFacingArguments
+            )
+            let transcriptID = "tool:\(call.id)"
+            toolTranscriptIDByCallID[call.id] = transcriptID
+            transcript.begin(
+                externalID: transcriptID,
+                kind: .toolActivity,
+                callID: call.id,
+                activityStepID: stepID,
+                text: call.progressSummary ?? presentation.runningDescription,
+                visibility: .collapseIntoThinking,
+                sequence: sequence
             )
             pendingToolArguments[call.id] = userFacingArguments
 
@@ -73,7 +131,7 @@ struct AgentEventAccumulator {
 
         case .toolExecutionStarted(let execution):
             let presentation = ToolPresentationRegistry.presentation(for: execution.name)
-            appendStep(
+            let stepID = appendStep(
                 externalID: "execution:\(execution.id)",
                 kind: presentation.activityKind,
                 title: presentation.title,
@@ -83,81 +141,165 @@ struct AgentEventAccumulator {
                 startedAt: execution.startedAt,
                 input: pendingToolArguments[execution.callID]
             )
+            callIDByExecutionID[execution.id] = execution.callID
+            let transcriptID = toolTranscriptIDByCallID[execution.callID] ?? "tool:\(execution.callID)"
+            toolTranscriptIDByCallID[execution.callID] = transcriptID
+            if transcript.item(externalID: transcriptID) == nil {
+                transcript.begin(
+                    externalID: transcriptID,
+                    kind: .toolActivity,
+                    callID: execution.callID,
+                    activityStepID: stepID,
+                    startedAt: execution.startedAt,
+                    text: presentation.runningDescription,
+                    visibility: .collapseIntoThinking
+                )
+            } else {
+                transcript.update(externalID: transcriptID) { item in
+                    item.activityStepID = stepID
+                    item.status = .running
+                    item.completedAt = nil
+                }
+            }
 
         case .toolExecutionProgress(let id, let message):
+            let sanitized = ProgressSummarySanitizer.sanitize(message)
             updateStep(externalID: "execution:\(id)") { step in
-                step.userFacingSummary = ProgressSummarySanitizer.sanitize(message) ?? step.userFacingSummary
+                step.userFacingSummary = sanitized ?? step.userFacingSummary
+            }
+            if let callID = callIDByExecutionID[id], let transcriptID = toolTranscriptIDByCallID[callID] {
+                transcript.update(externalID: transcriptID) { item in
+                    item.text = sanitized ?? item.text
+                }
             }
 
         case .toolExecutionCompleted(let id, let result):
+            let callID = callIDByExecutionID[id] ?? id.replacingOccurrences(of: ":execution", with: "")
             updateStep(externalID: "execution:\(id)") { step in
-                step.output = result.userText ?? result.modelText
+                step.output = Self.safePreview(result.userText ?? result.modelText)
                 step.richResultBlocks = result.richResultBlocks
                 step.status = .completed
                 step.completedAt = step.startedAt.addingTimeInterval(max(0, result.duration))
             }
+            if let transcriptID = toolTranscriptIDByCallID[callID] {
+                transcript.complete(externalID: transcriptID)
+            }
+            transcript.insertUserVisibleResult(
+                callID: callID,
+                blocks: result.richResultBlocks,
+                completedAt: Date()
+            )
 
         case .toolExecutionFailed(let id, let error):
+            let callID = callIDByExecutionID[id] ?? id.replacingOccurrences(of: ":execution", with: "")
             updateStep(externalID: "execution:\(id)") { step in
                 step.status = .failed
                 step.errorDescription = error.message
                 step.completedAt = Date()
             }
+            if let transcriptID = toolTranscriptIDByCallID[callID] {
+                transcript.update(externalID: transcriptID) { item in
+                    item.text = error.message
+                }
+                transcript.complete(externalID: transcriptID, status: .failed)
+            }
 
-        case .answerStarted:
-            if run.finalAnswer == nil { run.finalAnswer = "" }
+        case .answerSegmentStarted(let metadata):
+            transcript.begin(
+                externalID: metadata.id,
+                kind: .assistantText,
+                startedAt: metadata.startedAt,
+                textRole: .provisional,
+                visibility: .collapseIntoThinking
+            )
 
-        case .answerDelta(_, let text):
-            run.finalAnswer = (run.finalAnswer ?? "") + text
+        case .answerSegmentDelta(let id, let text):
+            transcript.appendText(text, to: id)
 
-        case .answerCompleted:
-            break
+        case .answerSegmentEnded(let id, let disposition):
+            transcript.endAnswerSegment(externalID: id, disposition: disposition)
+            if disposition == .final {
+                run.finalAnswer = Self.nonemptyText(transcript.item(externalID: id)?.text)
+            }
 
         case .searchStarted(let id, let title, let query):
-            appendStep(
+            let sequence = transcript.allocateSequence()
+            let stepID = appendStep(
                 externalID: id,
+                sequence: sequence,
                 kind: .webSearch,
                 title: title,
                 summary: title,
                 source: .applicationGenerated,
                 queryItems: query.map { [$0] } ?? []
             )
+            transcript.begin(
+                externalID: id,
+                kind: .toolActivity,
+                activityStepID: stepID,
+                text: title,
+                visibility: .collapseIntoThinking,
+                sequence: sequence
+            )
 
         case .searchCompleted(let id, let sources, let output):
             updateStep(externalID: id) { step in
                 step.sourceItems = sources
-                step.output = output
+                step.output = Self.safePreview(output)
                 step.status = .completed
                 step.completedAt = Date()
             }
+            transcript.complete(externalID: id)
 
         case .runCompleted:
             closeRunningSteps(as: .completed)
+            transcript.closeActiveItems(as: .completed)
+            run.finalAnswer = Self.finalAnswer(from: transcript.items)
             run.status = .completed
             run.completedAt = Date()
 
         case .runFailed(let error):
             closeRunningSteps(as: .failed, error: error.message)
+            transcript.closeActiveItems(as: .failed)
+            appendErrorTranscript(text: error.message, status: .failed, remainInChat: true)
+            run.finalAnswer = Self.finalAnswer(from: transcript.items)
             run.status = .failed
             run.completedAt = Date()
 
         case .runCancelled:
             closeRunningSteps(as: .cancelled)
+            transcript.closeActiveItems(as: .cancelled)
+            run.finalAnswer = Self.finalAnswer(from: transcript.items)
             run.status = .cancelled
             run.completedAt = Date()
-            appendStep(
+            let timestamp = Date()
+            let sequence = transcript.allocateSequence()
+            let stepID = appendStep(
                 externalID: "cancel:\(run.id.uuidString)",
+                sequence: sequence,
                 kind: .cancellation,
                 title: String(localized: "Cancelled"),
                 status: .cancelled,
-                startedAt: Date(),
-                completedAt: Date()
+                startedAt: timestamp,
+                completedAt: timestamp
+            )
+            transcript.begin(
+                externalID: "cancel:\(run.id.uuidString)",
+                kind: .error,
+                activityStepID: stepID,
+                startedAt: timestamp,
+                status: .cancelled,
+                text: String(localized: "Cancelled"),
+                visibility: .collapseIntoThinking,
+                sequence: sequence
             )
         }
     }
 
+    @discardableResult
     private mutating func appendStep(
         externalID: String?,
+        sequence: Int? = nil,
         kind: AgentActivityKind,
         title: String,
         subtitle: String? = nil,
@@ -170,11 +312,15 @@ struct AgentEventAccumulator {
         output: String? = nil,
         queryItems: [String] = [],
         sourceItems: [AgentActivitySource] = []
-    ) {
-        if let externalID, stepIndexByExternalID[externalID] != nil { return }
+    ) -> UUID? {
+        if let externalID, let index = stepIndexByExternalID[externalID], run.steps.indices.contains(index) {
+            return run.steps[index].id
+        }
+        let assignedSequence = sequence ?? nextStepSequence
+        nextStepSequence = max(nextStepSequence, assignedSequence + 1)
         let step = AgentActivityStep(
             externalID: externalID,
-            sequence: nextSequence,
+            sequence: assignedSequence,
             kind: kind,
             title: title,
             subtitle: subtitle,
@@ -190,12 +336,7 @@ struct AgentEventAccumulator {
         )
         run.steps.append(step)
         if let externalID { stepIndexByExternalID[externalID] = run.steps.count - 1 }
-        nextSequence += 1
-    }
-
-    private mutating func upsertStep(externalID: String, kind: AgentActivityKind, title: String, startedAt: Date) {
-        guard stepIndexByExternalID[externalID] == nil else { return }
-        appendStep(externalID: externalID, kind: kind, title: title, startedAt: startedAt)
+        return step.id
     }
 
     private mutating func append(
@@ -226,7 +367,9 @@ struct AgentEventAccumulator {
     }
 
     private func hasDuplicateProgress(_ message: String) -> Bool {
-        run.steps.reversed().prefix(3).contains { $0.userFacingSummary == message }
+        run.steps.reversed().prefix(3).contains {
+            AgentActivityDeduplicator.normalized($0.userFacingSummary) == AgentActivityDeduplicator.normalized(message)
+        }
     }
 
     private mutating func closeRunningSteps(as status: AgentActivityStatus, error: String? = nil) {
@@ -236,6 +379,37 @@ struct AgentEventAccumulator {
             run.steps[index].completedAt = completion
             if status == .failed { run.steps[index].errorDescription = error }
         }
+    }
+
+    private mutating func appendErrorTranscript(text: String, status: AgentActivityStatus, remainInChat: Bool) {
+        let id = "error:\(run.id.uuidString):\(transcript.nextSequence)"
+        transcript.begin(
+            externalID: id,
+            kind: .error,
+            status: status,
+            text: text,
+            visibility: remainInChat ? .remainInChat : .collapseIntoThinking
+        )
+    }
+
+    private static func safePreview(_ value: String?) -> String? {
+        guard let value = nonemptyText(value) else { return nil }
+        return String(value.prefix(1_000))
+    }
+
+    private static func nonemptyText(_ value: String?) -> String? {
+        guard let trimmed = value?.trimmingCharacters(in: .whitespacesAndNewlines), !trimmed.isEmpty else {
+            return nil
+        }
+        return trimmed
+    }
+
+    private static func finalAnswer(from items: [AgentTranscriptItem]) -> String? {
+        items
+            .filter { $0.kind == .assistantText && $0.textRole == .final }
+            .sorted { $0.sequence < $1.sequence }
+            .compactMap { nonemptyText($0.text) }
+            .last
     }
 }
 
@@ -250,7 +424,13 @@ final class AgentRunCoordinator {
         let run = AgentRun(groupID: groupID, providerID: providerID, modelID: modelID)
         runID = run.id
         accumulator = AgentEventAccumulator(run: run)
-        accumulator.apply(.runStarted(AgentRunMetadata(id: run.id, groupID: groupID, providerID: providerID, modelID: modelID, startedAt: run.startedAt)))
+        accumulator.apply(.runStarted(AgentRunMetadata(
+            id: run.id,
+            groupID: groupID,
+            providerID: providerID,
+            modelID: modelID,
+            startedAt: run.startedAt
+        )))
     }
 
     func consume(_ events: [AgentEvent]) {
