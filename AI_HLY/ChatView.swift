@@ -85,6 +85,7 @@ struct ChatView: View {
     @State private var operationalDescription: String = ""  // 操作描述文本
     @State private var apiManager: APIManager?
     @State private var activeAgentCoordinator: AgentRunCoordinator?
+    @State private var activeAgentRun: AgentRun?
     @State private var activeAgentMessage: ChatMessages?
 
     // URL解析与多选操作相关
@@ -816,14 +817,34 @@ struct ChatView: View {
             }
             return messages
         }()
-        let activityRun = groupMessages.compactMap(\.agentRun).first
+        let storedActivityRun = (activeAgentRun?.groupID == msg.groupID ? activeAgentRun : nil)
+            ?? groupMessages.compactMap(\.agentRun).first
+        let activityRun = storedActivityRun
             ?? LegacyAgentActivityAdapter.run(for: precedingSearchMessages + groupMessages)
+        let hasModernTranscript = storedActivityRun?.hasModernTranscript == true
+        let isAgentTranscriptOwner = hasModernTranscript && splitMarker
+        let hasLegacyResultContent = !msg.imageArray.isEmpty
+            || msg.codeBlockData?.isEmpty == false
+            || msg.knowledgeCard?.isEmpty == false
+            || msg.htmlContent?.isEmpty == false
+            || msg.events?.isEmpty == false
+            || msg.healthData?.isEmpty == false
+            || msg.locationsInfo?.isEmpty == false
+            || msg.routeInfos?.isEmpty == false
+            || msg.audioAssets?.isEmpty == false
+            || msg.showCanvas == true
+        if hasModernTranscript && !isAgentTranscriptOwner && !hasLegacyResultContent {
+            return AnyView(EmptyView())
+        }
+        let bubbleText = isAgentTranscriptOwner
+            ? (storedActivityRun?.finalAnswer ?? msg.text ?? "")
+            : (msg.text ?? "")
 
         // 1. 构造基础气泡
         let bubble = ChatBubbleView(
             temporaryRecord: TemporaryRecord,
             id: msg.id,
-            text: msg.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? "",
+            text: bubbleText.trimmingCharacters(in: .whitespacesAndNewlines),
             saveTranlatedText: msg.translatedText,
             images: msg.imageArray,
             imagesText: msg.images_text,
@@ -847,6 +868,8 @@ struct ChatView: View {
             nativeUIBlocks: msg.nativeUIBlocks,
             agentRun: activityRun,
             showsAgentActivitySummary: splitMarker,
+            isAgentTranscriptOwner: isAgentTranscriptOwner,
+            isRenderedByAgentTranscript: hasModernTranscript,
             searchEngine: msg.searchEngine,
             audioAssets: msg.audioAssets,
             isVoiceExpanded: audioExpandedBinding,
@@ -1169,6 +1192,7 @@ struct ChatView: View {
         )
         groupBeginMessage.agentRun = agentCoordinator.run
         activeAgentCoordinator = agentCoordinator
+        activeAgentRun = agentCoordinator.run
         activeAgentMessage = groupBeginMessage
         
         // 进行API请求
@@ -1214,7 +1238,7 @@ struct ChatView: View {
                         if isCancelled { return }
 
                         agentCoordinator.consume(agentEvents)
-                        groupBeginMessage.agentRun = agentCoordinator.run
+                        activeAgentRun = agentCoordinator.run
                         
                         var updated = false
                         
@@ -1421,8 +1445,6 @@ struct ChatView: View {
                         if updated {
                             let currentTime = Date()
                             if currentTime.timeIntervalSince(lastUpdateTime) > refreshInterval {
-                                assistantMessage.id = UUID()
-                                assistantMessage.timestamp = currentTime
 //                                if outPutFeedBackEnabled { isOutPut.toggle() }
                                 lastUpdateTime = currentTime
                             }
@@ -1604,6 +1626,7 @@ struct ChatView: View {
                         }
                     }
                     activeAgentCoordinator = nil
+                    activeAgentRun = nil
                     activeAgentMessage = nil
                 }
                 
@@ -1616,6 +1639,7 @@ struct ChatView: View {
                     context.insert(groupBeginMessage)
                     try? context.save()
                     activeAgentCoordinator = nil
+                    activeAgentRun = nil
                     activeAgentMessage = nil
                     if let index = chatTemps.lastIndex(where: { $0.role == "assistant" }),
                        index < chatTemps.count {
@@ -1648,11 +1672,13 @@ struct ChatView: View {
         Task { await apiManager?.completeAgentDiagnostics(status: "cancelled") }
         activeAgentCoordinator?.cancel()
         if let coordinator = activeAgentCoordinator {
+            activeAgentRun = coordinator.run
             activeAgentMessage?.agentRun = coordinator.run
             if let activeAgentMessage { context.insert(activeAgentMessage) }
             try? context.save()
         }
         activeAgentCoordinator = nil
+        activeAgentRun = nil
         activeAgentMessage = nil
         
         isObserving = false

@@ -96,6 +96,8 @@ struct ChatBubbleView: View {
     let nativeUIBlocks: [NativeUIBlock]
     let agentRun: AgentRun?
     let showsAgentActivitySummary: Bool
+    let isAgentTranscriptOwner: Bool
+    let isRenderedByAgentTranscript: Bool
     let searchEngine: String?
     let audioAssets: [AudioAsset]?
     @Binding var isVoiceExpanded: Bool // 语音消息折叠
@@ -142,6 +144,7 @@ struct ChatBubbleView: View {
     @State private var recordToWrite: KnowledgeRecords? = nil
     @State private var nativeAppFullScreenRequest: NativeAppLaunchRequest?
     @State private var nativeAppSheetRequest: NativeAppLaunchRequest?
+    @State private var legacyInspectorSelection: AgentActivityInspectorSelection?
     
     @ScaledMetric(relativeTo: .body) var size_5: CGFloat = 5
     @ScaledMetric(relativeTo: .body) var size_7: CGFloat = 7
@@ -185,6 +188,8 @@ struct ChatBubbleView: View {
         nativeUIBlocks: [NativeUIBlock] = [],
         agentRun: AgentRun? = nil,
         showsAgentActivitySummary: Bool = false,
+        isAgentTranscriptOwner: Bool = false,
+        isRenderedByAgentTranscript: Bool = false,
         searchEngine: String?,
         audioAssets: [AudioAsset]?,
         isVoiceExpanded: Binding<Bool>,
@@ -230,6 +235,8 @@ struct ChatBubbleView: View {
         self.nativeUIBlocks = nativeUIBlocks
         self.agentRun = agentRun
         self.showsAgentActivitySummary = showsAgentActivitySummary
+        self.isAgentTranscriptOwner = isAgentTranscriptOwner
+        self.isRenderedByAgentTranscript = isRenderedByAgentTranscript
         self.searchEngine = searchEngine
         self.audioAssets = audioAssets
         self._isVoiceExpanded = isVoiceExpanded
@@ -268,6 +275,16 @@ struct ChatBubbleView: View {
             NativeAppSessionContainerView(request: request)
                 .presentationDetents([.large])
                 .presentationDragIndicator(.visible)
+        }
+        .sheet(item: $legacyInspectorSelection) { selection in
+            if let agentRun {
+                AgentActivityInspectorView(
+                    run: agentRun,
+                    selectedActivityID: selection.selectedActivityID
+                )
+                .presentationDetents([.medium, .large])
+                .presentationDragIndicator(.visible)
+            }
         }
         .fullScreenCover(item: $nativeAppFullScreenRequest) { request in
             NativeAppSessionContainerView(request: request)
@@ -482,13 +499,41 @@ struct ChatBubbleView: View {
     @ViewBuilder
     private func assistantMessageView() -> some View {
         VStack(alignment: .leading, spacing: 6) {
-            assistantHeader()
-            if let agentRun, showsAgentActivitySummary {
-                AgentActivitySummaryView(run: agentRun, onLaunchRequest: launchNativeApp)
+            if isRenderedByAgentTranscript {
+                if isAgentTranscriptOwner, let agentRun {
+                    assistantHeader()
+                    AgentRunTranscriptView(
+                        run: agentRun,
+                        isResponding: isResponding,
+                        temporaryRecord: temporaryRecord,
+                        usesMathRenderer: mathMode,
+                        rendersFinalAnswer: false,
+                        onLaunchRequest: launchNativeApp
+                    )
+                }
+                assistantImageSection()
+                assistantLegacyResultSection()
+                if isAgentTranscriptOwner,
+                   let agentRun,
+                   agentRun.status != .running,
+                   agentRun.status != .pending,
+                   !text.isEmpty {
+                    messageContent()
+                }
+                if isAgentTranscriptOwner && isLastAssistantGroup && !isResponding {
+                    actionButtons()
+                }
+            } else {
+                assistantHeader()
+                if let agentRun, showsAgentActivitySummary {
+                    AgentActivitySummaryView(run: agentRun) {
+                        legacyInspectorSelection = AgentActivityInspectorSelection(selectedActivityID: nil)
+                    }
+                }
+                assistantImageSection()
+                assistantTextSection()
+                assistantFooter()
             }
-            assistantImageSection()
-            assistantTextSection()
-            assistantFooter()
         }
         .transition(.move(edge: .leading).combined(with: .opacity))
         .animation(.spring(response: 0.5, dampingFraction: 0.8, blendDuration: 0.4),
@@ -608,6 +653,39 @@ struct ChatBubbleView: View {
                 }
             }
         }
+    }
+
+    @ViewBuilder
+    private func assistantLegacyResultSection() -> some View {
+        VStack(alignment: .leading, spacing: 6) {
+            if showCanvas, canvas?.content.isEmpty == false {
+                canvasBubble(for: canvas)
+            }
+            if let codes = codeBlocks, !codes.isEmpty {
+                codeBubble(for: codes)
+            }
+            if let cards = knowledgeCard, !cards.isEmpty {
+                knowledgeCardBubble(for: cards)
+            }
+            if let htmls = htmlContent, !htmls.isEmpty {
+                htmlWebBubble(for: htmls)
+            }
+            if let evs = events, !evs.isEmpty {
+                eventsBubble(for: evs)
+            }
+            if let hcs = healthCards {
+                nutritionCards(
+                    for: Binding<[HealthData]>(get: { hcs }, set: { _ in })
+                )
+            }
+            if (locations?.isEmpty == false) || (routes?.isEmpty == false) {
+                mapBubble(for: locations ?? [], routes: routes ?? [])
+            }
+            if !isAgentTranscriptOwner || text.isEmpty {
+                audioView()
+            }
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
     }
 
     // MARK: 底部 Loading / 结束状态
@@ -2254,7 +2332,9 @@ struct ChatBubbleView: View {
     private func errorMessageView() -> some View {
         VStack(alignment: .leading) {
             if let agentRun, showsAgentActivitySummary {
-                AgentActivitySummaryView(run: agentRun, onLaunchRequest: launchNativeApp)
+                AgentActivitySummaryView(run: agentRun) {
+                    legacyInspectorSelection = AgentActivityInspectorSelection(selectedActivityID: nil)
+                }
             }
             Text(text)
                 .font(.caption)
