@@ -22,6 +22,7 @@ struct AgentTranscriptAccumulator {
         }
     }
 
+    @discardableResult
     mutating func begin(
         externalID: String,
         kind: AgentTranscriptItemKind,
