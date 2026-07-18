@@ -69,10 +69,15 @@ enum AgentActivityComposer {
         let input = friendlyInput(steps.compactMap(\.input).first(where: { !$0.isEmpty }))
         let output = friendlyOutput(steps.compactMap(\.output).last(where: { !$0.isEmpty }))
         let error = steps.compactMap(\.errorDescription).last
-        let richBlocks = steps.flatMap(\.richResultBlocks)
-        let title = kind == .narrative
-            ? (steps.compactMap(\.userFacingSummary).first ?? first.title)
-            : AgentActivityTitleBuilder.title(for: steps, kind: kind, queries: queries, status: status)
+        let title: String
+        switch kind {
+        case .narrative:
+            title = steps.compactMap(\.userFacingSummary).first ?? first.title
+        case .reasoning:
+            title = first.title
+        default:
+            title = AgentActivityTitleBuilder.title(for: steps, kind: kind, queries: queries, status: status)
+        }
         guard ProgressSummarySanitizer.sanitize(title) != nil || kind != .narrative else { return nil }
 
         return AgentDisplayActivity(
@@ -88,11 +93,10 @@ enum AgentActivityComposer {
             sources: sources,
             inputPreview: input,
             outputPreview: output,
-            richResultBlocks: richBlocks,
             errorDescription: error,
             isExpandable: AgentActivityDetailPolicy.isExpandable(
                 queries: queries, sources: sources, input: input, output: output,
-                error: error, richBlocks: richBlocks
+                error: error
             ),
             sourceStepIDs: steps.map(\.id)
         )
@@ -156,7 +160,7 @@ enum AgentActivityComposer {
             previous.title = AgentActivityTitleBuilder.title(for: [], kind: .search, queries: previous.queries, status: previous.status)
             previous.isExpandable = AgentActivityDetailPolicy.isExpandable(
                 queries: previous.queries, sources: previous.sources, input: previous.inputPreview,
-                output: previous.outputPreview, error: previous.errorDescription, richBlocks: previous.richResultBlocks
+                output: previous.outputPreview, error: previous.errorDescription
             )
             result.append(previous)
         }

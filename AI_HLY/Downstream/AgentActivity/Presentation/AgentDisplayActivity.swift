@@ -1,6 +1,7 @@
 import Foundation
 
 enum AgentDisplayActivityKind: String, Hashable, Sendable {
+    case reasoning
     case narrative
     case tool
     case search
@@ -27,7 +28,6 @@ struct AgentDisplayActivity: Identifiable, Hashable {
     var sources: [AgentActivitySource]
     var inputPreview: String?
     var outputPreview: String?
-    var richResultBlocks: [NativeUIBlock]
     var errorDescription: String?
     var isExpandable: Bool
     var sourceStepIDs: [UUID]

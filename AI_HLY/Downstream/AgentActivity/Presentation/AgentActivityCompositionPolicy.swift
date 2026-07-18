@@ -10,7 +10,6 @@ enum AgentActivityCompositionPolicy {
 
     static func isInternalTransport(_ step: AgentActivityStep) -> Bool {
         guard step.kind == .progress else { return false }
-        if step.summarySource == .applicationGenerated { return true }
         let values = [step.title, step.userFacingSummary, step.output]
             .compactMap { $0?.trimmingCharacters(in: .whitespacesAndNewlines).lowercased() }
         return values.contains { value in
@@ -20,7 +19,7 @@ enum AgentActivityCompositionPolicy {
 
     static func displayKind(for kind: AgentActivityKind) -> AgentDisplayActivityKind? {
         switch kind {
-        case .reasoning: return nil
+        case .reasoning: return .reasoning
         case .progress, .planning: return .narrative
         case .toolCall, .toolExecution, .nativeApp: return .tool
         case .webSearch: return .search

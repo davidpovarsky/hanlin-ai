@@ -19,6 +19,12 @@ enum ToolPresentationRegistry {
         if normalized.contains("github") {
             return ToolPresentation(title: String(localized: "Searching GitHub"), systemImage: "chevron.left.forwardslash.chevron.right", runningDescription: String(localized: "Searching GitHub"), completedDescription: String(localized: "Done"), activityKind: .webSearch)
         }
+        if normalized.contains("sefaria") {
+            return ToolPresentation(title: String(localized: "Searching Sefaria"), systemImage: "book.closed", runningDescription: String(localized: "Searching Sefaria"), completedDescription: String(localized: "Done"), activityKind: .webSearch)
+        }
+        if normalized.contains("wikipedia") || normalized.contains("wiki") {
+            return ToolPresentation(title: String(localized: "Searching Wikipedia"), systemImage: "globe", runningDescription: String(localized: "Searching Wikipedia"), completedDescription: String(localized: "Done"), activityKind: .webSearch)
+        }
         if normalized.contains("search") || normalized.contains("web") {
             return ToolPresentation(title: String(localized: "Searching the web"), systemImage: "magnifyingglass", runningDescription: String(localized: "Searching the web"), completedDescription: String(localized: "Done"), activityKind: .webSearch)
         }
