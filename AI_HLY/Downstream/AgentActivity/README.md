@@ -1,72 +1,77 @@
 # Hanlin Agent Activity Runtime
 
-This directory is the downstream-owned normalization and presentation layer for one assistant run. It deliberately keeps provider and product customizations out of the upstream chat model and views except for narrow integration points.
+This downstream-owned layer normalizes one provider run into functional activity state and a chronological chat transcript. It keeps the customization isolated from the upstream `CherryHQ/hanlin-ai` chat implementation except for narrow stream, persistence, and rendering bridges.
 
-## Architecture
+## Runtime path
 
-The runtime follows this path:
+`provider stream → StreamData → HanlinStreamEventAdapter → AgentEvent → AgentRunCoordinator → AgentEventAccumulator → AgentRun → AgentRunTranscriptView`
 
-`provider stream → StreamData → HanlinStreamEventAdapter → AgentEvent → AgentRunCoordinator → AgentEventAccumulator → AgentRun → SwiftUI timeline`
+`ChatView` creates one coordinator per assistant group. Recursive model rounds and tool executions feed that same run. During streaming, the current `AgentRun` stays in view state; it is persisted on completion, failure, or cancellation rather than writing the full transcript for every token.
 
-`ChatView` creates exactly one coordinator for an assistant group. Recursive model requests and every tool used by that group feed the same run. Views receive a persisted `AgentRun`; they never parse provider JSON.
+## Steps and transcript items
 
-## AgentEvent protocol
+`AgentRun.steps` remains the functional and diagnostic activity state used to compose the Thinking inspector. `AgentRun.transcriptItems` is the source of truth for chat ordering. Both are retained because a tool call/execution lifecycle may be composed into one display activity while the transcript must also place assistant text and user-visible results precisely between activities.
 
-`AgentEvent` describes run, visible reasoning, progress, tool-call, tool-execution, search, final-answer, failure, and cancellation transitions. External call IDs are retained. Deltas update existing items, so streaming does not create one persisted step per token. Events are ignored after the run leaves the running state, which prevents an old request from mutating a later retry.
+Every transcript item receives a monotonically increasing `sequence` from one counter. Timestamps are metadata and never determine ordering. Stable item IDs and in-place delta updates prevent one item per token and avoid regenerating identities during SwiftUI rendering.
 
-## Provider adapters and capabilities
+Schema version 2 persists transcript items. Version 1 runs decode with an empty transcript and continue through the legacy display path. Malformed or unsupported run JSON returns no modern run and cannot crash chat history. Rendering legacy history never writes an automatic migration.
 
-The current remote transport in `APIManager` is OpenAI-compatible for every configured cloud provider. `HanlinStreamEventAdapter` normalizes its `StreamData` output. Local LLM requests remain answer-only because the repository does not expose a verified structured native-tool protocol for them.
+## Assistant text segmentation
 
-`ProviderCapabilities` derives detailed behavior from the existing `AllModels` flags and provider identity. Tool schemas and `report_progress` are only sent when native tool calling is enabled. Visible reasoning is recorded only from explicit provider reasoning fields or the existing visible-thinking stream; the runtime never synthesizes chain-of-thought.
+`HanlinStreamEventAdapter` creates a new assistant text segment when content arrives without an active segment. Reasoning, progress, search, source work, or tool activity closes the preceding segment as `interim`; it remains visible while the run is live and collapses into Thinking afterward. At normal completion, the last non-empty active segment becomes `final`. `AgentRun.finalAnswer` is derived only from that final segment, never from the concatenation of interim narration.
 
-When adding a provider, keep its wire parsing in its transport adapter and emit the existing `AgentEvent` cases. Do not add provider JSON parsing to a view.
+Failed and cancelled runs close active segments without promoting partial text to a final answer. Retry creates a new group, run ID, adapter, and transcript; the earlier run remains persisted and cannot be mutated by later events.
 
-## `progress_summary`
+## Tool activity versus user-visible result
 
-`ToolSchemaDecorator` adds the flat `progress_summary` property at the central tool-list boundary. It supports OpenAI-compatible `function.parameters`, Anthropic-style `input_schema`, and Gemini-style top-level `parameters` shapes without changing existing names, descriptions, properties, or required fields.
+A tool activity is lightweight process state: call ID, title, sanitized arguments, progress summary, status, duration, safe output preview, source count/list, and error summary. It collapses into Thinking and never renders a `NativeUIBlock`.
 
-The value is optional inside Swift. `ToolProgressSummary` removes it before legacy or Native tool decoding and retains the original and sanitized JSON separately in `AgentToolCall`. `ProgressSummarySanitizer` trims and folds whitespace, limits length, and rejects empty text, raw JSON, URLs, credential-like material, system-prompt text, and internal-policy text.
+A user-visible tool result is a separate `userVisibleToolResult` transcript item created only when execution returns non-empty `NativeUIBlock` values. It receives the next transcript sequence and remains in chat after completion. Deduplication uses the call ID plus stable block IDs. Raw model tool output is not promoted to chat UI.
 
-## `report_progress`
+`AgentActivityStep.richResultBlocks` remains only for schema compatibility and raw persistence. `AgentDisplayActivity`, `AgentActivityStepView`, and `AgentActivityInspectorView` do not carry or render those blocks. The modern transcript result view is the only modern chat path that invokes `NativeUIToolResultContainer`.
 
-`report_progress` is a virtual schema appended after real tools. It is never registered with or executed by `NativeToolCatalog`. `APIManager` converts it directly into a progress event and returns `Progress update delivered.` to the model. `ReportProgressController` rejects empty, duplicate, rapid, excessive, and latest-tool-summary-equivalent updates.
+Legacy map, calendar, health, code, knowledge, HTML, canvas, and other existing result fields stay connected to their original `ChatMessages` split. For a modern run, transcript-owned text, reasoning, tool content, and Native UI are suppressed in those split messages while legacy result views remain available.
 
-## Tool execution lifecycle
+## Group ownership and split markers
 
-A completed structured tool request becomes a tool-call step and a separate execution step. The tool receives only sanitized arguments. Execution completion records safe user/model output, duration, and `NativeUIBlock` results. Native tools continue to use the existing enabled-state checks, locale, redacted tracing, result model, and actions.
+The first assistant message in a continuous group is the transcript owner. `ChatView` passes explicit `isAgentTranscriptOwner` and `isRenderedByAgentTranscript` flags. The owner renders `AgentRunTranscriptView` once; later `splitMarker` messages cannot render transcript text or Native UI again. Version 1 history continues through the legacy bubble path.
 
-To add a tool, register or build it through the existing catalog/tool-list path. Give it a canonical structured schema. The central decorator and argument separator then apply automatically. Add a deterministic mapping to `ToolPresentationRegistry` when the generic “Using a tool” presentation is insufficient.
+## Live and completed presentation
 
-## Persistence and legacy history
+While running, transcript items render by sequence: visible reasoning/activity rows, narrative progress, interim assistant Markdown, user-visible result cards, and later assistant segments. Selecting an activity never expands the chat layout; it opens the run's single Thinking sheet.
 
-`ChatMessages` owns one optional `agentRunJSON` field. Encoding and decoding live in `AgentActivityPersistence.swift`; malformed, missing, or unsupported data returns `nil` without crashing. The first assistant message in a group owns the run. Existing `nativeUIBlocksJSON` remains unchanged.
+After completion, reasoning, progress, tool activity, and interim assistant text collapse into one localized `Worked for …` row. The row opens the same sheet. User-visible result items and the final assistant segment remain in sequence below it. Runs with only an immediate final answer do not show an empty work summary.
 
-When stored activity is absent, `LegacyAgentActivityAdapter` builds a display-only timeline from reasoning, tool output, sources, documents, code, and Native UI blocks. It never writes a migration during rendering and does not claim that legacy ordering is exact.
+The inspector receives an optional selected activity ID, uses `ScrollViewReader`, scrolls to the matching transcript item, and applies a subtle highlight. It limits queries to 8 and sources to 10 until `Show more` is selected. It never instantiates Native UI, maps, HTML, web views, or full search-result renderers.
 
-## UI
+## Adding a tool
 
-`AgentActivitySummaryView` displays a compact running/completed/failed/cancelled state and up to four recent steps. Its inspector uses a `NavigationStack`, medium/large sheet detents, a vertical timeline, disclosure groups, selectable input/output, query chips, sources, and the existing expanded `NativeUIRenderer`. When an `AgentRun` is present, the old reasoning, tool-content, and operational loaders are suppressed.
+1. Register the tool through the existing catalog/tool-list path and provide its structured schema.
+2. Keep provider wire parsing in the provider/transport adapter and emit the existing tool lifecycle events.
+3. Add a deterministic semantic title/icon mapping in `ToolPresentationRegistry` when the generic mapping is insufficient.
+4. Return `NativeUIBlock` values only when the result is intentionally visible and actionable for the user.
+5. Keep model-only output in `modelText`; a safe short process summary may be placed in `userText`, but `userText` alone does not create a chat result card.
+6. Give blocks stable IDs so retry and duplicate delivery can be suppressed safely.
 
-The views use localized strings, leading alignment, Dynamic Type fonts, non-color status symbols, VoiceOver labels/values, selectable long content, and Reduce Motion awareness.
+## Diagnostics and privacy
 
-## Security
+When full local diagnostics are enabled, the runtime traces transcript creation/completion, interim/final classification, visible-result insertion/deduplication, and inspector selection/open/scroll/close. Trace fields contain IDs, kinds, sequence, and status only. Hidden reasoning, transcript text, arguments, results, credentials, and secrets are not logged by these events.
 
-Model progress text is untrusted. It is sanitized before display, never forwarded to a real tool, and is not added to tracing. Tool errors pass through `AgentSafeError`, which redacts common secret/token forms and limits displayed length. Raw provider or arguments JSON is not rendered by the activity UI.
+## Performance rules
 
-## Merge risks
+- No inline activity expansion in the chat scroll view.
+- No `NativeUIRenderer` in activity rows or Thinking.
+- No rich-result composition in `AgentActivityComposer`.
+- No per-row sheet and no mutation of `AgentRun` from a view.
+- No assistant-message ID churn to force a refresh.
+- No explicit persistence write per streamed token.
+- No horizontal nested activity scroller or large insertion animation.
+- Stable transcript and source IDs drive every `ForEach`.
 
-New behavior is isolated here. The unavoidable upstream edits are limited to:
+## Upstream merge surface
 
-- one optional persistence property in `ChatMessages`;
-- event metadata on `StreamData` and central request/tool lifecycle hooks in `APIManager`;
-- coordinator ownership in `ChatView`;
-- one activity input and duplicate-UI guards in `ChatBubbleView`;
-- schema decoration and defensive argument sanitization in `NativeToolBridge`;
-- localized catalog entries.
-
-The largest remaining merge risk is `APIManager.swift`, whose existing monolithic tool switch is an upstream-owned hotspot. The activity runtime avoids copying that switch and wraps only its common entry and exit points.
+New models, accumulation, composition, inspector UI, diagnostics hooks, and transcript views live under `AI_HLY/Downstream/AgentActivity`. The unavoidable upstream-owned edits are limited to `StreamData`/tool lifecycle hooks in `APIManager`, one optional JSON field in `ChatMessages`, coordinator and group ownership in `ChatView`, and narrow rendering flags in `ChatViewComponents`. `APIManager.swift` remains the largest merge-risk hotspot because the upstream tool switch is monolithic.
 
 ## Verification boundary
 
-This implementation was prepared on Windows. No Xcode SDK build, compiler diagnostic pass, simulator/device run, SwiftData/CloudKit migration test, VoiceOver device test, RTL screenshot review, cancellation stress test, or provider live request was performed here. CI is intentionally not run unless explicitly requested.
+Static validation can check sequence monotonicity, duplicate Native UI result keys, schema fallback, and forbidden renderer paths. GitHub Actions can verify compilation and IPA packaging when explicitly run. Neither static checks nor CI proves scrolling smoothness, absence of a runtime freeze, VoiceOver behavior, RTL layout, or iPad split-view behavior; those require the device scenarios in the final handoff.

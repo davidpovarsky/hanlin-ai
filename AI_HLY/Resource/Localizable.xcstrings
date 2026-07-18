@@ -16,6 +16,20 @@
         "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "已取消（%@）" } }
       }
     },
+    "Completed" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Completed" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "הושלם" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "已完成" } }
+      }
+    },
+    "Copy Content" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Copy Content" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "העתקת תוכן" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "复制内容" } }
+      }
+    },
     "Checking the calendar" : {
       "localizations" : {
         "en" : { "stringUnit" : { "state" : "translated", "value" : "Checking the calendar" } },
@@ -107,6 +121,20 @@
         "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "正在搜索 GitHub" } }
       }
     },
+    "Searching Sefaria" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Searching Sefaria" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "מחפש בספריא" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "正在搜索 Sefaria" } }
+      }
+    },
+    "Searching Wikipedia" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Searching Wikipedia" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "מחפש בוויקיפדיה" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "正在搜索维基百科" } }
+      }
+    },
     "Searching locations" : {
       "localizations" : {
         "en" : { "stringUnit" : { "state" : "translated", "value" : "Searching locations" } },
@@ -121,11 +149,32 @@
         "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "正在搜索网络" } }
       }
     },
+    "Show less" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Show less" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "הצג פחות" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "收起" } }
+      }
+    },
+    "Show more" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Show more" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "הצג עוד" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "显示更多" } }
+      }
+    },
     "Stopped after %@" : {
       "localizations" : {
         "en" : { "stringUnit" : { "state" : "translated", "value" : "Stopped after %@" } },
         "he" : { "stringUnit" : { "state" : "translated", "value" : "נעצר לאחר %@" } },
         "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "%@ 后停止" } }
+      }
+    },
+    "Thinking" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Thinking" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "חשיבה" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "思考" } }
       }
     },
     "Using a tool" : {
