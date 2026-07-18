@@ -89,7 +89,7 @@ enum AgentActivityTrace {
     }
 
     static func inspectorClosed(runID: UUID) {
-        log("agent_inspector_closed", runID: runID)
+        log("agent_inspector_closed", runID: runID, selectedActivityID: nil)
     }
 
     private static func log(_ event: String, item: AgentTranscriptItem) {
