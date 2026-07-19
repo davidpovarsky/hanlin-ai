@@ -213,7 +213,10 @@ struct AgentRun: Codable, Hashable, Identifiable {
             [AgentTranscriptItem].self,
             forKey: .transcriptItems
         ) ?? []
-        transcriptItems = AgentTranscriptValidation.normalized(decodedTranscript)
-        finalAnswer = try container.decodeIfPresent(String.self, forKey: .finalAnswer)
+        transcriptItems = AgentTranscriptValidation.normalized(
+            decodedTranscript,
+            promotingFinalAnswerForCompletedRun: status == .completed
+        )
+        finalAnswer = AgentTranscriptValidation.finalAnswer(in: transcriptItems)
     }
 }

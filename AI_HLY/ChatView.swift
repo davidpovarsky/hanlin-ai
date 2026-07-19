@@ -885,7 +885,7 @@ struct ChatView: View {
             return AnyView(EmptyView())
         }
         let bubbleText = isAgentTranscriptOwner
-            ? (storedActivityRun?.finalAnswer ?? msg.text ?? "")
+            ? AgentTranscriptValidation.finalAnswer(in: storedActivityRun?.transcriptItems ?? []) ?? ""
             : (msg.text ?? "")
 
         // 1. 构造基础气泡

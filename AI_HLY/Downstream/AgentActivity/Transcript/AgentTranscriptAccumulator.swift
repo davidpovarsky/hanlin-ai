@@ -168,6 +168,21 @@ struct AgentTranscriptAccumulator {
         }
     }
 
+    mutating func selectFinalAnswerForCompletedRun() -> String? {
+        let selectedIndex = AgentTranscriptValidation.finalAnswerIndexForCompletedRun(in: items)
+        for index in items.indices where items[index].kind == .assistantText {
+            guard AgentTranscriptValidation.hasNonemptyText(items[index].text) else { continue }
+            if index == selectedIndex {
+                items[index].textRole = .final
+                items[index].visibilityAfterCompletion = .remainInChat
+            } else {
+                items[index].textRole = .interim
+                items[index].visibilityAfterCompletion = .collapseIntoThinking
+            }
+        }
+        return selectedIndex.flatMap { items[$0].text }
+    }
+
     mutating func allocateSequence() -> Int {
         defer { nextSequence += 1 }
         return nextSequence

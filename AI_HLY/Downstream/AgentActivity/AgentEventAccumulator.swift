@@ -32,6 +32,7 @@ struct AgentEventAccumulator {
             run.transcriptItems = transcript.items
             assert(AgentTranscriptValidation.hasStrictlyIncreasingSequence(run.transcriptItems))
             assert(!AgentTranscriptValidation.containsDuplicateNativeUIResults(run.transcriptItems))
+            assert(AgentTranscriptValidation.satisfiesCompletedRunInvariant(run))
         }
 
         switch event {
@@ -305,7 +306,7 @@ struct AgentEventAccumulator {
         case .runCompleted:
             closeRunningSteps(as: .completed)
             transcript.closeActiveItems(as: .completed)
-            run.finalAnswer = Self.finalAnswer(from: transcript.items)
+            run.finalAnswer = transcript.selectFinalAnswerForCompletedRun()
             run.status = .completed
             run.completedAt = Date()
 
@@ -459,13 +460,6 @@ struct AgentEventAccumulator {
         return trimmed
     }
 
-    private static func finalAnswer(from items: [AgentTranscriptItem]) -> String? {
-        items
-            .filter { $0.kind == .assistantText && $0.textRole == .final }
-            .sorted { $0.sequence < $1.sequence }
-            .compactMap { nonemptyText($0.text) }
-            .last
-    }
 }
 
 @MainActor

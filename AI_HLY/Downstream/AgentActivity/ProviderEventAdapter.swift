@@ -77,17 +77,20 @@ struct HanlinStreamEventAdapter: ProviderEventAdapter {
             lastSemanticEventKind = .assistantText
         }
 
-        if let state = data.operationalState,
-           let sanitized = ProgressSummarySanitizer.sanitize(localizedOperationalState(state)),
-           !sanitized.isEmpty {
-            endActiveAnswerSegment(as: .interim, into: &events)
-            events.append(.progressMessage(AgentProgressMessage(
-                id: "status:\(runID.uuidString):\(sanitized)",
-                message: sanitized,
-                source: .applicationGenerated,
-                timestamp: Date()
-            )))
-            lastSemanticEventKind = .progress
+        if let state = data.operationalState, !state.isEmpty {
+            if isInternalTransportState(state) {
+                AgentOperationalStateDiagnostics.transportStateObserved(state)
+            } else if let sanitized = ProgressSummarySanitizer.sanitize(localizedOperationalState(state)),
+                      !sanitized.isEmpty {
+                endActiveAnswerSegment(as: .interim, into: &events)
+                events.append(.progressMessage(AgentProgressMessage(
+                    id: "status:\(runID.uuidString):\(sanitized)",
+                    message: sanitized,
+                    source: .applicationGenerated,
+                    timestamp: Date()
+                )))
+                lastSemanticEventKind = .progress
+            }
         }
 
         if data.searchEngine != nil || data.search_text != nil || data.resources != nil {
@@ -176,5 +179,31 @@ struct HanlinStreamEventAdapter: ProviderEventAdapter {
             return String(localized: "Searching the web")
         }
         return state
+    }
+
+    private func isInternalTransportState(_ state: String) -> Bool {
+        let normalized = state
+            .trimmingCharacters(in: .whitespacesAndNewlines)
+            .lowercased()
+        let transportStates = [
+            "processing", "processing dialogue content", "sending request",
+            "waiting for model response", "request prepared", "request sent",
+            "request started", "request completed", "parsing response",
+            "stream opened", "stream closed", "retrying transport",
+            "internal dispatch", "处理对话内容", "正在发送请求", "等待模型响应"
+        ]
+        return transportStates.contains {
+            normalized == $0 || normalized.hasPrefix("\($0)…") || normalized.hasPrefix("\($0)...")
+        }
+    }
+}
+
+private enum AgentOperationalStateDiagnostics {
+    static func transportStateObserved(_ state: String) {
+        guard AgentDiagnosticsConfiguration.level != .off else { return }
+        NativeToolTraceLogger.shared.log(
+            "agent_transport_state_observed",
+            ["state": state]
+        )
     }
 }
