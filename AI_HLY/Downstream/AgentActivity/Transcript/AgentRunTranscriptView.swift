@@ -14,6 +14,8 @@ struct AgentRunTranscriptView: View {
     let onLaunchRequest: ((NativeAppLaunchRequest) -> Void)?
 
     @State private var inspectorSelection: AgentActivityInspectorSelection?
+    @State private var isProcessExpanded = false
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     private var timeline: AgentDisplayTimeline { AgentActivityComposer.compose(run) }
     private var orderedItems: [AgentTranscriptItem] {
@@ -27,9 +29,17 @@ struct AgentRunTranscriptView: View {
         VStack(alignment: .leading, spacing: 8) {
             if isFinished {
                 if run.hasMeaningfulThinkingActivity {
-                    AgentActivitySummaryView(run: run) {
-                        inspectorSelection = AgentActivityInspectorSelection(selectedActivityID: nil)
+                    AgentActivitySummaryView(run: run, isExpanded: isProcessExpanded) {
+                        toggleProcessExpansion()
                     }
+                }
+                if isProcessExpanded {
+                    AgentInlineProcessView(run: run, timeline: timeline) { selectedID in
+                        inspectorSelection = AgentActivityInspectorSelection(
+                            selectedActivityID: selectedID
+                        )
+                    }
+                    .transition(.opacity.combined(with: .move(edge: .top)))
                 }
                 ForEach(orderedItems.filter { $0.visibilityAfterCompletion == .remainInChat }) { item in
                     transcriptItem(item, isLive: false)
@@ -111,6 +121,16 @@ struct AgentRunTranscriptView: View {
             return nil
         }
         return value
+    }
+
+    private func toggleProcessExpansion() {
+        if reduceMotion {
+            isProcessExpanded.toggle()
+        } else {
+            withAnimation(.easeInOut(duration: 0.18)) {
+                isProcessExpanded.toggle()
+            }
+        }
     }
 }
 

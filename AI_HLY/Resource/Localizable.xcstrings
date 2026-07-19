@@ -2,6 +2,20 @@
   "sourceLanguage" : "zh-Hans",
   "strings" : {
     "" : {},
+    "Collapse process" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Collapse process" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "כיווץ התהליך" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "收起过程" } }
+      }
+    },
+    "Expand process" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Expand process" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "הרחבת התהליך" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "展开过程" } }
+      }
+    },
     "Search provider" : {
       "localizations" : {
         "en" : { "stringUnit" : { "state" : "translated", "value" : "Search provider" } },

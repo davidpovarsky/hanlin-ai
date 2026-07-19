@@ -12,8 +12,15 @@ enum AgentActivityCompositionPolicy {
         guard step.kind == .progress else { return false }
         let values = [step.title, step.userFacingSummary, step.output]
             .compactMap { $0?.trimmingCharacters(in: .whitespacesAndNewlines).lowercased() }
-        return values.contains { value in
-            transportPhrases.contains { value == $0 || value.hasPrefix("\($0)…") }
+        return values.contains(isInternalTransportText)
+    }
+
+    static func isInternalTransportText(_ value: String) -> Bool {
+        let normalized = value.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
+        return transportPhrases.contains {
+            normalized == $0
+                || normalized.hasPrefix("\($0)…")
+                || normalized.hasPrefix("\($0)...")
         }
     }
 
