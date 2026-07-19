@@ -268,6 +268,38 @@ jobs:
             echo "Build command completed."
           } 2>&1 | tee "$LOG_DIR/07-build-step-wrapper.log"
 
+      - name: Run agent activity regression tests
+        run: |
+          set -euxo pipefail
+
+          {
+            SIMULATOR_UDID="$(xcrun simctl list devices available | awk -F '[()]' '/iPhone/ { print $2; exit }')"
+            if [ -z "$SIMULATOR_UDID" ]; then
+              echo "ERROR: No available iPhone simulator was found."
+              xcrun simctl list devices available
+              exit 1
+            fi
+
+            echo "Running AI_HLYTests on simulator: $SIMULATOR_UDID"
+            rm -rf "$LOG_DIR/TestResult.xcresult"
+
+            xcodebuild test \
+              -project "$PROJECT_PATH" \
+              -scheme "$SCHEME_NAME" \
+              -configuration Debug \
+              -sdk iphonesimulator \
+              -destination "platform=iOS Simulator,id=$SIMULATOR_UDID" \
+              -clonedSourcePackagesDirPath "$CLONED_PACKAGES_PATH" \
+              -resultBundlePath "$LOG_DIR/TestResult.xcresult" \
+              -skipPackagePluginValidation \
+              -skipMacroValidation \
+              -only-testing:AI_HLYTests \
+              IPHONEOS_DEPLOYMENT_TARGET="$IOS_DEPLOYMENT_TARGET" \
+              CODE_SIGNING_ALLOWED=NO \
+              CODE_SIGNING_REQUIRED=NO \
+              CODE_SIGN_IDENTITY=""
+          } 2>&1 | tee "$LOG_DIR/07b-tests.log"
+
       - name: Locate built app
         run: |
           set -euxo pipefail

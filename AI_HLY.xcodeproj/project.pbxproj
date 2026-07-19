@@ -16,6 +16,16 @@
 		D7D5EE4E2DD590C500B89AAD /* SwiftSoup in Frameworks */ = {isa = PBXBuildFile; productRef = D7D5EE4D2DD590C500B89AAD /* SwiftSoup */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		AA10000A0000000000000001 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D7B6C3B92D50A55D004E3AD6 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D7B6C3C02D50A55D004E3AD6;
+			remoteInfo = AI_Hanlin;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXCopyFilesBuildPhase section */
 		D73E237E2D818F0300ACC644 /* Embed ExtensionKit Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -40,11 +50,17 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		AA1000010000000000000001 /* AI_HLYTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AI_HLYTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D7B6C3C12D50A55D004E3AD6 /* AI_Hanlin.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AI_Hanlin.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D7C6558C2E6C731A0041F1C7 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		AA1000020000000000000001 /* AI_HLYTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = AI_HLYTests;
+			sourceTree = "<group>";
+		};
 		D7B6C3C32D50A55D004E3AD6 /* AI_HLY */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = AI_HLY;
@@ -53,6 +69,13 @@
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		AA1000030000000000000001 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D7B6C3BE2D50A55D004E3AD6 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -81,6 +104,7 @@
 			isa = PBXGroup;
 			children = (
 				D7B6C3C32D50A55D004E3AD6 /* AI_HLY */,
+				AA1000020000000000000001 /* AI_HLYTests */,
 				D73E23062D817B1300ACC644 /* Frameworks */,
 				D7B6C3C22D50A55D004E3AD6 /* Products */,
 				D7C6558C2E6C731A0041F1C7 /* Config.xcconfig */,
@@ -91,6 +115,7 @@
 			isa = PBXGroup;
 			children = (
 				D7B6C3C12D50A55D004E3AD6 /* AI_Hanlin.app */,
+				AA1000010000000000000001 /* AI_HLYTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -98,6 +123,29 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		AA1000060000000000000001 /* AI_HLYTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AA1000090000000000000001 /* Build configuration list for PBXNativeTarget "AI_HLYTests" */;
+			buildPhases = (
+				AA1000050000000000000001 /* Sources */,
+				AA1000030000000000000001 /* Frameworks */,
+				AA1000040000000000000001 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				AA10000B0000000000000001 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				AA1000020000000000000001 /* AI_HLYTests */,
+			);
+			name = AI_HLYTests;
+			packageProductDependencies = (
+			);
+			productName = AI_HLYTests;
+			productReference = AA1000010000000000000001 /* AI_HLYTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		D7B6C3C02D50A55D004E3AD6 /* AI_Hanlin */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = D7B6C3E52D50A55E004E3AD6 /* Build configuration list for PBXNativeTarget "AI_Hanlin" */;
@@ -139,6 +187,10 @@
 				LastSwiftUpdateCheck = 1620;
 				LastUpgradeCheck = 2600;
 				TargetAttributes = {
+					AA1000060000000000000001 = {
+						CreatedOnToolsVersion = 26.0;
+						TestTargetID = D7B6C3C02D50A55D004E3AD6;
+					};
 					D7B6C3C02D50A55D004E3AD6 = {
 						CreatedOnToolsVersion = 16.2;
 					};
@@ -170,11 +222,19 @@
 			projectRoot = "";
 			targets = (
 				D7B6C3C02D50A55D004E3AD6 /* AI_Hanlin */,
+				AA1000060000000000000001 /* AI_HLYTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		AA1000040000000000000001 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D7B6C3BF2D50A55D004E3AD6 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -185,6 +245,13 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		AA1000050000000000000001 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D7B6C3BD2D50A55D004E3AD6 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -194,7 +261,55 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		AA10000B0000000000000001 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D7B6C3C02D50A55D004E3AD6 /* AI_Hanlin */;
+			targetProxy = AA10000A0000000000000001 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		AA1000070000000000000001 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "cherryai.com.AI-HanlinTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AI_Hanlin.app/AI_Hanlin";
+			};
+			name = Debug;
+		};
+		AA1000080000000000000001 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "cherryai.com.AI-HanlinTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AI_Hanlin.app/AI_Hanlin";
+			};
+			name = Release;
+		};
 		D7B6C3E32D50A55E004E3AD6 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D7C6558C2E6C731A0041F1C7 /* Config.xcconfig */;
@@ -447,6 +562,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		AA1000090000000000000001 /* Build configuration list for PBXNativeTarget "AI_HLYTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AA1000070000000000000001 /* Debug */,
+				AA1000080000000000000001 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		D7B6C3BC2D50A55D004E3AD6 /* Build configuration list for PBXProject "AI_HLY" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
