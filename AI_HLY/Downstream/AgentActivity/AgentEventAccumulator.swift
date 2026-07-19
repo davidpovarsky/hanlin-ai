@@ -13,6 +13,8 @@ struct AgentEventAccumulator {
     private var pendingToolArguments: [String: String] = [:]
     private var toolTranscriptIDByCallID: [String: String] = [:]
     private var callIDByExecutionID: [String: String] = [:]
+    private var toolCallByID: [String: AgentToolCall] = [:]
+    private var profileByCallID: [String: ToolPresentationProfile] = [:]
 
     init(run: AgentRun) {
         self.run = run
@@ -89,18 +91,32 @@ struct AgentEventAccumulator {
             )
 
         case .toolCallStarted(let call):
-            let presentation = ToolPresentationRegistry.presentation(for: call.name)
-            let userFacingArguments = ToolProgressSummary.userFacingArguments(from: call.sanitizedArgumentsJSON)
+            let profile = call.presentationProfile
+            let presentation = ToolPresentationRegistry.presentation(for: call.name, profile: profile)
+            let visibleKeys = profile.activity.visibleArgumentKeys
+            let userFacingArguments = ToolProgressSummary.userFacingArguments(
+                from: call.sanitizedArgumentsJSON,
+                visibleKeys: visibleKeys
+            )
+            let queryItems = profile.activity.kind == .search
+                ? ToolProgressSummary.stringValues(
+                    from: call.sanitizedArgumentsJSON,
+                    keys: visibleKeys
+                )
+                : []
             let sequence = transcript.allocateSequence()
             let stepID = appendStep(
                 externalID: "call:\(call.id)",
                 sequence: sequence,
                 kind: .toolCall,
+                profile: profile,
+                resultPresentationRequest: call.resultPresentationRequest,
                 title: presentation.title,
                 subtitle: call.name,
                 summary: call.progressSummary ?? presentation.runningDescription,
                 source: call.progressSummarySource ?? .applicationGenerated,
-                input: userFacingArguments
+                input: userFacingArguments,
+                queryItems: queryItems
             )
             let transcriptID = "tool:\(call.id)"
             toolTranscriptIDByCallID[call.id] = transcriptID
@@ -114,26 +130,38 @@ struct AgentEventAccumulator {
                 sequence: sequence
             )
             pendingToolArguments[call.id] = userFacingArguments
+            toolCallByID[call.id] = call
+            profileByCallID[call.id] = profile
 
         case .toolCallArgumentsDelta(let id, let delta):
             pendingToolArguments[id, default: ""].append(delta)
 
         case .toolCallCompleted(let call):
+            toolCallByID[call.id] = call
+            profileByCallID[call.id] = call.presentationProfile
             let externalID = "call:\(call.id)"
             if stepIndexByExternalID[externalID] == nil {
                 apply(.toolCallStarted(call))
             }
             updateStep(externalID: externalID) { step in
-                step.input = ToolProgressSummary.userFacingArguments(from: call.sanitizedArgumentsJSON)
+                step.input = ToolProgressSummary.userFacingArguments(
+                    from: call.sanitizedArgumentsJSON,
+                    visibleKeys: call.presentationProfile.activity.visibleArgumentKeys
+                )
                 step.status = .completed
                 step.completedAt = Date()
             }
 
         case .toolExecutionStarted(let execution):
-            let presentation = ToolPresentationRegistry.presentation(for: execution.name)
+            let presentation = ToolPresentationRegistry.presentation(
+                for: execution.name,
+                profile: profileByCallID[execution.callID]
+            )
             let stepID = appendStep(
                 externalID: "execution:\(execution.id)",
                 kind: presentation.activityKind,
+                profile: profileByCallID[execution.callID],
+                resultPresentationRequest: toolCallByID[execution.callID]?.resultPresentationRequest,
                 title: presentation.title,
                 subtitle: execution.name,
                 summary: presentation.runningDescription,
@@ -175,25 +203,47 @@ struct AgentEventAccumulator {
 
         case .toolExecutionCompleted(let id, let result):
             let callID = callIDByExecutionID[id] ?? id.replacingOccurrences(of: ":execution", with: "")
+            let profile = profileByCallID[callID]
             updateStep(externalID: "execution:\(id)") { step in
                 step.output = Self.safePreview(result.userText ?? result.modelText)
                 step.richResultBlocks = result.richResultBlocks
-                step.status = .completed
+                if let profile {
+                    step.title = result.isError
+                        ? profile.activity.failedTitle
+                        : profile.activity.completedTitle
+                }
+                step.status = result.isError ? .failed : .completed
+                if result.isError {
+                    step.errorDescription = Self.safePreview(result.userText ?? result.modelText)
+                }
                 step.completedAt = step.startedAt.addingTimeInterval(max(0, result.duration))
             }
             if let transcriptID = toolTranscriptIDByCallID[callID] {
-                transcript.complete(externalID: transcriptID)
+                transcript.complete(externalID: transcriptID, status: result.isError ? .failed : .completed)
             }
-            transcript.insertUserVisibleResult(
-                callID: callID,
-                blocks: result.richResultBlocks,
-                completedAt: Date()
-            )
+            if let call = toolCallByID[callID], let profile {
+                let decision = ToolResultPresentationCoordinator.decide(
+                    call: call,
+                    profile: profile,
+                    hasPayload: !result.richResultBlocks.isEmpty || result.hasLegacyPresentationPayload
+                )
+                if decision.shouldPresent, let rendererKind = decision.rendererKind {
+                    transcript.insertUserVisibleResult(
+                        callID: callID,
+                        toolName: call.name,
+                        rendererKind: rendererKind,
+                        request: call.resultPresentationRequest,
+                        blocks: result.richResultBlocks,
+                        completedAt: Date()
+                    )
+                }
+            }
 
         case .toolExecutionFailed(let id, let error):
             let callID = callIDByExecutionID[id] ?? id.replacingOccurrences(of: ":execution", with: "")
             updateStep(externalID: "execution:\(id)") { step in
                 step.status = .failed
+                if let profile = profileByCallID[callID] { step.title = profile.activity.failedTitle }
                 step.errorDescription = error.message
                 step.completedAt = Date()
             }
@@ -301,6 +351,8 @@ struct AgentEventAccumulator {
         externalID: String?,
         sequence: Int? = nil,
         kind: AgentActivityKind,
+        profile: ToolPresentationProfile? = nil,
+        resultPresentationRequest: ToolResultPresentationRequest? = nil,
         title: String,
         subtitle: String? = nil,
         summary: String? = nil,
@@ -322,6 +374,8 @@ struct AgentEventAccumulator {
             externalID: externalID,
             sequence: assignedSequence,
             kind: kind,
+            presentationProfile: profile,
+            resultPresentationRequest: resultPresentationRequest,
             title: title,
             subtitle: subtitle,
             userFacingSummary: summary,

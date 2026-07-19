@@ -11,7 +11,15 @@ struct SefariaAssistantSearchTool: NativeTool {
             summary: String(localized: "Search topics, phrases and references"),
             categories: ["knowledge", "jewish texts", "sefaria", "native app"],
             keywords: ["torah", "talmud", "tanakh", "halacha", "source", "מקור", "ספריא"],
-            examples: ["Search Sefaria for hashavat aveidah", "Find a Jewish source about charity"]
+            examples: ["Search Sefaria for hashavat aveidah", "Find a Jewish source about charity"],
+            presentationProfile: .modernNative(
+                toolName: name,
+                kind: .search,
+                systemImage: "book.closed",
+                runningTitle: "Searching Sefaria",
+                completedTitle: "Searched Sefaria",
+                visibleArgumentKeys: ["query"]
+            )
         )
     }
 
@@ -80,7 +88,15 @@ struct SefariaAssistantSourceTool: NativeTool {
             summary: String(localized: "Load exact Hebrew or English source text"),
             categories: ["knowledge", "jewish texts", "sefaria", "native app"],
             keywords: ["source", "reference", "passage", "מקור", "פסוק"],
-            examples: ["Open Genesis 1:1", "Get Bava Metzia 21a"]
+            examples: ["Open Genesis 1:1", "Get Bava Metzia 21a"],
+            presentationProfile: .modernNative(
+                toolName: name,
+                kind: .read,
+                systemImage: "book.closed",
+                runningTitle: "Reading a source",
+                completedTitle: "Read a source",
+                visibleArgumentKeys: ["reference"]
+            )
         )
     }
 

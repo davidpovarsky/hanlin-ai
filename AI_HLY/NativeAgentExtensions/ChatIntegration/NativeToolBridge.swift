@@ -13,10 +13,13 @@ enum NativeToolBridge {
         let catalog = NativeToolCatalog.shared
         catalog.ensureBuiltinsRegistered()
 
-        return ToolSchemaDecorator.addingHanlinProgressSummary(
-            to: catalog.schemasForEnabledTools(),
-            required: false
-        )
+        return catalog.schemasForEnabledTools()
+    }
+
+    static func presentationProfile(for name: String) -> ToolPresentationProfile? {
+        let catalog = NativeToolCatalog.shared
+        catalog.ensureBuiltinsRegistered()
+        return catalog.presentationProfile(named: name)
     }
 
     static func executeIfNativeTool(
@@ -73,8 +76,8 @@ enum NativeToolBridge {
             ]
         )
 
-        let sanitizedArguments = ToolProgressSummary.separate(from: argumentsJSON).argumentsJSON
-        let result = await tool.execute(argumentsJSON: sanitizedArguments, context: context)
+        let extraction = ToolInvocationMetadataExtractor.extract(from: argumentsJSON)
+        let result = await tool.execute(argumentsJSON: extraction.sanitizedArgumentsJSON, context: context)
         let durationMs = Int(Date().timeIntervalSince(start) * 1000)
 
         NativeToolTraceLogger.shared.log(

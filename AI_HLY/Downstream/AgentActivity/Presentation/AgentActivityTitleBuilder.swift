@@ -14,6 +14,13 @@ enum AgentActivityTitleBuilder {
         }
 
         if kind == .search, let query = queries.first {
+            if let profile = steps.compactMap(\.presentationProfile).first,
+               profile.activity.kind == .search {
+                let title = status == .running
+                    ? profile.activity.runningTitle
+                    : profile.activity.completedTitle
+                return "\(title) · \(query)"
+            }
             let format = status == .running
                 ? String(localized: "Searching the web for %@")
                 : String(localized: "Searched the web for %@")
@@ -21,7 +28,8 @@ enum AgentActivityTitleBuilder {
         }
 
         let toolName = steps.compactMap(\.subtitle).first ?? ""
-        let presentation = ToolPresentationRegistry.presentation(for: toolName)
+        let profile = steps.compactMap(\.presentationProfile).first
+        let presentation = ToolPresentationRegistry.presentation(for: toolName, profile: profile)
         return status == .running ? presentation.runningDescription : presentation.completedDescriptionForTimeline
     }
 

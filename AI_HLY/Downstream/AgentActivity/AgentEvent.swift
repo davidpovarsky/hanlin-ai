@@ -50,23 +50,37 @@ struct AgentSafeError: Error, Codable, Hashable, Sendable {
     }
 }
 
-struct AgentToolCall: @unchecked Sendable {
+struct AgentToolCall: Sendable {
     var id: String
     var name: String
     var rawArgumentsJSON: String
     var sanitizedArgumentsJSON: String
     var progressSummary: String?
     var progressSummarySource: ProgressSummarySource?
+    var resultPresentationRequest: ToolResultPresentationRequest
+    var hadInvalidResultPresentation: Bool
+    var presentationProfile: ToolPresentationProfile
 
-    static func parse(id: String, name: String, argumentsJSON: String) -> AgentToolCall {
-        let separated = ToolProgressSummary.separate(from: argumentsJSON)
+    static func parse(
+        id: String,
+        name: String,
+        argumentsJSON: String,
+        presentationProfile: ToolPresentationProfile? = nil
+    ) -> AgentToolCall {
+        let extraction = ToolInvocationMetadataExtractor.extract(from: argumentsJSON)
         return AgentToolCall(
             id: id,
             name: name,
             rawArgumentsJSON: argumentsJSON,
-            sanitizedArgumentsJSON: separated.argumentsJSON,
-            progressSummary: separated.summary,
-            progressSummarySource: separated.summary == nil ? nil : .model
+            sanitizedArgumentsJSON: extraction.sanitizedArgumentsJSON,
+            progressSummary: extraction.metadata.progressSummary,
+            progressSummarySource: extraction.metadata.progressSummary == nil ? nil : .model,
+            resultPresentationRequest: extraction.metadata.resultPresentation,
+            hadInvalidResultPresentation: extraction.hadInvalidResultPresentation,
+            presentationProfile: ToolPresentationProfileRegistry.resolve(
+                toolName: name,
+                explicitProfile: presentationProfile
+            )
         )
     }
 }
@@ -82,6 +96,8 @@ struct AgentToolResult: @unchecked Sendable {
     var modelText: String
     var userText: String?
     var richResultBlocks: [NativeUIBlock]
+    var hasLegacyPresentationPayload: Bool
+    var isError: Bool
     var duration: TimeInterval
 }
 

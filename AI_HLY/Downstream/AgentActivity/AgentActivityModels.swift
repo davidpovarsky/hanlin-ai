@@ -59,6 +59,8 @@ struct AgentActivityStep: Codable, Hashable, Identifiable {
     var externalID: String?
     var sequence: Int
     var kind: AgentActivityKind
+    var presentationProfile: ToolPresentationProfile?
+    var resultPresentationRequest: ToolResultPresentationRequest?
     var title: String
     var subtitle: String?
     var userFacingSummary: String?
@@ -78,6 +80,8 @@ struct AgentActivityStep: Codable, Hashable, Identifiable {
         externalID: String? = nil,
         sequence: Int,
         kind: AgentActivityKind,
+        presentationProfile: ToolPresentationProfile? = nil,
+        resultPresentationRequest: ToolResultPresentationRequest? = nil,
         title: String,
         subtitle: String? = nil,
         userFacingSummary: String? = nil,
@@ -96,6 +100,8 @@ struct AgentActivityStep: Codable, Hashable, Identifiable {
         self.externalID = externalID
         self.sequence = sequence
         self.kind = kind
+        self.presentationProfile = presentationProfile
+        self.resultPresentationRequest = resultPresentationRequest
         self.title = title
         self.subtitle = subtitle
         self.userFacingSummary = userFacingSummary
@@ -112,7 +118,8 @@ struct AgentActivityStep: Codable, Hashable, Identifiable {
     }
 
     private enum CodingKeys: String, CodingKey {
-        case id, externalID, sequence, kind, title, subtitle, userFacingSummary, summarySource
+        case id, externalID, sequence, kind, presentationProfile, resultPresentationRequest
+        case title, subtitle, userFacingSummary, summarySource
         case status, startedAt, completedAt, input, output, queryItems, sourceItems
         case richResultBlocks, errorDescription
     }
@@ -123,6 +130,8 @@ struct AgentActivityStep: Codable, Hashable, Identifiable {
         externalID = try container.decodeIfPresent(String.self, forKey: .externalID)
         sequence = try container.decodeIfPresent(Int.self, forKey: .sequence) ?? 0
         kind = try container.decodeIfPresent(AgentActivityKind.self, forKey: .kind) ?? .progress
+        presentationProfile = try container.decodeIfPresent(ToolPresentationProfile.self, forKey: .presentationProfile)
+        resultPresentationRequest = try container.decodeIfPresent(ToolResultPresentationRequest.self, forKey: .resultPresentationRequest)
         title = try container.decodeIfPresent(String.self, forKey: .title) ?? ""
         subtitle = try container.decodeIfPresent(String.self, forKey: .subtitle)
         userFacingSummary = try container.decodeIfPresent(String.self, forKey: .userFacingSummary)
@@ -140,7 +149,7 @@ struct AgentActivityStep: Codable, Hashable, Identifiable {
 }
 
 struct AgentRun: Codable, Hashable, Identifiable {
-    static let currentSchemaVersion = 2
+    static let currentSchemaVersion = 3
 
     var schemaVersion: Int
     var id: UUID

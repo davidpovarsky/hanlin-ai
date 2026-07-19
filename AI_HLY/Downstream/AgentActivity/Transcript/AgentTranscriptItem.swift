@@ -28,6 +28,9 @@ struct AgentTranscriptItem: Codable, Hashable, Identifiable {
 
     var roundID: String?
     var callID: String?
+    var toolName: String?
+    var resultRendererKind: ToolResultRendererKind?
+    var resultPresentationRequest: ToolResultPresentationRequest?
     var activityStepID: UUID?
 
     var startedAt: Date
@@ -47,6 +50,9 @@ struct AgentTranscriptItem: Codable, Hashable, Identifiable {
         kind: AgentTranscriptItemKind,
         roundID: String? = nil,
         callID: String? = nil,
+        toolName: String? = nil,
+        resultRendererKind: ToolResultRendererKind? = nil,
+        resultPresentationRequest: ToolResultPresentationRequest? = nil,
         activityStepID: UUID? = nil,
         startedAt: Date = Date(),
         completedAt: Date? = nil,
@@ -62,6 +68,9 @@ struct AgentTranscriptItem: Codable, Hashable, Identifiable {
         self.kind = kind
         self.roundID = roundID
         self.callID = callID
+        self.toolName = toolName
+        self.resultRendererKind = resultRendererKind
+        self.resultPresentationRequest = resultPresentationRequest
         self.activityStepID = activityStepID
         self.startedAt = startedAt
         self.completedAt = completedAt
@@ -73,7 +82,8 @@ struct AgentTranscriptItem: Codable, Hashable, Identifiable {
     }
 
     private enum CodingKeys: String, CodingKey {
-        case id, externalID, sequence, kind, roundID, callID, activityStepID
+        case id, externalID, sequence, kind, roundID, callID, toolName
+        case resultRendererKind, resultPresentationRequest, activityStepID
         case startedAt, completedAt, status, text, nativeUIBlocks, textRole
         case visibilityAfterCompletion
     }
@@ -86,6 +96,9 @@ struct AgentTranscriptItem: Codable, Hashable, Identifiable {
         kind = try container.decodeIfPresent(AgentTranscriptItemKind.self, forKey: .kind) ?? .progress
         roundID = try container.decodeIfPresent(String.self, forKey: .roundID)
         callID = try container.decodeIfPresent(String.self, forKey: .callID)
+        toolName = try container.decodeIfPresent(String.self, forKey: .toolName)
+        resultRendererKind = try container.decodeIfPresent(ToolResultRendererKind.self, forKey: .resultRendererKind)
+        resultPresentationRequest = try container.decodeIfPresent(ToolResultPresentationRequest.self, forKey: .resultPresentationRequest)
         activityStepID = try container.decodeIfPresent(UUID.self, forKey: .activityStepID)
         startedAt = try container.decodeIfPresent(Date.self, forKey: .startedAt) ?? Date()
         completedAt = try container.decodeIfPresent(Date.self, forKey: .completedAt)

@@ -59,6 +59,12 @@ struct AgentDiagnosticsToolCall: Codable, Identifiable, Sendable {
     var callID: String
     var toolName: String
     var progressSummary: String?
+    var presentationProfileIdentity: String?
+    var resultPresentationRequested: String?
+    var resultPresentationEffective: Bool?
+    var resultRendererKind: String?
+    var resultPresentationSuppressed: Bool?
+    var suppressionReason: String?
     var requestedAt: Date
     var executionStartedAt: Date?
     var executionCompletedAt: Date?
@@ -86,6 +92,8 @@ struct AgentEfficiencyReport: Codable, Hashable, Sendable {
     var largestToolResultCharacters = 0
     var historyGrowthByRound: [Int] = []
     var toolSchemaOverheadTokens = 0
+    var resultPresentationSchemaToolCount: Int?
+    var resultPresentationSchemaEstimatedTokens: Int?
     var progressMessageCount = 0
     var hiddenProgressCount = 0
     var transportOnlyEventCount = 0

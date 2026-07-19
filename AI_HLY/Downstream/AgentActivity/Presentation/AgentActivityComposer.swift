@@ -59,8 +59,15 @@ enum AgentActivityComposer {
     }
 
     private static func makeActivity(_ steps: [AgentActivityStep]) -> AgentDisplayActivity? {
-        guard let first = steps.first,
-              let kind = AgentActivityCompositionPolicy.displayKind(for: first.kind) else { return nil }
+        guard let first = steps.first else { return nil }
+        let kind: AgentDisplayActivityKind
+        if let presentationKind = first.presentationProfile?.activity.kind {
+            kind = presentationKind.displayActivityKind
+        } else if let fallbackKind = AgentActivityCompositionPolicy.displayKind(for: first.kind) {
+            kind = fallbackKind
+        } else {
+            return nil
+        }
         let status = combinedStatus(steps)
         let queries = AgentActivityDeduplicator.uniqueStrings(
             steps.flatMap(\.queryItems) + steps.compactMap { query(from: $0.input) }
@@ -83,6 +90,7 @@ enum AgentActivityComposer {
         return AgentDisplayActivity(
             id: lifecycleKey(first),
             kind: kind,
+            systemImage: steps.compactMap(\.presentationProfile).first?.activity.systemImage,
             title: title,
             subtitle: nil,
             narrativeText: kind == .narrative ? title : nil,

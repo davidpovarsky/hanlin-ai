@@ -81,6 +81,8 @@ struct AgentPromptCompositionMetrics: Codable, Hashable, Sendable {
     var contextCharacters = 0
     var toolResultCharacters = 0
     var estimatedTokensBySection: [String: Int] = [:]
+    var resultPresentationSchemaToolCount: Int?
+    var resultPresentationSchemaEstimatedTokens: Int?
 }
 
 enum AgentTokenEstimator {

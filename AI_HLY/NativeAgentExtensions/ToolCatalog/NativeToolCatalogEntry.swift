@@ -19,6 +19,7 @@ struct NativeToolCatalogEntry: Identifiable, Hashable {
     var sourceAppTitle: String?
     var isEnabledByDefault: Bool
     var isVisibleInSettings: Bool
+    var presentationProfile: ToolPresentationProfile
 
     init(
         name: String,
@@ -32,7 +33,8 @@ struct NativeToolCatalogEntry: Identifiable, Hashable {
         sourceAppID: String? = nil,
         sourceAppTitle: String? = nil,
         isEnabledByDefault: Bool = true,
-        isVisibleInSettings: Bool = true
+        isVisibleInSettings: Bool = true,
+        presentationProfile: ToolPresentationProfile
     ) {
         self.name = name
         self.title = title
@@ -46,5 +48,6 @@ struct NativeToolCatalogEntry: Identifiable, Hashable {
         self.sourceAppTitle = sourceAppTitle
         self.isEnabledByDefault = isEnabledByDefault
         self.isVisibleInSettings = isVisibleInSettings
+        self.presentationProfile = presentationProfile
     }
 }

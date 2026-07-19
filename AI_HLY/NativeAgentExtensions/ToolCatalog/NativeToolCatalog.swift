@@ -109,6 +109,11 @@ final class NativeToolCatalog {
         return toolsByName[name]?.entry
     }
 
+    func presentationProfile(named name: String) -> ToolPresentationProfile? {
+        ensureBuiltinsRegistered()
+        return toolsByName[name]?.entry.presentationProfile
+    }
+
     func allEntries() -> [NativeToolCatalogEntry] {
         ensureBuiltinsRegistered()
         return toolsByName.values.map(\.entry).sorted { $0.name < $1.name }
@@ -166,7 +171,13 @@ final class NativeToolCatalog {
         let registrations = toolsByName.values.sorted { $0.entry.name < $1.entry.name }
         let enabled = registrations.filter { isEffectivelyEnabled($0.entry) }
         let disabled = registrations.filter { !isEffectivelyEnabled($0.entry) }
-        let schemas = enabled.map(\.schema)
+        let schemas = enabled.map { registration in
+            ToolSchemaDecorator.decorate(
+                schema: registration.schema,
+                profile: registration.entry.presentationProfile,
+                progressSummaryRequired: false
+            )
+        }
 
         NativeToolTraceLogger.shared.log(
             "schemas_for_request_completed",
@@ -175,6 +186,9 @@ final class NativeToolCatalog {
                 "enabledToolNames": enabled.map(\.entry.name),
                 "disabledToolNames": disabled.map(\.entry.name),
                 "includedToolNames": enabled.map(\.entry.name),
+                "resultPresentationSchemaToolCount": enabled.filter {
+                    $0.entry.presentationProfile.result?.supportsCard == true
+                }.count,
                 "groupDisabledToolNames": disabled.filter {
                     isGroupDisabled(for: $0.entry)
                 }.map(\.entry.name),

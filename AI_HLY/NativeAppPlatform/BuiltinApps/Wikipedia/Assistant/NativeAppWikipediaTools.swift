@@ -11,7 +11,15 @@ struct WikipediaAssistantSearchTool: NativeTool {
             summary: String(localized: "Search Wikipedia articles by title or topic"),
             categories: ["encyclopedia", "knowledge", "wikipedia", "native app"],
             keywords: ["wikipedia", "encyclopedia", "article", "person", "place", "ויקיפדיה"],
-            examples: ["Search Wikipedia for Maimonides", "Find articles about SwiftUI"]
+            examples: ["Search Wikipedia for Maimonides", "Find articles about SwiftUI"],
+            presentationProfile: .modernNative(
+                toolName: name,
+                kind: .search,
+                systemImage: "globe",
+                runningTitle: "Searching Wikipedia",
+                completedTitle: "Searched Wikipedia",
+                visibleArgumentKeys: ["query"]
+            )
         )
     }
 
@@ -82,7 +90,15 @@ struct WikipediaAssistantSummaryTool: NativeTool {
             summary: String(localized: "Load a concise summary for a Wikipedia article"),
             categories: ["encyclopedia", "knowledge", "wikipedia", "native app"],
             keywords: ["summary", "article", "page", "תקציר"],
-            examples: ["Get a Wikipedia summary for Jerusalem", "Summarize Ada Lovelace"]
+            examples: ["Get a Wikipedia summary for Jerusalem", "Summarize Ada Lovelace"],
+            presentationProfile: .modernNative(
+                toolName: name,
+                kind: .read,
+                systemImage: "globe",
+                runningTitle: "Reading Wikipedia",
+                completedTitle: "Read Wikipedia",
+                visibleArgumentKeys: ["title"]
+            )
         )
     }
 

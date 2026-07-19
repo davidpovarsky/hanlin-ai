@@ -11,7 +11,15 @@ struct NativeAppTextStudioAnalyzeTool: NativeTool {
             summary: String(localized: "Count and inspect text structure and extracted values"),
             categories: ["text", "analysis", "native app"],
             keywords: ["word count", "sentences", "links", "emails", "numbers", "analyze"],
-            examples: ["Analyze this text", "Count words and extract links"]
+            examples: ["Analyze this text", "Count words and extract links"],
+            presentationProfile: .modernNative(
+                toolName: name,
+                kind: .inspect,
+                systemImage: "text.magnifyingglass",
+                runningTitle: "Analyzing text",
+                completedTitle: "Analyzed text",
+                visibleArgumentKeys: []
+            )
         )
     }
 
@@ -80,7 +88,15 @@ struct NativeAppTextStudioTransformTool: NativeTool {
             summary: String(localized: "Apply a selected formatting transformation to text"),
             categories: ["text", "formatting", "native app"],
             keywords: ["uppercase", "lowercase", "title case", "trim", "sort lines"],
-            examples: ["Convert this to title case", "Trim whitespace from this text"]
+            examples: ["Convert this to title case", "Trim whitespace from this text"],
+            presentationProfile: .modernNative(
+                toolName: name,
+                kind: .write,
+                systemImage: "textformat",
+                runningTitle: "Transforming text",
+                completedTitle: "Transformed text",
+                visibleArgumentKeys: ["transform"]
+            )
         )
     }
 

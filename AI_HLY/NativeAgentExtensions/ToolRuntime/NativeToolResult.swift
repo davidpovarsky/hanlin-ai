@@ -10,6 +10,10 @@ struct NativeToolResult {
     var userText: String?
     var uiBlocks: [NativeUIBlock]
 
+    var isError: Bool {
+        uiBlocks.contains { $0.type == .error }
+    }
+
     init(
         modelText: String,
         userText: String? = nil,

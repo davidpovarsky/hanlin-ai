@@ -18,6 +18,7 @@ enum AgentDisplayActivityKind: String, Hashable, Sendable {
 struct AgentDisplayActivity: Identifiable, Hashable {
     var id: String
     var kind: AgentDisplayActivityKind
+    var systemImage: String?
     var title: String
     var subtitle: String?
     var narrativeText: String?

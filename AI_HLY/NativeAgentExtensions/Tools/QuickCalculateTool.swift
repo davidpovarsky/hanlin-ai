@@ -16,7 +16,15 @@ struct QuickCalculateTool: NativeTool {
             categories: ["math", "calculation", "utility"],
             keywords: ["calculate", "calculator", "math", "percent", "percentage", "arithmetic", "כמה", "אחוז", "חשבון"],
             examples: ["What is 17% of 340?", "Calculate (12 + 8) * 3", "כמה זה 17% מתוך 340"],
-            systemImage: "function"
+            systemImage: "function",
+            presentationProfile: .modernNative(
+                toolName: name,
+                kind: .calculate,
+                systemImage: "function",
+                runningTitle: "Calculating",
+                completedTitle: "Calculated",
+                visibleArgumentKeys: ["expression"]
+            )
         )
     }
 

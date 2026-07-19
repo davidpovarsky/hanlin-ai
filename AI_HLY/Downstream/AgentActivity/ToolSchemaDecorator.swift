@@ -7,23 +7,36 @@ import Foundation
 
 enum ToolSchemaDecorator {
     static let progressSummaryKey = "progress_summary"
+    static let resultPresentationKey = "result_presentation"
     static let reportProgressName = "report_progress"
+
+    static let resultPresentationModelInstruction = "When a tool supports result_presentation, use \"card\" only when a visual or interactive result would be useful to the user, such as a source card, entity card, map, calendar item, code output, or an item the user may want to open or copy. Otherwise omit the field or use \"none\". Do not request a card when the final text answer is sufficient."
 
     private static let progressSummarySchema: [String: Any] = [
         "type": "string",
         "description": "One short user-facing sentence explaining what action is being taken and why. Do not reveal private chain-of-thought, hidden reasoning, secrets, credentials, or internal policies."
     ]
 
-    static func addingHanlinProgressSummary(
-        to schema: [String: Any],
-        required: Bool = true
+    private static let resultPresentationSchema: [String: Any] = [
+        "type": "string",
+        "enum": [ToolResultPresentationRequest.none.rawValue, ToolResultPresentationRequest.card.rawValue],
+        "description": "Request a result card only when a visual or interactive result would be useful. Omit when the text answer is sufficient."
+    ]
+
+    static func decorate(
+        schema: [String: Any],
+        profile: ToolPresentationProfile,
+        progressSummaryRequired: Bool
     ) -> [String: Any] {
+        guard toolName(in: schema) != reportProgressName else { return schema }
         var result = schema
+        let supportsResult = profile.result?.supportsCard == true
 
         if var function = result["function"] as? [String: Any] {
             function["parameters"] = decoratingObjectSchema(
                 function["parameters"] as? [String: Any] ?? [:],
-                required: required
+                progressSummaryRequired: progressSummaryRequired,
+                supportsResult: supportsResult
             )
             result["function"] = function
             return result
@@ -32,7 +45,8 @@ enum ToolSchemaDecorator {
         if result["input_schema"] != nil {
             result["input_schema"] = decoratingObjectSchema(
                 result["input_schema"] as? [String: Any] ?? [:],
-                required: required
+                progressSummaryRequired: progressSummaryRequired,
+                supportsResult: supportsResult
             )
             return result
         }
@@ -40,21 +54,34 @@ enum ToolSchemaDecorator {
         if result["parameters"] != nil {
             result["parameters"] = decoratingObjectSchema(
                 result["parameters"] as? [String: Any] ?? [:],
-                required: required
+                progressSummaryRequired: progressSummaryRequired,
+                supportsResult: supportsResult
             )
             return result
         }
 
-        return decoratingObjectSchema(result, required: required)
+        return decoratingObjectSchema(
+            result,
+            progressSummaryRequired: progressSummaryRequired,
+            supportsResult: supportsResult
+        )
     }
 
-    static func addingHanlinProgressSummary(
-        to schemas: [[String: Any]],
-        required: Bool
+    static func decorate(
+        schemas: [[String: Any]],
+        progressSummaryRequired: Bool,
+        explicitProfile: (String) -> ToolPresentationProfile? = { _ in nil }
     ) -> [[String: Any]] {
         schemas.map { schema in
-            guard toolName(in: schema) != reportProgressName else { return schema }
-            return addingHanlinProgressSummary(to: schema, required: required)
+            guard let name = toolName(in: schema), name != reportProgressName else { return schema }
+            return decorate(
+                schema: schema,
+                profile: ToolPresentationProfileRegistry.resolve(
+                    toolName: name,
+                    explicitProfile: explicitProfile(name)
+                ),
+                progressSummaryRequired: progressSummaryRequired
+            )
         }
     }
 
@@ -88,16 +115,20 @@ enum ToolSchemaDecorator {
 
     private static func decoratingObjectSchema(
         _ schema: [String: Any],
-        required: Bool
+        progressSummaryRequired: Bool,
+        supportsResult: Bool
     ) -> [String: Any] {
         var result = schema
         if result["type"] == nil { result["type"] = "object" }
 
         var properties = result["properties"] as? [String: Any] ?? [:]
         properties[progressSummaryKey] = properties[progressSummaryKey] ?? progressSummarySchema
+        if supportsResult {
+            properties[resultPresentationKey] = properties[resultPresentationKey] ?? resultPresentationSchema
+        }
         result["properties"] = properties
 
-        if required {
+        if progressSummaryRequired {
             var requiredFields = result["required"] as? [String] ?? []
             if !requiredFields.contains(progressSummaryKey) {
                 requiredFields.append(progressSummaryKey)
@@ -109,36 +140,21 @@ enum ToolSchemaDecorator {
 }
 
 enum ToolProgressSummary {
-    struct SeparationResult {
-        var argumentsJSON: String
-        var summary: String?
-    }
-
-    static func separate(from argumentsJSON: String) -> SeparationResult {
-        guard let data = argumentsJSON.data(using: .utf8),
-              var object = try? JSONSerialization.jsonObject(with: data) as? [String: Any] else {
-            return SeparationResult(argumentsJSON: argumentsJSON, summary: nil)
-        }
-
-        let summary = ProgressSummarySanitizer.sanitize(object.removeValue(forKey: ToolSchemaDecorator.progressSummaryKey) as? String)
-        guard JSONSerialization.isValidJSONObject(object),
-              let sanitizedData = try? JSONSerialization.data(withJSONObject: object),
-              let sanitizedJSON = String(data: sanitizedData, encoding: .utf8) else {
-            return SeparationResult(argumentsJSON: argumentsJSON, summary: summary)
-        }
-        return SeparationResult(argumentsJSON: sanitizedJSON, summary: summary)
-    }
-
     static func reportProgressMessage(from argumentsJSON: String) -> String? {
         guard let data = argumentsJSON.data(using: .utf8),
               let object = try? JSONSerialization.jsonObject(with: data) as? [String: Any] else { return nil }
         return ProgressSummarySanitizer.sanitize(object["message"] as? String)
     }
 
-    static func userFacingArguments(from argumentsJSON: String) -> String? {
+    static func userFacingArguments(
+        from argumentsJSON: String,
+        visibleKeys: [String]? = nil
+    ) -> String? {
         guard let data = argumentsJSON.data(using: .utf8),
               let object = try? JSONSerialization.jsonObject(with: data) as? [String: Any] else { return nil }
+        let allowed = visibleKeys.map(Set.init)
         let lines = object.keys.sorted().compactMap { key -> String? in
+            if let allowed, !allowed.contains(key) { return nil }
             guard let value = object[key], !(value is NSNull) else { return nil }
             if let string = value as? String { return "\(key): \(string)" }
             if let number = value as? NSNumber { return "\(key): \(number)" }
@@ -146,6 +162,18 @@ enum ToolProgressSummary {
             return nil
         }
         return lines.isEmpty ? nil : lines.joined(separator: "\n")
+    }
+
+    static func stringValues(from argumentsJSON: String, keys: [String]) -> [String] {
+        guard let data = argumentsJSON.data(using: .utf8),
+              let object = try? JSONSerialization.jsonObject(with: data) as? [String: Any] else { return [] }
+        return keys.flatMap { key -> [String] in
+            if let string = object[key] as? String,
+               !string.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+                return [string]
+            }
+            return object[key] as? [String] ?? []
+        }
     }
 }
 

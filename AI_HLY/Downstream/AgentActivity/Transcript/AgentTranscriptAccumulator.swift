@@ -17,7 +17,11 @@ struct AgentTranscriptAccumulator {
                 itemIndexByExternalID[externalID] = index
             }
             if item.kind == .userVisibleToolResult {
-                resultDeduplicationKeys.insert(Self.resultKey(callID: item.callID, blocks: item.nativeUIBlocks))
+                resultDeduplicationKeys.insert(Self.resultKey(
+                    callID: item.callID,
+                    rendererKind: item.resultRendererKind,
+                    blocks: item.nativeUIBlocks
+                ))
             }
         }
     }
@@ -118,11 +122,14 @@ struct AgentTranscriptAccumulator {
     @discardableResult
     mutating func insertUserVisibleResult(
         callID: String,
+        toolName: String,
+        rendererKind: ToolResultRendererKind,
+        request: ToolResultPresentationRequest,
         blocks: [NativeUIBlock],
         completedAt: Date = Date()
     ) -> Bool {
-        guard !blocks.isEmpty else { return false }
-        let key = Self.resultKey(callID: callID, blocks: blocks)
+        guard !blocks.isEmpty || rendererKind == .legacyExisting else { return false }
+        let key = Self.resultKey(callID: callID, rendererKind: rendererKind, blocks: blocks)
         guard resultDeduplicationKeys.insert(key).inserted else {
             AgentTranscriptDiagnostics.duplicateResultSuppressed(callID: callID)
             return false
@@ -134,6 +141,9 @@ struct AgentTranscriptAccumulator {
             sequence: allocateSequence(),
             kind: .userVisibleToolResult,
             callID: callID,
+            toolName: toolName,
+            resultRendererKind: rendererKind,
+            resultPresentationRequest: request,
             startedAt: completedAt,
             completedAt: completedAt,
             status: .completed,
@@ -163,9 +173,13 @@ struct AgentTranscriptAccumulator {
         return nextSequence
     }
 
-    private static func resultKey(callID: String?, blocks: [NativeUIBlock]) -> String {
+    private static func resultKey(
+        callID: String?,
+        rendererKind: ToolResultRendererKind? = nil,
+        blocks: [NativeUIBlock]
+    ) -> String {
         let blockIDs = blocks.map(\.id).joined(separator: ",")
-        return "\(callID ?? "unknown"):\(blockIDs)"
+        return "\(callID ?? "unknown"):\(rendererKind?.rawValue ?? "legacy"):\(blockIDs)"
     }
 }
 

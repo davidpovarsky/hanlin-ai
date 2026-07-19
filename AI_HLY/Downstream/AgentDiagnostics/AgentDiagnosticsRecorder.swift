@@ -149,6 +149,12 @@ actor AgentDiagnosticsRecorder {
             callID: call.id,
             toolName: call.name,
             progressSummary: call.progressSummary,
+            presentationProfileIdentity: call.presentationProfile.identity,
+            resultPresentationRequested: call.resultPresentationRequest.rawValue,
+            resultPresentationEffective: nil,
+            resultRendererKind: nil,
+            resultPresentationSuppressed: nil,
+            suppressionReason: nil,
             requestedAt: Date(),
             executionStartedAt: Date(),
             status: "running",
@@ -174,7 +180,8 @@ actor AgentDiagnosticsRecorder {
         resultForModel: String,
         resultForUser: String?,
         duration: TimeInterval,
-        error: String? = nil
+        error: String? = nil,
+        presentationDecision: ToolResultPresentationDecision? = nil
     ) async {
         let shouldStoreFullContent = session.level == .fullLocalDebug
         let completedAt = Date()
@@ -197,6 +204,10 @@ actor AgentDiagnosticsRecorder {
             call.error = sanitizedError
             call.resultForModel = sanitizedModelResult
             call.resultForUser = sanitizedUserResult
+            call.resultPresentationEffective = presentationDecision?.shouldPresent
+            call.resultRendererKind = presentationDecision?.rendererKind?.rawValue
+            call.resultPresentationSuppressed = presentationDecision.map { !$0.shouldPresent }
+            call.suppressionReason = presentationDecision?.suppressionReason?.rawValue
             round.toolCalls[index] = call
         }
         updateDerivedValues()
@@ -274,6 +285,12 @@ actor AgentDiagnosticsRecorder {
         report.largestToolResultCharacters = calls.map(\.resultByteCount).max() ?? 0
         report.historyGrowthByRound = session.rounds.map(\.request.composition.historyCharacters)
         report.toolSchemaOverheadTokens = session.rounds.reduce(0) { $0 + $1.request.composition.estimatedTokensBySection["toolSchemas", default: 0] }
+        report.resultPresentationSchemaToolCount = session.rounds.compactMap {
+            $0.request.composition.resultPresentationSchemaToolCount
+        }.max()
+        report.resultPresentationSchemaEstimatedTokens = session.rounds.compactMap {
+            $0.request.composition.resultPresentationSchemaEstimatedTokens
+        }.max()
         report.failedToolCount = calls.filter { $0.status == "failed" }.count
         report.totalDuration = session.completedAt.map { $0.timeIntervalSince(session.startedAt) }
         if report.duplicateToolCallCount > 0 { report.warnings.append("Repeated identical tool calls detected") }
@@ -355,6 +372,11 @@ actor AgentDiagnosticsRecorder {
         result.toolResultCharacters = texts.filter { $0.0 == "tool" || $0.1.contains("result has been obtained") }.map { $0.1.count }.reduce(0, +)
         result.historyCharacters = max(0, texts.map { $0.1.count }.reduce(0, +) - result.currentUserCharacters)
         result.toolSchemaCharacters = sanitizedJSONString(from: tools).count
+        let resultPresentationSchemas = tools.filter(Self.hasResultPresentationProperty)
+        result.resultPresentationSchemaToolCount = resultPresentationSchemas.count
+        result.resultPresentationSchemaEstimatedTokens = AgentTokenEstimator.estimate(
+            sanitizedJSONString(from: resultPresentationSchemas)
+        )
         result.estimatedTokensBySection = [
             "system": AgentTokenEstimator.estimate(String(repeating: "x", count: result.systemCharacters)),
             "toolSchemas": AgentTokenEstimator.estimate(String(repeating: "x", count: result.toolSchemaCharacters)),
@@ -363,6 +385,19 @@ actor AgentDiagnosticsRecorder {
             "toolResults": AgentTokenEstimator.estimate(String(repeating: "x", count: result.toolResultCharacters))
         ]
         return result
+    }
+
+    private static func hasResultPresentationProperty(_ schema: [String: Any]) -> Bool {
+        let objectSchema: [String: Any]
+        if let function = schema["function"] as? [String: Any] {
+            objectSchema = function["parameters"] as? [String: Any] ?? [:]
+        } else if let input = schema["input_schema"] as? [String: Any] {
+            objectSchema = input
+        } else {
+            objectSchema = schema["parameters"] as? [String: Any] ?? schema
+        }
+        let properties = objectSchema["properties"] as? [String: Any] ?? [:]
+        return properties[ToolSchemaDecorator.resultPresentationKey] != nil
     }
 
     private static func stringify(_ value: Any?) -> String {
@@ -396,7 +431,15 @@ actor AgentDiagnosticsRecorder {
             if let content = round.response.visibleContent { lines.append(content) }
             lines += ["Finish reason: \(round.response.finishReason ?? "—")", "Token usage: \(round.usage.source.rawValue)"]
             for tool in round.toolCalls {
-                lines += ["", "Tool execution", "Tool name: \(tool.toolName)", "Call ID: \(tool.callID)", "Status: \(tool.status)"]
+                lines += [
+                    "", "Tool execution", "Tool name: \(tool.toolName)", "Call ID: \(tool.callID)",
+                    "Status: \(tool.status)",
+                    "Presentation profile: \(tool.presentationProfileIdentity ?? "—")",
+                    "Result requested: \(tool.resultPresentationRequested ?? "none")",
+                    "Result presented: \(tool.resultPresentationEffective.map(String.init) ?? "—")",
+                    "Result renderer: \(tool.resultRendererKind ?? "—")",
+                    "Suppression reason: \(tool.suppressionReason ?? "—")"
+                ]
                 if let arguments = tool.argumentsAfterMetadataRemoval { lines += ["Arguments", arguments] }
                 if let result = tool.resultForModel { lines += ["Result returned to model", result] }
             }

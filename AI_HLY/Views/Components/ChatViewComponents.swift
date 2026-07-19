@@ -658,34 +658,44 @@ struct ChatBubbleView: View {
     @ViewBuilder
     private func assistantLegacyResultSection() -> some View {
         VStack(alignment: .leading, spacing: 6) {
-            if showCanvas, canvas?.content.isEmpty == false {
-                canvasBubble(for: canvas)
-            }
-            if let codes = codeBlocks, !codes.isEmpty {
-                codeBubble(for: codes)
-            }
-            if let cards = knowledgeCard, !cards.isEmpty {
-                knowledgeCardBubble(for: cards)
-            }
-            if let htmls = htmlContent, !htmls.isEmpty {
-                htmlWebBubble(for: htmls)
-            }
-            if let evs = events, !evs.isEmpty {
-                eventsBubble(for: evs)
-            }
-            if let hcs = healthCards {
-                nutritionCards(
-                    for: Binding<[HealthData]>(get: { hcs }, set: { _ in })
-                )
-            }
-            if (locations?.isEmpty == false) || (routes?.isEmpty == false) {
-                mapBubble(for: locations ?? [], routes: routes ?? [])
+            if allowsLegacyResultPresentation {
+                resourcesView()
+                if showCanvas, canvas?.content.isEmpty == false {
+                    canvasBubble(for: canvas)
+                }
+                if let codes = codeBlocks, !codes.isEmpty {
+                    codeBubble(for: codes)
+                }
+                if let cards = knowledgeCard, !cards.isEmpty {
+                    knowledgeCardBubble(for: cards)
+                }
+                if let htmls = htmlContent, !htmls.isEmpty {
+                    htmlWebBubble(for: htmls)
+                }
+                if let evs = events, !evs.isEmpty {
+                    eventsBubble(for: evs)
+                }
+                if let hcs = healthCards {
+                    nutritionCards(
+                        for: Binding<[HealthData]>(get: { hcs }, set: { _ in })
+                    )
+                }
+                if (locations?.isEmpty == false) || (routes?.isEmpty == false) {
+                    mapBubble(for: locations ?? [], routes: routes ?? [])
+                }
             }
             if !isAgentTranscriptOwner || text.isEmpty {
                 audioView()
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
+    }
+
+    private var allowsLegacyResultPresentation: Bool {
+        guard let agentRun, agentRun.schemaVersion >= 3 else { return true }
+        return agentRun.transcriptItems.contains {
+            $0.kind == .userVisibleToolResult && $0.resultRendererKind == .legacyExisting
+        }
     }
 
     // MARK: 底部 Loading / 结束状态

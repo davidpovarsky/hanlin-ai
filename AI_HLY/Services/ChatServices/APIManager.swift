@@ -44,7 +44,6 @@ struct StreamData {
     var operationalState: String?   // 运行状态信息
     var operationalDescription: String? // 运行描述
     var splitMarkers: splitMarkerGroup? // 分割标记组
-    var native_ui: [NativeUIBlock]?  // Native UI blocks
     var canvas_info: CanvasData?    // 画布数据
     var agentEvents: [AgentEvent] = [] // Provider-neutral activity events
 }
@@ -82,7 +81,6 @@ class APIManager {
     private var codeBlock: [CodeBlock]?         // 代码块
     private var knowledgeCard: [KnowledgeCard]? // 知识卡片
     private var canvasInfo: CanvasData?         // 画布信息
-    private var nativeUIBlocks: [NativeUIBlock]? // Native UI blocks
     private var toolMessage: String?            // 工具使用说明
     private var toolMessageReasoning: String?   // 工具使用思考
     private var reportProgressController = ReportProgressController()
@@ -2408,6 +2406,16 @@ class APIManager {
                           !requestURLString.isEmpty else {
                         throw NSError(domain: "URLConfigError", code: -1, userInfo: [NSLocalizedDescriptionKey: "无效的请求 URL"])
                     }
+
+                    if modelInfo.agentCapabilities.supportsNativeToolCalling && ifToolUse,
+                       !finalFormattedMessages.contains(where: {
+                           ($0["content"] as? String) == ToolSchemaDecorator.resultPresentationModelInstruction
+                       }) {
+                        finalFormattedMessages.append([
+                            "role": "system",
+                            "content": ToolSchemaDecorator.resultPresentationModelInstruction
+                        ])
+                    }
                     
                     // 构造请求
                     var request = URLRequest(url: requestURL)
@@ -2456,9 +2464,9 @@ class APIManager {
                             canvasEnabled: canvasEnabled,
                         )
                         tools.append(contentsOf: await NativeToolBridge.schemasForRequest())
-                        tools = ToolSchemaDecorator.addingHanlinProgressSummary(
-                            to: tools,
-                            required: modelInfo.agentCapabilities.supportsProgressSummaryField
+                        tools = ToolSchemaDecorator.decorate(
+                            schemas: tools,
+                            progressSummaryRequired: modelInfo.agentCapabilities.supportsProgressSummaryField
                         )
                         if modelInfo.agentCapabilities.supportsReportProgressTool {
                             tools.append(ToolSchemaDecorator.reportProgressSchema())
@@ -2784,10 +2792,12 @@ class APIManager {
                                            let functionDict = toolCall["function"] as? [String: Any],
                                            let functionName = functionDict["name"] as? String,
                                            let functionArguments = functionDict["arguments"] as? String {
+                                            let nativeProfile = await NativeToolBridge.presentationProfile(for: functionName)
                                             var parsedCall = AgentToolCall.parse(
                                                 id: toolCallID,
                                                 name: functionName,
-                                                argumentsJSON: functionArguments
+                                                argumentsJSON: functionArguments,
+                                                presentationProfile: nativeProfile
                                             )
                                             if parsedCall.progressSummary == nil,
                                                let providerSummary = ProgressSummarySanitizer.sanitizeProviderReasoningSummary(self.toolMessageReasoning) {
@@ -2838,6 +2848,16 @@ class APIManager {
                                             let executionID = "\(toolCallID):execution"
                                             let executionStart = Date()
                                             var executionUIBlocks: [NativeUIBlock] = []
+                                            var executionReturnedError = false
+                                            let previousSearchResources = self.searchResources
+                                            let previousLocationsInfo = self.locationsInfo
+                                            let previousRouteInfo = self.storeRouteInfo
+                                            let previousEvents = self.events
+                                            let previousHTMLContent = self.htmlContent
+                                            let previousHealthCard = self.healthCard
+                                            let previousCodeBlock = self.codeBlock
+                                            let previousKnowledgeCard = self.knowledgeCard
+                                            let previousCanvasInfo = self.canvasInfo
                                             continuation.yield(StreamData(agentEvents: [
                                                 .toolCallStarted(parsedCall),
                                                 .toolCallCompleted(parsedCall),
@@ -3785,13 +3805,8 @@ class APIManager {
                                                     toolResult = nativeResult.modelText
                                                     toolResultFront = nativeResult.userText ?? nativeResult.modelText
 
-                                                    if !nativeResult.uiBlocks.isEmpty {
-                                                        executionUIBlocks = nativeResult.uiBlocks
-                                                        if self.nativeUIBlocks == nil {
-                                                            self.nativeUIBlocks = []
-                                                        }
-                                                        self.nativeUIBlocks?.append(contentsOf: nativeResult.uiBlocks)
-                                                    }
+                                                    executionUIBlocks = nativeResult.uiBlocks
+                                                    executionReturnedError = nativeResult.isError
 
                                                     break
                                                 }
@@ -3801,6 +3816,48 @@ class APIManager {
                                                 continuation.yield(StreamData(operationalState: currentLanguagePrefix ?  "工具不存在" : "Tool does not exist"))
                                                 toolResultFront = currentLanguagePrefix ?  "工具不存在" : "Tool does not exist"
                                             }
+                                            let legacyPayloadAvailable: Bool = {
+                                                switch functionName {
+                                                case "search_online", "search_arxiv_papers", "read_web_page", "search_knowledge_bag":
+                                                    return (self.searchResources?.count ?? 0) > (previousSearchResources?.count ?? 0)
+                                                case "query_location", "get_current_location", "search_nearby_locations":
+                                                    return (self.locationsInfo?.count ?? 0) > (previousLocationsInfo?.count ?? 0)
+                                                case "get_route":
+                                                    return (self.storeRouteInfo?.count ?? 0) > (previousRouteInfo?.count ?? 0)
+                                                case "write_system_event":
+                                                    return (self.events?.count ?? 0) > (previousEvents?.count ?? 0)
+                                                case "create_web_view":
+                                                    return self.htmlContent?.isEmpty == false && self.htmlContent != previousHTMLContent
+                                                case "make_nutrition_data":
+                                                    return (self.healthCard?.count ?? 0) > (previousHealthCard?.count ?? 0)
+                                                case "execute_python_code":
+                                                    return (self.codeBlock?.count ?? 0) > (previousCodeBlock?.count ?? 0)
+                                                case "create_knowledge_document":
+                                                    return (self.knowledgeCard?.count ?? 0) > (previousKnowledgeCard?.count ?? 0)
+                                                case "create_canvas", "edit_canvas":
+                                                    return self.canvasInfo != nil
+                                                default:
+                                                    return false
+                                                }
+                                            }()
+                                            let presentationDecision = ToolResultPresentationCoordinator.decide(
+                                                call: parsedCall,
+                                                profile: parsedCall.presentationProfile,
+                                                hasPayload: !executionUIBlocks.isEmpty || legacyPayloadAvailable
+                                            )
+                                            if parsedCall.presentationProfile.result?.rendererKind == .legacyExisting,
+                                               !presentationDecision.shouldPresent {
+                                                self.searchResources = previousSearchResources
+                                                self.locationsInfo = previousLocationsInfo
+                                                self.storeRouteInfo = previousRouteInfo
+                                                self.events = previousEvents
+                                                self.htmlContent = previousHTMLContent
+                                                self.healthCard = previousHealthCard
+                                                self.codeBlock = previousCodeBlock
+                                                self.knowledgeCard = previousKnowledgeCard
+                                                self.canvasInfo = previousCanvasInfo
+                                            }
+
                                             let executionDuration = Date().timeIntervalSince(executionStart)
                                             if toolResult == "Unknown" {
                                                 continuation.yield(StreamData(agentEvents: [
@@ -3817,6 +3874,10 @@ class APIManager {
                                                             modelText: toolResult,
                                                             userText: toolResultFront,
                                                             richResultBlocks: executionUIBlocks,
+                                                            hasLegacyPresentationPayload: presentationDecision.shouldPresent
+                                                                && presentationDecision.rendererKind == .legacyExisting
+                                                                && legacyPayloadAvailable,
+                                                            isError: executionReturnedError,
                                                             duration: executionDuration
                                                         )
                                                     )
@@ -3829,7 +3890,8 @@ class APIManager {
                                                     resultForModel: toolResult,
                                                     resultForUser: toolResultFront,
                                                     duration: executionDuration,
-                                                    error: toolResult == "Unknown" ? toolResultFront : nil
+                                                    error: toolResult == "Unknown" ? toolResultFront : nil,
+                                                    presentationDecision: presentationDecision
                                                 )
                                             }
                                             toolResultsForModel.append((functionName, toolResult))
@@ -3910,7 +3972,6 @@ class APIManager {
                                             splitMarkers: splitMarkerGroup(
                                                 groupID: groupID, modelName: modelInfo.name ?? "Unknown", modelDisplayName: modelInfo.displayName ?? "Unknown"
                                             ),
-                                            native_ui: self.nativeUIBlocks,
                                             canvas_info: self.canvasInfo,
                                         )
                                     )
@@ -3923,7 +3984,6 @@ class APIManager {
                                     self.codeBlock = nil
                                     self.knowledgeCard = nil
                                     self.canvasInfo = nil
-                                    self.nativeUIBlocks = nil
                                     
                                     if let recorder = self.agentDiagnosticsRecorder, let diagnosticsRoundID {
                                         await recorder.finishRound(
