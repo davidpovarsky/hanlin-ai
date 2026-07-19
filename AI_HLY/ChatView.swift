@@ -96,6 +96,8 @@ struct ChatView: View {
     @State private var showScrollToBottomButton = false     // 控制滚动到底部按钮显示
     @State private var needScrollToBottomButton = false     // 是否需要显示滚动到底部按钮
     @State private var ifScroll = false                     // 控制滚动相关状态
+    @State private var autoFollowController = ChatAutoFollowController()
+    @State private var pendingAutoFollowTask: Task<Void, Never>?
 
     // 提示词管理相关
     @State private var selectedPrompts: [PromptRepo] = []   // 选中的提示词
@@ -670,16 +672,21 @@ struct ChatView: View {
                 loadMoreMessages()
             }
             .onChange(of: scrollTriggerState) {
-                if !showScrollToBottomButton {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                        scrollToLastMessage(using: scrollViewProxy)
-                    }
-                }
+                scheduleAutoFollow(using: scrollViewProxy, animated: true)
             }
-            .onChange(of: [needScrollToBottomButton, ifScroll]) {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-                    scrollToLastMessage(using: scrollViewProxy)
-                }
+            .onChange(of: activeAgentRun?.scrollFingerprint) { previous, current in
+                guard let current else { return }
+                scheduleAutoFollow(
+                    using: scrollViewProxy,
+                    animated: current.isStructuralChange(comparedTo: previous)
+                )
+            }
+            .onChange(of: needScrollToBottomButton) {
+                autoFollowController.resumeFollowing()
+                scheduleAutoFollow(using: scrollViewProxy, animated: true, force: true)
+            }
+            .onChange(of: ifScroll) {
+                scheduleAutoFollow(using: scrollViewProxy, animated: true)
             }
             .onAppear {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
@@ -713,20 +720,61 @@ struct ChatView: View {
                 }
             )
             .onScrollGeometryChange(for: Bool.self) { geometry in
-                let isScrolledToBottom = geometry.contentOffset.y + geometry.containerSize.height > geometry.contentSize.height - geometry.contentInsets.bottom - geometry.containerSize.height/2
-                return isScrolledToBottom
+                let visibleBottom = geometry.contentOffset.y
+                    + geometry.containerSize.height
+                    - geometry.contentInsets.bottom
+                return geometry.contentSize.height - visibleBottom <= 96
             } action: { wasScrolledToBottom, isScrolledToBottom in
-                withAnimation {
+                autoFollowController.updateNearBottom(isScrolledToBottom)
+                withAnimation(.easeOut(duration: 0.16)) {
                     showScrollToBottomButton = !isScrolledToBottom
                 }
+            }
+            .onScrollPhaseChange { _, newPhase in
+                switch newPhase {
+                case .tracking, .interacting, .decelerating:
+                    autoFollowController.userInteractionBegan()
+                case .idle:
+                    autoFollowController.userInteractionEnded()
+                case .animating:
+                    break
+                @unknown default:
+                    break
+                }
+            }
+            .onDisappear {
+                pendingAutoFollowTask?.cancel()
+                pendingAutoFollowTask = nil
             }
     }
     
     // 聊天时滚动到最底层
-    private func scrollToLastMessage(using scrollViewProxy: ScrollViewProxy) {
-        // 使用带弹性的 Spring 动画，让滚动更柔和
-        withAnimation(.interactiveSpring(response: 0.5, dampingFraction: 0.8, blendDuration: 0.5)) {
+    private func scrollToLastMessage(using scrollViewProxy: ScrollViewProxy, animated: Bool) {
+        if animated {
+            withAnimation(.easeOut(duration: 0.18)) {
+                scrollViewProxy.scrollTo("BottomPadding", anchor: .bottom)
+            }
+        } else {
             scrollViewProxy.scrollTo("BottomPadding", anchor: .bottom)
+        }
+    }
+
+    private func scheduleAutoFollow(
+        using scrollViewProxy: ScrollViewProxy,
+        animated: Bool,
+        force: Bool = false
+    ) {
+        guard force || autoFollowController.shouldRequestScrollForVisualUpdate() else { return }
+        pendingAutoFollowTask?.cancel()
+        pendingAutoFollowTask = Task { @MainActor in
+            do {
+                try await Task.sleep(for: .milliseconds(80))
+            } catch {
+                return
+            }
+            guard !Task.isCancelled,
+                  force || autoFollowController.mode == .following else { return }
+            scrollToLastMessage(using: scrollViewProxy, animated: animated)
         }
     }
 
@@ -1146,6 +1194,8 @@ struct ChatView: View {
         isObserving = ifObservingMode
         isResponding = true
         respondIndex = ifObservingMode ? 2 : 1
+        pendingAutoFollowTask?.cancel()
+        autoFollowController.beginRun()
         
         // 传输数据准备
         var maxMessage = maxMessagesNum
@@ -1379,12 +1429,6 @@ struct ChatView: View {
                             updated = true
                         }
                         
-                        // Native UI blocks
-                        if let nativeUI = data.native_ui, !nativeUI.isEmpty {
-                            assistantMessage.appendNativeUIBlocks(nativeUI)
-                            updated = true
-                        }
-
                         // 画布信息
                         if let canvasInfo = data.canvas_info {
                             do {
@@ -1625,8 +1669,9 @@ struct ChatView: View {
                             }
                         }
                     }
+                    activeAgentRun = agentCoordinator.run
+                    autoFollowController.runEnded()
                     activeAgentCoordinator = nil
-                    activeAgentRun = nil
                     activeAgentMessage = nil
                 }
                 
@@ -1638,8 +1683,9 @@ struct ChatView: View {
                     groupBeginMessage.agentRun = agentCoordinator.run
                     context.insert(groupBeginMessage)
                     try? context.save()
+                    activeAgentRun = agentCoordinator.run
+                    autoFollowController.runEnded()
                     activeAgentCoordinator = nil
-                    activeAgentRun = nil
                     activeAgentMessage = nil
                     if let index = chatTemps.lastIndex(where: { $0.role == "assistant" }),
                        index < chatTemps.count {
@@ -1678,7 +1724,9 @@ struct ChatView: View {
             try? context.save()
         }
         activeAgentCoordinator = nil
-        activeAgentRun = nil
+        autoFollowController.runEnded()
+        pendingAutoFollowTask?.cancel()
+        pendingAutoFollowTask = nil
         activeAgentMessage = nil
         
         isObserving = false
