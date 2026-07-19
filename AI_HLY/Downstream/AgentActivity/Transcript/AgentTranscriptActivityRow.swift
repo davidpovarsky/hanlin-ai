@@ -93,6 +93,18 @@ enum AgentActivityTrace {
         log("agent_inspector_closed", runID: runID, selectedActivityID: nil)
     }
 
+    static func processExpansionChanged(runID: UUID, expanded: Bool) {
+        log(
+            expanded ? "inlineProcessExpanded" : "inlineProcessCollapsed",
+            runID: runID,
+            selectedActivityID: nil
+        )
+    }
+
+    static func thinkingActivitySelected(runID: UUID, selectedActivityID: String) {
+        log("thinkingActivitySelected", runID: runID, selectedActivityID: selectedActivityID)
+    }
+
     private static func log(_ event: String, item: AgentTranscriptItem) {
         log(event, runID: nil, selectedActivityID: item.externalID ?? item.id.uuidString)
     }

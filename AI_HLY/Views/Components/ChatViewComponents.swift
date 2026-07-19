@@ -114,13 +114,13 @@ struct ChatBubbleView: View {
     let isResponding: Bool
     let operationalState: String
     let operationalDescription: String
+    let onAgentLayoutChange: () -> Void
     let onRetry: (() -> Void)?     // 重新请求回调
     let onDelete: (() -> Void)?    // 新增：删除回调
     let screenHeight = UIScreen.main.bounds.height
     
     @StateObject var context = RichTextContext() // 富文本
     
-    @State private var isResourcesExpanded: Bool = false  // 资源文本折叠状态
     @State private var isTranslateExpanded: Bool = false  // 翻译文本折叠状态
     @State private var mathMode: Bool = false             // 科学模式
     @State private var showMathModeReminder: Bool = false // 科学模式提醒
@@ -145,6 +145,7 @@ struct ChatBubbleView: View {
     @State private var nativeAppFullScreenRequest: NativeAppLaunchRequest?
     @State private var nativeAppSheetRequest: NativeAppLaunchRequest?
     @State private var legacyInspectorSelection: AgentActivityInspectorSelection?
+    @State private var isLegacyEvidencePresented = false
     
     @ScaledMetric(relativeTo: .body) var size_5: CGFloat = 5
     @ScaledMetric(relativeTo: .body) var size_7: CGFloat = 7
@@ -206,6 +207,7 @@ struct ChatBubbleView: View {
         isResponding: Bool,
         operationalState: String,
         operationalDescription: String,
+        onAgentLayoutChange: @escaping () -> Void = {},
         onRetry: (() -> Void)?,
         onDelete: (() -> Void)?
     ) {
@@ -253,6 +255,7 @@ struct ChatBubbleView: View {
         self.isResponding = isResponding
         self.operationalState = operationalState
         self.operationalDescription = operationalDescription
+        self.onAgentLayoutChange = onAgentLayoutChange
         self.onRetry = onRetry
         self.onDelete = onDelete
     }
@@ -285,6 +288,11 @@ struct ChatBubbleView: View {
                 .presentationDetents([.medium, .large])
                 .presentationDragIndicator(.visible)
             }
+        }
+        .sheet(isPresented: $isLegacyEvidencePresented) {
+            AgentEvidenceSheet(items: legacyEvidenceItems)
+                .presentationDetents([.medium, .large])
+                .presentationDragIndicator(.visible)
         }
         .fullScreenCover(item: $nativeAppFullScreenRequest) { request in
             NativeAppSessionContainerView(request: request)
@@ -507,19 +515,14 @@ struct ChatBubbleView: View {
                         isResponding: isResponding,
                         temporaryRecord: temporaryRecord,
                         usesMathRenderer: mathMode,
-                        rendersFinalAnswer: false,
+                        rendersFinalAnswer: true,
+                        legacyEvidenceItems: legacyEvidenceItems,
+                        onLayoutChange: onAgentLayoutChange,
                         onLaunchRequest: launchNativeApp
                     )
                 }
                 assistantImageSection()
                 assistantLegacyResultSection()
-                if isAgentTranscriptOwner,
-                   let agentRun,
-                   agentRun.status != .running,
-                   agentRun.status != .pending,
-                   !text.isEmpty {
-                    messageContent()
-                }
                 if isAgentTranscriptOwner && isLastAssistantGroup && !isResponding {
                     actionButtons()
                 }
@@ -591,7 +594,8 @@ struct ChatBubbleView: View {
     // MARK: 文本 & 各类工具输出
     @ViewBuilder
     private func assistantTextSection() -> some View {
-        if !text.isEmpty || !reasoning.isEmpty || !toolContent.isEmpty || !nativeUIBlocks.isEmpty {
+        if !text.isEmpty || !reasoning.isEmpty || !toolContent.isEmpty || !nativeUIBlocks.isEmpty
+            || !legacyEvidenceItems.isEmpty {
             VStack(alignment: .leading, spacing: 6) {
                 if showCanvas, canvas?.content.isEmpty == false {
                     canvasBubble(for: canvas)
@@ -601,6 +605,10 @@ struct ChatBubbleView: View {
                 // 文字主体
                 messageContent()
                     .transition(.move(edge: .top).combined(with: .opacity))
+
+                AgentEvidenceSummaryView(items: legacyEvidenceItems) {
+                    isLegacyEvidencePresented = true
+                }
                 
                 // 代码块
                 if let codes = codeBlocks, !codes.isEmpty {
@@ -659,7 +667,6 @@ struct ChatBubbleView: View {
     private func assistantLegacyResultSection() -> some View {
         VStack(alignment: .leading, spacing: 6) {
             if allowsLegacyResultPresentation {
-                resourcesView()
                 if showCanvas, canvas?.content.isEmpty == false {
                     canvasBubble(for: canvas)
                 }
@@ -696,6 +703,14 @@ struct ChatBubbleView: View {
         return agentRun.transcriptItems.contains {
             $0.kind == .userVisibleToolResult && $0.resultRendererKind == .legacyExisting
         }
+    }
+
+    private var legacyEvidenceItems: [AgentEvidenceItem] {
+        AgentEvidenceAccumulator(items: LegacyResourcesEvidenceAdapter.items(
+            from: resources ?? [],
+            providerName: searchEngine,
+            wasReturnedToModel: true
+        )).items
     }
 
     // MARK: 底部 Loading / 结束状态
@@ -1872,11 +1887,6 @@ struct ChatBubbleView: View {
             translateView()
                 .transition(.opacity.combined(with: .move(edge: .top)))
             
-            if agentRun == nil {
-                resourcesView()
-                    .transition(.opacity.combined(with: .move(edge: .top)))
-            }
-
         }
         .padding(.bottom, 6)
         .foregroundColor(.primary)
@@ -2216,114 +2226,6 @@ struct ChatBubbleView: View {
                     }
                 }
             }
-        }
-    }
-
-    // MARK: - 参考资料区域
-    @ViewBuilder
-    private func resourcesView() -> some View {
-        if let resources = resources, !resources.isEmpty {
-            VStack(alignment: .leading) {
-                
-                ToggleButton(
-                    title: String(localized: "reference_materials"),
-                    timeText: String(resources.count),
-                    isExpanded: $isResourcesExpanded
-                )
-
-                if isResourcesExpanded {
-                    VStack(alignment: .leading) {
-                        ForEach(resources.indices, id: \.self) { index in
-                            resourceItemView(resource: resources[index], index: index)
-                        }
-                    }
-                    .padding(.horizontal, 6)
-                    .transition(.opacity.combined(with: .scale))
-                    .textSelection(.enabled)
-                    .padding(.bottom, 5)
-                }
-            }
-        }
-    }
-
-    // MARK: - 参考资料项
-    @State private var selectedLink: URL?
-    
-    @ViewBuilder
-    private func resourceItemView(resource: Resource, index: Int) -> some View {
-        
-        HStack(alignment: .center) {
-            
-            resourceIcon(urlString: resource.icon)
-            
-            Text("[\(index + 1)]")
-                .foregroundColor(temporaryRecord ? .primary : Color(.hlBluefont))
-                .font(.footnote.monospacedDigit())
-                .lineLimit(1)
-            
-            if let url = URL(string: resource.link) {
-                
-                Button(action: {
-                    selectedLink = url
-                }) {
-                    Text(resource.title)
-                        .foregroundColor(temporaryRecord ? .primary : Color(.hlBluefont))
-                        .font(.footnote)
-                        .lineLimit(1)
-                }
-                
-            } else {
-                Button(action: {
-                    openKnowledgeRecord(with: resource.title)
-                }) {
-                    Text(resource.title)
-                        .foregroundColor(temporaryRecord ? .primary : Color(.hlBluefont))
-                        .font(.footnote)
-                        .lineLimit(1)
-                }
-            }
-            
-        }
-        .sheet(item: $selectedLink) { url in
-            ResourceLinkAlertView(url: url)
-                .presentationDetents([.medium])
-                .presentationDragIndicator(.visible)
-        }
-    }
-
-    // MARK: - 资源图标
-    @ViewBuilder
-    private func resourceIcon(urlString: String) -> some View {
-        if let iconURL = URL(string: urlString) {
-            AsyncImage(url: iconURL) { phase in
-                switch phase {
-                case .empty:
-                    ProgressView()
-                        .frame(width: size_16, height: size_16)
-                case .success(let image):
-                    image
-                        .resizable()
-                        .scaledToFit()
-                        .clipShape(Circle())
-                        .frame(width: size_16, height: size_16)
-                case .failure:
-                    Image(systemName: "newspaper.circle")
-                        .resizable()
-                        .scaledToFit()
-                        .clipShape(Circle())
-                        .foregroundColor(.hlBluefont)
-                        .frame(width: size_16, height: size_16)
-                @unknown default:
-                    EmptyView()
-                }
-            }
-        } else {
-            Image(systemName: "backpack.circle")
-                .resizable()
-                .scaledToFit()
-                .clipShape(Circle())
-                .foregroundColor(.hlBluefont)
-                .frame(width: size_16, height: size_16)
         }
     }
 

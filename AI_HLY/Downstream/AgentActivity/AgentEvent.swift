@@ -96,6 +96,7 @@ struct AgentToolResult: @unchecked Sendable {
     var modelText: String
     var userText: String?
     var richResultBlocks: [NativeUIBlock]
+    var evidenceItems: [AgentEvidenceItem]
     var hasLegacyPresentationPayload: Bool
     var isError: Bool
     var duration: TimeInterval
@@ -123,7 +124,7 @@ enum AgentEvent: @unchecked Sendable {
     case answerSegmentStarted(AgentItemMetadata)
     case answerSegmentDelta(id: String, text: String)
     case answerSegmentEnded(id: String, disposition: AgentAnswerDisposition)
-    case searchStarted(id: String, title: String, query: String?)
+    case searchStarted(id: String, title: String, queries: [String], providerName: String?)
     case searchCompleted(id: String, sources: [AgentActivitySource], output: String?)
     case runCompleted
     case runFailed(AgentSafeError)

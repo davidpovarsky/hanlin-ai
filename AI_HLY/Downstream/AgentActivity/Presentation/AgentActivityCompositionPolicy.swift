@@ -3,7 +3,8 @@ import Foundation
 enum AgentActivityCompositionPolicy {
     private static let transportPhrases = [
         "processing", "sending request", "waiting for model response", "request started",
-        "request completed", "parsing response", "stream opened", "stream closed",
+        "request completed", "request prepared", "request sent", "waiting for first token",
+        "parsing response", "stream opened", "stream closed",
         "retrying transport", "internal dispatch", "internal tool lookup",
         "处理对话内容", "正在发送请求", "等待模型响应"
     ]
@@ -12,9 +13,12 @@ enum AgentActivityCompositionPolicy {
         guard step.kind == .progress else { return false }
         let values = [step.title, step.userFacingSummary, step.output]
             .compactMap { $0?.trimmingCharacters(in: .whitespacesAndNewlines).lowercased() }
-        return values.contains { value in
-            transportPhrases.contains { value == $0 || value.hasPrefix("\($0)…") }
-        }
+        return values.contains(isInternalTransportText)
+    }
+
+    static func isInternalTransportText(_ value: String) -> Bool {
+        let normalized = value.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
+        return transportPhrases.contains { normalized == $0 || normalized.hasPrefix("\($0)…") }
     }
 
     static func displayKind(for kind: AgentActivityKind) -> AgentDisplayActivityKind? {

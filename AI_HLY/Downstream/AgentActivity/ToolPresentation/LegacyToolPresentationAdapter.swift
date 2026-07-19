@@ -14,13 +14,15 @@ enum LegacyToolPresentationAdapter {
         let activity = activityDescriptor(for: normalized)
         guard knownToolNames.contains(normalized) else { return nil }
         let hasResult = resultTools.contains(normalized)
+        let evidence = evidenceDescriptor(for: normalized, activityKind: activity.kind)
         return ToolPresentationProfile(
             identity: "legacy.\(normalized)",
             activity: activity,
             result: hasResult
                 ? ToolResultPresentationDescriptor(rendererKind: .legacyExisting, supportsCard: true)
                 : nil,
-            resultDisplayPolicy: hasResult ? .modelControlled : .never
+            resultDisplayPolicy: hasResult ? .modelControlled : .never,
+            evidence: evidence
         )
     }
 
@@ -32,7 +34,8 @@ enum LegacyToolPresentationAdapter {
             identity: "semantic.\(normalized)",
             activity: activityDescriptor(for: normalized),
             result: nil,
-            resultDisplayPolicy: .never
+            resultDisplayPolicy: .never,
+            evidence: evidenceDescriptor(for: normalized, activityKind: activityDescriptor(for: normalized).kind)
         )
     }
 
@@ -86,6 +89,27 @@ enum LegacyToolPresentationAdapter {
             failedTitle: String(localized: "Tool failed"),
             visibleArgumentKeys: keys
         )
+    }
+
+    private static func evidenceDescriptor(
+        for name: String,
+        activityKind: ToolActivityPresentationKind
+    ) -> ToolEvidenceDescriptor? {
+        if name.contains("calendar") || name.contains("reminder") {
+            return ToolEvidenceDescriptor(kind: .calendarEvent, policy: .explicitExtractor)
+        }
+        if name.contains("github") {
+            return ToolEvidenceDescriptor(kind: .githubFile, policy: .automatic)
+        }
+        if name.contains("knowledge") || name.contains("document") || name.contains("file") {
+            return ToolEvidenceDescriptor(kind: .document, policy: .automatic)
+        }
+        switch activityKind {
+        case .search, .retrieve, .read:
+            return ToolEvidenceDescriptor(kind: .webPage, policy: .automatic)
+        case .write, .execute, .calculate, .navigate, .generate, .communicate, .inspect, .generic:
+            return nil
+        }
     }
 }
 

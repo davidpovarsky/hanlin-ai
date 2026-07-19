@@ -77,20 +77,25 @@ struct HanlinStreamEventAdapter: ProviderEventAdapter {
             lastSemanticEventKind = .assistantText
         }
 
-        if let state = data.operationalState,
-           let sanitized = ProgressSummarySanitizer.sanitize(localizedOperationalState(state)),
-           !sanitized.isEmpty {
-            endActiveAnswerSegment(as: .interim, into: &events)
-            events.append(.progressMessage(AgentProgressMessage(
-                id: "status:\(runID.uuidString):\(sanitized)",
-                message: sanitized,
-                source: .applicationGenerated,
-                timestamp: Date()
-            )))
-            lastSemanticEventKind = .progress
+        if let state = data.operationalState, !state.isEmpty {
+            let classification = OperationalEventClassifier.classify(state)
+            if classification.visibility == .userFacingActivity,
+               let title = classification.normalizedTitle,
+               let sanitized = ProgressSummarySanitizer.sanitize(title) {
+                if classification.shouldEndAnswerSegment {
+                    endActiveAnswerSegment(as: .interim, into: &events)
+                }
+                events.append(.progressMessage(AgentProgressMessage(
+                    id: "status:\(runID.uuidString):\(sanitized)",
+                    message: sanitized,
+                    source: .applicationGenerated,
+                    timestamp: Date()
+                )))
+                lastSemanticEventKind = .progress
+            }
         }
 
-        if data.searchEngine != nil || data.search_text != nil || data.resources != nil {
+        if data.searchEngine != nil || data.searchQueries != nil || data.search_text != nil || data.resources != nil {
             endActiveAnswerSegment(as: .interim, into: &events)
             if activeSearchID == nil {
                 searchSequence += 1
@@ -99,12 +104,24 @@ struct HanlinStreamEventAdapter: ProviderEventAdapter {
                 events.append(.searchStarted(
                     id: id,
                     title: String(localized: "Searching the web"),
-                    query: nil
+                    queries: AgentActivityDeduplicator.uniqueStrings(data.searchQueries ?? []),
+                    providerName: data.searchEngine
+                ))
+            } else if let id = activeSearchID, data.searchQueries?.isEmpty == false {
+                events.append(.searchStarted(
+                    id: id,
+                    title: String(localized: "Searching the web"),
+                    queries: AgentActivityDeduplicator.uniqueStrings(data.searchQueries ?? []),
+                    providerName: data.searchEngine
                 ))
             }
             if let id = activeSearchID {
                 let sources = (data.resources ?? []).map {
-                    AgentActivitySource(title: $0.title, url: $0.link, sourceName: data.searchEngine)
+                    AgentActivitySource(
+                        title: $0.title,
+                        url: $0.link,
+                        providerName: data.searchEngine
+                    )
                 }
                 events.append(.searchCompleted(id: id, sources: sources, output: data.search_text))
             }
@@ -152,29 +169,4 @@ struct HanlinStreamEventAdapter: ProviderEventAdapter {
         activeAnswerSegmentID = nil
     }
 
-    private func localizedOperationalState(_ state: String) -> String {
-        let normalized = state.lowercased()
-        if normalized.contains("tool") || state.contains("工具") {
-            return String(localized: "Using a tool")
-        }
-        if normalized.contains("webpage") || normalized.contains("reading web") || state.contains("读取网页") || state.contains("阅读网页") {
-            return String(localized: "Reading a source")
-        }
-        if normalized.contains("document") || state.contains("文件") {
-            return String(localized: "Reading a document")
-        }
-        if normalized.contains("code") || state.contains("代码") {
-            return String(localized: "Running code")
-        }
-        if normalized.contains("calendar") || normalized.contains("event") || state.contains("日程") || state.contains("事件") {
-            return String(localized: "Checking the calendar")
-        }
-        if normalized.contains("location") || normalized.contains("route") || normalized.contains("weather") || state.contains("位置") || state.contains("路线") || state.contains("天气") {
-            return String(localized: "Searching locations")
-        }
-        if normalized.contains("search") || state.contains("搜索") || state.contains("翻找") || state.contains("检索") {
-            return String(localized: "Searching the web")
-        }
-        return state
-    }
 }

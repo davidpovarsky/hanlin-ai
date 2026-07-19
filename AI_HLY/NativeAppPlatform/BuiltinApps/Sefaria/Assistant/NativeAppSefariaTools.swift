@@ -18,7 +18,8 @@ struct SefariaAssistantSearchTool: NativeTool {
                 systemImage: "book.closed",
                 runningTitle: "Searching Sefaria",
                 completedTitle: "Searched Sefaria",
-                visibleArgumentKeys: ["query"]
+                visibleArgumentKeys: ["query"],
+                evidenceKind: .sefariaSource
             )
         )
     }
@@ -95,7 +96,8 @@ struct SefariaAssistantSourceTool: NativeTool {
                 systemImage: "book.closed",
                 runningTitle: "Reading a source",
                 completedTitle: "Read a source",
-                visibleArgumentKeys: ["reference"]
+                visibleArgumentKeys: ["reference"],
+                evidenceKind: .sefariaSource
             )
         )
     }

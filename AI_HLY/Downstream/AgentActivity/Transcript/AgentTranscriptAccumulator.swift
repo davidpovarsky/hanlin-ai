@@ -61,6 +61,9 @@ struct AgentTranscriptAccumulator {
         items.append(item)
         itemIndexByExternalID[externalID] = items.count - 1
         AgentTranscriptDiagnostics.itemCreated(item)
+        if kind == .assistantText {
+            AgentTranscriptDiagnostics.answerSegmentStarted(item)
+        }
         return item.id
     }
 
@@ -168,6 +171,24 @@ struct AgentTranscriptAccumulator {
         }
     }
 
+    mutating func selectFinalAnswerForCompletedRun() -> String? {
+        let selected = AgentTranscriptValidation.finalAnswerIndexForCompletedRun(in: items)
+        for index in items.indices where items[index].kind == .assistantText {
+            guard AgentTranscriptValidation.nonemptyText(items[index].text) != nil else { continue }
+            if index == selected {
+                items[index].textRole = .final
+                items[index].visibilityAfterCompletion = .remainInChat
+                AgentTranscriptDiagnostics.answerSegmentPromoted(items[index])
+            } else {
+                items[index].textRole = .interim
+                items[index].visibilityAfterCompletion = .collapseIntoThinking
+            }
+        }
+        let answer = selected.flatMap { AgentTranscriptValidation.nonemptyText(items[$0].text) }
+        AgentTranscriptDiagnostics.finalAnswerSelected(answerLength: answer?.count ?? 0)
+        return answer
+    }
+
     mutating func allocateSequence() -> Int {
         defer { nextSequence += 1 }
         return nextSequence
@@ -192,11 +213,27 @@ enum AgentTranscriptDiagnostics {
         trace("agent_transcript_item_completed", item: item)
     }
 
+    static func answerSegmentStarted(_ item: AgentTranscriptItem) {
+        trace("answerSegmentStarted", item: item)
+    }
+
     static func answerSegmentCompleted(_ item: AgentTranscriptItem) {
         let event = item.textRole == .final
-            ? "agent_answer_segment_marked_final"
-            : "agent_answer_segment_marked_interim"
+            ? "answerSegmentMarkedFinal"
+            : "answerSegmentMarkedInterim"
         trace(event, item: item)
+    }
+
+    static func answerSegmentPromoted(_ item: AgentTranscriptItem) {
+        trace("answerSegmentPromotedToFinal", item: item)
+    }
+
+    static func finalAnswerSelected(answerLength: Int) {
+        guard AgentDiagnosticsConfiguration.level != .off else { return }
+        NativeToolTraceLogger.shared.log(
+            "finalAnswerSelected",
+            ["answerLength": answerLength]
+        )
     }
 
     static func userVisibleResultInserted(_ item: AgentTranscriptItem) {

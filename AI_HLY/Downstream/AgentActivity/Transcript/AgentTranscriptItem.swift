@@ -121,7 +121,8 @@ extension AgentRun {
     var hasMeaningfulThinkingActivity: Bool {
         transcriptItems.contains {
             $0.visibilityAfterCompletion == .collapseIntoThinking
-                && $0.kind != .assistantText
+                && ($0.text?.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty == false
+                    || !$0.nativeUIBlocks.isEmpty)
         }
     }
 }

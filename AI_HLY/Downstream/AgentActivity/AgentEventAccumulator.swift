@@ -8,6 +8,7 @@ import Foundation
 struct AgentEventAccumulator {
     private(set) var run: AgentRun
     private var transcript: AgentTranscriptAccumulator
+    private var evidence: AgentEvidenceAccumulator
     private var stepIndexByExternalID: [String: Int] = [:]
     private var nextStepSequence: Int
     private var pendingToolArguments: [String: String] = [:]
@@ -19,6 +20,7 @@ struct AgentEventAccumulator {
     init(run: AgentRun) {
         self.run = run
         transcript = AgentTranscriptAccumulator(items: run.transcriptItems)
+        evidence = AgentEvidenceAccumulator(items: run.evidenceItems)
         nextStepSequence = (run.steps.map(\.sequence).max() ?? -1) + 1
         for (index, step) in run.steps.enumerated() {
             if let externalID = step.externalID {
@@ -30,8 +32,10 @@ struct AgentEventAccumulator {
     mutating func apply(_ event: AgentEvent) {
         defer {
             run.transcriptItems = transcript.items
+            run.evidenceItems = evidence.items
             assert(AgentTranscriptValidation.hasStrictlyIncreasingSequence(run.transcriptItems))
             assert(!AgentTranscriptValidation.containsDuplicateNativeUIResults(run.transcriptItems))
+            assert(AgentTranscriptValidation.satisfiesCompletedRunInvariant(run))
         }
 
         switch event {
@@ -204,6 +208,7 @@ struct AgentEventAccumulator {
         case .toolExecutionCompleted(let id, let result):
             let callID = callIDByExecutionID[id] ?? id.replacingOccurrences(of: ":execution", with: "")
             let profile = profileByCallID[callID]
+            let evidenceSequence = run.steps.first(where: { $0.externalID == "execution:\(id)" })?.sequence
             updateStep(externalID: "execution:\(id)") { step in
                 step.output = Self.safePreview(result.userText ?? result.modelText)
                 step.richResultBlocks = result.richResultBlocks
@@ -222,6 +227,11 @@ struct AgentEventAccumulator {
                 transcript.complete(externalID: transcriptID, status: result.isError ? .failed : .completed)
             }
             if let call = toolCallByID[callID], let profile {
+                evidence.insert(contentsOf: AgentEvidenceExtractor.extract(
+                    call: call,
+                    result: result,
+                    sequence: evidenceSequence
+                ))
                 let decision = ToolResultPresentationCoordinator.decide(
                     call: call,
                     profile: profile,
@@ -273,7 +283,16 @@ struct AgentEventAccumulator {
                 run.finalAnswer = Self.nonemptyText(transcript.item(externalID: id)?.text)
             }
 
-        case .searchStarted(let id, let title, let query):
+        case .searchStarted(let id, let title, let queries, let providerName):
+            let normalizedQueries = AgentActivityDeduplicator.uniqueStrings(queries)
+            if stepIndexByExternalID[id] != nil {
+                updateStep(externalID: id) { step in
+                    step.queryItems = AgentActivityDeduplicator.uniqueStrings(step.queryItems + normalizedQueries)
+                    step.searchProviderName = providerName ?? step.searchProviderName
+                }
+                AgentSearchDiagnostics.queryCaptured(count: normalizedQueries.count)
+                break
+            }
             let sequence = transcript.allocateSequence()
             let stepID = appendStep(
                 externalID: id,
@@ -282,7 +301,8 @@ struct AgentEventAccumulator {
                 title: title,
                 summary: title,
                 source: .applicationGenerated,
-                queryItems: query.map { [$0] } ?? []
+                queryItems: normalizedQueries,
+                searchProviderName: providerName
             )
             transcript.begin(
                 externalID: id,
@@ -300,12 +320,18 @@ struct AgentEventAccumulator {
                 step.status = .completed
                 step.completedAt = Date()
             }
+            evidence.insert(contentsOf: AgentEvidenceExtractor.evidence(
+                from: sources,
+                sequence: run.steps.first(where: { $0.externalID == id })?.sequence
+            ))
+            AgentSearchDiagnostics.sourceCaptured(count: sources.count)
             transcript.complete(externalID: id)
 
         case .runCompleted:
             closeRunningSteps(as: .completed)
             transcript.closeActiveItems(as: .completed)
-            run.finalAnswer = Self.finalAnswer(from: transcript.items)
+            run.finalAnswer = transcript.selectFinalAnswerForCompletedRun()
+            evidence.markUsedInCompletedRun()
             run.status = .completed
             run.completedAt = Date()
 
@@ -313,14 +339,14 @@ struct AgentEventAccumulator {
             closeRunningSteps(as: .failed, error: error.message)
             transcript.closeActiveItems(as: .failed)
             appendErrorTranscript(text: error.message, status: .failed, remainInChat: true)
-            run.finalAnswer = Self.finalAnswer(from: transcript.items)
+            run.finalAnswer = AgentTranscriptValidation.finalAnswer(in: transcript.items)
             run.status = .failed
             run.completedAt = Date()
 
         case .runCancelled:
             closeRunningSteps(as: .cancelled)
             transcript.closeActiveItems(as: .cancelled)
-            run.finalAnswer = Self.finalAnswer(from: transcript.items)
+            run.finalAnswer = AgentTranscriptValidation.finalAnswer(in: transcript.items)
             run.status = .cancelled
             run.completedAt = Date()
             let timestamp = Date()
@@ -364,6 +390,7 @@ struct AgentEventAccumulator {
         input: String? = nil,
         output: String? = nil,
         queryItems: [String] = [],
+        searchProviderName: String? = nil,
         sourceItems: [AgentActivitySource] = []
     ) -> UUID? {
         if let externalID, let index = stepIndexByExternalID[externalID], run.steps.indices.contains(index) {
@@ -387,6 +414,7 @@ struct AgentEventAccumulator {
             input: input,
             output: output,
             queryItems: queryItems,
+            searchProviderName: searchProviderName,
             sourceItems: sourceItems
         )
         run.steps.append(step)
@@ -459,13 +487,6 @@ struct AgentEventAccumulator {
         return trimmed
     }
 
-    private static func finalAnswer(from items: [AgentTranscriptItem]) -> String? {
-        items
-            .filter { $0.kind == .assistantText && $0.textRole == .final }
-            .sorted { $0.sequence < $1.sequence }
-            .compactMap { nonemptyText($0.text) }
-            .last
-    }
 }
 
 @MainActor

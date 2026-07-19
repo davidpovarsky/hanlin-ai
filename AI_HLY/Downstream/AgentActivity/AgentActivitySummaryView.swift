@@ -2,12 +2,25 @@ import SwiftUI
 
 struct AgentActivitySummaryView: View {
     let run: AgentRun
-    let onOpenInspector: () -> Void
+    let isExpanded: Bool?
+    let onActivate: () -> Void
 
     private var timeline: AgentDisplayTimeline { AgentActivityComposer.compose(run) }
 
+    init(run: AgentRun, onOpenInspector: @escaping () -> Void) {
+        self.run = run
+        isExpanded = nil
+        onActivate = onOpenInspector
+    }
+
+    init(run: AgentRun, isExpanded: Bool, onToggle: @escaping () -> Void) {
+        self.run = run
+        self.isExpanded = isExpanded
+        onActivate = onToggle
+    }
+
     var body: some View {
-        Button(action: onOpenInspector) {
+        Button(action: onActivate) {
             HStack(spacing: 7) {
                 if run.status == .running || run.status == .pending {
                     ProgressView()
@@ -16,7 +29,7 @@ struct AgentActivitySummaryView: View {
                 Text(timeline.summaryTitle)
                     .font(.subheadline)
                     .foregroundStyle(.secondary)
-                Image(systemName: "chevron.right")
+                Image(systemName: chevronName)
                     .font(.caption2.weight(.semibold))
                     .foregroundStyle(.tertiary)
                 Spacer(minLength: 0)
@@ -26,7 +39,17 @@ struct AgentActivitySummaryView: View {
         }
         .buttonStyle(.plain)
         .accessibilityLabel(timeline.summaryTitle)
-        .accessibilityHint(String(localized: "Open activity"))
+        .accessibilityHint(accessibilityHint)
+    }
+
+    private var chevronName: String {
+        guard let isExpanded else { return "chevron.right" }
+        return isExpanded ? "chevron.up" : "chevron.down"
+    }
+
+    private var accessibilityHint: String {
+        guard let isExpanded else { return String(localized: "Open activity") }
+        return isExpanded ? String(localized: "Collapse process") : String(localized: "Expand process")
     }
 }
 

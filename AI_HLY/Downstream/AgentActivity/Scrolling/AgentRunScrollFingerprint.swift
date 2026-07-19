@@ -9,6 +9,7 @@ struct AgentRunScrollFingerprint: Equatable, Sendable {
     var lastItemTextLength: Int
     var lastItemStatus: AgentActivityStatus?
     var visibleResultCount: Int
+    var evidenceCount: Int
     var finalAnswerLength: Int
 
     func isStructuralChange(comparedTo previous: AgentRunScrollFingerprint?) -> Bool {
@@ -19,6 +20,7 @@ struct AgentRunScrollFingerprint: Equatable, Sendable {
             || lastItemID != previous.lastItemID
             || lastItemStatus != previous.lastItemStatus
             || visibleResultCount != previous.visibleResultCount
+            || evidenceCount != previous.evidenceCount
     }
 }
 
@@ -36,6 +38,7 @@ extension AgentRun {
             visibleResultCount: transcriptItems.lazy.filter {
                 $0.kind == .userVisibleToolResult
             }.count,
+            evidenceCount: evidenceItems.lazy.filter(\.wasReturnedToModel).count,
             finalAnswerLength: finalAnswer?.count ?? 0
         )
     }

@@ -44,11 +44,53 @@ enum ToolResultPresentationRequest: String, Codable, Hashable, Sendable {
     case card
 }
 
+enum ToolEvidencePolicy: String, Codable, Hashable, Sendable {
+    case none
+    case automatic
+    case explicitExtractor
+}
+
+struct ToolEvidenceDescriptor: Codable, Hashable, Sendable {
+    var kind: AgentEvidenceKind
+    var policy: ToolEvidencePolicy
+}
+
 struct ToolPresentationProfile: Codable, Hashable, Sendable {
     var identity: String
     var activity: ToolActivityPresentationDescriptor
     var result: ToolResultPresentationDescriptor?
     var resultDisplayPolicy: ToolResultDisplayPolicy
+    var evidence: ToolEvidenceDescriptor?
+
+    private enum CodingKeys: String, CodingKey {
+        case identity, activity, result, resultDisplayPolicy, evidence
+    }
+
+    init(
+        identity: String,
+        activity: ToolActivityPresentationDescriptor,
+        result: ToolResultPresentationDescriptor?,
+        resultDisplayPolicy: ToolResultDisplayPolicy,
+        evidence: ToolEvidenceDescriptor?
+    ) {
+        self.identity = identity
+        self.activity = activity
+        self.result = result
+        self.resultDisplayPolicy = resultDisplayPolicy
+        self.evidence = evidence
+    }
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        identity = try container.decode(String.self, forKey: .identity)
+        activity = try container.decode(ToolActivityPresentationDescriptor.self, forKey: .activity)
+        result = try container.decodeIfPresent(ToolResultPresentationDescriptor.self, forKey: .result)
+        resultDisplayPolicy = try container.decodeIfPresent(
+            ToolResultDisplayPolicy.self,
+            forKey: .resultDisplayPolicy
+        ) ?? .never
+        evidence = try container.decodeIfPresent(ToolEvidenceDescriptor.self, forKey: .evidence)
+    }
 
     static func generic(toolName: String) -> ToolPresentationProfile {
         ToolPresentationProfile(
@@ -62,7 +104,8 @@ struct ToolPresentationProfile: Codable, Hashable, Sendable {
                 visibleArgumentKeys: []
             ),
             result: nil,
-            resultDisplayPolicy: .never
+            resultDisplayPolicy: .never,
+            evidence: nil
         )
     }
 
@@ -74,7 +117,9 @@ struct ToolPresentationProfile: Codable, Hashable, Sendable {
         completedTitle: LocalizedStringResource,
         failedTitle: LocalizedStringResource = "Tool failed",
         visibleArgumentKeys: [String],
-        supportsCard: Bool = true
+        supportsCard: Bool = true,
+        evidenceKind: AgentEvidenceKind? = nil,
+        evidencePolicy: ToolEvidencePolicy = .automatic
     ) -> ToolPresentationProfile {
         ToolPresentationProfile(
             identity: "native.\(toolName)",
@@ -89,7 +134,8 @@ struct ToolPresentationProfile: Codable, Hashable, Sendable {
             result: supportsCard
                 ? ToolResultPresentationDescriptor(rendererKind: .modernNative, supportsCard: true)
                 : nil,
-            resultDisplayPolicy: supportsCard ? .modelControlled : .never
+            resultDisplayPolicy: supportsCard ? .modelControlled : .never,
+            evidence: evidenceKind.map { ToolEvidenceDescriptor(kind: $0, policy: evidencePolicy) }
         )
     }
 }

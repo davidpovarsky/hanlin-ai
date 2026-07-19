@@ -98,6 +98,7 @@ struct ChatView: View {
     @State private var ifScroll = false                     // 控制滚动相关状态
     @State private var autoFollowController = ChatAutoFollowController()
     @State private var pendingAutoFollowTask: Task<Void, Never>?
+    @State private var agentLayoutRevision = 0
 
     // 提示词管理相关
     @State private var selectedPrompts: [PromptRepo] = []   // 选中的提示词
@@ -613,6 +614,7 @@ struct ChatView: View {
         var showModelSuggestions: Bool
         var showVisualSuggestion: Bool
         var showImageSize: Bool
+        var agentLayoutRevision: Int
     }
     
     private var scrollTriggerState: ScrollTriggerState {
@@ -628,7 +630,8 @@ struct ChatView: View {
             isInputActive: isInputActive,
             showModelSuggestions: showModelSuggestions,
             showVisualSuggestion: selectedModelIndex >= 0 && !modelTemp[selectedModelIndex].supportsMultimodal && modelTemp[selectedModelIndex].company != "LOCAL",
-            showImageSize: selectedModelIndex >= 0 && modelTemp[selectedModelIndex].supportsImageGen
+            showImageSize: selectedModelIndex >= 0 && modelTemp[selectedModelIndex].supportsImageGen,
+            agentLayoutRevision: agentLayoutRevision
         )
     }
 
@@ -885,7 +888,7 @@ struct ChatView: View {
             return AnyView(EmptyView())
         }
         let bubbleText = isAgentTranscriptOwner
-            ? (storedActivityRun?.finalAnswer ?? msg.text ?? "")
+            ? (storedActivityRun?.finalAnswer ?? "")
             : (msg.text ?? "")
 
         // 1. 构造基础气泡
@@ -934,6 +937,9 @@ struct ChatView: View {
             isResponding: isResponding,
             operationalState: operationalState,
             operationalDescription: operationalDescription,
+            onAgentLayoutChange: {
+                agentLayoutRevision &+= 1
+            },
             onRetry: (msg.role == "assistant" || msg.role == "error") ? { retryRequest(for: msg) } : nil,
             onDelete: {
                 // 如果是助手组消息，删除整组，否则删除单条
@@ -1454,9 +1460,10 @@ struct ChatView: View {
                             updated = true
                         }
                         
-                        // 更新操作状态文本
-                        if let stateText = data.operationalState, !stateText.isEmpty {
-                            operationalState = stateText
+                        // Provider operational-state strings describe transport plumbing.
+                        // User-facing activity is rendered only from semantic AgentEvents.
+                        if data.operationalState?.isEmpty == false, !operationalState.isEmpty {
+                            operationalState = ""
                             updated = true
                         }
                         

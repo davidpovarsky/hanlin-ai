@@ -26,6 +26,7 @@ struct AgentDisplayActivity: Identifiable, Hashable {
     var startedAt: Date?
     var completedAt: Date?
     var queries: [String]
+    var searchProviderName: String?
     var sources: [AgentActivitySource]
     var inputPreview: String?
     var outputPreview: String?

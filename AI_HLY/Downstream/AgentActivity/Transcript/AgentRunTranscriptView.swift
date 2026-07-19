@@ -11,9 +11,14 @@ struct AgentRunTranscriptView: View {
     let temporaryRecord: Bool
     let usesMathRenderer: Bool
     let rendersFinalAnswer: Bool
+    let legacyEvidenceItems: [AgentEvidenceItem]
+    let onLayoutChange: () -> Void
     let onLaunchRequest: ((NativeAppLaunchRequest) -> Void)?
 
     @State private var inspectorSelection: AgentActivityInspectorSelection?
+    @State private var isProcessExpanded = false
+    @State private var isEvidencePresented = false
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     private var timeline: AgentDisplayTimeline { AgentActivityComposer.compose(run) }
     private var orderedItems: [AgentTranscriptItem] {
@@ -22,17 +27,35 @@ struct AgentRunTranscriptView: View {
     private var isFinished: Bool {
         run.status != .running && run.status != .pending
     }
+    private var evidenceItems: [AgentEvidenceItem] {
+        run.schemaVersion >= AgentRun.currentSchemaVersion
+            ? run.evidenceItems
+            : AgentEvidenceAccumulator(items: run.evidenceItems + legacyEvidenceItems).items
+    }
 
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             if isFinished {
-                if run.hasMeaningfulThinkingActivity {
-                    AgentActivitySummaryView(run: run) {
-                        inspectorSelection = AgentActivityInspectorSelection(selectedActivityID: nil)
-                    }
-                }
                 ForEach(orderedItems.filter { $0.visibilityAfterCompletion == .remainInChat }) { item in
                     transcriptItem(item, isLive: false)
+                }
+                if run.hasMeaningfulThinkingActivity {
+                    AgentActivitySummaryView(run: run, isExpanded: isProcessExpanded) {
+                        toggleProcessExpansion()
+                    }
+                }
+                if isProcessExpanded {
+                    AgentInlineProcessView(run: run, timeline: timeline) { selectedID in
+                        AgentActivityTrace.thinkingActivitySelected(
+                            runID: run.id,
+                            selectedActivityID: selectedID
+                        )
+                        inspectorSelection = AgentActivityInspectorSelection(selectedActivityID: selectedID)
+                    }
+                    .transition(.opacity.combined(with: .move(edge: .top)))
+                }
+                AgentEvidenceSummaryView(items: evidenceItems) {
+                    isEvidencePresented = true
                 }
             } else {
                 ForEach(orderedItems) { item in
@@ -48,6 +71,17 @@ struct AgentRunTranscriptView: View {
             )
             .presentationDetents([.medium, .large])
             .presentationDragIndicator(.visible)
+        }
+        .sheet(isPresented: $isEvidencePresented) {
+            AgentEvidenceSheet(items: evidenceItems)
+                .presentationDetents([.medium, .large])
+                .presentationDragIndicator(.visible)
+        }
+        .onChange(of: run.status) { _, status in
+            if status == .completed && isProcessExpanded {
+                isProcessExpanded = false
+                onLayoutChange()
+            }
         }
     }
 
@@ -111,6 +145,21 @@ struct AgentRunTranscriptView: View {
             return nil
         }
         return value
+    }
+
+    private func toggleProcessExpansion() {
+        let update = {
+            isProcessExpanded.toggle()
+        }
+        if reduceMotion {
+            update()
+        } else {
+            withAnimation(.easeInOut(duration: 0.18)) {
+                update()
+            }
+        }
+        AgentActivityTrace.processExpansionChanged(runID: run.id, expanded: isProcessExpanded)
+        onLayoutChange()
     }
 }
 

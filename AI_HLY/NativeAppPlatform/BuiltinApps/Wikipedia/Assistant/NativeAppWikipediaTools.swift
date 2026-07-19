@@ -18,7 +18,8 @@ struct WikipediaAssistantSearchTool: NativeTool {
                 systemImage: "globe",
                 runningTitle: "Searching Wikipedia",
                 completedTitle: "Searched Wikipedia",
-                visibleArgumentKeys: ["query"]
+                visibleArgumentKeys: ["query"],
+                evidenceKind: .wikipediaArticle
             )
         )
     }
@@ -97,7 +98,8 @@ struct WikipediaAssistantSummaryTool: NativeTool {
                 systemImage: "globe",
                 runningTitle: "Reading Wikipedia",
                 completedTitle: "Read Wikipedia",
-                visibleArgumentKeys: ["title"]
+                visibleArgumentKeys: ["title"],
+                evidenceKind: .wikipediaArticle
             )
         )
     }
