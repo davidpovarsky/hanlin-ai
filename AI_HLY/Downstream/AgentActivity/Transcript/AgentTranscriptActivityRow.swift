@@ -51,6 +51,7 @@ struct AgentTranscriptActivityRow: View {
     }
 
     private var iconName: String {
+        if let systemImage = activity?.systemImage { return systemImage }
         switch activity?.kind {
         case .reasoning: return "bubble.left.and.text.bubble.right"
         case .search: return "magnifyingglass"

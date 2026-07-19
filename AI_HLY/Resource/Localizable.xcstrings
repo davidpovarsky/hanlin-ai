@@ -10485,6 +10485,181 @@
         }
       }
     },
+    "%lld results" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "%lld results" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "%lld תוצאות" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "%lld 个结果" } }
+      }
+    },
+    "Analyzed text" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Analyzed text" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "ניתח טקסט" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "已分析文本" } }
+      }
+    },
+    "Analyzing text" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Analyzing text" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "מנתח טקסט" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "正在分析文本" } }
+      }
+    },
+    "Calculated" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Calculated" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "חישב" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "已计算" } }
+      }
+    },
+    "Calculating" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Calculating" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "מחשב" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "正在计算" } }
+      }
+    },
+    "Checked the calendar" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Checked the calendar" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "בדק את לוח השנה" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "已检查日历" } }
+      }
+    },
+    "Copy" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Copy" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "העתקה" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "复制" } }
+      }
+    },
+    "Couldn’t load the source" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Couldn’t load the source" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "לא ניתן לטעון את המקור" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "无法加载来源" } }
+      }
+    },
+    "Open" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Open" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "פתיחה" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "打开" } }
+      }
+    },
+    "Ran code" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Ran code" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "הריץ קוד" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "已运行代码" } }
+      }
+    },
+    "Read a source" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Read a source" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "קרא מקור" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "已读取来源" } }
+      }
+    },
+    "Read Wikipedia" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Read Wikipedia" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "קרא בוויקיפדיה" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "已阅读维基百科" } }
+      }
+    },
+    "Reading Wikipedia" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Reading Wikipedia" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "קורא בוויקיפדיה" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "正在阅读维基百科" } }
+      }
+    },
+    "Result card" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Result card" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "כרטיס תוצאה" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "结果卡片" } }
+      }
+    },
+    "Result hidden" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Result hidden" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "התוצאה מוסתרת" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "结果已隐藏" } }
+      }
+    },
+    "Searched Sefaria" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Searched Sefaria" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "חיפש בספריא" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "已搜索 Sefaria" } }
+      }
+    },
+    "Searched Wikipedia" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Searched Wikipedia" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "חיפש בוויקיפדיה" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "已搜索维基百科" } }
+      }
+    },
+    "Searched locations" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Searched locations" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "חיפש מיקומים" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "已搜索地点" } }
+      }
+    },
+    "Searched the web" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Searched the web" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "חיפש באינטרנט" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "已搜索网页" } }
+      }
+    },
+    "Show details" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Show details" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "הצגת פרטים" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "显示详情" } }
+      }
+    },
+    "Tool failed" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Tool failed" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "הפעלת הכלי נכשלה" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "工具失败" } }
+      }
+    },
+    "Transformed text" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Transformed text" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "שינה את הטקסט" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "已转换文本" } }
+      }
+    },
+    "Transforming text" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Transforming text" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "משנה את הטקסט" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "正在转换文本" } }
+      }
+    },
+    "Used a tool" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Used a tool" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "השתמש בכלי" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "已使用工具" } }
+      }
+    },
+    "View all" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "View all" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "הצגת הכול" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "查看全部" } }
+      }
+    },
     "暂未设置文本优化模型，请前往“设置-模型-优化模型”设置文本优化模型。视觉优化模型仅在视觉功能中需要。" : {
       "localizations" : {
         "en" : {

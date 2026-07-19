@@ -23,17 +23,21 @@ struct AgentActivityInspectorView: View {
         NavigationStack {
             ScrollViewReader { proxy in
                 ScrollView {
-                    LazyVStack(alignment: .leading, spacing: 10) {
+                    LazyVStack(alignment: .leading, spacing: 0) {
                         if run.hasModernTranscript, !thinkingItems.isEmpty {
                             ForEach(thinkingItems) { item in
-                                inspectorTranscriptItem(item)
+                                inspectorTranscriptItem(
+                                    item,
+                                    isLast: item.id == thinkingItems.last?.id
+                                )
                                     .id(selectionID(for: item))
                             }
                         } else {
-                            ForEach(timeline.activities) { activity in
+                            ForEach(Array(timeline.activities.enumerated()), id: \.element.id) { index, activity in
                                 AgentInspectorActivityView(
                                     activity: activity,
-                                    isSelected: selectedActivityID == activity.id
+                                    isSelected: selectedActivityID == activity.id,
+                                    isLast: index == timeline.activities.count - 1
                                 )
                                 .id(activity.id)
                             }
@@ -81,7 +85,7 @@ struct AgentActivityInspectorView: View {
     }
 
     @ViewBuilder
-    private func inspectorTranscriptItem(_ item: AgentTranscriptItem) -> some View {
+    private func inspectorTranscriptItem(_ item: AgentTranscriptItem, isLast: Bool) -> some View {
         let selected = selectedActivityID == selectionID(for: item)
         if item.kind == .assistantText || item.kind == .progress {
             if let text = item.text?.trimmingCharacters(in: .whitespacesAndNewlines), !text.isEmpty {
@@ -90,7 +94,7 @@ struct AgentActivityInspectorView: View {
                     .background(highlight(selected), in: RoundedRectangle(cornerRadius: 12))
             }
         } else if let activity = AgentTranscriptPresentation.activity(for: item, in: timeline) {
-            AgentInspectorActivityView(activity: activity, isSelected: selected)
+            AgentInspectorActivityView(activity: activity, isSelected: selected, isLast: isLast)
         } else if let text = item.text, !text.isEmpty {
             Text(text)
                 .font(.subheadline)
@@ -112,6 +116,7 @@ struct AgentActivityInspectorView: View {
 private struct AgentInspectorActivityView: View {
     let activity: AgentDisplayActivity
     let isSelected: Bool
+    let isLast: Bool
 
     @State private var showsAllQueries = false
     @State private var showsAllSources = false
@@ -124,17 +129,29 @@ private struct AgentInspectorActivityView: View {
     }
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 10) {
-            HStack(alignment: .firstTextBaseline, spacing: 8) {
+        HStack(alignment: .top, spacing: 10) {
+            VStack(spacing: 4) {
                 Image(systemName: iconName)
+                    .font(.system(size: 18, weight: .medium))
                     .foregroundStyle(activity.status == .failed ? .red : .secondary)
-                Text(activity.title)
-                    .font(.headline)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                Text(statusText)
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
+                    .frame(width: 22, height: 22)
+                if !isLast {
+                    Rectangle()
+                        .fill(Color(uiColor: .separator).opacity(0.45))
+                        .frame(width: 1)
+                        .frame(maxHeight: .infinity)
+                }
             }
+
+            VStack(alignment: .leading, spacing: 10) {
+                HStack(alignment: .firstTextBaseline, spacing: 8) {
+                    Text(activity.title)
+                        .font(.headline)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    Text(statusText)
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                }
 
             if !displayedQueries.isEmpty {
                 LazyVGrid(
@@ -143,7 +160,7 @@ private struct AgentInspectorActivityView: View {
                     spacing: 6
                 ) {
                     ForEach(displayedQueries, id: \.self) { query in
-                        Text(query)
+                        Label(query, systemImage: "magnifyingglass")
                             .font(.caption)
                             .padding(.horizontal, 9)
                             .padding(.vertical, 5)
@@ -164,27 +181,44 @@ private struct AgentInspectorActivityView: View {
                 detailText(error, monospaced: false)
                     .foregroundStyle(.red)
             }
-            ForEach(displayedSources) { source in
-                if let url = source.url.flatMap(URL.init(string:)) {
-                    Link(destination: url) {
-                        Label(source.title, systemImage: "arrow.up.right.square")
-                            .font(.caption)
-                            .frame(maxWidth: .infinity, alignment: .leading)
+                if !displayedSources.isEmpty {
+                    LazyVGrid(
+                        columns: [GridItem(.adaptive(minimum: 110), spacing: 6, alignment: .leading)],
+                        alignment: .leading,
+                        spacing: 6
+                    ) {
+                        ForEach(displayedSources) { source in
+                            if let url = source.url.flatMap(URL.init(string:)) {
+                                Link(destination: url) {
+                                    Label(sourceLabel(source), systemImage: "globe")
+                                        .font(.caption)
+                                        .lineLimit(1)
+                                        .padding(.horizontal, 9)
+                                        .padding(.vertical, 5)
+                                        .background(.quaternary, in: Capsule())
+                                }
+                            } else {
+                                Label(sourceLabel(source), systemImage: "doc.text")
+                                    .font(.caption)
+                                    .lineLimit(1)
+                                    .padding(.horizontal, 9)
+                                    .padding(.vertical, 5)
+                                    .background(.quaternary, in: Capsule())
+                            }
+                        }
                     }
-                } else {
-                    Label(source.title, systemImage: "doc.text")
-                        .font(.caption)
                 }
-            }
             if activity.sources.count > 10 {
                 showMoreButton(isExpanded: $showsAllSources)
             }
+            }
+            .padding(.bottom, isLast ? 0 : 14)
+            .padding(10)
+            .background(
+                isSelected ? Color.accentColor.opacity(0.09) : .clear,
+                in: RoundedRectangle(cornerRadius: 12)
+            )
         }
-        .padding(12)
-        .background(
-            isSelected ? Color.accentColor.opacity(0.09) : Color.secondary.opacity(0.05),
-            in: RoundedRectangle(cornerRadius: 14)
-        )
         .accessibilityElement(children: .contain)
     }
 
@@ -206,6 +240,12 @@ private struct AgentInspectorActivityView: View {
         .frame(minHeight: 44)
     }
 
+    private func sourceLabel(_ source: AgentActivitySource) -> String {
+        if let sourceName = source.sourceName, !sourceName.isEmpty { return sourceName }
+        if let value = source.url, let host = URL(string: value)?.host() { return host }
+        return source.title
+    }
+
     private var statusText: String {
         switch activity.status {
         case .pending, .running: return String(localized: "Working…")
@@ -216,6 +256,7 @@ private struct AgentInspectorActivityView: View {
     }
 
     private var iconName: String {
+        if let systemImage = activity.systemImage { return systemImage }
         switch activity.kind {
         case .reasoning: return "bubble.left.and.text.bubble.right"
         case .narrative: return "circle.fill"
