@@ -107,7 +107,7 @@ enum AgentEvidenceExtractor {
         sequence: Int?,
         fallbackKind: AgentEvidenceKind
     ) -> [AgentEvidenceItem] {
-        blocks.flatMap { block in
+        blocks.flatMap { block -> [AgentEvidenceItem] in
             guard block.type != .error else { return [] }
             var result: [AgentEvidenceItem] = []
             if block.type != .searchResults, let root = evidence(

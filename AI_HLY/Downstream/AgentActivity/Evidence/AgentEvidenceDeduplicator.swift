@@ -6,21 +6,21 @@ enum AgentEvidenceDeduplicator {
         case .webPage:
             return normalizedURL(item.url) ?? normalized(item.externalID ?? item.title)
         case .wikipediaArticle:
-            return normalized(item.externalID) ?? normalizedURL(item.url) ?? normalized(item.title)
+            return normalizedNonempty(item.externalID) ?? normalizedURL(item.url) ?? normalized(item.title)
         case .sefariaSource:
             return normalizedReference(item.reference ?? item.externalID ?? item.title)
         case .githubRepository:
             return normalizedURL(item.url) ?? normalized(item.externalID ?? item.title)
         case .githubFile:
-            return normalized(item.externalID) ?? normalizedURL(item.url) ?? normalized(item.title)
+            return normalizedNonempty(item.externalID) ?? normalizedURL(item.url) ?? normalized(item.title)
         case .githubCommit:
-            return normalized(item.externalID) ?? normalizedURL(item.url) ?? normalized(item.title)
+            return normalizedNonempty(item.externalID) ?? normalizedURL(item.url) ?? normalized(item.title)
         case .reminder, .calendarEvent, .email, .contact, .databaseRecord:
-            return normalized(item.externalID) ?? normalized(item.title)
+            return normalizedNonempty(item.externalID) ?? normalized(item.title)
         case .document, .file:
-            return normalized(item.externalID) ?? normalizedURL(item.url) ?? normalized(item.title)
+            return normalizedNonempty(item.externalID) ?? normalizedURL(item.url) ?? normalized(item.title)
         case .genericItem:
-            return normalized(item.externalID) ?? normalizedURL(item.url) ?? normalized(item.title)
+            return normalizedNonempty(item.externalID) ?? normalizedURL(item.url) ?? normalized(item.title)
         }
     }
 
@@ -40,6 +40,9 @@ enum AgentEvidenceDeduplicator {
             let filtered = queryItems.filter { !trackingNames.contains($0.name.lowercased()) }
             components.queryItems = filtered.isEmpty ? nil : filtered
         }
+        while components.path.count > 1 && components.path.hasSuffix("/") {
+            components.path.removeLast()
+        }
         if components.path == "/" { components.path = "" }
         return components.string
     }
@@ -55,5 +58,10 @@ enum AgentEvidenceDeduplicator {
             .trimmingCharacters(in: .whitespacesAndNewlines)
             .replacingOccurrences(of: "\\s+", with: " ", options: .regularExpression)
             .lowercased()
+    }
+
+    private static func normalizedNonempty(_ value: String?) -> String? {
+        let value = normalized(value)
+        return value.isEmpty ? nil : value
     }
 }
