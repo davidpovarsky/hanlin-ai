@@ -28,7 +28,11 @@ enum LegacyToolPresentationAdapter {
 
     static func semanticFallback(for toolName: String) -> ToolPresentationProfile? {
         let normalized = toolName.lowercased()
-        let markers = ["search", "read", "retrieve", "code", "python", "calculate", "map", "route", "calendar", "write", "create", "generate"]
+        let markers = [
+            "search", "read", "retrieve", "code", "python", "calculate", "map", "route",
+            "calendar", "write", "create", "generate", "github", "wikipedia", "sefaria",
+            "document", "file", "email", "contact"
+        ]
         guard markers.contains(where: normalized.contains) else { return nil }
         return ToolPresentationProfile(
             identity: "semantic.\(normalized)",
@@ -100,6 +104,18 @@ enum LegacyToolPresentationAdapter {
         }
         if name.contains("github") {
             return ToolEvidenceDescriptor(kind: .githubFile, policy: .automatic)
+        }
+        if name.contains("wikipedia") {
+            return ToolEvidenceDescriptor(kind: .wikipediaArticle, policy: .automatic)
+        }
+        if name.contains("sefaria") {
+            return ToolEvidenceDescriptor(kind: .sefariaSource, policy: .automatic)
+        }
+        if name.contains("email") {
+            return ToolEvidenceDescriptor(kind: .email, policy: .automatic)
+        }
+        if name.contains("contact") {
+            return ToolEvidenceDescriptor(kind: .contact, policy: .automatic)
         }
         if name.contains("knowledge") || name.contains("document") || name.contains("file") {
             return ToolEvidenceDescriptor(kind: .document, policy: .automatic)

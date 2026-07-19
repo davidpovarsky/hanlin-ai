@@ -161,7 +161,8 @@ enum AgentEvidenceExtractor {
         sequence: Int?,
         fallbackKind: AgentEvidenceKind
     ) -> AgentEvidenceItem? {
-        guard let title = nonempty(title), nonempty(url) != nil || nonempty(reference) != nil else {
+        guard let title = nonempty(title),
+              nonempty(url) != nil || nonempty(reference) != nil || nonempty(externalID) != nil else {
             return nil
         }
         let kind = kind(forURL: url, fallback: fallbackKind)

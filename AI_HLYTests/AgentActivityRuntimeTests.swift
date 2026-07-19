@@ -3,18 +3,23 @@ import XCTest
 
 final class AgentActivityRuntimeTests: XCTestCase {
     func testOperationalStateDoesNotEndAnswerOrCreateProgress() {
-        var adapter = HanlinStreamEventAdapter(runID: UUID())
-        let events = adapter.events(from: StreamData(content: "Answer", operationalState: "Processing"))
+        for state in [
+            "Processing", "Sending request", "Waiting for model response",
+            "Request sent", "Parsing response"
+        ] {
+            var adapter = HanlinStreamEventAdapter(runID: UUID())
+            let events = adapter.events(from: StreamData(content: "Answer", operationalState: state))
 
-        XCTAssertTrue(events.contains { event in
-            if case .answerSegmentDelta(_, "Answer") = event { return true }
-            return false
-        })
-        XCTAssertFalse(events.contains { event in
-            if case .answerSegmentEnded(_, .interim) = event { return true }
-            if case .progressMessage(_) = event { return true }
-            return false
-        })
+            XCTAssertTrue(events.contains { event in
+                if case .answerSegmentDelta(_, "Answer") = event { return true }
+                return false
+            })
+            XCTAssertFalse(events.contains { event in
+                if case .answerSegmentEnded(_, .interim) = event { return true }
+                if case .progressMessage(_) = event { return true }
+                return false
+            })
+        }
     }
 
     func testCompletedRunPromotesLastNonemptyAssistantSegment() {
@@ -75,6 +80,34 @@ final class AgentActivityRuntimeTests: XCTestCase {
         XCTAssertEqual(AgentTranscriptValidation.finalAnswer(in: normalized), "Second")
     }
 
+    func testExistingFinalMarkerWinsOverLaterInterimText() {
+        let final = assistantItem(sequence: 0, text: "Chosen", role: .final)
+        let later = assistantItem(sequence: 1, text: "Later interim", role: .interim)
+        let normalized = AgentTranscriptValidation.normalized(
+            [final, later],
+            promotingFinalAnswerForCompletedRun: true
+        )
+
+        XCTAssertEqual(AgentTranscriptValidation.finalAnswer(in: normalized), "Chosen")
+        XCTAssertEqual(normalized.last?.visibilityAfterCompletion, .collapseIntoThinking)
+    }
+
+    func testCompletedTranscriptWithoutAssistantTextHasNoFinalAnswer() {
+        let progress = AgentTranscriptItem(
+            sequence: 0,
+            kind: .progress,
+            status: .completed,
+            text: "Checked",
+            visibilityAfterCompletion: .collapseIntoThinking
+        )
+        let normalized = AgentTranscriptValidation.normalized(
+            [progress],
+            promotingFinalAnswerForCompletedRun: true
+        )
+
+        XCTAssertNil(AgentTranscriptValidation.finalAnswer(in: normalized))
+    }
+
     func testSearchCapturesQueryAndUsesSourceTitleInsteadOfProvider() {
         let runID = UUID()
         var adapter = HanlinStreamEventAdapter(runID: runID)
@@ -91,6 +124,19 @@ final class AgentActivityRuntimeTests: XCTestCase {
         XCTAssertEqual(activity?.queries, ["modern Swift concurrency"])
         XCTAssertEqual(activity?.sources.first?.displayTitle, "Swift")
         XCTAssertEqual(activity?.searchProviderName, "LANGSEARCH")
+    }
+
+    func testSearchQueryDeduplicationPreservesOrderAndSourceFallsBackToDomain() {
+        XCTAssertEqual(
+            AgentActivityDeduplicator.uniqueStrings(["First", " first ", "Second"]),
+            ["First", "Second"]
+        )
+        let source = AgentActivitySource(
+            title: "",
+            url: "https://developer.apple.com/documentation",
+            providerName: "LANGSEARCH"
+        )
+        XCTAssertEqual(source.displayTitle, "developer.apple.com")
     }
 
     func testEvidenceDeduplicatesNormalizedURLs() {
@@ -177,6 +223,115 @@ final class AgentActivityRuntimeTests: XCTestCase {
             hasPayload: true
         ).shouldPresent)
         XCTAssertEqual(AgentEvidenceExtractor.extract(call: call, result: result, sequence: 0).count, 1)
+    }
+
+    func testRetrievalProfilesCoverFutureEvidenceFamilies() {
+        XCTAssertEqual(
+            ToolPresentationProfileRegistry.resolve(toolName: "read_github_file").evidence?.kind,
+            .githubFile
+        )
+        XCTAssertEqual(
+            ToolPresentationProfileRegistry.resolve(toolName: "retrieve_email").evidence?.kind,
+            .email
+        )
+        XCTAssertEqual(
+            ToolPresentationProfileRegistry.resolve(toolName: "search_contacts").evidence?.kind,
+            .contact
+        )
+    }
+
+    func testRetrievedDocumentWithoutURLUsesExternalID() {
+        let profile = ToolPresentationProfile.modernNative(
+            toolName: "read_document",
+            kind: .read,
+            systemImage: "doc.text",
+            runningTitle: "Reading",
+            completedTitle: "Read",
+            visibleArgumentKeys: [],
+            evidenceKind: .document
+        )
+        let call = AgentToolCall.parse(
+            id: "document-call",
+            name: "read_document",
+            argumentsJSON: "{}",
+            presentationProfile: profile
+        )
+        let result = AgentToolResult(
+            modelText: "Document contents",
+            userText: nil,
+            richResultBlocks: [NativeUIBlock(id: "document-42", type: .text, title: "Project brief")],
+            evidenceItems: [],
+            hasLegacyPresentationPayload: false,
+            isError: false,
+            duration: 0
+        )
+
+        let evidence = AgentEvidenceExtractor.extract(call: call, result: result, sequence: 2)
+        XCTAssertEqual(evidence.first?.kind, .document)
+        XCTAssertEqual(evidence.first?.externalID, "document-42")
+    }
+
+    func testFailedAndUnreturnedEvidenceAreNotPresented() {
+        let profile = ToolPresentationProfile.modernNative(
+            toolName: "read_document",
+            kind: .read,
+            systemImage: "doc.text",
+            runningTitle: "Reading",
+            completedTitle: "Read",
+            visibleArgumentKeys: [],
+            evidenceKind: .document
+        )
+        let call = AgentToolCall.parse(
+            id: "failed-call",
+            name: "read_document",
+            argumentsJSON: "{}",
+            presentationProfile: profile
+        )
+        let failedResult = AgentToolResult(
+            modelText: "Failure",
+            userText: nil,
+            richResultBlocks: [NativeUIBlock(id: "failed", type: .text, title: "Not retrieved")],
+            evidenceItems: [],
+            hasLegacyPresentationPayload: false,
+            isError: true,
+            duration: 0
+        )
+        XCTAssertTrue(AgentEvidenceExtractor.extract(call: call, result: failedResult, sequence: 0).isEmpty)
+
+        var accumulator = AgentEvidenceAccumulator()
+        accumulator.insert(contentsOf: [AgentEvidenceItem(
+            kind: .document,
+            title: "Hidden",
+            externalID: "hidden",
+            wasReturnedToModel: false
+        )])
+        XCTAssertTrue(accumulator.items.isEmpty)
+    }
+
+    func testLegacyResourcesAdaptAndSefariaReferencesDeduplicate() {
+        let legacy = LegacyResourcesEvidenceAdapter.items(
+            from: [Resource(icon: "", title: "Apple", link: "https://apple.com")],
+            providerName: "LANGSEARCH"
+        )
+        XCTAssertEqual(legacy.first?.title, "Apple")
+        XCTAssertEqual(legacy.first?.sourceName, "LANGSEARCH")
+
+        var accumulator = AgentEvidenceAccumulator()
+        accumulator.insert(contentsOf: [
+            AgentEvidenceItem(
+                kind: .sefariaSource,
+                title: "Genesis 1:1",
+                reference: "Genesis 1:1–3",
+                wasReturnedToModel: true
+            ),
+            AgentEvidenceItem(
+                kind: .sefariaSource,
+                title: "Genesis 1:1",
+                reference: " genesis   1:1-3 ",
+                wasReturnedToModel: true
+            )
+        ])
+        XCTAssertEqual(accumulator.items.count, 1)
     }
 
     private func assistantItem(
