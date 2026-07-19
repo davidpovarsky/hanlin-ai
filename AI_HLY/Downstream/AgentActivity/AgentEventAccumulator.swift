@@ -338,14 +338,14 @@ struct AgentEventAccumulator {
             closeRunningSteps(as: .failed, error: error.message)
             transcript.closeActiveItems(as: .failed)
             appendErrorTranscript(text: error.message, status: .failed, remainInChat: true)
-            run.finalAnswer = Self.finalAnswer(from: transcript.items)
+            run.finalAnswer = AgentTranscriptValidation.finalAnswer(in: transcript.items)
             run.status = .failed
             run.completedAt = Date()
 
         case .runCancelled:
             closeRunningSteps(as: .cancelled)
             transcript.closeActiveItems(as: .cancelled)
-            run.finalAnswer = Self.finalAnswer(from: transcript.items)
+            run.finalAnswer = AgentTranscriptValidation.finalAnswer(in: transcript.items)
             run.status = .cancelled
             run.completedAt = Date()
             let timestamp = Date()

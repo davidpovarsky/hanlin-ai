@@ -12,7 +12,7 @@ enum AgentActivityCompositionPolicy {
         guard step.kind == .progress else { return false }
         let values = [step.title, step.userFacingSummary, step.output]
             .compactMap { $0?.trimmingCharacters(in: .whitespacesAndNewlines).lowercased() }
-        return values.contains(isInternalTransportText)
+        return values.contains(where: isInternalTransportText)
     }
 
     static func isInternalTransportText(_ value: String) -> Bool {

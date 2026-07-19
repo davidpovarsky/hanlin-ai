@@ -256,8 +256,9 @@ struct AgentRun: Codable, Hashable, Identifiable {
         )
         evidenceItems = try container.decodeIfPresent([AgentEvidenceItem].self, forKey: .evidenceItems) ?? []
         let transcriptFinalAnswer = AgentTranscriptValidation.finalAnswer(in: transcriptItems)
+        let persistedFinalAnswer = try container.decodeIfPresent(String.self, forKey: .finalAnswer)
         finalAnswer = schemaVersion >= 2
             ? transcriptFinalAnswer
-            : transcriptFinalAnswer ?? (try container.decodeIfPresent(String.self, forKey: .finalAnswer))
+            : transcriptFinalAnswer ?? persistedFinalAnswer
     }
 }
