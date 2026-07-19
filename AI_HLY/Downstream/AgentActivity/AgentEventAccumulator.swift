@@ -241,9 +241,10 @@ struct AgentEventAccumulator {
 
         case .toolExecutionFailed(let id, let error):
             let callID = callIDByExecutionID[id] ?? id.replacingOccurrences(of: ":execution", with: "")
+            let failedTitle = profileByCallID[callID]?.activity.failedTitle
             updateStep(externalID: "execution:\(id)") { step in
                 step.status = .failed
-                if let profile = profileByCallID[callID] { step.title = profile.activity.failedTitle }
+                if let failedTitle { step.title = failedTitle }
                 step.errorDescription = error.message
                 step.completedAt = Date()
             }
