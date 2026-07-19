@@ -2869,6 +2869,7 @@ class APIManager {
                                             let executionID = "\(toolCallID):execution"
                                             let executionStart = Date()
                                             var executionUIBlocks: [NativeUIBlock] = []
+                                            var executionEvidenceItems: [AgentEvidenceItem] = []
                                             var executionReturnedError = false
                                             let previousSearchResources = self.searchResources
                                             let previousLocationsInfo = self.locationsInfo
@@ -3389,6 +3390,11 @@ class APIManager {
                                                     
                                                     // 调用新的搜索函数，按照各条件查询日历与提醒事项
                                                     let items = await searchSystemEvents(keyword: keyword, startDate: startDate, endDate: endDate, location: location, eventType: eventType)
+                                                    executionEvidenceItems = AgentEvidenceExtractor.calendarItems(
+                                                        items,
+                                                        toolName: functionName,
+                                                        toolCallID: toolCallID
+                                                    )
                                                     
                                                     if items.isEmpty {
                                                         toolResult = currentLanguagePrefix ?
@@ -3837,6 +3843,17 @@ class APIManager {
                                                 continuation.yield(StreamData(operationalState: currentLanguagePrefix ?  "工具不存在" : "Tool does not exist"))
                                                 toolResultFront = currentLanguagePrefix ?  "工具不存在" : "Tool does not exist"
                                             }
+                                            let previousResourceCount = previousSearchResources?.count ?? 0
+                                            let currentResources = self.searchResources ?? []
+                                            if currentResources.count > previousResourceCount {
+                                                executionEvidenceItems += LegacyResourcesEvidenceAdapter.items(
+                                                    from: Array(currentResources.dropFirst(previousResourceCount)),
+                                                    providerName: self.searchEngine,
+                                                    toolName: functionName,
+                                                    toolCallID: toolCallID,
+                                                    wasReturnedToModel: true
+                                                )
+                                            }
                                             let legacyPayloadAvailable: Bool = {
                                                 switch functionName {
                                                 case "search_online", "search_arxiv_papers", "read_web_page", "search_knowledge_bag":
@@ -3895,6 +3912,7 @@ class APIManager {
                                                             modelText: toolResult,
                                                             userText: toolResultFront,
                                                             richResultBlocks: executionUIBlocks,
+                                                            evidenceItems: executionEvidenceItems,
                                                             hasLegacyPresentationPayload: presentationDecision.shouldPresent
                                                                 && presentationDecision.rendererKind == .legacyExisting
                                                                 && legacyPayloadAvailable,

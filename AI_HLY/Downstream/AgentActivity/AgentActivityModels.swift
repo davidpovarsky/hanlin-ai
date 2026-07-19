@@ -68,6 +68,20 @@ struct AgentActivitySource: Codable, Hashable, Identifiable, Sendable {
         if let reference, !reference.isEmpty { return reference }
         return String(localized: "Source")
     }
+
+    private enum CodingKeys: String, CodingKey {
+        case id, title, url, domain, reference
+    }
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        id = try container.decodeIfPresent(String.self, forKey: .id) ?? UUID().uuidString
+        title = try container.decodeIfPresent(String.self, forKey: .title) ?? ""
+        url = try container.decodeIfPresent(String.self, forKey: .url)
+        domain = try container.decodeIfPresent(String.self, forKey: .domain)
+            ?? url.flatMap(URL.init(string:))?.host()
+        reference = try container.decodeIfPresent(String.self, forKey: .reference)
+    }
 }
 
 struct AgentActivityStep: Codable, Hashable, Identifiable {
@@ -169,7 +183,7 @@ struct AgentActivityStep: Codable, Hashable, Identifiable {
 }
 
 struct AgentRun: Codable, Hashable, Identifiable {
-    static let currentSchemaVersion = 3
+    static let currentSchemaVersion = 4
 
     var schemaVersion: Int
     var id: UUID
@@ -181,6 +195,7 @@ struct AgentRun: Codable, Hashable, Identifiable {
     var status: AgentActivityStatus
     var steps: [AgentActivityStep]
     var transcriptItems: [AgentTranscriptItem]
+    var evidenceItems: [AgentEvidenceItem]
     var finalAnswer: String?
 
     init(
@@ -194,6 +209,7 @@ struct AgentRun: Codable, Hashable, Identifiable {
         status: AgentActivityStatus = .running,
         steps: [AgentActivityStep] = [],
         transcriptItems: [AgentTranscriptItem] = [],
+        evidenceItems: [AgentEvidenceItem] = [],
         finalAnswer: String? = nil
     ) {
         self.schemaVersion = schemaVersion
@@ -206,6 +222,7 @@ struct AgentRun: Codable, Hashable, Identifiable {
         self.status = status
         self.steps = steps
         self.transcriptItems = transcriptItems
+        self.evidenceItems = evidenceItems
         self.finalAnswer = finalAnswer
     }
 
@@ -215,7 +232,7 @@ struct AgentRun: Codable, Hashable, Identifiable {
 
     private enum CodingKeys: String, CodingKey {
         case schemaVersion, id, groupID, providerID, modelID, startedAt, completedAt
-        case status, steps, transcriptItems, finalAnswer
+        case status, steps, transcriptItems, evidenceItems, finalAnswer
     }
 
     init(from decoder: Decoder) throws {
@@ -237,6 +254,10 @@ struct AgentRun: Codable, Hashable, Identifiable {
             decodedTranscript,
             promotingFinalAnswerForCompletedRun: status == .completed
         )
-        finalAnswer = AgentTranscriptValidation.finalAnswer(in: transcriptItems)
+        evidenceItems = try container.decodeIfPresent([AgentEvidenceItem].self, forKey: .evidenceItems) ?? []
+        let transcriptFinalAnswer = AgentTranscriptValidation.finalAnswer(in: transcriptItems)
+        finalAnswer = schemaVersion >= 2
+            ? transcriptFinalAnswer
+            : transcriptFinalAnswer ?? (try container.decodeIfPresent(String.self, forKey: .finalAnswer))
     }
 }

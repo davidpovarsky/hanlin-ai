@@ -145,6 +145,7 @@ struct ChatBubbleView: View {
     @State private var nativeAppFullScreenRequest: NativeAppLaunchRequest?
     @State private var nativeAppSheetRequest: NativeAppLaunchRequest?
     @State private var legacyInspectorSelection: AgentActivityInspectorSelection?
+    @State private var isEvidencePresented = false
     
     @ScaledMetric(relativeTo: .body) var size_5: CGFloat = 5
     @ScaledMetric(relativeTo: .body) var size_7: CGFloat = 7
@@ -285,6 +286,11 @@ struct ChatBubbleView: View {
                 .presentationDetents([.medium, .large])
                 .presentationDragIndicator(.visible)
             }
+        }
+        .sheet(isPresented: $isEvidencePresented) {
+            AgentEvidenceSheet(items: evidenceItemsForDisplay)
+                .presentationDetents([.medium, .large])
+                .presentationDragIndicator(.visible)
         }
         .fullScreenCover(item: $nativeAppFullScreenRequest) { request in
             NativeAppSessionContainerView(request: request)
@@ -516,9 +522,13 @@ struct ChatBubbleView: View {
                 if isAgentTranscriptOwner,
                    let agentRun,
                    agentRun.status != .running,
-                   agentRun.status != .pending,
-                   !text.isEmpty {
-                    messageContent()
+                   agentRun.status != .pending {
+                    if !text.isEmpty {
+                        messageContent()
+                    }
+                    AgentEvidenceSummaryView(items: evidenceItemsForDisplay) {
+                        isEvidencePresented = true
+                    }
                 }
                 if isAgentTranscriptOwner && isLastAssistantGroup && !isResponding {
                     actionButtons()
@@ -591,7 +601,8 @@ struct ChatBubbleView: View {
     // MARK: 文本 & 各类工具输出
     @ViewBuilder
     private func assistantTextSection() -> some View {
-        if !text.isEmpty || !reasoning.isEmpty || !toolContent.isEmpty || !nativeUIBlocks.isEmpty {
+        if !text.isEmpty || !reasoning.isEmpty || !toolContent.isEmpty || !nativeUIBlocks.isEmpty
+            || !evidenceItemsForDisplay.isEmpty {
             VStack(alignment: .leading, spacing: 6) {
                 if showCanvas, canvas?.content.isEmpty == false {
                     canvasBubble(for: canvas)
@@ -601,6 +612,12 @@ struct ChatBubbleView: View {
                 // 文字主体
                 messageContent()
                     .transition(.move(edge: .top).combined(with: .opacity))
+
+                if !isResponding {
+                    AgentEvidenceSummaryView(items: evidenceItemsForDisplay) {
+                        isEvidencePresented = true
+                    }
+                }
                 
                 // 代码块
                 if let codes = codeBlocks, !codes.isEmpty {
@@ -659,7 +676,6 @@ struct ChatBubbleView: View {
     private func assistantLegacyResultSection() -> some View {
         VStack(alignment: .leading, spacing: 6) {
             if allowsLegacyResultPresentation {
-                resourcesView()
                 if showCanvas, canvas?.content.isEmpty == false {
                     canvasBubble(for: canvas)
                 }
@@ -696,6 +712,17 @@ struct ChatBubbleView: View {
         return agentRun.transcriptItems.contains {
             $0.kind == .userVisibleToolResult && $0.resultRendererKind == .legacyExisting
         }
+    }
+
+    private var evidenceItemsForDisplay: [AgentEvidenceItem] {
+        if isRenderedByAgentTranscript {
+            return AgentEvidenceAccumulator(items: agentRun?.evidenceItems ?? []).items
+        }
+        return AgentEvidenceAccumulator(items: LegacyResourcesEvidenceAdapter.items(
+            from: resources ?? [],
+            providerName: searchEngine,
+            wasReturnedToModel: true
+        )).items
     }
 
     // MARK: 底部 Loading / 结束状态
@@ -1872,7 +1899,7 @@ struct ChatBubbleView: View {
             translateView()
                 .transition(.opacity.combined(with: .move(edge: .top)))
             
-            if agentRun == nil {
+            if evidenceItemsForDisplay.isEmpty {
                 resourcesView()
                     .transition(.opacity.combined(with: .move(edge: .top)))
             }

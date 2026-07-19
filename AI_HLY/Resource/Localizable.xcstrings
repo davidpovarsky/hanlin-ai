@@ -2,6 +2,181 @@
   "sourceLanguage" : "zh-Hans",
   "strings" : {
     "" : {},
+    "%lld Reminders used" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "%lld Reminders used" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "נעשה שימוש ב־%lld תזכורות" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "使用了 %lld 个提醒事项" } }
+      }
+    },
+    "%lld Sources" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "%lld Sources" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "%lld מקורות" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "%lld 个来源" } }
+      }
+    },
+    "%lld Sources and items" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "%lld Sources and items" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "%lld מקורות ופריטים" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "%lld 个来源和项目" } }
+      }
+    },
+    "%lld Torah sources" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "%lld Torah sources" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "%lld מקורות תורניים" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "%lld 个犹太经典来源" } }
+      }
+    },
+    "1 Reminder used" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "1 Reminder used" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "נעשה שימוש בתזכורת אחת" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "使用了 1 个提醒事项" } }
+      }
+    },
+    "1 Source" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "1 Source" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "מקור אחד" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "1 个来源" } }
+      }
+    },
+    "1 Torah source" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "1 Torah source" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "מקור תורני אחד" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "1 个犹太经典来源" } }
+      }
+    },
+    "Calendar items" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Calendar items" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "פריטי לוח שנה" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "日历项目" } }
+      }
+    },
+    "Contacts" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Contacts" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "אנשי קשר" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "联系人" } }
+      }
+    },
+    "Copy link" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Copy link" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "העתקת קישור" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "复制链接" } }
+      }
+    },
+    "Copy reference" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Copy reference" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "העתקת מראה מקום" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "复制出处" } }
+      }
+    },
+    "Documents" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Documents" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "מסמכים" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "文档" } }
+      }
+    },
+    "Emails" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Emails" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "הודעות דוא״ל" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "电子邮件" } }
+      }
+    },
+    "GitHub" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "GitHub" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "GitHub" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "GitHub" } }
+      }
+    },
+    "No sources available" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "No sources available" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "אין מקורות זמינים" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "没有可用来源" } }
+      }
+    },
+    "Open in GitHub" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Open in GitHub" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "פתיחה ב־GitHub" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "在 GitHub 中打开" } }
+      }
+    },
+    "Open in Sefaria" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Open in Sefaria" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "פתיחה בספריא" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "在 Sefaria 中打开" } }
+      }
+    },
+    "Open in Wikipedia" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Open in Wikipedia" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "פתיחה בוויקיפדיה" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "在维基百科中打开" } }
+      }
+    },
+    "Open sources and items" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Open sources and items" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "פתיחת מקורות ופריטים" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "打开来源和项目" } }
+      }
+    },
+    "Other items" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Other items" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "פריטים אחרים" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "其他项目" } }
+      }
+    },
+    "Reminders used" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Reminders used" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "תזכורות בשימוש" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "使用的提醒事项" } }
+      }
+    },
+    "Sefaria" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Sefaria" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "ספריא" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "Sefaria" } }
+      }
+    },
+    "Sources and items" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Sources and items" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "מקורות ופריטים" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "来源和项目" } }
+      }
+    },
+    "Web sources" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Web sources" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "מקורות מהאינטרנט" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "网页来源" } }
+      }
+    },
+    "Wikipedia" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Wikipedia" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "ויקיפדיה" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "维基百科" } }
+      }
+    },
     "Collapse process" : {
       "localizations" : {
         "en" : { "stringUnit" : { "state" : "translated", "value" : "Collapse process" } },

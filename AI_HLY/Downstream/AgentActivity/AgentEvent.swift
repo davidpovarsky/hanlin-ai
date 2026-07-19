@@ -96,6 +96,7 @@ struct AgentToolResult: @unchecked Sendable {
     var modelText: String
     var userText: String?
     var richResultBlocks: [NativeUIBlock]
+    var evidenceItems: [AgentEvidenceItem] = []
     var hasLegacyPresentationPayload: Bool
     var isError: Bool
     var duration: TimeInterval

@@ -8,6 +8,7 @@ import Foundation
 struct AgentEventAccumulator {
     private(set) var run: AgentRun
     private var transcript: AgentTranscriptAccumulator
+    private var evidence: AgentEvidenceAccumulator
     private var stepIndexByExternalID: [String: Int] = [:]
     private var nextStepSequence: Int
     private var pendingToolArguments: [String: String] = [:]
@@ -19,6 +20,7 @@ struct AgentEventAccumulator {
     init(run: AgentRun) {
         self.run = run
         transcript = AgentTranscriptAccumulator(items: run.transcriptItems)
+        evidence = AgentEvidenceAccumulator(items: run.evidenceItems)
         nextStepSequence = (run.steps.map(\.sequence).max() ?? -1) + 1
         for (index, step) in run.steps.enumerated() {
             if let externalID = step.externalID {
@@ -30,6 +32,7 @@ struct AgentEventAccumulator {
     mutating func apply(_ event: AgentEvent) {
         defer {
             run.transcriptItems = transcript.items
+            run.evidenceItems = evidence.items
             assert(AgentTranscriptValidation.hasStrictlyIncreasingSequence(run.transcriptItems))
             assert(!AgentTranscriptValidation.containsDuplicateNativeUIResults(run.transcriptItems))
             assert(AgentTranscriptValidation.satisfiesCompletedRunInvariant(run))
@@ -205,6 +208,7 @@ struct AgentEventAccumulator {
         case .toolExecutionCompleted(let id, let result):
             let callID = callIDByExecutionID[id] ?? id.replacingOccurrences(of: ":execution", with: "")
             let profile = profileByCallID[callID]
+            let evidenceSequence = run.steps.first(where: { $0.externalID == "execution:\(id)" })?.sequence
             updateStep(externalID: "execution:\(id)") { step in
                 step.output = Self.safePreview(result.userText ?? result.modelText)
                 step.richResultBlocks = result.richResultBlocks
@@ -223,6 +227,11 @@ struct AgentEventAccumulator {
                 transcript.complete(externalID: transcriptID, status: result.isError ? .failed : .completed)
             }
             if let call = toolCallByID[callID], let profile {
+                evidence.insert(contentsOf: AgentEvidenceExtractor.extract(
+                    call: call,
+                    result: result,
+                    sequence: evidenceSequence
+                ))
                 let decision = ToolResultPresentationCoordinator.decide(
                     call: call,
                     profile: profile,
@@ -312,6 +321,10 @@ struct AgentEventAccumulator {
                 step.status = .completed
                 step.completedAt = Date()
             }
+            evidence.insert(contentsOf: AgentEvidenceExtractor.evidence(
+                from: sources,
+                sequence: run.steps.first(where: { $0.externalID == id })?.sequence
+            ))
             transcript.complete(externalID: id)
 
         case .runCompleted:
