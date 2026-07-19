@@ -93,7 +93,8 @@ struct HanlinStreamEventAdapter: ProviderEventAdapter {
             }
         }
 
-        if data.searchEngine != nil || data.search_text != nil || data.resources != nil {
+        let searchQueries = providerSearchQueries(from: data)
+        if data.searchEngine != nil || !searchQueries.isEmpty || data.search_text != nil || data.resources != nil {
             endActiveAnswerSegment(as: .interim, into: &events)
             if activeSearchID == nil {
                 searchSequence += 1
@@ -102,12 +103,20 @@ struct HanlinStreamEventAdapter: ProviderEventAdapter {
                 events.append(.searchStarted(
                     id: id,
                     title: String(localized: "Searching the web"),
-                    query: nil
+                    queries: searchQueries,
+                    providerName: data.searchEngine
+                ))
+            } else if let id = activeSearchID, !searchQueries.isEmpty {
+                events.append(.searchStarted(
+                    id: id,
+                    title: String(localized: "Searching the web"),
+                    queries: searchQueries,
+                    providerName: data.searchEngine
                 ))
             }
             if let id = activeSearchID {
                 let sources = (data.resources ?? []).map {
-                    AgentActivitySource(title: $0.title, url: $0.link, sourceName: data.searchEngine)
+                    AgentActivitySource(title: $0.title, url: $0.link)
                 }
                 events.append(.searchCompleted(id: id, sources: sources, output: data.search_text))
             }
@@ -195,6 +204,18 @@ struct HanlinStreamEventAdapter: ProviderEventAdapter {
         return transportStates.contains {
             normalized == $0 || normalized.hasPrefix("\($0)…") || normalized.hasPrefix("\($0)...")
         }
+    }
+
+    private func providerSearchQueries(from data: StreamData) -> [String] {
+        let explicit = AgentActivityDeduplicator.uniqueStrings(data.searchQueries ?? [])
+        if !explicit.isEmpty { return explicit }
+        guard data.resources == nil,
+              let text = data.search_text?.trimmingCharacters(in: .whitespacesAndNewlines),
+              !text.isEmpty,
+              text.count <= 300,
+              !text.contains("\n"),
+              !text.contains("#") else { return [] }
+        return [text]
     }
 }
 

@@ -274,7 +274,17 @@ struct AgentEventAccumulator {
                 run.finalAnswer = Self.nonemptyText(transcript.item(externalID: id)?.text)
             }
 
-        case .searchStarted(let id, let title, let query):
+        case .searchStarted(let id, let title, let queries, let providerName):
+            let normalizedQueries = AgentActivityDeduplicator.uniqueStrings(queries)
+            if stepIndexByExternalID[id] != nil {
+                updateStep(externalID: id) { step in
+                    step.queryItems = AgentActivityDeduplicator.uniqueStrings(
+                        step.queryItems + normalizedQueries
+                    )
+                    step.searchProviderName = providerName ?? step.searchProviderName
+                }
+                break
+            }
             let sequence = transcript.allocateSequence()
             let stepID = appendStep(
                 externalID: id,
@@ -283,7 +293,8 @@ struct AgentEventAccumulator {
                 title: title,
                 summary: title,
                 source: .applicationGenerated,
-                queryItems: query.map { [$0] } ?? []
+                queryItems: normalizedQueries,
+                searchProviderName: providerName
             )
             transcript.begin(
                 externalID: id,
@@ -365,6 +376,7 @@ struct AgentEventAccumulator {
         input: String? = nil,
         output: String? = nil,
         queryItems: [String] = [],
+        searchProviderName: String? = nil,
         sourceItems: [AgentActivitySource] = []
     ) -> UUID? {
         if let externalID, let index = stepIndexByExternalID[externalID], run.steps.indices.contains(index) {
@@ -388,6 +400,7 @@ struct AgentEventAccumulator {
             input: input,
             output: output,
             queryItems: queryItems,
+            searchProviderName: searchProviderName,
             sourceItems: sourceItems
         )
         run.steps.append(step)

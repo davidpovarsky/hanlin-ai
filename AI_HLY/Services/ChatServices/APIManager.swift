@@ -31,6 +31,7 @@ struct StreamData {
     var audioContent: Data?         // 音频数据
     var document_text: String?      // 文件内容
     var search_text: String?        // 搜索内容
+    var searchQueries: [String]?    // Actual search queries, separate from result text
     var locations_info: [Location]? // 位置信息
     var route_info: [RouteInfo]?    // 路线信息
     var events: [EventItem]?        // 事件信息
@@ -73,6 +74,7 @@ class APIManager {
     private var documentText: String?           // 文件内容
     private var imageText: String?              // 图片描述
     private var searchText: String?             // 搜索内容
+    private var searchQueries: [String] = []    // Actual queries in execution order
     private var locationsInfo: [Location]?      // 位置信息
     private var storeRouteInfo: [RouteInfo]?    // 路线信息
     private var events: [EventItem]?            // 事件信息
@@ -87,6 +89,16 @@ class APIManager {
     private var latestToolProgressSummary: String?
     private var agentDiagnosticsRecorder: AgentDiagnosticsRecorder?
     private var dataIndex: Int?
+
+    private func captureSearchQuery(_ value: String) {
+        let trimmed = value.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !trimmed.isEmpty else { return }
+        let normalized = AgentActivityDeduplicator.normalized(trimmed)
+        guard !searchQueries.contains(where: {
+            AgentActivityDeduplicator.normalized($0) == normalized
+        }) else { return }
+        searchQueries.append(trimmed)
+    }
     
     private var context: ModelContext
     private var currentTask: URLSessionDataTask? // 当前流式请求任务
@@ -324,6 +336,7 @@ class APIManager {
     
     // 主动搜索
     func searchOnline(query: String) async -> String {
+        captureSearchQuery(query)
         guard !query.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
             return Locale.preferredLanguages.first?.hasPrefix("zh") ?? true
                 ? "没有有效的查询内容"
@@ -425,6 +438,7 @@ class APIManager {
     
     /// 主动搜索 arXiv 文献
     func searchArxivPapers(query: String) async -> String {
+        captureSearchQuery(query)
         guard !query.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
             return Locale.preferredLanguages.first?.hasPrefix("zh") ?? true
                 ? "没有有效的查询内容"
@@ -581,6 +595,7 @@ class APIManager {
     
     /// 根据在线文件 URL 下载并提取文本内容
     func extractContentFromRemoteFile(urlString: String) async throws -> String {
+        captureSearchQuery(urlString)
         guard let originalURL = URL(string: urlString) else {
             return "无效的链接：\(urlString)"
         }
@@ -673,6 +688,7 @@ class APIManager {
     
     // 主动翻找
     func searchKnowledgeBag(query: String) async -> String {
+        captureSearchQuery(query)
         guard !query.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
             return Locale.preferredLanguages.first?.hasPrefix("zh") ?? true
                 ? "没有有效的查询内容"
@@ -705,6 +721,7 @@ class APIManager {
     
     /// 主动读取网页内容：从单个 URL 中提取正文并构造 Markdown 格式摘要
     func readWebPage(url: String) async -> String {
+        captureSearchQuery(url)
         // 校验 URL 是否有效
         guard !url.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
             return Locale.preferredLanguages.first?.hasPrefix("zh") ?? true
@@ -1904,6 +1921,7 @@ class APIManager {
             let images = currentMessage?.images
             let optimizer = SystemOptimizer(context: self.context)
             let optimizedQuery = try await optimizer.optimizeSearchQuestion(inputPrompt: timeQuery, recentMessages: recentMessages, inputImages: images)
+            captureSearchQuery(optimizedQuery)
             let bilingualSearchEnabled = isBilingualSearchEnabled()
             let searchCount = getSearchCount()
             
@@ -1922,6 +1940,7 @@ class APIManager {
             // 若启用双语搜索，则翻译查询并执行第二次搜索
             if bilingualSearchEnabled {
                 let translatedQuery = try await optimizer.translatePrompt(inputPrompt: optimizedQuery)
+                captureSearchQuery(translatedQuery)
                 let (searchResult2, _) = try await searchTool(query: translatedQuery, engine: engine, apiKey: apiKey, requestURL: requestURL, searchCount: searchCount)
                 
                 combinedTitles.append(contentsOf: searchResult2.titles)
@@ -1970,6 +1989,7 @@ class APIManager {
     /// 网页阅读任务：从选中的 URL 中提取网页内容，并构造 Markdown 格式摘要
     private func performWebPageTask(with selectedURLs: [String]) async {
         guard !selectedURLs.isEmpty else { return }
+        selectedURLs.forEach(captureSearchQuery)
         let extractedWebPages = await fetchWebPageContent(from: selectedURLs)
         if !extractedWebPages.isEmpty {
             var webContentMarkdown = ""
@@ -2222,6 +2242,7 @@ class APIManager {
             let images = currentMessage?.images
             let optimizer = SystemOptimizer(context: self.context)
             let optimizedQuery = try await optimizer.optimizeKnowledgeQuestion(inputPrompt: query, recentMessages: recentMessages, inputImages: images)
+            captureSearchQuery(optimizedQuery)
             print("优化后的问题：", optimizedQuery)
             
             if let knowledgeMarkdown = await self.performKnowledgeSearch(query: optimizedQuery) {
@@ -2292,7 +2313,7 @@ class APIManager {
                             await self.performSearchTask(updatedMessages: &updatedMessages)
                             // 推送搜索信息
                             if let searchEngine = self.searchEngine, !searchEngine.isEmpty {
-                                continuation.yield(StreamData(searchEngine: self.searchEngine, search_text: self.searchText))
+                                continuation.yield(StreamData(searchEngine: self.searchEngine, search_text: self.searchText, searchQueries: self.searchQueries))
                             }
                         }
                         
@@ -2302,7 +2323,7 @@ class APIManager {
                             await self.performSearchTask(with: messages)
                             // 推送搜索信息
                             if let searchEngine = self.searchEngine, !searchEngine.isEmpty {
-                                continuation.yield(StreamData(searchEngine: self.searchEngine, search_text: self.searchText))
+                                continuation.yield(StreamData(searchEngine: self.searchEngine, search_text: self.searchText, searchQueries: self.searchQueries))
                             }
                         }
                         
@@ -2312,7 +2333,7 @@ class APIManager {
                             await self.performWebPageTask(with: urls)
                             // 推送搜索信息
                             if let searchEngine = self.searchEngine, !searchEngine.isEmpty {
-                                continuation.yield(StreamData(searchEngine: self.searchEngine, search_text: self.searchText))
+                                continuation.yield(StreamData(searchEngine: self.searchEngine, search_text: self.searchText, searchQueries: self.searchQueries))
                             }
                         }
                         
@@ -2934,7 +2955,7 @@ class APIManager {
                                                 
                                                 // 推送搜索信息
                                                 if let searchEngine = self.searchEngine, !searchEngine.isEmpty {
-                                                    continuation.yield(StreamData(searchEngine: self.searchEngine, search_text: self.searchText))
+                                                    continuation.yield(StreamData(searchEngine: self.searchEngine, search_text: self.searchText, searchQueries: self.searchQueries))
                                                 }
                                                 
                                             case "search_arxiv_papers":
@@ -2954,7 +2975,7 @@ class APIManager {
                                                 
                                                 // 推送搜索信息
                                                 if let searchEngine = self.searchEngine, !searchEngine.isEmpty {
-                                                    continuation.yield(StreamData(searchEngine: self.searchEngine, search_text: self.searchText))
+                                                    continuation.yield(StreamData(searchEngine: self.searchEngine, search_text: self.searchText, searchQueries: self.searchQueries))
                                                 }
                                                 
                                             case "extract_remote_file_content":
@@ -2980,7 +3001,7 @@ class APIManager {
                                                 
                                                 // 推送搜索信息
                                                 if let searchEngine = self.searchEngine, !searchEngine.isEmpty {
-                                                    continuation.yield(StreamData(searchEngine: self.searchEngine, search_text: self.searchText))
+                                                    continuation.yield(StreamData(searchEngine: self.searchEngine, search_text: self.searchText, searchQueries: self.searchQueries))
                                                 }
                                                 
                                             case "read_web_page":
@@ -3000,7 +3021,7 @@ class APIManager {
                                                 
                                                 // 推送搜索信息
                                                 if let searchEngine = self.searchEngine, !searchEngine.isEmpty {
-                                                    continuation.yield(StreamData(searchEngine: self.searchEngine, search_text: self.searchText))
+                                                    continuation.yield(StreamData(searchEngine: self.searchEngine, search_text: self.searchText, searchQueries: self.searchQueries))
                                                 }
                                                 
                                             case "search_knowledge_bag":
@@ -3020,7 +3041,7 @@ class APIManager {
                                                 
                                                 // 推送搜索信息
                                                 if let searchEngine = self.searchEngine, !searchEngine.isEmpty {
-                                                    continuation.yield(StreamData(searchEngine: self.searchEngine, search_text: self.searchText))
+                                                    continuation.yield(StreamData(searchEngine: self.searchEngine, search_text: self.searchText, searchQueries: self.searchQueries))
                                                 }
                                                 
                                             case "create_knowledge_document":
@@ -4028,6 +4049,7 @@ class APIManager {
                                     responseData.content = ""
                                     responseData.resources = self.searchResources
                                     responseData.searchEngine = self.searchEngine
+                                    responseData.searchQueries = self.searchQueries.isEmpty ? nil : self.searchQueries
                                     if !audioB64.isEmpty {
                                         if modelInfo.company == "QWEN" {
                                             if let pcmData = Data(base64Encoded: audioB64) {
@@ -4482,6 +4504,7 @@ class APIManager {
         isCancelled = false
         reportProgressController = ReportProgressController()
         latestToolProgressSummary = nil
+        searchQueries = []
         
         let currentLanguage = Locale.preferredLanguages.first ?? "zh-Hans"
         

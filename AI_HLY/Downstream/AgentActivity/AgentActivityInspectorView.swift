@@ -171,6 +171,12 @@ private struct AgentInspectorActivityView: View {
             if activity.queries.count > 8 {
                 showMoreButton(isExpanded: $showsAllQueries)
             }
+            if let provider = activity.searchProviderName, !provider.isEmpty {
+                Text("\(String(localized: "Search provider")): \(provider)")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                    .textSelection(.enabled)
+            }
             if let input = activity.inputPreview {
                 detailText(input, monospaced: activity.kind == .code)
             }
@@ -241,9 +247,7 @@ private struct AgentInspectorActivityView: View {
     }
 
     private func sourceLabel(_ source: AgentActivitySource) -> String {
-        if let sourceName = source.sourceName, !sourceName.isEmpty { return sourceName }
-        if let value = source.url, let host = URL(string: value)?.host() { return host }
-        return source.title
+        source.displayTitle
     }
 
     private var statusText: String {

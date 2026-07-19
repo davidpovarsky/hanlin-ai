@@ -44,13 +44,29 @@ struct AgentActivitySource: Codable, Hashable, Identifiable, Sendable {
     var id: String
     var title: String
     var url: String?
-    var sourceName: String?
+    var domain: String?
+    var reference: String?
 
-    init(id: String = UUID().uuidString, title: String, url: String? = nil, sourceName: String? = nil) {
+    init(
+        id: String = UUID().uuidString,
+        title: String,
+        url: String? = nil,
+        domain: String? = nil,
+        reference: String? = nil
+    ) {
         self.id = id
         self.title = title
         self.url = url
-        self.sourceName = sourceName
+        self.domain = domain ?? url.flatMap(URL.init(string:))?.host()
+        self.reference = reference
+    }
+
+    var displayTitle: String {
+        let trimmedTitle = title.trimmingCharacters(in: .whitespacesAndNewlines)
+        if !trimmedTitle.isEmpty { return trimmedTitle }
+        if let domain, !domain.isEmpty { return domain }
+        if let reference, !reference.isEmpty { return reference }
+        return String(localized: "Source")
     }
 }
 
@@ -71,6 +87,7 @@ struct AgentActivityStep: Codable, Hashable, Identifiable {
     var input: String?
     var output: String?
     var queryItems: [String]
+    var searchProviderName: String?
     var sourceItems: [AgentActivitySource]
     var richResultBlocks: [NativeUIBlock]
     var errorDescription: String?
@@ -92,6 +109,7 @@ struct AgentActivityStep: Codable, Hashable, Identifiable {
         input: String? = nil,
         output: String? = nil,
         queryItems: [String] = [],
+        searchProviderName: String? = nil,
         sourceItems: [AgentActivitySource] = [],
         richResultBlocks: [NativeUIBlock] = [],
         errorDescription: String? = nil
@@ -112,6 +130,7 @@ struct AgentActivityStep: Codable, Hashable, Identifiable {
         self.input = input
         self.output = output
         self.queryItems = queryItems
+        self.searchProviderName = searchProviderName
         self.sourceItems = sourceItems
         self.richResultBlocks = richResultBlocks
         self.errorDescription = errorDescription
@@ -120,7 +139,7 @@ struct AgentActivityStep: Codable, Hashable, Identifiable {
     private enum CodingKeys: String, CodingKey {
         case id, externalID, sequence, kind, presentationProfile, resultPresentationRequest
         case title, subtitle, userFacingSummary, summarySource
-        case status, startedAt, completedAt, input, output, queryItems, sourceItems
+        case status, startedAt, completedAt, input, output, queryItems, searchProviderName, sourceItems
         case richResultBlocks, errorDescription
     }
 
@@ -142,6 +161,7 @@ struct AgentActivityStep: Codable, Hashable, Identifiable {
         input = try container.decodeIfPresent(String.self, forKey: .input)
         output = try container.decodeIfPresent(String.self, forKey: .output)
         queryItems = try container.decodeIfPresent([String].self, forKey: .queryItems) ?? []
+        searchProviderName = try container.decodeIfPresent(String.self, forKey: .searchProviderName)
         sourceItems = try container.decodeIfPresent([AgentActivitySource].self, forKey: .sourceItems) ?? []
         richResultBlocks = try container.decodeIfPresent([NativeUIBlock].self, forKey: .richResultBlocks) ?? []
         errorDescription = try container.decodeIfPresent(String.self, forKey: .errorDescription)

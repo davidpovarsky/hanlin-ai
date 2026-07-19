@@ -98,6 +98,7 @@ enum AgentActivityComposer {
             startedAt: steps.map(\.startedAt).min(),
             completedAt: steps.compactMap(\.completedAt).max(),
             queries: queries,
+            searchProviderName: steps.compactMap(\.searchProviderName).first,
             sources: sources,
             inputPreview: input,
             outputPreview: output,
@@ -161,6 +162,7 @@ enum AgentActivityComposer {
             }
             result.removeLast()
             previous.queries = AgentActivityDeduplicator.uniqueStrings(previous.queries + activity.queries)
+            previous.searchProviderName = previous.searchProviderName ?? activity.searchProviderName
             previous.sources = AgentActivityDeduplicator.uniqueSources(previous.sources + activity.sources)
             previous.sourceStepIDs += activity.sourceStepIDs
             previous.completedAt = [previous.completedAt, activity.completedAt].compactMap { $0 }.max()

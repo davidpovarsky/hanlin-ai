@@ -49,7 +49,8 @@ enum LegacyAgentActivityAdapter {
                 status: .completed,
                 startedAt: searchMessage.timestamp,
                 completedAt: searchMessage.timestamp,
-                output: output
+                output: output,
+                searchProviderName: searchMessage.searchEngine
             ))
         }
 
@@ -83,7 +84,8 @@ enum LegacyAgentActivityAdapter {
                     status: .completed,
                     startedAt: message.timestamp,
                     completedAt: message.timestamp,
-                    sourceItems: resources.map { AgentActivitySource(title: $0.title, url: $0.link, sourceName: message.searchEngine) }
+                    searchProviderName: message.searchEngine,
+                    sourceItems: resources.map { AgentActivitySource(title: $0.title, url: $0.link) }
                 ))
             }
 

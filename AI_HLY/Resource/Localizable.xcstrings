@@ -2,6 +2,20 @@
   "sourceLanguage" : "zh-Hans",
   "strings" : {
     "" : {},
+    "Search provider" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Search provider" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "ספק חיפוש" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "搜索提供商" } }
+      }
+    },
+    "Source" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Source" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "מקור" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "来源" } }
+      }
+    },
     "Cancelled" : {
       "localizations" : {
         "en" : { "stringUnit" : { "state" : "translated", "value" : "Cancelled" } },
