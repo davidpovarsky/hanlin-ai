@@ -456,7 +456,7 @@ private struct NativeKeyValueRows: View {
     }
 }
 
-private struct NativeActionControlGroup: View {
+struct NativeActionControlGroup: View {
     let actions: [NativeUIAction]
     let onLaunchRequest: ((NativeAppLaunchRequest) -> Void)?
 
@@ -476,7 +476,7 @@ private struct NativeActionControlGroup: View {
     }
 }
 
-private struct NativeActionButton: View {
+struct NativeActionButton: View {
     let action: NativeUIAction
     let onLaunchRequest: ((NativeAppLaunchRequest) -> Void)?
 

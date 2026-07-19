@@ -7,11 +7,19 @@ struct AgentTranscriptToolResultView: View {
 
     var body: some View {
         if !item.nativeUIBlocks.isEmpty {
-            NativeUIToolResultContainer(
-                blocks: item.nativeUIBlocks,
-                temporaryRecord: temporaryRecord,
-                onLaunchRequest: onLaunchRequest
-            )
+            switch item.resultRendererKind {
+            case .modernNative:
+                ModernNativeToolResultRenderer(
+                    blocks: item.nativeUIBlocks,
+                    onLaunchRequest: onLaunchRequest
+                )
+            case .legacyExisting, .none:
+                NativeUIToolResultContainer(
+                    blocks: item.nativeUIBlocks,
+                    temporaryRecord: temporaryRecord,
+                    onLaunchRequest: onLaunchRequest
+                )
+            }
         }
     }
 }
