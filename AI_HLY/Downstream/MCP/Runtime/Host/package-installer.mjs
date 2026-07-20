@@ -9,7 +9,8 @@ import { analyzePackage, inspectManifest, listEntryPoints, resolveEntryPoint } f
 const NODE_VERSION = '18.20.4';
 
 export async function previewPackage(source, options = {}) {
-  const resolved = await resolveSource(source, options);
+  const cachePath = path.join(options.root, 'cache', 'npm');
+  const resolved = await resolveSource(source, { ...options, cache: cachePath });
   const manifest = resolved.manifest;
   const entryPoints = listEntryPoints(manifest);
   const findings = inspectManifest(manifest);
@@ -39,6 +40,7 @@ export async function installPackage({ root, operationID, serverID, source, entr
   const packageRoot = path.join(operationRoot, 'package');
   const finalRoot = path.join(serversRoot, serverID);
   const backupRoot = path.join(stagingRoot, `backup-${operationID}`);
+  const cachePath = path.join(root, 'cache', 'npm');
   await fs.mkdir(stagingRoot, { recursive: true });
   await fs.mkdir(serversRoot, { recursive: true });
   await fs.rm(operationRoot, { recursive: true, force: true });
@@ -48,7 +50,7 @@ export async function installPackage({ root, operationID, serverID, source, entr
   try {
     checkCancelled(signal);
     emit('install', { operationID, phase: 'resolving', fraction: 0.05 });
-    const resolved = await resolveSource(source, { signal });
+    const resolved = await resolveSource(source, { signal, cache: cachePath });
     const manifest = resolved.manifest;
     const manifestFindings = inspectManifest(manifest);
     rejectUnsupported(manifestFindings);
@@ -56,7 +58,7 @@ export async function installPackage({ root, operationID, serverID, source, entr
     emit('install', { operationID, phase: 'downloading', fraction: 0.2 });
     await pacote.extract(resolved.spec, packageRoot, {
       integrity: resolved.integrity,
-      cache: path.join(root, 'cache'),
+      cache: cachePath,
       signal,
     });
 
@@ -74,7 +76,7 @@ export async function installPackage({ root, operationID, serverID, source, entr
     emit('install', { operationID, phase: 'installingDependencies', fraction: 0.58 });
     const arborist = new Arborist({
       path: packageRoot,
-      cache: path.join(root, 'cache'),
+      cache: cachePath,
       ignoreScripts: true,
       audit: false,
       fund: false,
@@ -224,7 +226,7 @@ async function resolveSource(source, options) {
   } else {
     await fs.access(spec);
   }
-  const manifest = await pacote.manifest(spec, { signal: options.signal });
+  const manifest = await pacote.manifest(spec, { cache: options.cache, signal: options.signal });
   return { manifest, spec, integrity: manifest._integrity ?? manifest.dist?.integrity };
 }
 

@@ -218,7 +218,7 @@ actor NodeMobileRuntimeProvider {
     }
 
     private func prepareHostRuntime() throws -> URL {
-        let version = "1"
+        let version = "2"
         let destination = fileLayout.runtime.appending(path: "host-v\(version)", directoryHint: .isDirectory)
         let marker = destination.appending(path: ".ready")
         if FileManager.default.fileExists(atPath: marker.path) { return destination }

@@ -3,21 +3,71 @@ import { promises as fs, createWriteStream } from 'node:fs';
 import path from 'node:path';
 import { Worker } from 'node:worker_threads';
 import { timingSafeEqual } from 'node:crypto';
-import { fileURLToPath } from 'node:url';
-import { commitInstall, installPackage, previewPackage, rollbackInstall } from './package-installer.mjs';
 
 const [root, readyPath, launchToken, logPath, debugFlag] = process.argv.slice(2);
 if (!root || !readyPath || !launchToken || !logPath) throw new Error('Missing host launch arguments.');
+
+const runtimeHome = path.join(root, 'runtime', 'home');
+const npmCache = path.join(root, 'cache', 'npm');
+const npmPrefix = path.join(root, 'runtime', 'npm-prefix');
+const npmTemp = path.join(root, 'staging', 'tmp');
+const xdgCache = path.join(root, 'cache', 'xdg');
+
+await Promise.all([
+  path.join(root, 'runtime'),
+  path.join(root, 'registry'),
+  path.join(root, 'servers'),
+  path.join(root, 'staging'),
+  path.join(root, 'cache'),
+  runtimeHome,
+  npmCache,
+  npmPrefix,
+  npmTemp,
+  xdgCache,
+].map(directory => fs.mkdir(directory, { recursive: true })));
+
+process.env.HOME = runtimeHome;
+process.env.USERPROFILE = runtimeHome;
+process.env.TMPDIR = npmTemp;
+process.env.TMP = npmTemp;
+process.env.TEMP = npmTemp;
+process.env.XDG_CACHE_HOME = xdgCache;
+process.env.npm_config_cache = npmCache;
+process.env.NPM_CONFIG_CACHE = npmCache;
+process.env.npm_config_prefix = npmPrefix;
+process.env.NPM_CONFIG_PREFIX = npmPrefix;
+process.env.npm_config_tmp = npmTemp;
+process.env.NPM_CONFIG_TMP = npmTemp;
+
+const npmUserConfig = path.join(root, 'runtime', 'npmrc');
+await fs.writeFile(npmUserConfig, [
+  `cache=${npmCache}`,
+  `prefix=${npmPrefix}`,
+  'audit=false',
+  'fund=false',
+  'ignore-scripts=true',
+].join('\n'), { flag: 'w', mode: 0o600 });
+process.env.npm_config_userconfig = npmUserConfig;
+process.env.NPM_CONFIG_USERCONFIG = npmUserConfig;
+
 const DEBUG = debugFlag === '1';
+const logStream = createWriteStream(logPath, { flags: 'a' });
+diagnostic('runtime_paths_configured', {
+  home: runtimeHome,
+  npmCache,
+  npmPrefix,
+  npmTemp,
+});
+
+const { commitInstall, installPackage, previewPackage, rollbackInstall } =
+  await import('./package-installer.mjs');
+
 const workerURL = new URL('./server-worker.mjs', import.meta.url);
 const servers = new Map();
 const installs = new Map();
 const installProgress = new Map();
-const logStream = createWriteStream(logPath, { flags: 'a' });
 const maximumBody = 10 * 1024 * 1024;
 const maximumLine = 8 * 1024 * 1024;
-
-await Promise.all(['runtime', 'registry', 'servers', 'staging', 'cache'].map(name => fs.mkdir(path.join(root, name), { recursive: true })));
 
 const server = http.createServer(async (request, response) => {
   try {
@@ -35,7 +85,7 @@ const server = http.createServer(async (request, response) => {
     }
     if (request.method === 'POST' && url.pathname === '/v1/install/preview') {
       const body = await readJSON(request);
-      return json(response, 200, await previewPackage(body.source, { entryPointOverride: body.entryPointOverride }));
+      return json(response, 200, await previewPackage(body.source, { root, entryPointOverride: body.entryPointOverride }));
     }
     if (request.method === 'POST' && url.pathname === '/v1/install') {
       const body = await readJSON(request);
