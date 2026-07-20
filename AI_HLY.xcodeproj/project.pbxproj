@@ -55,7 +55,13 @@
 		A10000000000000000000030 /* Exceptions for AI_HLY folder in AI_Hanlin target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				Downstream/MCP/Runtime/Host,
+				Downstream/MCP/Runtime/Host/Tests/host.test.mjs,
+				Downstream/MCP/Runtime/Host/host.mjs,
+				Downstream/MCP/Runtime/Host/package-compatibility.mjs,
+				Downstream/MCP/Runtime/Host/package-installer.mjs,
+				Downstream/MCP/Runtime/Host/package-lock.json,
+				Downstream/MCP/Runtime/Host/package.json,
+				Downstream/MCP/Runtime/Host/server-worker.mjs,
 			);
 			target = D7B6C3C02D50A55D004E3AD6 /* AI_Hanlin */;
 		};

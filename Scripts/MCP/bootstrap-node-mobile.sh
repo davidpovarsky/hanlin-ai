@@ -31,11 +31,21 @@ curl --fail --location --retry 3 \
   --output "${VENDOR_DIR}/NODE_LICENSE.generated.txt" \
   "https://raw.githubusercontent.com/nodejs-mobile/nodejs-mobile/v${NODE_MOBILE_VERSION}/LICENSE"
 
-npm ci --omit=dev --ignore-scripts --no-audit --no-fund --prefix "${HOST_DIR}"
+host_build_directory="${temporary_directory}/host"
+mkdir -p "${host_build_directory}"
+cp \
+  "${HOST_DIR}/host.mjs" \
+  "${HOST_DIR}/server-worker.mjs" \
+  "${HOST_DIR}/package-installer.mjs" \
+  "${HOST_DIR}/package-compatibility.mjs" \
+  "${HOST_DIR}/package.json" \
+  "${HOST_DIR}/package-lock.json" \
+  "${host_build_directory}/"
+npm ci --omit=dev --ignore-scripts --no-audit --no-fund --prefix "${host_build_directory}"
 rm -f "${HOST_ARCHIVE}"
 host_archive_temporary="${temporary_directory}/MCPHostResources.zip"
 (
-  cd "${HOST_DIR}"
+  cd "${host_build_directory}"
   find host.mjs server-worker.mjs package-installer.mjs package-compatibility.mjs package.json package-lock.json node_modules \
     -type f -print | LC_ALL=C sort | zip -X -q "${host_archive_temporary}" -@
 )
