@@ -998,6 +998,7 @@ struct ChatViewBottom: View {
                     chatTemps: $chatTemps,
                     respondIndex: respondIndex,
                     TemporaryRecord: TemporaryRecord,
+                    chatID: chatRecord.id,
                     isMenuMode: isMenuMode,
                     showModelMenuSheet: $showModelMenuSheet,
                     onSelectModel: onSelectModel,
@@ -1555,6 +1556,7 @@ struct ActionButtonsView: View {
     @Binding var chatTemps: [ChatMessages]
     let respondIndex: Int
     let TemporaryRecord: Bool
+    let chatID: UUID?
 
     // 菜单模式相关
     let isMenuMode: Bool
@@ -1772,7 +1774,7 @@ struct ActionButtonsView: View {
                         .transition(.opacity.combined(with: .move(edge: .leading)))
                         .disabled(isResponding)
 
-                        if let chatID = chatRecord.id {
+                        if let chatID {
                             MCPChatServerButton(
                                 chatID: chatID,
                                 temporary: TemporaryRecord,

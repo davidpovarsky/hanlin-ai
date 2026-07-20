@@ -9,8 +9,10 @@ enum AssistantToolBridge {
     }
 
     static func presentationProfile(for name: String) async -> ToolPresentationProfile? {
-        NativeToolBridge.presentationProfile(for: name)
-            ?? (await MCPToolBridge.presentationProfile(name: name))
+        if let native = NativeToolBridge.presentationProfile(for: name) {
+            return native
+        }
+        return await MCPToolBridge.presentationProfile(name: name)
     }
 
     static func execute(
