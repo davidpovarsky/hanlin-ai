@@ -155,6 +155,11 @@ jobs:
             cat Config.xcconfig
           } 2>&1 | tee "$LOG_DIR/03-create-config-xcconfig.log"
 
+      - name: Prepare embedded MCP runtime
+        run: |
+          set -euxo pipefail
+          bash Scripts/MCP/bootstrap-node-mobile.sh 2>&1 | tee "$LOG_DIR/04-bootstrap-mcp.log"
+
       - name: Validate expected project files
         run: |
           set -euxo pipefail

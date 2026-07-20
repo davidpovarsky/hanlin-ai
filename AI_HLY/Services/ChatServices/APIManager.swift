@@ -2276,6 +2276,7 @@ class APIManager {
                                     ifSearch: Bool,
                                     ifKnowledge: Bool,
                                     ifToolUse: Bool,
+                                    assistantToolScope: AssistantToolRequestScope,
                                     ifThink: Bool,
                                     ifAudio: Bool,
                                     ifPlanning: Bool,
@@ -2484,7 +2485,7 @@ class APIManager {
                             weatherEnabled: weatherEnabled,
                             canvasEnabled: canvasEnabled,
                         )
-                        tools.append(contentsOf: await NativeToolBridge.schemasForRequest())
+                        tools.append(contentsOf: await AssistantToolBridge.schemasForRequest(scope: assistantToolScope))
                         tools = ToolSchemaDecorator.decorate(
                             schemas: tools,
                             progressSummaryRequired: modelInfo.agentCapabilities.supportsProgressSummaryField
@@ -2813,7 +2814,7 @@ class APIManager {
                                            let functionDict = toolCall["function"] as? [String: Any],
                                            let functionName = functionDict["name"] as? String,
                                            let functionArguments = functionDict["arguments"] as? String {
-                                            let nativeProfile = await NativeToolBridge.presentationProfile(for: functionName)
+                                            let nativeProfile = await AssistantToolBridge.presentationProfile(for: functionName)
                                             var parsedCall = AgentToolCall.parse(
                                                 id: toolCallID,
                                                 name: functionName,
@@ -3823,7 +3824,7 @@ class APIManager {
                                                     modelContext: self.context
                                                 )
 
-                                                if let nativeResult = await NativeToolBridge.executeIfNativeTool(
+                                                if let nativeResult = await AssistantToolBridge.execute(
                                                     name: functionName,
                                                     argumentsJSON: functionArguments,
                                                     context: nativeContext
@@ -4042,6 +4043,7 @@ class APIManager {
                                                                                             ifSearch: ifSearch,
                                                                                             ifKnowledge: ifKnowledge,
                                                                                             ifToolUse: ifToolUse,
+                                                                                            assistantToolScope: assistantToolScope,
                                                                                             ifThink: ifThink,
                                                                                             ifAudio: ifAudio,
                                                                                             ifPlanning: ifPlanning,
@@ -4105,6 +4107,7 @@ class APIManager {
                                                                                                     ifSearch: ifSearch,
                                                                                                     ifKnowledge: ifKnowledge,
                                                                                                     ifToolUse: ifToolUse,
+                                                                                                    assistantToolScope: assistantToolScope,
                                                                                                     ifThink: ifThink,
                                                                                                     ifAudio: ifAudio,
                                                                                                     ifPlanning: ifPlanning,
@@ -4501,6 +4504,7 @@ class APIManager {
                            ifSearch: Bool,
                            ifKnowledge: Bool,
                            ifToolUse: Bool,
+                           assistantToolScope: AssistantToolRequestScope,
                            ifThink: Bool,
                            ifAudio: Bool,
                            ifPlanning: Bool,
@@ -4561,6 +4565,7 @@ class APIManager {
                                                     ifSearch: ifSearch,
                                                     ifKnowledge: ifKnowledge,
                                                     ifToolUse: ifToolUse,
+                                                    assistantToolScope: assistantToolScope,
                                                     ifThink: ifThink,
                                                     ifAudio: ifAudio,
                                                     ifPlanning: ifPlanning,

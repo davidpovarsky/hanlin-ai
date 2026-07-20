@@ -1257,6 +1257,10 @@ struct ChatView: View {
         Task {
             do {
                 var eventAdapter = HanlinStreamEventAdapter(runID: agentCoordinator.runID)
+                let assistantToolScope = await MCPRuntimeProvider.shared.requestScope(
+                    chatID: chatRecord.id,
+                    temporary: TemporaryRecord
+                )
                 let stream: AsyncThrowingStream<StreamData, Swift.Error> = try await apiManager!.sendStreamRequest(
                     messages: messagesToSend,
                     modelName: modelTemp[selectedModelIndex].name ?? "Unknown",
@@ -1265,6 +1269,7 @@ struct ChatView: View {
                     ifSearch: modelTemp[selectedModelIndex].supportsSearch && ifSearch,
                     ifKnowledge: modelTemp[selectedModelIndex].supportsSearch && ifKnowledge,
                     ifToolUse: modelTemp[selectedModelIndex].supportsToolUse && ifToolUse,
+                    assistantToolScope: assistantToolScope,
                     ifThink: modelTemp[selectedModelIndex].supportsReasoning && ifThink,
                     ifAudio: modelTemp[selectedModelIndex].supportsVoiceGen && ifAudio,
                     ifPlanning: !modelTemp[selectedModelIndex].supportsReasoning && ifPlanning,

@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A10000000000000000000001 /* MCP in Frameworks */ = {isa = PBXBuildFile; productRef = A10000000000000000000011 /* MCP */; };
+		A10000000000000000000002 /* SWCompression in Frameworks */ = {isa = PBXBuildFile; productRef = A10000000000000000000012 /* SWCompression */; };
+		A10000000000000000000003 /* Logging in Frameworks */ = {isa = PBXBuildFile; productRef = A10000000000000000000013 /* Logging */; };
+		A10000000000000000000004 /* NodeMobile.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A10000000000000000000020 /* NodeMobile.xcframework */; };
+		A10000000000000000000005 /* NodeMobile.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A10000000000000000000020 /* NodeMobile.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D786F6B02E63DE70004DAC20 /* LLM in Frameworks */ = {isa = PBXBuildFile; productRef = D786F6AF2E63DE70004DAC20 /* LLM */; };
 		D7D5EE3C2DD58CF000B89AAD /* CoreXLSX in Frameworks */ = {isa = PBXBuildFile; productRef = D7D5EE3B2DD58CF000B89AAD /* CoreXLSX */; };
 		D7D5EE3F2DD58D0600B89AAD /* RichTextKit in Frameworks */ = {isa = PBXBuildFile; productRef = D7D5EE3E2DD58D0600B89AAD /* RichTextKit */; };
@@ -33,6 +38,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				A10000000000000000000005 /* NodeMobile.xcframework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -40,13 +46,27 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		A10000000000000000000020 /* NodeMobile.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = Vendor/NodeMobile/NodeMobile.xcframework; sourceTree = SOURCE_ROOT; };
 		D7B6C3C12D50A55D004E3AD6 /* AI_Hanlin.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AI_Hanlin.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D7C6558C2E6C731A0041F1C7 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		A10000000000000000000030 /* Exceptions for AI_HLY folder in AI_Hanlin target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Downstream/MCP/Runtime/Host,
+			);
+			target = D7B6C3C02D50A55D004E3AD6 /* AI_Hanlin */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		D7B6C3C32D50A55D004E3AD6 /* AI_HLY */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				A10000000000000000000030 /* Exceptions for AI_HLY folder in AI_Hanlin target */,
+			);
 			path = AI_HLY;
 			sourceTree = "<group>";
 		};
@@ -57,6 +77,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A10000000000000000000004 /* NodeMobile.xcframework in Frameworks */,
+				A10000000000000000000003 /* Logging in Frameworks */,
+				A10000000000000000000002 /* SWCompression in Frameworks */,
+				A10000000000000000000001 /* MCP in Frameworks */,
 				D7D5EE3F2DD58D0600B89AAD /* RichTextKit in Frameworks */,
 				D7D5EE3C2DD58CF000B89AAD /* CoreXLSX in Frameworks */,
 				D7D5EE4B2DD590A100B89AAD /* MarkdownUI in Frameworks */,
@@ -73,6 +97,7 @@
 		D73E23062D817B1300ACC644 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A10000000000000000000020 /* NodeMobile.xcframework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -117,6 +142,9 @@
 			);
 			name = AI_Hanlin;
 			packageProductDependencies = (
+				A10000000000000000000011 /* MCP */,
+				A10000000000000000000012 /* SWCompression */,
+				A10000000000000000000013 /* Logging */,
 				D7D5EE3B2DD58CF000B89AAD /* CoreXLSX */,
 				D7D5EE3E2DD58D0600B89AAD /* RichTextKit */,
 				D7D5EE412DD58D3800B89AAD /* LaTeXSwiftUI */,
@@ -156,6 +184,9 @@
 			mainGroup = D7B6C3B82D50A55D004E3AD6;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
+				A10000000000000000000040 /* XCRemoteSwiftPackageReference "swift-sdk" */,
+				A10000000000000000000041 /* XCRemoteSwiftPackageReference "SWCompression" */,
+				A10000000000000000000042 /* XCRemoteSwiftPackageReference "swift-log" */,
 				D7D5EE3A2DD58CF000B89AAD /* XCRemoteSwiftPackageReference "CoreXLSX" */,
 				D7D5EE3D2DD58D0600B89AAD /* XCRemoteSwiftPackageReference "RichTextKit" */,
 				D7D5EE402DD58D3800B89AAD /* XCRemoteSwiftPackageReference "LaTeXSwiftUI" */,
@@ -250,7 +281,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -313,7 +344,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -362,7 +393,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -380,7 +411,7 @@
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -421,7 +452,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -439,7 +470,7 @@
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -468,6 +499,30 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		A10000000000000000000040 /* XCRemoteSwiftPackageReference "swift-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/modelcontextprotocol/swift-sdk.git";
+			requirement = {
+				kind = exactVersion;
+				version = 0.12.1;
+			};
+		};
+		A10000000000000000000041 /* XCRemoteSwiftPackageReference "SWCompression" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/tsolomko/SWCompression.git";
+			requirement = {
+				kind = exactVersion;
+				version = 4.9.0;
+			};
+		};
+		A10000000000000000000042 /* XCRemoteSwiftPackageReference "swift-log" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-log.git";
+			requirement = {
+				kind = exactVersion;
+				version = 1.6.2;
+			};
+		};
 		D786F6AE2E63DE70004DAC20 /* XCRemoteSwiftPackageReference "LLM" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/eastriverlee/LLM.swift/";
@@ -527,6 +582,21 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		A10000000000000000000011 /* MCP */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A10000000000000000000040 /* XCRemoteSwiftPackageReference "swift-sdk" */;
+			productName = MCP;
+		};
+		A10000000000000000000012 /* SWCompression */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A10000000000000000000041 /* XCRemoteSwiftPackageReference "SWCompression" */;
+			productName = SWCompression;
+		};
+		A10000000000000000000013 /* Logging */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A10000000000000000000042 /* XCRemoteSwiftPackageReference "swift-log" */;
+			productName = Logging;
+		};
 		D786F6AF2E63DE70004DAC20 /* LLM */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = D786F6AE2E63DE70004DAC20 /* XCRemoteSwiftPackageReference "LLM" */;

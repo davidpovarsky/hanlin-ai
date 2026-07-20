@@ -1771,6 +1771,16 @@ struct ActionButtonsView: View {
                         )
                         .transition(.opacity.combined(with: .move(edge: .leading)))
                         .disabled(isResponding)
+
+                        if let chatID = chatRecord.id {
+                            MCPChatServerButton(
+                                chatID: chatID,
+                                temporary: TemporaryRecord,
+                                toolUseSupported: model?.supportsToolUse == true,
+                                disabled: isResponding,
+                                ifToolUse: $ifToolUse
+                            )
+                        }
                     }
 
                     if model?.supportsSearch == true {

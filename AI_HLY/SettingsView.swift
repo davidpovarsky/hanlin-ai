@@ -97,6 +97,9 @@ struct SettingsView: View {
                     }
                 }
                 Section(header: Text(String(localized: "工具"))) {
+                    NavigationLink(destination: MCPServersSettingsView().onAppear { isPushed = true }.onDisappear { isPushed = false }.toolbar(.hidden, for: .tabBar)) {
+                        Label(MCPL10n.string("MCP Servers"), systemImage: "server.rack")
+                    }
                     NavigationLink(destination: SearchSettingView().onAppear { isPushed = true }.onDisappear { isPushed = false }.toolbar(.hidden, for: .tabBar)) {
                         Label(String(localized: "联网搜索"), systemImage: "magnifyingglass")
                     }

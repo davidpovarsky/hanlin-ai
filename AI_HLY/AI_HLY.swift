@@ -76,6 +76,7 @@ class AppDataManager: ObservableObject {
 struct MyApp: App {
     @MainActor @StateObject private var appDataManager = AppDataManager()
     @State private var deepLinkTarget: String? = nil
+    @Environment(\.scenePhase) private var scenePhase
     
     var body: some Scene {
         WindowGroup {
@@ -83,6 +84,10 @@ struct MyApp: App {
                 .modelContainer(appDataManager.modelContainer)
                 .task {
                     appDataManager.preloadDataIfNeeded()
+                    await MCPRuntimeProvider.shared.loadIfNeeded()
+                }
+                .onChange(of: scenePhase) { _, newPhase in
+                    Task { await MCPRuntimeProvider.shared.handleScenePhase(newPhase) }
                 }
                 .onOpenURL { url in
                     if url.host == "openVisionView" {
