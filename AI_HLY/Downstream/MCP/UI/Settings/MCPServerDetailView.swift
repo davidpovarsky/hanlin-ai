@@ -20,6 +20,16 @@ struct MCPServerDetailView: View {
                 TextField(MCPL10n.string("Display name"), text: $draft.displayName)
                 LabeledContent(MCPL10n.string("Package"), value: draft.packageName)
                 LabeledContent(MCPL10n.string("Version"), value: draft.resolvedVersion)
+                if let options = draft.entryPointOptions, options.count > 1 {
+                    Picker(MCPL10n.string("Bin"), selection: $draft.entryPoint) {
+                        ForEach(options) { option in
+                            Text(option.binName ?? option.entryPoint).tag(option.entryPoint)
+                        }
+                    }
+                    .onChange(of: draft.entryPoint) { _, entryPoint in
+                        draft.binName = options.first(where: { $0.entryPoint == entryPoint })?.binName
+                    }
+                }
                 TextField(MCPL10n.string("Entry point"), text: $draft.entryPoint)
                 TextField(
                     MCPL10n.string("Arguments"),

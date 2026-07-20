@@ -92,6 +92,19 @@ export async function installPackage({ root, operationID, serverID, source, entr
 
     const now = new Date().toISOString();
     const installedSize = await directorySize(operationRoot);
+    const entryPointOptions = listEntryPoints(extractedManifest).flatMap(entryPoint => {
+      const absoluteOption = path.resolve(packageRoot, entryPoint);
+      if (!isInside(packageRoot, absoluteOption)) return [];
+      const matchingBin = typeof extractedManifest.bin === 'object'
+        ? Object.entries(extractedManifest.bin).find(([, candidate]) => candidate === entryPoint)
+        : null;
+      const binName = matchingBin?.[0]
+        ?? (typeof extractedManifest.bin === 'string' && extractedManifest.bin === entryPoint ? extractedManifest.name : null);
+      return [{
+        binName,
+        entryPoint: absoluteOption.replace(operationRoot, finalRoot),
+      }];
+    });
     const descriptor = {
       id: serverID,
       slug: slug(extractedManifest.name),
@@ -101,6 +114,7 @@ export async function installPackage({ root, operationID, serverID, source, entr
       resolvedVersion: extractedManifest.version,
       entryPoint: absoluteEntry.replace(operationRoot, finalRoot),
       binName: selected.binName,
+      entryPointOptions,
       arguments: [],
       environment: [],
       packageRoot: packageRoot.replace(operationRoot, finalRoot),

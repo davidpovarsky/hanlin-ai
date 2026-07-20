@@ -9,6 +9,12 @@ struct MCPEnvironmentVariable: Codable, Hashable, Sendable, Identifiable {
     var isSecret: Bool { secretReference != nil }
 }
 
+struct MCPEntryPointOption: Codable, Hashable, Sendable, Identifiable {
+    var id: String { binName ?? entryPoint }
+    var binName: String?
+    var entryPoint: String
+}
+
 struct MCPServerDescriptor: Codable, Hashable, Sendable, Identifiable {
     var id: UUID
     var slug: String
@@ -18,6 +24,7 @@ struct MCPServerDescriptor: Codable, Hashable, Sendable, Identifiable {
     var resolvedVersion: String
     var entryPoint: String
     var binName: String?
+    var entryPointOptions: [MCPEntryPointOption]?
     var arguments: [String]
     var environment: [MCPEnvironmentVariable]
     var packageRoot: String
@@ -40,6 +47,7 @@ struct MCPServerDescriptor: Codable, Hashable, Sendable, Identifiable {
         resolvedVersion: String,
         entryPoint: String,
         binName: String? = nil,
+        entryPointOptions: [MCPEntryPointOption]? = nil,
         arguments: [String] = [],
         environment: [MCPEnvironmentVariable] = [],
         packageRoot: String,
@@ -61,6 +69,7 @@ struct MCPServerDescriptor: Codable, Hashable, Sendable, Identifiable {
         self.resolvedVersion = resolvedVersion
         self.entryPoint = entryPoint
         self.binName = binName
+        self.entryPointOptions = entryPointOptions
         self.arguments = arguments
         self.environment = environment
         self.packageRoot = packageRoot
