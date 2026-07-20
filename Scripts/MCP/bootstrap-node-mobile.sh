@@ -41,7 +41,10 @@ cp \
   "${HOST_DIR}/package.json" \
   "${HOST_DIR}/package-lock.json" \
   "${host_build_directory}/"
-npm ci --omit=dev --ignore-scripts --no-audit --no-fund --prefix "${host_build_directory}"
+(
+  cd "${host_build_directory}"
+  npm ci --omit=dev --ignore-scripts --ignore-workspaces --no-audit --no-fund
+)
 rm -f "${HOST_ARCHIVE}"
 host_archive_temporary="${temporary_directory}/MCPHostResources.zip"
 (
