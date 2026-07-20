@@ -4,15 +4,14 @@ import Arborist from '@npmcli/arborist';
 import pacote from 'pacote';
 import semver from 'semver';
 import ssri from 'ssri';
-import { analyzePackage, inspectManifest, resolveEntryPoint } from './package-compatibility.mjs';
+import { analyzePackage, inspectManifest, listEntryPoints, resolveEntryPoint } from './package-compatibility.mjs';
 
 const NODE_VERSION = '18.20.4';
 
 export async function previewPackage(source, options = {}) {
   const resolved = await resolveSource(source, options);
   const manifest = resolved.manifest;
-  let entryPoints = [];
-  try { entryPoints = [resolveEntryPoint(manifest, options.entryPointOverride).entryPoint]; } catch {}
+  const entryPoints = listEntryPoints(manifest);
   const findings = inspectManifest(manifest);
   if (entryPoints.length === 0) findings.push({ severity: 'unsupported', message: 'No unambiguous entry point was found.' });
   const compatibility = {
@@ -39,9 +38,11 @@ export async function installPackage({ root, operationID, serverID, source, entr
   const operationRoot = path.join(stagingRoot, operationID);
   const packageRoot = path.join(operationRoot, 'package');
   const finalRoot = path.join(serversRoot, serverID);
+  const backupRoot = path.join(stagingRoot, `backup-${operationID}`);
   await fs.mkdir(stagingRoot, { recursive: true });
   await fs.mkdir(serversRoot, { recursive: true });
   await fs.rm(operationRoot, { recursive: true, force: true });
+  await fs.rm(backupRoot, { recursive: true, force: true });
   await fs.mkdir(packageRoot, { recursive: true });
 
   try {
@@ -128,14 +129,44 @@ export async function installPackage({ root, operationID, serverID, source, entr
     await fs.mkdir(path.join(operationRoot, 'logs'), { recursive: true });
 
     emit('install', { operationID, phase: 'registering', fraction: 0.9 });
-    try { await fs.access(finalRoot); throw new Error('A server with this identifier already exists.'); } catch (error) {
+    try { await fs.access(finalRoot); await fs.rename(finalRoot, backupRoot); } catch (error) {
       if (error.code !== 'ENOENT') throw error;
     }
     await fs.rename(operationRoot, finalRoot);
     return descriptor;
   } catch (error) {
     await fs.rm(operationRoot, { recursive: true, force: true });
+    try {
+      await fs.access(backupRoot);
+      try {
+        await fs.access(finalRoot);
+      } catch (finalError) {
+        if (finalError.code !== 'ENOENT') throw finalError;
+        await fs.rename(backupRoot, finalRoot);
+      }
+    } catch (restoreError) {
+      if (restoreError.code !== 'ENOENT') throw new AggregateError([error, restoreError], 'Install failed and the prior package could not be restored.');
+    }
     throw error;
+  }
+}
+
+export async function commitInstall({ root, operationID, serverID }) {
+  validateID(operationID);
+  validateID(serverID);
+  await fs.rm(path.join(root, 'staging', `backup-${operationID}`), { recursive: true, force: true });
+}
+
+export async function rollbackInstall({ root, operationID, serverID }) {
+  validateID(operationID);
+  validateID(serverID);
+  const finalRoot = path.join(root, 'servers', serverID);
+  const backupRoot = path.join(root, 'staging', `backup-${operationID}`);
+  await fs.rm(finalRoot, { recursive: true, force: true });
+  try {
+    await fs.rename(backupRoot, finalRoot);
+  } catch (error) {
+    if (error.code !== 'ENOENT') throw error;
   }
 }
 

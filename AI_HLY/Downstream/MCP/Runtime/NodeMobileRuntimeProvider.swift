@@ -141,7 +141,12 @@ actor NodeMobileRuntimeProvider {
         return try JSONDecoder.mcp.decode(MCPPackageManifestPreview.self, from: data)
     }
 
-    func install(spec: MCPPackageSpec, operationID: UUID, entryPointOverride: String?) async throws -> MCPServerDescriptor {
+    func install(
+        spec: MCPPackageSpec,
+        operationID: UUID,
+        serverID: UUID,
+        entryPointOverride: String?
+    ) async throws -> MCPServerDescriptor {
         let host = try await ensureRunning()
         var source = spec.hostPayload
         if case .localArchive(let inputURL) = spec.source {
@@ -154,12 +159,36 @@ actor NodeMobileRuntimeProvider {
         }
         var body: [String: Any] = [
             "operationID": operationID.uuidString.lowercased(),
-            "serverID": UUID().uuidString.lowercased(),
+            "serverID": serverID.uuidString.lowercased(),
             "source": source
         ]
         if let entryPointOverride { body["entryPointOverride"] = entryPointOverride }
         let data = try await host.data(path: "/v1/install", method: "POST", json: body, timeout: 600)
         return try JSONDecoder.mcp.decode(MCPServerDescriptor.self, from: data)
+    }
+
+    func commitInstall(operationID: UUID, serverID: UUID) async throws {
+        let host = try await ensureRunning()
+        _ = try await host.data(
+            path: "/v1/install/commit",
+            method: "POST",
+            json: [
+                "operationID": operationID.uuidString.lowercased(),
+                "serverID": serverID.uuidString.lowercased()
+            ]
+        )
+    }
+
+    func rollbackInstall(operationID: UUID, serverID: UUID) async throws {
+        let host = try await ensureRunning()
+        _ = try await host.data(
+            path: "/v1/install/rollback",
+            method: "POST",
+            json: [
+                "operationID": operationID.uuidString.lowercased(),
+                "serverID": serverID.uuidString.lowercased()
+            ]
+        )
     }
 
     func cancelInstall(operationID: UUID) async throws {

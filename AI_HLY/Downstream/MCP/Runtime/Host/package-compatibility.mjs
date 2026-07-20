@@ -85,7 +85,15 @@ export async function analyzePackage(packageRoot, manifest, options = {}) {
 }
 
 export function resolveEntryPoint(manifest, override) {
-  if (override) return { entryPoint: override, binName: null };
+  if (override) {
+    if (manifest.bin && typeof manifest.bin === 'object' && typeof manifest.bin[override] === 'string') {
+      return { entryPoint: manifest.bin[override], binName: override };
+    }
+    const matchingBin = typeof manifest.bin === 'object'
+      ? Object.entries(manifest.bin).find(([, entryPoint]) => entryPoint === override)
+      : null;
+    return { entryPoint: override, binName: matchingBin?.[0] ?? null };
+  }
   if (typeof manifest.bin === 'string') return { entryPoint: manifest.bin, binName: manifest.name };
   if (manifest.bin && typeof manifest.bin === 'object') {
     const entries = Object.entries(manifest.bin);
@@ -101,6 +109,21 @@ export function resolveEntryPoint(manifest, override) {
   }
   if (typeof manifest.main === 'string') return { entryPoint: manifest.main, binName: null };
   throw new Error('No executable entry point was found in bin, exports, or main.');
+}
+
+export function listEntryPoints(manifest) {
+  const candidates = [];
+  if (typeof manifest.bin === 'string') candidates.push(manifest.bin);
+  if (manifest.bin && typeof manifest.bin === 'object') candidates.push(...Object.values(manifest.bin));
+  const exported = manifest.exports?.['.'] ?? manifest.exports;
+  if (typeof exported === 'string') candidates.push(exported);
+  if (exported && typeof exported === 'object') {
+    for (const key of ['import', 'require', 'default']) {
+      if (typeof exported[key] === 'string') candidates.push(exported[key]);
+    }
+  }
+  if (typeof manifest.main === 'string') candidates.push(manifest.main);
+  return [...new Set(candidates)];
 }
 
 function allows(values, current) {

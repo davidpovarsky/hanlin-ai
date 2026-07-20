@@ -1,9 +1,11 @@
 import SwiftUI
 
 struct MCPServerDetailView: View {
+    @Environment(\.dismiss) private var dismiss
     @State private var provider = MCPRuntimeProvider.shared
     @State private var draft: MCPServerDescriptor
     @State private var environment: [MCPEnvironmentDraft]
+    @State private var replacingPackage = false
 
     init(server: MCPServerDescriptor) {
         _draft = State(initialValue: server)
@@ -42,7 +44,16 @@ struct MCPServerDetailView: View {
                     Button(MCPL10n.string("Restart")) { Task { await provider.restart(draft) } }
                 }
                 Button(MCPL10n.string("Refresh tools")) { Task { await provider.refreshTools(draft) } }
+                NavigationLink(MCPL10n.string("View tools")) { MCPServerToolsView(server: draft) }
                 NavigationLink(MCPL10n.string("View logs")) { MCPServerLogsView(server: draft) }
+            }
+            Section(MCPL10n.string("Package management")) {
+                Button(MCPL10n.string("Update")) { replacePackage(latestCompatible: true) }
+                    .disabled(replacingPackage)
+                Button(MCPL10n.string("Reinstall")) { replacePackage(latestCompatible: false) }
+                    .disabled(replacingPackage)
+                if replacingPackage { MCPInstallProgressView(state: provider.installState) }
+                if let error = provider.lastError { Text(error).foregroundStyle(.red) }
             }
             Section(MCPL10n.string("Compatibility")) {
                 ForEach(draft.compatibility.findings) { finding in
@@ -62,6 +73,15 @@ struct MCPServerDetailView: View {
                     await provider.updateEnvironment(environment, for: draft)
                 }
             }
+        }
+    }
+
+    private func replacePackage(latestCompatible: Bool) {
+        replacingPackage = true
+        Task {
+            await provider.replacePackage(draft, latestCompatible: latestCompatible)
+            replacingPackage = false
+            if provider.lastError == nil { dismiss() }
         }
     }
 }

@@ -35,7 +35,7 @@ final class MCPRuntimeProvider {
         configurationStore = MCPFeatureConfigurationStore()
         secretStore = secrets
         controller = MCPRuntimeController(runtime: runtime, registry: registry, secrets: secrets)
-        installService = MCPPackageInstallService(runtime: runtime, registry: registry)
+        installService = MCPPackageInstallService(runtime: runtime)
     }
 
     func loadIfNeeded(startHost: Bool = false) async {
@@ -90,6 +90,19 @@ final class MCPRuntimeProvider {
         await refreshSnapshots()
     }
 
+    func tools(for server: MCPServerDescriptor) async -> [MCPToolDescriptor] {
+        do {
+            let tools = try await controller.toolDescriptors(serverIDs: [server.id])
+            lastError = nil
+            await refreshSnapshots()
+            return tools
+        } catch {
+            lastError = error.localizedDescription
+            await refreshSnapshots()
+            return []
+        }
+    }
+
     func selection(chatID: UUID, temporary: Bool) async -> Set<UUID> {
         do {
             if let stored = try await selectionStore.selection(chatID: chatID, temporary: temporary) {
@@ -105,9 +118,41 @@ final class MCPRuntimeProvider {
     }
 
     func install(spec: MCPPackageSpec, entryPointOverride: String? = nil) async {
-        installState = .previewing
+        await performInstall(spec: spec, existing: nil, entryPointOverride: entryPointOverride)
+    }
+
+    func replacePackage(_ server: MCPServerDescriptor, latestCompatible: Bool) async {
         do {
-            let server = try await installService.install(spec, entryPointOverride: entryPointOverride) { progress in
+            let packageSpec = latestCompatible
+                ? server.packageName
+                : "\(server.packageName)@\(server.resolvedVersion)"
+            let spec = try MCPPackageSpec(packageSpec)
+            await performInstall(
+                spec: spec,
+                existing: server,
+                entryPointOverride: server.binName ?? relativeEntryPoint(of: server)
+            )
+        } catch {
+            installState = .failed(error.localizedDescription)
+            lastError = error.localizedDescription
+        }
+    }
+
+    private func performInstall(
+        spec: MCPPackageSpec,
+        existing: MCPServerDescriptor?,
+        entryPointOverride: String?
+    ) async {
+        installState = .previewing
+        let wasRunning = existing.map { statuses[$0.id]?.state == .running } ?? false
+        if let existing { await controller.stop(serverID: existing.id) }
+        var installation: MCPPackageInstallation?
+        do {
+            var installed = try await installService.install(
+                spec,
+                serverID: existing?.id ?? UUID(),
+                entryPointOverride: entryPointOverride
+            ) { progress in
                 await MainActor.run {
                     self.activeInstallOperationID = progress.operationID
                     self.installState = .installing(
@@ -117,27 +162,33 @@ final class MCPRuntimeProvider {
                     )
                 }
             }
+            if let existing {
+                installed.descriptor.slug = existing.slug
+                installed.descriptor.displayName = existing.displayName
+                installed.descriptor.arguments = existing.arguments
+                installed.descriptor.environment = existing.environment
+                installed.descriptor.installedAt = existing.installedAt
+                installed.descriptor.isGloballyEnabled = existing.isGloballyEnabled
+                installed.descriptor.isEnabledForNewChats = existing.isEnabledForNewChats
+                installed.descriptor.autoStart = existing.autoStart
+            }
+            installation = installed
             do {
-                try await controller.start(server)
+                try await controller.start(installed.descriptor)
+                try await installService.commit(installed)
             } catch {
-                await controller.stop(serverID: server.id)
-                if let connection = try? await nodeRuntime.currentConnection() {
-                    _ = try? await connection.data(
-                        path: "/v1/servers/\(server.id.uuidString.lowercased())",
-                        method: "DELETE"
-                    )
-                }
-                _ = try? await registryStore.remove(id: server.id)
                 throw error
             }
             servers = try await registryStore.load()
-            installState = .completed(serverID: server.id)
+            installState = .completed(serverID: installed.descriptor.id)
             activeInstallOperationID = nil
             lastError = nil
         } catch is CancellationError {
+            await recoverFailedInstallation(installation, existing: existing, restart: wasRunning)
             installState = .cancelled
             activeInstallOperationID = nil
         } catch {
+            await recoverFailedInstallation(installation, existing: existing, restart: wasRunning)
             if let operationID = activeInstallOperationID,
                cancelledInstallOperationIDs.remove(operationID) != nil {
                 installState = .cancelled
@@ -148,6 +199,33 @@ final class MCPRuntimeProvider {
             }
             activeInstallOperationID = nil
         }
+    }
+
+    private func recoverFailedInstallation(
+        _ installation: MCPPackageInstallation?,
+        existing: MCPServerDescriptor?,
+        restart: Bool
+    ) async {
+        if let installation {
+            await controller.stop(serverID: installation.descriptor.id)
+            await installService.rollback(installation)
+        }
+        if let existing {
+            _ = try? await registryStore.upsert(existing)
+            if restart { try? await controller.start(existing) }
+        } else if let installation {
+            _ = try? await registryStore.remove(id: installation.descriptor.id)
+        }
+        servers = (try? await registryStore.load()) ?? servers
+        await refreshSnapshots()
+    }
+
+    private func relativeEntryPoint(of server: MCPServerDescriptor) -> String? {
+        let root = URL(fileURLWithPath: server.packageRoot, isDirectory: true).standardizedFileURL.path
+        let entry = URL(fileURLWithPath: server.entryPoint).standardizedFileURL.path
+        let prefix = root.hasSuffix("/") ? root : root + "/"
+        guard entry.hasPrefix(prefix) else { return nil }
+        return String(entry.dropFirst(prefix.count))
     }
 
     func cancelInstall() async {

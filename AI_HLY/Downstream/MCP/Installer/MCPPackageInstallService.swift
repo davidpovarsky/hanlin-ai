@@ -1,17 +1,19 @@
 import Foundation
 
+struct MCPPackageInstallation: Sendable {
+    var operationID: UUID
+    var descriptor: MCPServerDescriptor
+}
+
 actor MCPPackageInstallService {
     private let runtime: NodeMobileRuntimeProvider
-    private let registry: MCPServerRegistryStore
     private let fileLayout: MCPFileLayout
 
     init(
         runtime: NodeMobileRuntimeProvider,
-        registry: MCPServerRegistryStore = MCPServerRegistryStore(),
         fileLayout: MCPFileLayout = .default
     ) {
         self.runtime = runtime
-        self.registry = registry
         self.fileLayout = fileLayout
     }
 
@@ -26,9 +28,10 @@ actor MCPPackageInstallService {
 
     func install(
         _ spec: MCPPackageSpec,
+        serverID: UUID = UUID(),
         entryPointOverride: String? = nil,
         progress: @escaping @Sendable (MCPInstallProgress) async -> Void
-    ) async throws -> MCPServerDescriptor {
+    ) async throws -> MCPPackageInstallation {
         try fileLayout.prepareIfNeeded()
         let operationID = UUID()
         await progress(.init(operationID: operationID, phase: .resolving, fraction: nil))
@@ -36,12 +39,12 @@ actor MCPPackageInstallService {
             let response = try await runtime.install(
                 spec: spec,
                 operationID: operationID,
+                serverID: serverID,
                 entryPointOverride: entryPointOverride
             )
             await progress(.init(operationID: operationID, phase: .registering, fraction: 0.95))
-            _ = try await registry.upsert(response)
             await progress(.init(operationID: operationID, phase: .completed, fraction: 1))
-            return response
+            return MCPPackageInstallation(operationID: operationID, descriptor: response)
         } catch is CancellationError {
             try? await runtime.cancelInstall(operationID: operationID)
             throw CancellationError()
@@ -53,5 +56,19 @@ actor MCPPackageInstallService {
 
     func cancel(operationID: UUID) async {
         try? await runtime.cancelInstall(operationID: operationID)
+    }
+
+    func commit(_ installation: MCPPackageInstallation) async throws {
+        try await runtime.commitInstall(
+            operationID: installation.operationID,
+            serverID: installation.descriptor.id
+        )
+    }
+
+    func rollback(_ installation: MCPPackageInstallation) async {
+        try? await runtime.rollbackInstall(
+            operationID: installation.operationID,
+            serverID: installation.descriptor.id
+        )
     }
 }

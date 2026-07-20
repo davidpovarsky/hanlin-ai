@@ -4,7 +4,7 @@ import path from 'node:path';
 import { Worker } from 'node:worker_threads';
 import { timingSafeEqual } from 'node:crypto';
 import { fileURLToPath } from 'node:url';
-import { installPackage, previewPackage } from './package-installer.mjs';
+import { commitInstall, installPackage, previewPackage, rollbackInstall } from './package-installer.mjs';
 
 const [root, readyPath, launchToken, logPath, debugFlag] = process.argv.slice(2);
 if (!root || !readyPath || !launchToken || !logPath) throw new Error('Missing host launch arguments.');
@@ -53,6 +53,16 @@ const server = http.createServer(async (request, response) => {
       const body = await readJSON(request);
       installs.get(body.operationID)?.abort(new Error('Installation cancelled.'));
       return json(response, 200, { cancelled: true });
+    }
+    if (request.method === 'POST' && url.pathname === '/v1/install/commit') {
+      const body = await readJSON(request);
+      await commitInstall({ root, operationID: body.operationID, serverID: body.serverID });
+      return json(response, 200, { committed: true });
+    }
+    if (request.method === 'POST' && url.pathname === '/v1/install/rollback') {
+      const body = await readJSON(request);
+      await rollbackInstall({ root, operationID: body.operationID, serverID: body.serverID });
+      return json(response, 200, { rolledBack: true });
     }
 
     const match = url.pathname.match(/^\/v1\/servers\/([0-9a-f-]+)(?:\/(start|stop|restart|stdin|events|logs))?$/i);

@@ -5,6 +5,7 @@ struct MCPServerInstallView: View {
     @State private var packageInput = ""
     @State private var spec: MCPPackageSpec?
     @State private var preview: MCPPackageManifestPreview?
+    @State private var selectedEntryPoint = ""
     @State private var errorMessage: String?
     @State private var importing = false
     @State private var working = false
@@ -38,6 +39,15 @@ struct MCPServerInstallView: View {
                     if let summary = preview.summary { Text(summary) }
                     LabeledContent(MCPL10n.string("Node requirement"), value: preview.nodeRequirement ?? MCPL10n.string("Not specified"))
                     LabeledContent(MCPL10n.string("Dependencies"), value: "\(preview.dependencyCount)")
+                    if preview.entryPoints.count > 1 {
+                        Picker(MCPL10n.string("Entry point"), selection: $selectedEntryPoint) {
+                            ForEach(preview.entryPoints, id: \.self) { entryPoint in
+                                Text(entryPoint).tag(entryPoint)
+                            }
+                        }
+                    } else if let entryPoint = preview.entryPoints.first {
+                        LabeledContent(MCPL10n.string("Entry point"), value: entryPoint)
+                    }
                     ForEach(preview.compatibility.findings) { finding in
                         Label(finding.message, systemImage: finding.severity == .unsupported ? "xmark.octagon" : "exclamationmark.triangle")
                             .foregroundStyle(finding.severity == .unsupported ? .red : .orange)
@@ -74,6 +84,7 @@ struct MCPServerInstallView: View {
             let parsed = try MCPPackageSpec(packageInput)
             spec = parsed
             preview = try await provider.preview(spec: parsed)
+            selectedEntryPoint = preview?.entryPoints.first ?? ""
             errorMessage = nil
         } catch { errorMessage = error.localizedDescription; preview = nil }
     }
@@ -85,6 +96,7 @@ struct MCPServerInstallView: View {
             let parsed = try MCPPackageSpec(localArchive: url)
             spec = parsed
             preview = try await provider.preview(spec: parsed)
+            selectedEntryPoint = preview?.entryPoints.first ?? ""
             packageInput = url.lastPathComponent
             errorMessage = nil
         } catch { errorMessage = error.localizedDescription; preview = nil }
@@ -93,7 +105,10 @@ struct MCPServerInstallView: View {
     private func install() async {
         guard let spec else { return }
         working = true
-        await provider.install(spec: spec)
+        await provider.install(
+            spec: spec,
+            entryPointOverride: preview?.entryPoints.count == 1 ? nil : selectedEntryPoint
+        )
         errorMessage = provider.lastError
         working = false
     }

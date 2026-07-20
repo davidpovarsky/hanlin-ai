@@ -26,6 +26,7 @@ actor MCPRuntimeController {
         }
         if sessions[server.id] != nil { return }
         statusValues[server.id] = MCPServerStatus(id: server.id, state: .starting, toolCount: 0)
+        var pendingSession: MCPClientSession?
         do {
             let connection = try await runtime.ensureRunning()
             var secretValues: [String: String] = [:]
@@ -37,6 +38,7 @@ actor MCPRuntimeController {
             let configuration = MCPServerConfiguration(descriptor: server, secrets: secretValues)
             let transport = EmbeddedNodeMCPTransport(server: configuration, connection: connection)
             let session = MCPClientSession(server: server, transport: transport)
+            pendingSession = session
             let tools = try await session.connect()
             let registered = await catalog.replace(server: server, tools: tools)
             sessions[server.id] = session
@@ -55,6 +57,7 @@ actor MCPRuntimeController {
             updated.updatedAt = .now
             _ = try await registry.upsert(updated)
         } catch {
+            if let pendingSession { await pendingSession.disconnect() }
             statusValues[server.id] = MCPServerStatus(
                 id: server.id,
                 state: .failed,

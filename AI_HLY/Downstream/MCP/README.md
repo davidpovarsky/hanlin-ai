@@ -4,6 +4,8 @@ This downstream-only layer runs trusted JavaScript MCP servers locally inside Ha
 
 Server packages are never app resources. They are selected and installed after app installation into `Application Support/HanlinMCP/servers/<UUID>` through Pacote and Arborist APIs. Lifecycle scripts, native addons, external executables, global installs, shell execution, and package-manager CLIs are rejected.
 
+Install preview exposes every supported package entry point when a package has multiple bins. Update and reinstall use a staging directory plus an atomic server-directory swap; the prior package remains as a temporary backup until the replacement completes MCP initialization and `tools/list`, and is restored automatically if that probe fails. The server detail screen can also start, stop, restart, refresh, and inspect the dynamically discovered tool catalog.
+
 Host dependency versions were chosen as the newest releases observed on 2026-07-20 whose declared `engines.node` accepts 18.20.4: Arborist 8.0.5, Pacote 20.0.1, Semver 7.8.5, and SSRI 12.0.0. The lock contains 159 package records; all engine ranges were checked against 18.20.4.
 
 ## Build preparation
