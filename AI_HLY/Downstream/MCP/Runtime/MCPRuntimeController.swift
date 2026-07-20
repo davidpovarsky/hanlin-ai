@@ -6,6 +6,7 @@ actor MCPRuntimeController {
     private let secrets: MCPSecretStore
     private let catalog = MCPToolCatalog()
     private var sessions: [UUID: MCPClientSession] = [:]
+    private var toolChangeTasks: [UUID: Task<Void, Never>] = [:]
     private var statusValues: [UUID: MCPServerStatus] = [:]
 
     init(
@@ -42,6 +43,11 @@ actor MCPRuntimeController {
             let tools = try await session.connect()
             let registered = await catalog.replace(server: server, tools: tools)
             sessions[server.id] = session
+            toolChangeTasks[server.id] = Task { [weak self, session] in
+                for await _ in session.toolListChanges {
+                    await self?.handleToolListChanged(serverID: server.id)
+                }
+            }
             statusValues[server.id] = MCPServerStatus(
                 id: server.id,
                 state: .running,
@@ -69,6 +75,7 @@ actor MCPRuntimeController {
     }
 
     func stop(serverID: UUID) async {
+        toolChangeTasks.removeValue(forKey: serverID)?.cancel()
         if let session = sessions.removeValue(forKey: serverID) {
             await session.disconnect()
         }
@@ -121,5 +128,14 @@ actor MCPRuntimeController {
 
     func descriptor(exposedName: String) async -> MCPToolDescriptor? {
         await catalog.descriptor(exposedName: exposedName)
+    }
+
+    private func handleToolListChanged(serverID: UUID) async {
+        guard let server = try? await registry.load().first(where: { $0.id == serverID }) else { return }
+        do {
+            try await refreshTools(server)
+        } catch {
+            statusValues[serverID]?.message = error.localizedDescription
+        }
     }
 }

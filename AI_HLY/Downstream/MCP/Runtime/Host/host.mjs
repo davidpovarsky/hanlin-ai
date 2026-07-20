@@ -12,6 +12,7 @@ const DEBUG = debugFlag === '1';
 const workerURL = new URL('./server-worker.mjs', import.meta.url);
 const servers = new Map();
 const installs = new Map();
+const installProgress = new Map();
 const logStream = createWriteStream(logPath, { flags: 'a' });
 const maximumBody = 10 * 1024 * 1024;
 const maximumLine = 8 * 1024 * 1024;
@@ -26,6 +27,12 @@ const server = http.createServer(async (request, response) => {
     if (request.method === 'GET' && url.pathname === '/v1/runtime') {
       return json(response, 200, { nodeVersion: process.versions.node, protocolVersion: 1, workers: [...servers.values()].map(snapshot) });
     }
+    const installStatusMatch = url.pathname.match(/^\/v1\/install\/status\/([0-9a-f-]+)$/i);
+    if (request.method === 'GET' && installStatusMatch) {
+      const operationID = installStatusMatch[1].toLowerCase();
+      if (!validID(operationID)) return json(response, 400, { error: 'Invalid operation ID' });
+      return json(response, 200, { progress: installProgress.get(operationID) ?? null });
+    }
     if (request.method === 'POST' && url.pathname === '/v1/install/preview') {
       const body = await readJSON(request);
       return json(response, 200, await previewPackage(body.source, { entryPointOverride: body.entryPointOverride }));
@@ -34,6 +41,11 @@ const server = http.createServer(async (request, response) => {
       const body = await readJSON(request);
       const controller = new AbortController();
       installs.set(body.operationID, controller);
+      installProgress.set(body.operationID, {
+        operationID: body.operationID,
+        phase: 'resolving',
+        fraction: 0,
+      });
       try {
         const descriptor = await installPackage({
           root,
@@ -42,7 +54,10 @@ const server = http.createServer(async (request, response) => {
           source: body.source,
           entryPointOverride: body.entryPointOverride,
           signal: controller.signal,
-          emit: (channel, data) => emitGlobal(channel, data),
+          emit: (channel, data) => {
+            if (channel === 'install') installProgress.set(body.operationID, data);
+            emitGlobal(channel, data);
+          },
         });
         return json(response, 200, descriptor);
       } finally {
@@ -52,16 +67,19 @@ const server = http.createServer(async (request, response) => {
     if (request.method === 'POST' && url.pathname === '/v1/install/cancel') {
       const body = await readJSON(request);
       installs.get(body.operationID)?.abort(new Error('Installation cancelled.'));
+      installProgress.delete(body.operationID);
       return json(response, 200, { cancelled: true });
     }
     if (request.method === 'POST' && url.pathname === '/v1/install/commit') {
       const body = await readJSON(request);
       await commitInstall({ root, operationID: body.operationID, serverID: body.serverID });
+      installProgress.delete(body.operationID);
       return json(response, 200, { committed: true });
     }
     if (request.method === 'POST' && url.pathname === '/v1/install/rollback') {
       const body = await readJSON(request);
       await rollbackInstall({ root, operationID: body.operationID, serverID: body.serverID });
+      installProgress.delete(body.operationID);
       return json(response, 200, { rolledBack: true });
     }
 
@@ -149,7 +167,28 @@ async function startServer(id, configuration) {
   });
   worker.on('error', error => { state.state = 'failed'; emit(state, 'lifecycle', { event: 'error', message: redact(error.message) }); });
   worker.on('exit', code => { state.state = code === 0 ? 'stopped' : 'failed'; emit(state, 'lifecycle', { event: 'exit', code }); servers.delete(id); });
+  await waitForWorkerReady(worker, state);
   return snapshot(state);
+}
+
+function waitForWorkerReady(worker, state) {
+  if (state.state === 'running') return Promise.resolve();
+  return new Promise((resolve, reject) => {
+    const timeout = setTimeout(() => finish(new Error('Server worker startup timed out.')), 15_000);
+    const onMessage = message => { if (message?.type === 'loaded') finish(); };
+    const onError = error => finish(error);
+    const onExit = code => finish(new Error(`Server worker exited during startup with code ${code}.`));
+    const finish = error => {
+      clearTimeout(timeout);
+      worker.off('message', onMessage);
+      worker.off('error', onError);
+      worker.off('exit', onExit);
+      if (error) reject(error); else resolve();
+    };
+    worker.on('message', onMessage);
+    worker.on('error', onError);
+    worker.on('exit', onExit);
+  });
 }
 
 async function stopServer(id) {

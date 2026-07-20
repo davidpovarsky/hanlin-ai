@@ -8,6 +8,10 @@ private struct MCPReadyFile: Codable, Sendable {
     var protocolVersion: Int
 }
 
+private struct MCPInstallProgressResponse: Decodable, Sendable {
+    var progress: MCPInstallProgress?
+}
+
 struct MCPHostConnection: Sendable {
     let baseURL: URL
     let token: String
@@ -177,6 +181,15 @@ actor NodeMobileRuntimeProvider {
                 "serverID": serverID.uuidString.lowercased()
             ]
         )
+    }
+
+    func installProgress(operationID: UUID) async throws -> MCPInstallProgress? {
+        let host = try await ensureRunning()
+        let data = try await host.data(
+            path: "/v1/install/status/\(operationID.uuidString.lowercased())",
+            timeout: 5
+        )
+        return try JSONDecoder.mcp.decode(MCPInstallProgressResponse.self, from: data).progress
     }
 
     func rollbackInstall(operationID: UUID, serverID: UUID) async throws {

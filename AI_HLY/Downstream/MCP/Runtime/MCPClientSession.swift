@@ -7,14 +7,20 @@ struct MCPToolCallOutput: Sendable {
 }
 
 actor MCPClientSession {
+    nonisolated let toolListChanges: AsyncStream<Void>
+
     let server: MCPServerDescriptor
     private let client: Client
     private let transport: EmbeddedNodeMCPTransport
+    private let toolListChangeContinuation: AsyncStream<Void>.Continuation
     private(set) var tools: [MCPToolDescriptor] = []
 
     init(server: MCPServerDescriptor, transport: EmbeddedNodeMCPTransport) {
         self.server = server
         self.transport = transport
+        var continuation: AsyncStream<Void>.Continuation!
+        toolListChanges = AsyncStream { continuation = $0 }
+        toolListChangeContinuation = continuation
         client = Client(
             name: "Hanlin",
             version: Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1",
@@ -23,6 +29,9 @@ actor MCPClientSession {
     }
 
     func connect() async throws -> [MCPToolDescriptor] {
+        await client.onNotification(ToolListChangedNotification.self) { [toolListChangeContinuation] _ in
+            toolListChangeContinuation.yield()
+        }
         _ = try await client.connect(transport: transport)
         tools = try await loadTools()
         return tools
@@ -50,6 +59,7 @@ actor MCPClientSession {
 
     func disconnect() async {
         await client.disconnect()
+        toolListChangeContinuation.finish()
     }
 
     private func loadTools() async throws -> [MCPToolDescriptor] {

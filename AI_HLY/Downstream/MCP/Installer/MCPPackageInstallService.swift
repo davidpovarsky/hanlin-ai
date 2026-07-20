@@ -35,6 +35,15 @@ actor MCPPackageInstallService {
         try fileLayout.prepareIfNeeded()
         let operationID = UUID()
         await progress(.init(operationID: operationID, phase: .resolving, fraction: nil))
+        let progressTask = Task {
+            while !Task.isCancelled {
+                if let latest = try? await runtime.installProgress(operationID: operationID) {
+                    await progress(latest)
+                }
+                try? await Task.sleep(for: .milliseconds(150))
+            }
+        }
+        defer { progressTask.cancel() }
         do {
             let response = try await runtime.install(
                 spec: spec,

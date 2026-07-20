@@ -174,6 +174,11 @@ final class MCPRuntimeProvider {
             }
             installation = installed
             do {
+                installState = .installing(
+                    operationID: installed.operationID,
+                    phase: .starting,
+                    fraction: 0.98
+                )
                 try await controller.start(installed.descriptor)
                 try await installService.commit(installed)
             } catch {
