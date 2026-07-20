@@ -47,7 +47,7 @@ actor EmbeddedNodeMCPTransport: MCP.Transport {
         connected = false
         eventTask?.cancel()
         eventTask = nil
-        try? await connection.data(
+        _ = try? await connection.data(
             path: "/v1/servers/\(server.serverID.uuidString.lowercased())/stop",
             method: "POST",
             json: [:],
