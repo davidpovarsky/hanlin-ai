@@ -13,6 +13,11 @@ on:
         type: boolean
         required: true
         default: false
+      reuse_artifacts_run_id:
+        description: Reuse completed Node, Python, and host artifacts from this workflow run
+        type: string
+        required: false
+        default: ''
   workflow_call:
     inputs:
       publish_release:
@@ -21,8 +26,13 @@ on:
       force_rebuild:
         type: boolean
         required: true
+      reuse_artifacts_run_id:
+        type: string
+        required: false
+        default: ''
 
 permissions:
+  actions: read
   contents: write
 
 concurrency:
@@ -62,12 +72,39 @@ jobs:
         id: plan
         env:
           GH_TOKEN: ${{ github.token }}
+          REUSE_ARTIFACTS_RUN_ID: ${{ inputs.reuse_artifacts_run_id }}
         run: |
           set -euo pipefail
           node Scripts/Runtime/validate-runtime-lock.mjs RuntimeDependencies.lock.json --allow-pending-build
           dependency_hash="$(node Scripts/Runtime/compute-runtime-dependency-hash.mjs RuntimeDependencies.lock.json)"
           release_tag="runtime-core-v1-${dependency_hash}"
           release_exists=false
+
+          if [[ -n "$REUSE_ARTIFACTS_RUN_ID" ]]; then
+            source_run="$(gh api "repos/${GITHUB_REPOSITORY}/actions/runs/${REUSE_ARTIFACTS_RUN_ID}")"
+            source_repository="$(jq -r '.head_repository.full_name' <<<"$source_run")"
+            test "$source_repository" = "$GITHUB_REPOSITORY" || {
+              echo "Artifact source run belongs to $source_repository, not $GITHUB_REPOSITORY." >&2
+              exit 1
+            }
+
+            required_source_artifacts=(
+              "node-mobile-device-${dependency_hash}"
+              "node-mobile-simulator-${dependency_hash}"
+              "python-runtime-${dependency_hash}"
+              "runtime-host-${dependency_hash}"
+            )
+            source_artifacts="$(gh api "repos/${GITHUB_REPOSITORY}/actions/runs/${REUSE_ARTIFACTS_RUN_ID}/artifacts?per_page=100")"
+            for artifact in "${required_source_artifacts[@]}"; do
+              jq -e --arg name "$artifact" \
+                '.artifacts[] | select(.name == $name and .expired == false)' \
+                <<<"$source_artifacts" >/dev/null || {
+                  echo "Reusable run ${REUSE_ARTIFACTS_RUN_ID} is missing live artifact $artifact." >&2
+                  exit 1
+                }
+            done
+            echo "Verified reusable RuntimeCore inputs from workflow run ${REUSE_ARTIFACTS_RUN_ID}."
+          fi
 
           if gh release view "$release_tag" >/dev/null 2>&1; then
             required_assets=(
@@ -103,7 +140,9 @@ jobs:
   build-node:
     name: build-node-${{ matrix.artifact_suffix }}
     needs: plan-runtime
-    if: ${{ needs.plan-runtime.outputs.release_exists != 'true' || inputs.force_rebuild }}
+    if: >-
+      ${{ (needs.plan-runtime.outputs.release_exists != 'true' || inputs.force_rebuild) &&
+          inputs.reuse_artifacts_run_id == '' }}
     runs-on: macos-26
     timeout-minutes: 220
     strategy:
@@ -293,7 +332,9 @@ jobs:
   prepare-python-runtime:
     name: prepare-python-runtime
     needs: plan-runtime
-    if: ${{ needs.plan-runtime.outputs.release_exists != 'true' || inputs.force_rebuild }}
+    if: >-
+      ${{ (needs.plan-runtime.outputs.release_exists != 'true' || inputs.force_rebuild) &&
+          inputs.reuse_artifacts_run_id == '' }}
     runs-on: macos-26
     timeout-minutes: 30
     steps:
@@ -340,7 +381,9 @@ jobs:
   prepare-runtime-host:
     name: prepare-runtime-host
     needs: plan-runtime
-    if: ${{ needs.plan-runtime.outputs.release_exists != 'true' || inputs.force_rebuild }}
+    if: >-
+      ${{ (needs.plan-runtime.outputs.release_exists != 'true' || inputs.force_rebuild) &&
+          inputs.reuse_artifacts_run_id == '' }}
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
@@ -389,9 +432,10 @@ jobs:
     if: >-
       ${{ always() &&
           (needs.plan-runtime.outputs.release_exists != 'true' || inputs.force_rebuild) &&
-          needs.build-node.result == 'success' &&
-          needs.prepare-python-runtime.result == 'success' &&
-          needs.prepare-runtime-host.result == 'success' }}
+          (inputs.reuse_artifacts_run_id != '' ||
+           (needs.build-node.result == 'success' &&
+            needs.prepare-python-runtime.result == 'success' &&
+            needs.prepare-runtime-host.result == 'success')) }}
     runs-on: macos-26
     timeout-minutes: 75
     steps:
@@ -409,25 +453,61 @@ jobs:
       - name: Record initial disk usage
         run: df -h | tee assembly-disk-before.txt
       - name: Download device slice
+        if: ${{ inputs.reuse_artifacts_run_id == '' }}
         uses: actions/download-artifact@v4
         with:
           name: node-mobile-device-${{ needs.plan-runtime.outputs.dependency_hash }}
           path: build/runtime-inputs/node-device
       - name: Download simulator slice
+        if: ${{ inputs.reuse_artifacts_run_id == '' }}
         uses: actions/download-artifact@v4
         with:
           name: node-mobile-simulator-${{ needs.plan-runtime.outputs.dependency_hash }}
           path: build/runtime-inputs/node-simulator
       - name: Download Python runtime
+        if: ${{ inputs.reuse_artifacts_run_id == '' }}
         uses: actions/download-artifact@v4
         with:
           name: python-runtime-${{ needs.plan-runtime.outputs.dependency_hash }}
           path: build/runtime-inputs/python
       - name: Download runtime host
+        if: ${{ inputs.reuse_artifacts_run_id == '' }}
         uses: actions/download-artifact@v4
         with:
           name: runtime-host-${{ needs.plan-runtime.outputs.dependency_hash }}
           path: build/runtime-inputs/host
+      - name: Download device slice from reusable run
+        if: ${{ inputs.reuse_artifacts_run_id != '' }}
+        uses: actions/download-artifact@v4
+        with:
+          name: node-mobile-device-${{ needs.plan-runtime.outputs.dependency_hash }}
+          path: build/runtime-inputs/node-device
+          github-token: ${{ github.token }}
+          run-id: ${{ inputs.reuse_artifacts_run_id }}
+      - name: Download simulator slice from reusable run
+        if: ${{ inputs.reuse_artifacts_run_id != '' }}
+        uses: actions/download-artifact@v4
+        with:
+          name: node-mobile-simulator-${{ needs.plan-runtime.outputs.dependency_hash }}
+          path: build/runtime-inputs/node-simulator
+          github-token: ${{ github.token }}
+          run-id: ${{ inputs.reuse_artifacts_run_id }}
+      - name: Download Python runtime from reusable run
+        if: ${{ inputs.reuse_artifacts_run_id != '' }}
+        uses: actions/download-artifact@v4
+        with:
+          name: python-runtime-${{ needs.plan-runtime.outputs.dependency_hash }}
+          path: build/runtime-inputs/python
+          github-token: ${{ github.token }}
+          run-id: ${{ inputs.reuse_artifacts_run_id }}
+      - name: Download runtime host from reusable run
+        if: ${{ inputs.reuse_artifacts_run_id != '' }}
+        uses: actions/download-artifact@v4
+        with:
+          name: runtime-host-${{ needs.plan-runtime.outputs.dependency_hash }}
+          path: build/runtime-inputs/host
+          github-token: ${{ github.token }}
+          run-id: ${{ inputs.reuse_artifacts_run_id }}
       - name: Assemble and smoke-test existing slices
         run: |
           set -o pipefail

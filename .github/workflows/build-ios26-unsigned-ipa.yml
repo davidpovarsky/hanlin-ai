@@ -23,7 +23,9 @@ jobs:
     with:
       publish_release: true
       force_rebuild: false
+      reuse_artifacts_run_id: '29850350510'
     permissions:
+      actions: read
       contents: write
 
   build-ios26-unsigned-ipa:
