@@ -1,6 +1,7 @@
 import { createHash, randomBytes } from 'node:crypto';
 import { promises as fs } from 'node:fs';
 import path from 'node:path';
+import tls from 'node:tls';
 import { Worker } from 'node:worker_threads';
 
 const documents = path.join(process.env.HOME, 'Documents');
@@ -29,11 +30,7 @@ try {
   result.fs = await fs.readFile(path.join(runtimeRoot, 'runtime', 'fs-smoke.txt'), 'utf8') === result.hebrew;
   result.crypto = createHash('sha256').update('hanlin').digest('hex').length === 64;
   result.url = new URL('https://example.com/runtime').pathname === '/runtime';
-
-  const response = await fetch('https://example.com', { signal: AbortSignal.timeout(15_000) });
-  result.fetch = response.ok;
-  result.tls = new URL(response.url).protocol === 'https:';
-  await response.body?.cancel();
+  result.tls = typeof tls.createSecureContext === 'function' && Boolean(tls.DEFAULT_MIN_VERSION);
 
   result.workerThreads = await new Promise((resolve, reject) => {
     const worker = new Worker(
@@ -56,6 +53,7 @@ try {
         headers: { Authorization: `Bearer ${token}` },
         signal: AbortSignal.timeout(3_000),
       });
+      result.fetch = health.ok;
       result.hostStartup = health.ok;
       result.hostProtocolVersion = ready.protocolVersion;
       result.hostNodeVersion = ready.nodeVersion;

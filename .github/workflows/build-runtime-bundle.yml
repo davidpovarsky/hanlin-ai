@@ -430,8 +430,31 @@ jobs:
           path: build/runtime-inputs/host
       - name: Assemble and smoke-test existing slices
         run: |
+          set -o pipefail
           mkdir -p build/runtime-assembly-logs
           bash Scripts/Runtime/assemble-runtime-bundle.sh 2>&1 | tee build/runtime-assembly-logs/assembly-driver.log
+      - name: Verify complete runtime bundle output
+        run: |
+          set -euo pipefail
+          dependency_hash="${{ needs.plan-runtime.outputs.dependency_hash }}"
+          required=(
+            "build/hanlin-runtime-${dependency_hash}.zip"
+            "build/runtime-bundle/RuntimeManifest.json"
+            "build/runtime-bundle/RuntimeProvenance.json"
+            "build/runtime-bundle/NodeMobile-smoke.json"
+            "build/runtime-bundle.sha256"
+            "build/node-xcframework.sha256"
+            "build/runtime-dependency-hash.txt"
+            "build/runtime-bundle-name.txt"
+          )
+          for file in "${required[@]}"; do
+            test -f "$file" || {
+              echo "Missing runtime bundle output: $file" >&2
+              exit 1
+            }
+          done
+          (cd build && shasum -a 256 -c runtime-bundle.sha256)
+          test "$(cat build/runtime-dependency-hash.txt)" = "$dependency_hash"
       - name: Upload complete runtime bundle
         uses: actions/upload-artifact@v4
         with:
