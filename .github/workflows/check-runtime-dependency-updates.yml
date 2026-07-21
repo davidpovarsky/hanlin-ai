@@ -1,0 +1,193 @@
+name: Check RuntimeCore Dependency Updates
+
+on:
+  schedule:
+    - cron: '23 4 * * 2'
+  workflow_dispatch:
+
+permissions:
+  actions: write
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: runtime-core-update-check
+  cancel-in-progress: false
+
+jobs:
+  update-and-verify:
+    name: Pin, build, test, and propose RuntimeCore updates
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+    env:
+      GH_TOKEN: ${{ github.token }}
+      HOST_ROOT: AI_HLY/Downstream/RuntimeCore/Node/Host
+    steps:
+      - name: Checkout protected branch without modifying it
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.repository.default_branch }}
+          fetch-depth: 0
+
+      - name: Set up pinned Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24.5.0
+          cache: npm
+          cache-dependency-path: AI_HLY/Downstream/RuntimeCore/Node/Host/package-lock.json
+
+      - name: Resolve exact supported upstream releases
+        id: update
+        run: |
+          set -euo pipefail
+          cp RuntimeDependencies.lock.json "$RUNNER_TEMP/baseline-lock.json"
+          baseline_hash="$(node Scripts/Runtime/compute-runtime-dependency-hash.mjs "$RUNNER_TEMP/baseline-lock.json")"
+          echo "baseline_hash=$baseline_hash" >> "$GITHUB_OUTPUT"
+
+          node Scripts/Runtime/update-runtime-dependencies.mjs
+          npm install --package-lock-only --ignore-scripts --no-audit --no-fund --prefix "$HOST_ROOT"
+          node Scripts/Runtime/update-runtime-dependencies.mjs \
+            RuntimeDependencies.lock.json "$HOST_ROOT/package.json" "$HOST_ROOT/package-lock.json" \
+            --sync-package-lock
+          node Scripts/Runtime/generate-runtime-manifest.mjs
+          node Scripts/Runtime/validate-runtime-lock.mjs RuntimeDependencies.lock.json --allow-pending-build
+
+          if git diff --quiet -- RuntimeDependencies.lock.json "$HOST_ROOT/package.json" "$HOST_ROOT/package-lock.json"; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "All supported RuntimeCore dependencies are already current."
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Test updated host dependency graph
+        if: steps.update.outputs.changed == 'true'
+        run: |
+          set -euo pipefail
+          npm ci --ignore-scripts --no-audit --no-fund --prefix "$HOST_ROOT"
+          npm test --prefix "$HOST_ROOT"
+          node Scripts/Runtime/validate-runtime-localization.mjs
+
+      - name: Create isolated update branch
+        if: steps.update.outputs.changed == 'true'
+        id: branch
+        run: |
+          set -euo pipefail
+          branch="codex/runtime-core-dependencies-${GITHUB_RUN_ID}"
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git switch -c "$branch"
+          git add RuntimeDependencies.lock.json "$HOST_ROOT/package.json" "$HOST_ROOT/package-lock.json" \
+            AI_HLY/Downstream/RuntimeCore/Resources/RuntimeManifest.json
+          git commit -m "Update pinned RuntimeCore dependencies"
+          git push --set-upstream origin "$branch"
+          echo "name=$branch" >> "$GITHUB_OUTPUT"
+
+      - name: Build and publish immutable candidate runtime
+        if: steps.update.outputs.changed == 'true'
+        id: runtime
+        env:
+          BRANCH: ${{ steps.branch.outputs.name }}
+        run: |
+          set -euo pipefail
+          gh workflow run build-runtime-bundle.yml --ref "$BRANCH" \
+            -f publish_release=true -f force_rebuild=false -f reuse_artifacts_run_id=''
+          for attempt in {1..30}; do
+            run_id="$(gh run list --workflow build-runtime-bundle.yml --branch "$BRANCH" \
+              --event workflow_dispatch --limit 1 --json databaseId --jq '.[0].databaseId // empty')"
+            [[ -n "$run_id" ]] && break
+            sleep 2
+          done
+          test -n "${run_id:-}" || { echo "Runtime build dispatch was not found." >&2; exit 1; }
+          gh run watch "$run_id" --interval 60 --exit-status
+          echo "run_id=$run_id" >> "$GITHUB_OUTPUT"
+
+      - name: Finalize verified runtime checksums
+        if: steps.update.outputs.changed == 'true'
+        env:
+          BRANCH: ${{ steps.branch.outputs.name }}
+        run: |
+          set -euo pipefail
+          dependency_hash="$(node Scripts/Runtime/compute-runtime-dependency-hash.mjs RuntimeDependencies.lock.json)"
+          release_tag="runtime-core-v1-${dependency_hash}"
+          mkdir -p "$RUNNER_TEMP/runtime-release"
+          gh release download "$release_tag" --dir "$RUNNER_TEMP/runtime-release" \
+            --pattern runtime-bundle.sha256 --pattern node-xcframework.sha256
+          bundle_sha="$(awk 'NR == 1 {print $1}' "$RUNNER_TEMP/runtime-release/runtime-bundle.sha256")"
+          node_sha="$(awk 'NR == 1 {print $1}' "$RUNNER_TEMP/runtime-release/node-xcframework.sha256")"
+          node - "$bundle_sha" "$node_sha" <<'NODE'
+          const fs = require('node:fs');
+          const lock = JSON.parse(fs.readFileSync('RuntimeDependencies.lock.json', 'utf8'));
+          lock.runtimeBundle.sha256 = process.argv[2];
+          lock.runtimeBundle.verificationStatus = 'verified';
+          lock.node.xcframeworkSha256 = process.argv[3];
+          lock.node.verificationStatus = 'verified';
+          fs.writeFileSync('RuntimeDependencies.lock.json', `${JSON.stringify(lock, null, 2)}\n`);
+          NODE
+          node Scripts/Runtime/generate-runtime-manifest.mjs
+          node Scripts/Runtime/validate-runtime-lock.mjs
+          git add RuntimeDependencies.lock.json AI_HLY/Downstream/RuntimeCore/Resources/RuntimeManifest.json
+          git commit -m "Record verified RuntimeCore binary checksums"
+          git push origin "$BRANCH"
+
+      - name: Build the candidate app and unsigned IPA
+        if: steps.update.outputs.changed == 'true'
+        id: app
+        env:
+          BRANCH: ${{ steps.branch.outputs.name }}
+        run: |
+          set -euo pipefail
+          gh workflow run build-ios26-unsigned-ipa.yml --ref "$BRANCH"
+          for attempt in {1..30}; do
+            run_id="$(gh run list --workflow build-ios26-unsigned-ipa.yml --branch "$BRANCH" \
+              --event workflow_dispatch --limit 1 --json databaseId --jq '.[0].databaseId // empty')"
+            [[ -n "$run_id" ]] && break
+            sleep 2
+          done
+          test -n "${run_id:-}" || { echo "IPA build dispatch was not found." >&2; exit 1; }
+          gh run watch "$run_id" --interval 60 --exit-status
+          mkdir -p "$RUNNER_TEMP/candidate-ipa"
+          gh run download "$run_id" --name AI_Hanlin-iOS26-unsigned-ipa --dir "$RUNNER_TEMP/candidate-ipa"
+          ipa_size="$(find "$RUNNER_TEMP/candidate-ipa" -name '*.ipa' -type f -exec stat -c '%s' {} \; | head -1)"
+          echo "run_id=$run_id" >> "$GITHUB_OUTPUT"
+          echo "ipa_size=$ipa_size" >> "$GITHUB_OUTPUT"
+
+      - name: Open update pull request with provenance and size evidence
+        if: steps.update.outputs.changed == 'true'
+        env:
+          BRANCH: ${{ steps.branch.outputs.name }}
+          RUNTIME_RUN: ${{ steps.runtime.outputs.run_id }}
+          APP_RUN: ${{ steps.app.outputs.run_id }}
+          IPA_SIZE: ${{ steps.app.outputs.ipa_size }}
+          BASELINE_HASH: ${{ steps.update.outputs.baseline_hash }}
+        run: |
+          set -euo pipefail
+          dependency_hash="$(node Scripts/Runtime/compute-runtime-dependency-hash.mjs RuntimeDependencies.lock.json)"
+          release_tag="runtime-core-v1-${dependency_hash}"
+          old_tag="runtime-core-v1-${BASELINE_HASH}"
+          new_size="$(gh release view "$release_tag" --json assets --jq \
+            ".assets[] | select(.name == \"hanlin-runtime-${dependency_hash}.zip\") | .size")"
+          old_size="$(gh release view "$old_tag" --json assets --jq \
+            ".assets[] | select(.name == \"hanlin-runtime-${BASELINE_HASH}.zip\") | .size" 2>/dev/null || echo 0)"
+          delta=$((new_size - old_size))
+          node - <<'NODE' > "$RUNNER_TEMP/versions.txt"
+          const lock = require('./RuntimeDependencies.lock.json');
+          console.log(`- Node: ${lock.node.version} (${lock.node.commit})`);
+          console.log(`- Python: ${lock.python.version} (${lock.python.release})`);
+          console.log(`- TypeScript: ${lock.typescript.version}`);
+          console.log(`- ios_system: ${lock.iosSystem.release} (${lock.iosSystem.commit})`);
+          console.log(`- Runtime bundle SHA-256: ${lock.runtimeBundle.sha256}`);
+          console.log(`- Node XCFramework SHA-256: ${lock.node.xcframeworkSha256}`);
+          NODE
+          {
+            echo 'Automated RuntimeCore update candidate. No automatic merge is enabled.'
+            echo
+            cat "$RUNNER_TEMP/versions.txt"
+            echo
+            echo "- Runtime build: https://github.com/${GITHUB_REPOSITORY}/actions/runs/${RUNTIME_RUN}"
+            echo "- App/IPA build: https://github.com/${GITHUB_REPOSITORY}/actions/runs/${APP_RUN}"
+            echo "- Candidate unsigned IPA size: ${IPA_SIZE} bytes"
+            echo "- Runtime bundle size: ${new_size} bytes (delta ${delta} bytes)"
+            echo '- Host tests, lock validation, localization validation, runtime smoke tests, and the Xcode app build passed.'
+          } > "$RUNNER_TEMP/pr-body.md"
+          gh pr create --base "${{ github.event.repository.default_branch }}" --head "$BRANCH" \
+            --title 'Update pinned RuntimeCore dependencies' --body-file "$RUNNER_TEMP/pr-body.md"
