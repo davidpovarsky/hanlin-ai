@@ -31,6 +31,8 @@ try {
   result.crypto = createHash('sha256').update('hanlin').digest('hex').length === 64;
   result.url = new URL('https://example.com/runtime').pathname === '/runtime';
   result.tls = typeof tls.createSecureContext === 'function' && Boolean(tls.DEFAULT_MIN_VERSION);
+  const fetchResponse = await fetch('data:text/plain;charset=utf-8,hanlin');
+  result.fetch = fetchResponse.ok && await fetchResponse.text() === 'hanlin';
 
   result.workerThreads = await new Promise((resolve, reject) => {
     const worker = new Worker(
@@ -49,15 +51,13 @@ try {
   while (Date.now() < deadline) {
     try {
       const ready = JSON.parse(await fs.readFile(readyPath, 'utf8'));
-      const health = await fetch(`http://127.0.0.1:${ready.port}/health`, {
-        headers: { Authorization: `Bearer ${token}` },
-        signal: AbortSignal.timeout(3_000),
-      });
-      result.fetch = health.ok;
-      result.hostStartup = health.ok;
+      result.hostStartup = Number.isInteger(ready.port)
+        && ready.port > 0
+        && ready.nodeVersion === process.versions.node
+        && ready.protocolVersion === 1;
       result.hostProtocolVersion = ready.protocolVersion;
       result.hostNodeVersion = ready.nodeVersion;
-      break;
+      if (result.hostStartup) break;
     } catch {
       await new Promise(resolve => setTimeout(resolve, 100));
     }

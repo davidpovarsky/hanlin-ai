@@ -20,7 +20,7 @@ readonly PYTHON_VERSION="$(read_lock 'lock.python.version')"
 readonly PYTHON_SHA256="$(read_lock 'lock.python.archive.sha256')"
 readonly DEPENDENCY_HASH="$(node "${SCRIPT_DIR}/compute-runtime-dependency-hash.mjs" "${LOCK_FILE}")"
 
-rm -rf "${WORK_ROOT}" "${OUTPUT_ROOT}" "${LOG_ROOT}"
+rm -rf "${WORK_ROOT}" "${OUTPUT_ROOT}"
 mkdir -p "${WORK_ROOT}/device" "${WORK_ROOT}/simulator" "${OUTPUT_ROOT}" "${LOG_ROOT}"
 
 verify_checksum() {
