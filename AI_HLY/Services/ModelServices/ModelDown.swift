@@ -24,7 +24,7 @@ func getLocalModelPath(for modelName: String) -> String? {
 }
 
 /// 负责模型下载的类，实现 URLSessionDownloadDelegate 以监听进度
-class DownloadManager: NSObject, ObservableObject, URLSessionDownloadDelegate {
+final class DownloadManager: NSObject, ObservableObject, URLSessionDownloadDelegate {
     static let shared = DownloadManager()  // 单例模式，避免重复创建
     private var downloadTasks: [URLSessionDownloadTask: (LocalModelInfo, URL)] = [:]
     

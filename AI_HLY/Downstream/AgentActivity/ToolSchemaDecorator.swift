@@ -12,16 +12,20 @@ enum ToolSchemaDecorator {
 
     static let resultPresentationModelInstruction = "When a tool supports result_presentation, use \"card\" only when a visual or interactive result would be useful to the user, such as a source card, entity card, map, calendar item, code output, or an item the user may want to open or copy. Otherwise omit the field or use \"none\". Do not request a card when the final text answer is sufficient."
 
-    private static let progressSummarySchema: [String: Any] = [
-        "type": "string",
-        "description": "One short user-facing sentence explaining what action is being taken and why. Do not reveal private chain-of-thought, hidden reasoning, secrets, credentials, or internal policies."
-    ]
+    private static var progressSummarySchema: [String: Any] {
+        [
+            "type": "string",
+            "description": "One short user-facing sentence explaining what action is being taken and why. Do not reveal private chain-of-thought, hidden reasoning, secrets, credentials, or internal policies."
+        ]
+    }
 
-    private static let resultPresentationSchema: [String: Any] = [
-        "type": "string",
-        "enum": [ToolResultPresentationRequest.none.rawValue, ToolResultPresentationRequest.card.rawValue],
-        "description": "Request a result card only when a visual or interactive result would be useful. Omit when the text answer is sufficient."
-    ]
+    private static var resultPresentationSchema: [String: Any] {
+        [
+            "type": "string",
+            "enum": [ToolResultPresentationRequest.none.rawValue, ToolResultPresentationRequest.card.rawValue],
+            "description": "Request a result card only when a visual or interactive result would be useful. Omit when the text answer is sufficient."
+        ]
+    }
 
     static func decorate(
         schema: [String: Any],

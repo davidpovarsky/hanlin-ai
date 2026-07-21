@@ -99,7 +99,7 @@ actor PythonPackageManager {
         try FileManager.default.createDirectory(at: staging, withIntermediateDirectories: true)
         try data.write(to: wheelURL, options: [.atomic, .completeFileProtection])
         defer { try? FileManager.default.removeItem(at: wheelURL); try? FileManager.default.removeItem(at: staging) }
-        guard let archive = Archive(url: wheelURL, accessMode: .read) else { throw RuntimeCoreError.runtimeFailure("The wheel archive is invalid.") }
+        let archive = try Archive(url: wheelURL, accessMode: .read)
         for entry in archive {
             let path = entry.path.replacingOccurrences(of: "\\", with: "/")
             guard !path.hasPrefix("/"), !path.split(separator: "/").contains(".."), entry.type != .symlink else {
@@ -148,9 +148,9 @@ actor PythonPackageManager {
         try persist(try installed().filter { $0.normalizedName != record.normalizedName })
     }
 
-    func probe(_ record: PythonPackageRecord) throws -> RuntimeExecutionResult {
+    func probe(_ record: PythonPackageRecord) async throws -> RuntimeExecutionResult {
         let workspace = try fileLayout.workspace(client: .tools, identifier: "python-package-probe")
-        return try python.execute(RuntimeExecutionRequest(source: "import \(record.importName)\nprint(getattr(\(record.importName), '__version__', 'import-ok'))", workspace: workspace))
+        return try await python.execute(RuntimeExecutionRequest(source: "import \(record.importName)\nprint(getattr(\(record.importName), '__version__', 'import-ok'))", workspace: workspace))
     }
 
     private func project(name: String) async throws -> PyPIProject {

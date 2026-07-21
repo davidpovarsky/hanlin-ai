@@ -39,7 +39,7 @@ struct RuntimeHostConnection: Sendable {
     }
 
     func decode<T: Decodable>(_ type: T.Type, path: String, method: String = "GET", json: Any? = nil, timeout: TimeInterval = 60) async throws -> T {
-        try JSONDecoder().decode(T.self, from: data(path: path, method: method, json: json, timeout: timeout))
+        try JSONDecoder().decode(T.self, from: await data(path: path, method: method, json: json, timeout: timeout))
     }
 }
 

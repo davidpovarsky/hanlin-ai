@@ -3796,7 +3796,7 @@ class APIManager {
                                                     return nil
                                                 }
                                                 
-                                                let card = HealthTool.shared.makeNutritionData(
+                                                let card = await HealthTool.shared.makeNutritionData(
                                                     protein:       val("protein"),
                                                     carbohydrates: val("carbohydrates"),
                                                     fat:           val("fat"),
