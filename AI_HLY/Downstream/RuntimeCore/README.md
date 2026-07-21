@@ -18,3 +18,5 @@ All downloaded packages, generated code, caches, logs, and workspaces live below
 `RuntimeDependencies.lock.json` is the source of truth for immutable runtime inputs. `Scripts/Runtime/generate-runtime-manifest.mjs` creates the bundled diagnostics manifest from it. The pinned runtime bundle and Node binary hashes are verified; normal IPA preparation rejects checksum or provenance mismatches before Xcode starts.
 
 The original `PistonExecutor` and `execute_python_code` path are outside RuntimeCore and remain unchanged. Embedded Python is exposed separately as `execute_local_python_code`.
+
+Physical-device verification is intentionally separate from CI. Follow `ON_DEVICE_ACCEPTANCE.md` after installing a signed build; do not infer device success from an unsigned archive.
