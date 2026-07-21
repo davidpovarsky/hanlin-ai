@@ -16,10 +16,17 @@ export async function previewGlobalPackage({ root, name, version }) {
 
 export async function listGlobalPackages({ root }) {
   const manifest = await readRootManifest(root);
+  const lock = await readGlobalLock(root);
   return Promise.all(Object.entries(manifest.dependencies ?? {}).map(async ([name, version]) => {
     const packageRoot = path.join(globalRoot(root), 'node_modules', ...name.split('/'));
     const installed = JSON.parse(await fs.readFile(path.join(packageRoot, 'package.json'), 'utf8'));
-    return { name, version: installed.version, requestedVersion: version, packageRoot, size: await directorySize(packageRoot), dependencies: Object.keys(installed.dependencies ?? {}), integrity: null };
+    const lockKey = `node_modules/${name}`;
+    return {
+      name, version: installed.version, requestedVersion: version, summary: installed.description ?? null,
+      nodeRequirement: installed.engines?.node ?? null, packageRoot, size: await directorySize(packageRoot),
+      dependencies: Object.keys(installed.dependencies ?? {}), integrity: lock.packages?.[lockKey]?.integrity ?? null,
+      findings: inspectManifest(installed, NODE_VERSION), lifecycle: planLifecycle(installed, lock.packages?.[lockKey]?.integrity ?? null),
+    };
   }));
 }
 
@@ -79,6 +86,10 @@ async function resolve(name, requested, cache) {
 async function readRootManifest(root) {
   try { return JSON.parse(await fs.readFile(path.join(globalRoot(root), 'package.json'), 'utf8')); }
   catch (error) { if (error.code === 'ENOENT') return { dependencies: {} }; throw error; }
+}
+async function readGlobalLock(root) {
+  try { return JSON.parse(await fs.readFile(path.join(globalRoot(root), 'package-lock.json'), 'utf8')); }
+  catch (error) { if (error.code === 'ENOENT') return { packages: {} }; throw error; }
 }
 function globalRoot(root) { return path.join(root, 'packages', 'node-global'); }
 function details(resolved, findings, lifecycle, packageRoot = null) { return { name: resolved.manifest.name, version: resolved.manifest.version, summary: resolved.manifest.description ?? null, nodeRequirement: resolved.manifest.engines?.node ?? null, dependencies: Object.keys(resolved.manifest.dependencies ?? {}), integrity: resolved.integrity, findings, lifecycle, packageRoot }; }

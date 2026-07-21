@@ -8,6 +8,7 @@ private final class NodePackagesModel {
     var version = ""
     var installed: [NodePackageDetails] = []
     var preview: NodePackageDetails?
+    var probeOutput: String?
     var message: String?
     var isBusy = false
     private var operation: Task<Void, Never>?
@@ -21,6 +22,7 @@ private final class NodePackagesModel {
     func install() { run { self.preview = try await AppRuntimeCore.shared.nodePackages.install(name: self.packageName, version: self.version.nilIfEmpty); await self.reload() } }
     func update(_ item: NodePackageDetails) { packageName = item.name; version = ""; install() }
     func uninstall(_ item: NodePackageDetails) { run { try await AppRuntimeCore.shared.nodePackages.uninstall(name: item.name); await self.reload() } }
+    func probe(_ item: NodePackageDetails) { run { let result = try await AppRuntimeCore.shared.nodePackages.probe(item); self.probeOutput = result.stdout + result.stderr } }
     func cancel() { operation?.cancel(); operation = nil; isBusy = false; message = RuntimeL10n.string("Cancelled") }
 
     private func run(_ body: @escaping @MainActor () async throws -> Void) {
@@ -67,11 +69,13 @@ struct NodePackagesView: View {
                             Text(item.version).font(.caption).foregroundStyle(.secondary)
                         }
                     }
+                    Button(RuntimeL10n.string("Import Probe")) { model.probe(item) }.buttonStyle(.borderless)
                     .swipeActions {
                         Button(RuntimeL10n.string("Uninstall"), role: .destructive) { model.uninstall(item) }
                         Button(RuntimeL10n.string("Update")) { model.update(item) }.tint(.blue)
                     }
                 }
+                if let probeOutput = model.probeOutput { Text(probeOutput).font(.system(.caption, design: .monospaced)).textSelection(.enabled) }
             }
 
             Section { Text(RuntimeL10n.string("Packages are installed transactionally with npm lifecycle scripts disabled. Compatibility is reported per package; TypeScript packages with published JavaScript output are supported.")) .font(.caption).foregroundStyle(.secondary) }

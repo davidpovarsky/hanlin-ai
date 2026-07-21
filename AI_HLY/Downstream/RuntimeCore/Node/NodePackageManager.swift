@@ -69,4 +69,14 @@ actor NodePackageManager {
         let host = try await node.ensureRunning()
         _ = try await host.data(path: "/v1/packages/node/uninstall", method: "POST", json: ["name": name], timeout: 600)
     }
+
+    func probe(_ package: NodePackageDetails) async throws -> RuntimeExecutionResult {
+        let encodedName = try JSONEncoder().encode(package.name)
+        let literal = String(decoding: encodedName, as: UTF8.self)
+        let workspace = try RuntimeFileLayout.default.workspace(client: .tools, identifier: "node-package-probe")
+        return try await node.executeJavaScript(RuntimeExecutionRequest(
+            source: "const imported = await import(\(literal)); console.log(imported.default?.version ?? imported.version ?? 'import-ok'); export default { imported: true };",
+            workspace: workspace
+        ))
+    }
 }
