@@ -25,11 +25,10 @@ actor EmbeddedNodeMCPTransport: MCP.Transport {
     func connect() async throws {
         guard !connected else { return }
         let body = try JSONEncoder.mcp.encode(server)
-        let object = try JSONSerialization.jsonObject(with: body)
         _ = try await connection.data(
             path: "/v1/servers/\(server.serverID.uuidString.lowercased())/start",
             method: "POST",
-            json: object,
+            body: body,
             timeout: 20
         )
         connected = true
@@ -50,7 +49,7 @@ actor EmbeddedNodeMCPTransport: MCP.Transport {
         _ = try? await connection.data(
             path: "/v1/servers/\(server.serverID.uuidString.lowercased())/stop",
             method: "POST",
-            json: [:],
+            body: Data("{}".utf8),
             timeout: 10
         )
         continuation.finish()
@@ -61,10 +60,11 @@ actor EmbeddedNodeMCPTransport: MCP.Transport {
         guard data.count <= maximumMessageBytes else { throw MCPError.resultTooLarge }
         var framed = data
         framed.append(0x0A)
+        let body = try JSONSerialization.data(withJSONObject: ["data": framed.base64EncodedString()])
         _ = try await connection.data(
             path: "/v1/servers/\(server.serverID.uuidString.lowercased())/stdin",
             method: "POST",
-            json: ["data": framed.base64EncodedString()],
+            body: body,
             timeout: 30
         )
     }
