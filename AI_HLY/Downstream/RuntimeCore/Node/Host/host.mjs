@@ -12,11 +12,16 @@ const npmCache = path.join(root, 'cache', 'npm');
 const npmPrefix = path.join(root, 'runtime', 'npm-prefix');
 const npmTemp = path.join(root, 'staging', 'tmp');
 const xdgCache = path.join(root, 'cache', 'xdg');
+const clientsRoot = path.join(root, 'clients');
+const mcpPackagesRoot = path.join(root, 'packages', 'mcp');
 
 await Promise.all([
   path.join(root, 'runtime'),
   path.join(root, 'registry'),
-  path.join(root, 'servers'),
+  path.join(root, 'packages'),
+  mcpPackagesRoot,
+  path.join(root, 'packages', 'node-global'),
+  clientsRoot,
   path.join(root, 'staging'),
   path.join(root, 'cache'),
   runtimeHome,
@@ -61,9 +66,13 @@ diagnostic('runtime_paths_configured', {
 
 const { commitInstall, installPackage, previewPackage, rollbackInstall } =
   await import('./package-installer.mjs');
+const { installGlobalPackage, listGlobalPackages, previewGlobalPackage, uninstallGlobalPackage } =
+  await import('./global-package-manager.mjs');
 
 const workerURL = new URL('./server-worker.mjs', import.meta.url);
+const executionWorkerURL = new URL('./execution-worker.mjs', import.meta.url);
 const servers = new Map();
+const executions = new Map();
 const installs = new Map();
 const installProgress = new Map();
 const maximumBody = 10 * 1024 * 1024;
@@ -73,9 +82,36 @@ const server = http.createServer(async (request, response) => {
   try {
     if (!authorized(request)) return json(response, 401, { error: 'Unauthorized' });
     const url = new URL(request.url, 'http://127.0.0.1');
-    if (request.method === 'GET' && url.pathname === '/health') return json(response, 200, { ok: true });
+    if (request.method === 'GET' && url.pathname === '/health') return json(response, 200, { ok: true, nodeVersion: process.versions.node, protocolVersion: 2 });
     if (request.method === 'GET' && url.pathname === '/v1/runtime') {
-      return json(response, 200, { nodeVersion: process.versions.node, protocolVersion: 1, workers: [...servers.values()].map(snapshot) });
+      return json(response, 200, { nodeVersion: process.versions.node, protocolVersion: 2, workers: [...servers.values()].map(snapshot), executions: executions.size });
+    }
+    if (request.method === 'POST' && url.pathname === '/v1/executions') {
+      return json(response, 200, await executeJavaScript(await readJSON(request)));
+    }
+    const executionCancel = url.pathname.match(/^\/v1\/executions\/([0-9a-f-]+)\/cancel$/i);
+    if (request.method === 'POST' && executionCancel) {
+      const state = executions.get(executionCancel[1].toLowerCase());
+      if (state) { state.cancelled = true; await state.worker.terminate(); }
+      return json(response, 200, { cancelled: Boolean(state) });
+    }
+    if (request.method === 'POST' && url.pathname === '/v1/typescript/compile') {
+      return json(response, 200, await compileTypeScript(await readJSON(request)));
+    }
+    if (request.method === 'GET' && url.pathname === '/v1/packages/node') {
+      return json(response, 200, { packages: await listGlobalPackages({ root }) });
+    }
+    if (request.method === 'POST' && url.pathname === '/v1/packages/node/preview') {
+      const body = await readJSON(request);
+      return json(response, 200, await previewGlobalPackage({ root, name: body.name, version: body.version }));
+    }
+    if (request.method === 'POST' && url.pathname === '/v1/packages/node/install') {
+      const body = await readJSON(request);
+      return json(response, 200, await installGlobalPackage({ root, name: body.name, version: body.version }));
+    }
+    if (request.method === 'POST' && url.pathname === '/v1/packages/node/uninstall') {
+      const body = await readJSON(request);
+      return json(response, 200, await uninstallGlobalPackage({ root, name: body.name }));
     }
     const installStatusMatch = url.pathname.match(/^\/v1\/install\/status\/([0-9a-f-]+)$/i);
     if (request.method === 'GET' && installStatusMatch) {
@@ -172,7 +208,7 @@ const server = http.createServer(async (request, response) => {
 
 server.listen(0, '127.0.0.1', async () => {
   const address = server.address();
-  const ready = { port: address.port, nodeVersion: process.versions.node, protocolVersion: 1 };
+  const ready = { port: address.port, nodeVersion: process.versions.node, protocolVersion: 2 };
   const temporary = `${readyPath}.tmp`;
   await fs.writeFile(temporary, JSON.stringify(ready), { mode: 0o600 });
   await fs.rename(temporary, readyPath);
@@ -183,6 +219,106 @@ function authorized(request) {
   const expected = Buffer.from(`Bearer ${launchToken}`);
   const actual = Buffer.from(request.headers.authorization ?? '');
   return actual.length === expected.length && timingSafeEqual(actual, expected);
+}
+
+async function executeJavaScript(body) {
+  const id = String(body.executionID ?? '').toLowerCase();
+  if (!validID(id)) throw new Error('Invalid execution ID.');
+  if (typeof body.source !== 'string' || Buffer.byteLength(body.source) > maximumBody) throw new Error('JavaScript source is missing or too large.');
+  if (!['esm', 'commonjs'].includes(body.moduleKind)) throw new Error('Unsupported JavaScript module kind.');
+  const workspace = path.resolve(String(body.workspace ?? ''));
+  if (!isInside(clientsRoot, workspace)) throw new Error('Execution workspace is outside RuntimeCore clients.');
+  const stat = await fs.lstat(workspace);
+  if (!stat.isDirectory() || stat.isSymbolicLink()) throw new Error('Execution workspace must be a real directory.');
+  rejectUnsafeSource(body.source);
+  const executionRoot = path.join(workspace, '.hanlin-executions', id);
+  await fs.rm(executionRoot, { recursive: true, force: true });
+  await fs.mkdir(executionRoot, { recursive: true });
+  const globalNodeModules = path.join(root, 'packages', 'node-global', 'node_modules');
+  try { await fs.access(globalNodeModules); await fs.symlink(globalNodeModules, path.join(executionRoot, 'node_modules'), 'dir'); } catch (error) { if (error.code !== 'ENOENT') throw error; }
+  const extension = body.moduleKind === 'commonjs' ? 'cjs' : 'mjs';
+  const entryPoint = path.join(executionRoot, `main.${extension}`);
+  await fs.writeFile(entryPoint, body.source, { mode: 0o600 });
+  const maximumOutputBytes = Math.min(Math.max(Number(body.maximumOutputBytes) || 1_048_576, 1024), 8 * 1024 * 1024);
+  const timeoutMilliseconds = Math.min(Math.max(Number(body.timeoutMilliseconds) || 30_000, 1000), 300_000);
+  const started = Date.now();
+  const state = { worker: null, cancelled: false };
+  const result = await new Promise(resolve => {
+    const worker = new Worker(executionWorkerURL, {
+      workerData: {
+        entryPoint,
+        moduleKind: body.moduleKind,
+        arguments: Array.isArray(body.arguments) ? body.arguments : [],
+        environment: validatedEnvironment(body.environment),
+        maximumOutputBytes,
+      },
+    });
+    state.worker = worker;
+    executions.set(id, state);
+    let settled = false;
+    const finish = value => { if (!settled) { settled = true; clearTimeout(timer); resolve(value); } };
+    const timer = setTimeout(async () => {
+      await worker.terminate();
+      finish({ executionID: id, stdout: '', stderr: 'Execution timed out.\n', value: null, exitCode: null, didTimeOut: true, wasCancelled: false, outputWasTruncated: false });
+    }, timeoutMilliseconds);
+    worker.once('message', message => finish({
+      executionID: id,
+      stdout: message.stdout ?? '',
+      stderr: message.stderr ?? '',
+      value: message.value ?? null,
+      exitCode: message.type === 'completed' ? 0 : 1,
+      didTimeOut: false,
+      wasCancelled: state.cancelled,
+      outputWasTruncated: Boolean(message.outputWasTruncated),
+    }));
+    worker.once('error', error => finish({ executionID: id, stdout: '', stderr: `${redact(error.stack ?? error.message)}\n`, value: null, exitCode: 1, didTimeOut: false, wasCancelled: state.cancelled, outputWasTruncated: false }));
+    worker.once('exit', code => { if (state.cancelled) finish({ executionID: id, stdout: '', stderr: '', value: null, exitCode: code, didTimeOut: false, wasCancelled: true, outputWasTruncated: false }); });
+  });
+  executions.delete(id);
+  await fs.rm(executionRoot, { recursive: true, force: true });
+  result.durationMilliseconds = Date.now() - started;
+  return result;
+}
+
+async function compileTypeScript(body) {
+  if (typeof body.source !== 'string' || Buffer.byteLength(body.source) > maximumBody) throw new Error('TypeScript source is missing or too large.');
+  const ts = await import('typescript');
+  const baseOptions = {
+    target: ts.ScriptTarget.ES2022,
+    module: ts.ModuleKind.ESNext,
+    moduleResolution: ts.ModuleResolutionKind.Bundler,
+    strict: true,
+    sourceMap: true,
+    inlineSources: true,
+  };
+  const converted = ts.convertCompilerOptionsFromJson(body.tsconfig?.compilerOptions ?? {}, '.');
+  const result = ts.transpileModule(body.source, {
+    fileName: typeof body.fileName === 'string' ? body.fileName : 'main.ts',
+    compilerOptions: { ...baseOptions, ...converted.options },
+    reportDiagnostics: true,
+  });
+  const diagnostics = [...(converted.errors ?? []), ...(result.diagnostics ?? [])].map(diagnostic => {
+    const position = diagnostic.file && typeof diagnostic.start === 'number' ? diagnostic.file.getLineAndCharacterOfPosition(diagnostic.start) : null;
+    return { code: diagnostic.code, category: diagnostic.category, message: ts.flattenDiagnosticMessageText(diagnostic.messageText, '\n'), line: position ? position.line + 1 : null, column: position ? position.character + 1 : null };
+  });
+  const failed = diagnostics.some(item => item.category === ts.DiagnosticCategory.Error);
+  return { javaScript: failed ? null : result.outputText, sourceMap: failed ? null : result.sourceMapText ?? null, diagnostics: diagnostics.map(({ category, ...item }) => item), succeeded: !failed };
+}
+
+function validatedEnvironment(value) {
+  const output = {};
+  if (!value || typeof value !== 'object' || Array.isArray(value)) return output;
+  for (const [name, item] of Object.entries(value)) {
+    if (!/^[A-Za-z_][A-Za-z0-9_]*$/.test(name)) throw new Error(`Invalid environment name: ${name}`);
+    if (['HOME', 'USERPROFILE', 'PATH', 'TMPDIR', 'TMP', 'TEMP', 'XDG_CACHE_HOME', 'NODE_PATH', 'NPM_CONFIG_CACHE', 'NPM_CONFIG_PREFIX', 'PYTHONHOME', 'PYTHONPATH'].includes(name.toUpperCase())) throw new Error(`Reserved environment name: ${name}`);
+    output[name] = String(item);
+  }
+  return output;
+}
+
+function rejectUnsafeSource(source) {
+  if (/\b(?:child_process|cluster)\b/.test(source)) throw new Error('This script requests an unavailable process API.');
+  if (/\b(?:docker|sudo)\b/.test(source) || /curl\s+[^\n|]+\|\s*(?:sh|bash)/.test(source)) throw new Error('This script requests an unsupported executable chain.');
 }
 
 async function startServer(id, configuration) {
@@ -314,7 +450,7 @@ function json(response, status, value) {
 }
 
 function validID(value) { return /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(value); }
-function safeServerDirectory(id) { if (!validID(id)) throw new Error('Invalid server ID.'); return path.resolve(root, 'servers', id); }
+function safeServerDirectory(id) { if (!validID(id)) throw new Error('Invalid server ID.'); return path.resolve(mcpPackagesRoot, id); }
 function isInside(parent, child) { const relative = path.relative(path.resolve(parent), path.resolve(child)); return relative !== '..' && !relative.startsWith(`..${path.sep}`) && !path.isAbsolute(relative); }
 function redact(value = '') { return String(value).replace(/(authorization|bearer|token|api[_-]?key|secret|password|cookie)\s*[:=]?\s*[^\s,;]+/gi, '$1=<redacted>'); }
 function diagnostic(event, fields = {}) {

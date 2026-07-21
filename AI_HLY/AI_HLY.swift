@@ -84,10 +84,10 @@ struct MyApp: App {
                 .modelContainer(appDataManager.modelContainer)
                 .task {
                     appDataManager.preloadDataIfNeeded()
-                    await MCPRuntimeProvider.shared.loadIfNeeded()
+                    await RuntimeLifecycleBridge.prepareApplication()
                 }
                 .onChange(of: scenePhase) { _, newPhase in
-                    Task { await MCPRuntimeProvider.shared.handleScenePhase(newPhase) }
+                    Task { await RuntimeLifecycleBridge.handleScenePhase(newPhase) }
                 }
                 .onOpenURL { url in
                     if url.host == "openVisionView" {

@@ -3,7 +3,7 @@ set -euo pipefail
 
 readonly SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 readonly REPOSITORY_ROOT="$(cd "${SCRIPT_DIR}/../.." && pwd)"
-readonly HOST_SOURCE="${REPOSITORY_ROOT}/AI_HLY/Downstream/MCP/Runtime/Host"
+readonly HOST_SOURCE="${REPOSITORY_ROOT}/AI_HLY/Downstream/RuntimeCore/Node/Host"
 readonly WORK_ROOT="${RUNNER_TEMP:-${TMPDIR:-/tmp}}/hanlin-runtime-host"
 readonly OUTPUT_ROOT="${REPOSITORY_ROOT}/build/runtime-host"
 

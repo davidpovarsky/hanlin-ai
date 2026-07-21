@@ -100,6 +100,9 @@ struct SettingsView: View {
                     NavigationLink(destination: MCPServersSettingsView().onAppear { isPushed = true }.onDisappear { isPushed = false }.toolbar(.hidden, for: .tabBar)) {
                         Label(MCPL10n.string("MCP Servers"), systemImage: "server.rack")
                     }
+                    NavigationLink(destination: RuntimeCenterView().onAppear { isPushed = true }.onDisappear { isPushed = false }.toolbar(.hidden, for: .tabBar)) {
+                        Label(RuntimeL10n.string("Runtimes & Packages"), systemImage: "shippingbox.and.arrow.backward")
+                    }
                     NavigationLink(destination: SearchSettingView().onAppear { isPushed = true }.onDisappear { isPushed = false }.toolbar(.hidden, for: .tabBar)) {
                         Label(String(localized: "联网搜索"), systemImage: "magnifyingglass")
                     }

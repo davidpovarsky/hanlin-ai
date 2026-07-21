@@ -14,7 +14,7 @@ final class MCPRuntimeProvider {
     private(set) var installState: MCPInstallState = .idle
     private(set) var lastError: String?
 
-    let nodeRuntime: NodeMobileRuntimeProvider
+    let nodeRuntime: NodeRuntimeService
     let controller: MCPRuntimeController
     private let registryStore: MCPServerRegistryStore
     private let selectionStore: MCPChatSelectionStore
@@ -26,7 +26,7 @@ final class MCPRuntimeProvider {
     private var cancelledInstallOperationIDs: Set<UUID> = []
 
     private init() {
-        let runtime = NodeMobileRuntimeProvider()
+        let runtime = AppRuntimeCore.shared.node
         let registry = MCPServerRegistryStore()
         let secrets = MCPSecretStore()
         nodeRuntime = runtime
@@ -329,8 +329,20 @@ final class MCPRuntimeProvider {
 
     private func refreshSnapshots() async {
         let currentStatuses = await controller.statuses()
-        var snapshot = await nodeRuntime.snapshot()
-        snapshot.activeWorkerCount = currentStatuses.values.filter { $0.state == .running }.count
+        let nodeSnapshot = await nodeRuntime.snapshot()
+        let state: MCPNodeRuntimeState = switch nodeSnapshot.state {
+        case .preparing: .starting
+        case .ready, .executing: .running
+        case .failed, .appRestartRequired: .failed
+        case .unavailable, .stopped: .stopped
+        }
+        let snapshot = MCPRuntimeSnapshot(
+            state: state,
+            nodeVersion: nodeSnapshot.version,
+            protocolVersion: nodeSnapshot.version == nil ? nil : NodeRuntimeService.hostProtocolVersion,
+            activeWorkerCount: currentStatuses.values.filter { $0.state == .running }.count,
+            message: nodeSnapshot.lastErrorCode
+        )
         statuses = currentStatuses
         runtimeSnapshot = snapshot
     }

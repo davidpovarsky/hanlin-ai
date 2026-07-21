@@ -6,14 +6,14 @@ actor EmbeddedNodeMCPTransport: MCP.Transport {
     nonisolated let logger: Logger
 
     private let server: MCPServerConfiguration
-    private let connection: MCPHostConnection
+    private let connection: RuntimeHostConnection
     private let maximumMessageBytes = 8 * 1_024 * 1_024
     private let messageStream: AsyncThrowingStream<Data, Swift.Error>
     private let continuation: AsyncThrowingStream<Data, Swift.Error>.Continuation
     private var eventTask: Task<Void, Never>?
     private var connected = false
 
-    init(server: MCPServerConfiguration, connection: MCPHostConnection) {
+    init(server: MCPServerConfiguration, connection: RuntimeHostConnection) {
         self.server = server
         self.connection = connection
         logger = Logger(label: "hanlin.mcp.transport.\(server.serverID.uuidString)")

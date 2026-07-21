@@ -1,7 +1,7 @@
 import Foundation
 
 actor MCPRuntimeController {
-    private let runtime: NodeMobileRuntimeProvider
+    private let runtime: NodeRuntimeService
     private let registry: MCPServerRegistryStore
     private let secrets: MCPSecretStore
     private let catalog = MCPToolCatalog()
@@ -10,7 +10,7 @@ actor MCPRuntimeController {
     private var statusValues: [UUID: MCPServerStatus] = [:]
 
     init(
-        runtime: NodeMobileRuntimeProvider,
+        runtime: NodeRuntimeService,
         registry: MCPServerRegistryStore = MCPServerRegistryStore(),
         secrets: MCPSecretStore = MCPSecretStore()
     ) {

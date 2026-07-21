@@ -9,7 +9,7 @@ const blockedModules = [
 const externalExecutables = ['docker', 'python', 'python3', 'git', 'ffmpeg'];
 const lifecycleNames = ['preinstall', 'install', 'postinstall', 'prepare', 'prepublish'];
 
-export function inspectManifest(manifest, nodeVersion = '18.20.4') {
+export function inspectManifest(manifest, nodeVersion = '24.5.0') {
   const findings = [];
   const requirement = manifest.engines?.node;
   if (requirement && !semver.satisfies(nodeVersion, requirement, { includePrerelease: true })) {
@@ -22,7 +22,7 @@ export function inspectManifest(manifest, nodeVersion = '18.20.4') {
     findings.push(unsupported(`Package CPU constraint does not allow arm64: ${manifest.cpu.join(', ')}`));
   }
   for (const name of lifecycleNames) {
-    if (manifest.scripts?.[name]) findings.push(unsupported(`Lifecycle script '${name}' is required.`));
+    if (manifest.scripts?.[name]) findings.push(warning(`Lifecycle script '${name}' requires an approved structured execution plan.`));
   }
   return findings;
 }
@@ -54,9 +54,7 @@ export async function analyzePackage(packageRoot, manifest, options = {}) {
       const lower = entry.name.toLowerCase();
       if (lower.endsWith('.node')) findings.push(unsupported(`Native addon found: ${relative}`));
       if (lower === 'binding.gyp') findings.push(unsupported(`Native build manifest found: ${relative}`));
-      if (lower.endsWith('.ts') && !lower.endsWith('.d.ts')) {
-        findings.push(unsupported(`Uncompiled TypeScript found: ${relative}`));
-      }
+      if (lower.endsWith('.ts') && !lower.endsWith('.d.ts')) findings.push(warning(`TypeScript compilation is required: ${relative}`));
       if (/\.(?:js|cjs|mjs|json)$/i.test(lower)) {
         const stat = await fs.stat(absolute);
         if (stat.size <= 2 * 1024 * 1024) {
@@ -144,7 +142,7 @@ function report(findings) {
   const unique = [...new Map(findings.map(item => [`${item.severity}:${item.message}`, item])).values()];
   const verdict = unique.some(item => item.severity === 'unsupported')
     ? 'unsupported'
-    : unique.length ? 'compatibleWithWarnings' : 'compatibleWithWarnings';
+    : unique.length ? 'compatibleWithWarnings' : 'compatible';
   if (unique.length === 0) unique.push(warning('Static preflight passed; runtime probe is still required.'));
   return { verdict, findings: unique, runtimeProbePassed: false };
 }

@@ -180,6 +180,17 @@ jobs:
           set -euxo pipefail
           bash Scripts/Runtime/prepare-runtime-core.sh 2>&1 | tee "$LOG_DIR/04-prepare-runtime-core.log"
 
+      - name: Package current RuntimeCore host resources
+        run: |
+          set -euxo pipefail
+          bash Scripts/Runtime/prepare-runtime-host.sh 2>&1 | tee "$LOG_DIR/04-package-runtime-host.log"
+          cp build/runtime-host/RuntimeHostResources.zip AI_HLY/RuntimeHostResources.zip
+
+      - name: Run RuntimeCore fast preflight
+        run: |
+          set -euxo pipefail
+          bash Scripts/Runtime/preflight-runtime-core.sh 2>&1 | tee "$LOG_DIR/04-runtime-preflight.log"
+
       - name: Validate expected project files
         run: |
           set -euxo pipefail
@@ -326,6 +337,16 @@ jobs:
             echo
             echo "===== App bundle contents ====="
             find "$APP_PATH" -maxdepth 3 -print | sort | sed -n '1,400p'
+
+            echo
+            echo "===== RuntimeCore payload verification ====="
+            test -f "$APP_PATH/Frameworks/NodeMobile.framework/NodeMobile"
+            test -f "$APP_PATH/Frameworks/Python.framework/Python"
+            test -d "$APP_PATH/python/lib/python3.14"
+            test -f "$APP_PATH/RuntimeHostResources.zip"
+            test -f "$APP_PATH/RuntimeManifest.json"
+            otool -L "$APP_PATH/$APP_NAME" | tee "$LOG_DIR/08-runtime-linked-frameworks.txt"
+            nm "$APP_PATH/$APP_NAME" | grep -E '(_ios_system$|_HanlinPythonExecute$|_HanlinNodeStart$)' | tee "$LOG_DIR/08-runtime-symbols.txt"
 
             echo
             echo "===== App Info.plist ====="

@@ -36,9 +36,10 @@ test('worker stdin and stdout remain isolated for multiple servers', async () =>
   await fs.rm(root, { recursive: true, force: true });
 });
 
-test('lifecycle scripts and incompatible engines are rejected by preflight', () => {
+test('lifecycle scripts require approval while incompatible engines remain rejected', () => {
   const findings = inspectManifest({ engines: { node: '>=20' }, scripts: { postinstall: 'node setup.js' } });
-  assert.equal(findings.filter(item => item.severity === 'unsupported').length, 2);
+  assert.equal(findings.filter(item => item.severity === 'unsupported').length, 0);
+  assert.equal(findings.filter(item => item.severity === 'warning').length, 1);
 });
 
 test('integrity mismatch fails closed', () => {
@@ -62,7 +63,7 @@ test('replacement rollback restores the prior server and commit removes its back
   const root = await fs.mkdtemp(path.join(os.tmpdir(), 'hanlin-mcp-transaction-'));
   const operationID = '11111111-1111-4111-8111-111111111111';
   const serverID = '22222222-2222-4222-8222-222222222222';
-  const servers = path.join(root, 'servers');
+  const servers = path.join(root, 'packages', 'mcp');
   const staging = path.join(root, 'staging');
   const finalRoot = path.join(servers, serverID);
   const backupRoot = path.join(staging, `backup-${operationID}`);
@@ -83,7 +84,7 @@ test('replacement rollback restores the prior server and commit removes its back
 test('host redirects npm state before preview and install modules initialize', async () => {
   const sandbox = await fs.mkdtemp(path.join(os.tmpdir(), 'hanlin-mcp-home-'));
   const containerRoot = path.join(sandbox, 'container-root');
-  const root = path.join(containerRoot, 'Library', 'Application Support', 'HanlinMCP');
+  const root = path.join(containerRoot, 'Library', 'Application Support', 'HanlinRuntime', 'v1');
   const packageDirectory = path.join(sandbox, 'package-source');
   const fixtureCache = path.join(sandbox, 'fixture-cache');
   const archive = path.join(sandbox, 'fixture.tgz');

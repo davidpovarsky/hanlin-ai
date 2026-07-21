@@ -12,6 +12,10 @@
 		A10000000000000000000003 /* Logging in Frameworks */ = {isa = PBXBuildFile; productRef = A10000000000000000000013 /* Logging */; };
 		A10000000000000000000004 /* NodeMobile.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A10000000000000000000020 /* NodeMobile.xcframework */; };
 		A10000000000000000000005 /* NodeMobile.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A10000000000000000000020 /* NodeMobile.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		A10000000000000000000006 /* Python.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A10000000000000000000021 /* Python.xcframework */; };
+		A10000000000000000000007 /* Python.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A10000000000000000000021 /* Python.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		A10000000000000000000008 /* IOSSystemLite in Frameworks */ = {isa = PBXBuildFile; productRef = A10000000000000000000014 /* IOSSystemLite */; };
+		A10000000000000000000009 /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A10000000000000000000022 /* JavaScriptCore.framework */; };
 		D786F6B02E63DE70004DAC20 /* LLM in Frameworks */ = {isa = PBXBuildFile; productRef = D786F6AF2E63DE70004DAC20 /* LLM */; };
 		D7D5EE3C2DD58CF000B89AAD /* CoreXLSX in Frameworks */ = {isa = PBXBuildFile; productRef = D7D5EE3B2DD58CF000B89AAD /* CoreXLSX */; };
 		D7D5EE3F2DD58D0600B89AAD /* RichTextKit in Frameworks */ = {isa = PBXBuildFile; productRef = D7D5EE3E2DD58D0600B89AAD /* RichTextKit */; };
@@ -39,6 +43,7 @@
 			dstSubfolderSpec = 10;
 			files = (
 				A10000000000000000000005 /* NodeMobile.xcframework in Embed Frameworks */,
+				A10000000000000000000007 /* Python.xcframework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -47,6 +52,8 @@
 
 /* Begin PBXFileReference section */
 		A10000000000000000000020 /* NodeMobile.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = Vendor/NodeMobile/NodeMobile.xcframework; sourceTree = SOURCE_ROOT; };
+		A10000000000000000000021 /* Python.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = Vendor/Python/Python.xcframework; sourceTree = SOURCE_ROOT; };
+		A10000000000000000000022 /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		D7B6C3C12D50A55D004E3AD6 /* AI_Hanlin.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AI_Hanlin.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D7C6558C2E6C731A0041F1C7 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -57,13 +64,17 @@
 			membershipExceptions = (
 				Downstream/RuntimeCore/README.md,
 				Downstream/MCP/README.md,
-				Downstream/MCP/Runtime/Host/Tests/host.test.mjs,
-				Downstream/MCP/Runtime/Host/host.mjs,
-				Downstream/MCP/Runtime/Host/package-compatibility.mjs,
-				Downstream/MCP/Runtime/Host/package-installer.mjs,
-				Downstream/MCP/Runtime/Host/package-lock.json,
-				Downstream/MCP/Runtime/Host/package.json,
-				Downstream/MCP/Runtime/Host/server-worker.mjs,
+				Downstream/RuntimeCore/Node/Host/Tests/host.test.mjs,
+				Downstream/RuntimeCore/Node/Host/Tests/runtime.test.mjs,
+				Downstream/RuntimeCore/Node/Host/execution-worker.mjs,
+				Downstream/RuntimeCore/Node/Host/global-package-manager.mjs,
+				Downstream/RuntimeCore/Node/Host/host.mjs,
+				Downstream/RuntimeCore/Node/Host/lifecycle-planner.mjs,
+				Downstream/RuntimeCore/Node/Host/package-compatibility.mjs,
+				Downstream/RuntimeCore/Node/Host/package-installer.mjs,
+				Downstream/RuntimeCore/Node/Host/package-lock.json,
+				Downstream/RuntimeCore/Node/Host/package.json,
+				Downstream/RuntimeCore/Node/Host/server-worker.mjs,
 			);
 			target = D7B6C3C02D50A55D004E3AD6 /* AI_Hanlin */;
 		};
@@ -85,6 +96,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A10000000000000000000009 /* JavaScriptCore.framework in Frameworks */,
+				A10000000000000000000008 /* IOSSystemLite in Frameworks */,
+				A10000000000000000000006 /* Python.xcframework in Frameworks */,
 				A10000000000000000000004 /* NodeMobile.xcframework in Frameworks */,
 				A10000000000000000000003 /* Logging in Frameworks */,
 				A10000000000000000000002 /* SWCompression in Frameworks */,
@@ -105,6 +119,8 @@
 		D73E23062D817B1300ACC644 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A10000000000000000000022 /* JavaScriptCore.framework */,
+				A10000000000000000000021 /* Python.xcframework */,
 				A10000000000000000000020 /* NodeMobile.xcframework */,
 			);
 			name = Frameworks;
@@ -138,6 +154,7 @@
 				D7B6C3BD2D50A55D004E3AD6 /* Sources */,
 				D7B6C3BE2D50A55D004E3AD6 /* Frameworks */,
 				D7B6C3BF2D50A55D004E3AD6 /* Resources */,
+				A10000000000000000000050 /* Process Python libraries */,
 				D73E237E2D818F0300ACC644 /* Embed ExtensionKit Extensions */,
 				D79AD5752DB545F9000646D4 /* Embed Frameworks */,
 			);
@@ -150,6 +167,7 @@
 			);
 			name = AI_Hanlin;
 			packageProductDependencies = (
+				A10000000000000000000014 /* IOSSystemLite */,
 				A10000000000000000000011 /* MCP */,
 				A10000000000000000000012 /* SWCompression */,
 				A10000000000000000000013 /* Logging */,
@@ -192,6 +210,7 @@
 			mainGroup = D7B6C3B82D50A55D004E3AD6;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
+				A10000000000000000000043 /* XCLocalSwiftPackageReference "IOSSystemLite" */,
 				A10000000000000000000040 /* XCRemoteSwiftPackageReference "swift-sdk" */,
 				A10000000000000000000041 /* XCRemoteSwiftPackageReference "SWCompression" */,
 				A10000000000000000000042 /* XCRemoteSwiftPackageReference "swift-log" */,
@@ -222,6 +241,29 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		A10000000000000000000050 /* Process Python libraries */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Process Python libraries";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "set -e\nsource \"$PROJECT_DIR/Vendor/Python/Python.xcframework/build/utils.sh\"\nif [ -z \"${EXPANDED_CODE_SIGN_IDENTITY:-}\" ]; then\n  export EXPANDED_CODE_SIGN_IDENTITY=\"-\"\n  export EXPANDED_CODE_SIGN_IDENTITY_NAME=\"Ad Hoc\"\nfi\ninstall_python Vendor/Python/Python.xcframework\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		D7B6C3BD2D50A55D004E3AD6 /* Sources */ = {
@@ -378,6 +420,8 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = AI_HLY/Views;
 				DEVELOPMENT_TEAM = 87242QY66T;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = NO;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "AI-HLY-Info.plist";
@@ -402,6 +446,7 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				HEADER_SEARCH_PATHS = \"$(BUILT_PRODUCTS_DIR)/Python.framework/Headers\";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -419,7 +464,7 @@
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -437,6 +482,8 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = AI_HLY/Views;
 				DEVELOPMENT_TEAM = 87242QY66T;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = NO;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "AI-HLY-Info.plist";
@@ -461,6 +508,7 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				HEADER_SEARCH_PATHS = \"$(BUILT_PRODUCTS_DIR)/Python.framework/Headers\";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -478,7 +526,7 @@
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -505,6 +553,13 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		A10000000000000000000043 /* XCLocalSwiftPackageReference "IOSSystemLite" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Packages/IOSSystemLite;
+		};
+/* End XCLocalSwiftPackageReference section */
 
 /* Begin XCRemoteSwiftPackageReference section */
 		A10000000000000000000040 /* XCRemoteSwiftPackageReference "swift-sdk" */ = {
@@ -590,6 +645,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		A10000000000000000000014 /* IOSSystemLite */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A10000000000000000000043 /* XCLocalSwiftPackageReference "IOSSystemLite" */;
+			productName = IOSSystemLite;
+		};
 		A10000000000000000000011 /* MCP */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = A10000000000000000000040 /* XCRemoteSwiftPackageReference "swift-sdk" */;

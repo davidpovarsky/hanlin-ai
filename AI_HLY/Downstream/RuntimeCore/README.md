@@ -15,6 +15,6 @@ RuntimeCore is the downstream, app-owned execution layer shared by assistant too
 
 All downloaded packages, generated code, caches, logs, and workspaces live below `Library/Application Support/HanlinRuntime/v1`. Runtime code never treats the app-container root as `HOME`, and every execution receives a validated client workspace.
 
-`RuntimeDependencies.lock.json` is the source of truth for immutable runtime inputs. `Scripts/Runtime/generate-runtime-manifest.mjs` creates the bundled diagnostics manifest from it. A null binary hash means that source pins have been inspected but the required Xcode build and embedded smoke test have not yet verified the binary; normal IPA preparation must reject that state.
+`RuntimeDependencies.lock.json` is the source of truth for immutable runtime inputs. `Scripts/Runtime/generate-runtime-manifest.mjs` creates the bundled diagnostics manifest from it. The pinned runtime bundle and Node binary hashes are verified; normal IPA preparation rejects checksum or provenance mismatches before Xcode starts.
 
 The original `PistonExecutor` and `execute_python_code` path are outside RuntimeCore and remain unchanged. Embedded Python is exposed separately as `execute_local_python_code`.

@@ -27,6 +27,7 @@ final class NativeToolCatalog {
         guard !didRegisterBuiltins else { return }
         didRegisterBuiltins = true
         register(QuickCalculateTool())
+        registerRuntimeTools()
         registerNativeAppTools()
     }
 

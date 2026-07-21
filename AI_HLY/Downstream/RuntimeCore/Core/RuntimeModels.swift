@@ -122,6 +122,29 @@ enum RuntimeJSONValue: Codable, Hashable, Sendable {
     case string(String)
     case array([RuntimeJSONValue])
     case object([String: RuntimeJSONValue])
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        if container.decodeNil() { self = .null }
+        else if let value = try? container.decode(Bool.self) { self = .boolean(value) }
+        else if let value = try? container.decode(Double.self) { self = .number(value) }
+        else if let value = try? container.decode(String.self) { self = .string(value) }
+        else if let value = try? container.decode([RuntimeJSONValue].self) { self = .array(value) }
+        else if let value = try? container.decode([String: RuntimeJSONValue].self) { self = .object(value) }
+        else { throw DecodingError.dataCorruptedError(in: container, debugDescription: "Unsupported JSON value") }
+    }
+
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.singleValueContainer()
+        switch self {
+        case .null: try container.encodeNil()
+        case .boolean(let value): try container.encode(value)
+        case .number(let value): try container.encode(value)
+        case .string(let value): try container.encode(value)
+        case .array(let value): try container.encode(value)
+        case .object(let value): try container.encode(value)
+        }
+    }
 }
 
 enum RuntimeCoreError: Error, Equatable, Sendable {
@@ -137,6 +160,30 @@ enum RuntimeCoreError: Error, Equatable, Sendable {
     case executionCancelled
     case outputLimitExceeded
     case invalidDependencyManifest
+    case invalidRequest(String)
+    case requestFailed(Int, String)
+    case runtimeFailure(String)
+}
+
+extension RuntimeCoreError: LocalizedError {
+    var errorDescription: String? {
+        switch self {
+        case .invalidPath: "The requested path is invalid."
+        case .pathEscapesRoot: "The requested path is outside the permitted workspace."
+        case .symbolicLinkRejected: "Symbolic links may not escape the permitted workspace."
+        case .invalidIdentifier: "The identifier is invalid."
+        case .invalidEnvironmentName: "The environment variable name is invalid."
+        case .reservedEnvironmentName: "That environment variable is managed by RuntimeCore."
+        case .runtimeUnavailable(let kind): "The \(kind.rawValue) runtime is unavailable."
+        case .appRestartRequired(let kind): "The \(kind.rawValue) runtime stopped and the app must be restarted."
+        case .executionTimedOut: "Execution timed out."
+        case .executionCancelled: "Execution was cancelled."
+        case .outputLimitExceeded: "Execution output exceeded the configured limit."
+        case .invalidDependencyManifest: "The bundled runtime manifest is invalid."
+        case .invalidRequest(let message), .runtimeFailure(let message): message
+        case .requestFailed(let status, let message): "Runtime request failed (HTTP \(status)): \(message)"
+        }
+    }
 }
 
 struct RuntimeManifest: Codable, Sendable {

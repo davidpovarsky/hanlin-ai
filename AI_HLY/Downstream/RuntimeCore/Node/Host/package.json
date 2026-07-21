@@ -1,10 +1,10 @@
 {
-  "name": "hanlin-embedded-mcp-host",
-  "version": "1.0.0",
+  "name": "hanlin-runtime-host",
+  "version": "2.0.0",
   "private": true,
   "type": "module",
   "engines": {
-    "node": "18.20.4"
+    "node": "24.5.0"
   },
   "scripts": {
     "test": "node --test Tests/*.test.mjs"
@@ -13,6 +13,7 @@
     "@npmcli/arborist": "8.0.5",
     "pacote": "20.0.1",
     "semver": "7.8.5",
-    "ssri": "12.0.0"
+    "ssri": "12.0.0",
+    "typescript": "6.0.3"
   }
 }

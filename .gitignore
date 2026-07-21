@@ -117,7 +117,7 @@ Config.xcconfig
 Vendor/NodeMobile/NodeMobile.xcframework/
 Vendor/NodeMobile/NODE_LICENSE.generated.txt
 Vendor/Python/
-AI_HLY/Downstream/MCP/Runtime/Host/node_modules/
+AI_HLY/Downstream/RuntimeCore/Node/Host/node_modules/
 AI_HLY/RuntimeHostResources.zip
 
 # Logs

@@ -392,7 +392,7 @@ jobs:
         with:
           node-version: ${{ needs.plan-runtime.outputs.node_version }}
           cache: npm
-          cache-dependency-path: AI_HLY/Downstream/MCP/Runtime/Host/package-lock.json
+          cache-dependency-path: AI_HLY/Downstream/RuntimeCore/Node/Host/package-lock.json
       - name: Prepare and test shared runtime host
         run: |
           mkdir -p build/runtime-host-logs

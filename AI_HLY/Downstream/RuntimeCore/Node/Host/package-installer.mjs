@@ -6,7 +6,7 @@ import semver from 'semver';
 import ssri from 'ssri';
 import { analyzePackage, inspectManifest, listEntryPoints, resolveEntryPoint } from './package-compatibility.mjs';
 
-const NODE_VERSION = '18.20.4';
+const NODE_VERSION = '24.5.0';
 
 export async function previewPackage(source, options = {}) {
   const cachePath = path.join(options.root, 'cache', 'npm');
@@ -35,7 +35,7 @@ export async function installPackage({ root, operationID, serverID, source, entr
   validateID(operationID);
   validateID(serverID);
   const stagingRoot = path.join(root, 'staging');
-  const serversRoot = path.join(root, 'servers');
+  const serversRoot = path.join(root, 'packages', 'mcp');
   const operationRoot = path.join(stagingRoot, operationID);
   const packageRoot = path.join(operationRoot, 'package');
   const finalRoot = path.join(serversRoot, serverID);
@@ -176,7 +176,7 @@ export async function commitInstall({ root, operationID, serverID }) {
 export async function rollbackInstall({ root, operationID, serverID }) {
   validateID(operationID);
   validateID(serverID);
-  const finalRoot = path.join(root, 'servers', serverID);
+  const finalRoot = path.join(root, 'packages', 'mcp', serverID);
   const backupRoot = path.join(root, 'staging', `backup-${operationID}`);
   await fs.rm(finalRoot, { recursive: true, force: true });
   try {
