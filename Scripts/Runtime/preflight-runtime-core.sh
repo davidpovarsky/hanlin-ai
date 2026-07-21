@@ -10,6 +10,9 @@ readonly HOST_ARCHIVE="${REPOSITORY_ROOT}/AI_HLY/RuntimeHostResources.zip"
 readonly HOST_ROOT="${REPOSITORY_ROOT}/AI_HLY/Downstream/RuntimeCore/Node/Host"
 
 node "${SCRIPT_DIR}/validate-runtime-lock.mjs" "${LOCK_FILE}"
+node "${SCRIPT_DIR}/validate-runtime-localization.mjs" \
+  "${REPOSITORY_ROOT}/AI_HLY/Downstream/RuntimeCore" \
+  "${REPOSITORY_ROOT}/AI_HLY/Downstream/RuntimeCore/Resources/RuntimeLocalizable.xcstrings"
 
 required_paths=(
   "${REPOSITORY_ROOT}/AI_HLY.xcodeproj/project.pbxproj"

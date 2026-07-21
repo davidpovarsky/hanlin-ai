@@ -81,7 +81,7 @@ test('replacement rollback restores the prior server and commit removes its back
   await fs.rm(root, { recursive: true, force: true });
 });
 
-test('host redirects npm state before preview and install modules initialize', async () => {
+test('host redirects npm state before preview and install modules initialize', async t => {
   const sandbox = await fs.mkdtemp(path.join(os.tmpdir(), 'hanlin-mcp-home-'));
   const containerRoot = path.join(sandbox, 'container-root');
   const root = path.join(containerRoot, 'Library', 'Application Support', 'HanlinRuntime', 'v1');
@@ -142,6 +142,55 @@ test('host redirects npm state before preview and install modules initialize', a
     });
     assert.equal(installed.packageName, 'hanlin-mcp-cache-fixture');
 
+    const workspace = path.join(root, 'clients', 'tools', 'host-test');
+    await fs.mkdir(workspace, { recursive: true });
+    const execution = await hostRequest(ready.port, launchToken, '/v1/executions', {
+      executionID: '33333333-3333-4333-8333-333333333333',
+      source: 'console.log("שלום"); export default { answer: 42 };',
+      workspace,
+      moduleKind: 'esm',
+      timeoutMilliseconds: 5000,
+      maximumOutputBytes: 4096,
+    });
+    assert.equal(execution.stdout, 'שלום\n');
+    assert.deepEqual(execution.value, { answer: 42 });
+
+    const compiled = await hostRequest(ready.port, launchToken, '/v1/typescript/compile', {
+      source: 'const answer: number = 42; console.log(answer);',
+      fileName: 'main.ts',
+    });
+    assert.equal(compiled.succeeded, true);
+    assert.match(compiled.javaScript, /const answer = 42/);
+
+    const timedOut = await hostRequest(ready.port, launchToken, '/v1/executions', {
+      executionID: '44444444-4444-4444-8444-444444444444',
+      source: 'setInterval(() => {}, 1000); await new Promise(() => {});',
+      workspace,
+      moduleKind: 'esm',
+      timeoutMilliseconds: 1000,
+      maximumOutputBytes: 4096,
+    });
+    assert.equal(timedOut.didTimeOut, true);
+
+    const traversal = await hostRequestStatus(ready.port, launchToken, '/v1/executions', {
+      executionID: '55555555-5555-4555-8555-555555555555', source: 'export default 1;',
+      workspace: path.join(root, '..'), moduleKind: 'esm', timeoutMilliseconds: 1000, maximumOutputBytes: 4096,
+    });
+    assert.equal(traversal.status, 400);
+
+    const linkedWorkspace = path.join(root, 'clients', 'tools', 'linked-workspace');
+    try {
+      await fs.symlink(workspace, linkedWorkspace, 'dir');
+      const symlinkResult = await hostRequestStatus(ready.port, launchToken, '/v1/executions', {
+        executionID: '66666666-6666-4666-8666-666666666666', source: 'export default 1;',
+        workspace: linkedWorkspace, moduleKind: 'esm', timeoutMilliseconds: 1000, maximumOutputBytes: 4096,
+      });
+      assert.equal(symlinkResult.status, 400);
+    } catch (error) {
+      if (process.platform !== 'win32' || error.code !== 'EPERM') throw error;
+      t.diagnostic('Windows Developer Mode is unavailable; symlink rejection remains enabled on the macOS CI run.');
+    }
+
     const expectedCache = path.join(root, 'cache', 'npm');
     await fs.access(expectedCache);
     await assert.rejects(fs.access(path.join(containerRoot, '.npm')), error => error.code === 'ENOENT');
@@ -178,6 +227,12 @@ async function waitForJSON(file, child, stderr) {
 }
 
 async function hostRequest(port, token, route, body) {
+  const response = await hostRequestStatus(port, token, route, body);
+  assert.equal(response.status, 200, response.text);
+  return JSON.parse(response.text);
+}
+
+async function hostRequestStatus(port, token, route, body) {
   const response = await fetch(`http://127.0.0.1:${port}${route}`, {
     method: 'POST',
     headers: {
@@ -187,6 +242,5 @@ async function hostRequest(port, token, route, body) {
     body: JSON.stringify(body),
   });
   const text = await response.text();
-  assert.equal(response.status, 200, text);
-  return JSON.parse(text);
+  return { status: response.status, text };
 }
