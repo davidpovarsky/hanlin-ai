@@ -1,0 +1,80 @@
+name: Build RuntimeCore Bundle
+
+on:
+  workflow_dispatch:
+    inputs:
+      publish_release:
+        description: Publish the verified bundle as a same-repository release asset
+        required: true
+        default: true
+        type: boolean
+
+permissions:
+  contents: write
+
+jobs:
+  build-runtime-bundle:
+    name: Build and verify pinned Apple runtimes
+    runs-on: macos-26
+    timeout-minutes: 180
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Select newest installed Xcode 26
+        run: |
+          set -euo pipefail
+          selected="$(find /Applications -maxdepth 1 -type d -name 'Xcode_26*.app' -print | sort -V | tail -1)"
+          test -n "$selected"
+          sudo xcode-select -s "$selected/Contents/Developer"
+          xcodebuild -version
+          xcodebuild -showsdks | grep -E 'iphoneos26|iOS 26'
+
+      - name: Select Node 24.5.0 for host preparation
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24.5.0
+          cache: npm
+          cache-dependency-path: AI_HLY/Downstream/MCP/Runtime/Host/package-lock.json
+
+      - name: Install runtime build prerequisites
+        run: brew install cmake
+
+      - name: Build, validate, and smoke-test runtime bundle
+        run: bash Scripts/Runtime/build-runtime-bundle.sh 2>&1 | tee build-runtime-bundle.log
+
+      - name: Upload diagnostic runtime artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: hanlin-runtime-bundle-diagnostics
+          path: |
+            build/hanlin-runtime-*.zip
+            build/runtime-bundle/
+            build/*.sha256
+            build/runtime-*-hash.txt
+            build/runtime-bundle-name.txt
+            build-runtime-bundle.log
+          if-no-files-found: error
+          retention-days: 14
+
+      - name: Publish durable runtime release asset
+        if: ${{ inputs.publish_release }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          dependency_hash="$(cat build/runtime-dependency-hash.txt)"
+          bundle_name="$(cat build/runtime-bundle-name.txt)"
+          tag="runtime-core-v1-${dependency_hash}"
+          if gh release view "$tag" >/dev/null 2>&1; then
+            echo "Release $tag already exists; refusing to replace an immutable runtime asset."
+            exit 1
+          fi
+          gh release create "$tag" \
+            "build/$bundle_name" \
+            build/runtime-bundle.sha256 \
+            build/node-xcframework.sha256 \
+            build/runtime-bundle/RuntimeProvenance.json \
+            --title "Hanlin RuntimeCore ${dependency_hash}" \
+            --notes "Pinned RuntimeCore bundle built and smoke-tested by workflow run ${GITHUB_RUN_ID}."

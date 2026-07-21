@@ -1,0 +1,107 @@
+{
+  "schemaVersion": 1,
+  "runtimeBundle": {
+    "formatVersion": 1,
+    "releaseRepository": "davidpovarsky/hanlin-ai",
+    "releaseTagPrefix": "runtime-core-v1-",
+    "sha256": null,
+    "verificationStatus": "pending"
+  },
+  "node": {
+    "sourceRepository": "https://github.com/heylogin/nodejs-mobile",
+    "tag": "v24.5.0-mobile",
+    "commit": "4768489cd0cfa3bb0c27786e958c6446c004f1bd",
+    "version": "24.5.0",
+    "sourceArchive": {
+      "url": "https://github.com/heylogin/nodejs-mobile/archive/refs/tags/v24.5.0-mobile.tar.gz",
+      "sha256": "614b5f1cb6409d7471b80535d3306a5c4a32ac8128c4a2bd9d8147d663e2555c"
+    },
+    "xcframeworkSha256": null,
+    "verificationStatus": "pending",
+    "license": "MIT with bundled third-party notices"
+  },
+  "python": {
+    "sourceRepository": "https://github.com/beeware/Python-Apple-support",
+    "release": "3.14-b10",
+    "commit": "b4678bc4288477415a01e8702e53b65bce336eae",
+    "version": "3.14.6",
+    "archive": {
+      "url": "https://github.com/beeware/Python-Apple-support/releases/download/3.14-b10/Python-3.14-iOS-support.b10.tar.gz",
+      "sha256": "200ef60eb67be0483ceb638daa9048f84f41a9a952707a5ad4c3198037c7b583",
+      "size": 36776988
+    },
+    "license": "MIT; Python and bundled libraries retain their upstream licenses"
+  },
+  "typescript": {
+    "package": "typescript",
+    "version": "6.0.3",
+    "integrity": "sha512-y2TvuxSZPDyQakkFRPZHKFm+KKVqIisdg9/CZwm9ftvKXLP8NRWj38/ODjNbr43SsoXqNuAisEf1GdCxqWcdBw==",
+    "license": "Apache-2.0"
+  },
+  "iosSystem": {
+    "sourceRepository": "https://github.com/holzschu/ios_system",
+    "release": "v3.0.5",
+    "commit": "7658fcf551935b42d6bb5bedc9315d8f53f760c4",
+    "license": "BSD-3-Clause; included command components retain the licenses documented by ios_system",
+    "components": [
+      {
+        "name": "ios_system",
+        "url": "https://github.com/holzschu/ios_system/releases/download/v3.0.5/ios_system.xcframework.zip",
+        "sha256": "d429e68102926f58bedd8e8b7105dcd169478cd6da1cef494a5f468482d1c8f5",
+        "size": 5012643
+      },
+      {
+        "name": "files",
+        "url": "https://github.com/holzschu/ios_system/releases/download/v3.0.5/files.xcframework.zip",
+        "sha256": "b0ee1f58c65ba306f178cd559fd6bce79ec8f275280526908c2a992bfcafedd5",
+        "size": 3726635
+      },
+      {
+        "name": "text",
+        "url": "https://github.com/holzschu/ios_system/releases/download/v3.0.5/text.xcframework.zip",
+        "sha256": "6fed763c6e941817b2a2af2051871bdfb8a1af4177fad1ab7837f72023dffb79",
+        "size": 8230746
+      },
+      {
+        "name": "tar",
+        "url": "https://github.com/holzschu/ios_system/releases/download/v3.0.5/tar.xcframework.zip",
+        "sha256": "207ab260f8dfb3101938c9e2a949cfd7b76f0e90a000637bbfd6aff47b014a68",
+        "size": 3563895
+      },
+      {
+        "name": "curl_ios",
+        "url": "https://github.com/holzschu/ios_system/releases/download/v3.0.5/curl_ios.xcframework.zip",
+        "sha256": "d7e2f05c9f2689d103db32f83ab045bfb6ab28ce84e3017e0c23e4b4db7ab169",
+        "size": 11464469
+      },
+      {
+        "name": "awk",
+        "url": "https://github.com/holzschu/ios_system/releases/download/v3.0.5/awk.xcframework.zip",
+        "sha256": "283f368df6c44ed9d49d15651ca4281706cdd86eb2b6ddb81808c8a3b18a4f7d",
+        "size": 1583877
+      }
+    ]
+  },
+  "nodeHostPackages": {
+    "@npmcli/arborist": {
+      "version": "8.0.5",
+      "integrity": "sha512-dFby80JSC3e8825FRGRuhOMWFeKFHokz8j8osLOujmjOSKm6smGu/b1/gbgW0lP8d84iMZO+RxpqBbC5KgL6DQ==",
+      "license": "ISC"
+    },
+    "pacote": {
+      "version": "20.0.1",
+      "integrity": "sha512-jTMLD/QK7JMUKg3g7K3M/DEqIbGm7sxclj12eQYIkL3viutSiefTs26IrqIqgGlFsviF/9dlDUZxnpGvkRXtjw==",
+      "license": "ISC"
+    },
+    "semver": {
+      "version": "7.8.5",
+      "integrity": "sha512-Y7/KDsb8LjooZpwaqGyulO6DQlksgCncchHGk+sZIY4SBvUocMBEFH5Ur1fI4dV+Jvl0w6cjvucaIi40puRioA==",
+      "license": "ISC"
+    },
+    "ssri": {
+      "version": "12.0.0",
+      "integrity": "sha512-S7iGNosepx9RadX82oimUkvr0Ct7IjJbEbs4mJcTxst8um95J3sDYU1RBEOvdu6oL1Wek2ODI5i4MAw+dZ6cAQ==",
+      "license": "ISC"
+    }
+  }
+}

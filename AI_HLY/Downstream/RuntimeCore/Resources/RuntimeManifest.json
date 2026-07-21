@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 1,
+  "runtimeBundle": {
+    "formatVersion": 1,
+    "releaseRepository": "davidpovarsky/hanlin-ai",
+    "releaseTagPrefix": "runtime-core-v1-",
+    "sha256": null,
+    "verificationStatus": "pending"
+  },
+  "runtimes": [
+    {
+      "id": "node",
+      "sourceProject": "https://github.com/heylogin/nodejs-mobile",
+      "version": "24.5.0",
+      "revision": "4768489cd0cfa3bb0c27786e958c6446c004f1bd",
+      "license": "MIT with bundled third-party notices",
+      "bundleHash": null,
+      "verificationStatus": "pending"
+    },
+    {
+      "id": "python",
+      "sourceProject": "https://github.com/beeware/Python-Apple-support",
+      "version": "3.14.6",
+      "revision": "3.14-b10",
+      "license": "MIT; Python and bundled libraries retain their upstream licenses",
+      "bundleHash": "200ef60eb67be0483ceb638daa9048f84f41a9a952707a5ad4c3198037c7b583",
+      "verificationStatus": "archive-verified"
+    },
+    {
+      "id": "typescript",
+      "sourceProject": "https://github.com/microsoft/TypeScript",
+      "version": "6.0.3",
+      "revision": "6.0.3",
+      "license": "Apache-2.0",
+      "bundleHash": "sha512-y2TvuxSZPDyQakkFRPZHKFm+KKVqIisdg9/CZwm9ftvKXLP8NRWj38/ODjNbr43SsoXqNuAisEf1GdCxqWcdBw==",
+      "verificationStatus": "package-integrity-verified"
+    },
+    {
+      "id": "ios-system",
+      "sourceProject": "https://github.com/holzschu/ios_system",
+      "version": "v3.0.5",
+      "revision": "7658fcf551935b42d6bb5bedc9315d8f53f760c4",
+      "license": "BSD-3-Clause; included command components retain the licenses documented by ios_system",
+      "bundleHash": null,
+      "componentHashes": {
+        "ios_system": "d429e68102926f58bedd8e8b7105dcd169478cd6da1cef494a5f468482d1c8f5",
+        "files": "b0ee1f58c65ba306f178cd559fd6bce79ec8f275280526908c2a992bfcafedd5",
+        "text": "6fed763c6e941817b2a2af2051871bdfb8a1af4177fad1ab7837f72023dffb79",
+        "tar": "207ab260f8dfb3101938c9e2a949cfd7b76f0e90a000637bbfd6aff47b014a68",
+        "curl_ios": "d7e2f05c9f2689d103db32f83ab045bfb6ab28ce84e3017e0c23e4b4db7ab169",
+        "awk": "283f368df6c44ed9d49d15651ca4281706cdd86eb2b6ddb81808c8a3b18a4f7d"
+      },
+      "verificationStatus": "release-assets-verified"
+    }
+  ]
+}
