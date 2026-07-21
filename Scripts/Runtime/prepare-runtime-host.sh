@@ -28,7 +28,7 @@ node -e '
   fs.writeFileSync(file, `${JSON.stringify({
     nodeVersion, archiveSha256: hash, npmInstall: "npm ci --omit=dev --ignore-scripts --ignore-workspaces --no-audit --no-fund",
     tests: "passed",
-  }, null, 2)}\\n`);
+  }, null, 2)}\n`);
 ' "${OUTPUT_ROOT}/host-metadata.json" "${host_sha256}" "$(node --version)"
 
 rm -rf "${WORK_ROOT}"

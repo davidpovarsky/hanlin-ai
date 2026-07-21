@@ -23,7 +23,6 @@ jobs:
     with:
       publish_release: true
       force_rebuild: false
-      reuse_artifacts_run_id: '29850350510'
     permissions:
       actions: read
       contents: write
@@ -174,10 +173,12 @@ jobs:
             cat Config.xcconfig
           } 2>&1 | tee "$LOG_DIR/03-create-config-xcconfig.log"
 
-      - name: Prepare embedded MCP runtime
+      - name: Prepare verified embedded RuntimeCore
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
           set -euxo pipefail
-          bash Scripts/MCP/bootstrap-node-mobile.sh 2>&1 | tee "$LOG_DIR/04-bootstrap-mcp.log"
+          bash Scripts/Runtime/prepare-runtime-core.sh 2>&1 | tee "$LOG_DIR/04-prepare-runtime-core.log"
 
       - name: Validate expected project files
         run: |
@@ -193,6 +194,11 @@ jobs:
             test -f "AI_HLY/AI_HLY.entitlements"
             test -f "AI-HLY-Info.plist"
             test -f "Config.xcconfig"
+            test -d "Vendor/NodeMobile/NodeMobile.xcframework"
+            test -d "Vendor/Python/Python.xcframework"
+            test -f "Vendor/Python/Python-VERSIONS"
+            test -f "AI_HLY/RuntimeHostResources.zip"
+            test -f "AI_HLY/Downstream/RuntimeCore/Resources/RuntimeManifest.json"
 
             echo
             echo "Required files exist."

@@ -222,8 +222,8 @@ actor NodeMobileRuntimeProvider {
         let destination = fileLayout.runtime.appending(path: "host-v\(version)", directoryHint: .isDirectory)
         let marker = destination.appending(path: ".ready")
         if FileManager.default.fileExists(atPath: marker.path) { return destination }
-        guard let archive = Bundle.main.url(forResource: "MCPHostResources", withExtension: "zip") else {
-            throw MCPError.runtimeUnavailable("MCPHostResources.zip is missing. Run Scripts/MCP/bootstrap-node-mobile.sh before building.")
+        guard let archive = Bundle.main.url(forResource: "RuntimeHostResources", withExtension: "zip") else {
+            throw MCPError.runtimeUnavailable("RuntimeHostResources.zip is missing. Run Scripts/Runtime/prepare-runtime-core.sh before building.")
         }
         let staging = fileLayout.runtime.appending(path: "host-staging-\(UUID().uuidString)", directoryHint: .isDirectory)
         try FileManager.default.createDirectory(at: staging, withIntermediateDirectories: true)

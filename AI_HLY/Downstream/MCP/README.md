@@ -10,7 +10,7 @@ Host dependency versions were chosen as the newest releases observed on 2026-07-
 
 ## Build preparation
 
-Run `bash Scripts/MCP/bootstrap-node-mobile.sh`. The script verifies the official Node.js Mobile archive and creates both the excluded `Vendor/NodeMobile/NodeMobile.xcframework` and the bundled host-only `AI_HLY/MCPHostResources.zip`.
+Run `bash Scripts/Runtime/prepare-runtime-core.sh`. The script downloads the immutable verified RuntimeCore release, installs the excluded Node and Python XCFrameworks, and stages the single shared `AI_HLY/RuntimeHostResources.zip` app resource.
 
 ## Upstream touchpoints
 

@@ -116,8 +116,9 @@ Thumbs.db
 Config.xcconfig
 Vendor/NodeMobile/NodeMobile.xcframework/
 Vendor/NodeMobile/NODE_LICENSE.generated.txt
+Vendor/Python/
 AI_HLY/Downstream/MCP/Runtime/Host/node_modules/
-AI_HLY/MCPHostResources.zip
+AI_HLY/RuntimeHostResources.zip
 
 # Logs
 *.log

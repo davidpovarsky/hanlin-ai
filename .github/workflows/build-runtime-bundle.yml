@@ -672,7 +672,8 @@ jobs:
             --pattern 'RuntimeProvenance.json' --dir build/release-verification
           (cd build/release-verification && shasum -a 256 -c runtime-bundle.sha256)
           node -e '
-            const provenance = require(process.argv[1]);
+            const fs = require("node:fs");
+            const provenance = JSON.parse(fs.readFileSync(process.argv[1], "utf8"));
             if (provenance.dependencyHash !== process.argv[2]) throw new Error("Release provenance hash mismatch");
           ' build/release-verification/RuntimeProvenance.json "$DEPENDENCY_HASH"
           echo "Published and verified immutable release $RELEASE_TAG."

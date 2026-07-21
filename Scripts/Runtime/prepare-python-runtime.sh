@@ -52,7 +52,7 @@ node -e '
     pythonVersion: version, pythonCommit: commit, sourceArchiveSha256: sourceHash,
     packagedRuntimeSha256: archiveHash, deviceSlice: "ios-arm64",
     simulatorSlice: "ios-arm64_x86_64-simulator",
-  }, null, 2)}\\n`);
+  }, null, 2)}\n`);
 ' "${OUTPUT_ROOT}/python-metadata.json" "${PYTHON_VERSION}" "${PYTHON_COMMIT}" \
   "${PYTHON_SHA256}" "${runtime_sha256}"
 

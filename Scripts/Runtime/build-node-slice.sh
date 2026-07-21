@@ -65,7 +65,7 @@ node -e '
   fs.writeFileSync(file, `${JSON.stringify({
     nodeVersion, nodeCommit, target, xcodeVersion, frameworkSha256: hash,
     buildDurationSeconds: Number(duration), architectures: architectures.split(/\\s+/), platform,
-  }, null, 2)}\\n`);
+  }, null, 2)}\n`);
 ' "${OUTPUT_ROOT}/slice-metadata.json" "${node_version}" "${node_commit}" "${TARGET}" \
   "${xcode_version}" "${framework_sha256}" "${duration}" "${architectures}" "${platform}"
 
