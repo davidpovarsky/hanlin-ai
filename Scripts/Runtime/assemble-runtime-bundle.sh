@@ -156,7 +156,7 @@ node -e '
   const nodeRuntime = manifest.runtimes.find(runtime => runtime.id === "node");
   nodeRuntime.bundleHash = hash;
   nodeRuntime.verificationStatus = "embedded-smoke-verified";
-  fs.writeFileSync(file, `${JSON.stringify(manifest, null, 2)}\\n`);
+  fs.writeFileSync(file, `${JSON.stringify(manifest, null, 2)}\n`);
 ' "${OUTPUT_ROOT}/RuntimeManifest.json" "${node_xcframework_sha256}"
 
 device_slice_sha256="$(awk '{print $1}' "${INPUT_ROOT}/node-device/framework.sha256")"
@@ -174,7 +174,7 @@ node -e '
     pythonArchiveSha256: pythonSourceHash, pythonRuntimeSha256: pythonRuntimeHash,
     runtimeHostSha256: hostHash, workflowRunID: runID || null,
     workflowRunAttempt: runAttempt ? Number(runAttempt) : null,
-  }, null, 2)}\\n`);
+  }, null, 2)}\n`);
 ' "${OUTPUT_ROOT}/RuntimeProvenance.json" "${DEPENDENCY_HASH}" "${NODE_COMMIT}" "${NODE_VERSION}" \
   "${NODE_SOURCE_SHA256}" "${node_xcframework_sha256}" "${device_slice_sha256}" \
   "${simulator_slice_sha256}" "${PYTHON_VERSION}" "${PYTHON_SHA256}" \

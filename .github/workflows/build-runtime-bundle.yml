@@ -535,6 +535,13 @@ jobs:
           done
           (cd build && shasum -a 256 -c runtime-bundle.sha256)
           test "$(cat build/runtime-dependency-hash.txt)" = "$dependency_hash"
+          node -e '
+            const fs = require("node:fs");
+            for (const file of process.argv.slice(1)) JSON.parse(fs.readFileSync(file, "utf8"));
+          ' \
+            build/runtime-bundle/RuntimeManifest.json \
+            build/runtime-bundle/RuntimeProvenance.json \
+            build/runtime-bundle/NodeMobile-smoke.json
       - name: Upload complete runtime bundle
         uses: actions/upload-artifact@v4
         with:
@@ -600,6 +607,7 @@ jobs:
       - name: Publish or reuse immutable release
         env:
           GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
           RELEASE_EXISTS: ${{ needs.plan-runtime.outputs.release_exists }}
           RELEASE_TAG: ${{ needs.plan-runtime.outputs.release_tag }}
           DEPENDENCY_HASH: ${{ needs.plan-runtime.outputs.dependency_hash }}
