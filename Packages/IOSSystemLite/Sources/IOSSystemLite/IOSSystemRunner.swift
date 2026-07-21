@@ -25,10 +25,10 @@ public enum IOSSystemRunner {
             throw NSError(domain: "IOSSystemLite", code: 1, userInfo: [NSLocalizedDescriptionKey: "The command is not linked or allowed."])
         }
         configureCommands()
-        guard ios_setMiniRootURL(workspace as NSURL) == 1 else {
+        guard ios_setMiniRootURL(workspace) == 1 else {
             throw NSError(domain: "IOSSystemLite", code: 2, userInfo: [NSLocalizedDescriptionKey: "ios_system rejected the workspace miniRoot."])
         }
-        ios_setDirectoryURL(workspace as NSURL)
+        ios_setDirectoryURL(workspace)
         let oldEnvironment = ProcessInfo.processInfo.environment
         for (name, value) in environment { setenv(name, value, 1) }
         defer {
@@ -40,7 +40,6 @@ public enum IOSSystemRunner {
         }
         defer { fclose(input); fclose(output); fclose(error) }
         ios_setStreams(input, output, error)
-        joinMainThread = true
         let rendered = tokens.map(shellEscape).joined(separator: " ")
         let status = rendered.withCString { ios_system(UnsafeMutablePointer(mutating: $0)) }
         fflush(output); fflush(error)

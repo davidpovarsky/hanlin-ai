@@ -4,6 +4,7 @@ actor MCPRuntimeController {
     private let runtime: NodeRuntimeService
     private let registry: MCPServerRegistryStore
     private let secrets: MCPSecretStore
+    private let runtimeEnvironment: RuntimeEnvironmentStore
     private let catalog = MCPToolCatalog()
     private var sessions: [UUID: MCPClientSession] = [:]
     private var toolChangeTasks: [UUID: Task<Void, Never>] = [:]
@@ -12,11 +13,13 @@ actor MCPRuntimeController {
     init(
         runtime: NodeRuntimeService,
         registry: MCPServerRegistryStore = MCPServerRegistryStore(),
-        secrets: MCPSecretStore = MCPSecretStore()
+        secrets: MCPSecretStore = MCPSecretStore(),
+        runtimeEnvironment: RuntimeEnvironmentStore = AppRuntimeCore.shared.environment
     ) {
         self.runtime = runtime
         self.registry = registry
         self.secrets = secrets
+        self.runtimeEnvironment = runtimeEnvironment
     }
 
     func statuses() -> [UUID: MCPServerStatus] { statusValues }
@@ -36,7 +39,9 @@ actor MCPRuntimeController {
                     secretValues[reference] = try await secrets.value(reference: reference)
                 }
             }
-            let configuration = MCPServerConfiguration(descriptor: server, secrets: secretValues)
+            var configuration = MCPServerConfiguration(descriptor: server, secrets: secretValues)
+            let inheritedEnvironment = try await runtimeEnvironment.resolved(scopes: [.shared, .node, .mcpServer(server.id)])
+            configuration.environment = inheritedEnvironment.merging(configuration.environment) { _, serverValue in serverValue }
             let transport = EmbeddedNodeMCPTransport(server: configuration, connection: connection)
             let session = MCPClientSession(server: server, transport: transport)
             pendingSession = session
