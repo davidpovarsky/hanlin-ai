@@ -55,19 +55,22 @@ actor NodePackageManager {
         let host = try await node.ensureRunning()
         var body: [String: Any] = ["name": name]
         if let version { body["version"] = version }
-        return try await host.decode(NodePackageDetails.self, path: "/v1/packages/node/preview", method: "POST", json: body, timeout: 120)
+        let encodedBody = try JSONSerialization.data(withJSONObject: body)
+        return try await host.decode(NodePackageDetails.self, path: "/v1/packages/node/preview", method: "POST", body: encodedBody, timeout: 120)
     }
 
     func install(name: String, version: String? = nil) async throws -> NodePackageDetails {
         let host = try await node.ensureRunning()
         var body: [String: Any] = ["name": name]
         if let version { body["version"] = version }
-        return try await host.decode(NodePackageDetails.self, path: "/v1/packages/node/install", method: "POST", json: body, timeout: 600)
+        let encodedBody = try JSONSerialization.data(withJSONObject: body)
+        return try await host.decode(NodePackageDetails.self, path: "/v1/packages/node/install", method: "POST", body: encodedBody, timeout: 600)
     }
 
     func uninstall(name: String) async throws {
         let host = try await node.ensureRunning()
-        _ = try await host.data(path: "/v1/packages/node/uninstall", method: "POST", json: ["name": name], timeout: 600)
+        let body = try JSONSerialization.data(withJSONObject: ["name": name])
+        _ = try await host.data(path: "/v1/packages/node/uninstall", method: "POST", body: body, timeout: 600)
     }
 
     func probe(_ package: NodePackageDetails) async throws -> RuntimeExecutionResult {

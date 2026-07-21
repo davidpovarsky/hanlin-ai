@@ -27,8 +27,7 @@ struct RuntimeHostConnection: Sendable {
         return request
     }
 
-    func data(path: String, method: String = "GET", json: Any? = nil, timeout: TimeInterval = 60) async throws -> Data {
-        let body = try json.map { try JSONSerialization.data(withJSONObject: $0) }
+    func data(path: String, method: String = "GET", body: Data? = nil, timeout: TimeInterval = 60) async throws -> Data {
         let (data, response) = try await URLSession.shared.data(for: request(path: path, method: method, body: body, timeout: timeout))
         guard let http = response as? HTTPURLResponse else { throw RuntimeCoreError.runtimeFailure("The runtime host returned an invalid response.") }
         guard 200..<300 ~= http.statusCode else {
@@ -38,8 +37,8 @@ struct RuntimeHostConnection: Sendable {
         return data
     }
 
-    func decode<T: Decodable>(_ type: T.Type, path: String, method: String = "GET", json: Any? = nil, timeout: TimeInterval = 60) async throws -> T {
-        try JSONDecoder().decode(T.self, from: await data(path: path, method: method, json: json, timeout: timeout))
+    func decode<T: Decodable>(_ type: T.Type, path: String, method: String = "GET", body: Data? = nil, timeout: TimeInterval = 60) async throws -> T {
+        try JSONDecoder().decode(T.self, from: await data(path: path, method: method, body: body, timeout: timeout))
     }
 }
 
@@ -169,20 +168,21 @@ actor NodeRuntimeService {
         }
         let milliseconds = request.limits.timeout.components.seconds * 1_000
             + Int64(request.limits.timeout.components.attoseconds / 1_000_000_000_000_000)
+        let body = try JSONSerialization.data(withJSONObject: [
+            "executionID": request.id.uuidString.lowercased(),
+            "source": request.source,
+            "arguments": request.arguments,
+            "workspace": workspace.path,
+            "environment": request.environment,
+            "moduleKind": moduleKind,
+            "timeoutMilliseconds": milliseconds,
+            "maximumOutputBytes": request.limits.maximumOutputBytes
+        ])
         let payload = try await host.decode(
             HostExecutionResponse.self,
             path: "/v1/executions",
             method: "POST",
-            json: [
-                "executionID": request.id.uuidString.lowercased(),
-                "source": request.source,
-                "arguments": request.arguments,
-                "workspace": workspace.path,
-                "environment": request.environment,
-                "moduleKind": moduleKind,
-                "timeoutMilliseconds": milliseconds,
-                "maximumOutputBytes": request.limits.maximumOutputBytes
-            ],
+            body: body,
             timeout: TimeInterval(max(5, milliseconds / 1_000 + 5))
         )
         return RuntimeExecutionResult(
@@ -200,14 +200,18 @@ actor NodeRuntimeService {
 
     func cancelExecution(id: UUID) async {
         guard let connection else { return }
-        _ = try? await connection.data(path: "/v1/executions/\(id.uuidString.lowercased())/cancel", method: "POST", json: [:], timeout: 3)
+        _ = try? await connection.data(path: "/v1/executions/\(id.uuidString.lowercased())/cancel", method: "POST", body: Data("{}".utf8), timeout: 3)
     }
 
-    func compileTypeScript(source: String, fileName: String = "main.ts", tsconfig: [String: Any]? = nil) async throws -> TypeScriptCompilationResult {
+    func compileTypeScript(source: String, fileName: String = "main.ts", tsconfig: [String: RuntimeJSONValue]? = nil) async throws -> TypeScriptCompilationResult {
         let host = try await ensureRunning()
         var body: [String: Any] = ["source": source, "fileName": fileName]
-        if let tsconfig { body["tsconfig"] = tsconfig }
-        return try await host.decode(TypeScriptCompilationResult.self, path: "/v1/typescript/compile", method: "POST", json: body)
+        if let tsconfig {
+            let encoded = try JSONEncoder().encode(tsconfig)
+            body["tsconfig"] = try JSONSerialization.jsonObject(with: encoded)
+        }
+        let encodedBody = try JSONSerialization.data(withJSONObject: body)
+        return try await host.decode(TypeScriptCompilationResult.self, path: "/v1/typescript/compile", method: "POST", body: encodedBody)
     }
 
     func currentConnection() async throws -> RuntimeHostConnection {

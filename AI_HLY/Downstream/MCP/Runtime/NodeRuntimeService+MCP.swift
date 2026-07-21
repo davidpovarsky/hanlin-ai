@@ -7,10 +7,11 @@ private struct MCPInstallProgressResponse: Decodable, Sendable {
 extension NodeRuntimeService {
     func previewMCPPackage(spec: MCPPackageSpec) async throws -> MCPPackageManifestPreview {
         let host = try await ensureRunning()
+        let body = try JSONSerialization.data(withJSONObject: ["source": spec.hostPayload])
         let data = try await host.data(
             path: "/v1/install/preview",
             method: "POST",
-            json: ["source": spec.hostPayload],
+            body: body,
             timeout: 120
         )
         return try JSONDecoder.mcp.decode(MCPPackageManifestPreview.self, from: data)
@@ -39,16 +40,18 @@ extension NodeRuntimeService {
             "source": source
         ]
         if let entryPointOverride { body["entryPointOverride"] = entryPointOverride }
-        let data = try await host.data(path: "/v1/install", method: "POST", json: body, timeout: 600)
+        let encodedBody = try JSONSerialization.data(withJSONObject: body)
+        let data = try await host.data(path: "/v1/install", method: "POST", body: encodedBody, timeout: 600)
         return try JSONDecoder.mcp.decode(MCPServerDescriptor.self, from: data)
     }
 
     func commitMCPInstall(operationID: UUID, serverID: UUID) async throws {
         let host = try await ensureRunning()
-        _ = try await host.data(path: "/v1/install/commit", method: "POST", json: [
+        let body = try JSONSerialization.data(withJSONObject: [
             "operationID": operationID.uuidString.lowercased(),
             "serverID": serverID.uuidString.lowercased()
         ])
+        _ = try await host.data(path: "/v1/install/commit", method: "POST", body: body)
     }
 
     func mcpInstallProgress(operationID: UUID) async throws -> MCPInstallProgress? {
@@ -59,16 +62,18 @@ extension NodeRuntimeService {
 
     func rollbackMCPInstall(operationID: UUID, serverID: UUID) async throws {
         let host = try await ensureRunning()
-        _ = try await host.data(path: "/v1/install/rollback", method: "POST", json: [
+        let body = try JSONSerialization.data(withJSONObject: [
             "operationID": operationID.uuidString.lowercased(),
             "serverID": serverID.uuidString.lowercased()
         ])
+        _ = try await host.data(path: "/v1/install/rollback", method: "POST", body: body)
     }
 
     func cancelMCPInstall(operationID: UUID) async throws {
         let host = try await ensureRunning()
-        _ = try await host.data(path: "/v1/install/cancel", method: "POST", json: [
+        let body = try JSONSerialization.data(withJSONObject: [
             "operationID": operationID.uuidString.lowercased()
         ])
+        _ = try await host.data(path: "/v1/install/cancel", method: "POST", body: body)
     }
 }

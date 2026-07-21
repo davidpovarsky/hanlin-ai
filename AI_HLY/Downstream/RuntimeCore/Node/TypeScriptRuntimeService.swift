@@ -10,11 +10,11 @@ actor TypeScriptRuntimeService {
 
     init(node: NodeRuntimeService) { self.node = node }
 
-    func compile(source: String, fileName: String = "main.ts", tsconfig: [String: Any]? = nil) async throws -> TypeScriptCompilationResult {
+    func compile(source: String, fileName: String = "main.ts", tsconfig: [String: RuntimeJSONValue]? = nil) async throws -> TypeScriptCompilationResult {
         try await node.compileTypeScript(source: source, fileName: fileName, tsconfig: tsconfig)
     }
 
-    func compileAndExecute(source: String, request: RuntimeExecutionRequest, fileName: String = "main.ts", tsconfig: [String: Any]? = nil, compileOnly: Bool = false) async throws -> TypeScriptExecutionResult {
+    func compileAndExecute(source: String, request: RuntimeExecutionRequest, fileName: String = "main.ts", tsconfig: [String: RuntimeJSONValue]? = nil, compileOnly: Bool = false) async throws -> TypeScriptExecutionResult {
         let compilation = try await compile(source: source, fileName: fileName, tsconfig: tsconfig)
         guard compilation.succeeded, let javaScript = compilation.javaScript else { return TypeScriptExecutionResult(compilation: compilation, execution: nil) }
         if compileOnly { return TypeScriptExecutionResult(compilation: compilation, execution: nil) }
