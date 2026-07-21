@@ -4,77 +4,564 @@ on:
   workflow_dispatch:
     inputs:
       publish_release:
-        description: Publish the verified bundle as a same-repository release asset
+        description: Publish or reuse the immutable verified RuntimeCore release
+        type: boolean
         required: true
         default: true
+      force_rebuild:
+        description: Rebuild even when the exact immutable runtime release already exists
         type: boolean
+        required: true
+        default: false
+  workflow_call:
+    inputs:
+      publish_release:
+        type: boolean
+        required: true
+      force_rebuild:
+        type: boolean
+        required: true
 
 permissions:
   contents: write
 
-jobs:
-  build-runtime-bundle:
-    name: Build and verify pinned Apple runtimes
-    runs-on: macos-26
-    timeout-minutes: 180
+concurrency:
+  group: runtime-core-bundle-${{ github.ref }}
+  cancel-in-progress: false
 
+jobs:
+  plan-runtime:
+    name: Plan immutable runtime bundle
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    outputs:
+      dependency_hash: ${{ steps.plan.outputs.dependency_hash }}
+      release_tag: ${{ steps.plan.outputs.release_tag }}
+      node_version: ${{ steps.plan.outputs.node_version }}
+      node_commit: ${{ steps.plan.outputs.node_commit }}
+      node_source_url: ${{ steps.plan.outputs.node_source_url }}
+      node_source_sha256: ${{ steps.plan.outputs.node_source_sha256 }}
+      python_version: ${{ steps.plan.outputs.python_version }}
+      python_url: ${{ steps.plan.outputs.python_url }}
+      python_sha256: ${{ steps.plan.outputs.python_sha256 }}
+      release_exists: ${{ steps.plan.outputs.release_exists }}
     steps:
-      - name: Checkout repository
+      - name: Checkout requested revision
         uses: actions/checkout@v4
 
+      - name: Read pinned host Node version
+        id: lock
+        run: echo "node_version=$(node -p 'require("./RuntimeDependencies.lock.json").node.version')" >> "$GITHUB_OUTPUT"
+
+      - name: Set up pinned host Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ steps.lock.outputs.node_version }}
+
+      - name: Validate pins and plan release
+        id: plan
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          node Scripts/Runtime/validate-runtime-lock.mjs RuntimeDependencies.lock.json --allow-pending-build
+          dependency_hash="$(node Scripts/Runtime/compute-runtime-dependency-hash.mjs RuntimeDependencies.lock.json)"
+          release_tag="runtime-core-v1-${dependency_hash}"
+          release_exists=false
+
+          if gh release view "$release_tag" >/dev/null 2>&1; then
+            required_assets=(
+              "hanlin-runtime-${dependency_hash}.zip"
+              "runtime-bundle.sha256"
+              "node-xcframework.sha256"
+              "RuntimeProvenance.json"
+            )
+            mapfile -t actual_assets < <(gh release view "$release_tag" --json assets --jq '.assets[].name')
+            for asset in "${required_assets[@]}"; do
+              printf '%s\n' "${actual_assets[@]}" | grep -Fxq "$asset" || {
+                echo "Immutable release $release_tag is incomplete; missing $asset." >&2
+                exit 1
+              }
+            done
+            release_exists=true
+            echo "Verified existing immutable release $release_tag. Expensive jobs will be skipped unless force_rebuild is true."
+          fi
+
+          {
+            echo "dependency_hash=$dependency_hash"
+            echo "release_tag=$release_tag"
+            echo "node_version=$(node -p 'require("./RuntimeDependencies.lock.json").node.version')"
+            echo "node_commit=$(node -p 'require("./RuntimeDependencies.lock.json").node.commit')"
+            echo "node_source_url=$(node -p 'require("./RuntimeDependencies.lock.json").node.sourceArchive.url')"
+            echo "node_source_sha256=$(node -p 'require("./RuntimeDependencies.lock.json").node.sourceArchive.sha256')"
+            echo "python_version=$(node -p 'require("./RuntimeDependencies.lock.json").python.version')"
+            echo "python_url=$(node -p 'require("./RuntimeDependencies.lock.json").python.archive.url')"
+            echo "python_sha256=$(node -p 'require("./RuntimeDependencies.lock.json").python.archive.sha256')"
+            echo "release_exists=$release_exists"
+          } >> "$GITHUB_OUTPUT"
+
+  build-node:
+    name: build-node-${{ matrix.artifact_suffix }}
+    needs: plan-runtime
+    if: ${{ needs.plan-runtime.outputs.release_exists != 'true' || inputs.force_rebuild }}
+    runs-on: macos-26
+    timeout-minutes: 220
+    strategy:
+      fail-fast: false
+      max-parallel: 2
+      matrix:
+        include:
+          - target: arm64
+            artifact_suffix: device
+          - target: arm64-simulator
+            artifact_suffix: simulator
+    steps:
+      - name: Checkout requested revision
+        uses: actions/checkout@v4
+
+      - name: Set up pinned host Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ needs.plan-runtime.outputs.node_version }}
+
       - name: Select newest installed Xcode 26
+        id: xcode
         run: |
           set -euo pipefail
           selected="$(find /Applications -maxdepth 1 -type d -name 'Xcode_26*.app' -print | sort -V | tail -1)"
           test -n "$selected"
           sudo xcode-select -s "$selected/Contents/Developer"
-          xcodebuild -version
+          xcodebuild -version | tee xcode-version.txt
           xcodebuild -showsdks | grep -E 'iphoneos26|iOS 26'
+          echo "build=$(xcodebuild -version | awk '/Build version/{print $3}')" >> "$GITHUB_OUTPUT"
 
-      - name: Select Node 24.5.0 for host preparation
-        uses: actions/setup-node@v4
-        with:
-          node-version: 24.5.0
-          cache: npm
-          cache-dependency-path: AI_HLY/Downstream/MCP/Runtime/Host/package-lock.json
+      - name: Record initial disk usage
+        run: |
+          df -h | tee disk-before.txt
+          du -sh "$HOME/Library/Caches/HanlinNodeMobile" 2>/dev/null || true
 
-      - name: Install runtime build prerequisites
-        run: brew install cmake
+      - name: Install CMake and ccache
+        run: brew install cmake ccache
 
-      - name: Build, validate, and smoke-test runtime bundle
-        run: bash Scripts/Runtime/build-runtime-bundle.sh 2>&1 | tee build-runtime-bundle.log
-
-      - name: Upload diagnostic runtime artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: hanlin-runtime-bundle-diagnostics
-          path: |
-            build/hanlin-runtime-*.zip
-            build/runtime-bundle/
-            build/*.sha256
-            build/runtime-*-hash.txt
-            build/runtime-bundle-name.txt
-            build-runtime-bundle.log
-          if-no-files-found: error
-          retention-days: 14
-
-      - name: Publish durable runtime release asset
-        if: ${{ inputs.publish_release }}
+      - name: Configure architecture ccache
+        id: cache-key
         env:
-          GH_TOKEN: ${{ github.token }}
+          TARGET: ${{ matrix.target }}
+          NODE_COMMIT: ${{ needs.plan-runtime.outputs.node_commit }}
+          XCODE_BUILD: ${{ steps.xcode.outputs.build }}
         run: |
           set -euo pipefail
-          dependency_hash="$(cat build/runtime-dependency-hash.txt)"
-          bundle_name="$(cat build/runtime-bundle-name.txt)"
-          tag="runtime-core-v1-${dependency_hash}"
-          if gh release view "$tag" >/dev/null 2>&1; then
-            echo "Release $tag already exists; refusing to replace an immutable runtime asset."
-            exit 1
+          wrappers="$(brew --prefix ccache)/libexec"
+          ccache_dir="$HOME/Library/Caches/HanlinNodeMobile/ccache/${TARGET}"
+          mkdir -p "$ccache_dir"
+          echo "$wrappers" >> "$GITHUB_PATH"
+          {
+            echo "CCACHE_DIR=$ccache_dir"
+            echo "CCACHE_COMPRESS=true"
+            echo "CCACHE_MAXSIZE=3G"
+            echo "CCACHE_COMPILERCHECK=content"
+            echo "CCACHE_NOHASHDIR=true"
+          } >> "$GITHUB_ENV"
+          lock_hash="$(shasum -a 256 RuntimeDependencies.lock.json | awk '{print $1}')"
+          script_hash="$(shasum -a 256 Scripts/Runtime/build-node-slice.sh | awk '{print $1}')"
+          base="hanlin-node24-ccache-v1-${RUNNER_OS}-${RUNNER_ARCH}-${XCODE_BUILD}-${NODE_COMMIT}-${TARGET}-${lock_hash}-${script_hash}"
+          echo "base=$base" >> "$GITHUB_OUTPUT"
+
+      - name: Restore architecture ccache
+        id: cache-restore
+        uses: actions/cache/restore@v4
+        with:
+          path: ~/Library/Caches/HanlinNodeMobile/ccache/${{ matrix.target }}
+          key: ${{ steps.cache-key.outputs.base }}-${{ github.run_id }}-${{ github.run_attempt }}
+          restore-keys: |
+            ${{ steps.cache-key.outputs.base }}-
+
+      - name: Verify ccache compiler wrappers
+        run: |
+          set -euo pipefail
+          which clang
+          which clang++
+          which cc
+          which c++
+          ccache --version
+          ccache --show-config
+          ccache --max-size 3G
+          ccache --zero-stats
+          ccache --show-stats
+
+      - name: Prepare pinned Node source
+        env:
+          NODE_SOURCE_ROOT: ${{ runner.temp }}/hanlin-node-${{ matrix.target }}
+        run: |
+          mkdir -p build/node-evidence/${{ matrix.target }}
+          bash Scripts/Runtime/prepare-node-source.sh "$NODE_SOURCE_ROOT" \
+            2>&1 | tee build/node-evidence/${{ matrix.target }}/prepare-source.log
+          echo "CCACHE_BASEDIR=$NODE_SOURCE_ROOT" >> "$GITHUB_ENV"
+          echo "NODE_SOURCE_ROOT=$NODE_SOURCE_ROOT" >> "$GITHUB_ENV"
+
+      - name: Build one Node slice with heartbeat
+        id: slice-build
+        env:
+          TARGET: ${{ matrix.target }}
+        run: |
+          set +e
+          evidence="build/node-evidence/${TARGET}"
+          python3 Scripts/Runtime/run-with-heartbeat.py \
+            --log "$evidence/build.log" \
+            --summary "$evidence/heartbeat.log" \
+            --object-root "$NODE_SOURCE_ROOT/out" \
+            --timeout 10800 \
+            -- bash Scripts/Runtime/build-node-slice.sh "$TARGET"
+          status=$?
+          set -e
+          printf '%s\n' "$status" > "$evidence/build-status.txt"
+          echo "build_status=$status" >> "$GITHUB_OUTPUT"
+          exit 0
+
+      - name: Preserve slice diagnostics
+        if: always()
+        env:
+          TARGET: ${{ matrix.target }}
+          CACHE_MATCHED_KEY: ${{ steps.cache-restore.outputs.cache-matched-key }}
+        run: |
+          set +e
+          evidence="build/node-evidence/${TARGET}"
+          output="build/node-slices/${TARGET}"
+          mkdir -p "$evidence"
+          test -f "$evidence/build-status.txt" || echo "setup-or-source-preparation-failed" > "$evidence/build-status.txt"
+          xcodebuild -version > "$evidence/xcode-version.txt" 2>&1
+          df -h > "$evidence/disk-usage.txt" 2>&1
+          {
+            du -sh "$NODE_SOURCE_ROOT" 2>/dev/null
+            du -sh "$CCACHE_DIR" 2>/dev/null
+            du -sh "$output" 2>/dev/null
+          } > "$evidence/directory-sizes.txt" 2>&1
+          ccache --show-stats > "$evidence/ccache-stats.txt" 2>&1
+          tail -200 "$evidence/build.log" > "$evidence/compiler-last-200.log" 2>/dev/null || true
+          printf '%s\n' "$CACHE_MATCHED_KEY" > "$evidence/cache-restored-key.txt"
+          printf '%s\n' "./tools/ios_framework_prepare.sh ${TARGET}" > "$evidence/failed-command.txt"
+          shasum -a 256 RuntimeDependencies.lock.json Scripts/Runtime/build-node-slice.sh > "$evidence/input-hashes.txt"
+          if [[ -d "$output" ]]; then
+            cp "$evidence/build.log" "$output/build.log" 2>/dev/null || true
+            cp "$evidence/heartbeat.log" "$output/heartbeat.log" 2>/dev/null || true
+            cp "$evidence/build-status.txt" "$output/build-status.txt"
+            cp "$evidence/ccache-stats.txt" "$output/ccache-stats.txt"
+            cp "$evidence/xcode-version.txt" "$output/xcode-version.txt"
+            cp "$evidence/disk-usage.txt" "$output/disk-usage.txt"
           fi
-          gh release create "$tag" \
-            "build/$bundle_name" \
-            build/runtime-bundle.sha256 \
-            build/node-xcframework.sha256 \
-            build/runtime-bundle/RuntimeProvenance.json \
-            --title "Hanlin RuntimeCore ${dependency_hash}" \
-            --notes "Pinned RuntimeCore bundle built and smoke-tested by workflow run ${GITHUB_RUN_ID}."
+          cat "$evidence/ccache-stats.txt"
+
+      - name: Save architecture ccache
+        if: always()
+        uses: actions/cache/save@v4
+        with:
+          path: ~/Library/Caches/HanlinNodeMobile/ccache/${{ matrix.target }}
+          key: ${{ steps.cache-key.outputs.base }}-${{ github.run_id }}-${{ github.run_attempt }}
+
+      - name: Upload complete slice evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: node-mobile-${{ matrix.artifact_suffix }}-logs-${{ needs.plan-runtime.outputs.dependency_hash }}
+          path: build/node-evidence/${{ matrix.target }}
+          if-no-files-found: warn
+          retention-days: 14
+          compression-level: 0
+
+      - name: Upload completed Node slice
+        if: ${{ steps.slice-build.outputs.build_status == '0' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: node-mobile-${{ matrix.artifact_suffix }}-${{ needs.plan-runtime.outputs.dependency_hash }}
+          path: build/node-slices/${{ matrix.target }}
+          if-no-files-found: error
+          retention-days: 14
+          compression-level: 0
+
+      - name: Record final disk usage
+        if: always()
+        run: |
+          df -h
+          du -sh "$NODE_SOURCE_ROOT" "$CCACHE_DIR" build/node-slices/${{ matrix.target }} 2>/dev/null || true
+
+      - name: Fail after preserving cache and evidence
+        if: ${{ steps.slice-build.outputs.build_status != '0' }}
+        run: |
+          echo "Node ${{ matrix.target }} build failed with status ${{ steps.slice-build.outputs.build_status }}." >&2
+          exit 1
+
+  prepare-python-runtime:
+    name: prepare-python-runtime
+    needs: plan-runtime
+    if: ${{ needs.plan-runtime.outputs.release_exists != 'true' || inputs.force_rebuild }}
+    runs-on: macos-26
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ needs.plan-runtime.outputs.node_version }}
+      - name: Select newest installed Xcode 26
+        run: |
+          selected="$(find /Applications -maxdepth 1 -type d -name 'Xcode_26*.app' -print | sort -V | tail -1)"
+          test -n "$selected"
+          sudo xcode-select -s "$selected/Contents/Developer"
+          xcodebuild -version
+      - name: Record initial disk usage
+        run: df -h | tee python-disk-before.txt
+      - name: Prepare verified prebuilt Python runtime
+        run: |
+          mkdir -p build/python-logs
+          bash Scripts/Runtime/prepare-python-runtime.sh 2>&1 | tee build/python-logs/prepare-python.log
+      - name: Upload Python runtime
+        uses: actions/upload-artifact@v4
+        with:
+          name: python-runtime-${{ needs.plan-runtime.outputs.dependency_hash }}
+          path: build/python-runtime
+          if-no-files-found: error
+          retention-days: 14
+          compression-level: 0
+      - name: Preserve Python evidence
+        if: always()
+        run: |
+          mkdir -p build/python-logs
+          df -h > build/python-logs/disk-after.txt
+          du -sh build/python-runtime "$RUNNER_TEMP/hanlin-python-runtime" 2>/dev/null > build/python-logs/directory-sizes.txt || true
+          shasum -a 256 RuntimeDependencies.lock.json Scripts/Runtime/prepare-python-runtime.sh > build/python-logs/input-hashes.txt
+      - name: Upload Python logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: python-runtime-logs-${{ needs.plan-runtime.outputs.dependency_hash }}
+          path: build/python-logs
+          if-no-files-found: warn
+          retention-days: 14
+
+  prepare-runtime-host:
+    name: prepare-runtime-host
+    needs: plan-runtime
+    if: ${{ needs.plan-runtime.outputs.release_exists != 'true' || inputs.force_rebuild }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ needs.plan-runtime.outputs.node_version }}
+          cache: npm
+          cache-dependency-path: AI_HLY/Downstream/MCP/Runtime/Host/package-lock.json
+      - name: Prepare and test shared runtime host
+        run: |
+          mkdir -p build/runtime-host-logs
+          bash Scripts/Runtime/prepare-runtime-host.sh 2>&1 | tee build/runtime-host-logs/prepare-host.log
+      - name: Upload runtime host
+        uses: actions/upload-artifact@v4
+        with:
+          name: runtime-host-${{ needs.plan-runtime.outputs.dependency_hash }}
+          path: build/runtime-host
+          if-no-files-found: error
+          retention-days: 14
+          compression-level: 0
+      - name: Preserve host evidence
+        if: always()
+        run: |
+          mkdir -p build/runtime-host-logs
+          node --version > build/runtime-host-logs/node-version.txt
+          npm --version > build/runtime-host-logs/npm-version.txt
+          df -h > build/runtime-host-logs/disk-usage.txt
+          shasum -a 256 RuntimeDependencies.lock.json Scripts/Runtime/prepare-runtime-host.sh > build/runtime-host-logs/input-hashes.txt
+      - name: Upload runtime host logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: runtime-host-logs-${{ needs.plan-runtime.outputs.dependency_hash }}
+          path: build/runtime-host-logs
+          if-no-files-found: warn
+          retention-days: 14
+
+  assemble-runtime-bundle:
+    name: assemble-runtime-bundle
+    needs:
+      - plan-runtime
+      - build-node
+      - prepare-python-runtime
+      - prepare-runtime-host
+    if: >-
+      ${{ always() &&
+          (needs.plan-runtime.outputs.release_exists != 'true' || inputs.force_rebuild) &&
+          needs.build-node.result == 'success' &&
+          needs.prepare-python-runtime.result == 'success' &&
+          needs.prepare-runtime-host.result == 'success' }}
+    runs-on: macos-26
+    timeout-minutes: 75
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ needs.plan-runtime.outputs.node_version }}
+      - name: Select newest installed Xcode 26
+        run: |
+          selected="$(find /Applications -maxdepth 1 -type d -name 'Xcode_26*.app' -print | sort -V | tail -1)"
+          test -n "$selected"
+          sudo xcode-select -s "$selected/Contents/Developer"
+          xcodebuild -version | tee assembly-xcode-version.txt
+          xcodebuild -showsdks | grep -E 'iphoneos26|iOS 26'
+      - name: Record initial disk usage
+        run: df -h | tee assembly-disk-before.txt
+      - name: Download device slice
+        uses: actions/download-artifact@v4
+        with:
+          name: node-mobile-device-${{ needs.plan-runtime.outputs.dependency_hash }}
+          path: build/runtime-inputs/node-device
+      - name: Download simulator slice
+        uses: actions/download-artifact@v4
+        with:
+          name: node-mobile-simulator-${{ needs.plan-runtime.outputs.dependency_hash }}
+          path: build/runtime-inputs/node-simulator
+      - name: Download Python runtime
+        uses: actions/download-artifact@v4
+        with:
+          name: python-runtime-${{ needs.plan-runtime.outputs.dependency_hash }}
+          path: build/runtime-inputs/python
+      - name: Download runtime host
+        uses: actions/download-artifact@v4
+        with:
+          name: runtime-host-${{ needs.plan-runtime.outputs.dependency_hash }}
+          path: build/runtime-inputs/host
+      - name: Assemble and smoke-test existing slices
+        run: |
+          mkdir -p build/runtime-assembly-logs
+          bash Scripts/Runtime/assemble-runtime-bundle.sh 2>&1 | tee build/runtime-assembly-logs/assembly-driver.log
+      - name: Upload complete runtime bundle
+        uses: actions/upload-artifact@v4
+        with:
+          name: hanlin-runtime-bundle-${{ needs.plan-runtime.outputs.dependency_hash }}
+          path: |
+            build/hanlin-runtime-*.zip
+            build/runtime-bundle/RuntimeManifest.json
+            build/runtime-bundle/RuntimeProvenance.json
+            build/runtime-bundle/NodeMobile-smoke.json
+            build/runtime-assembly-logs/
+            build/runtime-bundle.sha256
+            build/node-xcframework.sha256
+            build/runtime-dependency-hash.txt
+            build/runtime-bundle-name.txt
+          if-no-files-found: error
+          retention-days: 14
+          compression-level: 0
+      - name: Preserve assembly evidence
+        if: always()
+        run: |
+          mkdir -p build/runtime-assembly-logs
+          df -h > build/runtime-assembly-logs/disk-after.txt
+          du -sh build/runtime-inputs build/runtime-bundle "$RUNNER_TEMP/hanlin-runtime-assembly" 2>/dev/null \
+            > build/runtime-assembly-logs/directory-sizes.txt || true
+          tail -200 build/runtime-assembly-logs/sample-xcodebuild.log \
+            > build/runtime-assembly-logs/sample-xcodebuild-last-200.log 2>/dev/null || true
+          cp assembly-xcode-version.txt build/runtime-assembly-logs/xcode-version.txt 2>/dev/null || true
+          shasum -a 256 RuntimeDependencies.lock.json Scripts/Runtime/assemble-runtime-bundle.sh \
+            > build/runtime-assembly-logs/input-hashes.txt
+      - name: Upload assembly logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: runtime-assembly-logs-${{ needs.plan-runtime.outputs.dependency_hash }}
+          path: build/runtime-assembly-logs
+          if-no-files-found: warn
+          retention-days: 14
+
+  publish-runtime-release:
+    name: publish-runtime-release
+    needs:
+      - plan-runtime
+      - assemble-runtime-bundle
+    if: always()
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Require successful assembly when a build was requested
+        if: >-
+          ${{ (needs.plan-runtime.outputs.release_exists != 'true' || inputs.force_rebuild) &&
+              needs.assemble-runtime-bundle.result != 'success' }}
+        run: |
+          echo "Runtime assembly did not succeed; release publication is blocked." >&2
+          exit 1
+
+      - name: Download assembled runtime artifact
+        if: ${{ needs.assemble-runtime-bundle.result == 'success' }}
+        uses: actions/download-artifact@v4
+        with:
+          name: hanlin-runtime-bundle-${{ needs.plan-runtime.outputs.dependency_hash }}
+          path: build/final-runtime
+
+      - name: Publish or reuse immutable release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_EXISTS: ${{ needs.plan-runtime.outputs.release_exists }}
+          RELEASE_TAG: ${{ needs.plan-runtime.outputs.release_tag }}
+          DEPENDENCY_HASH: ${{ needs.plan-runtime.outputs.dependency_hash }}
+          PUBLISH_RELEASE: ${{ inputs.publish_release }}
+          FORCE_REBUILD: ${{ inputs.force_rebuild }}
+        run: |
+          set -euo pipefail
+          required_assets=(
+            "hanlin-runtime-${DEPENDENCY_HASH}.zip"
+            "runtime-bundle.sha256"
+            "node-xcframework.sha256"
+            "RuntimeProvenance.json"
+          )
+
+          verify_assets() {
+            mapfile -t actual_assets < <(gh release view "$RELEASE_TAG" --json assets --jq '.assets[].name')
+            for asset in "${required_assets[@]}"; do
+              printf '%s\n' "${actual_assets[@]}" | grep -Fxq "$asset" || {
+                echo "Release $RELEASE_TAG is missing $asset." >&2
+                exit 1
+              }
+            done
+          }
+
+          if [[ "$RELEASE_EXISTS" == "true" ]]; then
+            verify_assets
+            echo "Reusing existing immutable release $RELEASE_TAG."
+            if [[ "$FORCE_REBUILD" == "true" ]]; then
+              mkdir -p build/existing-release
+              gh release download "$RELEASE_TAG" --pattern 'runtime-bundle.sha256' --pattern 'node-xcframework.sha256' \
+                --dir build/existing-release
+              echo "Existing runtime checksum: $(head -1 build/existing-release/runtime-bundle.sha256)"
+              echo "Rebuilt runtime checksum: $(head -1 build/final-runtime/runtime-bundle.sha256)"
+              echo "Existing Node checksum: $(head -1 build/existing-release/node-xcframework.sha256)"
+              echo "Rebuilt Node checksum: $(head -1 build/final-runtime/node-xcframework.sha256)"
+              echo "The immutable release was not overwritten."
+            fi
+            exit 0
+          fi
+
+          if [[ "$PUBLISH_RELEASE" != "true" ]]; then
+            echo "Runtime artifact built successfully; release publication was disabled."
+            exit 0
+          fi
+
+          final="build/final-runtime"
+          bundle="${final}/hanlin-runtime-${DEPENDENCY_HASH}.zip"
+          provenance="${final}/runtime-bundle/RuntimeProvenance.json"
+          (cd "$final" && shasum -a 256 -c runtime-bundle.sha256)
+          gh release create "$RELEASE_TAG" \
+            "$bundle" \
+            "${final}/runtime-bundle.sha256" \
+            "${final}/node-xcframework.sha256" \
+            "$provenance" \
+            --title "Hanlin RuntimeCore ${DEPENDENCY_HASH}" \
+            --notes "Pinned RuntimeCore bundle built from independent cached slices and smoke-tested by workflow run ${GITHUB_RUN_ID}."
+          verify_assets
+
+          mkdir -p build/release-verification
+          gh release download "$RELEASE_TAG" --pattern "hanlin-runtime-${DEPENDENCY_HASH}.zip" \
+            --pattern 'runtime-bundle.sha256' --pattern 'node-xcframework.sha256' \
+            --pattern 'RuntimeProvenance.json' --dir build/release-verification
+          (cd build/release-verification && shasum -a 256 -c runtime-bundle.sha256)
+          node -e '
+            const provenance = require(process.argv[1]);
+            if (provenance.dependencyHash !== process.argv[2]) throw new Error("Release provenance hash mismatch");
+          ' build/release-verification/RuntimeProvenance.json "$DEPENDENCY_HASH"
+          echo "Published and verified immutable release $RELEASE_TAG."
