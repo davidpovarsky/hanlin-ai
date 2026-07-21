@@ -11,6 +11,7 @@ const syncOnly = process.argv.includes('--sync-package-lock');
 const token = process.env.GITHUB_TOKEN ?? process.env.GH_TOKEN;
 const lock = JSON.parse(await readFile(lockPath, 'utf8'));
 const hostPackage = JSON.parse(await readFile(packagePath, 'utf8'));
+const originalDependencyHash = dependencyHash(lock);
 
 if (!syncOnly) {
   const nodeTag = await latestTag('heylogin/nodejs-mobile', /^v24\.\d+\.\d+-mobile$/);
@@ -19,8 +20,7 @@ if (!syncOnly) {
   lock.node.tag = nodeTag;
   lock.node.commit = await tagCommit('heylogin/nodejs-mobile', nodeTag);
   lock.node.version = nodeVersion;
-  lock.node.sourceArchive = await downloadable(nodeArchiveURL);
-  lock.node.verificationStatus = 'pending-runtime-build';
+  lock.node.sourceArchive = await downloadable(nodeArchiveURL, false);
   hostPackage.engines.node = nodeVersion;
 
   const pythonRelease = await latestRelease('beeware/Python-Apple-support', /^3\.14-b\d+$/);
@@ -48,7 +48,6 @@ if (!syncOnly) {
     if (!version || !metadata.versions?.[version]) throw new Error(`npm did not return an exact latest version for ${name}.`);
     hostPackage.dependencies[name] = version;
   }
-  lock.runtimeBundle.verificationStatus = 'pending-runtime-build';
   await writeJSON(packagePath, hostPackage);
 } else {
   const npmLock = JSON.parse(await readFile(packageLockPath, 'utf8'));
@@ -63,6 +62,11 @@ if (!syncOnly) {
   if (!typescript?.version || !typescript?.integrity) throw new Error('package-lock is missing TypeScript.');
   lock.typescript.version = typescript.version;
   lock.typescript.integrity = typescript.integrity;
+}
+
+if (dependencyHash(lock) !== originalDependencyHash) {
+  lock.runtimeBundle.verificationStatus = 'pending-runtime-build';
+  lock.node.verificationStatus = 'pending-runtime-build';
 }
 
 await writeJSON(lockPath, lock);
@@ -90,11 +94,13 @@ async function tagCommit(repository, tag) {
   return object.sha;
 }
 
-async function downloadable(url) {
+async function downloadable(url, includeSize = true) {
   const response = await fetch(url, { headers: token ? { Authorization: `Bearer ${token}` } : {}, redirect: 'follow' });
   if (!response.ok) throw new Error(`Download failed (${response.status}): ${url}`);
   const bytes = Buffer.from(await response.arrayBuffer());
-  return { url, sha256: createHash('sha256').update(bytes).digest('hex'), size: bytes.length };
+  const result = { url, sha256: createHash('sha256').update(bytes).digest('hex') };
+  if (includeSize) result.size = bytes.length;
+  return result;
 }
 
 async function npmMetadata(name) {
@@ -119,6 +125,15 @@ function compareVersions(left, right) {
     if (difference) return difference;
   }
   return left.localeCompare(right);
+}
+
+function dependencyHash(value) {
+  const copy = structuredClone(value);
+  delete copy.runtimeBundle.sha256;
+  delete copy.runtimeBundle.verificationStatus;
+  delete copy.node.xcframeworkSha256;
+  delete copy.node.verificationStatus;
+  return createHash('sha256').update(JSON.stringify(copy)).digest('hex');
 }
 
 async function writeJSON(path, value) {
