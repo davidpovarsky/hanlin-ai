@@ -91,7 +91,7 @@ jobs:
 
             echo
             echo "===== Top-level files ====="
-            find . -maxdepth 3 -type f | sort | sed 's#^\./##' | head -400
+            find . -maxdepth 3 -type f | sort | sed -n '1,400{s#^\./##;p;}'
           } 2>&1 | tee "$LOG_DIR/01-environment.log"
 
       - name: Select Xcode 26
@@ -209,7 +209,7 @@ jobs:
 
             echo
             echo "===== App source sample ====="
-            find AI_HLY -maxdepth 3 -type f | sort | head -200
+            find AI_HLY -maxdepth 3 -type f | sort | sed -n '1,200p'
           } 2>&1 | tee "$LOG_DIR/04-validate-project.log"
 
       - name: Inspect Xcode project
@@ -252,7 +252,7 @@ jobs:
 
             echo
             echo "===== Resolved packages folder ====="
-            find "$CLONED_PACKAGES_PATH" -maxdepth 4 -type d | sort | head -300 || true
+            find "$CLONED_PACKAGES_PATH" -maxdepth 4 -type d | sort | sed -n '1,300p' || true
 
             echo
             echo "Swift Package dependency resolution completed."
@@ -307,7 +307,7 @@ jobs:
 
             find "$DERIVED_DATA_PATH" -name "*.app" -type d -print | sort | tee "$LOG_DIR/08-found-apps.txt"
 
-            APP_PATH="$(find "$DERIVED_DATA_PATH/Build/Products" -path "*Release-iphoneos/*.app" -type d | head -1 || true)"
+            APP_PATH="$(find "$DERIVED_DATA_PATH/Build/Products" -path "*Release-iphoneos/*.app" -type d -print -quit || true)"
 
             if [ -z "$APP_PATH" ]; then
               echo "ERROR: No Release-iphoneos .app found."
@@ -325,7 +325,7 @@ jobs:
 
             echo
             echo "===== App bundle contents ====="
-            find "$APP_PATH" -maxdepth 3 -print | sort | head -400
+            find "$APP_PATH" -maxdepth 3 -print | sort | sed -n '1,400p'
 
             echo
             echo "===== App Info.plist ====="
@@ -364,7 +364,7 @@ jobs:
 
             echo
             echo "===== Payload contents ====="
-            find Payload -maxdepth 4 -print | sort | head -400
+            find Payload -maxdepth 4 -print | sort | sed -n '1,400p'
 
             echo
             echo "Creating IPA: $IPA_NAME"
@@ -376,7 +376,7 @@ jobs:
 
             echo
             echo "===== IPA zip listing sample ====="
-            unzip -l "$IPA_NAME" | head -200
+            unzip -l "$IPA_NAME" | sed -n '1,200p'
 
             echo
             echo "Unsigned IPA packaged successfully."
