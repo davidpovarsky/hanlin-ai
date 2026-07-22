@@ -4,6 +4,12 @@ import SwiftUI
 enum RuntimeLifecycleBridge {
     static func prepareApplication() async {
         try? await AppRuntimeCore.shared.prepareStorage()
+#if targetEnvironment(simulator)
+        if ProcessInfo.processInfo.environment["HANLIN_RUNTIME_ACCEPTANCE"] == "shell" {
+            ShellRegistrationProbe.run()
+            return
+        }
+#endif
         await MCPRuntimeProvider.shared.loadIfNeeded()
     }
 

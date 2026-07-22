@@ -696,7 +696,8 @@ jobs:
           trap cleanup EXIT
 
           set +e
-          xcrun simctl launch "$SIMULATOR_UDID" "$BUNDLE_ID" 2>&1 | tee "$LOG_DIR/08-launch-output.txt"
+          SIMCTL_CHILD_HANLIN_RUNTIME_ACCEPTANCE=shell \
+            xcrun simctl launch "$SIMULATOR_UDID" "$BUNDLE_ID" 2>&1 | tee "$LOG_DIR/08-launch-output.txt"
           launch_status=${PIPESTATUS[0]}
           set -e
           test "$launch_status" -eq 0
@@ -713,6 +714,13 @@ jobs:
           done
           /bin/kill -0 "$APP_PID"
           printf '%s\n' "15" > "$LOG_DIR/alive-duration-seconds.txt"
+
+          DATA_CONTAINER="$(xcrun simctl get_app_container "$SIMULATOR_UDID" "$BUNDLE_ID" data)"
+          PROBE_PATH="$DATA_CONTAINER/Library/Application Support/HanlinRuntime/v1/logs/shell-registration-pre-repair.json"
+          test -f "$PROBE_PATH"
+          cp "$PROBE_PATH" "$LOG_DIR/shell-registration-pre-repair.json"
+          python3 -m json.tool "$LOG_DIR/shell-registration-pre-repair.json" \
+            | tee "$LOG_DIR/08-shell-registration-pre-repair.log"
 
           xcrun simctl spawn "$SIMULATOR_UDID" log show \
             --style compact \

@@ -7,6 +7,23 @@ public struct IOSSystemExecution: Sendable {
     public let exitCode: Int32
 }
 
+#if targetEnvironment(simulator)
+public struct IOSSystemLegacyRegistrationProbe: Codable, Sendable {
+    public let mainBundlePath: String
+    public let moduleBundlePath: String
+    public let mainDictionaryPath: String?
+    public let extraDictionaryPath: String?
+    public let moduleDictionaryPath: String?
+    public let rawCommandsClass: String
+    public let rawCommandsCount: Int
+    public let rawCommandValues: [String]
+    public let addCommandListErrorDomain: String?
+    public let addCommandListErrorCode: Int?
+    public let addCommandListErrorDescription: String?
+    public let executableResults: [String: Int32]
+}
+#endif
+
 public enum IOSSystemRunner {
     public static let linkedCommands: Set<String> = [
         "awk", "cat", "cp", "curl", "grep", "head", "ln", "ls", "mkdir", "mv",
@@ -45,6 +62,52 @@ public enum IOSSystemRunner {
         fflush(output); fflush(error)
         return IOSSystemExecution(stdout: read(output), stderr: read(error), exitCode: Int32(status))
     }
+
+#if targetEnvironment(simulator)
+    /// Captures the broken pre-repair bootstrap exactly once in the dedicated CI process.
+    /// This probe is simulator-only and is removed after the baseline evidence is collected.
+    public static func legacyRegistrationProbe() -> IOSSystemLegacyRegistrationProbe {
+        initializeEnvironment()
+
+        let moduleDictionary = Bundle.module.url(forResource: "RuntimeCommands", withExtension: "plist")
+        let addError: NSError?
+        if let moduleDictionary {
+            addError = addCommandList(moduleDictionary.path)
+        } else {
+            addError = NSError(
+                domain: "IOSSystemLite.LegacyProbe",
+                code: 1,
+                userInfo: [NSLocalizedDescriptionKey: "RuntimeCommands.plist is missing from Bundle.module."]
+            )
+        }
+
+        let rawObject: AnyObject? = commandsAsArray()
+        let rawArray = rawObject as? NSArray
+        let rawValues = rawArray?.compactMap { value -> String? in
+            if let value = value as? String { return value }
+            if let value = value as? NSString { return value as String }
+            return nil
+        } ?? []
+        let executableResults = Dictionary(uniqueKeysWithValues: linkedCommands.sorted().map { command in
+            (command, command.withCString { ios_executable($0) })
+        })
+
+        return IOSSystemLegacyRegistrationProbe(
+            mainBundlePath: Bundle.main.bundlePath,
+            moduleBundlePath: Bundle.module.bundlePath,
+            mainDictionaryPath: Bundle.main.url(forResource: "commandDictionary", withExtension: "plist")?.path,
+            extraDictionaryPath: Bundle.main.url(forResource: "extraCommandsDictionary", withExtension: "plist")?.path,
+            moduleDictionaryPath: moduleDictionary?.path,
+            rawCommandsClass: rawObject.map { NSStringFromClass(type(of: $0)) } ?? "nil",
+            rawCommandsCount: rawArray?.count ?? 0,
+            rawCommandValues: rawValues,
+            addCommandListErrorDomain: addError?.domain,
+            addCommandListErrorCode: addError?.code,
+            addCommandListErrorDescription: addError?.localizedDescription,
+            executableResults: executableResults
+        )
+    }
+#endif
 
     private static func configureCommands() {
         initializeEnvironment()
