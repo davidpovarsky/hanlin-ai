@@ -16,6 +16,18 @@ node "${SCRIPT_DIR}/validate-ios-system-package.mjs" \
 node "${SCRIPT_DIR}/validate-runtime-localization.mjs" \
   "${REPOSITORY_ROOT}/AI_HLY/Downstream/RuntimeCore" \
   "${REPOSITORY_ROOT}/AI_HLY/Downstream/RuntimeCore/Resources/RuntimeLocalizable.xcstrings"
+generated_manifest="$(mktemp)"
+trap 'rm -f "${generated_manifest}"' EXIT
+node "${SCRIPT_DIR}/generate-runtime-manifest.mjs" "${LOCK_FILE}" "${generated_manifest}" >/dev/null
+cmp -s \
+  "${generated_manifest}" \
+  "${REPOSITORY_ROOT}/AI_HLY/Downstream/RuntimeCore/Resources/RuntimeManifest.json" || {
+    echo "RuntimeManifest.json is stale relative to RuntimeDependencies.lock.json." >&2
+    diff -u \
+      "${REPOSITORY_ROOT}/AI_HLY/Downstream/RuntimeCore/Resources/RuntimeManifest.json" \
+      "${generated_manifest}" >&2 || true
+    exit 1
+  }
 
 required_paths=(
   "${REPOSITORY_ROOT}/AI_HLY.xcodeproj/project.pbxproj"

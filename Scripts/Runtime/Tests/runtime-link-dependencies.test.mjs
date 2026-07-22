@@ -15,6 +15,8 @@ const lockPath = path.join(repositoryRoot, 'RuntimeDependencies.lock.json');
 const packagePath = path.join(repositoryRoot, 'Packages', 'IOSSystemLite', 'Package.swift');
 const manifestPath = path.join(repositoryRoot, 'AI_HLY', 'Downstream', 'RuntimeCore', 'Resources', 'RuntimeManifest.json');
 const hashScript = path.join(runtimeDirectory, 'compute-runtime-dependency-hash.mjs');
+const lockValidationScript = path.join(runtimeDirectory, 'validate-runtime-lock.mjs');
+const manifestGenerationScript = path.join(runtimeDirectory, 'generate-runtime-manifest.mjs');
 const packageValidationScript = path.join(runtimeDirectory, 'validate-ios-system-package.mjs');
 const expectedHash = '7d967563db0809a4efa0f07b75d6b5928379a3b6f3aafb886899a79f59512a93';
 
@@ -46,6 +48,33 @@ test('runtime manifest distinguishes application-link dependencies from bundled 
   assert.deepEqual(iosSystem.linkDependencies.map(dependency => dependency.name).sort(), ['libssh2', 'openssl']);
   assert.ok(iosSystem.linkDependencies.every(dependency => dependency.role === 'application-link-dependency'));
   assert.ok(iosSystem.linkDependencies.every(dependency => dependency.distribution === 'resolved-and-embedded-during-application-build'));
+});
+
+test('generated runtime manifest exactly matches the committed manifest', async () => {
+  const temporaryDirectory = await mkdtemp(path.join(os.tmpdir(), 'runtime-manifest-'));
+  try {
+    const generatedPath = path.join(temporaryDirectory, 'RuntimeManifest.json');
+    execFileSync(process.execPath, [manifestGenerationScript, lockPath, generatedPath], { encoding: 'utf8' });
+    assert.equal(await readFile(generatedPath, 'utf8'), await readFile(manifestPath, 'utf8'));
+  } finally {
+    await rm(temporaryDirectory, { recursive: true, force: true });
+  }
+});
+
+test('runtime lock validation rejects a mutated application-link pin', async () => {
+  const temporaryDirectory = await mkdtemp(path.join(os.tmpdir(), 'runtime-link-lock-'));
+  try {
+    const lock = JSON.parse(await readFile(lockPath, 'utf8'));
+    lock.iosSystem.linkDependencies[0].release = 'v1.11.1';
+    const mutatedPath = path.join(temporaryDirectory, 'RuntimeDependencies.lock.json');
+    await writeFile(mutatedPath, JSON.stringify(lock));
+    assert.throws(
+      () => execFileSync(process.execPath, [lockValidationScript, mutatedPath], { encoding: 'utf8', stdio: 'pipe' }),
+      /does not match the pinned curl_ios closure/,
+    );
+  } finally {
+    await rm(temporaryDirectory, { recursive: true, force: true });
+  }
 });
 
 test('application-link metadata does not alter RuntimeCore bundle identity', async () => {

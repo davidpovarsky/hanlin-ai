@@ -30,6 +30,8 @@ BANNED_PATH_MARKERS = ("/Users/", "/DerivedData/", "/Applications/", "/opt/homeb
 EXPECTED_PLATFORM = {"iphoneos": "IOS", "iphonesimulator": "IOS_SIMULATOR"}
 PLATFORM_NUMBERS = {2: "IOS", 7: "IOS_SIMULATOR"}
 FRAMEWORK_DEPENDENCY = re.compile(r"(?:^|/)([^/]+\.framework)/([^/]+)$")
+EXECUTABLE_BUNDLE_SUFFIXES = {".app", ".appex", ".xpc"}
+SIMULATOR_ONLY_ARCHITECTURES = {"i386", "x86_64"}
 
 
 @dataclass(frozen=True)
@@ -180,8 +182,15 @@ def scan_app(app: Path, platform: str, toolchain: InspectionToolchain | None = N
     macho_paths = sorted(path for path in app.rglob("*") if path.is_file() and is_macho(path))
     framework_paths = sorted(path for path in app.rglob("*.framework") if path.is_dir())
     invalid_frameworks, duplicate_bundle_ids, framework_metadata = inspect_frameworks(app, framework_paths)
+    executable_bundle_paths = [app, *sorted(
+        path
+        for path in app.rglob("*")
+        if path.is_dir() and path.suffix in EXECUTABLE_BUNDLE_SUFFIXES
+    )]
+    invalid_executable_bundles = inspect_executable_bundles(app, executable_bundle_paths)
     binaries = []
     unresolved = []
+    invalid_absolute_paths = []
     errors = []
     expected_platform = EXPECTED_PLATFORM[platform]
 
@@ -200,6 +209,12 @@ def scan_app(app: Path, platform: str, toolchain: InspectionToolchain | None = N
         apple_platforms = sorted({normalize_platform(value) for value in inspection.apple_platforms})
         if "arm64" not in architectures:
             binary_errors.append(f"missing arm64 architecture for {platform}")
+        if platform == "iphoneos":
+            simulator_architectures = sorted(set(architectures) & SIMULATOR_ONLY_ARCHITECTURES)
+            if simulator_architectures:
+                binary_errors.append(
+                    f"simulator architecture in device app: {', '.join(simulator_architectures)}"
+                )
         if not apple_platforms:
             binary_errors.append("missing Apple platform load command")
         elif any(value != expected_platform for value in apple_platforms):
@@ -207,10 +222,24 @@ def scan_app(app: Path, platform: str, toolchain: InspectionToolchain | None = N
                 f"platform mismatch: expected {expected_platform}, found {', '.join(apple_platforms)}"
             )
 
+        for install_id in inspection.install_ids:
+            path_error = unsafe_path_error(install_id, "LC_ID_DYLIB")
+            if path_error is None and is_invalid_absolute_path(install_id):
+                path_error = f"LC_ID_DYLIB contains unexpected absolute non-system path: {install_id}"
+            if path_error:
+                binary_errors.append(path_error)
+                invalid_absolute_paths.append(
+                    {"binary": relative, "kind": "LC_ID_DYLIB", "path": install_id, "message": path_error}
+                )
+
         for rpath in inspection.rpaths:
             path_error = unsafe_path_error(rpath, "LC_RPATH")
             if path_error:
                 binary_errors.append(path_error)
+                if is_invalid_absolute_path(rpath):
+                    invalid_absolute_paths.append(
+                        {"binary": relative, "kind": "LC_RPATH", "path": rpath, "message": path_error}
+                    )
 
         install_ids = set(inspection.install_ids)
         dependency_records = []
@@ -238,6 +267,15 @@ def scan_app(app: Path, platform: str, toolchain: InspectionToolchain | None = N
                 entry = {"binary": relative, "dependency": dependency, "message": dependency_error}
                 unresolved.append(entry)
                 binary_errors.append(dependency_error)
+                if is_invalid_absolute_path(dependency):
+                    invalid_absolute_paths.append(
+                        {
+                            "binary": relative,
+                            "kind": "dependency",
+                            "path": dependency,
+                            "message": dependency_error,
+                        }
+                    )
 
         for message in binary_errors:
             errors.append({"binary": relative, "message": message})
@@ -258,6 +296,8 @@ def scan_app(app: Path, platform: str, toolchain: InspectionToolchain | None = N
 
     for framework in invalid_frameworks:
         errors.append({"framework": framework["path"], "message": framework["message"]})
+    for bundle in invalid_executable_bundles:
+        errors.append({"bundle": bundle["path"], "message": bundle["message"]})
     for identifier, paths in duplicate_bundle_ids.items():
         errors.append({"bundleIdentifier": identifier, "message": f"duplicate framework bundle identifier: {', '.join(paths)}"})
 
@@ -267,11 +307,14 @@ def scan_app(app: Path, platform: str, toolchain: InspectionToolchain | None = N
         "platform": platform,
         "machOCount": len(macho_paths),
         "frameworkCount": len(framework_paths),
+        "executableBundleCount": len(executable_bundle_paths),
         "binaries": binaries,
         "unresolvedDependencies": unresolved,
         "unresolvedDependencyCount": len(unresolved),
+        "invalidAbsolutePaths": invalid_absolute_paths,
         "duplicateBundleIdentifiers": duplicate_bundle_ids,
         "invalidFrameworks": invalid_frameworks,
+        "invalidExecutableBundles": invalid_executable_bundles,
         "errors": errors,
         "result": "pass" if not errors else "fail",
     }
@@ -294,6 +337,10 @@ def inspect_frameworks(
             continue
         executable = info.get("CFBundleExecutable")
         identifier = info.get("CFBundleIdentifier")
+        if not isinstance(identifier, str) or not identifier:
+            invalid.append({"path": relative, "message": "missing CFBundleIdentifier"})
+            continue
+        identifiers.setdefault(identifier, []).append(relative)
         if not isinstance(executable, str) or not executable:
             invalid.append({"path": relative, "message": "missing CFBundleExecutable"})
             continue
@@ -304,11 +351,33 @@ def inspect_frameworks(
         if not is_macho(executable_path):
             invalid.append({"path": relative, "message": f"CFBundleExecutable is not Mach-O: {executable}"})
             continue
-        metadata[framework.resolve()] = {"executable": executable, "identifier": identifier or ""}
-        if isinstance(identifier, str) and identifier:
-            identifiers.setdefault(identifier, []).append(relative)
+        metadata[framework.resolve()] = {"executable": executable, "identifier": identifier}
     duplicates = {identifier: paths for identifier, paths in identifiers.items() if len(paths) > 1}
     return invalid, duplicates, metadata
+
+
+def inspect_executable_bundles(app: Path, bundle_paths: list[Path]) -> list[dict[str, str]]:
+    invalid = []
+    for bundle in bundle_paths:
+        relative = "." if bundle == app else bundle.relative_to(app).as_posix()
+        info_path = bundle / "Info.plist"
+        try:
+            with info_path.open("rb") as stream:
+                info = plistlib.load(stream)
+        except Exception as error:
+            invalid.append({"path": relative, "message": f"malformed or missing Info.plist: {error}"})
+            continue
+        executable = info.get("CFBundleExecutable")
+        if not isinstance(executable, str) or not executable:
+            invalid.append({"path": relative, "message": "missing CFBundleExecutable"})
+            continue
+        executable_path = bundle / executable
+        if not executable_path.is_file():
+            invalid.append({"path": relative, "message": f"missing CFBundleExecutable binary: {executable}"})
+            continue
+        if not is_macho(executable_path):
+            invalid.append({"path": relative, "message": f"CFBundleExecutable is not Mach-O: {executable}"})
+    return invalid
 
 
 def resolve_dependency(
@@ -320,12 +389,12 @@ def resolve_dependency(
 ) -> tuple[dict[str, object], str | None]:
     unsafe = unsafe_path_error(dependency, "dependency")
     if unsafe:
-        return dependency_record(dependency, "invalid", None, []), unsafe
+        return dependency_record(dependency, "invalid", None, [], status="invalid"), unsafe
     if dependency.startswith(SYSTEM_PREFIXES):
         return dependency_record(dependency, "system", dependency, [dependency]), None
     if dependency.startswith("/"):
         return (
-            dependency_record(dependency, "invalid", None, [dependency]),
+            dependency_record(dependency, "invalid", None, [dependency], status="invalid"),
             f"unexpected absolute non-system library path: {dependency}",
         )
 
@@ -349,7 +418,7 @@ def resolve_dependency(
         kind = "loader-path"
     else:
         return (
-            dependency_record(dependency, "invalid", None, []),
+            dependency_record(dependency, "invalid", None, [], status="invalid"),
             f"unsupported relative dependency: {dependency}",
         )
 
@@ -358,20 +427,31 @@ def resolve_dependency(
     if resolved is None:
         message = f"unresolved {dependency}"
         return dependency_record(dependency, kind, None, unique_candidates), message
+    if not is_within(resolved, app):
+        message = f"dependency resolves outside app bundle: {dependency} -> {resolved}"
+        return dependency_record(dependency, kind, str(resolved), unique_candidates, status="invalid"), message
+    if not is_macho(resolved):
+        message = f"dependency resolves to a non-Mach-O file: {dependency} -> {resolved}"
+        return dependency_record(dependency, kind, str(resolved), unique_candidates, status="invalid"), message
 
     framework_error = validate_framework_dependency(dependency, resolved, framework_metadata)
     if framework_error:
-        return dependency_record(dependency, kind, str(resolved), unique_candidates), framework_error
+        return dependency_record(dependency, kind, str(resolved), unique_candidates, status="invalid"), framework_error
     return dependency_record(dependency, kind, str(resolved), unique_candidates), None
 
 
 def dependency_record(
-    dependency: str, kind: str, resolved: str | None, candidates: Sequence[Path | str]
+    dependency: str,
+    kind: str,
+    resolved: str | None,
+    candidates: Sequence[Path | str],
+    *,
+    status: str | None = None,
 ) -> dict[str, object]:
     return {
         "path": dependency,
         "kind": kind,
-        "status": "resolved" if resolved else "unresolved",
+        "status": status or ("resolved" if resolved else "unresolved"),
         "resolvedPath": resolved,
         "candidates": [str(candidate) for candidate in candidates],
     }
@@ -428,7 +508,23 @@ def unsafe_path_error(value: str, label: str) -> str | None:
     for marker in BANNED_PATH_MARKERS:
         if marker in normalized:
             return f"{label} contains forbidden developer-machine path: {value}"
+    if label == "LC_RPATH" and is_invalid_absolute_path(normalized):
+        return f"LC_RPATH contains unexpected absolute non-system path: {value}"
     return None
+
+
+def is_invalid_absolute_path(value: str) -> bool:
+    normalized = value.replace("\\", "/")
+    is_absolute = normalized.startswith("/") or re.match(r"^[A-Za-z]:/", normalized) is not None
+    return is_absolute and not normalized.startswith(SYSTEM_PREFIXES)
+
+
+def is_within(path: Path, root: Path) -> bool:
+    try:
+        path.resolve().relative_to(root.resolve())
+        return True
+    except ValueError:
+        return False
 
 
 def unique_paths(paths: Sequence[Path]) -> list[Path]:
@@ -451,9 +547,12 @@ def render_text_report(report: dict[str, object]) -> str:
         f"Platform: {report['platform']}",
         f"Mach-O count: {report['machOCount']}",
         f"Framework count: {report['frameworkCount']}",
+        f"Executable bundle count: {report['executableBundleCount']}",
         f"Unresolved dependency count: {report['unresolvedDependencyCount']}",
+        f"Invalid absolute path count: {len(report['invalidAbsolutePaths'])}",
         f"Duplicate framework bundle-ID count: {len(report['duplicateBundleIdentifiers'])}",
         f"Invalid framework count: {len(report['invalidFrameworks'])}",
+        f"Invalid executable bundle count: {len(report['invalidExecutableBundles'])}",
         f"Result: {str(report['result']).upper()}",
         "",
     ]
@@ -483,6 +582,16 @@ def render_text_report(report: dict[str, object]) -> str:
         lines.append("Invalid frameworks:")
         for framework in report["invalidFrameworks"]:
             lines.append(f"  {framework['path']}: {framework['message']}")
+        lines.append("")
+    if report["invalidExecutableBundles"]:
+        lines.append("Invalid executable bundles:")
+        for bundle in report["invalidExecutableBundles"]:
+            lines.append(f"  {bundle['path']}: {bundle['message']}")
+        lines.append("")
+    if report["invalidAbsolutePaths"]:
+        lines.append("Invalid absolute paths:")
+        for entry in report["invalidAbsolutePaths"]:
+            lines.append(f"  {entry['binary']} [{entry['kind']}]: {entry['path']} ({entry['message']})")
         lines.append("")
     return "\n".join(lines).rstrip() + "\n"
 

@@ -461,6 +461,8 @@ jobs:
             --platform iphoneos \
             --json-output "$LOG_DIR/09-packaged-ipa-dyld-closure.json" \
             --text-output "$LOG_DIR/09-packaged-ipa-dyld-closure.txt"
+          stat -f %z "$IPA_NAME" | tee "$LOG_DIR/09-ipa-size-bytes.txt"
+          shasum -a 256 "$IPA_NAME" | tee "$LOG_DIR/09-ipa-sha256.txt"
 
       - name: Create diagnostic summary
         if: always()
@@ -498,6 +500,8 @@ jobs:
             echo "===== IPA ====="
             if [ -f "$IPA_NAME" ]; then
               ls -lh "$IPA_NAME"
+              echo "Size (bytes): $(cat "$LOG_DIR/09-ipa-size-bytes.txt" 2>/dev/null || echo unavailable)"
+              echo "SHA-256: $(cat "$LOG_DIR/09-ipa-sha256.txt" 2>/dev/null || echo unavailable)"
             else
               echo "IPA was not created."
             fi

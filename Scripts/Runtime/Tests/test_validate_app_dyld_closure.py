@@ -78,6 +78,14 @@ class DyldClosureScannerTests(unittest.TestCase):
         self.temporary = tempfile.TemporaryDirectory()
         self.app = Path(self.temporary.name) / "Fixture.app"
         self.app.mkdir()
+        with (self.app / "Info.plist").open("wb") as stream:
+            plistlib.dump(
+                {
+                    "CFBundleExecutable": "Fixture",
+                    "CFBundleIdentifier": "test.Fixture",
+                },
+                stream,
+            )
         self.inspections: dict[str, object] = {}
         self.add_binary("Fixture", inspection())
 
@@ -158,6 +166,84 @@ class DyldClosureScannerTests(unittest.TestCase):
         simulator = next(binary for binary in report["binaries"] if "SimulatorOnly.framework" in binary["path"])
         self.assertTrue(any("platform mismatch" in error for error in simulator["errors"]))
 
+    def test_catches_simulator_architecture_in_device_app(self) -> None:
+        self.inspections["Fixture"] = inspection(architectures=("arm64", "x86_64"))
+        report = self.scan()
+        self.assertEqual(report["result"], "fail")
+        self.assertTrue(any("simulator architecture" in error for error in report["binaries"][0]["errors"]))
+
+    def test_catches_missing_extension_executable(self) -> None:
+        extension = self.app / "PlugIns" / "Broken.appex"
+        extension.mkdir(parents=True)
+        with (extension / "Info.plist").open("wb") as stream:
+            plistlib.dump(
+                {
+                    "CFBundleExecutable": "MissingExtension",
+                    "CFBundleIdentifier": "test.BrokenExtension",
+                },
+                stream,
+            )
+        report = self.scan()
+        self.assertEqual(report["result"], "fail")
+        self.assertEqual(report["invalidExecutableBundles"][0]["path"], "PlugIns/Broken.appex")
+        self.assertIn("missing CFBundleExecutable binary", report["invalidExecutableBundles"][0]["message"])
+
+    def test_catches_missing_main_app_executable(self) -> None:
+        with (self.app / "Info.plist").open("wb") as stream:
+            plistlib.dump(
+                {
+                    "CFBundleExecutable": "MissingMainExecutable",
+                    "CFBundleIdentifier": "test.Fixture",
+                },
+                stream,
+            )
+        report = self.scan()
+        self.assertEqual(report["result"], "fail")
+        self.assertEqual(report["invalidExecutableBundles"][0]["path"], ".")
+        self.assertIn("missing CFBundleExecutable binary", report["invalidExecutableBundles"][0]["message"])
+
+    def test_catches_absolute_rpath_and_dependency_escape(self) -> None:
+        external_library = Path(self.temporary.name) / "Outside" / "libbad.dylib"
+        external_library.parent.mkdir()
+        external_library.write_bytes(MACHO_BYTES)
+        self.inspections["Fixture"] = inspection(
+            dependencies=("@loader_path/../Outside/libbad.dylib",),
+            rpaths=("/private/tmp/build-products",),
+        )
+        report = self.scan()
+        self.assertEqual(report["result"], "fail")
+        self.assertIn("outside app bundle", report["unresolvedDependencies"][0]["message"])
+        self.assertEqual(report["invalidAbsolutePaths"][0]["kind"], "LC_RPATH")
+
+    def test_catches_missing_framework_bundle_identifier(self) -> None:
+        framework = self.app / "Frameworks" / "Broken.framework"
+        framework.mkdir(parents=True)
+        with (framework / "Info.plist").open("wb") as stream:
+            plistlib.dump({"CFBundleExecutable": "Broken"}, stream)
+        self.add_binary("Frameworks/Broken.framework/Broken", inspection())
+        report = self.scan()
+        self.assertEqual(report["result"], "fail")
+        self.assertIn("missing CFBundleIdentifier", report["invalidFrameworks"][0]["message"])
+
+    def test_catches_duplicate_framework_bundle_identifiers(self) -> None:
+        self.add_framework("First", inspection(), identifier="test.Duplicate")
+        self.add_framework("Second", inspection(), identifier="test.Duplicate")
+        report = self.scan()
+        self.assertEqual(report["result"], "fail")
+        self.assertEqual(
+            report["duplicateBundleIdentifiers"]["test.Duplicate"],
+            ["Frameworks/First.framework", "Frameworks/Second.framework"],
+        )
+
+    def test_catches_dependency_resolving_to_non_macho_file(self) -> None:
+        bad_library = self.app / "Frameworks" / "libbad.dylib"
+        bad_library.parent.mkdir(parents=True, exist_ok=True)
+        bad_library.write_text("not a Mach-O", encoding="utf-8")
+        self.inspections["Fixture"] = inspection(dependencies=("@rpath/libbad.dylib",))
+        report = self.scan()
+        self.assertEqual(report["result"], "fail")
+        self.assertIn("non-Mach-O", report["unresolvedDependencies"][0]["message"])
+
     def test_allows_recognized_apple_system_libraries(self) -> None:
         self.inspections["Fixture"] = inspection(
             dependencies=(
@@ -178,6 +264,17 @@ class DyldClosureScannerTests(unittest.TestCase):
         self.assertEqual(report["result"], "pass")
         extension = next(binary for binary in report["binaries"] if "PythonSSL.framework" in binary["path"])
         self.assertEqual(extension["directDependencies"][0]["status"], "self")
+
+    def test_rejects_absolute_developer_path_in_own_install_id(self) -> None:
+        install_id = "/Users/developer/build/libbad.dylib"
+        self.add_framework(
+            "BadInstallID",
+            inspection(install_id=install_id, dependencies=(install_id,)),
+        )
+        report = self.scan()
+        self.assertEqual(report["result"], "fail")
+        self.assertEqual(report["invalidAbsolutePaths"][0]["kind"], "LC_ID_DYLIB")
+        self.assertIn("forbidden developer-machine path", report["invalidAbsolutePaths"][0]["message"])
 
     def test_rejects_other_relative_dependency_beside_own_install_id(self) -> None:
         install_id = "Modules/_ssl.cpython-314-iphoneos.so"
