@@ -110,14 +110,19 @@ actor PythonPackageManager {
     }
 
     func preview(name: String, version: String? = nil) async throws -> PythonPackagePreview {
-        let project = try await project(name: name)
-        let selected = version ?? project.info.version
-        let distributions = version == nil ? project.releases[selected] ?? [] : try await project(name: name, version: selected).urls ?? []
+        let projectIndex = try await project(name: name)
+        let selected = version ?? projectIndex.info.version
+        let distributions: [PyPIProject.Distribution]
+        if version == nil {
+            distributions = projectIndex.releases[selected] ?? []
+        } else {
+            distributions = try await project(name: name, version: selected).urls ?? []
+        }
         let wheel = distributions.first(where: isUniversalWheel)
         return PythonPackagePreview(
-            name: project.info.name,
+            name: projectIndex.info.name,
             version: selected,
-            summary: project.info.summary,
+            summary: projectIndex.info.summary,
             wheelFileName: wheel?.filename,
             isPurePython: wheel != nil,
             compatibilityExplanation: wheel == nil
@@ -253,7 +258,7 @@ actor PythonPackageManager {
             let requirement = queue.removeFirst()
             let normalized = normalize(requirement.name)
             if let existing = resolved[normalized] {
-                guard version(existing.version, satisfies: requirement.constraints) else {
+                guard versionSatisfies(existing.version, constraints: requirement.constraints) else {
                     throw RuntimeCoreError.runtimeFailure("Conflicting dependency requirements were found for \(requirement.name).")
                 }
                 continue
@@ -312,7 +317,7 @@ actor PythonPackageManager {
 
     private func selectVersion(from project: PyPIProject, constraints: String) throws -> String {
         let versions = project.releases.keys
-            .filter { version($0, satisfies: constraints) }
+            .filter { versionSatisfies($0, constraints: constraints) }
             .filter { candidate in project.releases[candidate]?.contains(where: isUniversalWheel) == true }
             .sorted { compareVersions($0, $1) == .orderedDescending }
         guard let selected = versions.first else {
@@ -476,7 +481,7 @@ actor PythonPackageManager {
         return compare(actual, String(marker[valueRange]), using: String(marker[operatorRange]))
     }
 
-    private func version(_ candidate: String, satisfies constraints: String) -> Bool {
+    private func versionSatisfies(_ candidate: String, constraints: String) -> Bool {
         let trimmed = constraints.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !trimmed.isEmpty else { return true }
         return trimmed.split(separator: ",").allSatisfy { component in

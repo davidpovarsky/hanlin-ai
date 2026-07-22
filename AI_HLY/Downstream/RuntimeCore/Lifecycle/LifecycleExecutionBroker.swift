@@ -77,8 +77,10 @@ actor LifecycleExecutionBroker {
         guard plan.executable, plan.rejected.isEmpty else {
             throw RuntimeCoreError.invalidRequest("The lifecycle plan contains rejected commands.")
         }
-        guard !plan.requiresApproval || (try isApproved(plan)) else {
-            throw RuntimeCoreError.invalidRequest("Lifecycle execution requires explicit approval for this exact package version, integrity, and script hash.")
+        if plan.requiresApproval {
+            guard try isApproved(plan) else {
+                throw RuntimeCoreError.invalidRequest("Lifecycle execution requires explicit approval for this exact package version, integrity, and script hash.")
+            }
         }
         let workspace = try fileLayout.validatedDescendant(packageRoot, of: fileLayout.clients, allowRoot: false)
         for action in plan.actions {
