@@ -48,6 +48,13 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Set up pinned RuntimeCore host Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24.5.0
+          cache: npm
+          cache-dependency-path: AI_HLY/Downstream/RuntimeCore/Node/Host/package-lock.json
+
       - name: Prepare log folders
         run: |
           set -euxo pipefail
@@ -181,16 +188,45 @@ jobs:
           bash Scripts/Runtime/prepare-runtime-core.sh 2>&1 | tee "$LOG_DIR/04-prepare-runtime-core.log"
           grep -Fq "Prepared verified RuntimeCore 7d967563db0809a4efa0f07b75d6b5928379a3b6f3aafb886899a79f59512a93" "$LOG_DIR/04-prepare-runtime-core.log"
 
+      - name: Verify MCP host on pinned Node 24.5.0
+        run: |
+          set -euxo pipefail
+          test "$(node --version)" = "v24.5.0"
+          npm ci --ignore-scripts --no-audit --no-fund --prefix AI_HLY/Downstream/RuntimeCore/Node/Host \
+            2>&1 | tee "$LOG_DIR/04-mcp-host-npm-ci.log"
+          npm test --prefix AI_HLY/Downstream/RuntimeCore/Node/Host \
+            2>&1 | tee "$LOG_DIR/04-mcp-host-tests.log"
+          npm run test:integration --prefix AI_HLY/Downstream/RuntimeCore/Node/Host \
+            2>&1 | tee "$LOG_DIR/04-mcp-server-everything-integration.log"
+          node Scripts/Runtime/validate-mcp-install-dedup.mjs \
+            2>&1 | tee "$LOG_DIR/04-mcp-install-dedup.log"
+
       - name: Package current RuntimeCore host resources
         run: |
           set -euxo pipefail
           bash Scripts/Runtime/prepare-runtime-host.sh 2>&1 | tee "$LOG_DIR/04-package-runtime-host.log"
           cp build/runtime-host/RuntimeHostResources.zip AI_HLY/RuntimeHostResources.zip
+          unzip -Z1 AI_HLY/RuntimeHostResources.zip | grep -Fx 'runtime-probe.mjs'
+          unzip -p AI_HLY/RuntimeHostResources.zip server-worker.mjs | grep -F 'registerHooks'
+          unzip -p AI_HLY/RuntimeHostResources.zip package-compatibility.mjs | grep -F 'inspectArchiveSafety'
 
       - name: Run RuntimeCore fast preflight
         run: |
           set -euxo pipefail
           bash Scripts/Runtime/preflight-runtime-core.sh 2>&1 | tee "$LOG_DIR/04-runtime-preflight.log"
+
+      - name: Confirm native RuntimeCore reuse
+        run: |
+          set -euxo pipefail
+          test "$(node Scripts/Runtime/compute-runtime-dependency-hash.mjs RuntimeDependencies.lock.json)" = \
+            "7d967563db0809a4efa0f07b75d6b5928379a3b6f3aafb886899a79f59512a93"
+          git diff --exit-code -- RuntimeDependencies.lock.json
+          if grep -E '(configure|cmake|ninja|make).*(Node|nodejs|V8|Python)' \
+            "$LOG_DIR/04-prepare-runtime-core.log" "$LOG_DIR/04-package-runtime-host.log"; then
+            echo "Native Node/V8/Python source compilation was detected unexpectedly." >&2
+            exit 1
+          fi
+          echo "Reused verified native RuntimeCore; no Node, V8, or Python source compilation was detected."
 
       - name: Run RuntimeCore link-closure regression tests
         run: |
@@ -566,7 +602,7 @@ jobs:
     if: ${{ github.event_name == 'workflow_dispatch' && !inputs.runtime_bundle_only }}
     name: Launch full app on iPad Simulator
     runs-on: macos-26
-    timeout-minutes: 60
+    timeout-minutes: 90
 
     env:
       PROJECT_PATH: AI_HLY.xcodeproj
@@ -580,6 +616,13 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
+      - name: Set up pinned RuntimeCore host Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24.5.0
+          cache: npm
+          cache-dependency-path: AI_HLY/Downstream/RuntimeCore/Node/Host/package-lock.json
 
       - name: Prepare simulator logs and select stable Xcode 26
         run: |
@@ -801,6 +844,63 @@ jobs:
           done < "$LOG_DIR/08-new-diagnostic-reports.txt"
 
           xcrun simctl terminate "$SIMULATOR_UDID" "$BUNDLE_ID" 2>/dev/null || true
+
+          MCP_ACCEPTANCE_PATH="$DATA_CONTAINER/Library/Application Support/HanlinRuntime/v1/logs/mcp-acceptance.json"
+          MCP_RUNTIME_LOG_PATH="$DATA_CONTAINER/Library/Application Support/HanlinRuntime/v1/logs/node-runtime.log"
+          rm -f "$MCP_ACCEPTANCE_PATH"
+          touch "$LOG_DIR/mcp-launch-marker"
+          set +e
+          SIMCTL_CHILD_HANLIN_RUNTIME_ACCEPTANCE=mcp \
+            xcrun simctl launch "$SIMULATOR_UDID" "$BUNDLE_ID" 2>&1 | tee "$LOG_DIR/08-mcp-launch-output.txt"
+          mcp_launch_status=${PIPESTATUS[0]}
+          set -e
+          test "$mcp_launch_status" -eq 0
+          MCP_APP_PID="$(awk -F ': ' -v bundle="$BUNDLE_ID" '$1 == bundle { print $2 }' "$LOG_DIR/08-mcp-launch-output.txt" | tail -1)"
+          test -n "$MCP_APP_PID"
+          printf '%s\n' "$MCP_APP_PID" > "$LOG_DIR/mcp-launch-pid.txt"
+          for elapsed in $(seq 1 360); do
+            if [ -f "$MCP_ACCEPTANCE_PATH" ]; then
+              break
+            fi
+            if ! xcrun simctl spawn "$SIMULATOR_UDID" launchctl print "pid/$MCP_APP_PID" >/dev/null 2>&1; then
+              echo "Full app exited before writing MCP acceptance JSON after ${elapsed} seconds." >&2
+              exit 1
+            fi
+            sleep 1
+          done
+          test -f "$MCP_ACCEPTANCE_PATH"
+          cp "$MCP_ACCEPTANCE_PATH" "$LOG_DIR/mcp-acceptance.json"
+          test -f "$MCP_RUNTIME_LOG_PATH"
+          cp "$MCP_RUNTIME_LOG_PATH" "$LOG_DIR/node-runtime.log"
+          COMPATIBILITY_REPORT="$(find "$DATA_CONTAINER/Library/Application Support/HanlinRuntime/v1/packages/mcp" -name compatibility-report.json -type f -print -quit)"
+          test -n "$COMPATIBILITY_REPORT"
+          cp "$COMPATIBILITY_REPORT" "$LOG_DIR/server-everything-compatibility-report.json"
+          python3 Scripts/Runtime/validate_mcp_acceptance.py \
+            "$LOG_DIR/mcp-acceptance.json" \
+            --summary-output "$LOG_DIR/08-mcp-acceptance-summary.json" \
+            | tee "$LOG_DIR/08-mcp-acceptance.log"
+          xcrun simctl spawn "$SIMULATOR_UDID" launchctl print "pid/$MCP_APP_PID" >/dev/null
+          xcrun simctl terminate "$SIMULATOR_UDID" "$BUNDLE_ID" 2>/dev/null || true
+
+          : > "$LOG_DIR/08-mcp-new-diagnostic-reports.txt"
+          for diagnostic_root in \
+            "$HOME/Library/Logs/DiagnosticReports" \
+            "$HOME/Library/Developer/CoreSimulator/Devices/$SIMULATOR_UDID/data/Library/Logs/CrashReporter" \
+            "$HOME/Library/Developer/CoreSimulator/Devices/$SIMULATOR_UDID/data/Library/Logs/DiagnosticReports"; do
+            if [ -d "$diagnostic_root" ]; then
+              find "$diagnostic_root" -type f -newer "$LOG_DIR/mcp-launch-marker" -print \
+                >> "$LOG_DIR/08-mcp-new-diagnostic-reports.txt"
+            fi
+          done
+          while IFS= read -r diagnostic_report; do
+            report_name="$(basename "$diagnostic_report")"
+            case "$report_name" in
+              "$APP_EXECUTABLE"*|"$BUNDLE_ID"*)
+                echo "MCP acceptance generated crash report: $diagnostic_report" >&2
+                exit 1
+                ;;
+            esac
+          done < "$LOG_DIR/08-mcp-new-diagnostic-reports.txt"
           trap - EXIT
 
       - name: Collect simulator diagnostics
@@ -819,6 +919,13 @@ jobs:
                   "$LOG_DIR/shell-acceptance.json" 2>/dev/null || true
                 cp "$DATA_CONTAINER/Library/Application Support/HanlinRuntime/v1/logs/shell-runtime.log" \
                   "$LOG_DIR/shell-runtime.log" 2>/dev/null || true
+                cp "$DATA_CONTAINER/Library/Application Support/HanlinRuntime/v1/logs/mcp-acceptance.json" \
+                  "$LOG_DIR/mcp-acceptance.json" 2>/dev/null || true
+                cp "$DATA_CONTAINER/Library/Application Support/HanlinRuntime/v1/logs/node-runtime.log" \
+                  "$LOG_DIR/node-runtime.log" 2>/dev/null || true
+                find "$DATA_CONTAINER/Library/Application Support/HanlinRuntime/v1/packages/mcp" \
+                  -name compatibility-report.json -type f -exec cp {} "$LOG_DIR/server-everything-compatibility-report.json" \; \
+                  2>/dev/null || true
               fi
             fi
             mkdir -p "$LOG_DIR/DiagnosticReports"

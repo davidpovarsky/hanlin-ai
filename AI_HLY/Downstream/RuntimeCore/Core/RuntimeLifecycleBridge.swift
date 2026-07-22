@@ -5,8 +5,13 @@ enum RuntimeLifecycleBridge {
     static func prepareApplication() async {
         try? await AppRuntimeCore.shared.prepareStorage()
 #if targetEnvironment(simulator)
-        if ProcessInfo.processInfo.environment["HANLIN_RUNTIME_ACCEPTANCE"] == "shell" {
+        let acceptance = ProcessInfo.processInfo.environment["HANLIN_RUNTIME_ACCEPTANCE"]
+        if acceptance == "shell" {
             await ShellRuntimeAcceptance.run()
+            return
+        }
+        if acceptance == "mcp" {
+            await MCPRuntimeAcceptance.run()
             return
         }
 #endif

@@ -18,6 +18,10 @@ python3 "${SCRIPT_DIR}/validate_ios_system_resources.py" \
 node "${SCRIPT_DIR}/validate-runtime-localization.mjs" \
   "${REPOSITORY_ROOT}/AI_HLY/Downstream/RuntimeCore" \
   "${REPOSITORY_ROOT}/AI_HLY/Downstream/RuntimeCore/Resources/RuntimeLocalizable.xcstrings"
+node "${SCRIPT_DIR}/validate-runtime-localization.mjs" \
+  "${REPOSITORY_ROOT}/AI_HLY/Downstream/MCP" \
+  "${REPOSITORY_ROOT}/AI_HLY/Downstream/MCP/Resources/MCPLocalizable.xcstrings" \
+  "MCPL10n"
 generated_manifest="$(mktemp)"
 trap 'rm -f "${generated_manifest}"' EXIT
 node "${SCRIPT_DIR}/generate-runtime-manifest.mjs" "${LOCK_FILE}" "${generated_manifest}" >/dev/null
@@ -82,5 +86,9 @@ runtime_dependency_hash="$(node "${SCRIPT_DIR}/compute-runtime-dependency-hash.m
 test "$(unzip -Z1 "${HOST_ARCHIVE}" | grep -c '^node_modules/typescript/package.json$')" -eq 1
 test "$(unzip -Z1 "${HOST_ARCHIVE}" | grep -c '^host.mjs$')" -eq 1
 test "$(unzip -Z1 "${HOST_ARCHIVE}" | grep -c '^execution-worker.mjs$')" -eq 1
+test "$(unzip -Z1 "${HOST_ARCHIVE}" | grep -c '^server-worker.mjs$')" -eq 1
+test "$(unzip -Z1 "${HOST_ARCHIVE}" | grep -c '^runtime-probe.mjs$')" -eq 1
+unzip -p "${HOST_ARCHIVE}" server-worker.mjs | grep -Fq 'registerHooks'
+unzip -p "${HOST_ARCHIVE}" package-compatibility.mjs | grep -Fq 'inspectArchiveSafety'
 
 echo "RuntimeCore preflight passed: verified Node 24.5.0, Python 3.14.6, TypeScript 6.0.3, host resources, ios_system 3.0.5 pins, and the complete pinned curl_ios link closure."

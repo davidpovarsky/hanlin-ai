@@ -1,7 +1,11 @@
 import { promises as fs } from 'node:fs';
 import path from 'node:path';
 
-const [sourceRoot = 'AI_HLY/Downstream/RuntimeCore', catalogPath = 'AI_HLY/Downstream/RuntimeCore/Resources/RuntimeLocalizable.xcstrings'] = process.argv.slice(2);
+const [
+  sourceRoot = 'AI_HLY/Downstream/RuntimeCore',
+  catalogPath = 'AI_HLY/Downstream/RuntimeCore/Resources/RuntimeLocalizable.xcstrings',
+  namespace = 'RuntimeL10n',
+] = process.argv.slice(2);
 const catalog = JSON.parse(await fs.readFile(catalogPath, 'utf8'));
 const requiredLocales = ['en', 'he', 'zh-Hans'];
 const keys = new Set();
@@ -19,11 +23,14 @@ const dynamicKeys = [
   'Translate text characters.', 'Filter repeated text lines.', 'Remove one workspace link or file.',
   'Count lines, words, or bytes.'
 ];
-dynamicKeys.forEach(key => keys.add(key));
+if (namespace === 'RuntimeL10n') dynamicKeys.forEach(key => keys.add(key));
+
+const escapedNamespace = namespace.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+const localizationCall = new RegExp(`${escapedNamespace}\\.(?:string|format)\\(\\s*"((?:[^"\\\\]|\\\\.)*)"`, 'g');
 
 for (const file of await swiftFiles(sourceRoot)) {
   const source = await fs.readFile(file, 'utf8');
-  for (const match of source.matchAll(/RuntimeL10n\.(?:string|format)\(\s*"((?:[^"\\]|\\.)*)"/g)) {
+  for (const match of source.matchAll(localizationCall)) {
     keys.add(JSON.parse(`"${match[1]}"`));
   }
 }
@@ -41,7 +48,7 @@ if (failures.length) {
   console.error(failures.join('\n'));
   process.exit(1);
 }
-console.log(`Validated ${keys.size} RuntimeCore localization keys for ${requiredLocales.join(', ')}.`);
+console.log(`Validated ${keys.size} ${namespace} localization keys for ${requiredLocales.join(', ')}.`);
 
 async function swiftFiles(root) {
   const output = [];
