@@ -6,6 +6,7 @@ private struct RuntimeHostReadyFile: Codable, Sendable {
     let port: Int
     let nodeVersion: String
     let protocolVersion: Int
+    let modulePolicyHooksAvailable: Bool
 }
 
 struct RuntimeHostConnection: Sendable {
@@ -134,6 +135,9 @@ actor NodeRuntimeService {
                           ready.protocolVersion == Self.hostProtocolVersion else {
                         throw RuntimeCoreError.runtimeFailure("Expected Node \(Self.expectedNodeVersion) and host protocol \(Self.hostProtocolVersion), received Node \(ready.nodeVersion) and protocol \(ready.protocolVersion).")
                     }
+                    guard ready.modulePolicyHooksAvailable else {
+                        throw RuntimeCoreError.runtimeFailure("Embedded Node \(ready.nodeVersion) does not provide module.registerHooks; MCP package code will not run unguarded.")
+                    }
                     guard let url = URL(string: "http://127.0.0.1:\(ready.port)") else {
                         throw RuntimeCoreError.runtimeFailure("The runtime host produced an invalid loopback address.")
                     }
@@ -241,7 +245,7 @@ actor NodeRuntimeService {
     }
 
     private func prepareHostRuntime() throws -> URL {
-        let version = "3"
+        let version = "4"
         let destination = fileLayout.nodeRuntime.appending(path: "host-v\(version)", directoryHint: .isDirectory)
         let marker = destination.appending(path: ".ready")
         if FileManager.default.fileExists(atPath: marker.path) { return destination }

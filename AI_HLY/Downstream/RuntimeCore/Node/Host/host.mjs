@@ -3,6 +3,7 @@ import { promises as fs, createWriteStream, mkdirSync } from 'node:fs';
 import path from 'node:path';
 import { Worker } from 'node:worker_threads';
 import { timingSafeEqual } from 'node:crypto';
+import * as nodeModule from 'node:module';
 
 const [root, readyPath, launchToken, logPath, debugFlag] = process.argv.slice(2);
 if (!root || !readyPath || !launchToken || !logPath) throw new Error('Missing host launch arguments.');
@@ -56,6 +57,10 @@ process.env.npm_config_userconfig = npmUserConfig;
 process.env.NPM_CONFIG_USERCONFIG = npmUserConfig;
 
 const DEBUG = debugFlag === '1';
+const modulePolicyHooksAvailable = typeof nodeModule.registerHooks === 'function';
+if (!modulePolicyHooksAvailable) {
+  throw new Error(`Node ${process.versions.node} does not provide module.registerHooks; RuntimeCore refuses to start unguarded.`);
+}
 const logStream = createWriteStream(logPath, { flags: 'a' });
 diagnostic('runtime_paths_configured', {
   home: runtimeHome,
@@ -82,9 +87,9 @@ const server = http.createServer(async (request, response) => {
   try {
     if (!authorized(request)) return json(response, 401, { error: 'Unauthorized' });
     const url = new URL(request.url, 'http://127.0.0.1');
-    if (request.method === 'GET' && url.pathname === '/health') return json(response, 200, { ok: true, nodeVersion: process.versions.node, protocolVersion: 2 });
+    if (request.method === 'GET' && url.pathname === '/health') return json(response, 200, { ok: true, nodeVersion: process.versions.node, protocolVersion: 2, modulePolicyHooksAvailable });
     if (request.method === 'GET' && url.pathname === '/v1/runtime') {
-      return json(response, 200, { nodeVersion: process.versions.node, protocolVersion: 2, workers: [...servers.values()].map(snapshot), executions: executions.size });
+      return json(response, 200, { nodeVersion: process.versions.node, protocolVersion: 2, modulePolicyHooksAvailable, workers: [...servers.values()].map(snapshot), executions: executions.size });
     }
     if (request.method === 'POST' && url.pathname === '/v1/executions') {
       return json(response, 200, await executeJavaScript(await readJSON(request)));
@@ -148,19 +153,36 @@ const server = http.createServer(async (request, response) => {
         fraction: 0,
       });
       try {
-        const descriptor = await installPackage({
-          root,
-          operationID: body.operationID,
-          serverID: body.serverID,
-          source: body.source,
-          entryPointOverride: body.entryPointOverride,
-          signal: controller.signal,
-          emit: (channel, data) => {
-            if (channel === 'install') installProgress.set(body.operationID, data);
-            emitGlobal(channel, data);
-          },
-        });
-        return json(response, 200, descriptor);
+        try {
+          const descriptor = await installPackage({
+            root,
+            operationID: body.operationID,
+            serverID: body.serverID,
+            source: body.source,
+            entryPointOverride: body.entryPointOverride,
+            arguments: body.arguments,
+            signal: controller.signal,
+            emit: (channel, data) => {
+              if (channel === 'install') installProgress.set(body.operationID, data);
+              emitGlobal(channel, data);
+            },
+          });
+          return json(response, 200, descriptor);
+        } catch (error) {
+          error.operationID = body.operationID;
+          const prior = installProgress.get(body.operationID);
+          installProgress.set(body.operationID, {
+            operationID: body.operationID,
+            phase: prior?.phase ?? 'checkingCompatibility',
+            fraction: prior?.fraction ?? null,
+            terminalError: {
+              code: error.code ?? 'install_failed',
+              message: redact(error.message),
+              findings: error.findings ?? null,
+            },
+          });
+          throw error;
+        }
       } finally {
         installs.delete(body.operationID);
       }
@@ -216,18 +238,22 @@ const server = http.createServer(async (request, response) => {
     return json(response, 404, { error: 'Not found' });
   } catch (error) {
     diagnostic('request_failed', { path: request.url, message: redact(error.message) });
-    if (!response.headersSent) json(response, error.name === 'AbortError' ? 499 : 400, { error: redact(error.message) });
+    if (!response.headersSent) json(response, error.name === 'AbortError' ? 499 : 400, {
+      error: redact(error.message),
+      operationID: error.operationID ?? null,
+      code: error.code ?? null,
+    });
     else response.end();
   }
 });
 
 server.listen(0, '127.0.0.1', async () => {
   const address = server.address();
-  const ready = { port: address.port, nodeVersion: process.versions.node, protocolVersion: 2 };
+  const ready = { port: address.port, nodeVersion: process.versions.node, protocolVersion: 2, modulePolicyHooksAvailable };
   const temporary = `${readyPath}.tmp`;
   await fs.writeFile(temporary, JSON.stringify(ready), { mode: 0o600 });
   await fs.rename(temporary, readyPath);
-  diagnostic('host_ready', { port: address.port, nodeVersion: process.versions.node });
+  diagnostic('host_ready', { port: address.port, nodeVersion: process.versions.node, modulePolicyHooksAvailable });
 });
 
 function authorized(request) {
@@ -384,7 +410,7 @@ async function startServer(id, configuration) {
   const entryPoint = path.resolve(configuration.entryPoint);
   if (!isInside(packageRoot, entryPoint)) throw new Error('Entry point is outside package root.');
 
-  const state = { id, state: 'starting', worker: null, clients: new Set(), stderr: [], pending: Buffer.alloc(0), startedAt: new Date().toISOString() };
+  const state = { id, state: 'starting', worker: null, clients: new Set(), stderr: [], pending: Buffer.alloc(0), startedAt: new Date().toISOString(), moduleEdges: [], blockedAccesses: [] };
   const worker = new Worker(workerURL, {
     workerData: { serverID: id, packageRoot, entryPoint },
     argv: Array.isArray(configuration.arguments) ? configuration.arguments : [],
@@ -403,7 +429,9 @@ async function startServer(id, configuration) {
     emit(state, 'stderr', { text: message });
   });
   worker.on('message', message => {
-    if (message?.type === 'loaded') { state.state = 'running'; emit(state, 'lifecycle', { event: 'server-ready' }); }
+    if (message?.type === 'module-edge') state.moduleEdges.push(message);
+    if (message?.type === 'policy-blocked') state.blockedAccesses.push(message);
+    if (message?.type === 'loaded') { state.state = 'running'; emit(state, 'lifecycle', { event: 'server-ready', modulePolicyHooksAvailable: message.modulePolicyHooksAvailable === true }); }
   });
   worker.on('error', error => { state.state = 'failed'; emit(state, 'lifecycle', { event: 'error', message: redact(error.message) }); });
   worker.on('exit', code => { state.state = code === 0 ? 'stopped' : 'failed'; emit(state, 'lifecycle', { event: 'exit', code }); servers.delete(id); });
@@ -483,7 +511,16 @@ async function sendLogs(id, response) {
   json(response, 200, { lines: state?.stderr ?? [] });
 }
 
-function snapshot(state) { return { id: state.id, state: state.state, startedAt: state.startedAt }; }
+function snapshot(state) {
+  return {
+    id: state.id,
+    state: state.state,
+    startedAt: state.startedAt,
+    modulePolicyHooksAvailable,
+    resolvedModuleCount: state.moduleEdges.length,
+    blockedAccesses: state.blockedAccesses,
+  };
+}
 
 async function readJSON(request) {
   const chunks = [];
