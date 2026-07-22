@@ -191,6 +191,27 @@ jobs:
           set -euxo pipefail
           bash Scripts/Runtime/preflight-runtime-core.sh 2>&1 | tee "$LOG_DIR/04-runtime-preflight.log"
 
+      - name: Run RuntimeCore link-closure regression tests
+        run: |
+          set -euxo pipefail
+          node --test Scripts/Runtime/Tests/runtime-link-dependencies.test.mjs 2>&1 | tee "$LOG_DIR/04-runtime-link-tests.log"
+          python3 -m unittest Scripts/Runtime/Tests/test_validate_app_dyld_closure.py -v 2>&1 | tee "$LOG_DIR/04-dyld-scanner-tests.log"
+
+      - name: Verify pinned application-link archives
+        run: |
+          set -euxo pipefail
+          archive_root="$(mktemp -d "$RUNNER_TEMP/runtime-link-archives.XXXXXX")"
+          curl -fL --retry 3 \
+            --output "$archive_root/libssh2-dynamic.xcframework.zip" \
+            "https://github.com/holzschu/libssh2-apple/releases/download/v1.11.0/libssh2-dynamic.xcframework.zip"
+          curl -fL --retry 3 \
+            --output "$archive_root/openssl-dynamic.xcframework.zip" \
+            "https://github.com/holzschu/openssl-apple/releases/download/v1.1.1w/openssl-dynamic.xcframework.zip"
+          test "$(stat -f %z "$archive_root/libssh2-dynamic.xcframework.zip")" = "6378994"
+          test "$(stat -f %z "$archive_root/openssl-dynamic.xcframework.zip")" = "13879626"
+          test "$(swift package compute-checksum "$archive_root/libssh2-dynamic.xcframework.zip")" = "cacfe1789b197b727119f7e32f561eaf9acc27bf38cd19975b74fce107f868a6"
+          test "$(swift package compute-checksum "$archive_root/openssl-dynamic.xcframework.zip")" = "329e8317cf9bee8e138da5d032330a7a1bd2473cf44c9c083cb2f0636abb8b80"
+
       - name: Validate expected project files
         run: |
           set -euxo pipefail
@@ -345,8 +366,32 @@ jobs:
             test -d "$APP_PATH/python/lib/python3.14"
             test -f "$APP_PATH/RuntimeHostResources.zip"
             test -f "$APP_PATH/RuntimeManifest.json"
-            otool -L "$APP_PATH/$APP_NAME" | tee "$LOG_DIR/08-runtime-linked-frameworks.txt"
+            test -f "$APP_PATH/RuntimeLinkDependencyNotices.txt"
             nm "$APP_PATH/$APP_NAME" | grep -E '(_ios_system$|_HanlinPythonExecute$|_HanlinNodeStart$)' | tee "$LOG_DIR/08-runtime-symbols.txt"
+
+            echo
+            echo "===== Complete Mach-O / dyld closure verification ====="
+            test -f "$APP_PATH/Frameworks/libssh2.framework/libssh2"
+            test -f "$APP_PATH/Frameworks/openssl.framework/openssl"
+            test -f "$APP_PATH/Frameworks/curl_ios.framework/curl_ios"
+            plutil -lint "$APP_PATH/Frameworks/libssh2.framework/Info.plist"
+            plutil -lint "$APP_PATH/Frameworks/openssl.framework/Info.plist"
+            test "$(/usr/libexec/PlistBuddy -c 'Print CFBundleExecutable' "$APP_PATH/Frameworks/libssh2.framework/Info.plist")" = "libssh2"
+            test "$(/usr/libexec/PlistBuddy -c 'Print CFBundleExecutable' "$APP_PATH/Frameworks/openssl.framework/Info.plist")" = "openssl"
+            lipo -archs "$APP_PATH/Frameworks/libssh2.framework/libssh2" | grep -qw arm64
+            lipo -archs "$APP_PATH/Frameworks/openssl.framework/openssl" | grep -qw arm64
+            vtool -show-build "$APP_PATH/Frameworks/libssh2.framework/libssh2" | tee "$LOG_DIR/08-libssh2-build-version.txt"
+            vtool -show-build "$APP_PATH/Frameworks/openssl.framework/openssl" | tee "$LOG_DIR/08-openssl-build-version.txt"
+            grep -Eq 'platform[[:space:]]+IOS$' "$LOG_DIR/08-libssh2-build-version.txt"
+            grep -Eq 'platform[[:space:]]+IOS$' "$LOG_DIR/08-openssl-build-version.txt"
+            otool -L "$APP_PATH/Frameworks/curl_ios.framework/curl_ios" | tee "$LOG_DIR/08-curl-ios-dependencies.txt"
+            grep -Fq '@rpath/libssh2.framework/libssh2' "$LOG_DIR/08-curl-ios-dependencies.txt"
+            grep -Fq '@rpath/openssl.framework/openssl' "$LOG_DIR/08-curl-ios-dependencies.txt"
+            python3 Scripts/Runtime/validate-app-dyld-closure.py \
+              --app "$APP_PATH" \
+              --platform iphoneos \
+              --json-output "$LOG_DIR/08-dyld-closure.json" \
+              --text-output "$LOG_DIR/08-dyld-closure.txt"
 
             echo
             echo "===== App Info.plist ====="
@@ -402,6 +447,19 @@ jobs:
             echo
             echo "Unsigned IPA packaged successfully."
           } 2>&1 | tee "$LOG_DIR/09-package-ipa.log"
+
+      - name: Validate packaged IPA dyld closure
+        run: |
+          set -euxo pipefail
+          packaged_root="$(mktemp -d "$RUNNER_TEMP/packaged-ipa.XXXXXX")"
+          ditto -x -k "$IPA_NAME" "$packaged_root"
+          PACKAGED_APP_PATH="$(find "$packaged_root/Payload" -maxdepth 1 -type d -name '*.app' -print -quit)"
+          test -n "$PACKAGED_APP_PATH"
+          python3 Scripts/Runtime/validate-app-dyld-closure.py \
+            --app "$PACKAGED_APP_PATH" \
+            --platform iphoneos \
+            --json-output "$LOG_DIR/09-packaged-ipa-dyld-closure.json" \
+            --text-output "$LOG_DIR/09-packaged-ipa-dyld-closure.txt"
 
       - name: Create diagnostic summary
         if: always()
