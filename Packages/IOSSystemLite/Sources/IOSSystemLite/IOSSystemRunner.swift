@@ -70,7 +70,7 @@ public enum IOSSystemRunner {
         initializeEnvironment()
 
         let moduleDictionary = Bundle.module.url(forResource: "RuntimeCommands", withExtension: "plist")
-        let addError: NSError?
+        let addError: Error?
         if let moduleDictionary {
             addError = addCommandList(moduleDictionary.path)
         } else {
@@ -81,8 +81,8 @@ public enum IOSSystemRunner {
             )
         }
 
-        let rawObject: AnyObject? = commandsAsArray()
-        let rawArray = rawObject as? NSArray
+        let rawArray = commandsAsArray()
+        let bridgedArray = rawArray.map { $0 as NSArray }
         let rawValues = rawArray?.compactMap { value -> String? in
             if let value = value as? String { return value }
             if let value = value as? NSString { return value as String }
@@ -98,11 +98,11 @@ public enum IOSSystemRunner {
             mainDictionaryPath: Bundle.main.url(forResource: "commandDictionary", withExtension: "plist")?.path,
             extraDictionaryPath: Bundle.main.url(forResource: "extraCommandsDictionary", withExtension: "plist")?.path,
             moduleDictionaryPath: moduleDictionary?.path,
-            rawCommandsClass: rawObject.map { NSStringFromClass(type(of: $0)) } ?? "nil",
+            rawCommandsClass: bridgedArray.map { NSStringFromClass(type(of: $0)) } ?? "nil",
             rawCommandsCount: rawArray?.count ?? 0,
             rawCommandValues: rawValues,
-            addCommandListErrorDomain: addError?.domain,
-            addCommandListErrorCode: addError?.code,
+            addCommandListErrorDomain: addError.map { ($0 as NSError).domain },
+            addCommandListErrorCode: addError.map { ($0 as NSError).code },
             addCommandListErrorDescription: addError?.localizedDescription,
             executableResults: executableResults
         )
