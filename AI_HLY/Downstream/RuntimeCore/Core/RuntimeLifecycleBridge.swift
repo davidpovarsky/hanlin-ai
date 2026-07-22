@@ -6,7 +6,7 @@ enum RuntimeLifecycleBridge {
         try? await AppRuntimeCore.shared.prepareStorage()
 #if targetEnvironment(simulator)
         if ProcessInfo.processInfo.environment["HANLIN_RUNTIME_ACCEPTANCE"] == "shell" {
-            ShellRegistrationProbe.run()
+            await ShellRuntimeAcceptance.run()
             return
         }
 #endif

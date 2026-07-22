@@ -28,6 +28,9 @@ struct RuntimeSnapshot: Codable, Identifiable, Sendable {
     var source: String?
     var lastHealthCheck: Date?
     var lastErrorCode: String?
+    var healthCategory: String? = nil
+    var lastDiagnostic: String? = nil
+    var missingCommands: [String]? = nil
     var storageBytes: Int64?
     var cacheBytes: Int64?
     var activeExecutionCount: Int
