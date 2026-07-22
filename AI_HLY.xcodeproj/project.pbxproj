@@ -16,6 +16,8 @@
 		A10000000000000000000007 /* Python.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A10000000000000000000021 /* Python.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		A10000000000000000000008 /* IOSSystemLite in Frameworks */ = {isa = PBXBuildFile; productRef = A10000000000000000000014 /* IOSSystemLite */; };
 		A10000000000000000000009 /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A10000000000000000000022 /* JavaScriptCore.framework */; };
+		A10000000000000000000060 /* commandDictionary.plist in Resources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000062 /* commandDictionary.plist */; };
+		A10000000000000000000061 /* extraCommandsDictionary.plist in Resources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000063 /* extraCommandsDictionary.plist */; };
 		D786F6B02E63DE70004DAC20 /* LLM in Frameworks */ = {isa = PBXBuildFile; productRef = D786F6AF2E63DE70004DAC20 /* LLM */; };
 		D7D5EE3C2DD58CF000B89AAD /* CoreXLSX in Frameworks */ = {isa = PBXBuildFile; productRef = D7D5EE3B2DD58CF000B89AAD /* CoreXLSX */; };
 		D7D5EE3F2DD58D0600B89AAD /* RichTextKit in Frameworks */ = {isa = PBXBuildFile; productRef = D7D5EE3E2DD58D0600B89AAD /* RichTextKit */; };
@@ -54,6 +56,8 @@
 		A10000000000000000000020 /* NodeMobile.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = Vendor/NodeMobile/NodeMobile.xcframework; sourceTree = SOURCE_ROOT; };
 		A10000000000000000000021 /* Python.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = Vendor/Python/Python.xcframework; sourceTree = SOURCE_ROOT; };
 		A10000000000000000000022 /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		A10000000000000000000062 /* commandDictionary.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = commandDictionary.plist; path = Packages/IOSSystemLite/Sources/IOSSystemLite/Resources/commandDictionary.plist; sourceTree = SOURCE_ROOT; };
+		A10000000000000000000063 /* extraCommandsDictionary.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = extraCommandsDictionary.plist; path = Packages/IOSSystemLite/Sources/IOSSystemLite/Resources/extraCommandsDictionary.plist; sourceTree = SOURCE_ROOT; };
 		D7B6C3C12D50A55D004E3AD6 /* AI_Hanlin.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AI_Hanlin.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D7C6558C2E6C731A0041F1C7 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -116,6 +120,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A10000000000000000000064 /* IOSSystemLite Resources */ = {
+			isa = PBXGroup;
+			children = (
+				A10000000000000000000062 /* commandDictionary.plist */,
+				A10000000000000000000063 /* extraCommandsDictionary.plist */,
+			);
+			name = "IOSSystemLite Resources";
+			sourceTree = "<group>";
+		};
 		D73E23062D817B1300ACC644 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -130,6 +143,7 @@
 			isa = PBXGroup;
 			children = (
 				D7B6C3C32D50A55D004E3AD6 /* AI_HLY */,
+				A10000000000000000000064 /* IOSSystemLite Resources */,
 				D73E23062D817B1300ACC644 /* Frameworks */,
 				D7B6C3C22D50A55D004E3AD6 /* Products */,
 				D7C6558C2E6C731A0041F1C7 /* Config.xcconfig */,
@@ -237,6 +251,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A10000000000000000000060 /* commandDictionary.plist in Resources */,
+				A10000000000000000000061 /* extraCommandsDictionary.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

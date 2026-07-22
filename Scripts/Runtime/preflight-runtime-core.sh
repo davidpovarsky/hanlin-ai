@@ -13,6 +13,8 @@ node "${SCRIPT_DIR}/validate-runtime-lock.mjs" "${LOCK_FILE}"
 node "${SCRIPT_DIR}/validate-ios-system-package.mjs" \
   "${LOCK_FILE}" \
   "${REPOSITORY_ROOT}/Packages/IOSSystemLite/Package.swift"
+python3 "${SCRIPT_DIR}/validate_ios_system_resources.py" \
+  --repository-root "${REPOSITORY_ROOT}"
 node "${SCRIPT_DIR}/validate-runtime-localization.mjs" \
   "${REPOSITORY_ROOT}/AI_HLY/Downstream/RuntimeCore" \
   "${REPOSITORY_ROOT}/AI_HLY/Downstream/RuntimeCore/Resources/RuntimeLocalizable.xcstrings"
@@ -43,6 +45,8 @@ required_paths=(
   "${REPOSITORY_ROOT}/AI_HLY/Downstream/RuntimeCore/Resources/RuntimeManifest.json"
   "${REPOSITORY_ROOT}/AI_HLY/Downstream/RuntimeCore/Resources/RuntimeLinkDependencyNotices.txt"
   "${REPOSITORY_ROOT}/Packages/IOSSystemLite/Package.swift"
+  "${REPOSITORY_ROOT}/Packages/IOSSystemLite/Sources/IOSSystemLite/Resources/commandDictionary.plist"
+  "${REPOSITORY_ROOT}/Packages/IOSSystemLite/Sources/IOSSystemLite/Resources/extraCommandsDictionary.plist"
 )
 for required_path in "${required_paths[@]}"; do
   test -e "${required_path}" || { echo "RuntimeCore preflight is missing ${required_path}." >&2; exit 1; }
