@@ -28,4 +28,8 @@ actor TypeScriptRuntimeService {
         )
         return TypeScriptExecutionResult(compilation: compilation, execution: try await node.executeJavaScript(executionRequest))
     }
+
+    func compileProject(workspace: URL, arguments: [String]) async throws -> TypeScriptProjectCompilationResult {
+        try await node.compileTypeScriptProject(workspace: workspace, arguments: arguments)
+    }
 }

@@ -1,5 +1,5 @@
 import http from 'node:http';
-import { promises as fs, createWriteStream } from 'node:fs';
+import { promises as fs, createWriteStream, mkdirSync } from 'node:fs';
 import path from 'node:path';
 import { Worker } from 'node:worker_threads';
 import { timingSafeEqual } from 'node:crypto';
@@ -66,7 +66,7 @@ diagnostic('runtime_paths_configured', {
 
 const { commitInstall, installPackage, previewPackage, rollbackInstall } =
   await import('./package-installer.mjs');
-const { installGlobalPackage, listGlobalPackages, previewGlobalPackage, uninstallGlobalPackage } =
+const { commitGlobalPackage, installGlobalPackage, listGlobalPackages, previewGlobalPackage, rollbackGlobalPackage, stageGlobalPackage, uninstallGlobalPackage } =
   await import('./global-package-manager.mjs');
 
 const workerURL = new URL('./server-worker.mjs', import.meta.url);
@@ -98,6 +98,9 @@ const server = http.createServer(async (request, response) => {
     if (request.method === 'POST' && url.pathname === '/v1/typescript/compile') {
       return json(response, 200, await compileTypeScript(await readJSON(request)));
     }
+    if (request.method === 'POST' && url.pathname === '/v1/typescript/project') {
+      return json(response, 200, await compileTypeScriptProject(await readJSON(request)));
+    }
     if (request.method === 'GET' && url.pathname === '/v1/packages/node') {
       return json(response, 200, { packages: await listGlobalPackages({ root }) });
     }
@@ -108,6 +111,18 @@ const server = http.createServer(async (request, response) => {
     if (request.method === 'POST' && url.pathname === '/v1/packages/node/install') {
       const body = await readJSON(request);
       return json(response, 200, await installGlobalPackage({ root, name: body.name, version: body.version }));
+    }
+    if (request.method === 'POST' && url.pathname === '/v1/packages/node/stage') {
+      const body = await readJSON(request);
+      return json(response, 200, await stageGlobalPackage({ root, name: body.name, version: body.version }));
+    }
+    if (request.method === 'POST' && url.pathname === '/v1/packages/node/commit') {
+      const body = await readJSON(request);
+      return json(response, 200, await commitGlobalPackage({ root, transactionID: body.transactionID }));
+    }
+    if (request.method === 'POST' && url.pathname === '/v1/packages/node/rollback') {
+      const body = await readJSON(request);
+      return json(response, 200, await rollbackGlobalPackage({ root, transactionID: body.transactionID }));
     }
     if (request.method === 'POST' && url.pathname === '/v1/packages/node/uninstall') {
       const body = await readJSON(request);
@@ -303,6 +318,45 @@ async function compileTypeScript(body) {
   });
   const failed = diagnostics.some(item => item.category === ts.DiagnosticCategory.Error);
   return { javaScript: failed ? null : result.outputText, sourceMap: failed ? null : result.sourceMapText ?? null, diagnostics: diagnostics.map(({ category, ...item }) => item), succeeded: !failed };
+}
+
+async function compileTypeScriptProject(body) {
+  const workspace = path.resolve(String(body.workspace ?? ''));
+  if (!isInside(clientsRoot, workspace)) throw new Error('TypeScript lifecycle workspace is outside RuntimeCore clients.');
+  const args = Array.isArray(body.arguments) ? body.arguments.map(String) : [];
+  if (args.length > 128 || args.some(argument => /[\0\r\n]/.test(argument))) throw new Error('Invalid TypeScript lifecycle arguments.');
+  const ts = await import('typescript');
+  const commandLine = ts.parseCommandLine(args);
+  const diagnostics = [...commandLine.errors];
+  const requestedProject = commandLine.options.project;
+  const configPath = requestedProject
+    ? path.resolve(workspace, requestedProject)
+    : ts.findConfigFile(workspace, ts.sys.fileExists, 'tsconfig.json');
+  if (!configPath || !isInside(workspace, configPath)) throw new Error('A tsconfig.json inside the package workspace is required.');
+  const config = ts.readConfigFile(configPath, ts.sys.readFile);
+  if (config.error) diagnostics.push(config.error);
+  const parsed = ts.parseJsonConfigFileContent(config.config ?? {}, ts.sys, path.dirname(configPath), commandLine.options, configPath);
+  diagnostics.push(...parsed.errors);
+  const emittedFiles = [];
+  if (!diagnostics.some(item => item.category === ts.DiagnosticCategory.Error)) {
+    const program = ts.createProgram({ rootNames: parsed.fileNames, options: parsed.options, projectReferences: parsed.projectReferences });
+    diagnostics.push(...ts.getPreEmitDiagnostics(program));
+    if (!diagnostics.some(item => item.category === ts.DiagnosticCategory.Error)) {
+      const emit = program.emit(undefined, (fileName, data, writeByteOrderMark) => {
+        const destination = path.resolve(fileName);
+        if (!isInside(workspace, destination)) throw new Error(`TypeScript output escapes the package workspace: ${fileName}`);
+        mkdirSync(path.dirname(destination), { recursive: true });
+        ts.sys.writeFile(destination, data, writeByteOrderMark);
+        emittedFiles.push(path.relative(workspace, destination));
+      });
+      diagnostics.push(...emit.diagnostics);
+    }
+  }
+  const normalized = diagnostics.map(diagnostic => {
+    const position = diagnostic.file && typeof diagnostic.start === 'number' ? diagnostic.file.getLineAndCharacterOfPosition(diagnostic.start) : null;
+    return { code: diagnostic.code, message: ts.flattenDiagnosticMessageText(diagnostic.messageText, '\n'), line: position ? position.line + 1 : null, column: position ? position.character + 1 : null };
+  });
+  return { diagnostics: normalized, emittedFiles, succeeded: !diagnostics.some(item => item.category === ts.DiagnosticCategory.Error) };
 }
 
 function validatedEnvironment(value) {

@@ -162,6 +162,19 @@ test('host redirects npm state before preview and install modules initialize', a
     assert.equal(compiled.succeeded, true);
     assert.match(compiled.javaScript, /const answer = 42/);
 
+    await fs.writeFile(path.join(workspace, 'tsconfig.json'), JSON.stringify({
+      compilerOptions: { target: 'ES2022', module: 'ESNext', rootDir: 'src', outDir: 'dist', strict: true },
+      include: ['src/**/*.ts'],
+    }));
+    await fs.mkdir(path.join(workspace, 'src'), { recursive: true });
+    await fs.writeFile(path.join(workspace, 'src', 'setup.ts'), 'export const answer: number = 42;\n');
+    const project = await hostRequest(ready.port, launchToken, '/v1/typescript/project', {
+      workspace,
+      arguments: ['--project', 'tsconfig.json'],
+    });
+    assert.equal(project.succeeded, true, JSON.stringify(project.diagnostics));
+    assert.ok(project.emittedFiles.includes(path.join('dist', 'setup.js')));
+
     const timedOut = await hostRequest(ready.port, launchToken, '/v1/executions', {
       executionID: '44444444-4444-4444-8444-444444444444',
       source: 'setInterval(() => {}, 1000); await new Promise(() => {});',

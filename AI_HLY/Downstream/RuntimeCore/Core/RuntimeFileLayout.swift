@@ -40,6 +40,7 @@ struct RuntimeFileLayout: Sendable {
     var logs: URL { directory("logs") }
     var registry: URL { directory("registry") }
     var environmentRegistry: URL { registry.appending(path: "RuntimeEnvironment.json") }
+    var lifecycleApprovalRegistry: URL { registry.appending(path: "LifecycleApprovals.json") }
 
     var legacyMCPDataExists: Bool {
         FileManager.default.fileExists(atPath: Self.legacyMCPRoot.path)

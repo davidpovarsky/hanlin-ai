@@ -9,6 +9,7 @@ private final class PythonPackagesModel {
     var installed: [PythonPackageRecord] = []
     var preview: PythonPackagePreview?
     var probeOutput: String?
+    var installProgress: PythonPackageInstallProgress?
     var message: String?
     var isBusy = false
     private var operation: Task<Void, Never>?
@@ -19,7 +20,17 @@ private final class PythonPackagesModel {
     }
 
     func inspect() { run { self.preview = try await AppRuntimeCore.shared.pythonPackages.preview(name: self.packageName, version: self.version.isEmpty ? nil : self.version) } }
-    func install() { run { _ = try await AppRuntimeCore.shared.pythonPackages.install(name: self.packageName, version: self.version.isEmpty ? nil : self.version); await self.reload() } }
+    func install() {
+        run {
+            _ = try await AppRuntimeCore.shared.pythonPackages.install(
+                name: self.packageName,
+                version: self.version.isEmpty ? nil : self.version
+            ) { update in
+                self.installProgress = update
+            }
+            await self.reload()
+        }
+    }
     func update(_ item: PythonPackageRecord) { packageName = item.name; version = ""; install() }
     func uninstall(_ item: PythonPackageRecord) { run { try await AppRuntimeCore.shared.pythonPackages.uninstall(item); await self.reload() } }
     func probe(_ item: PythonPackageRecord) { run { let result = try await AppRuntimeCore.shared.pythonPackages.probe(item); self.probeOutput = result.stdout + result.stderr } }
@@ -28,6 +39,7 @@ private final class PythonPackagesModel {
     private func run(_ body: @escaping @MainActor () async throws -> Void) {
         operation?.cancel()
         isBusy = true
+        installProgress = nil
         message = nil
         operation = Task {
             defer { self.isBusy = false }
@@ -51,7 +63,20 @@ struct PythonPackagesView: View {
                     Button(RuntimeL10n.string("Install")) { model.install() }
                     if model.isBusy { Button(RuntimeL10n.string("Cancel"), role: .cancel) { model.cancel() } }
                 }
-                if model.isBusy { ProgressView(RuntimeL10n.string("Downloading and verifying wheel")) }
+                if model.isBusy {
+                    if let progress = model.installProgress {
+                        ProgressView(
+                            value: Double(progress.completedUnits),
+                            total: Double(max(1, progress.totalUnits))
+                        ) {
+                            Text(RuntimeL10n.string("Python package installation progress"))
+                        } currentValueLabel: {
+                            Text("\(progress.phase.rawValue.capitalized): \(progress.packageName)")
+                        }
+                    } else {
+                        ProgressView(RuntimeL10n.string("Downloading and verifying wheel"))
+                    }
+                }
                 if let message = model.message { Text(message).font(.caption).textSelection(.enabled) }
             }
 
@@ -72,6 +97,11 @@ struct PythonPackagesView: View {
                         HStack { Text(item.name); Spacer(); Text(item.version).foregroundStyle(.secondary) }
                         Text(ByteCountFormatter.string(fromByteCount: item.storageBytes, countStyle: .file)).font(.caption)
                         if !item.dependencyRequirements.isEmpty { Text(item.dependencyRequirements.joined(separator: ", ")).font(.caption2).foregroundStyle(.secondary) }
+                        if let dependencies = item.resolvedDependencies, !dependencies.isEmpty {
+                            Text(dependencies.map { "\($0.name) \($0.version)" }.joined(separator: ", "))
+                                .font(.caption2)
+                                .foregroundStyle(.secondary)
+                        }
                         Button(RuntimeL10n.string("Import Probe")) { model.probe(item) }.buttonStyle(.borderless)
                     }
                     .swipeActions {

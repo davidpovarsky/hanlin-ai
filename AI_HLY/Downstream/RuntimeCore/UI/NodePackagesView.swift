@@ -10,6 +10,7 @@ private final class NodePackagesModel {
     var preview: NodePackageDetails?
     var probeOutput: String?
     var message: String?
+    var pendingApproval: NodePackageDetails?
     var isBusy = false
     private var operation: Task<Void, Never>?
 
@@ -19,19 +20,45 @@ private final class NodePackagesModel {
     }
 
     func inspect() { run { self.preview = try await AppRuntimeCore.shared.nodePackages.preview(name: self.packageName, version: self.version.nilIfEmpty) } }
-    func install() { run { self.preview = try await AppRuntimeCore.shared.nodePackages.install(name: self.packageName, version: self.version.nilIfEmpty); await self.reload() } }
+    func install() {
+        run(markCompleted: false) {
+            let inspected = try await AppRuntimeCore.shared.nodePackages.preview(name: self.packageName, version: self.version.nilIfEmpty)
+            self.preview = inspected
+            if inspected.lifecycle?.requiresApproval == true {
+                self.pendingApproval = inspected
+            } else {
+                self.preview = try await AppRuntimeCore.shared.nodePackages.install(name: self.packageName, version: self.version.nilIfEmpty)
+                await self.reload()
+                self.message = RuntimeL10n.string("Completed")
+            }
+        }
+    }
+    func approveAndInstall() {
+        pendingApproval = nil
+        run {
+            self.preview = try await AppRuntimeCore.shared.nodePackages.install(
+                name: self.packageName,
+                version: self.version.nilIfEmpty,
+                approveLifecycle: true
+            )
+            await self.reload()
+        }
+    }
     func update(_ item: NodePackageDetails) { packageName = item.name; version = ""; install() }
     func uninstall(_ item: NodePackageDetails) { run { try await AppRuntimeCore.shared.nodePackages.uninstall(name: item.name); await self.reload() } }
     func probe(_ item: NodePackageDetails) { run { let result = try await AppRuntimeCore.shared.nodePackages.probe(item); self.probeOutput = result.stdout + result.stderr } }
     func cancel() { operation?.cancel(); operation = nil; isBusy = false; message = RuntimeL10n.string("Cancelled") }
 
-    private func run(_ body: @escaping @MainActor () async throws -> Void) {
+    private func run(markCompleted: Bool = true, _ body: @escaping @MainActor () async throws -> Void) {
         operation?.cancel()
         isBusy = true
         message = nil
         operation = Task {
             defer { self.isBusy = false }
-            do { try await body(); self.message = RuntimeL10n.string("Completed") }
+            do {
+                try await body()
+                if markCompleted { self.message = RuntimeL10n.string("Completed") }
+            }
             catch is CancellationError { self.message = RuntimeL10n.string("Cancelled") }
             catch { self.message = error.localizedDescription }
         }
@@ -83,6 +110,19 @@ struct NodePackagesView: View {
         .navigationTitle(RuntimeL10n.string("Node Packages"))
         .task { await model.reload() }
         .refreshable { await model.reload() }
+        .confirmationDialog(
+            RuntimeL10n.string("Approve lifecycle scripts?"),
+            isPresented: Binding(
+                get: { model.pendingApproval != nil },
+                set: { if !$0 { model.pendingApproval = nil } }
+            ),
+            titleVisibility: .visible
+        ) {
+            Button(RuntimeL10n.string("Approve and Install")) { model.approveAndInstall() }
+            Button(RuntimeL10n.string("Cancel"), role: .cancel) { model.pendingApproval = nil }
+        } message: {
+            Text(RuntimeL10n.string("The exact lifecycle plan will run only through RuntimeCore and will be re-approved if its version, integrity, or script hash changes."))
+        }
     }
 }
 
@@ -100,7 +140,7 @@ private struct NodePackageDetailsView: View {
             if !item.dependencies.isEmpty { LabeledContent(RuntimeL10n.string("Dependencies"), value: item.dependencies.joined(separator: ", ")) }
             if let lifecycle = item.lifecycle {
                 LabeledContent(RuntimeL10n.string("Lifecycle scripts"), value: lifecycle.actions.isEmpty ? RuntimeL10n.string("None") : RuntimeL10n.format("%d planned actions", lifecycle.actions.count))
-                if lifecycle.requiresApproval { Text(RuntimeL10n.string("Lifecycle actions require explicit approval and are not run during the package transaction.")) .font(.caption).foregroundStyle(.orange) }
+                if lifecycle.requiresApproval { Text(RuntimeL10n.string("Lifecycle actions require explicit approval and run only through RuntimeCore.")) .font(.caption).foregroundStyle(.orange) }
             }
             ForEach(item.findings ?? []) { finding in
                 Label(finding.message, systemImage: finding.severity == "unsupported" ? "xmark.octagon" : "exclamationmark.triangle")

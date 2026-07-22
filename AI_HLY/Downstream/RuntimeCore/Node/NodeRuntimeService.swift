@@ -57,6 +57,12 @@ struct TypeScriptCompilationResult: Codable, Sendable {
     let succeeded: Bool
 }
 
+struct TypeScriptProjectCompilationResult: Codable, Sendable {
+    let diagnostics: [TypeScriptCompilationResult.Diagnostic]
+    let emittedFiles: [String]
+    let succeeded: Bool
+}
+
 actor NodeRuntimeService {
     static let expectedNodeVersion = "24.5.0"
     static let hostProtocolVersion = 2
@@ -212,6 +218,22 @@ actor NodeRuntimeService {
         }
         let encodedBody = try JSONSerialization.data(withJSONObject: body)
         return try await host.decode(TypeScriptCompilationResult.self, path: "/v1/typescript/compile", method: "POST", body: encodedBody)
+    }
+
+    func compileTypeScriptProject(workspace: URL, arguments: [String]) async throws -> TypeScriptProjectCompilationResult {
+        let scopedWorkspace = try fileLayout.validatedDescendant(workspace, of: fileLayout.clients, allowRoot: false)
+        let host = try await ensureRunning()
+        let body = try JSONSerialization.data(withJSONObject: [
+            "workspace": scopedWorkspace.path,
+            "arguments": arguments
+        ])
+        return try await host.decode(
+            TypeScriptProjectCompilationResult.self,
+            path: "/v1/typescript/project",
+            method: "POST",
+            body: body,
+            timeout: 300
+        )
     }
 
     func currentConnection() async throws -> RuntimeHostConnection {

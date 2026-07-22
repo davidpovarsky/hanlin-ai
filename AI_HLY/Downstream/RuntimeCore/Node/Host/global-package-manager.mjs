@@ -30,13 +30,11 @@ export async function listGlobalPackages({ root }) {
   }));
 }
 
-export async function installGlobalPackage({ root, name, version }) {
+export async function stageGlobalPackage({ root, name, version }) {
   const cache = path.join(root, 'cache', 'npm');
   const resolved = await resolve(name, version, cache);
   const operation = `${Date.now()}-${Math.random().toString(16).slice(2)}`;
-  const staging = path.join(root, 'staging', `node-global-${operation}`);
-  const destination = globalRoot(root);
-  const backup = path.join(root, 'staging', `node-global-backup-${operation}`);
+  const staging = transactionRoot(root, operation);
   await fs.rm(staging, { recursive: true, force: true });
   await fs.mkdir(staging, { recursive: true });
   const current = await readRootManifest(root);
@@ -48,10 +46,44 @@ export async function installGlobalPackage({ root, name, version }) {
   const compatibility = await analyzePackage(packageRoot, resolved.manifest, { maximumFiles: 50_000 });
   const lifecycle = planLifecycle(resolved.manifest, resolved.integrity);
   if (compatibility.verdict === 'unsupported') throw new Error(compatibility.findings.filter(item => item.severity === 'unsupported').map(item => item.message).join('; '));
+  return {
+    transactionID: operation,
+    packageRoot,
+    package: details(resolved, compatibility.findings, lifecycle, packageRoot),
+  };
+}
+
+export async function commitGlobalPackage({ root, transactionID }) {
+  const staging = transactionRoot(root, transactionID);
+  const destination = globalRoot(root);
+  const backup = path.join(root, 'staging', `node-global-backup-${transactionID}`);
+  await fs.access(path.join(staging, 'package.json'));
+  await fs.rm(backup, { recursive: true, force: true });
   try { await fs.rename(destination, backup); } catch (error) { if (error.code !== 'ENOENT') throw error; }
-  try { await fs.rename(staging, destination); await fs.rm(backup, { recursive: true, force: true }); }
-  catch (error) { try { await fs.rename(backup, destination); } catch {} throw error; }
-  return details(resolved, compatibility.findings, lifecycle, path.join(destination, 'node_modules', ...resolved.manifest.name.split('/')));
+  try {
+    await fs.rename(staging, destination);
+    await fs.rm(backup, { recursive: true, force: true });
+  } catch (error) {
+    await fs.rm(destination, { recursive: true, force: true });
+    try { await fs.rename(backup, destination); } catch {}
+    throw error;
+  }
+  return { committed: true };
+}
+
+export async function rollbackGlobalPackage({ root, transactionID }) {
+  await fs.rm(transactionRoot(root, transactionID), { recursive: true, force: true });
+  return { rolledBack: true };
+}
+
+export async function installGlobalPackage({ root, name, version }) {
+  const transaction = await stageGlobalPackage({ root, name, version });
+  if (transaction.package.lifecycle?.requiresApproval || transaction.package.lifecycle?.rejected?.length) {
+    await rollbackGlobalPackage({ root, transactionID: transaction.transactionID });
+    throw new Error('This package declares lifecycle actions and must be installed through the approval broker.');
+  }
+  await commitGlobalPackage({ root, transactionID: transaction.transactionID });
+  return (await listGlobalPackages({ root })).find(item => item.name === transaction.package.name) ?? transaction.package;
 }
 
 export async function uninstallGlobalPackage({ root, name }) {
@@ -92,5 +124,9 @@ async function readGlobalLock(root) {
   catch (error) { if (error.code === 'ENOENT') return { packages: {} }; throw error; }
 }
 function globalRoot(root) { return path.join(root, 'packages', 'node-global'); }
+function transactionRoot(root, transactionID) {
+  if (!/^[a-z0-9-]{8,80}$/i.test(transactionID)) throw new Error('Invalid global package transaction ID.');
+  return path.join(root, 'clients', 'tools', `npm-lifecycle-${transactionID}`);
+}
 function details(resolved, findings, lifecycle, packageRoot = null) { return { name: resolved.manifest.name, version: resolved.manifest.version, summary: resolved.manifest.description ?? null, nodeRequirement: resolved.manifest.engines?.node ?? null, dependencies: Object.keys(resolved.manifest.dependencies ?? {}), integrity: resolved.integrity, findings, lifecycle, packageRoot }; }
 async function directorySize(root) { let total = 0; const stack = [root]; while (stack.length) { const current = stack.pop(); for (const entry of await fs.readdir(current, { withFileTypes: true })) { const absolute = path.join(current, entry.name); if (entry.isDirectory()) stack.push(absolute); else if (entry.isFile()) total += (await fs.stat(absolute)).size; } } return total; }

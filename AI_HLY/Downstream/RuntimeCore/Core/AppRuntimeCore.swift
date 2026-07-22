@@ -12,6 +12,7 @@ actor AppRuntimeCore {
     nonisolated let environment: RuntimeEnvironmentStore
     nonisolated let pythonPackages: PythonPackageManager
     nonisolated let diagnostics: RuntimeDiagnostics
+    nonisolated let lifecycle: LifecycleExecutionBroker
 
     private let fileLayout: RuntimeFileLayout
 
@@ -19,15 +20,19 @@ actor AppRuntimeCore {
         self.fileLayout = fileLayout
         let python = PythonRuntimeService(fileLayout: fileLayout)
         let node = NodeRuntimeService(fileLayout: fileLayout)
+        let typeScript = TypeScriptRuntimeService(node: node)
+        let shell = ShellRuntimeService(fileLayout: fileLayout)
+        let lifecycle = LifecycleExecutionBroker(node: node, typeScript: typeScript, python: python, shell: shell, fileLayout: fileLayout)
         self.node = node
-        typeScript = TypeScriptRuntimeService(node: node)
-        nodePackages = NodePackageManager(node: node)
+        self.typeScript = typeScript
+        nodePackages = NodePackageManager(node: node, lifecycle: lifecycle)
         self.python = python
         javaScriptCore = JavaScriptCoreRuntimeService()
-        shell = ShellRuntimeService(fileLayout: fileLayout)
+        self.shell = shell
         environment = RuntimeEnvironmentStore(fileLayout: fileLayout)
         pythonPackages = PythonPackageManager(fileLayout: fileLayout, python: python)
         diagnostics = RuntimeDiagnostics()
+        self.lifecycle = lifecycle
     }
 
     func prepareStorage() throws {

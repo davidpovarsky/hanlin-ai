@@ -59,9 +59,15 @@ actor ShellRuntimeService {
     }
 
     func execute(command: String, workspace: URL, environment: [String: String], allowNetwork: Bool, limits: RuntimeExecutionLimits = RuntimeExecutionLimits()) throws -> RuntimeExecutionResult {
+        try execute(tokens: Self.tokenize(command), workspace: workspace, environment: environment, allowNetwork: allowNetwork, limits: limits)
+    }
+
+    func execute(tokens: [String], workspace: URL, environment: [String: String], allowNetwork: Bool, limits: RuntimeExecutionLimits = RuntimeExecutionLimits()) throws -> RuntimeExecutionResult {
         try fileLayout.prepareIfNeeded()
         let scopedWorkspace = try fileLayout.validatedDescendant(workspace, of: fileLayout.clients, allowRoot: false)
-        let tokens = try Self.tokenize(command)
+        guard !tokens.isEmpty, tokens.count <= 128 else {
+            throw RuntimeCoreError.invalidRequest("The command is empty or contains too many arguments.")
+        }
         guard let name = tokens.first, let capability = Self.capabilities.first(where: { $0.name == name }) else {
             throw RuntimeCoreError.invalidRequest("The requested command is not in the verified ios_system catalog.")
         }
