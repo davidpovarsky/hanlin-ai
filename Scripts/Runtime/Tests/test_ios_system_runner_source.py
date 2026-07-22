@@ -25,6 +25,12 @@ class IOSSystemRunnerSourceTests(unittest.TestCase):
         self.assertNotIn("addCommandList(", self.source)
         self.assertNotRegex(self.source, r"_\s*=\s*addCommandList")
 
+    def test_structured_registration_error_is_publicly_constructible(self) -> None:
+        self.assertRegex(
+            self.source,
+            r"public struct IOSSystemRegistrationError[\s\S]*?public init\(\s*category:",
+        )
+
     def test_main_and_module_resource_contract_is_explicit(self) -> None:
         self.assertIn('named: "commandDictionary"', self.source)
         self.assertIn('named: "extraCommandsDictionary"', self.source)

@@ -68,8 +68,8 @@ actor ShellRuntimeService {
             let report = try IOSSystemRunner.registrationReport()
             try diagnosticLog.record(
                 "shell_resources_found",
-                resourcePath: report.mainDictionaryPath,
-                message: "Main and extra ios_system dictionaries were found at the app root."
+                message: "Main and extra ios_system dictionaries were found at the app root.",
+                resourcePath: report.mainDictionaryPath
             )
             try diagnosticLog.record(
                 "shell_dictionary_validated",

@@ -64,7 +64,12 @@ extension ShellRuntimeService {
                     allowNetwork: false,
                     standardInput: standardInput
                 )
-                let passed = result.exitCode == 0 && (try verify(result))
+                let passed: Bool
+                if result.exitCode == 0 {
+                    passed = try verify(result)
+                } else {
+                    passed = false
+                }
                 let failure = passed ? nil : "The command returned unexpected output or filesystem state."
                 commandResults.append(
                     ShellCommandSmokeResult(

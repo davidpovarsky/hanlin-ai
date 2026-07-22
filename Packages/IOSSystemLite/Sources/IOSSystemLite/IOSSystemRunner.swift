@@ -29,7 +29,7 @@ public struct IOSSystemRegistrationError: Error, Codable, LocalizedError, Sendab
 
     public var errorDescription: String? { message }
 
-    init(
+    public init(
         category: IOSSystemRegistrationFailureCategory,
         code: String,
         message: String,
