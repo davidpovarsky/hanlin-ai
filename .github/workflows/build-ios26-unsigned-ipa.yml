@@ -192,11 +192,14 @@ jobs:
         run: |
           set -euxo pipefail
           test "$(node --version)" = "v24.5.0"
-          npm ci --ignore-scripts --no-audit --no-fund --prefix AI_HLY/Downstream/RuntimeCore/Node/Host \
+          verification_root="$(mktemp -d "$RUNNER_TEMP/mcp-host-verification.XXXXXX")"
+          trap 'rm -rf "$verification_root"' EXIT
+          cp -R AI_HLY/Downstream/RuntimeCore/Node/Host/. "$verification_root/"
+          npm ci --ignore-scripts --no-audit --no-fund --prefix "$verification_root" \
             2>&1 | tee "$LOG_DIR/04-mcp-host-npm-ci.log"
-          npm test --prefix AI_HLY/Downstream/RuntimeCore/Node/Host \
+          npm test --prefix "$verification_root" \
             2>&1 | tee "$LOG_DIR/04-mcp-host-tests.log"
-          npm run test:integration --prefix AI_HLY/Downstream/RuntimeCore/Node/Host \
+          npm run test:integration --prefix "$verification_root" \
             2>&1 | tee "$LOG_DIR/04-mcp-server-everything-integration.log"
           node Scripts/Runtime/validate-mcp-install-dedup.mjs \
             2>&1 | tee "$LOG_DIR/04-mcp-install-dedup.log"
