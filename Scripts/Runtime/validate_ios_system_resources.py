@@ -105,6 +105,12 @@ def validate_source_resources(repository_root: Path) -> dict[str, Any]:
     for resource_name in ("commandDictionary.plist in Resources", "extraCommandsDictionary.plist in Resources"):
         if project_text.count(resource_name) < 2:
             raise ResourceValidationError(f"Xcode Copy Bundle Resources entry is missing: {resource_name}")
+    for resource_name in ("commandDictionary.plist", "extraCommandsDictionary.plist"):
+        raw_copy_reference = f"explicitFileType = text; name = {resource_name};"
+        if raw_copy_reference not in project_text:
+            raise ResourceValidationError(
+                f"Xcode must copy {resource_name} as raw text so its canonical bytes are preserved"
+            )
 
     if (repository_root / RESOURCE_DIRECTORY / "RuntimeCommands.plist").exists():
         raise ResourceValidationError("Legacy RuntimeCommands.plist must not coexist with the canonical dictionary")

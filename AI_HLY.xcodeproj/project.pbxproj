@@ -56,8 +56,8 @@
 		A10000000000000000000020 /* NodeMobile.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = Vendor/NodeMobile/NodeMobile.xcframework; sourceTree = SOURCE_ROOT; };
 		A10000000000000000000021 /* Python.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = Vendor/Python/Python.xcframework; sourceTree = SOURCE_ROOT; };
 		A10000000000000000000022 /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
-		A10000000000000000000062 /* commandDictionary.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = commandDictionary.plist; path = Packages/IOSSystemLite/Sources/IOSSystemLite/Resources/commandDictionary.plist; sourceTree = SOURCE_ROOT; };
-		A10000000000000000000063 /* extraCommandsDictionary.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = extraCommandsDictionary.plist; path = Packages/IOSSystemLite/Sources/IOSSystemLite/Resources/extraCommandsDictionary.plist; sourceTree = SOURCE_ROOT; };
+		A10000000000000000000062 /* commandDictionary.plist */ = {isa = PBXFileReference; explicitFileType = text; name = commandDictionary.plist; path = Packages/IOSSystemLite/Sources/IOSSystemLite/Resources/commandDictionary.plist; sourceTree = SOURCE_ROOT; };
+		A10000000000000000000063 /* extraCommandsDictionary.plist */ = {isa = PBXFileReference; explicitFileType = text; name = extraCommandsDictionary.plist; path = Packages/IOSSystemLite/Sources/IOSSystemLite/Resources/extraCommandsDictionary.plist; sourceTree = SOURCE_ROOT; };
 		D7B6C3C12D50A55D004E3AD6 /* AI_Hanlin.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AI_Hanlin.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D7C6558C2E6C731A0041F1C7 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */

@@ -41,6 +41,14 @@ class IOSSystemAppResourceValidationTests(unittest.TestCase):
         self.assertEqual(result["approvedCommandCount"], 23)
         self.assertEqual(result["unexpectedCommands"], [])
 
+    def test_semantically_equal_binary_plist_fails_canonical_byte_check(self) -> None:
+        self.install_valid_resources()
+        path = self.app / "commandDictionary.plist"
+        value = plistlib.loads(path.read_bytes())
+        path.write_bytes(plistlib.dumps(value, fmt=plistlib.FMT_BINARY, sort_keys=False))
+        with self.assertRaisesRegex(ResourceValidationError, "canonical source bytes"):
+            self.validate()
+
     def test_missing_root_dictionary_fails(self) -> None:
         shutil.copyfile(CANONICAL_EXTRA, self.app / "extraCommandsDictionary.plist")
         with self.assertRaisesRegex(ResourceValidationError, "Required plist is missing"):
