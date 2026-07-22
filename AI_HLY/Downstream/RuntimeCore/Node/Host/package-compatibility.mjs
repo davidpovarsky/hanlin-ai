@@ -38,15 +38,14 @@ export function inspectManifest(manifest, nodeVersion = '24.5.0') {
 }
 
 export async function inspectArchiveSafety(packageRoot, options = {}) {
-  const root = path.resolve(packageRoot);
+  const requestedRoot = path.resolve(packageRoot);
   const maximumFiles = options.maximumFiles ?? 25_000;
   const maximumFileBytes = options.maximumFileBytes ?? 256 * 1024 * 1024;
   const findings = [];
   const inventory = { nativeAddons: [], nativeBuildManifests: [], typeScriptSources: 0 };
   let fileCount = 0;
-  const stack = [root];
 
-  const rootStat = await fs.lstat(root);
+  const rootStat = await fs.lstat(requestedRoot);
   if (!rootStat.isDirectory() || rootStat.isSymbolicLink()) {
     return {
       findings: [unsupported('Package root must be a real directory.', { code: 'archive_layout_invalid', phase: 'archive' })],
@@ -54,6 +53,8 @@ export async function inspectArchiveSafety(packageRoot, options = {}) {
       inventory,
     };
   }
+  const root = await fs.realpath(requestedRoot);
+  const stack = [root];
 
   while (stack.length) {
     const directory = stack.pop();
@@ -137,16 +138,17 @@ export async function inspectArchiveSafety(packageRoot, options = {}) {
 
 export async function inspectSelectedEntryPoint(packageRoot, manifest, options = {}) {
   if (!options.entryPoint) throw new TypeError('A selected entry point is required for execution-path compatibility analysis.');
-  const root = path.resolve(packageRoot);
+  const requestedRoot = path.resolve(packageRoot);
   const entryPoint = path.resolve(options.entryPoint);
-  const relative = relativePath(root, entryPoint);
+  const relative = relativePath(requestedRoot, entryPoint);
   const findings = [];
-  if (!isInside(root, entryPoint)) {
+  if (!isInside(requestedRoot, entryPoint)) {
     findings.push(unsupported('Entry point escapes the package directory.', {
       code: 'entry_point_escape', path: relative, reachable: true, phase: 'entryPoint',
     }));
     return { findings, entryPoint: relative, moduleKind: options.moduleKind ?? null };
   }
+  const root = await fs.realpath(requestedRoot);
   let stat;
   try {
     stat = await fs.stat(entryPoint);

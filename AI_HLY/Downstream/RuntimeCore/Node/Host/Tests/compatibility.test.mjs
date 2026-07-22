@@ -89,6 +89,41 @@ test('archive safety rejects a symlink that escapes packageRoot', async t => {
   }
 });
 
+test('canonical parent aliases do not make a contained entry point appear to escape', async t => {
+  const sandbox = await fs.mkdtemp(path.join(os.tmpdir(), 'hanlin-canonical-root-'));
+  const realParent = path.join(sandbox, 'real-parent');
+  const aliasParent = path.join(sandbox, 'alias-parent');
+  const realPackage = path.join(realParent, 'package');
+  try {
+    await fs.mkdir(realPackage, { recursive: true });
+    await fs.cp(path.join(fixtures, 'false-positive-sdk'), realPackage, { recursive: true });
+    try {
+      await fs.symlink(realParent, aliasParent, process.platform === 'win32' ? 'junction' : 'dir');
+    } catch (error) {
+      if (process.platform === 'win32' && error.code === 'EPERM') {
+        t.skip('Windows Developer Mode is unavailable; macOS CI exercises canonical parent aliases.');
+        return;
+      }
+      throw error;
+    }
+    const packageRoot = path.join(aliasParent, 'package');
+    const manifest = JSON.parse(await fs.readFile(path.join(packageRoot, 'package.json'), 'utf8'));
+    const report = await analyzePackage(packageRoot, manifest, {
+      entryPoint: path.join(packageRoot, 'server.mjs'),
+      moduleKind: 'esm',
+      runtimeProbe: () => runMCPRuntimeProbe({
+        packageRoot,
+        entryPoint: path.join(packageRoot, 'server.mjs'),
+        moduleKind: 'esm',
+        workspace: path.join(sandbox, 'workspace'),
+      }),
+    });
+    assert.notEqual(report.verdict, 'unsupported', JSON.stringify(report.findings));
+  } finally {
+    await fs.rm(sandbox, { recursive: true, force: true });
+  }
+});
+
 test('execution-path analysis requires an explicit selected entry point', async () => {
   const root = path.join(fixtures, 'false-positive-sdk');
   const manifest = JSON.parse(await fs.readFile(path.join(root, 'package.json'), 'utf8'));
