@@ -4,7 +4,14 @@ import Arborist from '@npmcli/arborist';
 import pacote from 'pacote';
 import semver from 'semver';
 import ssri from 'ssri';
-import { analyzePackage, inspectManifest, listEntryPoints, resolveEntryPoint } from './package-compatibility.mjs';
+import {
+  analyzePackage,
+  determineModuleKind,
+  inspectManifest,
+  listEntryPoints,
+  resolveEntryPoint,
+} from './package-compatibility.mjs';
+import { runMCPRuntimeProbe } from './runtime-probe.mjs';
 
 const NODE_VERSION = '24.5.0';
 
@@ -31,7 +38,16 @@ export async function previewPackage(source, options = {}) {
   };
 }
 
-export async function installPackage({ root, operationID, serverID, source, entryPointOverride, signal, emit }) {
+export async function installPackage({
+  root,
+  operationID,
+  serverID,
+  source,
+  entryPointOverride,
+  arguments: serverArguments = [],
+  signal,
+  emit,
+}) {
   validateID(operationID);
   validateID(serverID);
   const stagingRoot = path.join(root, 'staging');
@@ -84,13 +100,28 @@ export async function installPackage({ root, operationID, serverID, source, entr
     await arborist.reify({ omit: ['dev', 'optional'], ignoreScripts: true, signal });
 
     checkCancelled(signal);
-    emit('install', { operationID, phase: 'checkingCompatibility', fraction: 0.75 });
-    const compatibility = await analyzePackage(packageRoot, extractedManifest);
-    rejectUnsupported(compatibility.findings);
     const selected = resolveEntryPoint(extractedManifest, entryPointOverride);
     const absoluteEntry = path.resolve(packageRoot, selected.entryPoint);
     if (!isInside(packageRoot, absoluteEntry)) throw new Error('Entry point escapes the package directory.');
     await fs.access(absoluteEntry);
+    const moduleKind = determineModuleKind(absoluteEntry, extractedManifest);
+    const validatedServerArguments = validateArguments(serverArguments);
+
+    emit('install', { operationID, phase: 'checkingCompatibility', fraction: 0.75 });
+    const compatibility = await analyzePackage(packageRoot, extractedManifest, {
+      entryPoint: absoluteEntry,
+      moduleKind,
+      runtimeProbe: () => runMCPRuntimeProbe({
+        packageRoot,
+        entryPoint: absoluteEntry,
+        moduleKind,
+        arguments: validatedServerArguments,
+        workspace: path.join(operationRoot, 'probe-workspace'),
+        timeoutMilliseconds: 30_000,
+        maximumOutputBytes: 1_048_576,
+      }),
+    });
+    rejectUnsupported(compatibility.findings);
 
     const now = new Date().toISOString();
     const installedSize = await directorySize(operationRoot);
@@ -117,7 +148,7 @@ export async function installPackage({ root, operationID, serverID, source, entr
       entryPoint: absoluteEntry.replace(operationRoot, finalRoot),
       binName: selected.binName,
       entryPointOptions,
-      arguments: [],
+      arguments: validatedServerArguments,
       environment: [],
       packageRoot: packageRoot.replace(operationRoot, finalRoot),
       integrity: resolved.integrity ?? null,
@@ -232,7 +263,13 @@ async function resolveSource(source, options) {
 
 function rejectUnsupported(findings) {
   const reasons = findings.filter(item => item.severity === 'unsupported').map(item => item.message);
-  if (reasons.length) throw new Error(`Unsupported package: ${reasons.join('; ')}`);
+  if (reasons.length) {
+    const error = new Error(`Unsupported package: ${reasons.join('; ')}`);
+    error.name = 'PackageCompatibilityError';
+    error.code = findings.find(item => item.severity === 'unsupported')?.code ?? 'unsupported_package';
+    error.findings = findings.filter(item => item.severity === 'unsupported');
+    throw error;
+  }
 }
 
 function validateID(value) {
@@ -249,6 +286,15 @@ function isInside(root, candidate) {
 function slug(value) {
   const result = value.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_+|_+$/g, '');
   return /^[a-z]/.test(result) ? result : `server_${result || 'mcp'}`;
+}
+
+function validateArguments(value) {
+  if (!Array.isArray(value) || value.length > 128) throw new Error('Invalid server arguments.');
+  return value.map(item => {
+    const argument = String(item);
+    if (/\0|\r|\n/.test(argument)) throw new Error('Invalid server argument.');
+    return argument;
+  });
 }
 
 async function directorySize(root) {

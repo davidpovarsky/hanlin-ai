@@ -3,7 +3,7 @@ import path from 'node:path';
 import Arborist from '@npmcli/arborist';
 import pacote from 'pacote';
 import semver from 'semver';
-import { analyzePackage, inspectManifest } from './package-compatibility.mjs';
+import { inspectArchiveSafety, inspectManifest, mergeCompatibilityReports } from './package-compatibility.mjs';
 import { planLifecycle } from './lifecycle-planner.mjs';
 
 const NODE_VERSION = '24.5.0';
@@ -43,7 +43,11 @@ export async function stageGlobalPackage({ root, name, version }) {
   const arborist = new Arborist({ path: staging, cache, ignoreScripts: true, audit: false, fund: false });
   await arborist.reify({ omit: ['dev', 'optional'], ignoreScripts: true });
   const packageRoot = path.join(staging, 'node_modules', ...resolved.manifest.name.split('/'));
-  const compatibility = await analyzePackage(packageRoot, resolved.manifest, { maximumFiles: 50_000 });
+  const archive = await inspectArchiveSafety(packageRoot, { maximumFiles: 50_000 });
+  const compatibility = mergeCompatibilityReports({
+    manifestFindings: inspectManifest(resolved.manifest, NODE_VERSION),
+    archive,
+  });
   const lifecycle = planLifecycle(resolved.manifest, resolved.integrity);
   if (compatibility.verdict === 'unsupported') throw new Error(compatibility.findings.filter(item => item.severity === 'unsupported').map(item => item.message).join('; '));
   return {
