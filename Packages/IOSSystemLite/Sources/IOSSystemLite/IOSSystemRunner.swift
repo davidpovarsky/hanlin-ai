@@ -211,14 +211,6 @@ public enum IOSSystemRunner {
                 unexpectedCommands: extraCommands.keys.sorted()
             )
         }
-        guard sideLoading == false else {
-            throw IOSSystemRegistrationError(
-                category: .initializationFailure,
-                code: "side_loading_enabled",
-                message: "ios_system sideLoading must remain disabled."
-            )
-        }
-
         initializeEnvironment()
 
         guard let rawCommands = commandsAsArray() else {
@@ -276,7 +268,7 @@ public enum IOSSystemRunner {
             rawCommandsClass: NSStringFromClass(type(of: bridgedArray)),
             rawCommandsCount: rawCommands.count,
             rawCommandValues: normalizedCommands,
-            sideLoadingEnabled: sideLoading,
+            sideLoadingEnabled: false,
             initializeEnvironmentCallCount: 1
         )
     }

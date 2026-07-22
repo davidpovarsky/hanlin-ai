@@ -30,7 +30,8 @@ class IOSSystemRunnerSourceTests(unittest.TestCase):
         self.assertIn('named: "extraCommandsDictionary"', self.source)
         self.assertIn("let mainBundle = Bundle.main", self.source)
         self.assertIn("let moduleBundle = Bundle.module", self.source)
-        self.assertIn("guard sideLoading == false", self.source)
+        self.assertNotIn("sideLoading = true", self.source)
+        self.assertIn("sideLoadingEnabled: false", self.source)
 
     def test_objective_c_command_values_are_bridged_individually(self) -> None:
         self.assertIn("let bridgedArray = rawCommands as NSArray", self.source)
