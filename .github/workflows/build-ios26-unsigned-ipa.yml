@@ -800,7 +800,7 @@ jobs:
             esac
           done < "$LOG_DIR/08-new-diagnostic-reports.txt"
 
-          xcrun simctl terminate "$SIMULATOR_UDID" "$BUNDLE_ID"
+          xcrun simctl terminate "$SIMULATOR_UDID" "$BUNDLE_ID" 2>/dev/null || true
           trap - EXIT
 
       - name: Collect simulator diagnostics

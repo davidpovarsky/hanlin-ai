@@ -27,6 +27,15 @@ class ShellWorkflowSourceTests(unittest.TestCase):
         )
         self.assertNotIn('/bin/kill -0 "$APP_PID"', source)
 
+    def test_simulator_cleanup_tolerates_an_already_exited_app(self) -> None:
+        source = WORKFLOW_PATH.read_text(encoding="utf-8")
+        best_effort_termination = (
+            'xcrun simctl terminate "$SIMULATOR_UDID" "$BUNDLE_ID" '
+            "2>/dev/null || true"
+        )
+
+        self.assertEqual(source.count(best_effort_termination), 2)
+
 
 if __name__ == "__main__":
     unittest.main()
