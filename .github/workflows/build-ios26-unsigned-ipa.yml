@@ -750,7 +750,7 @@ jobs:
             if [ -f "$ACCEPTANCE_PATH" ]; then
               break
             fi
-            if ! /bin/kill -0 "$APP_PID" 2>/dev/null; then
+            if ! xcrun simctl spawn "$SIMULATOR_UDID" /bin/kill -0 "$APP_PID" 2>/dev/null; then
               echo "Full app exited before writing shell acceptance JSON after ${elapsed} seconds." >&2
               exit 1
             fi
@@ -767,11 +767,11 @@ jobs:
 
           ALIVE_SECONDS="$(( $(date +%s) - LAUNCH_EPOCH ))"
           while [ "$ALIVE_SECONDS" -lt 15 ]; do
-            /bin/kill -0 "$APP_PID"
+            xcrun simctl spawn "$SIMULATOR_UDID" /bin/kill -0 "$APP_PID"
             sleep 1
             ALIVE_SECONDS="$(( $(date +%s) - LAUNCH_EPOCH ))"
           done
-          /bin/kill -0 "$APP_PID"
+          xcrun simctl spawn "$SIMULATOR_UDID" /bin/kill -0 "$APP_PID"
           printf '%s\n' "$ALIVE_SECONDS" > "$LOG_DIR/alive-duration-seconds.txt"
 
           xcrun simctl spawn "$SIMULATOR_UDID" log show \
