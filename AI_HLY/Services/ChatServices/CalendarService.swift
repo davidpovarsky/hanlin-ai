@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import EventKit
+@preconcurrency import EventKit
 
 
 /// 根据可选的关键词、日期范围、地点以及事件类型搜索系统日历事件与提醒事项，返回匹配的 EventItem 列表。
@@ -17,6 +17,7 @@ import EventKit
 ///   - location: 可选，匹配日历事件的地点（不区分大小写）；对于提醒事项，在标题或备注中匹配。
 ///   - eventType: 可选，指定要查询的事件类型。有效值为 "calendar" 或 "reminder"，若不指定或为空则查询全部。
 /// - Returns: 匹配成功的 [EventItem] 数组。如果所有搜索条件均为空则返回空数组。
+@MainActor
 func searchSystemEvents(keyword: String?, startDate: Date?, endDate: Date?, location: String?, eventType: String? = nil) async -> [EventItem] {
     // 至少需要提供一个搜索条件
     let trimmedKeyword = keyword?.trimmingCharacters(in: .whitespacesAndNewlines)

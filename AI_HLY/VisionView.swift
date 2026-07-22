@@ -6,10 +6,12 @@
 //
 
 import SwiftUI
-import AVFoundation
+@preconcurrency import AVFoundation
+@preconcurrency import Dispatch
 import MarkdownUI
 import SwiftData
 import PhotosUI
+import UniformTypeIdentifiers
 
 struct VisionView: View {
     @Binding var selectedTab: Int
@@ -1091,12 +1093,12 @@ extension VisionView {
 }
 
 // 负责管理相机的类
-class CameraManager: NSObject, ObservableObject, AVCapturePhotoCaptureDelegate {
+final class CameraManager: NSObject, ObservableObject, AVCapturePhotoCaptureDelegate {
     let session = AVCaptureSession()
     private let output = AVCapturePhotoOutput()
     private let queue = DispatchQueue(label: "cameraQueue", qos: .userInitiated)
     private var isConfigured = false
-    private var completionHandler: ((UIImage?) -> Void)?
+    private var completionHandler: (@MainActor (UIImage?) -> Void)?
     
     @Published var zoomFactor: CGFloat = 1.0
     private var minZoomFactor: CGFloat = 1.0
@@ -1167,6 +1169,7 @@ class CameraManager: NSObject, ObservableObject, AVCapturePhotoCaptureDelegate {
     }
     
     /// **平滑设置变焦 (0.5x - 15x)**
+    @MainActor
     func setZoomFactor(_ factor: CGFloat) {
         guard let device = currentDevice else { return }
         
@@ -1271,7 +1274,7 @@ class CameraManager: NSObject, ObservableObject, AVCapturePhotoCaptureDelegate {
     }
     
     /// **拍照**
-    func capturePhoto(completion: @escaping (UIImage?) -> Void) {
+    func capturePhoto(completion: @escaping @MainActor (UIImage?) -> Void) {
         // 检查相机会话是否正在运行
         guard session.isRunning else {
             print("相机会话未运行，无法拍照")
@@ -1294,10 +1297,10 @@ class CameraManager: NSObject, ObservableObject, AVCapturePhotoCaptureDelegate {
     
     /// **处理照片**
     func photoOutput(_ output: AVCapturePhotoOutput, didFinishProcessingPhoto photo: AVCapturePhoto, error: Error?) {
+        let imageData = photo.fileDataRepresentation()
         // 确保在主线程回调
         DispatchQueue.main.async { [weak self] in
-            guard let imageData = photo.fileDataRepresentation(),
-                  let image = UIImage(data: imageData) else {
+            guard let imageData, let image = UIImage(data: imageData) else {
                 print("无法获取照片")
                 self?.completionHandler?(nil)
                 self?.completionHandler = nil
@@ -1406,7 +1409,8 @@ struct VisionImagePicker: UIViewControllerRepresentable {
         Coordinator(self)
     }
 
-    class Coordinator: NSObject, PHPickerViewControllerDelegate {
+    @MainActor
+    final class Coordinator: NSObject, PHPickerViewControllerDelegate {
         let parent: VisionImagePicker
 
         init(_ parent: VisionImagePicker) {
@@ -1415,14 +1419,15 @@ struct VisionImagePicker: UIViewControllerRepresentable {
 
         func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
             picker.dismiss(animated: true)
-            guard let provider = results.first?.itemProvider, provider.canLoadObject(ofClass: UIImage.self) else { return }
+            guard let provider = results.first?.itemProvider,
+                  provider.hasItemConformingToTypeIdentifier(UTType.image.identifier) else { return }
             
-            provider.loadObject(ofClass: UIImage.self) { image, _ in
-                DispatchQueue.main.async {
-                    if let uiImage = image as? UIImage {
-                        self.parent.selectedImage = uiImage
-                        self.parent.showModelSelection = true
-                    }
+            provider.loadDataRepresentation(forTypeIdentifier: UTType.image.identifier) { data, _ in
+                guard let data else { return }
+                Task { @MainActor [weak self] in
+                    guard let self, let image = UIImage(data: data) else { return }
+                    self.parent.selectedImage = image
+                    self.parent.showModelSelection = true
                 }
             }
         }

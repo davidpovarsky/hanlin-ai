@@ -1193,6 +1193,7 @@ struct SummaryView: View {
 }
 
 // 模型按钮
+@MainActor
 func toolModelButton(for model: AllModels, isSelected: Bool, color: Color) -> some View {
     HStack(spacing: 8) {
         if isSelected {

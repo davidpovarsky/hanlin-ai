@@ -478,24 +478,20 @@ extension APIKeysView {
     /// 处理厂商开关逻辑，并增加加载状态
     private func toggleVendor(key: APIKeys, company: String, newValue: Bool) {
         loadingCompany = company
-        DispatchQueue.global(qos: .userInitiated).async {
-            DispatchQueue.main.async {
-                if !newValue {
-                    // 关闭厂商
-                    key.isHidden = true
-                    updateModelVisibility(for: company, isHidden: true)
-                } else if hasValidAPIKey(for: key) {
-                    // 开启厂商（API Key 有效）
-                    key.isHidden = false
-                } else {
-                    // API Key 为空时阻止开启，并显示错误提示
+        if !newValue {
+            // 关闭厂商
+            key.isHidden = true
+            updateModelVisibility(for: company, isHidden: true)
+        } else if hasValidAPIKey(for: key) {
+            // 开启厂商（API Key 有效）
+            key.isHidden = false
+        } else {
+            // API Key 为空时阻止开启，并显示错误提示
             errorMessage = String(format: String(localized: "%@ 需要有效的 API Key，请先设置密钥。"), getCompanyName(for: key))
-                    showAPIKeyError = true
-                }
-                saveChanges()
-                loadingCompany = nil
-            }
+            showAPIKeyError = true
         }
+        saveChanges()
+        loadingCompany = nil
     }
     
     /// 检查 APIKey 是否有效（非空即可）

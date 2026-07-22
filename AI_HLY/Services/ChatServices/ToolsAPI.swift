@@ -10,6 +10,7 @@ import SwiftData
 import LLM
 
 // MARK: 翻译文本函数（流式输出版）
+@MainActor
 func translateTextAPI(
     input: String,
     sourceLanguage: String,
@@ -179,6 +180,7 @@ func translateTextAPI(
 
 
 // MARK: 润色优化函数（流式输出版）
+@MainActor
 func polishTextAPI(input: String,
                    modelInfo: AllModels,
                    prompts: String,
@@ -344,6 +346,7 @@ func polishTextAPI(input: String,
 
 
 // MARK: 生成摘要函数（流式输出版）
+@MainActor
 func generateSummaryAPI(input: String,
                         modelInfo: AllModels,
                         apiKey: String,

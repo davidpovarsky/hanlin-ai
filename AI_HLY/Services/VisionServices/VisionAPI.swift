@@ -15,6 +15,7 @@ struct VisionStreamData {
     var reasoning: String?  // 推理/思考过程
 }
 
+@MainActor
 class VisionAPIManager {
     
     private var context: ModelContext

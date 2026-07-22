@@ -3300,17 +3300,9 @@ struct FrontCodeSelectionTextView: UIViewRepresentable {
         guard coordinator.lastCode != code else { return }
         coordinator.lastCode = code
 
-        // 异步高亮，避免阻塞主线程
-        DispatchQueue.global(qos: .userInitiated).async {
-            let highlighted = makeHighlighted(code)
-            coordinator.lastAttributed = highlighted
-            DispatchQueue.main.async {
-                // 确保无新更新后再赋值
-                if coordinator.lastCode == code {
-                    uiView.attributedText = highlighted
-                }
-            }
-        }
+        let highlighted = makeHighlighted(code)
+        coordinator.lastAttributed = highlighted
+        uiView.attributedText = highlighted
     }
 }
 
@@ -3447,15 +3439,9 @@ struct PythonCodeSelectionTextView: UIViewRepresentable {
         guard coordinator.lastCode != code else { return }
         coordinator.lastCode = code
 
-        DispatchQueue.global(qos: .userInitiated).async {
-            let highlighted = highlightPythonCode(code)
-            coordinator.lastAttributed = highlighted
-            DispatchQueue.main.async {
-                if coordinator.lastCode == code {
-                    uiView.attributedText = highlighted
-                }
-            }
-        }
+        let highlighted = highlightPythonCode(code)
+        coordinator.lastAttributed = highlighted
+        uiView.attributedText = highlighted
     }
 }
 

@@ -66,6 +66,7 @@ struct RequestMessage {
 
 
 // MARK: - APIManager
+@MainActor
 class APIManager {
     
     // MARK: 属性声明

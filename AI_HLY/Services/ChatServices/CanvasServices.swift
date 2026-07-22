@@ -16,6 +16,7 @@ enum CanvasServiceError: Error {
 }
 
 /// 管理 CanvasData 的创建与保存
+@MainActor
 class CanvasServices {
     /// 创建一个新的 CanvasData（尚未保存到任何 ChatRecords）
     ///
@@ -155,6 +156,7 @@ class CanvasServices {
 }
 
 // MARK: 后端流式接口
+@MainActor
 func editCanvasAPI(
     input: String,
     modelInfo: AllModels,
@@ -311,6 +313,7 @@ func editCanvasAPI(
 }
 
 /// 对选中片段进行智能改写
+@MainActor
 func refineSelectedTextAPI(
     fullText: String,           // 整体上下文原文
     selectedText: String,       // 被选中的片段

@@ -6,8 +6,8 @@
 //
 
 import SwiftUI
-import Speech
-import AVFoundation
+@preconcurrency import Speech
+@preconcurrency import AVFoundation
 import Combine
 
 // MARK: - 语音输入界面
@@ -240,7 +240,8 @@ struct WaveformBarsView: View {
 
 // MARK: - SpeechRecognizer 类
 /// 使用 Apple Speech 框架实现语音识别，同时通过 AVAudioEngine 获取音频信号的 RMS 值用于波形可视化
-class SpeechRecognizer: NSObject, ObservableObject, SFSpeechRecognizerDelegate {
+@MainActor
+final class SpeechRecognizer: NSObject, ObservableObject, SFSpeechRecognizerDelegate {
     @Published var recognizedText: String = ""
     @Published var isRecording: Bool = false
     @Published var audioLevel: Float = 0.0
@@ -330,13 +331,15 @@ class SpeechRecognizer: NSObject, ObservableObject, SFSpeechRecognizerDelegate {
         // 安装 tap 获取音频数据，并写入录音文件
         let inputNode = audioEngine.inputNode
         let recordingFormat = inputNode.outputFormat(forBus: 0)
-        inputNode.installTap(onBus: 0, bufferSize: 1024, format: recordingFormat) { [weak self] buffer, when in
+        let activeRequest = recognitionRequest
+        let activeAudioFile = audioFile
+        inputNode.installTap(onBus: 0, bufferSize: 1024, format: recordingFormat) { [weak self] buffer, _ in
             // 将音频数据写入识别请求
-            self?.recognitionRequest?.append(buffer)
+            activeRequest.append(buffer)
             
             // 同时写入录音文件
             do {
-                try self?.audioFile?.write(from: buffer)
+                try activeAudioFile?.write(from: buffer)
             } catch {
                 print("写入录音文件失败：\(error.localizedDescription)")
             }
@@ -345,7 +348,7 @@ class SpeechRecognizer: NSObject, ObservableObject, SFSpeechRecognizerDelegate {
             guard let channelData = buffer.floatChannelData?[0] else { return }
             let channelDataArray = Array(UnsafeBufferPointer(start: channelData, count: Int(buffer.frameLength)))
             let rms = sqrt(channelDataArray.map { $0 * $0 }.reduce(0, +) / Float(buffer.frameLength))
-            DispatchQueue.main.async {
+            Task { @MainActor [weak self] in
                 self?.audioLevel = rms
             }
         }
@@ -361,15 +364,11 @@ class SpeechRecognizer: NSObject, ObservableObject, SFSpeechRecognizerDelegate {
         
         // 开始语音识别任务
         recognitionTask = speechRecognizer?.recognitionTask(with: recognitionRequest) { [weak self] result, error in
-            guard let self = self else { return }
-            if let result = result {
-                DispatchQueue.main.async {
-                    self.recognizedText = result.bestTranscription.formattedString
-                }
-            }
-            // 若发生错误或识别结束，则停止录音
-            if error != nil || (result?.isFinal ?? false) {
-                self.stopRecording()
+            let recognizedText = result?.bestTranscription.formattedString
+            let shouldStop = error != nil || (result?.isFinal ?? false)
+            Task { @MainActor [weak self] in
+                if let recognizedText { self?.recognizedText = recognizedText }
+                if shouldStop { self?.stopRecording() }
             }
         }
     }
@@ -386,8 +385,6 @@ class SpeechRecognizer: NSObject, ObservableObject, SFSpeechRecognizerDelegate {
         recognitionRequest?.endAudio()
         recognitionTask?.cancel()
         
-        DispatchQueue.main.async {
-            self.isRecording = false
-        }
+        isRecording = false
     }
 }
