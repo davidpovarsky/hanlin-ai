@@ -11,5 +11,8 @@ delete lock.runtimeBundle.sha256;
 delete lock.runtimeBundle.verificationStatus;
 delete lock.node.xcframeworkSha256;
 delete lock.node.verificationStatus;
+if (lock.iosSystem) {
+  delete lock.iosSystem.linkDependencies;
+}
 
 process.stdout.write(`${createHash('sha256').update(JSON.stringify(lock)).digest('hex')}\n`);

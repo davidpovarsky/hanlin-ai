@@ -4,8 +4,8 @@
     "formatVersion": 1,
     "releaseRepository": "davidpovarsky/hanlin-ai",
     "releaseTagPrefix": "runtime-core-v1-",
-    "sha256": null,
-    "verificationStatus": "pending"
+    "sha256": "446598e88eae7808483e9fe225c9c4405b1b8a95367b817e9d38676618be1bfe",
+    "verificationStatus": "verified"
   },
   "runtimes": [
     {
@@ -14,8 +14,8 @@
       "version": "24.5.0",
       "revision": "4768489cd0cfa3bb0c27786e958c6446c004f1bd",
       "license": "MIT with bundled third-party notices",
-      "bundleHash": null,
-      "verificationStatus": "pending"
+      "bundleHash": "7935c44fbd735e53c5ffdcb41905a3823a8bcc2d57adb1d1facdcb136db9f3a8",
+      "verificationStatus": "verified"
     },
     {
       "id": "python",
@@ -50,6 +50,30 @@
         "curl_ios": "d7e2f05c9f2689d103db32f83ab045bfb6ab28ce84e3017e0c23e4b4db7ab169",
         "awk": "283f368df6c44ed9d49d15651ca4281706cdd86eb2b6ddb81808c8a3b18a4f7d"
       },
+      "linkDependencyHashes": {
+        "libssh2": "cacfe1789b197b727119f7e32f561eaf9acc27bf38cd19975b74fce107f868a6",
+        "openssl": "329e8317cf9bee8e138da5d032330a7a1bd2473cf44c9c083cb2f0636abb8b80"
+      },
+      "linkDependencies": [
+        {
+          "name": "libssh2",
+          "role": "application-link-dependency",
+          "sourceRepository": "https://github.com/holzschu/libssh2-apple",
+          "release": "v1.11.0",
+          "archiveHash": "cacfe1789b197b727119f7e32f561eaf9acc27bf38cd19975b74fce107f868a6",
+          "license": "BSD-3-Clause (libssh2 1.11.0 COPYING)",
+          "distribution": "resolved-and-embedded-during-application-build"
+        },
+        {
+          "name": "openssl",
+          "role": "application-link-dependency",
+          "sourceRepository": "https://github.com/holzschu/openssl-apple",
+          "release": "v1.1.1w",
+          "archiveHash": "329e8317cf9bee8e138da5d032330a7a1bd2473cf44c9c083cb2f0636abb8b80",
+          "license": "OpenSSL License and original SSLeay License (OpenSSL 1.1.1w)",
+          "distribution": "resolved-and-embedded-during-application-build"
+        }
+      ],
       "verificationStatus": "release-assets-verified"
     }
   ]

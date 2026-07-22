@@ -196,6 +196,16 @@ struct RuntimeManifest: Codable, Sendable {
     }
 
     struct RuntimeRecord: Codable, Identifiable, Sendable {
+        struct LinkDependencyRecord: Codable, Sendable {
+            let name: String
+            let role: String
+            let sourceRepository: String
+            let release: String
+            let archiveHash: String
+            let license: String
+            let distribution: String
+        }
+
         let id: String
         let sourceProject: String
         let version: String
@@ -203,6 +213,8 @@ struct RuntimeManifest: Codable, Sendable {
         let license: String
         let bundleHash: String?
         let componentHashes: [String: String]?
+        let linkDependencyHashes: [String: String]?
+        let linkDependencies: [LinkDependencyRecord]?
         let verificationStatus: String
     }
 

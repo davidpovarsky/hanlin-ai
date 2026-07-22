@@ -10,6 +10,9 @@ readonly HOST_ARCHIVE="${REPOSITORY_ROOT}/AI_HLY/RuntimeHostResources.zip"
 readonly HOST_ROOT="${REPOSITORY_ROOT}/AI_HLY/Downstream/RuntimeCore/Node/Host"
 
 node "${SCRIPT_DIR}/validate-runtime-lock.mjs" "${LOCK_FILE}"
+node "${SCRIPT_DIR}/validate-ios-system-package.mjs" \
+  "${LOCK_FILE}" \
+  "${REPOSITORY_ROOT}/Packages/IOSSystemLite/Package.swift"
 node "${SCRIPT_DIR}/validate-runtime-localization.mjs" \
   "${REPOSITORY_ROOT}/AI_HLY/Downstream/RuntimeCore" \
   "${REPOSITORY_ROOT}/AI_HLY/Downstream/RuntimeCore/Resources/RuntimeLocalizable.xcstrings"
@@ -26,6 +29,7 @@ required_paths=(
   "${REPOSITORY_ROOT}/Vendor/Python/Python-VERSIONS"
   "${HOST_ARCHIVE}"
   "${REPOSITORY_ROOT}/AI_HLY/Downstream/RuntimeCore/Resources/RuntimeManifest.json"
+  "${REPOSITORY_ROOT}/AI_HLY/Downstream/RuntimeCore/Resources/RuntimeLinkDependencyNotices.txt"
   "${REPOSITORY_ROOT}/Packages/IOSSystemLite/Package.swift"
 )
 for required_path in "${required_paths[@]}"; do
@@ -41,25 +45,26 @@ test -d "${PYTHON_FRAMEWORK}/ios-arm64_x86_64-simulator" || test -d "${PYTHON_FR
 grep -Fq "Python version: 3.14.6" "${REPOSITORY_ROOT}/Vendor/Python/Python-VERSIONS"
 unzip -tq "${HOST_ARCHIVE}" >/dev/null
 
-node - "${LOCK_FILE}" "${HOST_ROOT}/package.json" "${HOST_ROOT}/package-lock.json" "${REPOSITORY_ROOT}/Packages/IOSSystemLite/Package.swift" <<'NODE'
+node - "${LOCK_FILE}" "${HOST_ROOT}/package.json" "${HOST_ROOT}/package-lock.json" <<'NODE'
 const fs = require('node:fs');
-const [lockPath, packagePath, packageLockPath, swiftPackagePath] = process.argv.slice(2);
+const [lockPath, packagePath, packageLockPath] = process.argv.slice(2);
 const lock = JSON.parse(fs.readFileSync(lockPath, 'utf8'));
 const manifest = JSON.parse(fs.readFileSync(packagePath, 'utf8'));
 const packageLock = JSON.parse(fs.readFileSync(packageLockPath, 'utf8'));
-const swiftPackage = fs.readFileSync(swiftPackagePath, 'utf8');
 if (manifest.engines?.node !== lock.node.version) throw new Error('Host Node engine does not match RuntimeDependencies.lock.json');
 if (manifest.dependencies?.typescript !== lock.typescript.version) throw new Error('TypeScript version does not match the runtime lock');
 if (packageLock.packages?.['']?.dependencies?.typescript !== lock.typescript.version) throw new Error('package-lock TypeScript version is inconsistent');
-for (const component of lock.iosSystem.components) {
-  if (!swiftPackage.includes(`name: "${component.name}"`) || !swiftPackage.includes(`checksum: "${component.sha256}"`)) {
-    throw new Error(`IOSSystemLite is inconsistent for ${component.name}`);
-  }
-}
 NODE
+
+readonly EXPECTED_RUNTIME_DEPENDENCY_HASH="7d967563db0809a4efa0f07b75d6b5928379a3b6f3aafb886899a79f59512a93"
+runtime_dependency_hash="$(node "${SCRIPT_DIR}/compute-runtime-dependency-hash.mjs" "${LOCK_FILE}")"
+[[ "${runtime_dependency_hash}" == "${EXPECTED_RUNTIME_DEPENDENCY_HASH}" ]] || {
+  echo "Runtime dependency hash changed unexpectedly: ${runtime_dependency_hash}" >&2
+  exit 1
+}
 
 test "$(unzip -Z1 "${HOST_ARCHIVE}" | grep -c '^node_modules/typescript/package.json$')" -eq 1
 test "$(unzip -Z1 "${HOST_ARCHIVE}" | grep -c '^host.mjs$')" -eq 1
 test "$(unzip -Z1 "${HOST_ARCHIVE}" | grep -c '^execution-worker.mjs$')" -eq 1
 
-echo "RuntimeCore preflight passed: verified Node 24.5.0, Python 3.14.6, TypeScript 6.0.3, host resources and ios_system 3.0.5 pins."
+echo "RuntimeCore preflight passed: verified Node 24.5.0, Python 3.14.6, TypeScript 6.0.3, host resources, ios_system 3.0.5 pins, and the complete pinned curl_ios link closure."
