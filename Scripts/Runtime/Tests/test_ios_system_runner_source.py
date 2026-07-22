@@ -7,12 +7,14 @@ from pathlib import Path
 
 REPOSITORY_ROOT = Path(__file__).resolve().parents[3]
 RUNNER = REPOSITORY_ROOT / "Packages/IOSSystemLite/Sources/IOSSystemLite/IOSSystemRunner.swift"
+STREAM_BRIDGE = REPOSITORY_ROOT / "Packages/IOSSystemLite/Sources/IOSSystemStreamBridge/IOSSystemStreamBridge.c"
 
 
 class IOSSystemRunnerSourceTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
         cls.source = RUNNER.read_text(encoding="utf-8")
+        cls.stream_bridge = STREAM_BRIDGE.read_text(encoding="utf-8")
 
     def test_initialize_environment_has_one_production_call_site(self) -> None:
         self.assertEqual(len(re.findall(r"\binitializeEnvironment\(\)", self.source)), 1)
@@ -43,6 +45,14 @@ class IOSSystemRunnerSourceTests(unittest.TestCase):
         self.assertIn("let bridgedArray = rawCommands as NSArray", self.source)
         self.assertIn("value as? NSString", self.source)
         self.assertIn("commands_array_bridge_failure", self.source)
+
+    def test_each_execution_refreshes_session_and_thread_local_streams(self) -> None:
+        self.assertIn("import IOSSystemStreamBridge", self.source)
+        self.assertIn("hanlin_ios_system_set_streams(input, output, error)", self.source)
+        self.assertIn("ios_setStreams(standard_input, standard_output, standard_error)", self.stream_bridge)
+        self.assertIn("thread_stdin = standard_input", self.stream_bridge)
+        self.assertIn("thread_stdout = standard_output", self.stream_bridge)
+        self.assertIn("thread_stderr = standard_error", self.stream_bridge)
 
 
 if __name__ == "__main__":

@@ -1,6 +1,7 @@
 import Foundation
 import Synchronization
 import ios_system
+import IOSSystemStreamBridge
 
 public struct IOSSystemExecution: Sendable {
     public let stdout: String
@@ -410,7 +411,7 @@ public enum IOSSystemRunner {
             }
             rewind(input)
         }
-        ios_setStreams(input, output, error)
+        hanlin_ios_system_set_streams(input, output, error)
         let rendered = tokens.map(shellEscape).joined(separator: " ")
         let status = rendered.withCString { ios_system(UnsafeMutablePointer(mutating: $0)) }
         fflush(output)

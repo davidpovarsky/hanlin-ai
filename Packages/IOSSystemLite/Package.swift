@@ -9,8 +9,13 @@ let package = Package(
     targets: [
         .target(
             name: "IOSSystemLite",
-            dependencies: ["ios_system", "files", "text", "tar", "curl_ios", "libssh2", "openssl", "awk"],
+            dependencies: ["IOSSystemStreamBridge", "ios_system", "files", "text", "tar", "curl_ios", "libssh2", "openssl", "awk"],
             resources: [.process("Resources")]
+        ),
+        .target(
+            name: "IOSSystemStreamBridge",
+            dependencies: ["ios_system"],
+            publicHeadersPath: "include"
         ),
         .binaryTarget(name: "ios_system", url: "https://github.com/holzschu/ios_system/releases/download/v3.0.5/ios_system.xcframework.zip", checksum: "d429e68102926f58bedd8e8b7105dcd169478cd6da1cef494a5f468482d1c8f5"),
         .binaryTarget(name: "files", url: "https://github.com/holzschu/ios_system/releases/download/v3.0.5/files.xcframework.zip", checksum: "b0ee1f58c65ba306f178cd559fd6bce79ec8f275280526908c2a992bfcafedd5"),
