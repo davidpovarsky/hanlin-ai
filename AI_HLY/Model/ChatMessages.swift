@@ -57,7 +57,7 @@ struct AudioAsset: Codable, Hashable {
 }
 
 // 事件数据结构体
-struct EventItem: Codable, Hashable {
+struct EventItem: Codable, Hashable, Sendable {
     var type: String               // calendar / reminder
     var title: String
     var startDate: Date?           // 仅 calendar 用

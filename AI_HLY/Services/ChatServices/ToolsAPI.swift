@@ -7,7 +7,7 @@
 
 import Foundation
 import SwiftData
-import LLM
+@preconcurrency import LLM
 
 // MARK: 翻译文本函数（流式输出版）
 @MainActor

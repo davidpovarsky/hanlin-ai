@@ -8,6 +8,14 @@
 import Foundation
 @preconcurrency import EventKit
 
+private struct ReminderSnapshot: Sendable {
+    let title: String
+    let notes: String?
+    let dueDate: Date?
+    let priority: Int
+    let isCompleted: Bool
+    let identifier: String
+}
 
 /// 根据可选的关键词、日期范围、地点以及事件类型搜索系统日历事件与提醒事项，返回匹配的 EventItem 列表。
 /// - Parameters:
@@ -150,9 +158,18 @@ func searchSystemEvents(keyword: String?, startDate: Date?, endDate: Date?, loca
     // 查询系统提醒事项
     if grantedReminder && searchReminder {
         let predicate = store.predicateForReminders(in: nil)
-        let reminders = await withCheckedContinuation { continuation in
+        let reminders: [ReminderSnapshot] = await withCheckedContinuation { continuation in
             store.fetchReminders(matching: predicate) { result in
-                continuation.resume(returning: result ?? [])
+                continuation.resume(returning: (result ?? []).map { reminder in
+                    ReminderSnapshot(
+                        title: reminder.title,
+                        notes: reminder.notes,
+                        dueDate: reminder.dueDateComponents?.date,
+                        priority: reminder.priority,
+                        isCompleted: reminder.isCompleted,
+                        identifier: reminder.calendarItemIdentifier
+                    )
+                })
             }
         }
         
@@ -167,7 +184,7 @@ func searchSystemEvents(keyword: String?, startDate: Date?, endDate: Date?, loca
             
             // 日期匹配：使用提醒的 dueDateComponents.date
             var dateMatch = true
-            let rDate = r.dueDateComponents?.date
+            let rDate = r.dueDate
             if let eventDate = rDate {
                 if let start = startDate, eventDate < start {
                     dateMatch = false
@@ -198,7 +215,7 @@ func searchSystemEvents(keyword: String?, startDate: Date?, endDate: Date?, loca
                     notes: r.notes,
                     priority: r.priority == 0 ? nil : r.priority,
                     completed: r.isCompleted,
-                    calendarIdentifier: r.calendarItemIdentifier
+                    calendarIdentifier: r.identifier
                 ))
             }
         }

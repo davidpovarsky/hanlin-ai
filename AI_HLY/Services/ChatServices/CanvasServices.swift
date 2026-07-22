@@ -7,7 +7,7 @@
 
 import Foundation
 import SwiftData
-import LLM
+@preconcurrency import LLM
 
 /// CanvasService 相关错误
 enum CanvasServiceError: Error {

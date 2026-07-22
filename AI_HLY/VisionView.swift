@@ -1241,9 +1241,7 @@ final class CameraManager: NSObject, ObservableObject, AVCapturePhotoCaptureDele
             
             self.session.commitConfiguration()
             
-            DispatchQueue.main.async {
-                self.isConfigured = true
-            }
+            self.isConfigured = true
         }
     }
     
@@ -1253,9 +1251,11 @@ final class CameraManager: NSObject, ObservableObject, AVCapturePhotoCaptureDele
     
     /// **开始摄像头**
     func startSession() {
+        let session = session
+        let shouldStart = isConfigured
         queue.async {
-            if self.isConfigured, !self.session.isRunning {
-                self.session.startRunning()
+            if shouldStart, !session.isRunning {
+                session.startRunning()
             } else {
                 return
             }
@@ -1264,9 +1264,10 @@ final class CameraManager: NSObject, ObservableObject, AVCapturePhotoCaptureDele
     
     /// **停止摄像头**
     func stopSession() {
+        let session = session
         queue.async {
-            if self.session.isRunning {
-                self.session.stopRunning()
+            if session.isRunning {
+                session.stopRunning()
             } else {
                 return
             }
@@ -1298,18 +1299,18 @@ final class CameraManager: NSObject, ObservableObject, AVCapturePhotoCaptureDele
     /// **处理照片**
     func photoOutput(_ output: AVCapturePhotoOutput, didFinishProcessingPhoto photo: AVCapturePhoto, error: Error?) {
         let imageData = photo.fileDataRepresentation()
+        let completion = completionHandler
+        completionHandler = nil
         // 确保在主线程回调
-        DispatchQueue.main.async { [weak self] in
+        DispatchQueue.main.async {
             guard let imageData, let image = UIImage(data: imageData) else {
                 print("无法获取照片")
-                self?.completionHandler?(nil)
-                self?.completionHandler = nil
+                completion?(nil)
                 return
             }
-            self?.completionHandler?(image)
-            self?.completionHandler = nil
-            self?.stopSession()
+            completion?(image)
         }
+        stopSession()
     }
     
     /// **手电筒模式**

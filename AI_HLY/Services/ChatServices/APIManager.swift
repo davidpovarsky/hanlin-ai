@@ -8,7 +8,7 @@
 import Foundation
 import PhotosUI
 import SwiftData
-import LLM
+@preconcurrency import LLM
 import MapKit
 import Accelerate
 
@@ -1491,17 +1491,18 @@ class APIManager {
                     }
 
                     if let recorder = self.agentDiagnosticsRecorder {
+                        let requestData = try JSONSerialization.data(withJSONObject: [
+                            "system": finalSystemMessage,
+                            "messages": chats.map { String(describing: $0) },
+                            "currentInput": currentInput,
+                            "temperature": tem,
+                            "topP": topp,
+                            "maxTokens": maxtokens
+                        ])
                         diagnosticsRoundID = await recorder.beginRound(
                             index: 1,
                             trigger: "initialUserRequest",
-                            requestObject: [
-                                "system": finalSystemMessage,
-                                "messages": chats.map { String(describing: $0) },
-                                "currentInput": currentInput,
-                                "temperature": tem,
-                                "topP": topp,
-                                "maxTokens": maxtokens
-                            ]
+                            requestData: requestData
                         )
                         if let diagnosticsRoundID {
                             await recorder.responseStarted(roundID: diagnosticsRoundID, httpStatus: nil, providerRequestID: nil)
@@ -2582,10 +2583,11 @@ class APIManager {
                     }
 
                     if let recorder = self.agentDiagnosticsRecorder {
+                        let requestData = try JSONSerialization.data(withJSONObject: requestBody)
                         diagnosticsRoundID = await recorder.beginRound(
                             index: depth + 1,
                             trigger: depth == 0 ? "initialUserRequest" : "continueAfterToolResult",
-                            requestObject: requestBody
+                            requestData: requestData
                         )
                     }
                     
@@ -2609,7 +2611,8 @@ class APIManager {
                     if let httpResponse = httpResponse, !(200...299).contains(httpResponse.statusCode) {
                         var errorContent = ""
                         do {
-                            let errorData = try await result.reduce(into: Data()) { $0.append($1) }
+                            var errorData = Data()
+                            for try await byte in result { errorData.append(byte) }
                             if let errorString = String(data: errorData, encoding: .utf8) {
                                 errorContent = ":\(errorString)"
                             }

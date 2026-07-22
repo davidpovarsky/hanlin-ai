@@ -78,7 +78,8 @@ actor AgentDiagnosticsRecorder {
     }
 
     @discardableResult
-    func beginRound(index: Int, trigger: String, requestObject: Any) async -> UUID {
+    func beginRound(index: Int, trigger: String, requestData: Data) async -> UUID {
+        let requestObject = (try? JSONSerialization.jsonObject(with: requestData)) ?? [:]
         let sanitizedJSON = AgentDiagnosticsRedactor.sanitizedJSONString(from: requestObject, pretty: true)
         let metadataOnly = session.level != .fullLocalDebug
         let requestText = metadataOnly ? nil : sanitizedJSON
