@@ -38,7 +38,7 @@ def inspection(
 
 class FakeToolchain:
     def __init__(self, app: Path, inspections: dict[str, object]) -> None:
-        self.app = app
+        self.app = app.resolve()
         self.inspections = inspections
 
     def inspect(self, binary: Path) -> object:
