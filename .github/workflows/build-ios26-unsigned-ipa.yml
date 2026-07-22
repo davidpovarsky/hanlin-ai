@@ -371,6 +371,19 @@ jobs:
             nm "$APP_PATH/$APP_NAME" | grep -E '(_ios_system$|_HanlinPythonExecute$|_HanlinNodeStart$)' | tee "$LOG_DIR/08-runtime-symbols.txt"
 
             echo
+            echo "===== ios_system root resource verification ====="
+            test -f "$APP_PATH/commandDictionary.plist"
+            test -f "$APP_PATH/extraCommandsDictionary.plist"
+            plutil -lint "$APP_PATH/commandDictionary.plist"
+            plutil -lint "$APP_PATH/extraCommandsDictionary.plist"
+            python3 Scripts/Runtime/validate_ios_system_resources.py \
+              --repository-root . \
+              --app "$APP_PATH" \
+              --json-output "$LOG_DIR/08-ios-system-resources.json"
+            cp "$APP_PATH/commandDictionary.plist" "$LOG_DIR/commandDictionary.plist"
+            cp "$APP_PATH/extraCommandsDictionary.plist" "$LOG_DIR/extraCommandsDictionary.plist"
+
+            echo
             echo "===== Complete Mach-O / dyld closure verification ====="
             test -f "$APP_PATH/Frameworks/libssh2.framework/libssh2"
             test -f "$APP_PATH/Frameworks/openssl.framework/openssl"
@@ -461,6 +474,19 @@ jobs:
             --platform iphoneos \
             --json-output "$LOG_DIR/09-packaged-ipa-dyld-closure.json" \
             --text-output "$LOG_DIR/09-packaged-ipa-dyld-closure.txt"
+          test -f "$PACKAGED_APP_PATH/commandDictionary.plist"
+          test -f "$PACKAGED_APP_PATH/extraCommandsDictionary.plist"
+          plutil -lint "$PACKAGED_APP_PATH/commandDictionary.plist"
+          plutil -lint "$PACKAGED_APP_PATH/extraCommandsDictionary.plist"
+          python3 Scripts/Runtime/validate_ios_system_resources.py \
+            --repository-root . \
+            --app "$PACKAGED_APP_PATH" \
+            --json-output "$LOG_DIR/09-packaged-ios-system-resources.json"
+          SOURCE_APP_PATH="$(cat "$LOG_DIR/app-path.txt")"
+          test "$(shasum -a 256 "$SOURCE_APP_PATH/commandDictionary.plist" | awk '{print $1}')" \
+            = "$(shasum -a 256 "$PACKAGED_APP_PATH/commandDictionary.plist" | awk '{print $1}')"
+          test "$(shasum -a 256 "$SOURCE_APP_PATH/extraCommandsDictionary.plist" | awk '{print $1}')" \
+            = "$(shasum -a 256 "$PACKAGED_APP_PATH/extraCommandsDictionary.plist" | awk '{print $1}')"
           stat -f %z "$IPA_NAME" | tee "$LOG_DIR/09-ipa-size-bytes.txt"
           shasum -a 256 "$IPA_NAME" | tee "$LOG_DIR/09-ipa-sha256.txt"
 
@@ -644,6 +670,17 @@ jobs:
           test -f "$APP_PATH/Frameworks/libssh2.framework/libssh2"
           test -f "$APP_PATH/Frameworks/openssl.framework/openssl"
           test -f "$APP_PATH/Frameworks/curl_ios.framework/curl_ios"
+          test -f "$APP_PATH/commandDictionary.plist"
+          test -f "$APP_PATH/extraCommandsDictionary.plist"
+          plutil -lint "$APP_PATH/commandDictionary.plist"
+          plutil -lint "$APP_PATH/extraCommandsDictionary.plist"
+          python3 Scripts/Runtime/validate_ios_system_resources.py \
+            --repository-root . \
+            --app "$APP_PATH" \
+            --json-output "$LOG_DIR/07-simulator-ios-system-resources.json"
+          cp "$APP_PATH/commandDictionary.plist" "$LOG_DIR/commandDictionary.plist"
+          cp "$APP_PATH/extraCommandsDictionary.plist" "$LOG_DIR/extraCommandsDictionary.plist"
+          find "$APP_PATH" -maxdepth 4 -print | sort > "$LOG_DIR/07-built-app-resources.txt"
           python3 Scripts/Runtime/validate-app-dyld-closure.py \
             --app "$APP_PATH" \
             --platform iphonesimulator \
@@ -687,6 +724,7 @@ jobs:
 
           xcrun simctl boot "$SIMULATOR_UDID" 2>/dev/null || true
           xcrun simctl bootstatus "$SIMULATOR_UDID" -b 2>&1 | tee "$LOG_DIR/08-bootstatus.log"
+          xcrun simctl uninstall "$SIMULATOR_UDID" "$BUNDLE_ID" 2>/dev/null || true
           xcrun simctl install "$SIMULATOR_UDID" "$APP_PATH"
           touch "$LOG_DIR/launch-marker"
 
@@ -704,23 +742,37 @@ jobs:
           APP_PID="$(awk -F ': ' -v bundle="$BUNDLE_ID" '$1 == bundle { print $2 }' "$LOG_DIR/08-launch-output.txt" | tail -1)"
           test -n "$APP_PID"
           printf '%s\n' "$APP_PID" > "$LOG_DIR/launch-pid.txt"
-
-          for elapsed in $(seq 1 15); do
+          LAUNCH_EPOCH="$(date +%s)"
+          DATA_CONTAINER="$(xcrun simctl get_app_container "$SIMULATOR_UDID" "$BUNDLE_ID" data)"
+          ACCEPTANCE_PATH="$DATA_CONTAINER/Library/Application Support/HanlinRuntime/v1/logs/shell-acceptance.json"
+          SHELL_LOG_PATH="$DATA_CONTAINER/Library/Application Support/HanlinRuntime/v1/logs/shell-runtime.log"
+          for elapsed in $(seq 1 120); do
+            if [ -f "$ACCEPTANCE_PATH" ]; then
+              break
+            fi
             if ! /bin/kill -0 "$APP_PID" 2>/dev/null; then
-              echo "Full app exited after fewer than ${elapsed} seconds." >&2
+              echo "Full app exited before writing shell acceptance JSON after ${elapsed} seconds." >&2
               exit 1
             fi
             sleep 1
           done
-          /bin/kill -0 "$APP_PID"
-          printf '%s\n' "15" > "$LOG_DIR/alive-duration-seconds.txt"
+          test -f "$ACCEPTANCE_PATH"
+          cp "$ACCEPTANCE_PATH" "$LOG_DIR/shell-acceptance.json"
+          test -f "$SHELL_LOG_PATH"
+          cp "$SHELL_LOG_PATH" "$LOG_DIR/shell-runtime.log"
+          python3 Scripts/Runtime/validate_shell_acceptance.py \
+            "$LOG_DIR/shell-acceptance.json" \
+            --summary-output "$LOG_DIR/08-shell-acceptance-summary.json" \
+            | tee "$LOG_DIR/08-shell-acceptance.log"
 
-          DATA_CONTAINER="$(xcrun simctl get_app_container "$SIMULATOR_UDID" "$BUNDLE_ID" data)"
-          PROBE_PATH="$DATA_CONTAINER/Library/Application Support/HanlinRuntime/v1/logs/shell-registration-pre-repair.json"
-          test -f "$PROBE_PATH"
-          cp "$PROBE_PATH" "$LOG_DIR/shell-registration-pre-repair.json"
-          python3 -m json.tool "$LOG_DIR/shell-registration-pre-repair.json" \
-            | tee "$LOG_DIR/08-shell-registration-pre-repair.log"
+          ALIVE_SECONDS="$(( $(date +%s) - LAUNCH_EPOCH ))"
+          while [ "$ALIVE_SECONDS" -lt 15 ]; do
+            /bin/kill -0 "$APP_PID"
+            sleep 1
+            ALIVE_SECONDS="$(( $(date +%s) - LAUNCH_EPOCH ))"
+          done
+          /bin/kill -0 "$APP_PID"
+          printf '%s\n' "$ALIVE_SECONDS" > "$LOG_DIR/alive-duration-seconds.txt"
 
           xcrun simctl spawn "$SIMULATOR_UDID" log show \
             --style compact \
@@ -759,6 +811,16 @@ jobs:
             SIMULATOR_UDID="$(cat "$LOG_DIR/simulator-udid.txt")"
             xcrun simctl spawn "$SIMULATOR_UDID" log show --style compact --last 10m \
               > "$LOG_DIR/09-simulator-system.log" 2>&1 || true
+            if [ -f "$LOG_DIR/bundle-id.txt" ]; then
+              BUNDLE_ID="$(cat "$LOG_DIR/bundle-id.txt")"
+              DATA_CONTAINER="$(xcrun simctl get_app_container "$SIMULATOR_UDID" "$BUNDLE_ID" data 2>/dev/null || true)"
+              if [ -n "$DATA_CONTAINER" ]; then
+                cp "$DATA_CONTAINER/Library/Application Support/HanlinRuntime/v1/logs/shell-acceptance.json" \
+                  "$LOG_DIR/shell-acceptance.json" 2>/dev/null || true
+                cp "$DATA_CONTAINER/Library/Application Support/HanlinRuntime/v1/logs/shell-runtime.log" \
+                  "$LOG_DIR/shell-runtime.log" 2>/dev/null || true
+              fi
+            fi
             mkdir -p "$LOG_DIR/DiagnosticReports"
             for diagnostic_root in \
               "$HOME/Library/Logs/DiagnosticReports" \
