@@ -7,7 +7,8 @@
     "node": "24.5.0"
   },
   "scripts": {
-    "test": "node --test Tests/*.test.mjs"
+    "test": "node --test Tests/*.test.mjs",
+    "test:integration": "node --test Tests/*.integration.mjs"
   },
   "dependencies": {
     "@npmcli/arborist": "8.0.5",

@@ -101,7 +101,19 @@ test('host redirects npm state before preview and install modules initialize', a
     type: 'module',
     main: 'server.mjs',
   }));
-  await fs.writeFile(path.join(packageDirectory, 'server.mjs'), 'process.stdin.resume();\n');
+  await fs.writeFile(path.join(packageDirectory, 'server.mjs'), `
+    import { createInterface } from 'node:readline';
+    createInterface({ input: process.stdin }).on('line', line => {
+      const request = JSON.parse(line);
+      if (request.method === 'initialize') respond(request.id, {
+        protocolVersion: request.params.protocolVersion,
+        capabilities: { tools: {} },
+        serverInfo: { name: 'host-test', version: '1.0.0' },
+      });
+      if (request.method === 'tools/list') respond(request.id, { tools: [] });
+    });
+    function respond(id, result) { process.stdout.write(JSON.stringify({ jsonrpc: '2.0', id, result }) + '\\n'); }
+  `);
   await fs.writeFile(archive, await pacote.tarball(`file:${packageDirectory}`, {
     Arborist,
     cache: fixtureCache,
@@ -130,6 +142,12 @@ test('host redirects npm state before preview and install modules initialize', a
     let stderr = '';
     child.stderr.on('data', chunk => { stderr += chunk.toString('utf8'); });
     const ready = await waitForJSON(readyPath, child, () => stderr);
+    assert.equal(ready.nodeVersion, process.versions.node);
+    assert.equal(ready.modulePolicyHooksAvailable, true);
+    const health = await fetch(`http://127.0.0.1:${ready.port}/health`, {
+      headers: { Authorization: `Bearer ${launchToken}` },
+    }).then(response => response.json());
+    assert.equal(health.modulePolicyHooksAvailable, true);
     const preview = await hostRequest(ready.port, launchToken, '/v1/install/preview', {
       source: { kind: 'file', path: archive },
     });
