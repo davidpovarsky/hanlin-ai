@@ -7,7 +7,7 @@ from pathlib import Path
 
 REPOSITORY_ROOT = Path(__file__).resolve().parents[3]
 RUNNER = REPOSITORY_ROOT / "Packages/IOSSystemLite/Sources/IOSSystemLite/IOSSystemRunner.swift"
-STREAM_BRIDGE = REPOSITORY_ROOT / "Packages/IOSSystemLite/Sources/IOSSystemStreamBridge/IOSSystemStreamBridge.c"
+STREAM_BRIDGE = REPOSITORY_ROOT / "Packages/IOSSystemLite/Sources/IOSSystemStreamBridge/IOSSystemStreamBridge.m"
 
 
 class IOSSystemRunnerSourceTests(unittest.TestCase):
