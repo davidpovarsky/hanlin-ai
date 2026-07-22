@@ -97,6 +97,10 @@ actor NodeRuntimeService {
                 _ = try await connection.data(path: "/health", timeout: 3)
                 snapshotValue.lastHealthCheck = .now
                 return connection
+            } catch is CancellationError {
+                throw CancellationError()
+            } catch let error as URLError where error.code == .cancelled {
+                throw CancellationError()
             } catch {
                 self.connection = nil
                 snapshotValue.state = .appRestartRequired
