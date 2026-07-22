@@ -75,8 +75,7 @@ func translateTextAPI(
                     var accumulatedOutput = ""
                     
                     // 调用本地模型流式接口，传入翻译提示
-                    await llm.respond(to: translationPrompt) { responseStream in
-                        for await delta in responseStream {
+                    await LocalLLMStreamingAdapter.consume(llm, prompt: translationPrompt) { delta in
                             accumulatedOutput += delta
                             // 输出本地模型返回的 token
                             continuation.yield(delta)
@@ -84,10 +83,9 @@ func translateTextAPI(
                             // 检测输出中是否出现停止标记，提前结束生成
                             if accumulatedOutput.contains("<|im_end|>") || accumulatedOutput.contains("<|im_start|>") {
                                 llm.stop()
-                                break
+                                return false
                             }
-                        }
-                        return ""
+                            return true
                     }
                     
                     continuation.finish()
@@ -246,8 +244,7 @@ func polishTextAPI(input: String,
                     var accumulatedOutput = ""
                     
                     // 调用本地模型流式接口，传入翻译提示
-                    await llm.respond(to: optimizationPrompt) { responseStream in
-                        for await delta in responseStream {
+                    await LocalLLMStreamingAdapter.consume(llm, prompt: optimizationPrompt) { delta in
                             accumulatedOutput += delta
                             // 输出本地模型返回的 token
                             continuation.yield(delta)
@@ -255,10 +252,9 @@ func polishTextAPI(input: String,
                             // 检测输出中是否出现停止标记，提前结束生成
                             if accumulatedOutput.contains("<|im_end|>") || accumulatedOutput.contains("<|im_start|>") {
                                 llm.stop()
-                                break
+                                return false
                             }
-                        }
-                        return ""
+                            return true
                     }
                     
                     continuation.finish()
@@ -398,8 +394,7 @@ func generateSummaryAPI(input: String,
                     var accumulatedOutput = ""
                     
                     // 调用本地模型流式接口，传入翻译提示
-                    await llm.respond(to: summaryPrompt) { responseStream in
-                        for await delta in responseStream {
+                    await LocalLLMStreamingAdapter.consume(llm, prompt: summaryPrompt) { delta in
                             accumulatedOutput += delta
                             // 输出本地模型返回的 token
                             continuation.yield(delta)
@@ -407,10 +402,9 @@ func generateSummaryAPI(input: String,
                             // 检测输出中是否出现停止标记，提前结束生成
                             if accumulatedOutput.contains("<|im_end|>") || accumulatedOutput.contains("<|im_start|>") {
                                 llm.stop()
-                                break
+                                return false
                             }
-                        }
-                        return ""
+                            return true
                     }
                     
                     continuation.finish()

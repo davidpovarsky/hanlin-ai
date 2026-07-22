@@ -1531,14 +1531,13 @@ class APIManager {
                     var prefixStripped = false
                     var buffer = ""
                     // 调用流式接口逐 token 返回结果
-                    await llm.respond(to: currentInput) { responseStream in
-                        for await delta in responseStream {
+                    await LocalLLMStreamingAdapter.consume(llm, prompt: currentInput) { delta in
                             
                             if self.isCancelled {
                                 llm.stop()
                                 continuation.finish()
                                 self.isCancelled = false
-                                break
+                                return false
                             }
                             
                             accumulatedOutput += delta
@@ -1572,15 +1571,14 @@ class APIManager {
                             if accumulatedOutput.contains("im_end") {
                                 // 检测到停止标记后调用停止方法，让底层模型尽快结束生成
                                 llm.stop()
-                                break
+                                return false
                             }
                             if accumulatedOutput.contains("im_start") {
                                 // 检测到停止标记后调用停止方法，让底层模型尽快结束生成
                                 llm.stop()
-                                break
+                                return false
                             }
-                        }
-                        return ""
+                            return true
                     }
 
                     if let recorder = self.agentDiagnosticsRecorder, let diagnosticsRoundID {

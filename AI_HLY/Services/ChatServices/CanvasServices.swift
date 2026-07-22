@@ -226,8 +226,7 @@ func editCanvasAPI(
                     var accumulatedOutput = ""
                     
                     // 调用本地模型流式接口，传入翻译提示
-                    await llm.respond(to: userPrompt) { responseStream in
-                        for await delta in responseStream {
+                    await LocalLLMStreamingAdapter.consume(llm, prompt: userPrompt) { delta in
                             accumulatedOutput += delta
                             // 输出本地模型返回的 token
                             continuation.yield(delta)
@@ -235,10 +234,9 @@ func editCanvasAPI(
                             // 检测输出中是否出现停止标记，提前结束生成
                             if accumulatedOutput.contains("<|im_end|>") || accumulatedOutput.contains("<|im_start|>") {
                                 llm.stop()
-                                break
+                                return false
                             }
-                        }
-                        return ""
+                            return true
                     }
                     
                     continuation.finish()
@@ -385,16 +383,14 @@ func refineSelectedTextAPI(
                         throw NSError(domain: "LocalLLMInit", code: -1, userInfo: [NSLocalizedDescriptionKey: "本地 LLM 初始化失败"])
                     }
                     var accumulatedOutput = ""
-                    await llm.respond(to: userPrompt) { responseStream in
-                        for await delta in responseStream {
+                    await LocalLLMStreamingAdapter.consume(llm, prompt: userPrompt) { delta in
                             accumulatedOutput += delta
                             continuation.yield(delta)
                             if accumulatedOutput.contains("<|im_end|>") || accumulatedOutput.contains("<|im_start|>") {
                                 llm.stop()
-                                break
+                                return false
                             }
-                        }
-                        return ""
+                            return true
                     }
                     continuation.finish()
                 } catch {
