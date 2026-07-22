@@ -167,6 +167,12 @@ private struct RuntimeCard<Destination: View>: View {
             if let source = snapshot.source { LabeledContent(RuntimeL10n.string("Source"), value: source) }
             if let date = snapshot.lastHealthCheck { LabeledContent(RuntimeL10n.string("Last health check"), value: date.formatted(date: .abbreviated, time: .standard)) }
             if let error = snapshot.lastErrorCode { Text(error).font(.caption).foregroundStyle(.red).textSelection(.enabled) }
+            if let diagnostic = snapshot.lastDiagnostic {
+                Text(diagnostic).font(.caption).foregroundStyle(snapshot.state == .failed ? .red : .secondary).textSelection(.enabled)
+            }
+            if let missingCommands = snapshot.missingCommands, !missingCommands.isEmpty {
+                Text(missingCommands.joined(separator: ", ")).font(.caption2.monospaced()).foregroundStyle(.red).textSelection(.enabled)
+            }
             HStack {
                 Button(RuntimeL10n.string(snapshot.state == .stopped ? "Prepare" : "Health Check"), action: prepare)
                 Button(RuntimeL10n.string("Smoke Test"), action: smoke)

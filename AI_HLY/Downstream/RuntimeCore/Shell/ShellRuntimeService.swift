@@ -91,7 +91,7 @@ actor ShellRuntimeService {
             )
 
             if !report.missingRegisteredCommands.isEmpty {
-                return try failHealth(
+                throw IOSSystemRegistrationError(
                     category: .commandNotRegistered,
                     code: "command_not_registered",
                     message: "Some approved ios_system commands were not registered: \(report.missingRegisteredCommands.joined(separator: ", ")).",
@@ -99,7 +99,7 @@ actor ShellRuntimeService {
                 )
             }
             if !report.missingExecutableCommands.isEmpty {
-                return try failHealth(
+                throw IOSSystemRegistrationError(
                     category: .commandNotExecutable,
                     code: "command_not_executable",
                     message: "Some registered ios_system commands are not executable: \(report.missingExecutableCommands.joined(separator: ", ")).",
