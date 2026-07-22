@@ -133,7 +133,7 @@ final class MCPRuntimeProvider {
                 entryPointOverride: server.binName ?? relativeEntryPoint(of: server)
             )
         } catch {
-            installState = .failed(error.localizedDescription)
+            installState = .failed(operationID: nil, message: error.localizedDescription, rollbackMessage: nil)
             lastError = error.localizedDescription
         }
     }
@@ -155,11 +155,19 @@ final class MCPRuntimeProvider {
             ) { progress in
                 await MainActor.run {
                     self.activeInstallOperationID = progress.operationID
-                    self.installState = .installing(
-                        operationID: progress.operationID,
-                        phase: progress.phase,
-                        fraction: progress.fraction
-                    )
+                    if let terminalError = progress.terminalError {
+                        self.installState = .failed(
+                            operationID: progress.operationID,
+                            message: terminalError.localizedMessage,
+                            rollbackMessage: terminalError.rollbackMessage
+                        )
+                    } else {
+                        self.installState = .installing(
+                            operationID: progress.operationID,
+                            phase: progress.phase,
+                            fraction: progress.fraction
+                        )
+                    }
                 }
             }
             if let existing {
@@ -174,12 +182,16 @@ final class MCPRuntimeProvider {
             }
             installation = installed
             do {
-                installState = .installing(
-                    operationID: installed.operationID,
-                    phase: .starting,
-                    fraction: 0.98
-                )
-                try await controller.start(installed.descriptor)
+                if installed.descriptor.compatibility.requiresConfiguration == true {
+                    _ = try await registryStore.upsert(installed.descriptor)
+                } else {
+                    installState = .installing(
+                        operationID: installed.operationID,
+                        phase: .starting,
+                        fraction: 0.98
+                    )
+                    try await controller.start(installed.descriptor)
+                }
                 try await installService.commit(installed)
             } catch {
                 throw error
@@ -189,18 +201,34 @@ final class MCPRuntimeProvider {
             activeInstallOperationID = nil
             lastError = nil
         } catch is CancellationError {
-            await recoverFailedInstallation(installation, existing: existing, restart: wasRunning)
+            _ = await recoverFailedInstallation(installation, existing: existing, restart: wasRunning)
             installState = .cancelled
             activeInstallOperationID = nil
         } catch {
-            await recoverFailedInstallation(installation, existing: existing, restart: wasRunning)
+            let operationID = activeInstallOperationID
+            let rollbackMessage = await recoverFailedInstallation(installation, existing: existing, restart: wasRunning)
             if let operationID = activeInstallOperationID,
                cancelledInstallOperationIDs.remove(operationID) != nil {
                 installState = .cancelled
                 lastError = nil
             } else {
-                installState = .failed(error.localizedDescription)
-                lastError = error.localizedDescription
+                if case .failed(let reportedOperationID, let reportedMessage, let reportedRollback) = installState,
+                   reportedOperationID == operationID {
+                    let effectiveRollback = rollbackMessage ?? reportedRollback
+                    installState = .failed(
+                        operationID: operationID,
+                        message: reportedMessage,
+                        rollbackMessage: effectiveRollback
+                    )
+                    lastError = [reportedMessage, effectiveRollback].compactMap { $0 }.joined(separator: "\n")
+                } else {
+                    installState = .failed(
+                        operationID: operationID,
+                        message: error.localizedDescription,
+                        rollbackMessage: rollbackMessage
+                    )
+                    lastError = [error.localizedDescription, rollbackMessage].compactMap { $0 }.joined(separator: "\n")
+                }
             }
             activeInstallOperationID = nil
         }
@@ -210,10 +238,15 @@ final class MCPRuntimeProvider {
         _ installation: MCPPackageInstallation?,
         existing: MCPServerDescriptor?,
         restart: Bool
-    ) async {
+    ) async -> String? {
+        var rollbackMessage: String?
         if let installation {
             await controller.stop(serverID: installation.descriptor.id)
-            await installService.rollback(installation)
+            do {
+                try await installService.rollback(installation)
+            } catch {
+                rollbackMessage = error.localizedDescription
+            }
         }
         if let existing {
             _ = try? await registryStore.upsert(existing)
@@ -223,6 +256,7 @@ final class MCPRuntimeProvider {
         }
         servers = (try? await registryStore.load()) ?? servers
         await refreshSnapshots()
+        return rollbackMessage
     }
 
     private func relativeEntryPoint(of server: MCPServerDescriptor) -> String? {

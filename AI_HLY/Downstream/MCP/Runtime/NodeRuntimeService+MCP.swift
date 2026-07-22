@@ -22,6 +22,7 @@ extension NodeRuntimeService {
         operationID: UUID,
         serverID: UUID,
         entryPointOverride: String?,
+        arguments: [String] = [],
         fileLayout: MCPFileLayout = .default
     ) async throws -> MCPServerDescriptor {
         let host = try await ensureRunning()
@@ -37,7 +38,8 @@ extension NodeRuntimeService {
         var body: [String: Any] = [
             "operationID": operationID.uuidString.lowercased(),
             "serverID": serverID.uuidString.lowercased(),
-            "source": source
+            "source": source,
+            "arguments": arguments
         ]
         if let entryPointOverride { body["entryPointOverride"] = entryPointOverride }
         let encodedBody = try JSONSerialization.data(withJSONObject: body)

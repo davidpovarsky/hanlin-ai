@@ -17,6 +17,6 @@ enum MCPInstallState: Codable, Hashable, Sendable {
     case previewing
     case installing(operationID: UUID, phase: MCPInstallPhase, fraction: Double?)
     case completed(serverID: UUID)
-    case failed(String)
+    case failed(operationID: UUID?, message: String, rollbackMessage: String?)
     case cancelled
 }

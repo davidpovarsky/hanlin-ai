@@ -63,11 +63,15 @@ struct MCPServerDetailView: View {
                 Button(MCPL10n.string("Reinstall")) { replacePackage(latestCompatible: false) }
                     .disabled(replacingPackage)
                 if replacingPackage { MCPInstallProgressView(state: provider.installState) }
-                if let error = provider.lastError { Text(error).foregroundStyle(.red) }
+                if case .failed = provider.installState {
+                    EmptyView()
+                } else if let error = provider.lastError {
+                    Text(error).foregroundStyle(.red)
+                }
             }
             Section(MCPL10n.string("Compatibility")) {
                 ForEach(draft.compatibility.findings) { finding in
-                    Label(finding.message, systemImage: finding.severity == .unsupported ? "xmark.octagon" : "exclamationmark.triangle")
+                    Label(finding.localizedMessage, systemImage: finding.severity == .unsupported ? "xmark.octagon" : "exclamationmark.triangle")
                 }
                 LabeledContent(MCPL10n.string("Runtime probe"), value: draft.compatibility.runtimeProbePassed ? MCPL10n.string("Passed") : MCPL10n.string("Pending"))
             }

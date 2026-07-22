@@ -18,8 +18,14 @@ struct MCPInstallProgressView: View {
         case .completed:
             Label(MCPL10n.string("Installation completed"), systemImage: "checkmark.circle.fill")
                 .foregroundStyle(.green)
-        case .failed(let message):
-            Label(message, systemImage: "exclamationmark.triangle.fill").foregroundStyle(.red)
+        case .failed(_, let message, let rollbackMessage):
+            VStack(alignment: .leading, spacing: 6) {
+                Label(message, systemImage: "exclamationmark.triangle.fill")
+                if let rollbackMessage {
+                    Text(rollbackMessage).font(.caption).textSelection(.enabled)
+                }
+            }
+            .foregroundStyle(.red)
         case .cancelled:
             Label(MCPL10n.string("Installation cancelled"), systemImage: "xmark.circle")
         }

@@ -49,8 +49,8 @@ struct MCPServerInstallView: View {
                         LabeledContent(MCPL10n.string("Entry point"), value: entryPoint)
                     }
                     ForEach(preview.compatibility.findings) { finding in
-                        Label(finding.message, systemImage: finding.severity == .unsupported ? "xmark.octagon" : "exclamationmark.triangle")
-                            .foregroundStyle(finding.severity == .unsupported ? .red : .orange)
+                        Label(finding.localizedMessage, systemImage: findingIcon(finding.severity))
+                            .foregroundStyle(findingColor(finding.severity))
                     }
                     Button(MCPL10n.string("Install")) { Task { await install() } }
                         .buttonStyle(.borderedProminent)
@@ -109,7 +109,28 @@ struct MCPServerInstallView: View {
             spec: spec,
             entryPointOverride: preview?.entryPoints.count == 1 ? nil : selectedEntryPoint
         )
-        errorMessage = provider.lastError
+        if case .failed = provider.installState {
+            // The operation-scoped progress card owns terminal install failures.
+            errorMessage = nil
+        } else {
+            errorMessage = provider.lastError
+        }
         working = false
+    }
+
+    private func findingIcon(_ severity: MCPCompatibilityFinding.Severity) -> String {
+        switch severity {
+        case .info: "checkmark.shield"
+        case .warning: "exclamationmark.triangle"
+        case .unsupported: "xmark.octagon"
+        }
+    }
+
+    private func findingColor(_ severity: MCPCompatibilityFinding.Severity) -> Color {
+        switch severity {
+        case .info: .blue
+        case .warning: .orange
+        case .unsupported: .red
+        }
     }
 }

@@ -30,6 +30,7 @@ actor MCPPackageInstallService {
         _ spec: MCPPackageSpec,
         serverID: UUID = UUID(),
         entryPointOverride: String? = nil,
+        arguments: [String] = [],
         progress: @escaping @Sendable (MCPInstallProgress) async -> Void
     ) async throws -> MCPPackageInstallation {
         try fileLayout.prepareIfNeeded()
@@ -49,7 +50,8 @@ actor MCPPackageInstallService {
                 spec: spec,
                 operationID: operationID,
                 serverID: serverID,
-                entryPointOverride: entryPointOverride
+                entryPointOverride: entryPointOverride,
+                arguments: arguments
             )
             await progress(.init(operationID: operationID, phase: .registering, fraction: 0.95))
             await progress(.init(operationID: operationID, phase: .completed, fraction: 1))
@@ -58,6 +60,9 @@ actor MCPPackageInstallService {
             try? await runtime.cancelMCPInstall(operationID: operationID)
             throw CancellationError()
         } catch {
+            if let latest = try? await runtime.mcpInstallProgress(operationID: operationID) {
+                await progress(latest)
+            }
             try? await runtime.cancelMCPInstall(operationID: operationID)
             throw error
         }
@@ -74,8 +79,8 @@ actor MCPPackageInstallService {
         )
     }
 
-    func rollback(_ installation: MCPPackageInstallation) async {
-        try? await runtime.rollbackMCPInstall(
+    func rollback(_ installation: MCPPackageInstallation) async throws {
+        try await runtime.rollbackMCPInstall(
             operationID: installation.operationID,
             serverID: installation.descriptor.id
         )
