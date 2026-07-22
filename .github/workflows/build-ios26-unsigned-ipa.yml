@@ -705,13 +705,13 @@ jobs:
           printf '%s\n' "$APP_PID" > "$LOG_DIR/launch-pid.txt"
 
           for elapsed in $(seq 1 15); do
-            if ! xcrun simctl spawn "$SIMULATOR_UDID" /bin/kill -0 "$APP_PID" 2>/dev/null; then
+            if ! /bin/kill -0 "$APP_PID" 2>/dev/null; then
               echo "Full app exited after fewer than ${elapsed} seconds." >&2
               exit 1
             fi
             sleep 1
           done
-          xcrun simctl spawn "$SIMULATOR_UDID" /bin/kill -0 "$APP_PID"
+          /bin/kill -0 "$APP_PID"
           printf '%s\n' "15" > "$LOG_DIR/alive-duration-seconds.txt"
 
           xcrun simctl spawn "$SIMULATOR_UDID" log show \
