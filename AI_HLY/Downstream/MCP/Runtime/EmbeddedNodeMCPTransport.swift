@@ -91,8 +91,9 @@ actor EmbeddedNodeMCPTransport: MCP.Transport {
                 if let connectTask { _ = try? await connectTask.value }
             case .connected, .disconnected:
                 state = .disconnecting
-                let task = Task { [weak self] in
-                    await self?.performDisconnect()
+                let task = Task<Void, Never> { [weak self] in
+                    guard let self else { return }
+                    await self.performDisconnect()
                 }
                 disconnectTask = task
                 await task.value

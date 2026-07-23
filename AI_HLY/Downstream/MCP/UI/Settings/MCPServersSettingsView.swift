@@ -31,7 +31,7 @@ struct MCPServersSettingsView: View {
                         MCPServerDetailView(server: server)
                     } label: {
                         HStack {
-                            Image(systemName: status(for: server).state == .running ? "server.rack" : "server.rack")
+                            Image(systemName: "server.rack")
                             VStack(alignment: .leading) {
                                 Text(server.displayName)
                                 Text("\(server.packageName) @ \(server.resolvedVersion)").font(.caption).foregroundStyle(.secondary)

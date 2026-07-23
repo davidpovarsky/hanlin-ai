@@ -6,7 +6,7 @@ import path from 'node:path';
 import {
   commitInstall,
   installPackage,
-} from '../../../../AI_HLY/Downstream/RuntimeCore/Node/Host/package-installer.mjs';
+} from '../package-installer.mjs';
 
 const packageName = '@cablate/mcp-google-map';
 const packageVersion = '0.0.53';

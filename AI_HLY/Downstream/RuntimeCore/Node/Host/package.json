@@ -8,7 +8,7 @@
   },
   "scripts": {
     "test": "node --test Tests/*.test.mjs",
-    "test:integration": "node --test ../../../../../Scripts/Runtime/Tests/MCPNode/cablate-google-map.integration.mjs && node --test ../../../../../Scripts/Runtime/Tests/MCPNode/lifecycle.integration.mjs && node --test Tests/*.integration.mjs"
+    "test:integration": "node --test Tests/cablate-google-map.integration.mjs && node --test Tests/lifecycle.integration.mjs && node --test Tests/server-everything.integration.mjs"
   },
   "dependencies": {
     "@npmcli/arborist": "8.0.5",

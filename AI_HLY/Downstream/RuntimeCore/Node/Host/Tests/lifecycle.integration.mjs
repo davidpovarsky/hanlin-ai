@@ -9,10 +9,7 @@ import { fileURLToPath } from 'node:url';
 
 const serverID = '22222222-2222-4222-8222-222222222222';
 const hostEntryPoint = fileURLToPath(
-  new URL(
-    '../../../../AI_HLY/Downstream/RuntimeCore/Node/Host/host.mjs',
-    import.meta.url,
-  ),
+  new URL('../host.mjs', import.meta.url),
 );
 
 test('HTTP host serializes MCP lifecycle and survives stress', { timeout: 240_000 }, async () => {

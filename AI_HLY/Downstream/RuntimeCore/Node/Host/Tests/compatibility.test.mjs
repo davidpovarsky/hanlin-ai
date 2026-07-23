@@ -15,12 +15,9 @@ import { runMCPRuntimeProbe } from '../runtime-probe.mjs';
 import { installPackage } from '../package-installer.mjs';
 
 const fixtures = fileURLToPath(new URL('./Fixtures', import.meta.url));
-const downstreamFixtureRoots = [
-  fileURLToPath(new URL('./DownstreamFixtures/', import.meta.url)),
-  fileURLToPath(
-    new URL('../../../../../../Scripts/Runtime/Tests/MCPNode/Fixtures/', import.meta.url),
-  ),
-];
+const downstreamFixtures = fileURLToPath(
+  new URL('./DownstreamFixtures/', import.meta.url),
+);
 
 test('unused client stdio and cross-spawn code do not reject the selected server path', async () => {
   const report = await analyzeFixture('false-positive-sdk');
@@ -240,15 +237,12 @@ async function fixtureDirectory(name) {
     await fs.access(path.join(local, 'package.json'));
     return local;
   } catch {
-    for (const root of downstreamFixtureRoots) {
-      const downstream = path.join(root, name);
-      try {
-        await fs.access(path.join(downstream, 'package.json'));
-        return downstream;
-      } catch {
-        // Continue to the source-tree or staged downstream fixture root.
-      }
+    const downstream = path.join(downstreamFixtures, name);
+    try {
+      await fs.access(path.join(downstream, 'package.json'));
+      return downstream;
+    } catch {
+      throw new Error(`Missing downstream MCP fixture: ${name}`);
     }
-    throw new Error(`Missing downstream MCP fixture: ${name}`);
   }
 }
