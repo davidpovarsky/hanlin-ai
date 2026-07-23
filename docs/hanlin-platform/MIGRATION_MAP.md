@@ -55,6 +55,7 @@ byte-preserved compatibility baseline. Later unavoidable touchpoints are:
 | selected Apps Hub/settings views | catalog and permission/package center entry points |
 | narrow chat integration | launch/return actions and unified tool adapter |
 | `AI_HLY.xcodeproj/project.pbxproj` | one local package reference and later target/resource wiring |
+| `.github/workflows/build-ios26-unsigned-ipa.yml` | manual-only Phase 1 validation mode on the already registered macOS/Xcode workflow |
 | Info.plist/localization | only real service purpose strings and user-facing text |
 | entitlements | only in the extension/service phase that requires them |
 | runtime preparation scripts | deterministic Script SDK resource packaging |

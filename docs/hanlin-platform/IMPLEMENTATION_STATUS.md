@@ -57,7 +57,7 @@ Tests performed:
 - `validate-scripting-examples.mjs`;
 - source-backed importer `--check`;
 - write-mode idempotence rerun;
-- Git ignore visibility check confirmed all 1,052 new Phase 0/1 and validation
+- Git ignore visibility check confirmed all 1,051 retained new Phase 0/1
   files are versionable, including both exact `tsconfig.json` inputs;
 - byte comparison of canonical required files against duplicate candidates;
 - strong secret-pattern scan over approved source files;
@@ -111,8 +111,9 @@ Existing behavior preserved:
 
 - RuntimeCore, MCP, NativeAppPlatform, NativeAgentExtensions, AgentActivity,
   app scenes, project configuration, signing, and entitlements were not
-  changed. A manual-only Phase 1 validation workflow was added without changing
-  existing workflow triggers or build commands.
+  changed. A manual-only Phase 1 validation mode was added to the existing
+  registered iOS workflow without changing its automatic trigger or existing
+  build commands.
 
 Unresolved risks and recorded findings:
 
@@ -191,7 +192,7 @@ Tests written but not executable in this environment:
 
 Verification still required before Phase 1 can be complete:
 
-- verify staged baseline bytes and commit the validation candidate;
+- commit and push the corrected registered-workflow validation candidate;
 - run the manual Phase 1 workflow on a clean macOS checkout;
 - compile with the repository's selected stable Xcode 26 toolchain;
 - execute all 14 `HanlinPlatformContractsTests`;
@@ -204,9 +205,21 @@ Original/upstream files minimally changed:
 
 - the Phase 0 `.gitignore` exception and narrow `.gitattributes` policy are the
   only repository policy touchpoints;
-- `.github/workflows/validate-hanlin-platform-phase1.yml` is additive,
-  manually triggered, fail-fast, and retains validation evidence;
+- `.github/workflows/build-ios26-unsigned-ipa.yml` adds one default-false
+  manual input, one isolated fail-fast validation job, and two condition
+  guards that prevent application jobs from running in validation-only mode;
 - the package is not yet wired into `AI_HLY.xcodeproj`.
+
+Validation failure history:
+
+- checkpoint `5a9a4f3` pushed successfully, but GitHub returned HTTP 404 before
+  creating a run because a brand-new workflow that exists only on a feature
+  branch is not registered for dispatch;
+- root-cause category: CI workflow registration, not source, package, schema,
+  baseline, or Xcode failure;
+- the unregistered standalone workflow was removed. Its job was moved into the
+  existing registered `build-ios26-unsigned-ipa.yml` workflow as an explicitly
+  selected manual-only mode. No runner was launched for the failed dispatch.
 
 Exact next gate:
 

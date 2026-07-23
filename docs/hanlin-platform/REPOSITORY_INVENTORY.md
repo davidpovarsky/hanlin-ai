@@ -82,8 +82,11 @@ Existing workflows:
 - `check-runtime-dependency-updates.yml`: manual and scheduled dependency
   update workflow.
 
-Phase 0 did not run or alter any workflow. The existing automatic triggers are
-recorded facts, not newly approved policy.
+Phase 0 did not run or alter any workflow. Phase 1 validation later adds one
+default-false manual-only mode to the already registered iOS workflow because
+GitHub cannot dispatch a brand-new workflow that exists only on a feature
+branch. Existing automatic triggers and existing build commands remain
+unchanged.
 
 ## Runtime dependency pins
 
