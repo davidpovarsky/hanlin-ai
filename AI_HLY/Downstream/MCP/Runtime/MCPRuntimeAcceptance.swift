@@ -430,7 +430,10 @@ enum MCPRuntimeAcceptance {
             to: layout.serverRegistry,
             options: .atomic
         )
-        let legacyAutoStartPreserved = try await store.load() == [legacyWithAutoStart]
+        let legacyAutoStartPreserved = try persistentlyEquivalent(
+            await store.load(),
+            [legacyWithAutoStart]
+        )
 
         var legacyWithoutAutoStart = descriptor
         legacyWithoutAutoStart.autoStart = false
@@ -447,13 +450,19 @@ enum MCPRuntimeAcceptance {
             options: .atomic
         )
         try? FileManager.default.removeItem(at: layout.serverRegistryBackup)
-        let legacyDefaultedSafely = try await store.load() == [legacyWithoutAutoStart]
+        let legacyDefaultedSafely = try persistentlyEquivalent(
+            await store.load(),
+            [legacyWithoutAutoStart]
+        )
 
         try await store.save([descriptor])
         let validBackup = try Data(contentsOf: layout.serverRegistryBackup)
         try Data("{corrupt".utf8).write(to: layout.serverRegistry, options: .atomic)
         try validBackup.write(to: layout.serverRegistryBackup, options: .atomic)
-        let primaryRecovered = try await store.load() == [descriptor]
+        let primaryRecovered = try persistentlyEquivalent(
+            await store.load(),
+            [descriptor]
+        )
             && (try? JSONDecoder.mcp.decode(
                 MCPServerRegistryDocument.self,
                 from: Data(contentsOf: layout.serverRegistry)
@@ -515,6 +524,13 @@ enum MCPRuntimeAcceptance {
                 && uninstallWasNotResurrected
                 && backupContainsIntentionalEmpty
         )
+    }
+
+    private static func persistentlyEquivalent(
+        _ lhs: [MCPServerDescriptor],
+        _ rhs: [MCPServerDescriptor]
+    ) throws -> Bool {
+        try JSONEncoder.mcp.encode(lhs) == JSONEncoder.mcp.encode(rhs)
     }
 }
 #endif

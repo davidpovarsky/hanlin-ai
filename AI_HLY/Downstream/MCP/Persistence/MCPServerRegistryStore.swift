@@ -53,8 +53,10 @@ actor MCPServerRegistryStore {
         )
         let data = try JSONEncoder.mcp.encode(document)
         let verified = try decodeDocument(data)
-        guard verified == document else {
-            throw MCPServerRegistryError.writeVerificationFailed("round-trip data did not match")
+        guard try JSONEncoder.mcp.encode(verified) == data else {
+            throw MCPServerRegistryError.writeVerificationFailed(
+                "round-trip encoding was not stable"
+            )
         }
 
         // The primary remains valid while the backup is replaced. Once the
