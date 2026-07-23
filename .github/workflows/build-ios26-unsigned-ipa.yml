@@ -159,6 +159,34 @@ jobs:
           swift test --package-path "$PACKAGE_PATH" --parallel \
             2>&1 | tee "$LOG_DIR/05-swift-test.log"
 
+      - name: Discover the generated Xcode package scheme
+        working-directory: Packages/HanlinPlatform
+        run: |
+          set -euxo pipefail
+          xcodebuild -list -json \
+            > "$LOG_DIR/06-xcodebuild-list.json" \
+            2> >(tee "$LOG_DIR/06-xcodebuild-list.stderr.log" >&2)
+          cat "$LOG_DIR/06-xcodebuild-list.json"
+          package_scheme="$(python3 - "$LOG_DIR/06-xcodebuild-list.json" <<'PY'
+          import json
+          import sys
+
+          with open(sys.argv[1], encoding="utf-8") as stream:
+              document = json.load(stream)
+          container = document.get("workspace") or document.get("project") or {}
+          schemes = container.get("schemes") or []
+          if "HanlinPlatform-Package" in schemes:
+              print("HanlinPlatform-Package")
+          elif len(schemes) == 1:
+              print(schemes[0])
+          else:
+              raise SystemExit(f"Expected one generated package scheme, found: {schemes}")
+          PY
+          )"
+          test -n "$package_scheme"
+          echo "PACKAGE_XCODE_SCHEME=$package_scheme" >> "$GITHUB_ENV"
+          echo "Selected generated package scheme: $package_scheme"
+
       - name: Compile contracts for generic iOS Simulator
         working-directory: Packages/HanlinPlatform
         run: |
@@ -167,7 +195,7 @@ jobs:
             "$GITHUB_WORKSPACE/build/Phase1SimulatorDerivedData" \
             "$LOG_DIR/Phase1Simulator.xcresult"
           xcodebuild \
-            -scheme HanlinPlatformContracts \
+            -scheme "$PACKAGE_XCODE_SCHEME" \
             -configuration Debug \
             -sdk iphonesimulator \
             -destination "generic/platform=iOS Simulator" \
@@ -175,7 +203,7 @@ jobs:
             -resultBundlePath "$LOG_DIR/Phase1Simulator.xcresult" \
             CODE_SIGNING_ALLOWED=NO \
             SWIFT_STRICT_CONCURRENCY=complete \
-            clean build 2>&1 | tee "$LOG_DIR/06-ios-simulator.log"
+            clean build 2>&1 | tee "$LOG_DIR/07-ios-simulator.log"
 
       - name: Compile contracts for generic iOS device
         working-directory: Packages/HanlinPlatform
@@ -185,7 +213,7 @@ jobs:
             "$GITHUB_WORKSPACE/build/Phase1DeviceDerivedData" \
             "$LOG_DIR/Phase1Device.xcresult"
           xcodebuild \
-            -scheme HanlinPlatformContracts \
+            -scheme "$PACKAGE_XCODE_SCHEME" \
             -configuration Debug \
             -sdk iphoneos \
             -destination "generic/platform=iOS" \
@@ -193,7 +221,7 @@ jobs:
             -resultBundlePath "$LOG_DIR/Phase1Device.xcresult" \
             CODE_SIGNING_ALLOWED=NO \
             SWIFT_STRICT_CONCURRENCY=complete \
-            clean build 2>&1 | tee "$LOG_DIR/07-ios-device.log"
+            clean build 2>&1 | tee "$LOG_DIR/08-ios-device.log"
 
       - name: Summarize compiler warnings
         if: always()
@@ -202,7 +230,7 @@ jobs:
           {
             echo "Compiler warnings retained for review:"
             grep -RIn --include='*.log' 'warning:' "$LOG_DIR" || true
-          } | tee "$LOG_DIR/08-warnings.log"
+          } | tee "$LOG_DIR/09-warnings.log"
 
       - name: Retain Phase 1 validation evidence
         if: always()

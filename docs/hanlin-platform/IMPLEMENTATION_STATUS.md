@@ -231,7 +231,16 @@ Validation failure history:
   now declares macOS 26 for host build/tests as well as iOS 26, without
   availability fallbacks or reduced language/concurrency strictness. Evidence
   artifact `phase1-validation-72fa7747d8f210bab83a2f5ecb9fe5cc9f810c46`
-  is retained through 2026-08-22.
+  is retained through 2026-08-22;
+- run `30032180092`, job `89291151693`, confirmed the macOS 26 package fix,
+  and all 14 Swift Testing tests passed. The next command failed before iOS
+  compilation because the generated Swift-package workspace does not expose a
+  scheme named after the library target. The workflow now records
+  `xcodebuild -list -json` and uses only the discovered
+  `HanlinPlatform-Package` scheme or a single unambiguous generated scheme.
+  Evidence artifact
+  `phase1-validation-4067e363b85d66f67d62cc153d9dc481a8a0e0c0` is retained
+  through 2026-08-22.
 
 Exact next gate:
 
