@@ -41,6 +41,7 @@ export async function inspectArchiveSafety(packageRoot, options = {}) {
   const requestedRoot = path.resolve(packageRoot);
   const maximumFiles = options.maximumFiles ?? 25_000;
   const maximumFileBytes = options.maximumFileBytes ?? 256 * 1024 * 1024;
+  const directoryConcurrency = boundedConcurrency(options.directoryConcurrency, 32);
   const findings = [];
   const inventory = { nativeAddons: [], nativeBuildManifests: [], typeScriptSources: 0 };
   let fileCount = 0;
@@ -54,73 +55,38 @@ export async function inspectArchiveSafety(packageRoot, options = {}) {
     };
   }
   const root = await fs.realpath(requestedRoot);
-  const stack = [root];
+  const directories = [root];
+  let directoryIndex = 0;
 
-  while (stack.length) {
-    const directory = stack.pop();
-    for (const entry of await fs.readdir(directory, { withFileTypes: true })) {
-      const absolute = path.resolve(directory, entry.name);
-      const relative = relativePath(root, absolute);
-      if (!isInside(root, absolute)) {
-        findings.push(unsupported(`Archive path escapes the package root: ${relative}`, {
-          code: 'archive_path_escape', path: relative, phase: 'archive',
-        }));
-        continue;
-      }
-      fileCount += 1;
+  while (directoryIndex < directories.length) {
+    const batch = directories.slice(directoryIndex, directoryIndex + directoryConcurrency);
+    directoryIndex += batch.length;
+    const listings = await Promise.all(batch.map(async directory => ({
+      directory,
+      entries: await fs.readdir(directory, { withFileTypes: true }),
+    })));
+
+    for (const { directory, entries } of listings) {
+      fileCount += entries.length;
       if (fileCount > maximumFiles) {
         findings.push(unsupported(`Package contains more than ${maximumFiles} files.`, {
           code: 'archive_file_limit', phase: 'archive',
         }));
-        return { findings, treeFileCount: fileCount, inventory };
-      }
-      if (entry.isSymbolicLink()) {
-        const target = await fs.readlink(absolute);
-        const resolved = path.resolve(path.dirname(absolute), target);
-        if (!isInside(root, resolved)) {
-          findings.push(unsupported(`Unsafe symbolic link: ${relative}`, {
-            code: 'archive_unsafe_symlink', path: relative, phase: 'archive',
-          }));
-        }
-        continue;
-      }
-      if (entry.isDirectory()) {
-        const realDirectory = await fs.realpath(absolute);
-        if (!isInside(root, realDirectory)) {
-          findings.push(unsupported(`Directory resolves outside the package root: ${relative}`, {
-            code: 'archive_path_escape', path: relative, phase: 'archive',
-          }));
-        } else {
-          stack.push(absolute);
-        }
-        continue;
-      }
-      if (!entry.isFile()) {
-        findings.push(unsupported(`Unsupported archive entry type: ${relative}`, {
-          code: 'archive_layout_invalid', path: relative, phase: 'archive',
-        }));
-        continue;
+        return { findings, treeFileCount: maximumFiles + 1, inventory };
       }
 
-      const stat = await fs.stat(absolute);
-      if (stat.size > maximumFileBytes) {
-        findings.push(unsupported(`Archive file is unexpectedly large: ${relative}`, {
-          code: 'archive_file_too_large', path: relative, phase: 'archive',
-        }));
-      }
-      const lower = entry.name.toLowerCase();
-      if (lower.endsWith('.node')) inventory.nativeAddons.push(relative);
-      if (lower === 'binding.gyp') inventory.nativeBuildManifests.push(relative);
-      if (lower.endsWith('.ts') && !lower.endsWith('.d.ts')) inventory.typeScriptSources += 1;
-      if (lower === 'package.json' && stat.size <= 2 * 1024 * 1024) {
-        try {
-          const nestedManifest = JSON.parse(await fs.readFile(absolute, 'utf8'));
-          if (!nestedManifest || typeof nestedManifest !== 'object' || Array.isArray(nestedManifest)) throw new Error('not an object');
-        } catch {
-          findings.push(unsupported(`Invalid package manifest: ${relative}`, {
-            code: 'archive_invalid_manifest', path: relative, phase: 'archive',
-          }));
-        }
+      const inspectedEntries = await Promise.all(entries.map(entry => inspectArchiveEntry({
+        directory,
+        entry,
+        root,
+        maximumFileBytes,
+      })));
+      for (const inspected of inspectedEntries) {
+        findings.push(...inspected.findings);
+        if (inspected.directory) directories.push(inspected.directory);
+        if (inspected.nativeAddon) inventory.nativeAddons.push(inspected.nativeAddon);
+        if (inspected.nativeBuildManifest) inventory.nativeBuildManifests.push(inspected.nativeBuildManifest);
+        inventory.typeScriptSources += inspected.typeScriptSourceCount;
       }
     }
   }
@@ -134,6 +100,73 @@ export async function inspectArchiveSafety(packageRoot, options = {}) {
     ));
   }
   return { findings, treeFileCount: fileCount, inventory };
+}
+
+async function inspectArchiveEntry({ directory, entry, root, maximumFileBytes }) {
+  const absolute = path.resolve(directory, entry.name);
+  const relative = relativePath(root, absolute);
+  const result = {
+    directory: null,
+    findings: [],
+    nativeAddon: null,
+    nativeBuildManifest: null,
+    typeScriptSourceCount: 0,
+  };
+  if (!isInside(root, absolute)) {
+    result.findings.push(unsupported(`Archive path escapes the package root: ${relative}`, {
+      code: 'archive_path_escape', path: relative, phase: 'archive',
+    }));
+    return result;
+  }
+  if (entry.isSymbolicLink()) {
+    const target = await fs.readlink(absolute);
+    const resolved = path.resolve(path.dirname(absolute), target);
+    if (!isInside(root, resolved)) {
+      result.findings.push(unsupported(`Unsafe symbolic link: ${relative}`, {
+        code: 'archive_unsafe_symlink', path: relative, phase: 'archive',
+      }));
+    }
+    return result;
+  }
+  if (entry.isDirectory()) {
+    const realDirectory = await fs.realpath(absolute);
+    if (!isInside(root, realDirectory)) {
+      result.findings.push(unsupported(`Directory resolves outside the package root: ${relative}`, {
+        code: 'archive_path_escape', path: relative, phase: 'archive',
+      }));
+    } else {
+      result.directory = absolute;
+    }
+    return result;
+  }
+  if (!entry.isFile()) {
+    result.findings.push(unsupported(`Unsupported archive entry type: ${relative}`, {
+      code: 'archive_layout_invalid', path: relative, phase: 'archive',
+    }));
+    return result;
+  }
+
+  const stat = await fs.stat(absolute);
+  if (stat.size > maximumFileBytes) {
+    result.findings.push(unsupported(`Archive file is unexpectedly large: ${relative}`, {
+      code: 'archive_file_too_large', path: relative, phase: 'archive',
+    }));
+  }
+  const lower = entry.name.toLowerCase();
+  if (lower.endsWith('.node')) result.nativeAddon = relative;
+  if (lower === 'binding.gyp') result.nativeBuildManifest = relative;
+  if (lower.endsWith('.ts') && !lower.endsWith('.d.ts')) result.typeScriptSourceCount = 1;
+  if (lower === 'package.json' && stat.size <= 2 * 1024 * 1024) {
+    try {
+      const nestedManifest = JSON.parse(await fs.readFile(absolute, 'utf8'));
+      if (!nestedManifest || typeof nestedManifest !== 'object' || Array.isArray(nestedManifest)) throw new Error('not an object');
+    } catch {
+      result.findings.push(unsupported(`Invalid package manifest: ${relative}`, {
+        code: 'archive_invalid_manifest', path: relative, phase: 'archive',
+      }));
+    }
+  }
+  return result;
 }
 
 export async function inspectSelectedEntryPoint(packageRoot, manifest, options = {}) {
@@ -202,11 +235,14 @@ export async function analyzePackage(packageRoot, manifest, options = {}) {
   if (!options.entryPoint) throw new TypeError('analyzePackage requires an explicit selected entry point.');
   const manifestFindings = inspectManifest(manifest, options.nodeVersion);
   const archive = await inspectArchiveSafety(packageRoot, options);
+  options.onProgress?.('archiveScanned');
   const selected = await inspectSelectedEntryPoint(packageRoot, manifest, options);
+  options.onProgress?.('entryPointInspected');
   let runtimeProbe = null;
   if (typeof options.runtimeProbe === 'function'
       && ![...manifestFindings, ...archive.findings, ...selected.findings].some(item => item.severity === 'unsupported')) {
     runtimeProbe = await options.runtimeProbe();
+    options.onProgress?.('runtimeProbeCompleted');
   }
   return mergeCompatibilityReports({
     manifestFindings,
@@ -375,4 +411,10 @@ function uniqueFindings(findings) {
     [item.severity, item.code, item.message, item.path, item.specifier, item.parentPath].join(':'),
     item,
   ])).values()];
+}
+
+function boundedConcurrency(value, fallback) {
+  const parsed = Number(value);
+  if (!Number.isInteger(parsed) || parsed < 1) return fallback;
+  return Math.min(parsed, 128);
 }

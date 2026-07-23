@@ -111,6 +111,14 @@ export async function installPackage({
     const compatibility = await analyzePackage(packageRoot, extractedManifest, {
       entryPoint: absoluteEntry,
       moduleKind,
+      onProgress(stage) {
+        const fraction = {
+          archiveScanned: 0.8,
+          entryPointInspected: 0.82,
+          runtimeProbeCompleted: 0.85,
+        }[stage] ?? 0.75;
+        emit('install', { operationID, phase: 'checkingCompatibility', fraction, stage });
+      },
       runtimeProbe: () => runMCPRuntimeProbe({
         packageRoot,
         entryPoint: absoluteEntry,
@@ -299,14 +307,25 @@ function validateArguments(value) {
 
 async function directorySize(root) {
   let total = 0;
-  const stack = [root];
-  while (stack.length) {
-    const current = stack.pop();
-    for (const entry of await fs.readdir(current, { withFileTypes: true })) {
-      const absolute = path.join(current, entry.name);
-      if (entry.isDirectory()) stack.push(absolute);
-      else if (entry.isFile()) total += (await fs.stat(absolute)).size;
+  const directories = [root];
+  let directoryIndex = 0;
+  while (directoryIndex < directories.length) {
+    const batch = directories.slice(directoryIndex, directoryIndex + 32);
+    directoryIndex += batch.length;
+    const listings = await Promise.all(batch.map(async directory => ({
+      directory,
+      entries: await fs.readdir(directory, { withFileTypes: true }),
+    })));
+    const files = [];
+    for (const { directory, entries } of listings) {
+      for (const entry of entries) {
+        const absolute = path.join(directory, entry.name);
+        if (entry.isDirectory()) directories.push(absolute);
+        else if (entry.isFile()) files.push(absolute);
+      }
     }
+    const stats = await Promise.all(files.map(file => fs.stat(file)));
+    total += stats.reduce((sum, stat) => sum + stat.size, 0);
   }
   return total;
 }

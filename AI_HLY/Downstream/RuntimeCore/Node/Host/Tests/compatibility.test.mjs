@@ -53,6 +53,13 @@ test('unreachable native build material is inventory, not an execution-path reje
   assert.ok(report.findings.some(item => item.code === 'unreachable_blocked_reference' && item.reachable === false));
 });
 
+test('bounded concurrent archive scanning preserves serial safety results', async () => {
+  const root = path.join(fixtures, 'unreachable-native');
+  const serial = await inspectArchiveSafety(root, { directoryConcurrency: 1 });
+  const concurrent = await inspectArchiveSafety(root, { directoryConcurrency: 32 });
+  assert.deepEqual(concurrent, serial);
+});
+
 test('only the selected reachable TypeScript entry is compiled by the Worker loader', async () => {
   const report = await analyzeFixture('typescript-selected');
   assert.notEqual(report.verdict, 'unsupported', JSON.stringify(report.findings));

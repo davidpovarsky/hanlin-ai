@@ -72,15 +72,14 @@ Tests performed:
 - 131 versionable JSON files parse, with all 60 internal manifest-schema
   references resolving across 23 definitions.
 
-Tests not performed:
+macOS verification:
 
-- no Xcode build or analysis;
-- no Swift compiler or installed Apple SDK verification;
-- no GitHub Actions;
-- no simulator or device run;
-- no TypeScript fixture compilation;
-- no package bundle or application launch;
-- no runtime, UI, permission, or extension test.
+- run `30032399070`, job `89291875155`, reverified the complete baseline from
+  a clean checkout: 999 files, 5,918,732 bytes, the exact baseline ID and
+  aggregate SHA-256, all 177 fixture records, and all 131 versionable JSON
+  files with 60 internal references across 23 definitions;
+- Phase 0 does not execute the TypeScript fixtures by contract. Compiler-backed
+  interpretation remains deferred to Phase 6.
 
 Pre-push source observations:
 
@@ -135,12 +134,13 @@ Unresolved risks and recorded findings:
 - exact current divergence from CherryHQ cannot be computed without an
   upstream remote/fetch.
 
-## Phase 1 — implementation complete, verification pending
+## Phase 1 — implementation complete, verification in progress
 
-Status: partial. The implementation and acceptance test suite are present, but
-this Windows environment has no Swift toolchain. The contract tests have not
-been compiled or executed, so the gate is not marked complete and Phase 2 has
-not started.
+Status: partial. Isolated contract verification is complete on the clean macOS
+runner. Full-application device compilation also passes. The simulator MCP
+acceptance exposed a compatibility-scan performance defect that is now fixed
+locally and awaits a clean rerun. The gate is not marked complete and Phase 2
+has not started.
 
 Implemented:
 
@@ -184,7 +184,7 @@ Static checks performed:
 - no public identifier field uses an unchecked raw `String`;
 - no import or reference to AI_HLY app models.
 
-Tests written but not executable in this environment:
+Contract test sources:
 
 - `IdentifierAndVersionTests.swift`;
 - `ValueAndSchemaTests.swift`;
@@ -192,14 +192,12 @@ Tests written but not executable in this environment:
 
 Verification still required before Phase 1 can be complete:
 
-- commit and push the corrected registered-workflow validation candidate;
-- run the manual Phase 1 workflow on a clean macOS checkout;
-- compile with the repository's selected stable Xcode 26 toolchain;
-- execute all 14 `HanlinPlatformContractsTests`;
-- compile the contracts for generic iOS Simulator and device destinations;
-- run the existing application build only after isolated package validation;
-- confirm Swift 6 concurrency and availability diagnostics from the installed
-  iOS 26 SDK.
+- commit and push the simulator compatibility-scan performance correction;
+- rerun isolated Phase 1 validation on that exact commit;
+- rerun the existing full-application device and iPad Simulator jobs;
+- require the pinned `server-everything` install, runtime probe, MCP
+  initialize, tools/list, harmless echo call, clean worker stop, and persisted
+  acceptance report to pass before closing the gate.
 
 Original/upstream files minimally changed:
 
@@ -240,7 +238,31 @@ Validation failure history:
   `HanlinPlatform-Package` scheme or a single unambiguous generated scheme.
   Evidence artifact
   `phase1-validation-4067e363b85d66f67d62cc153d9dc481a8a0e0c0` is retained
-  through 2026-08-22.
+  through 2026-08-22;
+- run `30032399070`, job `89291875155`, on exact commit
+  `aa78443de6f3679913184bf8585108ebdc8988b7` completed the isolated gate:
+  baseline and schema validation, package resolution, Swift build, all 14
+  Swift Testing tests, and generic iOS Simulator/device Xcode builds passed
+  with the discovered `HanlinPlatform` scheme. Evidence artifact
+  `phase1-validation-aa78443de6f3679913184bf8585108ebdc8988b7` is retained
+  through 2026-08-22;
+- full-application run `30032560629` used that same exact commit. Device job
+  `89292426462` passed the Release iOS 26 build, located the app, packaged the
+  unsigned IPA, validated its dyld closure, and uploaded both IPA and logs.
+  Simulator job `89292427012` passed the Release arm64 build, app-resource
+  scan, dyld closure, launch, 23-command shell acceptance, and process-liveness
+  checks, but failed waiting for `mcp-acceptance.json`;
+- the MCP diagnostic log proves Node 24.5.0 reached `host_ready`, installed
+  dependencies, and entered `checkingCompatibility`. The app remained alive
+  with no crash report, but the sequential archive scan did not finish within
+  the 360-poll CI window. The same pinned package contains 4,318 tree entries
+  and passes the macOS integration test with 13 tools;
+- the pending correction retains every archive safety check while scanning
+  independent directories and metadata concurrently in bounded batches. It
+  also batches installed-size metadata reads and records compatibility
+  sub-stages so a future timeout identifies archive, entry-point, or runtime
+  probe work precisely. Local Node syntax, all 28 deterministic host tests,
+  and the pinned npm integration test pass after the change.
 
 Exact next gate:
 
