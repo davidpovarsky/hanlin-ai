@@ -219,7 +219,11 @@ Validation failure history:
   baseline, or Xcode failure;
 - the unregistered standalone workflow was removed. Its job was moved into the
   existing registered `build-ios26-unsigned-ipa.yml` workflow as an explicitly
-  selected manual-only mode. No runner was launched for the failed dispatch.
+  selected manual-only mode. No runner was launched for the failed dispatch;
+- the first registered-workflow dispatch was then rejected with HTTP 422
+  because the `runner` expression context is unavailable in job-level `env`.
+  Log-directory resolution was moved to a step using `$RUNNER_TEMP`, where the
+  runner context is valid. This failure also launched no runner.
 
 Exact next gate:
 
