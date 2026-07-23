@@ -2,7 +2,7 @@
 
 Last updated: 2026-07-23
 Execution contract: Revision 2.0
-Current gate: Phase 1 validation
+Current gate: Phase 1 complete; Phase 2 not started
 
 ## Phase 0 — complete
 
@@ -134,13 +134,13 @@ Unresolved risks and recorded findings:
 - exact current divergence from CherryHQ cannot be computed without an
   upstream remote/fetch.
 
-## Phase 1 — implementation complete, verification in progress
+## Phase 1 — complete
 
-Status: partial. Isolated contract verification is complete on the clean macOS
-runner. Full-application device compilation also passes. The simulator MCP
-acceptance exposed a compatibility-scan performance defect that is now fixed
-locally and awaits a clean rerun. The gate is not marked complete and Phase 2
-has not started.
+Status: complete. The isolated contract gate and both full-application jobs
+passed from clean macOS checkouts of exact implementation commit
+`2c41b445427703f65444330a947ca46fba47ebf6`. The later documentation-only
+closure commit records these results and does not change the tested
+implementation. Phase 2 has not started.
 
 Implemented:
 
@@ -190,14 +190,18 @@ Contract test sources:
 - `ValueAndSchemaTests.swift`;
 - `ManifestAndWireTests.swift`.
 
-Verification still required before Phase 1 can be complete:
+Gate acceptance:
 
-- commit and push the simulator compatibility-scan performance correction;
-- rerun isolated Phase 1 validation on that exact commit;
-- rerun the existing full-application device and iPad Simulator jobs;
-- require the pinned `server-everything` install, runtime probe, MCP
-  initialize, tools/list, harmless echo call, clean worker stop, and persisted
-  acceptance report to pass before closing the gate.
+- the isolated Phase 1 validation passed on the exact tested commit;
+- all 14 contract tests passed;
+- generic iOS Simulator and iOS device compilation passed;
+- the full application passed Release device compilation and unsigned IPA
+  packaging;
+- the full application launched on an iPad Simulator and passed shell and MCP
+  runtime acceptance without a crash report;
+- the pinned `server-everything` install, compatibility scan, runtime probe,
+  MCP initialize, tools/list, harmless echo call, clean worker stop, and
+  persisted acceptance report all passed.
 
 Original/upstream files minimally changed:
 
@@ -257,15 +261,179 @@ Validation failure history:
   with no crash report, but the sequential archive scan did not finish within
   the 360-poll CI window. The same pinned package contains 4,318 tree entries
   and passes the macOS integration test with 13 tools;
-- the pending correction retains every archive safety check while scanning
+- the correction retains every archive safety check while scanning
   independent directories and metadata concurrently in bounded batches. It
   also batches installed-size metadata reads and records compatibility
-  sub-stages so a future timeout identifies archive, entry-point, or runtime
+  sub-stages so any future timeout identifies archive, entry-point, or runtime
   probe work precisely. Local Node syntax, all 28 deterministic host tests,
-  and the pinned npm integration test pass after the change.
+  and the pinned npm integration test passed after the change;
+- the correction was committed as
+  `2c41b445427703f65444330a947ca46fba47ebf6` and passed both final workflows
+  described below.
+
+## Phase 1 closure evidence
+
+Exact tested implementation commit:
+
+- `2c41b445427703f65444330a947ca46fba47ebf6`.
+
+Runner and toolchain:
+
+- macOS 26.4, build `25E246`;
+- Xcode 26.6, build `17F113`, selected from
+  `/Applications/Xcode_26.6.app/Contents/Developer`;
+- Apple Swift 6.3.3
+  (`swiftlang-6.3.3.1.3 clang-2100.1.1.101`);
+- iOS, iOS Simulator, and macOS SDK 26.5;
+- package language mode Swift 6 and deployment targets iOS 26 / macOS 26.
+
+Isolated contract run:
+
+- workflow run `30036246827`;
+- job `89304830925`, `Validate baseline, contracts, tests, and iOS
+  compilation`;
+- result: success;
+- evidence artifact `8575396468`,
+  `phase1-validation-2c41b445427703f65444330a947ca46fba47ebf6`,
+  retained through 2026-08-22;
+- clean-checkout baseline result: 999 files, 5,918,732 bytes, exact baseline
+  ID and aggregate SHA-256, 177 fixture records, and 131 JSON files with all
+  60 internal references across 23 definitions;
+- Swift package resolution and macOS host compilation passed;
+- discovered Swift-package Xcode scheme: `HanlinPlatform`;
+- generic iOS Simulator Debug compilation passed with code signing disabled
+  and complete strict concurrency;
+- generic iOS device Debug compilation passed with code signing disabled and
+  complete strict concurrency;
+- the contract warning scan found zero compiler-warning lines.
+
+All 14 contract tests passed:
+
+1. `manifestRoundTripsDeterministically`
+2. `schemasValidateAndRoundTrip`
+3. `majorMinorVersionsRejectNonCanonicalAndUnknownVersions`
+4. `wireEnvelopeRoundTripsAndEnforcesRequestIdentity`
+5. `hostVersionRangeRejectsInversion`
+6. `packageVersionsUseStableTotalOrdering`
+7. `valuesRejectNonFiniteAndUnknownRepresentations`
+8. `identifiersValidateAndRoundTripCanonically`
+9. `valuesRoundTripWithDeterministicEncoding`
+10. `manifestRejectsUnsafePathsAndUnsupportedVersions`
+11. `manifestRejectsDuplicateCanonicalIdentifiers`
+12. `manifestSchemaResourceIsValidJSONAndUnknownFieldsAreTolerated`
+13. `wireEnvelopeRejectsUnknownVersionMalformedKindAndOversizedPayload`
+14. `schemasRejectMalformedDefinitions`
+
+Full-application run:
+
+- workflow run `30036394400`;
+- simulator job `89305320796`: success;
+- device and unsigned-IPA job `89305320850`: success;
+- both jobs checked out the exact tested implementation commit;
+- project `AI_HLY.xcodeproj`, scheme `AI_HLY`, Release configuration, iOS 26
+  deployment target;
+- Release device compilation passed, the app was found, its dyld closure
+  passed, and an unsigned IPA was packaged;
+- IPA payload size: 80,156,373 bytes; SHA-256:
+  `c31840ddbcc4924f60f85a77c1dc25b0a865aacd12a40c7ec5739442a0e41402`;
+- build-log artifact `8576178216` and unsigned-IPA artifact `8576177511` are
+  retained through 2026-08-06;
+- Release arm64 Simulator compilation, app-resource scan, and dyld closure
+  passed;
+- the app installed and launched on an iPad mini (A17 Pro), iOS 26.5;
+- shell acceptance passed all 23 commands, found no workspace escape, and the
+  app remained alive for 24 seconds;
+- MCP acceptance passed with embedded Node 24.5.0 and pinned
+  `@modelcontextprotocol/server-everything` 2026.7.4: 264 reachable modules,
+  635 resolutions, 13 listed tools, successful initialize, tools/list, and
+  harmless echo call, clean worker stop, zero terminal errors, and no use of
+  `child_process`, client stdio, or `cross-spawn`;
+- no new crash diagnostic report was produced;
+- simulator evidence artifact `8576030321` is retained through 2026-08-06.
+
+Validation commands:
+
+- local: `node --check package-compatibility.mjs`,
+  `node --check package-installer.mjs`, `npm test`,
+  `npm run test:integration`,
+  `node Scripts/ScriptingReference/import-scripting-reference.mjs --source
+  C:\Users\DAVID\Code\ScriptingProjects --check`,
+  `node Scripts/ScriptingReference/verify-scripting-reference.mjs`,
+  `node Scripts/ScriptingReference/build-scripting-inventory.mjs --check`,
+  `node Scripts/ScriptingReference/validate-scripting-examples.mjs`,
+  `node Scripts/ScriptingReference/validate-json-and-schema.mjs`,
+  `git diff --check`, and `git diff --cached --check`;
+- isolated macOS runner: `sw_vers`, `xcodebuild -version`,
+  `xcode-select -p`, `swift --version`, `xcodebuild -showsdks`, the baseline
+  verifier, inventory check and deterministic regeneration, fixture validator,
+  JSON/schema validator, `swift package --package-path
+  Packages/HanlinPlatform resolve`, `swift build --package-path
+  Packages/HanlinPlatform`, `swift test --package-path
+  Packages/HanlinPlatform --parallel`, `xcodebuild -list -json`, and clean
+  generic iOS Simulator/device `xcodebuild` commands for the discovered
+  `HanlinPlatform` scheme with `CODE_SIGNING_ALLOWED=NO` and
+  `SWIFT_STRICT_CONCURRENCY=complete`;
+- full-application runner: isolated host-resource copy plus
+  `npm ci --ignore-scripts --no-audit --no-fund`, `npm test`,
+  `npm run test:integration`, MCP install-dedup validation, runtime-host
+  packaging and content checks, runtime-link and dyld-scanner tests, pinned
+  archive size/checksum validation, Xcode project listing/settings inspection,
+  package dependency resolution, clean Release device and arm64 Simulator
+  `xcodebuild` commands, app and packaged-IPA dyld-closure validation, IPA
+  resource/property-list checks, `simctl` boot/install/launch/process-liveness
+  checks, shell acceptance validation, MCP acceptance validation, and crash
+  diagnostic collection.
+
+Remaining warnings:
+
+- the isolated `HanlinPlatformContracts` package emitted no compiler warnings;
+- each successful full-app Xcode job emitted 60 pre-existing warning lines in
+  12 upstream-owned app files. They cover iOS 26 deprecations
+  (`UIScreen.main`, geocoder/placemark APIs, and concatenated SwiftUI `Text`),
+  Swift concurrency and `Sendable` isolation, one unnecessary `await`, and one
+  unused `isZh` value;
+- affected upstream files:
+  `NativeAgentExtensions/UI/NativeUIRenderer.swift`,
+  `Services/ChatServices/APIManager.swift`,
+  `Services/ChatServices/MapServices.swift`,
+  `Services/ModelServices/ModelDown.swift`,
+  `Views/Components/ChatViewBottom.swift`,
+  `Views/Components/ChatViewComponents.swift`,
+  `Views/Components/KnowledgeWritingView.swift`,
+  `Views/Components/ModelsViewComponents.swift`,
+  `Views/Components/SettingsViewComponents.swift`,
+  `Views/Components/VoiceInputView.swift`, `ChatView.swift`, and
+  `VisionView.swift`;
+- those warnings predate the Phase 1 package, did not fail the requested gate,
+  and were not broadly rewritten because that would be unrelated upstream
+  modernization outside Phase 1;
+- GitHub's runner also reported that selected v4 JavaScript actions target
+  Node 20 and were forced onto Node 24. This is infrastructure output, not an
+  application compiler warning.
+
+Files changed to resolve validation failures:
+
+- `.github/workflows/build-ios26-unsigned-ipa.yml`: registered the isolated
+  manual validation mode, moved runner-dependent log setup into a step,
+  discovered the generated package scheme, and kept full-app jobs isolated
+  from validation-only dispatches;
+- `Packages/HanlinPlatform/Package.swift`: declared the macOS 26 host-test
+  platform required by the modern Foundation contracts;
+- `AI_HLY/Downstream/RuntimeCore/Node/Host/package-compatibility.mjs`:
+  preserved archive-safety semantics while bounding independent metadata
+  scans concurrently;
+- `AI_HLY/Downstream/RuntimeCore/Node/Host/package-installer.mjs`: batched
+  installed-size metadata and exposed compatibility substages;
+- `AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/compatibility.test.mjs`:
+  proved serial and concurrent safety decisions are equivalent;
+- this status document: records the failure chain and final evidence.
+
+The contracts package remains intentionally unlinked from the application
+target in Phase 1. The package gate and full-app runtime regression gate were
+validated independently. Phase 2 capability, permission, policy, audit,
+redaction, distribution, UI-model, and registry-adapter work has not started.
 
 Exact next gate:
 
-Complete Phase 1 verification when explicitly authorized. Only after those
-acceptance tests pass may Phase 2 add capability, permission, policy, audit,
-redaction, distribution enforcement, UI models, and current-registry adapters.
+Phase 1 is closed. Do not begin Phase 2 without a subsequent task authorizing
+that work.
