@@ -10,10 +10,11 @@ Phase 1 exposes one real target:
   descriptors and validation, stable platform errors, and the versioned script
   wire envelope.
 
-The package targets iOS 26 and Swift language mode 6. It imports no AI_HLY app
-model. The bundled `HanlinAppManifest.schema.json` is the machine-readable
-structural manifest schema; Swift validation enforces semantic conditions such
-as supported versions, canonical IDs, safe entry points, uniqueness, schema
+The package targets iOS 26 for product compilation and macOS 26 for host
+build/tests, using Swift language mode 6. It imports no AI_HLY app model. The
+bundled `HanlinAppManifest.schema.json` is the machine-readable structural
+manifest schema; Swift validation enforces semantic conditions such as
+supported versions, canonical IDs, safe entry points, uniqueness, schema
 validity, integrity format, and required contexts.
 
 Future targets are added only when their phase has functional implementation.

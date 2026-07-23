@@ -5,6 +5,7 @@ import PackageDescription
 let package = Package(
     name: "HanlinPlatform",
     platforms: [
+        .macOS(.v26),
         .iOS(.v26)
     ],
     products: [

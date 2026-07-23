@@ -145,8 +145,8 @@ not started.
 Implemented:
 
 - new downstream package `Packages/HanlinPlatform`;
-- iOS 26 / Swift 6 `HanlinPlatformContracts` target with no app-model
-  dependency;
+- iOS 26 product / macOS 26 host-test / Swift 6
+  `HanlinPlatformContracts` target with no app-model dependency;
 - validated `RawRepresentable`, `Codable`, `Hashable`, `Sendable` identifiers
   for all required contract identities, plus typed MCP server and publisher
   identities;
@@ -223,7 +223,15 @@ Validation failure history:
 - the first registered-workflow dispatch was then rejected with HTTP 422
   because the `runner` expression context is unavailable in job-level `env`.
   Log-directory resolution was moved to a step using `$RUNNER_TEMP`, where the
-  runner context is valid. This failure also launched no runner.
+  runner context is valid. This failure also launched no runner;
+- run `30031979860`, job `89290494746`, validated the clean macOS baseline,
+  JSON, schema references, and package resolution, then failed at the first
+  `swift build`. The package declared only iOS 26, so host compilation inherited
+  an old default macOS minimum and rejected modern Foundation APIs. The package
+  now declares macOS 26 for host build/tests as well as iOS 26, without
+  availability fallbacks or reduced language/concurrency strictness. Evidence
+  artifact `phase1-validation-72fa7747d8f210bab83a2f5ecb9fe5cc9f810c46`
+  is retained through 2026-08-22.
 
 Exact next gate:
 
