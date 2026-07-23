@@ -271,6 +271,7 @@ export function mergeCompatibilityReports({ manifestFindings = [], archive = {},
     resolvedModuleCount: runtimeProbe?.resolvedModuleCount ?? 0,
     dynamicUnresolvedCount: runtimeProbe?.dynamicUnresolvedCount ?? 0,
     runtimeProbeDuration: runtimeProbe?.durationMilliseconds ?? null,
+    internalLoaderRetryCount: runtimeProbe?.internalLoaderRetryCount ?? 0,
     requiresConfiguration: Boolean(runtimeProbe?.requiresConfiguration),
     blockedAccesses: runtimeProbe?.blockedAccesses ?? [],
     moduleEdges: runtimeProbe?.moduleEdges ?? [],
@@ -338,8 +339,8 @@ function runtimeProbeFindings(probe) {
         reachable: true, phase: 'runtimeProbe', importChain: access.importChain,
       }));
     } else if (code === 'reachable_external_executable') {
-      findings.push(unsupported(`The selected entry point requested external process capability ${access.specifier} from ${parent}.`, {
-        code, specifier: access.specifier, parentPath: access.parentPath,
+      findings.push(unsupported(`The selected entry point requested external process capability ${access.operation ?? access.specifier} from ${parent}.`, {
+        code, specifier: access.specifier, operation: access.operation, parentPath: access.parentPath,
         reachable: true, phase: 'runtimeProbe', importChain: access.importChain,
       }));
     } else {

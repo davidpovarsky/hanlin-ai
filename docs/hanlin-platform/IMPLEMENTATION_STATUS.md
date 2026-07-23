@@ -4,6 +4,21 @@ Last updated: 2026-07-23
 Execution contract: Revision 2.0
 Current gate: Phase 1 complete; Phase 2 not started
 
+## MCP lifecycle stabilization — local implementation pending Xcode acceptance
+
+The existing downstream MCP layer now separates versioned, recoverable
+registry data from per-server runtime slots; routes chat schema and tool
+activation through lazy start; serializes Start, Stop, Restart, scene
+transitions, transport connect/disconnect, and Node Worker generations; and
+uses graceful stdin-first Worker shutdown with one finalizer. The runtime
+policy permits `child_process` imports but blocks executed subprocess
+capabilities. Node fixture, HTTP lifecycle stress, pinned server-everything,
+and pinned CabLate coverage are part of the downstream test surface.
+
+This is a stabilization of the existing MCP/RuntimeCore implementation. It
+does not start HanlinPlatform Phase 2. macOS/Xcode simulator acceptance remains
+required before claiming iPad behavior.
+
 ## Phase 0 — complete
 
 Status: complete in normal editing mode. No runtime behavior changed.

@@ -77,11 +77,23 @@ const { commitGlobalPackage, installGlobalPackage, listGlobalPackages, previewGl
 const workerURL = new URL('./server-worker.mjs', import.meta.url);
 const executionWorkerURL = new URL('./execution-worker.mjs', import.meta.url);
 const servers = new Map();
+const serverRestarts = new Map();
+const serverGenerations = new Map();
 const executions = new Map();
 const installs = new Map();
 const installProgress = new Map();
 const maximumBody = 10 * 1024 * 1024;
 const maximumLine = 8 * 1024 * 1024;
+const gracefulStopTimeoutMilliseconds = 3_000;
+const lifecycleCounters = {
+  workerCreationCount: 0,
+  activeWorkerCount: 0,
+  maximumSimultaneousWorkers: 0,
+  gracefulStopCount: 0,
+  forcedTerminationCount: 0,
+  finalizeCount: 0,
+};
+const lifecycleCountersByServer = new Map();
 
 const server = http.createServer(async (request, response) => {
   try {
@@ -89,7 +101,14 @@ const server = http.createServer(async (request, response) => {
     const url = new URL(request.url, 'http://127.0.0.1');
     if (request.method === 'GET' && url.pathname === '/health') return json(response, 200, { ok: true, nodeVersion: process.versions.node, protocolVersion: 2, modulePolicyHooksAvailable });
     if (request.method === 'GET' && url.pathname === '/v1/runtime') {
-      return json(response, 200, { nodeVersion: process.versions.node, protocolVersion: 2, modulePolicyHooksAvailable, workers: [...servers.values()].map(snapshot), executions: executions.size });
+      return json(response, 200, {
+        nodeVersion: process.versions.node,
+        protocolVersion: 2,
+        modulePolicyHooksAvailable,
+        workers: [...servers.values()].map(snapshot),
+        executions: executions.size,
+        lifecycle: lifecycleDiagnostics(),
+      });
     }
     if (request.method === 'POST' && url.pathname === '/v1/executions') {
       return json(response, 200, await executeJavaScript(await readJSON(request)));
@@ -211,9 +230,9 @@ const server = http.createServer(async (request, response) => {
     const id = match[1].toLowerCase();
     const action = match[2];
     if (request.method === 'POST' && action === 'start') return json(response, 200, await startServer(id, await readJSON(request)));
-    if (request.method === 'POST' && action === 'stop') { await stopServer(id); return json(response, 200, { state: 'stopped' }); }
+    if (request.method === 'POST' && action === 'stop') return json(response, 200, await stopServer(id));
     if (request.method === 'POST' && action === 'restart') {
-      const body = await readJSON(request); await stopServer(id); return json(response, 200, await startServer(id, body));
+      return json(response, 200, await restartServer(id, await readJSON(request)));
     }
     if (request.method === 'POST' && action === 'stdin') {
       const body = await readJSON(request);
@@ -402,15 +421,57 @@ function rejectUnsafeSource(source) {
 }
 
 async function startServer(id, configuration) {
-  if (servers.has(id)) return snapshot(servers.get(id));
   if (configuration.serverID?.toLowerCase() !== id) throw new Error('Server ID mismatch.');
+  const existing = servers.get(id);
+  if (existing) {
+    if (existing.state === 'running') return snapshot(existing);
+    if (existing.state === 'starting') {
+      await existing.readyPromise;
+      return snapshot(existing);
+    }
+    if (existing.state === 'stopping') {
+      await existing.stopPromise;
+      return startServer(id, configuration);
+    }
+    await finalizeServerState(existing, {
+      state: existing.state === 'failed' ? 'failed' : 'stopped',
+      reason: 'stale-state-before-start',
+    });
+  }
   const packageRoot = path.resolve(configuration.packageRoot);
   const allowedRoot = safeServerDirectory(id);
   if (!isInside(allowedRoot, packageRoot)) throw new Error('Package root is outside the installed server directory.');
   const entryPoint = path.resolve(configuration.entryPoint);
   if (!isInside(packageRoot, entryPoint)) throw new Error('Entry point is outside package root.');
 
-  const state = { id, state: 'starting', worker: null, clients: new Set(), stderr: [], pending: Buffer.alloc(0), startedAt: new Date().toISOString(), moduleEdges: [], blockedAccesses: [] };
+  const generation = (serverGenerations.get(id) ?? 0) + 1;
+  serverGenerations.set(id, generation);
+  const ready = deferred();
+  const exited = deferred();
+  const state = {
+    id,
+    generation,
+    state: 'starting',
+    worker: null,
+    readyPromise: ready.promise,
+    resolveReady: ready.resolve,
+    rejectReady: ready.reject,
+    exitPromise: exited.promise,
+    resolveExit: exited.resolve,
+    stopPromise: null,
+    clients: new Set(),
+    stderr: [],
+    pending: Buffer.alloc(0),
+    startedAt: new Date().toISOString(),
+    moduleEdges: [],
+    blockedAccesses: [],
+    expectedStop: false,
+    finalized: false,
+    forcedTermination: false,
+    stdinEnded: false,
+    countedActive: true,
+    handlers: {},
+  };
   const worker = new Worker(workerURL, {
     workerData: { serverID: id, packageRoot, entryPoint },
     argv: Array.isArray(configuration.arguments) ? configuration.arguments : [],
@@ -421,58 +482,206 @@ async function startServer(id, configuration) {
   });
   state.worker = worker;
   servers.set(id, state);
-  worker.stdout.on('data', chunk => handleStdout(state, chunk));
-  worker.stderr.on('data', chunk => {
+  lifecycleCounters.workerCreationCount += 1;
+  lifecycleCounters.activeWorkerCount += 1;
+  lifecycleCounters.maximumSimultaneousWorkers = Math.max(
+    lifecycleCounters.maximumSimultaneousWorkers,
+    lifecycleCounters.activeWorkerCount,
+  );
+  const serverCounters = lifecycleCountersByServer.get(id) ?? {
+    workerCreationCount: 0,
+    activeWorkerCount: 0,
+    maximumSimultaneousWorkers: 0,
+    gracefulStopCount: 0,
+    forcedTerminationCount: 0,
+    finalizeCount: 0,
+  };
+  serverCounters.workerCreationCount += 1;
+  serverCounters.activeWorkerCount += 1;
+  serverCounters.maximumSimultaneousWorkers = Math.max(
+    serverCounters.maximumSimultaneousWorkers,
+    serverCounters.activeWorkerCount,
+  );
+  lifecycleCountersByServer.set(id, serverCounters);
+  state.handlers.stdout = chunk => handleStdout(state, chunk);
+  state.handlers.stderr = chunk => {
     const message = redact(chunk.toString('utf8')).slice(0, maximumLine);
     state.stderr.push(message);
     if (state.stderr.length > 500) state.stderr.shift();
     emit(state, 'stderr', { text: message });
-  });
-  worker.on('message', message => {
+  };
+  state.handlers.message = message => {
     if (message?.type === 'module-edge') state.moduleEdges.push(message);
     if (message?.type === 'policy-blocked') state.blockedAccesses.push(message);
-    if (message?.type === 'loaded') { state.state = 'running'; emit(state, 'lifecycle', { event: 'server-ready', modulePolicyHooksAvailable: message.modulePolicyHooksAvailable === true }); }
-  });
-  worker.on('error', error => { state.state = 'failed'; emit(state, 'lifecycle', { event: 'error', message: redact(error.message) }); });
-  worker.on('exit', code => { state.state = code === 0 ? 'stopped' : 'failed'; emit(state, 'lifecycle', { event: 'exit', code }); servers.delete(id); });
-  await waitForWorkerReady(worker, state);
-  return snapshot(state);
-}
+    if (message?.type === 'loaded' && state.state === 'starting') {
+      state.state = 'running';
+      state.resolveReady();
+      emit(state, 'lifecycle', {
+        event: 'server-ready',
+        generation: state.generation,
+        modulePolicyHooksAvailable: message.modulePolicyHooksAvailable === true,
+      });
+    }
+  };
+  state.handlers.error = error => {
+    if (state.state === 'stopping') {
+      diagnostic('server_error_during_stop', {
+        serverID: state.id,
+        generation: state.generation,
+        message: redact(error.message),
+      });
+      return;
+    }
+    state.state = 'failed';
+    state.rejectReady(error);
+    emit(state, 'lifecycle', { event: 'error', message: redact(error.message) });
+  };
+  state.handlers.exit = code => {
+    state.resolveExit({ code });
+    if (state.state === 'starting') {
+      state.rejectReady(new Error(`Server worker exited during startup with code ${code}.`));
+    }
+    void handleWorkerExit(state, code);
+  };
+  worker.stdout.on('data', state.handlers.stdout);
+  worker.stderr.on('data', state.handlers.stderr);
+  worker.on('message', state.handlers.message);
+  worker.on('error', state.handlers.error);
+  worker.on('exit', state.handlers.exit);
 
-function waitForWorkerReady(worker, state) {
-  if (state.state === 'running') return Promise.resolve();
-  return new Promise((resolve, reject) => {
-    const timeout = setTimeout(() => finish(new Error('Server worker startup timed out.')), 15_000);
-    const onMessage = message => { if (message?.type === 'loaded') finish(); };
-    const onError = error => finish(error);
-    const onExit = code => finish(new Error(`Server worker exited during startup with code ${code}.`));
-    const finish = error => {
-      clearTimeout(timeout);
-      worker.off('message', onMessage);
-      worker.off('error', onError);
-      worker.off('exit', onExit);
-      if (error) reject(error); else resolve();
-    };
-    worker.on('message', onMessage);
-    worker.on('error', onError);
-    worker.on('exit', onExit);
-  });
+  try {
+    await withTimeout(state.readyPromise, 15_000, 'Server worker startup timed out.');
+    return snapshot(state);
+  } catch (error) {
+    await stopServerState(state, {
+      expectedStop: false,
+      forceAfterTimeout: true,
+      failure: error,
+    });
+    throw error;
+  }
 }
 
 async function stopServer(id) {
   const state = servers.get(id);
-  if (!state) return;
-  state.worker.stdin?.end();
-  await state.worker.terminate();
-  for (const client of state.clients) client.end();
-  servers.delete(id);
+  if (!state) return stoppedSnapshot(id);
+  return stopServerState(state, { expectedStop: true });
+}
+
+function stopServerState(state, options = {}) {
+  if (state.stopPromise) return state.stopPromise;
+  state.stopPromise = (async () => {
+    state.expectedStop ||= options.expectedStop === true;
+    state.state = 'stopping';
+    emit(state, 'lifecycle', {
+      event: 'stopping',
+      generation: state.generation,
+      reason: options.failure ? redact(options.failure.message) : null,
+    });
+    finishEventClients(state, 'stopping');
+    if (!state.stdinEnded) {
+      state.stdinEnded = true;
+      try { state.worker.stdin?.end(); } catch (error) {
+        diagnostic('server_stdin_end_failed', {
+          serverID: state.id,
+          generation: state.generation,
+          message: redact(error.message),
+        });
+      }
+    }
+
+    let exitResult = options.forceImmediately
+      ? null
+      : await settleWithin(state.exitPromise, gracefulStopTimeoutMilliseconds);
+    if (!exitResult && state.worker.threadId !== -1 && !state.forcedTermination) {
+      state.forcedTermination = true;
+      lifecycleCounters.forcedTerminationCount += 1;
+      lifecycleCountersByServer.get(state.id).forcedTerminationCount += 1;
+      await state.worker.terminate();
+      await state.exitPromise;
+    } else if (exitResult && state.expectedStop) {
+      lifecycleCounters.gracefulStopCount += 1;
+      lifecycleCountersByServer.get(state.id).gracefulStopCount += 1;
+    }
+
+    const result = {
+      state: state.expectedStop ? 'stopped' : 'failed',
+      code: exitResult?.code ?? null,
+      reason: options.failure ? redact(options.failure.message) : null,
+    };
+    await finalizeServerState(state, result);
+    return stoppedSnapshot(state.id, state.generation, result.state);
+  })();
+  return state.stopPromise;
+}
+
+function restartServer(id, configuration) {
+  const existing = serverRestarts.get(id);
+  if (existing) return existing;
+  const operation = (async () => {
+    await stopServer(id);
+    return startServer(id, configuration);
+  })();
+  serverRestarts.set(id, operation);
+  operation.finally(() => {
+    if (serverRestarts.get(id) === operation) serverRestarts.delete(id);
+  }).catch(() => {});
+  return operation;
+}
+
+async function handleWorkerExit(state, code) {
+  const expected = state.expectedStop || state.state === 'stopping';
+  const resultState = expected ? 'stopped' : (code === 0 ? 'stopped' : 'failed');
+  emit(state, 'lifecycle', {
+    event: 'exit',
+    code,
+    generation: state.generation,
+    expected,
+  });
+  await finalizeServerState(state, { state: resultState, code, reason: 'worker-exit' });
+}
+
+async function finalizeServerState(state, result) {
+  if (state.finalized) return;
+  state.finalized = true;
+  state.state = result.state;
+  state.rejectReady(new Error(result.reason ?? `Server worker finalized as ${result.state}.`));
+  finishEventClients(state, result.state);
+  state.pending = Buffer.alloc(0);
+  state.stderr = [];
+  if (state.handlers.stdout) state.worker.stdout?.off('data', state.handlers.stdout);
+  if (state.handlers.stderr) state.worker.stderr?.off('data', state.handlers.stderr);
+  if (state.handlers.message) state.worker.off('message', state.handlers.message);
+  if (state.handlers.error) state.worker.off('error', state.handlers.error);
+  if (state.handlers.exit) state.worker.off('exit', state.handlers.exit);
+  if (state.countedActive) {
+    state.countedActive = false;
+    lifecycleCounters.activeWorkerCount = Math.max(0, lifecycleCounters.activeWorkerCount - 1);
+    const serverCounters = lifecycleCountersByServer.get(state.id);
+    serverCounters.activeWorkerCount = Math.max(0, serverCounters.activeWorkerCount - 1);
+  }
+  lifecycleCounters.finalizeCount += 1;
+  lifecycleCountersByServer.get(state.id).finalizeCount += 1;
+  if (servers.get(state.id) === state) servers.delete(state.id);
+  diagnostic('server_finalized', {
+    serverID: state.id,
+    generation: state.generation,
+    state: result.state,
+    forcedTermination: state.forcedTermination,
+    code: result.code ?? null,
+  });
 }
 
 function handleStdout(state, chunk) {
+  if (state.finalized) return;
   state.pending = Buffer.concat([state.pending, chunk]);
   if (state.pending.length > maximumLine) {
     emit(state, 'lifecycle', { event: 'error', message: 'stdout line exceeded size limit' });
-    state.worker.terminate();
+    void stopServerState(state, {
+      expectedStop: false,
+      forceImmediately: true,
+      failure: new Error('stdout line exceeded size limit'),
+    });
     return;
   }
   let newline;
@@ -498,6 +707,22 @@ function attachEvents(id, request, response) {
   request.on('close', () => state.clients.delete(response));
 }
 
+function finishEventClients(state, event) {
+  for (const response of state.clients) {
+    if (!response.writableEnded) {
+      response.write(`${JSON.stringify({
+        channel: 'lifecycle',
+        serverID: state.id,
+        generation: state.generation,
+        event,
+        timestamp: new Date().toISOString(),
+      })}\n`);
+      response.end();
+    }
+  }
+  state.clients.clear();
+}
+
 function emit(state, channel, payload) {
   const line = `${JSON.stringify({ channel, serverID: state.id, timestamp: new Date().toISOString(), ...payload })}\n`;
   for (const response of state.clients) response.write(line);
@@ -514,12 +739,83 @@ async function sendLogs(id, response) {
 function snapshot(state) {
   return {
     id: state.id,
+    generation: state.generation,
     state: state.state,
     startedAt: state.startedAt,
     modulePolicyHooksAvailable,
     resolvedModuleCount: state.moduleEdges.length,
     blockedAccesses: state.blockedAccesses,
+    forcedTermination: state.forcedTermination,
   };
+}
+
+function stoppedSnapshot(id, generation = serverGenerations.get(id) ?? 0, state = 'stopped') {
+  return {
+    id,
+    generation,
+    state,
+    startedAt: null,
+    modulePolicyHooksAvailable,
+    resolvedModuleCount: 0,
+    blockedAccesses: [],
+    forcedTermination: false,
+  };
+}
+
+function lifecycleDiagnostics() {
+  const activeByServer = Object.fromEntries(
+    [...servers.entries()].map(([id, state]) => [id, {
+      generation: state.generation,
+      state: state.state,
+      activeWorkerCount: state.finalized ? 0 : 1,
+    }]),
+  );
+  return {
+    ...lifecycleCounters,
+    activeByServer,
+    byServer: Object.fromEntries(lifecycleCountersByServer),
+  };
+}
+
+function withTimeout(promise, milliseconds, message) {
+  let timer;
+  return Promise.race([
+    promise,
+    new Promise((_, reject) => {
+      timer = setTimeout(() => reject(new Error(message)), milliseconds);
+    }),
+  ]).finally(() => clearTimeout(timer));
+}
+
+function settleWithin(promise, milliseconds) {
+  let timer;
+  return Promise.race([
+    promise,
+    new Promise(resolve => {
+      timer = setTimeout(() => resolve(null), milliseconds);
+    }),
+  ]).finally(() => clearTimeout(timer));
+}
+
+function deferred() {
+  let resolve;
+  let reject;
+  let settled = false;
+  const promise = new Promise((accept, decline) => {
+    resolve = value => {
+      if (!settled) {
+        settled = true;
+        accept(value);
+      }
+    };
+    reject = error => {
+      if (!settled) {
+        settled = true;
+        decline(error);
+      }
+    };
+  });
+  return { promise, resolve, reject };
 }
 
 async function readJSON(request) {

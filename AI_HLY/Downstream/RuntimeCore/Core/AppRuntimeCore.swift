@@ -47,9 +47,9 @@ actor AppRuntimeCore {
         return [nodeSnapshot, pythonSnapshot, javaScriptCoreSnapshot, shellSnapshot]
     }
 
-    func handleForeground() async {
+    func handleForegroundIfLaunched() async {
         try? fileLayout.prepareIfNeeded()
-        _ = try? await node.healthCheck()
+        _ = try? await node.healthCheckIfLaunched()
     }
 
     func clearReproducibleCaches() throws {

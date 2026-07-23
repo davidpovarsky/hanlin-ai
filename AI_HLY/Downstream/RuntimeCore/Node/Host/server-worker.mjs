@@ -5,7 +5,7 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 import path from 'node:path';
 import ts from 'typescript';
 
-const blockedBuiltins = new Set(['child_process', 'cluster']);
+const blockedBuiltins = new Set(['cluster']);
 const entryPoint = path.resolve(workerData.entryPoint);
 const packageRoot = path.resolve(workerData.packageRoot);
 const relative = path.relative(packageRoot, entryPoint);
@@ -19,10 +19,36 @@ if (typeof nodeModule.registerHooks !== 'function') {
   );
 }
 
+// Worker threads expose the wrapper as argv[1]. MCP packages are executable
+// entry points, so present the selected package file exactly as a direct Node
+// launch would; argv[2...] remains the validated server arguments.
+process.argv[1] = entryPoint;
+
 const inspectedSources = new Set();
+globalThis[Symbol.for('hanlin.mcp.blockChildProcess')] = operation => {
+  deny(
+    'reachable_external_executable',
+    'child_process',
+    callerURL(),
+    null,
+    operation,
+  );
+};
+installChildProcessPolicy();
+
 nodeModule.registerHooks({
   resolve(specifier, context, nextResolve) {
     const normalized = normalizeBuiltin(specifier);
+    if (normalized === 'child_process') {
+      parentPort?.postMessage({
+        type: 'module-edge',
+        parentPath: reportLocation(context.parentURL),
+        specifier: reportSpecifier(specifier),
+        resolvedPath: 'node:child_process',
+        moduleType: 'builtin-policy',
+      });
+      return nextResolve(specifier, context);
+    }
     if (blockedBuiltins.has(normalized)) {
       deny('reachable_blocked_builtin', specifier, context.parentURL);
     }
@@ -73,6 +99,16 @@ nodeModule.registerHooks({
 const originalGetBuiltinModule = process.getBuiltinModule?.bind(process);
 if (originalGetBuiltinModule) {
   process.getBuiltinModule = specifier => {
+    if (normalizeBuiltin(specifier) === 'child_process') {
+      parentPort?.postMessage({
+        type: 'module-edge',
+        parentPath: reportLocation(callerURL()),
+        specifier: reportSpecifier(specifier),
+        resolvedPath: 'node:child_process',
+        moduleType: 'builtin-policy',
+      });
+      return originalGetBuiltinModule(specifier);
+    }
     if (blockedBuiltins.has(normalizeBuiltin(specifier))) {
       deny('reachable_blocked_builtin', String(specifier), callerURL());
     }
@@ -82,8 +118,14 @@ if (originalGetBuiltinModule) {
 
 const originalBinding = process.binding.bind(process);
 process.binding = name => {
-  if (name === 'spawn_sync') {
-    deny('reachable_external_executable', name, callerURL());
+  if (name === 'spawn_sync' || name === 'process_wrap') {
+    deny(
+      'reachable_external_executable',
+      name,
+      callerURL(),
+      null,
+      `process.binding(${name})`,
+    );
   }
   return originalBinding(name);
 };
@@ -103,20 +145,21 @@ if (useESM) {
 
 parentPort?.postMessage({ type: 'loaded', modulePolicyHooksAvailable: true });
 
-function deny(code, specifier, parentURL, resolvedURL = null) {
+function deny(code, specifier, parentURL, resolvedURL = null, operation = null) {
   const access = {
     type: 'policy-blocked',
     code,
     specifier,
     parentPath: reportLocation(parentURL),
     resolvedPath: reportLocation(resolvedURL),
+    operation,
   };
   parentPort?.postMessage(access);
   const location = access.parentPath ?? '<selected entry point>';
   const message = code === 'reachable_native_addon'
     ? `The selected server entry point attempted to load native addon ${access.resolvedPath ?? specifier} from ${location}.`
     : code === 'reachable_external_executable'
-      ? `The selected server entry point attempted to access external process capability ${specifier} from ${location}.`
+      ? `The selected server entry point attempted to access external process capability ${operation ?? specifier} from ${location}.`
       : `The selected server entry point attempted to load ${specifier} from ${location}.`;
   throw policyError(code, message, access);
 }
@@ -139,6 +182,37 @@ function inspectLoadedSource(url) {
 
 function normalizeBuiltin(specifier) {
   return String(specifier).replace(/^node:/, '');
+}
+
+function installChildProcessPolicy() {
+  const childProcess = nodeModule.createRequire(import.meta.url)('node:child_process');
+  for (const name of [
+    'spawn',
+    'exec',
+    'execFile',
+    'fork',
+    'spawnSync',
+    'execSync',
+    'execFileSync',
+    '_forkChild',
+  ]) {
+    const operation = `child_process.${name}`;
+    Object.defineProperty(childProcess, name, {
+      configurable: false,
+      enumerable: true,
+      value: (..._arguments) => globalThis[
+        Symbol.for('hanlin.mcp.blockChildProcess')
+      ](operation),
+      writable: false,
+    });
+  }
+  Object.defineProperty(childProcess.ChildProcess.prototype, 'spawn', {
+    configurable: false,
+    value: (..._arguments) => globalThis[
+      Symbol.for('hanlin.mcp.blockChildProcess')
+    ]('ChildProcess.prototype.spawn'),
+    writable: false,
+  });
 }
 
 function reportSpecifier(specifier) {

@@ -14,6 +14,8 @@ actor MCPClientSession {
     private let transport: EmbeddedNodeMCPTransport
     private let toolListChangeContinuation: AsyncStream<Void>.Continuation
     private(set) var tools: [MCPToolDescriptor] = []
+    private var disconnectTask: Task<Void, Never>?
+    private var disconnected = false
 
     init(server: MCPServerDescriptor, transport: EmbeddedNodeMCPTransport) {
         self.server = server
@@ -58,8 +60,21 @@ actor MCPClientSession {
     }
 
     func disconnect() async {
-        await client.disconnect()
-        toolListChangeContinuation.finish()
+        if let disconnectTask {
+            await disconnectTask.value
+            return
+        }
+        guard !disconnected else { return }
+        let task = Task { [weak self] in
+            guard let self else { return }
+            // The pinned MCP Swift SDK's Client.disconnect() owns transport
+            // disconnection; calling transport.disconnect() here as well would
+            // duplicate the host stop request.
+            await self.client.disconnect()
+            await self.finishDisconnect()
+        }
+        disconnectTask = task
+        await task.value
     }
 
     private func loadTools() async throws -> [MCPToolDescriptor] {
@@ -88,5 +103,11 @@ actor MCPClientSession {
                 inputSchemaJSON: try JSONEncoder().encode(tool.inputSchema)
             )
         }
+    }
+
+    private func finishDisconnect() {
+        disconnected = true
+        disconnectTask = nil
+        toolListChangeContinuation.finish()
     }
 }

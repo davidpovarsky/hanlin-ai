@@ -11,6 +11,7 @@ rm -rf "${WORK_ROOT}" "${OUTPUT_ROOT}"
 mkdir -p "${WORK_ROOT}" "${OUTPUT_ROOT}"
 cp "${HOST_SOURCE}"/*.mjs "${HOST_SOURCE}/package.json" "${HOST_SOURCE}/package-lock.json" "${WORK_ROOT}/"
 cp -R "${HOST_SOURCE}/Tests" "${WORK_ROOT}/Tests"
+cp -R "${SCRIPT_DIR}/Tests/MCPNode/Fixtures" "${WORK_ROOT}/Tests/DownstreamFixtures"
 
 (
   cd "${WORK_ROOT}"

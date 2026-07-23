@@ -5,13 +5,6 @@ struct MCPServersSettingsView: View {
 
     var body: some View {
         List {
-            Section(MCPL10n.string("Runtime")) {
-                MCPRuntimeStatusView(snapshot: provider.runtimeSnapshot)
-                HStack {
-                    Button(MCPL10n.string("Restart workers")) { Task { await restartWorkers() } }
-                    NavigationLink(MCPL10n.string("View runtime logs")) { MCPServerLogsView(server: nil) }
-                }
-            }
             Section {
                 Toggle(MCPL10n.string("Enable MCP Servers"), isOn: Binding(
                     get: { provider.configuration.isEnabled },
@@ -45,36 +38,32 @@ struct MCPServersSettingsView: View {
                             }
                             Spacer()
                             VStack(alignment: .trailing) {
-                                Text(statusTitle(status(for: server).state)).font(.caption)
-                                Text(MCPL10n.format("%d tools", status(for: server).toolCount)).font(.caption2)
+                                Text(MCPL10n.string("Installed")).font(.caption)
+                                Text(server.isGloballyEnabled ? MCPL10n.string("Enabled in app") : MCPL10n.string("Disabled"))
+                                    .font(.caption2)
+                                Text(server.isEnabledForNewChats ? MCPL10n.string("Included by default in new chats") : MCPL10n.string("Not included by default"))
+                                    .font(.caption2)
                             }
                         }
                         .accessibilityElement(children: .combine)
                     }
                 }
             }
+            Section {
+                NavigationLink(MCPL10n.string("Advanced & Diagnostics")) {
+                    MCPDiagnosticsView()
+                }
+            }
+            if case .failed = provider.persistentLoadState {
+                Section {
+                    Button(MCPL10n.string("Retry loading server registry")) {
+                        Task { await provider.retryPersistentLoad() }
+                    }
+                }
+            }
             if let error = provider.lastError { Section { Text(error).foregroundStyle(.red) } }
         }
         .navigationTitle(MCPL10n.string("MCP Servers"))
-        .task { await provider.loadIfNeeded(startHost: true) }
-    }
-
-    private func status(for server: MCPServerDescriptor) -> MCPServerStatus {
-        provider.statuses[server.id] ?? .init(id: server.id, state: .stopped, toolCount: server.cachedToolCount)
-    }
-
-    private func statusTitle(_ state: MCPServerRuntimeState) -> String {
-        switch state {
-        case .stopped: MCPL10n.string("Stopped")
-        case .starting: MCPL10n.string("Starting")
-        case .running: MCPL10n.string("Running")
-        case .failed: MCPL10n.string("Failed")
-        }
-    }
-
-    private func restartWorkers() async {
-        for server in provider.servers where status(for: server).state == .running {
-            await provider.restart(server)
-        }
+        .task { await provider.loadIfNeeded(startHost: false) }
     }
 }

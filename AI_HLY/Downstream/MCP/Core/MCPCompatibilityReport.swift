@@ -50,6 +50,7 @@ struct MCPCompatibilityFinding: Codable, Hashable, Sendable, Identifiable {
 struct MCPModuleAccess: Codable, Hashable, Sendable {
     var code: String?
     var specifier: String
+    var operation: String?
     var parentPath: String?
     var resolvedPath: String?
     var importChain: [String]?
@@ -72,6 +73,7 @@ struct MCPCompatibilityReport: Codable, Hashable, Sendable {
     var resolvedModuleCount: Int?
     var dynamicUnresolvedCount: Int?
     var runtimeProbeDuration: Int?
+    var internalLoaderRetryCount: Int?
     var requiresConfiguration: Bool?
     var blockedAccesses: [MCPModuleAccess]?
     var moduleEdges: [MCPModuleEdge]?
@@ -87,6 +89,7 @@ struct MCPCompatibilityReport: Codable, Hashable, Sendable {
         resolvedModuleCount: Int? = nil,
         dynamicUnresolvedCount: Int? = nil,
         runtimeProbeDuration: Int? = nil,
+        internalLoaderRetryCount: Int? = nil,
         requiresConfiguration: Bool? = nil,
         blockedAccesses: [MCPModuleAccess]? = nil,
         moduleEdges: [MCPModuleEdge]? = nil,
@@ -101,6 +104,7 @@ struct MCPCompatibilityReport: Codable, Hashable, Sendable {
         self.resolvedModuleCount = resolvedModuleCount
         self.dynamicUnresolvedCount = dynamicUnresolvedCount
         self.runtimeProbeDuration = runtimeProbeDuration
+        self.internalLoaderRetryCount = internalLoaderRetryCount
         self.requiresConfiguration = requiresConfiguration
         self.blockedAccesses = blockedAccesses
         self.moduleEdges = moduleEdges

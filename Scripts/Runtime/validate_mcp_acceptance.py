@@ -26,12 +26,27 @@ def main() -> None:
         "harmlessToolSucceeded": True,
         "workerStopped": True,
         "terminalInstallErrorCount": 0,
+        "lazyStartSucceeded": True,
+        "duplicateStartWasIdempotent": True,
+        "duplicateStopWasIdempotent": True,
+        "restartStressPassed": True,
+        "backgroundStopPassed": True,
+        "foregroundLazyRestartPassed": True,
+        "registryPreserved": True,
+        "forcedTerminationCount": 0,
+        "childProcessImportOnlyPassed": True,
+        "subprocessExecutionBlocked": True,
+        "healthCancellationPreserved": True,
+        "oldRegistryDecoded": True,
+        "backupRecoveryPassed": True,
     }
     failures = [f"{key}: expected {value!r}, received {payload.get(key)!r}" for key, value in expected.items() if payload.get(key) != value]
     if not isinstance(payload.get("toolCount"), int) or payload["toolCount"] < 1:
         failures.append("toolCount must be at least one")
     if not isinstance(payload.get("reachableModuleCount"), int) or payload["reachableModuleCount"] < 1:
         failures.append("reachableModuleCount must be at least one")
+    if not isinstance(payload.get("maximumConcurrentWorkers"), int) or payload["maximumConcurrentWorkers"] > 1:
+        failures.append("maximumConcurrentWorkers must be at most one")
     if payload.get("failureMessage") is not None:
         failures.append(f"failureMessage: {payload['failureMessage']}")
     if failures:
@@ -42,7 +57,9 @@ def main() -> None:
         for key in [
             "nodeVersion", "modulePolicyHooksAvailable", "packageName", "resolvedVersion",
             "resolvedEntryPoint", "reachableModuleCount", "resolvedModuleCount", "toolCount",
-            "harmlessToolSucceeded", "workerStopped",
+            "harmlessToolSucceeded", "workerStopped", "lazyStartSucceeded",
+            "restartStressPassed", "registryPreserved", "maximumConcurrentWorkers",
+            "childProcessImportOnlyPassed", "subprocessExecutionBlocked",
         ]
     }
     if args.summary_output:

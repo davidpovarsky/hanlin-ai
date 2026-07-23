@@ -12,6 +12,7 @@ struct MCPFileLayout: Sendable {
     var staging: URL { shared.staging.appending(path: "mcp", directoryHint: .isDirectory) }
     var cache: URL { shared.npmCache }
     var serverRegistry: URL { registry.appending(path: "MCPServerRegistry.json") }
+    var serverRegistryBackup: URL { registry.appending(path: "MCPServerRegistry.backup.json") }
     var chatSelections: URL { registry.appending(path: "MCPChatSelections.json") }
     var featureConfiguration: URL { registry.appending(path: "MCPFeatureConfiguration.json") }
     var runtimeLog: URL { shared.logs.appending(path: "mcp-runtime.log") }

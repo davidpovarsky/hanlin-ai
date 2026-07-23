@@ -42,20 +42,14 @@ struct MCPServerDetailView: View {
                 .autocorrectionDisabled()
                 Toggle(MCPL10n.string("Enabled globally"), isOn: $draft.isGloballyEnabled)
                 Toggle(MCPL10n.string("Enabled for new chats"), isOn: $draft.isEnabledForNewChats)
-                Toggle(MCPL10n.string("Auto-start"), isOn: $draft.autoStart)
                 NavigationLink(MCPL10n.string("Environment")) {
                     MCPServerEnvironmentView(variables: $environment)
                 }
             }
-            Section(MCPL10n.string("Runtime")) {
-                HStack {
-                    Button(MCPL10n.string("Start")) { Task { await provider.start(draft) } }
-                    Button(MCPL10n.string("Stop")) { Task { await provider.stop(draft) } }
-                    Button(MCPL10n.string("Restart")) { Task { await provider.restart(draft) } }
+            Section {
+                NavigationLink(MCPL10n.string("Advanced & Diagnostics")) {
+                    MCPServerDiagnosticsView(server: draft)
                 }
-                Button(MCPL10n.string("Refresh tools")) { Task { await provider.refreshTools(draft) } }
-                NavigationLink(MCPL10n.string("View tools")) { MCPServerToolsView(server: draft) }
-                NavigationLink(MCPL10n.string("View logs")) { MCPServerLogsView(server: draft) }
             }
             Section(MCPL10n.string("Package management")) {
                 Button(MCPL10n.string("Update")) { replacePackage(latestCompatible: true) }

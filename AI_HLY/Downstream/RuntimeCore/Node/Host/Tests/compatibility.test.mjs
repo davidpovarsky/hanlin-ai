@@ -15,6 +15,12 @@ import { runMCPRuntimeProbe } from '../runtime-probe.mjs';
 import { installPackage } from '../package-installer.mjs';
 
 const fixtures = fileURLToPath(new URL('./Fixtures', import.meta.url));
+const downstreamFixtureRoots = [
+  fileURLToPath(new URL('./DownstreamFixtures/', import.meta.url)),
+  fileURLToPath(
+    new URL('../../../../../../Scripts/Runtime/Tests/MCPNode/Fixtures/', import.meta.url),
+  ),
+];
 
 test('unused client stdio and cross-spawn code do not reject the selected server path', async () => {
   const report = await analyzeFixture('false-positive-sdk');
@@ -26,19 +32,62 @@ test('unused client stdio and cross-spawn code do not reject the selected server
   assert.equal(report.blockedAccesses.length, 0);
 });
 
-for (const [name, expectedParent, code = 'reachable_blocked_builtin'] of [
+for (const [name, expectedParent] of [
   ['direct-blocked', 'server.mjs'],
+  ['esm-import-only', 'server.mjs'],
   ['transitive-blocked', 'module-a.mjs'],
   ['commonjs-blocked', 'server.cjs'],
   ['dynamic-blocked', 'server.mjs'],
   ['get-builtin-blocked', 'server.mjs'],
+]) {
+  test(`${name} may import child_process without executing it`, async () => {
+    const report = await analyzeFixture(name);
+    assert.notEqual(report.verdict, 'unsupported', JSON.stringify(report));
+    assert.equal(report.runtimeProbePassed, true);
+    assert.equal(report.blockedAccesses.length, 0);
+    assert.ok(report.moduleEdges.some(edge => edge.resolvedPath === 'node:child_process'));
+    assert.ok(report.moduleEdges.some(edge => edge.parentPath === expectedParent));
+  });
+}
+
+for (const [name, operation, expectedParent = 'server.mjs'] of [
+  ['spawn-call', 'child_process.spawn'],
+  ['exec-call', 'child_process.exec'],
+  ['exec-file-call', 'child_process.execFile'],
+  ['fork-call', 'child_process.fork'],
+  ['spawn-sync-call', 'child_process.spawnSync'],
+  ['exec-sync-call', 'child_process.execSync'],
+  ['exec-file-sync-call', 'child_process.execFileSync'],
+  ['child-process-bypass', 'ChildProcess.prototype.spawn'],
+  ['fork-child-call', 'child_process._forkChild'],
+  ['commonjs-spawn-call', 'child_process.spawn', 'server.cjs'],
+  ['get-builtin-call', 'child_process.spawn'],
+  ['transitive-call', 'child_process.spawn', 'module-a.mjs'],
+]) {
+  test(`${name} is rejected when subprocess execution is attempted`, async () => {
+    const report = await analyzeFixture(name);
+    assert.equal(report.verdict, 'unsupported', JSON.stringify(report));
+    const access = report.blockedAccesses.find(
+      item => item.code === 'reachable_external_executable',
+    );
+    assert.ok(access, JSON.stringify(report));
+    assert.equal(access.operation, operation);
+    assert.equal(access.parentPath, expectedParent);
+    assert.ok(access.importChain.includes(expectedParent));
+  });
+}
+
+for (const [name, expectedParent, code] of [
   ['cluster-blocked', 'server.mjs'],
   ['binding-blocked', 'server.mjs', 'reachable_external_executable'],
+  ['process-wrap-blocked', 'server.mjs', 'reachable_external_executable'],
 ]) {
   test(`${name} is rejected by the Worker runtime policy`, async () => {
     const report = await analyzeFixture(name);
     assert.equal(report.verdict, 'unsupported');
-    const access = report.blockedAccesses.find(item => item.code === code);
+    const access = report.blockedAccesses.find(
+      item => item.code === (code ?? 'reachable_blocked_builtin'),
+    );
     assert.ok(access, JSON.stringify(report));
     assert.equal(access.parentPath, expectedParent);
     assert.ok(access.importChain.includes(expectedParent));
@@ -137,17 +186,18 @@ test('execution-path analysis requires an explicit selected entry point', async 
   await assert.rejects(analyzePackage(root, manifest), /selected entry point/i);
 });
 
-test('the production installer rejects reachable child_process and preserves the prior package', { timeout: 60_000 }, async () => {
+test('the production installer rejects executed child_process and preserves the prior package', { timeout: 60_000 }, async () => {
   const root = await fs.mkdtemp(path.join(os.tmpdir(), 'hanlin-negative-install-'));
   const cache = path.join(root, 'fixture-cache');
-  const archive = path.join(root, 'direct-blocked.tgz');
+  const archive = path.join(root, 'spawn-call.tgz');
   const operationID = '11111111-1111-4111-8111-111111111111';
   const serverID = '22222222-2222-4222-8222-222222222222';
   const finalRoot = path.join(root, 'packages', 'mcp', serverID);
   try {
+    const spawnFixture = await fixtureDirectory('spawn-call');
     await fs.mkdir(finalRoot, { recursive: true });
     await fs.writeFile(path.join(finalRoot, 'prior-version'), 'preserved');
-    await fs.writeFile(archive, await pacote.tarball(`file:${path.join(fixtures, 'direct-blocked')}`, {
+    await fs.writeFile(archive, await pacote.tarball(`file:${spawnFixture}`, {
       Arborist,
       cache,
       ignoreScripts: true,
@@ -168,7 +218,7 @@ test('the production installer rejects reachable child_process and preserves the
 });
 
 async function analyzeFixture(name) {
-  const packageRoot = path.join(fixtures, name);
+  const packageRoot = await fixtureDirectory(name);
   const manifest = JSON.parse(await fs.readFile(path.join(packageRoot, 'package.json'), 'utf8'));
   const entryPoint = path.resolve(packageRoot, manifest.main);
   const moduleKind = determineModuleKind(entryPoint, manifest);
@@ -182,4 +232,23 @@ async function analyzeFixture(name) {
       timeoutMilliseconds: 5_000,
     }),
   });
+}
+
+async function fixtureDirectory(name) {
+  const local = path.join(fixtures, name);
+  try {
+    await fs.access(path.join(local, 'package.json'));
+    return local;
+  } catch {
+    for (const root of downstreamFixtureRoots) {
+      const downstream = path.join(root, name);
+      try {
+        await fs.access(path.join(downstream, 'package.json'));
+        return downstream;
+      } catch {
+        // Continue to the source-tree or staged downstream fixture root.
+      }
+    }
+    throw new Error(`Missing downstream MCP fixture: ${name}`);
+  }
 }

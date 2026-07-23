@@ -38,6 +38,11 @@ struct MCPServerDescriptor: Codable, Hashable, Sendable, Identifiable {
     var installedSize: Int64
     var cachedToolCount: Int
 
+    var preloadOnLaunch: Bool {
+        get { autoStart }
+        set { autoStart = newValue }
+    }
+
     init(
         id: UUID = UUID(),
         slug: String,
@@ -82,5 +87,59 @@ struct MCPServerDescriptor: Codable, Hashable, Sendable, Identifiable {
         self.compatibility = compatibility
         self.installedSize = installedSize
         self.cachedToolCount = cachedToolCount
+    }
+
+    private enum CodingKeys: String, CodingKey {
+        case id
+        case slug
+        case displayName
+        case packageName
+        case requestedVersion
+        case resolvedVersion
+        case entryPoint
+        case binName
+        case entryPointOptions
+        case arguments
+        case environment
+        case packageRoot
+        case integrity
+        case installedAt
+        case updatedAt
+        case isGloballyEnabled
+        case isEnabledForNewChats
+        case autoStart
+        case compatibility
+        case installedSize
+        case cachedToolCount
+    }
+
+    init(from decoder: Decoder) throws {
+        let values = try decoder.container(keyedBy: CodingKeys.self)
+
+        // These values identify installed code and must never be fabricated when
+        // persisted data is damaged.
+        id = try values.decode(UUID.self, forKey: .id)
+        packageName = try values.decode(String.self, forKey: .packageName)
+        resolvedVersion = try values.decode(String.self, forKey: .resolvedVersion)
+        entryPoint = try values.decode(String.self, forKey: .entryPoint)
+
+        slug = try values.decodeIfPresent(String.self, forKey: .slug) ?? packageName
+        displayName = try values.decodeIfPresent(String.self, forKey: .displayName) ?? packageName
+        requestedVersion = try values.decodeIfPresent(String.self, forKey: .requestedVersion)
+        binName = try values.decodeIfPresent(String.self, forKey: .binName)
+        entryPointOptions = try values.decodeIfPresent([MCPEntryPointOption].self, forKey: .entryPointOptions)
+        arguments = try values.decodeIfPresent([String].self, forKey: .arguments) ?? []
+        environment = try values.decodeIfPresent([MCPEnvironmentVariable].self, forKey: .environment) ?? []
+        packageRoot = try values.decodeIfPresent(String.self, forKey: .packageRoot)
+            ?? URL(fileURLWithPath: entryPoint).deletingLastPathComponent().path
+        integrity = try values.decodeIfPresent(String.self, forKey: .integrity)
+        installedAt = try values.decodeIfPresent(Date.self, forKey: .installedAt) ?? .distantPast
+        updatedAt = try values.decodeIfPresent(Date.self, forKey: .updatedAt) ?? installedAt
+        isGloballyEnabled = try values.decodeIfPresent(Bool.self, forKey: .isGloballyEnabled) ?? true
+        isEnabledForNewChats = try values.decodeIfPresent(Bool.self, forKey: .isEnabledForNewChats) ?? true
+        autoStart = try values.decodeIfPresent(Bool.self, forKey: .autoStart) ?? false
+        compatibility = try values.decodeIfPresent(MCPCompatibilityReport.self, forKey: .compatibility) ?? .pendingProbe
+        installedSize = try values.decodeIfPresent(Int64.self, forKey: .installedSize) ?? 0
+        cachedToolCount = try values.decodeIfPresent(Int.self, forKey: .cachedToolCount) ?? 0
     }
 }

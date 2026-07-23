@@ -85,6 +85,7 @@ struct MyApp: App {
                 .task {
                     appDataManager.preloadDataIfNeeded()
                     await RuntimeLifecycleBridge.prepareApplication()
+                    await RuntimeLifecycleBridge.handleScenePhase(scenePhase)
                 }
                 .onChange(of: scenePhase) { _, newPhase in
                     Task { await RuntimeLifecycleBridge.handleScenePhase(newPhase) }

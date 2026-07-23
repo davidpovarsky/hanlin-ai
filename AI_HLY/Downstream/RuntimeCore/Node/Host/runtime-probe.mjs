@@ -6,6 +6,23 @@ const workerURL = new URL('./server-worker.mjs', import.meta.url);
 const protocolVersion = '2025-06-18';
 
 export async function runMCPRuntimeProbe(options) {
+  let totalDurationMilliseconds = 0;
+  let result;
+  for (let attempt = 1; attempt <= 5; attempt += 1) {
+    result = await runMCPRuntimeProbeAttempt(options);
+    totalDurationMilliseconds += result.durationMilliseconds;
+    if (!shouldRetryInternalLoaderFailure(result) || attempt === 5) {
+      return {
+        ...result,
+        durationMilliseconds: totalDurationMilliseconds,
+        internalLoaderRetryCount: attempt - 1,
+      };
+    }
+  }
+  return result;
+}
+
+async function runMCPRuntimeProbeAttempt(options) {
   const started = Date.now();
   const packageRoot = path.resolve(options.packageRoot);
   const entryPoint = path.resolve(options.entryPoint);
@@ -107,6 +124,7 @@ export async function runMCPRuntimeProbe(options) {
     const message = redact(error?.message ?? String(error));
     return {
       passed: false,
+      failureCode: error?.code ?? null,
       requiresConfiguration: graph.blockedAccesses.length === 0 && looksLikeConfigurationFailure(`${message}\n${stderr}`),
       message,
       durationMilliseconds: Date.now() - started,
@@ -124,6 +142,16 @@ export async function runMCPRuntimeProbe(options) {
   }
 }
 
+function shouldRetryInternalLoaderFailure(result) {
+  return !result.passed
+    && !result.requiresConfiguration
+    && (result.blockedAccesses?.length ?? 0) === 0
+    && (
+      result.failureCode === 'ERR_INTERNAL_ASSERTION'
+      || /Unexpected module status \d+/.test(result.message)
+    );
+}
+
 function createWorkerEvents(worker, state) {
   const loaded = deferred();
   worker.on('message', message => {
@@ -137,6 +165,7 @@ function createWorkerEvents(worker, state) {
     if (message?.type === 'policy-blocked') state.blockedAccesses.push({
       code: message.code,
       specifier: String(message.specifier),
+      operation: message.operation ?? null,
       parentPath: message.parentPath ?? null,
       resolvedPath: message.resolvedPath ?? null,
     });
