@@ -1,0 +1,24 @@
+{
+  "author": {
+    "name": "DAVID",
+    "email": null,
+    "homepage": null
+  },
+  "remoteResource": null,
+  "localizedNames": {
+    "en": "Transit Nearby"
+  },
+  "name": "Transit Nearby",
+  "localizedDescriptions": {
+    "en": "Nearby public transport stops, live arrivals, widgets and Live Activities."
+  },
+  "intentInputTypes": [],
+  "description": "תחנות תחבורה ציבורית קרובות, זמני אמת, ווידג׳טים ופעילות חיה בממשק נייטיבי.",
+  "contributors": [],
+  "entry": "index.tsx",
+  "iconImage": null,
+  "version": "2.1.0",
+  "runInApp": true,
+  "color": "rgba(0, 122, 255, 1)",
+  "icon": "bus.fill"
+}

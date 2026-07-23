@@ -1,0 +1,3018 @@
+{
+  "baselineID": "scripting-compat-2026-07-22-8d7d33d9369e",
+  "brokenDocumentationLinks": [],
+  "compilerVersionDifference": {
+    "differs": true,
+    "hanlinEmbedded": "6.0.3",
+    "resolution": "tracked-as-separate-compatibility-lanes",
+    "scriptingOriginal": "7.0.2"
+  },
+  "declarationDocumentationNotes": [
+    "Phase 0 uses a deterministic declaration lexer, not the TypeScript language service.",
+    "A missing document link does not imply a missing runtime implementation.",
+    "Phase 6 replaces lexical indexing with compiler-backed symbol and signature analysis."
+  ],
+  "documentationRootRelativeFallbacks": [
+    {
+      "document": "capture_scripts_httpclient/en.md",
+      "link": "capture_scripts/en.md",
+      "resolved": "capture_scripts/en.md"
+    },
+    {
+      "document": "capture_scripts_httpclient/zh.md",
+      "link": "capture_scripts/zh.md",
+      "resolved": "capture_scripts/zh.md"
+    },
+    {
+      "document": "capture_scripts_notification/en.md",
+      "link": "capture_scripts/en.md",
+      "resolved": "capture_scripts/en.md"
+    },
+    {
+      "document": "capture_scripts_notification/zh.md",
+      "link": "capture_scripts/zh.md",
+      "resolved": "capture_scripts/zh.md"
+    },
+    {
+      "document": "capture_scripts_store/en.md",
+      "link": "capture_scripts/en.md",
+      "resolved": "capture_scripts/en.md"
+    },
+    {
+      "document": "capture_scripts_store/zh.md",
+      "link": "capture_scripts/zh.md",
+      "resolved": "capture_scripts/zh.md"
+    },
+    {
+      "document": "capture_scripts_streaming/en.md",
+      "link": "capture_scripts/en.md",
+      "resolved": "capture_scripts/en.md"
+    },
+    {
+      "document": "capture_scripts_streaming/zh.md",
+      "link": "capture_scripts/zh.md",
+      "resolved": "capture_scripts/zh.md"
+    },
+    {
+      "document": "capture_scripts_utils/en.md",
+      "link": "capture_scripts/en.md",
+      "resolved": "capture_scripts/en.md"
+    },
+    {
+      "document": "capture_scripts_utils/zh.md",
+      "link": "capture_scripts/zh.md",
+      "resolved": "capture_scripts/zh.md"
+    },
+    {
+      "document": "capture_scripts/en.md",
+      "link": "capture_scripts_utils/en.md",
+      "resolved": "capture_scripts_utils/en.md"
+    },
+    {
+      "document": "capture_scripts/en.md",
+      "link": "capture_scripts_httpclient/en.md",
+      "resolved": "capture_scripts_httpclient/en.md"
+    },
+    {
+      "document": "capture_scripts/en.md",
+      "link": "capture_scripts_store/en.md",
+      "resolved": "capture_scripts_store/en.md"
+    },
+    {
+      "document": "capture_scripts/en.md",
+      "link": "capture_scripts_notification/en.md",
+      "resolved": "capture_scripts_notification/en.md"
+    },
+    {
+      "document": "capture_scripts/en.md",
+      "link": "capture_scripts_utils/en.md",
+      "resolved": "capture_scripts_utils/en.md"
+    },
+    {
+      "document": "capture_scripts/zh.md",
+      "link": "capture_scripts_utils/zh.md",
+      "resolved": "capture_scripts_utils/zh.md"
+    },
+    {
+      "document": "capture_scripts/zh.md",
+      "link": "capture_scripts_httpclient/zh.md",
+      "resolved": "capture_scripts_httpclient/zh.md"
+    },
+    {
+      "document": "capture_scripts/zh.md",
+      "link": "capture_scripts_store/zh.md",
+      "resolved": "capture_scripts_store/zh.md"
+    },
+    {
+      "document": "capture_scripts/zh.md",
+      "link": "capture_scripts_notification/zh.md",
+      "resolved": "capture_scripts_notification/zh.md"
+    },
+    {
+      "document": "capture_scripts/zh.md",
+      "link": "capture_scripts_utils/zh.md",
+      "resolved": "capture_scripts_utils/zh.md"
+    }
+  ],
+  "duplicateSymbols": [
+    {
+      "declarations": [
+        {
+          "category": "const",
+          "file": "scripting.d.ts",
+          "line": 11261
+        },
+        {
+          "category": "type",
+          "file": "scripting.d.ts",
+          "line": 11262
+        },
+        {
+          "category": "class",
+          "file": "web-fetch.d.ts",
+          "line": 148
+        }
+      ],
+      "normalizedSymbol": "abortcontroller"
+    },
+    {
+      "declarations": [
+        {
+          "category": "type",
+          "file": "scripting.d.ts",
+          "line": 10822
+        },
+        {
+          "category": "type",
+          "file": "web-fetch.d.ts",
+          "line": 125
+        }
+      ],
+      "normalizedSymbol": "aborteventlistener"
+    },
+    {
+      "declarations": [
+        {
+          "category": "const",
+          "file": "scripting.d.ts",
+          "line": 11265
+        },
+        {
+          "category": "type",
+          "file": "scripting.d.ts",
+          "line": 11266
+        },
+        {
+          "category": "class",
+          "file": "web-fetch.d.ts",
+          "line": 119
+        }
+      ],
+      "normalizedSymbol": "abortevent"
+    },
+    {
+      "declarations": [
+        {
+          "category": "const",
+          "file": "scripting.d.ts",
+          "line": 11263
+        },
+        {
+          "category": "type",
+          "file": "scripting.d.ts",
+          "line": 11264
+        },
+        {
+          "category": "class",
+          "file": "web-fetch.d.ts",
+          "line": 128
+        }
+      ],
+      "normalizedSymbol": "abortsignal"
+    },
+    {
+      "declarations": [
+        {
+          "category": "type",
+          "file": "global.d.ts",
+          "line": 1738
+        },
+        {
+          "category": "const",
+          "file": "global.d.ts",
+          "line": 1788
+        }
+      ],
+      "normalizedSymbol": "activitytype"
+    },
+    {
+      "declarations": [
+        {
+          "category": "function",
+          "file": "global.d.ts",
+          "line": 5868
+        },
+        {
+          "category": "function",
+          "file": "global.d.ts",
+          "line": 5869
+        },
+        {
+          "category": "function",
+          "file": "global.d.ts",
+          "line": 5870
+        },
+        {
+          "category": "function",
+          "file": "global.d.ts",
+          "line": 5871
+        },
+        {
+          "category": "function",
+          "file": "global.d.ts",
+          "line": 5872
+        },
+        {
+          "category": "function",
+          "file": "global.d.ts",
+          "line": 5873
+        },
+        {
+          "category": "function",
+          "file": "global.d.ts",
+          "line": 6559
+        },
+        {
+          "category": "function",
+          "file": "global.d.ts",
+          "line": 6560
+        },
+        {
+          "category": "function",
+          "file": "global.d.ts",
+          "line": 14993
+        },
+        {
+          "category": "function",
+          "file": "global.d.ts",
+          "line": 14994
+        }
+      ],
+      "normalizedSymbol": "addlistener"
+    },
+    {
+      "declarations": [
+        {
+          "category": "function",
+          "file": "global.d.ts",
+          "line": 1194
+        },
+        {
+          "category": "function",
+          "file": "global.d.ts",
+          "line": 1195
+        }
+      ],
+      "normalizedSymbol": "alert"
+    },
+    {
+      "declarations": [
+        {
+          "category": "function",
+          "file": "node.d.ts",
+          "line": 457
+        },
+        {
+          "category": "function",
+          "file": "node.d.ts",
+          "line": 476
+        }
+      ],
+      "normalizedSymbol": "appendfile"
+    },
+    {
+      "declarations": [
+        {
+          "category": "function",
+          "file": "node.d.ts",
+          "line": 673
+        },
+        {
+          "category": "namespace",
+          "file": "node.d.ts",
+          "line": 674
+        }
+      ],
+      "normalizedSymbol": "assert"
+    },
+    {
+      "declarations": [
+        {
+          "category": "namespace",
+          "file": "global.d.ts",
+          "line": 7793
+        },
+        {
+          "category": "class",
+          "file": "global.d.ts",
+          "line": 7915
+        }
+      ],
+      "normalizedSymbol": "audiocapture"
+    },
+    {
+      "declarations": [
+        {
+          "category": "class",
+          "file": "global.d.ts",
+          "line": 8032
+        },
+        {
+          "category": "namespace",
+          "file": "global.d.ts",
+          "line": 8161
+        }
+      ],
+      "normalizedSymbol": "avcapturedevice"
+    },
+    {
+      "declarations": [
+        {
+          "category": "type",
+          "file": "global.d.ts",
+          "line": 89
+        },
+        {
+          "category": "const",
+          "file": "global.d.ts",
+          "line": 118
+        }
+      ],
+      "normalizedSymbol": "batterystate"
+    },
+    {
+      "declarations": [
+        {
+          "category": "class",
+          "file": "node.d.ts",
+          "line": 301
+        },
+        {
+          "category": "const",
+          "file": "scripting.d.ts",
+          "line": 11259
+        },
+        {
+          "category": "type",
+          "file": "scripting.d.ts",
+          "line": 11260
+        },
+        {
+          "category": "class",
+          "file": "web-fetch.d.ts",
+          "line": 227
+        }
+      ],
+      "normalizedSymbol": "blob"
+    },
+    {
+      "declarations": [
+        {
+          "category": "type",
+          "file": "scripting.d.ts",
+          "line": 10875
+        },
+        {
+          "category": "type",
+          "file": "web-fetch.d.ts",
+          "line": 224
+        }
+      ],
+      "normalizedSymbol": "blobpart"
+    },
+    {
+      "declarations": [
+        {
+          "category": "type",
+          "file": "scripting.d.ts",
+          "line": 11138
+        },
+        {
+          "category": "type",
+          "file": "web-fetch.d.ts",
+          "line": 298
+        }
+      ],
+      "normalizedSymbol": "bodyinit"
+    },
+    {
+      "declarations": [
+        {
+          "category": "interface",
+          "file": "node.d.ts",
+          "line": 42
+        },
+        {
+          "category": "const",
+          "file": "node.d.ts",
+          "line": 134
+        },
+        {
+          "category": "const",
+          "file": "node.d.ts",
+          "line": 299
+        }
+      ],
+      "normalizedSymbol": "buffer"
+    },
+    {
+      "declarations": [
+        {
+          "category": "class",
+          "file": "global.d.ts",
+          "line": 17538
+        },
+        {
+          "category": "const",
+          "file": "scripting.d.ts",
+          "line": 940
+        }
+      ],
+      "normalizedSymbol": "button"
+    },
+    {
+      "declarations": [
+        {
+          "category": "function",
+          "file": "global.d.ts",
+          "line": 4632
+        },
+        {
+          "category": "function",
+          "file": "global.d.ts",
+          "line": 8831
+        },
+        {
+          "category": "function",
+          "file": "global.d.ts",
+          "line": 17624
+        }
+      ],
+      "normalizedSymbol": "cancel"
+    },
+    {
+      "declarations": [
+        {
+          "category": "type",
+          "file": "global.d.ts",
+          "line": 8689
+        },
+        {
+          "category": "type",
+          "file": "scripting.d.ts",
+          "line": 9275
+        }
+      ],
+      "normalizedSymbol": "capturevideopreviewviewprops"
+    },
+    {
+      "declarations": [
+        {
+          "category": "function",
+          "file": "global.d.ts",
+          "line": 1385
+        },
+        {
+          "category": "function",
+          "file": "global.d.ts",
+          "line": 4230
+        },
+        {
+          "category": "function",
+          "file": "global.d.ts",
+          "line": 17120
+        }
+      ],
+      "normalizedSymbol": "clear"
+    },
+    {
+      "declarations": [
+        {
+          "category": "function",
+          "file": "node.d.ts",
+          "line": 142
+        },
+        {
+          "category": "function",
+          "file": "node.d.ts",
+          "line": 799
+        }
+      ],
+      "normalizedSymbol": "clearimmediate"
+    },
+    {
+      "declarations": [
+        {
+          "category": "const",
+          "file": "global.d.ts",
+          "line": 46
+        },
+        {
+          "category": "function",
+          "file": "node.d.ts",
+          "line": 795
+        }
+      ],
+      "normalizedSymbol": "cleartimeout"
+    },
+    {
+      "declarations": [
+        {
+          "category": "class",
+          "file": "global.d.ts",
+          "line": 4259
+        },
+        {
+          "category": "namespace",
+          "file": "global.d.ts",
+          "line": 4325
+        }
+      ],
+      "normalizedSymbol": "cloudshareddata"
+    },
+    {
+      "declarations": [
+        {
+          "category": "const",
+          "file": "global.d.ts",
+          "line": 152
+        },
+        {
+          "category": "type",
+          "file": "scripting.d.ts",
+          "line": 627
+        },
+        {
+          "category": "const",
+          "file": "scripting.d.ts",
+          "line": 9690
+        }
+      ],
+      "normalizedSymbol": "colorscheme"
+    },
+    {
+      "declarations": [
+        {
+          "category": "interface",
+          "file": "global.d.ts",
+          "line": 7801
+        },
+        {
+          "category": "type",
+          "file": "global.d.ts",
+          "line": 8730
+        },
+        {
+          "category": "type",
+          "file": "global.d.ts",
+          "line": 17310
+        },
+        {
+          "category": "class",
+          "file": "global.d.ts",
+          "line": 17592
+        }
+      ],
+      "normalizedSymbol": "configuration"
+    },
+    {
+      "declarations": [
+        {
+          "category": "function",
+          "file": "global.d.ts",
+          "line": 1206
+        },
+        {
+          "category": "function",
+          "file": "global.d.ts",
+          "line": 1207
+        }
+      ],
+      "normalizedSymbol": "confirm"
+    },
+    {
+      "declarations": [
+        {
+          "category": "const",
+          "file": "node.d.ts",
+          "line": 300
+        },
+        {
+          "category": "const",
+          "file": "node.d.ts",
+          "line": 468
+        },
+        {
+          "category": "const",
+          "file": "node.d.ts",
+          "line": 549
+        },
+        {
+          "category": "const",
+          "file": "node.d.ts",
+          "line": 877
+        }
+      ],
+      "normalizedSymbol": "constants"
+    },
+    {
+      "declarations": [
+        {
+          "category": "function",
+          "file": "global.d.ts",
+          "line": 1373
+        },
+        {
+          "category": "function",
+          "file": "global.d.ts",
+          "line": 4226
+        },
+        {
+          "category": "function",
+          "file": "global.d.ts",
+          "line": 17117
+        }
+      ],
+      "normalizedSymbol": "contains"
+    },
+    {
+      "declarations": [
+        {
+          "category": "type",
+          "file": "global.d.ts",
+          "line": 9659
+        },
+        {
+          "category": "interface",
+          "file": "node.d.ts",
+          "line": 904
+        },
+        {
+          "category": "type",
+          "file": "scripting.d.ts",
+          "line": 97
+        }
+      ],
+      "normalizedSymbol": "context"
+    },
+    {
+      "declarations": [
+        {
+          "category": "interface",
+          "file": "scripting.d.ts",
+          "line": 11017
+        },
+        {
+          "category": "interface",
+          "file": "web-fetch.d.ts",
+          "line": 202
+        }
+      ],
+      "normalizedSymbol": "cookie"
+    },
+    {
+      "declarations": [
+        {
+          "category": "function",
+          "file": "global.d.ts",
+          "line": 2817
+        },
+        {
+          "category": "function",
+          "file": "node.d.ts",
+          "line": 488
+        }
+      ],
+      "normalizedSymbol": "copyfile"
+    },
+    {
+      "declarations": [
+        {
+          "category": "function",
+          "file": "global.d.ts",
+          "line": 2818
+        },
+        {
+          "category": "function",
+          "file": "node.d.ts",
+          "line": 449
+        }
+      ],
+      "normalizedSymbol": "copyfilesync"
+    },
+    {
+      "declarations": [
+        {
+          "category": "function",
+          "file": "node.d.ts",
+          "line": 920
+        },
+        {
+          "category": "function",
+          "file": "scripting.d.ts",
+          "line": 154
+        }
+      ],
+      "normalizedSymbol": "createcontext"
+    },
+    {
+      "declarations": [
+        {
+          "category": "function",
+          "file": "scripting.d.ts",
+          "line": 515
+        },
+        {
+          "category": "const",
+          "file": "scripting.d.ts",
+          "line": 518
+        }
+      ],
+      "normalizedSymbol": "createelement"
+    },
+    {
+      "declarations": [
+        {
+          "category": "function",
+          "file": "node.d.ts",
+          "line": 771
+        },
+        {
+          "category": "function",
+          "file": "node.d.ts",
+          "line": 786
+        }
+      ],
+      "normalizedSymbol": "createserver"
+    },
+    {
+      "declarations": [
+        {
+          "category": "namespace",
+          "file": "global.d.ts",
+          "line": 478
+        },
+        {
+          "category": "const",
+          "file": "node.d.ts",
+          "line": 156
+        }
+      ],
+      "normalizedSymbol": "crypto"
+    },
+    {
+      "declarations": [
+        {
+          "category": "interface",
+          "file": "node.d.ts",
+          "line": 249
+        },
+        {
+          "category": "var",
+          "file": "node.d.ts",
+          "line": 256
+        }
+      ],
+      "normalizedSymbol": "cryptokey"
+    },
+    {
+      "declarations": [
+        {
+          "category": "class",
+          "file": "node.d.ts",
+          "line": 822
+        },
+        {
+          "category": "function",
+          "file": "node.d.ts",
+          "line": 841
+        },
+        {
+          "category": "function",
+          "file": "node.d.ts",
+          "line": 842
+        }
+      ],
+      "normalizedSymbol": "deflate"
+    },
+    {
+      "declarations": [
+        {
+          "category": "class",
+          "file": "node.d.ts",
+          "line": 824
+        },
+        {
+          "category": "function",
+          "file": "node.d.ts",
+          "line": 845
+        },
+        {
+          "category": "function",
+          "file": "node.d.ts",
+          "line": 846
+        }
+      ],
+      "normalizedSymbol": "deflateraw"
+    },
+    {
+      "declarations": [
+        {
+          "category": "namespace",
+          "file": "global.d.ts",
+          "line": 52
+        },
+        {
+          "category": "const",
+          "file": "scripting.d.ts",
+          "line": 11824
+        }
+      ],
+      "normalizedSymbol": "device"
+    },
+    {
+      "declarations": [
+        {
+          "category": "namespace",
+          "file": "global.d.ts",
+          "line": 1190
+        },
+        {
+          "category": "type",
+          "file": "scripting.d.ts",
+          "line": 10208
+        }
+      ],
+      "normalizedSymbol": "dialog"
+    },
+    {
+      "declarations": [
+        {
+          "category": "function",
+          "file": "global.d.ts",
+          "line": 11055
+        },
+        {
+          "category": "function",
+          "file": "global.d.ts",
+          "line": 14914
+        }
+      ],
+      "normalizedSymbol": "dismiss"
+    },
+    {
+      "declarations": [
+        {
+          "category": "function",
+          "file": "scripting.d.ts",
+          "line": 990
+        },
+        {
+          "category": "type",
+          "file": "scripting.d.ts",
+          "line": 991
+        }
+      ],
+      "normalizedSymbol": "draggesture"
+    },
+    {
+      "declarations": [
+        {
+          "category": "type",
+          "file": "global.d.ts",
+          "line": 276
+        },
+        {
+          "category": "type",
+          "file": "node.d.ts",
+          "line": 558
+        }
+      ],
+      "normalizedSymbol": "encoding"
+    },
+    {
+      "declarations": [
+        {
+          "category": "class",
+          "file": "node.d.ts",
+          "line": 318
+        },
+        {
+          "category": "namespace",
+          "file": "node.d.ts",
+          "line": 339
+        }
+      ],
+      "normalizedSymbol": "eventemitter"
+    },
+    {
+      "declarations": [
+        {
+          "category": "type",
+          "file": "global.d.ts",
+          "line": 9711
+        },
+        {
+          "category": "class",
+          "file": "node.d.ts",
+          "line": 210
+        }
+      ],
+      "normalizedSymbol": "event"
+    },
+    {
+      "declarations": [
+        {
+          "category": "function",
+          "file": "global.d.ts",
+          "line": 2832
+        },
+        {
+          "category": "function",
+          "file": "node.d.ts",
+          "line": 466
+        }
+      ],
+      "normalizedSymbol": "exists"
+    },
+    {
+      "declarations": [
+        {
+          "category": "function",
+          "file": "global.d.ts",
+          "line": 2833
+        },
+        {
+          "category": "function",
+          "file": "node.d.ts",
+          "line": 436
+        }
+      ],
+      "normalizedSymbol": "existssync"
+    },
+    {
+      "declarations": [
+        {
+          "category": "function",
+          "file": "global.d.ts",
+          "line": 3647
+        },
+        {
+          "category": "function",
+          "file": "global.d.ts",
+          "line": 3652
+        }
+      ],
+      "normalizedSymbol": "fetchassets"
+    },
+    {
+      "declarations": [
+        {
+          "category": "const",
+          "file": "scripting.d.ts",
+          "line": 11247
+        },
+        {
+          "category": "function",
+          "file": "web-fetch.d.ts",
+          "line": 417
+        },
+        {
+          "category": "function",
+          "file": "web-fetch.d.ts",
+          "line": 418
+        }
+      ],
+      "normalizedSymbol": "fetch"
+    },
+    {
+      "declarations": [
+        {
+          "category": "class",
+          "file": "node.d.ts",
+          "line": 233
+        },
+        {
+          "category": "function",
+          "file": "scripting.d.ts",
+          "line": 10173
+        },
+        {
+          "category": "class",
+          "file": "web-fetch.d.ts",
+          "line": 249
+        }
+      ],
+      "normalizedSymbol": "file"
+    },
+    {
+      "declarations": [
+        {
+          "category": "type",
+          "file": "global.d.ts",
+          "line": 7799
+        },
+        {
+          "category": "function",
+          "file": "node.d.ts",
+          "line": 610
+        },
+        {
+          "category": "function",
+          "file": "node.d.ts",
+          "line": 650
+        }
+      ],
+      "normalizedSymbol": "format"
+    },
+    {
+      "declarations": [
+        {
+          "category": "type",
+          "file": "scripting.d.ts",
+          "line": 10961
+        },
+        {
+          "category": "type",
+          "file": "web-fetch.d.ts",
+          "line": 179
+        }
+      ],
+      "normalizedSymbol": "formbinarydata"
+    },
+    {
+      "declarations": [
+        {
+          "category": "const",
+          "file": "scripting.d.ts",
+          "line": 11257
+        },
+        {
+          "category": "type",
+          "file": "scripting.d.ts",
+          "line": 11258
+        },
+        {
+          "category": "class",
+          "file": "web-fetch.d.ts",
+          "line": 186
+        }
+      ],
+      "normalizedSymbol": "formdata"
+    },
+    {
+      "declarations": [
+        {
+          "category": "function",
+          "file": "global.d.ts",
+          "line": 1353
+        },
+        {
+          "category": "function",
+          "file": "global.d.ts",
+          "line": 4213
+        }
+      ],
+      "normalizedSymbol": "getdata"
+    },
+    {
+      "declarations": [
+        {
+          "category": "function",
+          "file": "global.d.ts",
+          "line": 1341
+        },
+        {
+          "category": "function",
+          "file": "global.d.ts",
+          "line": 4199
+        },
+        {
+          "category": "function",
+          "file": "global.d.ts",
+          "line": 17108
+        },
+        {
+          "category": "function",
+          "file": "node.d.ts",
+          "line": 742
+        },
+        {
+          "category": "function",
+          "file": "node.d.ts",
+          "line": 743
+        },
+        {
+          "category": "function",
+          "file": "node.d.ts",
+          "line": 784
+        },
+        {
+          "category": "function",
+          "file": "node.d.ts",
+          "line": 785
+        }
+      ],
+      "normalizedSymbol": "get"
+    },
+    {
+      "declarations": [
+        {
+          "category": "function",
+          "file": "global.d.ts",
+          "line": 8784
+        },
+        {
+          "category": "function",
+          "file": "global.d.ts",
+          "line": 11429
+        }
+      ],
+      "normalizedSymbol": "getstate"
+    },
+    {
+      "declarations": [
+        {
+          "category": "function",
+          "file": "safari-ext.d.ts",
+          "line": 342
+        },
+        {
+          "category": "function",
+          "file": "safari-ext.d.ts",
+          "line": 346
+        }
+      ],
+      "normalizedSymbol": "gm_addelement"
+    },
+    {
+      "declarations": [
+        {
+          "category": "function",
+          "file": "safari-ext.d.ts",
+          "line": 373
+        },
+        {
+          "category": "function",
+          "file": "safari-ext.d.ts",
+          "line": 374
+        }
+      ],
+      "normalizedSymbol": "gm_download"
+    },
+    {
+      "declarations": [
+        {
+          "category": "function",
+          "file": "safari-ext.d.ts",
+          "line": 365
+        },
+        {
+          "category": "function",
+          "file": "safari-ext.d.ts",
+          "line": 366
+        }
+      ],
+      "normalizedSymbol": "gm_notification"
+    },
+    {
+      "declarations": [
+        {
+          "category": "function",
+          "file": "safari-ext.d.ts",
+          "line": 375
+        },
+        {
+          "category": "function",
+          "file": "safari-ext.d.ts",
+          "line": 378
+        }
+      ],
+      "normalizedSymbol": "gm_xmlhttprequest"
+    },
+    {
+      "declarations": [
+        {
+          "category": "type",
+          "file": "scripting.d.ts",
+          "line": 1393
+        },
+        {
+          "category": "function",
+          "file": "scripting.d.ts",
+          "line": 9615
+        },
+        {
+          "category": "function",
+          "file": "scripting.d.ts",
+          "line": 9616
+        },
+        {
+          "category": "function",
+          "file": "scripting.d.ts",
+          "line": 9617
+        },
+        {
+          "category": "function",
+          "file": "scripting.d.ts",
+          "line": 9618
+        },
+        {
+          "category": "function",
+          "file": "scripting.d.ts",
+          "line": 9619
+        }
+      ],
+      "normalizedSymbol": "gradient"
+    },
+    {
+      "declarations": [
+        {
+          "category": "class",
+          "file": "node.d.ts",
+          "line": 821
+        },
+        {
+          "category": "function",
+          "file": "node.d.ts",
+          "line": 839
+        },
+        {
+          "category": "function",
+          "file": "node.d.ts",
+          "line": 840
+        }
+      ],
+      "normalizedSymbol": "gunzip"
+    },
+    {
+      "declarations": [
+        {
+          "category": "class",
+          "file": "node.d.ts",
+          "line": 820
+        },
+        {
+          "category": "function",
+          "file": "node.d.ts",
+          "line": 837
+        },
+        {
+          "category": "function",
+          "file": "node.d.ts",
+          "line": 838
+        }
+      ],
+      "normalizedSymbol": "gzip"
+    },
+    {
+      "declarations": [
+        {
+          "category": "type",
+          "file": "scripting.d.ts",
+          "line": 10983
+        },
+        {
+          "category": "type",
+          "file": "web-fetch.d.ts",
+          "line": 158
+        }
+      ],
+      "normalizedSymbol": "headersinit"
+    },
+    {
+      "declarations": [
+        {
+          "category": "const",
+          "file": "scripting.d.ts",
+          "line": 11255
+        },
+        {
+          "category": "type",
+          "file": "scripting.d.ts",
+          "line": 11256
+        },
+        {
+          "category": "class",
+          "file": "web-fetch.d.ts",
+          "line": 161
+        }
+      ],
+      "normalizedSymbol": "headers"
+    },
+    {
+      "declarations": [
+        {
+          "category": "const",
+          "file": "scripting.d.ts",
+          "line": 7188
+        },
+        {
+          "category": "function",
+          "file": "scripting.d.ts",
+          "line": 10168
+        }
+      ],
+      "normalizedSymbol": "image"
+    },
+    {
+      "declarations": [
+        {
+          "category": "class",
+          "file": "node.d.ts",
+          "line": 823
+        },
+        {
+          "category": "function",
+          "file": "node.d.ts",
+          "line": 843
+        },
+        {
+          "category": "function",
+          "file": "node.d.ts",
+          "line": 844
+        }
+      ],
+      "normalizedSymbol": "inflate"
+    },
+    {
+      "declarations": [
+        {
+          "category": "class",
+          "file": "node.d.ts",
+          "line": 825
+        },
+        {
+          "category": "function",
+          "file": "node.d.ts",
+          "line": 847
+        },
+        {
+          "category": "function",
+          "file": "node.d.ts",
+          "line": 848
+        }
+      ],
+      "normalizedSymbol": "inflateraw"
+    },
+    {
+      "declarations": [
+        {
+          "category": "const",
+          "file": "global.d.ts",
+          "line": 6527
+        },
+        {
+          "category": "const",
+          "file": "global.d.ts",
+          "line": 15733
+        }
+      ],
+      "normalizedSymbol": "isactive"
+    },
+    {
+      "declarations": [
+        {
+          "category": "const",
+          "file": "global.d.ts",
+          "line": 1150
+        },
+        {
+          "category": "const",
+          "file": "global.d.ts",
+          "line": 6523
+        },
+        {
+          "category": "const",
+          "file": "global.d.ts",
+          "line": 10939
+        },
+        {
+          "category": "const",
+          "file": "global.d.ts",
+          "line": 11450
+        },
+        {
+          "category": "const",
+          "file": "global.d.ts",
+          "line": 11487
+        },
+        {
+          "category": "const",
+          "file": "global.d.ts",
+          "line": 11527
+        },
+        {
+          "category": "const",
+          "file": "global.d.ts",
+          "line": 17620
+        },
+        {
+          "category": "function",
+          "file": "global.d.ts",
+          "line": 17808
+        }
+      ],
+      "normalizedSymbol": "isavailable"
+    },
+    {
+      "declarations": [
+        {
+          "category": "type",
+          "file": "global.d.ts",
+          "line": 1023
+        },
+        {
+          "category": "type",
+          "file": "global.d.ts",
+          "line": 17634
+        }
+      ],
+      "normalizedSymbol": "item"
+    },
+    {
+      "declarations": [
+        {
+          "category": "function",
+          "file": "global.d.ts",
+          "line": 1379
+        },
+        {
+          "category": "function",
+          "file": "global.d.ts",
+          "line": 4234
+        },
+        {
+          "category": "function",
+          "file": "global.d.ts",
+          "line": 17121
+        }
+      ],
+      "normalizedSymbol": "keys"
+    },
+    {
+      "declarations": [
+        {
+          "category": "namespace",
+          "file": "global.d.ts",
+          "line": 1693
+        },
+        {
+          "category": "type",
+          "file": "global.d.ts",
+          "line": 10761
+        }
+      ],
+      "normalizedSymbol": "location"
+    },
+    {
+      "declarations": [
+        {
+          "category": "function",
+          "file": "scripting.d.ts",
+          "line": 1005
+        },
+        {
+          "category": "type",
+          "file": "scripting.d.ts",
+          "line": 1006
+        }
+      ],
+      "normalizedSymbol": "longpressgesture"
+    },
+    {
+      "declarations": [
+        {
+          "category": "function",
+          "file": "scripting.d.ts",
+          "line": 1020
+        },
+        {
+          "category": "type",
+          "file": "scripting.d.ts",
+          "line": 1021
+        }
+      ],
+      "normalizedSymbol": "magnifygesture"
+    },
+    {
+      "declarations": [
+        {
+          "category": "type",
+          "file": "global.d.ts",
+          "line": 9643
+        },
+        {
+          "category": "const",
+          "file": "scripting.d.ts",
+          "line": 7979
+        }
+      ],
+      "normalizedSymbol": "menu"
+    },
+    {
+      "declarations": [
+        {
+          "category": "function",
+          "file": "node.d.ts",
+          "line": 458
+        },
+        {
+          "category": "function",
+          "file": "node.d.ts",
+          "line": 459
+        },
+        {
+          "category": "function",
+          "file": "node.d.ts",
+          "line": 477
+        }
+      ],
+      "normalizedSymbol": "mkdir"
+    },
+    {
+      "declarations": [
+        {
+          "category": "const",
+          "file": "global.d.ts",
+          "line": 5403
+        },
+        {
+          "category": "type",
+          "file": "node.d.ts",
+          "line": 394
+        }
+      ],
+      "normalizedSymbol": "mode"
+    },
+    {
+      "declarations": [
+        {
+          "category": "namespace",
+          "file": "node.d.ts",
+          "line": 103
+        },
+        {
+          "category": "namespace",
+          "file": "node.d.ts",
+          "line": 947
+        }
+      ],
+      "normalizedSymbol": "nodejs"
+    },
+    {
+      "declarations": [
+        {
+          "category": "type",
+          "file": "global.d.ts",
+          "line": 6178
+        },
+        {
+          "category": "var",
+          "file": "global.d.ts",
+          "line": 6577
+        }
+      ],
+      "normalizedSymbol": "nowplayinginfo"
+    },
+    {
+      "declarations": [
+        {
+          "category": "type",
+          "file": "global.d.ts",
+          "line": 11345
+        },
+        {
+          "category": "var",
+          "file": "global.d.ts",
+          "line": 11389
+        }
+      ],
+      "normalizedSymbol": "oncancel"
+    },
+    {
+      "declarations": [
+        {
+          "category": "type",
+          "file": "global.d.ts",
+          "line": 56
+        },
+        {
+          "category": "const",
+          "file": "global.d.ts",
+          "line": 147
+        }
+      ],
+      "normalizedSymbol": "orientation"
+    },
+    {
+      "declarations": [
+        {
+          "category": "const",
+          "file": "scripting.d.ts",
+          "line": 9851
+        },
+        {
+          "category": "const",
+          "file": "scripting.d.ts",
+          "line": 11725
+        }
+      ],
+      "normalizedSymbol": "parameter"
+    },
+    {
+      "declarations": [
+        {
+          "category": "function",
+          "file": "global.d.ts",
+          "line": 3076
+        },
+        {
+          "category": "function",
+          "file": "node.d.ts",
+          "line": 649
+        },
+        {
+          "category": "function",
+          "file": "node.d.ts",
+          "line": 662
+        },
+        {
+          "category": "function",
+          "file": "scripting.d.ts",
+          "line": 10806
+        }
+      ],
+      "normalizedSymbol": "parse"
+    },
+    {
+      "declarations": [
+        {
+          "category": "const",
+          "file": "node.d.ts",
+          "line": 526
+        },
+        {
+          "category": "namespace",
+          "file": "scripting.d.ts",
+          "line": 10756
+        }
+      ],
+      "normalizedSymbol": "path"
+    },
+    {
+      "declarations": [
+        {
+          "category": "function",
+          "file": "global.d.ts",
+          "line": 5841
+        },
+        {
+          "category": "function",
+          "file": "global.d.ts",
+          "line": 6668
+        },
+        {
+          "category": "function",
+          "file": "global.d.ts",
+          "line": 8817
+        },
+        {
+          "category": "function",
+          "file": "global.d.ts",
+          "line": 17626
+        }
+      ],
+      "normalizedSymbol": "pause"
+    },
+    {
+      "declarations": [
+        {
+          "category": "var",
+          "file": "global.d.ts",
+          "line": 6581
+        },
+        {
+          "category": "type",
+          "file": "global.d.ts",
+          "line": 6603
+        }
+      ],
+      "normalizedSymbol": "playbackstate"
+    },
+    {
+      "declarations": [
+        {
+          "category": "function",
+          "file": "global.d.ts",
+          "line": 6666
+        },
+        {
+          "category": "function",
+          "file": "global.d.ts",
+          "line": 8804
+        }
+      ],
+      "normalizedSymbol": "prepare"
+    },
+    {
+      "declarations": [
+        {
+          "category": "function",
+          "file": "global.d.ts",
+          "line": 1138
+        },
+        {
+          "category": "function",
+          "file": "global.d.ts",
+          "line": 3028
+        },
+        {
+          "category": "function",
+          "file": "global.d.ts",
+          "line": 11049
+        },
+        {
+          "category": "function",
+          "file": "global.d.ts",
+          "line": 11468
+        },
+        {
+          "category": "function",
+          "file": "global.d.ts",
+          "line": 11505
+        },
+        {
+          "category": "function",
+          "file": "global.d.ts",
+          "line": 11550
+        },
+        {
+          "category": "function",
+          "file": "global.d.ts",
+          "line": 15021
+        },
+        {
+          "category": "function",
+          "file": "global.d.ts",
+          "line": 15055
+        },
+        {
+          "category": "function",
+          "file": "scripting.d.ts",
+          "line": 9907
+        },
+        {
+          "category": "function",
+          "file": "scripting.d.ts",
+          "line": 10732
+        },
+        {
+          "category": "function",
+          "file": "scripting.d.ts",
+          "line": 10743
+        },
+        {
+          "category": "function",
+          "file": "scripting.d.ts",
+          "line": 11737
+        },
+        {
+          "category": "function",
+          "file": "scripting.d.ts",
+          "line": 11769
+        }
+      ],
+      "normalizedSymbol": "present"
+    },
+    {
+      "declarations": [
+        {
+          "category": "interface",
+          "file": "node.d.ts",
+          "line": 104
+        },
+        {
+          "category": "const",
+          "file": "node.d.ts",
+          "line": 135
+        }
+      ],
+      "normalizedSymbol": "process"
+    },
+    {
+      "declarations": [
+        {
+          "category": "function",
+          "file": "global.d.ts",
+          "line": 1228
+        },
+        {
+          "category": "function",
+          "file": "global.d.ts",
+          "line": 1229
+        }
+      ],
+      "normalizedSymbol": "prompt"
+    },
+    {
+      "declarations": [
+        {
+          "category": "type",
+          "file": "global.d.ts",
+          "line": 10828
+        },
+        {
+          "category": "type",
+          "file": "scripting.d.ts",
+          "line": 92
+        }
+      ],
+      "normalizedSymbol": "provider"
+    },
+    {
+      "declarations": [
+        {
+          "category": "function",
+          "file": "node.d.ts",
+          "line": 591
+        },
+        {
+          "category": "function",
+          "file": "node.d.ts",
+          "line": 592
+        }
+      ],
+      "normalizedSymbol": "randombytes"
+    },
+    {
+      "declarations": [
+        {
+          "category": "function",
+          "file": "node.d.ts",
+          "line": 594
+        },
+        {
+          "category": "function",
+          "file": "node.d.ts",
+          "line": 595
+        }
+      ],
+      "normalizedSymbol": "randomint"
+    },
+    {
+      "declarations": [
+        {
+          "category": "class",
+          "file": "scripting.d.ts",
+          "line": 9393
+        },
+        {
+          "category": "class",
+          "file": "web-fetch.d.ts",
+          "line": 14
+        }
+      ],
+      "normalizedSymbol": "readablestreamdefaultcontroller"
+    },
+    {
+      "declarations": [
+        {
+          "category": "class",
+          "file": "scripting.d.ts",
+          "line": 9501
+        },
+        {
+          "category": "class",
+          "file": "web-fetch.d.ts",
+          "line": 38
+        }
+      ],
+      "normalizedSymbol": "readablestreamdefaultreader"
+    },
+    {
+      "declarations": [
+        {
+          "category": "class",
+          "file": "scripting.d.ts",
+          "line": 9448
+        },
+        {
+          "category": "class",
+          "file": "web-fetch.d.ts",
+          "line": 26
+        }
+      ],
+      "normalizedSymbol": "readablestream"
+    },
+    {
+      "declarations": [
+        {
+          "category": "function",
+          "file": "node.d.ts",
+          "line": 463
+        },
+        {
+          "category": "function",
+          "file": "node.d.ts",
+          "line": 480
+        },
+        {
+          "category": "function",
+          "file": "node.d.ts",
+          "line": 481
+        }
+      ],
+      "normalizedSymbol": "readdir"
+    },
+    {
+      "declarations": [
+        {
+          "category": "function",
+          "file": "node.d.ts",
+          "line": 441
+        },
+        {
+          "category": "function",
+          "file": "node.d.ts",
+          "line": 442
+        }
+      ],
+      "normalizedSymbol": "readdirsync"
+    },
+    {
+      "declarations": [
+        {
+          "category": "function",
+          "file": "node.d.ts",
+          "line": 453
+        },
+        {
+          "category": "function",
+          "file": "node.d.ts",
+          "line": 454
+        },
+        {
+          "category": "function",
+          "file": "node.d.ts",
+          "line": 473
+        },
+        {
+          "category": "function",
+          "file": "node.d.ts",
+          "line": 474
+        }
+      ],
+      "normalizedSymbol": "readfile"
+    },
+    {
+      "declarations": [
+        {
+          "category": "function",
+          "file": "node.d.ts",
+          "line": 432
+        },
+        {
+          "category": "function",
+          "file": "node.d.ts",
+          "line": 433
+        }
+      ],
+      "normalizedSymbol": "readfilesync"
+    },
+    {
+      "declarations": [
+        {
+          "category": "interface",
+          "file": "scripting.d.ts",
+          "line": 11027
+        },
+        {
+          "category": "interface",
+          "file": "web-fetch.d.ts",
+          "line": 213
+        }
+      ],
+      "normalizedSymbol": "redirectrequest"
+    },
+    {
+      "declarations": [
+        {
+          "category": "function",
+          "file": "global.d.ts",
+          "line": 1364
+        },
+        {
+          "category": "function",
+          "file": "global.d.ts",
+          "line": 2966
+        },
+        {
+          "category": "function",
+          "file": "global.d.ts",
+          "line": 4219
+        },
+        {
+          "category": "function",
+          "file": "global.d.ts",
+          "line": 17114
+        }
+      ],
+      "normalizedSymbol": "remove"
+    },
+    {
+      "declarations": [
+        {
+          "category": "function",
+          "file": "global.d.ts",
+          "line": 5874
+        },
+        {
+          "category": "function",
+          "file": "global.d.ts",
+          "line": 5875
+        },
+        {
+          "category": "function",
+          "file": "global.d.ts",
+          "line": 5876
+        },
+        {
+          "category": "function",
+          "file": "global.d.ts",
+          "line": 5877
+        },
+        {
+          "category": "function",
+          "file": "global.d.ts",
+          "line": 5878
+        },
+        {
+          "category": "function",
+          "file": "global.d.ts",
+          "line": 5879
+        },
+        {
+          "category": "function",
+          "file": "global.d.ts",
+          "line": 6565
+        },
+        {
+          "category": "function",
+          "file": "global.d.ts",
+          "line": 6566
+        },
+        {
+          "category": "function",
+          "file": "global.d.ts",
+          "line": 15001
+        },
+        {
+          "category": "function",
+          "file": "global.d.ts",
+          "line": 15002
+        }
+      ],
+      "normalizedSymbol": "removelistener"
+    },
+    {
+      "declarations": [
+        {
+          "category": "function",
+          "file": "global.d.ts",
+          "line": 2960
+        },
+        {
+          "category": "function",
+          "file": "node.d.ts",
+          "line": 465
+        },
+        {
+          "category": "function",
+          "file": "node.d.ts",
+          "line": 487
+        }
+      ],
+      "normalizedSymbol": "rename"
+    },
+    {
+      "declarations": [
+        {
+          "category": "function",
+          "file": "global.d.ts",
+          "line": 2961
+        },
+        {
+          "category": "function",
+          "file": "node.d.ts",
+          "line": 448
+        }
+      ],
+      "normalizedSymbol": "renamesync"
+    },
+    {
+      "declarations": [
+        {
+          "category": "function",
+          "file": "global.d.ts",
+          "line": 1832
+        },
+        {
+          "category": "function",
+          "file": "global.d.ts",
+          "line": 10774
+        }
+      ],
+      "normalizedSymbol": "requestcurrent"
+    },
+    {
+      "declarations": [
+        {
+          "category": "function",
+          "file": "global.d.ts",
+          "line": 2662
+        },
+        {
+          "category": "function",
+          "file": "node.d.ts",
+          "line": 740
+        },
+        {
+          "category": "function",
+          "file": "node.d.ts",
+          "line": 741
+        },
+        {
+          "category": "function",
+          "file": "node.d.ts",
+          "line": 782
+        },
+        {
+          "category": "function",
+          "file": "node.d.ts",
+          "line": 783
+        },
+        {
+          "category": "const",
+          "file": "scripting.d.ts",
+          "line": 11251
+        },
+        {
+          "category": "type",
+          "file": "scripting.d.ts",
+          "line": 11252
+        },
+        {
+          "category": "class",
+          "file": "web-fetch.d.ts",
+          "line": 300
+        }
+      ],
+      "normalizedSymbol": "request"
+    },
+    {
+      "declarations": [
+        {
+          "category": "type",
+          "file": "scripting.d.ts",
+          "line": 11036
+        },
+        {
+          "category": "type",
+          "file": "web-fetch.d.ts",
+          "line": 263
+        }
+      ],
+      "normalizedSymbol": "requestinit"
+    },
+    {
+      "declarations": [
+        {
+          "category": "function",
+          "file": "global.d.ts",
+          "line": 10988
+        },
+        {
+          "category": "function",
+          "file": "global.d.ts",
+          "line": 11006
+        }
+      ],
+      "normalizedSymbol": "requeststructureddata"
+    },
+    {
+      "declarations": [
+        {
+          "category": "interface",
+          "file": "node.d.ts",
+          "line": 123
+        },
+        {
+          "category": "const",
+          "file": "node.d.ts",
+          "line": 136
+        }
+      ],
+      "normalizedSymbol": "require"
+    },
+    {
+      "declarations": [
+        {
+          "category": "type",
+          "file": "scripting.d.ts",
+          "line": 11140
+        },
+        {
+          "category": "type",
+          "file": "web-fetch.d.ts",
+          "line": 327
+        }
+      ],
+      "normalizedSymbol": "responseinit"
+    },
+    {
+      "declarations": [
+        {
+          "category": "const",
+          "file": "scripting.d.ts",
+          "line": 11253
+        },
+        {
+          "category": "type",
+          "file": "scripting.d.ts",
+          "line": 11254
+        },
+        {
+          "category": "class",
+          "file": "web-fetch.d.ts",
+          "line": 339
+        }
+      ],
+      "normalizedSymbol": "response"
+    },
+    {
+      "declarations": [
+        {
+          "category": "function",
+          "file": "global.d.ts",
+          "line": 5845
+        },
+        {
+          "category": "function",
+          "file": "global.d.ts",
+          "line": 8823
+        },
+        {
+          "category": "function",
+          "file": "global.d.ts",
+          "line": 17627
+        }
+      ],
+      "normalizedSymbol": "resume"
+    },
+    {
+      "declarations": [
+        {
+          "category": "function",
+          "file": "node.d.ts",
+          "line": 460
+        },
+        {
+          "category": "function",
+          "file": "node.d.ts",
+          "line": 461
+        },
+        {
+          "category": "function",
+          "file": "node.d.ts",
+          "line": 478
+        }
+      ],
+      "normalizedSymbol": "rm"
+    },
+    {
+      "declarations": [
+        {
+          "category": "function",
+          "file": "scripting.d.ts",
+          "line": 1047
+        },
+        {
+          "category": "type",
+          "file": "scripting.d.ts",
+          "line": 1048
+        }
+      ],
+      "normalizedSymbol": "rotategesture"
+    },
+    {
+      "declarations": [
+        {
+          "category": "function",
+          "file": "global.d.ts",
+          "line": 18285
+        },
+        {
+          "category": "function",
+          "file": "global.d.ts",
+          "line": 18308
+        },
+        {
+          "category": "function",
+          "file": "scripting.d.ts",
+          "line": 11554
+        }
+      ],
+      "normalizedSymbol": "run"
+    },
+    {
+      "declarations": [
+        {
+          "category": "function",
+          "file": "global.d.ts",
+          "line": 3576
+        },
+        {
+          "category": "function",
+          "file": "global.d.ts",
+          "line": 3593
+        }
+      ],
+      "normalizedSymbol": "savephoto"
+    },
+    {
+      "declarations": [
+        {
+          "category": "function",
+          "file": "global.d.ts",
+          "line": 3605
+        },
+        {
+          "category": "function",
+          "file": "global.d.ts",
+          "line": 3621
+        }
+      ],
+      "normalizedSymbol": "savevideo"
+    },
+    {
+      "declarations": [
+        {
+          "category": "type",
+          "file": "scripting.d.ts",
+          "line": 9650
+        },
+        {
+          "category": "const",
+          "file": "scripting.d.ts",
+          "line": 9680
+        }
+      ],
+      "normalizedSymbol": "scenephase"
+    },
+    {
+      "declarations": [
+        {
+          "category": "class",
+          "file": "global.d.ts",
+          "line": 17514
+        },
+        {
+          "category": "function",
+          "file": "global.d.ts",
+          "line": 17623
+        },
+        {
+          "category": "function",
+          "file": "scripting.d.ts",
+          "line": 10663
+        }
+      ],
+      "normalizedSymbol": "schedule"
+    },
+    {
+      "declarations": [
+        {
+          "category": "type",
+          "file": "global.d.ts",
+          "line": 12365
+        },
+        {
+          "category": "class",
+          "file": "node.d.ts",
+          "line": 911
+        },
+        {
+          "category": "namespace",
+          "file": "scripting.d.ts",
+          "line": 11344
+        }
+      ],
+      "normalizedSymbol": "script"
+    },
+    {
+      "declarations": [
+        {
+          "category": "interface",
+          "file": "safari-ext.d.ts",
+          "line": 274
+        },
+        {
+          "category": "type",
+          "file": "scripting.d.ts",
+          "line": 11339
+        }
+      ],
+      "normalizedSymbol": "scriptingapi"
+    },
+    {
+      "declarations": [
+        {
+          "category": "const",
+          "file": "global.d.ts",
+          "line": 8748
+        },
+        {
+          "category": "class",
+          "file": "global.d.ts",
+          "line": 9803
+        }
+      ],
+      "normalizedSymbol": "session"
+    },
+    {
+      "declarations": [
+        {
+          "category": "function",
+          "file": "global.d.ts",
+          "line": 1326
+        },
+        {
+          "category": "function",
+          "file": "global.d.ts",
+          "line": 4206
+        }
+      ],
+      "normalizedSymbol": "setdata"
+    },
+    {
+      "declarations": [
+        {
+          "category": "function",
+          "file": "global.d.ts",
+          "line": 1301
+        },
+        {
+          "category": "function",
+          "file": "global.d.ts",
+          "line": 4192
+        },
+        {
+          "category": "function",
+          "file": "global.d.ts",
+          "line": 17111
+        }
+      ],
+      "normalizedSymbol": "set"
+    },
+    {
+      "declarations": [
+        {
+          "category": "function",
+          "file": "node.d.ts",
+          "line": 141
+        },
+        {
+          "category": "function",
+          "file": "node.d.ts",
+          "line": 798
+        }
+      ],
+      "normalizedSymbol": "setimmediate"
+    },
+    {
+      "declarations": [
+        {
+          "category": "const",
+          "file": "global.d.ts",
+          "line": 42
+        },
+        {
+          "category": "function",
+          "file": "node.d.ts",
+          "line": 794
+        }
+      ],
+      "normalizedSymbol": "settimeout"
+    },
+    {
+      "declarations": [
+        {
+          "category": "type",
+          "file": "scripting.d.ts",
+          "line": 9943
+        },
+        {
+          "category": "const",
+          "file": "scripting.d.ts",
+          "line": 10101
+        }
+      ],
+      "normalizedSymbol": "shortcutparameter"
+    },
+    {
+      "declarations": [
+        {
+          "category": "function",
+          "file": "global.d.ts",
+          "line": 5897
+        },
+        {
+          "category": "function",
+          "file": "global.d.ts",
+          "line": 8811
+        }
+      ],
+      "normalizedSymbol": "start"
+    },
+    {
+      "declarations": [
+        {
+          "category": "function",
+          "file": "global.d.ts",
+          "line": 2953
+        },
+        {
+          "category": "function",
+          "file": "node.d.ts",
+          "line": 464
+        },
+        {
+          "category": "function",
+          "file": "node.d.ts",
+          "line": 482
+        }
+      ],
+      "normalizedSymbol": "stat"
+    },
+    {
+      "declarations": [
+        {
+          "category": "function",
+          "file": "global.d.ts",
+          "line": 2954
+        },
+        {
+          "category": "function",
+          "file": "node.d.ts",
+          "line": 443
+        }
+      ],
+      "normalizedSymbol": "statsync"
+    },
+    {
+      "declarations": [
+        {
+          "category": "function",
+          "file": "global.d.ts",
+          "line": 5850
+        },
+        {
+          "category": "function",
+          "file": "global.d.ts",
+          "line": 5981
+        },
+        {
+          "category": "function",
+          "file": "global.d.ts",
+          "line": 6669
+        },
+        {
+          "category": "function",
+          "file": "global.d.ts",
+          "line": 8841
+        },
+        {
+          "category": "function",
+          "file": "global.d.ts",
+          "line": 17625
+        }
+      ],
+      "normalizedSymbol": "stop"
+    },
+    {
+      "declarations": [
+        {
+          "category": "function",
+          "file": "global.d.ts",
+          "line": 3568
+        },
+        {
+          "category": "function",
+          "file": "global.d.ts",
+          "line": 8855
+        }
+      ],
+      "normalizedSymbol": "takephoto"
+    },
+    {
+      "declarations": [
+        {
+          "category": "function",
+          "file": "scripting.d.ts",
+          "line": 1050
+        },
+        {
+          "category": "type",
+          "file": "scripting.d.ts",
+          "line": 1051
+        }
+      ],
+      "normalizedSymbol": "tapgesture"
+    },
+    {
+      "declarations": [
+        {
+          "category": "class",
+          "file": "node.d.ts",
+          "line": 150
+        },
+        {
+          "category": "class",
+          "file": "node.d.ts",
+          "line": 621
+        }
+      ],
+      "normalizedSymbol": "textdecoder"
+    },
+    {
+      "declarations": [
+        {
+          "category": "class",
+          "file": "node.d.ts",
+          "line": 145
+        },
+        {
+          "category": "class",
+          "file": "node.d.ts",
+          "line": 617
+        }
+      ],
+      "normalizedSymbol": "textencoder"
+    },
+    {
+      "declarations": [
+        {
+          "category": "const",
+          "file": "scripting.d.ts",
+          "line": 9099
+        },
+        {
+          "category": "function",
+          "file": "scripting.d.ts",
+          "line": 10149
+        }
+      ],
+      "normalizedSymbol": "text"
+    },
+    {
+      "declarations": [
+        {
+          "category": "type",
+          "file": "scripting.d.ts",
+          "line": 9579
+        },
+        {
+          "category": "type",
+          "file": "web-fetch.d.ts",
+          "line": 83
+        }
+      ],
+      "normalizedSymbol": "transformer"
+    },
+    {
+      "declarations": [
+        {
+          "category": "class",
+          "file": "scripting.d.ts",
+          "line": 9584
+        },
+        {
+          "category": "class",
+          "file": "web-fetch.d.ts",
+          "line": 89
+        }
+      ],
+      "normalizedSymbol": "transformstreamdefaultcontroller"
+    },
+    {
+      "declarations": [
+        {
+          "category": "class",
+          "file": "scripting.d.ts",
+          "line": 9593
+        },
+        {
+          "category": "class",
+          "file": "web-fetch.d.ts",
+          "line": 97
+        }
+      ],
+      "normalizedSymbol": "transformstream"
+    },
+    {
+      "declarations": [
+        {
+          "category": "type",
+          "file": "scripting.d.ts",
+          "line": 9534
+        },
+        {
+          "category": "type",
+          "file": "web-fetch.d.ts",
+          "line": 51
+        }
+      ],
+      "normalizedSymbol": "underlyingsink"
+    },
+    {
+      "declarations": [
+        {
+          "category": "type",
+          "file": "scripting.d.ts",
+          "line": 9383
+        },
+        {
+          "category": "type",
+          "file": "web-fetch.d.ts",
+          "line": 7
+        }
+      ],
+      "normalizedSymbol": "underlyingsource"
+    },
+    {
+      "declarations": [
+        {
+          "category": "function",
+          "file": "node.d.ts",
+          "line": 462
+        },
+        {
+          "category": "function",
+          "file": "node.d.ts",
+          "line": 479
+        }
+      ],
+      "normalizedSymbol": "unlink"
+    },
+    {
+      "declarations": [
+        {
+          "category": "function",
+          "file": "global.d.ts",
+          "line": 3003
+        },
+        {
+          "category": "class",
+          "file": "node.d.ts",
+          "line": 826
+        },
+        {
+          "category": "function",
+          "file": "node.d.ts",
+          "line": 849
+        },
+        {
+          "category": "function",
+          "file": "node.d.ts",
+          "line": 850
+        }
+      ],
+      "normalizedSymbol": "unzip"
+    },
+    {
+      "declarations": [
+        {
+          "category": "function",
+          "file": "global.d.ts",
+          "line": 3004
+        },
+        {
+          "category": "function",
+          "file": "node.d.ts",
+          "line": 858
+        }
+      ],
+      "normalizedSymbol": "unzipsync"
+    },
+    {
+      "declarations": [
+        {
+          "category": "class",
+          "file": "node.d.ts",
+          "line": 182
+        },
+        {
+          "category": "const",
+          "file": "node.d.ts",
+          "line": 652
+        },
+        {
+          "category": "function",
+          "file": "scripting.d.ts",
+          "line": 10159
+        }
+      ],
+      "normalizedSymbol": "url"
+    },
+    {
+      "declarations": [
+        {
+          "category": "class",
+          "file": "node.d.ts",
+          "line": 166
+        },
+        {
+          "category": "const",
+          "file": "node.d.ts",
+          "line": 653
+        }
+      ],
+      "normalizedSymbol": "urlsearchparams"
+    },
+    {
+      "declarations": [
+        {
+          "category": "function",
+          "file": "scripting.d.ts",
+          "line": 473
+        },
+        {
+          "category": "function",
+          "file": "scripting.d.ts",
+          "line": 474
+        }
+      ],
+      "normalizedSymbol": "useobservable"
+    },
+    {
+      "declarations": [
+        {
+          "category": "function",
+          "file": "scripting.d.ts",
+          "line": 389
+        },
+        {
+          "category": "function",
+          "file": "scripting.d.ts",
+          "line": 390
+        }
+      ],
+      "normalizedSymbol": "usereducer"
+    },
+    {
+      "declarations": [
+        {
+          "category": "function",
+          "file": "scripting.d.ts",
+          "line": 511
+        },
+        {
+          "category": "function",
+          "file": "scripting.d.ts",
+          "line": 512
+        },
+        {
+          "category": "function",
+          "file": "scripting.d.ts",
+          "line": 513
+        }
+      ],
+      "normalizedSymbol": "useref"
+    },
+    {
+      "declarations": [
+        {
+          "category": "function",
+          "file": "scripting.d.ts",
+          "line": 426
+        },
+        {
+          "category": "function",
+          "file": "scripting.d.ts",
+          "line": 427
+        }
+      ],
+      "normalizedSymbol": "usestate"
+    },
+    {
+      "declarations": [
+        {
+          "category": "function",
+          "file": "global.d.ts",
+          "line": 17047
+        },
+        {
+          "category": "function",
+          "file": "global.d.ts",
+          "line": 17048
+        },
+        {
+          "category": "function",
+          "file": "global.d.ts",
+          "line": 17049
+        }
+      ],
+      "normalizedSymbol": "withanimation"
+    },
+    {
+      "declarations": [
+        {
+          "category": "class",
+          "file": "scripting.d.ts",
+          "line": 9541
+        },
+        {
+          "category": "class",
+          "file": "web-fetch.d.ts",
+          "line": 58
+        }
+      ],
+      "normalizedSymbol": "writablestreamdefaultcontroller"
+    },
+    {
+      "declarations": [
+        {
+          "category": "class",
+          "file": "scripting.d.ts",
+          "line": 9565
+        },
+        {
+          "category": "class",
+          "file": "web-fetch.d.ts",
+          "line": 63
+        }
+      ],
+      "normalizedSymbol": "writablestreamdefaultwriter"
+    },
+    {
+      "declarations": [
+        {
+          "category": "class",
+          "file": "scripting.d.ts",
+          "line": 9544
+        },
+        {
+          "category": "class",
+          "file": "web-fetch.d.ts",
+          "line": 75
+        }
+      ],
+      "normalizedSymbol": "writablestream"
+    },
+    {
+      "declarations": [
+        {
+          "category": "function",
+          "file": "node.d.ts",
+          "line": 455
+        },
+        {
+          "category": "function",
+          "file": "node.d.ts",
+          "line": 456
+        },
+        {
+          "category": "function",
+          "file": "node.d.ts",
+          "line": 475
+        }
+      ],
+      "normalizedSymbol": "writefile"
+    }
+  ],
+  "generatedBy": "Hanlin Phase 0 inventory tooling",
+  "schemaVersion": 1,
+  "summary": {
+    "ambiguousRequiredSourceNames": 8,
+    "brokenDocumentationLinks": 0,
+    "declarationFiles": 5,
+    "declarationSymbols": 2419,
+    "documentationFiles": 942,
+    "documentationMarkdownChinese": 402,
+    "documentationMarkdownEnglish": 402,
+    "documentationRootRelativeFallbacks": 20,
+    "duplicateSymbolNames": 158,
+    "fixtures": 177
+  }
+}

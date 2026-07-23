@@ -1,0 +1,748 @@
+{
+  "$id": "https://hanlin.local/schema/app-manifest-v1.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": true,
+  "properties": {
+    "actions": {
+      "items": {
+        "$ref": "#/$defs/action"
+      },
+      "type": "array"
+    },
+    "apiVersion": {
+      "$ref": "#/$defs/majorMinorVersion"
+    },
+    "appearance": {
+      "$ref": "#/$defs/appearance"
+    },
+    "authors": {
+      "items": {
+        "$ref": "#/$defs/author"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "capabilities": {
+      "items": {
+        "$ref": "#/$defs/capability"
+      },
+      "type": "array"
+    },
+    "category": {
+      "enum": [
+        "assistant",
+        "developer",
+        "education",
+        "health",
+        "knowledge",
+        "media",
+        "productivity",
+        "reference",
+        "utilities",
+        "other"
+      ],
+      "type": "string"
+    },
+    "dependencies": {
+      "items": {
+        "$ref": "#/$defs/dependency"
+      },
+      "type": "array"
+    },
+    "description": {
+      "$ref": "#/$defs/localizedValue"
+    },
+    "distribution": {
+      "$ref": "#/$defs/distribution"
+    },
+    "entryPoints": {
+      "items": {
+        "$ref": "#/$defs/entryPoint"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "extensions": {
+      "items": {
+        "$ref": "#/$defs/extension"
+      },
+      "type": "array"
+    },
+    "icon": {
+      "$ref": "#/$defs/icon"
+    },
+    "id": {
+      "$ref": "#/$defs/identifier"
+    },
+    "implementation": {
+      "$ref": "#/$defs/implementation"
+    },
+    "integrity": {
+      "$ref": "#/$defs/integrity"
+    },
+    "minimumHostVersion": {
+      "$ref": "#/$defs/packageVersion"
+    },
+    "name": {
+      "$ref": "#/$defs/localizedValue"
+    },
+    "routes": {
+      "items": {
+        "$ref": "#/$defs/route"
+      },
+      "type": "array"
+    },
+    "schemaVersion": {
+      "$ref": "#/$defs/majorMinorVersion"
+    },
+    "summary": {
+      "$ref": "#/$defs/localizedValue"
+    },
+    "tools": {
+      "items": {
+        "$ref": "#/$defs/tool"
+      },
+      "type": "array"
+    },
+    "version": {
+      "$ref": "#/$defs/packageVersion"
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "id",
+    "name",
+    "summary",
+    "description",
+    "version",
+    "apiVersion",
+    "icon",
+    "appearance",
+    "category",
+    "implementation",
+    "entryPoints",
+    "routes",
+    "actions",
+    "tools",
+    "capabilities",
+    "dependencies",
+    "extensions",
+    "authors",
+    "distribution"
+  ],
+  "title": "Hanlin application descriptor",
+  "type": "object",
+  "$defs": {
+    "action": {
+      "additionalProperties": true,
+      "properties": {
+        "capabilities": {
+          "items": {
+            "$ref": "#/$defs/identifier"
+          },
+          "type": "array"
+        },
+        "id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "inputSchema": {
+          "$ref": "#/$defs/schema"
+        },
+        "outputSchema": {
+          "$ref": "#/$defs/schema"
+        },
+        "risk": {
+          "$ref": "#/$defs/risk"
+        },
+        "title": {
+          "$ref": "#/$defs/localizedValue"
+        }
+      },
+      "required": [
+        "id",
+        "title",
+        "inputSchema",
+        "capabilities",
+        "risk"
+      ],
+      "type": "object"
+    },
+    "appearance": {
+      "additionalProperties": true,
+      "properties": {
+        "accentHex": {
+          "pattern": "^#[0-9a-fA-F]{6}([0-9a-fA-F]{2})?$",
+          "type": "string"
+        },
+        "preferredColorScheme": {
+          "enum": [
+            "system",
+            "light",
+            "dark"
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "author": {
+      "additionalProperties": true,
+      "properties": {
+        "identifier": {
+          "$ref": "#/$defs/identifier"
+        },
+        "name": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "website": {
+          "format": "uri",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "type": "object"
+    },
+    "capability": {
+      "additionalProperties": true,
+      "properties": {
+        "constraints": {
+          "$ref": "#/$defs/value"
+        },
+        "id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "optional": {
+          "type": "boolean"
+        },
+        "reason": {
+          "$ref": "#/$defs/localizedValue"
+        }
+      },
+      "required": [
+        "id",
+        "reason",
+        "constraints",
+        "optional"
+      ],
+      "type": "object"
+    },
+    "dependency": {
+      "additionalProperties": true,
+      "properties": {
+        "optional": {
+          "type": "boolean"
+        },
+        "packageID": {
+          "$ref": "#/$defs/identifier"
+        },
+        "versions": {
+          "$ref": "#/$defs/versionRange"
+        }
+      },
+      "required": [
+        "packageID",
+        "versions",
+        "optional"
+      ],
+      "type": "object"
+    },
+    "distribution": {
+      "additionalProperties": true,
+      "properties": {
+        "allowedModes": {
+          "items": {
+            "enum": [
+              "personalDevelopment",
+              "enterprise",
+              "testFlight",
+              "appStoreRestricted"
+            ],
+            "type": "string"
+          },
+          "minItems": 1,
+          "type": "array",
+          "uniqueItems": true
+        },
+        "remoteUpdates": {
+          "type": "boolean"
+        },
+        "sourceEditable": {
+          "type": "boolean"
+        },
+        "sourceVisible": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "sourceVisible",
+        "sourceEditable",
+        "remoteUpdates",
+        "allowedModes"
+      ],
+      "type": "object"
+    },
+    "entryPoint": {
+      "additionalProperties": true,
+      "properties": {
+        "allowedContexts": {
+          "items": {
+            "enum": [
+              "mainApplication",
+              "widget",
+              "liveActivity",
+              "controlWidget",
+              "appIntent",
+              "notificationUI",
+              "keyboard",
+              "translationUI",
+              "backgroundTask"
+            ],
+            "type": "string"
+          },
+          "minItems": 1,
+          "type": "array",
+          "uniqueItems": true
+        },
+        "handler": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "kind": {
+          "$ref": "#/$defs/entryPointKind"
+        }
+      },
+      "required": [
+        "kind",
+        "handler",
+        "allowedContexts"
+      ],
+      "type": "object"
+    },
+    "entryPointKind": {
+      "enum": [
+        "app",
+        "assistantTool",
+        "widget",
+        "liveActivity",
+        "controlWidget",
+        "appIntentBridge",
+        "notificationUI",
+        "keyboard",
+        "translationUI",
+        "backgroundTask"
+      ],
+      "type": "string"
+    },
+    "extension": {
+      "additionalProperties": true,
+      "properties": {
+        "entryPoint": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "kind": {
+          "$ref": "#/$defs/entryPointKind"
+        },
+        "requiredCapabilities": {
+          "items": {
+            "$ref": "#/$defs/identifier"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "kind",
+        "entryPoint",
+        "requiredCapabilities"
+      ],
+      "type": "object"
+    },
+    "icon": {
+      "additionalProperties": true,
+      "properties": {
+        "type": {
+          "enum": [
+            "systemSymbol",
+            "asset",
+            "packageResource"
+          ],
+          "type": "string"
+        },
+        "value": {
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "value"
+      ],
+      "type": "object"
+    },
+    "identifier": {
+      "maxLength": 255,
+      "pattern": "^[a-z0-9](?:[a-z0-9]|[._-](?=[a-z0-9]))*[a-z0-9]$|^[a-z0-9]$",
+      "type": "string"
+    },
+    "implementation": {
+      "oneOf": [
+        {
+          "additionalProperties": true,
+          "properties": {
+            "moduleID": {
+              "$ref": "#/$defs/identifier"
+            },
+            "type": {
+              "const": "native"
+            }
+          },
+          "required": [
+            "type",
+            "moduleID"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": true,
+          "properties": {
+            "packageID": {
+              "$ref": "#/$defs/identifier"
+            },
+            "type": {
+              "const": "script"
+            }
+          },
+          "required": [
+            "type",
+            "packageID"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": true,
+          "properties": {
+            "moduleID": {
+              "$ref": "#/$defs/identifier"
+            },
+            "packageID": {
+              "$ref": "#/$defs/identifier"
+            },
+            "type": {
+              "const": "hybrid"
+            }
+          },
+          "required": [
+            "type",
+            "moduleID",
+            "packageID"
+          ],
+          "type": "object"
+        }
+      ]
+    },
+    "integrity": {
+      "additionalProperties": true,
+      "properties": {
+        "algorithm": {
+          "const": "sha256"
+        },
+        "digest": {
+          "pattern": "^[0-9a-f]{64}$",
+          "type": "string"
+        },
+        "signer": {
+          "$ref": "#/$defs/identifier"
+        }
+      },
+      "required": [
+        "algorithm",
+        "digest"
+      ],
+      "type": "object"
+    },
+    "localizedValue": {
+      "additionalProperties": true,
+      "properties": {
+        "fallbackLocale": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "values": {
+          "additionalProperties": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "minProperties": 1,
+          "type": "object"
+        }
+      },
+      "required": [
+        "values",
+        "fallbackLocale"
+      ],
+      "type": "object"
+    },
+    "majorMinorVersion": {
+      "pattern": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)$",
+      "type": "string"
+    },
+    "packageVersion": {
+      "pattern": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)(-[0-9A-Za-z-]+(?:\\.[0-9A-Za-z-]+)*)?(\\+[0-9A-Za-z-]+(?:\\.[0-9A-Za-z-]+)*)?$",
+      "type": "string"
+    },
+    "risk": {
+      "enum": [
+        "passive",
+        "read",
+        "sensitiveRead",
+        "write",
+        "destructive",
+        "privileged"
+      ],
+      "type": "string"
+    },
+    "route": {
+      "additionalProperties": true,
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "parameterSchema": {
+          "$ref": "#/$defs/schema"
+        },
+        "requiredCapabilities": {
+          "items": {
+            "$ref": "#/$defs/identifier"
+          },
+          "type": "array"
+        },
+        "title": {
+          "$ref": "#/$defs/localizedValue"
+        }
+      },
+      "required": [
+        "id",
+        "title",
+        "parameterSchema",
+        "requiredCapabilities"
+      ],
+      "type": "object"
+    },
+    "schema": {
+      "additionalProperties": true,
+      "properties": {
+        "additionalProperties": {
+          "type": "boolean"
+        },
+        "items": {
+          "$ref": "#/$defs/schema"
+        },
+        "maxBytes": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "maxItems": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "maxLength": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "maximum": {
+          "type": "number"
+        },
+        "minItems": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "minLength": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "minimum": {
+          "type": "number"
+        },
+        "pattern": {
+          "type": "string"
+        },
+        "properties": {
+          "additionalProperties": {
+            "$ref": "#/$defs/schema"
+          },
+          "type": "object"
+        },
+        "required": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array",
+          "uniqueItems": true
+        },
+        "schemas": {
+          "items": {
+            "$ref": "#/$defs/schema"
+          },
+          "minItems": 1,
+          "type": "array"
+        },
+        "type": {
+          "enum": [
+            "any",
+            "null",
+            "boolean",
+            "integer",
+            "number",
+            "string",
+            "data",
+            "array",
+            "object",
+            "oneOf",
+            "enumeration"
+          ],
+          "type": "string"
+        },
+        "values": {
+          "items": {
+            "$ref": "#/$defs/value"
+          },
+          "minItems": 1,
+          "type": "array"
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "type": "object"
+    },
+    "tool": {
+      "additionalProperties": true,
+      "properties": {
+        "capabilities": {
+          "items": {
+            "$ref": "#/$defs/identifier"
+          },
+          "type": "array"
+        },
+        "id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "inputSchema": {
+          "$ref": "#/$defs/schema"
+        },
+        "outputSchema": {
+          "$ref": "#/$defs/schema"
+        },
+        "owner": {
+          "$ref": "#/$defs/toolOwner"
+        },
+        "presentation": {
+          "additionalProperties": true,
+          "properties": {
+            "compactStyle": {
+              "enum": [
+                "automatic",
+                "text",
+                "entity",
+                "search",
+                "error"
+              ],
+              "type": "string"
+            },
+            "supportsExpandedPresentation": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "compactStyle",
+            "supportsExpandedPresentation"
+          ],
+          "type": "object"
+        },
+        "risk": {
+          "$ref": "#/$defs/risk"
+        },
+        "summary": {
+          "$ref": "#/$defs/localizedValue"
+        },
+        "title": {
+          "$ref": "#/$defs/localizedValue"
+        }
+      },
+      "required": [
+        "id",
+        "owner",
+        "title",
+        "summary",
+        "inputSchema",
+        "capabilities",
+        "risk",
+        "presentation"
+      ],
+      "type": "object"
+    },
+    "toolOwner": {
+      "additionalProperties": true,
+      "properties": {
+        "identifier": {
+          "$ref": "#/$defs/identifier"
+        },
+        "type": {
+          "enum": [
+            "system",
+            "app",
+            "module",
+            "package",
+            "mcpServer"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "type": "object"
+    },
+    "value": {
+      "additionalProperties": true,
+      "properties": {
+        "type": {
+          "enum": [
+            "null",
+            "bool",
+            "integer",
+            "number",
+            "string",
+            "data",
+            "array",
+            "object"
+          ],
+          "type": "string"
+        },
+        "value": {}
+      },
+      "required": [
+        "type"
+      ],
+      "type": "object"
+    },
+    "versionRange": {
+      "additionalProperties": true,
+      "properties": {
+        "maximum": {
+          "$ref": "#/$defs/packageVersion"
+        },
+        "minimum": {
+          "$ref": "#/$defs/packageVersion"
+        }
+      },
+      "required": [
+        "minimum"
+      ],
+      "type": "object"
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "baselineID": "scripting-compat-2026-07-22-8d7d33d9369e",
+  "driftPolicy": {
+    "hideDifferences": false,
+    "phase0Action": "record",
+    "phase6Action": "run-separate-conformance-lanes"
+  },
+  "profiles": [
+    {
+      "declarations": [
+        "Types/global.d.ts",
+        "Types/node.d.ts",
+        "Types/safari-ext.d.ts",
+        "Types/scripting.d.ts",
+        "Types/web-fetch.d.ts"
+      ],
+      "id": "scripting-original",
+      "immutable": true,
+      "runtimePackagingStatus": "metadata-only-in-phase-0",
+      "source": "Original/Compiler/tsconfig.json",
+      "typescriptVersion": "7.0.2"
+    },
+    {
+      "id": "hanlin-embedded",
+      "immutable": false,
+      "runtimePackagingStatus": "existing-runtime-compiler",
+      "source": "RuntimeDependencies.lock.json",
+      "typescriptVersion": "6.0.3"
+    }
+  ],
+  "schemaVersion": 1
+}

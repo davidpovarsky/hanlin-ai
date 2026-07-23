@@ -113,6 +113,9 @@ Thumbs.db
 *.plist.bak
 *secrets*
 *config.json
+# Authorized immutable Scripting compatibility inputs are hash-verified data.
+!Reference/ScriptingCompatibility/Original/Compiler/tsconfig.json
+!Reference/ScriptingCompatibility/Original/Examples/**/tsconfig.json
 Config.xcconfig
 Vendor/NodeMobile/NodeMobile.xcframework/
 Vendor/NodeMobile/NODE_LICENSE.generated.txt

@@ -1,0 +1,3 @@
+# Preserve the authorized Scripting baseline bytes and accept their original
+# whitespace without weakening checks elsewhere in the repository.
+Reference/ScriptingCompatibility/** -text -whitespace

@@ -1,0 +1,66 @@
+{
+  "baselineID": "scripting-compat-2026-07-22-8d7d33d9369e",
+  "files": [
+    {
+      "bytes": 702176,
+      "imports": [
+        "scripting",
+        "very far apart"
+      ],
+      "lineCount": 18776,
+      "path": "Original/Types/global.d.ts",
+      "sha256": "f3d06e3b200a0cc2f4e731b63c367f303f3ee879016d9bd25a892b1188d74b33"
+    },
+    {
+      "bytes": 40903,
+      "imports": [
+        "buffer",
+        "crypto",
+        "events",
+        "fs",
+        "http",
+        "https",
+        "os",
+        "querystring",
+        "stream",
+        "string_decoder",
+        "timers",
+        "url",
+        "util",
+        "vm",
+        "zlib"
+      ],
+      "lineCount": 955,
+      "path": "Original/Types/node.d.ts",
+      "sha256": "05be426cfb2493524d8ef5a167f9e30128257457289b6c14a87a14c23d5f0602"
+    },
+    {
+      "bytes": 12670,
+      "imports": [],
+      "lineCount": 384,
+      "path": "Original/Types/safari-ext.d.ts",
+      "sha256": "b86c4909673f425deb596e67c328cacad2f43022aa12ece1a03aee0e464815ae"
+    },
+    {
+      "bytes": 454206,
+      "imports": [
+        "12:00",
+        "scripting"
+      ],
+      "lineCount": 11839,
+      "path": "Original/Types/scripting.d.ts",
+      "sha256": "0dd028697d487ae23ac5625e718fd8af0af0a3f7a295fb753f7a1a1d3277ede2"
+    },
+    {
+      "bytes": 16789,
+      "imports": [
+        "scripting"
+      ],
+      "lineCount": 419,
+      "path": "Original/Types/web-fetch.d.ts",
+      "sha256": "d93cf87b1e46c33c6e672d3fc451f9cfa35f7bae490065b9a7f26b0b08d16938"
+    }
+  ],
+  "parser": "hanlin-phase0-declaration-lexer-v1",
+  "schemaVersion": 1
+}

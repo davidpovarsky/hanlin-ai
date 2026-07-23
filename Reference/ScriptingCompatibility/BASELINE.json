@@ -1,0 +1,45 @@
+{
+  "aggregateSHA256": "8d7d33d9369ee555d15adf10c867abbfb85834eced7e7596a627b70ff627ff36",
+  "authorizedForDirectUse": true,
+  "baselineID": "scripting-compat-2026-07-22-8d7d33d9369e",
+  "declarationHeaderVersion": "1.1.1",
+  "fileCounts": {
+    "byCategory": {
+      "compiler": 3,
+      "declaration": 5,
+      "documentation": 942,
+      "example": 49
+    },
+    "byLanguage": {
+      "en": 402,
+      "json": 8,
+      "markdown": 5,
+      "tsx": 155,
+      "typescript": 27,
+      "zh": 402
+    },
+    "total": 999
+  },
+  "generatedAt": "2026-07-22T15:07:41.315Z",
+  "generationTimestampPolicy": "latest-imported-source-mtime",
+  "schemaVersion": 1,
+  "sourceObservations": {
+    "excludedUnderApprovedRoots": 1,
+    "inspectedDirectories": 507,
+    "inspectedFiles": 2076,
+    "reparsePoints": 0,
+    "requiredCandidateCounts": {
+      "global.d.ts": 2,
+      "node.d.ts": 2,
+      "package-lock.json": 2,
+      "package.json": 2,
+      "safari-ext.d.ts": 2,
+      "scripting.d.ts": 2,
+      "tsconfig.json": 3,
+      "web-fetch.d.ts": 2
+    }
+  },
+  "sourceRootForImportRecord": "C:\\Users\\DAVID\\Code\\ScriptingProjects",
+  "sourceRootRole": "provenance-only",
+  "typescriptPackageVersion": "7.0.2"
+}
