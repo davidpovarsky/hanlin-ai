@@ -445,6 +445,7 @@ enum MCPRuntimeAcceptance {
                 || error.localizedDescription.contains("reachable_external_executable")
         }
         _ = try await registry.remove(id: importDescriptor.id)
+        _ = try await registry.remove(id: blockedDescriptor.id)
         return (true, executionBlocked)
     }
 
