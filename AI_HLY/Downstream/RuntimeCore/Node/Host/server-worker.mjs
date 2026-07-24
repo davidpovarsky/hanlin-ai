@@ -1,6 +1,8 @@
 import { parentPort, workerData } from 'node:worker_threads';
 import * as nodeModule from 'node:module';
+import { Console } from 'node:console';
 import { readFileSync, promises as fs } from 'node:fs';
+import { PassThrough, Writable } from 'node:stream';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import path from 'node:path';
 import ts from 'typescript';
@@ -23,6 +25,30 @@ if (typeof nodeModule.registerHooks !== 'function') {
 // entry points, so present the selected package file exactly as a direct Node
 // launch would; argv[2...] remains the validated server arguments.
 process.argv[1] = entryPoint;
+
+const workerStdin = new PassThrough();
+const workerStdout = portWritable('stdout');
+const workerStderr = portWritable('stderr');
+Object.defineProperties(process, {
+  stdin: { configurable: true, enumerable: true, value: workerStdin },
+  stdout: { configurable: true, enumerable: true, value: workerStdout },
+  stderr: { configurable: true, enumerable: true, value: workerStderr },
+});
+globalThis.console = new Console({
+  stdout: workerStdout,
+  stderr: workerStderr,
+});
+const handleHostMessage = message => {
+  if (message?.type === 'stdio-input') {
+    workerStdin.write(Buffer.from(message.data));
+  }
+  if (message?.type === 'stdio-end') {
+    workerStdin.end();
+    parentPort?.off('message', handleHostMessage);
+    parentPort?.unref();
+  }
+};
+parentPort?.on('message', handleHostMessage);
 
 const inspectedSources = new Set();
 globalThis[Symbol.for('hanlin.mcp.blockChildProcess')] = operation => {
@@ -144,9 +170,6 @@ if (useESM) {
 }
 
 parentPort?.postMessage({ type: 'loaded', modulePolicyHooksAvailable: true });
-// stdin is the lifetime of an MCP stdio server. The diagnostics port must not
-// keep the Worker alive after the host closes stdin during Stop.
-parentPort?.unref();
 
 function deny(code, specifier, parentURL, resolvedURL = null, operation = null) {
   const access = {
@@ -215,6 +238,23 @@ function installChildProcessPolicy() {
       Symbol.for('hanlin.mcp.blockChildProcess')
     ]('ChildProcess.prototype.spawn'),
     writable: false,
+  });
+}
+
+function portWritable(channel) {
+  return new Writable({
+    write(chunk, _encoding, callback) {
+      try {
+        parentPort?.postMessage({
+          type: 'stdio-output',
+          channel,
+          data: Buffer.from(chunk),
+        });
+        callback();
+      } catch (error) {
+        callback(error);
+      }
+    },
   });
 }
 

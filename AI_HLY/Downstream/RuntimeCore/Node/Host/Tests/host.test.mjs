@@ -23,13 +23,20 @@ test('worker stdin and stdout remain isolated for multiple servers', async () =>
   `);
   const create = () => new Worker(workerURL, {
     workerData: { packageRoot: root, entryPoint: path.join(root, 'server.mjs') },
-    stdin: true, stdout: true, stderr: true,
   });
   const first = create();
   const second = create();
-  const read = worker => new Promise(resolve => worker.stdout.once('data', data => resolve(data.toString('utf8').trim())));
+  const read = worker => new Promise(resolve => {
+    const receive = message => {
+      if (message?.type !== 'stdio-output' || message.channel !== 'stdout') return;
+      worker.off('message', receive);
+      resolve(Buffer.from(message.data).toString('utf8').trim());
+    };
+    worker.on('message', receive);
+  });
   const firstRead = read(first); const secondRead = read(second);
-  first.stdin.write('{"id":1}\n'); second.stdin.write('{"id":2}\n');
+  first.postMessage({ type: 'stdio-input', data: Buffer.from('{"id":1}\n') });
+  second.postMessage({ type: 'stdio-input', data: Buffer.from('{"id":2}\n') });
   assert.equal(await firstRead, '{"id":1}');
   assert.equal(await secondRead, '{"id":2}');
   await Promise.all([first.terminate(), second.terminate()]);

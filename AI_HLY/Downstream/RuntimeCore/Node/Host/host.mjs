@@ -237,10 +237,12 @@ const server = http.createServer(async (request, response) => {
     if (request.method === 'POST' && action === 'stdin') {
       const body = await readJSON(request);
       const state = servers.get(id);
-      if (!state?.worker.stdin) return json(response, 409, { error: 'Server is not running' });
+      if (!state || state.finalized || state.stdinEnded) {
+        return json(response, 409, { error: 'Server is not running' });
+      }
       const data = Buffer.from(body.data ?? '', 'base64');
       if (data.length > maximumLine) return json(response, 413, { error: 'Input is too large' });
-      await new Promise((resolve, reject) => state.worker.stdin.write(data, error => error ? reject(error) : resolve()));
+      state.worker.postMessage({ type: 'stdio-input', data });
       return json(response, 200, { accepted: data.length });
     }
     if (request.method === 'GET' && action === 'events') return attachEvents(id, request, response);
@@ -476,9 +478,6 @@ async function startServer(id, configuration) {
     workerData: { serverID: id, packageRoot, entryPoint },
     argv: Array.isArray(configuration.arguments) ? configuration.arguments : [],
     env: { ...process.env, ...(configuration.environment ?? {}), HANLIN_MCP_SERVER_ID: id },
-    stdin: true,
-    stdout: true,
-    stderr: true,
   });
   state.worker = worker;
   servers.set(id, state);
@@ -503,7 +502,6 @@ async function startServer(id, configuration) {
     serverCounters.activeWorkerCount,
   );
   lifecycleCountersByServer.set(id, serverCounters);
-  state.handlers.stdout = chunk => handleStdout(state, chunk);
   state.handlers.stderr = chunk => {
     const message = redact(chunk.toString('utf8')).slice(0, maximumLine);
     state.stderr.push(message);
@@ -511,6 +509,12 @@ async function startServer(id, configuration) {
     emit(state, 'stderr', { text: message });
   };
   state.handlers.message = message => {
+    if (message?.type === 'stdio-output') {
+      const chunk = Buffer.from(message.data);
+      if (message.channel === 'stderr') state.handlers.stderr(chunk);
+      else handleStdout(state, chunk);
+      return;
+    }
     if (message?.type === 'module-edge') state.moduleEdges.push(message);
     if (message?.type === 'policy-blocked') state.blockedAccesses.push(message);
     if (message?.type === 'loaded' && state.state === 'starting') {
@@ -543,8 +547,6 @@ async function startServer(id, configuration) {
     }
     void handleWorkerExit(state, code);
   };
-  worker.stdout.on('data', state.handlers.stdout);
-  worker.stderr.on('data', state.handlers.stderr);
   worker.on('message', state.handlers.message);
   worker.on('error', state.handlers.error);
   worker.on('exit', state.handlers.exit);
@@ -581,7 +583,7 @@ function stopServerState(state, options = {}) {
     finishEventClients(state, 'stopping');
     if (!state.stdinEnded) {
       state.stdinEnded = true;
-      try { state.worker.stdin?.end(); } catch (error) {
+      try { state.worker.postMessage({ type: 'stdio-end' }); } catch (error) {
         diagnostic('server_stdin_end_failed', {
           serverID: state.id,
           generation: state.generation,
@@ -681,8 +683,6 @@ async function finalizeServerState(state, result) {
   finishEventClients(state, result.state);
   state.pending = Buffer.alloc(0);
   state.stderr = [];
-  if (state.handlers.stdout) state.worker.stdout?.off('data', state.handlers.stdout);
-  if (state.handlers.stderr) state.worker.stderr?.off('data', state.handlers.stderr);
   if (state.handlers.message) state.worker.off('message', state.handlers.message);
   if (state.handlers.error) state.worker.off('error', state.handlers.error);
   if (state.handlers.exit) state.worker.off('exit', state.handlers.exit);

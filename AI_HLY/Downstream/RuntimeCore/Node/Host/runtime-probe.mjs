@@ -51,32 +51,35 @@ async function runMCPRuntimeProbeAttempt(options) {
       },
       argv: validatedArguments(options.arguments),
       env: sanitizedEnvironment(workspace, options.environment),
-      stdin: true,
-      stdout: true,
-      stderr: true,
     });
 
-    const events = createWorkerEvents(worker, { moduleEdges, blockedAccesses, dynamicModules });
     const responses = createResponseQueue();
-    worker.stdout.on('data', chunk => {
-      outputBytes += chunk.length;
-      if (outputBytes > maximumOutputBytes) {
-        responses.fail(new Error('Runtime probe output exceeded its limit.'));
-        return;
-      }
-      stdoutBuffer = Buffer.concat([stdoutBuffer, chunk]);
-      let newline;
-      while ((newline = stdoutBuffer.indexOf(0x0a)) >= 0) {
-        const line = stdoutBuffer.subarray(0, newline).toString('utf8').trim();
-        stdoutBuffer = stdoutBuffer.subarray(newline + 1);
-        if (!line) continue;
-        try { responses.push(JSON.parse(line)); } catch { /* diagnostic stdout is not MCP traffic */ }
-      }
-    });
-    worker.stderr.on('data', chunk => {
-      outputBytes += chunk.length;
-      if (Buffer.byteLength(stderr) < maximumOutputBytes) stderr += chunk.toString('utf8');
-      if (outputBytes > maximumOutputBytes) responses.fail(new Error('Runtime probe output exceeded its limit.'));
+    const events = createWorkerEvents(worker, {
+      moduleEdges,
+      blockedAccesses,
+      dynamicModules,
+      output(channel, data) {
+        const chunk = Buffer.from(data);
+        outputBytes += chunk.length;
+        if (outputBytes > maximumOutputBytes) {
+          responses.fail(new Error('Runtime probe output exceeded its limit.'));
+          return;
+        }
+        if (channel === 'stderr') {
+          if (Buffer.byteLength(stderr) < maximumOutputBytes) {
+            stderr += chunk.toString('utf8');
+          }
+          return;
+        }
+        stdoutBuffer = Buffer.concat([stdoutBuffer, chunk]);
+        let newline;
+        while ((newline = stdoutBuffer.indexOf(0x0a)) >= 0) {
+          const line = stdoutBuffer.subarray(0, newline).toString('utf8').trim();
+          stdoutBuffer = stdoutBuffer.subarray(newline + 1);
+          if (!line) continue;
+          try { responses.push(JSON.parse(line)); } catch { /* diagnostic stdout is not MCP traffic */ }
+        }
+      },
     });
     worker.once('error', error => { events.fail(error); responses.fail(error); });
     worker.once('exit', code => {
@@ -163,6 +166,10 @@ function shouldRetryInternalLoaderFailure(result) {
 function createWorkerEvents(worker, state) {
   const loaded = deferred();
   worker.on('message', message => {
+    if (message?.type === 'stdio-output') {
+      state.output(message.channel, message.data);
+      return;
+    }
     if (message?.type === 'loaded') loaded.resolve(message);
     if (message?.type === 'module-edge') state.moduleEdges.push({
       parentPath: message.parentPath ?? null,
@@ -236,13 +243,16 @@ function importChain(edges, entryPoint, parentPath, specifier) {
 }
 
 function writeMessage(worker, message) {
-  worker.stdin.write(`${JSON.stringify(message)}\n`);
+  worker.postMessage({
+    type: 'stdio-input',
+    data: Buffer.from(`${JSON.stringify(message)}\n`),
+  });
 }
 
 async function stopWorker(worker) {
   if (worker.threadId === -1) return { stopped: true, graceful: true };
   const exited = new Promise(resolve => worker.once('exit', code => resolve({ code })));
-  try { worker.stdin?.end(); } catch { /* forced termination remains available */ }
+  try { worker.postMessage({ type: 'stdio-end' }); } catch { /* forced termination remains available */ }
   const gracefulExit = await settleWithin(exited, 1_000);
   if (gracefulExit || worker.threadId === -1) {
     return { stopped: true, graceful: true };
