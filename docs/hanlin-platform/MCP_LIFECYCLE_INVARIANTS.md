@@ -2,8 +2,9 @@
 
 ## Ownership
 
-- The registry owns installed definitions; lifecycle code never deletes or
-  rewrites them.
+- The registry owns installed definitions. Lifecycle cleanup never deletes
+  them; the only automatic rewrite is an idempotent canonical path migration
+  persisted before Start.
 - `MCPRuntimeController` owns one runtime slot per server ID.
 - A slot owns at most one client session, transport, tool-change task,
   lifecycle task, and active generation.
@@ -65,3 +66,17 @@ classified as requiring an app restart.
   produced by uninstall.
 - A load failure preserves the in-memory server list and blocks automatic
   persistence until an explicit retry succeeds.
+
+## Package-path and multi-server isolation
+
+- `MCPServerPathResolver` derives the canonical root from the server UUID,
+  validates a relative entry point, rejects traversal and symlink escape, and
+  persists corrected absolute compatibility fields before Start.
+- Registry paths from an old iOS application-container UUID are locators to
+  migrate, never runtime authority.
+- A missing directory or entry point marks only that server as requiring
+  repair. The descriptor, environment references, and chat selections remain.
+- Schema resolution records success or failure per selected server. A failed
+  server never removes catalog entries or schemas from another server.
+- Catalog removal clears live availability while retaining the last known
+  tool route needed to lazily restart only the server targeted by a Tool Call.

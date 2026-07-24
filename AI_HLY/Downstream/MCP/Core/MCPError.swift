@@ -15,6 +15,12 @@ enum MCPError: LocalizedError, Sendable {
     case archiveTooLarge
     case unsafeArchivePath
     case secretUnavailable
+    case packageRootInvalid
+    case packageDirectoryMissing
+    case entryPointInvalid
+    case entryPointMissing
+    case registryMigrationFailed(String)
+    case runtimeStartFailed(String)
 
     var errorDescription: String? {
         switch self {
@@ -32,6 +38,12 @@ enum MCPError: LocalizedError, Sendable {
         case .archiveTooLarge: "The package archive exceeds the allowed size."
         case .unsafeArchivePath: "The archive contains an unsafe path."
         case .secretUnavailable: "A required secret could not be read from Keychain."
+        case .packageRootInvalid: "The installed MCP package path is invalid."
+        case .packageDirectoryMissing: "The installed MCP package directory is missing."
+        case .entryPointInvalid: "The MCP server entry point is invalid."
+        case .entryPointMissing: "The MCP server entry point is missing."
+        case .registryMigrationFailed(let reason): "The MCP registry path migration failed: \(reason)"
+        case .runtimeStartFailed(let reason): "The MCP server could not start: \(reason)"
         }
     }
 }

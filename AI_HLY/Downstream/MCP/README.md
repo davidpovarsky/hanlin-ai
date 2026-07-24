@@ -33,6 +33,15 @@ Two corrupt copies produce a typed persistence failure instead of an empty
 server list. Saves round-trip-decode before an atomic backup-first,
 primary-second replacement, so at least one verified copy remains available.
 
+The installed package root is derived from the stable server UUID under
+`Application Support/HanlinRuntime/v1/packages/mcp`, never trusted from an
+absolute registry value. Entry points persist a validated package-relative
+path. On load and before Start, legacy descriptors from `HanlinMCP/servers`,
+older app-container UUIDs, and the former nested `package` layout are migrated
+idempotently and saved before Node receives a configuration. Missing or unsafe
+installations remain registered and selected, but enter a typed repair-required
+state instead of being started.
+
 ## Lifecycle and process policy
 
 Each server ID has one actor-isolated lifecycle slot, one generation, and one

@@ -60,6 +60,12 @@ struct MCPServerDiagnosticsView: View {
                 if let message = status.message {
                     Text(message).font(.caption).foregroundStyle(.red)
                 }
+                if let failure = status.failure {
+                    LabeledContent(
+                        MCPL10n.string("Error code"),
+                        value: failure.kind.rawValue
+                    )
+                }
                 HStack {
                     Button(MCPL10n.string("Start")) { Task { await provider.start(server) } }
                         .disabled(!canStart)
@@ -78,6 +84,44 @@ struct MCPServerDiagnosticsView: View {
                 NavigationLink(MCPL10n.string("View logs")) {
                     MCPServerLogsView(server: server)
                 }
+            }
+            Section(MCPL10n.string("Package path diagnostics")) {
+                LabeledContent(
+                    MCPL10n.string("Server ID"),
+                    value: pathDiagnostics.serverID.uuidString.lowercased()
+                )
+                LabeledContent(
+                    MCPL10n.string("Package name"),
+                    value: pathDiagnostics.packageName
+                )
+                diagnosticPath(
+                    MCPL10n.string("Saved package root"),
+                    pathDiagnostics.persistedPackageRoot
+                )
+                diagnosticPath(
+                    MCPL10n.string("Expected package root"),
+                    pathDiagnostics.expectedCanonicalPackageRoot
+                )
+                diagnosticPath(
+                    MCPL10n.string("Saved entry point"),
+                    pathDiagnostics.persistedEntryPoint
+                )
+                diagnosticPath(
+                    MCPL10n.string("Relative entry point"),
+                    pathDiagnostics.derivedRelativeEntryPoint ?? MCPL10n.string("Unavailable")
+                )
+                LabeledContent(
+                    MCPL10n.string("Package directory exists"),
+                    value: yesNo(pathDiagnostics.packageDirectoryExists)
+                )
+                LabeledContent(
+                    MCPL10n.string("Entry point exists"),
+                    value: yesNo(pathDiagnostics.entryPointExists)
+                )
+                LabeledContent(
+                    MCPL10n.string("Paths remain inside package"),
+                    value: yesNo(pathDiagnostics.canonicalEntryPointIsInsideRoot)
+                )
             }
             Section {
                 Toggle(MCPL10n.string("Preload when the app opens"), isOn: $preloadOnLaunch)
@@ -100,6 +144,22 @@ struct MCPServerDiagnosticsView: View {
             state: .stopped,
             toolCount: 0
         )
+    }
+
+    private var pathDiagnostics: MCPServerPathDiagnostics {
+        MCPServerPathResolver().diagnostics(for: server)
+    }
+
+    @ViewBuilder
+    private func diagnosticPath(_ title: String, _ value: String) -> some View {
+        VStack(alignment: .leading, spacing: 4) {
+            Text(title).font(.caption).foregroundStyle(.secondary)
+            Text(value).font(.caption.monospaced()).textSelection(.enabled)
+        }
+    }
+
+    private func yesNo(_ value: Bool) -> String {
+        value ? MCPL10n.string("Yes") : MCPL10n.string("No")
     }
 
     private var canStart: Bool {

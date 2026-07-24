@@ -60,6 +60,11 @@ struct MCPRuntimeAcceptanceResult: Codable, Sendable {
     let healthCancellationPreserved: Bool
     let oldRegistryDecoded: Bool
     let backupRecoveryPassed: Bool
+    let pathMigrationPassed: Bool
+    let partialFailureIsolationPassed: Bool
+    let toolCallLazyRecoveryPassed: Bool
+    let multiServerCollectionPassed: Bool
+    let serverToolCounts: [String: Int]
     let failureMessage: String?
 }
 
@@ -96,10 +101,17 @@ enum MCPRuntimeAcceptance {
         var healthCancellationPreserved = false
         var oldRegistryDecoded = false
         var backupRecoveryPassed = false
+        var pathMigrationPassed = false
+        var partialFailureIsolationPassed = false
+        var toolCallLazyRecoveryPassed = false
+        var multiServerCollectionPassed = false
+        var serverToolCounts: [String: Int] = [:]
         var failureMessage: String?
 
         do {
             try await core.prepareStorage()
+            try await MCPServerPathResolverAcceptance.run()
+            pathMigrationPassed = true
             await provider.loadIfNeeded(startHost: false)
             guard provider.persistentLoadState == .loaded else {
                 throw RuntimeCoreError.runtimeFailure(
@@ -141,6 +153,36 @@ enum MCPRuntimeAcceptance {
             }
             harmlessToolSucceeded = true
 
+            var brokenSequential = installed.descriptor
+            brokenSequential.id = UUID()
+            brokenSequential.slug = "modelcontextprotocol_server_sequential_thinking"
+            brokenSequential.displayName = "@modelcontextprotocol/server-sequential-thinking"
+            brokenSequential.packageName = "@modelcontextprotocol/server-sequential-thinking"
+            brokenSequential.resolvedVersion = "2026.7.4"
+            brokenSequential.entryPointRelativePath = nil
+            brokenSequential.packageRoot = fileLayout.staging.appending(
+                path: "invalid-sequential/package",
+                directoryHint: .isDirectory
+            ).path
+            brokenSequential.entryPoint = fileLayout.staging.appending(
+                path: "invalid-sequential/package/dist/index.js"
+            ).path
+            _ = try await registry.upsert(brokenSequential)
+            let partialResult = await controller.resolveToolDescriptors(
+                serverIDs: [installed.descriptor.id, brokenSequential.id]
+            )
+            partialFailureIsolationPassed =
+                partialResult.descriptors.contains { $0.serverID == installed.descriptor.id }
+                && partialResult.failures.count == 1
+                && partialResult.failures.first?.serverID == brokenSequential.id
+            _ = try await registry.remove(id: brokenSequential.id)
+
+            await controller.stop(serverID: installed.descriptor.id)
+            let recoveredOutput = try await controller.call(
+                exposedName: echo.exposedName,
+                argumentsJSON: #"{"message":"Hanlin lazy tool recovery"}"#
+            )
+            toolCallLazyRecoveryPassed = !recoveredOutput.isError
             await controller.stop(serverID: installed.descriptor.id)
             let generationBeforeDuplicateStart = await controller.statuses()[installed.descriptor.id]?.generation
             async let firstStart = controller.ensureRunning(
@@ -217,6 +259,22 @@ enum MCPRuntimeAcceptance {
             ]
             maximumConcurrentWorkers = serverLifecycle?.maximumSimultaneousWorkers ?? .max
             forcedTerminationCount = serverLifecycle?.forcedTerminationCount ?? .max
+            let multiServerResult = try await exercisePinnedMultiServerCollection(
+                primary: installed.descriptor,
+                service: service,
+                registry: registry,
+                controller: controller,
+                progressRecorder: progressRecorder
+            )
+            serverToolCounts = multiServerResult.counts
+            partialFailureIsolationPassed =
+                partialFailureIsolationPassed
+                && multiServerResult.partialFailurePassed
+            multiServerCollectionPassed = [
+                "@modelcontextprotocol/server-everything",
+                "@modelcontextprotocol/server-memory",
+                "@modelcontextprotocol/server-sequential-thinking"
+            ].allSatisfy { (serverToolCounts[$0] ?? 0) > 0 }
             try await service.commit(installed)
         } catch {
             failureMessage = error.localizedDescription
@@ -269,13 +327,17 @@ enum MCPRuntimeAcceptance {
             && healthCancellationPreserved
             && oldRegistryDecoded
             && backupRecoveryPassed
+            && pathMigrationPassed
+            && partialFailureIsolationPassed
+            && toolCallLazyRecoveryPassed
+            && multiServerCollectionPassed
             && !clientStdioLoaded
             && !crossSpawnLoaded
             && !childProcessResolved
             && terminalErrorCount == 0
 
         let result = MCPRuntimeAcceptanceResult(
-            schemaVersion: 2,
+            schemaVersion: 3,
             generatedAt: .now,
             passed: passed,
             nodeVersion: snapshot.version,
@@ -308,6 +370,11 @@ enum MCPRuntimeAcceptance {
             healthCancellationPreserved: healthCancellationPreserved,
             oldRegistryDecoded: oldRegistryDecoded,
             backupRecoveryPassed: backupRecoveryPassed,
+            pathMigrationPassed: pathMigrationPassed,
+            partialFailureIsolationPassed: partialFailureIsolationPassed,
+            toolCallLazyRecoveryPassed: toolCallLazyRecoveryPassed,
+            multiServerCollectionPassed: multiServerCollectionPassed,
+            serverToolCounts: serverToolCounts,
             failureMessage: failureMessage
         )
 
@@ -381,6 +448,125 @@ enum MCPRuntimeAcceptance {
         return (true, executionBlocked)
     }
 
+    private static func exercisePinnedMultiServerCollection(
+        primary: MCPServerDescriptor,
+        service: MCPPackageInstallService,
+        registry: MCPServerRegistryStore,
+        controller: MCPRuntimeController,
+        progressRecorder: MCPAcceptanceProgressRecorder
+    ) async throws -> (counts: [String: Int], partialFailurePassed: Bool) {
+        let packageNames = [
+            "@modelcontextprotocol/server-memory",
+            "@modelcontextprotocol/server-sequential-thinking"
+        ]
+        var installations: [MCPPackageInstallation] = []
+        do {
+            for packageName in packageNames {
+                let spec = try MCPPackageSpec("\(packageName)@\(packageVersion)")
+                let installation = try await service.install(
+                    spec,
+                    entryPointOverride: "dist/index.js"
+                ) { progress in
+                    await progressRecorder.record(progress)
+                }
+                installations.append(installation)
+                _ = try await registry.upsert(installation.descriptor)
+            }
+
+            let descriptors = [primary] + installations.map(\.descriptor)
+            let result = await controller.resolveToolDescriptors(
+                serverIDs: Set(descriptors.map(\.id))
+            )
+            guard result.failures.isEmpty else {
+                let messages = result.failures.map {
+                    "\($0.packageName): \($0.errorCode): \($0.message)"
+                }
+                throw RuntimeCoreError.runtimeFailure(messages.joined(separator: "; "))
+            }
+            var counts: [String: Int] = [:]
+            for descriptor in descriptors {
+                counts[descriptor.packageName] = result.descriptors.filter {
+                    $0.serverID == descriptor.id
+                }.count
+            }
+            guard counts.values.allSatisfy({ $0 > 0 }) else {
+                throw RuntimeCoreError.runtimeFailure(
+                    "One or more pinned MCP servers returned no tools: \(counts)"
+                )
+            }
+
+            let serverA = primary
+            let serverB = installations[0].descriptor
+            var serverC = installations[1].descriptor
+            serverC.id = UUID()
+            serverC.displayName = "Invalid MCP fixture"
+            serverC.packageName = "invalid-mcp-fixture"
+            serverC.entryPointRelativePath = nil
+            serverC.packageRoot = MCPFileLayout.default.staging.appending(
+                path: "invalid-\(serverC.id.uuidString.lowercased())",
+                directoryHint: .isDirectory
+            ).path
+            serverC.entryPoint = URL(
+                fileURLWithPath: serverC.packageRoot,
+                isDirectory: true
+            ).appending(path: "dist/index.js").path
+            _ = try await registry.upsert(serverC)
+
+            let aOnly = await controller.resolveToolDescriptors(serverIDs: [serverA.id])
+            let bOnly = await controller.resolveToolDescriptors(serverIDs: [serverB.id])
+            let cOnly = await controller.resolveToolDescriptors(serverIDs: [serverC.id])
+            let aAndC = await controller.resolveToolDescriptors(
+                serverIDs: [serverA.id, serverC.id]
+            )
+            let allWithC = await controller.resolveToolDescriptors(
+                serverIDs: [serverA.id, serverB.id, serverC.id]
+            )
+            _ = try await registry.remove(id: serverC.id)
+
+            let partialFailurePassed =
+                aOnly.failures.isEmpty
+                && aOnly.descriptors.count == 13
+                && Set(aOnly.descriptors.map(\.serverID)) == [serverA.id]
+                && bOnly.failures.isEmpty
+                && !bOnly.descriptors.isEmpty
+                && Set(bOnly.descriptors.map(\.serverID)) == [serverB.id]
+                && cOnly.descriptors.isEmpty
+                && Set(cOnly.failures.map(\.serverID)) == [serverC.id]
+                && Set(aAndC.descriptors.map(\.serverID)) == [serverA.id]
+                && Set(aAndC.failures.map(\.serverID)) == [serverC.id]
+                && Set(allWithC.descriptors.map(\.serverID)) == [serverA.id, serverB.id]
+                && Set(allWithC.failures.map(\.serverID)) == [serverC.id]
+            guard partialFailurePassed else {
+                throw RuntimeCoreError.runtimeFailure(
+                    "The MCP partial-failure isolation matrix did not pass."
+                )
+            }
+
+            await controller.stop(serverID: installations[1].descriptor.id)
+            let sequentialSecondStart = await controller.resolveToolDescriptors(
+                serverIDs: [installations[1].descriptor.id]
+            )
+            guard sequentialSecondStart.failures.isEmpty,
+                  !sequentialSecondStart.descriptors.isEmpty else {
+                throw RuntimeCoreError.runtimeFailure(
+                    "Sequential Thinking did not return tools after a second start."
+                )
+            }
+            await controller.stopAll()
+            for installation in installations {
+                try await service.commit(installation)
+            }
+            return (counts, partialFailurePassed)
+        } catch {
+            await controller.stopAll()
+            for installation in installations.reversed() {
+                try? await service.rollback(installation)
+                _ = try? await registry.remove(id: installation.descriptor.id)
+            }
+            throw error
+        }
+    }
+
     private static func makePolicyFixture(
         layout: MCPFileLayout,
         source: String
@@ -437,6 +623,7 @@ enum MCPRuntimeAcceptance {
 
         var legacyWithoutAutoStart = descriptor
         legacyWithoutAutoStart.autoStart = false
+        legacyWithoutAutoStart.entryPointRelativePath = nil
         let encodedLegacy = try JSONEncoder.mcp.encode([legacyWithoutAutoStart])
         guard var legacyObjects = try JSONSerialization.jsonObject(
             with: encodedLegacy
@@ -445,6 +632,7 @@ enum MCPRuntimeAcceptance {
             throw RuntimeCoreError.runtimeFailure("Could not create legacy MCP registry fixture.")
         }
         legacyObjects[0].removeValue(forKey: "autoStart")
+        legacyObjects[0].removeValue(forKey: "entryPointRelativePath")
         try JSONSerialization.data(withJSONObject: legacyObjects).write(
             to: layout.serverRegistry,
             options: .atomic

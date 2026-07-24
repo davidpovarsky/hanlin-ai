@@ -132,6 +132,7 @@
 				Downstream/RuntimeCore/Node/Host/Tests/Fixtures/unreachable-native/unused/binding.gyp,
 				Downstream/RuntimeCore/Node/Host/Tests/host.test.mjs,
 				Downstream/RuntimeCore/Node/Host/Tests/lifecycle.integration.mjs,
+				Downstream/RuntimeCore/Node/Host/Tests/mcp-server-regression.integration.mjs,
 				Downstream/RuntimeCore/Node/Host/Tests/runtime.test.mjs,
 				Downstream/RuntimeCore/Node/Host/Tests/server-everything.integration.mjs,
 				Downstream/RuntimeCore/Node/Host/execution-worker.mjs,

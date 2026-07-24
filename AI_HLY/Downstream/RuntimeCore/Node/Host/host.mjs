@@ -1,5 +1,11 @@
 import http from 'node:http';
-import { promises as fs, createWriteStream, mkdirSync } from 'node:fs';
+import {
+  promises as fs,
+  createWriteStream,
+  mkdirSync,
+  realpathSync,
+  statSync,
+} from 'node:fs';
 import path from 'node:path';
 import { Worker } from 'node:worker_threads';
 import { timingSafeEqual } from 'node:crypto';
@@ -438,11 +444,14 @@ async function startServer(id, configuration) {
       reason: 'stale-state-before-start',
     });
   }
-  const packageRoot = path.resolve(configuration.packageRoot);
-  const allowedRoot = safeServerDirectory(id);
-  if (!isInside(allowedRoot, packageRoot)) throw new Error('Package root is outside the installed server directory.');
-  const entryPoint = path.resolve(configuration.entryPoint);
+  const requestedPackageRoot = path.resolve(configuration.packageRoot);
+  const allowedRoot = realpathSync(safeServerDirectory(id));
+  const packageRoot = realpathSync(requestedPackageRoot);
+  if (packageRoot !== allowedRoot) throw new Error('Package root is outside the installed server directory.');
+  const requestedEntryPoint = path.resolve(configuration.entryPoint);
+  const entryPoint = realpathSync(requestedEntryPoint);
   if (!isInside(packageRoot, entryPoint)) throw new Error('Entry point is outside package root.');
+  if (!statSync(entryPoint).isFile()) throw new Error('Entry point is not a regular file.');
 
   const generation = (serverGenerations.get(id) ?? 0) + 1;
   serverGenerations.set(id, generation);

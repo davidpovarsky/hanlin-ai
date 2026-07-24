@@ -19,6 +19,40 @@ This is a stabilization of the existing MCP/RuntimeCore implementation. It
 does not start HanlinPlatform Phase 2. macOS/Xcode simulator acceptance remains
 required before claiming iPad behavior.
 
+The current local follow-up also corrects the legacy MCP path migration and
+multi-server failure boundary. The root cause was the earlier
+`HanlinMCP/servers` to `HanlinRuntime/v1/packages/mcp` copy migration: server
+directories and registry JSON were copied, but persisted absolute
+`packageRoot` and `entryPoint` values were not rewritten. Descriptors installed
+before that transition could therefore retain an old app-container/root prefix
+while later installations were valid.
+
+Implemented locally, pending Xcode acceptance:
+
+- UUID-derived canonical package roots and validated relative entry points;
+- idempotent load/start migration persisted through the recoverable registry;
+- atomic conversion of the former nested `package` directory layout;
+- typed missing-package, invalid-path, missing-entry, registry-migration,
+  compatibility, runtime, and Node-host failures;
+- per-server schema resolution with partial successes retained;
+- lazy Tool Call recovery scoped to the tool's owning server;
+- separate selected, connected, available-now, cached, failed, and
+  repair-required UI states;
+- deterministic path fixtures, device-upgrade simulation, partial-failure
+  acceptance, and pinned everything/memory/sequential-thinking coverage.
+
+Local Node 24.5.0 evidence:
+
+- all 43 deterministic host tests passed;
+- lifecycle stress passed with one Worker per server and no forced termination;
+- `server-everything@2026.7.4` exposed 13 tools;
+- `server-memory@2026.7.4` exposed 9 tools;
+- `server-sequential-thinking@2026.7.4` exposed 1 tool;
+- CabLate Google Maps regression passed.
+
+No GitHub Actions, Xcode build, simulator launch, or device acceptance has run
+for this follow-up yet. Phase 2 remains unstarted.
+
 ## Phase 0 — complete
 
 Status: complete in normal editing mode. No runtime behavior changed.

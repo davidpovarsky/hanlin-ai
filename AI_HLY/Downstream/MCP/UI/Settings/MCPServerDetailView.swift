@@ -16,6 +16,20 @@ struct MCPServerDetailView: View {
 
     var body: some View {
         Form {
+            if requiresRepair {
+                Section(MCPL10n.string("Installation repair")) {
+                    Text(MCPL10n.string(
+                        "This server installation is incomplete or uses an outdated path. Repair it by reinstalling the same version."
+                    ))
+                    Button(MCPL10n.string("Repair / Reinstall")) {
+                        replacePackage(latestCompatible: false)
+                    }
+                    .disabled(replacingPackage)
+                    NavigationLink(MCPL10n.string("View diagnostics")) {
+                        MCPServerDiagnosticsView(server: draft)
+                    }
+                }
+            }
             Section(MCPL10n.string("Server")) {
                 TextField(MCPL10n.string("Display name"), text: $draft.displayName)
                 LabeledContent(MCPL10n.string("Package"), value: draft.packageName)
@@ -28,9 +42,28 @@ struct MCPServerDetailView: View {
                     }
                     .onChange(of: draft.entryPoint) { _, entryPoint in
                         draft.binName = options.first(where: { $0.entryPoint == entryPoint })?.binName
+                        draft.entryPointRelativePath = relativeEntryPoint(
+                            entryPoint,
+                            packageRoot: draft.packageRoot
+                        )
                     }
                 }
-                TextField(MCPL10n.string("Entry point"), text: $draft.entryPoint)
+                TextField(
+                    MCPL10n.string("Relative entry point"),
+                    text: Binding(
+                        get: {
+                            draft.entryPointRelativePath
+                                ?? relativeEntryPoint(
+                                    draft.entryPoint,
+                                    packageRoot: draft.packageRoot
+                                )
+                                ?? ""
+                        },
+                        set: { draft.entryPointRelativePath = $0 }
+                    )
+                )
+                .textInputAutocapitalization(.never)
+                .autocorrectionDisabled()
                 TextField(
                     MCPL10n.string("Arguments"),
                     text: Binding(
@@ -54,7 +87,9 @@ struct MCPServerDetailView: View {
             Section(MCPL10n.string("Package management")) {
                 Button(MCPL10n.string("Update")) { replacePackage(latestCompatible: true) }
                     .disabled(replacingPackage)
-                Button(MCPL10n.string("Reinstall")) { replacePackage(latestCompatible: false) }
+                Button(MCPL10n.string("Repair / Reinstall")) {
+                    replacePackage(latestCompatible: false)
+                }
                     .disabled(replacingPackage)
                 if replacingPackage { MCPInstallProgressView(state: provider.installState) }
                 if case .failed = provider.installState {
@@ -91,5 +126,24 @@ struct MCPServerDetailView: View {
             replacingPackage = false
             if provider.lastError == nil { dismiss() }
         }
+    }
+
+    private var requiresRepair: Bool {
+        switch provider.statuses[draft.id]?.failure?.kind {
+        case .packageInstallationMissing, .packagePathInvalid, .entryPointInvalid,
+             .entryPointMissing, .registryMigrationFailed:
+            true
+        default:
+            false
+        }
+    }
+
+    private func relativeEntryPoint(_ entryPoint: String, packageRoot: String) -> String? {
+        let root = URL(fileURLWithPath: packageRoot, isDirectory: true)
+            .standardizedFileURL.path
+        let entry = URL(fileURLWithPath: entryPoint).standardizedFileURL.path
+        let prefix = root.hasSuffix("/") ? root : root + "/"
+        guard entry.hasPrefix(prefix) else { return nil }
+        return String(entry.dropFirst(prefix.count))
     }
 }

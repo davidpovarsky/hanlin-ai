@@ -132,7 +132,8 @@ export async function installPackage({
     rejectUnsupported(compatibility.findings);
 
     const now = new Date().toISOString();
-    const installedSize = await directorySize(operationRoot);
+    const installedSize = await directorySize(packageRoot);
+    const entryPointRelativePath = relativePath(packageRoot, absoluteEntry);
     const entryPointOptions = listEntryPoints(extractedManifest).flatMap(entryPoint => {
       const absoluteOption = path.resolve(packageRoot, entryPoint);
       if (!isInside(packageRoot, absoluteOption)) return [];
@@ -143,7 +144,7 @@ export async function installPackage({
         ?? (typeof extractedManifest.bin === 'string' && extractedManifest.bin === entryPoint ? extractedManifest.name : null);
       return [{
         binName,
-        entryPoint: absoluteOption.replace(operationRoot, finalRoot),
+        entryPoint: path.resolve(finalRoot, relativePath(packageRoot, absoluteOption)),
       }];
     });
     const descriptor = {
@@ -153,12 +154,13 @@ export async function installPackage({
       packageName: extractedManifest.name,
       requestedVersion: source.version ?? null,
       resolvedVersion: extractedManifest.version,
-      entryPoint: absoluteEntry.replace(operationRoot, finalRoot),
+      entryPoint: path.resolve(finalRoot, entryPointRelativePath),
+      entryPointRelativePath,
       binName: selected.binName,
       entryPointOptions,
       arguments: validatedServerArguments,
       environment: [],
-      packageRoot: packageRoot.replace(operationRoot, finalRoot),
+      packageRoot: finalRoot,
       integrity: resolved.integrity ?? null,
       installedAt: now,
       updatedAt: now,
@@ -175,19 +177,22 @@ export async function installPackage({
       resolvedVersion: descriptor.resolvedVersion,
       integrity: descriptor.integrity,
       entryPoint: descriptor.entryPoint,
+      entryPointRelativePath: descriptor.entryPointRelativePath,
       binName: descriptor.binName,
       installedAt: now,
       dependencyCount: Object.keys(extractedManifest.dependencies ?? {}).length,
     };
-    await fs.writeFile(path.join(operationRoot, 'install-manifest.json'), JSON.stringify(installManifest, null, 2));
-    await fs.writeFile(path.join(operationRoot, 'compatibility-report.json'), JSON.stringify(compatibility, null, 2));
-    await fs.mkdir(path.join(operationRoot, 'logs'), { recursive: true });
+    const metadataRoot = path.join(packageRoot, '.hanlin-runtime');
+    await fs.mkdir(path.join(metadataRoot, 'logs'), { recursive: true });
+    await fs.writeFile(path.join(metadataRoot, 'install-manifest.json'), JSON.stringify(installManifest, null, 2));
+    await fs.writeFile(path.join(metadataRoot, 'compatibility-report.json'), JSON.stringify(compatibility, null, 2));
 
     emit('install', { operationID, phase: 'registering', fraction: 0.9 });
     try { await fs.access(finalRoot); await fs.rename(finalRoot, backupRoot); } catch (error) {
       if (error.code !== 'ENOENT') throw error;
     }
-    await fs.rename(operationRoot, finalRoot);
+    await fs.rename(packageRoot, finalRoot);
+    await fs.rm(operationRoot, { recursive: true, force: true });
     return descriptor;
   } catch (error) {
     await fs.rm(operationRoot, { recursive: true, force: true });
@@ -289,6 +294,12 @@ function validateID(value) {
 function isInside(root, candidate) {
   const relative = path.relative(path.resolve(root), path.resolve(candidate));
   return relative !== '..' && !relative.startsWith(`..${path.sep}`) && !path.isAbsolute(relative);
+}
+
+function relativePath(root, candidate) {
+  const relative = path.relative(path.resolve(root), path.resolve(candidate));
+  if (!relative || !isInside(root, candidate)) throw new Error('Entry point escapes the package directory.');
+  return relative.split(path.sep).join('/');
 }
 
 function slug(value) {

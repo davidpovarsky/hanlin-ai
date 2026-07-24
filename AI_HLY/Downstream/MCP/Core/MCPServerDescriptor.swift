@@ -23,6 +23,7 @@ struct MCPServerDescriptor: Codable, Hashable, Sendable, Identifiable {
     var requestedVersion: String?
     var resolvedVersion: String
     var entryPoint: String
+    var entryPointRelativePath: String?
     var binName: String?
     var entryPointOptions: [MCPEntryPointOption]?
     var arguments: [String]
@@ -51,6 +52,7 @@ struct MCPServerDescriptor: Codable, Hashable, Sendable, Identifiable {
         requestedVersion: String? = nil,
         resolvedVersion: String,
         entryPoint: String,
+        entryPointRelativePath: String? = nil,
         binName: String? = nil,
         entryPointOptions: [MCPEntryPointOption]? = nil,
         arguments: [String] = [],
@@ -73,6 +75,7 @@ struct MCPServerDescriptor: Codable, Hashable, Sendable, Identifiable {
         self.requestedVersion = requestedVersion
         self.resolvedVersion = resolvedVersion
         self.entryPoint = entryPoint
+        self.entryPointRelativePath = entryPointRelativePath
         self.binName = binName
         self.entryPointOptions = entryPointOptions
         self.arguments = arguments
@@ -97,6 +100,7 @@ struct MCPServerDescriptor: Codable, Hashable, Sendable, Identifiable {
         case requestedVersion
         case resolvedVersion
         case entryPoint
+        case entryPointRelativePath
         case binName
         case entryPointOptions
         case arguments
@@ -122,6 +126,10 @@ struct MCPServerDescriptor: Codable, Hashable, Sendable, Identifiable {
         packageName = try values.decode(String.self, forKey: .packageName)
         resolvedVersion = try values.decode(String.self, forKey: .resolvedVersion)
         entryPoint = try values.decode(String.self, forKey: .entryPoint)
+        entryPointRelativePath = try values.decodeIfPresent(
+            String.self,
+            forKey: .entryPointRelativePath
+        )
 
         slug = try values.decodeIfPresent(String.self, forKey: .slug) ?? packageName
         displayName = try values.decodeIfPresent(String.self, forKey: .displayName) ?? packageName

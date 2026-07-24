@@ -12,6 +12,7 @@ def main() -> None:
 
     payload = json.loads(args.report.read_text(encoding="utf-8"))
     expected = {
+        "schemaVersion": 3,
         "passed": True,
         "nodeVersion": "24.5.0",
         "modulePolicyHooksAvailable": True,
@@ -39,6 +40,10 @@ def main() -> None:
         "healthCancellationPreserved": True,
         "oldRegistryDecoded": True,
         "backupRecoveryPassed": True,
+        "pathMigrationPassed": True,
+        "partialFailureIsolationPassed": True,
+        "toolCallLazyRecoveryPassed": True,
+        "multiServerCollectionPassed": True,
     }
     failures = [f"{key}: expected {value!r}, received {payload.get(key)!r}" for key, value in expected.items() if payload.get(key) != value]
     if not isinstance(payload.get("toolCount"), int) or payload["toolCount"] < 1:
@@ -49,6 +54,16 @@ def main() -> None:
         failures.append("maximumConcurrentWorkers must be at most one")
     if payload.get("failureMessage") is not None:
         failures.append(f"failureMessage: {payload['failureMessage']}")
+    server_tool_counts = payload.get("serverToolCounts")
+    expected_servers = {
+        "@modelcontextprotocol/server-everything",
+        "@modelcontextprotocol/server-memory",
+        "@modelcontextprotocol/server-sequential-thinking",
+    }
+    if not isinstance(server_tool_counts, dict) or set(server_tool_counts) != expected_servers:
+        failures.append("serverToolCounts must contain exactly the three pinned MCP servers")
+    elif any(not isinstance(value, int) or value < 1 for value in server_tool_counts.values()):
+        failures.append("every pinned MCP server must expose at least one tool")
     if failures:
         raise SystemExit("MCP acceptance failed:\n" + "\n".join(failures))
 
@@ -60,6 +75,9 @@ def main() -> None:
             "harmlessToolSucceeded", "workerStopped", "lazyStartSucceeded",
             "restartStressPassed", "registryPreserved", "maximumConcurrentWorkers",
             "childProcessImportOnlyPassed", "subprocessExecutionBlocked",
+            "pathMigrationPassed", "partialFailureIsolationPassed",
+            "toolCallLazyRecoveryPassed", "multiServerCollectionPassed",
+            "serverToolCounts",
         ]
     }
     if args.summary_output:

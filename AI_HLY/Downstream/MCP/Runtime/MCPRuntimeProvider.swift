@@ -60,7 +60,10 @@ final class MCPRuntimeProvider {
                 guard let self else { return }
                 do {
                     let loadedConfiguration = try await configurationStore.load()
-                    let loadedServers = try await registryStore.load()
+                    let persistedServers = try await registryStore.load()
+                    let loadedServers = await controller.migratePersistedPaths(
+                        in: persistedServers
+                    )
                     configuration = loadedConfiguration
                     servers = loadedServers
                     persistentLoadState = .loaded
@@ -304,6 +307,9 @@ final class MCPRuntimeProvider {
     }
 
     private func relativeEntryPoint(of server: MCPServerDescriptor) -> String? {
+        if let relative = server.entryPointRelativePath {
+            return relative
+        }
         let root = URL(fileURLWithPath: server.packageRoot, isDirectory: true).standardizedFileURL.path
         let entry = URL(fileURLWithPath: server.entryPoint).standardizedFileURL.path
         let prefix = root.hasSuffix("/") ? root : root + "/"
@@ -361,7 +367,7 @@ final class MCPRuntimeProvider {
 
     func uninstall(_ server: MCPServerDescriptor) async {
         guard persistentLoadState == .loaded else { return }
-        await controller.stop(serverID: server.id)
+        await controller.forgetInstalledServer(id: server.id)
         do {
             if let connection = try? await nodeRuntime.currentConnection() {
                 _ = try? await connection.data(
@@ -391,6 +397,13 @@ final class MCPRuntimeProvider {
             mcpServerIDs: ids,
             mcpGloballyEnabled: configuration.isEnabled
         )
+    }
+
+    func synchronizeRuntimeState() async {
+        if let persistedServers = try? await registryStore.load() {
+            servers = persistedServers
+        }
+        await refreshSnapshots()
     }
 
     func handleScenePhase(_ phase: ScenePhase) async {

@@ -5,15 +5,49 @@ import MCP
 enum MCPToolBridge {
     static func schemas(scope: AssistantToolRequestScope) async -> [[String: Any]] {
         guard scope.mcpGloballyEnabled, !scope.mcpServerIDs.isEmpty else { return [] }
-        do {
-            let descriptors = try await MCPRuntimeProvider.shared.controller.toolDescriptors(
-                serverIDs: scope.mcpServerIDs
+        let provider = MCPRuntimeProvider.shared
+        let result = await provider.controller.resolveToolDescriptors(
+            serverIDs: scope.mcpServerIDs
+        )
+        await provider.synchronizeRuntimeState()
+        for failure in result.failures {
+            await MCPTraceLogger.shared.log(
+                "mcp_server_schema_resolution_failed",
+                fields: [
+                    "serverID": failure.serverID.uuidString.lowercased(),
+                    "packageName": failure.packageName,
+                    "displayName": failure.displayName,
+                    "errorCode": failure.errorCode,
+                    "message": failure.message
+                ]
             )
-            return descriptors.compactMap { try? $0.openAIToolSchema() }
-        } catch {
-            await MCPTraceLogger.shared.log("tool_schema_refresh_failed", fields: ["error": error.localizedDescription])
-            return []
         }
+        var schemas: [[String: Any]] = []
+        for descriptor in result.descriptors {
+            do {
+                schemas.append(try descriptor.openAIToolSchema())
+            } catch {
+                await MCPTraceLogger.shared.log(
+                    "mcp_tool_schema_conversion_failed",
+                    fields: [
+                        "serverID": descriptor.serverID.uuidString.lowercased(),
+                        "toolName": descriptor.originalName,
+                        "errorCode": "mcp_tool_schema_invalid",
+                        "message": error.localizedDescription
+                    ]
+                )
+            }
+        }
+        await MCPTraceLogger.shared.log(
+            "mcp_tool_schema_resolution_completed",
+            fields: [
+                "selectedServerCount": "\(scope.mcpServerIDs.count)",
+                "successfulServerCount": "\(result.successfulServerCount)",
+                "failedServerCount": "\(result.failures.count)",
+                "toolCount": "\(schemas.count)"
+            ]
+        )
+        return schemas
     }
 
     static func execute(name: String, argumentsJSON: String) async -> NativeToolResult? {
@@ -24,8 +58,10 @@ enum MCPToolBridge {
                 exposedName: name,
                 argumentsJSON: argumentsJSON
             )
+            await MCPRuntimeProvider.shared.synchronizeRuntimeState()
             return render(output, descriptor: descriptor)
         } catch {
+            await MCPRuntimeProvider.shared.synchronizeRuntimeState()
             return NativeToolResult(
                 modelText: "MCP tool failed: \(error.localizedDescription)",
                 userText: error.localizedDescription,

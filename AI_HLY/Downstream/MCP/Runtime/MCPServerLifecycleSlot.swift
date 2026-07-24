@@ -29,5 +29,6 @@ struct MCPServerRuntimeSlot {
     var startedAt: Date?
     var stoppedAt: Date?
     var lastError: String?
+    var failure: MCPServerFailure?
     var toolCount = 0
 }

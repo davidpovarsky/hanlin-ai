@@ -12,9 +12,9 @@ const hostEntryPoint = fileURLToPath(
   new URL('../host.mjs', import.meta.url),
 );
 
-test('HTTP host serializes MCP lifecycle and survives stress', { timeout: 240_000 }, async () => {
+test('HTTP host serializes MCP lifecycle and survives stress', { timeout: 240_000 }, async t => {
   const root = await fs.mkdtemp(path.join(os.tmpdir(), 'hanlin-host-lifecycle-'));
-  const packageRoot = path.join(root, 'packages', 'mcp', serverID, 'package');
+  const packageRoot = path.join(root, 'packages', 'mcp', serverID);
   const entryPoint = path.join(packageRoot, 'server.mjs');
   const readyPath = path.join(root, 'ready.json');
   const logPath = path.join(root, 'host.log');
@@ -61,6 +61,77 @@ test('HTTP host serializes MCP lifecycle and survives stress', { timeout: 240_00
       arguments: [],
       environment: {},
     };
+
+    const legacyNestedRoot = path.join(packageRoot, 'package');
+    await fs.mkdir(legacyNestedRoot, { recursive: true });
+    const legacyNestedEntry = path.join(legacyNestedRoot, 'server.mjs');
+    await fs.writeFile(legacyNestedEntry, 'export {};');
+    const legacyNestedResult = await postRaw(
+      ready.port,
+      token,
+      `/v1/servers/${serverID}/start`,
+      {
+        ...configuration,
+        packageRoot: legacyNestedRoot,
+        entryPoint: legacyNestedEntry,
+      },
+    );
+    assert.equal(legacyNestedResult.status, 400);
+    assert.match(legacyNestedResult.text, /outside the installed server directory/);
+
+    const otherServerID = '33333333-3333-4333-8333-333333333333';
+    const otherRoot = path.join(root, 'packages', 'mcp', otherServerID);
+    await fs.mkdir(otherRoot, { recursive: true });
+    const otherEntry = path.join(otherRoot, 'server.mjs');
+    await fs.writeFile(otherEntry, 'export {};');
+    const otherServerResult = await postRaw(
+      ready.port,
+      token,
+      `/v1/servers/${serverID}/start`,
+      { ...configuration, packageRoot: otherRoot, entryPoint: otherEntry },
+    );
+    assert.equal(otherServerResult.status, 400);
+    assert.match(otherServerResult.text, /outside the installed server directory/);
+
+    const stagingRoot = path.join(root, 'staging', 'invalid-server');
+    await fs.mkdir(stagingRoot, { recursive: true });
+    const stagingEntry = path.join(stagingRoot, 'server.mjs');
+    await fs.writeFile(stagingEntry, 'export {};');
+    const stagingResult = await postRaw(
+      ready.port,
+      token,
+      `/v1/servers/${serverID}/start`,
+      { ...configuration, packageRoot: stagingRoot, entryPoint: stagingEntry },
+    );
+    assert.equal(stagingResult.status, 400);
+    assert.match(stagingResult.text, /outside the installed server directory/);
+
+    const outsideEntry = path.join(root, 'outside-server.mjs');
+    await fs.writeFile(outsideEntry, 'export {};');
+    const traversalResult = await postRaw(
+      ready.port,
+      token,
+      `/v1/servers/${serverID}/start`,
+      { ...configuration, entryPoint: outsideEntry },
+    );
+    assert.equal(traversalResult.status, 400);
+    assert.match(traversalResult.text, /outside package root/);
+
+    const symlinkEntry = path.join(packageRoot, 'symlink-escape.mjs');
+    try {
+      await fs.symlink(outsideEntry, symlinkEntry);
+      const symlinkResult = await postRaw(
+        ready.port,
+        token,
+        `/v1/servers/${serverID}/start`,
+        { ...configuration, entryPoint: symlinkEntry },
+      );
+      assert.equal(symlinkResult.status, 400);
+      assert.match(symlinkResult.text, /outside package root/);
+    } catch (error) {
+      if (!['EPERM', 'EACCES', 'ENOTSUP'].includes(error.code)) throw error;
+      t.diagnostic(`Symlink escape case is unavailable on this host: ${error.code}`);
+    }
 
     const duplicateStarts = await Promise.all(Array.from(
       { length: 8 },
@@ -124,7 +195,7 @@ test('HTTP host serializes MCP lifecycle and survives stress', { timeout: 240_00
     }
 
     const startingID = '44444444-4444-4444-8444-444444444444';
-    const startingRoot = path.join(root, 'packages', 'mcp', startingID, 'package');
+    const startingRoot = path.join(root, 'packages', 'mcp', startingID);
     const startingEntry = path.join(startingRoot, 'server.mjs');
     await fs.mkdir(startingRoot, { recursive: true });
     await fs.writeFile(path.join(startingRoot, 'package.json'), JSON.stringify({
@@ -160,7 +231,7 @@ test('HTTP host serializes MCP lifecycle and survives stress', { timeout: 240_00
     assert.equal((await cancelledStart).status, 400);
 
     const slowStopID = '55555555-5555-4555-8555-555555555555';
-    const slowStopRoot = path.join(root, 'packages', 'mcp', slowStopID, 'package');
+    const slowStopRoot = path.join(root, 'packages', 'mcp', slowStopID);
     const slowStopEntry = path.join(slowStopRoot, 'server.mjs');
     await fs.mkdir(slowStopRoot, { recursive: true });
     await fs.writeFile(path.join(slowStopRoot, 'package.json'), JSON.stringify({
@@ -206,7 +277,7 @@ test('HTTP host serializes MCP lifecycle and survives stress', { timeout: 240_00
     await post(ready.port, token, `/v1/servers/${slowStopID}/stop`, {});
 
     const timeoutID = '66666666-6666-4666-8666-666666666666';
-    const timeoutRoot = path.join(root, 'packages', 'mcp', timeoutID, 'package');
+    const timeoutRoot = path.join(root, 'packages', 'mcp', timeoutID);
     const timeoutEntry = path.join(timeoutRoot, 'server.mjs');
     await fs.mkdir(timeoutRoot, { recursive: true });
     await fs.writeFile(path.join(timeoutRoot, 'package.json'), JSON.stringify({
@@ -237,7 +308,7 @@ test('HTTP host serializes MCP lifecycle and survives stress', { timeout: 240_00
     assert.ok(Date.now() - timeoutStarted >= 17_900);
 
     const stubbornID = '33333333-3333-4333-8333-333333333333';
-    const stubbornRoot = path.join(root, 'packages', 'mcp', stubbornID, 'package');
+    const stubbornRoot = path.join(root, 'packages', 'mcp', stubbornID);
     const stubbornEntry = path.join(stubbornRoot, 'server.mjs');
     await fs.mkdir(stubbornRoot, { recursive: true });
     await fs.writeFile(path.join(stubbornRoot, 'package.json'), JSON.stringify({

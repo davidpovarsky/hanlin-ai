@@ -5,6 +5,7 @@ actor MCPRuntimeController {
     private let registry: MCPServerRegistryStore
     private let secrets: MCPSecretStore
     private let runtimeEnvironment: RuntimeEnvironmentStore
+    private let pathResolver: MCPServerPathResolver
     private let catalog = MCPToolCatalog()
     private var slots: [UUID: MCPServerRuntimeSlot] = [:]
 
@@ -12,12 +13,14 @@ actor MCPRuntimeController {
         runtime: NodeRuntimeService,
         registry: MCPServerRegistryStore = MCPServerRegistryStore(),
         secrets: MCPSecretStore = MCPSecretStore(),
-        runtimeEnvironment: RuntimeEnvironmentStore = AppRuntimeCore.shared.environment
+        runtimeEnvironment: RuntimeEnvironmentStore = AppRuntimeCore.shared.environment,
+        fileLayout: MCPFileLayout = .default
     ) {
         self.runtime = runtime
         self.registry = registry
         self.secrets = secrets
         self.runtimeEnvironment = runtimeEnvironment
+        pathResolver = MCPServerPathResolver(fileLayout: fileLayout)
     }
 
     func statuses() -> [UUID: MCPServerStatus] {
@@ -27,11 +30,33 @@ actor MCPRuntimeController {
                 state: pair.value.phase,
                 toolCount: pair.value.toolCount,
                 message: pair.value.lastError,
+                failure: pair.value.failure,
                 generation: pair.value.generation,
                 startedAt: pair.value.startedAt,
                 stoppedAt: pair.value.stoppedAt
             )
         }
+    }
+
+    func migratePersistedPaths(
+        in servers: [MCPServerDescriptor]
+    ) async -> [MCPServerDescriptor] {
+        var migratedServers: [MCPServerDescriptor] = []
+        for server in servers {
+            do {
+                let prepared = try await prepareServerForStart(server)
+                migratedServers.append(prepared.descriptor)
+            } catch {
+                let classified = failure(for: error)
+                var slot = slots[server.id] ?? MCPServerRuntimeSlot()
+                slot.phase = .failed
+                slot.lastError = classified.message
+                slot.failure = classified
+                slots[server.id] = slot
+                migratedServers.append(server)
+            }
+        }
+        return migratedServers
     }
 
     func ensureRunning(
@@ -110,6 +135,12 @@ actor MCPRuntimeController {
         }
     }
 
+    func forgetInstalledServer(id: UUID) async {
+        await stop(serverID: id)
+        await catalog.forget(serverID: id)
+        slots.removeValue(forKey: id)
+    }
+
     func restart(_ server: MCPServerDescriptor) async throws {
         while true {
             let slot = slots[server.id] ?? MCPServerRuntimeSlot()
@@ -137,25 +168,95 @@ actor MCPRuntimeController {
     }
 
     func toolDescriptors(serverIDs: Set<UUID>) async throws -> [MCPToolDescriptor] {
-        let servers = try await registry.load().filter {
+        let result = await resolveToolDescriptors(serverIDs: serverIDs)
+        if result.descriptors.isEmpty, let failure = result.failures.first {
+            throw MCPError.runtimeStartFailed(failure.message)
+        }
+        return result.descriptors
+    }
+
+    func resolveToolDescriptors(serverIDs: Set<UUID>) async -> MCPToolResolutionResult {
+        let installedServers: [MCPServerDescriptor]
+        do {
+            installedServers = try await registry.load()
+        } catch {
+            return MCPToolResolutionResult(
+                descriptors: [],
+                failures: serverIDs.map { serverID in
+                    MCPServerResolutionFailure(
+                        serverID: serverID,
+                        packageName: "<registry unavailable>",
+                        displayName: "MCP server",
+                        errorCode: MCPServerFailureKind.registryMigrationFailed.rawValue,
+                        message: error.localizedDescription
+                    )
+                }
+            )
+        }
+
+        let selected = installedServers.filter {
             serverIDs.contains($0.id) && $0.isGloballyEnabled
         }
-        for server in servers {
-            _ = try await ensureRunning(server, reason: .chatToolSchema)
+        var descriptors: [MCPToolDescriptor] = []
+        var failures: [MCPServerResolutionFailure] = []
+        for server in selected {
+            do {
+                _ = try await ensureRunning(server, reason: .chatToolSchema)
+                let serverDescriptors = await catalog.descriptors(serverIDs: [server.id])
+                descriptors.append(contentsOf: serverDescriptors)
+            } catch {
+                failures.append(resolutionFailure(server: server, error: error))
+            }
         }
-        return await catalog.descriptors(serverIDs: Set(servers.map(\.id)))
+        let selectedIDs = Set(selected.map(\.id))
+        for missingID in serverIDs.subtracting(selectedIDs) {
+            failures.append(
+                MCPServerResolutionFailure(
+                    serverID: missingID,
+                    packageName: "<not installed>",
+                    displayName: "MCP server",
+                    errorCode: "mcp_server_not_found",
+                    message: MCPError.serverNotFound.localizedDescription
+                )
+            )
+        }
+        return MCPToolResolutionResult(
+            descriptors: descriptors.sorted { $0.exposedName < $1.exposedName },
+            failures: failures.sorted { $0.serverID.uuidString < $1.serverID.uuidString }
+        )
     }
 
     func call(exposedName: String, argumentsJSON: String) async throws -> MCPToolCallOutput {
-        guard let descriptor = await catalog.descriptor(exposedName: exposedName) else {
+        guard let knownDescriptor = await catalog.descriptor(exposedName: exposedName) else {
             throw MCPError.toolNotFound
         }
-        guard let server = try await registry.load().first(where: { $0.id == descriptor.serverID }),
+        guard let server = try await registry.load().first(where: {
+            $0.id == knownDescriptor.serverID
+        }),
               server.isGloballyEnabled else {
             throw MCPError.serverNotFound
         }
         let session = try await ensureRunning(server, reason: .toolCall)
-        return try await session.call(name: descriptor.originalName, argumentsJSON: argumentsJSON)
+        if await catalog.liveDescriptor(exposedName: exposedName) == nil {
+            let generation = slots[server.id]?.generation
+            let tools = try await session.refreshTools()
+            guard generation == slots[server.id]?.generation,
+                  slots[server.id]?.session === session else {
+                throw MCPError.runtimeStartFailed(
+                    "The server changed while its tools were refreshing."
+                )
+            }
+            let registered = await catalog.replace(server: server, tools: tools)
+            updateToolCount(registered.count, serverID: server.id)
+        }
+        guard let descriptor = await catalog.liveDescriptor(exposedName: exposedName),
+              descriptor.serverID == server.id else {
+            throw MCPError.toolNotFound
+        }
+        return try await session.call(
+            name: descriptor.originalName,
+            argumentsJSON: argumentsJSON
+        )
     }
 
     func descriptor(exposedName: String) async -> MCPToolDescriptor? {
@@ -171,6 +272,7 @@ actor MCPRuntimeController {
         slot.phase = .starting
         slot.stopRequested = false
         slot.lastError = nil
+        slot.failure = nil
         let generation = slot.generation
         let operationID = UUID()
         slot.lifecycleOperationID = operationID
@@ -217,6 +319,7 @@ actor MCPRuntimeController {
         slot.phase = .stopping
         slot.stopRequested = false
         slot.lastError = nil
+        slot.failure = nil
         let generation = slot.generation
         let operationID = UUID()
         slot.lifecycleOperationID = operationID
@@ -242,22 +345,27 @@ actor MCPRuntimeController {
     ) async throws -> MCPClientSession {
         var pendingSession: MCPClientSession?
         do {
+            let prepared = try await prepareServerForStart(server)
+            let activeServer = prepared.descriptor
             let connection = try await runtime.ensureRunning()
             var secretValues: [String: String] = [:]
-            for variable in server.environment {
+            for variable in activeServer.environment {
                 if let reference = variable.secretReference {
-                    secretValues[reference] = try await secrets.value(reference: reference)
+                    let secret = try await secrets.value(reference: reference)
+                    secretValues[reference] = secret
                 }
             }
-            var configuration = MCPServerConfiguration(descriptor: server, secrets: secretValues)
             let inheritedEnvironment = try await runtimeEnvironment.resolved(
-                scopes: [.shared, .node, .mcpServer(server.id)]
+                scopes: [.shared, .node, .mcpServer(activeServer.id)]
             )
-            configuration.environment = inheritedEnvironment.merging(configuration.environment) {
-                _, serverValue in serverValue
-            }
+            let configuration = MCPServerConfiguration.make(
+                descriptor: activeServer,
+                resolvedPaths: prepared.paths,
+                secrets: secretValues,
+                environment: inheritedEnvironment
+            )
             let transport = EmbeddedNodeMCPTransport(server: configuration, connection: connection)
-            let session = MCPClientSession(server: server, transport: transport)
+            let session = MCPClientSession(server: activeServer, transport: transport)
             pendingSession = session
 
             guard installPendingResources(
@@ -275,7 +383,7 @@ actor MCPRuntimeController {
                   slots[server.id]?.stopRequested == false else {
                 throw CancellationError()
             }
-            let registered = await catalog.replace(server: server, tools: tools)
+            let registered = await catalog.replace(server: activeServer, tools: tools)
             let toolTask = Task { [weak self, session] in
                 for await _ in session.toolListChanges {
                     await self?.handleToolListChanged(
@@ -404,6 +512,7 @@ actor MCPRuntimeController {
         slots[serverID]?.phase = .running
         slots[serverID]?.startedAt = .now
         slots[serverID]?.lastError = nil
+        slots[serverID]?.failure = nil
         slots[serverID]?.lifecycleTask = nil
         slots[serverID]?.lifecycleOperationID = nil
         slots[serverID]?.lifecycleKind = nil
@@ -435,6 +544,7 @@ actor MCPRuntimeController {
             slots[serverID]?.stoppedAt = .now
         }
         slots[serverID]?.lastError = stopped ? nil : error.localizedDescription
+        slots[serverID]?.failure = stopped ? nil : failure(for: error)
     }
 
     private func resourcesForStop(
@@ -468,6 +578,7 @@ actor MCPRuntimeController {
         slots[serverID]?.phase = .stopped
         slots[serverID]?.stoppedAt = .now
         slots[serverID]?.lastError = nil
+        slots[serverID]?.failure = nil
         slots[serverID]?.lifecycleTask = nil
         slots[serverID]?.lifecycleOperationID = nil
         slots[serverID]?.lifecycleKind = nil
@@ -500,6 +611,7 @@ actor MCPRuntimeController {
         var slot = slots[serverID] ?? MCPServerRuntimeSlot()
         slot.phase = .failed
         slot.lastError = message
+        slot.failure = MCPServerFailure(kind: .runtimeFailure, message: message)
         slot.lifecycleTask = nil
         slot.lifecycleOperationID = nil
         slot.lifecycleKind = nil
@@ -545,6 +657,7 @@ actor MCPRuntimeController {
         let operationID = UUID()
         slot.phase = .stopping
         slot.lastError = message
+        slot.failure = MCPServerFailure(kind: .runtimeFailure, message: message)
         slot.lifecycleOperationID = operationID
         slot.lifecycleKind = .stop
         slot.terminationTask = nil
@@ -588,6 +701,7 @@ actor MCPRuntimeController {
         slots[serverID]?.toolCount = 0
         slots[serverID]?.phase = .failed
         slots[serverID]?.lastError = message
+        slots[serverID]?.failure = MCPServerFailure(kind: .runtimeFailure, message: message)
         slots[serverID]?.lifecycleTask = nil
         slots[serverID]?.lifecycleOperationID = nil
         slots[serverID]?.lifecycleKind = nil
@@ -610,6 +724,93 @@ actor MCPRuntimeController {
         } catch {
             guard slots[serverID]?.generation == generation else { return }
             slots[serverID]?.lastError = error.localizedDescription
+            slots[serverID]?.failure = failure(for: error)
         }
+    }
+
+    private func prepareServerForStart(
+        _ descriptor: MCPServerDescriptor
+    ) async throws -> (descriptor: MCPServerDescriptor, paths: MCPResolvedServerPaths) {
+        let diagnostics = pathResolver.diagnostics(for: descriptor)
+        await MCPTraceLogger.shared.log(
+            "mcp_server_path_diagnostics",
+            fields: diagnostics.logFields
+        )
+        do {
+            let paths = try pathResolver.resolve(descriptor)
+            let migrated = pathResolver.migratedDescriptor(descriptor, paths: paths)
+            if paths.requiredMigration {
+                do {
+                    _ = try await registry.upsert(migrated)
+                } catch {
+                    throw MCPServerPathResolutionError.migrationFailed(
+                        error.localizedDescription
+                    )
+                }
+                await MCPTraceLogger.shared.log("mcp_server_paths_migrated", fields: [
+                    "serverID": descriptor.id.uuidString.lowercased(),
+                    "packageName": descriptor.packageName,
+                    "entryPointRelativePath": paths.entryPointRelativePath
+                ])
+            }
+            return (migrated, paths)
+        } catch {
+            let classified = failure(for: error)
+            await MCPTraceLogger.shared.log("mcp_server_path_resolution_failed", fields: [
+                "serverID": descriptor.id.uuidString.lowercased(),
+                "packageName": descriptor.packageName,
+                "errorCode": classified.kind.rawValue,
+                "message": classified.message
+            ])
+            throw error
+        }
+    }
+
+    private func resolutionFailure(
+        server: MCPServerDescriptor,
+        error: Error
+    ) -> MCPServerResolutionFailure {
+        let classified = failure(for: error)
+        return MCPServerResolutionFailure(
+            serverID: server.id,
+            packageName: server.packageName,
+            displayName: server.displayName,
+            errorCode: classified.kind.rawValue,
+            message: classified.message
+        )
+    }
+
+    private func failure(for error: Error) -> MCPServerFailure {
+        if let pathError = error as? MCPServerPathResolutionError {
+            return MCPServerFailure(
+                kind: pathError.failureKind,
+                message: pathError.localizedDescription
+            )
+        }
+        if let mcpError = error as? MCPError {
+            switch mcpError {
+            case .incompatiblePackage:
+                return MCPServerFailure(
+                    kind: .compatibilityFailure,
+                    message: error.localizedDescription
+                )
+            case .secretUnavailable:
+                return MCPServerFailure(
+                    kind: .missingConfiguration,
+                    message: error.localizedDescription
+                )
+            case .runtimeUnavailable:
+                return MCPServerFailure(
+                    kind: .nodeHostUnavailable,
+                    message: error.localizedDescription
+                )
+            default:
+                break
+            }
+        }
+        return MCPServerFailure(
+            kind: .runtimeFailure,
+            message: error.localizedDescription
+        )
     }
 }

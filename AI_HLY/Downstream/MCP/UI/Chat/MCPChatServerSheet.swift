@@ -32,7 +32,11 @@ struct MCPChatServerSheet: View {
                         )) {
                             VStack(alignment: .leading) {
                                 Text(server.displayName)
-                                Text(MCPL10n.format("%d tools", provider.statuses[server.id]?.toolCount ?? server.cachedToolCount))
+                                if selected.contains(server.id) {
+                                    Text(MCPL10n.string("Selected for this chat"))
+                                        .font(.caption)
+                                }
+                                Text(statusText(for: server))
                                     .font(.caption).foregroundStyle(.secondary)
                             }
                         }
@@ -58,5 +62,34 @@ struct MCPChatServerSheet: View {
         selected = next
         onSelectionChanged(next.count)
         Task { await provider.setSelection(next, chatID: chatID, temporary: temporary) }
+    }
+
+    private func statusText(for server: MCPServerDescriptor) -> String {
+        guard let status = provider.statuses[server.id] else {
+            return server.cachedToolCount > 0
+                ? MCPL10n.format("Last known: %d tools", server.cachedToolCount)
+                : MCPL10n.string("Not started yet")
+        }
+        switch status.state {
+        case .starting:
+            return MCPL10n.string("Connecting")
+        case .running:
+            return MCPL10n.format("Connected — %d tools", status.toolCount)
+        case .stopping:
+            return MCPL10n.string("Stopping")
+        case .failed:
+            if status.failure?.kind == .packageInstallationMissing
+                || status.failure?.kind == .packagePathInvalid
+                || status.failure?.kind == .entryPointInvalid
+                || status.failure?.kind == .entryPointMissing
+                || status.failure?.kind == .registryMigrationFailed {
+                return MCPL10n.string("Installation requires repair")
+            }
+            return MCPL10n.string("Failed")
+        case .stopped:
+            return server.cachedToolCount > 0
+                ? MCPL10n.format("Last known: %d tools", server.cachedToolCount)
+                : MCPL10n.string("Not started yet")
+        }
     }
 }

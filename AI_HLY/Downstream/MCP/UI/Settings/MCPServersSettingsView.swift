@@ -35,6 +35,9 @@ struct MCPServersSettingsView: View {
                             VStack(alignment: .leading) {
                                 Text(server.displayName)
                                 Text("\(server.packageName) @ \(server.resolvedVersion)").font(.caption).foregroundStyle(.secondary)
+                                Text(statusText(for: server))
+                                    .font(.caption2)
+                                    .foregroundStyle(.secondary)
                             }
                             Spacer()
                             VStack(alignment: .trailing) {
@@ -65,5 +68,33 @@ struct MCPServersSettingsView: View {
         }
         .navigationTitle(MCPL10n.string("MCP Servers"))
         .task { await provider.loadIfNeeded(startHost: false) }
+    }
+
+    private func statusText(for server: MCPServerDescriptor) -> String {
+        guard let status = provider.statuses[server.id] else {
+            return server.cachedToolCount > 0
+                ? MCPL10n.format("%d cached tools", server.cachedToolCount)
+                : MCPL10n.string("Not running")
+        }
+        switch status.state {
+        case .running:
+            return MCPL10n.format("Available now: %d tools", status.toolCount)
+        case .starting:
+            return MCPL10n.string("Connecting")
+        case .stopping:
+            return MCPL10n.string("Stopping")
+        case .failed:
+            return status.failure?.kind == .packageInstallationMissing
+                || status.failure?.kind == .packagePathInvalid
+                || status.failure?.kind == .entryPointInvalid
+                || status.failure?.kind == .entryPointMissing
+                || status.failure?.kind == .registryMigrationFailed
+                ? MCPL10n.string("Installation requires repair")
+                : MCPL10n.string("Failed")
+        case .stopped:
+            return server.cachedToolCount > 0
+                ? MCPL10n.format("%d cached tools", server.cachedToolCount)
+                : MCPL10n.string("Not running")
+        }
     }
 }
