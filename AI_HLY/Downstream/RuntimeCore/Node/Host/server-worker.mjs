@@ -1,8 +1,7 @@
 import { parentPort, workerData } from 'node:worker_threads';
 import * as nodeModule from 'node:module';
-import { Console } from 'node:console';
 import { readFileSync, promises as fs } from 'node:fs';
-import { PassThrough, Writable } from 'node:stream';
+import { PassThrough } from 'node:stream';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import path from 'node:path';
 import ts from 'typescript';
@@ -27,17 +26,13 @@ if (typeof nodeModule.registerHooks !== 'function') {
 process.argv[1] = entryPoint;
 
 const workerStdin = new PassThrough();
-const workerStdout = portWritable('stdout');
-const workerStderr = portWritable('stderr');
-Object.defineProperties(process, {
-  stdin: { configurable: true, enumerable: true, value: workerStdin },
-  stdout: { configurable: true, enumerable: true, value: workerStdout },
-  stderr: { configurable: true, enumerable: true, value: workerStderr },
+Object.defineProperty(process, 'stdin', {
+  configurable: true,
+  enumerable: true,
+  value: workerStdin,
 });
-globalThis.console = new Console({
-  stdout: workerStdout,
-  stderr: workerStderr,
-});
+process.stdout.write = portWrite('stdout');
+process.stderr.write = portWrite('stderr');
 const handleHostMessage = message => {
   if (message?.type === 'stdio-input') {
     workerStdin.write(Buffer.from(message.data));
@@ -241,21 +236,30 @@ function installChildProcessPolicy() {
   });
 }
 
-function portWritable(channel) {
-  return new Writable({
-    write(chunk, _encoding, callback) {
-      try {
-        parentPort?.postMessage({
-          type: 'stdio-output',
-          channel,
-          data: Buffer.from(chunk),
-        });
-        callback();
-      } catch (error) {
+function portWrite(channel) {
+  return (chunk, encoding, callback) => {
+    if (typeof encoding === 'function') {
+      callback = encoding;
+      encoding = undefined;
+    }
+    try {
+      parentPort?.postMessage({
+        type: 'stdio-output',
+        channel,
+        data: Buffer.isBuffer(chunk)
+          ? chunk
+          : Buffer.from(String(chunk), encoding),
+      });
+      callback?.();
+      return true;
+    } catch (error) {
+      if (callback) {
         callback(error);
+        return false;
       }
-    },
-  });
+      throw error;
+    }
+  };
 }
 
 function reportSpecifier(specifier) {
