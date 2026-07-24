@@ -431,7 +431,9 @@ actor MCPRuntimeController {
         slots[serverID]?.lifecycleTask = nil
         slots[serverID]?.lifecycleOperationID = nil
         slots[serverID]?.lifecycleKind = nil
-        slots[serverID]?.stoppedAt = stopped ? .now : slots[serverID]?.stoppedAt
+        if stopped {
+            slots[serverID]?.stoppedAt = .now
+        }
         slots[serverID]?.lastError = stopped ? nil : error.localizedDescription
     }
 
