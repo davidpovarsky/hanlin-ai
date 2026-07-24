@@ -51,6 +51,8 @@ async function runMCPRuntimeProbeAttempt(options) {
       },
       argv: validatedArguments(options.arguments),
       env: sanitizedEnvironment(workspace, options.environment),
+      // The embedded host owns its process-level descriptors across Workers.
+      trackUnmanagedFds: false,
     });
 
     const responses = createResponseQueue();

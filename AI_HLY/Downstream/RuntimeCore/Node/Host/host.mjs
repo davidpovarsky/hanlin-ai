@@ -478,6 +478,8 @@ async function startServer(id, configuration) {
     workerData: { serverID: id, packageRoot, entryPoint },
     argv: Array.isArray(configuration.arguments) ? configuration.arguments : [],
     env: { ...process.env, ...(configuration.environment ?? {}), HANLIN_MCP_SERVER_ID: id },
+    // The embedded host owns its process-level descriptors across Workers.
+    trackUnmanagedFds: false,
   });
   state.worker = worker;
   servers.set(id, state);
