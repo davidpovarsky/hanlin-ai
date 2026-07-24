@@ -183,6 +183,60 @@ test('execution-path analysis requires an explicit selected entry point', async 
   await assert.rejects(analyzePackage(root, manifest), /selected entry point/i);
 });
 
+test('runtime probe bounds forced shutdown after MCP protocol success', { timeout: 10_000 }, async () => {
+  const packageRoot = await fs.mkdtemp(path.join(os.tmpdir(), 'hanlin-forced-probe-stop-'));
+  const workspace = path.join(packageRoot, 'workspace');
+  const entryPoint = path.join(packageRoot, 'server.mjs');
+  try {
+    await fs.writeFile(path.join(packageRoot, 'package.json'), JSON.stringify({
+      name: 'forced-probe-stop',
+      version: '1.0.0',
+      type: 'module',
+      main: 'server.mjs',
+    }));
+    await fs.writeFile(entryPoint, `
+      import readline from 'node:readline';
+      setInterval(() => {}, 60_000);
+      const lines = readline.createInterface({ input: process.stdin });
+      lines.on('line', line => {
+        const request = JSON.parse(line);
+        if (request.method === 'initialize') {
+          process.stdout.write(JSON.stringify({
+            jsonrpc: '2.0',
+            id: request.id,
+            result: {
+              protocolVersion: '2025-06-18',
+              capabilities: {},
+              serverInfo: { name: 'forced-probe-stop', version: '1' },
+            },
+          }) + '\\n');
+        }
+        if (request.method === 'tools/list') {
+          process.stdout.write(JSON.stringify({
+            jsonrpc: '2.0',
+            id: request.id,
+            result: { tools: [] },
+          }) + '\\n');
+        }
+      });
+    `);
+
+    const started = Date.now();
+    const result = await runMCPRuntimeProbe({
+      packageRoot,
+      entryPoint,
+      moduleKind: 'esm',
+      workspace,
+      timeoutMilliseconds: 2_000,
+    });
+    assert.equal(result.passed, true, JSON.stringify(result));
+    assert.equal(result.cleanStop, false);
+    assert.ok(Date.now() - started < 7_000, JSON.stringify(result));
+  } finally {
+    await fs.rm(packageRoot, { recursive: true, force: true });
+  }
+});
+
 test('the production installer rejects executed child_process and preserves the prior package', { timeout: 60_000 }, async () => {
   const root = await fs.mkdtemp(path.join(os.tmpdir(), 'hanlin-negative-install-'));
   const cache = path.join(root, 'fixture-cache');

@@ -39,6 +39,7 @@ async function runMCPRuntimeProbeAttempt(options) {
   let stdoutBuffer = Buffer.alloc(0);
   let worker;
   let cleanStop = false;
+  let stopAttempted = false;
 
   try {
     worker = new Worker(workerURL, {
@@ -102,8 +103,12 @@ async function runMCPRuntimeProbeAttempt(options) {
     if (tools.error) throw new Error(`MCP tools/list failed: ${tools.error.message ?? JSON.stringify(tools.error)}`);
     if (!Array.isArray(tools.result?.tools)) throw new Error('MCP tools/list returned an invalid result.');
 
-    cleanStop = await stopWorker(worker);
-    if (!cleanStop) throw new Error('Server Worker did not stop cleanly after stdin closed.');
+    stopAttempted = true;
+    const stopResult = await stopWorker(worker);
+    cleanStop = stopResult.graceful;
+    if (!stopResult.stopped) {
+      throw new Error('Server Worker did not stop within the bounded shutdown deadline.');
+    }
     const graph = finalizeGraph(moduleEdges, blockedAccesses, relativePath(packageRoot, entryPoint));
     return {
       passed: true,
@@ -119,7 +124,10 @@ async function runMCPRuntimeProbeAttempt(options) {
       stderr: redact(stderr).slice(0, 16_384),
     };
   } catch (error) {
-    if (worker && worker.threadId !== -1) cleanStop = await stopWorker(worker);
+    if (worker && worker.threadId !== -1 && !stopAttempted) {
+      stopAttempted = true;
+      cleanStop = (await stopWorker(worker)).graceful;
+    }
     const graph = finalizeGraph(moduleEdges, blockedAccesses, relativePath(packageRoot, entryPoint));
     const message = redact(error?.message ?? String(error));
     return {
@@ -232,12 +240,30 @@ function writeMessage(worker, message) {
 }
 
 async function stopWorker(worker) {
-  if (worker.threadId === -1) return true;
-  worker.stdin?.end();
-  const exited = new Promise(resolve => worker.once('exit', () => resolve(true)));
-  const graceful = await Promise.race([exited, new Promise(resolve => setTimeout(() => resolve(false), 1_000))]);
-  if (!graceful && worker.threadId !== -1) await worker.terminate();
-  return graceful;
+  if (worker.threadId === -1) return { stopped: true, graceful: true };
+  const exited = new Promise(resolve => worker.once('exit', code => resolve({ code })));
+  try { worker.stdin?.end(); } catch { /* forced termination remains available */ }
+  const gracefulExit = await settleWithin(exited, 1_000);
+  if (gracefulExit || worker.threadId === -1) {
+    return { stopped: true, graceful: true };
+  }
+
+  let termination;
+  try {
+    termination = worker.terminate();
+  } catch {
+    worker.unref();
+    return { stopped: false, graceful: false };
+  }
+  const forcedExit = await settleWithin(
+    Promise.race([
+      exited,
+      termination.then(code => ({ code })),
+    ]),
+    3_000,
+  ).catch(() => null);
+  if (!forcedExit) worker.unref();
+  return { stopped: Boolean(forcedExit), graceful: false };
 }
 
 function sanitizedEnvironment(workspace, supplied) {
@@ -280,6 +306,16 @@ function withTimeout(promise, milliseconds, message) {
   return Promise.race([
     promise,
     new Promise((_, reject) => { timer = setTimeout(() => reject(new Error(message)), milliseconds); }),
+  ]).finally(() => clearTimeout(timer));
+}
+
+function settleWithin(promise, milliseconds) {
+  let timer;
+  return Promise.race([
+    promise,
+    new Promise(resolve => {
+      timer = setTimeout(() => resolve(null), milliseconds);
+    }),
   ]).finally(() => clearTimeout(timer));
 }
 

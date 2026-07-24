@@ -597,8 +597,40 @@ function stopServerState(state, options = {}) {
       state.forcedTermination = true;
       lifecycleCounters.forcedTerminationCount += 1;
       lifecycleCountersByServer.get(state.id).forcedTerminationCount += 1;
-      await state.worker.terminate();
-      await state.exitPromise;
+      let termination;
+      try {
+        termination = state.worker.terminate();
+      } catch (error) {
+        diagnostic('server_terminate_failed', {
+          serverID: state.id,
+          generation: state.generation,
+          message: redact(error.message),
+        });
+      }
+      if (termination) {
+        exitResult = await settleWithin(
+          Promise.race([
+            state.exitPromise,
+            termination.then(code => ({ code })),
+          ]),
+          gracefulStopTimeoutMilliseconds,
+        ).catch(error => {
+          diagnostic('server_terminate_failed', {
+            serverID: state.id,
+            generation: state.generation,
+            message: redact(error.message),
+          });
+          return null;
+        });
+      }
+      if (!exitResult) {
+        state.worker.unref();
+        diagnostic('server_termination_timeout', {
+          serverID: state.id,
+          generation: state.generation,
+          timeoutMilliseconds: gracefulStopTimeoutMilliseconds,
+        });
+      }
     } else if (exitResult && state.expectedStop) {
       lifecycleCounters.gracefulStopCount += 1;
       lifecycleCountersByServer.get(state.id).gracefulStopCount += 1;

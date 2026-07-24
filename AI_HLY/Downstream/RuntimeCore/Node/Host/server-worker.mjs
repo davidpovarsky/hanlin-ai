@@ -144,6 +144,9 @@ if (useESM) {
 }
 
 parentPort?.postMessage({ type: 'loaded', modulePolicyHooksAvailable: true });
+// stdin is the lifetime of an MCP stdio server. The diagnostics port must not
+// keep the Worker alive after the host closes stdin during Stop.
+parentPort?.unref();
 
 function deny(code, specifier, parentURL, resolvedURL = null, operation = null) {
   const access = {
