@@ -1,7 +1,6 @@
 import { parentPort, workerData } from 'node:worker_threads';
 import * as nodeModule from 'node:module';
 import { readFileSync, promises as fs } from 'node:fs';
-import { PassThrough } from 'node:stream';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import path from 'node:path';
 import ts from 'typescript';
@@ -24,26 +23,6 @@ if (typeof nodeModule.registerHooks !== 'function') {
 // entry points, so present the selected package file exactly as a direct Node
 // launch would; argv[2...] remains the validated server arguments.
 process.argv[1] = entryPoint;
-
-const workerStdin = new PassThrough();
-Object.defineProperty(process, 'stdin', {
-  configurable: true,
-  enumerable: true,
-  value: workerStdin,
-});
-process.stdout.write = portWrite('stdout');
-process.stderr.write = portWrite('stderr');
-const handleHostMessage = message => {
-  if (message?.type === 'stdio-input') {
-    workerStdin.write(Buffer.from(message.data));
-  }
-  if (message?.type === 'stdio-end') {
-    workerStdin.end();
-    parentPort?.off('message', handleHostMessage);
-    parentPort?.unref();
-  }
-};
-parentPort?.on('message', handleHostMessage);
 
 const inspectedSources = new Set();
 globalThis[Symbol.for('hanlin.mcp.blockChildProcess')] = operation => {
@@ -165,6 +144,9 @@ if (useESM) {
 }
 
 parentPort?.postMessage({ type: 'loaded', modulePolicyHooksAvailable: true });
+// stdin is the lifetime of an MCP stdio server. The diagnostics port must not
+// keep the Worker alive after the host closes stdin during Stop.
+parentPort?.unref();
 
 function deny(code, specifier, parentURL, resolvedURL = null, operation = null) {
   const access = {
@@ -234,32 +216,6 @@ function installChildProcessPolicy() {
     ]('ChildProcess.prototype.spawn'),
     writable: false,
   });
-}
-
-function portWrite(channel) {
-  return (chunk, encoding, callback) => {
-    if (typeof encoding === 'function') {
-      callback = encoding;
-      encoding = undefined;
-    }
-    try {
-      parentPort?.postMessage({
-        type: 'stdio-output',
-        channel,
-        data: Buffer.isBuffer(chunk)
-          ? chunk
-          : Buffer.from(String(chunk), encoding),
-      });
-      callback?.();
-      return true;
-    } catch (error) {
-      if (callback) {
-        callback(error);
-        return false;
-      }
-      throw error;
-    }
-  };
 }
 
 function reportSpecifier(specifier) {
