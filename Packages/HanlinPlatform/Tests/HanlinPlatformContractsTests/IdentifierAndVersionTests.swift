@@ -64,3 +64,29 @@ func hostVersionRangeRejectsInversion() throws {
         try HanlinHostVersionRange(minimum: two, maximum: one)
     }
 }
+
+@Test
+func correlationAndInstanceIdentitiesRemainDistinctTypedValues() throws {
+    let raw = "123e4567-e89b-12d3-a456-426614174000"
+    let appSession = try HanlinAppSessionID(validating: raw)
+    let runtimeSession = try HanlinRuntimeSessionID(validating: raw)
+    let invocation = try HanlinToolInvocationID(validating: raw)
+    let providerInstance = try HanlinProviderInstanceID(validating: raw)
+
+    #expect(appSession.rawValue == runtimeSession.rawValue)
+    #expect(invocation.rawValue == providerInstance.rawValue)
+    #expect(type(of: appSession) == HanlinAppSessionID.self)
+    #expect(type(of: runtimeSession) == HanlinRuntimeSessionID.self)
+    #expect(type(of: invocation) == HanlinToolInvocationID.self)
+    #expect(type(of: providerInstance) == HanlinProviderInstanceID.self)
+}
+
+@Test
+func descriptorAndCatalogRevisionsHaveSeparateSemantics() throws {
+    let descriptor = try HanlinDescriptorRevision(1)
+    let catalog = HanlinCatalogRevision(1)
+    #expect(descriptor.rawValue == catalog.rawValue)
+    #expect(throws: HanlinContractError.self) {
+        try HanlinDescriptorRevision(0)
+    }
+}

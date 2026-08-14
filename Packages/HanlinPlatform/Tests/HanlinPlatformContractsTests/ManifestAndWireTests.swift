@@ -56,10 +56,12 @@ func manifestRejectsDuplicateCanonicalIdentifiers() throws {
     let route = HanlinRouteDescriptor(
         id: routeID,
         title: try ContractFixtures.localized("Details"),
-        parameterSchema: .object(
-            properties: [:],
-            required: [],
-            additionalProperties: false
+        parameterSchema: try ContractFixtures.jsonSchema(
+            .object([
+                "additionalProperties": .bool(false),
+                "properties": .object([:]),
+                "type": .string("object")
+            ])
         )
     )
     let descriptor = try ContractFixtures.descriptor(routes: [route, route])

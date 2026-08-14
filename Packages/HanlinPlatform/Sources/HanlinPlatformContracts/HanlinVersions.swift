@@ -106,6 +106,75 @@ public struct HanlinWireProtocolVersion: HanlinMajorMinorVersion {
     }
 }
 
+public struct HanlinContractVersion: HanlinMajorMinorVersion {
+    public static let versionKind = "contract"
+    public let major: UInt16
+    public let minor: UInt16
+    public init(major: UInt16, minor: UInt16) {
+        self.major = major
+        self.minor = minor
+    }
+}
+
+public struct HanlinPolicyVersion: HanlinMajorMinorVersion {
+    public static let versionKind = "policy"
+    public let major: UInt16
+    public let minor: UInt16
+    public init(major: UInt16, minor: UInt16) {
+        self.major = major
+        self.minor = minor
+    }
+}
+
+public struct HanlinRecordSchemaVersion: Codable, Hashable, Comparable, Sendable {
+    public let rawValue: UInt32
+
+    public init(_ rawValue: UInt32) {
+        self.rawValue = rawValue
+    }
+
+    public static func < (left: Self, right: Self) -> Bool {
+        left.rawValue < right.rawValue
+    }
+}
+
+public struct HanlinDescriptorRevision: Codable, Hashable, Comparable, Sendable {
+    public let rawValue: UInt64
+
+    public init(_ rawValue: UInt64) throws {
+        guard rawValue > 0 else {
+            throw HanlinContractError.invalidRevision(kind: "descriptor", value: rawValue)
+        }
+        self.rawValue = rawValue
+    }
+
+    public static func < (left: Self, right: Self) -> Bool {
+        left.rawValue < right.rawValue
+    }
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        try self.init(container.decode(UInt64.self))
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.singleValueContainer()
+        try container.encode(rawValue)
+    }
+}
+
+public struct HanlinCatalogRevision: Codable, Hashable, Comparable, Sendable {
+    public let rawValue: UInt64
+
+    public init(_ rawValue: UInt64) {
+        self.rawValue = rawValue
+    }
+
+    public static func < (left: Self, right: Self) -> Bool {
+        left.rawValue < right.rawValue
+    }
+}
+
 public struct HanlinPackageVersion:
     RawRepresentable,
     Codable,

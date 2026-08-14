@@ -214,3 +214,165 @@ public struct HanlinPublisherID: HanlinStringIdentifier {
         self.rawValue = rawValue
     }
 }
+
+public struct HanlinProviderID: HanlinStringIdentifier {
+    public static let identifierKind = "provider"
+    public let rawValue: String
+    public init(validating rawValue: String) throws {
+        try HanlinIdentifierValidator.validate(rawValue, kind: Self.identifierKind)
+        self.rawValue = rawValue
+    }
+}
+
+public struct HanlinProviderInstanceID: HanlinStringIdentifier {
+    public static let identifierKind = "provider-instance"
+    public let rawValue: String
+    public init(validating rawValue: String) throws {
+        try HanlinIdentifierValidator.validate(rawValue, kind: Self.identifierKind)
+        self.rawValue = rawValue
+    }
+}
+
+public struct HanlinInstalledPackageID: HanlinStringIdentifier {
+    public static let identifierKind = "installed-package"
+    public let rawValue: String
+    public init(validating rawValue: String) throws {
+        try HanlinIdentifierValidator.validate(rawValue, kind: Self.identifierKind)
+        self.rawValue = rawValue
+    }
+}
+
+public struct HanlinCatalogRegistrationID: HanlinStringIdentifier {
+    public static let identifierKind = "catalog-registration"
+    public let rawValue: String
+    public init(validating rawValue: String) throws {
+        try HanlinIdentifierValidator.validate(rawValue, kind: Self.identifierKind)
+        self.rawValue = rawValue
+    }
+}
+
+public struct HanlinLaunchID: HanlinStringIdentifier {
+    public static let identifierKind = "launch"
+    public let rawValue: String
+    public init(validating rawValue: String) throws {
+        try HanlinIdentifierValidator.validate(rawValue, kind: Self.identifierKind)
+        self.rawValue = rawValue
+    }
+}
+
+public struct HanlinAppSessionID: HanlinStringIdentifier {
+    public static let identifierKind = "app-session"
+    public let rawValue: String
+    public init(validating rawValue: String) throws {
+        try HanlinIdentifierValidator.validate(rawValue, kind: Self.identifierKind)
+        self.rawValue = rawValue
+    }
+}
+
+public struct HanlinRuntimeSessionID: HanlinStringIdentifier {
+    public static let identifierKind = "runtime-session"
+    public let rawValue: String
+    public init(validating rawValue: String) throws {
+        try HanlinIdentifierValidator.validate(rawValue, kind: Self.identifierKind)
+        self.rawValue = rawValue
+    }
+}
+
+public struct HanlinToolInvocationID: HanlinStringIdentifier {
+    public static let identifierKind = "tool-invocation"
+    public let rawValue: String
+    public init(validating rawValue: String) throws {
+        try HanlinIdentifierValidator.validate(rawValue, kind: Self.identifierKind)
+        self.rawValue = rawValue
+    }
+}
+
+public struct HanlinScriptExecutionID: HanlinStringIdentifier {
+    public static let identifierKind = "script-execution"
+    public let rawValue: String
+    public init(validating rawValue: String) throws {
+        try HanlinIdentifierValidator.validate(rawValue, kind: Self.identifierKind)
+        self.rawValue = rawValue
+    }
+}
+
+public struct HanlinPermissionRequestID: HanlinStringIdentifier {
+    public static let identifierKind = "permission-request"
+    public let rawValue: String
+    public init(validating rawValue: String) throws {
+        try HanlinIdentifierValidator.validate(rawValue, kind: Self.identifierKind)
+        self.rawValue = rawValue
+    }
+}
+
+public struct HanlinGrantID: HanlinStringIdentifier {
+    public static let identifierKind = "grant"
+    public let rawValue: String
+    public init(validating rawValue: String) throws {
+        try HanlinIdentifierValidator.validate(rawValue, kind: Self.identifierKind)
+        self.rawValue = rawValue
+    }
+}
+
+public struct HanlinRevocationID: HanlinStringIdentifier {
+    public static let identifierKind = "revocation"
+    public let rawValue: String
+    public init(validating rawValue: String) throws {
+        try HanlinIdentifierValidator.validate(rawValue, kind: Self.identifierKind)
+        self.rawValue = rawValue
+    }
+}
+
+public struct HanlinPolicyEvaluationID: HanlinStringIdentifier {
+    public static let identifierKind = "policy-evaluation"
+    public let rawValue: String
+    public init(validating rawValue: String) throws {
+        try HanlinIdentifierValidator.validate(rawValue, kind: Self.identifierKind)
+        self.rawValue = rawValue
+    }
+}
+
+public struct HanlinPolicyRuleID: HanlinStringIdentifier {
+    public static let identifierKind = "policy-rule"
+    public let rawValue: String
+    public init(validating rawValue: String) throws {
+        try HanlinIdentifierValidator.validate(rawValue, kind: Self.identifierKind)
+        self.rawValue = rawValue
+    }
+}
+
+public struct HanlinAuditEventID: HanlinStringIdentifier {
+    public static let identifierKind = "audit-event"
+    public let rawValue: String
+    public init(validating rawValue: String) throws {
+        try HanlinIdentifierValidator.validate(rawValue, kind: Self.identifierKind)
+        self.rawValue = rawValue
+    }
+}
+
+public struct HanlinMigrationID: HanlinStringIdentifier {
+    public static let identifierKind = "migration"
+    public let rawValue: String
+    public init(validating rawValue: String) throws {
+        try HanlinIdentifierValidator.validate(rawValue, kind: Self.identifierKind)
+        self.rawValue = rawValue
+    }
+}
+
+public struct HanlinCancellationID: HanlinStringIdentifier {
+    public static let identifierKind = "cancellation"
+    public let rawValue: String
+    public init(validating rawValue: String) throws {
+        try HanlinIdentifierValidator.validate(rawValue, kind: Self.identifierKind)
+        self.rawValue = rawValue
+    }
+}
+
+public struct HanlinContractID: HanlinStringIdentifier {
+    public static let identifierKind = "contract"
+    public let rawValue: String
+    public init(validating rawValue: String) throws {
+        try HanlinIdentifierValidator.validate(rawValue, kind: Self.identifierKind)
+        self.rawValue = rawValue
+    }
+}

@@ -1,6 +1,7 @@
 # Value and Schema Round-Trip Contract
 
-Status: proposed normative conversion policy; no conversion code is authorized.
+Status: normative first-integration contract implemented by
+`HanlinPlatformContracts`.
 
 ## 1. Domains
 
@@ -25,7 +26,7 @@ null | bool | integer(Int64) | number(binary64) | string | data(bytes) |
 array([HanlinValue]) | object([String: HanlinValue])
 ```
 
-Its next-major tagged wire representation must encode:
+Its canonical tagged wire representation encodes:
 
 - integer as a canonical base-10 signed Int64 string or integer field whose
   decoder proves exact Int64 recovery;
@@ -35,12 +36,9 @@ Its next-major tagged wire representation must encode:
 - object keys as Unicode strings with duplicate detection before dictionary
   construction.
 
-The current tagged encoding is accepted as a package-only Phase 1 format, not
-the final cross-runtime encoding. Because the package is not linked and no
-product store uses it, the design prefers one clean next-major format rather
-than permanent dual encoding. Phase 1 fixtures may be regenerated after owner
-approval; no compatibility reader is required unless an external consumer or
-persisted file is discovered before implementation.
+The former package-only tagged encoding had no product or persisted consumer and
+is not retained as a compatibility format. The canonical encoding is the only
+supported package representation.
 
 ## 3. JSON-domain representation
 
@@ -53,14 +51,16 @@ is treated as binary64.
 Canonical JSON encoding follows these rules:
 
 - UTF-8 only; no BOM.
-- Object members sorted by Unicode scalar/UTF-8 lexical order defined by the
-  implementation specification and covered by cross-language fixtures.
+- Object members sorted lexicographically by the unmodified UTF-8 bytes of each
+  key. Keys are not Unicode-normalized, case-folded, trimmed, or rewritten.
 - Minimal required JSON escaping; `/` is not escaped.
 - `true`, `false`, and `null` use lowercase literals.
 - Integers use canonical base-10 with no leading zero and no `+` sign.
 - Binary64 uses the shortest decimal spelling that round-trips to the identical
-  finite bit pattern; `-0.0` is emitted as `-0` and remains distinguishable only
-  where the decoder and destination preserve it.
+  finite bit pattern. When that spelling would otherwise look like an integer,
+  a floating marker is retained. In particular, `0.0`, `-0.0`, `1.0`, and
+  `-1.0` encode exactly as written here, so decoding preserves `.number` and
+  the sign bit of zero.
 - NaN and infinities are rejected before encoding.
 - No insignificant whitespace.
 
@@ -182,8 +182,8 @@ Projection warnings are not swallowed.
 
 ## 6. Limits
 
-Hard caps are host policy and apply before recursive decoding. Initial proposed
-caps for owner approval are:
+Hard caps are host policy and apply before recursive decoding. The initial
+canonical caps are:
 
 | Limit | Default | Hard maximum |
 | --- | ---: | ---: |
@@ -245,4 +245,3 @@ MCP schemas/calls, RuntimeCore results, manifests, wire messages, and tests use
 the split canonical types; no `[String: Any]` conversion is authoritative;
 legacy manifest data is migrated or reset by approved policy; and randomized
 plus golden round-trip tests pass in the exact Xcode SDK and shipped runtime.
-

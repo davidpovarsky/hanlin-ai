@@ -21,6 +21,9 @@ enum ContractFixtures {
         let packageID = try HanlinPackageID(validating: "com.example.transit")
         let capabilityID = try HanlinCapabilityID(validating: "network.fetch")
         let toolID = try HanlinToolID(validating: "com.example.transit.refresh")
+        let providerInstanceID = try HanlinProviderInstanceID(
+            validating: "native.app.com.example.transit"
+        )
         let packageVersion = try HanlinPackageVersion(validating: "1.2.3")
         let defaultEntryPoints = [
             HanlinEntryPointDescriptor(
@@ -29,15 +32,23 @@ enum ContractFixtures {
                 allowedContexts: [.mainApplication]
             )
         ]
-        let inputSchema = HanlinJSONSchema.object(
-            properties: [
-                "stop": .string(minLength: 1, maxLength: 80, pattern: nil)
-            ],
-            required: ["stop"],
-            additionalProperties: false
+        let inputSchema = try jsonSchema(
+            .object([
+                "additionalProperties": .bool(false),
+                "properties": .object([
+                    "stop": .object([
+                        "maxLength": .integer(80),
+                        "minLength": .integer(1),
+                        "type": .string("string")
+                    ])
+                ]),
+                "required": .array([.string("stop")]),
+                "type": .string("object")
+            ])
         )
         return HanlinAppDescriptor(
             schemaVersion: schemaVersion,
+            descriptorRevision: try HanlinDescriptorRevision(1),
             id: appID,
             name: try localized("Transit"),
             summary: try localized("Nearby arrivals"),
@@ -56,19 +67,22 @@ enum ContractFixtures {
             routes: routes,
             tools: [
                 HanlinToolDescriptor(
-                    id: toolID,
+                    logicalID: HanlinLogicalToolID(
+                        providerInstanceID: providerInstanceID,
+                        localToolID: toolID
+                    ),
+                    descriptorRevision: try HanlinDescriptorRevision(1),
                     owner: .app(appID),
                     title: try localized("Refresh"),
                     summary: try localized("Refresh arrivals"),
                     inputSchema: inputSchema,
-                    outputSchema: .array(
-                        items: .string(
-                            minLength: nil,
-                            maxLength: nil,
-                            pattern: nil
-                        ),
-                        minItems: 0,
-                        maxItems: 100
+                    outputSchema: try jsonSchema(
+                        .object([
+                            "items": .object(["type": .string("string")]),
+                            "maxItems": .integer(100),
+                            "minItems": .integer(0),
+                            "type": .string("array")
+                        ])
                     ),
                     capabilities: [capabilityID],
                     risk: .read,
@@ -103,6 +117,15 @@ enum ContractFixtures {
                 digest: String(repeating: "a", count: 64),
                 signer: try HanlinPublisherID(validating: "com.example")
             )
+        )
+    }
+
+    static func jsonSchema(
+        _ root: HanlinJSONValue
+    ) throws -> HanlinJSONSchemaDocument {
+        try HanlinJSONSchemaDocument(
+            dialect: .draft2020_12,
+            root: root
         )
     }
 }

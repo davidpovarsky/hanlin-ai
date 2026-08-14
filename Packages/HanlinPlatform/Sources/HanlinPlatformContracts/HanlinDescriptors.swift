@@ -295,13 +295,13 @@ public struct HanlinEntryPointDescriptor: Codable, Hashable, Sendable {
 public struct HanlinRouteDescriptor: Codable, Hashable, Sendable {
     public let id: HanlinRouteID
     public let title: LocalizedValue
-    public let parameterSchema: HanlinJSONSchema
+    public let parameterSchema: HanlinJSONSchemaDocument
     public let requiredCapabilities: [HanlinCapabilityID]
 
     public init(
         id: HanlinRouteID,
         title: LocalizedValue,
-        parameterSchema: HanlinJSONSchema,
+        parameterSchema: HanlinJSONSchemaDocument,
         requiredCapabilities: [HanlinCapabilityID] = []
     ) {
         self.id = id
@@ -314,16 +314,16 @@ public struct HanlinRouteDescriptor: Codable, Hashable, Sendable {
 public struct HanlinActionDescriptor: Codable, Hashable, Sendable {
     public let id: HanlinActionID
     public let title: LocalizedValue
-    public let inputSchema: HanlinJSONSchema
-    public let outputSchema: HanlinJSONSchema?
+    public let inputSchema: HanlinJSONSchemaDocument
+    public let outputSchema: HanlinJSONSchemaDocument?
     public let capabilities: [HanlinCapabilityID]
     public let risk: HanlinRiskLevel
 
     public init(
         id: HanlinActionID,
         title: LocalizedValue,
-        inputSchema: HanlinJSONSchema,
-        outputSchema: HanlinJSONSchema? = nil,
+        inputSchema: HanlinJSONSchemaDocument,
+        outputSchema: HanlinJSONSchemaDocument? = nil,
         capabilities: [HanlinCapabilityID] = [],
         risk: HanlinRiskLevel
     ) {
@@ -425,28 +425,32 @@ public enum HanlinToolCompactStyle: String, Codable, Hashable, Sendable {
 }
 
 public struct HanlinToolDescriptor: Codable, Hashable, Sendable {
-    public let id: HanlinToolID
+    public var id: HanlinLogicalToolID { logicalID }
+    public let logicalID: HanlinLogicalToolID
+    public let descriptorRevision: HanlinDescriptorRevision
     public let owner: HanlinToolOwner
     public let title: LocalizedValue
     public let summary: LocalizedValue
-    public let inputSchema: HanlinJSONSchema
-    public let outputSchema: HanlinJSONSchema?
+    public let inputSchema: HanlinJSONSchemaDocument
+    public let outputSchema: HanlinJSONSchemaDocument?
     public let capabilities: [HanlinCapabilityID]
     public let risk: HanlinRiskLevel
     public let presentation: HanlinToolPresentationDescriptor
 
     public init(
-        id: HanlinToolID,
+        logicalID: HanlinLogicalToolID,
+        descriptorRevision: HanlinDescriptorRevision,
         owner: HanlinToolOwner,
         title: LocalizedValue,
         summary: LocalizedValue,
-        inputSchema: HanlinJSONSchema,
-        outputSchema: HanlinJSONSchema? = nil,
+        inputSchema: HanlinJSONSchemaDocument,
+        outputSchema: HanlinJSONSchemaDocument? = nil,
         capabilities: [HanlinCapabilityID] = [],
         risk: HanlinRiskLevel,
         presentation: HanlinToolPresentationDescriptor
     ) {
-        self.id = id
+        self.logicalID = logicalID
+        self.descriptorRevision = descriptorRevision
         self.owner = owner
         self.title = title
         self.summary = summary
@@ -463,17 +467,26 @@ public struct HanlinCapabilityDeclaration: Codable, Hashable, Sendable {
     public let reason: LocalizedValue
     public let constraints: HanlinValue
     public let optional: Bool
+    public let scopeSchema: HanlinValueSchema?
+    public let risk: HanlinRiskLevel
+    public let requiresSystemAuthorization: Bool
 
     public init(
         id: HanlinCapabilityID,
         reason: LocalizedValue,
         constraints: HanlinValue = .object([:]),
-        optional: Bool = false
+        optional: Bool = false,
+        scopeSchema: HanlinValueSchema? = nil,
+        risk: HanlinRiskLevel = .read,
+        requiresSystemAuthorization: Bool = false
     ) {
         self.id = id
         self.reason = reason
         self.constraints = constraints
         self.optional = optional
+        self.scopeSchema = scopeSchema
+        self.risk = risk
+        self.requiresSystemAuthorization = requiresSystemAuthorization
     }
 }
 
@@ -566,6 +579,7 @@ public struct HanlinIntegrityDeclaration: Codable, Hashable, Sendable {
 
 public struct HanlinAppDescriptor: Codable, Identifiable, Hashable, Sendable {
     public let schemaVersion: HanlinManifestVersion
+    public let descriptorRevision: HanlinDescriptorRevision
     public let id: HanlinAppID
     public let name: LocalizedValue
     public let summary: LocalizedValue
@@ -590,6 +604,7 @@ public struct HanlinAppDescriptor: Codable, Identifiable, Hashable, Sendable {
 
     public init(
         schemaVersion: HanlinManifestVersion,
+        descriptorRevision: HanlinDescriptorRevision,
         id: HanlinAppID,
         name: LocalizedValue,
         summary: LocalizedValue,
@@ -613,6 +628,7 @@ public struct HanlinAppDescriptor: Codable, Identifiable, Hashable, Sendable {
         integrity: HanlinIntegrityDeclaration? = nil
     ) {
         self.schemaVersion = schemaVersion
+        self.descriptorRevision = descriptorRevision
         self.id = id
         self.name = name
         self.summary = summary
@@ -772,7 +788,7 @@ public struct HanlinAppDescriptor: Codable, Identifiable, Hashable, Sendable {
         }
         for (index, route) in routes.enumerated() {
             do {
-                try route.parameterSchema.validateDefinition()
+                _ = try route.parameterSchema.canonicalJSONData()
             } catch {
                 issues.append(.init(
                     code: .invalidSchema,
@@ -815,12 +831,12 @@ public struct HanlinAppDescriptor: Codable, Identifiable, Hashable, Sendable {
     }
 
     private static func validate(
-        _ schema: HanlinJSONSchema,
+        _ schema: HanlinJSONSchemaDocument,
         path: String,
         into issues: inout [HanlinManifestIssue]
     ) {
         do {
-            try schema.validateDefinition()
+            _ = try schema.canonicalJSONData()
         } catch {
             issues.append(.init(
                 code: .invalidSchema,
