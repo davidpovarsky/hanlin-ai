@@ -13,6 +13,11 @@ on:
         required: true
         default: false
         type: boolean
+      force_clean_build:
+        description: Discard compiler build state and perform a clean diagnostic rebuild
+        required: true
+        default: false
+        type: boolean
   push:
     branches:
       - main
@@ -22,7 +27,7 @@ permissions:
 
 jobs:
   validate-hanlin-platform-phase1:
-    if: ${{ github.event_name == 'workflow_dispatch' && inputs.phase1_validation_only && !inputs.runtime_bundle_only }}
+    if: ${{ github.event_name == 'workflow_dispatch' && !inputs.runtime_bundle_only }}
     name: Validate baseline, contracts, tests, and iOS compilation
     runs-on: macos-26
     timeout-minutes: 60
@@ -38,6 +43,7 @@ jobs:
 
     steps:
       - name: Select newest stable Xcode 26 and print environment
+        id: phase1-toolchain
         run: |
           set -euxo pipefail
           mkdir -p "$RUNNER_TEMP/$LOG_DIR"
@@ -56,6 +62,16 @@ jobs:
             xcodebuild -showsdks | grep -E 'iphoneos26|iOS 26'
             xcodebuild -showsdks | grep -E 'iphonesimulator26|iOS Simulator 26'
           } 2>&1 | tee "$RUNNER_TEMP/$LOG_DIR/00-environment.log"
+          xcode_version="$(xcodebuild -version | sed -n '1s/^Xcode //p')"
+          xcode_build="$(xcodebuild -version | sed -n '2s/^Build version //p')"
+          runner_arch="$(uname -m)"
+          iphoneos_sdk="$(xcrun --sdk iphoneos --show-sdk-version)"
+          simulator_sdk="$(xcrun --sdk iphonesimulator --show-sdk-version)"
+          echo "xcode-version=$xcode_version" >> "$GITHUB_OUTPUT"
+          echo "xcode-build=$xcode_build" >> "$GITHUB_OUTPUT"
+          echo "runner-arch=$runner_arch" >> "$GITHUB_OUTPUT"
+          echo "iphoneos-sdk=$iphoneos_sdk" >> "$GITHUB_OUTPUT"
+          echo "simulator-sdk=$simulator_sdk" >> "$GITHUB_OUTPUT"
 
       - name: Check out exact validation commit cleanly
         uses: actions/checkout@v4
@@ -82,6 +98,68 @@ jobs:
           absolute_log_dir="$RUNNER_TEMP/$LOG_DIR"
           mkdir -p "$absolute_log_dir" build
           echo "LOG_DIR=$absolute_log_dir" >> "$GITHUB_ENV"
+
+      - name: Restore Phase 1 SwiftPM build cache
+        if: ${{ !inputs.force_clean_build }}
+        id: phase1-spm-cache
+        uses: actions/cache/restore@v6
+        with:
+          path: Packages/HanlinPlatform/.build
+          key: phase1-spm-v1-${{ runner.os }}-${{ steps.phase1-toolchain.outputs.runner-arch }}-${{ steps.phase1-toolchain.outputs.xcode-build }}-${{ hashFiles('Packages/HanlinPlatform/Package.swift') }}-${{ github.sha }}
+          restore-keys: |
+            phase1-spm-v1-${{ runner.os }}-${{ steps.phase1-toolchain.outputs.runner-arch }}-${{ steps.phase1-toolchain.outputs.xcode-build }}-${{ hashFiles('Packages/HanlinPlatform/Package.swift') }}-
+
+      - name: Restore Phase 1 simulator compiler cache
+        if: ${{ !inputs.force_clean_build }}
+        id: phase1-simulator-cache
+        uses: actions/cache/restore@v6
+        with:
+          path: |
+            build/Phase1SimulatorDerivedData/Build
+            build/Phase1SimulatorDerivedData/ModuleCache.noindex
+            build/Phase1SimulatorDerivedData/SDKStatCaches.noindex
+          key: phase1-derived-v1-${{ runner.os }}-${{ steps.phase1-toolchain.outputs.runner-arch }}-${{ steps.phase1-toolchain.outputs.xcode-build }}-iphonesimulator-${{ steps.phase1-toolchain.outputs.simulator-sdk }}-debug-${{ hashFiles('Packages/HanlinPlatform/Package.swift') }}-${{ github.sha }}
+          restore-keys: |
+            phase1-derived-v1-${{ runner.os }}-${{ steps.phase1-toolchain.outputs.runner-arch }}-${{ steps.phase1-toolchain.outputs.xcode-build }}-iphonesimulator-${{ steps.phase1-toolchain.outputs.simulator-sdk }}-debug-${{ hashFiles('Packages/HanlinPlatform/Package.swift') }}-
+
+      - name: Restore Phase 1 device compiler cache
+        if: ${{ !inputs.force_clean_build }}
+        id: phase1-device-cache
+        uses: actions/cache/restore@v6
+        with:
+          path: |
+            build/Phase1DeviceDerivedData/Build
+            build/Phase1DeviceDerivedData/ModuleCache.noindex
+            build/Phase1DeviceDerivedData/SDKStatCaches.noindex
+          key: phase1-derived-v1-${{ runner.os }}-${{ steps.phase1-toolchain.outputs.runner-arch }}-${{ steps.phase1-toolchain.outputs.xcode-build }}-iphoneos-${{ steps.phase1-toolchain.outputs.iphoneos-sdk }}-debug-${{ hashFiles('Packages/HanlinPlatform/Package.swift') }}-${{ github.sha }}
+          restore-keys: |
+            phase1-derived-v1-${{ runner.os }}-${{ steps.phase1-toolchain.outputs.runner-arch }}-${{ steps.phase1-toolchain.outputs.xcode-build }}-iphoneos-${{ steps.phase1-toolchain.outputs.iphoneos-sdk }}-debug-${{ hashFiles('Packages/HanlinPlatform/Package.swift') }}-
+
+      - name: Report Phase 1 cache mode
+        run: |
+          set -euo pipefail
+          cache_state() {
+            if [ "$1" = "true" ]; then echo exact-hit
+            elif [ -n "$2" ]; then echo fallback-hit
+            else echo miss
+            fi
+          }
+          {
+            echo "force_clean_build=${{ inputs.force_clean_build }}"
+            echo "SwiftPM=$(cache_state '${{ steps.phase1-spm-cache.outputs.cache-hit }}' '${{ steps.phase1-spm-cache.outputs.cache-matched-key }}')"
+            echo "SimulatorDerivedData=$(cache_state '${{ steps.phase1-simulator-cache.outputs.cache-hit }}' '${{ steps.phase1-simulator-cache.outputs.cache-matched-key }}')"
+            echo "DeviceDerivedData=$(cache_state '${{ steps.phase1-device-cache.outputs.cache-hit }}' '${{ steps.phase1-device-cache.outputs.cache-matched-key }}')"
+          } | tee "$LOG_DIR/00-cache-mode.log"
+
+      - name: Discard Phase 1 compiler state for forced clean build
+        if: ${{ inputs.force_clean_build }}
+        run: |
+          set -euxo pipefail
+          echo "FORCED CLEAN BUILD: discarding Phase 1 SwiftPM and DerivedData compiler state."
+          rm -rf \
+            Packages/HanlinPlatform/.build \
+            build/Phase1SimulatorDerivedData \
+            build/Phase1DeviceDerivedData
 
       - name: Verify Scripting baseline integrity and reproducibility
         run: |
@@ -159,6 +237,13 @@ jobs:
           swift test --package-path "$PACKAGE_PATH" --parallel \
             2>&1 | tee "$LOG_DIR/05-swift-test.log"
 
+      - name: Save successful Phase 1 SwiftPM build cache
+        if: ${{ success() && !inputs.force_clean_build }}
+        uses: actions/cache/save@v6
+        with:
+          path: Packages/HanlinPlatform/.build
+          key: ${{ steps.phase1-spm-cache.outputs.cache-primary-key }}
+
       - name: Discover the generated Xcode package scheme
         working-directory: Packages/HanlinPlatform
         run: |
@@ -191,9 +276,12 @@ jobs:
         working-directory: Packages/HanlinPlatform
         run: |
           set -euxo pipefail
-          rm -rf \
-            "$GITHUB_WORKSPACE/build/Phase1SimulatorDerivedData" \
-            "$LOG_DIR/Phase1Simulator.xcresult"
+          rm -rf "$LOG_DIR/Phase1Simulator.xcresult"
+          build_actions=(build)
+          if [ "${{ inputs.force_clean_build }}" = "true" ]; then
+            build_actions=(clean build)
+          fi
+          started_at="$(date +%s)"
           xcodebuild \
             -scheme "$PACKAGE_XCODE_SCHEME" \
             -configuration Debug \
@@ -201,17 +289,32 @@ jobs:
             -destination "generic/platform=iOS Simulator" \
             -derivedDataPath "$GITHUB_WORKSPACE/build/Phase1SimulatorDerivedData" \
             -resultBundlePath "$LOG_DIR/Phase1Simulator.xcresult" \
+            -showBuildTimingSummary \
             CODE_SIGNING_ALLOWED=NO \
             SWIFT_STRICT_CONCURRENCY=complete \
-            clean build 2>&1 | tee "$LOG_DIR/07-ios-simulator.log"
+            "${build_actions[@]}" 2>&1 | tee "$LOG_DIR/07-ios-simulator.log"
+          echo "$(( $(date +%s) - started_at ))" > "$LOG_DIR/07-ios-simulator-duration-seconds.txt"
+
+      - name: Save successful Phase 1 simulator compiler cache
+        if: ${{ success() && !inputs.force_clean_build }}
+        uses: actions/cache/save@v6
+        with:
+          path: |
+            build/Phase1SimulatorDerivedData/Build
+            build/Phase1SimulatorDerivedData/ModuleCache.noindex
+            build/Phase1SimulatorDerivedData/SDKStatCaches.noindex
+          key: ${{ steps.phase1-simulator-cache.outputs.cache-primary-key }}
 
       - name: Compile contracts for generic iOS device
         working-directory: Packages/HanlinPlatform
         run: |
           set -euxo pipefail
-          rm -rf \
-            "$GITHUB_WORKSPACE/build/Phase1DeviceDerivedData" \
-            "$LOG_DIR/Phase1Device.xcresult"
+          rm -rf "$LOG_DIR/Phase1Device.xcresult"
+          build_actions=(build)
+          if [ "${{ inputs.force_clean_build }}" = "true" ]; then
+            build_actions=(clean build)
+          fi
+          started_at="$(date +%s)"
           xcodebuild \
             -scheme "$PACKAGE_XCODE_SCHEME" \
             -configuration Debug \
@@ -219,9 +322,21 @@ jobs:
             -destination "generic/platform=iOS" \
             -derivedDataPath "$GITHUB_WORKSPACE/build/Phase1DeviceDerivedData" \
             -resultBundlePath "$LOG_DIR/Phase1Device.xcresult" \
+            -showBuildTimingSummary \
             CODE_SIGNING_ALLOWED=NO \
             SWIFT_STRICT_CONCURRENCY=complete \
-            clean build 2>&1 | tee "$LOG_DIR/08-ios-device.log"
+            "${build_actions[@]}" 2>&1 | tee "$LOG_DIR/08-ios-device.log"
+          echo "$(( $(date +%s) - started_at ))" > "$LOG_DIR/08-ios-device-duration-seconds.txt"
+
+      - name: Save successful Phase 1 device compiler cache
+        if: ${{ success() && !inputs.force_clean_build }}
+        uses: actions/cache/save@v6
+        with:
+          path: |
+            build/Phase1DeviceDerivedData/Build
+            build/Phase1DeviceDerivedData/ModuleCache.noindex
+            build/Phase1DeviceDerivedData/SDKStatCaches.noindex
+          key: ${{ steps.phase1-device-cache.outputs.cache-primary-key }}
 
       - name: Summarize compiler warnings
         if: always()
@@ -327,6 +442,7 @@ jobs:
           } 2>&1 | tee "$LOG_DIR/01-environment.log"
 
       - name: Select Xcode 26
+        id: app-toolchain
         run: |
           set -euxo pipefail
 
@@ -383,6 +499,73 @@ jobs:
               exit 1
             }
           } 2>&1 | tee "$LOG_DIR/02-select-xcode26.log"
+          xcode_version="$(xcodebuild -version | sed -n '1s/^Xcode //p')"
+          xcode_build="$(xcodebuild -version | sed -n '2s/^Build version //p')"
+          runner_arch="$(uname -m)"
+          iphoneos_sdk="$(xcrun --sdk iphoneos --show-sdk-version)"
+          echo "xcode-version=$xcode_version" >> "$GITHUB_OUTPUT"
+          echo "xcode-build=$xcode_build" >> "$GITHUB_OUTPUT"
+          echo "runner-arch=$runner_arch" >> "$GITHUB_OUTPUT"
+          echo "iphoneos-sdk=$iphoneos_sdk" >> "$GITHUB_OUTPUT"
+
+      - name: Restore cloned Swift package dependencies
+        id: app-sourcepackages-cache
+        uses: actions/cache/restore@v6
+        with:
+          path: build/SourcePackages
+          key: ios-sourcepackages-v1-${{ runner.os }}-${{ steps.app-toolchain.outputs.runner-arch }}-${{ steps.app-toolchain.outputs.xcode-build }}-${{ hashFiles('AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved', 'Packages/HanlinPlatform/Package.swift', 'Packages/IOSSystemLite/Package.swift') }}
+          restore-keys: |
+            ios-sourcepackages-v1-${{ runner.os }}-${{ steps.app-toolchain.outputs.runner-arch }}-${{ steps.app-toolchain.outputs.xcode-build }}-
+
+      - name: Restore compatible incremental Xcode compiler state
+        if: ${{ !inputs.force_clean_build }}
+        id: app-deriveddata-cache
+        uses: actions/cache/restore@v6
+        with:
+          path: |
+            build/DerivedData/Build
+            build/DerivedData/ModuleCache.noindex
+            build/DerivedData/SDKStatCaches.noindex
+          key: ios-derived-v2-${{ runner.os }}-${{ steps.app-toolchain.outputs.runner-arch }}-${{ steps.app-toolchain.outputs.xcode-build }}-iphoneos-${{ steps.app-toolchain.outputs.iphoneos-sdk }}-${{ env.CONFIGURATION }}-${{ hashFiles('AI_HLY.xcodeproj/project.pbxproj', 'AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved', 'Packages/HanlinPlatform/Package.swift', 'Packages/IOSSystemLite/Package.swift') }}-${{ github.sha }}
+          restore-keys: |
+            ios-derived-v2-${{ runner.os }}-${{ steps.app-toolchain.outputs.runner-arch }}-${{ steps.app-toolchain.outputs.xcode-build }}-iphoneos-${{ steps.app-toolchain.outputs.iphoneos-sdk }}-${{ env.CONFIGURATION }}-${{ hashFiles('AI_HLY.xcodeproj/project.pbxproj', 'AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved', 'Packages/HanlinPlatform/Package.swift', 'Packages/IOSSystemLite/Package.swift') }}-
+
+      - name: Report application build cache mode
+        run: |
+          set -euo pipefail
+          cache_state() {
+            if [ "$1" = "true" ]; then echo exact-hit
+            elif [ -n "$2" ]; then echo fallback-hit
+            else echo miss
+            fi
+          }
+          sourcepackages_state="$(cache_state '${{ steps.app-sourcepackages-cache.outputs.cache-hit }}' '${{ steps.app-sourcepackages-cache.outputs.cache-matched-key }}')"
+          deriveddata_state="$(cache_state '${{ steps.app-deriveddata-cache.outputs.cache-hit }}' '${{ steps.app-deriveddata-cache.outputs.cache-matched-key }}')"
+          if [ "${{ inputs.force_clean_build }}" = "true" ]; then
+            build_mode=forced-clean
+            deriveddata_state=disabled-for-forced-clean
+          elif [ -n "${{ steps.app-deriveddata-cache.outputs.cache-matched-key }}" ]; then
+            build_mode=restored-incremental
+          else
+            build_mode=cold
+          fi
+          {
+            echo "force_clean_build=${{ inputs.force_clean_build }}"
+            echo "SourcePackages=$sourcepackages_state"
+            echo "DerivedData=$deriveddata_state"
+            echo "build_mode=$build_mode"
+            echo "selected_xcode=${{ steps.app-toolchain.outputs.xcode-version }}"
+            echo "selected_xcode_build=${{ steps.app-toolchain.outputs.xcode-build }}"
+            echo "runner_arch=${{ steps.app-toolchain.outputs.runner-arch }}"
+            echo "iphoneos_sdk=${{ steps.app-toolchain.outputs.iphoneos-sdk }}"
+          } | tee "$LOG_DIR/02-cache-mode.log"
+
+      - name: Discard application compiler state for forced clean build
+        if: ${{ inputs.force_clean_build }}
+        run: |
+          set -euxo pipefail
+          echo "FORCED CLEAN BUILD: dependency downloads may be reused; DerivedData will not be restored or saved."
+          rm -rf "$DERIVED_DATA_PATH"
 
       - name: Create CI Config.xcconfig
         run: |
@@ -555,6 +738,12 @@ jobs:
             echo "Swift Package dependency resolution completed."
           } 2>&1 | tee "$LOG_DIR/06-resolve-packages.log"
 
+      - name: Save validated cloned Swift package dependencies
+        uses: actions/cache/save@v6
+        with:
+          path: build/SourcePackages
+          key: ${{ steps.app-sourcepackages-cache.outputs.cache-primary-key }}
+
       - name: Build unsigned iOS 26 app
         run: |
           set -euxo pipefail
@@ -571,6 +760,11 @@ jobs:
             echo
 
             rm -rf "$LOG_DIR/BuildResult.xcresult"
+            build_actions=(build)
+            if [ "${{ inputs.force_clean_build }}" = "true" ]; then
+              build_actions=(clean build)
+            fi
+            started_at="$(date +%s)"
 
             xcodebuild \
               -project "$PROJECT_PATH" \
@@ -581,6 +775,7 @@ jobs:
               -derivedDataPath "$DERIVED_DATA_PATH" \
               -clonedSourcePackagesDirPath "$CLONED_PACKAGES_PATH" \
               -resultBundlePath "$LOG_DIR/BuildResult.xcresult" \
+              -showBuildTimingSummary \
               -skipPackagePluginValidation \
               -skipMacroValidation \
               IPHONEOS_DEPLOYMENT_TARGET="$IOS_DEPLOYMENT_TARGET" \
@@ -589,11 +784,25 @@ jobs:
               CODE_SIGN_IDENTITY="" \
               PROVISIONING_PROFILE_SPECIFIER="" \
               DEVELOPMENT_TEAM="" \
-              clean build 2>&1 | tee "$LOG_DIR/07-xcodebuild.raw.log"
+              "${build_actions[@]}" 2>&1 | tee "$LOG_DIR/07-xcodebuild.raw.log"
+
+            duration_seconds="$(( $(date +%s) - started_at ))"
+            echo "$duration_seconds" > "$LOG_DIR/07-app-compilation-duration-seconds.txt"
+            echo "Application compilation duration: ${duration_seconds}s"
 
             echo
             echo "Build command completed."
           } 2>&1 | tee "$LOG_DIR/07-build-step-wrapper.log"
+
+      - name: Save successful incremental Xcode compiler state
+        if: ${{ success() && !inputs.force_clean_build }}
+        uses: actions/cache/save@v6
+        with:
+          path: |
+            build/DerivedData/Build
+            build/DerivedData/ModuleCache.noindex
+            build/DerivedData/SDKStatCaches.noindex
+          key: ${{ steps.app-deriveddata-cache.outputs.cache-primary-key }}
 
       - name: Locate built app
         run: |
@@ -787,6 +996,12 @@ jobs:
             echo "IOS_DEPLOYMENT_TARGET=$IOS_DEPLOYMENT_TARGET"
 
             echo
+            echo "===== Incremental build evidence ====="
+            cat "$LOG_DIR/02-cache-mode.log" 2>/dev/null || echo "Cache mode unavailable."
+            echo "Compilation duration (seconds): $(cat "$LOG_DIR/07-app-compilation-duration-seconds.txt" 2>/dev/null || echo unavailable)"
+            grep -A 80 -F 'Build Timing Summary' "$LOG_DIR/07-xcodebuild.raw.log" 2>/dev/null || true
+
+            echo
             echo "===== IPA ====="
             if [ -f "$IPA_NAME" ]; then
               ls -lh "$IPA_NAME"
@@ -837,7 +1052,7 @@ jobs:
       SCHEME_NAME: AI_HLY
       CONFIGURATION: Release
       DERIVED_DATA_PATH: build/SimulatorDerivedData
-      CLONED_PACKAGES_PATH: build/SimulatorSourcePackages
+      CLONED_PACKAGES_PATH: build/SourcePackages
       LOG_DIR: simulator-logs
       IOS_DEPLOYMENT_TARGET: "26.0"
 
@@ -853,6 +1068,7 @@ jobs:
           cache-dependency-path: AI_HLY/Downstream/RuntimeCore/Node/Host/package-lock.json
 
       - name: Prepare simulator logs and select stable Xcode 26
+        id: simulator-toolchain
         run: |
           set -euxo pipefail
           mkdir -p "$LOG_DIR" build
@@ -869,6 +1085,66 @@ jobs:
             xcodebuild -showsdks
           } 2>&1 | tee "$LOG_DIR/01-environment.log"
           xcodebuild -showsdks | grep -E 'iphonesimulator26|iOS Simulator 26'
+          echo "xcode-version=$(xcodebuild -version | sed -n '1s/^Xcode //p')" >> "$GITHUB_OUTPUT"
+          echo "xcode-build=$(xcodebuild -version | sed -n '2s/^Build version //p')" >> "$GITHUB_OUTPUT"
+          echo "runner-arch=$(uname -m)" >> "$GITHUB_OUTPUT"
+          echo "simulator-sdk=$(xcrun --sdk iphonesimulator --show-sdk-version)" >> "$GITHUB_OUTPUT"
+
+      - name: Restore simulator cloned Swift package dependencies
+        id: simulator-sourcepackages-cache
+        uses: actions/cache/restore@v6
+        with:
+          path: build/SourcePackages
+          key: ios-sourcepackages-v1-${{ runner.os }}-${{ steps.simulator-toolchain.outputs.runner-arch }}-${{ steps.simulator-toolchain.outputs.xcode-build }}-${{ hashFiles('AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved', 'Packages/HanlinPlatform/Package.swift', 'Packages/IOSSystemLite/Package.swift') }}
+          restore-keys: |
+            ios-sourcepackages-v1-${{ runner.os }}-${{ steps.simulator-toolchain.outputs.runner-arch }}-${{ steps.simulator-toolchain.outputs.xcode-build }}-
+
+      - name: Restore compatible simulator compiler state
+        if: ${{ !inputs.force_clean_build }}
+        id: simulator-deriveddata-cache
+        uses: actions/cache/restore@v6
+        with:
+          path: |
+            build/SimulatorDerivedData/Build
+            build/SimulatorDerivedData/ModuleCache.noindex
+            build/SimulatorDerivedData/SDKStatCaches.noindex
+          key: ios-derived-v2-${{ runner.os }}-${{ steps.simulator-toolchain.outputs.runner-arch }}-${{ steps.simulator-toolchain.outputs.xcode-build }}-iphonesimulator-${{ steps.simulator-toolchain.outputs.simulator-sdk }}-${{ env.CONFIGURATION }}-${{ hashFiles('AI_HLY.xcodeproj/project.pbxproj', 'AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved', 'Packages/HanlinPlatform/Package.swift', 'Packages/IOSSystemLite/Package.swift') }}-${{ github.sha }}
+          restore-keys: |
+            ios-derived-v2-${{ runner.os }}-${{ steps.simulator-toolchain.outputs.runner-arch }}-${{ steps.simulator-toolchain.outputs.xcode-build }}-iphonesimulator-${{ steps.simulator-toolchain.outputs.simulator-sdk }}-${{ env.CONFIGURATION }}-${{ hashFiles('AI_HLY.xcodeproj/project.pbxproj', 'AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved', 'Packages/HanlinPlatform/Package.swift', 'Packages/IOSSystemLite/Package.swift') }}-
+
+      - name: Report simulator cache mode
+        run: |
+          set -euo pipefail
+          cache_state() {
+            if [ "$1" = "true" ]; then echo exact-hit
+            elif [ -n "$2" ]; then echo fallback-hit
+            else echo miss
+            fi
+          }
+          if [ "${{ inputs.force_clean_build }}" = "true" ]; then
+            build_mode=forced-clean
+          elif [ -n "${{ steps.simulator-deriveddata-cache.outputs.cache-matched-key }}" ]; then
+            build_mode=restored-incremental
+          else
+            build_mode=cold
+          fi
+          {
+            echo "force_clean_build=${{ inputs.force_clean_build }}"
+            echo "SourcePackages=$(cache_state '${{ steps.simulator-sourcepackages-cache.outputs.cache-hit }}' '${{ steps.simulator-sourcepackages-cache.outputs.cache-matched-key }}')"
+            echo "DerivedData=$(cache_state '${{ steps.simulator-deriveddata-cache.outputs.cache-hit }}' '${{ steps.simulator-deriveddata-cache.outputs.cache-matched-key }}')"
+            echo "build_mode=$build_mode"
+            echo "selected_xcode=${{ steps.simulator-toolchain.outputs.xcode-version }}"
+            echo "selected_xcode_build=${{ steps.simulator-toolchain.outputs.xcode-build }}"
+            echo "runner_arch=${{ steps.simulator-toolchain.outputs.runner-arch }}"
+            echo "iphonesimulator_sdk=${{ steps.simulator-toolchain.outputs.simulator-sdk }}"
+          } | tee "$LOG_DIR/01-cache-mode.log"
+
+      - name: Discard simulator compiler state for forced clean build
+        if: ${{ inputs.force_clean_build }}
+        run: |
+          set -euxo pipefail
+          echo "FORCED CLEAN BUILD: discarding simulator DerivedData without discarding dependency downloads."
+          rm -rf "$DERIVED_DATA_PATH"
 
       - name: Create CI Config.xcconfig
         run: |
@@ -912,10 +1188,21 @@ jobs:
             -skipMacroValidation \
             2>&1 | tee "$LOG_DIR/05-resolve-packages.log"
 
+      - name: Save validated simulator Swift package dependencies
+        uses: actions/cache/save@v6
+        with:
+          path: build/SourcePackages
+          key: ${{ steps.simulator-sourcepackages-cache.outputs.cache-primary-key }}
+
       - name: Build full arm64 simulator app
         run: |
           set -euxo pipefail
           rm -rf "$LOG_DIR/SimulatorBuildResult.xcresult"
+          build_actions=(build)
+          if [ "${{ inputs.force_clean_build }}" = "true" ]; then
+            build_actions=(clean build)
+          fi
+          started_at="$(date +%s)"
           xcodebuild \
             -project "$PROJECT_PATH" \
             -scheme "$SCHEME_NAME" \
@@ -925,12 +1212,24 @@ jobs:
             -derivedDataPath "$DERIVED_DATA_PATH" \
             -clonedSourcePackagesDirPath "$CLONED_PACKAGES_PATH" \
             -resultBundlePath "$LOG_DIR/SimulatorBuildResult.xcresult" \
+            -showBuildTimingSummary \
             -skipPackagePluginValidation \
             -skipMacroValidation \
             IPHONEOS_DEPLOYMENT_TARGET="$IOS_DEPLOYMENT_TARGET" \
             ARCHS=arm64 \
             ONLY_ACTIVE_ARCH=YES \
-            clean build 2>&1 | tee "$LOG_DIR/06-xcodebuild-simulator.log"
+            "${build_actions[@]}" 2>&1 | tee "$LOG_DIR/06-xcodebuild-simulator.log"
+          echo "$(( $(date +%s) - started_at ))" > "$LOG_DIR/06-app-compilation-duration-seconds.txt"
+
+      - name: Save successful simulator compiler state
+        if: ${{ success() && !inputs.force_clean_build }}
+        uses: actions/cache/save@v6
+        with:
+          path: |
+            build/SimulatorDerivedData/Build
+            build/SimulatorDerivedData/ModuleCache.noindex
+            build/SimulatorDerivedData/SDKStatCaches.noindex
+          key: ${{ steps.simulator-deriveddata-cache.outputs.cache-primary-key }}
 
       - name: Locate and scan simulator app
         run: |
