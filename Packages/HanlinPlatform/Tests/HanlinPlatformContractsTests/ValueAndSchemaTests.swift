@@ -98,6 +98,17 @@ func jsonObjectsSortByUnmodifiedUTF8KeyBytes() throws {
     #expect(text == "{\"\(decomposed)\":1,\"z\":2,\"é\":3}")
     #expect(text.contains("\(decomposed)"))
     #expect(text.contains("é"))
+
+    let decoded = try HanlinJSONValue.decodeCanonicalJSON(
+        Data("{\"é\":1,\"\(decomposed)\":2}".utf8)
+    )
+    guard case let .object(members) = decoded else {
+        Issue.record("canonically equivalent UTF-8 keys were not retained as an object")
+        return
+    }
+    #expect(members.count == 2)
+    #expect(members["é"] == .integer(1))
+    #expect(members[decomposed] == .integer(2))
 }
 
 @Test

@@ -23,7 +23,7 @@ The semantic `HanlinValue` cases remain:
 
 ```text
 null | bool | integer(Int64) | number(binary64) | string | data(bytes) |
-array([HanlinValue]) | object([String: HanlinValue])
+array([HanlinValue]) | object(HanlinObject<HanlinValue>)
 ```
 
 Its canonical tagged wire representation encodes:
@@ -33,8 +33,13 @@ Its canonical tagged wire representation encodes:
 - number as the exact 64-bit IEEE-754 bit pattern in 16 lowercase hexadecimal
   digits, rejecting exponent/locale/parser differences and preserving `-0.0`;
 - data as unpadded base64url plus an explicit byte count; and
-- object keys as Unicode strings with duplicate detection before dictionary
-  construction.
+- object keys as Unicode strings with duplicate detection before canonical
+  object construction.
+
+`HanlinObject` uses the exact UTF-8 byte sequence for key equality and hashing.
+This is required because Swift `String` equality otherwise treats canonically
+equivalent Unicode spellings as equal even though this contract does not
+normalize or rewrite keys.
 
 The former package-only tagged encoding had no product or persisted consumer and
 is not retained as a compatibility format. The canonical encoding is the only

@@ -48,8 +48,11 @@ enum RuntimeCoreCanonicalShadowAdapter {
                 try projectJSONValue(child, path: "\(path)/\(index)")
             })
         case let .object(values):
-            return try .object(Dictionary(uniqueKeysWithValues: values.map { key, child in
-                (key, try projectJSONValue(child, path: "\(path)/\(key)"))
+            return try .object(HanlinObject(uniqueMembers: values.map { key, child in
+                (
+                    key: key,
+                    value: try projectJSONValue(child, path: "\(path)/\(key)")
+                )
             }))
         }
     }

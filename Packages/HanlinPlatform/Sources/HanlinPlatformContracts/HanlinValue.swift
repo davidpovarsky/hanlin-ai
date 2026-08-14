@@ -33,6 +33,170 @@ public struct HanlinValueLimits: Codable, Hashable, Sendable {
     public static let canonical = HanlinValueLimits()
 }
 
+/// A JSON-style object whose key identity is the key's exact UTF-8 byte
+/// sequence. Swift `String` equality uses Unicode canonical equivalence, which
+/// would otherwise merge differently encoded keys before canonicalization.
+public struct HanlinObject<Value: Hashable & Sendable>:
+    Hashable,
+    Sendable,
+    ExpressibleByDictionaryLiteral,
+    RandomAccessCollection
+{
+    private struct StorageMember: Hashable, Sendable {
+        let key: String
+        let value: Value
+    }
+
+    private var storage: [StorageMember]
+
+    public typealias DictionaryLiteralElement = (String, Value)
+    public typealias Element = (key: String, value: Value)
+    public typealias Index = Int
+
+    public init(dictionaryLiteral elements: DictionaryLiteralElement...) {
+        var storage: [StorageMember] = []
+        storage.reserveCapacity(elements.count)
+        for (key, value) in elements {
+            precondition(
+                !storage.contains { Self.keysEqual($0.key, key) },
+                "Hanlin object literal contains duplicate UTF-8 keys"
+            )
+            storage.append(.init(key: key, value: value))
+        }
+        self.storage = Self.sorted(storage)
+    }
+
+    public init(uniqueMembers: [(key: String, value: Value)]) throws {
+        var storage: [StorageMember] = []
+        storage.reserveCapacity(uniqueMembers.count)
+        for member in uniqueMembers {
+            guard !storage.contains(where: { Self.keysEqual($0.key, member.key) }) else {
+                throw HanlinContractError.duplicateObjectKey(key: member.key, path: "")
+            }
+            storage.append(.init(key: member.key, value: member.value))
+        }
+        self.storage = Self.sorted(storage)
+    }
+
+    private init(sortedUniqueMembers: [(key: String, value: Value)]) {
+        storage = Self.sorted(sortedUniqueMembers.map {
+            StorageMember(key: $0.key, value: $0.value)
+        })
+    }
+
+    public var startIndex: Int { storage.startIndex }
+    public var endIndex: Int { storage.endIndex }
+
+    public func index(after index: Int) -> Int {
+        storage.index(after: index)
+    }
+
+    public func index(before index: Int) -> Int {
+        storage.index(before: index)
+    }
+
+    public func distance(from start: Int, to end: Int) -> Int {
+        storage.distance(from: start, to: end)
+    }
+
+    public func index(_ index: Int, offsetBy distance: Int) -> Int {
+        storage.index(index, offsetBy: distance)
+    }
+
+    public subscript(position: Int) -> Element {
+        let member = storage[position]
+        return (member.key, member.value)
+    }
+
+    public subscript(key: String) -> Value? {
+        get {
+            storage.first(where: { Self.keysEqual($0.key, key) })?.value
+        }
+        set {
+            if let index = storage.firstIndex(where: { Self.keysEqual($0.key, key) }) {
+                if let newValue {
+                    storage[index] = .init(key: key, value: newValue)
+                } else {
+                    storage.remove(at: index)
+                }
+            } else if let newValue {
+                storage.append(.init(key: key, value: newValue))
+            }
+            storage = Self.sorted(storage)
+        }
+    }
+
+    public var keys: [String] { storage.map(\.key) }
+    public var values: [Value] { storage.map(\.value) }
+
+    public func containsKey(_ key: String) -> Bool {
+        storage.contains { Self.keysEqual($0.key, key) }
+    }
+
+    public func mapValues<Transformed: Hashable & Sendable>(
+        _ transform: (Value) throws -> Transformed
+    ) rethrows -> HanlinObject<Transformed> {
+        let members = try storage.map { member in
+            (key: member.key, value: try transform(member.value))
+        }
+        return HanlinObject<Transformed>(sortedUniqueMembers: members)
+    }
+
+    public static func == (left: Self, right: Self) -> Bool {
+        guard left.storage.count == right.storage.count else { return false }
+        return zip(left.storage, right.storage).allSatisfy { pair in
+            keysEqual(pair.0.key, pair.1.key) && pair.0.value == pair.1.value
+        }
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(storage.count)
+        for member in storage {
+            hasher.combine(Array(member.key.utf8))
+            hasher.combine(member.value)
+        }
+    }
+
+    private static func sorted(_ members: [StorageMember]) -> [StorageMember] {
+        members.sorted { left, right in
+            left.key.utf8.lexicographicallyPrecedes(right.key.utf8)
+        }
+    }
+
+    private static func keysEqual(_ left: String, _ right: String) -> Bool {
+        left.utf8.elementsEqual(right.utf8)
+    }
+}
+
+extension HanlinObject: Codable where Value: Codable {
+    private enum CodingKeys: String, CodingKey {
+        case key
+        case value
+    }
+
+    public init(from decoder: Decoder) throws {
+        var container = try decoder.unkeyedContainer()
+        var members: [(key: String, value: Value)] = []
+        while !container.isAtEnd {
+            let member = try container.nestedContainer(keyedBy: CodingKeys.self)
+            members.append((
+                key: try member.decode(String.self, forKey: .key),
+                value: try member.decode(Value.self, forKey: .value)
+            ))
+        }
+        try self.init(uniqueMembers: members)
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.unkeyedContainer()
+        for member in storage {
+            var encoded = container.nestedContainer(keyedBy: CodingKeys.self)
+            try encoded.encode(member.key, forKey: .key)
+            try encoded.encode(member.value, forKey: .value)
+        }
+    }
+}
+
 public enum HanlinNumericDestination: String, Codable, Hashable, Sendable {
     case json
     case javaScriptBinary64
@@ -46,7 +210,7 @@ public indirect enum HanlinValue: Hashable, Sendable {
     case string(String)
     case data(Data)
     case array([HanlinValue])
-    case object([String: HanlinValue])
+    case object(HanlinObject<HanlinValue>)
 
     public static func finiteNumber(_ value: Double) throws -> HanlinValue {
         guard value.isFinite else {
@@ -114,10 +278,10 @@ public indirect enum HanlinValue: Hashable, Sendable {
                 )
             })
         case let .object(values):
-            return try .object(Dictionary(uniqueKeysWithValues: values.map { key, value in
+            return try .object(HanlinObject(uniqueMembers: values.map { key, value in
                 (
-                    key,
-                    try value.jsonValue(
+                    key: key,
+                    value: try value.jsonValue(
                         destination: destination,
                         path: Self.appending(key, to: path)
                     )
@@ -267,7 +431,10 @@ public indirect enum HanlinValue: Hashable, Sendable {
                 byteOffset: 0
             )
         }
-        let unexpectedKeys = Set(container.keys).subtracting(["type", "value"])
+        let unexpectedKeys = container.keys.filter { key in
+            !key.utf8.elementsEqual("type".utf8) &&
+                !key.utf8.elementsEqual("value".utf8)
+        }
         guard unexpectedKeys.isEmpty else {
             throw HanlinContractError.invalidJSON(
                 reason: "unexpected rich-value members: \(unexpectedKeys.sorted())",
@@ -345,10 +512,10 @@ public indirect enum HanlinValue: Hashable, Sendable {
             guard case let .object(payload)? = container["value"] else {
                 throw Self.invalidTaggedPayload(type)
             }
-            self = try .object(Dictionary(uniqueKeysWithValues: payload.map { key, item in
+            self = try .object(HanlinObject(uniqueMembers: payload.map { key, item in
                 (
-                    key,
-                    try Self(
+                    key: key,
+                    value: try Self(
                         taggedJSONValue: item,
                         path: Self.appending(key, to: path)
                     )
@@ -468,7 +635,7 @@ extension HanlinValue: Codable {
         case "array":
             self = try .array(container.decode([HanlinValue].self, forKey: .value))
         case "object":
-            self = try .object(container.decode([String: HanlinValue].self, forKey: .value))
+            self = try .object(container.decode(HanlinObject<HanlinValue>.self, forKey: .value))
         default:
             throw DecodingError.dataCorruptedError(
                 forKey: .type,
@@ -521,7 +688,7 @@ public indirect enum HanlinJSONValue: Hashable, Sendable {
     case number(Double)
     case string(String)
     case array([HanlinJSONValue])
-    case object([String: HanlinJSONValue])
+    case object(HanlinObject<HanlinJSONValue>)
 
     public static func finiteNumber(_ value: Double) throws -> HanlinJSONValue {
         guard value.isFinite else {
@@ -767,7 +934,7 @@ extension HanlinJSONValue: Codable {
         case "array":
             self = try .array(container.decode([HanlinJSONValue].self, forKey: .value))
         case "object":
-            self = try .object(container.decode([String: HanlinJSONValue].self, forKey: .value))
+            self = try .object(container.decode(HanlinObject<HanlinJSONValue>.self, forKey: .value))
         default:
             throw DecodingError.dataCorruptedError(
                 forKey: .type,
@@ -912,15 +1079,15 @@ private struct HanlinJSONParser {
     private mutating func parseObject(depth: Int, path: String) throws -> HanlinJSONValue {
         index += 1
         skipWhitespace()
-        var values: [String: HanlinJSONValue] = [:]
+        var members: [(key: String, value: HanlinJSONValue)] = []
         if consumeIf(0x7D) {
-            return .object(values)
+            return .object([:])
         }
         while true {
-            guard values.count < limits.maximumObjectMembers else {
+            guard members.count < limits.maximumObjectMembers else {
                 throw HanlinContractError.sizeLimitExceeded(
                     kind: "object members",
-                    measured: values.count + 1,
+                    measured: members.count + 1,
                     maximum: limits.maximumObjectMembers,
                     path: path
                 )
@@ -930,7 +1097,7 @@ private struct HanlinJSONParser {
             }
             let key = try parseString(maximumBytes: limits.maximumKeyBytes, path: path)
             let memberPath = append(key, to: path)
-            guard values[key] == nil else {
+            guard !members.contains(where: { $0.key.utf8.elementsEqual(key.utf8) }) else {
                 throw HanlinContractError.duplicateObjectKey(key: key, path: path)
             }
             skipWhitespace()
@@ -938,7 +1105,10 @@ private struct HanlinJSONParser {
                 throw failure("expected ':' after object key")
             }
             skipWhitespace()
-            values[key] = try parseValue(depth: depth + 1, path: memberPath)
+            members.append((
+                key: key,
+                value: try parseValue(depth: depth + 1, path: memberPath)
+            ))
             skipWhitespace()
             if consumeIf(0x7D) { break }
             guard consumeIf(0x2C) else {
@@ -946,7 +1116,7 @@ private struct HanlinJSONParser {
             }
             skipWhitespace()
         }
-        return .object(values)
+        return try .object(HanlinObject(uniqueMembers: members))
     }
 
     private mutating func parseString(maximumBytes: Int, path: String) throws -> String {

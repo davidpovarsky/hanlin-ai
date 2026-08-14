@@ -58,8 +58,11 @@ enum HanlinFoundationJSONShadowAdapter {
                 try project(value, path: append(String(index), to: path))
             })
         case let values as [String: Any]:
-            return try .object(Dictionary(uniqueKeysWithValues: values.map { key, value in
-                (key, try project(value, path: append(key, to: path)))
+            return try .object(HanlinObject(uniqueMembers: values.map { key, value in
+                (
+                    key: key,
+                    value: try project(value, path: append(key, to: path))
+                )
             }))
         default:
             throw HanlinContractError.invalidJSON(
