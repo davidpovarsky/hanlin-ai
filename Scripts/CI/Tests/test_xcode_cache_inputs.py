@@ -66,13 +66,42 @@ class XcodeCacheInputsTests(unittest.TestCase):
             )
             payload = json.loads(manifest.read_text(encoding="utf-8"))
 
-            self.assertEqual(payload["schemaVersion"], 1)
+            self.assertEqual(payload["schemaVersion"], 2)
             self.assertEqual(payload["repositoryHead"], "def456")
             self.assertEqual(
                 [record["path"] for record in payload["files"]],
                 ["A.swift", "B.swift"],
             )
             self.assertNotIn(str(repository), manifest.read_text(encoding="utf-8"))
+
+    def test_restores_directory_mtime_only_when_entries_are_identical(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            repository = Path(directory)
+            sources = repository / "Sources"
+            sources.mkdir()
+            (sources / "Feature.swift").write_text("let value = 1\n", encoding="utf-8")
+            requested_mtime = 1_700_000_000_123_456_789
+            os.utime(sources, ns=(requested_mtime, requested_mtime))
+            original_mtime = sources.stat().st_mtime_ns
+            manifest = repository / "manifest.json"
+
+            xcode_cache_inputs.capture(
+                repository,
+                manifest,
+                ["Sources"],
+                {".swift"},
+                "abc123",
+            )
+            new_mtime = original_mtime + 5_000_000_000
+            os.utime(sources, ns=(new_mtime, new_mtime))
+
+            xcode_cache_inputs.restore(repository, manifest)
+            self.assertEqual(sources.stat().st_mtime_ns, original_mtime)
+
+            (sources / "Added.swift").write_text("let added = true\n", encoding="utf-8")
+            changed_mtime = sources.stat().st_mtime_ns
+            xcode_cache_inputs.restore(repository, manifest)
+            self.assertEqual(sources.stat().st_mtime_ns, changed_mtime)
 
     def test_missing_and_outside_paths_are_safe(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
@@ -83,6 +112,7 @@ class XcodeCacheInputsTests(unittest.TestCase):
                     {
                         "schemaVersion": 1,
                         "repositoryHead": "abc123",
+                        "directories": ["invalid"],
                         "files": [
                             {
                                 "path": "missing.swift",

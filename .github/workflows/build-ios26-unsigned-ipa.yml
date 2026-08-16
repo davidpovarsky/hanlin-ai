@@ -793,6 +793,7 @@ jobs:
             --suffix .pbxproj \
             --suffix .resolved \
             AI_HLY \
+            AI_HLYTests \
             Packages \
             AI_HLY.xcodeproj \
             Config.xcconfig \
@@ -1310,6 +1311,7 @@ jobs:
             --suffix .pbxproj \
             --suffix .resolved \
             AI_HLY \
+            AI_HLYTests \
             Packages \
             AI_HLY.xcodeproj \
             Config.xcconfig \

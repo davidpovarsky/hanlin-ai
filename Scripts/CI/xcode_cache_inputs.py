@@ -19,7 +19,9 @@ import tempfile
 from typing import Iterable
 
 
-SCHEMA_VERSION = 1
+SCHEMA_VERSION = 2
+SUPPORTED_SCHEMA_VERSIONS = {1, SCHEMA_VERSION}
+IGNORED_DIRECTORY_NAMES = {".build", ".git", ".swiftpm", "build", "xcuserdata"}
 
 
 def digest(path: Path) -> str:
@@ -28,6 +30,23 @@ def digest(path: Path) -> str:
         for chunk in iter(lambda: stream.read(1024 * 1024), b""):
             hasher.update(chunk)
     return hasher.hexdigest()
+
+
+def directory_digest(path: Path) -> str:
+    entries = []
+    with os.scandir(path) as children:
+        for child in children:
+            if child.is_symlink():
+                kind = "symlink"
+            elif child.is_dir(follow_symlinks=False):
+                kind = "directory"
+            elif child.is_file(follow_symlinks=False):
+                kind = "file"
+            else:
+                kind = "other"
+            entries.append((child.name, kind))
+    encoded = json.dumps(sorted(entries), separators=(",", ":")).encode("utf-8")
+    return hashlib.sha256(encoded).hexdigest()
 
 
 def repository_path(repository: Path, raw_path: str) -> Path:
@@ -59,6 +78,23 @@ def input_files(
     return sorted(files, key=lambda path: path.relative_to(repository).as_posix())
 
 
+def input_directories(repository: Path, raw_paths: Iterable[str]) -> list[Path]:
+    directories: set[Path] = set()
+    for raw_path in raw_paths:
+        path = repository_path(repository, raw_path)
+        if not path.is_dir():
+            continue
+        for current, child_names, _ in os.walk(path):
+            child_names[:] = [
+                name for name in child_names if name not in IGNORED_DIRECTORY_NAMES
+            ]
+            directories.add(Path(current))
+    return sorted(
+        directories,
+        key=lambda path: path.relative_to(repository).as_posix(),
+    )
+
+
 def capture(
     repository: Path,
     manifest: Path,
@@ -79,10 +115,22 @@ def capture(
             }
         )
 
+    directory_records = []
+    for path in input_directories(repository, raw_paths):
+        stat = path.stat()
+        directory_records.append(
+            {
+                "path": path.relative_to(repository).as_posix(),
+                "entriesSha256": directory_digest(path),
+                "mtimeNanoseconds": stat.st_mtime_ns,
+            }
+        )
+
     payload = {
         "schemaVersion": SCHEMA_VERSION,
         "repositoryHead": head,
         "files": records,
+        "directories": directory_records,
     }
     manifest.parent.mkdir(parents=True, exist_ok=True)
     with tempfile.NamedTemporaryFile(
@@ -97,7 +145,11 @@ def capture(
         stream.write("\n")
         temporary = Path(stream.name)
     temporary.replace(manifest)
-    print(f"XCODE_CACHE_INPUTS capture files={len(records)} head={head or 'unknown'}")
+    print(
+        "XCODE_CACHE_INPUTS capture "
+        f"files={len(records)} directories={len(directory_records)} "
+        f"head={head or 'unknown'}"
+    )
     return 0
 
 
@@ -108,7 +160,7 @@ def restore(repository: Path, manifest: Path) -> int:
         return 0
 
     payload = json.loads(manifest.read_text(encoding="utf-8"))
-    if payload.get("schemaVersion") != SCHEMA_VERSION:
+    if payload.get("schemaVersion") not in SUPPORTED_SCHEMA_VERSIONS:
         print("XCODE_CACHE_INPUTS restore status=unsupported-schema")
         return 0
 
@@ -136,10 +188,50 @@ def restore(repository: Path, manifest: Path) -> int:
         os.utime(path, ns=(stat.st_atime_ns, mtime_nanoseconds))
         restored += 1
 
+    restored_directories = 0
+    changed_directories = 0
+    missing_directories = 0
+    invalid_directories = 0
+    directory_records = payload.get("directories", [])
+    if not isinstance(directory_records, list):
+        directory_records = []
+        invalid_directories += 1
+    valid_directory_records = [
+        record for record in directory_records if isinstance(record, dict)
+    ]
+    invalid_directories += len(directory_records) - len(valid_directory_records)
+    ordered_directories = sorted(
+        valid_directory_records,
+        key=lambda record: str(record.get("path", "")).count("/"),
+        reverse=True,
+    )
+    for record in ordered_directories:
+        try:
+            path = repository_path(repository, record["path"])
+            expected_digest = record["entriesSha256"]
+            mtime_nanoseconds = int(record["mtimeNanoseconds"])
+        except (KeyError, TypeError, ValueError):
+            invalid_directories += 1
+            continue
+
+        if not path.is_dir():
+            missing_directories += 1
+            continue
+        if directory_digest(path) != expected_digest:
+            changed_directories += 1
+            continue
+        stat = path.stat()
+        os.utime(path, ns=(stat.st_atime_ns, mtime_nanoseconds))
+        restored_directories += 1
+
     print(
         "XCODE_CACHE_INPUTS restore "
         f"status=complete restored={restored} changed={changed} "
         f"missing={missing} invalid={invalid} "
+        f"directoriesRestored={restored_directories} "
+        f"directoriesChanged={changed_directories} "
+        f"directoriesMissing={missing_directories} "
+        f"directoriesInvalid={invalid_directories} "
         f"head={payload.get('repositoryHead') or 'unknown'}"
     )
     return 0
