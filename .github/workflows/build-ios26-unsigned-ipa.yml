@@ -1215,6 +1215,7 @@ jobs:
             -showBuildTimingSummary \
             -skipPackagePluginValidation \
             -skipMacroValidation \
+            ENABLE_TESTABILITY=YES \
             IPHONEOS_DEPLOYMENT_TARGET="$IOS_DEPLOYMENT_TARGET" \
             ARCHS=arm64 \
             ONLY_ACTIVE_ARCH=YES \
@@ -1239,6 +1240,7 @@ jobs:
             -skipPackagePluginValidation \
             -skipMacroValidation \
             -only-testing:AI_HLYTests \
+            ENABLE_TESTABILITY=YES \
             IPHONEOS_DEPLOYMENT_TARGET="$IOS_DEPLOYMENT_TARGET" \
             ARCHS=arm64 \
             ONLY_ACTIVE_ARCH=YES \
