@@ -1221,6 +1221,11 @@ jobs:
             ONLY_ACTIVE_ARCH=YES \
             "${build_actions[@]}" 2>&1 | tee "$LOG_DIR/06-xcodebuild-simulator.log"
           echo "$(( $(date +%s) - started_at ))" > "$LOG_DIR/06-app-compilation-duration-seconds.txt"
+          APP_PATH="$(find "$DERIVED_DATA_PATH/Build/Products" -path '*Release-iphonesimulator/*.app' -type d -print -quit)"
+          test -n "$APP_PATH"
+          rm -rf build/SimulatorRuntimeApp
+          mkdir -p build/SimulatorRuntimeApp
+          ditto "$APP_PATH" build/SimulatorRuntimeApp/AI_Hanlin.app
 
       - name: Build downstream unit tests
         run: |
@@ -1260,8 +1265,8 @@ jobs:
       - name: Locate and scan simulator app
         run: |
           set -euxo pipefail
-          APP_PATH="$(find "$DERIVED_DATA_PATH/Build/Products" -path '*Release-iphonesimulator/*.app' -type d -print -quit)"
-          test -n "$APP_PATH"
+          APP_PATH="build/SimulatorRuntimeApp/AI_Hanlin.app"
+          test -d "$APP_PATH"
           echo "$APP_PATH" > "$LOG_DIR/app-path.txt"
           test -f "$APP_PATH/Frameworks/libssh2.framework/libssh2"
           test -f "$APP_PATH/Frameworks/openssl.framework/openssl"
