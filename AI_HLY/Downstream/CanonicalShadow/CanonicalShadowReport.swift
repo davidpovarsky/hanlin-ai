@@ -160,6 +160,8 @@ enum CanonicalShadowComparison {
         source: [CanonicalShadowItem],
         projected: [CanonicalShadowItem],
         repeatedProjection: [CanonicalShadowItem],
+        compareAliases: Bool = false,
+        compareProviders: Bool = false,
         additionalFindings: [CanonicalShadowFinding] = []
     ) -> CanonicalShadowDomainReport {
         let sourceItems = source.sorted(by: CanonicalShadowOrdering.items)
@@ -189,7 +191,7 @@ enum CanonicalShadowComparison {
 
         let sourceAliases = sourceItems.map { ($0.identity, $0.alias) }
         let projectedAliases = projectedItems.map { ($0.identity, $0.alias) }
-        if !aliasesEqual(sourceAliases, projectedAliases) {
+        if compareAliases && !aliasesEqual(sourceAliases, projectedAliases) {
             findings.append(.init(
                 severity: .mismatch,
                 code: "\(domain.rawValue).aliasMismatch",
@@ -200,7 +202,7 @@ enum CanonicalShadowComparison {
 
         let sourceProviders = sourceItems.map { ($0.identity, $0.providerIdentity) }
         let projectedProviders = projectedItems.map { ($0.identity, $0.providerIdentity) }
-        if !providersEqual(sourceProviders, projectedProviders) {
+        if compareProviders && !providersEqual(sourceProviders, projectedProviders) {
             findings.append(.init(
                 severity: .mismatch,
                 code: "\(domain.rawValue).providerMismatch",

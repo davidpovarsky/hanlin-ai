@@ -514,6 +514,8 @@ struct HanlinCanonicalShadowCoordinator {
                 source: sourceItems,
                 projected: projectedItems,
                 repeatedProjection: repeatedItems,
+                compareAliases: true,
+                compareProviders: true,
                 additionalFindings: routeFindings(
                     projectedItems: projectedItems,
                     routes: source.routes
