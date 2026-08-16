@@ -1,4 +1,5 @@
 import Foundation
+import HanlinPlatformContracts
 
 #if targetEnvironment(simulator)
 private actor MCPAcceptanceProgressRecorder {
@@ -65,6 +66,7 @@ struct MCPRuntimeAcceptanceResult: Codable, Sendable {
     let toolCallLazyRecoveryPassed: Bool
     let multiServerCollectionPassed: Bool
     let serverToolCounts: [String: Int]
+    let canonicalShadow: CanonicalShadowReport?
     let failureMessage: String?
 }
 
@@ -106,6 +108,7 @@ enum MCPRuntimeAcceptance {
         var toolCallLazyRecoveryPassed = false
         var multiServerCollectionPassed = false
         var serverToolCounts: [String: Int] = [:]
+        var observedTools: [MCPToolDescriptor]?
         var failureMessage: String?
 
         do {
@@ -135,6 +138,7 @@ enum MCPRuntimeAcceptance {
 
             // No explicit start: schema discovery is the first activation.
             let tools = try await controller.toolDescriptors(serverIDs: [installed.descriptor.id])
+            observedTools = tools
             lazyStartSucceeded = true
             initializeSucceeded = true
             toolsListSucceeded = true
@@ -305,6 +309,12 @@ enum MCPRuntimeAcceptance {
             ["child_process", "node:child_process"].contains(edge.specifier)
                 || edge.resolvedPath == "node:child_process"
         }
+        let canonicalShadow = canonicalShadowReport(
+            provider: provider,
+            descriptor: descriptor,
+            tools: observedTools,
+            runtimeSnapshot: snapshot
+        )
         let passed = failureMessage == nil
             && snapshot.version == NodeRuntimeService.expectedNodeVersion
             && report?.runtimeProbePassed == true
@@ -375,6 +385,7 @@ enum MCPRuntimeAcceptance {
             toolCallLazyRecoveryPassed: toolCallLazyRecoveryPassed,
             multiServerCollectionPassed: multiServerCollectionPassed,
             serverToolCounts: serverToolCounts,
+            canonicalShadow: canonicalShadow,
             failureMessage: failureMessage
         )
 
@@ -397,6 +408,53 @@ enum MCPRuntimeAcceptance {
             try? await Task.sleep(for: .seconds(5))
             preconditionFailure(result.failureMessage ?? "MCP acceptance failed.")
         }
+    }
+
+    private static func canonicalShadowReport(
+        provider: MCPRuntimeProvider,
+        descriptor: MCPServerDescriptor?,
+        tools: [MCPToolDescriptor]?,
+        runtimeSnapshot: RuntimeSnapshot
+    ) -> CanonicalShadowReport? {
+        guard HanlinCanonicalShadowCoordinator.isEnabled,
+              let runtimeSessionID = try? HanlinRuntimeSessionID(
+                validating: "runtime.acceptance.node"
+              ),
+              let runtimeProviderID = try? HanlinProviderInstanceID(
+                validating: "runtime.node"
+              ),
+              let mcpSessionID = try? HanlinRuntimeSessionID(
+                validating: "runtime.acceptance.mcp"
+              ) else {
+            return nil
+        }
+        let observedAt = Date()
+        let mcpSource = descriptor.map { descriptor in
+            HanlinCanonicalShadowCoordinator.MCPSource(
+                servers: [descriptor],
+                tools: tools,
+                runtime: .init(
+                    snapshot: provider.runtimeSnapshot,
+                    sessionID: mcpSessionID,
+                    createdAt: observedAt,
+                    observedAt: observedAt
+                )
+            )
+        }
+        return HanlinCanonicalShadowCoordinator.runIfEnabled(
+            sources: .init(
+                mcp: mcpSource,
+                runtimeCore: [
+                    .init(
+                        snapshot: runtimeSnapshot,
+                        sessionID: runtimeSessionID,
+                        providerInstanceID: runtimeProviderID,
+                        createdAt: observedAt,
+                        observedAt: observedAt
+                    )
+                ]
+            )
+        )
     }
 
     private static func exerciseChildProcessPolicy(

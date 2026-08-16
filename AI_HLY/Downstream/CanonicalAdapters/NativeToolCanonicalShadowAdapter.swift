@@ -1,6 +1,11 @@
 import Foundation
 import HanlinPlatformContracts
 
+struct NativeToolCanonicalShadowProjection: Sendable {
+    let descriptor: HanlinToolDescriptor
+    let findings: [HanlinShadowFinding]
+}
+
 /// Projects NativeAgentExtensions discovery state into a read-only canonical
 /// tool snapshot. `NativeToolCatalog` remains the executor and settings owner.
 ///
@@ -24,14 +29,14 @@ enum NativeToolCanonicalShadowAdapter {
                     reason: "native catalog entry '\(entry.name)' has no executable source"
                 )
             }
-            let descriptor = try project(
+            let projection = try project(
                 tool: tool,
                 entry: entry,
-                descriptorRevision: descriptorRevision,
-                findings: &findings
+                descriptorRevision: descriptorRevision
             )
+            findings.append(contentsOf: projection.findings)
             return HanlinToolCatalogEntry(
-                descriptor: descriptor,
+                descriptor: projection.descriptor,
                 availability: catalog.isEffectivelyEnabled(entry) ? .available : .disabled,
                 modelAlias: entry.name
             )
@@ -46,12 +51,11 @@ enum NativeToolCanonicalShadowAdapter {
         )
     }
 
-    private static func project(
+    static func project(
         tool: NativeTool,
         entry: NativeToolCatalogEntry,
-        descriptorRevision: HanlinDescriptorRevision,
-        findings: inout [HanlinShadowFinding]
-    ) throws -> HanlinToolDescriptor {
+        descriptorRevision: HanlinDescriptorRevision
+    ) throws -> NativeToolCanonicalShadowProjection {
         let schema = tool.openAIToolSchema()
         guard let function = schema["function"] as? [String: Any],
               let name = function["name"] as? String,
@@ -80,17 +84,16 @@ enum NativeToolCanonicalShadowAdapter {
             root: root,
             sourceProviderInstanceID: providerInstanceID
         )
-        findings.append(.init(
+        let findings: [HanlinShadowFinding] = [.init(
             severity: .information,
             path: "tools/\(entry.name)/outputSchema",
             message: "NativeTool has no declared output schema; no output schema was synthesized."
-        ))
-        findings.append(.init(
+        ), .init(
             severity: .information,
             path: "tools/\(entry.name)/presentation",
             message: "The live ToolPresentationProfile remains authoritative and is represented only as an automatic hint."
-        ))
-        return HanlinToolDescriptor(
+        )]
+        let descriptor = HanlinToolDescriptor(
             logicalID: HanlinLogicalToolID(
                 providerInstanceID: providerInstanceID,
                 localToolID: try HanlinToolID(validating: entry.name)
@@ -104,5 +107,6 @@ enum NativeToolCanonicalShadowAdapter {
             risk: entry.isSensitive ? .sensitiveRead : .read,
             presentation: .init(compactStyle: .automatic)
         )
+        return .init(descriptor: descriptor, findings: findings)
     }
 }

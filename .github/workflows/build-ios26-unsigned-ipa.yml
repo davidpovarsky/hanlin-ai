@@ -1221,6 +1221,30 @@ jobs:
             "${build_actions[@]}" 2>&1 | tee "$LOG_DIR/06-xcodebuild-simulator.log"
           echo "$(( $(date +%s) - started_at ))" > "$LOG_DIR/06-app-compilation-duration-seconds.txt"
 
+      - name: Build downstream unit tests
+        run: |
+          set -euxo pipefail
+          rm -rf "$LOG_DIR/DownstreamTestsBuildResult.xcresult"
+          started_at="$(date +%s)"
+          xcodebuild build-for-testing \
+            -project "$PROJECT_PATH" \
+            -scheme "$SCHEME_NAME" \
+            -configuration "$CONFIGURATION" \
+            -sdk iphonesimulator \
+            -destination "generic/platform=iOS Simulator" \
+            -derivedDataPath "$DERIVED_DATA_PATH" \
+            -clonedSourcePackagesDirPath "$CLONED_PACKAGES_PATH" \
+            -resultBundlePath "$LOG_DIR/DownstreamTestsBuildResult.xcresult" \
+            -showBuildTimingSummary \
+            -skipPackagePluginValidation \
+            -skipMacroValidation \
+            -only-testing:AI_HLYTests \
+            IPHONEOS_DEPLOYMENT_TARGET="$IOS_DEPLOYMENT_TARGET" \
+            ARCHS=arm64 \
+            ONLY_ACTIVE_ARCH=YES \
+            2>&1 | tee "$LOG_DIR/06-downstream-test-build.log"
+          echo "$(( $(date +%s) - started_at ))" > "$LOG_DIR/06-downstream-test-build-duration-seconds.txt"
+
       - name: Save successful simulator compiler state
         if: ${{ success() && !inputs.force_clean_build }}
         uses: actions/cache/save@v6
@@ -1294,6 +1318,21 @@ jobs:
 
           xcrun simctl boot "$SIMULATOR_UDID" 2>/dev/null || true
           xcrun simctl bootstatus "$SIMULATOR_UDID" -b 2>&1 | tee "$LOG_DIR/08-bootstatus.log"
+          rm -rf "$LOG_DIR/DownstreamTestsResult.xcresult"
+          started_at="$(date +%s)"
+          xcodebuild test-without-building \
+            -project "$PROJECT_PATH" \
+            -scheme "$SCHEME_NAME" \
+            -configuration "$CONFIGURATION" \
+            -destination "platform=iOS Simulator,id=$SIMULATOR_UDID" \
+            -derivedDataPath "$DERIVED_DATA_PATH" \
+            -clonedSourcePackagesDirPath "$CLONED_PACKAGES_PATH" \
+            -resultBundlePath "$LOG_DIR/DownstreamTestsResult.xcresult" \
+            -skipPackagePluginValidation \
+            -skipMacroValidation \
+            -only-testing:AI_HLYTests \
+            2>&1 | tee "$LOG_DIR/08-downstream-unit-tests.log"
+          echo "$(( $(date +%s) - started_at ))" > "$LOG_DIR/08-downstream-unit-tests-duration-seconds.txt"
           xcrun simctl uninstall "$SIMULATOR_UDID" "$BUNDLE_ID" 2>/dev/null || true
           xcrun simctl install "$SIMULATOR_UDID" "$APP_PATH"
           touch "$LOG_DIR/launch-marker"
@@ -1304,6 +1343,7 @@ jobs:
           trap cleanup EXIT
 
           set +e
+          SIMCTL_CHILD_HANLIN_CANONICAL_SHADOW_CHECKS=1 \
           SIMCTL_CHILD_HANLIN_RUNTIME_ACCEPTANCE=shell \
             xcrun simctl launch "$SIMULATOR_UDID" "$BUNDLE_ID" 2>&1 | tee "$LOG_DIR/08-launch-output.txt"
           launch_status=${PIPESTATUS[0]}
@@ -1334,6 +1374,27 @@ jobs:
             "$LOG_DIR/shell-acceptance.json" \
             --summary-output "$LOG_DIR/08-shell-acceptance-summary.json" \
             | tee "$LOG_DIR/08-shell-acceptance.log"
+          python3 - "$LOG_DIR/shell-acceptance.json" <<'PY' | tee "$LOG_DIR/08-shell-canonical-shadow.log"
+          import json
+          import sys
+
+          payload = json.load(open(sys.argv[1], encoding="utf-8"))
+          report = payload.get("canonicalShadow")
+          if report is None:
+              raise SystemExit("Shell acceptance did not emit canonical shadow evidence")
+          domains = {item["domain"]: item for item in report["domains"]}
+          if report["summary"]["mismatchCount"] != 0:
+              raise SystemExit("Shell canonical shadow reported a mismatch")
+          if domains.get("runtime.core", {}).get("status") != "passed":
+              raise SystemExit("Shell RuntimeCore canonical shadow did not pass")
+          print(
+              "HANLIN_CANONICAL_SHADOW_CI acceptance=shell "
+              f"passed={report['summary']['passedCount']} "
+              f"warnings={report['summary']['warningCount']} "
+              f"mismatches={report['summary']['mismatchCount']} "
+              f"skipped={report['summary']['skippedCount']}"
+          )
+          PY
 
           ALIVE_SECONDS="$(( $(date +%s) - LAUNCH_EPOCH ))"
           while [ "$ALIVE_SECONDS" -lt 15 ]; do
@@ -1377,6 +1438,7 @@ jobs:
           rm -f "$MCP_ACCEPTANCE_PATH"
           touch "$LOG_DIR/mcp-launch-marker"
           set +e
+          SIMCTL_CHILD_HANLIN_CANONICAL_SHADOW_CHECKS=1 \
           SIMCTL_CHILD_HANLIN_RUNTIME_ACCEPTANCE=mcp \
             xcrun simctl launch "$SIMULATOR_UDID" "$BUNDLE_ID" 2>&1 | tee "$LOG_DIR/08-mcp-launch-output.txt"
           mcp_launch_status=${PIPESTATUS[0]}
@@ -1406,6 +1468,28 @@ jobs:
             "$LOG_DIR/mcp-acceptance.json" \
             --summary-output "$LOG_DIR/08-mcp-acceptance-summary.json" \
             | tee "$LOG_DIR/08-mcp-acceptance.log"
+          python3 - "$LOG_DIR/mcp-acceptance.json" <<'PY' | tee "$LOG_DIR/08-mcp-canonical-shadow.log"
+          import json
+          import sys
+
+          payload = json.load(open(sys.argv[1], encoding="utf-8"))
+          report = payload.get("canonicalShadow")
+          if report is None:
+              raise SystemExit("MCP acceptance did not emit canonical shadow evidence")
+          domains = {item["domain"]: item for item in report["domains"]}
+          if report["summary"]["mismatchCount"] != 0:
+              raise SystemExit("MCP canonical shadow reported a mismatch")
+          for domain in ("mcp", "runtime.core"):
+              if domains.get(domain, {}).get("status") != "passed":
+                  raise SystemExit(f"{domain} canonical shadow did not pass")
+          print(
+              "HANLIN_CANONICAL_SHADOW_CI acceptance=mcp "
+              f"passed={report['summary']['passedCount']} "
+              f"warnings={report['summary']['warningCount']} "
+              f"mismatches={report['summary']['mismatchCount']} "
+              f"skipped={report['summary']['skippedCount']}"
+          )
+          PY
           xcrun simctl spawn "$SIMULATOR_UDID" launchctl print "pid/$MCP_APP_PID" >/dev/null
           xcrun simctl terminate "$SIMULATOR_UDID" "$BUNDLE_ID" 2>/dev/null || true
 
