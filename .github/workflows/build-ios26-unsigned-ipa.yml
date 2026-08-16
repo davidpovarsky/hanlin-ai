@@ -1340,6 +1340,9 @@ jobs:
             -only-testing:AI_HLYTests \
             2>&1 | tee "$LOG_DIR/08-downstream-unit-tests.log"
           echo "$(( $(date +%s) - started_at ))" > "$LOG_DIR/08-downstream-unit-tests-duration-seconds.txt"
+          xcrun simctl boot "$SIMULATOR_UDID" 2>/dev/null || true
+          xcrun simctl bootstatus "$SIMULATOR_UDID" -b 2>&1 \
+            | tee "$LOG_DIR/08-post-tests-bootstatus.log"
           xcrun simctl uninstall "$SIMULATOR_UDID" "$BUNDLE_ID" 2>/dev/null || true
           xcrun simctl install "$SIMULATOR_UDID" "$APP_PATH"
           touch "$LOG_DIR/launch-marker"
