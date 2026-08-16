@@ -31,6 +31,7 @@ def digest(path: Path) -> str:
 
 
 def repository_path(repository: Path, raw_path: str) -> Path:
+    repository = repository.resolve()
     candidate = (repository / raw_path).resolve()
     try:
         candidate.relative_to(repository)
@@ -65,6 +66,7 @@ def capture(
     suffixes: set[str],
     head: str,
 ) -> int:
+    repository = repository.resolve()
     records = []
     for path in input_files(repository, raw_paths, suffixes):
         stat = path.stat()
@@ -100,6 +102,7 @@ def capture(
 
 
 def restore(repository: Path, manifest: Path) -> int:
+    repository = repository.resolve()
     if not manifest.is_file():
         print("XCODE_CACHE_INPUTS restore status=no-manifest")
         return 0

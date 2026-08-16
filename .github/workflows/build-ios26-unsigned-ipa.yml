@@ -13,6 +13,11 @@ on:
         required: true
         default: false
         type: boolean
+      fast_validation_only:
+        description: Run incremental Debug simulator tests and a basic launch without Release IPA or runtime acceptance
+        required: true
+        default: false
+        type: boolean
       force_clean_build:
         description: Discard compiler build state and perform a clean diagnostic rebuild
         required: true
@@ -381,7 +386,7 @@ jobs:
       contents: write
 
   build-ios26-unsigned-ipa:
-    if: ${{ !inputs.runtime_bundle_only && !inputs.phase1_validation_only }}
+    if: ${{ !inputs.runtime_bundle_only && !inputs.phase1_validation_only && !inputs.fast_validation_only }}
     name: Build unsigned IPA with Xcode 26
     runs-on: macos-26
     timeout-minutes: 60
@@ -1130,7 +1135,7 @@ jobs:
     env:
       PROJECT_PATH: AI_HLY.xcodeproj
       SCHEME_NAME: AI_HLY
-      CONFIGURATION: Release
+      CONFIGURATION: ${{ inputs.fast_validation_only && 'Debug' || 'Release' }}
       DERIVED_DATA_PATH: build/SimulatorDerivedData
       CLONED_PACKAGES_PATH: build/SourcePackages
       LOG_DIR: simulator-logs
@@ -1338,7 +1343,7 @@ jobs:
             ONLY_ACTIVE_ARCH=YES \
             "${build_actions[@]}" 2>&1 | tee "$LOG_DIR/06-xcodebuild-simulator.log"
           echo "$(( $(date +%s) - started_at ))" > "$LOG_DIR/06-app-compilation-duration-seconds.txt"
-          APP_PATH="$(find "$DERIVED_DATA_PATH/Build/Products" -path '*Release-iphonesimulator/*.app' -type d -print -quit)"
+          APP_PATH="$(find "$DERIVED_DATA_PATH/Build/Products" -path "*${CONFIGURATION}-iphonesimulator/*.app" -type d -print -quit)"
           test -n "$APP_PATH"
           rm -rf build/SimulatorRuntimeApp
           mkdir -p build/SimulatorRuntimeApp
@@ -1496,6 +1501,32 @@ jobs:
             xcrun simctl terminate "$SIMULATOR_UDID" "$BUNDLE_ID" 2>/dev/null || true
           }
           trap cleanup EXIT
+
+          if [ "${{ inputs.fast_validation_only }}" = "true" ]; then
+            set +e
+            xcrun simctl launch "$SIMULATOR_UDID" "$BUNDLE_ID" 2>&1 \
+              | tee "$LOG_DIR/08-fast-launch-output.txt"
+            launch_status=${PIPESTATUS[0]}
+            set -e
+            test "$launch_status" -eq 0
+            APP_PID="$(awk -F ': ' -v bundle="$BUNDLE_ID" '$1 == bundle { print $2 }' "$LOG_DIR/08-fast-launch-output.txt" | tail -1)"
+            test -n "$APP_PID"
+            printf '%s\n' "$APP_PID" > "$LOG_DIR/launch-pid.txt"
+            for elapsed in $(seq 1 15); do
+              xcrun simctl spawn "$SIMULATOR_UDID" launchctl print "pid/$APP_PID" >/dev/null
+              sleep 1
+            done
+            xcrun simctl spawn "$SIMULATOR_UDID" log show \
+              --style compact \
+              --last 2m \
+              --predicate "processID == $APP_PID" \
+              > "$LOG_DIR/08-application.log" 2>&1 || true
+            printf '%s\n' "15" > "$LOG_DIR/alive-duration-seconds.txt"
+            printf '%s\n' "fast-debug-tests-and-launch" > "$LOG_DIR/validation-profile.txt"
+            trap - EXIT
+            cleanup
+            exit 0
+          fi
 
           set +e
           SIMCTL_CHILD_HANLIN_CANONICAL_SHADOW_CHECKS=1 \
