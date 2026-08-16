@@ -18,6 +18,11 @@ on:
         required: true
         default: false
         type: boolean
+      measure_warm_rebuild:
+        description: Run one same-run no-op rebuild to measure Xcode incremental reuse
+        required: true
+        default: false
+        type: boolean
   push:
     branches:
       - main
@@ -98,6 +103,14 @@ jobs:
           absolute_log_dir="$RUNNER_TEMP/$LOG_DIR"
           mkdir -p "$absolute_log_dir" build
           echo "LOG_DIR=$absolute_log_dir" >> "$GITHUB_ENV"
+
+      - name: Test Xcode cache input normalization
+        run: |
+          set -euxo pipefail
+          python3 -m unittest discover \
+            -s Scripts/CI/Tests \
+            -p 'test_*.py' \
+            -v 2>&1 | tee "$LOG_DIR/00-xcode-cache-input-tests.log"
 
       - name: Restore Phase 1 SwiftPM build cache
         if: ${{ !inputs.force_clean_build }}
@@ -526,6 +539,7 @@ jobs:
             build/DerivedData/Build
             build/DerivedData/ModuleCache.noindex
             build/DerivedData/SDKStatCaches.noindex
+            build/DerivedData/CacheMetadata/xcode-build-inputs.json
           key: ios-derived-v2-${{ runner.os }}-${{ steps.app-toolchain.outputs.runner-arch }}-${{ steps.app-toolchain.outputs.xcode-build }}-iphoneos-${{ steps.app-toolchain.outputs.iphoneos-sdk }}-${{ env.CONFIGURATION }}-${{ hashFiles('AI_HLY.xcodeproj/project.pbxproj', 'AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved', 'Packages/HanlinPlatform/Package.swift', 'Packages/IOSSystemLite/Package.swift') }}-${{ github.sha }}
           restore-keys: |
             ios-derived-v2-${{ runner.os }}-${{ steps.app-toolchain.outputs.runner-arch }}-${{ steps.app-toolchain.outputs.xcode-build }}-iphoneos-${{ steps.app-toolchain.outputs.iphoneos-sdk }}-${{ env.CONFIGURATION }}-${{ hashFiles('AI_HLY.xcodeproj/project.pbxproj', 'AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved', 'Packages/HanlinPlatform/Package.swift', 'Packages/IOSSystemLite/Package.swift') }}-
@@ -744,6 +758,42 @@ jobs:
           path: build/SourcePackages
           key: ${{ steps.app-sourcepackages-cache.outputs.cache-primary-key }}
 
+      - name: Restore unchanged Xcode build input metadata
+        run: |
+          set -euxo pipefail
+          python3 Scripts/CI/xcode_cache_inputs.py \
+            --repository "$GITHUB_WORKSPACE" \
+            restore \
+            --manifest "$DERIVED_DATA_PATH/CacheMetadata/xcode-build-inputs.json" \
+            2>&1 | tee "$LOG_DIR/06-cache-input-restore.log"
+
+      - name: Capture Xcode build input metadata
+        run: |
+          set -euxo pipefail
+          python3 Scripts/CI/xcode_cache_inputs.py \
+            --repository "$GITHUB_WORKSPACE" \
+            capture \
+            --manifest "$DERIVED_DATA_PATH/CacheMetadata/xcode-build-inputs.json" \
+            --head "$GITHUB_SHA" \
+            --suffix .swift \
+            --suffix .c \
+            --suffix .cc \
+            --suffix .cpp \
+            --suffix .m \
+            --suffix .mm \
+            --suffix .h \
+            --suffix .hpp \
+            --suffix .modulemap \
+            --suffix .xcconfig \
+            --suffix .pbxproj \
+            --suffix .resolved \
+            AI_HLY \
+            Packages \
+            AI_HLY.xcodeproj \
+            Config.xcconfig \
+            RuntimeDependencies.lock.json \
+            2>&1 | tee "$LOG_DIR/06-cache-input-capture.log"
+
       - name: Build unsigned iOS 26 app
         run: |
           set -euxo pipefail
@@ -794,6 +844,35 @@ jobs:
             echo "Build command completed."
           } 2>&1 | tee "$LOG_DIR/07-build-step-wrapper.log"
 
+      - name: Measure same-run device no-op rebuild
+        if: ${{ inputs.measure_warm_rebuild }}
+        run: |
+          set -euxo pipefail
+          rm -rf "$LOG_DIR/WarmBuildResult.xcresult"
+          started_at="$(date +%s)"
+          xcodebuild build \
+            -project "$PROJECT_PATH" \
+            -scheme "$SCHEME_NAME" \
+            -configuration "$CONFIGURATION" \
+            -sdk iphoneos \
+            -destination "generic/platform=iOS" \
+            -derivedDataPath "$DERIVED_DATA_PATH" \
+            -clonedSourcePackagesDirPath "$CLONED_PACKAGES_PATH" \
+            -resultBundlePath "$LOG_DIR/WarmBuildResult.xcresult" \
+            -showBuildTimingSummary \
+            -skipPackagePluginValidation \
+            -skipMacroValidation \
+            IPHONEOS_DEPLOYMENT_TARGET="$IOS_DEPLOYMENT_TARGET" \
+            CODE_SIGNING_ALLOWED=NO \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGN_IDENTITY="" \
+            PROVISIONING_PROFILE_SPECIFIER="" \
+            DEVELOPMENT_TEAM="" \
+            2>&1 | tee "$LOG_DIR/07-warm-rebuild.log"
+          duration_seconds="$(( $(date +%s) - started_at ))"
+          echo "$duration_seconds" > "$LOG_DIR/07-warm-rebuild-duration-seconds.txt"
+          echo "Same-run device no-op rebuild duration: ${duration_seconds}s"
+
       - name: Save successful incremental Xcode compiler state
         if: ${{ success() && !inputs.force_clean_build }}
         uses: actions/cache/save@v6
@@ -802,6 +881,7 @@ jobs:
             build/DerivedData/Build
             build/DerivedData/ModuleCache.noindex
             build/DerivedData/SDKStatCaches.noindex
+            build/DerivedData/CacheMetadata/xcode-build-inputs.json
           key: ${{ steps.app-deriveddata-cache.outputs.cache-primary-key }}
 
       - name: Locate built app
@@ -1108,6 +1188,7 @@ jobs:
             build/SimulatorDerivedData/Build
             build/SimulatorDerivedData/ModuleCache.noindex
             build/SimulatorDerivedData/SDKStatCaches.noindex
+            build/SimulatorDerivedData/CacheMetadata/xcode-build-inputs.json
           key: ios-derived-v2-${{ runner.os }}-${{ steps.simulator-toolchain.outputs.runner-arch }}-${{ steps.simulator-toolchain.outputs.xcode-build }}-iphonesimulator-${{ steps.simulator-toolchain.outputs.simulator-sdk }}-${{ env.CONFIGURATION }}-${{ hashFiles('AI_HLY.xcodeproj/project.pbxproj', 'AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved', 'Packages/HanlinPlatform/Package.swift', 'Packages/IOSSystemLite/Package.swift') }}-${{ github.sha }}
           restore-keys: |
             ios-derived-v2-${{ runner.os }}-${{ steps.simulator-toolchain.outputs.runner-arch }}-${{ steps.simulator-toolchain.outputs.xcode-build }}-iphonesimulator-${{ steps.simulator-toolchain.outputs.simulator-sdk }}-${{ env.CONFIGURATION }}-${{ hashFiles('AI_HLY.xcodeproj/project.pbxproj', 'AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved', 'Packages/HanlinPlatform/Package.swift', 'Packages/IOSSystemLite/Package.swift') }}-
@@ -1194,6 +1275,42 @@ jobs:
           path: build/SourcePackages
           key: ${{ steps.simulator-sourcepackages-cache.outputs.cache-primary-key }}
 
+      - name: Restore unchanged simulator build input metadata
+        run: |
+          set -euxo pipefail
+          python3 Scripts/CI/xcode_cache_inputs.py \
+            --repository "$GITHUB_WORKSPACE" \
+            restore \
+            --manifest "$DERIVED_DATA_PATH/CacheMetadata/xcode-build-inputs.json" \
+            2>&1 | tee "$LOG_DIR/05-cache-input-restore.log"
+
+      - name: Capture simulator build input metadata
+        run: |
+          set -euxo pipefail
+          python3 Scripts/CI/xcode_cache_inputs.py \
+            --repository "$GITHUB_WORKSPACE" \
+            capture \
+            --manifest "$DERIVED_DATA_PATH/CacheMetadata/xcode-build-inputs.json" \
+            --head "$GITHUB_SHA" \
+            --suffix .swift \
+            --suffix .c \
+            --suffix .cc \
+            --suffix .cpp \
+            --suffix .m \
+            --suffix .mm \
+            --suffix .h \
+            --suffix .hpp \
+            --suffix .modulemap \
+            --suffix .xcconfig \
+            --suffix .pbxproj \
+            --suffix .resolved \
+            AI_HLY \
+            Packages \
+            AI_HLY.xcodeproj \
+            Config.xcconfig \
+            RuntimeDependencies.lock.json \
+            2>&1 | tee "$LOG_DIR/05-cache-input-capture.log"
+
       - name: Build full arm64 simulator app
         run: |
           set -euxo pipefail
@@ -1226,6 +1343,33 @@ jobs:
           rm -rf build/SimulatorRuntimeApp
           mkdir -p build/SimulatorRuntimeApp
           ditto "$APP_PATH" build/SimulatorRuntimeApp/AI_Hanlin.app
+
+      - name: Measure same-run simulator no-op rebuild
+        if: ${{ inputs.measure_warm_rebuild }}
+        run: |
+          set -euxo pipefail
+          rm -rf "$LOG_DIR/SimulatorWarmBuildResult.xcresult"
+          started_at="$(date +%s)"
+          xcodebuild build \
+            -project "$PROJECT_PATH" \
+            -scheme "$SCHEME_NAME" \
+            -configuration "$CONFIGURATION" \
+            -sdk iphonesimulator \
+            -destination "generic/platform=iOS Simulator" \
+            -derivedDataPath "$DERIVED_DATA_PATH" \
+            -clonedSourcePackagesDirPath "$CLONED_PACKAGES_PATH" \
+            -resultBundlePath "$LOG_DIR/SimulatorWarmBuildResult.xcresult" \
+            -showBuildTimingSummary \
+            -skipPackagePluginValidation \
+            -skipMacroValidation \
+            ENABLE_TESTABILITY=YES \
+            IPHONEOS_DEPLOYMENT_TARGET="$IOS_DEPLOYMENT_TARGET" \
+            ARCHS=arm64 \
+            ONLY_ACTIVE_ARCH=YES \
+            2>&1 | tee "$LOG_DIR/06-warm-rebuild.log"
+          duration_seconds="$(( $(date +%s) - started_at ))"
+          echo "$duration_seconds" > "$LOG_DIR/06-warm-rebuild-duration-seconds.txt"
+          echo "Same-run simulator no-op rebuild duration: ${duration_seconds}s"
 
       - name: Build downstream unit tests
         run: |
@@ -1260,6 +1404,7 @@ jobs:
             build/SimulatorDerivedData/Build
             build/SimulatorDerivedData/ModuleCache.noindex
             build/SimulatorDerivedData/SDKStatCaches.noindex
+            build/SimulatorDerivedData/CacheMetadata/xcode-build-inputs.json
           key: ${{ steps.simulator-deriveddata-cache.outputs.cache-primary-key }}
 
       - name: Locate and scan simulator app
