@@ -19,8 +19,8 @@ import tempfile
 from typing import Iterable
 
 
-SCHEMA_VERSION = 2
-SUPPORTED_SCHEMA_VERSIONS = {1, SCHEMA_VERSION}
+SCHEMA_VERSION = 3
+SUPPORTED_SCHEMA_VERSIONS = {1, 2, SCHEMA_VERSION}
 IGNORED_DIRECTORY_NAMES = {".build", ".git", ".swiftpm", "build", "xcuserdata"}
 
 
@@ -70,11 +70,15 @@ def input_files(
         if path.is_file():
             files.add(path)
         elif path.is_dir():
-            files.update(
-                child
-                for child in path.rglob("*")
-                if child.is_file() and (not suffixes or child.suffix in suffixes)
-            )
+            for current, child_names, file_names in os.walk(path):
+                child_names[:] = [
+                    name for name in child_names if name not in IGNORED_DIRECTORY_NAMES
+                ]
+                files.update(
+                    Path(current) / name
+                    for name in file_names
+                    if not suffixes or Path(name).suffix in suffixes
+                )
     return sorted(files, key=lambda path: path.relative_to(repository).as_posix())
 
 
@@ -101,6 +105,7 @@ def capture(
     raw_paths: list[str],
     suffixes: set[str],
     head: str,
+    directory_roots: list[str] | None = None,
 ) -> int:
     repository = repository.resolve()
     records = []
@@ -116,7 +121,8 @@ def capture(
         )
 
     directory_records = []
-    for path in input_directories(repository, raw_paths):
+    all_directory_roots = raw_paths + (directory_roots or [])
+    for path in input_directories(repository, all_directory_roots):
         stat = path.stat()
         directory_records.append(
             {
@@ -246,6 +252,7 @@ def parser() -> argparse.ArgumentParser:
     capture_parser.add_argument("--manifest", type=Path, required=True)
     capture_parser.add_argument("--head", default="")
     capture_parser.add_argument("--suffix", action="append", default=[])
+    capture_parser.add_argument("--directory-root", action="append", default=[])
     capture_parser.add_argument("paths", nargs="+")
 
     restore_parser = subparsers.add_parser("restore")
@@ -265,6 +272,7 @@ def main() -> int:
                 arguments.paths,
                 set(arguments.suffix),
                 arguments.head,
+                arguments.directory_root,
             )
         return restore(repository, manifest)
     except (OSError, ValueError, json.JSONDecodeError) as error:

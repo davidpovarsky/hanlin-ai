@@ -780,18 +780,7 @@ jobs:
             capture \
             --manifest "$DERIVED_DATA_PATH/CacheMetadata/xcode-build-inputs.json" \
             --head "$GITHUB_SHA" \
-            --suffix .swift \
-            --suffix .c \
-            --suffix .cc \
-            --suffix .cpp \
-            --suffix .m \
-            --suffix .mm \
-            --suffix .h \
-            --suffix .hpp \
-            --suffix .modulemap \
-            --suffix .xcconfig \
-            --suffix .pbxproj \
-            --suffix .resolved \
+            --directory-root . \
             AI_HLY \
             AI_HLYTests \
             Packages \
@@ -1298,18 +1287,7 @@ jobs:
             capture \
             --manifest "$DERIVED_DATA_PATH/CacheMetadata/xcode-build-inputs.json" \
             --head "$GITHUB_SHA" \
-            --suffix .swift \
-            --suffix .c \
-            --suffix .cc \
-            --suffix .cpp \
-            --suffix .m \
-            --suffix .mm \
-            --suffix .h \
-            --suffix .hpp \
-            --suffix .modulemap \
-            --suffix .xcconfig \
-            --suffix .pbxproj \
-            --suffix .resolved \
+            --directory-root . \
             AI_HLY \
             AI_HLYTests \
             Packages \

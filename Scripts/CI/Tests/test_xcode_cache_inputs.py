@@ -66,13 +66,40 @@ class XcodeCacheInputsTests(unittest.TestCase):
             )
             payload = json.loads(manifest.read_text(encoding="utf-8"))
 
-            self.assertEqual(payload["schemaVersion"], 2)
+            self.assertEqual(payload["schemaVersion"], 3)
             self.assertEqual(payload["repositoryHead"], "def456")
             self.assertEqual(
                 [record["path"] for record in payload["files"]],
                 ["A.swift", "B.swift"],
             )
             self.assertNotIn(str(repository), manifest.read_text(encoding="utf-8"))
+
+    def test_additional_directory_root_does_not_expand_file_scope(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            repository = Path(directory)
+            (repository / "Sources").mkdir()
+            (repository / "Sources" / "Feature.swift").write_text(
+                "let value = 1\n",
+                encoding="utf-8",
+            )
+            (repository / "Unrelated.txt").write_text("not a build input\n", encoding="utf-8")
+            manifest = repository / "manifest.json"
+
+            xcode_cache_inputs.capture(
+                repository,
+                manifest,
+                ["Sources"],
+                set(),
+                "abc123",
+                ["."],
+            )
+            payload = json.loads(manifest.read_text(encoding="utf-8"))
+
+            self.assertEqual(
+                [record["path"] for record in payload["files"]],
+                ["Sources/Feature.swift"],
+            )
+            self.assertIn(".", [record["path"] for record in payload["directories"]])
 
     def test_restores_directory_mtime_only_when_entries_are_identical(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
