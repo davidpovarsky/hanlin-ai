@@ -64,6 +64,27 @@ def main() -> None:
         failures.append("serverToolCounts must contain exactly the three pinned MCP servers")
     elif any(not isinstance(value, int) or value < 1 for value in server_tool_counts.values()):
         failures.append("every pinned MCP server must expose at least one tool")
+    canonical_shadow = payload.get("canonicalShadow")
+    required_shadow_domains = {
+        "native.tools",
+        "mcp",
+        "runtime.core",
+        "cross-domain.tools",
+    }
+    if not isinstance(canonical_shadow, dict):
+        failures.append("canonicalShadow must be present")
+    else:
+        canonical_summary = canonical_shadow.get("summary")
+        if not isinstance(canonical_summary, dict) or canonical_summary.get("mismatchCount") != 0:
+            failures.append("canonicalShadow must contain zero mismatches")
+        domains = {
+            item.get("domain"): item
+            for item in canonical_shadow.get("domains", [])
+            if isinstance(item, dict)
+        }
+        for domain in required_shadow_domains:
+            if domains.get(domain, {}).get("status") != "passed":
+                failures.append(f"canonicalShadow domain {domain} must pass")
     if failures:
         raise SystemExit("MCP acceptance failed:\n" + "\n".join(failures))
 
@@ -78,6 +99,7 @@ def main() -> None:
             "pathMigrationPassed", "partialFailureIsolationPassed",
             "toolCallLazyRecoveryPassed", "multiServerCollectionPassed",
             "serverToolCounts",
+            "canonicalShadow",
         ]
     }
     if args.summary_output:

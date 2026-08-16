@@ -1651,7 +1651,7 @@ jobs:
           domains = {item["domain"]: item for item in report["domains"]}
           if report["summary"]["mismatchCount"] != 0:
               raise SystemExit("MCP canonical shadow reported a mismatch")
-          for domain in ("mcp", "runtime.core"):
+          for domain in ("native.tools", "mcp", "runtime.core", "cross-domain.tools"):
               if domains.get(domain, {}).get("status") != "passed":
                   raise SystemExit(f"{domain} canonical shadow did not pass")
           print(

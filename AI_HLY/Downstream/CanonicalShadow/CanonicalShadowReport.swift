@@ -187,6 +187,28 @@ enum CanonicalShadowComparison {
             ))
         }
 
+        let sourceAliases = sourceItems.map { ($0.identity, $0.alias) }
+        let projectedAliases = projectedItems.map { ($0.identity, $0.alias) }
+        if !aliasesEqual(sourceAliases, projectedAliases) {
+            findings.append(.init(
+                severity: .mismatch,
+                code: "\(domain.rawValue).aliasMismatch",
+                path: domain.rawValue,
+                message: "Source and canonical model-facing aliases differ."
+            ))
+        }
+
+        let sourceProviders = sourceItems.map { ($0.identity, $0.providerIdentity) }
+        let projectedProviders = projectedItems.map { ($0.identity, $0.providerIdentity) }
+        if !providersEqual(sourceProviders, projectedProviders) {
+            findings.append(.init(
+                severity: .mismatch,
+                code: "\(domain.rawValue).providerMismatch",
+                path: domain.rawValue,
+                message: "Source and canonical provider identities differ."
+            ))
+        }
+
         for identity in duplicates(projectedIdentities) {
             findings.append(.init(
                 severity: .mismatch,
@@ -245,6 +267,26 @@ enum CanonicalShadowComparison {
             .filter { $0.value.count > 1 }
             .map(\.key)
             .sorted()
+    }
+
+    private static func aliasesEqual(
+        _ left: [(String, String?)],
+        _ right: [(String, String?)]
+    ) -> Bool {
+        guard left.count == right.count else { return false }
+        return zip(left, right).allSatisfy { lhs, rhs in
+            lhs.0 == rhs.0 && lhs.1 == rhs.1
+        }
+    }
+
+    private static func providersEqual(
+        _ left: [(String, String?)],
+        _ right: [(String, String?)]
+    ) -> Bool {
+        guard left.count == right.count else { return false }
+        return zip(left, right).allSatisfy { lhs, rhs in
+            lhs.0 == rhs.0 && lhs.1 == rhs.1
+        }
     }
 }
 

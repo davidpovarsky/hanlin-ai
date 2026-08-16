@@ -28,6 +28,25 @@ struct HanlinCanonicalShadowCoordinator {
         let runtime: MCPRuntimeSource?
     }
 
+    enum ToolBackend: String, Sendable {
+        case native
+        case mcp
+    }
+
+    struct ToolRouteSource: Sendable {
+        let logicalIdentity: String
+        let alias: String
+        let backend: ToolBackend
+        let backendProviderIdentity: String
+        let targetExists: Bool
+    }
+
+    struct CombinedToolSource {
+        let nativeTools: [NativeToolSource]
+        let mcpTools: [MCPToolDescriptor]
+        let routes: [ToolRouteSource]
+    }
+
     struct RuntimeSource {
         let snapshot: RuntimeSnapshot
         let sessionID: HanlinRuntimeSessionID
@@ -40,17 +59,20 @@ struct HanlinCanonicalShadowCoordinator {
         var nativeApplications: [NativeApplicationSource]?
         var nativeTools: [NativeToolSource]?
         var mcp: MCPSource?
+        var combinedTools: CombinedToolSource?
         var runtimeCore: [RuntimeSource]?
 
         init(
             nativeApplications: [NativeApplicationSource]? = nil,
             nativeTools: [NativeToolSource]? = nil,
             mcp: MCPSource? = nil,
+            combinedTools: CombinedToolSource? = nil,
             runtimeCore: [RuntimeSource]? = nil
         ) {
             self.nativeApplications = nativeApplications
             self.nativeTools = nativeTools
             self.mcp = mcp
+            self.combinedTools = combinedTools
             self.runtimeCore = runtimeCore
         }
     }
@@ -94,7 +116,11 @@ struct HanlinCanonicalShadowCoordinator {
             descriptorRevision: descriptorRevision
         )
         let runtime = projectRuntimeCore(sources.runtimeCore)
-        let crossDomain = compareToolDomains(nativeTools.items, mcp.items)
+        let crossDomain = projectCombinedTools(
+            sources.combinedTools,
+            revision: revision,
+            descriptorRevision: descriptorRevision
+        )
 
         return CanonicalShadowReport(domains: [
             .skipped(.foundationJSON, code: "foundation.json.directTestsOnly"),
@@ -419,23 +445,159 @@ struct HanlinCanonicalShadowCoordinator {
         )
     }
 
-    private static func compareToolDomains(
-        _ nativeItems: [CanonicalShadowItem]?,
-        _ mcpItems: [CanonicalShadowItem]?
+    private static func projectCombinedTools(
+        _ source: CombinedToolSource?,
+        revision: HanlinCatalogRevision,
+        descriptorRevision: HanlinDescriptorRevision
     ) -> CanonicalShadowDomainReport {
-        guard let nativeItems, let mcpItems else {
+        guard let source else {
             return .skipped(
                 .crossDomainTools,
                 code: "cross-domain.tools.notObservable"
             )
         }
-        let combined = nativeItems + mcpItems
-        return CanonicalShadowComparison.compare(
-            domain: .crossDomainTools,
-            source: combined,
-            projected: combined,
-            repeatedProjection: combined
-        )
+        do {
+            let firstNative = try source.nativeTools.map {
+                try NativeToolCanonicalShadowAdapter.project(
+                    tool: $0.tool,
+                    entry: $0.entry,
+                    descriptorRevision: descriptorRevision
+                )
+            }
+            let repeatedNative = try source.nativeTools.map {
+                try NativeToolCanonicalShadowAdapter.project(
+                    tool: $0.tool,
+                    entry: $0.entry,
+                    descriptorRevision: descriptorRevision
+                )
+            }
+            let firstMCP = try MCPCanonicalShadowAdapter.projectTools(
+                source.mcpTools,
+                revision: revision,
+                descriptorRevision: descriptorRevision
+            )
+            let repeatedMCP = try MCPCanonicalShadowAdapter.projectTools(
+                source.mcpTools,
+                revision: revision,
+                descriptorRevision: descriptorRevision
+            )
+
+            let sourceItems = try source.nativeTools.map { native in
+                let provider = try NativeToolCanonicalShadowAdapter
+                    .providerInstanceID(for: native.entry).rawValue
+                return CanonicalShadowItem(
+                    identity: logicalIdentity(
+                        provider: provider,
+                        local: native.entry.name
+                    ),
+                    alias: native.entry.name,
+                    providerIdentity: provider
+                )
+            } + source.mcpTools.map { tool in
+                let provider = tool.serverID.uuidString.lowercased()
+                return CanonicalShadowItem(
+                    identity: logicalIdentity(
+                        provider: provider,
+                        local: tool.originalName
+                    ),
+                    alias: tool.exposedName,
+                    providerIdentity: provider
+                )
+            }
+            let projectedItems = firstNative.map(toolItem)
+                + firstMCP.entries.map(toolItem)
+            let repeatedItems = repeatedNative.map(toolItem)
+                + repeatedMCP.entries.map(toolItem)
+
+            return CanonicalShadowComparison.compare(
+                domain: .crossDomainTools,
+                source: sourceItems,
+                projected: projectedItems,
+                repeatedProjection: repeatedItems,
+                additionalFindings: routeFindings(
+                    projectedItems: projectedItems,
+                    routes: source.routes
+                )
+            )
+        } catch {
+            return projectionFailure(
+                domain: .crossDomainTools,
+                code: "cross-domain.tools.projectionFailed"
+            )
+        }
+    }
+
+    private static func routeFindings(
+        projectedItems: [CanonicalShadowItem],
+        routes: [ToolRouteSource]
+    ) -> [CanonicalShadowFinding] {
+        var findings: [CanonicalShadowFinding] = []
+        let projectedIdentities = Set(projectedItems.map(\.identity))
+        let projectedAliases = Set(projectedItems.compactMap(\.alias))
+        let routesByIdentity = Dictionary(grouping: routes, by: \.logicalIdentity)
+        let routesByAlias = Dictionary(grouping: routes, by: \.alias)
+
+        for identity in projectedIdentities.sorted()
+        where routesByIdentity[identity]?.count != 1 {
+            findings.append(.init(
+                severity: .mismatch,
+                code: "cross-domain.tools.routeCountMismatch",
+                path: "cross-domain.tools/routes/\(identity)",
+                message: "Every exposed canonical tool must have exactly one backend route."
+            ))
+        }
+        for identity in routesByIdentity.keys.sorted()
+        where !projectedIdentities.contains(identity) {
+            findings.append(.init(
+                severity: .mismatch,
+                code: "cross-domain.tools.orphanedRoute",
+                path: "cross-domain.tools/routes/\(identity)",
+                message: "A backend route does not belong to an exposed canonical tool."
+            ))
+        }
+        for alias in routesByAlias.keys.sorted() where routesByAlias[alias]?.count != 1 {
+            findings.append(.init(
+                severity: .mismatch,
+                code: "cross-domain.tools.routeAliasCollision",
+                path: "cross-domain.tools/routes/aliases/\(alias)",
+                message: "A model-facing alias must resolve to exactly one backend route."
+            ))
+        }
+        for alias in routesByAlias.keys.sorted() where !projectedAliases.contains(alias) {
+            findings.append(.init(
+                severity: .mismatch,
+                code: "cross-domain.tools.routeAliasMismatch",
+                path: "cross-domain.tools/routes/aliases/\(alias)",
+                message: "A backend route alias is not exposed by the canonical projection."
+            ))
+        }
+        for route in routes.sorted(by: { $0.alias < $1.alias }) {
+            if !route.targetExists {
+                findings.append(.init(
+                    severity: .mismatch,
+                    code: "cross-domain.tools.missingRouteTarget",
+                    path: "cross-domain.tools/routes/\(route.logicalIdentity)",
+                    message: "The selected backend route target does not exist."
+                ))
+            }
+            let provider = route.logicalIdentity.split(
+                separator: "|",
+                maxSplits: 1
+            ).first.map(String.init)
+            if provider != route.backendProviderIdentity
+                || (route.backend == .native
+                    && route.backendProviderIdentity.hasPrefix("native.") == false)
+                || (route.backend == .mcp
+                    && route.backendProviderIdentity.hasPrefix("native.")) {
+                findings.append(.init(
+                    severity: .mismatch,
+                    code: "cross-domain.tools.backendProviderMismatch",
+                    path: "cross-domain.tools/routes/\(route.logicalIdentity)",
+                    message: "A backend route does not match its canonical provider identity."
+                ))
+            }
+        }
+        return findings
     }
 
     private static func projectionFailure(

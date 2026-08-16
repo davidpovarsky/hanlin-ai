@@ -66,16 +66,12 @@ enum NativeToolCanonicalShadowAdapter {
                 reason: "native tool '\(entry.name)' has an invalid function schema"
             )
         }
-        let providerInstanceID: HanlinProviderInstanceID
+        let providerInstanceID = try providerInstanceID(for: entry)
         let owner: HanlinToolOwner
         if let sourceAppID = entry.sourceAppID {
             let appID = try HanlinAppID(validating: sourceAppID)
-            providerInstanceID = try HanlinProviderInstanceID(
-                validating: "native.app.\(sourceAppID)"
-            )
             owner = .app(appID)
         } else {
-            providerInstanceID = try HanlinProviderInstanceID(validating: "native.system")
             owner = .system
         }
         let root = try HanlinFoundationJSONShadowAdapter.project(parameters)
@@ -108,5 +104,16 @@ enum NativeToolCanonicalShadowAdapter {
             presentation: .init(compactStyle: .automatic)
         )
         return .init(descriptor: descriptor, findings: findings)
+    }
+
+    static func providerInstanceID(
+        for entry: NativeToolCatalogEntry
+    ) throws -> HanlinProviderInstanceID {
+        if let sourceAppID = entry.sourceAppID {
+            return try HanlinProviderInstanceID(
+                validating: "native.app.\(sourceAppID)"
+            )
+        }
+        return try HanlinProviderInstanceID(validating: "native.system")
     }
 }

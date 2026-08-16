@@ -68,6 +68,11 @@ struct CanonicalShadowCoordinatorTests {
     func allObservableDomains() throws {
         let nativeTool = QuickCalculateTool()
         let server = TestFixtures.mcpServer()
+        let mcpTool = TestFixtures.mcpTool(serverID: server.id)
+        let nativeSource = HanlinCanonicalShadowCoordinator.NativeToolSource(
+            tool: nativeTool,
+            entry: nativeTool.catalogEntry
+        )
         let runtimeSnapshot = RuntimeSnapshot(
             kind: .shell,
             state: .ready,
@@ -90,11 +95,11 @@ struct CanonicalShadowCoordinatorTests {
                     )
                 ],
                 nativeTools: [
-                    .init(tool: nativeTool, entry: nativeTool.catalogEntry)
+                    nativeSource
                 ],
                 mcp: .init(
                     servers: [server],
-                    tools: [TestFixtures.mcpTool(serverID: server.id)],
+                    tools: [mcpTool],
                     runtime: .init(
                         snapshot: .stopped,
                         sessionID: try HanlinRuntimeSessionID(
@@ -103,6 +108,26 @@ struct CanonicalShadowCoordinatorTests {
                         createdAt: observedAt,
                         observedAt: observedAt
                     )
+                ),
+                combinedTools: .init(
+                    nativeTools: [nativeSource],
+                    mcpTools: [mcpTool],
+                    routes: [
+                        .init(
+                            logicalIdentity: "native.system|quick_calculate",
+                            alias: "quick_calculate",
+                            backend: .native,
+                            backendProviderIdentity: "native.system",
+                            targetExists: true
+                        ),
+                        .init(
+                            logicalIdentity: "\(server.id.uuidString.lowercased())|echo",
+                            alias: mcpTool.exposedName,
+                            backend: .mcp,
+                            backendProviderIdentity: server.id.uuidString.lowercased(),
+                            targetExists: true
+                        )
+                    ]
                 ),
                 runtimeCore: [
                     .init(
@@ -125,6 +150,57 @@ struct CanonicalShadowCoordinatorTests {
         #expect(report.domains.first { $0.domain == .mcp }?.status == .passed)
         #expect(report.domains.first { $0.domain == .runtimeCore }?.status == .passed)
         #expect(report.domains.first { $0.domain == .crossDomainTools }?.status == .passed)
+    }
+
+    @MainActor
+    @Test("Combined tool parity rejects collisions, missing targets, and orphan routes")
+    func combinedToolRouteFailures() {
+        let nativeTool = QuickCalculateTool()
+        let nativeSource = HanlinCanonicalShadowCoordinator.NativeToolSource(
+            tool: nativeTool,
+            entry: nativeTool.catalogEntry
+        )
+        var mcpTool = TestFixtures.mcpTool()
+        mcpTool.exposedName = nativeTool.name
+        let report = HanlinCanonicalShadowCoordinator.run(
+            sources: .init(
+                combinedTools: .init(
+                    nativeTools: [nativeSource],
+                    mcpTools: [mcpTool],
+                    routes: [
+                        .init(
+                            logicalIdentity: "native.system|quick_calculate",
+                            alias: nativeTool.name,
+                            backend: .native,
+                            backendProviderIdentity: "native.system",
+                            targetExists: true
+                        ),
+                        .init(
+                            logicalIdentity: "\(mcpTool.serverID.uuidString.lowercased())|echo",
+                            alias: nativeTool.name,
+                            backend: .mcp,
+                            backendProviderIdentity: mcpTool.serverID.uuidString.lowercased(),
+                            targetExists: false
+                        ),
+                        .init(
+                            logicalIdentity: "native.system|orphan",
+                            alias: "orphan",
+                            backend: .mcp,
+                            backendProviderIdentity: "native.system",
+                            targetExists: true
+                        )
+                    ]
+                )
+            )
+        )
+        let combined = report.domains.first { $0.domain == .crossDomainTools }
+        let codes = combined?.findings.map(\.code) ?? []
+        #expect(combined?.status == .mismatch)
+        #expect(codes.contains("cross-domain.tools.aliasCollision"))
+        #expect(codes.contains("cross-domain.tools.routeAliasCollision"))
+        #expect(codes.contains("cross-domain.tools.missingRouteTarget"))
+        #expect(codes.contains("cross-domain.tools.orphanedRoute"))
+        #expect(codes.contains("cross-domain.tools.backendProviderMismatch"))
     }
 
     @Test("Structured diagnostics exclude source secrets and arbitrary payloads")

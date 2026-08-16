@@ -309,7 +309,7 @@ enum MCPRuntimeAcceptance {
             ["child_process", "node:child_process"].contains(edge.specifier)
                 || edge.resolvedPath == "node:child_process"
         }
-        let canonicalShadow = canonicalShadowReport(
+        let canonicalShadow = await canonicalShadowReport(
             provider: provider,
             descriptor: descriptor,
             tools: observedTools,
@@ -415,7 +415,7 @@ enum MCPRuntimeAcceptance {
         descriptor: MCPServerDescriptor?,
         tools: [MCPToolDescriptor]?,
         runtimeSnapshot: RuntimeSnapshot
-    ) -> CanonicalShadowReport? {
+    ) async -> CanonicalShadowReport? {
         guard HanlinCanonicalShadowCoordinator.isEnabled,
               let runtimeSessionID = try? HanlinRuntimeSessionID(
                 validating: "runtime.acceptance.node"
@@ -441,9 +441,70 @@ enum MCPRuntimeAcceptance {
                 )
             )
         }
+        let nativeCatalog = NativeToolCatalog.shared
+        nativeCatalog.ensureBuiltinsRegistered()
+        let nativeTools = nativeCatalog.allEntries().compactMap { entry in
+            nativeCatalog.tool(named: entry.name, enabledOnly: false).map {
+                HanlinCanonicalShadowCoordinator.NativeToolSource(
+                    tool: $0,
+                    entry: entry
+                )
+            }
+        }
+        let exposedNativeTools = nativeTools.filter {
+            nativeCatalog.isEffectivelyEnabled($0.entry)
+        }
+        var combinedRoutes: [HanlinCanonicalShadowCoordinator.ToolRouteSource] = []
+        for source in exposedNativeTools {
+            guard let providerID = try? NativeToolCanonicalShadowAdapter
+                .providerInstanceID(for: source.entry).rawValue else {
+                continue
+            }
+            combinedRoutes.append(.init(
+                logicalIdentity: logicalIdentity(
+                    provider: providerID,
+                    local: source.entry.name
+                ),
+                alias: source.entry.name,
+                backend: .native,
+                backendProviderIdentity: providerID,
+                targetExists: nativeCatalog.tool(
+                    named: source.entry.name,
+                    enabledOnly: false
+                ) != nil
+            ))
+        }
+        if let tools {
+            for tool in tools {
+                let providerID = tool.serverID.uuidString.lowercased()
+                let target = await provider.controller.descriptor(
+                    exposedName: tool.exposedName
+                )
+                combinedRoutes.append(.init(
+                    logicalIdentity: logicalIdentity(
+                        provider: providerID,
+                        local: tool.originalName
+                    ),
+                    alias: tool.exposedName,
+                    backend: .mcp,
+                    backendProviderIdentity: providerID,
+                    targetExists: target?.serverID == tool.serverID
+                        && target?.originalName == tool.originalName
+                ))
+            }
+        }
+        let combinedSource = tools.flatMap { tools in
+            tools.isEmpty ? nil : HanlinCanonicalShadowCoordinator.CombinedToolSource(
+                nativeTools: exposedNativeTools,
+                mcpTools: tools,
+                routes: combinedRoutes
+            )
+        }
         return HanlinCanonicalShadowCoordinator.runIfEnabled(
             sources: .init(
+                nativeTools: nativeTools,
                 mcp: mcpSource,
+                combinedTools: combinedSource,
                 runtimeCore: [
                     .init(
                         snapshot: runtimeSnapshot,
@@ -455,6 +516,10 @@ enum MCPRuntimeAcceptance {
                 ]
             )
         )
+    }
+
+    private static func logicalIdentity(provider: String, local: String) -> String {
+        "\(provider)|\(local)"
     }
 
     private static func exerciseChildProcessPolicy(
