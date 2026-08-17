@@ -32,7 +32,11 @@ actor HanlinQuickJSSession {
         )
     }
 
-    private var session: OpaquePointer?
+    /// nonisolated(unsafe) is required so `deinit` (which is always nonisolated)
+    /// can synchronously release the underlying QuickJS session. Safety holds
+    /// because every other access to this property happens on the actor's own
+    /// isolated executor, and deinit only runs once no other access is possible.
+    private nonisolated(unsafe) var session: OpaquePointer?
     private let cancellationHandle: HanlinQuickJSCancellationHandle
     private let configuration: Configuration
     private var disposed = false
