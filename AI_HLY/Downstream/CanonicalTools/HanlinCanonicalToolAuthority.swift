@@ -312,8 +312,11 @@ struct HanlinCanonicalToolAuthority {
             if left.preferredAlias != right.preferredAlias {
                 return left.preferredAlias < right.preferredAlias
             }
-            return HanlinCanonicalToolAuthority.identity(left.descriptor.logicalID)
-                < HanlinCanonicalToolAuthority.identity(right.descriptor.logicalID)
+            let leftIdentity = "\(left.descriptor.logicalID.providerInstanceID.rawValue)"
+                + "|\(left.descriptor.logicalID.localToolID.rawValue)"
+            let rightIdentity = "\(right.descriptor.logicalID.providerInstanceID.rawValue)"
+                + "|\(right.descriptor.logicalID.localToolID.rawValue)"
+            return leftIdentity < rightIdentity
         }
     }
 
