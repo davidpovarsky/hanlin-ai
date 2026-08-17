@@ -56,7 +56,18 @@ enum NativeToolCanonicalShadowAdapter {
         entry: NativeToolCatalogEntry,
         descriptorRevision: HanlinDescriptorRevision
     ) throws -> NativeToolCanonicalShadowProjection {
-        let schema = tool.openAIToolSchema()
+        try project(
+            schema: tool.openAIToolSchema(),
+            entry: entry,
+            descriptorRevision: descriptorRevision
+        )
+    }
+
+    static func project(
+        schema: [String: Any],
+        entry: NativeToolCatalogEntry,
+        descriptorRevision: HanlinDescriptorRevision
+    ) throws -> NativeToolCanonicalShadowProjection {
         guard let function = schema["function"] as? [String: Any],
               let name = function["name"] as? String,
               name == entry.name,

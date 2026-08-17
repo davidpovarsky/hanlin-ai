@@ -2451,6 +2451,12 @@ class APIManager {
                         "messages": finalFormattedMessages,
                         "stream": true,
                     ]
+                    var preparedAssistantTools: AssistantToolBridge.PreparedTools?
+                    if modelInfo.agentCapabilities.supportsNativeToolCalling && ifToolUse {
+                        preparedAssistantTools = try await AssistantToolBridge.prepare(
+                            scope: assistantToolScope
+                        )
+                    }
                     
                     // 参数设置
                     if temperature > 0 {
@@ -2485,7 +2491,7 @@ class APIManager {
                             weatherEnabled: weatherEnabled,
                             canvasEnabled: canvasEnabled,
                         )
-                        tools.append(contentsOf: await AssistantToolBridge.schemasForRequest(scope: assistantToolScope))
+                        tools.append(contentsOf: preparedAssistantTools?.schemas ?? [])
                         tools = ToolSchemaDecorator.decorate(
                             schemas: tools,
                             progressSummaryRequired: modelInfo.agentCapabilities.supportsProgressSummaryField
@@ -2816,7 +2822,8 @@ class APIManager {
                                            let functionDict = toolCall["function"] as? [String: Any],
                                            let functionName = functionDict["name"] as? String,
                                            let functionArguments = functionDict["arguments"] as? String {
-                                            let nativeProfile = await AssistantToolBridge.presentationProfile(for: functionName)
+                                            let nativeProfile = preparedAssistantTools?
+                                                .presentationProfile(for: functionName)
                                             var parsedCall = AgentToolCall.parse(
                                                 id: toolCallID,
                                                 name: functionName,
@@ -3826,8 +3833,8 @@ class APIManager {
                                                     modelContext: self.context
                                                 )
 
-                                                if let nativeResult = await AssistantToolBridge.execute(
-                                                    name: functionName,
+                                                if let nativeResult = await preparedAssistantTools?.execute(
+                                                    alias: functionName,
                                                     argumentsJSON: functionArguments,
                                                     context: nativeContext
                                                 ) {

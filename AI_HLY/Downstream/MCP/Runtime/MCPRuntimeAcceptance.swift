@@ -149,7 +149,8 @@ enum MCPRuntimeAcceptance {
                 )
             }
             let output = try await controller.call(
-                exposedName: echo.exposedName,
+                serverID: echo.serverID,
+                toolName: echo.originalName,
                 argumentsJSON: #"{"message":"Hanlin RuntimeCore acceptance"}"#
             )
             guard !output.isError else {
@@ -183,7 +184,8 @@ enum MCPRuntimeAcceptance {
 
             await controller.stop(serverID: installed.descriptor.id)
             let recoveredOutput = try await controller.call(
-                exposedName: echo.exposedName,
+                serverID: echo.serverID,
+                toolName: echo.originalName,
                 argumentsJSON: #"{"message":"Hanlin lazy tool recovery"}"#
             )
             toolCallLazyRecoveryPassed = !recoveredOutput.isError
@@ -454,51 +456,65 @@ enum MCPRuntimeAcceptance {
         let exposedNativeTools = nativeTools.filter {
             nativeCatalog.isEffectivelyEnabled($0.entry)
         }
-        var combinedRoutes: [HanlinCanonicalShadowCoordinator.ToolRouteSource] = []
-        for source in exposedNativeTools {
-            guard let providerID = try? NativeToolCanonicalShadowAdapter
-                .providerInstanceID(for: source.entry).rawValue else {
-                continue
-            }
-            combinedRoutes.append(.init(
-                logicalIdentity: logicalIdentity(
-                    provider: providerID,
-                    local: source.entry.name
-                ),
-                alias: source.entry.name,
-                backend: .native,
-                backendProviderIdentity: providerID,
-                targetExists: nativeCatalog.tool(
-                    named: source.entry.name,
-                    enabledOnly: false
-                ) != nil
-            ))
-        }
-        if let tools {
-            for tool in tools {
-                let providerID = tool.serverID.uuidString.lowercased()
-                let target = await provider.controller.descriptor(
-                    exposedName: tool.exposedName
-                )
-                combinedRoutes.append(.init(
+        let combinedSource: HanlinCanonicalShadowCoordinator.CombinedToolSource?
+        if let tools, !tools.isEmpty,
+           let nativeSources = try? NativeToolBridge.canonicalSourcesForRequest(),
+           let authority = try? HanlinCanonicalToolAuthority.build(
+               nativeSources: nativeSources,
+               mcpTools: tools,
+               generatedAt: observedAt
+           ),
+           let repeatedAuthority = try? HanlinCanonicalToolAuthority.build(
+               nativeSources: nativeSources,
+               mcpTools: tools,
+               generatedAt: observedAt
+           ) {
+            let routes = authority.backendRoutes.map { entry in
+                let logicalID = entry.route.logicalToolID
+                let backend: HanlinCanonicalShadowCoordinator.ToolBackend
+                let targetExists: Bool
+                switch entry.backend {
+                case .native(let providerID, let toolName):
+                    backend = .native
+                    if let nativeEntry = nativeCatalog.entry(named: toolName),
+                       let actualProviderID = try? NativeToolCanonicalShadowAdapter
+                        .providerInstanceID(for: nativeEntry) {
+                        targetExists = providerID == actualProviderID
+                            && nativeCatalog.tool(
+                                named: toolName,
+                                enabledOnly: false
+                            ) != nil
+                    } else {
+                        targetExists = false
+                    }
+                case .mcp(let serverID, let toolName):
+                    backend = .mcp
+                    targetExists = tools.contains {
+                        $0.serverID == serverID && $0.originalName == toolName
+                    }
+                }
+                return HanlinCanonicalShadowCoordinator.ToolRouteSource(
                     logicalIdentity: logicalIdentity(
-                        provider: providerID,
-                        local: tool.originalName
+                        provider: logicalID.providerInstanceID.rawValue,
+                        local: logicalID.localToolID.rawValue
                     ),
-                    alias: tool.exposedName,
-                    backend: .mcp,
-                    backendProviderIdentity: providerID,
-                    targetExists: target?.serverID == tool.serverID
-                        && target?.originalName == tool.originalName
-                ))
+                    alias: entry.route.alias,
+                    backend: backend,
+                    backendProviderIdentity: entry.backend.providerIdentity,
+                    targetExists: targetExists
+                )
             }
-        }
-        let combinedSource = tools.flatMap { tools in
-            tools.isEmpty ? nil : HanlinCanonicalShadowCoordinator.CombinedToolSource(
+            combinedSource = .init(
                 nativeTools: exposedNativeTools,
                 mcpTools: tools,
-                routes: combinedRoutes
+                authoritativeCatalog: authority.catalog,
+                repeatedCatalog: repeatedAuthority.catalog,
+                routingTable: authority.routingTable,
+                repeatedRoutingTable: repeatedAuthority.routingTable,
+                routes: routes
             )
+        } else {
+            combinedSource = nil
         }
         return HanlinCanonicalShadowCoordinator.runIfEnabled(
             sources: .init(

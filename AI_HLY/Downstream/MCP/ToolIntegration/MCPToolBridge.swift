@@ -3,7 +3,9 @@ import MCP
 
 @MainActor
 enum MCPToolBridge {
-    static func schemas(scope: AssistantToolRequestScope) async -> [[String: Any]] {
+    static func resolveDescriptors(
+        scope: AssistantToolRequestScope
+    ) async -> [MCPToolDescriptor] {
         guard scope.mcpGloballyEnabled, !scope.mcpServerIDs.isEmpty else { return [] }
         let provider = MCPRuntimeProvider.shared
         let result = await provider.controller.resolveToolDescriptors(
@@ -22,44 +24,32 @@ enum MCPToolBridge {
                 ]
             )
         }
-        var schemas: [[String: Any]] = []
-        for descriptor in result.descriptors {
-            do {
-                schemas.append(try descriptor.openAIToolSchema())
-            } catch {
-                await MCPTraceLogger.shared.log(
-                    "mcp_tool_schema_conversion_failed",
-                    fields: [
-                        "serverID": descriptor.serverID.uuidString.lowercased(),
-                        "toolName": descriptor.originalName,
-                        "errorCode": "mcp_tool_schema_invalid",
-                        "message": error.localizedDescription
-                    ]
-                )
-            }
-        }
         await MCPTraceLogger.shared.log(
             "mcp_tool_schema_resolution_completed",
             fields: [
                 "selectedServerCount": "\(scope.mcpServerIDs.count)",
                 "successfulServerCount": "\(result.successfulServerCount)",
                 "failedServerCount": "\(result.failures.count)",
-                "toolCount": "\(schemas.count)"
+                "toolCount": "\(result.descriptors.count)"
             ]
         )
-        return schemas
+        return result.descriptors
     }
 
-    static func execute(name: String, argumentsJSON: String) async -> NativeToolResult? {
-        guard name.hasPrefix("mcp__") else { return nil }
+    static func execute(
+        serverID: UUID,
+        toolName: String,
+        resultTitle: String,
+        argumentsJSON: String
+    ) async -> NativeToolResult {
         do {
-            let descriptor = await MCPRuntimeProvider.shared.controller.descriptor(exposedName: name)
             let output = try await MCPRuntimeProvider.shared.controller.call(
-                exposedName: name,
+                serverID: serverID,
+                toolName: toolName,
                 argumentsJSON: argumentsJSON
             )
             await MCPRuntimeProvider.shared.synchronizeRuntimeState()
-            return render(output, descriptor: descriptor)
+            return render(output, title: resultTitle)
         } catch {
             await MCPRuntimeProvider.shared.synchronizeRuntimeState()
             return NativeToolResult(
@@ -75,11 +65,10 @@ enum MCPToolBridge {
         }
     }
 
-    static func presentationProfile(name: String) async -> ToolPresentationProfile? {
-        guard let descriptor = await MCPRuntimeProvider.shared.controller.descriptor(exposedName: name) else {
-            return nil
-        }
-        return ToolPresentationProfile(
+    static func presentationProfile(
+        descriptor: MCPToolDescriptor
+    ) -> ToolPresentationProfile {
+        ToolPresentationProfile(
             identity: "mcp.\(descriptor.serverID.uuidString).\(descriptor.originalName)",
             activity: .init(
                 kind: .execute,
@@ -94,10 +83,12 @@ enum MCPToolBridge {
         )
     }
 
-    private static func render(_ output: MCPToolCallOutput, descriptor: MCPToolDescriptor?) -> NativeToolResult {
+    private static func render(
+        _ output: MCPToolCallOutput,
+        title: String
+    ) -> NativeToolResult {
         var modelParts: [String] = []
         var blocks: [NativeUIBlock] = []
-        let title = descriptor?.title ?? descriptor?.originalName ?? MCPL10n.string("MCP tool")
         for content in output.content {
             switch content {
             case .text(let text, _, _):

@@ -226,18 +226,22 @@ actor MCPRuntimeController {
         )
     }
 
-    func call(exposedName: String, argumentsJSON: String) async throws -> MCPToolCallOutput {
-        guard let knownDescriptor = await catalog.descriptor(exposedName: exposedName) else {
-            throw MCPError.toolNotFound
-        }
+    func call(
+        serverID: UUID,
+        toolName: String,
+        argumentsJSON: String
+    ) async throws -> MCPToolCallOutput {
         guard let server = try await registry.load().first(where: {
-            $0.id == knownDescriptor.serverID
+            $0.id == serverID
         }),
               server.isGloballyEnabled else {
             throw MCPError.serverNotFound
         }
         let session = try await ensureRunning(server, reason: .toolCall)
-        if await catalog.liveDescriptor(exposedName: exposedName) == nil {
+        if await catalog.liveDescriptor(
+            serverID: serverID,
+            toolName: toolName
+        ) == nil {
             let generation = slots[server.id]?.generation
             let tools = try await session.refreshTools()
             guard generation == slots[server.id]?.generation,
@@ -249,18 +253,16 @@ actor MCPRuntimeController {
             let registered = await catalog.replace(server: server, tools: tools)
             updateToolCount(registered.count, serverID: server.id)
         }
-        guard let descriptor = await catalog.liveDescriptor(exposedName: exposedName),
-              descriptor.serverID == server.id else {
+        guard let descriptor = await catalog.liveDescriptor(
+            serverID: serverID,
+            toolName: toolName
+        ) else {
             throw MCPError.toolNotFound
         }
         return try await session.call(
             name: descriptor.originalName,
             argumentsJSON: argumentsJSON
         )
-    }
-
-    func descriptor(exposedName: String) async -> MCPToolDescriptor? {
-        await catalog.descriptor(exposedName: exposedName)
     }
 
     private func beginStart(

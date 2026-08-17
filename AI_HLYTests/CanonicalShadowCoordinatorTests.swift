@@ -69,9 +69,25 @@ struct CanonicalShadowCoordinatorTests {
         let nativeTool = QuickCalculateTool()
         let server = TestFixtures.mcpServer()
         let mcpTool = TestFixtures.mcpTool(serverID: server.id)
+        let observedAt = Date(timeIntervalSince1970: 1)
         let nativeSource = HanlinCanonicalShadowCoordinator.NativeToolSource(
             tool: nativeTool,
             entry: nativeTool.catalogEntry
+        )
+        let nativeAuthoritySource = HanlinCanonicalToolAuthority.NativeSource(
+            entry: nativeTool.catalogEntry,
+            canonicalSchema: nativeTool.openAIToolSchema(),
+            modelSchema: nativeTool.openAIToolSchema()
+        )
+        let firstAuthority = try HanlinCanonicalToolAuthority.build(
+            nativeSources: [nativeAuthoritySource],
+            mcpTools: [mcpTool],
+            generatedAt: observedAt
+        )
+        let repeatedAuthority = try HanlinCanonicalToolAuthority.build(
+            nativeSources: [nativeAuthoritySource],
+            mcpTools: [mcpTool],
+            generatedAt: observedAt
         )
         let runtimeSnapshot = RuntimeSnapshot(
             kind: .shell,
@@ -85,7 +101,6 @@ struct CanonicalShadowCoordinatorTests {
             activeExecutionCount: 0,
             packageCount: nil
         )
-        let observedAt = Date(timeIntervalSince1970: 1)
         let report = HanlinCanonicalShadowCoordinator.run(
             sources: .init(
                 nativeApplications: [
@@ -112,6 +127,10 @@ struct CanonicalShadowCoordinatorTests {
                 combinedTools: .init(
                     nativeTools: [nativeSource],
                     mcpTools: [mcpTool],
+                    authoritativeCatalog: firstAuthority.catalog,
+                    repeatedCatalog: repeatedAuthority.catalog,
+                    routingTable: firstAuthority.routingTable,
+                    repeatedRoutingTable: repeatedAuthority.routingTable,
                     routes: [
                         .init(
                             logicalIdentity: "native.system|quick_calculate",
@@ -154,7 +173,7 @@ struct CanonicalShadowCoordinatorTests {
 
     @MainActor
     @Test("Combined tool parity rejects collisions, missing targets, and orphan routes")
-    func combinedToolRouteFailures() {
+    func combinedToolRouteFailures() throws {
         let nativeTool = QuickCalculateTool()
         let nativeSource = HanlinCanonicalShadowCoordinator.NativeToolSource(
             tool: nativeTool,
@@ -162,11 +181,57 @@ struct CanonicalShadowCoordinatorTests {
         )
         var mcpTool = TestFixtures.mcpTool()
         mcpTool.exposedName = nativeTool.name
+        let descriptorRevision = try HanlinDescriptorRevision(1)
+        let nativeDescriptor = try NativeToolCanonicalShadowAdapter.project(
+            tool: nativeTool,
+            entry: nativeTool.catalogEntry,
+            descriptorRevision: descriptorRevision
+        ).descriptor
+        let mcpDescriptor = try MCPCanonicalShadowAdapter.projectTool(
+            mcpTool,
+            descriptorRevision: descriptorRevision
+        )
+        let revision = HanlinCatalogRevision(1)
+        let catalog = HanlinToolCatalogSnapshot(
+            revision: revision,
+            generatedAt: Date(timeIntervalSince1970: 1),
+            entries: [
+                .init(
+                    descriptor: nativeDescriptor,
+                    availability: .available,
+                    modelAlias: nativeTool.name
+                ),
+                .init(
+                    descriptor: mcpDescriptor,
+                    availability: .available,
+                    modelAlias: nativeTool.name
+                )
+            ]
+        )
+        let routingTable = try HanlinToolRoutingTable(
+            revision: revision,
+            routes: [
+                .init(
+                    alias: nativeTool.name,
+                    logicalToolID: nativeDescriptor.logicalID,
+                    descriptorRevision: descriptorRevision
+                ),
+                .init(
+                    alias: "mcp__test_server__echo",
+                    logicalToolID: mcpDescriptor.logicalID,
+                    descriptorRevision: descriptorRevision
+                )
+            ]
+        )
         let report = HanlinCanonicalShadowCoordinator.run(
             sources: .init(
                 combinedTools: .init(
                     nativeTools: [nativeSource],
                     mcpTools: [mcpTool],
+                    authoritativeCatalog: catalog,
+                    repeatedCatalog: catalog,
+                    routingTable: routingTable,
+                    repeatedRoutingTable: routingTable,
                     routes: [
                         .init(
                             logicalIdentity: "native.system|quick_calculate",

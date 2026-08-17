@@ -47,33 +47,11 @@ enum MCPCanonicalShadowAdapter {
         descriptorRevision: HanlinDescriptorRevision
     ) throws -> HanlinToolCatalogSnapshot {
         let entries = try tools.sorted { $0.exposedName < $1.exposedName }.map { tool in
-            let providerInstanceID = try HanlinProviderInstanceID(
-                validating: tool.serverID.uuidString.lowercased()
-            )
-            let schema = try HanlinJSONSchemaDocument.decodeCanonicalJSON(
-                tool.inputSchemaJSON,
-                defaultDialect: .draft2020_12
-            )
-            let descriptor = HanlinToolDescriptor(
-                logicalID: HanlinLogicalToolID(
-                    providerInstanceID: providerInstanceID,
-                    localToolID: try HanlinToolID(validating: tool.originalName)
-                ),
-                descriptorRevision: descriptorRevision,
-                owner: .mcpServer(
-                    try HanlinMCPServerID(validating: tool.serverID.uuidString.lowercased())
-                ),
-                title: try LocalizedValue(["en": tool.title ?? tool.originalName]),
-                summary: try LocalizedValue([
-                    "en": tool.summary ?? "Tool provided by \(tool.serverDisplayName)"
-                ]),
-                inputSchema: schema,
-                outputSchema: nil,
-                risk: .read,
-                presentation: .init(compactStyle: .automatic)
-            )
             return HanlinToolCatalogEntry(
-                descriptor: descriptor,
+                descriptor: try projectTool(
+                    tool,
+                    descriptorRevision: descriptorRevision
+                ),
                 availability: .available,
                 modelAlias: tool.exposedName
             )
@@ -82,6 +60,37 @@ enum MCPCanonicalShadowAdapter {
             revision: revision,
             generatedAt: .now,
             entries: entries
+        )
+    }
+
+    static func projectTool(
+        _ tool: MCPToolDescriptor,
+        descriptorRevision: HanlinDescriptorRevision
+    ) throws -> HanlinToolDescriptor {
+        let providerInstanceID = try HanlinProviderInstanceID(
+            validating: tool.serverID.uuidString.lowercased()
+        )
+        let schema = try HanlinJSONSchemaDocument.decodeCanonicalJSON(
+            tool.inputSchemaJSON,
+            defaultDialect: .draft2020_12
+        )
+        return HanlinToolDescriptor(
+            logicalID: HanlinLogicalToolID(
+                providerInstanceID: providerInstanceID,
+                localToolID: try HanlinToolID(validating: tool.originalName)
+            ),
+            descriptorRevision: descriptorRevision,
+            owner: .mcpServer(
+                try HanlinMCPServerID(validating: tool.serverID.uuidString.lowercased())
+            ),
+            title: try LocalizedValue(["en": tool.title ?? tool.originalName]),
+            summary: try LocalizedValue([
+                "en": tool.summary ?? "Tool provided by \(tool.serverDisplayName)"
+            ]),
+            inputSchema: schema,
+            outputSchema: nil,
+            risk: .read,
+            presentation: .init(compactStyle: .automatic)
         )
     }
 

@@ -6,54 +6,82 @@
 //
 
 import Foundation
+import HanlinPlatformContracts
 
 @MainActor
 enum NativeToolBridge {
-    static func schemasForRequest() -> [[String: Any]] {
+    static func canonicalSourcesForRequest() throws -> [
+        HanlinCanonicalToolAuthority.NativeSource
+    ] {
         let catalog = NativeToolCatalog.shared
         catalog.ensureBuiltinsRegistered()
-
-        return catalog.schemasForEnabledTools()
+        return try catalog.schemasForEnabledTools().map { schema in
+            guard let name = ToolSchemaDecorator.toolName(in: schema),
+                  let entry = catalog.entry(named: name),
+                  let tool = catalog.tool(named: name, enabledOnly: false),
+                  catalog.isEffectivelyEnabled(entry) else {
+                throw HanlinCanonicalToolAuthorityError.invalidModelSchema(
+                    ToolSchemaDecorator.toolName(in: schema) ?? "<missing-name>"
+                )
+            }
+            return HanlinCanonicalToolAuthority.NativeSource(
+                entry: entry,
+                canonicalSchema: tool.openAIToolSchema(),
+                modelSchema: schema
+            )
+        }
     }
 
-    static func presentationProfile(for name: String) -> ToolPresentationProfile? {
-        let catalog = NativeToolCatalog.shared
-        catalog.ensureBuiltinsRegistered()
-        return catalog.presentationProfile(named: name)
-    }
-
-    static func executeIfNativeTool(
-        name: String,
+    static func executeCanonical(
+        providerInstanceID: HanlinProviderInstanceID,
+        toolName: String,
         argumentsJSON: String,
         context: NativeToolExecutionContext
-    ) async -> NativeToolResult? {
+    ) async -> NativeToolResult {
         let catalog = NativeToolCatalog.shared
         catalog.ensureBuiltinsRegistered()
 
         NativeToolTraceLogger.shared.log(
             "tool_execution_lookup_started",
             [
-                "toolName": name,
+                "toolName": toolName,
+                "providerInstanceID": providerInstanceID.rawValue,
                 "arguments": NativeToolTraceLogger.shared.redactedJSONString(argumentsJSON),
                 "localeIdentifier": context.localeIdentifier
             ]
         )
 
-        guard let entry = catalog.entry(named: name) else {
+        guard let entry = catalog.entry(named: toolName),
+              let actualProvider = try? NativeToolCanonicalShadowAdapter
+                .providerInstanceID(for: entry),
+              actualProvider == providerInstanceID else {
             NativeToolTraceLogger.shared.log(
                 "tool_execution_lookup_failed",
-                ["toolName": name]
-            )
-            return nil
-        }
-
-        guard catalog.isEnabled(entry), let tool = catalog.tool(named: name) else {
-            NativeToolTraceLogger.shared.log(
-                "disabled_tool_execution_rejected",
-                ["toolName": name, "sourceAppID": entry.sourceAppID as Any]
+                [
+                    "toolName": toolName,
+                    "providerInstanceID": providerInstanceID.rawValue
+                ]
             )
             return NativeToolResult(
-                modelText: "The assistant tool '\(name)' is unavailable because it is disabled in Settings.",
+                modelText: "The canonical assistant tool route is no longer available.",
+                userText: "Tool unavailable.",
+                uiBlocks: [NativeUIBlock(
+                    type: .error,
+                    title: "Tool unavailable",
+                    body: "The selected tool route is no longer available.",
+                    systemImage: "wrench.and.screwdriver.fill"
+                )]
+            )
+        }
+
+        guard catalog.isEnabled(entry),
+              let tool = catalog.tool(named: toolName) else {
+            NativeToolTraceLogger.shared.log(
+                "disabled_tool_execution_rejected",
+                ["toolName": toolName, "sourceAppID": entry.sourceAppID as Any]
+            )
+            return NativeToolResult(
+                modelText: "The assistant tool '\(toolName)' is unavailable because it is disabled in Settings.",
                 userText: "Tool unavailable: \(entry.title) is disabled.",
                 uiBlocks: [
                     NativeUIBlock(
@@ -70,7 +98,7 @@ enum NativeToolBridge {
         NativeToolTraceLogger.shared.log(
             "tool_execution_started",
             [
-                "toolName": name,
+                "toolName": toolName,
                 "sourceAppID": entry.sourceAppID as Any,
                 "arguments": NativeToolTraceLogger.shared.redactedJSONString(argumentsJSON)
             ]
@@ -83,7 +111,7 @@ enum NativeToolBridge {
         NativeToolTraceLogger.shared.log(
             "tool_execution_completed",
             [
-                "toolName": name,
+                "toolName": toolName,
                 "durationMs": durationMs,
                 "modelTextLength": result.modelText.count,
                 "userTextLength": result.userText?.count ?? 0,

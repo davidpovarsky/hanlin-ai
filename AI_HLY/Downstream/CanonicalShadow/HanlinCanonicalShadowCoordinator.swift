@@ -44,6 +44,10 @@ struct HanlinCanonicalShadowCoordinator {
     struct CombinedToolSource {
         let nativeTools: [NativeToolSource]
         let mcpTools: [MCPToolDescriptor]
+        let authoritativeCatalog: HanlinToolCatalogSnapshot
+        let repeatedCatalog: HanlinToolCatalogSnapshot
+        let routingTable: HanlinToolRoutingTable
+        let repeatedRoutingTable: HanlinToolRoutingTable
         let routes: [ToolRouteSource]
     }
 
@@ -116,11 +120,7 @@ struct HanlinCanonicalShadowCoordinator {
             descriptorRevision: descriptorRevision
         )
         let runtime = projectRuntimeCore(sources.runtimeCore)
-        let crossDomain = projectCombinedTools(
-            sources.combinedTools,
-            revision: revision,
-            descriptorRevision: descriptorRevision
-        )
+        let crossDomain = projectCombinedTools(sources.combinedTools)
 
         return CanonicalShadowReport(domains: [
             .skipped(.foundationJSON, code: "foundation.json.directTestsOnly"),
@@ -446,9 +446,7 @@ struct HanlinCanonicalShadowCoordinator {
     }
 
     private static func projectCombinedTools(
-        _ source: CombinedToolSource?,
-        revision: HanlinCatalogRevision,
-        descriptorRevision: HanlinDescriptorRevision
+        _ source: CombinedToolSource?
     ) -> CanonicalShadowDomainReport {
         guard let source else {
             return .skipped(
@@ -457,31 +455,6 @@ struct HanlinCanonicalShadowCoordinator {
             )
         }
         do {
-            let firstNative = try source.nativeTools.map {
-                try NativeToolCanonicalShadowAdapter.project(
-                    tool: $0.tool,
-                    entry: $0.entry,
-                    descriptorRevision: descriptorRevision
-                )
-            }
-            let repeatedNative = try source.nativeTools.map {
-                try NativeToolCanonicalShadowAdapter.project(
-                    tool: $0.tool,
-                    entry: $0.entry,
-                    descriptorRevision: descriptorRevision
-                )
-            }
-            let firstMCP = try MCPCanonicalShadowAdapter.projectTools(
-                source.mcpTools,
-                revision: revision,
-                descriptorRevision: descriptorRevision
-            )
-            let repeatedMCP = try MCPCanonicalShadowAdapter.projectTools(
-                source.mcpTools,
-                revision: revision,
-                descriptorRevision: descriptorRevision
-            )
-
             let sourceItems = try source.nativeTools.map { native in
                 let provider = try NativeToolCanonicalShadowAdapter
                     .providerInstanceID(for: native.entry).rawValue
@@ -504,10 +477,8 @@ struct HanlinCanonicalShadowCoordinator {
                     providerIdentity: provider
                 )
             }
-            let projectedItems = firstNative.map(toolItem)
-                + firstMCP.entries.map(toolItem)
-            let repeatedItems = repeatedNative.map(toolItem)
-                + repeatedMCP.entries.map(toolItem)
+            let projectedItems = source.authoritativeCatalog.entries.map(toolItem)
+            let repeatedItems = source.repeatedCatalog.entries.map(toolItem)
 
             return CanonicalShadowComparison.compare(
                 domain: .crossDomainTools,
@@ -518,6 +489,9 @@ struct HanlinCanonicalShadowCoordinator {
                 compareProviders: true,
                 additionalFindings: routeFindings(
                     projectedItems: projectedItems,
+                    catalogRevision: source.authoritativeCatalog.revision,
+                    routingTable: source.routingTable,
+                    repeatedRoutingTable: source.repeatedRoutingTable,
                     routes: source.routes
                 )
             )
@@ -531,6 +505,9 @@ struct HanlinCanonicalShadowCoordinator {
 
     private static func routeFindings(
         projectedItems: [CanonicalShadowItem],
+        catalogRevision: HanlinCatalogRevision,
+        routingTable: HanlinToolRoutingTable,
+        repeatedRoutingTable: HanlinToolRoutingTable,
         routes: [ToolRouteSource]
     ) -> [CanonicalShadowFinding] {
         var findings: [CanonicalShadowFinding] = []
@@ -538,6 +515,40 @@ struct HanlinCanonicalShadowCoordinator {
         let projectedAliases = Set(projectedItems.compactMap(\.alias))
         let routesByIdentity = Dictionary(grouping: routes, by: \.logicalIdentity)
         let routesByAlias = Dictionary(grouping: routes, by: \.alias)
+
+        if routingTable.revision != catalogRevision {
+            findings.append(.init(
+                severity: .mismatch,
+                code: "cross-domain.tools.routeRevisionMismatch",
+                path: "cross-domain.tools/routes",
+                message: "The catalog and routing table revisions differ."
+            ))
+        }
+        if routingTable != repeatedRoutingTable {
+            findings.append(.init(
+                severity: .mismatch,
+                code: "cross-domain.tools.routeInstability",
+                path: "cross-domain.tools/routes",
+                message: "Repeated routing-table construction was not stable."
+            ))
+        }
+        let canonicalRoutePairs = Set(routingTable.routes.map {
+            "\($0.alias)|\(logicalIdentity(
+                provider: $0.logicalToolID.providerInstanceID.rawValue,
+                local: $0.logicalToolID.localToolID.rawValue
+            ))"
+        })
+        let backendRoutePairs = Set(routes.map {
+            "\($0.alias)|\($0.logicalIdentity)"
+        })
+        if canonicalRoutePairs != backendRoutePairs {
+            findings.append(.init(
+                severity: .mismatch,
+                code: "cross-domain.tools.backendRouteIndexMismatch",
+                path: "cross-domain.tools/routes",
+                message: "The canonical routing table and backend route index differ."
+            ))
+        }
 
         for identity in projectedIdentities.sorted()
         where routesByIdentity[identity]?.count != 1 {
