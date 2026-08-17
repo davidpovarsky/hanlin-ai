@@ -15,6 +15,7 @@
     "Sources/CQuickJS/dtoa.c": "a8d2cf2d04db406e0c16acdd95ab0e709d309902865722f41dac07a1ba5676af",
     "Sources/CQuickJS/dtoa.h": "1c4a4540c0038632c8a4c225472fbc21bd476fb35c4da4a857a11965b58231b9",
     "Sources/CQuickJS/include/quickjs.h": "686bd55ccdd5e2195a4920d790e4c324473ce54385d49debcfb2c618ff2a7cbc",
+    "Sources/CQuickJS/libregexp-opcode.h": "2a98d646089f3a72f25480116297c5fdb5b28fd9f815447273951f4ade4a115e",
     "Sources/CQuickJS/libregexp.c": "53448af77d8ba0aecfc2bfa46aaa87e5d1329fce055bb226ff4e5b7e437ab724",
     "Sources/CQuickJS/libregexp.h": "53ff95a038f7001b752c455d195d998e2955f0ae4ed62a002c13eca798db3ceb",
     "Sources/CQuickJS/libunicode-table.h": "5840a921ac11664b505ee37b1219f518fff2a04972fe848b4bdf1e85c5a0bd83",
