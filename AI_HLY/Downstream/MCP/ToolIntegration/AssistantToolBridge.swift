@@ -39,6 +39,7 @@ enum AssistantToolBridge {
         }
     }
 
+    @MainActor
     struct PreparedTools {
         let authority: HanlinCanonicalToolAuthority
         let executors: Executors
