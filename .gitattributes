@@ -1,3 +1,8 @@
 # Preserve the authorized Scripting baseline bytes and accept their original
 # whitespace without weakening checks elsewhere in the repository.
 Reference/ScriptingCompatibility/** -text -whitespace
+
+# Preserve the hash-pinned upstream QuickJS-ng vendor source byte-for-byte
+# across platforms so checkout cannot diverge from SHA256SUMS.json.
+Packages/HanlinQuickJS/LICENSE -text
+Packages/HanlinQuickJS/Sources/CQuickJS/** -text
