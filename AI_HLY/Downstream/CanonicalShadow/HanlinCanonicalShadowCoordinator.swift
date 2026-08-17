@@ -532,11 +532,12 @@ struct HanlinCanonicalShadowCoordinator {
                 message: "Repeated routing-table construction was not stable."
             ))
         }
-        let canonicalRoutePairs = Set(routingTable.routes.map {
-            "\($0.alias)|\(logicalIdentity(
-                provider: $0.logicalToolID.providerInstanceID.rawValue,
-                local: $0.logicalToolID.localToolID.rawValue
-            ))"
+        let canonicalRoutePairs = Set(routingTable.routes.map { route in
+            let identity = logicalIdentity(
+                provider: route.logicalToolID.providerInstanceID.rawValue,
+                local: route.logicalToolID.localToolID.rawValue
+            )
+            return "\(route.alias)|\(identity)"
         })
         let backendRoutePairs = Set(routes.map {
             "\($0.alias)|\($0.logicalIdentity)"
