@@ -1,0 +1,6 @@
+{
+  "schemaVersion": "1.0",
+  "entrypoint": {
+    "sourcePath": "../outside.ts"
+  }
+}

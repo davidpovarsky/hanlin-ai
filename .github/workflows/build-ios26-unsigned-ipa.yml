@@ -237,6 +237,13 @@ jobs:
           node Scripts/ScriptingReference/validate-json-and-schema.mjs \
             2>&1 | tee "$LOG_DIR/02-json-schema.log"
 
+      - name: Verify exact TypeScript 7.0.2 Scripting artifacts
+        run: |
+          set -euxo pipefail
+          npm ci --ignore-scripts --prefix Scripts/ScriptingCompiler
+          npm test --prefix Scripts/ScriptingCompiler \
+            2>&1 | tee "$LOG_DIR/02-scripting-compiler.log"
+
       - name: Resolve the Phase 1 Swift package
         run: |
           set -euxo pipefail
@@ -531,7 +538,7 @@ jobs:
         uses: actions/cache/restore@v6
         with:
           path: build/SourcePackages
-          key: ios-sourcepackages-v1-${{ runner.os }}-${{ steps.app-toolchain.outputs.runner-arch }}-${{ steps.app-toolchain.outputs.xcode-build }}-${{ hashFiles('AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved', 'Packages/HanlinPlatform/Package.swift', 'Packages/IOSSystemLite/Package.swift') }}
+          key: ios-sourcepackages-v1-${{ runner.os }}-${{ steps.app-toolchain.outputs.runner-arch }}-${{ steps.app-toolchain.outputs.xcode-build }}-${{ hashFiles('AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved', 'Packages/HanlinPlatform/Package.swift', 'Packages/HanlinQuickJS/Package.swift', 'Packages/IOSSystemLite/Package.swift') }}
           restore-keys: |
             ios-sourcepackages-v1-${{ runner.os }}-${{ steps.app-toolchain.outputs.runner-arch }}-${{ steps.app-toolchain.outputs.xcode-build }}-
 
@@ -545,9 +552,9 @@ jobs:
             build/DerivedData/ModuleCache.noindex
             build/DerivedData/SDKStatCaches.noindex
             build/DerivedData/CacheMetadata/xcode-build-inputs.json
-          key: ios-derived-v2-${{ runner.os }}-${{ steps.app-toolchain.outputs.runner-arch }}-${{ steps.app-toolchain.outputs.xcode-build }}-iphoneos-${{ steps.app-toolchain.outputs.iphoneos-sdk }}-${{ env.CONFIGURATION }}-${{ hashFiles('AI_HLY.xcodeproj/project.pbxproj', 'AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved', 'Packages/HanlinPlatform/Package.swift', 'Packages/IOSSystemLite/Package.swift') }}-${{ github.sha }}
+          key: ios-derived-v2-${{ runner.os }}-${{ steps.app-toolchain.outputs.runner-arch }}-${{ steps.app-toolchain.outputs.xcode-build }}-iphoneos-${{ steps.app-toolchain.outputs.iphoneos-sdk }}-${{ env.CONFIGURATION }}-${{ hashFiles('AI_HLY.xcodeproj/project.pbxproj', 'AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved', 'Packages/HanlinPlatform/Package.swift', 'Packages/HanlinQuickJS/Package.swift', 'Packages/IOSSystemLite/Package.swift') }}-${{ github.sha }}
           restore-keys: |
-            ios-derived-v2-${{ runner.os }}-${{ steps.app-toolchain.outputs.runner-arch }}-${{ steps.app-toolchain.outputs.xcode-build }}-iphoneos-${{ steps.app-toolchain.outputs.iphoneos-sdk }}-${{ env.CONFIGURATION }}-${{ hashFiles('AI_HLY.xcodeproj/project.pbxproj', 'AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved', 'Packages/HanlinPlatform/Package.swift', 'Packages/IOSSystemLite/Package.swift') }}-
+            ios-derived-v2-${{ runner.os }}-${{ steps.app-toolchain.outputs.runner-arch }}-${{ steps.app-toolchain.outputs.xcode-build }}-iphoneos-${{ steps.app-toolchain.outputs.iphoneos-sdk }}-${{ env.CONFIGURATION }}-${{ hashFiles('AI_HLY.xcodeproj/project.pbxproj', 'AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved', 'Packages/HanlinPlatform/Package.swift', 'Packages/HanlinQuickJS/Package.swift', 'Packages/IOSSystemLite/Package.swift') }}-
 
       - name: Report application build cache mode
         run: |
@@ -1170,7 +1177,7 @@ jobs:
         uses: actions/cache/restore@v6
         with:
           path: build/SourcePackages
-          key: ios-sourcepackages-v1-${{ runner.os }}-${{ steps.simulator-toolchain.outputs.runner-arch }}-${{ steps.simulator-toolchain.outputs.xcode-build }}-${{ hashFiles('AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved', 'Packages/HanlinPlatform/Package.swift', 'Packages/IOSSystemLite/Package.swift') }}
+          key: ios-sourcepackages-v1-${{ runner.os }}-${{ steps.simulator-toolchain.outputs.runner-arch }}-${{ steps.simulator-toolchain.outputs.xcode-build }}-${{ hashFiles('AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved', 'Packages/HanlinPlatform/Package.swift', 'Packages/HanlinQuickJS/Package.swift', 'Packages/IOSSystemLite/Package.swift') }}
           restore-keys: |
             ios-sourcepackages-v1-${{ runner.os }}-${{ steps.simulator-toolchain.outputs.runner-arch }}-${{ steps.simulator-toolchain.outputs.xcode-build }}-
 
@@ -1184,9 +1191,9 @@ jobs:
             build/SimulatorDerivedData/ModuleCache.noindex
             build/SimulatorDerivedData/SDKStatCaches.noindex
             build/SimulatorDerivedData/CacheMetadata/xcode-build-inputs.json
-          key: ios-derived-v2-${{ runner.os }}-${{ steps.simulator-toolchain.outputs.runner-arch }}-${{ steps.simulator-toolchain.outputs.xcode-build }}-iphonesimulator-${{ steps.simulator-toolchain.outputs.simulator-sdk }}-${{ env.CONFIGURATION }}-${{ hashFiles('AI_HLY.xcodeproj/project.pbxproj', 'AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved', 'Packages/HanlinPlatform/Package.swift', 'Packages/IOSSystemLite/Package.swift') }}-${{ github.sha }}
+          key: ios-derived-v2-${{ runner.os }}-${{ steps.simulator-toolchain.outputs.runner-arch }}-${{ steps.simulator-toolchain.outputs.xcode-build }}-iphonesimulator-${{ steps.simulator-toolchain.outputs.simulator-sdk }}-${{ env.CONFIGURATION }}-${{ hashFiles('AI_HLY.xcodeproj/project.pbxproj', 'AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved', 'Packages/HanlinPlatform/Package.swift', 'Packages/HanlinQuickJS/Package.swift', 'Packages/IOSSystemLite/Package.swift') }}-${{ github.sha }}
           restore-keys: |
-            ios-derived-v2-${{ runner.os }}-${{ steps.simulator-toolchain.outputs.runner-arch }}-${{ steps.simulator-toolchain.outputs.xcode-build }}-iphonesimulator-${{ steps.simulator-toolchain.outputs.simulator-sdk }}-${{ env.CONFIGURATION }}-${{ hashFiles('AI_HLY.xcodeproj/project.pbxproj', 'AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved', 'Packages/HanlinPlatform/Package.swift', 'Packages/IOSSystemLite/Package.swift') }}-
+            ios-derived-v2-${{ runner.os }}-${{ steps.simulator-toolchain.outputs.runner-arch }}-${{ steps.simulator-toolchain.outputs.xcode-build }}-iphonesimulator-${{ steps.simulator-toolchain.outputs.simulator-sdk }}-${{ env.CONFIGURATION }}-${{ hashFiles('AI_HLY.xcodeproj/project.pbxproj', 'AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved', 'Packages/HanlinPlatform/Package.swift', 'Packages/HanlinQuickJS/Package.swift', 'Packages/IOSSystemLite/Package.swift') }}-
 
       - name: Report simulator cache mode
         run: |
@@ -1476,6 +1483,21 @@ jobs:
             -only-testing:AI_HLYTests \
             2>&1 | tee "$LOG_DIR/08-downstream-unit-tests.log"
           echo "$(( $(date +%s) - started_at ))" > "$LOG_DIR/08-downstream-unit-tests-duration-seconds.txt"
+          rm -rf "$LOG_DIR/ScriptingAcceptanceResult.xcresult"
+          scripting_started_at="$(date +%s)"
+          xcodebuild test-without-building \
+            -project "$PROJECT_PATH" \
+            -scheme "$SCHEME_NAME" \
+            -configuration "$CONFIGURATION" \
+            -destination "platform=iOS Simulator,id=$SIMULATOR_UDID" \
+            -derivedDataPath "$DERIVED_DATA_PATH" \
+            -clonedSourcePackagesDirPath "$CLONED_PACKAGES_PATH" \
+            -resultBundlePath "$LOG_DIR/ScriptingAcceptanceResult.xcresult" \
+            -skipPackagePluginValidation \
+            -skipMacroValidation \
+            -only-testing:AI_HLYTests/HanlinScriptingAcceptanceTests \
+            2>&1 | tee "$LOG_DIR/08-scripting-acceptance.log"
+          echo "$(( $(date +%s) - scripting_started_at ))" > "$LOG_DIR/08-scripting-acceptance-duration-seconds.txt"
           xcrun simctl boot "$SIMULATOR_UDID" 2>/dev/null || true
           xcrun simctl bootstatus "$SIMULATOR_UDID" -b 2>&1 \
             | tee "$LOG_DIR/08-post-tests-bootstatus.log"

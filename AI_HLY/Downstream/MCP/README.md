@@ -84,7 +84,7 @@ Run `bash Scripts/Runtime/prepare-runtime-core.sh`. The script downloads the imm
 | `AI_HLY/SettingsView.swift` | One navigation link in Tools | Opens the separate MCP settings UI |
 | `AI_HLY/Views/Components/ChatViewBottom.swift` | One separate MCP selector button beside the existing tool button | Provides per-chat server selection without replacing native tools |
 | `AI_HLY/ChatView.swift` | Creates one immutable request scope and passes it with the request | Prevents global mutable current-chat state |
-| `AI_HLY/Services/ChatServices/APIManager.swift` | Threads the scope, obtains schemas/presentation through `AssistantToolBridge`, and uses its native-first execution fallback | Connects dynamic tools at the existing narrow tool-call points |
+| `AI_HLY/Services/ChatServices/APIManager.swift` | Threads the scope and obtains schemas, presentation, and canonical dispatch through `AssistantToolBridge` | Connects dynamic tools at the existing narrow tool-call points |
 | `AI_HLY/AI_HLY.swift` | Small scene lifecycle forwarding hook | Delivers the initial scene phase and later background/foreground transitions |
 | `AI_HLY.xcodeproj/project.pbxproj` | Exact SPM products, runtime framework link/embed, Python processing phase, and Host source exclusion | Required compiler/linker/resource wiring |
 | `AI-HLY-Info.plist` | Allows loopback-only local networking | Required for the authenticated private HTTP control plane |

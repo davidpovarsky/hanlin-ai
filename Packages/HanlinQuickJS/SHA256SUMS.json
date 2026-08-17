@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "upstream": {
+    "repository": "https://github.com/quickjs-ng/quickjs",
+    "tag": "v0.16.1",
+    "commit": "954dc53628e36891f93c359aa60895c2ae3dac6b",
+    "sourceArchiveSha256": "4b3c11f37dab2c58bdeccbaeb23b923fa4a9798a45e50be6af55f3e75b616ea0"
+  },
+  "files": {
+    "LICENSE": "53457ad029723be6a273ecba41b90ed76cccdb62fe8139d8ee2365983b47f6e4",
+    "Sources/CQuickJS/cutils.h": "998c9869e87363e46c383cd7b2b235794a33a28686faaec7e823cca672660bce",
+    "Sources/CQuickJS/dtoa.c": "ecfd6fa900b6d7f80d6f00d33dfe6cb4e0552ddbe256f0e7cca502ede455f9b6",
+    "Sources/CQuickJS/dtoa.h": "ae28bfa866c399886ab092624f7f70edee7336e030a67f30139661416465c7bc",
+    "Sources/CQuickJS/include/quickjs.h": "30597f01814a4cc62a9967fd0c852004a6a13b123e6cebe6c2579252713b9628",
+    "Sources/CQuickJS/libregexp.c": "34d0a4c7d704b424124a3fc5cf257891d639fbd52f242a42095efb0c82b77026",
+    "Sources/CQuickJS/libregexp.h": "9cd1c1431157611ec845685deffe770f5d59136509e2d41323ff848807a99cca",
+    "Sources/CQuickJS/libunicode-table.h": "81beb35cc0cff00a515bcd3382a5f7ddd67b3f06ca45015762fdd2dc8765c2f8",
+    "Sources/CQuickJS/libunicode.c": "eb6d92e1be1f9dfd7847c5a6feabd87a5a17d5fed2f16d8b4d6eacaa4f2ee4a7",
+    "Sources/CQuickJS/libunicode.h": "6b44e3390be7b9f0acd128234c67c697fb8cbca60d1605debd0df1b6b98466b7",
+    "Sources/CQuickJS/list.h": "f3a1ff3c435342de26c5f55c10b95fce32a7072e4e2955239ff335857b00fead",
+    "Sources/CQuickJS/quickjs-atom.h": "5c29549f2b25ae8ef9f35d1f3fb3031b1e5133da1a62c8becaac9daa67dd1b7d",
+    "Sources/CQuickJS/quickjs-c-atomics.h": "9e01ec23bd13086b950b7bf0481b6f50bcdc99d4527e740c35de8eb8d852aedc",
+    "Sources/CQuickJS/quickjs-opcode.h": "7a0c83c43dff3d3732f0aeac21d23cbe63acf5a77cda73e0b97d848be88f1ec9",
+    "Sources/CQuickJS/quickjs.c": "61229b29209fe942d66159ff3178eba61ad3e90f035577bdd1dd3f4aa18b3984"
+  }
+}

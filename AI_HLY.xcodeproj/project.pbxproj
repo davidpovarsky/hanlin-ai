@@ -17,6 +17,7 @@
 		A10000000000000000000008 /* IOSSystemLite in Frameworks */ = {isa = PBXBuildFile; productRef = A10000000000000000000014 /* IOSSystemLite */; };
 		A10000000000000000000009 /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A10000000000000000000022 /* JavaScriptCore.framework */; };
 		A10000000000000000000070 /* HanlinPlatformContracts in Frameworks */ = {isa = PBXBuildFile; productRef = A10000000000000000000015 /* HanlinPlatformContracts */; };
+		A10000000000000000000071 /* HanlinQuickJS in Frameworks */ = {isa = PBXBuildFile; productRef = A10000000000000000000016 /* HanlinQuickJS */; };
 		B10000000000000000000001 /* HanlinPlatformContracts in Frameworks */ = {isa = PBXBuildFile; productRef = A10000000000000000000015 /* HanlinPlatformContracts */; };
 		A10000000000000000000060 /* commandDictionary.plist in Resources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000062 /* commandDictionary.plist */; };
 		A10000000000000000000061 /* extraCommandsDictionary.plist in Resources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000063 /* extraCommandsDictionary.plist */; };
@@ -81,6 +82,7 @@
 			membershipExceptions = (
 				Downstream/RuntimeCore/README.md,
 				Downstream/MCP/README.md,
+				Downstream/Scripting/README.md,
 				Downstream/RuntimeCore/Node/Host/Tests/cablate-google-map.integration.mjs,
 				Downstream/RuntimeCore/Node/Host/Tests/compatibility.test.mjs,
 				Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/child-process-bypass/package.json,
@@ -184,6 +186,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A10000000000000000000071 /* HanlinQuickJS in Frameworks */,
 				A10000000000000000000070 /* HanlinPlatformContracts in Frameworks */,
 				A10000000000000000000009 /* JavaScriptCore.framework in Frameworks */,
 				A10000000000000000000008 /* IOSSystemLite in Frameworks */,
@@ -276,6 +279,7 @@
 			);
 			name = AI_Hanlin;
 			packageProductDependencies = (
+				A10000000000000000000016 /* HanlinQuickJS */,
 				A10000000000000000000015 /* HanlinPlatformContracts */,
 				A10000000000000000000014 /* IOSSystemLite */,
 				A10000000000000000000011 /* MCP */,
@@ -348,6 +352,7 @@
 			mainGroup = D7B6C3B82D50A55D004E3AD6;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
+				A10000000000000000000045 /* XCLocalSwiftPackageReference "HanlinQuickJS" */,
 				A10000000000000000000044 /* XCLocalSwiftPackageReference "HanlinPlatform" */,
 				A10000000000000000000043 /* XCLocalSwiftPackageReference "IOSSystemLite" */,
 				A10000000000000000000040 /* XCRemoteSwiftPackageReference "swift-sdk" */,
@@ -778,6 +783,10 @@
 /* End XCConfigurationList section */
 
 /* Begin XCLocalSwiftPackageReference section */
+		A10000000000000000000045 /* XCLocalSwiftPackageReference "HanlinQuickJS" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Packages/HanlinQuickJS;
+		};
 		A10000000000000000000044 /* XCLocalSwiftPackageReference "HanlinPlatform" */ = {
 			isa = XCLocalSwiftPackageReference;
 			relativePath = Packages/HanlinPlatform;
@@ -872,6 +881,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		A10000000000000000000016 /* HanlinQuickJS */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A10000000000000000000045 /* XCLocalSwiftPackageReference "HanlinQuickJS" */;
+			productName = HanlinQuickJS;
+		};
 		A10000000000000000000015 /* HanlinPlatformContracts */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = A10000000000000000000044 /* XCLocalSwiftPackageReference "HanlinPlatform" */;

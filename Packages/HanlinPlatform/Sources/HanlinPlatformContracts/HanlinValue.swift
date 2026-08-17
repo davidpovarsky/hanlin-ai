@@ -219,6 +219,27 @@ public indirect enum HanlinValue: Hashable, Sendable {
         return .number(value)
     }
 
+    public init(jsonValue: HanlinJSONValue) throws {
+        switch jsonValue {
+        case .null:
+            self = .null
+        case let .bool(value):
+            self = .bool(value)
+        case let .integer(value):
+            self = .integer(value)
+        case let .number(value):
+            self = try Self.finiteNumber(value)
+        case let .string(value):
+            self = .string(value)
+        case let .array(values):
+            let converted = try values.map { try Self(jsonValue: $0) }
+            self = .array(converted)
+        case let .object(values):
+            let converted = try values.mapValues { try Self(jsonValue: $0) }
+            self = .object(converted)
+        }
+    }
+
     public func canonicalJSONData(
         limits: HanlinValueLimits = .canonical
     ) throws -> Data {

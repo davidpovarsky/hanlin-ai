@@ -2,7 +2,8 @@ import Foundation
 import HanlinPlatformContracts
 
 /// Read-only MCP provider/catalog projection. MCP runtime/controller/catalog
-/// actors remain authoritative for discovery, aliases, collisions, and calls.
+/// actors remain authoritative for discovery and calls. The combined canonical
+/// tool authority owns final model-facing aliases and collision resolution.
 ///
 /// Legacy sources: `MCPServerDescriptor`, `MCPToolDescriptor`, and
 /// `MCPRuntimeSnapshot`. Canonical targets: provider instances, logical tools,

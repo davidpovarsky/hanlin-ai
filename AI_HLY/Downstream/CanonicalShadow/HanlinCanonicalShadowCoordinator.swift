@@ -31,6 +31,7 @@ struct HanlinCanonicalShadowCoordinator {
     enum ToolBackend: String, Sendable {
         case native
         case mcp
+        case scripting
     }
 
     struct ToolRouteSource: Sendable {
@@ -44,6 +45,7 @@ struct HanlinCanonicalShadowCoordinator {
     struct CombinedToolSource {
         let nativeTools: [NativeToolSource]
         let mcpTools: [MCPToolDescriptor]
+        let scriptTools: [HanlinCanonicalToolAuthority.ScriptSource]
         let authoritativeCatalog: HanlinToolCatalogSnapshot
         let repeatedCatalog: HanlinToolCatalogSnapshot
         let routingTable: HanlinToolRoutingTable
@@ -476,6 +478,17 @@ struct HanlinCanonicalShadowCoordinator {
                     alias: tool.exposedName,
                     providerIdentity: provider
                 )
+            } + source.scriptTools.map { tool in
+                let logicalID = tool.descriptor.logicalID
+                let provider = logicalID.providerInstanceID.rawValue
+                return CanonicalShadowItem(
+                    identity: logicalIdentity(
+                        provider: provider,
+                        local: logicalID.localToolID.rawValue
+                    ),
+                    alias: tool.preferredAlias,
+                    providerIdentity: provider
+                )
             }
             let projectedItems = source.authoritativeCatalog.entries.map(toolItem)
             let repeatedItems = source.repeatedCatalog.entries.map(toolItem)
@@ -602,7 +615,9 @@ struct HanlinCanonicalShadowCoordinator {
                 || (route.backend == .native
                     && route.backendProviderIdentity.hasPrefix("native.") == false)
                 || (route.backend == .mcp
-                    && route.backendProviderIdentity.hasPrefix("native.")) {
+                    && route.backendProviderIdentity.hasPrefix("native."))
+                || (route.backend == .scripting
+                    && !route.backendProviderIdentity.hasPrefix("script.")) {
                 findings.append(.init(
                     severity: .mismatch,
                     code: "cross-domain.tools.backendProviderMismatch",

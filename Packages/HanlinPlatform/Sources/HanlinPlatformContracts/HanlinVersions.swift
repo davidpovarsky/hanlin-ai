@@ -116,6 +116,16 @@ public struct HanlinContractVersion: HanlinMajorMinorVersion {
     }
 }
 
+public struct HanlinScriptABIVersion: HanlinMajorMinorVersion {
+    public static let versionKind = "script ABI"
+    public let major: UInt16
+    public let minor: UInt16
+    public init(major: UInt16, minor: UInt16) {
+        self.major = major
+        self.minor = minor
+    }
+}
+
 public struct HanlinPolicyVersion: HanlinMajorMinorVersion {
     public static let versionKind = "policy"
     public let major: UInt16

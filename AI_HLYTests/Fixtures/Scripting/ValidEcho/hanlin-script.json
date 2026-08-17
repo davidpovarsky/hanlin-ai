@@ -1,0 +1,225 @@
+{
+  "descriptorRevision": 1,
+  "displayName": {
+    "fallbackLocale": "en",
+    "values": {
+      "en": "Hanlin Script Echo Fixture"
+    }
+  },
+  "entrypoint": {
+    "compiledIntegrity": {
+      "algorithm": "sha256",
+      "digest": "358693a21ddd782326cfab9d8e4b0f4492019e58dece483e7b51c91112b73465"
+    },
+    "compiledPath": "assistant_tool.js",
+    "compilerConfigurationHash": "ea250be3f93de1703163734fe2d0e31c9cc7b599aa09fce203d3ff8bdfbfcbea",
+    "compilerLane": "scripting-original",
+    "compilerVersion": "7.0.2",
+    "documentKind": "assistantTool",
+    "exportedTools": [
+      {
+        "id": "echo",
+        "inputSchema": {
+          "dialect": "https://json-schema.org/draft/2020-12/schema",
+          "findings": [],
+          "root": {
+            "type": "object",
+            "value": [
+              {
+                "key": "$schema",
+                "value": {
+                  "type": "string",
+                  "value": "https://json-schema.org/draft/2020-12/schema"
+                }
+              },
+              {
+                "key": "additionalProperties",
+                "value": {
+                  "type": "bool",
+                  "value": false
+                }
+              },
+              {
+                "key": "properties",
+                "value": {
+                  "type": "object",
+                  "value": [
+                    {
+                      "key": "text",
+                      "value": {
+                        "type": "object",
+                        "value": [
+                          {
+                            "key": "maxLength",
+                            "value": {
+                              "type": "integer",
+                              "value": "1024"
+                            }
+                          },
+                          {
+                            "key": "minLength",
+                            "value": {
+                              "type": "integer",
+                              "value": "1"
+                            }
+                          },
+                          {
+                            "key": "type",
+                            "value": {
+                              "type": "string",
+                              "value": "string"
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "key": "required",
+                "value": {
+                  "type": "array",
+                  "value": [
+                    {
+                      "type": "string",
+                      "value": "text"
+                    }
+                  ]
+                }
+              },
+              {
+                "key": "type",
+                "value": {
+                  "type": "string",
+                  "value": "object"
+                }
+              }
+            ]
+          }
+        },
+        "outputSchema": {
+          "dialect": "https://json-schema.org/draft/2020-12/schema",
+          "findings": [],
+          "root": {
+            "type": "object",
+            "value": [
+              {
+                "key": "$schema",
+                "value": {
+                  "type": "string",
+                  "value": "https://json-schema.org/draft/2020-12/schema"
+                }
+              },
+              {
+                "key": "additionalProperties",
+                "value": {
+                  "type": "bool",
+                  "value": false
+                }
+              },
+              {
+                "key": "properties",
+                "value": {
+                  "type": "object",
+                  "value": [
+                    {
+                      "key": "message",
+                      "value": {
+                        "type": "object",
+                        "value": [
+                          {
+                            "key": "type",
+                            "value": {
+                              "type": "string",
+                              "value": "string"
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "key": "success",
+                      "value": {
+                        "type": "object",
+                        "value": [
+                          {
+                            "key": "type",
+                            "value": {
+                              "type": "string",
+                              "value": "boolean"
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "key": "required",
+                "value": {
+                  "type": "array",
+                  "value": [
+                    {
+                      "type": "string",
+                      "value": "success"
+                    },
+                    {
+                      "type": "string",
+                      "value": "message"
+                    }
+                  ]
+                }
+              },
+              {
+                "key": "type",
+                "value": {
+                  "type": "string",
+                  "value": "object"
+                }
+              }
+            ]
+          }
+        },
+        "requiredCapabilities": [],
+        "requiresApproval": false,
+        "risk": "passive",
+        "summary": {
+          "fallbackLocale": "en",
+          "values": {
+            "en": "Returns a deterministic message from the isolated Script runtime."
+          }
+        },
+        "title": {
+          "fallbackLocale": "en",
+          "values": {
+            "en": "Script Echo"
+          }
+        }
+      }
+    ],
+    "sourceIntegrity": {
+      "algorithm": "sha256",
+      "digest": "13769047e962847dd557f4613c60c6406eba19e51f3d041cc4b2e8ef9f8cf945"
+    },
+    "sourcePath": "assistant_tool.ts"
+  },
+  "integrity": {
+    "algorithm": "sha256",
+    "digest": "e0d4834e3da94b6bd5157f9e4908c6d0fa14e5ec7ca470da836ee39be524447d"
+  },
+  "packageID": "com.hanlin.fixture.echo",
+  "runtime": {
+    "abiVersion": "1.0",
+    "cancellation": {
+      "deadlineEnforcement": true,
+      "interruptibleExecution": true
+    },
+    "engine": "quickjs-ng",
+    "engineVersion": "0.16.1",
+    "kind": "quickJS"
+  },
+  "schemaVersion": "1.0",
+  "version": "1.0.0"
+}

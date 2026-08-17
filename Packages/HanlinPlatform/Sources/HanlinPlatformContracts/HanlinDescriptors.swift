@@ -903,6 +903,10 @@ public enum HanlinManifestIssueCode: String, Codable, Hashable, Sendable {
     case duplicateDistributionMode
     case invalidIntegrity
     case invalidSchema
+    case invalidRuntime
+    case unsupportedScriptABI
+    case invalidCompiler
+    case missingScriptTool
 }
 
 public struct HanlinManifestIssue: Codable, Hashable, Sendable {

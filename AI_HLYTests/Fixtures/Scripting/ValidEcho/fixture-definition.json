@@ -1,0 +1,33 @@
+{
+  "packageID": "com.hanlin.fixture.echo",
+  "version": "1.0.0",
+  "displayName": "Hanlin Script Echo Fixture",
+  "tools": [
+    {
+      "id": "echo",
+      "title": "Script Echo",
+      "summary": "Returns a deterministic message from the isolated Script runtime.",
+      "inputSchema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "text": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 1024
+          }
+        },
+        "required": ["text"]
+      },
+      "outputSchema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "success": { "type": "boolean" },
+          "message": { "type": "string" }
+        },
+        "required": ["success", "message"]
+      }
+    }
+  ]
+}

@@ -16,8 +16,18 @@ enum AssistantToolBridge {
             String,
             String
         ) async -> NativeToolResult
+        let executeScripting: @MainActor (
+            HanlinScriptBackendRoute,
+            String
+        ) async -> NativeToolResult
 
         static var live: Self {
+            live(scriptingRegistry: .shared)
+        }
+
+        static func live(
+            scriptingRegistry: HanlinScriptingProviderRegistry
+        ) -> Self {
             Self(
                 executeNative: { providerInstanceID, toolName, argumentsJSON, context in
                     await NativeToolBridge.executeCanonical(
@@ -34,6 +44,46 @@ enum AssistantToolBridge {
                         resultTitle: resultTitle,
                         argumentsJSON: argumentsJSON
                     )
+                },
+                executeScripting: { route, argumentsJSON in
+                    do {
+                        let result = try await scriptingRegistry.execute(
+                            route: route,
+                            argumentsJSON: argumentsJSON
+                        )
+                        return NativeToolResult(
+                            modelText: result.message,
+                            userText: result.success ? nil : result.message,
+                            uiBlocks: result.success ? [] : [.init(
+                                type: .error,
+                                title: "Script tool failed",
+                                body: result.message,
+                                systemImage: "exclamationmark.triangle"
+                            )]
+                        )
+                    } catch let error as HanlinScriptingError {
+                        return NativeToolResult(
+                            modelText: "Script tool failed (\(error.diagnosticCode)).",
+                            userText: error.localizedDescription,
+                            uiBlocks: [.init(
+                                type: .error,
+                                title: "Script tool failed",
+                                body: error.localizedDescription,
+                                systemImage: "exclamationmark.triangle"
+                            )]
+                        )
+                    } catch {
+                        return NativeToolResult(
+                            modelText: "Script tool failed (unexpected_failure).",
+                            userText: "The Script tool could not complete.",
+                            uiBlocks: [.init(
+                                type: .error,
+                                title: "Script tool failed",
+                                body: "The Script tool could not complete.",
+                                systemImage: "exclamationmark.triangle"
+                            )]
+                        )
+                    }
                 }
             )
         }
@@ -83,18 +133,27 @@ enum AssistantToolBridge {
                     resolution.resultTitle ?? toolName,
                     argumentsJSON
                 )
+            case .scripting(let route):
+                return await executors.executeScripting(route, argumentsJSON)
             }
         }
     }
 
-    static func prepare(scope: AssistantToolRequestScope) async throws -> PreparedTools {
+    static func prepare(
+        scope: AssistantToolRequestScope,
+        scriptingRegistry: HanlinScriptingProviderRegistry = .shared
+    ) async throws -> PreparedTools {
         do {
             let nativeSources = try NativeToolBridge.canonicalSourcesForRequest()
             let mcpTools = await MCPToolBridge.resolveDescriptors(scope: scope)
+            let scriptSources = try HanlinScriptCanonicalAdapter.project(
+                await scriptingRegistry.snapshots()
+            )
             return PreparedTools(authority: try HanlinCanonicalToolAuthority.build(
                 nativeSources: nativeSources,
-                mcpTools: mcpTools
-            ))
+                mcpTools: mcpTools,
+                scriptSources: scriptSources
+            ), executors: .live(scriptingRegistry: scriptingRegistry))
         } catch {
             NativeToolTraceLogger.shared.log(
                 "canonical_tool_authority_build_failed",

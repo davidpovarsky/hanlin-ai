@@ -27,6 +27,7 @@ enum HanlinCanonicalToolAuthorityError: LocalizedError {
 enum HanlinCanonicalToolBackendRoute: Hashable, Sendable {
     case native(providerInstanceID: HanlinProviderInstanceID, toolName: String)
     case mcp(serverID: UUID, toolName: String)
+    case scripting(HanlinScriptBackendRoute)
 
     var providerIdentity: String {
         switch self {
@@ -34,6 +35,8 @@ enum HanlinCanonicalToolBackendRoute: Hashable, Sendable {
             providerInstanceID.rawValue
         case .mcp(let serverID, _):
             serverID.uuidString.lowercased()
+        case .scripting(let route):
+            route.providerInstanceID.rawValue
         }
     }
 }
@@ -129,6 +132,15 @@ struct HanlinCanonicalToolAuthority {
         }
     }
 
+    struct ScriptSource {
+        let descriptor: HanlinToolDescriptor
+        let preferredAlias: String
+        let modelSchema: [String: Any]
+        let backendRoute: HanlinScriptBackendRoute
+        let presentationProfile: ToolPresentationProfile
+        let resultTitle: String?
+    }
+
     struct Resolution {
         let route: HanlinToolRoute
         let backend: HanlinCanonicalToolBackendRoute
@@ -172,6 +184,7 @@ struct HanlinCanonicalToolAuthority {
     static func build(
         nativeSources: [NativeSource],
         mcpTools: [MCPToolDescriptor],
+        scriptSources: [ScriptSource] = [],
         generatedAt: Date = .now
     ) throws -> Self {
         let descriptorRevision = try HanlinDescriptorRevision(1)
@@ -222,6 +235,21 @@ struct HanlinCanonicalToolAuthority {
                 resultTitle: tool.title ?? tool.originalName,
                 precedence: 1,
                 discriminator: discriminator
+            ))
+        }
+
+        for source in scriptSources {
+            let logicalID = source.descriptor.logicalID
+            candidates.append(Candidate(
+                descriptor: source.descriptor,
+                preferredAlias: source.preferredAlias,
+                modelSchema: source.modelSchema,
+                backend: .scripting(source.backendRoute),
+                presentationProfile: source.presentationProfile,
+                resultTitle: source.resultTitle,
+                precedence: 2,
+                discriminator: "\(logicalID.providerInstanceID.rawValue):"
+                    + logicalID.localToolID.rawValue
             ))
         }
 
@@ -334,27 +362,36 @@ struct HanlinCanonicalToolAuthority {
         if allocatedAliases.insert(candidate.preferredAlias).inserted {
             return candidate.preferredAlias
         }
-        guard case .mcp = candidate.backend else {
-            throw HanlinCanonicalToolAuthorityError.routeInvariant(
-                "native alias collision at \(candidate.preferredAlias)"
-            )
-        }
-
-        var attempt = 0
-        while true {
-            let discriminator = attempt == 0
-                ? candidate.discriminator
-                : "\(candidate.discriminator):\(attempt)"
-            let alias = MCPToolNameCodec.collisionName(
-                candidate.preferredAlias,
-                discriminator: discriminator
-            )
-            try validateAlias(alias)
-            if allocatedAliases.insert(alias).inserted {
-                return alias
+        guard case .native = candidate.backend else {
+            var attempt = 0
+            while true {
+                let discriminator = attempt == 0
+                    ? candidate.discriminator
+                    : "\(candidate.discriminator):\(attempt)"
+                let alias = collisionName(
+                    candidate.preferredAlias,
+                    discriminator: discriminator
+                )
+                try validateAlias(alias)
+                if allocatedAliases.insert(alias).inserted {
+                    return alias
+                }
+                attempt += 1
             }
-            attempt += 1
         }
+        throw HanlinCanonicalToolAuthorityError.routeInvariant(
+            "native alias collision at \(candidate.preferredAlias)"
+        )
+    }
+
+    private static func collisionName(
+        _ name: String,
+        discriminator: String
+    ) -> String {
+        let suffix = SHA256.hash(data: Data(discriminator.utf8)).prefix(4)
+            .map { String(format: "%02x", $0) }
+            .joined()
+        return "\(name.prefix(55))_\(suffix)"
     }
 
     private static func validateLogicalIdentities(_ candidates: [Candidate]) throws {

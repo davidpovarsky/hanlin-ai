@@ -492,6 +492,9 @@ enum MCPRuntimeAcceptance {
                     targetExists = tools.contains {
                         $0.serverID == serverID && $0.originalName == toolName
                     }
+                case .scripting:
+                    backend = .scripting
+                    targetExists = false
                 }
                 return HanlinCanonicalShadowCoordinator.ToolRouteSource(
                     logicalIdentity: logicalIdentity(
@@ -507,6 +510,7 @@ enum MCPRuntimeAcceptance {
             combinedSource = .init(
                 nativeTools: exposedNativeTools,
                 mcpTools: tools,
+                scriptTools: [],
                 authoritativeCatalog: authority.catalog,
                 repeatedCatalog: repeatedAuthority.catalog,
                 routingTable: authority.routingTable,

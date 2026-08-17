@@ -367,6 +367,10 @@ struct CanonicalToolAuthorityTests {
                     #expect(serverID == mcp.serverID)
                     #expect(toolName == "echo")
                     return NativeToolResult(modelText: "mcp-result")
+                },
+                executeScripting: { _, _ in
+                    Issue.record("Scripting fallback unexpectedly executed")
+                    return NativeToolResult(modelText: "wrong-backend")
                 }
             )
         )
@@ -429,6 +433,10 @@ struct CanonicalToolAuthorityTests {
                 },
                 executeMCP: { _, _, _, _ in
                     mcpCalls += 1
+                    return NativeToolResult(modelText: "wrong-backend")
+                },
+                executeScripting: { _, _ in
+                    Issue.record("Scripting fallback unexpectedly executed")
                     return NativeToolResult(modelText: "wrong-backend")
                 }
             )

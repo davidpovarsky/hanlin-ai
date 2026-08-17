@@ -1,0 +1,13 @@
+{
+  "name": "hanlin-scripting-compiler",
+  "private": true,
+  "version": "1.0.0",
+  "license": "MIT",
+  "scripts": {
+    "generate": "node compile-scripting-fixtures.mjs --write",
+    "test": "node verify-quickjs-source.mjs && node compile-scripting-fixtures.mjs --check"
+  },
+  "devDependencies": {
+    "typescript": "7.0.2"
+  }
+}

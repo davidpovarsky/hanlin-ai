@@ -81,6 +81,7 @@ public struct HanlinAppSessionEvent: Codable, Hashable, Sendable {
 public enum HanlinRuntimeKind: String, Codable, Hashable, Sendable {
     case node
     case typeScript
+    case quickJS
     case localPython
     case javaScriptCore
     case shell

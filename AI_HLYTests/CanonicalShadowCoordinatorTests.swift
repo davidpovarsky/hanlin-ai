@@ -127,6 +127,7 @@ struct CanonicalShadowCoordinatorTests {
                 combinedTools: .init(
                     nativeTools: [nativeSource],
                     mcpTools: [mcpTool],
+                    scriptTools: [],
                     authoritativeCatalog: firstAuthority.catalog,
                     repeatedCatalog: repeatedAuthority.catalog,
                     routingTable: firstAuthority.routingTable,
@@ -228,6 +229,7 @@ struct CanonicalShadowCoordinatorTests {
                 combinedTools: .init(
                     nativeTools: [nativeSource],
                     mcpTools: [mcpTool],
+                    scriptTools: [],
                     authoritativeCatalog: catalog,
                     repeatedCatalog: catalog,
                     routingTable: routingTable,
