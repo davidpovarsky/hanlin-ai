@@ -371,6 +371,28 @@ struct HanlinQuickJSEngineTests {
 }
 
 private func fixtureDirectory(_ name: String) -> URL {
+    let marker = name == "MalformedManifest"
+        ? "malformed-hanlin-script"
+        : "hanlin-script"
+
+    // Xcode's file-system-synchronized resource copy does not carry the
+    // fixture subdirectories into the test bundle (and drops the ".ts"
+    // companion source outright, since it is classified as a media UTI
+    // rather than a resource). The checked-out source tree is always
+    // reachable on the host running the Simulator, so prefer it — it is
+    // the only location guaranteed to contain every fixture file.
+    let sourceRelative = URL(filePath: #filePath)
+        .deletingLastPathComponent()
+        .appending(path: "Fixtures/Scripting/\(name)", directoryHint: .isDirectory)
+    if FileManager.default.fileExists(
+        atPath: sourceRelative.appending(
+            path: "\(marker).json",
+            directoryHint: .notDirectory
+        ).path()
+    ) {
+        return sourceRelative
+    }
+
     let resourceRoot = Bundle(for: HanlinScriptingFixtureMarker.self).resourceURL
     let bundledCandidates = [
         resourceRoot?.appending(
@@ -388,9 +410,6 @@ private func fixtureDirectory(_ name: String) -> URL {
     }) {
         return bundled
     }
-    let marker = name == "MalformedManifest"
-        ? "malformed-hanlin-script"
-        : "hanlin-script"
     let subdirectories: [String?] = [
         "Fixtures/Scripting/\(name)",
         "Scripting/\(name)",
@@ -406,9 +425,7 @@ private func fixtureDirectory(_ name: String) -> URL {
             return markerURL.deletingLastPathComponent()
         }
     }
-    return URL(filePath: #filePath)
-        .deletingLastPathComponent()
-        .appending(path: "Fixtures/Scripting/\(name)", directoryHint: .isDirectory)
+    return sourceRelative
 }
 
 private final class HanlinScriptingFixtureMarker: NSObject {}

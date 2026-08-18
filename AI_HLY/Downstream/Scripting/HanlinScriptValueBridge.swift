@@ -87,23 +87,19 @@ enum HanlinScriptValueBridge {
           }
           return value.value.map((item) => decode(item, depth + 1, state));
         case "object": {
-          if (!Array.isArray(value.value) || value.value.length > limits.maximumObjectMembers) {
-            fail("object_limit");
+          if (value.value === null || typeof value.value !== "object" || Array.isArray(value.value)) {
+            fail("invalid_object_member");
           }
+          const keys = Object.keys(value.value);
+          if (keys.length > limits.maximumObjectMembers) fail("object_limit");
           const object = Object.create(null);
-          const keys = new Set();
-          for (const member of value.value) {
-            if (member === null || typeof member !== "object" || typeof member.key !== "string") {
-              fail("invalid_object_member");
-            }
-            checkText(member.key, limits.maximumKeyBytes, "key_limit");
-            if (keys.has(member.key)) fail("duplicate_key");
-            keys.add(member.key);
-            Object.defineProperty(object, member.key, {
+          for (const key of keys) {
+            checkText(key, limits.maximumKeyBytes, "key_limit");
+            Object.defineProperty(object, key, {
               configurable: true,
               enumerable: true,
               writable: true,
-              value: decode(member.value, depth + 1, state)
+              value: decode(value.value[key], depth + 1, state)
             });
           }
           return object;
@@ -152,14 +148,19 @@ enum HanlinScriptValueBridge {
           if (prototype !== Object.prototype && prototype !== null) fail("object_prototype");
           const keys = Reflect.ownKeys(value);
           if (keys.length > limits.maximumObjectMembers) fail("object_limit");
-          const members = [];
+          const members = Object.create(null);
           for (const key of keys) {
             if (typeof key !== "string") fail("symbol_key");
             checkText(key, limits.maximumKeyBytes, "key_limit");
             const descriptor = Object.getOwnPropertyDescriptor(value, key);
             if (!descriptor || !descriptor.enumerable) continue;
             if (!("value" in descriptor)) fail("accessor_unsupported");
-            members.push({ key, value: encode(descriptor.value, depth + 1, state) });
+            Object.defineProperty(members, key, {
+              configurable: true,
+              enumerable: true,
+              writable: true,
+              value: encode(descriptor.value, depth + 1, state)
+            });
           }
           return { type: "object", value: members };
         } finally {
