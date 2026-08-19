@@ -160,8 +160,8 @@ struct HanlinTranslationProviderView: View {
         defer { isTranslating = false }
 
         do {
-            let response = try await session.translate(inputText)
-            translatedText = response.attributedTargetText ?? AttributedString(response.targetText)
+            let response = try await session.translate(String(inputText.characters))
+            translatedText = AttributedString(response.targetText)
             translationError = nil
         } catch {
             translatedText = nil
