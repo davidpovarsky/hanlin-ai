@@ -28,6 +28,7 @@
 		D7D5EE482DD58D7F00B89AAD /* ZIPFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = D7D5EE472DD58D7F00B89AAD /* ZIPFoundation */; };
 		D7D5EE4B2DD590A100B89AAD /* MarkdownUI in Frameworks */ = {isa = PBXBuildFile; productRef = D7D5EE4A2DD590A100B89AAD /* MarkdownUI */; };
 		D7D5EE4E2DD590C500B89AAD /* SwiftSoup in Frameworks */ = {isa = PBXBuildFile; productRef = D7D5EE4D2DD590C500B89AAD /* SwiftSoup */; };
+		F20000000000000000000009 /* HanlinTranslationExtension.appex in Embed ExtensionKit Extensions */ = {isa = PBXBuildFile; fileRef = F20000000000000000000001 /* HanlinTranslationExtension.appex */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,6 +39,13 @@
 			remoteGlobalIDString = D7B6C3C02D50A55D004E3AD6;
 			remoteInfo = AI_Hanlin;
 		};
+		F20000000000000000000007 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D7B6C3B92D50A55D004E3AD6 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F20000000000000000000006;
+			remoteInfo = HanlinTranslationExtension;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -47,6 +55,7 @@
 			dstPath = "$(EXTENSIONS_FOLDER_PATH)";
 			dstSubfolderSpec = 16;
 			files = (
+				F20000000000000000000009 /* HanlinTranslationExtension.appex in Embed ExtensionKit Extensions */,
 			);
 			name = "Embed ExtensionKit Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -74,6 +83,7 @@
 		D7B6C3C12D50A55D004E3AD6 /* AI_Hanlin.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AI_Hanlin.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B10000000000000000000002 /* AI_HLYTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AI_HLYTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D7C6558C2E6C731A0041F1C7 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
+		F20000000000000000000001 /* HanlinTranslationExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = HanlinTranslationExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -179,6 +189,11 @@
 			path = AI_HLYTests;
 			sourceTree = "<group>";
 		};
+		F20000000000000000000002 /* HanlinTranslationExtension */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = HanlinTranslationExtension;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -213,6 +228,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		F20000000000000000000003 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -239,6 +261,7 @@
 			isa = PBXGroup;
 			children = (
 				D7B6C3C32D50A55D004E3AD6 /* AI_HLY */,
+				F20000000000000000000002 /* HanlinTranslationExtension */,
 				B10000000000000000000003 /* AI_HLYTests */,
 				A10000000000000000000064 /* IOSSystemLite Resources */,
 				D73E23062D817B1300ACC644 /* Frameworks */,
@@ -251,6 +274,7 @@
 			isa = PBXGroup;
 			children = (
 				D7B6C3C12D50A55D004E3AD6 /* AI_Hanlin.app */,
+				F20000000000000000000001 /* HanlinTranslationExtension.appex */,
 				B10000000000000000000002 /* AI_HLYTests.xctest */,
 			);
 			name = Products;
@@ -273,6 +297,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				F20000000000000000000008 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				D7B6C3C32D50A55D004E3AD6 /* AI_HLY */,
@@ -321,6 +346,28 @@
 			productReference = B10000000000000000000002 /* AI_HLYTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		F20000000000000000000006 /* HanlinTranslationExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F2000000000000000000000C /* Build configuration list for PBXNativeTarget "HanlinTranslationExtension" */;
+			buildPhases = (
+				F20000000000000000000005 /* Sources */,
+				F20000000000000000000003 /* Frameworks */,
+				F20000000000000000000004 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				F20000000000000000000002 /* HanlinTranslationExtension */,
+			);
+			name = HanlinTranslationExtension;
+			packageProductDependencies = (
+			);
+			productName = HanlinTranslationExtension;
+			productReference = F20000000000000000000001 /* HanlinTranslationExtension.appex */;
+			productType = "com.apple.product-type.extensionkit-extension";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -333,6 +380,9 @@
 				TargetAttributes = {
 					D7B6C3C02D50A55D004E3AD6 = {
 						CreatedOnToolsVersion = 16.2;
+					};
+					F20000000000000000000006 = {
+						CreatedOnToolsVersion = 26.0;
 					};
 					B10000000000000000000007 = {
 						CreatedOnToolsVersion = 26.0;
@@ -372,6 +422,7 @@
 			projectRoot = "";
 			targets = (
 				D7B6C3C02D50A55D004E3AD6 /* AI_Hanlin */,
+				F20000000000000000000006 /* HanlinTranslationExtension */,
 				B10000000000000000000007 /* AI_HLYTests */,
 			);
 		};
@@ -388,6 +439,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		B10000000000000000000006 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F20000000000000000000004 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -425,6 +483,11 @@
 			target = D7B6C3C02D50A55D004E3AD6 /* AI_Hanlin */;
 			targetProxy = B1000000000000000000000B /* PBXContainerItemProxy */;
 		};
+		F20000000000000000000008 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F20000000000000000000006 /* HanlinTranslationExtension */;
+			targetProxy = F20000000000000000000007 /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -436,6 +499,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		D7B6C3BD2D50A55D004E3AD6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F20000000000000000000005 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -750,6 +820,68 @@
 			};
 			name = Release;
 		};
+		F2000000000000000000000A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 87242QY66T;
+				EX_ENABLE_EXTENSION_POINT_GENERATION = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = Hanlin;
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 0.7.3;
+				PRODUCT_BUNDLE_IDENTIFIER = "cherryai.com.AI-Hanlin.TranslationProvider";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		F2000000000000000000000B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 87242QY66T;
+				EX_ENABLE_EXTENSION_POINT_GENERATION = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = Hanlin;
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 0.7.3;
+				PRODUCT_BUNDLE_IDENTIFIER = "cherryai.com.AI-Hanlin.TranslationProvider";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -776,6 +908,15 @@
 			buildConfigurations = (
 				B10000000000000000000008 /* Debug */,
 				B10000000000000000000009 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F2000000000000000000000C /* Build configuration list for PBXNativeTarget "HanlinTranslationExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F2000000000000000000000A /* Debug */,
+				F2000000000000000000000B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

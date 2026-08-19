@@ -8,11 +8,13 @@
 	<true/>
 	<key>com.apple.developer.icloud-container-identifiers</key>
 	<array>
-		<string>iCloud.$(TeamIdentifierPrefix)$(CFBundleIdentifier)</string>
+		<string>iCloud.cherryai.com.AI-HLY</string>
 	</array>
 	<key>com.apple.developer.icloud-services</key>
 	<array>
-		<string>CloudKit</string>
+		<string>CloudDocuments</string>
 	</array>
+	<key>com.apple.developer.translation-app</key>
+	<true/>
 </dict>
 </plist>
