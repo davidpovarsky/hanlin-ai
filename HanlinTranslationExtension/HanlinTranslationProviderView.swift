@@ -48,7 +48,24 @@ struct HanlinTranslationProviderView: View {
             footer
         }
         .translationTask(configuration) { session in
-            await performTranslation(using: session)
+            Task { @MainActor in
+                guard let inputText = context.inputText, !inputText.characters.isEmpty else {
+                    translatedText = nil
+                    return
+                }
+
+                isTranslating = true
+                defer { isTranslating = false }
+
+                do {
+                    let response = try await session.translate(String(inputText.characters))
+                    translatedText = AttributedString(response.targetText)
+                    translationError = nil
+                } catch {
+                    translatedText = nil
+                    translationError = error.localizedDescription
+                }
+            }
         }
         .onChange(of: context.inputText) { _, _ in
             configuration = nil
@@ -147,25 +164,6 @@ struct HanlinTranslationProviderView: View {
             configuration = TranslationSession.Configuration(source: nil, target: nil)
         } else {
             configuration?.invalidate()
-        }
-    }
-
-    private func performTranslation(using session: TranslationSession) async {
-        guard let inputText = context.inputText, !inputText.characters.isEmpty else {
-            translatedText = nil
-            return
-        }
-
-        isTranslating = true
-        defer { isTranslating = false }
-
-        do {
-            let response = try await session.translate(String(inputText.characters))
-            translatedText = AttributedString(response.targetText)
-            translationError = nil
-        } catch {
-            translatedText = nil
-            translationError = error.localizedDescription
         }
     }
 }
