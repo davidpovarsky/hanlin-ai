@@ -47,23 +47,43 @@ struct HanlinTranslationProviderView: View {
         .safeAreaInset(edge: .bottom) {
             footer
         }
-        .translationTask(configuration) { session in
-            Task { @MainActor in
+        .translationTask(configuration) { @Sendable session in
+            let sourceText: String? = await MainActor.run {
                 guard let inputText = context.inputText, !inputText.characters.isEmpty else {
-                    translatedText = nil
-                    return
+                    return nil
                 }
+                return String(inputText.characters)
+            }
 
-                isTranslating = true
-                defer { isTranslating = false }
-
-                do {
-                    let response = try await session.translate(String(inputText.characters))
-                    translatedText = AttributedString(response.targetText)
-                    translationError = nil
-                } catch {
+            guard let sourceText else {
+                await MainActor.run {
                     translatedText = nil
-                    translationError = error.localizedDescription
+                    translationError = nil
+                    isTranslating = false
+                }
+                return
+            }
+
+            await MainActor.run {
+                isTranslating = true
+            }
+
+            do {
+                let response = try await session.translate(sourceText)
+                let result = AttributedString(response.targetText)
+
+                await MainActor.run {
+                    translatedText = result
+                    translationError = nil
+                    isTranslating = false
+                }
+            } catch {
+                let message = error.localizedDescription
+
+                await MainActor.run {
+                    translatedText = nil
+                    translationError = message
+                    isTranslating = false
                 }
             }
         }
