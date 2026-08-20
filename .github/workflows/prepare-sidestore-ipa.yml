@@ -1,0 +1,128 @@
+name: Prepare SideStore IPA
+
+on:
+  push:
+    branches:
+      - codex/ios-translation-provider
+    paths:
+      - .github/workflows/prepare-sidestore-ipa.yml
+      - AI_HLY/AI_HLY.entitlements
+  workflow_dispatch:
+    inputs:
+      source_run_id:
+        description: Optional Build iOS 26 Unsigned IPA run ID; latest completed branch run is used when empty
+        required: false
+        default: ""
+        type: string
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  prepare:
+    runs-on: macos-26
+
+    steps:
+      - name: Checkout entitlement source
+        uses: actions/checkout@v4
+        with:
+          ref: codex/ios-translation-provider
+
+      - name: Resolve source build run
+        id: source
+        env:
+          GH_TOKEN: ${{ github.token }}
+          INPUT_RUN_ID: ${{ inputs.source_run_id }}
+        run: |
+          set -euo pipefail
+
+          run_id="$INPUT_RUN_ID"
+          if [ -z "$run_id" ]; then
+            run_id="$(gh run list \
+              --repo "$GITHUB_REPOSITORY" \
+              --branch codex/ios-translation-provider \
+              --limit 50 \
+              --json databaseId,name,status,createdAt \
+              --jq '[.[] | select(.name == "Build iOS 26 Unsigned IPA" and .status == "completed")][0].databaseId')"
+          fi
+
+          if [ -z "$run_id" ] || [ "$run_id" = "null" ]; then
+            echo "No completed Build iOS 26 Unsigned IPA run found on codex/ios-translation-provider." >&2
+            exit 1
+          fi
+
+          echo "run_id=$run_id" >> "$GITHUB_OUTPUT"
+          echo "Using source workflow run: $run_id"
+
+      - name: Download unsigned IPA artifact
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RUN_ID: ${{ steps.source.outputs.run_id }}
+        run: |
+          set -euo pipefail
+          rm -rf source-artifact
+          mkdir source-artifact
+          gh run download "$RUN_ID" \
+            --repo "$GITHUB_REPOSITORY" \
+            --name AI_Hanlin-iOS26-unsigned-ipa \
+            --dir source-artifact
+          find source-artifact -maxdepth 3 -type f -print
+
+      - name: Embed translation entitlement in Mach-O signature
+        run: |
+          set -euo pipefail
+
+          source_ipa="$(find source-artifact -type f -name '*.ipa' -print -quit)"
+          test -n "$source_ipa"
+          test -f AI_HLY/AI_HLY.entitlements
+
+          rm -rf sidestore-ipa
+          mkdir sidestore-ipa
+          ditto -x -k "$source_ipa" sidestore-ipa
+
+          app_path="$(find sidestore-ipa/Payload -maxdepth 1 -type d -name '*.app' -print -quit)"
+          test -n "$app_path"
+
+          executable_name="$(/usr/libexec/PlistBuddy -c 'Print CFBundleExecutable' "$app_path/Info.plist")"
+          executable_path="$app_path/$executable_name"
+          test -f "$executable_path"
+
+          echo "Before ad-hoc entitlement signature:"
+          otool -l "$executable_path" | grep -A4 LC_CODE_SIGNATURE || true
+
+          # Sign only the main Mach-O, not the app bundle. This signature is a
+          # transport marker for SideStore/AltSign so it can read the original
+          # requested entitlements before replacing the signature and profiles.
+          /usr/bin/codesign \
+            --force \
+            --sign - \
+            --entitlements AI_HLY/AI_HLY.entitlements \
+            --generate-entitlement-der \
+            "$executable_path"
+
+          echo "Embedded entitlements:"
+          /usr/bin/codesign -d --entitlements :- "$executable_path" 2>&1 | tee embedded-entitlements.txt
+          grep -q 'com.apple.developer.translation-app' embedded-entitlements.txt
+          grep -q '<true/>' embedded-entitlements.txt
+          otool -l "$executable_path" | grep -A4 LC_CODE_SIGNATURE
+
+      - name: Package SideStore-ready IPA
+        run: |
+          set -euo pipefail
+          output="$GITHUB_WORKSPACE/AI_Hanlin-iOS26-SideStore-ready.ipa"
+          rm -f "$output"
+          cd sidestore-ipa
+          /usr/bin/zip -qry "$output" Payload
+          cd "$GITHUB_WORKSPACE"
+          test -s "$output"
+          ls -lh "$output"
+          shasum -a 256 "$output"
+
+      - name: Upload SideStore-ready IPA
+        uses: actions/upload-artifact@v4
+        with:
+          name: AI_Hanlin-iOS26-SideStore-ready
+          path: AI_Hanlin-iOS26-SideStore-ready.ipa
+          if-no-files-found: error
+          retention-days: 14
