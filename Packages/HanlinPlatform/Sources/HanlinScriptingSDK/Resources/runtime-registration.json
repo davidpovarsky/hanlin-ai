@@ -64,78 +64,6 @@
       ]
     },
     {
-      "symbol": "clearTimeout",
-      "state": "supported",
-      "operation": "timer.cancel",
-      "capability": null,
-      "contexts": [
-        "mainApplication",
-        "backgroundTask"
-      ],
-      "declarationEvidence": [
-        {
-          "category": "const",
-          "declarationFile": "global.d.ts",
-          "line": 46,
-          "signatureHash": "39e63faae01a69cae43f21b239d2c0c545a4df4b95525e35e6dbe062f30eb7cc"
-        },
-        {
-          "category": "function",
-          "declarationFile": "node.d.ts",
-          "line": 795,
-          "signatureHash": "884f3f123464ebc16290492f8f3b923593f6ded1c31d5dc56d50ece1f77432bd"
-        }
-      ]
-    },
-    {
-      "symbol": "console",
-      "state": "supported",
-      "operation": "console",
-      "capability": null,
-      "contexts": [
-        "all"
-      ],
-      "declarationEvidence": [
-        {
-          "category": "const",
-          "declarationFile": "global.d.ts",
-          "line": 15,
-          "signatureHash": "1f78a7556a74998af9db23b4f59468f6b936804066627a0f4ada00acf4088919"
-        }
-      ]
-    },
-    {
-      "symbol": "fetch",
-      "state": "partial",
-      "operation": "network.fetch",
-      "capability": "network",
-      "contexts": [
-        "mainApplication",
-        "backgroundTask",
-        "appIntent"
-      ],
-      "declarationEvidence": [
-        {
-          "category": "const",
-          "declarationFile": "scripting.d.ts",
-          "line": 11247,
-          "signatureHash": "ac707c2f8bee55ee0cc5af3f32c59594474e38b29c232463b4838834e2ac97b8"
-        },
-        {
-          "category": "function",
-          "declarationFile": "web-fetch.d.ts",
-          "line": 417,
-          "signatureHash": "51b8297fcc9433ce8c0e3239055de61408e46c8bb0ae46261a1e0f03e5c02b52"
-        },
-        {
-          "category": "function",
-          "declarationFile": "web-fetch.d.ts",
-          "line": 418,
-          "signatureHash": "927eb52dc0cd48c9f6e7bb7da8e36c67e3ca17ad79b7f97098dbcd2bb33d756e"
-        }
-      ]
-    },
-    {
       "symbol": "Headers",
       "state": "partial",
       "operation": "network.headers",
@@ -258,30 +186,6 @@
       ]
     },
     {
-      "symbol": "setTimeout",
-      "state": "supported",
-      "operation": "timer.schedule",
-      "capability": null,
-      "contexts": [
-        "mainApplication",
-        "backgroundTask"
-      ],
-      "declarationEvidence": [
-        {
-          "category": "const",
-          "declarationFile": "global.d.ts",
-          "line": 42,
-          "signatureHash": "9c50b45b9d06828e6f1835c4d208b4d81f088bf2a0bda5eb0917055b9633591d"
-        },
-        {
-          "category": "function",
-          "declarationFile": "node.d.ts",
-          "line": 794,
-          "signatureHash": "57c0b4b16d4f9e3f6fc0e8a3380aac8b004f10a3a3a0751aaab6c365cd8974a4"
-        }
-      ]
-    },
-    {
       "symbol": "TextDecoder",
       "state": "supported",
       "operation": "value.textDecoder",
@@ -370,6 +274,102 @@
           "declarationFile": "node.d.ts",
           "line": 653,
           "signatureHash": "69f881b2830ca503d796aff5ea8b2be200424e655a18ca5fc378a2eb75fa2c88"
+        }
+      ]
+    },
+    {
+      "symbol": "clearTimeout",
+      "state": "supported",
+      "operation": "timer.cancel",
+      "capability": null,
+      "contexts": [
+        "mainApplication",
+        "backgroundTask"
+      ],
+      "declarationEvidence": [
+        {
+          "category": "const",
+          "declarationFile": "global.d.ts",
+          "line": 46,
+          "signatureHash": "39e63faae01a69cae43f21b239d2c0c545a4df4b95525e35e6dbe062f30eb7cc"
+        },
+        {
+          "category": "function",
+          "declarationFile": "node.d.ts",
+          "line": 795,
+          "signatureHash": "884f3f123464ebc16290492f8f3b923593f6ded1c31d5dc56d50ece1f77432bd"
+        }
+      ]
+    },
+    {
+      "symbol": "console",
+      "state": "supported",
+      "operation": "console",
+      "capability": null,
+      "contexts": [
+        "all"
+      ],
+      "declarationEvidence": [
+        {
+          "category": "const",
+          "declarationFile": "global.d.ts",
+          "line": 15,
+          "signatureHash": "1f78a7556a74998af9db23b4f59468f6b936804066627a0f4ada00acf4088919"
+        }
+      ]
+    },
+    {
+      "symbol": "fetch",
+      "state": "partial",
+      "operation": "network.fetch",
+      "capability": "network",
+      "contexts": [
+        "mainApplication",
+        "backgroundTask",
+        "appIntent"
+      ],
+      "declarationEvidence": [
+        {
+          "category": "const",
+          "declarationFile": "scripting.d.ts",
+          "line": 11247,
+          "signatureHash": "ac707c2f8bee55ee0cc5af3f32c59594474e38b29c232463b4838834e2ac97b8"
+        },
+        {
+          "category": "function",
+          "declarationFile": "web-fetch.d.ts",
+          "line": 417,
+          "signatureHash": "51b8297fcc9433ce8c0e3239055de61408e46c8bb0ae46261a1e0f03e5c02b52"
+        },
+        {
+          "category": "function",
+          "declarationFile": "web-fetch.d.ts",
+          "line": 418,
+          "signatureHash": "927eb52dc0cd48c9f6e7bb7da8e36c67e3ca17ad79b7f97098dbcd2bb33d756e"
+        }
+      ]
+    },
+    {
+      "symbol": "setTimeout",
+      "state": "supported",
+      "operation": "timer.schedule",
+      "capability": null,
+      "contexts": [
+        "mainApplication",
+        "backgroundTask"
+      ],
+      "declarationEvidence": [
+        {
+          "category": "const",
+          "declarationFile": "global.d.ts",
+          "line": 42,
+          "signatureHash": "9c50b45b9d06828e6f1835c4d208b4d81f088bf2a0bda5eb0917055b9633591d"
+        },
+        {
+          "category": "function",
+          "declarationFile": "node.d.ts",
+          "line": 794,
+          "signatureHash": "57c0b4b16d4f9e3f6fc0e8a3380aac8b004f10a3a3a0751aaab6c365cd8974a4"
         }
       ]
     }

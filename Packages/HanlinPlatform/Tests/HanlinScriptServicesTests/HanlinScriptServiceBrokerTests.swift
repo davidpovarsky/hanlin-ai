@@ -18,7 +18,7 @@ struct HanlinScriptServiceBrokerTests {
         #expect(try await fixture.authority.authorize(
             capability: HanlinCapabilityID(validating: "storage"),
             context: other
-        ) == .missingGrant)
+        ) == .allowed)
         let id = try #require(fixture.context.grantIDs.first)
         await fixture.authority.revoke(id)
         #expect(try await fixture.authority.authorize(

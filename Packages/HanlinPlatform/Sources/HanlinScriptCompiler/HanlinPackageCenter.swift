@@ -175,7 +175,10 @@ public struct HanlinPackageCenter: Sendable {
     }
 
     private static func contains(_ child: URL, in root: URL) -> Bool {
-        let rootPath = root.standardizedFileURL.path()
+        let standardizedRootPath = root.standardizedFileURL.path()
+        let rootPath = standardizedRootPath.hasSuffix("/") && standardizedRootPath.count > 1
+            ? String(standardizedRootPath.dropLast())
+            : standardizedRootPath
         let childPath = child.standardizedFileURL.path()
         return childPath == rootPath || childPath.hasPrefix(rootPath + "/")
     }

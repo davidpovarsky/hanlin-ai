@@ -31,7 +31,7 @@ const records = overlay.symbols.map(entry => {
       signatureHash: match.signatureHash,
     })).sort(compareEvidence),
   };
-}).sort((left, right) => left.symbol.localeCompare(right.symbol));
+}).sort((left, right) => compareStrings(left.symbol, right.symbol));
 
 const declarations = `// Generated from ${baseline.baselineID}. Do not edit.\n` + String.raw`
 export type JSONValue = null | boolean | number | string | JSONValue[] | { [key: string]: JSONValue }
@@ -139,6 +139,7 @@ console.log(check ? `Generated Scripting SDK matches ${baseline.baselineID}.` : 
 function compareEvidence(left, right) {
   return `${left.declarationFile}:${left.line}:${left.category}`.localeCompare(`${right.declarationFile}:${right.line}:${right.category}`);
 }
+function compareStrings(left, right) { return left < right ? -1 : left > right ? 1 : 0; }
 function canonicalJSON(value) { return Buffer.from(`${JSON.stringify(value, null, 2)}\n`); }
 function sha256(value) { return crypto.createHash('sha256').update(value).digest('hex'); }
 async function readJSON(file) { return JSON.parse(await fs.readFile(file, 'utf8')); }

@@ -228,7 +228,15 @@ public struct HanlinScriptAnalyzer: Sendable {
                 )])
             }
             guard values.isRegularFile == true else { continue }
-            let path = String(url.path().dropFirst(root.path().count + 1))
+            let standardizedRootPath = root.standardizedFileURL.path()
+            let rootPath = standardizedRootPath.hasSuffix("/") && standardizedRootPath.count > 1
+                ? String(standardizedRootPath.dropLast())
+                : standardizedRootPath
+            let filePath = url.standardizedFileURL.path()
+            guard filePath.hasPrefix(rootPath + "/") else {
+                throw HanlinPackageCenterError.stagingFailed
+            }
+            let path = String(filePath.dropFirst(rootPath.count + 1))
                 .replacingOccurrences(of: "\\", with: "/")
             result[path] = try Data(contentsOf: url)
         }

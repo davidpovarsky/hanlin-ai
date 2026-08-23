@@ -233,9 +233,9 @@ public struct HanlinScriptingManifest: Codable, Hashable, Sendable {
         var preserved: [String: HanlinJSONValue] = [:]
         for candidate in container.allKeys where !Self.knownKeys.contains(candidate.stringValue) {
             preserved[candidate.stringValue] = try container.decode(
-                HanlinJSONValue.self,
+                ManifestJSONValue.self,
                 forKey: candidate
-            )
+            ).value
         }
         unknownFields = preserved
     }
@@ -258,7 +258,71 @@ public struct HanlinScriptingManifest: Codable, Hashable, Sendable {
         try container.encode(intentInputTypes, forKey: key("intentInputTypes"))
         try container.encodeIfPresent(remoteResource, forKey: key("remoteResource"))
         for (field, value) in unknownFields where !Self.knownKeys.contains(field) {
-            try container.encode(value, forKey: key(field))
+            try container.encode(ManifestJSONValue(value), forKey: key(field))
+        }
+    }
+}
+
+/// Adapts ordinary JSON used by `script.json` to the canonical value model.
+/// `HanlinJSONValue.Codable` intentionally uses a tagged wire format, so it
+/// cannot be decoded directly from forward-compatible manifest fields.
+private struct ManifestJSONValue: Codable {
+    let value: HanlinJSONValue
+
+    init(_ value: HanlinJSONValue) {
+        self.value = value
+    }
+
+    init(from decoder: Decoder) throws {
+        let single = try decoder.singleValueContainer()
+        if single.decodeNil() {
+            value = .null
+        } else if let decoded = try? single.decode(Bool.self) {
+            value = .bool(decoded)
+        } else if let decoded = try? single.decode(Int64.self) {
+            value = .integer(decoded)
+        } else if let decoded = try? single.decode(Double.self) {
+            value = try .finiteNumber(decoded)
+        } else if let decoded = try? single.decode(String.self) {
+            value = .string(decoded)
+        } else if let decoded = try? single.decode([ManifestJSONValue].self) {
+            value = .array(decoded.map(\.value))
+        } else {
+            let container = try decoder.container(keyedBy: DynamicCodingKey.self)
+            let members = try container.allKeys.map { key in
+                (key: key.stringValue, value: try container.decode(Self.self, forKey: key).value)
+            }
+            value = try .object(HanlinObject(uniqueMembers: members))
+        }
+    }
+
+    func encode(to encoder: Encoder) throws {
+        switch value {
+        case .null:
+            var container = encoder.singleValueContainer()
+            try container.encodeNil()
+        case let .bool(value):
+            var container = encoder.singleValueContainer()
+            try container.encode(value)
+        case let .integer(value):
+            var container = encoder.singleValueContainer()
+            try container.encode(value)
+        case let .number(value):
+            var container = encoder.singleValueContainer()
+            try container.encode(value)
+        case let .string(value):
+            var container = encoder.singleValueContainer()
+            try container.encode(value)
+        case let .array(values):
+            var container = encoder.unkeyedContainer()
+            for value in values {
+                try container.encode(Self(value))
+            }
+        case let .object(values):
+            var container = encoder.container(keyedBy: DynamicCodingKey.self)
+            for (key, value) in values {
+                try container.encode(Self(value), forKey: DynamicCodingKey(key))
+            }
         }
     }
 }
