@@ -1,5 +1,6 @@
 import SwiftUI
 import SwiftData
+import HanlinScriptStore
 #if os(iOS)
 import UIKit
 #endif
@@ -15,6 +16,8 @@ struct NativeAppsHubView: View {
     @State private var fullScreenRequest: NativeAppLaunchRequest?
     @State private var largeSheetRequest: NativeAppLaunchRequest?
     @State private var infoModuleID: String?
+    @State private var scriptingPlatform = HanlinScriptingPlatform.shared
+    @State private var scriptingPackageID: HanlinInstalledPackageID?
 
     private var context: NativeAppContext {
         NativeAppContext(
@@ -30,6 +33,18 @@ struct NativeAppsHubView: View {
 
     private var visibleModules: [NativeAppModule] {
         modules.filter { $0.manifest.matches(searchText: searchText) }
+    }
+
+    private var visibleScriptingPackages: [HanlinStoredPackageSnapshot] {
+        guard !searchText.isEmpty else { return scriptingPlatform.installedPackages }
+        return scriptingPlatform.installedPackages.filter { package in
+            let searchable = [
+                package.manifest?.name,
+                package.manifest?.description,
+                package.record.packageID.rawValue
+            ].compactMap { $0 }.joined(separator: " ")
+            return searchable.localizedStandardContains(searchText)
+        }
     }
 
     private let columns = [
@@ -68,6 +83,23 @@ struct NativeAppsHubView: View {
                             .padding(12)
                         }
                     }
+
+                    ForEach(visibleScriptingPackages, id: \.record.installedPackageID) { package in
+                        Button {
+                            scriptingPackageID = package.record.installedPackageID
+                        } label: {
+                            ScriptingPackageCardView(package: package)
+                        }
+                        .buttonStyle(.plain)
+                        .disabled(isEditingApps)
+                        .contextMenu {
+                            Button {
+                                scriptingPackageID = package.record.installedPackageID
+                            } label: {
+                                Label("Package Information", systemImage: "info.circle")
+                            }
+                        }
+                    }
                 }
                 .padding(.horizontal, 24)
                 .padding(.vertical, 18)
@@ -88,12 +120,12 @@ struct NativeAppsHubView: View {
                 }
             }
             .overlay {
-                if visibleModules.isEmpty {
+                if visibleModules.isEmpty && visibleScriptingPackages.isEmpty {
                     ContentUnavailableView.search(text: searchText)
                 }
             }
             .sheet(isPresented: $showsAddSheet) {
-                NativeAppsAddSheet(modules: modules)
+                NativeAppsAddSheet(modules: modules, scriptingPlatform: scriptingPlatform)
             }
             .fullScreenCover(item: $fullScreenRequest) { request in
                 NativeAppSessionContainerView(request: request)
@@ -110,6 +142,22 @@ struct NativeAppsHubView: View {
                 if let id = infoModuleID, let module = NativeAppRegistry.shared.module(id: id) {
                     NativeAppDetailView(module: module, context: context)
                 }
+            }
+            .sheet(isPresented: Binding(
+                get: { scriptingPackageID != nil },
+                set: { if !$0 { scriptingPackageID = nil } }
+            )) {
+                if let packageID = scriptingPackageID {
+                    NavigationStack {
+                        ScriptingInstalledPackageDetailView(
+                            packageID: packageID,
+                            platform: scriptingPlatform
+                        )
+                    }
+                }
+            }
+            .task {
+                await scriptingPlatform.restore()
             }
         }
     }

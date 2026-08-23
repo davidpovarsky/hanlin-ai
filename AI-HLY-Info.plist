@@ -55,7 +55,23 @@
 	</array>
 	<key>UTImportedTypeDeclarations</key>
 	<array>
-		<dict/>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.zip-archive</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>Scripting Package</string>
+			<key>UTTypeIdentifier</key>
+			<string>com.hanlin.scripting-package</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>scripting</string>
+				</array>
+			</dict>
+		</dict>
 	</array>
 	<key>com.apple.developer.translation-ui-provider.network-access</key>
 	<true/>

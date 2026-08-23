@@ -18,6 +18,10 @@
 		A10000000000000000000009 /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A10000000000000000000022 /* JavaScriptCore.framework */; };
 		A10000000000000000000070 /* HanlinPlatformContracts in Frameworks */ = {isa = PBXBuildFile; productRef = A10000000000000000000015 /* HanlinPlatformContracts */; };
 		A10000000000000000000071 /* HanlinQuickJS in Frameworks */ = {isa = PBXBuildFile; productRef = A10000000000000000000016 /* HanlinQuickJS */; };
+		A10000000000000000000072 /* HanlinScriptContracts in Frameworks */ = {isa = PBXBuildFile; productRef = C10000000000000000000017 /* HanlinScriptContracts */; };
+		A10000000000000000000073 /* HanlinScriptCompiler in Frameworks */ = {isa = PBXBuildFile; productRef = C10000000000000000000018 /* HanlinScriptCompiler */; };
+		A10000000000000000000074 /* HanlinScriptStore in Frameworks */ = {isa = PBXBuildFile; productRef = C10000000000000000000019 /* HanlinScriptStore */; };
+		A10000000000000000000075 /* HanlinScriptingSDK in Frameworks */ = {isa = PBXBuildFile; productRef = C10000000000000000000020 /* HanlinScriptingSDK */; };
 		B10000000000000000000001 /* HanlinPlatformContracts in Frameworks */ = {isa = PBXBuildFile; productRef = A10000000000000000000015 /* HanlinPlatformContracts */; };
 		A10000000000000000000060 /* commandDictionary.plist in Resources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000062 /* commandDictionary.plist */; };
 		A10000000000000000000061 /* extraCommandsDictionary.plist in Resources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000063 /* extraCommandsDictionary.plist */; };
@@ -186,6 +190,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A10000000000000000000075 /* HanlinScriptingSDK in Frameworks */,
+				A10000000000000000000074 /* HanlinScriptStore in Frameworks */,
+				A10000000000000000000073 /* HanlinScriptCompiler in Frameworks */,
+				A10000000000000000000072 /* HanlinScriptContracts in Frameworks */,
 				A10000000000000000000071 /* HanlinQuickJS in Frameworks */,
 				A10000000000000000000070 /* HanlinPlatformContracts in Frameworks */,
 				A10000000000000000000009 /* JavaScriptCore.framework in Frameworks */,
@@ -279,6 +287,10 @@
 			);
 			name = AI_Hanlin;
 			packageProductDependencies = (
+				C10000000000000000000020 /* HanlinScriptingSDK */,
+				C10000000000000000000019 /* HanlinScriptStore */,
+				C10000000000000000000018 /* HanlinScriptCompiler */,
+				C10000000000000000000017 /* HanlinScriptContracts */,
 				A10000000000000000000016 /* HanlinQuickJS */,
 				A10000000000000000000015 /* HanlinPlatformContracts */,
 				A10000000000000000000014 /* IOSSystemLite */,
@@ -881,6 +893,26 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		C10000000000000000000020 /* HanlinScriptingSDK */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A10000000000000000000044 /* XCLocalSwiftPackageReference "HanlinPlatform" */;
+			productName = HanlinScriptingSDK;
+		};
+		C10000000000000000000019 /* HanlinScriptStore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A10000000000000000000044 /* XCLocalSwiftPackageReference "HanlinPlatform" */;
+			productName = HanlinScriptStore;
+		};
+		C10000000000000000000018 /* HanlinScriptCompiler */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A10000000000000000000044 /* XCLocalSwiftPackageReference "HanlinPlatform" */;
+			productName = HanlinScriptCompiler;
+		};
+		C10000000000000000000017 /* HanlinScriptContracts */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A10000000000000000000044 /* XCLocalSwiftPackageReference "HanlinPlatform" */;
+			productName = HanlinScriptContracts;
+		};
 		A10000000000000000000016 /* HanlinQuickJS */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = A10000000000000000000045 /* XCLocalSwiftPackageReference "HanlinQuickJS" */;

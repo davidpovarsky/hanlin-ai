@@ -36,15 +36,18 @@ public struct HanlinScriptCatalogEntry: Codable, Hashable, Sendable {
     public let record: HanlinInstalledPackageRecord
     public let entrypoints: [HanlinPackageEntrypointDescriptor]
     public let enabled: Bool
+    public let manifest: HanlinScriptingManifest?
 
     public init(
         record: HanlinInstalledPackageRecord,
         entrypoints: [HanlinPackageEntrypointDescriptor],
-        enabled: Bool
+        enabled: Bool,
+        manifest: HanlinScriptingManifest? = nil
     ) {
         self.record = record
         self.entrypoints = entrypoints
         self.enabled = enabled
+        self.manifest = manifest
     }
 }
 
@@ -72,17 +75,20 @@ public struct HanlinStoredPackageSnapshot: Codable, Hashable, Sendable {
     public let entrypoints: [HanlinPackageEntrypointDescriptor]
     public let enabled: Bool
     public let availableGenerations: [UInt64]
+    public let manifest: HanlinScriptingManifest?
 
     public init(
         record: HanlinInstalledPackageRecord,
         entrypoints: [HanlinPackageEntrypointDescriptor],
         enabled: Bool,
-        availableGenerations: [UInt64]
+        availableGenerations: [UInt64],
+        manifest: HanlinScriptingManifest? = nil
     ) {
         self.record = record
         self.entrypoints = entrypoints
         self.enabled = enabled
         self.availableGenerations = availableGenerations
+        self.manifest = manifest
     }
 }
 
@@ -103,6 +109,7 @@ public actor HanlinAtomicScriptStore {
         var record: HanlinInstalledPackageRecord
         var entrypoints: [HanlinPackageEntrypointDescriptor]
         var enabled: Bool
+        var manifest: HanlinScriptingManifest?
     }
 
     private struct GenerationMetadata: Codable, Sendable {
@@ -165,7 +172,8 @@ public actor HanlinAtomicScriptStore {
                 record: entry.record,
                 entrypoints: entry.entrypoints,
                 enabled: entry.enabled,
-                availableGenerations: try generations(for: entry.record.installedPackageID)
+                availableGenerations: try generations(for: entry.record.installedPackageID),
+                manifest: entry.manifest
             )
         }.sorted { $0.record.installedPackageID.rawValue < $1.record.installedPackageID.rawValue }
     }
@@ -176,7 +184,7 @@ public actor HanlinAtomicScriptStore {
             generatedAt: now(),
             nativeCatalog: native,
             scriptPackages: registry.packages.values.map {
-                .init(record: $0.record, entrypoints: $0.entrypoints, enabled: $0.enabled)
+                .init(record: $0.record, entrypoints: $0.entrypoints, enabled: $0.enabled, manifest: $0.manifest)
             }.sorted { $0.record.installedPackageID.rawValue < $1.record.installedPackageID.rawValue }
         )
     }
@@ -349,7 +357,8 @@ public actor HanlinAtomicScriptStore {
         registry.packages[plan.installedPackageID.rawValue] = .init(
             record: record,
             entrypoints: plan.entrypoints,
-            enabled: true
+            enabled: true,
+            manifest: plan.manifest
         )
         registry.revision &+= 1
         try persistRegistry()
