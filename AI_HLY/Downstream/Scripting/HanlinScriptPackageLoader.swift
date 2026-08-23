@@ -41,13 +41,8 @@ enum HanlinScriptPackageLoader {
             == compilerConfigurationHash else {
             throw HanlinScriptingError.compilerArtifactMismatch
         }
-        guard manifest.entrypoint.exportedTools.count == 1 else {
-            throw HanlinScriptingError.unsupportedABI("one_tool_per_entrypoint")
-        }
-        let exportedTool = manifest.entrypoint.exportedTools[0]
-        guard !exportedTool.requiresApproval,
-              exportedTool.requiredCapabilities.isEmpty else {
-            throw HanlinScriptingError.unsupportedABI("privileged_tool")
+        guard (1 ... 64).contains(manifest.entrypoint.exportedTools.count) else {
+            throw HanlinScriptingError.unsupportedABI("tool_count")
         }
 
         let sourceURL = packageDirectory.appending(

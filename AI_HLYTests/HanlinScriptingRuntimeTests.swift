@@ -190,6 +190,41 @@ struct HanlinQuickJSEngineTests {
         #expect(try resultFields(isolatedResult).message == "undefined")
     }
 
+    @Test("Routes multiple registered tools and preserves structured results")
+    func multipleToolsAndStructuredResults() async throws {
+        let session = try await session(
+            program: #"""
+            AssistantTool.registerExecuteTool((parameters) => ({
+              success: true,
+              message: `first:${parameters.value}`
+            }));
+            AssistantTool.registerExecuteTool((parameters) => ({
+              success: true,
+              message: "second",
+              data: { received: parameters.value, items: [1n, true] }
+            }));
+            """#,
+            expectedToolCount: 2
+        )
+
+        let first = try await session.invoke(
+            toolIndex: 0,
+            parameters: .object(["value": .string("one")])
+        )
+        let second = try await session.invoke(
+            toolIndex: 1,
+            parameters: .object(["value": .string("two")])
+        )
+        #expect(try resultFields(first).message == "first:one")
+        guard case let .object(secondMembers) = second,
+              case let .object(data)? = secondMembers["data"],
+              case let .string(received)? = data["received"] else {
+            Issue.record("Structured Script tool result was not preserved")
+            return
+        }
+        #expect(received == "two")
+    }
+
     @Test("Exposes no ambient host capabilities")
     func defaultDenyHostSurface() async throws {
         let session = try await session(program: #"""
@@ -354,10 +389,15 @@ struct HanlinQuickJSEngineTests {
 
     private func session(
         program: String,
-        configuration: HanlinQuickJSSession.Configuration = .phase2A
+        configuration: HanlinQuickJSSession.Configuration = .phase2A,
+        expectedToolCount: Int = 1
     ) async throws -> HanlinQuickJSSession {
         let session = try HanlinQuickJSSession(configuration: configuration)
-        try await session.loadProgram(program, filename: "fixture.js")
+        try await session.loadProgram(
+            program,
+            filename: "fixture.js",
+            expectedToolCount: expectedToolCount
+        )
         return session
     }
 

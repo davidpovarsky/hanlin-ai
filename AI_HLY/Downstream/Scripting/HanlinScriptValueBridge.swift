@@ -12,7 +12,7 @@ enum HanlinScriptValueBridge {
       });
       const minimumInteger = -(1n << 63n);
       const maximumInteger = (1n << 63n) - 1n;
-      let executeTool = null;
+      const executeTools = [];
 
       function fail(code) {
         throw new TypeError(`HANLIN_BRIDGE:${code}`);
@@ -171,8 +171,8 @@ enum HanlinScriptValueBridge {
       const assistantTool = {
         registerExecuteTool(execute) {
           if (typeof execute !== "function") fail("execute_not_function");
-          if (executeTool !== null) fail("duplicate_execute_registration");
-          executeTool = execute;
+          if (executeTools.length >= 64) fail("tool_registration_limit");
+          executeTools.push(execute);
           return async (parameters) => execute(parameters);
         }
       };
@@ -187,24 +187,41 @@ enum HanlinScriptValueBridge {
         configurable: false,
         enumerable: false,
         writable: false,
-        value: () => executeTool !== null
+        value: () => executeTools.length > 0
+      });
+      Object.defineProperty(globalThis, "__hanlinToolCount", {
+        configurable: false,
+        enumerable: false,
+        writable: false,
+        value: () => executeTools.length
       });
       Object.defineProperty(globalThis, "__hanlinInvoke", {
         configurable: false,
         enumerable: false,
         writable: false,
         value: async (canonicalInput) => {
-          if (executeTool === null) throw new Error("HANLIN_ABI:missing_execute_tool");
-          const parameters = decode(JSON.parse(canonicalInput));
-          const result = await executeTool(parameters);
+          if (executeTools.length === 0) throw new Error("HANLIN_ABI:missing_execute_tool");
+          const decoded = decode(JSON.parse(canonicalInput));
+          const isNamedInvocation = decoded !== null
+            && typeof decoded === "object"
+            && !Array.isArray(decoded)
+            && typeof decoded.__hanlinToolIndex === "bigint"
+            && Object.hasOwn(decoded, "parameters");
+          const toolIndex = isNamedInvocation ? Number(decoded.__hanlinToolIndex) : 0;
+          if (!Number.isSafeInteger(toolIndex) || toolIndex < 0 || toolIndex >= executeTools.length) {
+            throw new Error("HANLIN_ABI:unknown_tool");
+          }
+          const parameters = isNamedInvocation ? decoded.parameters : decoded;
+          const result = await executeTools[toolIndex](parameters);
           if (result === null || typeof result !== "object") {
             throw new TypeError("HANLIN_ABI:invalid_tool_result");
           }
           const encodedResult = encode(result);
           const resultKeys = Reflect.ownKeys(result);
-          if (resultKeys.length !== 2
+          if ((resultKeys.length !== 2 && resultKeys.length !== 3)
               || !resultKeys.includes("success")
-              || !resultKeys.includes("message")) {
+              || !resultKeys.includes("message")
+              || (resultKeys.length === 3 && !resultKeys.includes("data"))) {
             throw new TypeError("HANLIN_ABI:invalid_tool_result");
           }
           if (typeof result.success !== "boolean"

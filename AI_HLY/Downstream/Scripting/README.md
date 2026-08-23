@@ -20,9 +20,11 @@ Node tool is a separate execution product. Updating it is not required to
 compile immutable Scripting package artifacts and would expand this phase's
 authority and acceptance scope.
 
-## Supported ABI
+## Assistant tool ABI
 
-The supported ABI is `hanlin.script/1.0`, restricted to one call:
+The supported ABI is `hanlin.script/1.0`. A checked artifact may register up
+to 64 execute functions; their stable manifest order is bound to the canonical
+tool IDs and is checked when the program loads:
 
 ```ts
 AssistantTool.registerExecuteTool(async parameters => ({
@@ -31,11 +33,14 @@ AssistantTool.registerExecuteTool(async parameters => ({
 }))
 ```
 
-A Phase 2A package declares exactly one `execute` tool. Input is a canonical
-`HanlinValue`; output must have exactly `success: boolean` and
-`message: string`. Other baseline APIs, multiple tools, binary values, host
-capabilities, and dynamic module loading are intentionally unsupported. This
-is a deliberate vertical slice, not a claim of full Scripting compatibility.
+Input is a canonical `HanlinValue`. Output contains `success: boolean`,
+`message: string`, and may contain a canonical structured `data` value.
+Invocation resolves the package, installed-package identity, entrypoint, and
+tool ID before execution. A package-scoped authorizer checks approval and every
+declared capability; the default policy denies privileged calls. Cancellation
+propagates into the owning QuickJS session. Dynamic module loading and binary
+values remain unsupported in this legacy ABI; the versioned runtime v2 lane
+owns the broader Scripting service protocol.
 
 ## Isolation and authority
 

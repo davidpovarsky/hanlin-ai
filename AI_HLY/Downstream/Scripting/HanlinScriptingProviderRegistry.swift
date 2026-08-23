@@ -20,10 +20,17 @@ struct HanlinScriptProviderSnapshot: Hashable, Sendable {
 struct HanlinScriptToolExecutionResult: Hashable, Sendable {
     let success: Bool
     let message: String
+    let data: HanlinValue?
 }
 
 actor HanlinScriptingProviderRegistry {
     static let shared = HanlinScriptingProviderRegistry()
+
+    typealias Authorizer = @Sendable (
+        HanlinPackageID,
+        HanlinInstalledPackageID,
+        HanlinScriptExportedTool
+    ) async -> Bool
 
     private struct Provider {
         let package: HanlinLoadedScriptPackage
@@ -31,6 +38,13 @@ actor HanlinScriptingProviderRegistry {
     }
 
     private var providers: [HanlinProviderInstanceID: Provider] = [:]
+    private var authorizer: Authorizer = { _, _, tool in
+        tool.requiredCapabilities.isEmpty && !tool.requiresApproval
+    }
+
+    func setAuthorizer(_ authorizer: @escaping Authorizer) {
+        self.authorizer = authorizer
+    }
 
     func loadPackage(at directory: URL) async throws -> HanlinProviderInstanceID {
         let package = try HanlinScriptPackageLoader.load(packageDirectory: directory)
@@ -41,7 +55,8 @@ actor HanlinScriptingProviderRegistry {
         do {
             try await session.loadProgram(
                 package.javaScript,
-                filename: package.manifest.entrypoint.compiledPath
+                filename: package.manifest.entrypoint.compiledPath,
+                expectedToolCount: package.manifest.entrypoint.exportedTools.count
             )
         } catch {
             await session.dispose()
@@ -114,13 +129,27 @@ actor HanlinScriptingProviderRegistry {
         } catch {
             throw HanlinScriptingError.invalidBridgeValue("invalid_arguments_json")
         }
+        guard let toolIndex = provider.package.manifest.entrypoint.exportedTools.firstIndex(
+            where: { $0.id == route.localToolID }
+        ) else {
+            throw HanlinScriptingError.unavailableProvider(route.localToolID.rawValue)
+        }
+        let tool = provider.package.manifest.entrypoint.exportedTools[toolIndex]
+        guard await authorizer(provider.package.manifest.packageID, route.installedPackageID, tool) else {
+            throw HanlinScriptingError.unsupportedABI("tool_permission_denied")
+        }
+        guard !Task.isCancelled else { throw HanlinScriptingError.cancelled }
         let value = try HanlinValue(jsonValue: json)
-        let result = try await provider.session.invoke(parameters: value)
+        let result = try await provider.session.invoke(toolIndex: toolIndex, parameters: value)
         guard case let .object(members) = result,
               case let .bool(success)? = members["success"],
               case let .string(message)? = members["message"] else {
             throw HanlinScriptingError.invalidBridgeValue("invalid_tool_result")
         }
-        return HanlinScriptToolExecutionResult(success: success, message: message)
+        return HanlinScriptToolExecutionResult(
+            success: success,
+            message: message,
+            data: members["data"]
+        )
     }
 }

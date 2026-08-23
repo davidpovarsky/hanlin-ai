@@ -60,7 +60,11 @@ actor HanlinQuickJSSession {
         }
     }
 
-    func loadProgram(_ javaScript: String, filename: String) throws {
+    func loadProgram(
+        _ javaScript: String,
+        filename: String,
+        expectedToolCount: Int = 1
+    ) throws {
         _ = try activeSession()
         try evaluate(
             HanlinScriptValueBridge.bootstrap,
@@ -68,17 +72,23 @@ actor HanlinQuickJSSession {
         )
         try evaluate(javaScript, filename: filename)
         try evaluate(
-            "if (!globalThis.__hanlinHasTool()) { throw new Error('HANLIN_ABI:missing_execute_tool'); }",
+            "if (globalThis.__hanlinToolCount() !== \(expectedToolCount)) { throw new Error('HANLIN_ABI:tool_count_mismatch'); }",
             filename: "hanlin-script-export-check.js"
         )
     }
 
-    func invoke(parameters: HanlinValue) async throws -> HanlinValue {
+    func invoke(toolIndex: Int = 0, parameters: HanlinValue) async throws -> HanlinValue {
         let session = try activeSession()
         guard !Task.isCancelled else {
             throw HanlinScriptingError.cancelled
         }
-        let input = try parameters.canonicalJSONData()
+        guard toolIndex >= 0 else {
+            throw HanlinScriptingError.invalidBridgeValue("negative_tool_index")
+        }
+        let input = try HanlinValue.object([
+            "__hanlinToolIndex": .integer(Int64(toolIndex)),
+            "parameters": parameters
+        ]).canonicalJSONData()
         guard input.count <= configuration.maximumOutputBytes else {
             throw HanlinScriptingError.resourceLimit("input_size")
         }

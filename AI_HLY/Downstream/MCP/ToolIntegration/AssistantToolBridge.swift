@@ -51,8 +51,22 @@ enum AssistantToolBridge {
                             route: route,
                             argumentsJSON: argumentsJSON
                         )
+                        let modelText: String
+                        if let data = result.data {
+                            let payload = HanlinJSONValue.object([
+                                "success": .bool(result.success),
+                                "message": .string(result.message),
+                                "data": try data.jsonValue()
+                            ])
+                            modelText = String(
+                                decoding: try payload.canonicalJSONData(),
+                                as: UTF8.self
+                            )
+                        } else {
+                            modelText = result.message
+                        }
                         return NativeToolResult(
-                            modelText: result.message,
+                            modelText: modelText,
                             userText: result.success ? nil : result.message,
                             uiBlocks: result.success ? [] : [.init(
                                 type: .error,
