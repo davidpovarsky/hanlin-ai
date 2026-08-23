@@ -1,6 +1,7 @@
 # Canonical Contract Decision Register
 
-Status: proposed design decisions for owner approval. No entry authorizes Phase 2.
+Status: accepted for full Scripting execution on 2026-08-24. Historical
+cutover decisions remain normative unless superseded below.
 
 Snapshot: `a5cea34dc60038c860b4148ee934111f3fac59bd` after fresh remote fetch.
 
@@ -17,7 +18,7 @@ Snapshot: `a5cea34dc60038c860b4148ee934111f3fac59bd` after fresh remote fetch.
 | ID | Status | Decision | Consequence |
 | --- | --- | --- | --- |
 | CCD-001 | Selected | `HanlinPlatformContracts` is the physical home of canonical portable contracts; current API is not frozen. | Evolve lossy/ambiguous package types before app linkage. |
-| CCD-002 | Selected | `NativeAppPlatform` remains native host/runtime; NativeAgentExtensions remains native tool/UI; MCP and RuntimeCore remain implementations; Scripting remains reference-only. | Canonical package never imports UI, SDK, runtime, or persistence implementations. |
+| CCD-002 | Selected | `NativeAppPlatform` remains native host/runtime; NativeAgentExtensions remains native tool/UI; MCP and RuntimeCore remain implementations; Scripting is an authorized provider/runtime behind separate package targets and downstream adapters. | Canonical contracts never import UI, SDK, runtime, or persistence implementations; the immutable baseline remains reference input. |
 | CCD-003 | Proposed | Use one canonical model with narrow cutover adapters, not a permanent parallel model. | Every adapter has explicit deletion criteria and no new feature may depend solely on a legacy adapter. |
 | CCD-004 | Proposed | Use distinct typed IDs for installed instances, providers, app sessions, runtime sessions, invocations, grants, revocations, migrations, and cancellations. | Replace ambiguous generic session identity and raw cross-boundary UUID/String use. |
 | CCD-005 | Proposed | Keep rich `HanlinValue`, add strict `HanlinJSONValue`, split Hanlin value schema from lossless JSON Schema documents, and fail every lossy conversion. | Current `HanlinJSONSchema` is replaced after descriptor/fixture migration; RuntimeJSONValue and MCP SDK values stay implementation types. |
@@ -33,10 +34,10 @@ Snapshot: `a5cea34dc60038c860b4148ee934111f3fac59bd` after fresh remote fetch.
 | CCD-015 | Proposed | Existing lifecycle approvals are not capability grants and never authorize Scripting/device APIs. | Preserve them only for their exact package-script hash behavior until a separate policy-approval contract replaces them. |
 | CCD-016 | Proposed | Generalize `HanlinScriptEnvelope` into a negotiated, typed envelope; enforce ordered sequences, hard resource caps, explicit feature negotiation, and typed errors. | Script/runtime implementation waits until every message kind has a typed payload. |
 | CCD-017 | Selected | Authorized Scripting baseline remains immutable and exact; declaration presence is not implementation. | Overlays and compatibility records remain separate. |
-| CCD-018 | Blocking | Select the product compiler lane: upgrade embedded RuntimeCore from TypeScript 6.0.3 to the authorized 7.0.2 lane, or explicitly support a non-conformant embedded lane with documented fixture failures. | No claim of Scripting compiler/API compatibility before exact project typecheck and runtime fixtures pass on the shipped compiler. |
-| CCD-019 | Blocking | Approve first Scripting contexts and APIs, permission UX, storage quota, process/resource limits, and extension availability. | Scripting provider registration and execution remain prohibited. |
-| CCD-020 | Blocking | Approve whether user-visible permission decisions sync across devices or remain local-device security state. | Permission-store implementation and CloudKit relationship cannot begin. Recommended default: local-device only. |
-| CCD-021 | Blocking | Approve retention/export policy for security audit events separately from user activity and debug diagnostics. | Audit sink persistence cannot be finalized. |
+| CCD-018 | Selected | Ship TypeScript 7.0.2 exactly for the Scripting compiler lane. | No 6.0.3 artifact or cache may satisfy a Scripting install. |
+| CCD-019 | Selected | Implement app, assistant-tool, widget, App Intent, and Live Activity contexts plus every approved baseline family; context-specific resource policies remain versioned and measured. | Unsupported platform behavior stays explicit and cannot be replaced by a mock. |
+| CCD-020 | Selected | Permission grants and revocations are local-device security state by default and do not use CloudKit. | Package data may define separate sync behavior, but grants never sync implicitly. |
+| CCD-021 | Selected | Security audit is local, redacted, bounded, and separately exportable from user activity and debug diagnostics; final byte/time caps are performance-policy inputs. | Audit failure denies privileged operations; raw content and secrets are never recorded. |
 | CCD-022 | Proposed | First implementation slice is package-only: evolve IDs/value/schema/error/wire primitives and add exhaustive fixtures, without linking the app. | Lowest behavior/persistence/upstream risk; prerequisite to every adapter. |
 
 ## Resolved corrections to the prior audit

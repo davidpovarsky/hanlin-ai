@@ -1,6 +1,7 @@
 # Scripting Integration Gates
 
-Status: architecture-only. Scripting remains reference-only and unimplemented.
+Status: implementation authorized on 2026-08-24; gates remain evidence-based
+and close only when their pass criteria are demonstrated.
 
 ## 1. Verified repository facts
 
@@ -21,27 +22,28 @@ Status: architecture-only. Scripting remains reference-only and unimplemented.
 
 ## 2. Compiler policy
 
-There are only two honest product choices:
+The selected product lane ships TypeScript 7.0.2 exactly for Scripting. The
+current RuntimeCore 6.0.3 resource is not a Scripting compiler and cannot share
+its cache. Compiler version, integrity, options, baseline, ABI, and context are
+part of every descriptor, diagnostic, artifact, source map, and cache key.
+Changing declarations, `skipLibCheck`, or `transpileModule` cannot establish
+compatibility.
 
-1. **Conformance lane (recommended):** ship the exact authorized TypeScript
-   7.0.2 compiler (or a separately owner-authorized newer compiler after a new
-   baseline review) in the embedded runtime and run the original declaration /
-   tsconfig fixture suite against it.
-2. **Two explicit lanes:** retain `scripting-original` at 7.0.2 for compatibility
-   verification and label the shipped 6.0.3 runtime `hanlin-embedded`, publishing
-   every syntax/type/emit/declaration difference and never claiming Scripting
-   compatibility for failing projects.
+## 2.1 Traceability
 
-The current discrepancy cannot be resolved by changing declarations to make
-6.0.3 pass, using `skipLibCheck`, or running `transpileModule`. Before any
-compatibility claim, decide whether 7.0.2 can be packaged and executed on iOS,
-verify license/artifact/integrity, update the runtime lock and bundle, and run
-full `Program`/incremental project builds with the exact original compiler
-configuration and examples.
-
-If two lanes remain, compiler lane/version/config hash is part of every script
-descriptor, diagnostic, cache key, execution request/result, source map, and
-compatibility report. Cross-lane cache reuse is prohibited.
+| Gate | Current state | Closing evidence |
+| --- | --- | --- |
+| SG-0 | Closed | Owner authorization and `HANLIN_FULL_SCRIPTING_EXECUTION_PLAN_HE.md` decisions |
+| SG-1 | Open | Clean baseline verification and generated-resource drift checks |
+| SG-2 | Open | Shipped 7.0.2 compiler, deterministic multi-project fixtures, iOS verification |
+| SG-3 | Open | Typed async wire, lossless conversion, limits, randomized round trips |
+| SG-4 | Open | Safe import, canonical descriptors, atomic install/update/rollback/uninstall |
+| SG-5 | Open | QuickJS lifecycle, isolation, cancellation, recovery, leak tests |
+| SG-6 | Open | Capability mappings, grants, OS authorization, revocation and bypass tests |
+| SG-7 | Open | ScriptUI and extension render/interaction/accessibility evidence |
+| SG-8 | Open | Canonical Script tool routing, collisions, progress and cancellation |
+| SG-9 | Open | Store fixtures, crash recovery, migrations and stale-grant/cache rejection |
+| SG-10 | Open | Acceptance packages, compatibility matrix, performance and approved Xcode run |
 
 ## 3. Gates
 
@@ -168,4 +170,3 @@ Only those passing all applicable columns may be called compatible.
 
 Until these decisions and gates pass, Scripting is not a tool provider, app
 runtime, platform service consumer, or executable contract source.
-

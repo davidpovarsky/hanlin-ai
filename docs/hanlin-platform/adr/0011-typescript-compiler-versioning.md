@@ -1,6 +1,6 @@
 # ADR 0011: TypeScript compiler versioning
 
-Status: accepted for Phase 0; implementation gated to Phase 6
+Status: accepted for the full Scripting platform
 Date: 2026-07-23
 
 ## Context
@@ -11,21 +11,20 @@ strict CommonJS and classic JSX with `createElement` and `Fragment`.
 
 ## Decision
 
-Hanlin records two explicit conformance lanes:
+The shipped Scripting compiler is exactly TypeScript 7.0.2. The compiler,
+package lock, integrity, configuration, baseline hash, Hanlin ABI, and target
+context participate in every artifact fingerprint. Scripting projects use a
+full TypeScript Program/incremental project build; one-shot `transpileModule`
+is not a compatibility or install path.
 
-1. `scripting-original`: exact declarations and exact original tsconfig with
-   TypeScript 7.0.2 for reference compatibility verification;
-2. `hanlin-embedded`: the controlled iOS-capable compiler resource, currently
-   6.0.3, with differences surfaced rather than hidden.
-
-Phase 6 must determine whether the iOS compiler can move to the reference
-version, whether both lanes remain necessary, and which language features each
-accepts. It must use a full TypeScript program/incremental builder for projects.
-One-shot `transpileModule` remains limited to developer snippets.
+RuntimeCore may retain a separately named compiler only for unrelated trusted
+developer functionality. It cannot compile installed Scripting packages or
+contribute artifacts to their cache.
 
 ## Consequences
 
 No source declaration is edited to accommodate compiler drift. Windows-native
-compiler executables and local `node_modules` are never packaged. Diagnostics,
-fixtures, autocomplete, hover, signature help, and source maps record compiler
-lane and version.
+compiler executables and local `node_modules` are never packaged. Imported
+source is data provided to the trusted compiler protocol; package scripts are
+never invoked. Diagnostics, fixtures, language services, source maps, and cache
+records identify TypeScript 7.0.2 explicitly.

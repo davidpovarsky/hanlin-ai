@@ -1,8 +1,43 @@
 # Hanlin platform implementation status
 
-Last updated: 2026-07-23
+Last updated: 2026-08-24
 Execution contract: Revision 2.0
-Current gate: Phase 1 complete; Phase 2 not started
+Current gate: full Scripting platform authorized; implementation in progress
+
+## Full Scripting execution — in progress
+
+The owner authorized the complete execution plan on 2026-08-24. The target is
+not the existing Phase 2A proof: it is import, preview, compile, install,
+QuickJS runtime, generated `scripting` SDK, native ScriptUI, services, unified
+Apps Hub/tools, generic extensions, recovery, and acceptance through SG-10.
+
+Completed on branch `codex/full-scripting-platform`:
+
+- QuickJS returns distinct typed memory and stack statuses; Swift no longer
+  classifies either resource failure by parsing engine messages.
+- timeout, memory, stack, output, cancellation, and disposal are independent
+  tests.
+- Scripting fixtures are an opaque test resource bundle copied to a temporary
+  directory; tests have no `#filePath` checkout fallback.
+- the local TypeScript 7.0.2 fixture lane and immutable QuickJS source hashes
+  pass after byte-preserving checkout normalization.
+
+Current implementation truth before the remaining work:
+
+- Phase 2A loads only `hanlin-script.json`, one precompiled assistant tool, and
+  one narrow ABI. It is not a Scripting package importer or compatibility
+  claim.
+- production bootstrap does not yet restore installed packages or publish
+  Script tools.
+- RuntimeCore still contains TypeScript 6.0.3; the shipped Scripting lane must
+  be isolated and upgraded to the authorized 7.0.2 artifact.
+- ScriptUI, service brokers, unified catalog, package management, and generic
+  Widget/AppIntent/LiveActivity execution are not yet implemented.
+- only SG-0 is closed. SG-1 through SG-10 require the evidence recorded in
+  `canonical-contracts/SCRIPTING_INTEGRATION_GATES.md`.
+
+Historical statements below that say Phase 2 had not started describe their
+dated checkpoints and do not revoke the 2026-08-24 authorization.
 
 ## MCP lifecycle stabilization — local implementation pending Xcode acceptance
 

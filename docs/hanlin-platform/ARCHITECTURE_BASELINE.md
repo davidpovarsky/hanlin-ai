@@ -91,13 +91,15 @@ adapters.
 
 Two trust profiles are architectural:
 
-- `sandboxedApplication`: dedicated JavaScriptCore isolation, no Node globals,
+- `sandboxedApplication`: dedicated QuickJS-NG runtime/context isolation, no Node globals,
   filesystem, network, native modules, or process API; only capability-checked
   versioned RPC.
 - `trustedDeveloperNode`: existing MCP, controlled build tooling, and
   explicitly trusted developer execution; visibly not a hostile-code sandbox.
 
 Compilation is trusted host work and is distinct from application execution.
+TypeScript 7.0.2 is the only authorized Scripting compiler; imported code runs
+only in QuickJS.
 
 ## Authorized Scripting baseline
 
