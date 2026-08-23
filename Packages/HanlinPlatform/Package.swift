@@ -32,6 +32,10 @@ let package = Package(
         .library(
             name: "HanlinScriptingSDK",
             targets: ["HanlinScriptingSDK"]
+        ),
+        .library(
+            name: "HanlinScriptUI",
+            targets: ["HanlinScriptUI"]
         )
     ],
     dependencies: [
@@ -105,6 +109,18 @@ let package = Package(
         .testTarget(
             name: "HanlinScriptingSDKTests",
             dependencies: ["HanlinScriptingSDK"]
+        ),
+        .target(
+            name: "HanlinScriptUI",
+            dependencies: [
+                "HanlinPlatformContracts",
+                "HanlinScriptContracts"
+            ],
+            resources: [.process("Resources")]
+        ),
+        .testTarget(
+            name: "HanlinScriptUITests",
+            dependencies: ["HanlinScriptUI"]
         )
     ],
     swiftLanguageModes: [.v6]
