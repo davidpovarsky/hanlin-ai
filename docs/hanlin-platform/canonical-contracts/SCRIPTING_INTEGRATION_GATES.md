@@ -20,14 +20,18 @@ and close only when their pass criteria are demonstrated.
   compilation endpoints, but that is not evidence that Scripting declarations,
   JSX runtime, module resolution, host APIs, or lifecycle are compatible.
 
-## 2. Compiler policy
+## 2. Compiler and runtime policy
 
-The selected product lane ships TypeScript 7.0.2 exactly for Scripting. The
-current RuntimeCore 6.0.3 resource is not a Scripting compiler and cannot share
-its cache. Compiler version, integrity, options, baseline, ABI, and context are
-part of every descriptor, diagnostic, artifact, source map, and cache key.
-Changing declarations, `skipLibCheck`, or `transpileModule` cannot establish
-compatibility.
+TypeScript 7.0.2 is the authoritative compatibility/typecheck lane on the host
+and in CI. TypeScript 6.0.3 in NodeMobile is the authorized on-device
+project-emitter lane. The two never share identity or cache claims. Contracts
+distinguish typecheck compiler, emitter, bundler, runtime engine, hashes and
+options. TypeScript 7 is not claimed to run on iOS.
+
+Original TS/TSX/JS runs under `scripting-jsc`; QuickJS is `hanlin-quickjs`, a
+separate constrained Hanlin runtime. Node and Python are trusted worker
+profiles. Shell is a brokered capability service. Entrypoints persist the
+choice; no engine fallback is permitted.
 
 ## 2.1 Traceability
 
@@ -35,10 +39,10 @@ compatibility.
 | --- | --- | --- |
 | SG-0 | Closed | Owner authorization and `HANLIN_FULL_SCRIPTING_EXECUTION_PLAN_HE.md` decisions |
 | SG-1 | Closed locally | Baseline and generated-resource drift checks pass deterministically |
-| SG-2 | Blocked | TypeScript 7.0.2 exposes no stable in-process API and ships no iOS `tsgo`; owner/compiler-vendor decision required |
+| SG-2 | Implemented contract; production adapter pending | dual compiler provenance is typed; NodeMobile 6.0.3 project emitter must be connected to install and proven under Xcode |
 | SG-3 | Implemented; verification pending | Typed wire, lossless values, limits and deterministic tests exist; randomized Xcode round trips remain |
 | SG-4 | Partial | Safe preview and atomic store exist; production install fails closed while SG-2 is blocked |
-| SG-5 | Partial | Session/lifecycle contracts and QuickJS limits exist; installed Scripting-package execution and Xcode leak evidence remain blocked |
+| SG-5 | Partial | typed profiles, persistent JSC assistant route and QuickJS limits exist; runtime-v2, worker, ScriptUI and Xcode leak evidence remain |
 | SG-6 | Partial | Capability brokers and Apple adapters exist; real-package revoke/expiry/bypass evidence remains blocked |
 | SG-7 | Partial | ScriptUI and generic extensions exist; Xcode, device and real-fixture evidence remain |
 | SG-8 | Partial | Multi-tool schemas, routing, structured results and cancellation exist; production-package and approval/progress evidence remain |

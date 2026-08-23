@@ -98,8 +98,11 @@ Two trust profiles are architectural:
   explicitly trusted developer execution; visibly not a hostile-code sandbox.
 
 Compilation is trusted host work and is distinct from application execution.
-TypeScript 7.0.2 is the only authorized Scripting compiler; imported code runs
-only in QuickJS.
+TypeScript 7.0.2 is the authoritative host/CI typecheck compiler, while the
+pinned TypeScript 6.0.3 JavaScript compiler is the on-device emitter lane.
+Original Scripting TS/TSX/JS runs in JavaScriptCore; QuickJS is the separate
+constrained Hanlin JavaScript profile. Runtime selection is persisted per
+entrypoint and never falls back automatically.
 
 ## Authorized Scripting baseline
 

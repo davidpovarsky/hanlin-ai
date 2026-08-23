@@ -1,4 +1,4 @@
-# Hanlin Scripting Phase 2A
+# Hanlin multi-runtime Scripting adapters
 
 This downstream layer implements the first executable Scripting slice without
 changing Native, MCP, or RuntimeCore execution authority.
@@ -10,15 +10,16 @@ Repository and CI fixture preparation uses exactly TypeScript 7.0.2 from
 TypeScript entrypoint and emits the checked JavaScript artifact. The app never
 downloads or installs npm packages at runtime.
 
-The app executes only a manifest-declared, integrity-checked JavaScript
-artifact in a bare QuickJS-NG 0.16.1 context. The vendored engine is pinned to
+Original Scripting JavaScript executes in a persistent package-local Apple
+JavaScriptCore VM/context. Hanlin-native constrained JavaScript may execute in
+the separate bare QuickJS-NG 0.16.1 runtime. The vendored engine is pinned to
 commit `954dc53628e36891f93c359aa60895c2ae3dac6b`; its source provenance and
 per-file hashes live in `Packages/HanlinQuickJS`.
 
-RuntimeCore intentionally remains on TypeScript 6.0.3. Its general-purpose
-Node tool is a separate execution product. Updating it is not required to
-compile immutable Scripting package artifacts and would expand this phase's
-authority and acceptance scope.
+TypeScript 7.0.2 is used for authoritative host/CI compatibility typechecking.
+RuntimeCore's pinned TypeScript 6.0.3 is the authorized on-device project
+emitter. Manifest provenance must report both lanes separately; the app does
+not claim to run TypeScript 7 on iOS.
 
 ## Assistant tool ABI
 
@@ -38,15 +39,17 @@ Input is a canonical `HanlinValue`. Output contains `success: boolean`,
 Invocation resolves the package, installed-package identity, entrypoint, and
 tool ID before execution. A package-scoped authorizer checks approval and every
 declared capability; the default policy denies privileged calls. Cancellation
-propagates into the owning QuickJS session. Dynamic module loading and binary
+propagates into the owning runtime session. Dynamic module loading and binary
 values remain unsupported in this legacy ABI; the versioned runtime v2 lane
 owns the broader Scripting service protocol.
 
 ## Isolation and authority
 
-Each loaded package owns one actor-isolated QuickJS runtime/context. The C
-wrapper enforces memory, stack, deadline, cancellation, and result boundaries.
-It does not link QuickJS libc or install filesystem, network, process,
+Each loaded package owns one actor-isolated runtime context. JSC uses public
+API only and makes no hard memory/interrupt claim; it uses isolated lifecycle,
+bounded bridge values and cooperative cancellation. The QuickJS C wrapper
+enforces memory, stack, deadline, cancellation, and result boundaries. Neither
+adapter installs filesystem, network, process,
 environment, secrets, Keychain, UserDefaults, or permission APIs.
 
 Package identity is derived from the validated manifest and artifact digest.

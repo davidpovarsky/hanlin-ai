@@ -19,9 +19,9 @@ successful Import Preview does not imply compile, install, or execution.
 | Stage | Required evidence | Current result |
 | --- | --- | --- |
 | Import/analyzer | deterministic preview JSON and zero execution | blocked locally: Swift toolchain cannot run; production analyzer exists |
-| Compile | TypeScript 7.0.2 diagnostics, graph, JS, maps and fingerprint | blocked: the official TS 7 API requires a native `tsgo` process and ships no iOS binary |
+| Compile | TS 7.0.2 host typecheck plus TS 6.0.3 device emission, graph, JS, maps and fingerprint | contract implemented; production NodeMobile adapter and Xcode proof pending |
 | Install/relaunch | atomic record, generation, catalog restoration | store fault tests exist; real package blocked by compile |
-| Launch/render/events | QuickJS session and ScriptUI snapshots/patches | component tests exist; real package blocked by compile/install |
+| Launch/render/events | JSC compatibility or QuickJS secure session plus ScriptUI snapshots/patches | persistent JSC and QuickJS component tests exist; real package blocked by install |
 | Permissions | allow, deny, expiry and revoke with audit | broker tests exist; real package blocked by compile/install |
 | Entrypoints | app, tools, widget, intent and live activity | generic host infrastructure exists; Xcode/device verification pending |
 | Update/removal | diff, rollback generation, uninstall and cleanup | atomic store tests exist; real package blocked by compile |
@@ -40,6 +40,7 @@ at least 30 iterations after five warmups on the CI simulator/device class.
 | Installed Script app cold launch to first native frame, p95 | <= 1.0 s |
 | ScriptUI event-to-applied-patch latency, p95 | <= 33 ms |
 | Foreground QuickJS session memory limit | 16 MiB engine heap |
+| Foreground JSC bridge input/output | <= 1 MiB each; no claimed hard engine heap limit |
 | Widget snapshot file | <= 4 MiB |
 | Widget timeline load and decode, p95 | <= 100 ms |
 | Assistant tool cancellation acknowledgement, p95 | <= 250 ms |

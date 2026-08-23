@@ -1,6 +1,6 @@
 # Full Scripting platform definition of done
 
-Status: local implementation complete where technically possible; release gates remain blocked.
+Status: multi-runtime core implemented; end-to-end and release gates remain open.
 
 This checklist is the repository traceability companion to
 `canonical-contracts/SCRIPTING_INTEGRATION_GATES.md`. A checked item requires
@@ -9,6 +9,13 @@ UI presence, a placeholder, or a declaration-only binding is not completion.
 
 ## Engine and fixtures
 
+- [x] Original TS/TSX/JS entrypoints select typed `scripting-jsc`; original
+  Python entrypoints select `hanlin-python`; selection has no fallback.
+- [x] JSC and QuickJS declare different, truthful hard-limit capabilities.
+- [ ] JSC imports/source maps/ScriptUI/lifecycle conformance pass under Xcode.
+- [ ] QuickJS runtime-v2 async host calls, events, streams, modules, handles,
+  cleanup and backpressure pass shared conformance.
+- [ ] Trusted Node and Python worker adapters pass Hybrid conformance.
 - [x] QuickJS C bridge exposes typed memory and stack failures.
 - [x] Swift does not parse engine messages to classify resource failures.
 - [x] Timeout, memory, stack, output, cancellation, and disposal are separate tests.
@@ -21,11 +28,11 @@ UI presence, a placeholder, or a declaration-only binding is not completion.
   update, rollback, uninstall, and recovery.
 - [ ] Safe extraction rejects traversal, links, bombs, collisions, malformed
   manifests, encrypted entries, and policy limit violations.
-- [ ] The shipped Scripting compiler is exactly TypeScript 7.0.2 with recorded
-  license, provenance, integrity, diagnostics, source maps, and cache inputs.
+- [ ] TypeScript 7.0.2 host/CI typecheck and TypeScript 6.0.3 on-device emitter
+  record separate versions, hashes, options, diagnostics, maps and cache inputs.
 - [ ] Multi-file TS/TSX/JS/JSON and the virtual `scripting` module compile into
   a deterministic closed module graph without arbitrary npm or package scripts.
-- [ ] Untrusted code runs only in package-isolated QuickJS sessions with typed
+- [ ] Untrusted Hanlin code runs only in package-isolated QuickJS sessions with typed
   async wire, handles, streams, cancellation, backpressure, quotas, and cleanup.
 
 ## SDK, UI, and services
@@ -80,3 +87,7 @@ edited.
 | `סוכן חדש 21.scripting` | `b6dc61e6ca8fd736fdbef55b62e5d48bcf8e452c72d0d36b153d107ad1a94b9a` |
 | `אכילה חכמה מעודכן 7.zip` | `6846c3eff7f40740c79116f8845389bfdfc48a0b1457bdf3c46531f112f87356` |
 | `זמני היום ולוח לימוד יומי 3.zip` | pending user attachment |
+
+The missing file was searched once in the workspace and attachment directory
+on 2026-08-24. Its row alone is `blocked-by-missing-input`; no substitute
+fixture or digest is authorized.

@@ -2,7 +2,7 @@
 
 Hanlin accepts `.scripting` or `.zip` archives containing one unambiguous
 `script.json`. Keep source and resources below one optional wrapper directory.
-Use UTF-8 package-local `.ts`, `.tsx`, `.js`, `.jsx`, and `.json` modules with
+Use UTF-8 package-local `.ts`, `.tsx`, `.js`, `.jsx`, `.json`, and `.py` modules with
 relative imports. Import the compatibility facade only as `scripting` and
 Hanlin-specific additions only as `hanlin`.
 
@@ -12,7 +12,13 @@ credentials, or generated secrets. Declare every capability needed by each
 entrypoint. The user sees those requests before install, while the operating
 system prompt appears only when the service is first used.
 
-Conventional entrypoints are `index.tsx`, `assistant_tool.tsx`, `widget.tsx`,
+Original TS/TSX/JS entrypoints always use `scripting-jsc`; authors cannot ask
+Hanlin to try another engine after failure. `index.py` uses `hanlin-python` and
+requires a trust review. Hanlin-native manifests may explicitly choose
+`hanlin-quickjs`, `hanlin-node`, or `hanlin-python`; Node/Python are trusted
+worker profiles and do not render ScriptUI or execute in extensions.
+
+Conventional entrypoints are `index.tsx`, `index.py`, `assistant_tool.tsx`, `widget.tsx`,
 `app_intents.tsx` or `intent.tsx`, and `live_activity.tsx`. A package may expose
 multiple assistant tools. Widgets and Live Activities render a bounded native
 subset from extension-safe snapshots; they do not run Node or compile source.
@@ -31,10 +37,11 @@ subset from extension-safe snapshots; they do not run Node or compile source.
   entitlement. Do not retry in a loop.
 - **Widget shows “Open Hanlin”:** the node is outside the extension-safe
   subset and must continue in the foreground.
-- **Install reports TypeScript 7 unavailable:** this is the current closed
-  compiler gate, not a package error. Hanlin will not silently compile with
-  TypeScript 6 or a one-shot transpiler.
+- **Compiler lane differs:** TypeScript 7.0.2 supplies host/CI compatibility
+  typechecking. The pinned TypeScript 6.0.3 compiler supplies on-device project
+  emission. Diagnostics disclose both; neither silently substitutes for the
+  other and neither causes runtime fallback.
 
 The current branch supports safe inspection and the host architecture but is
-not yet an author-ready release: exact TypeScript 7 compilation on iOS and the
-full acceptance suite remain mandatory.
+not yet an author-ready release: production on-device bundling, all worker
+adapters, and the full acceptance suite remain mandatory.

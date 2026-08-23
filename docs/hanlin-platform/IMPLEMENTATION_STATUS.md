@@ -2,16 +2,40 @@
 
 Last updated: 2026-08-24
 Execution contract: Revision 2.0
-Current gate: local implementation exhausted; release acceptance blocked
+Current gate: multi-runtime cutover in progress; release acceptance blocked
 
-## Full Scripting execution — local implementation complete, release blocked
+## Multi-runtime Scripting continuation — implemented core, integration pending
+
+Implemented on `codex/full-scripting-multiruntime`:
+
+- typed `scripting-jsc`, `hanlin-quickjs`, `hanlin-node`, and
+  `hanlin-python` profiles with explicit security/runtime capabilities and
+  minimum trust;
+- deterministic per-entrypoint analysis: original TS/TSX/JS selects JSC and
+  `index.py` selects CPython; legacy stored descriptors migrate to their
+  historical QuickJS profile without changing packages or generations;
+- a persistent, package-isolated public-API JavaScriptCore session wired into
+  the canonical Assistant Tool registry, with QuickJS retained as a separate
+  selectable session and no engine fallback;
+- Import Preview and installed details disclose the chosen runtime and reason;
+- compiler provenance can distinguish TypeScript 7.0.2 host typecheck from the
+  TypeScript 6.0.3 NodeMobile emitter, bundler, and runtime engine versions.
+
+Still not complete: the Package Center production install method remains
+closed, Node/Python Hybrid worker entrypoints are not yet published through the
+package registry, and the Python `scripting` compatibility module is absent.
+JSC hard memory/time limits are unsupported by verified public API and are not
+claimed. Local Node fixture checks pass; Swift/Xcode and acceptance evidence is
+pending.
+
+## Earlier full Scripting work
 
 The owner authorized the complete execution plan on 2026-08-24. The target is
 not the existing Phase 2A proof: it is import, preview, compile, install,
-QuickJS runtime, generated `scripting` SDK, native ScriptUI, services, unified
+multi-runtime execution, generated `scripting` SDK, native ScriptUI, services, unified
 Apps Hub/tools, generic extensions, recovery, and acceptance through SG-10.
 
-Implemented on branch `codex/full-scripting-platform`:
+Implemented on source branch `codex/full-scripting-platform`:
 
 - QuickJS returns distinct typed memory and stack statuses; Swift no longer
   classifies either resource failure by parsing engine messages.
@@ -34,18 +58,18 @@ Implemented on branch `codex/full-scripting-platform`:
 
 Current release truth:
 
-- exact TypeScript 7.0.2 compilation on iOS is blocked. The package's unstable
-  programmatic API launches a native `tsgo` process, and its optional binaries
-  do not include iOS. Hanlin therefore fails Install closed and does not silently
-  substitute RuntimeCore's TypeScript 6.0.3;
+- TypeScript 7.0.2 is the authoritative host/CI typecheck lane. Its stable 7.0
+  release is a native command-line compiler; the vendor states the programmatic
+  API changes in 7.1, and no official iOS artifact exists. NodeMobile's pinned
+  TypeScript 6.0.3 is the authorized on-device emitter lane, but production
+  Package Center integration for that lane is not yet implemented;
 - five supplied acceptance packages match their locked SHA-256 values. The
   sixth package, `זמני היום ולוח לימוד יומי 3.zip`, has not been supplied;
 - Windows has no functioning Apple SDK/Xcode environment, and the local Swift
   toolchain exits before compilation. Swift package tests, the extension target,
   performance measurements, simulator/device acceptance and full SG-10 evidence
   remain unverified;
-- GitHub Actions did not run because this task did not authorize CI. Gate states
-  and exact closing evidence are recorded in
+- GitHub Actions for this continuation have not run yet. Gate states and exact closing evidence are recorded in
   `canonical-contracts/SCRIPTING_INTEGRATION_GATES.md`.
 
 Historical statements below that say Phase 2 had not started describe their
