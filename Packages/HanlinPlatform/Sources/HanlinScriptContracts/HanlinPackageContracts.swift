@@ -6,12 +6,6 @@ public enum HanlinScriptingSourceFormat: String, Codable, Hashable, Sendable {
     case zip
 }
 
-public enum HanlinPackageTrust: String, Codable, Hashable, Sendable {
-    case localUnverified
-    case integrityVerified
-    case publisherVerified
-}
-
 public struct HanlinImportedPackageSource: Codable, Hashable, Sendable {
     public let originalFileName: String
     public let format: HanlinScriptingSourceFormat

@@ -81,7 +81,15 @@ private struct ScriptingImportPreviewSections: View {
         }
         Section("Entry Points") {
             ForEach(preview.entrypoints, id: \.id) { entrypoint in
-                LabeledContent(entrypoint.kind.rawValue, value: entrypoint.sourcePath)
+                VStack(alignment: .leading, spacing: 4) {
+                    LabeledContent(entrypoint.kind.rawValue, value: entrypoint.sourcePath)
+                    LabeledContent("Runtime", value: entrypoint.runtimeProfile.rawValue)
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                    Text(runtimeReason(entrypoint.runtimeProfile))
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                }
             }
         }
         if !preview.requestedCapabilities.isEmpty {
@@ -101,6 +109,15 @@ private struct ScriptingImportPreviewSections: View {
                     .foregroundStyle(finding.severity == .error ? Color.red : Color.secondary)
                 }
             }
+        }
+    }
+
+    private func runtimeReason(_ profile: HanlinRuntimeProfile) -> String {
+        switch profile {
+        case .scriptingJSC: return "Original Scripting JavaScript and TypeScript use the compatibility runtime."
+        case .hanlinQuickJS: return "Hanlin manifest selected constrained JavaScript."
+        case .hanlinNode: return "Hanlin manifest selected a trusted Node worker."
+        case .hanlinPython: return "Python entrypoint requires trusted local execution."
         }
     }
 }
@@ -125,7 +142,12 @@ struct ScriptingInstalledPackageDetailView: View {
                     }
                     Section("Entry Points") {
                         ForEach(package.entrypoints, id: \.id) {
-                            LabeledContent($0.kind.rawValue, value: $0.sourcePath)
+                            VStack(alignment: .leading) {
+                                LabeledContent($0.kind.rawValue, value: $0.sourcePath)
+                                LabeledContent("Runtime", value: $0.runtimeProfile.rawValue)
+                                    .font(.caption)
+                                    .foregroundStyle(.secondary)
+                            }
                         }
                     }
                     Section {

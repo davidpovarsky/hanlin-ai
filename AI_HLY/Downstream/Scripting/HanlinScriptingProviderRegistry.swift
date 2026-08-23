@@ -34,7 +34,35 @@ actor HanlinScriptingProviderRegistry {
 
     private struct Provider {
         let package: HanlinLoadedScriptPackage
-        let session: HanlinQuickJSSession
+        let session: Session
+    }
+
+    private enum Session: Sendable {
+        case javaScriptCore(HanlinJavaScriptCoreSession)
+        case quickJS(HanlinQuickJSSession)
+
+        func loadProgram(_ source: String, filename: String, expectedToolCount: Int) async throws {
+            switch self {
+            case let .javaScriptCore(session):
+                try await session.loadProgram(source, filename: filename, expectedToolCount: expectedToolCount)
+            case let .quickJS(session):
+                try await session.loadProgram(source, filename: filename, expectedToolCount: expectedToolCount)
+            }
+        }
+
+        func invoke(toolIndex: Int, parameters: HanlinValue) async throws -> HanlinValue {
+            switch self {
+            case let .javaScriptCore(session): try await session.invoke(toolIndex: toolIndex, parameters: parameters)
+            case let .quickJS(session): try await session.invoke(toolIndex: toolIndex, parameters: parameters)
+            }
+        }
+
+        func dispose() async {
+            switch self {
+            case let .javaScriptCore(session): await session.dispose()
+            case let .quickJS(session): await session.dispose()
+            }
+        }
     }
 
     private var providers: [HanlinProviderInstanceID: Provider] = [:]
@@ -46,12 +74,23 @@ actor HanlinScriptingProviderRegistry {
         self.authorizer = authorizer
     }
 
-    func loadPackage(at directory: URL) async throws -> HanlinProviderInstanceID {
+    func loadPackage(
+        at directory: URL,
+        trust: HanlinPackageTrust
+    ) async throws -> HanlinProviderInstanceID {
         let package = try HanlinScriptPackageLoader.load(packageDirectory: directory)
+        guard trust.satisfies(package.manifest.runtime.minimumTrust) else {
+            throw HanlinScriptingError.unsupportedABI("runtime_minimum_trust")
+        }
         guard providers[package.providerInstanceID] == nil else {
             return package.providerInstanceID
         }
-        let session = try HanlinQuickJSSession()
+        let session: Session = switch package.runtimeProfile {
+        case .scriptingJSC: .javaScriptCore(try HanlinJavaScriptCoreSession())
+        case .hanlinQuickJS: .quickJS(try HanlinQuickJSSession())
+        case .hanlinNode, .hanlinPython:
+            throw HanlinScriptingError.unsupportedABI("worker_entrypoint_requires_typed_worker_route")
+        }
         do {
             try await session.loadProgram(
                 package.javaScript,

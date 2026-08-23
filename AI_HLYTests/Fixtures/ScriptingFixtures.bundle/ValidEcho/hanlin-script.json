@@ -14,6 +14,15 @@
     "compiledPath": "assistant_tool.js",
     "compilerConfigurationHash": "ea250be3f93de1703163734fe2d0e31c9cc7b599aa09fce203d3ff8bdfbfcbea",
     "compilerLane": "scripting-original",
+    "compilerProvenance": {
+      "bundlerConfigurationHash": "ea250be3f93de1703163734fe2d0e31c9cc7b599aa09fce203d3ff8bdfbfcbea",
+      "bundlerVersion": "hanlin-fixture-bundler-1.0.0",
+      "emitterConfigurationHash": "ea250be3f93de1703163734fe2d0e31c9cc7b599aa09fce203d3ff8bdfbfcbea",
+      "emitterVersion": "7.0.2",
+      "runtimeEngineVersion": "Apple",
+      "typecheckCompilerVersion": "7.0.2",
+      "typecheckConfigurationHash": "ea250be3f93de1703163734fe2d0e31c9cc7b599aa09fce203d3ff8bdfbfcbea"
+    },
     "compilerVersion": "7.0.2",
     "documentKind": "assistantTool",
     "exportedTools": [
@@ -207,18 +216,33 @@
   },
   "integrity": {
     "algorithm": "sha256",
-    "digest": "e0d4834e3da94b6bd5157f9e4908c6d0fa14e5ec7ca470da836ee39be524447d"
+    "digest": "b54855365db02adc42e34400d808c6435775800e018a4994effa7110c15542f0"
   },
   "packageID": "com.hanlin.fixture.echo",
   "runtime": {
     "abiVersion": "1.0",
     "cancellation": {
-      "deadlineEnforcement": true,
-      "interruptibleExecution": true
+      "deadlineEnforcement": false,
+      "interruptibleExecution": false
     },
-    "engine": "quickjs-ng",
-    "engineVersion": "0.16.1",
-    "kind": "quickJS"
+    "capabilities": {
+      "asyncHostCalls": true,
+      "extensionSafe": true,
+      "filesystem": "capabilityBroker",
+      "hardInterruption": false,
+      "hardMemoryLimit": false,
+      "hardStackLimit": false,
+      "modules": true,
+      "network": "capabilityBroker",
+      "persistentContext": true,
+      "scriptUI": true,
+      "trustedCodeOnly": false
+    },
+    "engine": "JavaScriptCore",
+    "engineVersion": "Apple",
+    "kind": "javaScriptCore",
+    "minimumTrust": "localUnverified",
+    "profile": "scripting-jsc"
   },
   "schemaVersion": "1.0",
   "version": "1.0.0"

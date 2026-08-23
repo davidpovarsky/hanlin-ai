@@ -72,6 +72,7 @@ public struct HanlinPackageEntrypointDescriptor: Codable, Hashable, Sendable {
     public let supportedContexts: Set<HanlinExecutionContext>
     public let requiredCapabilities: [HanlinCapabilityRequest]
     public let runtimePolicyID: String
+    public let runtimeProfile: HanlinRuntimeProfile
     public let artifactDigest: String?
     public let compatibility: HanlinCompatibilityState
 
@@ -83,6 +84,7 @@ public struct HanlinPackageEntrypointDescriptor: Codable, Hashable, Sendable {
         supportedContexts: Set<HanlinExecutionContext>,
         requiredCapabilities: [HanlinCapabilityRequest] = [],
         runtimePolicyID: String,
+        runtimeProfile: HanlinRuntimeProfile = .scriptingJSC,
         artifactDigest: String? = nil,
         compatibility: HanlinCompatibilityState
     ) {
@@ -93,8 +95,29 @@ public struct HanlinPackageEntrypointDescriptor: Codable, Hashable, Sendable {
         self.supportedContexts = supportedContexts
         self.requiredCapabilities = requiredCapabilities
         self.runtimePolicyID = runtimePolicyID
+        self.runtimeProfile = runtimeProfile
         self.artifactDigest = artifactDigest
         self.compatibility = compatibility
+    }
+
+    private enum CodingKeys: String, CodingKey {
+        case id, kind, sourcePath, exportedSymbol, supportedContexts, requiredCapabilities
+        case runtimePolicyID, runtimeProfile, artifactDigest, compatibility
+    }
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        id = try container.decode(String.self, forKey: .id)
+        kind = try container.decode(HanlinPackageEntrypointKind.self, forKey: .kind)
+        sourcePath = try container.decode(String.self, forKey: .sourcePath)
+        exportedSymbol = try container.decodeIfPresent(String.self, forKey: .exportedSymbol)
+        supportedContexts = try container.decode(Set<HanlinExecutionContext>.self, forKey: .supportedContexts)
+        requiredCapabilities = try container.decodeIfPresent([HanlinCapabilityRequest].self, forKey: .requiredCapabilities) ?? []
+        runtimePolicyID = try container.decode(String.self, forKey: .runtimePolicyID)
+        runtimeProfile = try container.decodeIfPresent(HanlinRuntimeProfile.self, forKey: .runtimeProfile)
+            ?? (sourcePath.lowercased().hasSuffix(".py") ? .hanlinPython : .hanlinQuickJS)
+        artifactDigest = try container.decodeIfPresent(String.self, forKey: .artifactDigest)
+        compatibility = try container.decode(HanlinCompatibilityState.self, forKey: .compatibility)
     }
 }
 

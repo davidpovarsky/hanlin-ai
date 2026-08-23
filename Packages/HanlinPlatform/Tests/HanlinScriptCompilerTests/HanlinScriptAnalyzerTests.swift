@@ -26,6 +26,7 @@ struct HanlinScriptAnalyzerTests {
         let preview = try HanlinScriptAnalyzer(inventory: inventory).analyze(fixture)
         #expect(preview.canInstall)
         #expect(preview.entrypoints.map(\.kind) == [.app, .assistantTool, .widget])
+        #expect(preview.entrypoints.allSatisfy { $0.runtimeProfile == .scriptingJSC })
         #expect(preview.dependencyGraph.unresolvedSpecifiers.isEmpty)
         #expect(Set(preview.requestedCapabilities.map { $0.capabilityID.rawValue }) == [
             "assistant", "storage"
@@ -33,6 +34,24 @@ struct HanlinScriptAnalyzerTests {
         let encoder = JSONEncoder()
         encoder.outputFormatting = [.sortedKeys]
         #expect(try encoder.encode(preview) == encoder.encode(preview))
+    }
+
+    @Test("Routes original Python entrypoint deterministically without engine fallback")
+    func pythonProfile() throws {
+        let fixture = try package(files: [
+            "script.json": #"{"name":"Python Fixture","version":"1.0.0","entry":"index.py"}"#,
+            "index.py": "from scripting import Script\nScript.exit(0)"
+        ])
+        defer { try? FileManager.default.removeItem(at: fixture.stagingRoot) }
+        let preview = try HanlinScriptAnalyzer(inventory: .init(
+            baselineID: "fixture",
+            baselineDigest: String(repeating: "d", count: 64),
+            symbols: []
+        )).analyze(fixture)
+        let entrypoint = try #require(preview.entrypoints.first)
+        #expect(entrypoint.sourcePath == "index.py")
+        #expect(entrypoint.runtimeProfile == .hanlinPython)
+        #expect(entrypoint.runtimeProfile.runtimeKind == .localPython)
     }
 
     @Test("Rejects dynamic imports, eval, unresolved paths, and arbitrary bare modules")

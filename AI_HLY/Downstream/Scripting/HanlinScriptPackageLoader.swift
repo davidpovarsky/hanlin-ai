@@ -7,17 +7,11 @@ struct HanlinLoadedScriptPackage: Sendable {
     let installedPackageID: HanlinInstalledPackageID
     let providerInstanceID: HanlinProviderInstanceID
     let javaScript: String
+    let runtimeProfile: HanlinRuntimeProfile
 }
 
 enum HanlinScriptPackageLoader {
-    static let support = HanlinScriptContractSupport(
-        manifestVersion: .init(major: 1, minor: 0),
-        abiVersion: .init(major: 1, minor: 0),
-        engine: "quickjs-ng",
-        engineVersion: "0.16.1",
-        compilerLane: "scripting-original",
-        compilerVersion: "7.0.2"
-    )
+    static let support = HanlinScriptContractSupport.multiRuntime
 
     static let compilerConfigurationHash =
         "ea250be3f93de1703163734fe2d0e31c9cc7b599aa09fce203d3ff8bdfbfcbea"
@@ -78,7 +72,8 @@ enum HanlinScriptPackageLoader {
             providerInstanceID: try HanlinProviderInstanceID(
                 validating: "script.\(identitySuffix)"
             ),
-            javaScript: javaScript
+            javaScript: javaScript,
+            runtimeProfile: manifest.runtime.profile
         )
     }
 

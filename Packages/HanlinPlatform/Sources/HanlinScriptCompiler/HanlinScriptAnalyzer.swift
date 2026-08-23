@@ -185,6 +185,7 @@ public struct HanlinScriptAnalyzer: Sendable {
                         $0.capabilityID.rawValue < $1.capabilityID.rawValue
                     },
                     runtimePolicyID: descriptor.runtimePolicyID,
+                    runtimeProfile: descriptor.runtimeProfile,
                     artifactDigest: descriptor.artifactDigest,
                     compatibility: descriptor.compatibility
                 )
@@ -243,7 +244,7 @@ public struct HanlinScriptAnalyzer: Sendable {
         let available = Set(sourcePaths)
         var candidates: [(String, HanlinPackageEntrypointKind, Set<HanlinExecutionContext>, String)] = []
         let appPath = manifest.entry.flatMap { available.contains($0) ? $0 : nil }
-            ?? ["index.tsx", "index.ts", "index.jsx", "index.js"].first { available.contains($0) }
+            ?? ["index.tsx", "index.ts", "index.jsx", "index.js", "index.py"].first { available.contains($0) }
         if let appPath {
             candidates.append((appPath, .app, [.mainApplication], "foreground-app-v1"))
         }
@@ -263,12 +264,15 @@ public struct HanlinScriptAnalyzer: Sendable {
             candidates.append((path, kind, [context], policy))
         }
         return candidates.map { path, kind, contexts, policy in
-            .init(
+            let profile: HanlinRuntimeProfile = path.lowercased().hasSuffix(".py")
+                ? .hanlinPython : .scriptingJSC
+            return .init(
                 id: kind.rawValue,
                 kind: kind,
                 sourcePath: path,
                 supportedContexts: contexts,
                 runtimePolicyID: policy,
+                runtimeProfile: profile,
                 compatibility: .partial
             )
         }.sorted { ($0.kind.rawValue, $0.sourcePath) < ($1.kind.rawValue, $1.sourcePath) }
@@ -360,13 +364,13 @@ public struct HanlinScriptAnalyzer: Sendable {
     }
 
     private static func isModule(_ path: String) -> Bool {
-        ["ts", "tsx", "js", "jsx", "json"].contains(
+        ["ts", "tsx", "js", "jsx", "json", "py"].contains(
             URL(filePath: path).pathExtension.lowercased()
         )
     }
 
     private static func isSource(_ path: String) -> Bool {
-        ["ts", "tsx", "js", "jsx"].contains(
+        ["ts", "tsx", "js", "jsx", "py"].contains(
             URL(filePath: path).pathExtension.lowercased()
         )
     }

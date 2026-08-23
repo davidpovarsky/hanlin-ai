@@ -19,23 +19,69 @@ public struct HanlinScriptCancellationCapabilities: Codable, Hashable, Sendable 
 
 public struct HanlinScriptRuntimeDescriptor: Codable, Hashable, Sendable {
     public let kind: HanlinRuntimeKind
+    public let profile: HanlinRuntimeProfile
     public let engine: String
     public let engineVersion: String
     public let abiVersion: HanlinScriptABIVersion
     public let cancellation: HanlinScriptCancellationCapabilities
+    public let capabilities: HanlinRuntimeCapabilities
+    public let minimumTrust: HanlinPackageTrust
 
     public init(
         kind: HanlinRuntimeKind,
+        profile: HanlinRuntimeProfile? = nil,
         engine: String,
         engineVersion: String,
         abiVersion: HanlinScriptABIVersion,
-        cancellation: HanlinScriptCancellationCapabilities
+        cancellation: HanlinScriptCancellationCapabilities,
+        capabilities: HanlinRuntimeCapabilities? = nil,
+        minimumTrust: HanlinPackageTrust? = nil
     ) {
         self.kind = kind
+        let resolvedProfile = profile ?? Self.legacyProfile(for: kind)
+        self.profile = resolvedProfile
         self.engine = engine
         self.engineVersion = engineVersion
         self.abiVersion = abiVersion
         self.cancellation = cancellation
+        self.capabilities = capabilities ?? .canonical(for: resolvedProfile)
+        self.minimumTrust = minimumTrust ?? Self.defaultMinimumTrust(for: resolvedProfile)
+    }
+
+    private enum CodingKeys: String, CodingKey {
+        case kind, profile, engine, engineVersion, abiVersion, cancellation, capabilities, minimumTrust
+    }
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        kind = try container.decode(HanlinRuntimeKind.self, forKey: .kind)
+        profile = try container.decodeIfPresent(HanlinRuntimeProfile.self, forKey: .profile)
+            ?? Self.legacyProfile(for: kind)
+        engine = try container.decode(String.self, forKey: .engine)
+        engineVersion = try container.decode(String.self, forKey: .engineVersion)
+        abiVersion = try container.decode(HanlinScriptABIVersion.self, forKey: .abiVersion)
+        cancellation = try container.decode(HanlinScriptCancellationCapabilities.self, forKey: .cancellation)
+        capabilities = try container.decodeIfPresent(HanlinRuntimeCapabilities.self, forKey: .capabilities)
+            ?? .canonical(for: profile)
+        minimumTrust = try container.decodeIfPresent(HanlinPackageTrust.self, forKey: .minimumTrust)
+            ?? Self.defaultMinimumTrust(for: profile)
+    }
+
+    private static func legacyProfile(for kind: HanlinRuntimeKind) -> HanlinRuntimeProfile {
+        switch kind {
+        case .javaScriptCore: .scriptingJSC
+        case .node, .mcp: .hanlinNode
+        case .localPython: .hanlinPython
+        default: .hanlinQuickJS
+        }
+    }
+
+    private static func defaultMinimumTrust(for profile: HanlinRuntimeProfile) -> HanlinPackageTrust {
+        switch profile {
+        case .scriptingJSC, .hanlinQuickJS: .localUnverified
+        case .hanlinNode: .publisherVerified
+        case .hanlinPython: .integrityVerified
+        }
     }
 }
 
@@ -77,6 +123,7 @@ public struct HanlinScriptEntrypoint: Codable, Hashable, Sendable {
     public let compilerLane: String
     public let compilerVersion: String
     public let compilerConfigurationHash: String
+    public let compilerProvenance: HanlinCompilerProvenance?
     public let sourceIntegrity: HanlinIntegrityDeclaration
     public let compiledIntegrity: HanlinIntegrityDeclaration
     public let exportedTools: [HanlinScriptExportedTool]
@@ -88,6 +135,7 @@ public struct HanlinScriptEntrypoint: Codable, Hashable, Sendable {
         compilerLane: String,
         compilerVersion: String,
         compilerConfigurationHash: String,
+        compilerProvenance: HanlinCompilerProvenance? = nil,
         sourceIntegrity: HanlinIntegrityDeclaration,
         compiledIntegrity: HanlinIntegrityDeclaration,
         exportedTools: [HanlinScriptExportedTool]
@@ -98,6 +146,7 @@ public struct HanlinScriptEntrypoint: Codable, Hashable, Sendable {
         self.compilerLane = compilerLane
         self.compilerVersion = compilerVersion
         self.compilerConfigurationHash = compilerConfigurationHash
+        self.compilerProvenance = compilerProvenance
         self.sourceIntegrity = sourceIntegrity
         self.compiledIntegrity = compiledIntegrity
         self.exportedTools = exportedTools
@@ -175,22 +224,37 @@ public struct HanlinScriptPackageManifest: Codable, Hashable, Sendable {
                 message: "Unsupported Script manifest version '\(schemaVersion.rawValue)'."
             ))
         }
-        if runtime.kind != .quickJS || runtime.engine != support.engine {
+        if runtime.kind != runtime.profile.runtimeKind {
             issues.append(.init(
                 code: .invalidRuntime,
                 path: "runtime",
-                message: "The Script runtime must use the configured isolated engine."
+                message: "The runtime kind does not match its typed runtime profile."
             ))
         }
-        if runtime.engineVersion != support.engineVersion {
+        if runtime.capabilities != .canonical(for: runtime.profile) {
+            issues.append(.init(
+                code: .invalidRuntime,
+                path: "runtime.capabilities",
+                message: "Runtime capabilities must match the canonical profile declaration."
+            ))
+        }
+        guard let acceptedRuntime = support.runtimes[runtime.profile] else {
+            issues.append(.init(
+                code: .invalidRuntime,
+                path: "runtime.profile",
+                message: "Unsupported runtime profile '\(runtime.profile.rawValue)'."
+            ))
+            throw HanlinContractError.invalidManifest(issues)
+        }
+        if runtime.engine != acceptedRuntime.engine || runtime.engineVersion != acceptedRuntime.version {
             issues.append(.init(
                 code: .invalidRuntime,
                 path: "runtime.engineVersion",
-                message: "Unsupported Script engine version '\(runtime.engineVersion)'."
+                message: "Unsupported engine or engine version for '\(runtime.profile.rawValue)'."
             ))
         }
-        if !runtime.cancellation.interruptibleExecution
-            || !runtime.cancellation.deadlineEnforcement {
+        if runtime.capabilities.hardInterruption
+            && (!runtime.cancellation.interruptibleExecution || !runtime.cancellation.deadlineEnforcement) {
             issues.append(.init(
                 code: .invalidRuntime,
                 path: "runtime.cancellation",
@@ -369,12 +433,23 @@ public struct HanlinScriptPackageManifest: Codable, Hashable, Sendable {
 }
 
 public struct HanlinScriptContractSupport: Hashable, Sendable {
+    public struct Runtime: Hashable, Sendable {
+        public let engine: String
+        public let version: String
+
+        public init(engine: String, version: String) {
+            self.engine = engine
+            self.version = version
+        }
+    }
+
     public let manifestVersion: HanlinManifestVersion
     public let abiVersion: HanlinScriptABIVersion
     public let engine: String
     public let engineVersion: String
     public let compilerLane: String
     public let compilerVersion: String
+    public let runtimes: [HanlinRuntimeProfile: Runtime]
 
     public init(
         manifestVersion: HanlinManifestVersion,
@@ -382,7 +457,8 @@ public struct HanlinScriptContractSupport: Hashable, Sendable {
         engine: String,
         engineVersion: String,
         compilerLane: String,
-        compilerVersion: String
+        compilerVersion: String,
+        runtimes: [HanlinRuntimeProfile: Runtime]? = nil
     ) {
         self.manifestVersion = manifestVersion
         self.abiVersion = abiVersion
@@ -390,7 +466,23 @@ public struct HanlinScriptContractSupport: Hashable, Sendable {
         self.engineVersion = engineVersion
         self.compilerLane = compilerLane
         self.compilerVersion = compilerVersion
+        self.runtimes = runtimes ?? [
+            .hanlinQuickJS: .init(engine: engine, version: engineVersion)
+        ]
     }
+
+    public static let multiRuntime = Self(
+        manifestVersion: .init(major: 1, minor: 0),
+        abiVersion: .init(major: 1, minor: 0),
+        engine: "JavaScriptCore", engineVersion: "Apple",
+        compilerLane: "scripting-original", compilerVersion: "7.0.2",
+        runtimes: [
+            .scriptingJSC: .init(engine: "JavaScriptCore", version: "Apple"),
+            .hanlinQuickJS: .init(engine: "quickjs-ng", version: "0.16.1"),
+            .hanlinNode: .init(engine: "NodeMobile", version: "24.5.0"),
+            .hanlinPython: .init(engine: "CPython", version: "3.14.6")
+        ]
+    )
 }
 
 public struct HanlinScriptExecutionLimits: Codable, Hashable, Sendable {

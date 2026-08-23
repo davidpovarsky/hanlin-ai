@@ -11,8 +11,8 @@ struct HanlinScriptingAcceptanceTests {
         let registry = HanlinScriptingProviderRegistry()
         let directory = try materializedFixtureDirectory("ValidEcho")
         defer { try? FileManager.default.removeItem(at: directory) }
-        let firstIdentity = try await registry.loadPackage(at: directory)
-        let secondIdentity = try await registry.loadPackage(at: directory)
+        let firstIdentity = try await registry.loadPackage(at: directory, trust: .bundledTrusted)
+        let secondIdentity = try await registry.loadPackage(at: directory, trust: .bundledTrusted)
         #expect(firstIdentity == secondIdentity)
 
         let snapshots = await registry.snapshots()
@@ -76,9 +76,7 @@ struct HanlinScriptingAcceptanceTests {
         let malformedDirectory = try materializedMalformedPackage()
         defer { try? FileManager.default.removeItem(at: malformedDirectory) }
         do {
-            _ = try await registry.loadPackage(
-                at: malformedDirectory
-            )
+            _ = try await registry.loadPackage(at: malformedDirectory, trust: .bundledTrusted)
             Issue.record("Malformed package unexpectedly loaded")
         } catch {
             let snapshots = await registry.snapshots()
@@ -120,12 +118,47 @@ struct HanlinScriptingAcceptanceTests {
         directory: URL
     ) async {
         do {
-            _ = try await registry.loadPackage(at: directory)
+            _ = try await registry.loadPackage(at: directory, trust: .bundledTrusted)
             Issue.record("Tampered package unexpectedly loaded")
         } catch {
             let snapshots = await registry.snapshots()
             #expect(snapshots.isEmpty)
         }
+    }
+}
+
+@Suite("Scripting JavaScriptCore compatibility engine", .serialized)
+struct HanlinJavaScriptCoreEngineTests {
+    @Test("Keeps a persistent isolated context and exposes no privileged globals")
+    func persistentContextAndDefaultDeny() async throws {
+        let session = try HanlinJavaScriptCoreSession()
+        try await session.loadProgram(
+            #"""
+            let state = { invocationCount: 0 };
+            AssistantTool.registerExecuteTool(() => ({
+              success: typeof process === "undefined"
+                && typeof require === "undefined"
+                && typeof fetch === "undefined",
+              message: String(++state.invocationCount)
+            }));
+            """#,
+            filename: "fixture.js",
+            expectedToolCount: 1
+        )
+        let first = try await session.invoke(toolIndex: 0, parameters: .object([:]))
+        let second = try await session.invoke(toolIndex: 0, parameters: .object([:]))
+        guard case let .object(firstMembers) = first,
+              case let .bool(success)? = firstMembers["success"],
+              case let .string(firstMessage)? = firstMembers["message"],
+              case let .object(secondMembers) = second,
+              case let .string(secondMessage)? = secondMembers["message"] else {
+            Issue.record("JavaScriptCore result did not cross the canonical bridge")
+            return
+        }
+        #expect(success)
+        #expect(firstMessage == "1")
+        #expect(secondMessage == "2")
+        await session.dispose()
     }
 }
 

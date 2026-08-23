@@ -75,6 +75,29 @@ func standardJSONPromotesToRichValuesWithoutNumericCollapse() throws {
     }
 }
 
+@Test
+func runtimeProfilesDeclareHonestIsolationAndTrustCapabilities() {
+    let jsc = HanlinRuntimeCapabilities.canonical(for: .scriptingJSC)
+    #expect(jsc.persistentContext)
+    #expect(!jsc.hardMemoryLimit)
+    #expect(!jsc.hardInterruption)
+    #expect(jsc.scriptUI)
+
+    let quickJS = HanlinRuntimeCapabilities.canonical(for: .hanlinQuickJS)
+    #expect(quickJS.hardMemoryLimit)
+    #expect(quickJS.hardStackLimit)
+    #expect(quickJS.hardInterruption)
+
+    let node = HanlinRuntimeCapabilities.canonical(for: .hanlinNode)
+    #expect(node.trustedCodeOnly)
+    #expect(!node.extensionSafe)
+    #expect(!node.scriptUI)
+
+    #expect(HanlinPackageTrust.publisherVerified.satisfies(.integrityVerified))
+    #expect(!HanlinPackageTrust.localUnverified.satisfies(.integrityVerified))
+}
+
+
 private let scriptSupport = HanlinScriptContractSupport(
     manifestVersion: .init(major: 1, minor: 0),
     abiVersion: .init(major: 1, minor: 0),

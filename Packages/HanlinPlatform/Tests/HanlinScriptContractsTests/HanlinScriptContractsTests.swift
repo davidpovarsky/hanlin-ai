@@ -5,6 +5,17 @@ import Testing
 
 @Suite("Full Scripting contracts")
 struct HanlinScriptContractsTests {
+
+    @Test("Legacy installed entrypoint migrates to its historical QuickJS profile")
+    func legacyEntrypointRuntimeMigration() throws {
+        let data = Data(#"{
+          "id":"app","kind":"app","sourcePath":"index.tsx",
+          "supportedContexts":["mainApplication"],"requiredCapabilities":[],
+          "runtimePolicyID":"foreground-app-v1","compatibility":"partial"
+        }"#.utf8)
+        let descriptor = try JSONDecoder().decode(HanlinPackageEntrypointDescriptor.self, from: data)
+        #expect(descriptor.runtimeProfile == .hanlinQuickJS)
+    }
     @Test("Preserves unknown script.json fields without granting behavior")
     func manifestUnknownFieldRoundTrip() throws {
         let data = Data(#"{"name":"Fixture","version":"1.2.3","runInApp":false,"future":{"enabled":true}}"#.utf8)
