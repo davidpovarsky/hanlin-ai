@@ -47,18 +47,16 @@ public struct HanlinCompatibilityInventory: Codable, Hashable, Sendable {
 public struct HanlinScriptAnalyzer: Sendable {
     private let inventory: HanlinCompatibilityInventory
     private let symbols: [String: HanlinAPISymbolRecord]
-    private let fileManager: FileManager
+    private var fileManager: FileManager { .default }
 
     public init(
-        inventory: HanlinCompatibilityInventory,
-        fileManager: FileManager = .default
+        inventory: HanlinCompatibilityInventory
     ) {
         self.inventory = inventory
         symbols = Dictionary(
             inventory.symbols.map { ($0.symbol, $0) },
             uniquingKeysWith: { current, _ in current }
         )
-        self.fileManager = fileManager
     }
 
     public func analyze(_ package: HanlinStagedPackage) throws -> HanlinImportPreview {

@@ -171,20 +171,18 @@ public struct HanlinScriptingBundler: Sendable {
     private let abiVersion: String
     private let scriptingDeclarations: Data
     private let compiler: any HanlinTrustedCompilerClient
-    private let fileManager: FileManager
+    private var fileManager: FileManager { .default }
 
     public init(
         baseline: HanlinCompatibilityInventory,
         abiVersion: String,
         scriptingDeclarations: Data,
-        compiler: any HanlinTrustedCompilerClient,
-        fileManager: FileManager = .default
+        compiler: any HanlinTrustedCompilerClient
     ) {
         self.baseline = baseline
         self.abiVersion = abiVersion
         self.scriptingDeclarations = scriptingDeclarations
         self.compiler = compiler
-        self.fileManager = fileManager
     }
 
     public func bundle(

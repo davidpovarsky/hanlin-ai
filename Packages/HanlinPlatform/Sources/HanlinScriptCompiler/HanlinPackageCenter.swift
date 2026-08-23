@@ -40,14 +40,12 @@ public struct HanlinStagedPackage: Sendable {
 
 public struct HanlinPackageCenter: Sendable {
     public let archivePolicy: HanlinArchivePolicy
-    private let fileManager: FileManager
+    private var fileManager: FileManager { .default }
 
     public init(
-        archivePolicy: HanlinArchivePolicy = .init(),
-        fileManager: FileManager = .default
+        archivePolicy: HanlinArchivePolicy = .init()
     ) {
         self.archivePolicy = archivePolicy
-        self.fileManager = fileManager
     }
 
     public func stageAndInspect(
