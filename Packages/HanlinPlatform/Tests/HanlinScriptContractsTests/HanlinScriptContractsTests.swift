@@ -8,11 +8,13 @@ struct HanlinScriptContractsTests {
 
     @Test("Legacy installed entrypoint migrates to its historical QuickJS profile")
     func legacyEntrypointRuntimeMigration() throws {
-        let data = Data(#"{
+        let data = Data(#"""
+        {
           "id":"app","kind":"app","sourcePath":"index.tsx",
           "supportedContexts":["mainApplication"],"requiredCapabilities":[],
           "runtimePolicyID":"foreground-app-v1","compatibility":"partial"
-        }"#.utf8)
+        }
+        """#.utf8)
         let descriptor = try JSONDecoder().decode(HanlinPackageEntrypointDescriptor.self, from: data)
         #expect(descriptor.runtimeProfile == .hanlinQuickJS)
     }
