@@ -45,9 +45,12 @@ public final class HanlinScriptUIModel {
         case let .scenePhase(value): scenePhase = value
         case let .resume(payload):
             lastResumePayload = payload
+            let queryParameters = try HanlinObject(uniqueMembers: payload.queryParameters.map {
+                (key: $0.key, value: $0.value)
+            })
             eventSink("Script.onResume", .object([
                 "source": .string(payload.source),
-                "queryParameters": .object(payload.queryParameters)
+                "queryParameters": .object(queryParameters)
             ]))
         }
     }
@@ -73,6 +76,40 @@ public struct HanlinScriptUIView: View {
     public init(model: HanlinScriptUIModel) { self.model = model }
 
     public var body: some View {
+        presentationView
+        .alert(
+            model.activePresentation?.style == .dialog ? model.activePresentation?.title ?? "" : "",
+            isPresented: Binding(
+                get: { model.activePresentation?.style == .dialog },
+                set: { if !$0 { model.activePresentation = nil } }
+            )
+        ) {
+            Button("OK") { model.activePresentation = nil }
+        } message: {
+            Text(model.activePresentation?.message ?? "")
+        }
+    }
+
+    @ViewBuilder
+    private var presentationView: some View {
+#if os(iOS)
+        sheetView
+            .fullScreenCover(item: fullScreenPresentation) { presentation in
+                if let content = presentation.content {
+                    HanlinScriptUINodeView(node: content, model: model)
+                }
+            }
+#else
+        sheetView
+            .sheet(item: fullScreenPresentation) { presentation in
+                if let content = presentation.content {
+                    HanlinScriptUINodeView(node: content, model: model)
+                }
+            }
+#endif
+    }
+
+    private var sheetView: some View {
         NavigationStack(path: Binding(
             get: { model.navigationPath },
             set: { model.navigationPath = $0 }
@@ -94,25 +131,13 @@ public struct HanlinScriptUIView: View {
                 HanlinScriptUINodeView(node: content, model: model)
             }
         }
-        .fullScreenCover(item: Binding(
+    }
+
+    private var fullScreenPresentation: Binding<HanlinScriptUIPresentation?> {
+        Binding(
             get: { model.activePresentation?.style == .fullScreen ? model.activePresentation : nil },
             set: { model.activePresentation = $0 }
-        )) { presentation in
-            if let content = presentation.content {
-                HanlinScriptUINodeView(node: content, model: model)
-            }
-        }
-        .alert(
-            model.activePresentation?.style == .dialog ? model.activePresentation?.title ?? "" : "",
-            isPresented: Binding(
-                get: { model.activePresentation?.style == .dialog },
-                set: { if !$0 { model.activePresentation = nil } }
-            )
-        ) {
-            Button("OK") { model.activePresentation = nil }
-        } message: {
-            Text(model.activePresentation?.message ?? "")
-        }
+        )
     }
 }
 
@@ -143,15 +168,15 @@ private struct HanlinScriptUINodeView: View {
             ))
             .textFieldStyle(.roundedBorder)
         case .hStack:
-            HStack(spacing: node.number("spacing")) { children(node) }
+            HStack(spacing: node.dimension("spacing")) { children(node) }
         case .vStack:
-            VStack(spacing: node.number("spacing")) { children(node) }
+            VStack(spacing: node.dimension("spacing")) { children(node) }
         case .zStack:
             ZStack { children(node) }
         case .scrollView:
             ScrollView { children(node) }
         case .spacer:
-            Spacer(minLength: node.number("minimumLength"))
+            Spacer(minLength: node.dimension("minimumLength"))
         case .divider:
             Divider()
         case .progress:
@@ -196,5 +221,9 @@ private extension HanlinScriptUINode {
         case let .number(value): value
         default: nil
         }
+    }
+
+    func dimension(_ name: String) -> CGFloat? {
+        number(name).map(CGFloat.init)
     }
 }
