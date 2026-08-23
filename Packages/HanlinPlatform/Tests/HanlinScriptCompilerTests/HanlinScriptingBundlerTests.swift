@@ -176,7 +176,7 @@ struct HanlinScriptingBundlerTests {
             archiveURL: root.appending(path: "source.scripting"),
             packageRoot: packageRoot,
             inspection: archive,
-            manifest: nil
+            manifest: .init(name: "Fixture", version: "1.0.0", entry: "index.tsx")
         )
         return (package, .init(
             source: source,
