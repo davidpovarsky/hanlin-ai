@@ -65,6 +65,50 @@ struct HanlinScriptUIReconcilerTests {
         #expect(model.effects.isEmpty)
     }
 
+    @MainActor
+    @Test("Navigation, presentation, scene, and resume state are explicit")
+    func navigationAndResume() throws {
+        var events: [(String, HanlinValue)] = []
+        let model = HanlinScriptUIModel(root: stack([])) { events.append(($0, $1)) }
+        let route = HanlinScriptUIRoute(id: "details", payload: .object(["id": .integer(42)]))
+        try model.apply(.registerRoute(route, destination: text("Details")))
+        try model.apply(.navigate(route))
+        try model.apply(.selectTab("settings"))
+        try model.apply(.present(.init(
+            id: "sheet.1",
+            style: .sheet,
+            content: text("Sheet")
+        )))
+        try model.apply(.scenePhase(.active))
+        try model.apply(.resume(.init(
+            source: "widget",
+            queryParameters: ["item": .integer(7)],
+            widgetParameter: "daily"
+        )))
+        #expect(model.navigationPath == [route])
+        #expect(model.selectedTab == "settings")
+        #expect(model.activePresentation?.id == "sheet.1")
+        #expect(model.scenePhase == .active)
+        #expect(model.lastResumePayload?.source == "widget")
+        #expect(events.last?.0 == "Script.onResume")
+        try model.apply(.pop(count: 1))
+        try model.apply(.dismissPresentation(id: "sheet.1"))
+        #expect(model.navigationPath.isEmpty)
+        #expect(model.activePresentation == nil)
+    }
+
+    @MainActor
+    @Test("Unknown routes and invalid pops fail closed")
+    func navigationFailures() throws {
+        let model = HanlinScriptUIModel(root: stack([])) { _, _ in }
+        #expect(throws: HanlinScriptUIError.unknownRoute("missing")) {
+            try model.apply(.navigate(.init(id: "missing")))
+        }
+        #expect(throws: HanlinScriptUIError.invalidPopCount(1)) {
+            try model.apply(.pop(count: 1))
+        }
+    }
+
     private func text(_ value: String, key: String? = nil) -> HanlinScriptUINode {
         .init(kind: .text, key: key, properties: [
             "text": .string(value),

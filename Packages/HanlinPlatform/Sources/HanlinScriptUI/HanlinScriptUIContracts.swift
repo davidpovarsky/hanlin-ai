@@ -15,6 +15,10 @@ public enum HanlinScriptUIPrimitive: String, Codable, CaseIterable, Hashable, Se
     case spacer
     case divider
     case progress
+    case navigationStack
+    case navigationLink
+    case tabView
+    case tab
 }
 
 public struct HanlinScriptUINode: Codable, Hashable, Sendable {
@@ -67,6 +71,98 @@ public enum HanlinScriptUICommand: Codable, Hashable, Sendable {
     case state(hookID: String, value: HanlinValue)
     case registerEffect(HanlinScriptUIEffect)
     case releaseEffect(id: String)
+    case registerRoute(HanlinScriptUIRoute, destination: HanlinScriptUINode)
+    case navigate(HanlinScriptUIRoute)
+    case pop(count: Int)
+    case selectTab(String)
+    case present(HanlinScriptUIPresentation)
+    case dismissPresentation(id: String)
+    case scenePhase(HanlinScriptUIScenePhase)
+    case resume(HanlinScriptResumePayload)
+}
+
+public struct HanlinScriptUIRoute: Codable, Hashable, Identifiable, Sendable {
+    public let id: String
+    public let payload: HanlinValue
+    public init(id: String, payload: HanlinValue = .null) {
+        self.id = id
+        self.payload = payload
+    }
+}
+
+public enum HanlinScriptUIPresentationStyle: String, Codable, Hashable, Sendable {
+    case sheet
+    case fullScreen
+    case dialog
+}
+
+public struct HanlinScriptUIPresentation: Codable, Hashable, Identifiable, Sendable {
+    public let id: String
+    public let style: HanlinScriptUIPresentationStyle
+    public let title: String?
+    public let message: String?
+    public let content: HanlinScriptUINode?
+
+    public init(
+        id: String,
+        style: HanlinScriptUIPresentationStyle,
+        title: String? = nil,
+        message: String? = nil,
+        content: HanlinScriptUINode? = nil
+    ) {
+        self.id = id
+        self.style = style
+        self.title = title
+        self.message = message
+        self.content = content
+    }
+}
+
+public enum HanlinScriptUIScenePhase: String, Codable, Hashable, Sendable {
+    case active
+    case inactive
+    case background
+}
+
+public struct HanlinScriptResumePayload: Codable, Hashable, Sendable {
+    public let source: String
+    public let queryParameters: [String: HanlinValue]
+    public let widgetParameter: String?
+    public let action: HanlinValue?
+
+    public init(
+        source: String,
+        queryParameters: [String: HanlinValue] = [:],
+        widgetParameter: String? = nil,
+        action: HanlinValue? = nil
+    ) {
+        self.source = source
+        self.queryParameters = queryParameters
+        self.widgetParameter = widgetParameter
+        self.action = action
+    }
+}
+
+public struct HanlinScriptUISceneDescriptor: Codable, Hashable, Sendable {
+    public let id: String
+    public let title: String
+    public let supportsMultipleWindows: Bool
+    public let minimumWidth: Double?
+    public let minimumHeight: Double?
+
+    public init(
+        id: String,
+        title: String,
+        supportsMultipleWindows: Bool,
+        minimumWidth: Double? = nil,
+        minimumHeight: Double? = nil
+    ) {
+        self.id = id
+        self.title = title
+        self.supportsMultipleWindows = supportsMultipleWindows
+        self.minimumWidth = minimumWidth
+        self.minimumHeight = minimumHeight
+    }
 }
 
 public enum HanlinScriptUIError: Error, Equatable, Sendable {
@@ -74,4 +170,6 @@ public enum HanlinScriptUIError: Error, Equatable, Sendable {
     case duplicateKey(String)
     case keySetMismatch
     case patchLimit
+    case unknownRoute(String)
+    case invalidPopCount(Int)
 }
