@@ -20,6 +20,10 @@ let package = Package(
         .library(
             name: "HanlinScriptCompiler",
             targets: ["HanlinScriptCompiler"]
+        ),
+        .library(
+            name: "HanlinScriptStore",
+            targets: ["HanlinScriptStore"]
         )
     ],
     dependencies: [
@@ -62,6 +66,17 @@ let package = Package(
                 "HanlinScriptCompiler",
                 .product(name: "ZIPFoundation", package: "ZIPFoundation")
             ]
+        ),
+        .target(
+            name: "HanlinScriptStore",
+            dependencies: [
+                "HanlinPlatformContracts",
+                "HanlinScriptContracts"
+            ]
+        ),
+        .testTarget(
+            name: "HanlinScriptStoreTests",
+            dependencies: ["HanlinScriptStore"]
         )
     ],
     swiftLanguageModes: [.v6]
