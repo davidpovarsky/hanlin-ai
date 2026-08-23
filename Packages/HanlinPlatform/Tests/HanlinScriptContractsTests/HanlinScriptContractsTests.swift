@@ -1,0 +1,79 @@
+import Foundation
+import HanlinPlatformContracts
+import HanlinScriptContracts
+import Testing
+
+@Suite("Full Scripting contracts")
+struct HanlinScriptContractsTests {
+    @Test("Preserves unknown script.json fields without granting behavior")
+    func manifestUnknownFieldRoundTrip() throws {
+        let data = Data(#"{"name":"Fixture","version":"1.2.3","runInApp":false,"future":{"enabled":true}}"#.utf8)
+        let manifest = try JSONDecoder().decode(HanlinScriptingManifest.self, from: data)
+        #expect(manifest.name == "Fixture")
+        #expect(manifest.unknownFields["future"] == .object(["enabled": .bool(true)]))
+
+        let encoded = try JSONEncoder().encode(manifest)
+        let decoded = try JSONDecoder().decode(HanlinScriptingManifest.self, from: encoded)
+        #expect(decoded == manifest)
+    }
+
+    @Test("Preview installability fails closed on archive or analyzer errors")
+    func previewInstallability() throws {
+        let source = HanlinImportedPackageSource(
+            originalFileName: "fixture.scripting",
+            format: .scripting,
+            contentSHA256: String(repeating: "a", count: 64),
+            byteCount: 42,
+            importedAt: Date(timeIntervalSince1970: 1)
+        )
+        let archive = HanlinArchiveInspection(
+            fileCount: 2,
+            directoryCount: 1,
+            compressedBytes: 42,
+            uncompressedBytes: 84,
+            maximumDepth: 2,
+            manifestPath: "script.json"
+        )
+        let preview = HanlinImportPreview(
+            source: source,
+            archive: archive,
+            manifest: .init(name: "Fixture", version: "1.0.0"),
+            entrypoints: [],
+            dependencyGraph: .init(modules: [], edges: []),
+            requestedCapabilities: [],
+            findings: [.init(
+                state: .unsupported,
+                severity: .error,
+                message: "Required app entrypoint is unavailable."
+            )],
+            sourceBytes: 42,
+            extractedBytes: 84
+        )
+        #expect(!preview.canInstall)
+    }
+
+    @Test("Installed records and artifact manifests round trip deterministically")
+    func installedRecordRoundTrip() throws {
+        let installedID = try HanlinInstalledPackageID(validating: "11111111-1111-1111-1111-111111111111")
+        let packageID = try HanlinPackageID(validating: "fixture.package")
+        let version = try HanlinPackageVersion(validating: "1.0.0")
+        let record = HanlinInstalledPackageRecord(
+            installedPackageID: installedID,
+            packageID: packageID,
+            version: version,
+            sourceDigest: String(repeating: "1", count: 64),
+            artifactDigest: String(repeating: "2", count: 64),
+            activeGeneration: 1,
+            installedAt: Date(timeIntervalSince1970: 2),
+            updatedAt: Date(timeIntervalSince1970: 2)
+        )
+        let encoder = JSONEncoder()
+        encoder.outputFormatting = [.sortedKeys]
+        let first = try encoder.encode(record)
+        let second = try encoder.encode(try JSONDecoder().decode(
+            HanlinInstalledPackageRecord.self,
+            from: first
+        ))
+        #expect(first == second)
+    }
+}

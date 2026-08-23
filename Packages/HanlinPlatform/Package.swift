@@ -12,6 +12,10 @@ let package = Package(
         .library(
             name: "HanlinPlatformContracts",
             targets: ["HanlinPlatformContracts"]
+        ),
+        .library(
+            name: "HanlinScriptContracts",
+            targets: ["HanlinScriptContracts"]
         )
     ],
     targets: [
@@ -24,6 +28,15 @@ let package = Package(
         .testTarget(
             name: "HanlinPlatformContractsTests",
             dependencies: ["HanlinPlatformContracts"]
+        ),
+        .target(
+            name: "HanlinScriptContracts",
+            dependencies: ["HanlinPlatformContracts"],
+            resources: [.process("Resources")]
+        ),
+        .testTarget(
+            name: "HanlinScriptContractsTests",
+            dependencies: ["HanlinScriptContracts"]
         )
     ],
     swiftLanguageModes: [.v6]
