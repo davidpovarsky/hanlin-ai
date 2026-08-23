@@ -1,4 +1,5 @@
 import Foundation
+import HanlinPlatformContracts
 
 public struct HanlinScriptingPerformanceBudgets: Codable, Hashable, Sendable {
     public let schemaVersion: UInt32
