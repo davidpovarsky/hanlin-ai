@@ -103,6 +103,15 @@ public enum HanlinScriptMessageKind: String, Codable, CaseIterable, Hashable, Se
     case uiPatch
     case log
     case progress
+    case promiseResolved
+    case promiseRejected
+    case callbackRegistered
+    case callbackInvoked
+    case callbackReleased
+    case subscribed
+    case unsubscribed
+    case streamChunk
+    case streamCompleted
     case retainHandle
     case releaseHandle
     case heartbeat
@@ -140,6 +149,11 @@ public struct HanlinScriptEnvelope: Codable, Hashable, Sendable {
         maximumPayloadBytes: Int = 1_048_576
     ) throws {
         try support.validate(protocolVersion)
+        guard sequence > 0 else {
+            throw HanlinContractError.invalidWireEnvelope(
+                reason: "wire sequences begin at one"
+            )
+        }
         guard maximumPayloadBytes > 0 else {
             throw HanlinContractError.invalidWireEnvelope(
                 reason: "maximum payload byte count must be positive"
@@ -152,13 +166,16 @@ public struct HanlinScriptEnvelope: Codable, Hashable, Sendable {
             )
         }
         switch kind {
-        case .request, .response, .error, .cancel, .progress:
+        case .request, .response, .error, .cancel, .progress,
+             .promiseResolved, .promiseRejected, .callbackInvoked,
+             .streamChunk, .streamCompleted:
             guard requestID != nil else {
                 throw HanlinContractError.invalidWireEnvelope(
                     reason: "\(kind.rawValue) messages require a request ID"
                 )
             }
         case .hello, .ready, .event, .uiSnapshot, .uiPatch, .log,
+             .callbackRegistered, .callbackReleased, .subscribed, .unsubscribed,
              .retainHandle, .releaseHandle, .heartbeat, .suspend, .resume,
              .shutdown:
             break

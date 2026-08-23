@@ -471,6 +471,12 @@ public struct HanlinVersionSupport: Hashable, Sendable {
         wireProtocol: HanlinWireProtocolVersion(major: 1, minor: 0) ... HanlinWireProtocolVersion(major: 1, minor: 0)
     )
 
+    public static let scriptingV2 = HanlinVersionSupport(
+        api: HanlinAPIVersion(major: 1, minor: 0) ... HanlinAPIVersion(major: 1, minor: 0),
+        manifest: HanlinManifestVersion(major: 1, minor: 0) ... HanlinManifestVersion(major: 1, minor: 0),
+        wireProtocol: HanlinWireProtocolVersion(major: 1, minor: 0) ... HanlinWireProtocolVersion(major: 2, minor: 0)
+    )
+
     public func validate(_ version: HanlinAPIVersion) throws {
         guard api.contains(version) else {
             throw HanlinContractError.unsupportedVersion(

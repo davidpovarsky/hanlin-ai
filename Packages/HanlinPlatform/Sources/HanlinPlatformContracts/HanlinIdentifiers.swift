@@ -179,6 +179,33 @@ public struct HanlinCallbackID: HanlinStringIdentifier {
     }
 }
 
+public struct HanlinPromiseID: HanlinStringIdentifier {
+    public static let identifierKind = "promise"
+    public let rawValue: String
+    public init(validating rawValue: String) throws {
+        try HanlinIdentifierValidator.validate(rawValue, kind: Self.identifierKind)
+        self.rawValue = rawValue
+    }
+}
+
+public struct HanlinSubscriptionID: HanlinStringIdentifier {
+    public static let identifierKind = "subscription"
+    public let rawValue: String
+    public init(validating rawValue: String) throws {
+        try HanlinIdentifierValidator.validate(rawValue, kind: Self.identifierKind)
+        self.rawValue = rawValue
+    }
+}
+
+public struct HanlinStreamID: HanlinStringIdentifier {
+    public static let identifierKind = "stream"
+    public let rawValue: String
+    public init(validating rawValue: String) throws {
+        try HanlinIdentifierValidator.validate(rawValue, kind: Self.identifierKind)
+        self.rawValue = rawValue
+    }
+}
+
 public struct HanlinObjectHandleID: HanlinStringIdentifier {
     public static let identifierKind = "object-handle"
     public let rawValue: String

@@ -137,3 +137,34 @@ func wireEnvelopeRejectsUnknownVersionMalformedKindAndOversizedPayload() throws 
         try oversized.validate(maximumPayloadBytes: 16)
     }
 }
+
+@Test
+func scriptingWireV2IsAdditiveAndRequiresExplicitV2Support() throws {
+    let requestID = try HanlinRequestID(validating: "request.promise.1")
+    let envelope = HanlinScriptEnvelope(
+        protocolVersion: .init(major: 2, minor: 0),
+        sessionID: try HanlinSessionID(validating: "session.v2"),
+        sequence: 1,
+        requestID: requestID,
+        kind: .promiseResolved,
+        payload: .object(["value": .integer(42)])
+    )
+    #expect(throws: HanlinContractError.self) { try envelope.validate() }
+    try envelope.validate(support: .scriptingV2)
+    let decoded = try HanlinScriptEnvelope.decodeAndValidate(
+        envelope.canonicalJSONData(),
+        support: .scriptingV2
+    )
+    #expect(decoded == envelope)
+
+    let zeroSequence = HanlinScriptEnvelope(
+        protocolVersion: .init(major: 2, minor: 0),
+        sessionID: envelope.sessionID,
+        sequence: 0,
+        kind: .heartbeat,
+        payload: .null
+    )
+    #expect(throws: HanlinContractError.self) {
+        try zeroSequence.validate(support: .scriptingV2)
+    }
+}
