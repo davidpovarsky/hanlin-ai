@@ -224,6 +224,6 @@ private extension HanlinScriptUINode {
     }
 
     func dimension(_ name: String) -> CGFloat? {
-        number(name).map(CGFloat.init)
+        number(name).map { CGFloat($0) }
     }
 }
