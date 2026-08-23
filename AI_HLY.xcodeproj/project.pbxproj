@@ -22,6 +22,11 @@
 		A10000000000000000000073 /* HanlinScriptCompiler in Frameworks */ = {isa = PBXBuildFile; productRef = C10000000000000000000018 /* HanlinScriptCompiler */; };
 		A10000000000000000000074 /* HanlinScriptStore in Frameworks */ = {isa = PBXBuildFile; productRef = C10000000000000000000019 /* HanlinScriptStore */; };
 		A10000000000000000000075 /* HanlinScriptingSDK in Frameworks */ = {isa = PBXBuildFile; productRef = C10000000000000000000020 /* HanlinScriptingSDK */; };
+		A10000000000000000000076 /* HanlinScriptExtensions in Frameworks */ = {isa = PBXBuildFile; productRef = C10000000000000000000021 /* HanlinScriptExtensions */; };
+		D20000000000000000000001 /* HanlinScriptingWidgets.appex in Embed ExtensionKit Extensions */ = {isa = PBXBuildFile; fileRef = D20000000000000000000020 /* HanlinScriptingWidgets.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, CodeSignOnCopy, ); }; };
+		D20000000000000000000002 /* HanlinScriptExtensions in Frameworks */ = {isa = PBXBuildFile; productRef = C10000000000000000000021 /* HanlinScriptExtensions */; };
+		D20000000000000000000003 /* HanlinScriptUI in Frameworks */ = {isa = PBXBuildFile; productRef = C10000000000000000000022 /* HanlinScriptUI */; };
+		D20000000000000000000004 /* HanlinPlatformContracts in Frameworks */ = {isa = PBXBuildFile; productRef = A10000000000000000000015 /* HanlinPlatformContracts */; };
 		B10000000000000000000001 /* HanlinPlatformContracts in Frameworks */ = {isa = PBXBuildFile; productRef = A10000000000000000000015 /* HanlinPlatformContracts */; };
 		A10000000000000000000060 /* commandDictionary.plist in Resources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000062 /* commandDictionary.plist */; };
 		A10000000000000000000061 /* extraCommandsDictionary.plist in Resources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000063 /* extraCommandsDictionary.plist */; };
@@ -42,6 +47,13 @@
 			remoteGlobalIDString = D7B6C3C02D50A55D004E3AD6;
 			remoteInfo = AI_Hanlin;
 		};
+		D20000000000000000000010 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D7B6C3B92D50A55D004E3AD6 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D20000000000000000000050;
+			remoteInfo = HanlinScriptingWidgets;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -51,6 +63,7 @@
 			dstPath = "$(EXTENSIONS_FOLDER_PATH)";
 			dstSubfolderSpec = 16;
 			files = (
+				D20000000000000000000001 /* HanlinScriptingWidgets.appex in Embed ExtensionKit Extensions */,
 			);
 			name = "Embed ExtensionKit Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -77,10 +90,19 @@
 		A10000000000000000000063 /* extraCommandsDictionary.plist */ = {isa = PBXFileReference; explicitFileType = text; name = extraCommandsDictionary.plist; path = Packages/IOSSystemLite/Sources/IOSSystemLite/Resources/extraCommandsDictionary.plist; sourceTree = SOURCE_ROOT; };
 		D7B6C3C12D50A55D004E3AD6 /* AI_Hanlin.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AI_Hanlin.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B10000000000000000000002 /* AI_HLYTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AI_HLYTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		D20000000000000000000020 /* HanlinScriptingWidgets.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = HanlinScriptingWidgets.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		D7C6558C2E6C731A0041F1C7 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		D20000000000000000000031 /* Exceptions for HanlinScriptingWidgets folder */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				HanlinScriptingWidgets.entitlements,
+				Info.plist,
+			);
+			target = D20000000000000000000050 /* HanlinScriptingWidgets */;
+		};
 		A10000000000000000000030 /* Exceptions for AI_HLY folder in AI_Hanlin target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
@@ -183,6 +205,14 @@
 			path = AI_HLYTests;
 			sourceTree = "<group>";
 		};
+		D20000000000000000000030 /* HanlinScriptingWidgets */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				D20000000000000000000031 /* Exceptions for HanlinScriptingWidgets folder */,
+			);
+			path = HanlinScriptingWidgets;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -190,6 +220,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A10000000000000000000076 /* HanlinScriptExtensions in Frameworks */,
 				A10000000000000000000075 /* HanlinScriptingSDK in Frameworks */,
 				A10000000000000000000074 /* HanlinScriptStore in Frameworks */,
 				A10000000000000000000073 /* HanlinScriptCompiler in Frameworks */,
@@ -221,6 +252,16 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		D20000000000000000000040 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D20000000000000000000004 /* HanlinPlatformContracts in Frameworks */,
+				D20000000000000000000003 /* HanlinScriptUI in Frameworks */,
+				D20000000000000000000002 /* HanlinScriptExtensions in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -248,6 +289,7 @@
 			children = (
 				D7B6C3C32D50A55D004E3AD6 /* AI_HLY */,
 				B10000000000000000000003 /* AI_HLYTests */,
+				D20000000000000000000030 /* HanlinScriptingWidgets */,
 				A10000000000000000000064 /* IOSSystemLite Resources */,
 				D73E23062D817B1300ACC644 /* Frameworks */,
 				D7B6C3C22D50A55D004E3AD6 /* Products */,
@@ -260,6 +302,7 @@
 			children = (
 				D7B6C3C12D50A55D004E3AD6 /* AI_Hanlin.app */,
 				B10000000000000000000002 /* AI_HLYTests.xctest */,
+				D20000000000000000000020 /* HanlinScriptingWidgets.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -281,12 +324,14 @@
 			buildRules = (
 			);
 			dependencies = (
+				D20000000000000000000060 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				D7B6C3C32D50A55D004E3AD6 /* AI_HLY */,
 			);
 			name = AI_Hanlin;
 			packageProductDependencies = (
+				C10000000000000000000021 /* HanlinScriptExtensions */,
 				C10000000000000000000020 /* HanlinScriptingSDK */,
 				C10000000000000000000019 /* HanlinScriptStore */,
 				C10000000000000000000018 /* HanlinScriptCompiler */,
@@ -333,6 +378,31 @@
 			productReference = B10000000000000000000002 /* AI_HLYTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		D20000000000000000000050 /* HanlinScriptingWidgets */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D20000000000000000000072 /* Build configuration list for PBXNativeTarget "HanlinScriptingWidgets" */;
+			buildPhases = (
+				D20000000000000000000041 /* Sources */,
+				D20000000000000000000040 /* Frameworks */,
+				D20000000000000000000042 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				D20000000000000000000030 /* HanlinScriptingWidgets */,
+			);
+			name = HanlinScriptingWidgets;
+			packageProductDependencies = (
+				C10000000000000000000021 /* HanlinScriptExtensions */,
+				C10000000000000000000022 /* HanlinScriptUI */,
+				A10000000000000000000015 /* HanlinPlatformContracts */,
+			);
+			productName = HanlinScriptingWidgets;
+			productReference = D20000000000000000000020 /* HanlinScriptingWidgets.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -349,6 +419,9 @@
 					B10000000000000000000007 = {
 						CreatedOnToolsVersion = 26.0;
 						TestTargetID = D7B6C3C02D50A55D004E3AD6;
+					};
+					D20000000000000000000050 = {
+						CreatedOnToolsVersion = 26.0;
 					};
 				};
 			};
@@ -385,6 +458,7 @@
 			targets = (
 				D7B6C3C02D50A55D004E3AD6 /* AI_Hanlin */,
 				B10000000000000000000007 /* AI_HLYTests */,
+				D20000000000000000000050 /* HanlinScriptingWidgets */,
 			);
 		};
 /* End PBXProject section */
@@ -400,6 +474,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		B10000000000000000000006 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D20000000000000000000042 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -437,6 +518,11 @@
 			target = D7B6C3C02D50A55D004E3AD6 /* AI_Hanlin */;
 			targetProxy = B1000000000000000000000B /* PBXContainerItemProxy */;
 		};
+		D20000000000000000000060 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D20000000000000000000050 /* HanlinScriptingWidgets */;
+			targetProxy = D20000000000000000000010 /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -448,6 +534,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		D7B6C3BD2D50A55D004E3AD6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D20000000000000000000041 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -699,6 +792,58 @@
 			};
 			name = Debug;
 		};
+		D20000000000000000000070 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CODE_SIGN_ENTITLEMENTS = HanlinScriptingWidgets/HanlinScriptingWidgets.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 87242QY66T;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = HanlinScriptingWidgets/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "cherryai.com.AI-Hanlin.ScriptingWidgets";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		D20000000000000000000071 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CODE_SIGN_ENTITLEMENTS = HanlinScriptingWidgets/HanlinScriptingWidgets.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 87242QY66T;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = HanlinScriptingWidgets/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "cherryai.com.AI-Hanlin.ScriptingWidgets";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		D7B6C3E72D50A55E004E3AD6 /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D7C6558C2E6C731A0041F1C7 /* Config.xcconfig */;
@@ -779,6 +924,15 @@
 			buildConfigurations = (
 				D7B6C3E62D50A55E004E3AD6 /* Debug */,
 				D7B6C3E72D50A55E004E3AD6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D20000000000000000000072 /* Build configuration list for PBXNativeTarget "HanlinScriptingWidgets" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D20000000000000000000070 /* Debug */,
+				D20000000000000000000071 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -893,6 +1047,16 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		C10000000000000000000021 /* HanlinScriptExtensions */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A10000000000000000000044 /* XCLocalSwiftPackageReference "HanlinPlatform" */;
+			productName = HanlinScriptExtensions;
+		};
+		C10000000000000000000022 /* HanlinScriptUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A10000000000000000000044 /* XCLocalSwiftPackageReference "HanlinPlatform" */;
+			productName = HanlinScriptUI;
+		};
 		C10000000000000000000020 /* HanlinScriptingSDK */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = A10000000000000000000044 /* XCLocalSwiftPackageReference "HanlinPlatform" */;

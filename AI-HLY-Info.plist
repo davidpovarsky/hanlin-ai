@@ -73,6 +73,8 @@
 			</dict>
 		</dict>
 	</array>
+	<key>NSSupportsLiveActivities</key>
+	<true/>
 	<key>com.apple.developer.translation-ui-provider.network-access</key>
 	<true/>
 </dict>

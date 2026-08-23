@@ -3,6 +3,7 @@ import Foundation
 import HanlinPlatformContracts
 import HanlinScriptCompiler
 import HanlinScriptContracts
+import HanlinScriptExtensions
 import HanlinScriptStore
 import HanlinScriptingSDK
 import Observation
@@ -24,11 +25,13 @@ final class HanlinScriptingPlatform {
     private(set) var preview: HanlinImportPreview?
     private(set) var installedPackages: [HanlinStoredPackageSnapshot] = []
     private(set) var bootstrapError: String?
+    private(set) var pendingResumeCommands: [HanlinScriptResumeCommand] = []
 
     private let packageCenter = HanlinPackageCenter()
     private var stagedPackage: HanlinStagedPackage?
     private var analyzer: HanlinScriptAnalyzer?
     private var store: HanlinAtomicScriptStore?
+    private var extensionStore: HanlinScriptExtensionStore?
     private let stagingRoot: URL?
 
     private init() {
@@ -56,6 +59,7 @@ final class HanlinScriptingPlatform {
             store = try HanlinAtomicScriptStore(
                 root: platformRoot.appending(path: "Installed", directoryHint: .isDirectory)
             )
+            extensionStore = try? HanlinScriptExtensionStore()
         } catch {
             stagingRoot = nil
             bootstrapError = Self.safeMessage(error)
@@ -66,8 +70,18 @@ final class HanlinScriptingPlatform {
         guard let store else { return }
         do {
             installedPackages = try await store.restore()
+            pendingResumeCommands = try extensionStore?.pendingCommands() ?? []
         } catch {
             bootstrapError = Self.safeMessage(error)
+        }
+    }
+
+    func acknowledgeResumeCommand(_ command: HanlinScriptResumeCommand) {
+        do {
+            try extensionStore?.acknowledge(command.id)
+            pendingResumeCommands.removeAll { $0.id == command.id }
+        } catch {
+            activity = .failed(Self.safeMessage(error))
         }
     }
 

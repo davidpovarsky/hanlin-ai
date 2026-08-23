@@ -44,6 +44,10 @@ let package = Package(
         .library(
             name: "HanlinScriptDeviceServices",
             targets: ["HanlinScriptDeviceServices"]
+        ),
+        .library(
+            name: "HanlinScriptExtensions",
+            targets: ["HanlinScriptExtensions"]
         )
     ],
     dependencies: [
@@ -151,6 +155,18 @@ let package = Package(
         .testTarget(
             name: "HanlinScriptDeviceServicesTests",
             dependencies: ["HanlinScriptDeviceServices"]
+        ),
+        .target(
+            name: "HanlinScriptExtensions",
+            dependencies: [
+                "HanlinPlatformContracts",
+                "HanlinScriptContracts",
+                "HanlinScriptUI"
+            ]
+        ),
+        .testTarget(
+            name: "HanlinScriptExtensionsTests",
+            dependencies: ["HanlinScriptExtensions"]
         )
     ],
     swiftLanguageModes: [.v6]
