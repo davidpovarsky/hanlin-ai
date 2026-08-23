@@ -14,8 +14,8 @@ and close only when their pass criteria are demonstrated.
 - Reference compiler metadata pins TypeScript 7.0.2 with strict mode,
   `ESNext`, CommonJS, classic JSX, `createElement`, and `Fragment`.
 - Embedded RuntimeCore lock pins TypeScript 6.0.3.
-- Generated compatibility records currently say the reference APIs are planned,
-  not implemented.
+- Generated compatibility records classify all 2,419 approved symbol records:
+  13 partial and 2,406 not yet implemented, with no planned/unknown state.
 - Current TypeScript runtime supports one-source compilation and full project
   compilation endpoints, but that is not evidence that Scripting declarations,
   JSX runtime, module resolution, host APIs, or lifecycle are compatible.
@@ -34,27 +34,25 @@ compatibility.
 | Gate | Current state | Closing evidence |
 | --- | --- | --- |
 | SG-0 | Closed | Owner authorization and `HANLIN_FULL_SCRIPTING_EXECUTION_PLAN_HE.md` decisions |
-| SG-1 | Open | Clean baseline verification and generated-resource drift checks |
-| SG-2 | Open | Shipped 7.0.2 compiler, deterministic multi-project fixtures, iOS verification |
-| SG-3 | Open | Typed async wire, lossless conversion, limits, randomized round trips |
-| SG-4 | Open | Safe import, canonical descriptors, atomic install/update/rollback/uninstall |
-| SG-5 | Open | QuickJS lifecycle, isolation, cancellation, recovery, leak tests |
-| SG-6 | Open | Capability mappings, grants, OS authorization, revocation and bypass tests |
-| SG-7 | Open | ScriptUI and extension render/interaction/accessibility evidence |
-| SG-8 | Open | Canonical Script tool routing, collisions, progress and cancellation |
-| SG-9 | Open | Store fixtures, crash recovery, migrations and stale-grant/cache rejection |
-| SG-10 | Open | Acceptance packages, compatibility matrix, performance and approved Xcode run |
+| SG-1 | Closed locally | Baseline and generated-resource drift checks pass deterministically |
+| SG-2 | Blocked | TypeScript 7.0.2 exposes no stable in-process API and ships no iOS `tsgo`; owner/compiler-vendor decision required |
+| SG-3 | Implemented; verification pending | Typed wire, lossless values, limits and deterministic tests exist; randomized Xcode round trips remain |
+| SG-4 | Partial | Safe preview and atomic store exist; production install fails closed while SG-2 is blocked |
+| SG-5 | Partial | Session/lifecycle contracts and QuickJS limits exist; installed Scripting-package execution and Xcode leak evidence remain blocked |
+| SG-6 | Partial | Capability brokers and Apple adapters exist; real-package revoke/expiry/bypass evidence remains blocked |
+| SG-7 | Partial | ScriptUI and generic extensions exist; Xcode, device and real-fixture evidence remain |
+| SG-8 | Partial | Multi-tool schemas, routing, structured results and cancellation exist; production-package and approval/progress evidence remain |
+| SG-9 | Implemented; verification pending | Atomic generations, recovery and stale-integrity isolation exist; Xcode migration/device evidence remains |
+| SG-10 | Blocked | One fixture is missing, SG-2 is blocked, performance is unmeasured and no approved Xcode run has occurred |
 
 ## 3. Gates
 
 ### SG-0 — Owner scope approval
 
-Decide the first supported execution contexts and API subset. Recommended first
-context is a non-UI, manually invoked `assistant_tool` or explicit developer
-execution with no device capability APIs, no nested `Script.run`, and strict
-resource limits. Widgets, intents, notification, keyboard, control widget, live
-activity, translation provider, and full SwiftUI-like rendering remain out of
-scope until their targets/entitlements/lifecycle are designed.
+The owner authorized the full execution plan, including foreground Script apps,
+assistant tools, ScriptUI, system-service brokers and generic extension hosts.
+Unsupported symbols remain explicit and non-executable; declaration presence
+does not grant runtime behavior.
 
 **Pass:** approved context/API matrix and explicit unsupported list.
 
@@ -156,17 +154,20 @@ Xcode app verification on the exact commit/compiler/runtime bundle.
 accepted, typechecked, runtime implemented, behavior tested, and unsupported.
 Only those passing all applicable columns may be called compatible.
 
-## 4. Required decisions before implementation
+## 4. Resolved implementation decisions
 
-- Compiler lane and whether embedded TypeScript upgrades to 7.0.2.
-- First contexts and API subset.
-- Whether nested scripts and UI rendering are in first scope.
-- Permission prompt UX and local versus synced grants.
-- Script package identity/signing/update policy.
-- Workspace/storage quota and backup/sync behavior.
-- CPU, memory, time, output, callback/handle, and stream caps.
-- Which Apple extension targets/entitlements, if any, will exist.
-- Compatibility claim wording and required fixture threshold.
+- Scripting requires an isolated, exact TypeScript 7.0.2 compiler lane; the
+  embedded TypeScript 6.0.3 RuntimeCore compiler is not a substitute.
+- Foreground apps, multiple assistant tools, native ScriptUI, Widget, App Intent
+  and Live Activity contexts are designed; unsupported extension contexts fail
+  explicitly.
+- Grants are local, capability- and integrity-scoped, time bounded where
+  applicable, revocable, and combined with Apple system authorization.
+- Package identity, integrity, atomic generation changes, rollback, quotas,
+  runtime limits and versioned compatibility claims are encoded as contracts.
+- Generic Apple extensions consume signed App Group snapshots and enqueue resume
+  commands; they do not compile or execute untrusted source.
 
-Until these decisions and gates pass, Scripting is not a tool provider, app
-runtime, platform service consumer, or executable contract source.
+Until SG-2 and SG-10 pass, the new Scripting pipeline is not a release-ready
+runtime or a claim of full API compatibility. Existing legacy runtime behavior
+is not evidence that these gates passed.

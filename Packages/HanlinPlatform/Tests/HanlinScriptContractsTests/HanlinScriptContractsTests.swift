@@ -76,4 +76,21 @@ struct HanlinScriptContractsTests {
         ))
         #expect(first == second)
     }
+
+    @Test("Release performance budgets are versioned and deterministic")
+    func performanceBudgets() throws {
+        let budgets = try HanlinScriptingPerformanceBudgets.release()
+        #expect(budgets.schemaVersion == 1)
+        #expect(budgets.foregroundEngineHeapBytes == 16 << 20)
+        #expect(budgets.coldCompileP95Milliseconds >= budgets.warmCompileP95Milliseconds)
+
+        let encoder = JSONEncoder()
+        encoder.outputFormatting = [.sortedKeys]
+        let first = try encoder.encode(budgets)
+        let second = try encoder.encode(try JSONDecoder().decode(
+            HanlinScriptingPerformanceBudgets.self,
+            from: first
+        ))
+        #expect(first == second)
+    }
 }

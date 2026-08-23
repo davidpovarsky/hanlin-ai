@@ -2,16 +2,16 @@
 
 Last updated: 2026-08-24
 Execution contract: Revision 2.0
-Current gate: full Scripting platform authorized; implementation in progress
+Current gate: local implementation exhausted; release acceptance blocked
 
-## Full Scripting execution — in progress
+## Full Scripting execution — local implementation complete, release blocked
 
 The owner authorized the complete execution plan on 2026-08-24. The target is
 not the existing Phase 2A proof: it is import, preview, compile, install,
 QuickJS runtime, generated `scripting` SDK, native ScriptUI, services, unified
 Apps Hub/tools, generic extensions, recovery, and acceptance through SG-10.
 
-Completed on branch `codex/full-scripting-platform`:
+Implemented on branch `codex/full-scripting-platform`:
 
 - QuickJS returns distinct typed memory and stack statuses; Swift no longer
   classifies either resource failure by parsing engine messages.
@@ -19,21 +19,33 @@ Completed on branch `codex/full-scripting-platform`:
   tests.
 - Scripting fixtures are an opaque test resource bundle copied to a temporary
   directory; tests have no `#filePath` checkout fallback.
-- the local TypeScript 7.0.2 fixture lane and immutable QuickJS source hashes
-  pass after byte-preserving checkout normalization.
+- immutable package contracts, safe copy/inspection/preview, canonical analysis,
+  a deterministic compiler interface, atomic generations and startup recovery;
+- isolated runtime sessions, the generated SDK, native ScriptUI reconciliation,
+  navigation and presentation, capability brokers and modern Apple adapters;
+- one Native/Script/Hybrid Apps Hub, restored Script tool publication,
+  multi-tool schemas/routing/results/cancellation and default-deny authorization;
+- generic Widget, App Intent and Live Activity infrastructure backed by
+  integrity-checked, versioned App Group snapshots and a durable resume queue;
+- deterministic compatibility generation and evidence-based classification for
+  all 2,419 authorized symbol records, with no `planned` or `unknown` state;
+- locked acceptance input metadata, an external-byte verifier, versioned release
+  performance budgets, recovery guidance and an authoring guide.
 
-Current implementation truth before the remaining work:
+Current release truth:
 
-- Phase 2A loads only `hanlin-script.json`, one precompiled assistant tool, and
-  one narrow ABI. It is not a Scripting package importer or compatibility
-  claim.
-- production bootstrap does not yet restore installed packages or publish
-  Script tools.
-- RuntimeCore still contains TypeScript 6.0.3; the shipped Scripting lane must
-  be isolated and upgraded to the authorized 7.0.2 artifact.
-- ScriptUI, service brokers, unified catalog, package management, and generic
-  Widget/AppIntent/LiveActivity execution are not yet implemented.
-- only SG-0 is closed. SG-1 through SG-10 require the evidence recorded in
+- exact TypeScript 7.0.2 compilation on iOS is blocked. The package's unstable
+  programmatic API launches a native `tsgo` process, and its optional binaries
+  do not include iOS. Hanlin therefore fails Install closed and does not silently
+  substitute RuntimeCore's TypeScript 6.0.3;
+- five supplied acceptance packages match their locked SHA-256 values. The
+  sixth package, `זמני היום ולוח לימוד יומי 3.zip`, has not been supplied;
+- Windows has no functioning Apple SDK/Xcode environment, and the local Swift
+  toolchain exits before compilation. Swift package tests, the extension target,
+  performance measurements, simulator/device acceptance and full SG-10 evidence
+  remain unverified;
+- GitHub Actions did not run because this task did not authorize CI. Gate states
+  and exact closing evidence are recorded in
   `canonical-contracts/SCRIPTING_INTEGRATION_GATES.md`.
 
 Historical statements below that say Phase 2 had not started describe their
