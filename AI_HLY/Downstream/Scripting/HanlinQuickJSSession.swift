@@ -156,10 +156,11 @@ actor HanlinQuickJSSession {
         if result.status == HANLIN_QUICKJS_CANCELLED {
             return .cancelled
         }
-        if result.status == HANLIN_QUICKJS_RESOURCE_LIMIT {
-            return message.contains("stack overflow")
-                ? .resourceLimit("engine_stack")
-                : .resourceLimit("engine_memory")
+        if result.status == HANLIN_QUICKJS_MEMORY_LIMIT {
+            return .resourceLimit("engine_memory")
+        }
+        if result.status == HANLIN_QUICKJS_STACK_LIMIT {
+            return .resourceLimit("engine_stack")
         }
         if result.status == HANLIN_QUICKJS_PENDING_PROMISE {
             return .unsupportedABI("pending_host_capability")

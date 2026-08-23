@@ -236,8 +236,8 @@ struct HanlinQuickJSEngineTests {
         }
     }
 
-    @Test("Enforces timeout, cancellation, memory, output, and disposal boundaries")
-    func executionLimitsAndDisposal() async throws {
+    @Test("Maps engine timeout to the typed timeout failure")
+    func executionTimeout() async throws {
         let timeoutSession = try await session(
             program: "AssistantTool.registerExecuteTool(() => { while (true) {} });",
             configuration: .init(
@@ -250,7 +250,10 @@ struct HanlinQuickJSEngineTests {
         await expectScriptingFailure(expected: .executionTimedOut) {
             _ = try await timeoutSession.invoke(parameters: .object([:]))
         }
+    }
 
+    @Test("Maps QuickJS null OOM recovery to the typed memory limit")
+    func memoryLimit() async throws {
         let memorySession = try await session(
             program: #"""
             AssistantTool.registerExecuteTool(() => {
@@ -268,7 +271,10 @@ struct HanlinQuickJSEngineTests {
         await expectScriptingFailure(expected: .resourceLimit("engine_memory")) {
             _ = try await memorySession.invoke(parameters: .object([:]))
         }
+    }
 
+    @Test("Maps the locked QuickJS stack message to the typed stack limit")
+    func stackLimit() async throws {
         let stackSession = try await session(
             program: #"AssistantTool.registerExecuteTool(() => { const recurse = () => recurse(); recurse(); });"#,
             configuration: .init(
@@ -281,7 +287,10 @@ struct HanlinQuickJSEngineTests {
         await expectScriptingFailure(expected: .resourceLimit("engine_stack")) {
             _ = try await stackSession.invoke(parameters: .object([:]))
         }
+    }
 
+    @Test("Rejects results larger than the configured output limit")
+    func outputLimit() async throws {
         let outputSession = try await session(
             program: #"""
             AssistantTool.registerExecuteTool(() => ({
@@ -299,7 +308,10 @@ struct HanlinQuickJSEngineTests {
         await expectScriptingFailure(expected: .resourceLimit("output_size")) {
             _ = try await outputSession.invoke(parameters: .object([:]))
         }
+    }
 
+    @Test("Cancellation takes precedence over the execution deadline")
+    func cancellation() async throws {
         let cancellationSession = try await session(
             program: "AssistantTool.registerExecuteTool(() => { while (true) {} });",
             configuration: .init(
@@ -324,12 +336,18 @@ struct HanlinQuickJSEngineTests {
         } catch {
             Issue.record("Cancellation escaped the typed Scripting boundary")
         }
+    }
 
-        await cancellationSession.dispose()
+    @Test("Disposed sessions reject subsequent invocations")
+    func disposal() async throws {
+        let disposedSession = try await session(
+            program: "AssistantTool.registerExecuteTool(() => ({ success: true, message: 'unused' }));"
+        )
+        await disposedSession.dispose()
         await expectScriptingFailure(
             expected: .unavailableProvider("disposed_session")
         ) {
-            _ = try await cancellationSession.invoke(parameters: .object([:]))
+            _ = try await disposedSession.invoke(parameters: .object([:]))
         }
     }
 

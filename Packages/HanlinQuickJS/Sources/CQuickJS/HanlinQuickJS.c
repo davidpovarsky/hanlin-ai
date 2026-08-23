@@ -100,17 +100,47 @@ static HanlinQuickJSStatus hanlin_interruption_status(
     }
 }
 
-static HanlinQuickJSStatus hanlin_status_for_message(
+/*
+ * QuickJS-ng's own out-of-memory recovery path can be re-entered while
+ * constructing the "out of memory" error itself (further allocations for
+ * the Error object can also fail), in which case no real exception value
+ * is ever thrown and JS_GetException/JS_ToCStringLen only observe a stale
+ * "null". Message-text matching cannot distinguish that from a script
+ * that legitimately does `throw null`, so fall back to asking the engine
+ * directly whether it is sitting at its configured memory ceiling.
+ */
+static bool hanlin_memory_exhausted(JSRuntime *runtime) {
+    JSMemoryUsage usage;
+    JS_ComputeMemoryUsage(runtime, &usage);
+    if (usage.malloc_limit <= 0) {
+        return false;
+    }
+    int64_t reserve = usage.malloc_limit / 20;
+    return usage.memory_used_size >= usage.malloc_limit - reserve;
+}
+
+static HanlinQuickJSStatus hanlin_failure_status(
     HanlinQuickJSSession *session,
+    JSValueConst exception,
     const char *message
 ) {
     HanlinQuickJSStatus status = hanlin_interruption_status(session);
-    if (message != NULL
-        && (strstr(message, "out of memory") != NULL
-            || strstr(message, "stack overflow") != NULL)) {
-        return HANLIN_QUICKJS_RESOURCE_LIMIT;
+    if (status != HANLIN_QUICKJS_EXCEPTION) {
+        return status;
     }
-    return status;
+    if ((JS_IsNull(exception) && hanlin_memory_exhausted(session->runtime))
+        || (message != NULL && strstr(message, "out of memory") != NULL)) {
+        return HANLIN_QUICKJS_MEMORY_LIMIT;
+    }
+    if (message != NULL
+        && (strstr(message, "Maximum call stack size exceeded") != NULL
+            || strstr(message, "stack overflow") != NULL)) {
+        return HANLIN_QUICKJS_STACK_LIMIT;
+    }
+    if (hanlin_memory_exhausted(session->runtime)) {
+        return HANLIN_QUICKJS_MEMORY_LIMIT;
+    }
+    return HANLIN_QUICKJS_EXCEPTION;
 }
 
 static HanlinQuickJSResult hanlin_exception_result(
@@ -123,13 +153,15 @@ static HanlinQuickJSResult hanlin_exception_result(
     char *message = text == NULL
         ? hanlin_copy_bytes("Script exception", strlen("Script exception"))
         : hanlin_copy_bytes(text, length);
+    HanlinQuickJSStatus status = hanlin_failure_status(
+        session,
+        exception,
+        text == NULL ? NULL : message
+    );
     if (text != NULL) {
         JS_FreeCString(context, text);
     }
     JS_FreeValue(context, exception);
-    HanlinQuickJSStatus status = text == NULL
-        ? HANLIN_QUICKJS_RESOURCE_LIMIT
-        : hanlin_status_for_message(session, message);
     return hanlin_result(status, NULL, message);
 }
 
@@ -307,13 +339,15 @@ HanlinQuickJSResult hanlin_quickjs_session_invoke(
         char *message = text == NULL
             ? hanlin_copy_bytes("Script promise rejected", strlen("Script promise rejected"))
             : hanlin_copy_bytes(text, length);
+        HanlinQuickJSStatus status = hanlin_failure_status(
+            session,
+            settled,
+            text == NULL ? NULL : message
+        );
         if (text != NULL) {
             JS_FreeCString(context, text);
         }
         JS_FreeValue(context, settled);
-        HanlinQuickJSStatus status = text == NULL
-            ? HANLIN_QUICKJS_RESOURCE_LIMIT
-            : hanlin_status_for_message(session, message);
         hanlin_end_operation(session);
         return hanlin_result(status, NULL, message);
     }
@@ -332,7 +366,7 @@ HanlinQuickJSResult hanlin_quickjs_session_invoke(
     hanlin_end_operation(session);
     if (value == NULL) {
         return hanlin_message_result(
-            HANLIN_QUICKJS_RESOURCE_LIMIT,
+            HANLIN_QUICKJS_MEMORY_LIMIT,
             "Unable to allocate Script result"
         );
     }
