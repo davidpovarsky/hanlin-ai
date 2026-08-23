@@ -1,0 +1,377 @@
+{
+  "schemaVersion": 1,
+  "baselineID": "scripting-compat-2026-07-22-8d7d33d9369e",
+  "baselineDigest": "8d7d33d9369ee555d15adf10c867abbfb85834eced7e7596a627b70ff627ff36",
+  "typescriptVersion": "7.0.2",
+  "module": "scripting",
+  "records": [
+    {
+      "symbol": "AbortController",
+      "state": "partial",
+      "operation": "cancellation.controller",
+      "capability": null,
+      "contexts": [
+        "all"
+      ],
+      "declarationEvidence": [
+        {
+          "category": "const",
+          "declarationFile": "scripting.d.ts",
+          "line": 11261,
+          "signatureHash": "4bffd6282798e8287dd3d1f0416ab6f1e9259c5eaac03467679c0d5986190f1d"
+        },
+        {
+          "category": "type",
+          "declarationFile": "scripting.d.ts",
+          "line": 11262,
+          "signatureHash": "4daaa7001bb1be4af09d7b2d9343efa24464a8e50ffce953aa3faad010867acf"
+        },
+        {
+          "category": "class",
+          "declarationFile": "web-fetch.d.ts",
+          "line": 148,
+          "signatureHash": "35cac568067d2cdcd9cac7c35a7bbd46edb97c9c1db14d0db0f3b81325868b99"
+        }
+      ]
+    },
+    {
+      "symbol": "AbortSignal",
+      "state": "partial",
+      "operation": "cancellation.signal",
+      "capability": null,
+      "contexts": [
+        "all"
+      ],
+      "declarationEvidence": [
+        {
+          "category": "const",
+          "declarationFile": "scripting.d.ts",
+          "line": 11263,
+          "signatureHash": "abf67ed84df8da544af5db639930db89fb550995f97576139ca3605360236f54"
+        },
+        {
+          "category": "type",
+          "declarationFile": "scripting.d.ts",
+          "line": 11264,
+          "signatureHash": "01c9633d9d1b1da2a02c883fdc9e290450d56244d7f8d3c32301118a34d7efda"
+        },
+        {
+          "category": "class",
+          "declarationFile": "web-fetch.d.ts",
+          "line": 128,
+          "signatureHash": "ba16924c510d2dae52a0ea71c217a879392d37019c52301d0ce8c7f33a6a300b"
+        }
+      ]
+    },
+    {
+      "symbol": "clearTimeout",
+      "state": "supported",
+      "operation": "timer.cancel",
+      "capability": null,
+      "contexts": [
+        "mainApplication",
+        "backgroundTask"
+      ],
+      "declarationEvidence": [
+        {
+          "category": "const",
+          "declarationFile": "global.d.ts",
+          "line": 46,
+          "signatureHash": "39e63faae01a69cae43f21b239d2c0c545a4df4b95525e35e6dbe062f30eb7cc"
+        },
+        {
+          "category": "function",
+          "declarationFile": "node.d.ts",
+          "line": 795,
+          "signatureHash": "884f3f123464ebc16290492f8f3b923593f6ded1c31d5dc56d50ece1f77432bd"
+        }
+      ]
+    },
+    {
+      "symbol": "console",
+      "state": "supported",
+      "operation": "console",
+      "capability": null,
+      "contexts": [
+        "all"
+      ],
+      "declarationEvidence": [
+        {
+          "category": "const",
+          "declarationFile": "global.d.ts",
+          "line": 15,
+          "signatureHash": "1f78a7556a74998af9db23b4f59468f6b936804066627a0f4ada00acf4088919"
+        }
+      ]
+    },
+    {
+      "symbol": "fetch",
+      "state": "partial",
+      "operation": "network.fetch",
+      "capability": "network",
+      "contexts": [
+        "mainApplication",
+        "backgroundTask",
+        "appIntent"
+      ],
+      "declarationEvidence": [
+        {
+          "category": "const",
+          "declarationFile": "scripting.d.ts",
+          "line": 11247,
+          "signatureHash": "ac707c2f8bee55ee0cc5af3f32c59594474e38b29c232463b4838834e2ac97b8"
+        },
+        {
+          "category": "function",
+          "declarationFile": "web-fetch.d.ts",
+          "line": 417,
+          "signatureHash": "51b8297fcc9433ce8c0e3239055de61408e46c8bb0ae46261a1e0f03e5c02b52"
+        },
+        {
+          "category": "function",
+          "declarationFile": "web-fetch.d.ts",
+          "line": 418,
+          "signatureHash": "927eb52dc0cd48c9f6e7bb7da8e36c67e3ca17ad79b7f97098dbcd2bb33d756e"
+        }
+      ]
+    },
+    {
+      "symbol": "Headers",
+      "state": "partial",
+      "operation": "network.headers",
+      "capability": "network",
+      "contexts": [
+        "mainApplication",
+        "backgroundTask",
+        "appIntent"
+      ],
+      "declarationEvidence": [
+        {
+          "category": "const",
+          "declarationFile": "scripting.d.ts",
+          "line": 11255,
+          "signatureHash": "7031ecb944c7cd5d71c2d9ea66c9e4924f28cacd18169decd77d141f12c32ab7"
+        },
+        {
+          "category": "type",
+          "declarationFile": "scripting.d.ts",
+          "line": 11256,
+          "signatureHash": "64b3dcf12e8639586bd8e42785ba836a0c491279d0431da8647336d4e58adb6b"
+        },
+        {
+          "category": "class",
+          "declarationFile": "web-fetch.d.ts",
+          "line": 161,
+          "signatureHash": "3ba17260fdb5c9e2507622e3e4576f79d426e030dcbe3661ee78df75b3d625fa"
+        }
+      ]
+    },
+    {
+      "symbol": "Request",
+      "state": "partial",
+      "operation": "network.request",
+      "capability": "network",
+      "contexts": [
+        "mainApplication",
+        "backgroundTask",
+        "appIntent"
+      ],
+      "declarationEvidence": [
+        {
+          "category": "const",
+          "declarationFile": "scripting.d.ts",
+          "line": 11251,
+          "signatureHash": "59f273cf69d7dadb2d5b5f1c729d8363b475f8a08806eb933e69ccd08991297c"
+        },
+        {
+          "category": "type",
+          "declarationFile": "scripting.d.ts",
+          "line": 11252,
+          "signatureHash": "9a27d10fa93c8d52254256f00d08cf4a31437ce1cd4ad379cfaa8912beb97efa"
+        },
+        {
+          "category": "class",
+          "declarationFile": "web-fetch.d.ts",
+          "line": 300,
+          "signatureHash": "f0ad7f73918de708c169d42d542954209016130d29352d839db5334fa667ec2f"
+        }
+      ]
+    },
+    {
+      "symbol": "Response",
+      "state": "partial",
+      "operation": "network.response",
+      "capability": "network",
+      "contexts": [
+        "mainApplication",
+        "backgroundTask",
+        "appIntent"
+      ],
+      "declarationEvidence": [
+        {
+          "category": "const",
+          "declarationFile": "scripting.d.ts",
+          "line": 11253,
+          "signatureHash": "cf0b9ba482d34a6da5e865c397bdbb1885e2c103bdc9ea6bbcc80a82163d9314"
+        },
+        {
+          "category": "type",
+          "declarationFile": "scripting.d.ts",
+          "line": 11254,
+          "signatureHash": "e197e9987c3c46e6dd55342e030ff18daea6ce993d9d32a90054e2d081ee8ce4"
+        },
+        {
+          "category": "class",
+          "declarationFile": "web-fetch.d.ts",
+          "line": 339,
+          "signatureHash": "d567c896beda6163654e10e532951bcedfebda36ad0b083bb2e510ebefc18b7d"
+        }
+      ]
+    },
+    {
+      "symbol": "Script",
+      "state": "partial",
+      "operation": "script.lifecycle",
+      "capability": null,
+      "contexts": [
+        "all"
+      ],
+      "declarationEvidence": [
+        {
+          "category": "type",
+          "declarationFile": "global.d.ts",
+          "line": 12365,
+          "signatureHash": "d80a8c1dd899c78a0b5b6193898735e0af4f8450d6ef3ce9fb652b33c93a28f4"
+        },
+        {
+          "category": "class",
+          "declarationFile": "node.d.ts",
+          "line": 911,
+          "signatureHash": "620537c6245d89ccacb15e5eccb8dba0c669b11c425d8786f150526b5c836bcb"
+        },
+        {
+          "category": "namespace",
+          "declarationFile": "scripting.d.ts",
+          "line": 11344,
+          "signatureHash": "74c613dabc592b7d74af7f819efc37fbe90b8ea00dc4e16588ac5d7f7e1b77d8"
+        }
+      ]
+    },
+    {
+      "symbol": "setTimeout",
+      "state": "supported",
+      "operation": "timer.schedule",
+      "capability": null,
+      "contexts": [
+        "mainApplication",
+        "backgroundTask"
+      ],
+      "declarationEvidence": [
+        {
+          "category": "const",
+          "declarationFile": "global.d.ts",
+          "line": 42,
+          "signatureHash": "9c50b45b9d06828e6f1835c4d208b4d81f088bf2a0bda5eb0917055b9633591d"
+        },
+        {
+          "category": "function",
+          "declarationFile": "node.d.ts",
+          "line": 794,
+          "signatureHash": "57c0b4b16d4f9e3f6fc0e8a3380aac8b004f10a3a3a0751aaab6c365cd8974a4"
+        }
+      ]
+    },
+    {
+      "symbol": "TextDecoder",
+      "state": "supported",
+      "operation": "value.textDecoder",
+      "capability": null,
+      "contexts": [
+        "all"
+      ],
+      "declarationEvidence": [
+        {
+          "category": "class",
+          "declarationFile": "node.d.ts",
+          "line": 150,
+          "signatureHash": "24e5f8dcc74683ba44bc61c489b8b6eb8375e9fd0388d687349127a50596dfa7"
+        },
+        {
+          "category": "class",
+          "declarationFile": "node.d.ts",
+          "line": 621,
+          "signatureHash": "3104adbff30515dc1b94d833199efd797f2aae214f83884becdaf4d30855710a"
+        }
+      ]
+    },
+    {
+      "symbol": "TextEncoder",
+      "state": "supported",
+      "operation": "value.textEncoder",
+      "capability": null,
+      "contexts": [
+        "all"
+      ],
+      "declarationEvidence": [
+        {
+          "category": "class",
+          "declarationFile": "node.d.ts",
+          "line": 145,
+          "signatureHash": "881e17d6e43087b8a991fead4a402039f8670897c8af1fdeff638cedf200f637"
+        },
+        {
+          "category": "class",
+          "declarationFile": "node.d.ts",
+          "line": 617,
+          "signatureHash": "1d054de0be914dc3080bcf70c7f4d9c2e9937d3b314f0518cc82e898f471df5c"
+        }
+      ]
+    },
+    {
+      "symbol": "URL",
+      "state": "supported",
+      "operation": "value.url",
+      "capability": null,
+      "contexts": [
+        "all"
+      ],
+      "declarationEvidence": [
+        {
+          "category": "class",
+          "declarationFile": "node.d.ts",
+          "line": 182,
+          "signatureHash": "91f32b5514463a8fc303b44c0510399099b981c7a8fd398428756edbca358b02"
+        },
+        {
+          "category": "const",
+          "declarationFile": "node.d.ts",
+          "line": 652,
+          "signatureHash": "3a13f56a83747f032f7edae37c6d34a994cd5969cdc41660e10abb8cd62184dc"
+        }
+      ]
+    },
+    {
+      "symbol": "URLSearchParams",
+      "state": "supported",
+      "operation": "value.urlSearchParams",
+      "capability": null,
+      "contexts": [
+        "all"
+      ],
+      "declarationEvidence": [
+        {
+          "category": "class",
+          "declarationFile": "node.d.ts",
+          "line": 166,
+          "signatureHash": "b238efb162ed076d461b38405eef9f76eb677cb4c33cf4b7ccc9e01e12375761"
+        },
+        {
+          "category": "const",
+          "declarationFile": "node.d.ts",
+          "line": 653,
+          "signatureHash": "69f881b2830ca503d796aff5ea8b2be200424e655a18ca5fc378a2eb75fa2c88"
+        }
+      ]
+    }
+  ]
+}

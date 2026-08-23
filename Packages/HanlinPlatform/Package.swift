@@ -28,6 +28,10 @@ let package = Package(
         .library(
             name: "HanlinScriptRuntime",
             targets: ["HanlinScriptRuntime"]
+        ),
+        .library(
+            name: "HanlinScriptingSDK",
+            targets: ["HanlinScriptingSDK"]
         )
     ],
     dependencies: [
@@ -92,6 +96,15 @@ let package = Package(
         .testTarget(
             name: "HanlinScriptRuntimeTests",
             dependencies: ["HanlinScriptRuntime"]
+        ),
+        .target(
+            name: "HanlinScriptingSDK",
+            dependencies: ["HanlinScriptContracts"],
+            resources: [.process("Resources")]
+        ),
+        .testTarget(
+            name: "HanlinScriptingSDKTests",
+            dependencies: ["HanlinScriptingSDK"]
         )
     ],
     swiftLanguageModes: [.v6]

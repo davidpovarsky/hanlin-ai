@@ -1,0 +1,8 @@
+{
+  "schemaVersion": 1,
+  "baselineID": "scripting-compat-2026-07-22-8d7d33d9369e",
+  "files": {
+    "scripting-foundation.d.ts": "c5e64fea390ec8f417ef53959143ba258beb51c0a9401e6a97a6d2e83d01bcb9",
+    "runtime-registration.json": "8594928ffcfcd3ccc9ac2b27567271857c26e3397b8d0c2bd9f63f7466f8572e"
+  }
+}
