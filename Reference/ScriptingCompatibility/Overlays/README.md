@@ -3,7 +3,13 @@
 Hanlin additions and module augmentations belong here or in a later canonical
 Hanlin IDL output. Imported files under `Original/` must never be edited.
 
-Phase 0 intentionally adds no declaration augmentation: no runtime surface has
-yet passed the contracts, policy, compiler, or runtime gates. The first overlay
-must be introduced with a real API contract, provenance, compatibility record,
-and tests in its owning phase.
+`compatibility-classification.json` is the Hanlin-owned classification layer
+for every immutable declaration record. Its declaration-file defaults make
+missing runtime work explicit as `not-yet-implemented`. A symbol override may
+claim `partial` or `implemented` only with a Hanlin symbol, observable behavior
+notes, and repository test evidence. `unsupported-by-platform` additionally
+requires a concrete rationale; it is not a synonym for unfinished work.
+
+The generator merges this overlay into the immutable inventory and emits the
+canonical matrix. `verify-compatibility-classification.mjs` rejects
+`planned`/`unknown`, incomplete partial claims, and missing test paths.

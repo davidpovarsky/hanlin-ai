@@ -808,6 +808,10 @@ function resolveDocumentationLink(documentPath, link) {
 
 export async function createGeneratedOutputs(plan) {
   const hanlinCompilerVersion = await readHanlinCompilerVersion();
+  const compatibilityClassification = JSON.parse(await readFile(
+    path.join(referenceRoot, "Overlays", "compatibility-classification.json"),
+    "utf8",
+  ));
   const declarationFiles = plan.importedFiles.filter(
     (file) => file.category === "declaration",
   );
@@ -993,27 +997,40 @@ export async function createGeneratedOutputs(plan) {
       })),
     }));
 
-  const compatibilityMatrix = symbolIndex.map((symbol) => ({
-    referenceSymbol: symbol.referenceSymbol,
-    referenceCategory: symbol.referenceCategory,
-    referenceSignatureHash: symbol.referenceSignatureHash,
-    declarationFile: symbol.declarationFile,
-    declarationLine: symbol.line,
-    declaredByScripting: true,
-    hanlinSymbol: null,
-    hanlinAPIVersion: null,
-    implementedByHanlin: false,
-    behaviorMatched: false,
-    verifiedByFixture: false,
-    status: "planned",
-    behaviorDifferences: [],
-    requiredCapability: null,
-    requiredEntitlement: null,
-    allowedOrigins: [],
-    allowedContexts: [],
-    tests: [],
-    notes: "Phase 0 declaration obligation; runtime support is not claimed.",
-  }));
+  if (compatibilityClassification.schemaVersion !== 1) {
+    throw new Error("Unsupported compatibility classification overlay.");
+  }
+  const symbolClassifications = new Map(
+    compatibilityClassification.symbols.map((entry) => [entry.symbol, entry]),
+  );
+  const compatibilityMatrix = symbolIndex.map((symbol) => {
+    const classification = symbolClassifications.get(symbol.referenceSymbol)
+      ?? compatibilityClassification.declarationDefaults[symbol.declarationFile];
+    if (!classification) {
+      throw new Error(`Missing compatibility classification for ${symbol.declarationFile}:${symbol.referenceSymbol}`);
+    }
+    return {
+      referenceSymbol: symbol.referenceSymbol,
+      referenceCategory: symbol.referenceCategory,
+      referenceSignatureHash: symbol.referenceSignatureHash,
+      declarationFile: symbol.declarationFile,
+      declarationLine: symbol.line,
+      declaredByScripting: true,
+      hanlinSymbol: classification.hanlinSymbol ?? null,
+      hanlinAPIVersion: classification.hanlinAPIVersion ?? null,
+      implementedByHanlin: classification.status === "implemented" || classification.status === "partial",
+      behaviorMatched: classification.status === "implemented",
+      verifiedByFixture: classification.verifiedByFixture ?? false,
+      status: classification.status,
+      behaviorDifferences: classification.behaviorDifferences ?? [],
+      requiredCapability: classification.requiredCapability ?? null,
+      requiredEntitlement: classification.requiredEntitlement ?? null,
+      allowedOrigins: classification.allowedOrigins ?? [],
+      allowedContexts: classification.allowedContexts ?? [],
+      tests: classification.tests ?? [],
+      notes: classification.notes,
+    };
+  });
 
   const diagnostics = {
     schemaVersion: 1,

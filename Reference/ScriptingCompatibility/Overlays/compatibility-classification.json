@@ -1,0 +1,135 @@
+{
+  "schemaVersion": 1,
+  "declarationDefaults": {
+    "global.d.ts": {
+      "status": "not-yet-implemented",
+      "notes": "The authorized ambient API has no complete runtime binding and conformance test yet; declaration presence is not treated as support."
+    },
+    "node.d.ts": {
+      "status": "not-yet-implemented",
+      "notes": "Untrusted packages receive no ambient Node runtime. Individual compatible operations require an explicit brokered binding and test."
+    },
+    "safari-ext.d.ts": {
+      "status": "not-yet-implemented",
+      "notes": "Safari extension declarations require a separately entitled, precompiled extension surface and are not currently bound."
+    },
+    "scripting.d.ts": {
+      "status": "not-yet-implemented",
+      "notes": "The symbol is authorized for compatibility work but lacks a complete observable binding and conformance test."
+    },
+    "web-fetch.d.ts": {
+      "status": "not-yet-implemented",
+      "notes": "A capability-gated network broker exists, but this declaration is not yet connected through the package runtime as a tested Web-compatible binding."
+    }
+  },
+  "symbols": [
+    {
+      "symbol": "AssistantTool",
+      "status": "partial",
+      "hanlinSymbol": "HanlinCanonicalToolAuthority.ScriptSource",
+      "hanlinAPIVersion": "hanlin.script/1.0",
+      "requiredCapability": "assistant",
+      "allowedContexts": ["mainApplication"],
+      "behaviorDifferences": ["The legacy checked-artifact ABI implements execute-tool registration, routing, cancellation and structured results; the full Scripting package compiler lane remains unavailable."],
+      "tests": ["AI_HLYTests/HanlinScriptingRuntimeTests.swift"],
+      "notes": "Operational for integrity-checked legacy artifacts and intentionally not claimed as full namespace compatibility."
+    },
+    {
+      "symbol": "Script",
+      "status": "partial",
+      "hanlinSymbol": "HanlinScriptUIModel",
+      "hanlinAPIVersion": "hanlin.wire/2.0",
+      "allowedContexts": ["mainApplication", "widget", "appIntent", "liveActivity"],
+      "behaviorDifferences": ["Lifecycle contracts and resume delivery exist, but the TypeScript 7 package compiler cannot currently produce an installable runtime artifact on iOS."],
+      "tests": ["Packages/HanlinPlatform/Tests/HanlinScriptUITests/HanlinScriptUIReconcilerTests.swift"],
+      "notes": "Lifecycle and resume infrastructure is implemented behind a blocked compiler/install gate."
+    },
+    {
+      "symbol": "Storage",
+      "status": "partial",
+      "hanlinSymbol": "HanlinScriptServiceBroker",
+      "hanlinAPIVersion": "hanlin.services/1.0",
+      "requiredCapability": "storage",
+      "allowedContexts": ["mainApplication", "backgroundTask", "appIntent"],
+      "behaviorDifferences": ["Namespacing, authorization and quotas are implemented; the generated JavaScript binding is not connected to an installable package runtime."],
+      "tests": ["Packages/HanlinPlatform/Tests/HanlinScriptServicesTests/HanlinScriptServiceBrokerTests.swift"],
+      "notes": "Host broker implemented; end-to-end Scripting binding pending."
+    },
+    {
+      "symbol": "FileManager",
+      "status": "partial",
+      "hanlinSymbol": "HanlinScriptServiceBroker",
+      "hanlinAPIVersion": "hanlin.services/1.0",
+      "requiredCapability": "files",
+      "allowedContexts": ["mainApplication", "backgroundTask", "appIntent"],
+      "behaviorDifferences": ["Hanlin exposes a bounded package VFS instead of an ambient filesystem; external handles and the JavaScript binding remain incomplete."],
+      "tests": ["Packages/HanlinPlatform/Tests/HanlinScriptServicesTests/HanlinScriptServiceBrokerTests.swift"],
+      "notes": "VFS host semantics are partial and deliberately deny raw paths."
+    },
+    {
+      "symbol": "Location",
+      "status": "partial",
+      "hanlinSymbol": "HanlinLocationService",
+      "hanlinAPIVersion": "hanlin.services/1.0",
+      "requiredCapability": "location",
+      "requiredEntitlement": "NSLocationWhenInUseUsageDescription",
+      "allowedContexts": ["mainApplication"],
+      "behaviorDifferences": ["Modern Core Location live updates are implemented, but runtime binding and full declaration coverage are pending."],
+      "tests": ["Packages/HanlinPlatform/Tests/HanlinScriptDeviceServicesTests/HanlinAppleServiceContractsTests.swift"],
+      "notes": "Device adapter exists with explicit authorization paths."
+    },
+    {
+      "symbol": "Notification",
+      "status": "partial",
+      "hanlinSymbol": "HanlinNotificationService",
+      "hanlinAPIVersion": "hanlin.services/1.0",
+      "requiredCapability": "notifications",
+      "allowedContexts": ["mainApplication"],
+      "behaviorDifferences": ["Authorization and scheduling adapter exists; the complete Scripting namespace is not bound."],
+      "tests": ["Packages/HanlinPlatform/Tests/HanlinScriptDeviceServicesTests/HanlinAppleServiceContractsTests.swift"],
+      "notes": "Host adapter implemented with denied and unsupported paths."
+    },
+    {
+      "symbol": "Health",
+      "status": "partial",
+      "hanlinSymbol": "HanlinHealthService",
+      "hanlinAPIVersion": "hanlin.services/1.0",
+      "requiredCapability": "health",
+      "requiredEntitlement": "com.apple.developer.healthkit",
+      "allowedContexts": ["mainApplication"],
+      "behaviorDifferences": ["Async HealthKit authorization and statistics are implemented for configured types; broad Health declarations remain unbound."],
+      "tests": ["Packages/HanlinPlatform/Tests/HanlinScriptDeviceServicesTests/HanlinAppleServiceContractsTests.swift"],
+      "notes": "Sensitive adapter exists behind both local grants and OS authorization."
+    },
+    {
+      "symbol": "Widget",
+      "status": "partial",
+      "hanlinSymbol": "HanlinScriptingWidget",
+      "hanlinAPIVersion": "hanlin.extensions/1.0",
+      "allowedContexts": ["widget"],
+      "behaviorDifferences": ["A precompiled generic widget renders a safe ScriptUI subset from snapshots; arbitrary package execution and unsupported nodes are excluded."],
+      "tests": ["Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinScriptExtensionStoreTests.swift"],
+      "notes": "Extension-safe snapshot transport is implemented; package compilation and device verification remain pending."
+    },
+    {
+      "symbol": "LiveActivity",
+      "status": "partial",
+      "hanlinSymbol": "HanlinScriptLiveActivityController",
+      "hanlinAPIVersion": "hanlin.extensions/1.0",
+      "allowedContexts": ["liveActivity"],
+      "behaviorDifferences": ["Hanlin uses one static ActivityAttributes type and canonical package state; dynamic Swift types are impossible after installation."],
+      "tests": ["Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinScriptExtensionStoreTests.swift"],
+      "notes": "Generic lifecycle and renderer are present and require Xcode/device verification."
+    },
+    {
+      "symbol": "AppIntent",
+      "status": "partial",
+      "hanlinSymbol": "HanlinRunScriptActionIntent",
+      "hanlinAPIVersion": "hanlin.extensions/1.0",
+      "allowedContexts": ["appIntent"],
+      "behaviorDifferences": ["One static AppIntent uses dynamic AppEntity records and foreground resume; installed packages cannot add new Swift AppIntent types."],
+      "tests": ["Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinScriptExtensionStoreTests.swift"],
+      "notes": "Generic dynamic action transport exists and requires Xcode discovery verification."
+    }
+  ]
+}
