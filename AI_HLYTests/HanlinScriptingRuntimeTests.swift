@@ -9,7 +9,8 @@ struct HanlinScriptingAcceptanceTests {
     @Test("Loads, projects, routes, and executes the TypeScript fixture")
     func executableVerticalSlice() async throws {
         let registry = HanlinScriptingProviderRegistry()
-        let directory = fixtureDirectory("ValidEcho")
+        let directory = try materializedFixtureDirectory("ValidEcho")
+        defer { try? FileManager.default.removeItem(at: directory) }
         let firstIdentity = try await registry.loadPackage(at: directory)
         let secondIdentity = try await registry.loadPackage(at: directory)
         #expect(firstIdentity == secondIdentity)
@@ -388,62 +389,36 @@ struct HanlinQuickJSEngineTests {
     }
 }
 
-private func fixtureDirectory(_ name: String) -> URL {
-    let marker = name == "MalformedManifest"
-        ? "malformed-hanlin-script"
-        : "hanlin-script"
-
-    // Xcode's file-system-synchronized resource copy does not carry the
-    // fixture subdirectories into the test bundle (and drops the ".ts"
-    // companion source outright, since it is classified as a media UTI
-    // rather than a resource). The checked-out source tree is always
-    // reachable on the host running the Simulator, so prefer it — it is
-    // the only location guaranteed to contain every fixture file.
-    let sourceRelative = URL(filePath: #filePath)
-        .deletingLastPathComponent()
-        .appending(path: "Fixtures/Scripting/\(name)", directoryHint: .isDirectory)
-    if FileManager.default.fileExists(
-        atPath: sourceRelative.appending(
-            path: "\(marker).json",
-            directoryHint: .notDirectory
-        ).path()
-    ) {
-        return sourceRelative
-    }
-
-    let resourceRoot = Bundle(for: HanlinScriptingFixtureMarker.self).resourceURL
-    let bundledCandidates = [
-        resourceRoot?.appending(
-            path: "Fixtures/Scripting/\(name)",
-            directoryHint: .isDirectory
+private func bundledFixtureDirectory(_ name: String) throws -> URL {
+    let bundle = Bundle(for: HanlinScriptingFixtureMarker.self)
+    let roots = [
+        bundle.url(
+            forResource: "ScriptingFixtures",
+            withExtension: "bundle",
+            subdirectory: "Fixtures"
         ),
-        resourceRoot?.appending(
-            path: "Scripting/\(name)",
-            directoryHint: .isDirectory
-        ),
-        resourceRoot?.appending(path: name, directoryHint: .isDirectory)
+        bundle.url(forResource: "ScriptingFixtures", withExtension: "bundle")
     ].compactMap { $0 }
-    if let bundled = bundledCandidates.first(where: {
+    guard let root = roots.first(where: {
         FileManager.default.fileExists(atPath: $0.path())
-    }) {
-        return bundled
+    }) else {
+        throw HanlinScriptingError.unavailableProvider("fixture_bundle_missing")
     }
-    let subdirectories: [String?] = [
-        "Fixtures/Scripting/\(name)",
-        "Scripting/\(name)",
-        name,
-        nil
-    ]
-    for subdirectory in subdirectories {
-        if let markerURL = Bundle(for: HanlinScriptingFixtureMarker.self).url(
-            forResource: marker,
-            withExtension: "json",
-            subdirectory: subdirectory
-        ) {
-            return markerURL.deletingLastPathComponent()
-        }
+    let directory = root.appending(path: name, directoryHint: .isDirectory)
+    guard FileManager.default.fileExists(atPath: directory.path()) else {
+        throw HanlinScriptingError.unavailableProvider("fixture_missing_\(name)")
     }
-    return sourceRelative
+    return directory
+}
+
+private func materializedFixtureDirectory(_ name: String) throws -> URL {
+    let source = try bundledFixtureDirectory(name)
+    let destination = FileManager.default.temporaryDirectory.appending(
+        path: "hanlin-script-fixture-\(UUID().uuidString.lowercased())",
+        directoryHint: .isDirectory
+    )
+    try FileManager.default.copyItem(at: source, to: destination)
+    return destination
 }
 
 private final class HanlinScriptingFixtureMarker: NSObject {}
@@ -457,7 +432,7 @@ private func materializedPackageCopy(named name: String) throws -> URL {
         at: directory,
         withIntermediateDirectories: false
     )
-    let source = fixtureDirectory("ValidEcho")
+    let source = try bundledFixtureDirectory("ValidEcho")
     for filename in ["assistant_tool.ts", "assistant_tool.js", "hanlin-script.json"] {
         try FileManager.default.copyItem(
             at: source.appending(path: filename, directoryHint: .notDirectory),
@@ -468,7 +443,7 @@ private func materializedPackageCopy(named name: String) throws -> URL {
 }
 
 private func materializedMalformedPackage() throws -> URL {
-    let fixtureRoot = fixtureDirectory("MalformedManifest")
+    let fixtureRoot = try bundledFixtureDirectory("MalformedManifest")
     let source = fixtureRoot.appending(
         path: "malformed-hanlin-script.json",
         directoryHint: .notDirectory

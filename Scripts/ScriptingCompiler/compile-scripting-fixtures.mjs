@@ -7,7 +7,10 @@ import { fileURLToPath } from "node:url";
 
 const compilerRoot = dirname(fileURLToPath(import.meta.url));
 const repositoryRoot = resolve(compilerRoot, "../..");
-const fixturesRoot = join(repositoryRoot, "AI_HLYTests/Fixtures/Scripting");
+const fixturesRoot = join(
+  repositoryRoot,
+  "AI_HLYTests/Fixtures/ScriptingFixtures.bundle",
+);
 const compilerPath = join(compilerRoot, "node_modules/typescript/bin/tsc");
 const compilerPackagePath = join(
   compilerRoot,

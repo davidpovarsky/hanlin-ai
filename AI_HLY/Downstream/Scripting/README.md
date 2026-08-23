@@ -49,3 +49,29 @@ Descriptors are projected into `HanlinCanonicalToolAuthority`, where Native,
 MCP, and Script candidates share collision handling with precedence Native,
 then MCP, then Script. Execution uses the resolved Script backend route; aliases
 are never used as provider identity or as a fallback lookup.
+
+## Targeted verification
+
+The compiler fixture and vendored QuickJS integrity checks run locally without
+Xcode:
+
+```sh
+npm ci --prefix Scripts/ScriptingCompiler
+npm test --prefix Scripts/ScriptingCompiler
+```
+
+On a macOS host with the repository's Xcode 26 toolchain, build the test bundle
+once and select only the isolated engine suite:
+
+```sh
+xcodebuild test \
+  -project AI_HLY.xcodeproj \
+  -scheme AI_HLY \
+  -configuration Debug \
+  -destination 'platform=iOS Simulator,id=<SIMULATOR_UDID>' \
+  -only-testing:AI_HLYTests/HanlinQuickJSEngineTests
+```
+
+`ScriptingFixtures.bundle` is an opaque test resource. Tests copy a requested
+fixture into a fresh temporary directory; no test locates source through
+`#filePath` or reads from the checkout at runtime.
