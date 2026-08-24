@@ -43,10 +43,10 @@ jobs:
     timeout-minutes: 60
 
     env:
-      BASELINE_ID: scripting-compat-2026-07-22-8d7d33d9369e
-      BASELINE_SHA256: 8d7d33d9369ee555d15adf10c867abbfb85834eced7e7596a627b70ff627ff36
+      BASELINE_ID: scripting-compat-2026-08-25-0b7b8e715573
+      BASELINE_SHA256: 0b7b8e715573ffc1656f530d9eba6cc019e6742294392278edbee812bd45a1c9
       BASELINE_FILES: "999"
-      BASELINE_BYTES: "5918732"
+      BASELINE_BYTES: "5933046"
       EXPECTED_FIXTURES: "177"
       PACKAGE_PATH: Packages/HanlinPlatform
       LOG_DIR: phase1-validation-logs
