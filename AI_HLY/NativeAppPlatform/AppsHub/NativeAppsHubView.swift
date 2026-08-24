@@ -1,5 +1,6 @@
 import SwiftUI
 import SwiftData
+import HanlinPlatformContracts
 import HanlinScriptStore
 #if os(iOS)
 import UIKit
@@ -56,49 +57,11 @@ struct NativeAppsHubView: View {
             ScrollView {
                 LazyVGrid(columns: columns, spacing: 20) {
                     ForEach(visibleModules, id: \.manifest.id) { module in
-                        ZStack(alignment: .topLeading) {
-                            Button {
-                                openFullScreen(module)
-                            } label: {
-                                NativeAppCardView(
-                                    manifest: module.manifest,
-                                    isEditing: isEditingApps
-                                )
-                            }
-                            .buttonStyle(.plain)
-                            .disabled(isEditingApps)
-                            .contextMenu {
-                                nativeAppActions(for: module)
-                            }
-
-                            Menu {
-                                nativeAppActions(for: module)
-                            } label: {
-                                Image(systemName: "ellipsis")
-                                    .font(.headline)
-                                    .foregroundStyle(.white)
-                                    .frame(width: 38, height: 38)
-                                    .background(.white.opacity(0.18), in: Circle())
-                            }
-                            .padding(12)
-                        }
+                        nativeModuleCard(module)
                     }
 
                     ForEach(visibleScriptingPackages, id: \.record.installedPackageID) { package in
-                        Button {
-                            scriptingPackageID = package.record.installedPackageID
-                        } label: {
-                            ScriptingPackageCardView(package: package)
-                        }
-                        .buttonStyle(.plain)
-                        .disabled(isEditingApps)
-                        .contextMenu {
-                            Button {
-                                scriptingPackageID = package.record.installedPackageID
-                            } label: {
-                                Label("Package Information", systemImage: "info.circle")
-                            }
-                        }
+                        scriptingPackageCard(package)
                     }
                 }
                 .padding(.horizontal, 24)
@@ -158,6 +121,52 @@ struct NativeAppsHubView: View {
             }
             .task {
                 await scriptingPlatform.restore()
+            }
+        }
+    }
+
+    private func nativeModuleCard(_ module: NativeAppModule) -> some View {
+        ZStack(alignment: .topLeading) {
+            Button {
+                openFullScreen(module)
+            } label: {
+                NativeAppCardView(
+                    manifest: module.manifest,
+                    isEditing: isEditingApps
+                )
+            }
+            .buttonStyle(.plain)
+            .disabled(isEditingApps)
+            .contextMenu {
+                nativeAppActions(for: module)
+            }
+
+            Menu {
+                nativeAppActions(for: module)
+            } label: {
+                Image(systemName: "ellipsis")
+                    .font(.headline)
+                    .foregroundStyle(.white)
+                    .frame(width: 38, height: 38)
+                    .background(.white.opacity(0.18), in: Circle())
+            }
+            .padding(12)
+        }
+    }
+
+    private func scriptingPackageCard(_ package: HanlinStoredPackageSnapshot) -> some View {
+        Button {
+            scriptingPackageID = package.record.installedPackageID
+        } label: {
+            ScriptingPackageCardView(package: package)
+        }
+        .buttonStyle(.plain)
+        .disabled(isEditingApps)
+        .contextMenu {
+            Button {
+                scriptingPackageID = package.record.installedPackageID
+            } label: {
+                Label("Package Information", systemImage: "info.circle")
             }
         }
     }

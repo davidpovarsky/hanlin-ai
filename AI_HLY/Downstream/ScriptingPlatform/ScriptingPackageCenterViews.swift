@@ -130,35 +130,7 @@ struct ScriptingInstalledPackageDetailView: View {
     var body: some View {
         Group {
             if let package {
-                List {
-                    Section("Package") {
-                        LabeledContent("Name", value: package.manifest?.name ?? package.record.packageID.rawValue)
-                        LabeledContent("Version", value: package.record.version.rawValue)
-                        LabeledContent("Generation", value: String(package.record.activeGeneration))
-                        Toggle("Enabled", isOn: Binding(
-                            get: { package.enabled },
-                            set: { value in Task { await platform.setEnabled(value, for: packageID) } }
-                        ))
-                    }
-                    Section("Entry Points") {
-                        ForEach(package.entrypoints, id: \.id) {
-                            VStack(alignment: .leading) {
-                                LabeledContent($0.kind.rawValue, value: $0.sourcePath)
-                                LabeledContent("Runtime", value: $0.runtimeProfile.rawValue)
-                                    .font(.caption)
-                                    .foregroundStyle(.secondary)
-                            }
-                        }
-                    }
-                    Section {
-                        Button("Uninstall", role: .destructive) {
-                            Task {
-                                await platform.uninstall(packageID)
-                                dismiss()
-                            }
-                        }
-                    }
-                }
+                installedPackageList(package)
             } else {
                 ContentUnavailableView("Package Not Installed", systemImage: "shippingbox")
             }
@@ -168,5 +140,43 @@ struct ScriptingInstalledPackageDetailView: View {
 
     private var package: HanlinStoredPackageSnapshot? {
         platform.installedPackages.first { $0.record.installedPackageID == packageID }
+    }
+
+    private func installedPackageList(_ package: HanlinStoredPackageSnapshot) -> some View {
+        List {
+            Section("Package") {
+                LabeledContent("Name", value: package.manifest?.name ?? package.record.packageID.rawValue)
+                LabeledContent("Version", value: package.record.version.rawValue)
+                LabeledContent("Generation", value: String(package.record.activeGeneration))
+                Toggle("Enabled", isOn: enabledBinding(for: package))
+            }
+            Section("Entry Points") {
+                ForEach(package.entrypoints, id: \.id) { entrypoint in
+                    VStack(alignment: .leading) {
+                        LabeledContent(entrypoint.kind.rawValue, value: entrypoint.sourcePath)
+                        LabeledContent("Runtime", value: entrypoint.runtimeProfile.rawValue)
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                    }
+                }
+            }
+            Section {
+                Button("Uninstall", role: .destructive) {
+                    Task {
+                        await platform.uninstall(packageID)
+                        dismiss()
+                    }
+                }
+            }
+        }
+    }
+
+    private func enabledBinding(for package: HanlinStoredPackageSnapshot) -> Binding<Bool> {
+        Binding(
+            get: { package.enabled },
+            set: { value in
+                Task { await platform.setEnabled(value, for: packageID) }
+            }
+        )
     }
 }
