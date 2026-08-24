@@ -94,12 +94,17 @@ export async function installPackage({
     rejectUnsupported(inspectManifest(extractedManifest));
 
     // The embedded iOS Node build intentionally omits ICU. Apply the narrow,
-    // integrity-pinned transitive override before Arborist resolves ranges so
-    // an upstream patch release cannot introduce unsupported RegExp syntax.
+    // integrity-pinned compatibility dependency before Arborist resolves
+    // ranges so an upstream patch release cannot introduce unsupported RegExp
+    // syntax. The direct pin also gives every AJV edge one hoistable target.
     extractedManifest.overrides = mergeRuntimeOverrides(
       extractedManifest.overrides,
       runtimeDependencyOverrides.overrides,
     );
+    extractedManifest.dependencies = {
+      ...(extractedManifest.dependencies ?? {}),
+      'fast-uri': runtimeDependencyOverrides.packages['fast-uri'].version,
+    };
     await fs.writeFile(
       path.join(packageRoot, 'package.json'),
       `${JSON.stringify(extractedManifest, null, 2)}\n`,
