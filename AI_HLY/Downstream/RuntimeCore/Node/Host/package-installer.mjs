@@ -1,4 +1,5 @@
 import { promises as fs } from 'node:fs';
+import { createRequire } from 'node:module';
 import path from 'node:path';
 import Arborist from '@npmcli/arborist';
 import pacote from 'pacote';
@@ -350,15 +351,18 @@ function mergeRuntimeOverrides(packageOverrides, runtimeOverrides) {
 
 async function verifyRuntimeDependencyOverrides(packageRoot) {
   const lock = JSON.parse(await fs.readFile(path.join(packageRoot, 'package-lock.json'), 'utf8'));
-  for (const [name, metadata] of Object.entries(runtimeDependencyOverrides.packages)) {
-    const installed = Object.entries(lock.packages ?? {}).filter(([location, value]) => (
-      location.endsWith(`node_modules/${name}`)
-      && String(value.version).split('.')[0] === metadata.version.split('.')[0]
-    ));
-    for (const [, value] of installed) {
-      if (value.version !== metadata.version || value.integrity !== metadata.integrity) {
-        throw new Error(`Runtime dependency override verification failed for ${name}.`);
-      }
+  const metadata = runtimeDependencyOverrides.packages['fast-uri'];
+  const ajvLocations = Object.keys(lock.packages ?? {}).filter(location => (
+    location === 'node_modules/ajv' || location.endsWith('/node_modules/ajv')
+  ));
+  for (const location of ajvLocations) {
+    const ajvManifest = path.join(packageRoot, ...location.split('/'), 'package.json');
+    const fastURIManifest = createRequire(ajvManifest).resolve('fast-uri/package.json');
+    const installed = JSON.parse(await fs.readFile(fastURIManifest, 'utf8'));
+    const lockLocation = path.relative(packageRoot, path.dirname(fastURIManifest)).split(path.sep).join('/');
+    const lockEntry = lock.packages?.[lockLocation];
+    if (installed.version !== metadata.version || lockEntry?.integrity !== metadata.integrity) {
+      throw new Error('Runtime dependency override verification failed for ajv > fast-uri.');
     }
   }
 }
