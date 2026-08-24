@@ -116,7 +116,9 @@ static bool hanlin_memory_exhausted(JSRuntime *runtime) {
         return false;
     }
     int64_t reserve = usage.malloc_limit / 20;
-    return usage.memory_used_size >= usage.malloc_limit - reserve;
+    /* JS_SetMemoryLimit is enforced against the allocator's malloc_size,
+       not the semantic heap estimate in memory_used_size. */
+    return usage.malloc_size >= usage.malloc_limit - reserve;
 }
 
 static HanlinQuickJSStatus hanlin_failure_status(
