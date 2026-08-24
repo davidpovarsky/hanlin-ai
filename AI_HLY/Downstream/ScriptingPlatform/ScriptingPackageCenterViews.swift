@@ -170,6 +170,50 @@ struct ScriptingInstalledPackageDetailView: View {
                     }
                 }
             }
+            let capabilities = Set(package.entrypoints.flatMap { $0.requiredCapabilities })
+            if !capabilities.isEmpty {
+                Section("Permissions") {
+                    ForEach(capabilities.sorted { $0.rawValue < $1.rawValue }, id: \.self) { capability in
+                        Toggle(
+                            capability.rawValue,
+                            isOn: Binding(
+                                get: { package.grantedCapabilities.contains(capability) },
+                                set: { granted in
+                                    Task {
+                                        await platform.setCapabilityGranted(
+                                            granted,
+                                            capability: capability,
+                                            for: packageID
+                                        )
+                                    }
+                                }
+                            )
+                        )
+                    }
+                    Text("Revoking a capability takes effect for new package operations and tool invocations.")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                }
+            }
+            if package.availableGenerations.count > 1 {
+                Section("Versions") {
+                    ForEach(package.availableGenerations.reversed(), id: \.self) { generation in
+                        Button {
+                            Task { await platform.rollback(packageID, to: generation) }
+                        } label: {
+                            HStack {
+                                Text("Generation \(generation)")
+                                Spacer()
+                                if generation == package.record.activeGeneration {
+                                    Label("Active", systemImage: "checkmark.circle.fill")
+                                        .foregroundStyle(.secondary)
+                                }
+                            }
+                        }
+                        .disabled(generation == package.record.activeGeneration)
+                    }
+                }
+            }
             Section {
                 Button("Uninstall", role: .destructive) {
                     Task {

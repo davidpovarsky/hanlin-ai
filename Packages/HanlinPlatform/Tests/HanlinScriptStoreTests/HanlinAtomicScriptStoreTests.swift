@@ -149,6 +149,26 @@ struct HanlinAtomicScriptStoreTests {
         #expect(try await store.snapshots().isEmpty)
     }
 
+    @Test("Capability grants persist and revocation is package scoped")
+    func capabilityGrantLifecycle() async throws {
+        let fixture = try Fixture()
+        defer { fixture.remove() }
+        let capability = try HanlinCapabilityID(validating: "network")
+        let store = try HanlinAtomicScriptStore(root: fixture.storeRoot)
+        _ = try await store.install(
+            plan: fixture.plan(version: "1.0.0", sourceDigest: fixture.first.manifest.packageContentDigest),
+            artifactDirectory: fixture.first.url,
+            artifactManifest: fixture.first.manifest
+        )
+
+        try await store.setCapabilityGranted(true, capability: capability, for: fixture.installedID)
+        let restored = try await HanlinAtomicScriptStore(root: fixture.storeRoot).restore()
+        #expect(restored[0].grantedCapabilities == [capability])
+
+        try await store.setCapabilityGranted(false, capability: capability, for: fixture.installedID)
+        #expect(try await store.snapshots()[0].grantedCapabilities.isEmpty)
+    }
+
     @Test("Unified catalog retains native and installed script authorities")
     func unifiedCatalog() async throws {
         let fixture = try Fixture()

@@ -155,10 +155,12 @@ final class HanlinScriptingPlatform {
             let installed = try await Task.detached(priority: .userInitiated) {
                 defer { try? FileManager.default.removeItem(at: artifactRoot) }
                 try Self.copyPackageSource(from: stagedPackage.packageRoot, to: artifactRoot)
-                let contexts = Set(preview.entrypoints.map(\.kind)).sorted { $0.rawValue < $1.rawValue }
-                guard !contexts.isEmpty,
-                      !preview.entrypoints.contains(where: { $0.runtimeProfile == .hanlinPython }) else {
-                    throw HanlinScriptingPlatformError.workerCompilerRequired
+                let contexts = Set(preview.entrypoints
+                    .filter { $0.runtimeProfile != .hanlinPython }
+                    .map(\.kind))
+                    .sorted { $0.rawValue < $1.rawValue }
+                guard !preview.entrypoints.isEmpty else {
+                    throw HanlinScriptingBundlerError.previewRejected
                 }
                 var bundles: [HanlinScriptingBundle] = []
                 for context in contexts {
@@ -168,7 +170,11 @@ final class HanlinScriptingPlatform {
                         context: context
                     ))
                 }
-                let compiled = try bundler.merged(bundles)
+                let compiled = if bundles.isEmpty {
+                    try Self.pythonSourceBundle(preview: preview)
+                } else {
+                    try bundler.merged(bundles)
+                }
                 try bundler.write(compiled, to: artifactRoot)
                 let completeManifest = try Self.completeArtifactManifest(
                     compiled.manifest,
@@ -202,6 +208,7 @@ final class HanlinScriptingPlatform {
                     sourceDigest: preview.source.contentSHA256,
                     entrypoints: entrypoints,
                     requestedCapabilities: preview.requestedCapabilities,
+                    grantedCapabilities: approvedCapabilities.sorted { $0.rawValue < $1.rawValue },
                     manifest: stagedPackage.manifest
                 )
                 if try await store.snapshots().contains(where: { $0.record.installedPackageID == installedID }) {
@@ -254,10 +261,34 @@ final class HanlinScriptingPlatform {
         }
     }
 
+    func rollback(_ id: HanlinInstalledPackageID, to generation: UInt64) async {
+        guard let store else { return }
+        do {
+            _ = try await store.rollback(id, to: generation)
+            installedPackages = try await store.snapshots()
+        } catch {
+            activity = .failed(Self.safeMessage(error))
+        }
+    }
+
     func setEnabled(_ enabled: Bool, for id: HanlinInstalledPackageID) async {
         guard let store else { return }
         do {
             try await store.setEnabled(enabled, for: id)
+            installedPackages = try await store.snapshots()
+        } catch {
+            activity = .failed(Self.safeMessage(error))
+        }
+    }
+
+    func setCapabilityGranted(
+        _ granted: Bool,
+        capability: HanlinCapabilityID,
+        for id: HanlinInstalledPackageID
+    ) async {
+        guard let store else { return }
+        do {
+            try await store.setCapabilityGranted(granted, capability: capability, for: id)
             installedPackages = try await store.snapshots()
         } catch {
             activity = .failed(Self.safeMessage(error))
@@ -330,10 +361,40 @@ final class HanlinScriptingPlatform {
             files: files
         )
     }
+
+    nonisolated private static func pythonSourceBundle(
+        preview: HanlinImportPreview
+    ) throws -> HanlinScriptingBundle {
+        let metadata = try HanlinScriptingSDK.metadata()
+        let optionsHash = SHA256.hash(data: Data("python-source-v1".utf8))
+            .map { String(format: "%02x", $0) }.joined()
+        let fingerprint = SHA256.hash(data: Data([
+            preview.source.contentSHA256,
+            "CPython-3.14.6",
+            "200ef60eb67be0483ceb638daa9048f84f41a9a952707a5ad4c3198037c7b583",
+            metadata.baselineID,
+            metadata.baselineDigest,
+            optionsHash,
+        ].joined(separator: "\n").utf8)).map { String(format: "%02x", $0) }.joined()
+        return .init(
+            manifest: .init(
+                compilerVersion: "CPython-3.14.6",
+                compilerIntegrity: "200ef60eb67be0483ceb638daa9048f84f41a9a952707a5ad4c3198037c7b583",
+                compilerOptionsHash: optionsHash,
+                baselineID: metadata.baselineID,
+                baselineDigest: metadata.baselineDigest,
+                hanlinABIVersion: HanlinScriptContractSupport.multiRuntime.abiVersion.description,
+                packageContentDigest: preview.source.contentSHA256,
+                cacheFingerprint: fingerprint,
+                files: []
+            ),
+            modules: [],
+            diagnostics: []
+        )
+    }
 }
 
 private enum HanlinScriptingPlatformError: Error {
-    case workerCompilerRequired
     case artifactEnumerationFailed
 }
 

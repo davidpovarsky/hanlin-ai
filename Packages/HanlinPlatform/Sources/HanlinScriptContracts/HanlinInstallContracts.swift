@@ -208,6 +208,7 @@ public struct HanlinInstallPlan: Codable, Hashable, Sendable {
     public let sourceDigest: String
     public let entrypoints: [HanlinPackageEntrypointDescriptor]
     public let requestedCapabilities: [HanlinCapabilityRequest]
+    public let grantedCapabilities: [HanlinCapabilityID]
     public let manifest: HanlinScriptingManifest?
 
     public init(
@@ -217,6 +218,7 @@ public struct HanlinInstallPlan: Codable, Hashable, Sendable {
         sourceDigest: String,
         entrypoints: [HanlinPackageEntrypointDescriptor],
         requestedCapabilities: [HanlinCapabilityRequest],
+        grantedCapabilities: [HanlinCapabilityID] = [],
         manifest: HanlinScriptingManifest? = nil
     ) {
         self.installedPackageID = installedPackageID
@@ -225,6 +227,7 @@ public struct HanlinInstallPlan: Codable, Hashable, Sendable {
         self.sourceDigest = sourceDigest
         self.entrypoints = entrypoints
         self.requestedCapabilities = requestedCapabilities
+        self.grantedCapabilities = grantedCapabilities.sorted { $0.rawValue < $1.rawValue }
         self.manifest = manifest
     }
 }

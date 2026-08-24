@@ -75,6 +75,7 @@ public struct HanlinStoredPackageSnapshot: Codable, Hashable, Sendable {
     public let entrypoints: [HanlinPackageEntrypointDescriptor]
     public let enabled: Bool
     public let availableGenerations: [UInt64]
+    public let grantedCapabilities: [HanlinCapabilityID]
     public let manifest: HanlinScriptingManifest?
 
     public init(
@@ -82,12 +83,14 @@ public struct HanlinStoredPackageSnapshot: Codable, Hashable, Sendable {
         entrypoints: [HanlinPackageEntrypointDescriptor],
         enabled: Bool,
         availableGenerations: [UInt64],
+        grantedCapabilities: [HanlinCapabilityID] = [],
         manifest: HanlinScriptingManifest? = nil
     ) {
         self.record = record
         self.entrypoints = entrypoints
         self.enabled = enabled
         self.availableGenerations = availableGenerations
+        self.grantedCapabilities = grantedCapabilities.sorted { $0.rawValue < $1.rawValue }
         self.manifest = manifest
     }
 }
@@ -109,6 +112,7 @@ public actor HanlinAtomicScriptStore {
         var record: HanlinInstalledPackageRecord
         var entrypoints: [HanlinPackageEntrypointDescriptor]
         var enabled: Bool
+        var grantedCapabilities: [HanlinCapabilityID]?
         var manifest: HanlinScriptingManifest?
     }
 
@@ -173,6 +177,7 @@ public actor HanlinAtomicScriptStore {
                 entrypoints: entry.entrypoints,
                 enabled: entry.enabled,
                 availableGenerations: try generations(for: entry.record.installedPackageID),
+                grantedCapabilities: entry.grantedCapabilities ?? [],
                 manifest: entry.manifest
             )
         }.sorted { $0.record.installedPackageID.rawValue < $1.record.installedPackageID.rawValue }
@@ -257,6 +262,22 @@ public actor HanlinAtomicScriptStore {
             throw HanlinAtomicScriptStoreError.notInstalled(id)
         }
         entry.enabled = enabled
+        registry.packages[id.rawValue] = entry
+        registry.revision &+= 1
+        try persistRegistry()
+    }
+
+    public func setCapabilityGranted(
+        _ granted: Bool,
+        capability: HanlinCapabilityID,
+        for id: HanlinInstalledPackageID
+    ) throws {
+        guard var entry = registry.packages[id.rawValue] else {
+            throw HanlinAtomicScriptStoreError.notInstalled(id)
+        }
+        var grants = Set(entry.grantedCapabilities ?? [])
+        if granted { grants.insert(capability) } else { grants.remove(capability) }
+        entry.grantedCapabilities = grants.sorted { $0.rawValue < $1.rawValue }
         registry.packages[id.rawValue] = entry
         registry.revision &+= 1
         try persistRegistry()
@@ -358,6 +379,7 @@ public actor HanlinAtomicScriptStore {
             record: record,
             entrypoints: plan.entrypoints,
             enabled: true,
+            grantedCapabilities: plan.grantedCapabilities,
             manifest: plan.manifest
         )
         registry.revision &+= 1
