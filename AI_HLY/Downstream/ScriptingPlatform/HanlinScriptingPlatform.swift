@@ -55,11 +55,11 @@ final class HanlinScriptingPlatform {
             let platformRoot = applicationSupport.appending(path: "ScriptingPlatform", directoryHint: .isDirectory)
             let staging = platformRoot.appending(path: "ImportStaging", directoryHint: .isDirectory)
             try FileManager.default.createDirectory(at: staging, withIntermediateDirectories: true)
-            stagingRoot = staging
             store = try HanlinAtomicScriptStore(
                 root: platformRoot.appending(path: "Installed", directoryHint: .isDirectory)
             )
             extensionStore = try? HanlinScriptExtensionStore()
+            stagingRoot = staging
         } catch {
             stagingRoot = nil
             bootstrapError = Self.safeMessage(error)
