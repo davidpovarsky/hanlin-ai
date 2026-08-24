@@ -7,6 +7,9 @@ import HanlinPlatformContracts
 /// owning session actor outlives every cancellation handler that captures it.
 private final class HanlinQuickJSCancellationHandle: @unchecked Sendable {
     private let session: OpaquePointer
+    private let lock = NSLock()
+    private var invocationStarted = false
+    private var startWaiters: [CheckedContinuation<Void, Never>] = []
 
     init(session: OpaquePointer) {
         self.session = session
@@ -14,6 +17,34 @@ private final class HanlinQuickJSCancellationHandle: @unchecked Sendable {
 
     func cancel() {
         hanlin_quickjs_session_cancel(session)
+    }
+
+    func markInvocationStarted() {
+        lock.lock()
+        invocationStarted = true
+        let waiters = startWaiters
+        startWaiters.removeAll(keepingCapacity: false)
+        lock.unlock()
+        waiters.forEach { $0.resume() }
+    }
+
+    func markInvocationFinished() {
+        lock.lock()
+        invocationStarted = false
+        lock.unlock()
+    }
+
+    func waitUntilInvocationStarted() async {
+        await withCheckedContinuation { continuation in
+            lock.lock()
+            if invocationStarted {
+                lock.unlock()
+                continuation.resume()
+            } else {
+                startWaiters.append(continuation)
+                lock.unlock()
+            }
+        }
     }
 }
 
@@ -95,6 +126,8 @@ actor HanlinQuickJSSession {
         hanlin_quickjs_session_reset_cancellation(session)
         let cancellationHandle = cancellationHandle
         let result = await withTaskCancellationHandler {
+            cancellationHandle.markInvocationStarted()
+            defer { cancellationHandle.markInvocationFinished() }
             input.withUnsafeBytes { bytes in
                 hanlin_quickjs_session_invoke(
                     session,
@@ -107,6 +140,10 @@ actor HanlinQuickJSSession {
             cancellationHandle.cancel()
         }
         return try decode(result)
+    }
+
+    nonisolated func waitUntilInvocationStarted() async {
+        await cancellationHandle.waitUntilInvocationStarted()
     }
 
     func dispose() {

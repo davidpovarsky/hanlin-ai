@@ -393,9 +393,7 @@ struct HanlinQuickJSEngineTests {
         let task = Task {
             try await cancellationSession.invoke(parameters: .object([:]))
         }
-        for _ in 0 ..< 20 {
-            await Task.yield()
-        }
+        await cancellationSession.waitUntilInvocationStarted()
         task.cancel()
         do {
             _ = try await task.value
