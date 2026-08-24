@@ -268,7 +268,6 @@ actor HanlinPythonWorkerSession {
     import base64 as _hanlin_base64
     import json as _hanlin_json
     import sys as _hanlin_sys
-    import types as _hanlin_types
 
     _hanlin_tools = []
 
@@ -314,7 +313,7 @@ actor HanlinPythonWorkerSession {
         def exit(code=0):
             if code: raise RuntimeError("HANLIN_SCRIPT:exit_failure")
 
-    _hanlin_scripting = _hanlin_types.ModuleType("scripting")
+    _hanlin_scripting = type(_hanlin_sys)("scripting")
     _hanlin_scripting.AssistantTool = _HanlinAssistantTool
     _hanlin_scripting.Script = _HanlinScript
     _hanlin_sys.modules["scripting"] = _hanlin_scripting
