@@ -139,6 +139,10 @@ actor HanlinQuickJSSession {
         } onCancel: {
             cancellationHandle.cancel()
         }
+        if Task.isCancelled {
+            hanlin_quickjs_result_destroy(result)
+            throw HanlinScriptingError.cancelled
+        }
         return try decode(result)
     }
 

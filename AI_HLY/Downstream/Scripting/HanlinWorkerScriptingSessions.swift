@@ -243,7 +243,10 @@ actor HanlinPythonWorkerSession {
             if result.didTimeOut { throw HanlinScriptingError.executionTimedOut }
             if result.outputWasTruncated { throw HanlinScriptingError.resourceLimit("output_size") }
             guard result.exitCode == 0 else {
-                throw HanlinScriptingError.moduleEvaluationFailed("python_worker_failed")
+                let diagnostic = String(result.stderr.prefix(2_048))
+                throw HanlinScriptingError.moduleEvaluationFailed(
+                    diagnostic.isEmpty ? "python_worker_failed" : diagnostic
+                )
             }
             return result
         } catch let error as HanlinScriptingError {
