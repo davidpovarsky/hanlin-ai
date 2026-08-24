@@ -151,6 +151,7 @@ final class HanlinScriptingPlatform {
             path: "artifact-\(UUID().uuidString.lowercased())",
             directoryHint: .isDirectory
         )
+        let grantedCapabilities = approvedCapabilities.sorted { $0.rawValue < $1.rawValue }
         do {
             let installed = try await Task.detached(priority: .userInitiated) {
                 defer { try? FileManager.default.removeItem(at: artifactRoot) }
@@ -208,7 +209,7 @@ final class HanlinScriptingPlatform {
                     sourceDigest: preview.source.contentSHA256,
                     entrypoints: entrypoints,
                     requestedCapabilities: preview.requestedCapabilities,
-                    grantedCapabilities: approvedCapabilities.sorted { $0.rawValue < $1.rawValue },
+                    grantedCapabilities: grantedCapabilities,
                     manifest: stagedPackage.manifest
                 )
                 if try await store.snapshots().contains(where: { $0.record.installedPackageID == installedID }) {
