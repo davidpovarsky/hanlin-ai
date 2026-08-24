@@ -46,6 +46,7 @@ required_paths=(
   "${PYTHON_FRAMEWORK}/build/utils.sh"
   "${REPOSITORY_ROOT}/Vendor/Python/Python-VERSIONS"
   "${HOST_ARCHIVE}"
+  "${HOST_ROOT}/runtime-dependency-overrides.json"
   "${REPOSITORY_ROOT}/AI_HLY/Downstream/RuntimeCore/Resources/RuntimeManifest.json"
   "${REPOSITORY_ROOT}/AI_HLY/Downstream/RuntimeCore/Resources/RuntimeLinkDependencyNotices.txt"
   "${REPOSITORY_ROOT}/Packages/IOSSystemLite/Package.swift"
@@ -65,15 +66,19 @@ test -d "${PYTHON_FRAMEWORK}/ios-arm64_x86_64-simulator" || test -d "${PYTHON_FR
 grep -Fq "Python version: 3.14.6" "${REPOSITORY_ROOT}/Vendor/Python/Python-VERSIONS"
 unzip -tq "${HOST_ARCHIVE}" >/dev/null
 
-node - "${LOCK_FILE}" "${HOST_ROOT}/package.json" "${HOST_ROOT}/package-lock.json" <<'NODE'
+node - "${LOCK_FILE}" "${HOST_ROOT}/package.json" "${HOST_ROOT}/package-lock.json" "${HOST_ROOT}/runtime-dependency-overrides.json" <<'NODE'
 const fs = require('node:fs');
-const [lockPath, packagePath, packageLockPath] = process.argv.slice(2);
+const [lockPath, packagePath, packageLockPath, overridesPath] = process.argv.slice(2);
 const lock = JSON.parse(fs.readFileSync(lockPath, 'utf8'));
 const manifest = JSON.parse(fs.readFileSync(packagePath, 'utf8'));
 const packageLock = JSON.parse(fs.readFileSync(packageLockPath, 'utf8'));
+const overrides = JSON.parse(fs.readFileSync(overridesPath, 'utf8'));
 if (manifest.engines?.node !== lock.node.version) throw new Error('Host Node engine does not match RuntimeDependencies.lock.json');
 if (manifest.dependencies?.typescript !== lock.typescript.version) throw new Error('TypeScript version does not match the runtime lock');
 if (packageLock.packages?.['']?.dependencies?.typescript !== lock.typescript.version) throw new Error('package-lock TypeScript version is inconsistent');
+if (overrides.schemaVersion !== 1) throw new Error('Runtime dependency overrides schema is unsupported');
+if (overrides.overrides?.ajv?.['fast-uri'] !== overrides.packages?.['fast-uri']?.version) throw new Error('fast-uri override metadata is inconsistent');
+if (!/^sha512-/.test(overrides.packages?.['fast-uri']?.integrity ?? '')) throw new Error('fast-uri override integrity is missing');
 NODE
 
 readonly EXPECTED_RUNTIME_DEPENDENCY_HASH="7d967563db0809a4efa0f07b75d6b5928379a3b6f3aafb886899a79f59512a93"
@@ -88,6 +93,7 @@ test "$(unzip -Z1 "${HOST_ARCHIVE}" | grep -c '^host.mjs$')" -eq 1
 test "$(unzip -Z1 "${HOST_ARCHIVE}" | grep -c '^execution-worker.mjs$')" -eq 1
 test "$(unzip -Z1 "${HOST_ARCHIVE}" | grep -c '^server-worker.mjs$')" -eq 1
 test "$(unzip -Z1 "${HOST_ARCHIVE}" | grep -c '^runtime-probe.mjs$')" -eq 1
+test "$(unzip -Z1 "${HOST_ARCHIVE}" | grep -c '^runtime-dependency-overrides.json$')" -eq 1
 unzip -p "${HOST_ARCHIVE}" server-worker.mjs | grep -Fq 'registerHooks'
 unzip -p "${HOST_ARCHIVE}" package-compatibility.mjs | grep -Fq 'inspectArchiveSafety'
 

@@ -29,6 +29,11 @@ test('pinned server-everything follows only its stdio server execution path', { 
     assert.equal(descriptor.packageRoot, path.join(root, 'packages', 'mcp', serverID));
     assert.equal(descriptor.entryPointRelativePath, 'dist/index.js');
     assert.equal(descriptor.entryPoint, path.join(descriptor.packageRoot, 'dist', 'index.js'));
+    const fastURIManifest = JSON.parse(await fs.readFile(
+      path.join(descriptor.packageRoot, 'node_modules', 'fast-uri', 'package.json'),
+      'utf8',
+    ));
+    assert.equal(fastURIManifest.version, '3.1.5');
     assert.ok(report.moduleEdges.some(edge => edge.specifier === '@modelcontextprotocol/sdk/server/stdio.js'));
     assert.ok(!report.moduleEdges.some(edge => edge.specifier === '@modelcontextprotocol/sdk/client/stdio.js'));
     assert.ok(!report.moduleEdges.some(edge => edge.resolvedPath?.includes('cross-spawn')));

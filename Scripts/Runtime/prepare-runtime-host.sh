@@ -9,7 +9,12 @@ readonly OUTPUT_ROOT="${REPOSITORY_ROOT}/build/runtime-host"
 
 rm -rf "${WORK_ROOT}" "${OUTPUT_ROOT}"
 mkdir -p "${WORK_ROOT}" "${OUTPUT_ROOT}"
-cp "${HOST_SOURCE}"/*.mjs "${HOST_SOURCE}/package.json" "${HOST_SOURCE}/package-lock.json" "${WORK_ROOT}/"
+cp \
+  "${HOST_SOURCE}"/*.mjs \
+  "${HOST_SOURCE}/package.json" \
+  "${HOST_SOURCE}/package-lock.json" \
+  "${HOST_SOURCE}/runtime-dependency-overrides.json" \
+  "${WORK_ROOT}/"
 cp -R "${HOST_SOURCE}/Tests" "${WORK_ROOT}/Tests"
 
 (

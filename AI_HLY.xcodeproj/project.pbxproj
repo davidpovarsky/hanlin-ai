@@ -184,6 +184,7 @@
 				Downstream/RuntimeCore/Node/Host/package-installer.mjs,
 				Downstream/RuntimeCore/Node/Host/package-lock.json,
 				Downstream/RuntimeCore/Node/Host/package.json,
+				Downstream/RuntimeCore/Node/Host/runtime-dependency-overrides.json,
 				Downstream/RuntimeCore/Node/Host/runtime-probe.mjs,
 				Downstream/RuntimeCore/Node/Host/server-worker.mjs,
 			);

@@ -14,6 +14,10 @@ import {
 import { runMCPRuntimeProbe } from './runtime-probe.mjs';
 
 const NODE_VERSION = '24.5.0';
+const runtimeDependencyOverrides = JSON.parse(await fs.readFile(
+  new URL('./runtime-dependency-overrides.json', import.meta.url),
+  'utf8',
+));
 
 export async function previewPackage(source, options = {}) {
   const cachePath = path.join(options.root, 'cache', 'npm');
@@ -89,6 +93,18 @@ export async function installPackage({
     const extractedManifest = JSON.parse(await fs.readFile(path.join(packageRoot, 'package.json'), 'utf8'));
     rejectUnsupported(inspectManifest(extractedManifest));
 
+    // The embedded iOS Node build intentionally omits ICU. Apply the narrow,
+    // integrity-pinned transitive override before Arborist resolves ranges so
+    // an upstream patch release cannot introduce unsupported RegExp syntax.
+    extractedManifest.overrides = mergeRuntimeOverrides(
+      extractedManifest.overrides,
+      runtimeDependencyOverrides.overrides,
+    );
+    await fs.writeFile(
+      path.join(packageRoot, 'package.json'),
+      `${JSON.stringify(extractedManifest, null, 2)}\n`,
+    );
+
     emit('install', { operationID, phase: 'installingDependencies', fraction: 0.58 });
     const arborist = new Arborist({
       path: packageRoot,
@@ -98,6 +114,7 @@ export async function installPackage({
       fund: false,
     });
     await arborist.reify({ omit: ['dev', 'optional'], ignoreScripts: true, signal });
+    await verifyRuntimeDependencyOverrides(packageRoot);
 
     checkCancelled(signal);
     const selected = resolveEntryPoint(extractedManifest, entryPointOverride);
@@ -181,6 +198,7 @@ export async function installPackage({
       binName: descriptor.binName,
       installedAt: now,
       dependencyCount: Object.keys(extractedManifest.dependencies ?? {}).length,
+      runtimeDependencyOverrides: runtimeDependencyOverrides.packages,
     };
     const metadataRoot = path.join(packageRoot, '.hanlin-runtime');
     await fs.mkdir(path.join(metadataRoot, 'logs'), { recursive: true });
@@ -314,6 +332,35 @@ function validateArguments(value) {
     if (/\0|\r|\n/.test(argument)) throw new Error('Invalid server argument.');
     return argument;
   });
+}
+
+function mergeRuntimeOverrides(packageOverrides, runtimeOverrides) {
+  const packageValues = packageOverrides && typeof packageOverrides === 'object'
+    ? packageOverrides
+    : {};
+  return {
+    ...packageValues,
+    ...runtimeOverrides,
+    ajv: {
+      ...(packageValues.ajv && typeof packageValues.ajv === 'object' ? packageValues.ajv : {}),
+      ...runtimeOverrides.ajv,
+    },
+  };
+}
+
+async function verifyRuntimeDependencyOverrides(packageRoot) {
+  const lock = JSON.parse(await fs.readFile(path.join(packageRoot, 'package-lock.json'), 'utf8'));
+  for (const [name, metadata] of Object.entries(runtimeDependencyOverrides.packages)) {
+    const installed = Object.entries(lock.packages ?? {}).filter(([location, value]) => (
+      location.endsWith(`node_modules/${name}`)
+      && String(value.version).split('.')[0] === metadata.version.split('.')[0]
+    ));
+    for (const [, value] of installed) {
+      if (value.version !== metadata.version || value.integrity !== metadata.integrity) {
+        throw new Error(`Runtime dependency override verification failed for ${name}.`);
+      }
+    }
+  }
 }
 
 async function directorySize(root) {
