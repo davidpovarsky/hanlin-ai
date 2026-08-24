@@ -318,7 +318,7 @@
 				D7B6C3BE2D50A55D004E3AD6 /* Frameworks */,
 				D7B6C3BF2D50A55D004E3AD6 /* Resources */,
 				A10000000000000000000050 /* Process Python libraries */,
-				D73E237E2D818F0300ACC644 /* Embed ExtensionKit Extensions */,
+				D73E237E2D818F0300ACC644 /* Embed App Extensions */,
 				D79AD5752DB545F9000646D4 /* Embed Frameworks */,
 			);
 			buildRules = (
