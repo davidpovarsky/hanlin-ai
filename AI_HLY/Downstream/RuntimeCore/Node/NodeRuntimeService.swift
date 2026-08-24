@@ -46,7 +46,9 @@ struct RuntimeHostConnection: Sendable {
 struct TypeScriptCompilationResult: Codable, Sendable {
     struct Diagnostic: Codable, Sendable, Identifiable {
         let code: Int
+        let category: String?
         let message: String
+        let file: String?
         let line: Int?
         let column: Int?
         var id: String { "\(code):\(line ?? 0):\(column ?? 0):\(message)" }
@@ -59,6 +61,8 @@ struct TypeScriptCompilationResult: Codable, Sendable {
 }
 
 struct TypeScriptProjectCompilationResult: Codable, Sendable {
+    let compilerVersion: String?
+    let compilerIntegrity: String?
     let diagnostics: [TypeScriptCompilationResult.Diagnostic]
     let emittedFiles: [String]
     let succeeded: Bool

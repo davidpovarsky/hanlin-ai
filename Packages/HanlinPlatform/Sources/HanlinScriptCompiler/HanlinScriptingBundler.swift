@@ -23,13 +23,13 @@ public struct HanlinVirtualCompilerOptions: Codable, Hashable, Sendable {
     public let jsxRuntime: String
 
     public init(
-        target: String = "ES2022",
-        module: String = "ESNext",
-        moduleResolution: String = "Bundler",
+        target: String = "ESNext",
+        module: String = "CommonJS",
+        moduleResolution: String = "Node10",
         strict: Bool = true,
         sourceMap: Bool = true,
         skipLibCheck: Bool = false,
-        jsxRuntime: String = "react-jsx"
+        jsxRuntime: String = "react"
     ) {
         self.target = target
         self.module = module
@@ -109,6 +109,8 @@ public struct HanlinCompiledModule: Codable, Hashable, Sendable {
 }
 
 public struct HanlinTrustedCompilerResult: Codable, Hashable, Sendable {
+    public let typecheckCompilerVersion: String
+    public let typecheckCompilerIntegrity: String
     public let compilerVersion: String
     public let compilerIntegrity: String
     public let buildFingerprint: String
@@ -117,6 +119,8 @@ public struct HanlinTrustedCompilerResult: Codable, Hashable, Sendable {
     public let modules: [HanlinCompiledModule]
 
     public init(
+        typecheckCompilerVersion: String = HanlinScriptingBundler.typecheckCompilerVersion,
+        typecheckCompilerIntegrity: String = HanlinScriptingBundler.typecheckCompilerIntegrity,
         compilerVersion: String,
         compilerIntegrity: String,
         buildFingerprint: String,
@@ -124,6 +128,8 @@ public struct HanlinTrustedCompilerResult: Codable, Hashable, Sendable {
         resolvedGraph: HanlinPackageDependencyGraph,
         modules: [HanlinCompiledModule]
     ) {
+        self.typecheckCompilerVersion = typecheckCompilerVersion
+        self.typecheckCompilerIntegrity = typecheckCompilerIntegrity
         self.compilerVersion = compilerVersion
         self.compilerIntegrity = compilerIntegrity
         self.buildFingerprint = buildFingerprint
@@ -164,8 +170,10 @@ public enum HanlinScriptingBundlerError: Error, Equatable, Sendable {
 }
 
 public struct HanlinScriptingBundler: Sendable {
-    public static let compilerVersion = "7.0.2"
-    public static let compilerIntegrity = "sha512-8FYau96o3NKOhbjKi/qNvG/W5jhzxkbdm5sj9AbZ/5T5sWqn3hJgLfGx27sRKZWTvyzCP8dLRBTf5tBTSRVUNA=="
+    public static let typecheckCompilerVersion = "7.0.2"
+    public static let typecheckCompilerIntegrity = "sha512-8FYau96o3NKOhbjKi/qNvG/W5jhzxkbdm5sj9AbZ/5T5sWqn3hJgLfGx27sRKZWTvyzCP8dLRBTf5tBTSRVUNA=="
+    public static let compilerVersion = "6.0.3"
+    public static let compilerIntegrity = "sha512-y2TvuxSZPDyQakkFRPZHKFm+KKVqIisdg9/CZwm9ftvKXLP8NRWj38/ODjNbr43SsoXqNuAisEf1GdCxqWcdBw=="
 
     private let baseline: HanlinCompatibilityInventory
     private let abiVersion: String
@@ -202,6 +210,13 @@ public struct HanlinScriptingBundler: Sendable {
             options: options
         )
         let result = try await compiler.compile(project)
+        guard result.typecheckCompilerVersion == Self.typecheckCompilerVersion,
+              result.typecheckCompilerIntegrity == Self.typecheckCompilerIntegrity else {
+            throw HanlinScriptingBundlerError.compilerVersionMismatch(
+                expected: Self.typecheckCompilerVersion,
+                actual: result.typecheckCompilerVersion
+            )
+        }
         guard result.compilerVersion == Self.compilerVersion else {
             throw HanlinScriptingBundlerError.compilerVersionMismatch(
                 expected: Self.compilerVersion,
@@ -221,6 +236,8 @@ public struct HanlinScriptingBundler: Sendable {
         let optionsHash = try digest(options)
         let fingerprintInput = [
             package.source.contentSHA256,
+            Self.typecheckCompilerVersion,
+            Self.typecheckCompilerIntegrity,
             Self.compilerVersion,
             Self.compilerIntegrity,
             baseline.baselineID,
@@ -280,6 +297,41 @@ public struct HanlinScriptingBundler: Sendable {
         try encoder.encode(bundle.manifest).write(
             to: root.appending(path: "artifact-manifest.json", directoryHint: .notDirectory),
             options: .atomic
+        )
+    }
+
+    public func merged(_ bundles: [HanlinScriptingBundle]) throws -> HanlinScriptingBundle {
+        guard let first = bundles.first else { throw HanlinScriptingBundlerError.previewRejected }
+        let manifests = bundles.map(\.manifest)
+        guard manifests.allSatisfy({ manifest in
+            manifest.compilerVersion == first.manifest.compilerVersion
+                && manifest.compilerIntegrity == first.manifest.compilerIntegrity
+                && manifest.compilerOptionsHash == first.manifest.compilerOptionsHash
+                && manifest.baselineID == first.manifest.baselineID
+                && manifest.baselineDigest == first.manifest.baselineDigest
+                && manifest.hanlinABIVersion == first.manifest.hanlinABIVersion
+                && manifest.packageContentDigest == first.manifest.packageContentDigest
+        }) else { throw HanlinScriptingBundlerError.invalidCompilerOutput("inconsistent_bundle_provenance") }
+        let modules = try validatedModules(bundles.flatMap(\.modules))
+        let files = manifests.flatMap(\.files).sorted { $0.logicalPath < $1.logicalPath }
+        guard Set(files.map(\.logicalPath)).count == files.count else {
+            throw HanlinScriptingBundlerError.invalidCompilerOutput("duplicate_artifact_path")
+        }
+        let fingerprint = Self.sha256(Data(manifests.map(\.cacheFingerprint).sorted().joined(separator: "\n").utf8))
+        return .init(
+            manifest: .init(
+                compilerVersion: first.manifest.compilerVersion,
+                compilerIntegrity: first.manifest.compilerIntegrity,
+                compilerOptionsHash: first.manifest.compilerOptionsHash,
+                baselineID: first.manifest.baselineID,
+                baselineDigest: first.manifest.baselineDigest,
+                hanlinABIVersion: first.manifest.hanlinABIVersion,
+                packageContentDigest: first.manifest.packageContentDigest,
+                cacheFingerprint: fingerprint,
+                files: files
+            ),
+            modules: modules,
+            diagnostics: bundles.flatMap(\.diagnostics)
         )
     }
 

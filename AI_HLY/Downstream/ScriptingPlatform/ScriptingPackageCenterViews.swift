@@ -27,7 +27,7 @@ struct ScriptingPackageImportView: View {
             }
 
             if let preview = platform.preview {
-                ScriptingImportPreviewSections(preview: preview)
+                ScriptingImportPreviewSections(preview: preview, platform: platform)
                 Section {
                     Button("Install") { Task { await platform.installPreview() } }
                         .disabled(!preview.canInstall || platform.activity == .installing)
@@ -71,6 +71,7 @@ struct ScriptingPackageImportView: View {
 
 private struct ScriptingImportPreviewSections: View {
     let preview: HanlinImportPreview
+    let platform: HanlinScriptingPlatform
 
     var body: some View {
         Section("Package") {
@@ -94,9 +95,18 @@ private struct ScriptingImportPreviewSections: View {
         }
         if !preview.requestedCapabilities.isEmpty {
             Section("Permissions") {
-                ForEach(preview.requestedCapabilities, id: \.capabilityID) {
-                    Label($0.capabilityID.rawValue, systemImage: "hand.raised")
+                ForEach(preview.requestedCapabilities, id: \.capabilityID) { request in
+                    Toggle(
+                        request.capabilityID.rawValue,
+                        isOn: Binding(
+                            get: { platform.approvedCapabilities.contains(request.capabilityID) },
+                            set: { platform.setCapabilityApproved($0, capability: request.capabilityID) }
+                        )
+                    )
                 }
+                Text("Required capabilities must be approved explicitly. They remain package-scoped and can be revoked from package details.")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
             }
         }
         if !preview.findings.isEmpty {

@@ -17,7 +17,7 @@ struct HanlinScriptingBundlerTests {
         let second = try await bundler.bundle(package: fixture.package, preview: fixture.preview, context: .app)
 
         #expect(first == second)
-        #expect(first.manifest.compilerVersion == "7.0.2")
+        #expect(first.manifest.compilerVersion == "6.0.3")
         #expect(first.manifest.compilerOptionsHash.count == 64)
         #expect(first.manifest.cacheFingerprint.count == 64)
         let receivedProject = await compiler.lastProject()
@@ -53,10 +53,10 @@ struct HanlinScriptingBundlerTests {
             )
         }
 
-        let wrongCompiler = CompilerStub(result: result(compilerVersion: "7.0.3"))
+        let wrongCompiler = CompilerStub(result: result(compilerVersion: "6.0.4"))
         await #expect(throws: HanlinScriptingBundlerError.compilerVersionMismatch(
-            expected: "7.0.2",
-            actual: "7.0.3"
+            expected: "6.0.3",
+            actual: "6.0.4"
         )) {
             try await makeBundler(compiler: wrongCompiler).bundle(
                 package: fixture.package,
@@ -194,7 +194,7 @@ struct HanlinScriptingBundlerTests {
     private func successfulResult() -> HanlinTrustedCompilerResult { result() }
 
     private func result(
-        compilerVersion: String = "7.0.2",
+        compilerVersion: String = "6.0.3",
         graph: HanlinPackageDependencyGraph = .init(
             modules: ["index.tsx", "lib/value.ts"],
             edges: [.init(importer: "index.tsx", specifier: "./lib/value", resolvedPath: "lib/value.ts")]

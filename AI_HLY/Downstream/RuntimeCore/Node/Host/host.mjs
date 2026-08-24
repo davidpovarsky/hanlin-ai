@@ -90,6 +90,7 @@ const installs = new Map();
 const installProgress = new Map();
 const maximumBody = 10 * 1024 * 1024;
 const maximumLine = 8 * 1024 * 1024;
+const typescriptCompilerIntegrity = 'sha512-y2TvuxSZPDyQakkFRPZHKFm+KKVqIisdg9/CZwm9ftvKXLP8NRWj38/ODjNbr43SsoXqNuAisEf1GdCxqWcdBw==';
 const gracefulStopTimeoutMilliseconds = 3_000;
 const lifecycleCounters = {
   workerCreationCount: 0,
@@ -405,9 +406,22 @@ async function compileTypeScriptProject(body) {
   }
   const normalized = diagnostics.map(diagnostic => {
     const position = diagnostic.file && typeof diagnostic.start === 'number' ? diagnostic.file.getLineAndCharacterOfPosition(diagnostic.start) : null;
-    return { code: diagnostic.code, message: ts.flattenDiagnosticMessageText(diagnostic.messageText, '\n'), line: position ? position.line + 1 : null, column: position ? position.character + 1 : null };
+    return {
+      code: diagnostic.code,
+      category: ts.DiagnosticCategory[diagnostic.category]?.toLowerCase() ?? 'error',
+      message: ts.flattenDiagnosticMessageText(diagnostic.messageText, '\n'),
+      file: diagnostic.file?.fileName ? path.relative(workspace, diagnostic.file.fileName) : null,
+      line: position ? position.line + 1 : null,
+      column: position ? position.character + 1 : null,
+    };
   });
-  return { diagnostics: normalized, emittedFiles, succeeded: !diagnostics.some(item => item.category === ts.DiagnosticCategory.Error) };
+  return {
+    compilerVersion: ts.version,
+    compilerIntegrity: typescriptCompilerIntegrity,
+    diagnostics: normalized,
+    emittedFiles: emittedFiles.sort(),
+    succeeded: !diagnostics.some(item => item.category === ts.DiagnosticCategory.Error),
+  };
 }
 
 function validatedEnvironment(value) {

@@ -6,6 +6,7 @@ struct RuntimeFileLayout: Sendable {
         case agents
         case tools
         case mcp
+        case scripting
     }
 
     let root: URL

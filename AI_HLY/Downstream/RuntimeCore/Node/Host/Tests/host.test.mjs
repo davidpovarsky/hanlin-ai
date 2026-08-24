@@ -192,6 +192,8 @@ test('host redirects npm state before preview and install modules initialize', a
       arguments: ['--project', 'tsconfig.json'],
     });
     assert.equal(project.succeeded, true, JSON.stringify(project.diagnostics));
+    assert.equal(project.compilerVersion, '6.0.3');
+    assert.equal(project.compilerIntegrity, 'sha512-y2TvuxSZPDyQakkFRPZHKFm+KKVqIisdg9/CZwm9ftvKXLP8NRWj38/ODjNbr43SsoXqNuAisEf1GdCxqWcdBw==');
     assert.ok(project.emittedFiles.includes(path.join('dist', 'setup.js')));
 
     const timedOut = await hostRequest(ready.port, launchToken, '/v1/executions', {

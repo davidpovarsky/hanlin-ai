@@ -244,7 +244,7 @@ private struct Fixture {
             context: .app
         )
         let manifest = HanlinPackageArtifactManifest(
-            compilerVersion: "7.0.2",
+            compilerVersion: "6.0.3",
             compilerIntegrity: "sha512-fixture",
             compilerOptionsHash: String(repeating: "a", count: 64),
             baselineID: "fixture",

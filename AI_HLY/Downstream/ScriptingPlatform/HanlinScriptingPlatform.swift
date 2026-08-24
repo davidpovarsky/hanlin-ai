@@ -26,11 +26,13 @@ final class HanlinScriptingPlatform {
     private(set) var installedPackages: [HanlinStoredPackageSnapshot] = []
     private(set) var bootstrapError: String?
     private(set) var pendingResumeCommands: [HanlinScriptResumeCommand] = []
+    private(set) var approvedCapabilities: Set<HanlinCapabilityID> = []
 
     private let packageCenter = HanlinPackageCenter()
     private var stagedPackage: HanlinStagedPackage?
     private var analyzer: HanlinScriptAnalyzer?
     private var store: HanlinAtomicScriptStore?
+    private var bundler: HanlinScriptingBundler?
     private var extensionStore: HanlinScriptExtensionStore?
     private let stagingRoot: URL?
 
@@ -51,6 +53,25 @@ final class HanlinScriptingPlatform {
                     )
                 }
             ))
+            bundler = HanlinScriptingBundler(
+                baseline: .init(
+                    baselineID: metadata.baselineID,
+                    baselineDigest: metadata.baselineDigest,
+                    symbols: try metadata.records.map { record in
+                        .init(
+                            symbol: record.symbol,
+                            state: record.state,
+                            requiredCapability: try record.capability.map(HanlinCapabilityID.init(validating:)),
+                            allowedContexts: record.contexts.contains("all")
+                                ? Set(HanlinExecutionContext.allCases)
+                                : Set(record.contexts.compactMap(HanlinExecutionContext.init(rawValue:)))
+                        )
+                    }
+                ),
+                abiVersion: HanlinScriptContractSupport.multiRuntime.abiVersion.description,
+                scriptingDeclarations: try HanlinScriptingSDK.declarations(),
+                compiler: HanlinNodeMobileScriptingCompiler()
+            )
             let applicationSupport = try Self.applicationSupportDirectory()
             let platformRoot = applicationSupport.appending(path: "ScriptingPlatform", directoryHint: .isDirectory)
             let staging = platformRoot.appending(path: "ImportStaging", directoryHint: .isDirectory)
@@ -115,22 +136,106 @@ final class HanlinScriptingPlatform {
     }
 
     func installPreview() async {
-        guard let preview, preview.canInstall, stagedPackage != nil else {
+        guard let preview, preview.canInstall, let stagedPackage,
+              let store, let bundler, let stagingRoot else {
             activity = .failed("This package did not pass Import Preview.")
             return
         }
+        let required = Set(preview.requestedCapabilities.filter(\.required).map(\.capabilityID))
+        guard required.isSubset(of: approvedCapabilities) else {
+            activity = .failed("Approve every required capability before installing this package.")
+            return
+        }
         activity = .installing
-        // Installation deliberately remains closed until Commit 7 can provide a
-        // signed, in-process iOS build of the exact TypeScript 7.0.2 compiler.
-        activity = .failed(
-            "TypeScript 7.0.2 has no iOS compiler artifact. The package remains staged and no catalog state was changed."
+        let artifactRoot = stagingRoot.appending(
+            path: "artifact-\(UUID().uuidString.lowercased())",
+            directoryHint: .isDirectory
         )
+        do {
+            let installed = try await Task.detached(priority: .userInitiated) {
+                defer { try? FileManager.default.removeItem(at: artifactRoot) }
+                try Self.copyPackageSource(from: stagedPackage.packageRoot, to: artifactRoot)
+                let contexts = Set(preview.entrypoints.map(\.kind)).sorted { $0.rawValue < $1.rawValue }
+                guard !contexts.isEmpty,
+                      !preview.entrypoints.contains(where: { $0.runtimeProfile == .hanlinPython }) else {
+                    throw HanlinScriptingPlatformError.workerCompilerRequired
+                }
+                var bundles: [HanlinScriptingBundle] = []
+                for context in contexts {
+                    bundles.append(try await bundler.bundle(
+                        package: stagedPackage,
+                        preview: preview,
+                        context: context
+                    ))
+                }
+                let compiled = try bundler.merged(bundles)
+                try bundler.write(compiled, to: artifactRoot)
+                let completeManifest = try Self.completeArtifactManifest(
+                    compiled.manifest,
+                    artifactRoot: artifactRoot
+                )
+                try JSONEncoder.canonical.encode(completeManifest).write(
+                    to: artifactRoot.appending(path: "artifact-manifest.json"),
+                    options: .atomic
+                )
+                let packageID = try Self.stablePackageID(for: preview.manifest ?? stagedPackage.manifest)
+                let installedID = try HanlinInstalledPackageID(validating: "install-\(packageID.rawValue)")
+                let version = try HanlinPackageVersion(validating: stagedPackage.manifest.version)
+                let entrypoints = preview.entrypoints.map { descriptor in
+                    HanlinPackageEntrypointDescriptor(
+                        id: descriptor.id,
+                        kind: descriptor.kind,
+                        sourcePath: "source/\(descriptor.sourcePath)",
+                        exportedSymbol: descriptor.exportedSymbol,
+                        supportedContexts: descriptor.supportedContexts,
+                        requiredCapabilities: descriptor.requiredCapabilities,
+                        runtimePolicyID: descriptor.runtimePolicyID,
+                        runtimeProfile: descriptor.runtimeProfile,
+                        artifactDigest: completeManifest.cacheFingerprint,
+                        compatibility: descriptor.compatibility
+                    )
+                }
+                let plan = HanlinInstallPlan(
+                    installedPackageID: installedID,
+                    packageID: packageID,
+                    version: version,
+                    sourceDigest: preview.source.contentSHA256,
+                    entrypoints: entrypoints,
+                    requestedCapabilities: preview.requestedCapabilities,
+                    manifest: stagedPackage.manifest
+                )
+                if try await store.snapshots().contains(where: { $0.record.installedPackageID == installedID }) {
+                    return try await store.update(
+                        plan: plan,
+                        artifactDirectory: artifactRoot,
+                        artifactManifest: completeManifest
+                    )
+                }
+                return try await store.install(
+                    plan: plan,
+                    artifactDirectory: artifactRoot,
+                    artifactManifest: completeManifest
+                )
+            }.value
+            installedPackages = try await store.snapshots()
+            _ = installed
+            discardPreview()
+            activity = .idle
+        } catch {
+            activity = .failed(Self.safeMessage(error))
+        }
+    }
+
+    func setCapabilityApproved(_ approved: Bool, capability: HanlinCapabilityID) {
+        if approved { approvedCapabilities.insert(capability) }
+        else { approvedCapabilities.remove(capability) }
     }
 
     func discardPreview() {
         if let stagedPackage { try? packageCenter.discard(stagedPackage) }
         stagedPackage = nil
         preview = nil
+        approvedCapabilities.removeAll(keepingCapacity: false)
         if case .failed = activity {} else { activity = .idle }
     }
 
@@ -159,7 +264,7 @@ final class HanlinScriptingPlatform {
         }
     }
 
-    static func stablePackageID(for manifest: HanlinScriptingManifest) throws -> HanlinPackageID {
+    nonisolated static func stablePackageID(for manifest: HanlinScriptingManifest) throws -> HanlinPackageID {
         let digest = SHA256.hash(data: Data(manifest.name.precomposedStringWithCanonicalMapping.utf8))
             .map { String(format: "%02x", $0) }.joined()
         return try HanlinPackageID(validating: "script-\(digest.prefix(24))")
@@ -174,5 +279,68 @@ final class HanlinScriptingPlatform {
 
     private static func safeMessage(_ error: Error) -> String {
         String(String(describing: error).prefix(512))
+    }
+
+    nonisolated private static func copyPackageSource(from source: URL, to artifactRoot: URL) throws {
+        let destination = artifactRoot.appending(path: "source", directoryHint: .isDirectory)
+        try FileManager.default.createDirectory(at: artifactRoot, withIntermediateDirectories: true)
+        try FileManager.default.copyItem(at: source, to: destination)
+    }
+
+    nonisolated private static func completeArtifactManifest(
+        _ compiled: HanlinPackageArtifactManifest,
+        artifactRoot: URL
+    ) throws -> HanlinPackageArtifactManifest {
+        let sourceRoot = artifactRoot.appending(path: "source", directoryHint: .isDirectory)
+        guard let enumerator = FileManager.default.enumerator(
+            at: sourceRoot,
+            includingPropertiesForKeys: [.isRegularFileKey, .isSymbolicLinkKey],
+            options: [.skipsHiddenFiles]
+        ) else { throw HanlinScriptingPlatformError.artifactEnumerationFailed }
+        var files = compiled.files
+        for case let url as URL in enumerator {
+            let values = try url.resourceValues(forKeys: [.isRegularFileKey, .isSymbolicLinkKey])
+            guard values.isSymbolicLink != true else { throw HanlinScriptingPlatformError.artifactEnumerationFailed }
+            guard values.isRegularFile == true else { continue }
+            let relative = String(url.path().dropFirst(sourceRoot.path().count + 1))
+                .replacingOccurrences(of: "\\", with: "/")
+            let data = try Data(contentsOf: url)
+            files.append(.init(
+                logicalPath: "source/\(relative)",
+                sha256: SHA256.hash(data: data).map { String(format: "%02x", $0) }.joined(),
+                byteCount: Int64(data.count),
+                context: .app
+            ))
+        }
+        files.sort { $0.logicalPath < $1.logicalPath }
+        guard Set(files.map(\.logicalPath)).count == files.count else {
+            throw HanlinScriptingPlatformError.artifactEnumerationFailed
+        }
+        let fingerprint = SHA256.hash(data: Data(files.map { "\($0.logicalPath):\($0.sha256)" }.joined(separator: "\n").utf8))
+            .map { String(format: "%02x", $0) }.joined()
+        return .init(
+            compilerVersion: compiled.compilerVersion,
+            compilerIntegrity: compiled.compilerIntegrity,
+            compilerOptionsHash: compiled.compilerOptionsHash,
+            baselineID: compiled.baselineID,
+            baselineDigest: compiled.baselineDigest,
+            hanlinABIVersion: compiled.hanlinABIVersion,
+            packageContentDigest: compiled.packageContentDigest,
+            cacheFingerprint: fingerprint,
+            files: files
+        )
+    }
+}
+
+private enum HanlinScriptingPlatformError: Error {
+    case workerCompilerRequired
+    case artifactEnumerationFailed
+}
+
+private extension JSONEncoder {
+    static var canonical: JSONEncoder {
+        let encoder = JSONEncoder()
+        encoder.outputFormatting = [.sortedKeys, .withoutEscapingSlashes]
+        return encoder
     }
 }
