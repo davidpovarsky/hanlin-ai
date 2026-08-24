@@ -1,5 +1,4 @@
 import { promises as fs } from 'node:fs';
-import { createRequire } from 'node:module';
 import path from 'node:path';
 import Arborist from '@npmcli/arborist';
 import pacote from 'pacote';
@@ -114,8 +113,8 @@ export async function installPackage({
       audit: false,
       fund: false,
     });
-    await arborist.reify({ omit: ['dev', 'optional'], ignoreScripts: true, signal });
-    await verifyRuntimeDependencyOverrides(packageRoot);
+    const actualTree = await arborist.reify({ omit: ['dev', 'optional'], ignoreScripts: true, signal });
+    verifyRuntimeDependencyOverrides(actualTree);
 
     checkCancelled(signal);
     const selected = resolveEntryPoint(extractedManifest, entryPointOverride);
@@ -349,24 +348,17 @@ function mergeRuntimeOverrides(packageOverrides, runtimeOverrides) {
   };
 }
 
-async function verifyRuntimeDependencyOverrides(packageRoot) {
-  const lock = JSON.parse(await fs.readFile(path.join(packageRoot, 'package-lock.json'), 'utf8'));
+function verifyRuntimeDependencyOverrides(actualTree) {
   const metadata = runtimeDependencyOverrides.packages['fast-uri'];
-  const canonicalPackageRoot = await fs.realpath(packageRoot);
-  const ajvLocations = Object.keys(lock.packages ?? {}).filter(location => (
-    location === 'node_modules/ajv' || location.endsWith('/node_modules/ajv')
-  ));
-  for (const location of ajvLocations) {
-    const ajvManifest = path.join(packageRoot, ...location.split('/'), 'package.json');
-    const fastURIManifest = createRequire(ajvManifest).resolve('fast-uri/package.json');
-    const installed = JSON.parse(await fs.readFile(fastURIManifest, 'utf8'));
-    const lockLocation = path.relative(
-      canonicalPackageRoot,
-      path.dirname(fastURIManifest),
-    ).split(path.sep).join('/');
-    const lockEntry = lock.packages?.[lockLocation];
-    if (installed.version !== metadata.version || lockEntry?.integrity !== metadata.integrity) {
-      throw new Error('Runtime dependency override verification failed for ajv > fast-uri.');
+  for (const ajv of actualTree.inventory.query('name', 'ajv')) {
+    const dependency = ajv.edgesOut.get('fast-uri')?.to;
+    const installedVersion = dependency?.package?.version;
+    const installedIntegrity = dependency?.integrity;
+    if (installedVersion !== metadata.version || installedIntegrity !== metadata.integrity) {
+      throw new Error(
+        'Runtime dependency override verification failed for ajv > fast-uri '
+        + `(version=${installedVersion ?? 'missing'}, integrity=${installedIntegrity ?? 'missing'}).`,
+      );
     }
   }
 }
