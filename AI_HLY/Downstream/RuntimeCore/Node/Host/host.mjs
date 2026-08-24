@@ -469,6 +469,8 @@ async function startServer(id, configuration) {
     resolveExit: exited.resolve,
     stopPromise: null,
     clients: new Set(),
+    stdoutBacklog: [],
+    stdoutBacklogBytes: 0,
     stderr: [],
     pending: Buffer.alloc(0),
     startedAt: new Date().toISOString(),
@@ -691,6 +693,8 @@ async function finalizeServerState(state, result) {
   state.rejectReady(new Error(result.reason ?? `Server worker finalized as ${result.state}.`));
   finishEventClients(state, result.state);
   state.pending = Buffer.alloc(0);
+  state.stdoutBacklog = [];
+  state.stdoutBacklogBytes = 0;
   state.stderr = [];
   if (state.handlers.stdout) state.worker.stdout?.off('data', state.handlers.stdout);
   if (state.handlers.stderr) state.worker.stderr?.off('data', state.handlers.stderr);
@@ -747,6 +751,9 @@ function attachEvents(id, request, response) {
   if (!state) { response.write(`${JSON.stringify({ channel: 'lifecycle', event: 'stopped' })}\n`); return response.end(); }
   state.clients.add(response);
   response.write(`${JSON.stringify({ channel: 'lifecycle', event: state.state })}\n`);
+  for (const line of state.stdoutBacklog) response.write(line);
+  state.stdoutBacklog = [];
+  state.stdoutBacklogBytes = 0;
   request.on('close', () => state.clients.delete(response));
 }
 
@@ -768,6 +775,13 @@ function finishEventClients(state, event) {
 
 function emit(state, channel, payload) {
   const line = `${JSON.stringify({ channel, serverID: state.id, timestamp: new Date().toISOString(), ...payload })}\n`;
+  if (channel === 'stdout' && state.clients.size === 0) {
+    state.stdoutBacklog.push(line);
+    state.stdoutBacklogBytes += Buffer.byteLength(line);
+    while (state.stdoutBacklogBytes > maximumLine && state.stdoutBacklog.length > 1) {
+      state.stdoutBacklogBytes -= Buffer.byteLength(state.stdoutBacklog.shift());
+    }
+  }
   for (const response of state.clients) response.write(line);
   if (channel !== 'stdout') diagnostic(`server_${channel}`, { serverID: state.id, ...payload });
 }

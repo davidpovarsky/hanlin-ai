@@ -352,6 +352,7 @@ function mergeRuntimeOverrides(packageOverrides, runtimeOverrides) {
 async function verifyRuntimeDependencyOverrides(packageRoot) {
   const lock = JSON.parse(await fs.readFile(path.join(packageRoot, 'package-lock.json'), 'utf8'));
   const metadata = runtimeDependencyOverrides.packages['fast-uri'];
+  const canonicalPackageRoot = await fs.realpath(packageRoot);
   const ajvLocations = Object.keys(lock.packages ?? {}).filter(location => (
     location === 'node_modules/ajv' || location.endsWith('/node_modules/ajv')
   ));
@@ -359,7 +360,10 @@ async function verifyRuntimeDependencyOverrides(packageRoot) {
     const ajvManifest = path.join(packageRoot, ...location.split('/'), 'package.json');
     const fastURIManifest = createRequire(ajvManifest).resolve('fast-uri/package.json');
     const installed = JSON.parse(await fs.readFile(fastURIManifest, 'utf8'));
-    const lockLocation = path.relative(packageRoot, path.dirname(fastURIManifest)).split(path.sep).join('/');
+    const lockLocation = path.relative(
+      canonicalPackageRoot,
+      path.dirname(fastURIManifest),
+    ).split(path.sep).join('/');
     const lockEntry = lock.packages?.[lockLocation];
     if (installed.version !== metadata.version || lockEntry?.integrity !== metadata.integrity) {
       throw new Error('Runtime dependency override verification failed for ajv > fast-uri.');

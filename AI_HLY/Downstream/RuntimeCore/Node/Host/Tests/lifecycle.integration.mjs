@@ -140,13 +140,30 @@ test('HTTP host serializes MCP lifecycle and survives stress', { timeout: 240_00
     assert.equal(new Set(duplicateStarts.map(value => value.generation)).size, 1);
     assert.ok(duplicateStarts.every(value => value.state === 'running'));
 
+    const initializeRequest = Buffer.from(JSON.stringify({
+      jsonrpc: '2.0',
+      id: 1,
+      method: 'initialize',
+      params: { protocolVersion: '2025-06-18' },
+    }) + '\n').toString('base64');
+    await post(ready.port, token, `/v1/servers/${serverID}/stdin`, {
+      data: initializeRequest,
+    });
+
     const eventResponse = await fetch(
       `http://127.0.0.1:${ready.port}/v1/servers/${serverID}/events`,
       { headers: { Authorization: `Bearer ${token}` } },
     );
     assert.equal(eventResponse.status, 200);
     const eventReader = eventResponse.body.getReader();
-    await eventReader.read();
+    let firstEvents = '';
+    while (!firstEvents.includes('"channel":"stdout"')) {
+      const eventChunk = await eventReader.read();
+      assert.equal(eventChunk.done, false);
+      firstEvents += new TextDecoder().decode(eventChunk.value);
+    }
+    assert.match(firstEvents, /"channel":"stdout"/);
+    assert.match(firstEvents, /eyJqc29ucnBjIjoiMi4wIiwiaWQiOjEsInJlc3VsdCI6/);
 
     const duplicateStops = await Promise.all(Array.from(
       { length: 8 },
