@@ -1335,6 +1335,11 @@ jobs:
           rm -rf build/SimulatorRuntimeApp
           mkdir -p build/SimulatorRuntimeApp
           ditto "$APP_PATH" build/SimulatorRuntimeApp/AI_Hanlin.app
+          # A restored DerivedData cache can leave the downstream test bundle in
+          # the product app. Keep the runtime copy representative of the shipped
+          # application before validating its dyld closure and launching it.
+          rm -rf build/SimulatorRuntimeApp/AI_Hanlin.app/PlugIns/AI_HLYTests.xctest
+          test ! -e build/SimulatorRuntimeApp/AI_Hanlin.app/PlugIns/AI_HLYTests.xctest
 
       - name: Measure same-run simulator no-op rebuild
         if: ${{ inputs.measure_warm_rebuild }}
