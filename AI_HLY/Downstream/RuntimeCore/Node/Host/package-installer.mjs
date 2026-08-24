@@ -341,10 +341,6 @@ function mergeRuntimeOverrides(packageOverrides, runtimeOverrides) {
   return {
     ...packageValues,
     ...runtimeOverrides,
-    ajv: {
-      ...(packageValues.ajv && typeof packageValues.ajv === 'object' ? packageValues.ajv : {}),
-      ...runtimeOverrides.ajv,
-    },
   };
 }
 

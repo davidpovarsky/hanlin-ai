@@ -77,7 +77,7 @@ if (manifest.engines?.node !== lock.node.version) throw new Error('Host Node eng
 if (manifest.dependencies?.typescript !== lock.typescript.version) throw new Error('TypeScript version does not match the runtime lock');
 if (packageLock.packages?.['']?.dependencies?.typescript !== lock.typescript.version) throw new Error('package-lock TypeScript version is inconsistent');
 if (overrides.schemaVersion !== 1) throw new Error('Runtime dependency overrides schema is unsupported');
-if (overrides.overrides?.ajv?.['fast-uri'] !== overrides.packages?.['fast-uri']?.version) throw new Error('fast-uri override metadata is inconsistent');
+if (overrides.overrides?.['fast-uri'] !== overrides.packages?.['fast-uri']?.version) throw new Error('fast-uri override metadata is inconsistent');
 if (!/^sha512-/.test(overrides.packages?.['fast-uri']?.integrity ?? '')) throw new Error('fast-uri override integrity is missing');
 NODE
 
