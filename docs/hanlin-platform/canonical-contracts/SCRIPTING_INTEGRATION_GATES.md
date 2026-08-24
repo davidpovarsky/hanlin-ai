@@ -47,7 +47,7 @@ choice; no engine fallback is permitted.
 | SG-7 | Partial | ScriptUI and generic extensions exist; Xcode, device and real-fixture evidence remain |
 | SG-8 | Partial | Multi-tool schemas, routing, structured results and cancellation exist; production-package and approval/progress evidence remain |
 | SG-9 | Implemented; verification pending | Atomic generations, recovery and stale-integrity isolation exist; Xcode migration/device evidence remains |
-| SG-10 | Blocked | One fixture is missing, SG-2 is blocked, performance is unmeasured and no approved Xcode run has occurred |
+| SG-10 | Blocked | Run `32693925085` passed the implemented Xcode/Simulator surface; one fixture is missing, SG-2 remains blocked, physical-device real-package acceptance is absent, and performance is unmeasured |
 
 ## 3. Gates
 

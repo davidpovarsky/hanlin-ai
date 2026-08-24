@@ -20,7 +20,8 @@ UI presence, a placeholder, or a declaration-only binding is not completion.
 - [x] Swift does not parse engine messages to classify resource failures.
 - [x] Timeout, memory, stack, output, cancellation, and disposal are separate tests.
 - [x] Test fixtures are bundled and have no checkout-path fallback.
-- [ ] Targeted Xcode 26 engine tests pass on the exact implementation commit.
+- [x] Xcode 26 engine tests pass on exact implementation commit
+  `af8b8288507614c2db1853ca724c4652df571a1f` in run `32693925085`.
 
 ## Package, compiler, and runtime
 
@@ -70,8 +71,9 @@ UI presence, a placeholder, or a declaration-only binding is not completion.
 - [ ] SG-0 through SG-10 are closed with code and test links.
 - [x] Performance budgets, migrations, corruption recovery, authoring guide,
   diagnostics, and troubleshooting are documented.
-- [ ] After explicit authorization, targeted CI passes first and one full CI
-  run passes on the same or documented successor commit.
+- [x] After explicit authorization, targeted CI passed first and full CI run
+  `32693925085` passed on documented successor commit
+  `af8b8288507614c2db1853ca724c4652df571a1f`.
 
 ## Immutable acceptance inputs
 

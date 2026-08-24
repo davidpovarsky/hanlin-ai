@@ -25,8 +25,11 @@ Still not complete: the Package Center production install method remains
 closed, Node/Python Hybrid worker entrypoints are not yet published through the
 package registry, and the Python `scripting` compatibility module is absent.
 JSC hard memory/time limits are unsupported by verified public API and are not
-claimed. Local Node fixture checks pass; Swift/Xcode and acceptance evidence is
-pending.
+claimed. Local Node fixture checks pass. The implemented core, extension
+targets, Release device build, unsigned IPA, and iPad Simulator acceptance
+passed full workflow run `32693925085` on exact implementation commit
+`af8b8288507614c2db1853ca724c4652df571a1f`; this is not physical-device or
+real-Scripting-package evidence and does not close the remaining gates.
 
 ## Earlier full Scripting work
 
@@ -65,17 +68,18 @@ Current release truth:
   Package Center integration for that lane is not yet implemented;
 - five supplied acceptance packages match their locked SHA-256 values. The
   sixth package, `זמני היום ולוח לימוד יומי 3.zip`, has not been supplied;
-- Windows has no functioning Apple SDK/Xcode environment, and the local Swift
-  toolchain exits before compilation. Swift package tests, the extension target,
-  performance measurements, simulator/device acceptance and full SG-10 evidence
-  remain unverified;
-- GitHub Actions for this continuation have not run yet. Gate states and exact closing evidence are recorded in
+- Windows has no functioning Apple SDK/Xcode environment. GitHub Actions run
+  `32693925085` verified package tests, extension compilation, a Release iOS 26
+  device build, unsigned IPA packaging, and iPad Simulator acceptance. Physical
+  device execution, real-package acceptance, and performance measurements remain
+  unverified, so SG-10 stays open;
+- exact gate states and remaining evidence are recorded in
   `canonical-contracts/SCRIPTING_INTEGRATION_GATES.md`.
 
 Historical statements below that say Phase 2 had not started describe their
 dated checkpoints and do not revoke the 2026-08-24 authorization.
 
-## MCP lifecycle stabilization — local implementation pending Xcode acceptance
+## MCP lifecycle stabilization — Xcode and Simulator accepted
 
 The existing downstream MCP layer now separates versioned, recoverable
 registry data from per-server runtime slots; routes chat schema and tool
@@ -87,8 +91,8 @@ capabilities. Node fixture, HTTP lifecycle stress, pinned server-everything,
 and pinned CabLate coverage are part of the downstream test surface.
 
 This is a stabilization of the existing MCP/RuntimeCore implementation. It
-does not start HanlinPlatform Phase 2. macOS/Xcode simulator acceptance remains
-required before claiming iPad behavior.
+does not start HanlinPlatform Phase 2. The CI iPad Simulator evidence does not
+claim physical-device behavior.
 
 The current local follow-up also corrects the legacy MCP path migration and
 multi-server failure boundary. The root cause was the earlier
@@ -98,7 +102,7 @@ directories and registry JSON were copied, but persisted absolute
 before that transition could therefore retain an old app-container/root prefix
 while later installations were valid.
 
-Implemented locally, pending Xcode acceptance:
+Implemented and accepted by Xcode/Simulator CI:
 
 - UUID-derived canonical package roots and validated relative entry points;
 - idempotent load/start migration persisted through the recoverable registry;
@@ -114,15 +118,18 @@ Implemented locally, pending Xcode acceptance:
 
 Local Node 24.5.0 evidence:
 
-- all 43 deterministic host tests passed;
+- all 44 deterministic host tests passed;
 - lifecycle stress passed with one Worker per server and no forced termination;
 - `server-everything@2026.7.4` exposed 13 tools;
 - `server-memory@2026.7.4` exposed 9 tools;
 - `server-sequential-thinking@2026.7.4` exposed 1 tool;
-- CabLate Google Maps regression passed.
+- CabLate installation reached its runtime probe locally but the Windows Node
+  loader repeatedly returned internal `Unexpected module status 3`; the pinned
+  CabLate regression passed on macOS CI.
 
-No GitHub Actions, Xcode build, simulator launch, or device acceptance has run
-for this follow-up yet. Phase 2 remains unstarted.
+GitHub Actions run `32693925085` passed the MCP host checks, Xcode build,
+unsigned IPA packaging, simulator launch, and MCP acceptance. No physical-device
+runtime acceptance ran. Phase 2 remains unstarted.
 
 ## Phase 0 — complete
 

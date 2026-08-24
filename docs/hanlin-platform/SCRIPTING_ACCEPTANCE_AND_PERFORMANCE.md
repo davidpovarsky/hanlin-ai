@@ -1,6 +1,6 @@
 # Scripting acceptance and performance
 
-Status: local infrastructure complete; end-to-end acceptance blocked.
+Status: core Xcode/Simulator verification passed; real-package end-to-end acceptance blocked.
 
 ## Immutable inputs
 
@@ -18,12 +18,12 @@ successful Import Preview does not imply compile, install, or execution.
 
 | Stage | Required evidence | Current result |
 | --- | --- | --- |
-| Import/analyzer | deterministic preview JSON and zero execution | blocked locally: Swift toolchain cannot run; production analyzer exists |
+| Import/analyzer | deterministic preview JSON and zero execution | analyzer and Xcode tests pass; real acceptance packages remain blocked by the production install path |
 | Compile | TS 7.0.2 host typecheck plus TS 6.0.3 device emission, graph, JS, maps and fingerprint | contract implemented; production NodeMobile adapter and Xcode proof pending |
 | Install/relaunch | atomic record, generation, catalog restoration | store fault tests exist; real package blocked by compile |
 | Launch/render/events | JSC compatibility or QuickJS secure session plus ScriptUI snapshots/patches | persistent JSC and QuickJS component tests exist; real package blocked by install |
 | Permissions | allow, deny, expiry and revoke with audit | broker tests exist; real package blocked by compile/install |
-| Entrypoints | app, tools, widget, intent and live activity | generic host infrastructure exists; Xcode/device verification pending |
+| Entrypoints | app, tools, widget, intent and live activity | generic hosts compile and simulator acceptance passes; real fixtures and physical-device execution remain pending |
 | Update/removal | diff, rollback generation, uninstall and cleanup | atomic store tests exist; real package blocked by compile |
 
 ## Release performance budgets
