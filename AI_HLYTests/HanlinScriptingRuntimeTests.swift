@@ -162,6 +162,78 @@ struct HanlinJavaScriptCoreEngineTests {
     }
 }
 
+@Suite("Trusted Scripting worker routes", .serialized)
+struct HanlinTrustedWorkerRouteTests {
+    @Test("NodeMobile worker registers and invokes multiple typed tools")
+    func nodeWorkerInvocation() async throws {
+        let session = try HanlinNodeWorkerSession(
+            identifier: "test-node-\(UUID().uuidString.lowercased())"
+        )
+        defer { Task { await session.dispose() } }
+        try await session.loadProgram(
+            #"""
+            AssistantTool.registerExecuteTool((parameters) => ({
+              success: true,
+              message: `node:${parameters.value}`
+            }));
+            AssistantTool.registerExecuteTool((parameters) => ({
+              success: true,
+              message: "node-second",
+              data: { received: parameters.value }
+            }));
+            """#,
+            filename: "assistant_tool.js",
+            expectedToolCount: 2
+        )
+        let result = try await session.invoke(
+            toolIndex: 1,
+            parameters: .object(["value": .string("typed")])
+        )
+        guard case let .object(fields) = result,
+              case let .bool(success)? = fields["success"],
+              case let .object(data)? = fields["data"],
+              case let .string(received)? = data["received"] else {
+            Issue.record("Node worker result did not cross the canonical bridge")
+            return
+        }
+        #expect(success)
+        #expect(received == "typed")
+    }
+
+    @Test("Python worker exposes the scripting compatibility module")
+    func pythonWorkerInvocation() async throws {
+        let session = try HanlinPythonWorkerSession(
+            identifier: "test-python-\(UUID().uuidString.lowercased())"
+        )
+        defer { Task { await session.dispose() } }
+        try await session.loadProgram(
+            #"""
+            from scripting import AssistantTool
+
+            @AssistantTool.register_execute_tool
+            def execute(parameters):
+                return {
+                    "success": True,
+                    "message": "python:" + parameters["value"],
+                    "data": {"received": parameters["value"]}
+                }
+            """#,
+            filename: "assistant_tool.py",
+            expectedToolCount: 1
+        )
+        let result = try await session.invoke(
+            toolIndex: 0,
+            parameters: .object(["value": .string("typed")])
+        )
+        guard case let .object(fields) = result,
+              case let .string(message)? = fields["message"] else {
+            Issue.record("Python worker result did not cross the canonical bridge")
+            return
+        }
+        #expect(message == "python:typed")
+    }
+}
+
 @Suite("Isolated QuickJS engine", .serialized)
 struct HanlinQuickJSEngineTests {
     @Test("Preserves canonical number, negative-zero, Unicode-key, and nested semantics")

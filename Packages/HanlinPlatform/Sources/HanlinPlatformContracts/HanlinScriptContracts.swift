@@ -293,13 +293,24 @@ public struct HanlinScriptPackageManifest: Codable, Hashable, Sendable {
                 message: "Script entry paths must be normalized package-local relative paths."
             ))
         }
-        if !entrypoint.sourcePath.hasSuffix(".ts")
-            || !entrypoint.compiledPath.hasSuffix(".js")
-            || entrypoint.sourcePath == entrypoint.compiledPath {
+        let sourceExtension = URL(filePath: entrypoint.sourcePath).pathExtension.lowercased()
+        let compiledExtension = URL(filePath: entrypoint.compiledPath).pathExtension.lowercased()
+        let validEntrypointMapping = switch runtime.profile {
+        case .hanlinPython:
+            sourceExtension == "py" && compiledExtension == "py"
+                && entrypoint.sourcePath == entrypoint.compiledPath
+        case .scriptingJSC, .hanlinQuickJS, .hanlinNode:
+            ["ts", "tsx", "js", "jsx"].contains(sourceExtension)
+                && compiledExtension == "js"
+                && entrypoint.sourcePath != entrypoint.compiledPath
+        }
+        if !validEntrypointMapping {
             issues.append(.init(
                 code: .invalidCompiler,
                 path: "entrypoint",
-                message: "A Script entrypoint must map a TypeScript source to a distinct JavaScript artifact."
+                message: runtime.profile == .hanlinPython
+                    ? "A Python worker entrypoint must reference one integrity-checked Python source artifact."
+                    : "A JavaScript worker entrypoint must map a supported source module to a distinct JavaScript artifact."
             ))
         }
         if entrypoint.exportedTools.isEmpty {

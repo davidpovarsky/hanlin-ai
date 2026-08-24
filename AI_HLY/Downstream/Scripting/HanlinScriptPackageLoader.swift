@@ -6,7 +6,7 @@ struct HanlinLoadedScriptPackage: Sendable {
     let manifest: HanlinScriptPackageManifest
     let installedPackageID: HanlinInstalledPackageID
     let providerInstanceID: HanlinProviderInstanceID
-    let javaScript: String
+    let program: String
     let runtimeProfile: HanlinRuntimeProfile
 }
 
@@ -59,8 +59,9 @@ enum HanlinScriptPackageLoader {
             == manifest.integrity.digest else {
             throw HanlinScriptingError.compilerArtifactMismatch
         }
-        guard let javaScript = String(data: compiled, encoding: .utf8) else {
-            throw HanlinScriptingError.invalidPackage("compiled_source_not_utf8")
+        let programData = manifest.runtime.profile == .hanlinPython ? source : compiled
+        guard let program = String(data: programData, encoding: .utf8) else {
+            throw HanlinScriptingError.invalidPackage("entrypoint_not_utf8")
         }
 
         let identitySuffix = String(manifest.integrity.digest.prefix(32))
@@ -72,7 +73,7 @@ enum HanlinScriptPackageLoader {
             providerInstanceID: try HanlinProviderInstanceID(
                 validating: "script.\(identitySuffix)"
             ),
-            javaScript: javaScript,
+            program: program,
             runtimeProfile: manifest.runtime.profile
         )
     }

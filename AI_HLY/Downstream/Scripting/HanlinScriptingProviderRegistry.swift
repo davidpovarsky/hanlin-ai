@@ -40,12 +40,18 @@ actor HanlinScriptingProviderRegistry {
     private enum Session: Sendable {
         case javaScriptCore(HanlinJavaScriptCoreSession)
         case quickJS(HanlinQuickJSSession)
+        case node(HanlinNodeWorkerSession)
+        case python(HanlinPythonWorkerSession)
 
         func loadProgram(_ source: String, filename: String, expectedToolCount: Int) async throws {
             switch self {
             case let .javaScriptCore(session):
                 try await session.loadProgram(source, filename: filename, expectedToolCount: expectedToolCount)
             case let .quickJS(session):
+                try await session.loadProgram(source, filename: filename, expectedToolCount: expectedToolCount)
+            case let .node(session):
+                try await session.loadProgram(source, filename: filename, expectedToolCount: expectedToolCount)
+            case let .python(session):
                 try await session.loadProgram(source, filename: filename, expectedToolCount: expectedToolCount)
             }
         }
@@ -54,6 +60,8 @@ actor HanlinScriptingProviderRegistry {
             switch self {
             case let .javaScriptCore(session): try await session.invoke(toolIndex: toolIndex, parameters: parameters)
             case let .quickJS(session): try await session.invoke(toolIndex: toolIndex, parameters: parameters)
+            case let .node(session): try await session.invoke(toolIndex: toolIndex, parameters: parameters)
+            case let .python(session): try await session.invoke(toolIndex: toolIndex, parameters: parameters)
             }
         }
 
@@ -61,6 +69,8 @@ actor HanlinScriptingProviderRegistry {
             switch self {
             case let .javaScriptCore(session): await session.dispose()
             case let .quickJS(session): await session.dispose()
+            case let .node(session): await session.dispose()
+            case let .python(session): await session.dispose()
             }
         }
     }
@@ -88,12 +98,14 @@ actor HanlinScriptingProviderRegistry {
         let session: Session = switch package.runtimeProfile {
         case .scriptingJSC: .javaScriptCore(try HanlinJavaScriptCoreSession())
         case .hanlinQuickJS: .quickJS(try HanlinQuickJSSession())
-        case .hanlinNode, .hanlinPython:
-            throw HanlinScriptingError.unsupportedABI("worker_entrypoint_requires_typed_worker_route")
+        case .hanlinNode:
+            .node(try HanlinNodeWorkerSession(identifier: package.providerInstanceID.rawValue))
+        case .hanlinPython:
+            .python(try HanlinPythonWorkerSession(identifier: package.providerInstanceID.rawValue))
         }
         do {
             try await session.loadProgram(
-                package.javaScript,
+                package.program,
                 filename: package.manifest.entrypoint.compiledPath,
                 expectedToolCount: package.manifest.entrypoint.exportedTools.count
             )
