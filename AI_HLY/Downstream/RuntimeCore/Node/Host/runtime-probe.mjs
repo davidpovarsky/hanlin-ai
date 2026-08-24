@@ -83,7 +83,11 @@ async function runMCPRuntimeProbeAttempt(options) {
     worker.once('error', error => { events.fail(error); responses.fail(error); });
     worker.once('exit', code => {
       if (code !== 0) {
-        const error = new Error(`Server Worker exited during the runtime probe with code ${code}.`);
+        const diagnostic = redact(stderr).trim().slice(-2_048);
+        const error = new Error(
+          `Server Worker exited during the runtime probe with code ${code}.`
+          + (diagnostic ? ` Worker stderr: ${diagnostic}` : ''),
+        );
         events.fail(error); responses.fail(error);
       }
     });
