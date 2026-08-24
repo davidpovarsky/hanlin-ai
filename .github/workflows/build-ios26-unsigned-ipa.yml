@@ -1475,6 +1475,7 @@ jobs:
           xcrun simctl bootstatus "$SIMULATOR_UDID" -b 2>&1 | tee "$LOG_DIR/08-bootstatus.log"
           rm -rf "$LOG_DIR/DownstreamTestsResult.xcresult"
           started_at="$(date +%s)"
+          set +e
           xcodebuild test-without-building \
             -project "$PROJECT_PATH" \
             -scheme "$SCHEME_NAME" \
@@ -1487,7 +1488,16 @@ jobs:
             -skipMacroValidation \
             -only-testing:AI_HLYTests \
             2>&1 | tee "$LOG_DIR/08-downstream-unit-tests.log"
+          downstream_test_status="${PIPESTATUS[0]}"
+          set -e
           echo "$(( $(date +%s) - started_at ))" > "$LOG_DIR/08-downstream-unit-tests-duration-seconds.txt"
+          if [ "$downstream_test_status" -ne 0 ]; then
+            xcrun xcresulttool get test-results tests \
+              --path "$LOG_DIR/DownstreamTestsResult.xcresult" \
+              --format json \
+              | tee "$LOG_DIR/08-downstream-unit-test-results.json" || true
+            exit "$downstream_test_status"
+          fi
           rm -rf "$LOG_DIR/ScriptingAcceptanceResult.xcresult"
           scripting_started_at="$(date +%s)"
           xcodebuild test-without-building \
