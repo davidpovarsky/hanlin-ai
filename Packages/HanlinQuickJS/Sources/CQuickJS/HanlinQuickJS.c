@@ -106,19 +106,11 @@ static HanlinQuickJSStatus hanlin_interruption_status(
  * the Error object can also fail), in which case no real exception value
  * is ever thrown and JS_GetException/JS_ToCStringLen only observe a stale
  * "null". Message-text matching cannot distinguish that from a script
- * that legitimately does `throw null`, so fall back to asking the engine
- * directly whether it is sitting at its configured memory ceiling.
+ * that legitimately does `throw null`, so use the allocator's operation-local
+ * record of a rejection by the configured memory ceiling.
  */
 static bool hanlin_memory_exhausted(JSRuntime *runtime) {
-    JSMemoryUsage usage;
-    JS_ComputeMemoryUsage(runtime, &usage);
-    if (usage.malloc_limit <= 0) {
-        return false;
-    }
-    int64_t reserve = usage.malloc_limit / 20;
-    /* JS_SetMemoryLimit is enforced against the allocator's malloc_size,
-       not the semantic heap estimate in memory_used_size. */
-    return usage.malloc_size >= usage.malloc_limit - reserve;
+    return JS_HanlinMemoryLimitExceeded(runtime);
 }
 
 static HanlinQuickJSStatus hanlin_failure_status(
@@ -177,6 +169,7 @@ static bool hanlin_begin_operation(
     )) {
         return false;
     }
+    JS_HanlinResetMemoryLimitExceeded(session->runtime);
     atomic_store_explicit(
         &session->interrupt_reason,
         HANLIN_INTERRUPT_NONE,

@@ -511,6 +511,10 @@ JS_EXTERN JSRuntime *JS_NewRuntime(void);
 JS_EXTERN void JS_SetRuntimeInfo(JSRuntime *rt, const char *info);
 /* use 0 to disable memory limit */
 JS_EXTERN void JS_SetMemoryLimit(JSRuntime *rt, size_t limit);
+/* Hanlin downstream patch: expose configured-limit exhaustion without relying
+   on an exception string that may itself fail to allocate. */
+JS_EXTERN void JS_HanlinResetMemoryLimitExceeded(JSRuntime *rt);
+JS_EXTERN bool JS_HanlinMemoryLimitExceeded(JSRuntime *rt);
 JS_EXTERN void JS_SetDumpFlags(JSRuntime *rt, uint64_t flags);
 JS_EXTERN uint64_t JS_GetDumpFlags(JSRuntime *rt);
 JS_EXTERN size_t JS_GetGCThreshold(JSRuntime *rt);

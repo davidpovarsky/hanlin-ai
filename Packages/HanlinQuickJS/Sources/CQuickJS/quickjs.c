@@ -362,6 +362,7 @@ struct JSRuntime {
     JSValue current_exception;
     /* true if inside an out of memory error, to avoid recursing */
     bool in_out_of_memory;
+    bool hanlin_memory_limit_exceeded;
     /* true if inside build_backtrace, to avoid recursing */
     bool in_build_stack_trace;
     /* true if inside JS_FreeRuntime */
@@ -1992,8 +1993,10 @@ void *js_calloc_rt(JSRuntime *rt, size_t count, size_t size)
 
     s = &rt->malloc_state;
     /* When malloc_limit is 0 (unlimited), malloc_limit - 1 will be SIZE_MAX. */
-    if (unlikely(s->malloc_size + (count * size) > s->malloc_limit - 1))
+    if (unlikely(s->malloc_size + (count * size) > s->malloc_limit - 1)) {
+        rt->hanlin_memory_limit_exceeded = true;
         return NULL;
+    }
 
     ptr = js_arena_calloc(rt, count, size);
     if (!ptr)
@@ -2015,8 +2018,10 @@ void *js_malloc_rt(JSRuntime *rt, size_t size)
 
     s = &rt->malloc_state;
     /* When malloc_limit is 0 (unlimited), malloc_limit - 1 will be SIZE_MAX. */
-    if (unlikely(s->malloc_size + size > s->malloc_limit - 1))
+    if (unlikely(s->malloc_size + size > s->malloc_limit - 1)) {
+        rt->hanlin_memory_limit_exceeded = true;
         return NULL;
+    }
 
     ptr = js_arena_malloc(rt, size);
     if (!ptr)
@@ -2062,8 +2067,10 @@ void *js_realloc_rt(JSRuntime *rt, void *ptr, size_t size)
     old_size = js_arena_usable_size(rt, ptr);
     s = &rt->malloc_state;
     /* When malloc_limit is 0 (unlimited), malloc_limit - 1 will be SIZE_MAX. */
-    if (s->malloc_size + size - old_size > s->malloc_limit - 1)
+    if (s->malloc_size + size - old_size > s->malloc_limit - 1) {
+        rt->hanlin_memory_limit_exceeded = true;
         return NULL;
+    }
 
     ptr = js_arena_realloc(rt, ptr, size);
     if (!ptr)
@@ -2441,6 +2448,16 @@ JSRuntime *JS_NewRuntime(void)
 void JS_SetMemoryLimit(JSRuntime *rt, size_t limit)
 {
     rt->malloc_state.malloc_limit = limit;
+}
+
+void JS_HanlinResetMemoryLimitExceeded(JSRuntime *rt)
+{
+    rt->hanlin_memory_limit_exceeded = false;
+}
+
+bool JS_HanlinMemoryLimitExceeded(JSRuntime *rt)
+{
+    return rt->hanlin_memory_limit_exceeded;
 }
 
 void JS_SetDumpFlags(JSRuntime *rt, uint64_t flags)

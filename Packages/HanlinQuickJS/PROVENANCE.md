@@ -17,3 +17,8 @@ The library is built from source by Swift Package Manager for each Apple
 destination. Hanlin's wrapper creates a bare `JS_NewContext`; it does not link
 `quickjs-libc.c`, `qjs`, or `qjsc`, so the engine has no filesystem, process,
 environment, network, or dynamic-module host API.
+
+Downstream patch: the allocator records when the configured QuickJS memory
+ceiling rejects an allocation and exposes a namespaced reset/query pair to the
+Hanlin C wrapper. This preserves typed memory-limit errors even when QuickJS
+cannot allocate its own `out of memory` exception object.
