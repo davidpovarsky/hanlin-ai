@@ -26,7 +26,9 @@ struct HanlinScriptingBundlerTests {
         #expect(request.entrypoints == ["index.tsx"])
         #expect(request.sources.map(\.logicalPath) == ["index.tsx", "lib/value.ts"])
         #expect(request.declarationFiles.map(\.logicalPath) == ["virtual/scripting.d.ts"])
-        #expect(request.options.skipLibCheck == false)
+        // Match Scripting's authoritative compiler profile: declaration internals
+        // are trusted, while package source files remain strictly typechecked.
+        #expect(request.options.skipLibCheck == true)
     }
 
     @Test("Fails closed on preview errors and compiler identity mismatch")
