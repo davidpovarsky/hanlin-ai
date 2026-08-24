@@ -128,7 +128,7 @@ actor HanlinQuickJSSession {
         let result = await withTaskCancellationHandler {
             cancellationHandle.markInvocationStarted()
             defer { cancellationHandle.markInvocationFinished() }
-            input.withUnsafeBytes { bytes in
+            return input.withUnsafeBytes { bytes in
                 hanlin_quickjs_session_invoke(
                     session,
                     bytes.bindMemory(to: CChar.self).baseAddress,
