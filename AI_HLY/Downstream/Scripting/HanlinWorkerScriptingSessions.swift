@@ -265,7 +265,6 @@ actor HanlinPythonWorkerSession {
     }
 
     private static let bootstrap = #"""
-    import asyncio as _hanlin_asyncio
     import base64 as _hanlin_base64
     import inspect as _hanlin_inspect
     import json as _hanlin_json
@@ -324,7 +323,9 @@ actor HanlinPythonWorkerSession {
     def _hanlin_invoke(index, canonical_base64):
         parameters = _hanlin_decode(_hanlin_json.loads(_hanlin_base64.b64decode(canonical_base64)))
         result = _hanlin_tools[index](parameters)
-        if _hanlin_inspect.isawaitable(result): result = _hanlin_asyncio.run(result)
+        if _hanlin_inspect.isawaitable(result):
+            import asyncio as _hanlin_asyncio
+            result = _hanlin_asyncio.run(result)
         if not isinstance(result, dict) or set(result.keys()) not in ({"success", "message"}, {"success", "message", "data"}):
             raise TypeError("HANLIN_ABI:invalid_tool_result")
         if not isinstance(result["success"], bool) or not isinstance(result["message"], str):
