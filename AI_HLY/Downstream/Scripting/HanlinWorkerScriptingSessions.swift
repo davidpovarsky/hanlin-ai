@@ -122,7 +122,10 @@ actor HanlinNodeWorkerSession {
             if result.didTimeOut { throw HanlinScriptingError.executionTimedOut }
             if result.outputWasTruncated { throw HanlinScriptingError.resourceLimit("output_size") }
             guard result.exitCode == 0 else {
-                throw HanlinScriptingError.moduleEvaluationFailed("node_worker_failed")
+                let diagnostic = String(result.stderr.prefix(2_048))
+                throw HanlinScriptingError.moduleEvaluationFailed(
+                    diagnostic.isEmpty ? "node_worker_failed" : diagnostic
+                )
             }
             return result
         } catch {
@@ -141,7 +144,7 @@ actor HanlinNodeWorkerSession {
         case .executionCancelled: .cancelled
         case .outputLimitExceeded: .resourceLimit("output_size")
         case .runtimeUnavailable, .appRestartRequired: .runtimeInitializationFailed
-        default: .moduleEvaluationFailed("node_worker_failed")
+        default: .moduleEvaluationFailed(String(String(describing: runtimeError).prefix(2_048)))
         }
     }
 }
@@ -195,7 +198,7 @@ actor HanlinPythonWorkerSession {
             throw HanlinScriptingError.exportedToolMissing(String(toolIndex))
         }
         let canonical = try parameters.canonicalJSONData().base64EncodedString()
-        let source = program + "\n__hanlin_result__ = _hanlin_invoke(\(toolIndex), \"(canonical)\")"
+        let source = program + "\n__hanlin_result__ = _hanlin_invoke(\(toolIndex), \"\(canonical)\")"
         let result = try await execute(source)
         guard let value = result.value else {
             throw HanlinScriptingError.invalidBridgeValue("worker_result_missing")
