@@ -152,13 +152,15 @@ async function runMCPRuntimeProbeAttempt(options) {
   }
 }
 
-function shouldRetryInternalLoaderFailure(result) {
+export function shouldRetryInternalLoaderFailure(result) {
+  const diagnostics = `${result.message ?? ''}\n${result.stderr ?? ''}`;
   return !result.passed
     && !result.requiresConfiguration
     && (result.blockedAccesses?.length ?? 0) === 0
     && (
       result.failureCode === 'ERR_INTERNAL_ASSERTION'
-      || /Unexpected module status \d+/.test(result.message)
+      || /Unexpected module status \d+/.test(diagnostics)
+      || /Server Worker exited during the runtime probe with code 1\./.test(result.message)
     );
 }
 

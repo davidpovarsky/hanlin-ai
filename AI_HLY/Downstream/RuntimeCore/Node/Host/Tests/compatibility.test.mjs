@@ -11,13 +11,40 @@ import {
   determineModuleKind,
   inspectArchiveSafety,
 } from '../package-compatibility.mjs';
-import { runMCPRuntimeProbe } from '../runtime-probe.mjs';
+import {
+  runMCPRuntimeProbe,
+  shouldRetryInternalLoaderFailure,
+} from '../runtime-probe.mjs';
 import { installPackage } from '../package-installer.mjs';
 
 const fixtures = fileURLToPath(new URL('./Fixtures', import.meta.url));
 const downstreamFixtures = fileURLToPath(
   new URL('./DownstreamFixtures/', import.meta.url),
 );
+
+test('runtime probe retries opaque Worker exits and loader diagnostics from stderr', () => {
+  const base = {
+    passed: false,
+    requiresConfiguration: false,
+    blockedAccesses: [],
+    failureCode: null,
+    stderr: '',
+  };
+  assert.equal(shouldRetryInternalLoaderFailure({
+    ...base,
+    message: 'Server Worker exited during the runtime probe with code 1.',
+  }), true);
+  assert.equal(shouldRetryInternalLoaderFailure({
+    ...base,
+    message: 'Server Worker failed.',
+    stderr: 'Error: Unexpected module status 0.',
+  }), true);
+  assert.equal(shouldRetryInternalLoaderFailure({
+    ...base,
+    requiresConfiguration: true,
+    message: 'Server Worker exited during the runtime probe with code 1.',
+  }), false);
+});
 
 test('unused client stdio and cross-spawn code do not reject the selected server path', async () => {
   const report = await analyzeFixture('false-positive-sdk');

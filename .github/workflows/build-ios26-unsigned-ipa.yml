@@ -1660,13 +1660,13 @@ jobs:
           cp "$MCP_ACCEPTANCE_PATH" "$LOG_DIR/mcp-acceptance.json"
           test -f "$MCP_RUNTIME_LOG_PATH"
           cp "$MCP_RUNTIME_LOG_PATH" "$LOG_DIR/node-runtime.log"
-          COMPATIBILITY_REPORT="$(find "$DATA_CONTAINER/Library/Application Support/HanlinRuntime/v1/packages/mcp" -name compatibility-report.json -type f -print -quit)"
-          test -n "$COMPATIBILITY_REPORT"
-          cp "$COMPATIBILITY_REPORT" "$LOG_DIR/server-everything-compatibility-report.json"
           python3 Scripts/Runtime/validate_mcp_acceptance.py \
             "$LOG_DIR/mcp-acceptance.json" \
             --summary-output "$LOG_DIR/08-mcp-acceptance-summary.json" \
             | tee "$LOG_DIR/08-mcp-acceptance.log"
+          COMPATIBILITY_REPORT="$(find "$DATA_CONTAINER/Library/Application Support/HanlinRuntime/v1/packages/mcp" -name compatibility-report.json -type f -print -quit)"
+          test -n "$COMPATIBILITY_REPORT"
+          cp "$COMPATIBILITY_REPORT" "$LOG_DIR/server-everything-compatibility-report.json"
           python3 - "$LOG_DIR/mcp-acceptance.json" <<'PY' | tee "$LOG_DIR/08-mcp-canonical-shadow.log"
           import json
           import sys
