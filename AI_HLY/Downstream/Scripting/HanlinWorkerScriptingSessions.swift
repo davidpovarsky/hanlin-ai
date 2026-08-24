@@ -266,10 +266,7 @@ actor HanlinPythonWorkerSession {
 
     private static let bootstrap = #"""
     import base64 as _hanlin_base64
-    import inspect as _hanlin_inspect
     import json as _hanlin_json
-    import math as _hanlin_math
-    import struct as _hanlin_struct
     import sys as _hanlin_sys
     import types as _hanlin_types
 
@@ -280,7 +277,9 @@ actor HanlinPythonWorkerSession {
         if kind == "null": return None
         if kind == "bool": return bool(value["value"])
         if kind == "integer": return int(value["value"])
-        if kind == "number": return _hanlin_struct.unpack(">d", bytes.fromhex(value["value"]))[0]
+        if kind == "number":
+            import struct as _hanlin_struct
+            return _hanlin_struct.unpack(">d", bytes.fromhex(value["value"]))[0]
         if kind == "string": return value["value"]
         if kind == "array": return [_hanlin_decode(item) for item in value["value"]]
         if kind == "object": return {key: _hanlin_decode(item) for key, item in value["value"].items()}
@@ -291,6 +290,8 @@ actor HanlinPythonWorkerSession {
         if isinstance(value, bool): return {"type": "bool", "value": value}
         if isinstance(value, int): return {"type": "integer", "value": str(value)}
         if isinstance(value, float):
+            import math as _hanlin_math
+            import struct as _hanlin_struct
             if not _hanlin_math.isfinite(value): raise TypeError("HANLIN_BRIDGE:non_finite_number")
             return {"type": "number", "value": _hanlin_struct.pack(">d", value).hex()}
         if isinstance(value, str): return {"type": "string", "value": value}
@@ -323,7 +324,7 @@ actor HanlinPythonWorkerSession {
     def _hanlin_invoke(index, canonical_base64):
         parameters = _hanlin_decode(_hanlin_json.loads(_hanlin_base64.b64decode(canonical_base64)))
         result = _hanlin_tools[index](parameters)
-        if _hanlin_inspect.isawaitable(result):
+        if hasattr(result, "__await__"):
             import asyncio as _hanlin_asyncio
             result = _hanlin_asyncio.run(result)
         if not isinstance(result, dict) or set(result.keys()) not in ({"success", "message"}, {"success", "message", "data"}):
