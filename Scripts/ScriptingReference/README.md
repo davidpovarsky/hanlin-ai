@@ -29,12 +29,32 @@ node .\Scripts\ScriptingReference\import-scripting-reference.mjs `
   --check
 ```
 
+Update only the five declarations from a current app export while retaining the
+authorized compiler, documentation, and example snapshot:
+
+```powershell
+node .\Scripts\ScriptingReference\update-scripting-types.mjs `
+  --source "C:\Users\DAVID\dts" `
+  --exported-at "2026-08-25T02:00:21+03:00"
+```
+
+The updater reads the export directory without modifying it, records byte-level
+provenance in `CURRENT_TYPE_EXPORT.json`, and gives the combined baseline a new
+identity. Add `--check` to verify drift without writes.
+
 Verify the portable repository snapshot without the source directory:
 
 ```powershell
 node .\Scripts\ScriptingReference\verify-scripting-reference.mjs
 node .\Scripts\ScriptingReference\build-scripting-inventory.mjs --check
 node .\Scripts\ScriptingReference\validate-scripting-examples.mjs
+```
+
+Typecheck extracted acceptance packages against all five current declarations:
+
+```powershell
+node .\Scripts\ScriptingReference\typecheck-acceptance-packages.mjs `
+  --directory .\artifacts\real-scripting-inputs
 ```
 
 `build-scripting-inventory.mjs` uses a deterministic Phase 0 declaration lexer.

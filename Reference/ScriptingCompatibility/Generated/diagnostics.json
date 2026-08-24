@@ -1,5 +1,5 @@
 {
-  "baselineID": "scripting-compat-2026-07-22-8d7d33d9369e",
+  "baselineID": "scripting-compat-2026-08-25-0b7b8e715573",
   "brokenDocumentationLinks": [],
   "compilerVersionDifference": {
     "differs": true,
@@ -195,12 +195,12 @@
         {
           "category": "type",
           "file": "global.d.ts",
-          "line": 1738
+          "line": 1754
         },
         {
           "category": "const",
           "file": "global.d.ts",
-          "line": 1788
+          "line": 1804
         }
       ],
       "normalizedSymbol": "activitytype"
@@ -210,52 +210,52 @@
         {
           "category": "function",
           "file": "global.d.ts",
-          "line": 5868
+          "line": 5973
         },
         {
           "category": "function",
           "file": "global.d.ts",
-          "line": 5869
+          "line": 5974
         },
         {
           "category": "function",
           "file": "global.d.ts",
-          "line": 5870
+          "line": 5975
         },
         {
           "category": "function",
           "file": "global.d.ts",
-          "line": 5871
+          "line": 5976
         },
         {
           "category": "function",
           "file": "global.d.ts",
-          "line": 5872
+          "line": 5977
         },
         {
           "category": "function",
           "file": "global.d.ts",
-          "line": 5873
+          "line": 5978
         },
         {
           "category": "function",
           "file": "global.d.ts",
-          "line": 6559
+          "line": 6664
         },
         {
           "category": "function",
           "file": "global.d.ts",
-          "line": 6560
+          "line": 6665
         },
         {
           "category": "function",
           "file": "global.d.ts",
-          "line": 14993
+          "line": 15110
         },
         {
           "category": "function",
           "file": "global.d.ts",
-          "line": 14994
+          "line": 15111
         }
       ],
       "normalizedSymbol": "addlistener"
@@ -265,12 +265,12 @@
         {
           "category": "function",
           "file": "global.d.ts",
-          "line": 1194
+          "line": 1210
         },
         {
           "category": "function",
           "file": "global.d.ts",
-          "line": 1195
+          "line": 1211
         }
       ],
       "normalizedSymbol": "alert"
@@ -310,12 +310,12 @@
         {
           "category": "namespace",
           "file": "global.d.ts",
-          "line": 7793
+          "line": 7898
         },
         {
           "category": "class",
           "file": "global.d.ts",
-          "line": 7915
+          "line": 8020
         }
       ],
       "normalizedSymbol": "audiocapture"
@@ -325,12 +325,12 @@
         {
           "category": "class",
           "file": "global.d.ts",
-          "line": 8032
+          "line": 8137
         },
         {
           "category": "namespace",
           "file": "global.d.ts",
-          "line": 8161
+          "line": 8266
         }
       ],
       "normalizedSymbol": "avcapturedevice"
@@ -430,7 +430,7 @@
         {
           "category": "class",
           "file": "global.d.ts",
-          "line": 17538
+          "line": 17841
         },
         {
           "category": "const",
@@ -445,17 +445,17 @@
         {
           "category": "function",
           "file": "global.d.ts",
-          "line": 4632
+          "line": 4737
         },
         {
           "category": "function",
           "file": "global.d.ts",
-          "line": 8831
+          "line": 8936
         },
         {
           "category": "function",
           "file": "global.d.ts",
-          "line": 17624
+          "line": 17927
         }
       ],
       "normalizedSymbol": "cancel"
@@ -465,7 +465,7 @@
         {
           "category": "type",
           "file": "global.d.ts",
-          "line": 8689
+          "line": 8794
         },
         {
           "category": "type",
@@ -480,17 +480,17 @@
         {
           "category": "function",
           "file": "global.d.ts",
-          "line": 1385
+          "line": 1401
         },
         {
           "category": "function",
           "file": "global.d.ts",
-          "line": 4230
+          "line": 4335
         },
         {
           "category": "function",
           "file": "global.d.ts",
-          "line": 17120
+          "line": 17362
         }
       ],
       "normalizedSymbol": "clear"
@@ -530,12 +530,12 @@
         {
           "category": "class",
           "file": "global.d.ts",
-          "line": 4259
+          "line": 4364
         },
         {
           "category": "namespace",
           "file": "global.d.ts",
-          "line": 4325
+          "line": 4430
         }
       ],
       "normalizedSymbol": "cloudshareddata"
@@ -565,22 +565,22 @@
         {
           "category": "interface",
           "file": "global.d.ts",
-          "line": 7801
+          "line": 7906
         },
         {
           "category": "type",
           "file": "global.d.ts",
-          "line": 8730
+          "line": 8835
         },
         {
           "category": "type",
           "file": "global.d.ts",
-          "line": 17310
+          "line": 17613
         },
         {
           "category": "class",
           "file": "global.d.ts",
-          "line": 17592
+          "line": 17895
         }
       ],
       "normalizedSymbol": "configuration"
@@ -590,12 +590,12 @@
         {
           "category": "function",
           "file": "global.d.ts",
-          "line": 1206
+          "line": 1222
         },
         {
           "category": "function",
           "file": "global.d.ts",
-          "line": 1207
+          "line": 1223
         }
       ],
       "normalizedSymbol": "confirm"
@@ -630,17 +630,17 @@
         {
           "category": "function",
           "file": "global.d.ts",
-          "line": 1373
+          "line": 1389
         },
         {
           "category": "function",
           "file": "global.d.ts",
-          "line": 4226
+          "line": 4331
         },
         {
           "category": "function",
           "file": "global.d.ts",
-          "line": 17117
+          "line": 17359
         }
       ],
       "normalizedSymbol": "contains"
@@ -650,7 +650,7 @@
         {
           "category": "type",
           "file": "global.d.ts",
-          "line": 9659
+          "line": 9764
         },
         {
           "category": "interface",
@@ -685,7 +685,7 @@
         {
           "category": "function",
           "file": "global.d.ts",
-          "line": 2817
+          "line": 2833
         },
         {
           "category": "function",
@@ -700,7 +700,7 @@
         {
           "category": "function",
           "file": "global.d.ts",
-          "line": 2818
+          "line": 2834
         },
         {
           "category": "function",
@@ -760,7 +760,7 @@
         {
           "category": "namespace",
           "file": "global.d.ts",
-          "line": 478
+          "line": 486
         },
         {
           "category": "const",
@@ -835,7 +835,7 @@
         {
           "category": "const",
           "file": "scripting.d.ts",
-          "line": 11824
+          "line": 11876
         }
       ],
       "normalizedSymbol": "device"
@@ -845,7 +845,7 @@
         {
           "category": "namespace",
           "file": "global.d.ts",
-          "line": 1190
+          "line": 1206
         },
         {
           "category": "type",
@@ -860,12 +860,17 @@
         {
           "category": "function",
           "file": "global.d.ts",
-          "line": 11055
+          "line": 11172
         },
         {
           "category": "function",
           "file": "global.d.ts",
-          "line": 14914
+          "line": 15031
+        },
+        {
+          "category": "function",
+          "file": "global.d.ts",
+          "line": 17609
         }
       ],
       "normalizedSymbol": "dismiss"
@@ -890,7 +895,7 @@
         {
           "category": "type",
           "file": "global.d.ts",
-          "line": 276
+          "line": 284
         },
         {
           "category": "type",
@@ -920,7 +925,7 @@
         {
           "category": "type",
           "file": "global.d.ts",
-          "line": 9711
+          "line": 9816
         },
         {
           "category": "class",
@@ -935,7 +940,7 @@
         {
           "category": "function",
           "file": "global.d.ts",
-          "line": 2832
+          "line": 2848
         },
         {
           "category": "function",
@@ -950,7 +955,7 @@
         {
           "category": "function",
           "file": "global.d.ts",
-          "line": 2833
+          "line": 2849
         },
         {
           "category": "function",
@@ -965,12 +970,12 @@
         {
           "category": "function",
           "file": "global.d.ts",
-          "line": 3647
+          "line": 3752
         },
         {
           "category": "function",
           "file": "global.d.ts",
-          "line": 3652
+          "line": 3757
         }
       ],
       "normalizedSymbol": "fetchassets"
@@ -1020,7 +1025,7 @@
         {
           "category": "type",
           "file": "global.d.ts",
-          "line": 7799
+          "line": 7904
         },
         {
           "category": "function",
@@ -1075,12 +1080,12 @@
         {
           "category": "function",
           "file": "global.d.ts",
-          "line": 1353
+          "line": 1369
         },
         {
           "category": "function",
           "file": "global.d.ts",
-          "line": 4213
+          "line": 4318
         }
       ],
       "normalizedSymbol": "getdata"
@@ -1090,17 +1095,17 @@
         {
           "category": "function",
           "file": "global.d.ts",
-          "line": 1341
+          "line": 1357
         },
         {
           "category": "function",
           "file": "global.d.ts",
-          "line": 4199
+          "line": 4304
         },
         {
           "category": "function",
           "file": "global.d.ts",
-          "line": 17108
+          "line": 17350
         },
         {
           "category": "function",
@@ -1130,12 +1135,12 @@
         {
           "category": "function",
           "file": "global.d.ts",
-          "line": 8784
+          "line": 8889
         },
         {
           "category": "function",
           "file": "global.d.ts",
-          "line": 11429
+          "line": 11546
         }
       ],
       "normalizedSymbol": "getstate"
@@ -1370,12 +1375,12 @@
         {
           "category": "const",
           "file": "global.d.ts",
-          "line": 6527
+          "line": 6632
         },
         {
           "category": "const",
           "file": "global.d.ts",
-          "line": 15733
+          "line": 15850
         }
       ],
       "normalizedSymbol": "isactive"
@@ -1385,42 +1390,42 @@
         {
           "category": "const",
           "file": "global.d.ts",
-          "line": 1150
+          "line": 1166
         },
         {
           "category": "const",
           "file": "global.d.ts",
-          "line": 6523
+          "line": 6628
         },
         {
           "category": "const",
           "file": "global.d.ts",
-          "line": 10939
+          "line": 11056
         },
         {
           "category": "const",
           "file": "global.d.ts",
-          "line": 11450
+          "line": 11567
         },
         {
           "category": "const",
           "file": "global.d.ts",
-          "line": 11487
+          "line": 11604
         },
         {
           "category": "const",
           "file": "global.d.ts",
-          "line": 11527
+          "line": 11644
         },
         {
           "category": "const",
           "file": "global.d.ts",
-          "line": 17620
+          "line": 17923
         },
         {
           "category": "function",
           "file": "global.d.ts",
-          "line": 17808
+          "line": 18111
         }
       ],
       "normalizedSymbol": "isavailable"
@@ -1430,12 +1435,12 @@
         {
           "category": "type",
           "file": "global.d.ts",
-          "line": 1023
+          "line": 1039
         },
         {
           "category": "type",
           "file": "global.d.ts",
-          "line": 17634
+          "line": 17937
         }
       ],
       "normalizedSymbol": "item"
@@ -1445,17 +1450,17 @@
         {
           "category": "function",
           "file": "global.d.ts",
-          "line": 1379
+          "line": 1395
         },
         {
           "category": "function",
           "file": "global.d.ts",
-          "line": 4234
+          "line": 4339
         },
         {
           "category": "function",
           "file": "global.d.ts",
-          "line": 17121
+          "line": 17363
         }
       ],
       "normalizedSymbol": "keys"
@@ -1465,12 +1470,12 @@
         {
           "category": "namespace",
           "file": "global.d.ts",
-          "line": 1693
+          "line": 1709
         },
         {
           "category": "type",
           "file": "global.d.ts",
-          "line": 10761
+          "line": 10878
         }
       ],
       "normalizedSymbol": "location"
@@ -1510,7 +1515,7 @@
         {
           "category": "type",
           "file": "global.d.ts",
-          "line": 9643
+          "line": 9748
         },
         {
           "category": "const",
@@ -1545,7 +1550,7 @@
         {
           "category": "const",
           "file": "global.d.ts",
-          "line": 5403
+          "line": 5508
         },
         {
           "category": "type",
@@ -1575,12 +1580,12 @@
         {
           "category": "type",
           "file": "global.d.ts",
-          "line": 6178
+          "line": 6283
         },
         {
           "category": "var",
           "file": "global.d.ts",
-          "line": 6577
+          "line": 6682
         }
       ],
       "normalizedSymbol": "nowplayinginfo"
@@ -1590,12 +1595,12 @@
         {
           "category": "type",
           "file": "global.d.ts",
-          "line": 11345
+          "line": 11462
         },
         {
           "category": "var",
           "file": "global.d.ts",
-          "line": 11389
+          "line": 11506
         }
       ],
       "normalizedSymbol": "oncancel"
@@ -1625,7 +1630,7 @@
         {
           "category": "const",
           "file": "scripting.d.ts",
-          "line": 11725
+          "line": 11760
         }
       ],
       "normalizedSymbol": "parameter"
@@ -1635,7 +1640,7 @@
         {
           "category": "function",
           "file": "global.d.ts",
-          "line": 3076
+          "line": 3092
         },
         {
           "category": "function",
@@ -1675,22 +1680,22 @@
         {
           "category": "function",
           "file": "global.d.ts",
-          "line": 5841
+          "line": 5946
         },
         {
           "category": "function",
           "file": "global.d.ts",
-          "line": 6668
+          "line": 6773
         },
         {
           "category": "function",
           "file": "global.d.ts",
-          "line": 8817
+          "line": 8922
         },
         {
           "category": "function",
           "file": "global.d.ts",
-          "line": 17626
+          "line": 17929
         }
       ],
       "normalizedSymbol": "pause"
@@ -1700,12 +1705,12 @@
         {
           "category": "var",
           "file": "global.d.ts",
-          "line": 6581
+          "line": 6686
         },
         {
           "category": "type",
           "file": "global.d.ts",
-          "line": 6603
+          "line": 6708
         }
       ],
       "normalizedSymbol": "playbackstate"
@@ -1715,12 +1720,12 @@
         {
           "category": "function",
           "file": "global.d.ts",
-          "line": 6666
+          "line": 6771
         },
         {
           "category": "function",
           "file": "global.d.ts",
-          "line": 8804
+          "line": 8909
         }
       ],
       "normalizedSymbol": "prepare"
@@ -1730,42 +1735,47 @@
         {
           "category": "function",
           "file": "global.d.ts",
-          "line": 1138
+          "line": 1154
         },
         {
           "category": "function",
           "file": "global.d.ts",
-          "line": 3028
+          "line": 3044
         },
         {
           "category": "function",
           "file": "global.d.ts",
-          "line": 11049
+          "line": 11166
         },
         {
           "category": "function",
           "file": "global.d.ts",
-          "line": 11468
+          "line": 11585
         },
         {
           "category": "function",
           "file": "global.d.ts",
-          "line": 11505
+          "line": 11622
         },
         {
           "category": "function",
           "file": "global.d.ts",
-          "line": 11550
+          "line": 11667
         },
         {
           "category": "function",
           "file": "global.d.ts",
-          "line": 15021
+          "line": 15138
         },
         {
           "category": "function",
           "file": "global.d.ts",
-          "line": 15055
+          "line": 15172
+        },
+        {
+          "category": "function",
+          "file": "global.d.ts",
+          "line": 17604
         },
         {
           "category": "function",
@@ -1785,12 +1795,12 @@
         {
           "category": "function",
           "file": "scripting.d.ts",
-          "line": 11737
+          "line": 11789
         },
         {
           "category": "function",
           "file": "scripting.d.ts",
-          "line": 11769
+          "line": 11821
         }
       ],
       "normalizedSymbol": "present"
@@ -1815,12 +1825,12 @@
         {
           "category": "function",
           "file": "global.d.ts",
-          "line": 1228
+          "line": 1244
         },
         {
           "category": "function",
           "file": "global.d.ts",
-          "line": 1229
+          "line": 1245
         }
       ],
       "normalizedSymbol": "prompt"
@@ -1830,7 +1840,7 @@
         {
           "category": "type",
           "file": "global.d.ts",
-          "line": 10828
+          "line": 10945
         },
         {
           "category": "type",
@@ -2010,22 +2020,22 @@
         {
           "category": "function",
           "file": "global.d.ts",
-          "line": 1364
+          "line": 1380
         },
         {
           "category": "function",
           "file": "global.d.ts",
-          "line": 2966
+          "line": 2982
         },
         {
           "category": "function",
           "file": "global.d.ts",
-          "line": 4219
+          "line": 4324
         },
         {
           "category": "function",
           "file": "global.d.ts",
-          "line": 17114
+          "line": 17356
         }
       ],
       "normalizedSymbol": "remove"
@@ -2035,52 +2045,52 @@
         {
           "category": "function",
           "file": "global.d.ts",
-          "line": 5874
+          "line": 5979
         },
         {
           "category": "function",
           "file": "global.d.ts",
-          "line": 5875
+          "line": 5980
         },
         {
           "category": "function",
           "file": "global.d.ts",
-          "line": 5876
+          "line": 5981
         },
         {
           "category": "function",
           "file": "global.d.ts",
-          "line": 5877
+          "line": 5982
         },
         {
           "category": "function",
           "file": "global.d.ts",
-          "line": 5878
+          "line": 5983
         },
         {
           "category": "function",
           "file": "global.d.ts",
-          "line": 5879
+          "line": 5984
         },
         {
           "category": "function",
           "file": "global.d.ts",
-          "line": 6565
+          "line": 6670
         },
         {
           "category": "function",
           "file": "global.d.ts",
-          "line": 6566
+          "line": 6671
         },
         {
           "category": "function",
           "file": "global.d.ts",
-          "line": 15001
+          "line": 15118
         },
         {
           "category": "function",
           "file": "global.d.ts",
-          "line": 15002
+          "line": 15119
         }
       ],
       "normalizedSymbol": "removelistener"
@@ -2090,7 +2100,7 @@
         {
           "category": "function",
           "file": "global.d.ts",
-          "line": 2960
+          "line": 2976
         },
         {
           "category": "function",
@@ -2110,7 +2120,7 @@
         {
           "category": "function",
           "file": "global.d.ts",
-          "line": 2961
+          "line": 2977
         },
         {
           "category": "function",
@@ -2125,12 +2135,12 @@
         {
           "category": "function",
           "file": "global.d.ts",
-          "line": 1832
+          "line": 1848
         },
         {
           "category": "function",
           "file": "global.d.ts",
-          "line": 10774
+          "line": 10891
         }
       ],
       "normalizedSymbol": "requestcurrent"
@@ -2140,7 +2150,7 @@
         {
           "category": "function",
           "file": "global.d.ts",
-          "line": 2662
+          "line": 2678
         },
         {
           "category": "function",
@@ -2200,12 +2210,12 @@
         {
           "category": "function",
           "file": "global.d.ts",
-          "line": 10988
+          "line": 11105
         },
         {
           "category": "function",
           "file": "global.d.ts",
-          "line": 11006
+          "line": 11123
         }
       ],
       "normalizedSymbol": "requeststructureddata"
@@ -2265,17 +2275,17 @@
         {
           "category": "function",
           "file": "global.d.ts",
-          "line": 5845
+          "line": 5950
         },
         {
           "category": "function",
           "file": "global.d.ts",
-          "line": 8823
+          "line": 8928
         },
         {
           "category": "function",
           "file": "global.d.ts",
-          "line": 17627
+          "line": 17930
         }
       ],
       "normalizedSymbol": "resume"
@@ -2320,17 +2330,17 @@
         {
           "category": "function",
           "file": "global.d.ts",
-          "line": 18285
+          "line": 18588
         },
         {
           "category": "function",
           "file": "global.d.ts",
-          "line": 18308
+          "line": 18611
         },
         {
           "category": "function",
           "file": "scripting.d.ts",
-          "line": 11554
+          "line": 11555
         }
       ],
       "normalizedSymbol": "run"
@@ -2340,12 +2350,12 @@
         {
           "category": "function",
           "file": "global.d.ts",
-          "line": 3576
+          "line": 3674
         },
         {
           "category": "function",
           "file": "global.d.ts",
-          "line": 3593
+          "line": 3691
         }
       ],
       "normalizedSymbol": "savephoto"
@@ -2355,12 +2365,12 @@
         {
           "category": "function",
           "file": "global.d.ts",
-          "line": 3605
+          "line": 3703
         },
         {
           "category": "function",
           "file": "global.d.ts",
-          "line": 3621
+          "line": 3719
         }
       ],
       "normalizedSymbol": "savevideo"
@@ -2385,12 +2395,12 @@
         {
           "category": "class",
           "file": "global.d.ts",
-          "line": 17514
+          "line": 17817
         },
         {
           "category": "function",
           "file": "global.d.ts",
-          "line": 17623
+          "line": 17926
         },
         {
           "category": "function",
@@ -2405,7 +2415,7 @@
         {
           "category": "type",
           "file": "global.d.ts",
-          "line": 12365
+          "line": 12482
         },
         {
           "category": "class",
@@ -2440,12 +2450,12 @@
         {
           "category": "const",
           "file": "global.d.ts",
-          "line": 8748
+          "line": 8853
         },
         {
           "category": "class",
           "file": "global.d.ts",
-          "line": 9803
+          "line": 9908
         }
       ],
       "normalizedSymbol": "session"
@@ -2455,12 +2465,12 @@
         {
           "category": "function",
           "file": "global.d.ts",
-          "line": 1326
+          "line": 1342
         },
         {
           "category": "function",
           "file": "global.d.ts",
-          "line": 4206
+          "line": 4311
         }
       ],
       "normalizedSymbol": "setdata"
@@ -2470,17 +2480,17 @@
         {
           "category": "function",
           "file": "global.d.ts",
-          "line": 1301
+          "line": 1317
         },
         {
           "category": "function",
           "file": "global.d.ts",
-          "line": 4192
+          "line": 4297
         },
         {
           "category": "function",
           "file": "global.d.ts",
-          "line": 17111
+          "line": 17353
         }
       ],
       "normalizedSymbol": "set"
@@ -2535,12 +2545,12 @@
         {
           "category": "function",
           "file": "global.d.ts",
-          "line": 5897
+          "line": 6002
         },
         {
           "category": "function",
           "file": "global.d.ts",
-          "line": 8811
+          "line": 8916
         }
       ],
       "normalizedSymbol": "start"
@@ -2550,7 +2560,7 @@
         {
           "category": "function",
           "file": "global.d.ts",
-          "line": 2953
+          "line": 2969
         },
         {
           "category": "function",
@@ -2570,7 +2580,7 @@
         {
           "category": "function",
           "file": "global.d.ts",
-          "line": 2954
+          "line": 2970
         },
         {
           "category": "function",
@@ -2585,27 +2595,27 @@
         {
           "category": "function",
           "file": "global.d.ts",
-          "line": 5850
+          "line": 5955
         },
         {
           "category": "function",
           "file": "global.d.ts",
-          "line": 5981
+          "line": 6086
         },
         {
           "category": "function",
           "file": "global.d.ts",
-          "line": 6669
+          "line": 6774
         },
         {
           "category": "function",
           "file": "global.d.ts",
-          "line": 8841
+          "line": 8946
         },
         {
           "category": "function",
           "file": "global.d.ts",
-          "line": 17625
+          "line": 17928
         }
       ],
       "normalizedSymbol": "stop"
@@ -2615,12 +2625,12 @@
         {
           "category": "function",
           "file": "global.d.ts",
-          "line": 3568
+          "line": 3666
         },
         {
           "category": "function",
           "file": "global.d.ts",
-          "line": 8855
+          "line": 8960
         }
       ],
       "normalizedSymbol": "takephoto"
@@ -2780,7 +2790,7 @@
         {
           "category": "function",
           "file": "global.d.ts",
-          "line": 3003
+          "line": 3019
         },
         {
           "category": "class",
@@ -2805,7 +2815,7 @@
         {
           "category": "function",
           "file": "global.d.ts",
-          "line": 3004
+          "line": 3020
         },
         {
           "category": "function",
@@ -2920,17 +2930,17 @@
         {
           "category": "function",
           "file": "global.d.ts",
-          "line": 17047
+          "line": 17289
         },
         {
           "category": "function",
           "file": "global.d.ts",
-          "line": 17048
+          "line": 17290
         },
         {
           "category": "function",
           "file": "global.d.ts",
-          "line": 17049
+          "line": 17291
         }
       ],
       "normalizedSymbol": "withanimation"
@@ -3007,7 +3017,7 @@
     "ambiguousRequiredSourceNames": 8,
     "brokenDocumentationLinks": 0,
     "declarationFiles": 5,
-    "declarationSymbols": 2419,
+    "declarationSymbols": 2440,
     "documentationFiles": 942,
     "documentationMarkdownChinese": 402,
     "documentationMarkdownEnglish": 402,

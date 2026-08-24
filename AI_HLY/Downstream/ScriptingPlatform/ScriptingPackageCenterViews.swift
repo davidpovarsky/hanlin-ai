@@ -170,7 +170,11 @@ struct ScriptingInstalledPackageDetailView: View {
                     }
                 }
             }
-            let capabilities = Set(package.entrypoints.flatMap { $0.requiredCapabilities })
+            let capabilities = Set(
+                package.entrypoints
+                    .flatMap(\.requiredCapabilities)
+                    .map(\.capabilityID)
+            )
             if !capabilities.isEmpty {
                 Section("Permissions") {
                     ForEach(capabilities.sorted { $0.rawValue < $1.rawValue }, id: \.self) { capability in

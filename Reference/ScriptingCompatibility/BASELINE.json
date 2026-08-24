@@ -1,7 +1,41 @@
 {
-  "aggregateSHA256": "8d7d33d9369ee555d15adf10c867abbfb85834eced7e7596a627b70ff627ff36",
+  "aggregateSHA256": "0b7b8e715573ffc1656f530d9eba6cc019e6742294392278edbee812bd45a1c9",
   "authorizedForDirectUse": true,
-  "baselineID": "scripting-compat-2026-07-22-8d7d33d9369e",
+  "baselineID": "scripting-compat-2026-08-25-0b7b8e715573",
+  "currentTypeExport": {
+    "declarationSet": [
+      {
+        "bytes": 713964,
+        "name": "global.d.ts",
+        "sha256": "d5ed4b23de93d9f5c93fcf372736f8288e436e117fa008cdd9ac69a2656a949c"
+      },
+      {
+        "bytes": 40903,
+        "name": "node.d.ts",
+        "sha256": "05be426cfb2493524d8ef5a167f9e30128257457289b6c14a87a14c23d5f0602"
+      },
+      {
+        "bytes": 12670,
+        "name": "safari-ext.d.ts",
+        "sha256": "b86c4909673f425deb596e67c328cacad2f43022aa12ece1a03aee0e464815ae"
+      },
+      {
+        "bytes": 456732,
+        "name": "scripting.d.ts",
+        "sha256": "92155306822de8d1b3c9c31acd604ab562f46c69f0fa70a4cdced63c4a7a5259"
+      },
+      {
+        "bytes": 16789,
+        "name": "web-fetch.d.ts",
+        "sha256": "d93cf87b1e46c33c6e672d3fc451f9cfa35f7bae490065b9a7f26b0b08d16938"
+      }
+    ],
+    "exportedAt": "2026-08-25T02:00:21+03:00",
+    "exportedAtUTC": "2026-08-24T23:00:21.000Z",
+    "schemaVersion": 1,
+    "sourceDirectoryForImportRecord": "C:\\Users\\DAVID\\dts",
+    "sourceDirectoryRole": "read-only-provenance-only"
+  },
   "declarationHeaderVersion": "1.1.1",
   "fileCounts": {
     "byCategory": {
@@ -20,13 +54,13 @@
     },
     "total": 999
   },
-  "generatedAt": "2026-07-22T15:07:41.315Z",
+  "generatedAt": "2026-08-24T23:00:21.000Z",
   "generationTimestampPolicy": "latest-imported-source-mtime",
   "schemaVersion": 1,
   "sourceObservations": {
-    "excludedUnderApprovedRoots": 1,
-    "inspectedDirectories": 507,
-    "inspectedFiles": 2076,
+    "excludedUnderApprovedRoots": 0,
+    "inspectedDirectories": 0,
+    "inspectedFiles": 999,
     "reparsePoints": 0,
     "requiredCandidateCounts": {
       "global.d.ts": 2,

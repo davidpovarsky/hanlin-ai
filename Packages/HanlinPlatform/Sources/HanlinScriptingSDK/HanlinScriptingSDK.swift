@@ -34,8 +34,36 @@ public enum HanlinScriptingSDKError: Error, Equatable, Sendable {
     case invalidMetadata
 }
 
+public struct HanlinScriptingDeclarationFile: Hashable, Sendable {
+    public let name: String
+    public let data: Data
+
+    public init(name: String, data: Data) {
+        self.name = name
+        self.data = data
+    }
+}
+
 public enum HanlinScriptingSDK {
+    public static let declarationFileNames = [
+        "global.d.ts",
+        "node.d.ts",
+        "safari-ext.d.ts",
+        "scripting.d.ts",
+        "web-fetch.d.ts"
+    ]
+
     public static func declarations() throws -> Data {
+        try verifiedResource(fileName: "scripting.d.ts")
+    }
+
+    public static func declarationFiles() throws -> [HanlinScriptingDeclarationFile] {
+        try declarationFileNames.map { name in
+            .init(name: name, data: try verifiedResource(fileName: name))
+        }
+    }
+
+    public static func foundationDeclarations() throws -> Data {
         try verifiedResource(fileName: "scripting-foundation.d.ts")
     }
 

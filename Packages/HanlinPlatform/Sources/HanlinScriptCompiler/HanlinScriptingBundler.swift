@@ -177,14 +177,14 @@ public struct HanlinScriptingBundler: Sendable {
 
     private let baseline: HanlinCompatibilityInventory
     private let abiVersion: String
-    private let scriptingDeclarations: Data
+    private let scriptingDeclarations: [HanlinVirtualSourceFile]
     private let compiler: any HanlinTrustedCompilerClient
     private var fileManager: FileManager { .default }
 
     public init(
         baseline: HanlinCompatibilityInventory,
         abiVersion: String,
-        scriptingDeclarations: Data,
+        scriptingDeclarations: [HanlinVirtualSourceFile],
         compiler: any HanlinTrustedCompilerClient
     ) {
         self.baseline = baseline
@@ -202,10 +202,12 @@ public struct HanlinScriptingBundler: Sendable {
         let entrypoints = preview.entrypoints.filter { $0.kind == context }.map(\.sourcePath).sorted()
         guard !entrypoints.isEmpty else { throw HanlinScriptingBundlerError.previewRejected }
         let sources = try loadSources(at: package.packageRoot, paths: preview.dependencyGraph.modules)
-        let options = HanlinVirtualCompilerOptions()
+        // The authoritative Scripting profile uses skipLibCheck for the exported
+        // declaration bundle while retaining strict checking for package source.
+        let options = HanlinVirtualCompilerOptions(skipLibCheck: true)
         let project = HanlinVirtualTypeScriptProject(
             sources: sources,
-            declarationFiles: [.init(logicalPath: "virtual/scripting.d.ts", bytes: scriptingDeclarations)],
+            declarationFiles: scriptingDeclarations,
             entrypoints: entrypoints,
             options: options
         )

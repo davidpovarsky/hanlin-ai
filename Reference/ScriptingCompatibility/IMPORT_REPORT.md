@@ -1,18 +1,18 @@
 # Scripting Compatibility Import Report
 
-Baseline: `scripting-compat-2026-07-22-8d7d33d9369e`
+Baseline: `scripting-compat-2026-08-25-0b7b8e715573`
 
 ## Result
 
-- Aggregate SHA-256: `8d7d33d9369ee555d15adf10c867abbfb85834eced7e7596a627b70ff627ff36`
-- Source files inspected: 2076
-- Source directories inspected: 507
+- Aggregate SHA-256: `0b7b8e715573ffc1656f530d9eba6cc019e6742294392278edbee812bd45a1c9`
+- Source files inspected: 999
+- Source directories inspected: 0
 - Imported files: 999
-- Imported bytes: 5918732
+- Imported bytes: 5933046
 - Declaration files: 5
 - Documentation files: 942
 - Project-example files: 49
-- Excluded files under approved roots: 1
+- Excluded files under approved roots: 0
 - Reparse points discovered: 0
 
 The canonical source mapping selects the root-level `dts/`, `docs/`,
@@ -23,8 +23,8 @@ The absolute import source is provenance only and is not a runtime dependency.
 
 | Source | Destination | Bytes | SHA-256 |
 | --- | --- | ---: | --- |
-| `dts/scripting.d.ts` | `Original/Types/scripting.d.ts` | 454206 | `0dd028697d487ae23ac5625e718fd8af0af0a3f7a295fb753f7a1a1d3277ede2` |
-| `dts/global.d.ts` | `Original/Types/global.d.ts` | 702176 | `f3d06e3b200a0cc2f4e731b63c367f303f3ee879016d9bd25a892b1188d74b33` |
+| `dts/scripting.d.ts` | `Original/Types/scripting.d.ts` | 456732 | `92155306822de8d1b3c9c31acd604ab562f46c69f0fa70a4cdced63c4a7a5259` |
+| `dts/global.d.ts` | `Original/Types/global.d.ts` | 713964 | `d5ed4b23de93d9f5c93fcf372736f8288e436e117fa008cdd9ac69a2656a949c` |
 | `dts/node.d.ts` | `Original/Types/node.d.ts` | 40903 | `05be426cfb2493524d8ef5a167f9e30128257457289b6c14a87a14c23d5f0602` |
 | `dts/web-fetch.d.ts` | `Original/Types/web-fetch.d.ts` | 16789 | `d93cf87b1e46c33c6e672d3fc451f9cfa35f7bae490065b9a7f26b0b08d16938` |
 | `dts/safari-ext.d.ts` | `Original/Types/safari-ext.d.ts` | 12670 | `b86c4909673f425deb596e67c328cacad2f43022aa12ece1a03aee0e464815ae` |
@@ -39,29 +39,27 @@ They were not imported as additional baselines.
 
 | Name | Candidate | Same as selected | SHA-256 |
 | --- | --- | --- | --- |
-| `global.d.ts` | `dts/global.d.ts` | yes | `f3d06e3b200a0cc2f4e731b63c367f303f3ee879016d9bd25a892b1188d74b33` |
-| `global.d.ts` | `‏‏תיקיה חדשה/dts/global.d.ts` | yes | `f3d06e3b200a0cc2f4e731b63c367f303f3ee879016d9bd25a892b1188d74b33` |
-| `node.d.ts` | `dts/node.d.ts` | yes | `05be426cfb2493524d8ef5a167f9e30128257457289b6c14a87a14c23d5f0602` |
-| `node.d.ts` | `‏‏תיקיה חדשה/dts/node.d.ts` | yes | `05be426cfb2493524d8ef5a167f9e30128257457289b6c14a87a14c23d5f0602` |
-| `package-lock.json` | `package-lock.json` | yes | `7be92767d776519208fd152ee1fc91ae8576b2671f4083c2aaad789485053eab` |
-| `package-lock.json` | `‏‏תיקיה חדשה/package-lock.json` | yes | `7be92767d776519208fd152ee1fc91ae8576b2671f4083c2aaad789485053eab` |
-| `package.json` | `package.json` | yes | `4383cf89cc583bc07d0e1f8307d00a50e1ed25d6cb17180cf0a5db085b895256` |
-| `package.json` | `‏‏תיקיה חדשה/package.json` | yes | `4383cf89cc583bc07d0e1f8307d00a50e1ed25d6cb17180cf0a5db085b895256` |
-| `safari-ext.d.ts` | `dts/safari-ext.d.ts` | yes | `b86c4909673f425deb596e67c328cacad2f43022aa12ece1a03aee0e464815ae` |
-| `safari-ext.d.ts` | `‏‏תיקיה חדשה/dts/safari-ext.d.ts` | yes | `b86c4909673f425deb596e67c328cacad2f43022aa12ece1a03aee0e464815ae` |
-| `scripting.d.ts` | `dts/scripting.d.ts` | yes | `0dd028697d487ae23ac5625e718fd8af0af0a3f7a295fb753f7a1a1d3277ede2` |
-| `scripting.d.ts` | `‏‏תיקיה חדשה/dts/scripting.d.ts` | yes | `0dd028697d487ae23ac5625e718fd8af0af0a3f7a295fb753f7a1a1d3277ede2` |
-| `tsconfig.json` | `scripts/Transit Nearby/tsconfig.json` | no | `a3a7fae48e1e2adcdf20e7516313abd47dc33cc2575b6447418369aaf8bdea61` |
-| `tsconfig.json` | `tsconfig.json` | yes | `7e47c2c814a304249510be267cc93b0c5baa07c0d5441ea360d1a8fd8b3f62ee` |
-| `tsconfig.json` | `‏‏תיקיה חדשה/tsconfig.json` | yes | `7e47c2c814a304249510be267cc93b0c5baa07c0d5441ea360d1a8fd8b3f62ee` |
-| `web-fetch.d.ts` | `dts/web-fetch.d.ts` | yes | `d93cf87b1e46c33c6e672d3fc451f9cfa35f7bae490065b9a7f26b0b08d16938` |
-| `web-fetch.d.ts` | `‏‏תיקיה חדשה/dts/web-fetch.d.ts` | yes | `d93cf87b1e46c33c6e672d3fc451f9cfa35f7bae490065b9a7f26b0b08d16938` |
+| `scripting.d.ts` | `dts/scripting.d.ts` | yes | `undefined` |
+| `scripting.d.ts` | `recorded-alternative-1` | yes | `undefined` |
+| `global.d.ts` | `dts/global.d.ts` | yes | `undefined` |
+| `global.d.ts` | `recorded-alternative-1` | yes | `undefined` |
+| `node.d.ts` | `dts/node.d.ts` | yes | `undefined` |
+| `node.d.ts` | `recorded-alternative-1` | yes | `undefined` |
+| `web-fetch.d.ts` | `dts/web-fetch.d.ts` | yes | `undefined` |
+| `web-fetch.d.ts` | `recorded-alternative-1` | yes | `undefined` |
+| `safari-ext.d.ts` | `dts/safari-ext.d.ts` | yes | `undefined` |
+| `safari-ext.d.ts` | `recorded-alternative-1` | yes | `undefined` |
+| `tsconfig.json` | `tsconfig.json` | yes | `undefined` |
+| `tsconfig.json` | `recorded-alternative-1` | yes | `undefined` |
+| `tsconfig.json` | `recorded-alternative-2` | yes | `undefined` |
+| `package.json` | `package.json` | yes | `undefined` |
+| `package.json` | `recorded-alternative-1` | yes | `undefined` |
+| `package-lock.json` | `package-lock.json` | yes | `undefined` |
+| `package-lock.json` | `recorded-alternative-1` | yes | `undefined` |
 
 ## Exclusions
 
-| Reason | Count |
-| --- | ---: |
-| `excluded-extension:.zip` | 1 |
+No files inside the approved roots required exclusion.
 
 The source-wide inventory also found non-approved roots and backup artifacts.
 They are intentionally outside the canonical mapping. `node_modules`, `.bin`,

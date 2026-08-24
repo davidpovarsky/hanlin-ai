@@ -1,0 +1,105 @@
+{
+  "schemaVersion": 1,
+  "baselineID": "scripting-compat-2026-08-25-0b7b8e715573",
+  "compilerVersion": "7.0.2",
+  "compilerProfile": {
+    "allowJs": true,
+    "checkJs": false,
+    "jsx": "react",
+    "jsxFactory": "createElement",
+    "jsxFragmentFactory": "Fragment",
+    "module": "CommonJS",
+    "skipLibCheck": true,
+    "strict": true,
+    "target": "ESNext"
+  },
+  "declarationFiles": [
+    "global.d.ts",
+    "node.d.ts",
+    "safari-ext.d.ts",
+    "scripting.d.ts",
+    "web-fetch.d.ts"
+  ],
+  "comparisonWithSupersededBaseline": "identical-diagnostics",
+  "packages": [
+    {
+      "archive": "FileManager 2.zip",
+      "displayName": "FileManager",
+      "sourceFileCount": 36,
+      "errorCount": 5,
+      "status": "package-source-errors",
+      "affectedFiles": [
+        "components/DirectoryView.tsx",
+        "hooks/useFileOperations.ts"
+      ],
+      "issues": [
+        "The DirectoryView configuration passes softRemoveEntry, which FileOperationsConfig does not declare.",
+        "DirectoryView destructures handleImportFolder and handleImportFiles from a hook result that does not expose them.",
+        "The L10n interface does not declare copiedToast or moveToast."
+      ]
+    },
+    {
+      "archive": "טקסטים ספריא רב מנועי .scripting",
+      "displayName": "טקסטים ספריא רב מנועי חדש",
+      "sourceFileCount": 62,
+      "errorCount": 4,
+      "status": "package-source-and-authoritative-api-usage-errors",
+      "affectedFiles": [
+        "src/ui/components/SettingsSheet.tsx",
+        "src/ui/components/TabBar.tsx",
+        "src/ui/components/ToolbarSearchBar.tsx",
+        "src/ui/screens/MainScreen.tsx"
+      ],
+      "issues": [
+        "The Picker onChanged callback narrows string to SearchBarStyle and is not assignable to the declared Picker callback.",
+        "TocSearchEntry does not declare displayPath.",
+        "A capsule glass-effect shape is widened to string fields instead of the declared Shape literals.",
+        "A ref-taking callback is supplied where the composed declared property also requires a zero-argument submit callback."
+      ]
+    },
+    {
+      "archive": "nativ ai 9.zip",
+      "displayName": "nativ ai 3",
+      "sourceFileCount": 86,
+      "errorCount": 45,
+      "status": "package-source-and-authoritative-api-usage-errors",
+      "affectedFileCount": 16,
+      "issueGroups": [
+        "Symbol effects use unsupported string literals instead of the declared SymbolEffect values.",
+        "Capsule shapes omit the required style and several shape/color/gradient values are widened strings rather than declared Color or ShapeStyle values.",
+        "setInterval and clearInterval are not Scripting globals in the exported declaration set.",
+        "Script is referenced as an ambient global in src/l10n/index.ts even though it must be imported from scripting.",
+        "Several font objects omit name or add an undeclared weight property.",
+        "The SQLite Configuration value omits the required readonly property.",
+        "pipShowOnBackground and pipHideOnForeground are passed to HStack even though they are not HStack properties.",
+        "Section combines title and footer, a combination excluded by the declared SectionProps union.",
+        "Agent tool Card components require strings while the package's AgentToolCardComponent contract makes strings optional.",
+        "WeatherWind does not declare speed."
+      ]
+    },
+    {
+      "archive": "סוכן חדש 21.scripting",
+      "displayName": "סוכן חדש עיצוב חדש",
+      "sourceFileCount": 70,
+      "errorCount": 4,
+      "status": "package-source-errors",
+      "affectedFiles": [
+        "src/tools/cityInfo/index.ts",
+        "src/tools/reminder/index.ts",
+        "src/tools/weather/index.ts",
+        "src/tools/weather/runWeatherTool.ts"
+      ],
+      "issues": [
+        "Three Agent tool Card components require strings while AgentToolCardComponent makes strings optional.",
+        "WeatherWind does not declare speed."
+      ]
+    },
+    {
+      "archive": "אכילה חכמה מעודכן 7.zip",
+      "displayName": "אכילה חכמה מעודכן 7",
+      "sourceFileCount": 49,
+      "errorCount": 0,
+      "status": "passed"
+    }
+  ]
+}

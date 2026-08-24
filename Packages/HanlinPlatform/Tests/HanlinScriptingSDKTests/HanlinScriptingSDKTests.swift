@@ -8,9 +8,18 @@ struct HanlinScriptingSDKTests {
     func generatedResources() throws {
         let declarations = try HanlinScriptingSDK.declarations()
         let source = try #require(String(data: declarations, encoding: .utf8))
-        #expect(source.contains("export const Script"))
-        #expect(source.contains("export function fetch"))
+        #expect(source.contains("declare namespace Script"))
+        #expect(source.contains("declare namespace Navigation"))
+        #expect(source.contains("useState"))
         #expect(!source.contains("skipLibCheck"))
+
+        let declarationFiles = try HanlinScriptingSDK.declarationFiles()
+        #expect(declarationFiles.map(\.name) == HanlinScriptingSDK.declarationFileNames)
+        #expect(declarationFiles.count == 5)
+        #expect(declarationFiles.allSatisfy { !$0.data.isEmpty })
+
+        let foundation = try HanlinScriptingSDK.foundationDeclarations()
+        #expect(String(data: foundation, encoding: .utf8)?.contains("export const Script") == true)
 
         let metadata = try HanlinScriptingSDK.metadata()
         #expect(metadata.typescriptVersion == "7.0.2")
@@ -25,7 +34,7 @@ struct HanlinScriptingSDKTests {
         let data = try HanlinScriptingSDK.manifestData()
         let object = try #require(try JSONSerialization.jsonObject(with: data) as? [String: Any])
         #expect(object["schemaVersion"] as? Int == 1)
-        #expect((object["files"] as? [String: String])?.count == 2)
+        #expect((object["files"] as? [String: String])?.count == 7)
         #expect(data.last == 0x0A)
     }
 }

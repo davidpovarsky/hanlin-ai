@@ -719,6 +719,9 @@ export async function createMetadataOutputs(plan) {
     generationTimestampPolicy: "latest-imported-source-mtime",
     generatedAt: plan.generatedAt,
   };
+  if (plan.typeExport) {
+    baseline.currentTypeExport = plan.typeExport;
+  }
   const sums = {
     schemaVersion: 1,
     algorithm: "SHA-256",
@@ -1214,6 +1217,7 @@ export async function loadPlanFromRepository() {
     generatedAt: baseline.generatedAt,
     declarationHeaderVersion: baseline.declarationHeaderVersion,
     typescriptPackageVersion: baseline.typescriptPackageVersion,
+    typeExport: baseline.currentTypeExport ?? null,
   };
 }
 

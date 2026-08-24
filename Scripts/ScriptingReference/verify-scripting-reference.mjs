@@ -104,6 +104,37 @@ async function main() {
     failures.push("Baseline file count does not match checksum records");
   }
 
+  const currentTypeExport = JSON.parse(
+    await readFile(path.join(referenceRoot, "CURRENT_TYPE_EXPORT.json"), "utf8"),
+  );
+  if (baseline.currentTypeExport?.schemaVersion !== 1) {
+    failures.push("Current declaration export provenance is missing from BASELINE.json");
+  }
+  if (
+    currentTypeExport.baselineID !== baseline.baselineID ||
+    currentTypeExport.aggregateSHA256 !== baseline.aggregateSHA256
+  ) {
+    failures.push("CURRENT_TYPE_EXPORT.json baseline identity mismatch");
+  }
+  const declarationRecords = sums.files.filter(
+    record => record.category === "declaration",
+  );
+  if (
+    currentTypeExport.declarationSet?.length !== 5 ||
+    JSON.stringify(currentTypeExport.declarationSet) !==
+      JSON.stringify(baseline.currentTypeExport?.declarationSet)
+  ) {
+    failures.push("Current declaration export must describe the same five files in both provenance records");
+  }
+  for (const exported of currentTypeExport.declarationSet ?? []) {
+    const record = declarationRecords.find(
+      candidate => path.posix.basename(candidate.path) === exported.name,
+    );
+    if (!record || record.bytes !== exported.bytes || record.sha256 !== exported.sha256) {
+      failures.push(`${exported.name}: current type export provenance does not match SHA256SUMS.json`);
+    }
+  }
+
   const generatedNames = [
     "api-inventory.json",
     "symbol-index.json",

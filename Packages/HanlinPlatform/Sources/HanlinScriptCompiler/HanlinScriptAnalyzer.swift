@@ -98,6 +98,7 @@ public struct HanlinScriptAnalyzer: Sendable {
                 ))
             }
             importedSymbols.formUnion(Self.scriptingImports(in: source))
+            importedSymbols.formUnion(Self.ambientScriptingSymbols(in: source))
             for specifier in Self.moduleSpecifiers(in: source) {
                 let resolved = resolve(
                     specifier: specifier,
@@ -331,6 +332,17 @@ public struct HanlinScriptAnalyzer: Sendable {
                     .split(separator: " ").first.map(String.init)
                 return name?.isEmpty == false ? name : nil
             }
+        })
+    }
+
+    private static func ambientScriptingSymbols(in source: String) -> Set<String> {
+        let candidates = [
+            "Assistant", "AssistantTool", "CacheStorage", "FileManager", "Health",
+            "IntentMemoryStorage", "Location", "Notification", "OpenURL", "Pasteboard",
+            "Safari", "Storage", "addLocationListener"
+        ]
+        return Set(candidates.filter { symbol in
+            matches("\\b\(NSRegularExpression.escapedPattern(for: symbol))\\b", source)
         })
     }
 

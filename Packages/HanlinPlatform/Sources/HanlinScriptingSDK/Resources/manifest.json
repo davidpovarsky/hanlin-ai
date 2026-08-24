@@ -1,8 +1,13 @@
 {
   "schemaVersion": 1,
-  "baselineID": "scripting-compat-2026-07-22-8d7d33d9369e",
+  "baselineID": "scripting-compat-2026-08-25-0b7b8e715573",
   "files": {
-    "scripting-foundation.d.ts": "c5e64fea390ec8f417ef53959143ba258beb51c0a9401e6a97a6d2e83d01bcb9",
-    "runtime-registration.json": "5c2fc7eeab5cb4dd61a55ddd1528244a956246208361beb76b77c2295c67a4c1"
+    "scripting-foundation.d.ts": "8892c4f35bdf65cf92ab26aabacf807b62c8a573a8b73b166a8ec153b608bb7b",
+    "runtime-registration.json": "5801eea97a21a9915a5259160b078ad9fdf6b1a10439d4527321e76310320639",
+    "global.d.ts": "d5ed4b23de93d9f5c93fcf372736f8288e436e117fa008cdd9ac69a2656a949c",
+    "node.d.ts": "05be426cfb2493524d8ef5a167f9e30128257457289b6c14a87a14c23d5f0602",
+    "safari-ext.d.ts": "b86c4909673f425deb596e67c328cacad2f43022aa12ece1a03aee0e464815ae",
+    "scripting.d.ts": "92155306822de8d1b3c9c31acd604ab562f46c69f0fa70a4cdced63c4a7a5259",
+    "web-fetch.d.ts": "d93cf87b1e46c33c6e672d3fc451f9cfa35f7bae490065b9a7f26b0b08d16938"
   }
 }

@@ -124,7 +124,12 @@ struct HanlinScriptingBundlerTests {
                 symbols: []
             ),
             abiVersion: "2",
-            scriptingDeclarations: Data("declare module \"scripting\" {}".utf8),
+            scriptingDeclarations: [
+                .init(
+                    logicalPath: "virtual/scripting.d.ts",
+                    bytes: Data("declare module \"scripting\" {}".utf8)
+                )
+            ],
             compiler: compiler
         )
     }

@@ -69,7 +69,12 @@ final class HanlinScriptingPlatform {
                     }
                 ),
                 abiVersion: HanlinScriptContractSupport.multiRuntime.abiVersion.description,
-                scriptingDeclarations: try HanlinScriptingSDK.declarations(),
+                scriptingDeclarations: try HanlinScriptingSDK.declarationFiles().map {
+                    HanlinVirtualSourceFile(
+                        logicalPath: "virtual/\($0.name)",
+                        bytes: $0.data
+                    )
+                },
                 compiler: HanlinNodeMobileScriptingCompiler()
             )
             let applicationSupport = try Self.applicationSupportDirectory()

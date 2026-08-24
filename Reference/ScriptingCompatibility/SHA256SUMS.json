@@ -1,5 +1,5 @@
 {
-  "aggregateSHA256": "8d7d33d9369ee555d15adf10c867abbfb85834eced7e7596a627b70ff627ff36",
+  "aggregateSHA256": "0b7b8e715573ffc1656f530d9eba6cc019e6742294392278edbee812bd45a1c9",
   "algorithm": "SHA-256",
   "files": [
     {
@@ -8949,12 +8949,12 @@
       "sourceRelativePath": "scripts/Transit Nearby/widget.tsx"
     },
     {
-      "bytes": 702176,
+      "bytes": 713964,
       "category": "declaration",
       "language": "typescript",
       "path": "Original/Types/global.d.ts",
       "role": "ambient-globals",
-      "sha256": "f3d06e3b200a0cc2f4e731b63c367f303f3ee879016d9bd25a892b1188d74b33",
+      "sha256": "d5ed4b23de93d9f5c93fcf372736f8288e436e117fa008cdd9ac69a2656a949c",
       "sourceRelativePath": "dts/global.d.ts"
     },
     {
@@ -8976,12 +8976,12 @@
       "sourceRelativePath": "dts/safari-ext.d.ts"
     },
     {
-      "bytes": 454206,
+      "bytes": 456732,
       "category": "declaration",
       "language": "typescript",
       "path": "Original/Types/scripting.d.ts",
       "role": "scripting-module",
-      "sha256": "0dd028697d487ae23ac5625e718fd8af0af0a3f7a295fb753f7a1a1d3277ede2",
+      "sha256": "92155306822de8d1b3c9c31acd604ab562f46c69f0fa70a4cdced63c4a7a5259",
       "sourceRelativePath": "dts/scripting.d.ts"
     },
     {

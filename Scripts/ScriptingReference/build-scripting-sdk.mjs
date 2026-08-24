@@ -11,19 +11,35 @@ const referenceRoot = path.join(repositoryRoot, 'Reference', 'ScriptingCompatibi
 const generatedRoot = path.join(referenceRoot, 'GeneratedSDK');
 const packageResourceRoot = path.join(repositoryRoot, 'Packages', 'HanlinPlatform', 'Sources', 'HanlinScriptingSDK', 'Resources');
 const check = process.argv.slice(2).includes('--check');
+const declarationRoot = path.join(referenceRoot, 'Original', 'Types');
+const declarationNames = ['global.d.ts', 'node.d.ts', 'safari-ext.d.ts', 'scripting.d.ts', 'web-fetch.d.ts'];
 
 const baseline = await readJSON(path.join(referenceRoot, 'BASELINE.json'));
 const inventory = await readJSON(path.join(referenceRoot, 'Generated', 'api-inventory.json'));
 const overlay = await readJSON(path.join(referenceRoot, 'Overlays', 'foundation-runtime.json'));
+const classification = await readJSON(path.join(referenceRoot, 'Overlays', 'compatibility-classification.json'));
 if (baseline.typescriptPackageVersion !== '7.0.2') throw new Error('SDK generation requires the authorized TypeScript 7.0.2 baseline.');
 if (inventory.baselineID !== baseline.baselineID) throw new Error('API inventory baseline mismatch.');
 if (overlay.schemaVersion !== 1 || !Array.isArray(overlay.symbols)) throw new Error('Unsupported foundation runtime overlay.');
 
-const records = overlay.symbols.map(entry => {
-  const matches = inventory.symbols.filter(candidate => candidate.name === entry.symbol);
-  if (matches.length === 0) throw new Error(`Foundation symbol is absent from the authorized baseline: ${entry.symbol}`);
+const foundationBySymbol = new Map(overlay.symbols.map(entry => [entry.symbol, entry]));
+const classificationBySymbol = new Map(classification.symbols.map(entry => [entry.symbol, entry]));
+const inventoryBySymbol = Map.groupBy(inventory.symbols, entry => entry.name);
+for (const symbol of [...foundationBySymbol.keys(), ...classificationBySymbol.keys()]) {
+  if (!inventoryBySymbol.has(symbol)) throw new Error(`Classified symbol is absent from the authorized baseline: ${symbol}`);
+}
+const records = [...inventoryBySymbol].map(([symbol, matches]) => {
+  const foundation = foundationBySymbol.get(symbol);
+  const explicit = classificationBySymbol.get(symbol);
+  const defaultStatus = classification.declarationDefaults[matches[0].declarationFile]?.status;
+  const status = foundation?.state ?? explicit?.status ?? defaultStatus ?? 'not-yet-implemented';
+  const state = status === 'supported' ? 'supported' : status === 'partial' ? 'partial' : 'unsupported';
   return {
-    ...entry,
+    symbol,
+    state,
+    operation: foundation?.operation ?? explicit?.hanlinSymbol ?? 'unimplemented',
+    capability: foundation?.capability ?? explicit?.requiredCapability ?? null,
+    contexts: foundation?.contexts ?? explicit?.allowedContexts ?? [],
     declarationEvidence: matches.map(match => ({
       category: match.category,
       declarationFile: match.declarationFile,
@@ -106,18 +122,25 @@ const metadata = {
 };
 const declarationsBytes = Buffer.from(declarations.replaceAll('\r\n', '\n'));
 const metadataBytes = canonicalJSON(metadata);
+const declarationOutputs = new Map(await Promise.all(declarationNames.map(async name => [
+  name,
+  await fs.readFile(path.join(declarationRoot, name)),
+])));
+const manifestFiles = {
+  'scripting-foundation.d.ts': sha256(declarationsBytes),
+  'runtime-registration.json': sha256(metadataBytes),
+};
+for (const [name, bytes] of declarationOutputs) manifestFiles[name] = sha256(bytes);
 const manifest = canonicalJSON({
   schemaVersion: 1,
   baselineID: baseline.baselineID,
-  files: {
-    'scripting-foundation.d.ts': sha256(declarationsBytes),
-    'runtime-registration.json': sha256(metadataBytes),
-  },
+  files: manifestFiles,
 });
 const outputs = new Map([
   ['scripting-foundation.d.ts', declarationsBytes],
   ['runtime-registration.json', metadataBytes],
   ['manifest.json', manifest],
+  ...declarationOutputs,
 ]);
 
 const drift = [];

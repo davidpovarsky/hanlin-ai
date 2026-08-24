@@ -1,4 +1,4 @@
-// Generated from scripting-compat-2026-07-22-8d7d33d9369e. Do not edit.
+// Generated from scripting-compat-2026-08-25-0b7b8e715573. Do not edit.
 
 export type JSONValue = null | boolean | number | string | JSONValue[] | { [key: string]: JSONValue }
 export type ScriptEnvironment = "index" | "widget" | "intent" | "app_intents" | "assistant_tool" | "live_activity" | "control_widget" | "notification" | "keyboard" | "translation_ui_provider"
