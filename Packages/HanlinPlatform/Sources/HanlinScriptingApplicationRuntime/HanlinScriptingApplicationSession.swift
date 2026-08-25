@@ -305,7 +305,7 @@ public final class HanlinScriptingApplicationSession {
         }
         if operation.hasPrefix("sqlite.") {
             let sqliteStore = sqliteStore
-            return try await Task.detached(priority: .userInitiated) {
+            return await Task.detached(priority: .userInitiated) {
                 do {
                     return HanlinScriptingNativeJSON.success(
                         try sqliteStore.perform(operation: operation, payloadJSON: payloadJSON)
