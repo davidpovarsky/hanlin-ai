@@ -2835,10 +2835,12 @@
     },
     {
       "symbol": "Blob",
-      "state": "unsupported",
-      "operation": "unimplemented",
+      "state": "partial",
+      "operation": "HanlinScriptingApplicationSession.Blob",
       "capability": null,
-      "contexts": [],
+      "contexts": [
+        "mainApplication"
+      ],
       "declarationEvidence": [
         {
           "category": "class",
@@ -5405,10 +5407,12 @@
     },
     {
       "symbol": "Data",
-      "state": "unsupported",
-      "operation": "unimplemented",
+      "state": "partial",
+      "operation": "HanlinScriptingApplicationSession.Data",
       "capability": null,
-      "contexts": [],
+      "contexts": [
+        "mainApplication"
+      ],
       "declarationEvidence": [
         {
           "category": "class",
@@ -7145,7 +7149,7 @@
     {
       "symbol": "FileManager",
       "state": "partial",
-      "operation": "HanlinScriptServiceBroker",
+      "operation": "HanlinScriptingPackageFileSystem",
       "capability": "files",
       "contexts": [
         "mainApplication",
@@ -7424,10 +7428,12 @@
     },
     {
       "symbol": "FormData",
-      "state": "unsupported",
-      "operation": "unimplemented",
+      "state": "partial",
+      "operation": "HanlinScriptingApplicationSession.FormData",
       "capability": null,
-      "contexts": [],
+      "contexts": [
+        "mainApplication"
+      ],
       "declarationEvidence": [
         {
           "category": "const",
@@ -15034,10 +15040,12 @@
     },
     {
       "symbol": "Path",
-      "state": "unsupported",
-      "operation": "unimplemented",
+      "state": "partial",
+      "operation": "HanlinScriptingApplicationSession.Path",
       "capability": null,
-      "contexts": [],
+      "contexts": [
+        "mainApplication"
+      ],
       "declarationEvidence": [
         {
           "category": "namespace",
@@ -18683,7 +18691,7 @@
     {
       "symbol": "Storage",
       "state": "partial",
-      "operation": "HanlinScriptServiceBroker",
+      "operation": "HanlinScriptingPackageStorage",
       "capability": "storage",
       "contexts": [
         "mainApplication",

@@ -219,6 +219,129 @@ struct HanlinScriptingApplicationRuntimeTests {
             // Expected: the denied synchronous Storage access aborts launch.
         }
     }
+
+    @MainActor
+    @Test("Bridges Path, binary Data, Storage, and package-scoped FileManager to native services")
+    func nativeFoundationServices() throws {
+        let packageID = try HanlinInstalledPackageID(
+            validating: "install-foundation-\(UUID().uuidString.lowercased())"
+        )
+        let runtimeRoot = FileManager.default.temporaryDirectory.appending(
+            path: "hanlin-foundation-\(UUID().uuidString.lowercased())",
+            directoryHint: .isDirectory
+        )
+        let sourceRoot = runtimeRoot.appending(path: "Source", directoryHint: .isDirectory)
+        try FileManager.default.createDirectory(at: sourceRoot, withIntermediateDirectories: true)
+        try Data("fixture".utf8).write(
+            to: sourceRoot.appending(path: "fixture.txt", directoryHint: .notDirectory)
+        )
+        defer { try? FileManager.default.removeItem(at: runtimeRoot) }
+
+        let session = try HanlinScriptingApplicationSession(
+            installedPackageID: packageID,
+            program: #"""
+            Storage.clear();
+            Storage.set("record", { count: 3 });
+            Storage.setData("bytes", Data.fromIntArray([0, 127, 255]));
+            const directory = Path.join(FileManager.documentsDirectory, "nested");
+            const file = Path.join(directory, "note.txt");
+            FileManager.createDirectorySync(directory, true);
+            FileManager.writeAsStringSync(file, "שלום");
+            FileManager.appendTextSync(file, "!");
+            const result = [
+              Path.basename(file),
+              Path.dirname(file),
+              FileManager.readAsStringSync(file),
+              FileManager.statSync(file).type,
+              String(Storage.get("record").count),
+              Storage.getData("bytes").toHexString(),
+              FileManager.readAsStringSync(Path.join(FileManager.scriptsDirectory, "fixture.txt"))
+            ].join("|");
+            Navigation.present({ element: createElement(Text, null, result) });
+            """#,
+            filename: "compiled/index.js",
+            storageAllowed: true,
+            filesAllowed: true,
+            runtimeRoot: runtimeRoot,
+            packageSourceDirectory: sourceRoot
+        )
+        #expect(
+            session.model.root.properties["text"]
+                == .string("note.txt|/documents/nested|שלום!|file|3|007fff|fixture")
+        )
+        session.dismiss()
+    }
+
+    @MainActor
+    @Test("Enforces files capability before package filesystem access")
+    func deniedFiles() throws {
+        let packageID = try HanlinInstalledPackageID(
+            validating: "install-files-denied-\(UUID().uuidString.lowercased())"
+        )
+        do {
+            _ = try HanlinScriptingApplicationSession(
+                installedPackageID: packageID,
+                program: #"FileManager.existsSync(FileManager.documentsDirectory); Navigation.present({ element: createElement(Text, null, "No") });"#,
+                filename: "compiled/index.js",
+                storageAllowed: false,
+                filesAllowed: false
+            )
+            Issue.record("FileManager was available without the files capability")
+        } catch {
+            // Expected: denied synchronous filesystem access aborts launch.
+        }
+    }
+
+    @MainActor
+    @Test("Resolves fetch and FileManager promises through the native callback bridge")
+    func asynchronousNativeCallbacks() async throws {
+        let packageID = try HanlinInstalledPackageID(
+            validating: "install-async-\(UUID().uuidString.lowercased())"
+        )
+        let runtimeRoot = FileManager.default.temporaryDirectory.appending(
+            path: "hanlin-async-\(UUID().uuidString.lowercased())",
+            directoryHint: .isDirectory
+        )
+        defer { try? FileManager.default.removeItem(at: runtimeRoot) }
+        let session = try HanlinScriptingApplicationSession(
+            installedPackageID: packageID,
+            program: #"""
+            function App() {
+              const [result, setResult] = useState("pending");
+              useEffect(() => {
+                const file = Path.join(FileManager.documentsDirectory, "async.txt");
+                FileManager.writeAsString(file, "bridge")
+                  .then(() => FileManager.readAsString(file))
+                  .then(text => fetch("https://example.test/value").then(response => response.json())
+                    .then(body => setResult(text + ":" + body.ok)))
+                  .catch(error => setResult(error.name + ":" + error.code));
+              }, []);
+              return createElement(Text, null, result);
+            }
+            Navigation.present({ element: createElement(App, null) });
+            """#,
+            filename: "compiled/index.js",
+            storageAllowed: false,
+            filesAllowed: true,
+            networkAllowed: true,
+            runtimeRoot: runtimeRoot,
+            networkLoader: { request in
+                #expect(request.url == "https://example.test/value")
+                return HanlinScriptingFetchResponse(
+                    url: request.url,
+                    status: 200,
+                    headers: ["content-type": "application/json"],
+                    body: Data(#"{"ok":true}"#.utf8)
+                )
+            }
+        )
+        #expect(session.model.root.properties["text"] == .string("pending"))
+        for _ in 0..<50 where session.model.root.properties["text"] != .string("bridge:true") {
+            try await Task.sleep(for: .milliseconds(10))
+        }
+        #expect(session.model.root.properties["text"] == .string("bridge:true"))
+        session.dismiss()
+    }
 }
 
 @Suite("Trusted Scripting worker routes", .serialized)

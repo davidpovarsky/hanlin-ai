@@ -69,6 +69,34 @@ globalThis.__hanlinNativeStorageGet = key => JSON.stringify(
 );
 globalThis.__hanlinNativeStorageSet = (key, json) => { storage.set(key, json); return true; };
 globalThis.__hanlinNativeStorageClear = () => { storage.clear(); return true; };
+globalThis.__hanlinNativeStorageRemove = key => storage.delete(key);
+globalThis.__hanlinNativeStorageContains = key => storage.has(key);
+globalThis.__hanlinNativeStorageKeys = () => JSON.stringify({ allowed: true, keys: [...storage.keys()] });
+globalThis.__hanlinNativeStorageGetData = () => JSON.stringify({ allowed: true, found: false });
+globalThis.__hanlinNativeStorageSetData = () => true;
+globalThis.__hanlinNativeFileInfo = () => JSON.stringify({
+  ok: true,
+  value: {
+    documentsDirectory: "/documents",
+    appGroupDocumentsDirectory: "/app-group",
+    temporaryDirectory: "/temporary",
+    scriptsDirectory: "/scripts",
+    isiCloudEnabled: false,
+    isWebDAVAvailable: false,
+  },
+});
+globalThis.__hanlinNativeFileSync = () => JSON.stringify({
+  ok: false,
+  error: { name: "Error", code: "unavailable_in_smoke", message: "Filesystem I/O was not requested by this smoke fixture." },
+});
+globalThis.__hanlinNativeAsync = (id) => queueMicrotask(() => globalThis.__hanlinResolveNative(
+  id,
+  JSON.stringify({
+    ok: false,
+    error: { name: "Error", code: "unavailable_in_smoke", message: "Native async I/O was not requested by this smoke fixture." },
+  }),
+));
+globalThis.__hanlinCancelNative = () => {};
 vm.runInThisContext(bootstrap, { filename: "hanlin-scripting-ui-runtime.js" });
 
 const cache = new Map();
@@ -110,7 +138,7 @@ console.log(JSON.stringify({
 
 function walk(directory) {
   return fs.readdirSync(directory, { withFileTypes: true }).flatMap(entry => {
-    if (entry.name === "__MACOSX" || entry.name === "node_modules") return [];
+    if (entry.name === "__MACOSX" || entry.name === "node_modules" || entry.name.startsWith("._")) return [];
     const absolute = path.join(directory, entry.name);
     return entry.isDirectory() ? walk(absolute) : [absolute];
   });

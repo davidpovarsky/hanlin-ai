@@ -1,0 +1,154 @@
+import assert from "node:assert/strict";
+import fs from "node:fs";
+import path from "node:path";
+import test from "node:test";
+import vm from "node:vm";
+
+const repositoryRoot = path.resolve(import.meta.dirname, "../../..");
+const swift = fs.readFileSync(path.join(
+  repositoryRoot,
+  "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingApplicationSession.swift",
+), "utf8");
+const marker = `static let bootstrap = #${'"'.repeat(3)}`;
+const start = swift.indexOf(marker) + marker.length;
+const bootstrap = swift.slice(start, swift.indexOf(`${'"'.repeat(3)}#`, start));
+
+function runtime() {
+  const storage = new Map();
+  const binaryStorage = new Map();
+  const files = new Map();
+  let rendered;
+  const success = value => JSON.stringify({ ok: true, value });
+  const failure = (code, message) => JSON.stringify({
+    ok: false,
+    error: { name: "Error", code, message },
+  });
+  const fileOperation = (operation, payload) => {
+    switch (operation) {
+      case "file.createDirectory": return null;
+      case "file.writeData": files.set(payload.path, payload.base64); return null;
+      case "file.appendData": {
+        const previous = Buffer.from(files.get(payload.path) ?? "", "base64");
+        const next = Buffer.from(payload.base64, "base64");
+        files.set(payload.path, Buffer.concat([previous, next]).toString("base64"));
+        return null;
+      }
+      case "file.readData": {
+        if (!files.has(payload.path)) throw new Error("not found");
+        return files.get(payload.path);
+      }
+      case "file.exists": return files.has(payload.path);
+      case "file.isFile": return files.has(payload.path);
+      case "file.isDirectory": return payload.path === "/documents";
+      case "file.isLink": return false;
+      case "file.readDirectory": return [...files.keys()].map(value => value.split("/").at(-1));
+      case "file.stat": return { creationDate: 0, modificationDate: 0, type: "file", size: Buffer.from(files.get(payload.path), "base64").length };
+      case "file.remove": files.delete(payload.path); return null;
+      case "file.rename": files.set(payload.newPath, files.get(payload.path)); files.delete(payload.path); return null;
+      case "file.copy": files.set(payload.newPath, files.get(payload.path)); return null;
+      case "file.mimeType": return "text/plain";
+      default: throw new Error(`unsupported ${operation}`);
+    }
+  };
+  const context = vm.createContext({
+    console,
+    queueMicrotask,
+    __hanlinNativeRender(json) { rendered = JSON.parse(json); },
+    __hanlinNativeStorageGet(key, shared) {
+      if (shared) return JSON.stringify({ allowed: false });
+      return JSON.stringify(storage.has(key)
+        ? { allowed: true, found: true, json: storage.get(key) }
+        : { allowed: true, found: false });
+    },
+    __hanlinNativeStorageSet(key, json, shared) { if (shared) return false; storage.set(key, json); return true; },
+    __hanlinNativeStorageClear() { storage.clear(); binaryStorage.clear(); return true; },
+    __hanlinNativeStorageRemove(key, shared) { if (shared) return false; return storage.delete(key) || binaryStorage.delete(key); },
+    __hanlinNativeStorageContains(key, shared) { return !shared && (storage.has(key) || binaryStorage.has(key)); },
+    __hanlinNativeStorageKeys(shared) { return JSON.stringify(shared ? { allowed: false } : { allowed: true, keys: [...new Set([...storage.keys(), ...binaryStorage.keys()])] }); },
+    __hanlinNativeStorageGetData(key, shared) { return JSON.stringify(shared || !binaryStorage.has(key) ? { allowed: !shared, found: false } : { allowed: true, found: true, base64: binaryStorage.get(key) }); },
+    __hanlinNativeStorageSetData(key, base64, shared) { if (shared) return false; binaryStorage.set(key, base64); return true; },
+    __hanlinNativeFileInfo() { return success({ documentsDirectory: "/documents", appGroupDocumentsDirectory: "/app-group", temporaryDirectory: "/temporary", scriptsDirectory: "/scripts", isiCloudEnabled: false, isWebDAVAvailable: false }); },
+    __hanlinNativeFileSync(operation, json) {
+      try { return success(fileOperation(operation, JSON.parse(json))); }
+      catch (error) { return failure("file_failure", error.message); }
+    },
+    __hanlinNativeAsync(id, operation, json) {
+      queueMicrotask(() => {
+        try {
+          const payload = JSON.parse(json);
+          const value = operation === "network.fetch"
+            ? { url: payload.url, status: 200, headers: { "content-type": "application/json" }, bodyBase64: Buffer.from('{"ok":true}').toString("base64") }
+            : operation === "runtime.delay"
+              ? null
+            : fileOperation(operation, payload);
+          context.__hanlinResolveNative(id, success(value));
+        } catch (error) {
+          context.__hanlinResolveNative(id, failure("async_failure", error.message));
+        }
+      });
+    },
+    __hanlinCancelNative() {},
+  });
+  vm.runInContext(bootstrap, context, { filename: "hanlin-scripting-ui-runtime.js" });
+  return { context, rendered: () => rendered };
+}
+
+test("Path, binary Data, Storage, and synchronous FileManager preserve values", () => {
+  const { context, rendered } = runtime();
+  vm.runInContext(`
+    Storage.clear();
+    Storage.set("record", { count: 3 });
+    Storage.setData("bytes", Data.fromIntArray([0, 127, 255]));
+    const file = Path.join(FileManager.documentsDirectory, "nested", "note.txt");
+    FileManager.writeAsStringSync(file, "שלום");
+    FileManager.appendTextSync(file, "!");
+    const valid = Path.basename(file) === "note.txt"
+      && Path.dirname(file) === "/documents/nested"
+      && FileManager.existsSync(file)
+      && FileManager.readAsStringSync(file) === "שלום!"
+      && Storage.get("record").count === 3
+      && Storage.getData("bytes").toHexString() === "007fff"
+      && Storage.contains("record")
+      && Storage.keys().includes("bytes");
+    Navigation.present({ element: createElement(Text, null, String(valid)) });
+  `, context);
+  assert.equal(rendered().properties.text, "true");
+});
+
+test("FileManager promises and fetch resolve through the native callback channel", async () => {
+  const { context, rendered } = runtime();
+  await vm.runInContext(`
+    (async () => {
+      const file = Path.join(FileManager.documentsDirectory, "async.txt");
+      await FileManager.writeAsString(file, "bridge");
+      const text = await FileManager.readAsString(file);
+      const response = await fetch("https://example.test/value");
+      const body = await response.json();
+      Navigation.present({ element: createElement(Text, null, text + ":" + response.status + ":" + body.ok) });
+    })()
+  `, context);
+  assert.equal(rendered().properties.text, "bridge:200:true");
+});
+
+test("AbortController rejects before dispatch and disposal cancels pending native requests", async () => {
+  const { context } = runtime();
+  const result = await vm.runInContext(`
+    (async () => {
+      const controller = new AbortController();
+      controller.abort();
+      try { await fetch("https://example.test", { signal: controller.signal }); }
+      catch (error) { return error.name; }
+      return "unexpected";
+    })()
+  `, context);
+  assert.equal(result, "AbortError");
+  const timeoutName = await vm.runInContext(`
+    (async () => {
+      const signal = AbortSignal.timeout(0);
+      await new Promise(resolve => signal.addEventListener("abort", resolve));
+      return signal.reason.name;
+    })()
+  `, context);
+  assert.equal(timeoutName, "TimeoutError");
+  assert.doesNotThrow(() => context.__hanlinDispose());
+});

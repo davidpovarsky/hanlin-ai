@@ -347,11 +347,16 @@ final class HanlinScriptingPlatform {
             let program = try String(contentsOf: compiledURL, encoding: .utf8)
             dismissActiveApplication()
             let storageCapability = try HanlinCapabilityID(validating: "storage")
+            let filesCapability = try HanlinCapabilityID(validating: "files")
+            let networkCapability = try HanlinCapabilityID(validating: "network")
             let session = try HanlinScriptingApplicationSession(
                 installedPackageID: id,
                 program: program,
                 filename: compiledPath,
-                storageAllowed: package.grantedCapabilities.contains(storageCapability)
+                storageAllowed: package.grantedCapabilities.contains(storageCapability),
+                filesAllowed: package.grantedCapabilities.contains(filesCapability),
+                networkAllowed: package.grantedCapabilities.contains(networkCapability),
+                packageSourceDirectory: artifactRoot.appending(path: "source", directoryHint: .isDirectory)
             )
             applicationSession = session
             activeApplicationID = id

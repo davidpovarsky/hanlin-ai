@@ -102,24 +102,106 @@
     {
       "symbol": "Storage",
       "status": "partial",
-      "hanlinSymbol": "HanlinScriptServiceBroker",
+      "hanlinSymbol": "HanlinScriptingPackageStorage",
       "hanlinAPIVersion": "hanlin.services/1.0",
       "requiredCapability": "storage",
       "allowedContexts": ["mainApplication", "backgroundTask", "appIntent"],
-      "behaviorDifferences": ["The live synchronous binding is package-namespaced, capability-gated and quota-bounded; it does not yet expose the complete Storage namespace or broker audit stream."],
-      "tests": ["AI_HLYTests/HanlinScriptingRuntimeTests.swift", "Packages/HanlinPlatform/Tests/HanlinScriptServicesTests/HanlinScriptServiceBrokerTests.swift"],
+      "behaviorDifferences": ["The live synchronous binding implements JSON and Data get/set, remove, contains, keys and clear in a package-namespaced quota-bounded domain; shared App Group storage is explicitly denied until a provisioned shared container is available."],
+      "tests": ["AI_HLYTests/HanlinScriptingRuntimeTests.swift", "Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs", "Packages/HanlinPlatform/Tests/HanlinScriptServicesTests/HanlinScriptServiceBrokerTests.swift"],
       "notes": "Connected to installed scripting-jsc app sessions with revocation closing the active session."
     },
     {
       "symbol": "FileManager",
       "status": "partial",
-      "hanlinSymbol": "HanlinScriptServiceBroker",
+      "hanlinSymbol": "HanlinScriptingPackageFileSystem",
       "hanlinAPIVersion": "hanlin.services/1.0",
       "requiredCapability": "files",
       "allowedContexts": ["mainApplication", "backgroundTask", "appIntent"],
-      "behaviorDifferences": ["Hanlin exposes a bounded package VFS instead of an ambient filesystem; external handles and the JavaScript binding remain incomplete."],
-      "tests": ["Packages/HanlinPlatform/Tests/HanlinScriptServicesTests/HanlinScriptServiceBrokerTests.swift"],
-      "notes": "VFS host semantics are partial and deliberately deny raw paths."
+      "behaviorDifferences": ["Hanlin exposes documents, app-group, temporary and read-only package-source roots through a bounded capability-gated VFS; iCloud, WebDAV, bookmarks, links and archive operations remain unavailable."],
+      "tests": ["AI_HLYTests/HanlinScriptingRuntimeTests.swift", "Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs", "Packages/HanlinPlatform/Tests/HanlinScriptServicesTests/HanlinScriptServiceBrokerTests.swift"],
+      "notes": "The synchronous and Promise APIs used by the real FileManager acceptance project are connected to native filesystem operations; raw paths outside package roots are rejected."
+    },
+    {
+      "symbol": "Path",
+      "status": "partial",
+      "hanlinSymbol": "HanlinScriptingApplicationSession.Path",
+      "hanlinAPIVersion": "hanlin.services/1.0",
+      "allowedContexts": ["mainApplication"],
+      "behaviorDifferences": ["Implements the declared POSIX normalize, join, dirname, basename, extname, parse, sep and delimiter surface; conformance is currently validated against acceptance use and targeted edge cases rather than the complete Node path corpus."],
+      "tests": ["AI_HLYTests/HanlinScriptingRuntimeTests.swift", "Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs"],
+      "notes": "Runs entirely inside the isolated JavaScriptCore context."
+    },
+    {
+      "symbol": "Data",
+      "status": "partial",
+      "hanlinSymbol": "HanlinScriptingApplicationSession.Data",
+      "hanlinAPIVersion": "hanlin.services/1.0",
+      "allowedContexts": ["mainApplication"],
+      "behaviorDifferences": ["Implements byte mutation, slicing, concatenation and UTF-8, ASCII, base64, hex, ArrayBuffer and Uint8Array conversion; compression, legacy encodings and image conversion remain unavailable."],
+      "tests": ["AI_HLYTests/HanlinScriptingRuntimeTests.swift", "Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs"],
+      "notes": "Binary values remain JavaScript objects and cross the native boundary as bounded base64 payloads."
+    },
+    {
+      "symbol": "fetch",
+      "status": "partial",
+      "hanlinSymbol": "HanlinScriptingURLSessionLoader",
+      "hanlinAPIVersion": "hanlin.services/1.0",
+      "requiredCapability": "network",
+      "allowedContexts": ["mainApplication"],
+      "behaviorDifferences": ["Uses an ephemeral URLSession with bounded buffered request and response bodies, HTTPS-by-default policy, cancellation and timeout propagation; streaming, redirect callbacks, cookie persistence and cache APIs remain unavailable."],
+      "tests": ["AI_HLYTests/HanlinScriptingRuntimeTests.swift", "Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs"],
+      "notes": "HTTP error statuses resolve as Response values; transport and permission failures reject the Promise."
+    },
+    {
+      "symbol": "Headers",
+      "status": "partial",
+      "hanlinSymbol": "HanlinScriptingApplicationSession.Headers",
+      "hanlinAPIVersion": "hanlin.services/1.0",
+      "allowedContexts": ["mainApplication"],
+      "behaviorDifferences": ["Implements case-insensitive mutation, lookup, array enumeration, iteration, getSetCookie and JSON conversion; URLSession currently collapses duplicate response header fields."],
+      "tests": ["Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs"],
+      "notes": "Used by Request, Response and fetch."
+    },
+    {
+      "symbol": "Request",
+      "status": "partial",
+      "hanlinSymbol": "HanlinScriptingApplicationSession.Request",
+      "hanlinAPIVersion": "hanlin.services/1.0",
+      "requiredCapability": "network",
+      "allowedContexts": ["mainApplication"],
+      "behaviorDifferences": ["Implements construction, cloning, buffered body consumption, headers, signals and timeout metadata; streams, form-data parsing and redirect callbacks remain unavailable."],
+      "tests": ["Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs"],
+      "notes": "GET and HEAD bodies are rejected."
+    },
+    {
+      "symbol": "Response",
+      "status": "partial",
+      "hanlinSymbol": "HanlinScriptingApplicationSession.Response",
+      "hanlinAPIVersion": "hanlin.services/1.0",
+      "allowedContexts": ["mainApplication"],
+      "behaviorDifferences": ["Implements buffered single-consumption text, JSON, Data, bytes, ArrayBuffer and Blob bodies plus clone/json/redirect helpers; ReadableStream, form-data parsing and structured cookies remain unavailable."],
+      "tests": ["AI_HLYTests/HanlinScriptingRuntimeTests.swift", "Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs"],
+      "notes": "Network response bodies are capped before crossing into JavaScriptCore."
+    },
+    {
+      "symbol": "Blob",
+      "status": "partial",
+      "hanlinSymbol": "HanlinScriptingApplicationSession.Blob",
+      "hanlinAPIVersion": "hanlin.services/1.0",
+      "allowedContexts": ["mainApplication"],
+      "behaviorDifferences": ["Implements buffered construction, slicing and text/bytes/ArrayBuffer reads; stream() is unavailable."],
+      "tests": ["Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs"],
+      "notes": "Backed by isolated JavaScript Data values."
+    },
+    {
+      "symbol": "FormData",
+      "status": "partial",
+      "hanlinSymbol": "HanlinScriptingApplicationSession.FormData",
+      "hanlinAPIVersion": "hanlin.services/1.0",
+      "allowedContexts": ["mainApplication"],
+      "behaviorDifferences": ["Implements mutation, lookup, enumeration and multipart request encoding; response parsing and File values remain unavailable."],
+      "tests": ["Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs"],
+      "notes": "Multipart bodies are bounded by the native fetch request limit."
     },
     {
       "symbol": "Location",

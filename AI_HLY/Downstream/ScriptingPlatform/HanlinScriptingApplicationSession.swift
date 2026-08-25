@@ -11,13 +11,22 @@ final class HanlinScriptingApplicationSession {
     private let context: JSContext
     private let virtualMachine: JSVirtualMachine
     private let storage: HanlinScriptingPackageStorage
+    private let fileSystem: HanlinScriptingPackageFileSystem
+    private let networkAllowed: Bool
+    private let networkLoader: HanlinScriptingNetworkLoader
+    private var nativeTasks: [String: Task<Void, Never>] = [:]
     private var disposed = false
 
     init(
         installedPackageID: HanlinInstalledPackageID,
         program: String,
         filename: String,
-        storageAllowed: Bool
+        storageAllowed: Bool,
+        filesAllowed: Bool = false,
+        networkAllowed: Bool = false,
+        runtimeRoot: URL? = nil,
+        packageSourceDirectory: URL? = nil,
+        networkLoader: @escaping HanlinScriptingNetworkLoader = HanlinScriptingURLSessionLoader.load
     ) throws {
         guard let virtualMachine = JSVirtualMachine(),
               let context = JSContext(virtualMachine: virtualMachine) else {
@@ -29,6 +38,14 @@ final class HanlinScriptingApplicationSession {
             installedPackageID: installedPackageID,
             allowed: storageAllowed
         )
+        fileSystem = try HanlinScriptingPackageFileSystem(
+            installedPackageID: installedPackageID.rawValue,
+            allowed: filesAllowed,
+            runtimeRoot: runtimeRoot,
+            packageSourceDirectory: packageSourceDirectory
+        )
+        self.networkAllowed = networkAllowed
+        self.networkLoader = networkLoader
 
         let router = HanlinScriptingUIEventRouter()
         model = HanlinScriptUIModel(root: .init(kind: .fragment)) { handlerID, payload in
@@ -71,11 +88,22 @@ final class HanlinScriptingApplicationSession {
         guard !disposed else { return }
         disposed = true
         context.evaluateScript("globalThis.__hanlinDispose?.();")
+        nativeTasks.values.forEach { $0.cancel() }
+        nativeTasks.removeAll(keepingCapacity: false)
         context.exceptionHandler = nil
         context.setObject(nil, forKeyedSubscript: "__hanlinNativeRender" as NSString)
         context.setObject(nil, forKeyedSubscript: "__hanlinNativeStorageGet" as NSString)
         context.setObject(nil, forKeyedSubscript: "__hanlinNativeStorageSet" as NSString)
         context.setObject(nil, forKeyedSubscript: "__hanlinNativeStorageClear" as NSString)
+        context.setObject(nil, forKeyedSubscript: "__hanlinNativeStorageRemove" as NSString)
+        context.setObject(nil, forKeyedSubscript: "__hanlinNativeStorageContains" as NSString)
+        context.setObject(nil, forKeyedSubscript: "__hanlinNativeStorageKeys" as NSString)
+        context.setObject(nil, forKeyedSubscript: "__hanlinNativeStorageGetData" as NSString)
+        context.setObject(nil, forKeyedSubscript: "__hanlinNativeStorageSetData" as NSString)
+        context.setObject(nil, forKeyedSubscript: "__hanlinNativeFileInfo" as NSString)
+        context.setObject(nil, forKeyedSubscript: "__hanlinNativeFileSync" as NSString)
+        context.setObject(nil, forKeyedSubscript: "__hanlinNativeAsync" as NSString)
+        context.setObject(nil, forKeyedSubscript: "__hanlinCancelNative" as NSString)
     }
 
     private func installNativeBridges() {
@@ -87,17 +115,164 @@ final class HanlinScriptingApplicationSession {
                   let node = try? Self.decodeNode(object, depth: 0) else { return }
             try? self.model.apply(.render(node))
         }
-        let storageGet: @convention(block) (String) -> String = { [storage] key in
-            storage.response(for: key)
+        let storageGet: @convention(block) (String, Bool) -> String = { [storage] key, shared in
+            storage.response(for: key, shared: shared)
         }
-        let storageSet: @convention(block) (String, String) -> Bool = { [storage] key, json in
-            storage.set(json: json, for: key)
+        let storageSet: @convention(block) (String, String, Bool) -> Bool = {
+            [storage] key, json, shared in
+            storage.set(json: json, for: key, shared: shared)
         }
         let storageClear: @convention(block) () -> Bool = { [storage] in storage.clear() }
+        let storageRemove: @convention(block) (String, Bool) -> Bool = { [storage] key, shared in
+            storage.remove(key: key, shared: shared)
+        }
+        let storageContains: @convention(block) (String, Bool) -> Bool = { [storage] key, shared in
+            storage.contains(key: key, shared: shared)
+        }
+        let storageKeys: @convention(block) (Bool) -> String = { [storage] shared in
+            storage.keysResponse(shared: shared)
+        }
+        let storageGetData: @convention(block) (String, Bool) -> String = { [storage] key, shared in
+            storage.dataResponse(for: key, shared: shared)
+        }
+        let storageSetData: @convention(block) (String, String, Bool) -> Bool = {
+            [storage] key, base64, shared in
+            storage.setData(base64: base64, for: key, shared: shared)
+        }
+        let fileInfo: @convention(block) () -> String = { [fileSystem] in
+            HanlinScriptingNativeJSON.success(fileSystem.publicDirectories)
+        }
+        let fileSync: @convention(block) (String, String) -> String = { [fileSystem] operation, json in
+            do {
+                let payload = try HanlinScriptingNativeJSON.decodeObject(json)
+                return HanlinScriptingNativeJSON.success(
+                    try fileSystem.perform(operation: operation, payload: payload)
+                )
+            } catch {
+                return HanlinScriptingNativeJSON.failure(error)
+            }
+        }
+        let nativeAsync: @convention(block) (String, String, String) -> Void = {
+            [weak self] requestID, operation, json in
+            self?.enqueueNativeRequest(id: requestID, operation: operation, payloadJSON: json)
+        }
+        let cancelNative: @convention(block) (String) -> Void = { [weak self] requestID in
+            self?.nativeTasks[requestID]?.cancel()
+        }
         context.setObject(render, forKeyedSubscript: "__hanlinNativeRender" as NSString)
         context.setObject(storageGet, forKeyedSubscript: "__hanlinNativeStorageGet" as NSString)
         context.setObject(storageSet, forKeyedSubscript: "__hanlinNativeStorageSet" as NSString)
         context.setObject(storageClear, forKeyedSubscript: "__hanlinNativeStorageClear" as NSString)
+        context.setObject(storageRemove, forKeyedSubscript: "__hanlinNativeStorageRemove" as NSString)
+        context.setObject(storageContains, forKeyedSubscript: "__hanlinNativeStorageContains" as NSString)
+        context.setObject(storageKeys, forKeyedSubscript: "__hanlinNativeStorageKeys" as NSString)
+        context.setObject(storageGetData, forKeyedSubscript: "__hanlinNativeStorageGetData" as NSString)
+        context.setObject(storageSetData, forKeyedSubscript: "__hanlinNativeStorageSetData" as NSString)
+        context.setObject(fileInfo, forKeyedSubscript: "__hanlinNativeFileInfo" as NSString)
+        context.setObject(fileSync, forKeyedSubscript: "__hanlinNativeFileSync" as NSString)
+        context.setObject(nativeAsync, forKeyedSubscript: "__hanlinNativeAsync" as NSString)
+        context.setObject(cancelNative, forKeyedSubscript: "__hanlinCancelNative" as NSString)
+    }
+
+    private func enqueueNativeRequest(id: String, operation: String, payloadJSON: String) {
+        guard !disposed, !id.isEmpty, id.utf8.count <= 128, nativeTasks[id] == nil else { return }
+        let task = Task { @MainActor [weak self] in
+            guard let self else { return }
+            let result: String
+            do {
+                let value = try await performNativeRequest(
+                    operation: operation,
+                    payloadJSON: payloadJSON
+                )
+                try Task.checkCancellation()
+                result = value
+            } catch is CancellationError {
+                result = HanlinScriptingNativeJSON.failure(HanlinScriptingNativeError(
+                    name: "AbortError",
+                    code: "cancelled",
+                    message: "The operation was cancelled."
+                ))
+            } catch {
+                result = HanlinScriptingNativeJSON.failure(error)
+            }
+            nativeTasks[id] = nil
+            guard !disposed else { return }
+            resolveNativeRequest(id: id, resultJSON: result)
+        }
+        nativeTasks[id] = task
+    }
+
+    private func performNativeRequest(operation: String, payloadJSON: String) async throws -> String {
+        if operation == "runtime.delay" {
+            let payload = try HanlinScriptingNativeJSON.decodeObject(payloadJSON)
+            guard let milliseconds = payload["milliseconds"] as? NSNumber,
+                  milliseconds.doubleValue.isFinite,
+                  milliseconds.doubleValue >= 0,
+                  milliseconds.doubleValue <= 300_000 else {
+                throw HanlinScriptingNativeError(
+                    name: "TypeError",
+                    code: "invalid_delay",
+                    message: "The delay must be between 0 and 300000 milliseconds."
+                )
+            }
+            let delay = Int64(milliseconds.doubleValue.rounded(.up))
+            try await Task.sleep(for: .milliseconds(delay))
+            return HanlinScriptingNativeJSON.success(NSNull())
+        }
+        if operation.hasPrefix("file.") {
+            let fileSystem = fileSystem
+            return try await Task.detached(priority: .userInitiated) {
+                do {
+                    let payload = try HanlinScriptingNativeJSON.decodeObject(payloadJSON)
+                    return HanlinScriptingNativeJSON.success(
+                        try fileSystem.perform(operation: operation, payload: payload)
+                    )
+                } catch {
+                    return HanlinScriptingNativeJSON.failure(error)
+                }
+            }.value
+        }
+        if operation == "network.fetch" {
+            guard networkAllowed else {
+                throw HanlinScriptingNativeError(
+                    name: "TypeError",
+                    code: "permission_denied",
+                    message: "The network capability is not granted."
+                )
+            }
+            guard let data = payloadJSON.data(using: .utf8) else {
+                throw HanlinScriptingNativeError(
+                    name: "TypeError",
+                    code: "invalid_payload",
+                    message: "The native request payload is invalid."
+                )
+            }
+            let request = try JSONDecoder().decode(HanlinScriptingFetchRequest.self, from: data)
+            let response = try await networkLoader(request)
+            return HanlinScriptingNativeJSON.success([
+                "url": response.url,
+                "status": response.status,
+                "headers": response.headers,
+                "bodyBase64": response.body.base64EncodedString(),
+            ])
+        }
+        throw HanlinScriptingNativeError(
+            name: "Error",
+            code: "unsupported_operation",
+            message: "The requested native operation is unavailable."
+        )
+    }
+
+    private func resolveNativeRequest(id: String, resultJSON: String) {
+        guard let function = context.objectForKeyedSubscript("__hanlinResolveNative"),
+              !function.isUndefined else { return }
+        var exception: JSValue?
+        context.exceptionHandler = { _, value in exception = value }
+        function.call(withArguments: [id, resultJSON])
+        context.exceptionHandler = nil
+        if exception != nil {
+            nativeTasks[id]?.cancel()
+        }
     }
 
     private func evaluate(_ source: String, filename: String) throws {
@@ -182,6 +357,7 @@ private final class HanlinScriptingPackageStorage: @unchecked Sendable {
     private let suiteName: String
     private let allowed: Bool
     private let maximumBytes = 1_048_576
+    private let dataPrefix = "__hanlin_data__:"
 
     init(installedPackageID: HanlinInstalledPackageID, allowed: Bool) throws {
         let suiteName = "com.hanlin.scripting.storage.\(installedPackageID.rawValue)"
@@ -193,10 +369,10 @@ private final class HanlinScriptingPackageStorage: @unchecked Sendable {
         self.allowed = allowed
     }
 
-    func response(for key: String) -> String {
+    func response(for key: String, shared: Bool) -> String {
         lock.lock()
         defer { lock.unlock() }
-        guard allowed, Self.valid(key: key) else { return #"{"allowed":false}"# }
+        guard allowed, !shared, Self.valid(key: key) else { return #"{"allowed":false}"# }
         guard let json = defaults.string(forKey: key) else { return #"{"allowed":true,"found":false}"# }
         guard let encoded = try? JSONEncoder().encode(json),
               let literal = String(data: encoded, encoding: .utf8) else {
@@ -205,22 +381,87 @@ private final class HanlinScriptingPackageStorage: @unchecked Sendable {
         return #"{"allowed":true,"found":true,"json":\#(literal)}"#
     }
 
-    func set(json: String, for key: String) -> Bool {
+    func set(json: String, for key: String, shared: Bool) -> Bool {
         lock.lock()
         defer { lock.unlock() }
-        guard allowed, Self.valid(key: key), json.utf8.count <= maximumBytes,
+        guard allowed, !shared, Self.valid(key: key), json.utf8.count <= maximumBytes,
               let data = json.data(using: .utf8),
               (try? JSONSerialization.jsonObject(with: data, options: [.fragmentsAllowed])) != nil else {
             return false
         }
         let existingValues = defaults.persistentDomain(forName: suiteName) ?? [:]
-        let existingBytes = existingValues.keys.reduce(0) {
-            $0 + ((existingValues[$1] as? String)?.utf8.count ?? 0)
+        let existingBytes = existingValues.values.reduce(0) {
+            $0 + (($1 as? String)?.utf8.count ?? ($1 as? Data)?.count ?? 0)
         }
         let replacedBytes = defaults.string(forKey: key)?.utf8.count ?? 0
         guard existingBytes - replacedBytes + json.utf8.count <= maximumBytes else { return false }
+        defaults.removeObject(forKey: dataPrefix + key)
         defaults.set(json, forKey: key)
         return true
+    }
+
+    func dataResponse(for key: String, shared: Bool) -> String {
+        lock.lock()
+        defer { lock.unlock() }
+        guard allowed, !shared, Self.valid(key: key) else { return #"{"allowed":false}"# }
+        guard let data = defaults.data(forKey: dataPrefix + key) else {
+            return #"{"allowed":true,"found":false}"#
+        }
+        guard let encoded = try? JSONEncoder().encode(data.base64EncodedString()),
+              let literal = String(data: encoded, encoding: .utf8) else {
+            return #"{"allowed":true,"found":false}"#
+        }
+        return #"{"allowed":true,"found":true,"base64":\#(literal)}"#
+    }
+
+    func setData(base64: String, for key: String, shared: Bool) -> Bool {
+        lock.lock()
+        defer { lock.unlock() }
+        guard allowed, !shared, Self.valid(key: key),
+              let data = Data(base64Encoded: base64), data.count <= maximumBytes else { return false }
+        let existingValues = defaults.persistentDomain(forName: suiteName) ?? [:]
+        let existingBytes = existingValues.reduce(0) { result, item in
+            result + ((item.value as? String)?.utf8.count ?? (item.value as? Data)?.count ?? 0)
+        }
+        let dataKey = dataPrefix + key
+        let replacedBytes = defaults.data(forKey: dataKey)?.count
+            ?? defaults.string(forKey: key)?.utf8.count
+            ?? 0
+        guard existingBytes - replacedBytes + data.count <= maximumBytes else { return false }
+        defaults.removeObject(forKey: key)
+        defaults.set(data, forKey: dataKey)
+        return true
+    }
+
+    func remove(key: String, shared: Bool) -> Bool {
+        lock.lock()
+        defer { lock.unlock() }
+        guard allowed, !shared, Self.valid(key: key) else { return false }
+        defaults.removeObject(forKey: key)
+        defaults.removeObject(forKey: dataPrefix + key)
+        return true
+    }
+
+    func contains(key: String, shared: Bool) -> Bool {
+        lock.lock()
+        defer { lock.unlock() }
+        guard allowed, !shared, Self.valid(key: key) else { return false }
+        return defaults.object(forKey: key) != nil || defaults.data(forKey: dataPrefix + key) != nil
+    }
+
+    func keysResponse(shared: Bool) -> String {
+        lock.lock()
+        defer { lock.unlock() }
+        guard allowed, !shared else { return #"{"allowed":false}"# }
+        let domain = defaults.persistentDomain(forName: suiteName) ?? [:]
+        let keys = Set(domain.keys.map { key in
+            key.hasPrefix(dataPrefix) ? String(key.dropFirst(dataPrefix.count)) : key
+        }).sorted()
+        guard let data = try? JSONEncoder().encode(keys),
+              let json = String(data: data, encoding: .utf8) else {
+            return #"{"allowed":true,"keys":[]}"#
+        }
+        return #"{"allowed":true,"keys":\#(json)}"#
     }
 
     func clear() -> Bool {
@@ -268,6 +509,464 @@ private extension HanlinScriptingApplicationSession {
       let dismissPresentation = null;
       let rendering = false;
       let renderPending = false;
+      let nativeRequestCounter = 0;
+      const nativeRequests = new Map();
+
+      function nativeError(value) {
+        const error = new Error(value?.message || "The native operation failed.");
+        error.name = value?.name || "Error";
+        error.code = value?.code || "native_failure";
+        return error;
+      }
+
+      function decodeNativeResult(json) {
+        const result = JSON.parse(json);
+        if (!result.ok) throw nativeError(result.error);
+        return result.value;
+      }
+
+      function nativeCallSync(operation, payload = {}) {
+        return decodeNativeResult(__hanlinNativeFileSync(operation, JSON.stringify(payload)));
+      }
+
+      function nativeCallAsync(operation, payload = {}, signal = null) {
+        if (signal?.aborted) return Promise.reject(signal.reason ?? abortError());
+        const id = `native-${++nativeRequestCounter}`;
+        return new Promise((resolve, reject) => {
+          const onAbort = () => {
+            if (!nativeRequests.delete(id)) return;
+            __hanlinCancelNative(id);
+            reject(signal.reason ?? abortError());
+          };
+          if (signal) signal.addEventListener("abort", onAbort);
+          nativeRequests.set(id, { resolve, reject, signal, onAbort });
+          __hanlinNativeAsync(id, operation, JSON.stringify(payload));
+        });
+      }
+
+      function resolveNativeRequest(id, json) {
+        const request = nativeRequests.get(id);
+        if (!request) return;
+        nativeRequests.delete(id);
+        request.signal?.removeEventListener("abort", request.onAbort);
+        try { request.resolve(decodeNativeResult(json)); }
+        catch (error) { request.reject(error); }
+      }
+
+      class HanlinDOMException extends Error {
+        constructor(message = "", name = "Error") { super(message); this.name = name; }
+        get code() { return this.name === "AbortError" ? 20 : this.name === "TimeoutError" ? 23 : 0; }
+      }
+
+      function abortError(message = "The operation was aborted.") { return new HanlinDOMException(message, "AbortError"); }
+      function timeoutError(message = "The operation timed out.") { return new HanlinDOMException(message, "TimeoutError"); }
+
+      class HanlinAbortEvent {
+        constructor(signal) { this.type = "abort"; this.target = signal; }
+      }
+
+      class HanlinAbortSignal {
+        constructor() { this.aborted = false; this.reason = undefined; this.onabort = null; this.listeners = new Set(); }
+        throwIfAborted() { if (this.aborted) throw this.reason ?? abortError(); }
+        addEventListener(type, listener) { if (type === "abort" && typeof listener === "function") this.listeners.add(listener); }
+        removeEventListener(type, listener) { if (type === "abort") this.listeners.delete(listener); }
+        _abort(reason) {
+          if (this.aborted) return;
+          this.aborted = true;
+          this.reason = reason === undefined ? abortError() : reason;
+          const event = new HanlinAbortEvent(this);
+          try { this.onabort?.(event); } catch (_) {}
+          for (const listener of [...this.listeners]) { try { listener(event); } catch (_) {} }
+          this.listeners.clear();
+        }
+        static abort(reason) { const signal = new HanlinAbortSignal(); signal._abort(reason); return signal; }
+        static timeout(delay) {
+          const milliseconds = Number(delay);
+          if (!Number.isFinite(milliseconds) || milliseconds < 0) throw new TypeError("Delay must be a non-negative finite number");
+          const controller = new HanlinAbortController();
+          nativeCallAsync("runtime.delay", { milliseconds }).then(
+            () => controller.abort(timeoutError()),
+            error => { if (error?.name !== "AbortError") controller.abort(error); }
+          );
+          return controller.signal;
+        }
+        static any(signals) {
+          const controller = new HanlinAbortController();
+          for (const signal of signals) {
+            if (signal.aborted) { controller.abort(signal.reason); break; }
+            signal.addEventListener("abort", () => controller.abort(signal.reason));
+          }
+          return controller.signal;
+        }
+      }
+
+      class HanlinAbortController {
+        constructor() { this.signal = new HanlinAbortSignal(); }
+        abort(reason) { this.signal._abort(reason); }
+      }
+
+      function utf8Bytes(value) {
+        const encoded = unescape(encodeURIComponent(String(value)));
+        return Uint8Array.from(encoded, character => character.charCodeAt(0));
+      }
+
+      function utf8String(bytes) {
+        let binary = "";
+        for (let index = 0; index < bytes.length; index += 0x8000) {
+          binary += String.fromCharCode(...bytes.subarray(index, index + 0x8000));
+        }
+        try { return decodeURIComponent(escape(binary)); }
+        catch (_) { return binary.replace(/[^\x00-\x7f]/g, "\ufffd"); }
+      }
+
+      const base64Alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+      function bytesToBase64(bytes) {
+        let output = "";
+        for (let index = 0; index < bytes.length; index += 3) {
+          const first = bytes[index];
+          const second = index + 1 < bytes.length ? bytes[index + 1] : 0;
+          const third = index + 2 < bytes.length ? bytes[index + 2] : 0;
+          const value = (first << 16) | (second << 8) | third;
+          output += base64Alphabet[(value >>> 18) & 63];
+          output += base64Alphabet[(value >>> 12) & 63];
+          output += index + 1 < bytes.length ? base64Alphabet[(value >>> 6) & 63] : "=";
+          output += index + 2 < bytes.length ? base64Alphabet[value & 63] : "=";
+        }
+        return output;
+      }
+
+      function base64ToBytes(value) {
+        const input = String(value).replace(/\s+/g, "");
+        if (input.length % 4 !== 0 || /[^A-Za-z0-9+/=]/.test(input)) return null;
+        const output = [];
+        for (let index = 0; index < input.length; index += 4) {
+          const a = base64Alphabet.indexOf(input[index]);
+          const b = base64Alphabet.indexOf(input[index + 1]);
+          const c = input[index + 2] === "=" ? 0 : base64Alphabet.indexOf(input[index + 2]);
+          const d = input[index + 3] === "=" ? 0 : base64Alphabet.indexOf(input[index + 3]);
+          if (a < 0 || b < 0 || c < 0 || d < 0) return null;
+          const combined = (a << 18) | (b << 12) | (c << 6) | d;
+          output.push((combined >>> 16) & 255);
+          if (input[index + 2] !== "=") output.push((combined >>> 8) & 255);
+          if (input[index + 3] !== "=") output.push(combined & 255);
+        }
+        return Uint8Array.from(output);
+      }
+
+      class HanlinData {
+        constructor(bytes) { this.bytes = Uint8Array.from(bytes ?? []); }
+        get size() { return this.bytes.length; }
+        resetBytes(startIndex, endIndex) { this.bytes.fill(0, startIndex, endIndex); }
+        advanced(amount) { return new HanlinData(this.bytes.slice(amount)); }
+        replaceSubrange(startIndex, endIndex, data) {
+          const output = new Uint8Array(this.size - (endIndex - startIndex) + data.size);
+          output.set(this.bytes.slice(0, startIndex));
+          output.set(data.bytes, startIndex);
+          output.set(this.bytes.slice(endIndex), startIndex + data.size);
+          this.bytes = output;
+        }
+        slice(start = 0, end = this.size) { return new HanlinData(this.bytes.slice(start, end)); }
+        append(other) {
+          const output = new Uint8Array(this.size + other.size);
+          output.set(this.bytes); output.set(other.bytes, this.size); this.bytes = output;
+        }
+        getBytes() { return this.toUint8Array(); }
+        toUint8Array() { return new Uint8Array(this.bytes); }
+        toArrayBuffer() { return this.toUint8Array().buffer; }
+        toBase64String() { return bytesToBase64(this.bytes); }
+        toHexString() { return [...this.bytes].map(value => value.toString(16).padStart(2, "0")).join(""); }
+        toRawString(encoding = "utf8") {
+          if (!["utf8", "utf-8", "ascii"].includes(encoding)) throw new Error("HANLIN_DATA:unsupported_encoding");
+          return encoding === "ascii" ? String.fromCharCode(...this.bytes) : utf8String(this.bytes);
+        }
+        toDecodedString(encoding = "utf8") { return this.toRawString(encoding); }
+        toIntArray() { return [...this.bytes]; }
+        static fromIntArray(value) { return new HanlinData(Uint8Array.from(value)); }
+        static fromString(value, encoding) { return this.fromRawString(value, encoding); }
+        static fromRawString(value, encoding = "utf8") {
+          if (!["utf8", "utf-8", "ascii"].includes(encoding)) throw new Error("HANLIN_DATA:unsupported_encoding");
+          return new HanlinData(encoding === "ascii" ? Uint8Array.from([...String(value)], item => item.charCodeAt(0) & 255) : utf8Bytes(value));
+        }
+        static fromFile(path) {
+          try { return new HanlinData(base64ToBytes(nativeCallSync("file.readData", { path }))); }
+          catch (_) { return null; }
+        }
+        static fromArrayBuffer(value) { return value?.byteLength ? new HanlinData(new Uint8Array(value)) : null; }
+        static fromUint8Array(value) { return value?.byteLength ? new HanlinData(value) : null; }
+        static fromBase64String(value) { const bytes = base64ToBytes(value); return bytes ? new HanlinData(bytes) : null; }
+        static fromHexString(value) {
+          const text = String(value); if (text.length % 2 || /[^0-9a-f]/i.test(text)) return null;
+          return new HanlinData(Uint8Array.from(text.match(/../g) ?? [], item => parseInt(item, 16)));
+        }
+        static combine(values) {
+          const output = new HanlinData(); for (const value of values) output.append(value); return output;
+        }
+      }
+
+      function normalizePath(path) {
+        if (typeof path !== "string") throw new TypeError("Path must be a string");
+        if (!path) return ".";
+        const absolute = path.startsWith("/");
+        const trailing = path.endsWith("/");
+        const parts = [];
+        for (const part of path.split("/")) {
+          if (!part || part === ".") continue;
+          if (part === "..") {
+            if (parts.length && parts[parts.length - 1] !== "..") parts.pop();
+            else if (!absolute) parts.push("..");
+          } else parts.push(part);
+        }
+        let result = `${absolute ? "/" : ""}${parts.join("/")}`;
+        if (!result) result = absolute ? "/" : ".";
+        if (trailing && result !== "/" && result !== ".") result += "/";
+        return result;
+      }
+
+      const Path = Object.freeze({
+        sep: "/", delimiter: ":", normalize: normalizePath,
+        isAbsolute(path) { if (typeof path !== "string") throw new TypeError("Path must be a string"); return path.startsWith("/"); },
+        join(...parts) {
+          if (parts.some(part => typeof part !== "string")) throw new TypeError("Path segments must be strings");
+          return normalizePath(parts.filter(Boolean).join("/"));
+        },
+        dirname(path) {
+          const normalized = normalizePath(path).replace(/\/+$/, "");
+          if (normalized === "/") return "/";
+          const index = normalized.lastIndexOf("/");
+          if (index < 0) return ".";
+          return index === 0 ? "/" : normalized.slice(0, index);
+        },
+        basename(path, extension = "") {
+          const normalized = normalizePath(path).replace(/\/+$/, "");
+          let base = normalized.slice(normalized.lastIndexOf("/") + 1);
+          if (extension && base.endsWith(extension)) base = base.slice(0, -extension.length);
+          return base;
+        },
+        extname(path) {
+          const base = this.basename(path); const index = base.lastIndexOf(".");
+          return index <= 0 ? "" : base.slice(index);
+        },
+        parse(path) {
+          const root = this.isAbsolute(path) ? "/" : ""; const dir = this.dirname(path);
+          const base = this.basename(path); const ext = this.extname(path);
+          return { root, dir, base, ext, name: ext ? base.slice(0, -ext.length) : base };
+        }
+      });
+
+      const fileInfo = decodeNativeResult(__hanlinNativeFileInfo());
+      function filePayload(path, extra = {}) { return { path: normalizePath(path), ...extra }; }
+      const FileManager = {
+        ...fileInfo,
+        mimeType(path) { return nativeCallSync("file.mimeType", filePayload(path)); },
+        createDirectory(path, recursive = false) { return nativeCallAsync("file.createDirectory", filePayload(path, { recursive })); },
+        createDirectorySync(path, recursive = false) { nativeCallSync("file.createDirectory", filePayload(path, { recursive })); },
+        copyFile(path, newPath) { return nativeCallAsync("file.copy", filePayload(path, { newPath: normalizePath(newPath) })); },
+        copyFileSync(path, newPath) { nativeCallSync("file.copy", filePayload(path, { newPath: normalizePath(newPath) })); },
+        readDirectory(path, recursive = false) { return nativeCallAsync("file.readDirectory", filePayload(path, { recursive })); },
+        readDirectorySync(path, recursive = false) { return nativeCallSync("file.readDirectory", filePayload(path, { recursive })); },
+        exists(path) { return nativeCallAsync("file.exists", filePayload(path)); },
+        existsSync(path) { return nativeCallSync("file.exists", filePayload(path)); },
+        isFile(path) { return nativeCallAsync("file.isFile", filePayload(path)); },
+        isFileSync(path) { return nativeCallSync("file.isFile", filePayload(path)); },
+        isDirectory(path) { return nativeCallAsync("file.isDirectory", filePayload(path)); },
+        isDirectorySync(path) { return nativeCallSync("file.isDirectory", filePayload(path)); },
+        isLink(path) { return nativeCallAsync("file.isLink", filePayload(path)); },
+        isLinkSync(path) { return nativeCallSync("file.isLink", filePayload(path)); },
+        readAsData(path) { return nativeCallAsync("file.readData", filePayload(path)).then(value => HanlinData.fromBase64String(value)); },
+        readAsDataSync(path) { return HanlinData.fromBase64String(nativeCallSync("file.readData", filePayload(path))); },
+        readAsBytes(path) { return this.readAsData(path).then(value => value.toUint8Array()); },
+        readAsBytesSync(path) { return this.readAsDataSync(path).toUint8Array(); },
+        readAsString(path, encoding = "utf8") { return this.readAsData(path).then(value => value.toRawString(encoding)); },
+        readAsStringSync(path, encoding = "utf8") { return this.readAsDataSync(path).toRawString(encoding); },
+        writeAsData(path, data) { return nativeCallAsync("file.writeData", filePayload(path, { base64: data.toBase64String() })); },
+        writeAsDataSync(path, data) { nativeCallSync("file.writeData", filePayload(path, { base64: data.toBase64String() })); },
+        writeAsBytes(path, data) { return this.writeAsData(path, new HanlinData(data)); },
+        writeAsBytesSync(path, data) { this.writeAsDataSync(path, new HanlinData(data)); },
+        writeAsString(path, value, encoding = "utf8") { return this.writeAsData(path, HanlinData.fromRawString(value, encoding)); },
+        writeAsStringSync(path, value, encoding = "utf8") { this.writeAsDataSync(path, HanlinData.fromRawString(value, encoding)); },
+        appendData(path, data) { return nativeCallAsync("file.appendData", filePayload(path, { base64: data.toBase64String() })); },
+        appendDataSync(path, data) { nativeCallSync("file.appendData", filePayload(path, { base64: data.toBase64String() })); },
+        appendText(path, value, encoding = "utf8") { return this.appendData(path, HanlinData.fromRawString(value, encoding)); },
+        appendTextSync(path, value, encoding = "utf8") { this.appendDataSync(path, HanlinData.fromRawString(value, encoding)); },
+        stat(path) { return nativeCallAsync("file.stat", filePayload(path)); },
+        statSync(path) { return nativeCallSync("file.stat", filePayload(path)); },
+        rename(path, newPath) { return nativeCallAsync("file.rename", filePayload(path, { newPath: normalizePath(newPath) })); },
+        renameSync(path, newPath) { nativeCallSync("file.rename", filePayload(path, { newPath: normalizePath(newPath) })); },
+        remove(path) { return nativeCallAsync("file.remove", filePayload(path)); },
+        removeSync(path) { nativeCallSync("file.remove", filePayload(path)); },
+        isBinaryFile(path) { return this.readAsData(path).then(value => value.toIntArray().includes(0)); },
+        isBinaryFileSync(path) { return this.readAsDataSync(path).toIntArray().includes(0); },
+        isFileStoredIniCloud() { return false; }, isiCloudFileDownloaded() { return false; },
+        downloadFileFromiCloud() { return Promise.resolve(false); },
+        addFileBookmark() { return null; }, removeFileBookmark() { return false; },
+        bookmarkExists() { return false; }, getAllFileBookmarks() { return []; }, bookmarkedPath() { return null; }
+      };
+      Object.defineProperties(FileManager, {
+        iCloudDocumentsDirectory: { get() { throw new Error("HANLIN_FILE:iCloud_unavailable"); } },
+        webDAVDocumentsDirectory: { get() { throw new Error("HANLIN_FILE:webdav_unavailable"); } }
+      });
+      Object.freeze(FileManager);
+
+      class HanlinHeaders {
+        constructor(initial = undefined) {
+          this.store = new Map();
+          if (initial instanceof HanlinHeaders) {
+            for (const [name, value] of initial.rawEntries()) this.append(name, value);
+          } else if (Array.isArray(initial)) {
+            for (const pair of initial) {
+              if (!Array.isArray(pair) || pair.length !== 2) throw new TypeError("Invalid header pair");
+              this.append(pair[0], pair[1]);
+            }
+          } else if (initial && typeof initial === "object") {
+            for (const [name, value] of Object.entries(initial)) this.append(name, value);
+          }
+        }
+        normalizeName(name) {
+          const value = String(name).trim().toLowerCase();
+          if (!value || /[^!#$%&'*+.^_`|~0-9a-z-]/.test(value)) throw new TypeError("Invalid header name");
+          return value;
+        }
+        normalizeValue(value) { return String(value).trim(); }
+        append(name, value) {
+          const key = this.normalizeName(name); const normalized = this.normalizeValue(value);
+          const entry = this.store.get(key) ?? { name: String(name), values: [] };
+          entry.values.push(normalized); this.store.set(key, entry);
+        }
+        set(name, value) { const key = this.normalizeName(name); this.store.set(key, { name: String(name), values: [this.normalizeValue(value)] }); }
+        get(name) { const entry = this.store.get(this.normalizeName(name)); return entry ? entry.values.join(", ") : null; }
+        getSetCookie() { return this.store.get("set-cookie")?.values.slice() ?? []; }
+        has(name) { return this.store.has(this.normalizeName(name)); }
+        delete(name) { this.store.delete(this.normalizeName(name)); }
+        *rawEntries() { for (const entry of this.store.values()) for (const value of entry.values) yield [entry.name, value]; }
+        entries() { return [...this.store].map(([key, entry]) => [key, entry.values.join(", ")]); }
+        keys() { return this.entries().map(value => value[0]); }
+        values() { return this.entries().map(value => value[1]); }
+        forEach(callback, thisArg) { for (const [name, value] of this.entries()) callback.call(thisArg, value, name, this); }
+        [Symbol.iterator]() { return this.entries()[Symbol.iterator](); }
+        toObject() { const output = {}; for (const [name, value] of this.entries()) output[name] = value; return output; }
+        toJson() { return this.toObject(); }
+      }
+
+      class HanlinBlob {
+        constructor(parts = [], options = {}) {
+          this.type = String(options.type ?? "").toLowerCase();
+          this.dataValue = new HanlinData();
+          for (const part of parts) this.dataValue.append(bodyData(part));
+        }
+        get size() { return this.dataValue.size; }
+        arrayBuffer() { return Promise.resolve(this.dataValue.toArrayBuffer()); }
+        bytes() { return Promise.resolve(this.dataValue.toUint8Array()); }
+        text() { return Promise.resolve(this.dataValue.toDecodedString()); }
+        data() { return Promise.resolve(this.dataValue.slice()); }
+        slice(start = 0, end = this.size, type = "") { return new HanlinBlob([this.dataValue.slice(start, end)], { type }); }
+      }
+
+      class HanlinFormData {
+        constructor() { this.items = []; }
+        append(name, value, mimeType, filename) { this.items.push({ name: String(name), value, mimeType, filename }); }
+        set(name, value, mimeType, filename) { this.delete(name); this.append(name, value, mimeType, filename); }
+        get(name) { return this.items.find(item => item.name === String(name))?.value ?? null; }
+        getAll(name) { return this.items.filter(item => item.name === String(name)).map(item => item.value); }
+        has(name) { return this.items.some(item => item.name === String(name)); }
+        delete(name) { this.items = this.items.filter(item => item.name !== String(name)); }
+        forEach(callback, thisArg) { for (const item of this.items) callback.call(thisArg, item.value, item.name, this); }
+        entries() { return this.items.map(item => [item.name, item.value]); }
+        keys() { return this.items.map(item => item.name); }
+        values() { return this.items.map(item => item.value); }
+        [Symbol.iterator]() { return this.entries()[Symbol.iterator](); }
+        toJson() {
+          const output = {};
+          for (const item of this.items) (output[item.name] ??= []).push(item.value);
+          return output;
+        }
+        _encode() {
+          const boundary = `hanlin-${Math.random().toString(16).slice(2)}-${Date.now()}`;
+          const output = new HanlinData();
+          for (const item of this.items) {
+            output.append(HanlinData.fromRawString(`--${boundary}\r\nContent-Disposition: form-data; name="${item.name.replace(/["\r\n]/g, "")}"`));
+            if (item.filename) output.append(HanlinData.fromRawString(`; filename="${String(item.filename).replace(/["\r\n]/g, "")}"`));
+            if (item.mimeType) output.append(HanlinData.fromRawString(`\r\nContent-Type: ${item.mimeType}`));
+            output.append(HanlinData.fromRawString("\r\n\r\n"));
+            output.append(bodyData(item.value));
+            output.append(HanlinData.fromRawString("\r\n"));
+          }
+          output.append(HanlinData.fromRawString(`--${boundary}--\r\n`));
+          return { data: output, contentType: `multipart/form-data; boundary=${boundary}` };
+        }
+      }
+
+      function bodyData(value) {
+        if (value == null) return new HanlinData();
+        if (value instanceof HanlinData) return value.slice();
+        if (value instanceof HanlinBlob) return value.dataValue.slice();
+        if (value instanceof Uint8Array) return new HanlinData(value);
+        if (value instanceof ArrayBuffer) return new HanlinData(new Uint8Array(value));
+        return HanlinData.fromRawString(String(value));
+      }
+
+      class HanlinRequest {
+        constructor(input, init = {}) {
+          const source = input instanceof HanlinRequest ? input : null;
+          this.url = String(source?.url ?? input);
+          this.method = String(init.method ?? source?.method ?? "GET").toUpperCase();
+          this.headers = new HanlinHeaders(init.headers ?? source?.headers);
+          this.signal = init.signal ?? source?.signal ?? null;
+          this.timeout = init.timeout ?? source?.timeout;
+          this.allowInsecureRequest = init.allowInsecureRequest ?? source?.allowInsecureRequest ?? false;
+          this.debugLabel = init.debugLabel ?? source?.debugLabel;
+          this.bodyUsed = false;
+          const body = Object.hasOwn(init, "body") ? init.body : source?.bodyValue;
+          if ((this.method === "GET" || this.method === "HEAD") && body != null) throw new TypeError("GET and HEAD requests cannot have a body");
+          if (body instanceof HanlinFormData) {
+            const encoded = body._encode(); this.bodyValue = encoded.data;
+            if (!this.headers.has("content-type")) this.headers.set("content-type", encoded.contentType);
+          } else this.bodyValue = body == null ? null : bodyData(body);
+        }
+        clone() { if (this.bodyUsed) throw new TypeError("Body has already been used"); return new HanlinRequest(this); }
+        _consume() { if (this.bodyUsed) return Promise.reject(new TypeError("Body has already been used")); this.bodyUsed = true; return Promise.resolve(this.bodyValue ?? new HanlinData()); }
+        arrayBuffer() { return this._consume().then(value => value.toArrayBuffer()); }
+        data() { return this._consume(); }
+        text() { return this._consume().then(value => value.toDecodedString()); }
+        json() { return this.text().then(JSON.parse); }
+      }
+
+      class HanlinResponse {
+        constructor(body = null, init = {}) {
+          this.status = Number(init.status ?? 200); this.statusText = String(init.statusText ?? "");
+          this.headers = new HanlinHeaders(init.headers); this.url = String(init.url ?? "");
+          this.redirected = Boolean(init.redirected); this.type = "basic"; this.bodyUsed = false;
+          this.bodyValue = body == null ? new HanlinData() : bodyData(body);
+        }
+        get ok() { return this.status >= 200 && this.status <= 299; }
+        get cookies() { return this.headers.getSetCookie(); }
+        clone() { if (this.bodyUsed) throw new TypeError("Body has already been used"); return new HanlinResponse(this.bodyValue.slice(), { status: this.status, statusText: this.statusText, headers: this.headers, url: this.url, redirected: this.redirected }); }
+        _consume() { if (this.bodyUsed) return Promise.reject(new TypeError("Body has already been used")); this.bodyUsed = true; return Promise.resolve(this.bodyValue); }
+        arrayBuffer() { return this._consume().then(value => value.toArrayBuffer()); }
+        blob() { return this._consume().then(value => new HanlinBlob([value], { type: this.headers.get("content-type") ?? "" })); }
+        bytes() { return this._consume().then(value => value.toUint8Array()); }
+        data() { return this._consume().then(value => value.slice()); }
+        text() { return this._consume().then(value => value.toDecodedString()); }
+        json() { return this.text().then(JSON.parse); }
+        static json(value, init = {}) { const headers = new HanlinHeaders(init.headers); if (!headers.has("content-type")) headers.set("content-type", "application/json"); return new HanlinResponse(JSON.stringify(value), { ...init, headers }); }
+        static redirect(url, status = 302) { return new HanlinResponse(null, { status, headers: { location: String(url) } }); }
+      }
+
+      function hanlinFetch(input, init = undefined) {
+        let request;
+        try { request = new HanlinRequest(input, init); }
+        catch (error) { return Promise.reject(error); }
+        return nativeCallAsync("network.fetch", {
+          url: request.url,
+          method: request.method,
+          headers: request.headers.toObject(),
+          bodyBase64: request.bodyValue?.toBase64String() ?? null,
+          timeout: request.timeout ?? null,
+          allowInsecureRequest: request.allowInsecureRequest
+        }, request.signal).then(result => new HanlinResponse(
+          HanlinData.fromBase64String(result.bodyBase64) ?? new HanlinData(),
+          { status: result.status, headers: result.headers, url: result.url }
+        ));
+      }
 
       const hostKinds = Object.freeze({
         Text: "text", Image: "image", Button: "button", TextField: "textField",
@@ -524,15 +1223,33 @@ private extension HanlinScriptingApplicationSession {
         useDismiss() { return value => { dismissPresentation?.(value); dismissPresentation = null; }; }
       });
       const Storage = Object.freeze({
-        get(key) {
-          const response = JSON.parse(__hanlinNativeStorageGet(String(key)));
+        get(key, options = {}) {
+          const response = JSON.parse(__hanlinNativeStorageGet(String(key), options.shared === true));
           if (!response.allowed) throw new Error("HANLIN_PERMISSION:storage");
           return response.found ? JSON.parse(response.json) : null;
         },
-        set(key, value) {
-          if (!__hanlinNativeStorageSet(String(key), JSON.stringify(value))) throw new Error("HANLIN_STORAGE:write_failed");
+        set(key, value, options = {}) {
+          if (!__hanlinNativeStorageSet(String(key), JSON.stringify(value), options.shared === true)) throw new Error("HANLIN_STORAGE:write_failed");
+          return true;
         },
-        remove(key) { return this.set(key, null); },
+        remove(key, options = {}) {
+          if (!__hanlinNativeStorageRemove(String(key), options.shared === true)) throw new Error("HANLIN_STORAGE:remove_failed");
+        },
+        contains(key, options = {}) { return __hanlinNativeStorageContains(String(key), options.shared === true); },
+        keys(options = {}) {
+          const response = JSON.parse(__hanlinNativeStorageKeys(options.shared === true));
+          if (!response.allowed) throw new Error("HANLIN_PERMISSION:storage");
+          return response.keys;
+        },
+        getData(key, options = {}) {
+          const response = JSON.parse(__hanlinNativeStorageGetData(String(key), options.shared === true));
+          if (!response.allowed) throw new Error("HANLIN_PERMISSION:storage");
+          return response.found ? HanlinData.fromBase64String(response.base64) : null;
+        },
+        setData(key, value, options = {}) {
+          const data = value instanceof HanlinData ? value : new HanlinData(value);
+          if (!__hanlinNativeStorageSetData(String(key), data.toBase64String(), options.shared === true)) throw new Error("HANLIN_STORAGE:write_failed");
+        },
         clear() { if (!__hanlinNativeStorageClear()) throw new Error("HANLIN_STORAGE:clear_failed"); }
       });
       const Script = Object.freeze({
@@ -547,8 +1264,13 @@ private extension HanlinScriptingApplicationSession {
       Object.assign(globalThis, {
         createElement, Fragment, useState, useObservable, useRef, useMemo, useCallback,
         useEffect, useEffectEvent, createContext, useContext, ForEach, Navigation,
+        Data: HanlinData, Path, FileManager, Headers: HanlinHeaders, Blob: HanlinBlob,
+        FormData: HanlinFormData, Request: HanlinRequest, Response: HanlinResponse,
+        fetch: hanlinFetch, DOMException: HanlinDOMException, AbortEvent: HanlinAbortEvent,
+        AbortSignal: HanlinAbortSignal, AbortController: HanlinAbortController,
         Storage, Script, Device, Widget, AppIntentProtocol, AppIntentManager,
         Color: Object.freeze({}),
+        __hanlinResolveNative: resolveNativeRequest,
         __hanlinHasPresentedUI: false,
         __hanlinDispatch(handlerID, payloadJSON) {
           const handler = handlers.get(handlerID);
@@ -559,7 +1281,12 @@ private extension HanlinScriptingApplicationSession {
         __hanlinDismiss() { dismissPresentation?.(null); dismissPresentation = null; },
         __hanlinDispose() {
           for (const effect of effects.values()) effect.dispose?.();
-          effects.clear(); handlers.clear(); presentedElement = null;
+          for (const [requestID, pending] of nativeRequests) {
+            pending.signal?.removeEventListener("abort", pending.onAbort);
+            __hanlinCancelNative(requestID);
+            pending.reject(abortError("The scripting session was disposed."));
+          }
+          nativeRequests.clear(); effects.clear(); handlers.clear(); presentedElement = null;
         }
       });
     })();

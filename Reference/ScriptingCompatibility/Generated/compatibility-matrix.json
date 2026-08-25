@@ -5540,24 +5540,30 @@
       "verifiedByFixture": false
     },
     {
-      "allowedContexts": [],
+      "allowedContexts": [
+        "mainApplication"
+      ],
       "allowedOrigins": [],
-      "behaviorDifferences": [],
+      "behaviorDifferences": [
+        "Implements buffered construction, slicing and text/bytes/ArrayBuffer reads; stream() is unavailable."
+      ],
       "behaviorMatched": false,
       "declarationFile": "node.d.ts",
       "declarationLine": 301,
       "declaredByScripting": true,
-      "hanlinAPIVersion": null,
-      "hanlinSymbol": null,
-      "implementedByHanlin": false,
-      "notes": "Untrusted packages receive no ambient Node runtime. Individual compatible operations require an explicit brokered binding and test.",
+      "hanlinAPIVersion": "hanlin.services/1.0",
+      "hanlinSymbol": "HanlinScriptingApplicationSession.Blob",
+      "implementedByHanlin": true,
+      "notes": "Backed by isolated JavaScript Data values.",
       "referenceCategory": "class",
       "referenceSignatureHash": "6571fa950fee4a422322590f25e28a98d13094739fcf9378974038fafae01200",
       "referenceSymbol": "Blob",
       "requiredCapability": null,
       "requiredEntitlement": null,
-      "status": "not-yet-implemented",
-      "tests": [],
+      "status": "partial",
+      "tests": [
+        "Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs"
+      ],
       "verifiedByFixture": false
     },
     {
@@ -5603,66 +5609,84 @@
       "verifiedByFixture": false
     },
     {
-      "allowedContexts": [],
+      "allowedContexts": [
+        "mainApplication"
+      ],
       "allowedOrigins": [],
-      "behaviorDifferences": [],
+      "behaviorDifferences": [
+        "Implements buffered construction, slicing and text/bytes/ArrayBuffer reads; stream() is unavailable."
+      ],
       "behaviorMatched": false,
       "declarationFile": "scripting.d.ts",
       "declarationLine": 11259,
       "declaredByScripting": true,
-      "hanlinAPIVersion": null,
-      "hanlinSymbol": null,
-      "implementedByHanlin": false,
-      "notes": "The symbol is authorized for compatibility work but lacks a complete observable binding and conformance test.",
+      "hanlinAPIVersion": "hanlin.services/1.0",
+      "hanlinSymbol": "HanlinScriptingApplicationSession.Blob",
+      "implementedByHanlin": true,
+      "notes": "Backed by isolated JavaScript Data values.",
       "referenceCategory": "const",
       "referenceSignatureHash": "ab17514bb36b904c5475371c1f2b79264ea0cde73e89a5ccc3c8249521d26999",
       "referenceSymbol": "Blob",
       "requiredCapability": null,
       "requiredEntitlement": null,
-      "status": "not-yet-implemented",
-      "tests": [],
+      "status": "partial",
+      "tests": [
+        "Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs"
+      ],
       "verifiedByFixture": false
     },
     {
-      "allowedContexts": [],
+      "allowedContexts": [
+        "mainApplication"
+      ],
       "allowedOrigins": [],
-      "behaviorDifferences": [],
+      "behaviorDifferences": [
+        "Implements buffered construction, slicing and text/bytes/ArrayBuffer reads; stream() is unavailable."
+      ],
       "behaviorMatched": false,
       "declarationFile": "scripting.d.ts",
       "declarationLine": 11260,
       "declaredByScripting": true,
-      "hanlinAPIVersion": null,
-      "hanlinSymbol": null,
-      "implementedByHanlin": false,
-      "notes": "The symbol is authorized for compatibility work but lacks a complete observable binding and conformance test.",
+      "hanlinAPIVersion": "hanlin.services/1.0",
+      "hanlinSymbol": "HanlinScriptingApplicationSession.Blob",
+      "implementedByHanlin": true,
+      "notes": "Backed by isolated JavaScript Data values.",
       "referenceCategory": "type",
       "referenceSignatureHash": "980a26280d2c290de60753e294fc8c3beaa2c8027017d46e8d583612854c1875",
       "referenceSymbol": "Blob",
       "requiredCapability": null,
       "requiredEntitlement": null,
-      "status": "not-yet-implemented",
-      "tests": [],
+      "status": "partial",
+      "tests": [
+        "Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs"
+      ],
       "verifiedByFixture": false
     },
     {
-      "allowedContexts": [],
+      "allowedContexts": [
+        "mainApplication"
+      ],
       "allowedOrigins": [],
-      "behaviorDifferences": [],
+      "behaviorDifferences": [
+        "Implements buffered construction, slicing and text/bytes/ArrayBuffer reads; stream() is unavailable."
+      ],
       "behaviorMatched": false,
       "declarationFile": "web-fetch.d.ts",
       "declarationLine": 227,
       "declaredByScripting": true,
-      "hanlinAPIVersion": null,
-      "hanlinSymbol": null,
-      "implementedByHanlin": false,
-      "notes": "A capability-gated network broker exists, but this declaration is not yet connected through the package runtime as a tested Web-compatible binding.",
+      "hanlinAPIVersion": "hanlin.services/1.0",
+      "hanlinSymbol": "HanlinScriptingApplicationSession.Blob",
+      "implementedByHanlin": true,
+      "notes": "Backed by isolated JavaScript Data values.",
       "referenceCategory": "class",
       "referenceSignatureHash": "eb9ffb5ebaaf8514ead773ca0eb0a70d4c82eae36f079e69504298cf8393b0d3",
       "referenceSymbol": "Blob",
       "requiredCapability": null,
       "requiredEntitlement": null,
-      "status": "not-yet-implemented",
-      "tests": [],
+      "status": "partial",
+      "tests": [
+        "Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs"
+      ],
       "verifiedByFixture": false
     },
     {
@@ -11366,24 +11390,31 @@
       "verifiedByFixture": false
     },
     {
-      "allowedContexts": [],
+      "allowedContexts": [
+        "mainApplication"
+      ],
       "allowedOrigins": [],
-      "behaviorDifferences": [],
+      "behaviorDifferences": [
+        "Implements byte mutation, slicing, concatenation and UTF-8, ASCII, base64, hex, ArrayBuffer and Uint8Array conversion; compression, legacy encodings and image conversion remain unavailable."
+      ],
       "behaviorMatched": false,
       "declarationFile": "global.d.ts",
       "declarationLine": 316,
       "declaredByScripting": true,
-      "hanlinAPIVersion": null,
-      "hanlinSymbol": null,
-      "implementedByHanlin": false,
-      "notes": "The authorized ambient API has no complete runtime binding and conformance test yet; declaration presence is not treated as support.",
+      "hanlinAPIVersion": "hanlin.services/1.0",
+      "hanlinSymbol": "HanlinScriptingApplicationSession.Data",
+      "implementedByHanlin": true,
+      "notes": "Binary values remain JavaScript objects and cross the native boundary as bounded base64 payloads.",
       "referenceCategory": "class",
       "referenceSignatureHash": "b0ea5f6c854bc29be54e3e4166009e8dee8f80dc310d8ba89fdc5df8488287ad",
       "referenceSymbol": "Data",
       "requiredCapability": null,
       "requiredEntitlement": null,
-      "status": "not-yet-implemented",
-      "tests": [],
+      "status": "partial",
+      "tests": [
+        "AI_HLYTests/HanlinScriptingRuntimeTests.swift",
+        "Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs"
+      ],
       "verifiedByFixture": false
     },
     {
@@ -15246,66 +15277,87 @@
       "verifiedByFixture": false
     },
     {
-      "allowedContexts": [],
+      "allowedContexts": [
+        "mainApplication"
+      ],
       "allowedOrigins": [],
-      "behaviorDifferences": [],
+      "behaviorDifferences": [
+        "Uses an ephemeral URLSession with bounded buffered request and response bodies, HTTPS-by-default policy, cancellation and timeout propagation; streaming, redirect callbacks, cookie persistence and cache APIs remain unavailable."
+      ],
       "behaviorMatched": false,
       "declarationFile": "scripting.d.ts",
       "declarationLine": 11247,
       "declaredByScripting": true,
-      "hanlinAPIVersion": null,
-      "hanlinSymbol": null,
-      "implementedByHanlin": false,
-      "notes": "The symbol is authorized for compatibility work but lacks a complete observable binding and conformance test.",
+      "hanlinAPIVersion": "hanlin.services/1.0",
+      "hanlinSymbol": "HanlinScriptingURLSessionLoader",
+      "implementedByHanlin": true,
+      "notes": "HTTP error statuses resolve as Response values; transport and permission failures reject the Promise.",
       "referenceCategory": "const",
       "referenceSignatureHash": "ac707c2f8bee55ee0cc5af3f32c59594474e38b29c232463b4838834e2ac97b8",
       "referenceSymbol": "fetch",
-      "requiredCapability": null,
+      "requiredCapability": "network",
       "requiredEntitlement": null,
-      "status": "not-yet-implemented",
-      "tests": [],
+      "status": "partial",
+      "tests": [
+        "AI_HLYTests/HanlinScriptingRuntimeTests.swift",
+        "Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs"
+      ],
       "verifiedByFixture": false
     },
     {
-      "allowedContexts": [],
+      "allowedContexts": [
+        "mainApplication"
+      ],
       "allowedOrigins": [],
-      "behaviorDifferences": [],
+      "behaviorDifferences": [
+        "Uses an ephemeral URLSession with bounded buffered request and response bodies, HTTPS-by-default policy, cancellation and timeout propagation; streaming, redirect callbacks, cookie persistence and cache APIs remain unavailable."
+      ],
       "behaviorMatched": false,
       "declarationFile": "web-fetch.d.ts",
       "declarationLine": 417,
       "declaredByScripting": true,
-      "hanlinAPIVersion": null,
-      "hanlinSymbol": null,
-      "implementedByHanlin": false,
-      "notes": "A capability-gated network broker exists, but this declaration is not yet connected through the package runtime as a tested Web-compatible binding.",
+      "hanlinAPIVersion": "hanlin.services/1.0",
+      "hanlinSymbol": "HanlinScriptingURLSessionLoader",
+      "implementedByHanlin": true,
+      "notes": "HTTP error statuses resolve as Response values; transport and permission failures reject the Promise.",
       "referenceCategory": "function",
       "referenceSignatureHash": "51b8297fcc9433ce8c0e3239055de61408e46c8bb0ae46261a1e0f03e5c02b52",
       "referenceSymbol": "fetch",
-      "requiredCapability": null,
+      "requiredCapability": "network",
       "requiredEntitlement": null,
-      "status": "not-yet-implemented",
-      "tests": [],
+      "status": "partial",
+      "tests": [
+        "AI_HLYTests/HanlinScriptingRuntimeTests.swift",
+        "Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs"
+      ],
       "verifiedByFixture": false
     },
     {
-      "allowedContexts": [],
+      "allowedContexts": [
+        "mainApplication"
+      ],
       "allowedOrigins": [],
-      "behaviorDifferences": [],
+      "behaviorDifferences": [
+        "Uses an ephemeral URLSession with bounded buffered request and response bodies, HTTPS-by-default policy, cancellation and timeout propagation; streaming, redirect callbacks, cookie persistence and cache APIs remain unavailable."
+      ],
       "behaviorMatched": false,
       "declarationFile": "web-fetch.d.ts",
       "declarationLine": 418,
       "declaredByScripting": true,
-      "hanlinAPIVersion": null,
-      "hanlinSymbol": null,
-      "implementedByHanlin": false,
-      "notes": "A capability-gated network broker exists, but this declaration is not yet connected through the package runtime as a tested Web-compatible binding.",
+      "hanlinAPIVersion": "hanlin.services/1.0",
+      "hanlinSymbol": "HanlinScriptingURLSessionLoader",
+      "implementedByHanlin": true,
+      "notes": "HTTP error statuses resolve as Response values; transport and permission failures reject the Promise.",
       "referenceCategory": "function",
       "referenceSignatureHash": "927eb52dc0cd48c9f6e7bb7da8e36c67e3ca17ad79b7f97098dbcd2bb33d756e",
       "referenceSymbol": "fetch",
-      "requiredCapability": null,
+      "requiredCapability": "network",
       "requiredEntitlement": null,
-      "status": "not-yet-implemented",
-      "tests": [],
+      "status": "partial",
+      "tests": [
+        "AI_HLYTests/HanlinScriptingRuntimeTests.swift",
+        "Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs"
+      ],
       "verifiedByFixture": false
     },
     {
@@ -15358,16 +15410,16 @@
       ],
       "allowedOrigins": [],
       "behaviorDifferences": [
-        "Hanlin exposes a bounded package VFS instead of an ambient filesystem; external handles and the JavaScript binding remain incomplete."
+        "Hanlin exposes documents, app-group, temporary and read-only package-source roots through a bounded capability-gated VFS; iCloud, WebDAV, bookmarks, links and archive operations remain unavailable."
       ],
       "behaviorMatched": false,
       "declarationFile": "global.d.ts",
       "declarationLine": 2724,
       "declaredByScripting": true,
       "hanlinAPIVersion": "hanlin.services/1.0",
-      "hanlinSymbol": "HanlinScriptServiceBroker",
+      "hanlinSymbol": "HanlinScriptingPackageFileSystem",
       "implementedByHanlin": true,
-      "notes": "VFS host semantics are partial and deliberately deny raw paths.",
+      "notes": "The synchronous and Promise APIs used by the real FileManager acceptance project are connected to native filesystem operations; raw paths outside package roots are rejected.",
       "referenceCategory": "namespace",
       "referenceSignatureHash": "98e7f4987efeb719b0a76f27a99938b8532394e126b5183729cfd21a1606389e",
       "referenceSymbol": "FileManager",
@@ -15375,6 +15427,8 @@
       "requiredEntitlement": null,
       "status": "partial",
       "tests": [
+        "AI_HLYTests/HanlinScriptingRuntimeTests.swift",
+        "Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs",
         "Packages/HanlinPlatform/Tests/HanlinScriptServicesTests/HanlinScriptServiceBrokerTests.swift"
       ],
       "verifiedByFixture": false
@@ -16052,66 +16106,84 @@
       "verifiedByFixture": false
     },
     {
-      "allowedContexts": [],
+      "allowedContexts": [
+        "mainApplication"
+      ],
       "allowedOrigins": [],
-      "behaviorDifferences": [],
+      "behaviorDifferences": [
+        "Implements mutation, lookup, enumeration and multipart request encoding; response parsing and File values remain unavailable."
+      ],
       "behaviorMatched": false,
       "declarationFile": "scripting.d.ts",
       "declarationLine": 11257,
       "declaredByScripting": true,
-      "hanlinAPIVersion": null,
-      "hanlinSymbol": null,
-      "implementedByHanlin": false,
-      "notes": "The symbol is authorized for compatibility work but lacks a complete observable binding and conformance test.",
+      "hanlinAPIVersion": "hanlin.services/1.0",
+      "hanlinSymbol": "HanlinScriptingApplicationSession.FormData",
+      "implementedByHanlin": true,
+      "notes": "Multipart bodies are bounded by the native fetch request limit.",
       "referenceCategory": "const",
       "referenceSignatureHash": "97dc8e0a964fd73ea7045bc1fd9afd85cc29aa5694c250615ce91c4ad265c02a",
       "referenceSymbol": "FormData",
       "requiredCapability": null,
       "requiredEntitlement": null,
-      "status": "not-yet-implemented",
-      "tests": [],
+      "status": "partial",
+      "tests": [
+        "Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs"
+      ],
       "verifiedByFixture": false
     },
     {
-      "allowedContexts": [],
+      "allowedContexts": [
+        "mainApplication"
+      ],
       "allowedOrigins": [],
-      "behaviorDifferences": [],
+      "behaviorDifferences": [
+        "Implements mutation, lookup, enumeration and multipart request encoding; response parsing and File values remain unavailable."
+      ],
       "behaviorMatched": false,
       "declarationFile": "scripting.d.ts",
       "declarationLine": 11258,
       "declaredByScripting": true,
-      "hanlinAPIVersion": null,
-      "hanlinSymbol": null,
-      "implementedByHanlin": false,
-      "notes": "The symbol is authorized for compatibility work but lacks a complete observable binding and conformance test.",
+      "hanlinAPIVersion": "hanlin.services/1.0",
+      "hanlinSymbol": "HanlinScriptingApplicationSession.FormData",
+      "implementedByHanlin": true,
+      "notes": "Multipart bodies are bounded by the native fetch request limit.",
       "referenceCategory": "type",
       "referenceSignatureHash": "11d9c2d82693e0156da73396d717c81483d683fc07ab8436f6a1c56499a92b8b",
       "referenceSymbol": "FormData",
       "requiredCapability": null,
       "requiredEntitlement": null,
-      "status": "not-yet-implemented",
-      "tests": [],
+      "status": "partial",
+      "tests": [
+        "Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs"
+      ],
       "verifiedByFixture": false
     },
     {
-      "allowedContexts": [],
+      "allowedContexts": [
+        "mainApplication"
+      ],
       "allowedOrigins": [],
-      "behaviorDifferences": [],
+      "behaviorDifferences": [
+        "Implements mutation, lookup, enumeration and multipart request encoding; response parsing and File values remain unavailable."
+      ],
       "behaviorMatched": false,
       "declarationFile": "web-fetch.d.ts",
       "declarationLine": 186,
       "declaredByScripting": true,
-      "hanlinAPIVersion": null,
-      "hanlinSymbol": null,
-      "implementedByHanlin": false,
-      "notes": "A capability-gated network broker exists, but this declaration is not yet connected through the package runtime as a tested Web-compatible binding.",
+      "hanlinAPIVersion": "hanlin.services/1.0",
+      "hanlinSymbol": "HanlinScriptingApplicationSession.FormData",
+      "implementedByHanlin": true,
+      "notes": "Multipart bodies are bounded by the native fetch request limit.",
       "referenceCategory": "class",
       "referenceSignatureHash": "b952efffdb94794df4dccef056f3be910fd6986e848a458e13a1639ac3466d2c",
       "referenceSymbol": "FormData",
       "requiredCapability": null,
       "requiredEntitlement": null,
-      "status": "not-yet-implemented",
-      "tests": [],
+      "status": "partial",
+      "tests": [
+        "Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs"
+      ],
       "verifiedByFixture": false
     },
     {
@@ -20260,66 +20332,84 @@
       "verifiedByFixture": false
     },
     {
-      "allowedContexts": [],
+      "allowedContexts": [
+        "mainApplication"
+      ],
       "allowedOrigins": [],
-      "behaviorDifferences": [],
+      "behaviorDifferences": [
+        "Implements case-insensitive mutation, lookup, array enumeration, iteration, getSetCookie and JSON conversion; URLSession currently collapses duplicate response header fields."
+      ],
       "behaviorMatched": false,
       "declarationFile": "scripting.d.ts",
       "declarationLine": 11255,
       "declaredByScripting": true,
-      "hanlinAPIVersion": null,
-      "hanlinSymbol": null,
-      "implementedByHanlin": false,
-      "notes": "The symbol is authorized for compatibility work but lacks a complete observable binding and conformance test.",
+      "hanlinAPIVersion": "hanlin.services/1.0",
+      "hanlinSymbol": "HanlinScriptingApplicationSession.Headers",
+      "implementedByHanlin": true,
+      "notes": "Used by Request, Response and fetch.",
       "referenceCategory": "const",
       "referenceSignatureHash": "7031ecb944c7cd5d71c2d9ea66c9e4924f28cacd18169decd77d141f12c32ab7",
       "referenceSymbol": "Headers",
       "requiredCapability": null,
       "requiredEntitlement": null,
-      "status": "not-yet-implemented",
-      "tests": [],
+      "status": "partial",
+      "tests": [
+        "Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs"
+      ],
       "verifiedByFixture": false
     },
     {
-      "allowedContexts": [],
+      "allowedContexts": [
+        "mainApplication"
+      ],
       "allowedOrigins": [],
-      "behaviorDifferences": [],
+      "behaviorDifferences": [
+        "Implements case-insensitive mutation, lookup, array enumeration, iteration, getSetCookie and JSON conversion; URLSession currently collapses duplicate response header fields."
+      ],
       "behaviorMatched": false,
       "declarationFile": "scripting.d.ts",
       "declarationLine": 11256,
       "declaredByScripting": true,
-      "hanlinAPIVersion": null,
-      "hanlinSymbol": null,
-      "implementedByHanlin": false,
-      "notes": "The symbol is authorized for compatibility work but lacks a complete observable binding and conformance test.",
+      "hanlinAPIVersion": "hanlin.services/1.0",
+      "hanlinSymbol": "HanlinScriptingApplicationSession.Headers",
+      "implementedByHanlin": true,
+      "notes": "Used by Request, Response and fetch.",
       "referenceCategory": "type",
       "referenceSignatureHash": "64b3dcf12e8639586bd8e42785ba836a0c491279d0431da8647336d4e58adb6b",
       "referenceSymbol": "Headers",
       "requiredCapability": null,
       "requiredEntitlement": null,
-      "status": "not-yet-implemented",
-      "tests": [],
+      "status": "partial",
+      "tests": [
+        "Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs"
+      ],
       "verifiedByFixture": false
     },
     {
-      "allowedContexts": [],
+      "allowedContexts": [
+        "mainApplication"
+      ],
       "allowedOrigins": [],
-      "behaviorDifferences": [],
+      "behaviorDifferences": [
+        "Implements case-insensitive mutation, lookup, array enumeration, iteration, getSetCookie and JSON conversion; URLSession currently collapses duplicate response header fields."
+      ],
       "behaviorMatched": false,
       "declarationFile": "web-fetch.d.ts",
       "declarationLine": 161,
       "declaredByScripting": true,
-      "hanlinAPIVersion": null,
-      "hanlinSymbol": null,
-      "implementedByHanlin": false,
-      "notes": "A capability-gated network broker exists, but this declaration is not yet connected through the package runtime as a tested Web-compatible binding.",
+      "hanlinAPIVersion": "hanlin.services/1.0",
+      "hanlinSymbol": "HanlinScriptingApplicationSession.Headers",
+      "implementedByHanlin": true,
+      "notes": "Used by Request, Response and fetch.",
       "referenceCategory": "class",
       "referenceSignatureHash": "3ba17260fdb5c9e2507622e3e4576f79d426e030dcbe3661ee78df75b3d625fa",
       "referenceSymbol": "Headers",
       "requiredCapability": null,
       "requiredEntitlement": null,
-      "status": "not-yet-implemented",
-      "tests": [],
+      "status": "partial",
+      "tests": [
+        "Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs"
+      ],
       "verifiedByFixture": false
     },
     {
@@ -32022,24 +32112,31 @@
       "verifiedByFixture": false
     },
     {
-      "allowedContexts": [],
+      "allowedContexts": [
+        "mainApplication"
+      ],
       "allowedOrigins": [],
-      "behaviorDifferences": [],
+      "behaviorDifferences": [
+        "Implements the declared POSIX normalize, join, dirname, basename, extname, parse, sep and delimiter surface; conformance is currently validated against acceptance use and targeted edge cases rather than the complete Node path corpus."
+      ],
       "behaviorMatched": false,
       "declarationFile": "scripting.d.ts",
       "declarationLine": 10756,
       "declaredByScripting": true,
-      "hanlinAPIVersion": null,
-      "hanlinSymbol": null,
-      "implementedByHanlin": false,
-      "notes": "The symbol is authorized for compatibility work but lacks a complete observable binding and conformance test.",
+      "hanlinAPIVersion": "hanlin.services/1.0",
+      "hanlinSymbol": "HanlinScriptingApplicationSession.Path",
+      "implementedByHanlin": true,
+      "notes": "Runs entirely inside the isolated JavaScriptCore context.",
       "referenceCategory": "namespace",
       "referenceSignatureHash": "1adc47ff0ef910ffcb12c41bff421d45ad1770caca29981d4220da6225eb47c6",
       "referenceSymbol": "Path",
       "requiredCapability": null,
       "requiredEntitlement": null,
-      "status": "not-yet-implemented",
-      "tests": [],
+      "status": "partial",
+      "tests": [
+        "AI_HLYTests/HanlinScriptingRuntimeTests.swift",
+        "Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs"
+      ],
       "verifiedByFixture": false
     },
     {
@@ -37847,45 +37944,57 @@
       "verifiedByFixture": false
     },
     {
-      "allowedContexts": [],
+      "allowedContexts": [
+        "mainApplication"
+      ],
       "allowedOrigins": [],
-      "behaviorDifferences": [],
+      "behaviorDifferences": [
+        "Implements construction, cloning, buffered body consumption, headers, signals and timeout metadata; streams, form-data parsing and redirect callbacks remain unavailable."
+      ],
       "behaviorMatched": false,
       "declarationFile": "scripting.d.ts",
       "declarationLine": 11251,
       "declaredByScripting": true,
-      "hanlinAPIVersion": null,
-      "hanlinSymbol": null,
-      "implementedByHanlin": false,
-      "notes": "The symbol is authorized for compatibility work but lacks a complete observable binding and conformance test.",
+      "hanlinAPIVersion": "hanlin.services/1.0",
+      "hanlinSymbol": "HanlinScriptingApplicationSession.Request",
+      "implementedByHanlin": true,
+      "notes": "GET and HEAD bodies are rejected.",
       "referenceCategory": "const",
       "referenceSignatureHash": "59f273cf69d7dadb2d5b5f1c729d8363b475f8a08806eb933e69ccd08991297c",
       "referenceSymbol": "Request",
-      "requiredCapability": null,
+      "requiredCapability": "network",
       "requiredEntitlement": null,
-      "status": "not-yet-implemented",
-      "tests": [],
+      "status": "partial",
+      "tests": [
+        "Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs"
+      ],
       "verifiedByFixture": false
     },
     {
-      "allowedContexts": [],
+      "allowedContexts": [
+        "mainApplication"
+      ],
       "allowedOrigins": [],
-      "behaviorDifferences": [],
+      "behaviorDifferences": [
+        "Implements construction, cloning, buffered body consumption, headers, signals and timeout metadata; streams, form-data parsing and redirect callbacks remain unavailable."
+      ],
       "behaviorMatched": false,
       "declarationFile": "scripting.d.ts",
       "declarationLine": 11252,
       "declaredByScripting": true,
-      "hanlinAPIVersion": null,
-      "hanlinSymbol": null,
-      "implementedByHanlin": false,
-      "notes": "The symbol is authorized for compatibility work but lacks a complete observable binding and conformance test.",
+      "hanlinAPIVersion": "hanlin.services/1.0",
+      "hanlinSymbol": "HanlinScriptingApplicationSession.Request",
+      "implementedByHanlin": true,
+      "notes": "GET and HEAD bodies are rejected.",
       "referenceCategory": "type",
       "referenceSignatureHash": "9a27d10fa93c8d52254256f00d08cf4a31437ce1cd4ad379cfaa8912beb97efa",
       "referenceSymbol": "Request",
-      "requiredCapability": null,
+      "requiredCapability": "network",
       "requiredEntitlement": null,
-      "status": "not-yet-implemented",
-      "tests": [],
+      "status": "partial",
+      "tests": [
+        "Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs"
+      ],
       "verifiedByFixture": false
     },
     {
@@ -37952,24 +38061,30 @@
       "verifiedByFixture": false
     },
     {
-      "allowedContexts": [],
+      "allowedContexts": [
+        "mainApplication"
+      ],
       "allowedOrigins": [],
-      "behaviorDifferences": [],
+      "behaviorDifferences": [
+        "Implements construction, cloning, buffered body consumption, headers, signals and timeout metadata; streams, form-data parsing and redirect callbacks remain unavailable."
+      ],
       "behaviorMatched": false,
       "declarationFile": "web-fetch.d.ts",
       "declarationLine": 300,
       "declaredByScripting": true,
-      "hanlinAPIVersion": null,
-      "hanlinSymbol": null,
-      "implementedByHanlin": false,
-      "notes": "A capability-gated network broker exists, but this declaration is not yet connected through the package runtime as a tested Web-compatible binding.",
+      "hanlinAPIVersion": "hanlin.services/1.0",
+      "hanlinSymbol": "HanlinScriptingApplicationSession.Request",
+      "implementedByHanlin": true,
+      "notes": "GET and HEAD bodies are rejected.",
       "referenceCategory": "class",
       "referenceSignatureHash": "f0ad7f73918de708c169d42d542954209016130d29352d839db5334fa667ec2f",
       "referenceSymbol": "Request",
-      "requiredCapability": null,
+      "requiredCapability": "network",
       "requiredEntitlement": null,
-      "status": "not-yet-implemented",
-      "tests": [],
+      "status": "partial",
+      "tests": [
+        "Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs"
+      ],
       "verifiedByFixture": false
     },
     {
@@ -38183,66 +38298,87 @@
       "verifiedByFixture": false
     },
     {
-      "allowedContexts": [],
+      "allowedContexts": [
+        "mainApplication"
+      ],
       "allowedOrigins": [],
-      "behaviorDifferences": [],
+      "behaviorDifferences": [
+        "Implements buffered single-consumption text, JSON, Data, bytes, ArrayBuffer and Blob bodies plus clone/json/redirect helpers; ReadableStream, form-data parsing and structured cookies remain unavailable."
+      ],
       "behaviorMatched": false,
       "declarationFile": "scripting.d.ts",
       "declarationLine": 11253,
       "declaredByScripting": true,
-      "hanlinAPIVersion": null,
-      "hanlinSymbol": null,
-      "implementedByHanlin": false,
-      "notes": "The symbol is authorized for compatibility work but lacks a complete observable binding and conformance test.",
+      "hanlinAPIVersion": "hanlin.services/1.0",
+      "hanlinSymbol": "HanlinScriptingApplicationSession.Response",
+      "implementedByHanlin": true,
+      "notes": "Network response bodies are capped before crossing into JavaScriptCore.",
       "referenceCategory": "const",
       "referenceSignatureHash": "cf0b9ba482d34a6da5e865c397bdbb1885e2c103bdc9ea6bbcc80a82163d9314",
       "referenceSymbol": "Response",
       "requiredCapability": null,
       "requiredEntitlement": null,
-      "status": "not-yet-implemented",
-      "tests": [],
+      "status": "partial",
+      "tests": [
+        "AI_HLYTests/HanlinScriptingRuntimeTests.swift",
+        "Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs"
+      ],
       "verifiedByFixture": false
     },
     {
-      "allowedContexts": [],
+      "allowedContexts": [
+        "mainApplication"
+      ],
       "allowedOrigins": [],
-      "behaviorDifferences": [],
+      "behaviorDifferences": [
+        "Implements buffered single-consumption text, JSON, Data, bytes, ArrayBuffer and Blob bodies plus clone/json/redirect helpers; ReadableStream, form-data parsing and structured cookies remain unavailable."
+      ],
       "behaviorMatched": false,
       "declarationFile": "scripting.d.ts",
       "declarationLine": 11254,
       "declaredByScripting": true,
-      "hanlinAPIVersion": null,
-      "hanlinSymbol": null,
-      "implementedByHanlin": false,
-      "notes": "The symbol is authorized for compatibility work but lacks a complete observable binding and conformance test.",
+      "hanlinAPIVersion": "hanlin.services/1.0",
+      "hanlinSymbol": "HanlinScriptingApplicationSession.Response",
+      "implementedByHanlin": true,
+      "notes": "Network response bodies are capped before crossing into JavaScriptCore.",
       "referenceCategory": "type",
       "referenceSignatureHash": "e197e9987c3c46e6dd55342e030ff18daea6ce993d9d32a90054e2d081ee8ce4",
       "referenceSymbol": "Response",
       "requiredCapability": null,
       "requiredEntitlement": null,
-      "status": "not-yet-implemented",
-      "tests": [],
+      "status": "partial",
+      "tests": [
+        "AI_HLYTests/HanlinScriptingRuntimeTests.swift",
+        "Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs"
+      ],
       "verifiedByFixture": false
     },
     {
-      "allowedContexts": [],
+      "allowedContexts": [
+        "mainApplication"
+      ],
       "allowedOrigins": [],
-      "behaviorDifferences": [],
+      "behaviorDifferences": [
+        "Implements buffered single-consumption text, JSON, Data, bytes, ArrayBuffer and Blob bodies plus clone/json/redirect helpers; ReadableStream, form-data parsing and structured cookies remain unavailable."
+      ],
       "behaviorMatched": false,
       "declarationFile": "web-fetch.d.ts",
       "declarationLine": 339,
       "declaredByScripting": true,
-      "hanlinAPIVersion": null,
-      "hanlinSymbol": null,
-      "implementedByHanlin": false,
-      "notes": "A capability-gated network broker exists, but this declaration is not yet connected through the package runtime as a tested Web-compatible binding.",
+      "hanlinAPIVersion": "hanlin.services/1.0",
+      "hanlinSymbol": "HanlinScriptingApplicationSession.Response",
+      "implementedByHanlin": true,
+      "notes": "Network response bodies are capped before crossing into JavaScriptCore.",
       "referenceCategory": "class",
       "referenceSignatureHash": "d567c896beda6163654e10e532951bcedfebda36ad0b083bb2e510ebefc18b7d",
       "referenceSymbol": "Response",
       "requiredCapability": null,
       "requiredEntitlement": null,
-      "status": "not-yet-implemented",
-      "tests": [],
+      "status": "partial",
+      "tests": [
+        "AI_HLYTests/HanlinScriptingRuntimeTests.swift",
+        "Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs"
+      ],
       "verifiedByFixture": false
     },
     {
@@ -44355,14 +44491,14 @@
       ],
       "allowedOrigins": [],
       "behaviorDifferences": [
-        "The live synchronous binding is package-namespaced, capability-gated and quota-bounded; it does not yet expose the complete Storage namespace or broker audit stream."
+        "The live synchronous binding implements JSON and Data get/set, remove, contains, keys and clear in a package-namespaced quota-bounded domain; shared App Group storage is explicitly denied until a provisioned shared container is available."
       ],
       "behaviorMatched": false,
       "declarationFile": "global.d.ts",
       "declarationLine": 4289,
       "declaredByScripting": true,
       "hanlinAPIVersion": "hanlin.services/1.0",
-      "hanlinSymbol": "HanlinScriptServiceBroker",
+      "hanlinSymbol": "HanlinScriptingPackageStorage",
       "implementedByHanlin": true,
       "notes": "Connected to installed scripting-jsc app sessions with revocation closing the active session.",
       "referenceCategory": "namespace",
@@ -44373,6 +44509,7 @@
       "status": "partial",
       "tests": [
         "AI_HLYTests/HanlinScriptingRuntimeTests.swift",
+        "Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs",
         "Packages/HanlinPlatform/Tests/HanlinScriptServicesTests/HanlinScriptServiceBrokerTests.swift"
       ],
       "verifiedByFixture": false
