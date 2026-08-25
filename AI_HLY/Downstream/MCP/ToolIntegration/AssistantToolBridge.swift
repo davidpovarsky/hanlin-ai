@@ -51,6 +51,9 @@ enum AssistantToolBridge {
                             route: route,
                             argumentsJSON: argumentsJSON
                         )
+                        if result.isStructured {
+                            return try nativeResult(for: result)
+                        }
                         let modelText: String
                         if let data = result.data {
                             let payload = HanlinJSONValue.object([
@@ -99,6 +102,48 @@ enum AssistantToolBridge {
                         )
                     }
                 }
+            )
+        }
+
+        static func nativeResult(
+            for result: HanlinScriptToolExecutionResult
+        ) throws -> NativeToolResult {
+            let assistantParts = result.assistantParts ?? []
+            let assistantPayload = HanlinValue.object([
+                "success": .bool(result.success),
+                "output": .object([
+                    "assistantParts": .array(assistantParts.map(\.value)),
+                ]),
+            ])
+            let modelText = String(
+                decoding: try assistantPayload.canonicalJSONData(),
+                as: UTF8.self
+            )
+            let userParts = result.userParts ?? []
+            let userText = userParts.compactMap { part -> String? in
+                switch part {
+                case let .string(text), let .text(text): text
+                case .image: nil
+                }
+            }.joined(separator: "\n")
+            let blocks = userParts.map { part -> NativeUIBlock in
+                switch part {
+                case let .string(text), let .text(text):
+                    return NativeUIBlock(type: .markdown, body: text)
+                case let .image(base64, mimeType):
+                    return NativeUIBlock(
+                        type: .card,
+                        title: String(localized: "Image"),
+                        systemImage: "photo",
+                        embeddedImageBase64: base64,
+                        embeddedImageMIMEType: mimeType
+                    )
+                }
+            }
+            return NativeToolResult(
+                modelText: modelText,
+                userText: userText.isEmpty ? nil : userText,
+                uiBlocks: blocks
             )
         }
     }

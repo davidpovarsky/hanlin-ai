@@ -255,18 +255,61 @@ enum HanlinScriptValueBridge {
           if (result === null || typeof result !== "object") {
             throw new TypeError("HANLIN_ABI:invalid_tool_result");
           }
-          const encodedResult = encode(result);
           const resultKeys = Reflect.ownKeys(result);
-          if ((resultKeys.length !== 2 && resultKeys.length !== 3)
-              || !resultKeys.includes("success")
-              || !resultKeys.includes("message")
-              || (resultKeys.length === 3 && !resultKeys.includes("data"))) {
+          if (typeof result.success !== "boolean") {
             throw new TypeError("HANLIN_ABI:invalid_tool_result");
           }
-          if (typeof result.success !== "boolean"
-              || typeof result.message !== "string") {
+          const isLegacy = resultKeys.length >= 2
+            && resultKeys.length <= 3
+            && resultKeys.includes("message")
+            && resultKeys.every(key => key === "success" || key === "message" || key === "data")
+            && typeof result.message === "string";
+          const isStructured = resultKeys.length === 2
+            && resultKeys.includes("success")
+            && resultKeys.includes("output")
+            && result.output !== null
+            && typeof result.output === "object"
+            && !Array.isArray(result.output);
+          if (!isLegacy && !isStructured) {
             throw new TypeError("HANLIN_ABI:invalid_tool_result");
           }
+          if (isStructured) {
+            const outputKeys = Reflect.ownKeys(result.output);
+            if (!outputKeys.every(key => key === "userParts" || key === "assistantParts")) {
+              throw new TypeError("HANLIN_ABI:invalid_tool_result");
+            }
+            for (const name of ["userParts", "assistantParts"]) {
+              const parts = result.output[name];
+              if (parts === undefined) continue;
+              if (!Array.isArray(parts) || parts.length > 256) {
+                throw new TypeError("HANLIN_ABI:invalid_tool_result");
+              }
+              for (const part of parts) {
+                if (typeof part === "string") continue;
+                if (part === null || typeof part !== "object" || Array.isArray(part)) {
+                  throw new TypeError("HANLIN_ABI:invalid_tool_result");
+                }
+                const keys = Reflect.ownKeys(part);
+                const validText = part.type === "text"
+                  && keys.length === 2
+                  && keys.includes("type")
+                  && keys.includes("text")
+                  && typeof part.text === "string";
+                const validImage = part.type === "image"
+                  && keys.length >= 2
+                  && keys.length <= 3
+                  && keys.includes("type")
+                  && keys.includes("base64")
+                  && keys.every(key => key === "type" || key === "base64" || key === "mimeType")
+                  && typeof part.base64 === "string"
+                  && (part.mimeType === undefined || typeof part.mimeType === "string");
+                if (!validText && !validImage) {
+                  throw new TypeError("HANLIN_ABI:invalid_tool_result");
+                }
+              }
+            }
+          }
+          const encodedResult = encode(result);
           return JSON.stringify(encodedResult);
         }
       });

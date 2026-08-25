@@ -332,10 +332,25 @@ actor HanlinPythonWorkerSession {
         if hasattr(result, "__await__"):
             import asyncio as _hanlin_asyncio
             result = _hanlin_asyncio.run(result)
-        if not isinstance(result, dict) or set(result.keys()) not in ({"success", "message"}, {"success", "message", "data"}):
+        if not isinstance(result, dict) or set(result.keys()) not in ({"success", "message"}, {"success", "message", "data"}, {"success", "output"}):
             raise TypeError("HANLIN_ABI:invalid_tool_result")
-        if not isinstance(result["success"], bool) or not isinstance(result["message"], str):
+        if not isinstance(result["success"], bool):
             raise TypeError("HANLIN_ABI:invalid_tool_result")
+        if "message" in result and not isinstance(result["message"], str):
+            raise TypeError("HANLIN_ABI:invalid_tool_result")
+        if "output" in result:
+            output = result["output"]
+            if not isinstance(output, dict) or not set(output.keys()).issubset({"userParts", "assistantParts"}):
+                raise TypeError("HANLIN_ABI:invalid_tool_result")
+            for name in ("userParts", "assistantParts"):
+                parts = output.get(name)
+                if parts is None: continue
+                if not isinstance(parts, list) or len(parts) > 256:
+                    raise TypeError("HANLIN_ABI:invalid_tool_result")
+                for part in parts:
+                    if isinstance(part, str): continue
+                    if not isinstance(part, dict) or part.get("type") not in ("text", "image"):
+                        raise TypeError("HANLIN_ABI:invalid_tool_result")
         return _hanlin_encode(result)
     """#
 }

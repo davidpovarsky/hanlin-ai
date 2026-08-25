@@ -6,6 +6,29 @@ import Testing
 @Suite("Hanlin Scripting Phase 2A acceptance", .serialized)
 struct HanlinScriptingAcceptanceTests {
     @MainActor
+    @Test("Routes structured AssistantTool parts to model and native user presentation")
+    func structuredAssistantToolResult() throws {
+        let result = HanlinScriptToolExecutionResult(
+            success: true,
+            message: "",
+            userParts: [
+                .text("Shown to the user"),
+                .image(base64: "iVBORw0KGgo=", mimeType: "image/png"),
+            ],
+            assistantParts: [.text("Sent only to the assistant")]
+        )
+
+        let native = try AssistantToolBridge.Executors.nativeResult(for: result)
+
+        #expect(native.userText == "Shown to the user")
+        #expect(native.uiBlocks.count == 2)
+        #expect(native.uiBlocks[0].type == .markdown)
+        #expect(native.uiBlocks[1].embeddedImageBase64 == "iVBORw0KGgo=")
+        #expect(native.modelText.contains("Sent only to the assistant"))
+        #expect(!native.modelText.contains("Shown to the user"))
+    }
+
+    @MainActor
     @Test("Loads, projects, routes, and executes the TypeScript fixture")
     func executableVerticalSlice() async throws {
         let registry = HanlinScriptingProviderRegistry()

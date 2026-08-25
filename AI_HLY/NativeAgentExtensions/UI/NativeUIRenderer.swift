@@ -254,6 +254,14 @@ private struct NativeCardView: View {
                         isSelectable: presentationMode == .expanded
                     )
                 }
+                if let base64 = block.embeddedImageBase64,
+                   let data = Data(base64Encoded: base64),
+                   let image = UIImage(data: data) {
+                    Image(uiImage: image)
+                        .resizable()
+                        .scaledToFit()
+                        .accessibilityLabel(block.title ?? String(localized: "Image"))
+                }
                 if !block.keyValues.isEmpty {
                     NativeKeyValueRows(block: block, presentationMode: presentationMode)
                 }

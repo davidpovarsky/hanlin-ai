@@ -85,7 +85,7 @@
       "hanlinAPIVersion": "hanlin.script/1.0",
       "requiredCapability": "assistant",
       "allowedContexts": ["mainApplication"],
-      "behaviorDifferences": ["The checked-artifact JavaScriptCore ABI implements execute-tool registration, canonical invocation, bounded call state, replaceable progress reports, cooperative onCancel, host task cancellation, timeout, deterministic disposal and session reuse; approval requests, interactive tool UI and ScriptEditorProvider remain unavailable."],
+      "behaviorDifferences": ["The checked-artifact JavaScriptCore ABI implements execute-tool registration, legacy and structured user/assistant output parts (including bounded embedded images rendered natively), canonical invocation, bounded call state, replaceable progress reports, cooperative onCancel, host task cancellation, timeout, deterministic disposal and session reuse; approval requests, registerUIView and ScriptEditorProvider remain unavailable."],
       "tests": ["AI_HLYTests/HanlinScriptingRuntimeTests.swift", "Scripts/ScriptingReference/Tests/assistant-tool-runtime.test.mjs"],
       "notes": "Operational for integrity-checked scripting-jsc assistant-tool artifacts and routed through the canonical native/MCP/Scripting tool authority."
     },

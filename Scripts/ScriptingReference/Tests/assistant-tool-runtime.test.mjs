@@ -65,3 +65,40 @@ test("AssistantTool cancellation is idempotent and clears onCancel after use", (
   assert.equal(context.AssistantTool.isCancelled, true);
   assert.equal(context.AssistantTool.onCancel, null);
 });
+
+test("AssistantTool preserves structured user and assistant output parts", async () => {
+  const context = vm.createContext({});
+  vm.runInContext(bootstrap, context);
+  vm.runInContext(`
+    AssistantTool.registerExecuteTool(async () => ({
+      success: true,
+      output: {
+        userParts: ["Visible", { type: "image", base64: "aGVsbG8=", mimeType: "image/png" }],
+        assistantParts: [{ type: "text", text: "For the model" }]
+      }
+    }));
+  `, context);
+  const input = canonicalObject({ __hanlinToolIndex: 0n, parameters: {} });
+  const output = JSON.parse(await context.__hanlinInvoke(JSON.stringify(input)));
+  assert.deepEqual(output.value.output.value.userParts.value[0], {
+    type: "string",
+    value: "Visible",
+  });
+  assert.equal(output.value.output.value.assistantParts.value[0].value.text.value, "For the model");
+});
+
+test("AssistantTool rejects malformed structured output before returning to native code", async () => {
+  const context = vm.createContext({});
+  vm.runInContext(bootstrap, context);
+  vm.runInContext(`
+    AssistantTool.registerExecuteTool(async () => ({
+      success: true,
+      output: { assistantParts: [{ type: "image", base64: 42 }] }
+    }));
+  `, context);
+  const input = canonicalObject({ __hanlinToolIndex: 0n, parameters: {} });
+  await assert.rejects(
+    context.__hanlinInvoke(JSON.stringify(input)),
+    /HANLIN_ABI:invalid_tool_result/,
+  );
+});

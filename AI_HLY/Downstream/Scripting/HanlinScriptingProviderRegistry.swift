@@ -17,10 +17,93 @@ struct HanlinScriptProviderSnapshot: Hashable, Sendable {
     let route: HanlinScriptBackendRoute
 }
 
+enum HanlinScriptToolOutputPart: Hashable, Sendable {
+    case string(String)
+    case text(String)
+    case image(base64: String, mimeType: String?)
+
+    init(value: HanlinValue) throws {
+        if case let .string(text) = value {
+            self = .string(text)
+            return
+        }
+        guard case let .object(members) = value,
+              case let .string(type)? = members["type"] else {
+            throw HanlinScriptingError.invalidBridgeValue("invalid_tool_output_part")
+        }
+        switch type {
+        case "text":
+            guard members.keys.sorted() == ["text", "type"],
+                  case let .string(text)? = members["text"] else {
+                throw HanlinScriptingError.invalidBridgeValue("invalid_tool_text_part")
+            }
+            self = .text(text)
+        case "image":
+            guard members.keys.allSatisfy({ ["base64", "mimeType", "type"].contains($0) }),
+                  members.keys.contains("base64"),
+                  case let .string(base64)? = members["base64"],
+                  let imageData = Data(base64Encoded: base64),
+                  imageData.count <= 16 * 1_024 * 1_024 else {
+                throw HanlinScriptingError.invalidBridgeValue("invalid_tool_image_part")
+            }
+            let mimeType: String?
+            if let value = members["mimeType"] {
+                guard case let .string(candidate) = value,
+                      candidate.utf8.count <= 255 else {
+                    throw HanlinScriptingError.invalidBridgeValue("invalid_tool_image_mime_type")
+                }
+                mimeType = candidate
+            } else {
+                mimeType = nil
+            }
+            self = .image(base64: base64, mimeType: mimeType)
+        default:
+            throw HanlinScriptingError.invalidBridgeValue("invalid_tool_output_part_type")
+        }
+    }
+
+    var value: HanlinValue {
+        switch self {
+        case let .string(text):
+            return .string(text)
+        case let .text(text):
+            return .object(["type": .string("text"), "text": .string(text)])
+        case let .image(base64, mimeType):
+            var members: [String: HanlinValue] = [
+                "type": .string("image"),
+                "base64": .string(base64),
+            ]
+            if let mimeType { members["mimeType"] = .string(mimeType) }
+            return .object(members)
+        }
+    }
+}
+
 struct HanlinScriptToolExecutionResult: Hashable, Sendable {
     let success: Bool
     let message: String
     let data: HanlinValue?
+    let userParts: [HanlinScriptToolOutputPart]?
+    let assistantParts: [HanlinScriptToolOutputPart]?
+    private let structured: Bool
+
+    var isStructured: Bool { structured }
+
+    init(
+        success: Bool,
+        message: String,
+        data: HanlinValue? = nil,
+        userParts: [HanlinScriptToolOutputPart]? = nil,
+        assistantParts: [HanlinScriptToolOutputPart]? = nil,
+        structured: Bool = false
+    ) {
+        self.success = success
+        self.message = message
+        self.data = data
+        self.userParts = userParts
+        self.assistantParts = assistantParts
+        self.structured = structured || userParts != nil || assistantParts != nil
+    }
 }
 
 actor HanlinScriptingProviderRegistry {
@@ -193,14 +276,35 @@ actor HanlinScriptingProviderRegistry {
         let value = try HanlinValue(jsonValue: json)
         let result = try await provider.session.invoke(toolIndex: toolIndex, parameters: value)
         guard case let .object(members) = result,
-              case let .bool(success)? = members["success"],
-              case let .string(message)? = members["message"] else {
+              case let .bool(success)? = members["success"] else {
             throw HanlinScriptingError.invalidBridgeValue("invalid_tool_result")
         }
+        if case let .string(message)? = members["message"] {
+            return HanlinScriptToolExecutionResult(
+                success: success,
+                message: message,
+                data: members["data"]
+            )
+        }
+        guard case let .object(output)? = members["output"] else {
+            throw HanlinScriptingError.invalidBridgeValue("invalid_tool_result")
+        }
+        let userParts = try Self.outputParts(output["userParts"])
+        let assistantParts = try Self.outputParts(output["assistantParts"])
         return HanlinScriptToolExecutionResult(
             success: success,
-            message: message,
-            data: members["data"]
+            message: "",
+            userParts: userParts,
+            assistantParts: assistantParts,
+            structured: true
         )
+    }
+
+    private static func outputParts(_ value: HanlinValue?) throws -> [HanlinScriptToolOutputPart]? {
+        guard let value else { return nil }
+        guard case let .array(values) = value, values.count <= 256 else {
+            throw HanlinScriptingError.invalidBridgeValue("invalid_tool_output_parts")
+        }
+        return try values.map(HanlinScriptToolOutputPart.init(value:))
     }
 }

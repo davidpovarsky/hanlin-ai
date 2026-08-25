@@ -115,6 +115,8 @@ struct NativeUIBlock: Codable, Identifiable, Hashable {
     var footnote: String?
     var systemImage: String?
     var imageURL: String?
+    var embeddedImageBase64: String?
+    var embeddedImageMIMEType: String?
     var url: String?
     var items: [NativeUIListItem]
     var keyValues: [NativeUIKeyValue]
@@ -134,6 +136,8 @@ struct NativeUIBlock: Codable, Identifiable, Hashable {
         footnote: String? = nil,
         systemImage: String? = nil,
         imageURL: String? = nil,
+        embeddedImageBase64: String? = nil,
+        embeddedImageMIMEType: String? = nil,
         url: String? = nil,
         items: [NativeUIListItem] = [],
         keyValues: [NativeUIKeyValue] = [],
@@ -152,6 +156,8 @@ struct NativeUIBlock: Codable, Identifiable, Hashable {
         self.footnote = footnote
         self.systemImage = systemImage
         self.imageURL = imageURL
+        self.embeddedImageBase64 = embeddedImageBase64
+        self.embeddedImageMIMEType = embeddedImageMIMEType
         self.url = url
         self.items = items
         self.keyValues = keyValues
