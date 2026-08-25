@@ -9,6 +9,7 @@ import HanlinScriptStore
 import HanlinScriptUI
 import HanlinScriptingSDK
 import Observation
+import SwiftData
 
 @MainActor
 @Observable
@@ -39,6 +40,7 @@ final class HanlinScriptingPlatform {
     private var bundler: HanlinScriptingBundler?
     private var extensionStore: HanlinScriptExtensionStore?
     private var applicationSession: HanlinScriptingApplicationSession?
+    private var modelContext: ModelContext?
     private let locationService = HanlinAppleLocationService()
     private var liveActivityRevisions: [String: UInt64] = [:]
     private let stagingRoot: URL?
@@ -107,6 +109,10 @@ final class HanlinScriptingPlatform {
         } catch {
             bootstrapError = Self.safeMessage(error)
         }
+    }
+
+    func configure(modelContext: ModelContext) {
+        self.modelContext = modelContext
     }
 
     func acknowledgeResumeCommand(_ command: HanlinScriptResumeCommand) {
@@ -353,6 +359,7 @@ final class HanlinScriptingPlatform {
             let filesCapability = try HanlinCapabilityID(validating: "files")
             let networkCapability = try HanlinCapabilityID(validating: "network")
             let locationCapability = try HanlinCapabilityID(validating: "location")
+            let assistantCapability = try HanlinCapabilityID(validating: "assistant")
             let session = try HanlinScriptingApplicationSession(
                 installedPackageID: id,
                 program: program,
@@ -365,6 +372,11 @@ final class HanlinScriptingPlatform {
                 locationLoader: { [weak self] request in
                     guard let self else { throw CancellationError() }
                     return try await self.performLocation(request)
+                },
+                assistantAllowed: package.grantedCapabilities.contains(assistantCapability),
+                assistantLoader: { [weak self] request in
+                    guard let self else { throw CancellationError() }
+                    return try await self.performAssistant(request)
                 },
                 liveActivityAllowed: true,
                 liveActivityLoader: { [weak self] request in
@@ -422,6 +434,19 @@ final class HanlinScriptingPlatform {
             try locationService.setAccuracy(accuracy)
             return .success
         }
+    }
+
+    private func performAssistant(
+        _ request: HanlinScriptingAssistantRequest
+    ) async throws -> AsyncThrowingStream<HanlinScriptingAssistantChunk, Error> {
+        guard let modelContext else {
+            throw HanlinScriptingNativeError(
+                name: "Error",
+                code: "assistant_configuration_unavailable",
+                message: "The Assistant configuration is unavailable."
+            )
+        }
+        return try await HanlinScriptingAssistantProviderAdapter(context: modelContext).load(request)
     }
 
     private static func scriptingLocation(

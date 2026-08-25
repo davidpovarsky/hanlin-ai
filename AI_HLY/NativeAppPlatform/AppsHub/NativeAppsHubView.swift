@@ -138,6 +138,7 @@ struct NativeAppsHubView: View {
                 if case let .failed(message) = scriptingPlatform.activity { Text(message) }
             }
             .task {
+                scriptingPlatform.configure(modelContext: modelContext)
                 await scriptingPlatform.restore()
             }
         }

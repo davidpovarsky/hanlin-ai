@@ -334,7 +334,7 @@ public enum HanlinScriptingAssistantChunk: Sendable {
     case structuredJSON(Data)
 }
 
-public typealias HanlinScriptingAssistantLoader = @Sendable (
+public typealias HanlinScriptingAssistantLoader = @MainActor @Sendable (
     HanlinScriptingAssistantRequest
 ) async throws -> AsyncThrowingStream<HanlinScriptingAssistantChunk, Error>
 
@@ -467,10 +467,16 @@ public enum HanlinScriptingURLSessionLoader {
     }
 }
 
-struct HanlinScriptingNativeError: Error, Sendable {
-    let name: String
-    let code: String
-    let message: String
+public struct HanlinScriptingNativeError: Error, Sendable {
+    public let name: String
+    public let code: String
+    public let message: String
+
+    public init(name: String, code: String, message: String) {
+        self.name = name
+        self.code = code
+        self.message = message
+    }
 }
 
 enum HanlinScriptingAssistantPayloadDecoder {

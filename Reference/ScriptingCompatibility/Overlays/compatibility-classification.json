@@ -165,9 +165,9 @@
       "hanlinAPIVersion": "hanlin.services/1.0",
       "requiredCapability": "assistant",
       "allowedContexts": ["mainApplication"],
-      "behaviorDifferences": ["The live JavaScriptCore binding implements requestStreaming and both requestStructuredData overloads over a capability-gated native AsyncThrowingStream transport, including text/reasoning/usage chunks, bounded multimodal payloads, provider selection, schema validation, sequential iteration, early-return cancellation, native errors and deterministic teardown; a configured provider adapter and the system-hosted conversation UI remain separate requirements, so conversation methods are not claimed as supported."],
-      "tests": ["Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs", "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift"],
-      "notes": "The transport and JavaScript semantics used by the nativ-ai, new-agent and smart-eating acceptance projects are implemented without changing those projects. Launch-only fixtures intentionally leave the Assistant capability unavailable until the host injects an authorized provider loader."
+      "behaviorDifferences": ["The live JavaScriptCore binding implements requestStreaming and both requestStructuredData overloads over a capability-gated native AsyncThrowingStream transport, including text/reasoning/usage chunks, bounded multimodal payloads, provider/model selection, schema validation, sequential iteration, early-return cancellation, native errors and deterministic teardown. The host resolves credentials and models from the user's SwiftData configuration and executes bounded OpenAI-compatible Chat Completions SSE or JSON Schema requests; provider-native protocols, streamed image output, document parts and the system-hosted conversation UI remain unavailable."],
+      "tests": ["Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs", "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift", "AI_HLYTests/HanlinScriptingAssistantProviderAdapterTests.swift"],
+      "notes": "The transport and configured-provider path used by the nativ-ai, new-agent and smart-eating acceptance projects are implemented without changing those projects. Credentials remain in the host request and are never copied into the JavaScriptCore package context."
     },
     {
       "symbol": "AssistantTool",
