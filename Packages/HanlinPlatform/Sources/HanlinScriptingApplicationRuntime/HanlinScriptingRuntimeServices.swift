@@ -2,6 +2,131 @@ import Foundation
 import HanlinScriptUI
 import UniformTypeIdentifiers
 
+public struct HanlinScriptingDeviceSnapshot: Hashable, Sendable {
+    public struct Screen: Hashable, Sendable {
+        public let width: Double
+        public let height: Double
+        public let scale: Double
+
+        public init(width: Double, height: Double, scale: Double) {
+            self.width = width
+            self.height = height
+            self.scale = scale
+        }
+    }
+
+    public let model: String
+    public let localizedModel: String
+    public let systemVersion: String
+    public let systemName: String
+    public let isiPad: Bool
+    public let isiPhone: Bool
+    public let screen: Screen
+    public let batteryState: String
+    public let batteryLevel: Double
+    public let proximityState: Bool
+    public let orientation: String
+    public let colorScheme: String
+    public let isiOSAppOnMac: Bool
+    public let systemLocale: String
+    public let preferredLanguages: [String]
+    public let systemLanguageTag: String
+    public let systemLanguageCode: String
+    public let systemCountryCode: String?
+    public let systemScriptCode: String?
+
+    public init(
+        model: String,
+        localizedModel: String,
+        systemVersion: String,
+        systemName: String,
+        isiPad: Bool,
+        isiPhone: Bool,
+        screen: Screen,
+        batteryState: String,
+        batteryLevel: Double,
+        proximityState: Bool,
+        orientation: String,
+        colorScheme: String,
+        isiOSAppOnMac: Bool,
+        systemLocale: String,
+        preferredLanguages: [String],
+        systemLanguageTag: String,
+        systemLanguageCode: String,
+        systemCountryCode: String? = nil,
+        systemScriptCode: String? = nil
+    ) {
+        self.model = model
+        self.localizedModel = localizedModel
+        self.systemVersion = systemVersion
+        self.systemName = systemName
+        self.isiPad = isiPad
+        self.isiPhone = isiPhone
+        self.screen = screen
+        self.batteryState = batteryState
+        self.batteryLevel = batteryLevel
+        self.proximityState = proximityState
+        self.orientation = orientation
+        self.colorScheme = colorScheme
+        self.isiOSAppOnMac = isiOSAppOnMac
+        self.systemLocale = systemLocale
+        self.preferredLanguages = preferredLanguages
+        self.systemLanguageTag = systemLanguageTag
+        self.systemLanguageCode = systemLanguageCode
+        self.systemCountryCode = systemCountryCode
+        self.systemScriptCode = systemScriptCode
+    }
+
+    public static let unavailable = Self(
+        model: "Unknown",
+        localizedModel: "Unknown",
+        systemVersion: "",
+        systemName: "Unknown",
+        isiPad: false,
+        isiPhone: false,
+        screen: .init(width: 0, height: 0, scale: 1),
+        batteryState: "unknown",
+        batteryLevel: -1,
+        proximityState: false,
+        orientation: "unknown",
+        colorScheme: "light",
+        isiOSAppOnMac: false,
+        systemLocale: "und",
+        preferredLanguages: [],
+        systemLanguageTag: "und",
+        systemLanguageCode: "und"
+    )
+
+    var nativeObject: [String: Any] {
+        var object: [String: Any] = [
+            "model": model,
+            "localizedModel": localizedModel,
+            "systemVersion": systemVersion,
+            "systemName": systemName,
+            "isiPad": isiPad,
+            "isiPhone": isiPhone,
+            "screen": ["width": screen.width, "height": screen.height, "scale": screen.scale],
+            "batteryState": batteryState,
+            "batteryLevel": batteryLevel,
+            "proximityState": proximityState,
+            "orientation": orientation,
+            "isLandscape": orientation == "landscapeLeft" || orientation == "landscapeRight",
+            "isPortrait": orientation == "portrait" || orientation == "portraitUpsideDown",
+            "isFlat": orientation == "faceUp" || orientation == "faceDown",
+            "colorScheme": colorScheme,
+            "isiOSAppOnMac": isiOSAppOnMac,
+            "systemLocale": systemLocale,
+            "preferredLanguages": preferredLanguages,
+            "systemLocales": preferredLanguages,
+            "systemLanguageTag": systemLanguageTag,
+            "systemLanguageCode": systemLanguageCode,
+        ]
+        if let systemCountryCode { object["systemCountryCode"] = systemCountryCode }
+        if let systemScriptCode { object["systemScriptCode"] = systemScriptCode }
+        return object
+    }
+}
+
 public enum HanlinScriptingLocationAction: String, Sendable {
     case requestCurrent = "request_current"
     case geocodeAddress = "geocode_address"

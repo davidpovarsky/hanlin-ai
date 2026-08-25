@@ -21,6 +21,53 @@ struct HanlinScriptingApplicationRuntimeTests {
         #expect(session.model.root.properties["text"] == .string("Ready"))
     }
 
+    @MainActor
+    @Test("Projects the native device snapshot into an immutable Scripting Device object")
+    func deviceSnapshot() throws {
+        let packageID = try HanlinInstalledPackageID(validating: "device-runtime-test")
+        let snapshot = HanlinScriptingDeviceSnapshot(
+            model: "iPad",
+            localizedModel: "iPad",
+            systemVersion: "26.5",
+            systemName: "iPadOS",
+            isiPad: true,
+            isiPhone: false,
+            screen: .init(width: 744, height: 1133, scale: 2),
+            batteryState: "charging",
+            batteryLevel: 0.75,
+            proximityState: false,
+            orientation: "landscapeRight",
+            colorScheme: "dark",
+            isiOSAppOnMac: false,
+            systemLocale: "he_IL",
+            preferredLanguages: ["he-IL", "en-US"],
+            systemLanguageTag: "he-IL",
+            systemLanguageCode: "he",
+            systemCountryCode: "IL",
+            systemScriptCode: "Hebr"
+        )
+        let session = try HanlinScriptingApplicationSession(
+            installedPackageID: packageID,
+            program: #"""
+            Navigation.present({ element: createElement(Text, null, JSON.stringify([
+              Device.model, Device.systemName, Device.screen.width, Device.batteryState,
+              Device.orientation, Device.colorScheme, Device.systemLanguageCode,
+              Device.systemCountryCode, Device.isLandscape, Device.isPortrait,
+              Object.isFrozen(Device), Object.isFrozen(Device.screen),
+              Object.isFrozen(Device.preferredLanguages)
+            ])) });
+            """#,
+            filename: "compiled/index.js",
+            storageAllowed: false,
+            deviceSnapshot: snapshot
+        )
+        defer { session.dispose() }
+
+        #expect(session.model.root.properties["text"] == .string(
+            #"["iPad","iPadOS",744,"charging","landscapeRight","dark","he","IL",true,false,true,true,true]"#
+        ))
+    }
+
     @Test("Decodes bounded Assistant requests and emits Web-compatible chunks")
     func assistantNativePayloads() throws {
         let request = try HanlinScriptingAssistantPayloadDecoder.decode(#"""

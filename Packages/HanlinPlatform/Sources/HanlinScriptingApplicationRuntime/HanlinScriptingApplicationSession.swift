@@ -21,6 +21,7 @@ public final class HanlinScriptingApplicationSession {
     private let assistantLoader: HanlinScriptingAssistantLoader
     private let liveActivityAllowed: Bool
     private let liveActivityLoader: HanlinScriptingLiveActivityLoader
+    private let deviceSnapshot: HanlinScriptingDeviceSnapshot
     private var nativeTasks: [String: Task<Void, Never>] = [:]
     private var disposed = false
 
@@ -39,7 +40,8 @@ public final class HanlinScriptingApplicationSession {
         assistantAllowed: Bool = false,
         assistantLoader: @escaping HanlinScriptingAssistantLoader = HanlinScriptingUnavailableAssistantLoader.load,
         liveActivityAllowed: Bool = false,
-        liveActivityLoader: @escaping HanlinScriptingLiveActivityLoader = HanlinScriptingUnavailableLiveActivityLoader.load
+        liveActivityLoader: @escaping HanlinScriptingLiveActivityLoader = HanlinScriptingUnavailableLiveActivityLoader.load,
+        deviceSnapshot: HanlinScriptingDeviceSnapshot = .unavailable
     ) throws {
         guard let virtualMachine = JSVirtualMachine(),
               let context = JSContext(virtualMachine: virtualMachine) else {
@@ -66,6 +68,7 @@ public final class HanlinScriptingApplicationSession {
         self.assistantLoader = assistantLoader
         self.liveActivityAllowed = liveActivityAllowed
         self.liveActivityLoader = liveActivityLoader
+        self.deviceSnapshot = deviceSnapshot
 
         let router = HanlinScriptingUIEventRouter()
         model = HanlinScriptUIModel(root: .init(kind: .fragment)) { handlerID, payload in
@@ -126,6 +129,7 @@ public final class HanlinScriptingApplicationSession {
         context.setObject(nil, forKeyedSubscript: "__hanlinNativeAssistantAvailable" as NSString)
         context.setObject(nil, forKeyedSubscript: "__hanlinNativeAssistantStart" as NSString)
         context.setObject(nil, forKeyedSubscript: "__hanlinCancelNative" as NSString)
+        context.setObject(nil, forKeyedSubscript: "__hanlinNativeDeviceSnapshot" as NSString)
     }
 
     private func installNativeBridges() {
@@ -203,6 +207,10 @@ public final class HanlinScriptingApplicationSession {
         )
         context.setObject(assistantStart, forKeyedSubscript: "__hanlinNativeAssistantStart" as NSString)
         context.setObject(cancelNative, forKeyedSubscript: "__hanlinCancelNative" as NSString)
+        context.setObject(
+            deviceSnapshot.nativeObject,
+            forKeyedSubscript: "__hanlinNativeDeviceSnapshot" as NSString
+        )
     }
 
     private func enqueueAssistantRequest(id: String, payloadJSON: String) {
@@ -2079,7 +2087,13 @@ private extension HanlinScriptingApplicationSession {
         queryParameters: {}, shareFiles: [],
         exit() {}, minimize() {}, onResume() { return () => {}; }
       });
-      const Device = Object.freeze({ systemLanguageCode: "en", systemName: "iOS" });
+      const deviceSnapshot = globalThis.__hanlinNativeDeviceSnapshot ?? {};
+      const Device = Object.freeze({
+        ...deviceSnapshot,
+        screen: Object.freeze({ ...(deviceSnapshot.screen ?? {}) }),
+        preferredLanguages: Object.freeze([...(deviceSnapshot.preferredLanguages ?? [])]),
+        systemLocales: Object.freeze([...(deviceSnapshot.systemLocales ?? [])])
+      });
       const Widget = Object.freeze({ family: "systemMedium", reloadAll() {}, present() {} });
       const AppIntentProtocol = Object.freeze({ AppIntent: "AppIntent" });
       const AppIntentManager = Object.freeze({ register(options) { return options; } });

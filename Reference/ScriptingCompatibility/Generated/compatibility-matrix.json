@@ -12395,16 +12395,16 @@
       ],
       "allowedOrigins": [],
       "behaviorDifferences": [
-        "The live JavaScriptCore bridge implements the listed component, hook, navigation and presentation subset, including observable subscription, reducer state, native URL links, NavigationStack paths, dynamic string NavigationDestination builders, direct NavigationLink destinations, split-view bindings, ScrollViewReader proxy scrolling and native back propagation; declaration members outside that tested subset remain unavailable and are not synthesized dynamically."
+        "A launch-time snapshot exposes the real Apple device model, OS, scene screen, battery, proximity, interface orientation, color scheme, iOS-on-Mac state, locale, language, region and script fields. Battery/orientation/proximity listeners, network interfaces, wake-lock ownership and orientation mutation remain unavailable and are not synthesized."
       ],
       "behaviorMatched": false,
       "declarationFile": "global.d.ts",
       "declarationLine": 52,
       "declaredByScripting": true,
-      "hanlinAPIVersion": "hanlin.scriptui/1.0",
-      "hanlinSymbol": "HanlinScriptingApplicationSession",
+      "hanlinAPIVersion": "hanlin.device/1.0",
+      "hanlinSymbol": "HanlinScriptingDeviceSnapshot",
       "implementedByHanlin": true,
-      "notes": "Validated with untouched Sefaria and agent projects reaching native split-navigation roots, a real 49-source-module package rendering a 356-node interactive ScriptUI tree, the real FileManager package, and targeted state, navigation, scrolling and control tests.",
+      "notes": "The app adapter uses the active UIWindowScene rather than the deprecated global screen/window APIs, and immutable nested JavaScript values prevent a package from mutating the captured host state.",
       "referenceCategory": "namespace",
       "referenceSignatureHash": "6559097ca8cfe14e4485d61967a9e5818e3a96bd94fcca418afb53cf4b1f625c",
       "referenceSymbol": "Device",
@@ -12412,10 +12412,8 @@
       "requiredEntitlement": null,
       "status": "partial",
       "tests": [
-        "AI_HLYTests/HanlinScriptingRuntimeTests.swift",
         "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift",
-        "Packages/HanlinPlatform/Tests/HanlinScriptUITests/HanlinScriptUIReconcilerTests.swift",
-        "Scripts/ScriptingReference/smoke-scripting-package-runtime.mjs"
+        "AI_HLY/Downstream/ScriptingPlatform/HanlinAppleDeviceSnapshotProvider.swift"
       ],
       "verifiedByFixture": false
     },
@@ -12425,16 +12423,16 @@
       ],
       "allowedOrigins": [],
       "behaviorDifferences": [
-        "The live JavaScriptCore bridge implements the listed component, hook, navigation and presentation subset, including observable subscription, reducer state, native URL links, NavigationStack paths, dynamic string NavigationDestination builders, direct NavigationLink destinations, split-view bindings, ScrollViewReader proxy scrolling and native back propagation; declaration members outside that tested subset remain unavailable and are not synthesized dynamically."
+        "A launch-time snapshot exposes the real Apple device model, OS, scene screen, battery, proximity, interface orientation, color scheme, iOS-on-Mac state, locale, language, region and script fields. Battery/orientation/proximity listeners, network interfaces, wake-lock ownership and orientation mutation remain unavailable and are not synthesized."
       ],
       "behaviorMatched": false,
       "declarationFile": "scripting.d.ts",
       "declarationLine": 11876,
       "declaredByScripting": true,
-      "hanlinAPIVersion": "hanlin.scriptui/1.0",
-      "hanlinSymbol": "HanlinScriptingApplicationSession",
+      "hanlinAPIVersion": "hanlin.device/1.0",
+      "hanlinSymbol": "HanlinScriptingDeviceSnapshot",
       "implementedByHanlin": true,
-      "notes": "Validated with untouched Sefaria and agent projects reaching native split-navigation roots, a real 49-source-module package rendering a 356-node interactive ScriptUI tree, the real FileManager package, and targeted state, navigation, scrolling and control tests.",
+      "notes": "The app adapter uses the active UIWindowScene rather than the deprecated global screen/window APIs, and immutable nested JavaScript values prevent a package from mutating the captured host state.",
       "referenceCategory": "const",
       "referenceSignatureHash": "b964f8cdba66644b0b97a307178520458b51d9ebdc2b09409c80d873af5532bf",
       "referenceSymbol": "Device",
@@ -12442,10 +12440,8 @@
       "requiredEntitlement": null,
       "status": "partial",
       "tests": [
-        "AI_HLYTests/HanlinScriptingRuntimeTests.swift",
         "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift",
-        "Packages/HanlinPlatform/Tests/HanlinScriptUITests/HanlinScriptUIReconcilerTests.swift",
-        "Scripts/ScriptingReference/smoke-scripting-package-runtime.mjs"
+        "AI_HLY/Downstream/ScriptingPlatform/HanlinAppleDeviceSnapshotProvider.swift"
       ],
       "verifiedByFixture": false
     },

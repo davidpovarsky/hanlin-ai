@@ -35,7 +35,6 @@
         "Color",
         "ControlGroup",
         "ContentUnavailableView",
-        "Device",
         "Divider",
         "DisclosureGroup",
         "Form",
@@ -101,6 +100,16 @@
     }
   ],
   "symbols": [
+    {
+      "symbol": "Device",
+      "status": "partial",
+      "hanlinSymbol": "HanlinScriptingDeviceSnapshot",
+      "hanlinAPIVersion": "hanlin.device/1.0",
+      "allowedContexts": ["mainApplication"],
+      "behaviorDifferences": ["A launch-time snapshot exposes the real Apple device model, OS, scene screen, battery, proximity, interface orientation, color scheme, iOS-on-Mac state, locale, language, region and script fields. Battery/orientation/proximity listeners, network interfaces, wake-lock ownership and orientation mutation remain unavailable and are not synthesized."],
+      "tests": ["Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift", "AI_HLY/Downstream/ScriptingPlatform/HanlinAppleDeviceSnapshotProvider.swift"],
+      "notes": "The app adapter uses the active UIWindowScene rather than the deprecated global screen/window APIs, and immutable nested JavaScript values prevent a package from mutating the captured host state."
+    },
     {
       "symbol": "SQLite",
       "status": "partial",

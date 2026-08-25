@@ -132,10 +132,32 @@ function runtime() {
       queueMicrotask(emit);
     },
     __hanlinCancelNative(id) { cancelledRequests.add(id); },
+    __hanlinNativeDeviceSnapshot: {
+      model: "iPad", localizedModel: "iPad", systemVersion: "26.5", systemName: "iPadOS",
+      isiPad: true, isiPhone: false, screen: { width: 744, height: 1133, scale: 2 },
+      batteryState: "charging", batteryLevel: 0.75, proximityState: false,
+      orientation: "landscapeRight", isLandscape: true, isPortrait: false, isFlat: false,
+      colorScheme: "dark", isiOSAppOnMac: false, systemLocale: "he_IL",
+      preferredLanguages: ["he-IL", "en-US"], systemLocales: ["he-IL", "en-US"],
+      systemLanguageTag: "he-IL", systemLanguageCode: "he", systemCountryCode: "IL",
+      systemScriptCode: "Hebr",
+    },
   });
   vm.runInContext(bootstrap, context, { filename: "hanlin-scripting-ui-runtime.js" });
   return { context, rendered: () => rendered, assistantRequests, sqliteRequests, locationRequests, cancelledRequests };
 }
+
+test("Device exposes the immutable native launch snapshot", () => {
+  const { context } = runtime();
+  const result = vm.runInContext(`JSON.stringify([
+    Device.model, Device.systemName, Device.screen.width, Device.batteryState,
+    Device.orientation, Device.colorScheme, Device.systemLanguageCode,
+    Device.systemCountryCode, Device.isLandscape, Device.isPortrait,
+    Object.isFrozen(Device), Object.isFrozen(Device.screen),
+    Object.isFrozen(Device.preferredLanguages)
+  ])`, context);
+  assert.equal(result, '["iPad","iPadOS",744,"charging","landscapeRight","dark","he","IL",true,false,true,true,true]');
+});
 
 test("Path, binary Data, Storage, and synchronous FileManager preserve values", () => {
   const { context, rendered } = runtime();

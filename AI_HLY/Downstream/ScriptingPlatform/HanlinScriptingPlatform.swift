@@ -382,7 +382,8 @@ final class HanlinScriptingPlatform {
                 liveActivityLoader: { [weak self] request in
                     guard let self else { throw CancellationError() }
                     return try await self.performLiveActivity(request, installedPackageID: id)
-                }
+                },
+                deviceSnapshot: HanlinAppleDeviceSnapshotProvider.snapshot()
             )
             applicationSession = session
             activeApplicationID = id
