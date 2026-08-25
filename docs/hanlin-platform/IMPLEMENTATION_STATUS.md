@@ -39,11 +39,13 @@ and most other declared service families are not connected to the live JavaScrip
 session; storage is intentionally partial because its live binding does not yet
 flow through the service broker audit stream. Node/Python Hybrid conformance and
 the Python `scripting` compatibility module also remain open. JSC hard memory/time
-limits are unsupported by verified public API and are not claimed. Fast workflow
-run `32792945237` built the exact live-app implementation commit
-`b680fba0f1bc3c75735a4cd7ad23550c5407ac61`, built downstream tests, and launched
-the iPad Simulator successfully; it did not run the full test/IPA lane and does
-not close the remaining gates.
+limits are unsupported by verified public API and are not claimed. Full workflow
+run `32794988662` passed on exact integration commit
+`6a75fb23d97f97fa704132d2d0d7f743aabaf492`: baseline/contracts/package tests,
+generic simulator and device compilation, the unsigned iOS 26 IPA and dyld
+closure, downstream test compilation, and full-app iPad Simulator launch all
+succeeded. This is not physical-device or complete real-package lifecycle
+evidence and does not close the remaining gates.
 
 ## Earlier full Scripting work
 
@@ -84,11 +86,11 @@ Current release truth:
 - five supplied acceptance packages match their locked SHA-256 values. The
   sixth package, `זמני היום ולוח לימוד יומי 3.zip`, has not been supplied;
 - Windows has no functioning Apple SDK/Xcode environment. GitHub Actions run
-  `32792945237` verified the live-app implementation with Xcode 26.6, iOS 26.5
-  Simulator SDK, iOS 26 deployment target, Swift 6, downstream test compilation,
-  and iPad Simulator launch. Full-suite/IPA evidence for the current declaration
-  integration, physical-device execution, complete real-package acceptance, and
-  performance measurements remain unverified, so SG-10 stays open;
+  `32794988662` verified the current declaration/live-app integration with Xcode
+  26.6, iOS 26.5 Simulator SDK, iOS 26 deployment target, Swift 6, full package
+  tests, downstream test compilation, unsigned IPA generation and validation,
+  and iPad Simulator launch. Physical-device execution, complete real-package
+  acceptance, and performance measurements remain unverified, so SG-10 stays open;
 - exact gate states and remaining evidence are recorded in
   `canonical-contracts/SCRIPTING_INTEGRATION_GATES.md`.
 

@@ -48,7 +48,7 @@ choice; no engine fallback is permitted.
 | SG-7 | Partial | Live ScriptUI hooks/events/navigation/presentation and generic extensions exist; parity, extension, device and full real-fixture evidence remain |
 | SG-8 | Partial | Multi-tool schemas, routing, structured results and cancellation exist; production-package and approval/progress evidence remain |
 | SG-9 | Implemented; verification pending | Atomic generations, recovery and stale-integrity isolation exist; Xcode migration/device evidence remains |
-| SG-10 | Blocked | Fast run `32792945237` built and launched the live-app path; one fixture is missing, four supplied packages have source diagnostics, full current-suite/IPA and physical-device real-package acceptance are absent, and performance is unmeasured |
+| SG-10 | Blocked | Full run `32794988662` passed the current tests, compilation, IPA validation and Simulator launch; one fixture is missing, four supplied packages have source diagnostics, physical-device and complete real-package acceptance are absent, and performance is unmeasured |
 
 ## 3. Gates
 

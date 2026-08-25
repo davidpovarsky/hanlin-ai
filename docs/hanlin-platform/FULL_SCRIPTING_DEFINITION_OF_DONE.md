@@ -84,6 +84,10 @@ UI presence, a placeholder, or a declaration-only binding is not completion.
 - [x] After explicit authorization, targeted CI passed first and full CI run
   `32693925085` passed on documented successor commit
   `af8b8288507614c2db1853ca724c4652df571a1f`.
+- [x] Full current-declaration/live-app CI run `32794988662` passed on exact
+  integration commit `6a75fb23d97f97fa704132d2d0d7f743aabaf492`, including
+  package tests, device and Simulator compilation, IPA/dyld validation,
+  downstream test compilation, and iPad Simulator launch.
 
 ## Immutable acceptance inputs
 
