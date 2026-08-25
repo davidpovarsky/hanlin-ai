@@ -41,13 +41,14 @@ struct HanlinScriptingApplicationRuntimeTests {
             installedPackageID: packageID,
             program: #"""
             const assistantResult = useObservable("Idle");
+            const assistantStream = Assistant.requestStreaming({
+              messages: { role: "user", content: "Hello" },
+              provider: "openai"
+            });
             Navigation.present({ element: createElement(Button, {
               title: assistantResult,
               action: async () => {
-                const stream = await Assistant.requestStreaming({
-                  messages: { role: "user", content: "Hello" },
-                  provider: "openai"
-                });
+                const stream = await assistantStream;
                 let text = "";
                 for await (const chunk of stream) {
                   if (chunk.type === "text") text += chunk.content;
@@ -76,9 +77,14 @@ struct HanlinScriptingApplicationRuntimeTests {
             Issue.record("The Assistant test button did not expose an event handler")
             return
         }
+        for _ in 0 ..< 100 {
+            if await recorder.first() != nil { break }
+            try await Task.sleep(for: .milliseconds(1))
+        }
         session.dispatch(handlerID: handlerID, payload: .null)
-        for _ in 0 ..< 100 where session.model.root.properties["title"] != .string("Hello world") {
-            await Task.yield()
+        for _ in 0 ..< 100 {
+            if session.model.root.properties["title"] == .string("Hello world") { break }
+            try await Task.sleep(for: .milliseconds(1))
         }
 
         #expect(session.model.root.properties["title"] == .string("Hello world"))
