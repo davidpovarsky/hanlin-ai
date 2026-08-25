@@ -27058,11 +27058,12 @@
     },
     {
       "allowedContexts": [
+        "mainApplication",
         "liveActivity"
       ],
       "allowedOrigins": [],
       "behaviorDifferences": [
-        "Hanlin uses one static ActivityAttributes type and canonical package state; dynamic Swift types are impossible after installation."
+        "Hanlin uses one static ActivityAttributes type and canonical package state because installed packages cannot add dynamic Swift types. register creates isolated instances whose start, update and end operations rebuild the registered ScriptUI tree and cross a bounded asynchronous native transport into ActivityKit. Stale date, relevance score and immediate/dated/default dismissal are preserved. Instance listeners reflect operations performed by that instance. Cross-process lookup, global listeners and bulk lifecycle operations remain unavailable and are not claimed."
       ],
       "behaviorMatched": false,
       "declarationFile": "scripting.d.ts",
@@ -27071,7 +27072,7 @@
       "hanlinAPIVersion": "hanlin.extensions/1.0",
       "hanlinSymbol": "HanlinScriptLiveActivityController",
       "implementedByHanlin": true,
-      "notes": "Generic lifecycle and renderer are present and require Xcode/device verification.",
+      "notes": "The host injects the ActivityKit adapter and the precompiled Widget extension renders the transported state; physical-device verification remains pending.",
       "referenceCategory": "class",
       "referenceSignatureHash": "1427d48b8080dc5eb24fd63a4b5892aa1e16e721f0694d10ca10bebdfef024c7",
       "referenceSymbol": "LiveActivity",
@@ -27079,6 +27080,7 @@
       "requiredEntitlement": null,
       "status": "partial",
       "tests": [
+        "Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs",
         "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinScriptExtensionStoreTests.swift"
       ],
       "verifiedByFixture": false
@@ -27126,87 +27128,115 @@
       "verifiedByFixture": false
     },
     {
-      "allowedContexts": [],
+      "allowedContexts": [
+        "mainApplication",
+        "liveActivity"
+      ],
       "allowedOrigins": [],
-      "behaviorDifferences": [],
+      "behaviorDifferences": [
+        "Preserved as a distinct Dynamic Island expanded-bottom region and rendered by the precompiled Widget extension."
+      ],
       "behaviorMatched": false,
       "declarationFile": "scripting.d.ts",
       "declarationLine": 10396,
       "declaredByScripting": true,
-      "hanlinAPIVersion": null,
-      "hanlinSymbol": null,
-      "implementedByHanlin": false,
-      "notes": "The symbol is authorized for compatibility work but lacks a complete observable binding and conformance test.",
+      "hanlinAPIVersion": "hanlin.extensions/1.0",
+      "hanlinSymbol": "HanlinLiveActivityUILayout.expandedBottom",
+      "implementedByHanlin": true,
       "referenceCategory": "function",
       "referenceSignatureHash": "7724b28c5969dfb15a05aef5922a794fbeed6692cc696092f8c12d9b69c6efc8",
       "referenceSymbol": "LiveActivityUIExpandedBottom",
       "requiredCapability": null,
       "requiredEntitlement": null,
-      "status": "not-yet-implemented",
-      "tests": [],
+      "status": "partial",
+      "tests": [
+        "Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs",
+        "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinScriptExtensionStoreTests.swift"
+      ],
       "verifiedByFixture": false
     },
     {
-      "allowedContexts": [],
+      "allowedContexts": [
+        "mainApplication",
+        "liveActivity"
+      ],
       "allowedOrigins": [],
-      "behaviorDifferences": [],
+      "behaviorDifferences": [
+        "Preserved as a distinct Dynamic Island expanded-center region and rendered by the precompiled Widget extension."
+      ],
       "behaviorMatched": false,
       "declarationFile": "scripting.d.ts",
       "declarationLine": 10395,
       "declaredByScripting": true,
-      "hanlinAPIVersion": null,
-      "hanlinSymbol": null,
-      "implementedByHanlin": false,
-      "notes": "The symbol is authorized for compatibility work but lacks a complete observable binding and conformance test.",
+      "hanlinAPIVersion": "hanlin.extensions/1.0",
+      "hanlinSymbol": "HanlinLiveActivityUILayout.expandedCenter",
+      "implementedByHanlin": true,
       "referenceCategory": "function",
       "referenceSignatureHash": "f0091e845369521c40b3d7336cacc40aff77c97c1e864a3be9bbf4ee837be26f",
       "referenceSymbol": "LiveActivityUIExpandedCenter",
       "requiredCapability": null,
       "requiredEntitlement": null,
-      "status": "not-yet-implemented",
-      "tests": [],
+      "status": "partial",
+      "tests": [
+        "Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs",
+        "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinScriptExtensionStoreTests.swift"
+      ],
       "verifiedByFixture": false
     },
     {
-      "allowedContexts": [],
+      "allowedContexts": [
+        "mainApplication",
+        "liveActivity"
+      ],
       "allowedOrigins": [],
-      "behaviorDifferences": [],
+      "behaviorDifferences": [
+        "Preserved as a distinct Dynamic Island expanded-leading region and rendered by the precompiled Widget extension."
+      ],
       "behaviorMatched": false,
       "declarationFile": "scripting.d.ts",
       "declarationLine": 10393,
       "declaredByScripting": true,
-      "hanlinAPIVersion": null,
-      "hanlinSymbol": null,
-      "implementedByHanlin": false,
-      "notes": "The symbol is authorized for compatibility work but lacks a complete observable binding and conformance test.",
+      "hanlinAPIVersion": "hanlin.extensions/1.0",
+      "hanlinSymbol": "HanlinLiveActivityUILayout.expandedLeading",
+      "implementedByHanlin": true,
       "referenceCategory": "function",
       "referenceSignatureHash": "190072d5a8e9526344119565f34fa728ec4b24db7bf4bfd819db5fe17f32feba",
       "referenceSymbol": "LiveActivityUIExpandedLeading",
       "requiredCapability": null,
       "requiredEntitlement": null,
-      "status": "not-yet-implemented",
-      "tests": [],
+      "status": "partial",
+      "tests": [
+        "Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs",
+        "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinScriptExtensionStoreTests.swift"
+      ],
       "verifiedByFixture": false
     },
     {
-      "allowedContexts": [],
+      "allowedContexts": [
+        "mainApplication",
+        "liveActivity"
+      ],
       "allowedOrigins": [],
-      "behaviorDifferences": [],
+      "behaviorDifferences": [
+        "Preserved as a distinct Dynamic Island expanded-trailing region and rendered by the precompiled Widget extension."
+      ],
       "behaviorMatched": false,
       "declarationFile": "scripting.d.ts",
       "declarationLine": 10394,
       "declaredByScripting": true,
-      "hanlinAPIVersion": null,
-      "hanlinSymbol": null,
-      "implementedByHanlin": false,
-      "notes": "The symbol is authorized for compatibility work but lacks a complete observable binding and conformance test.",
+      "hanlinAPIVersion": "hanlin.extensions/1.0",
+      "hanlinSymbol": "HanlinLiveActivityUILayout.expandedTrailing",
+      "implementedByHanlin": true,
       "referenceCategory": "function",
       "referenceSignatureHash": "98b83928b3edbfa71965d65f9a9c88c1bf2a62af2d8a04169f0e95c3edab8eb6",
       "referenceSymbol": "LiveActivityUIExpandedTrailing",
       "requiredCapability": null,
       "requiredEntitlement": null,
-      "status": "not-yet-implemented",
-      "tests": [],
+      "status": "partial",
+      "tests": [
+        "Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs",
+        "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinScriptExtensionStoreTests.swift"
+      ],
       "verifiedByFixture": false
     },
     {
@@ -27252,24 +27282,32 @@
       "verifiedByFixture": false
     },
     {
-      "allowedContexts": [],
+      "allowedContexts": [
+        "mainApplication",
+        "liveActivity"
+      ],
       "allowedOrigins": [],
-      "behaviorDifferences": [],
+      "behaviorDifferences": [
+        "The JavaScriptCore renderer preserves the Lock Screen, compact-leading, compact-trailing, minimal and expanded Dynamic Island regions as separate typed nodes. The precompiled Widget extension maps those nodes to ActivityConfiguration and DynamicIsland regions. LiveActivity registration, lifecycle and snapshot publication remain separately classified."
+      ],
       "behaviorMatched": false,
       "declarationFile": "scripting.d.ts",
       "declarationLine": 10392,
       "declaredByScripting": true,
-      "hanlinAPIVersion": null,
-      "hanlinSymbol": null,
-      "implementedByHanlin": false,
-      "notes": "The symbol is authorized for compatibility work but lacks a complete observable binding and conformance test.",
+      "hanlinAPIVersion": "hanlin.extensions/1.0",
+      "hanlinSymbol": "HanlinLiveActivityUILayout",
+      "implementedByHanlin": true,
+      "notes": "Implemented against the original Scripting declarations and the untouched nativ-ai acceptance package without editing its sources.",
       "referenceCategory": "function",
       "referenceSignatureHash": "3511bee92b883769de4c75bd6b32c00fa9659f81e71f43fce716595a3773cc27",
       "referenceSymbol": "LiveActivityUI",
       "requiredCapability": null,
       "requiredEntitlement": null,
-      "status": "not-yet-implemented",
-      "tests": [],
+      "status": "partial",
+      "tests": [
+        "Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs",
+        "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinScriptExtensionStoreTests.swift"
+      ],
       "verifiedByFixture": false
     },
     {
