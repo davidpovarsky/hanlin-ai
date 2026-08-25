@@ -1,18 +1,7 @@
 import HanlinPlatformContracts
 @testable import HanlinScriptingApplicationRuntime
+import Foundation
 import Testing
-
-private actor AssistantRequestRecorder {
-    private var requests: [HanlinScriptingAssistantRequest] = []
-
-    func append(_ request: HanlinScriptingAssistantRequest) {
-        requests.append(request)
-    }
-
-    func first() -> HanlinScriptingAssistantRequest? {
-        requests.first
-    }
-}
 
 @Suite("Scripting application runtime", .serialized)
 struct HanlinScriptingApplicationRuntimeTests {
@@ -32,65 +21,36 @@ struct HanlinScriptingApplicationRuntimeTests {
         #expect(session.model.root.properties["text"] == .string("Ready"))
     }
 
-    @MainActor
-    @Test("Dispatches Assistant requests from JavaScriptCore to the native loader")
-    func dispatchesAssistantRequest() async throws {
-        let recorder = AssistantRequestRecorder()
-        let packageID = try HanlinInstalledPackageID(validating: "assistant-runtime-test")
-        let session = try HanlinScriptingApplicationSession(
-            installedPackageID: packageID,
-            program: #"""
-            const assistantResult = useObservable(Assistant.isAvailable ? "Idle" : "Unavailable");
-            Navigation.present({ element: createElement(Button, {
-              title: assistantResult,
-              action: () => {
-                const pending = Assistant.requestStreaming({
-                  messages: { role: "user", content: "Hello" },
-                  provider: "openai"
-                });
-                assistantResult.value = "Dispatched";
-                pending.then(async stream => {
-                  let text = "";
-                  for await (const chunk of stream) {
-                    if (chunk.type === "text") text += chunk.content;
-                  }
-                  assistantResult.value = text;
-                }).catch(error => {
-                  assistantResult.value = `${error.name}:${error.message}`;
-                });
-              }
-            }) });
-            """#,
-            filename: "compiled/index.js",
-            storageAllowed: false,
-            assistantAllowed: true,
-            assistantLoader: { request in
-                await recorder.append(request)
-                return AsyncThrowingStream { continuation in
-                    continuation.yield(.text("Hello "))
-                    continuation.yield(.reasoning("verified"))
-                    continuation.yield(.text("world"))
-                    continuation.yield(.usage(.init(inputTokens: 1, outputTokens: 2)))
-                    continuation.finish()
-                }
-            }
-        )
-        defer { session.dispose() }
-
-        guard case let .string(handlerID)? = session.model.root.properties["onPress"] else {
-            Issue.record("The Assistant test button did not expose an event handler")
-            return
+    @Test("Decodes bounded Assistant requests and emits Web-compatible chunks")
+    func assistantNativePayloads() throws {
+        let request = try HanlinScriptingAssistantPayloadDecoder.decode(#"""
+        {
+          "kind": "streaming",
+          "systemPrompt": "Be concise",
+          "messages": [{"role":"user","content":"Hello"}],
+          "provider": {"custom":"https://assistant.example/v1"},
+          "modelId": "test-model"
         }
-        try session.model.apply(.event(handlerID: handlerID, payload: .null))
-        for _ in 0 ..< 100 {
-            if await recorder.first() != nil { break }
-            try await Task.sleep(for: .milliseconds(1))
-        }
+        """#)
+        #expect(request.kind == .streaming)
+        #expect(request.provider == .custom("https://assistant.example/v1"))
+        #expect(request.modelID == "test-model")
+        #expect(request.messagesJSON != nil)
 
-        #expect(session.model.root.properties["title"] != .string("Idle"))
-        let request = await recorder.first()
-        #expect(request?.kind == .streaming)
-        #expect(request?.provider == .builtIn("openai"))
-        #expect(request?.messagesJSON != nil)
+        let usage = try HanlinScriptingAssistantChunk.usage(.init(
+            totalCost: nil,
+            cacheReadTokens: 4,
+            inputTokens: 7,
+            outputTokens: 3
+        )).nativeObject()
+        #expect(usage["type"] as? String == "usage")
+        let content = try #require(usage["content"] as? [String: Any])
+        #expect(content["inputTokens"] as? Int == 7)
+
+        let structured = try HanlinScriptingAssistantChunk.structuredJSON(
+            Data(#"{"answer":"verified"}"#.utf8)
+        ).nativeObject()
+        #expect(structured["type"] as? String == "structured")
+        #expect((structured["content"] as? [String: Any])?["answer"] as? String == "verified")
     }
 }
