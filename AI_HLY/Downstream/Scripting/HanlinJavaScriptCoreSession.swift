@@ -41,6 +41,7 @@ actor HanlinJavaScriptCoreSession {
     private var context: JSContext?
     private let configuration: Configuration
     private var activeInvocation: (id: UUID, continuation: HanlinJSCInvocationContinuation)?
+    private var invocationStartWaiters: [CheckedContinuation<Void, Never>] = []
     private var disposed = false
 
     init(configuration: Configuration = .scriptingCompatibility) throws {
@@ -95,6 +96,7 @@ actor HanlinJavaScriptCoreSession {
                 try await withCheckedThrowingContinuation { continuation in
                     let bridge = HanlinJSCInvocationContinuation(continuation)
                     activeInvocation = (invocationID, bridge)
+                    resumeInvocationStartWaiters()
                     let resolve: @convention(block) (String) -> Void = { value in
                         bridge.resolve(value)
                     }
@@ -136,9 +138,20 @@ actor HanlinJavaScriptCoreSession {
         context?.evaluateScript("globalThis.__hanlinCancelCurrent?.();")
         activeInvocation?.continuation.reject(.unavailableProvider("disposed_session"))
         activeInvocation = nil
+        resumeInvocationStartWaiters()
         context?.exceptionHandler = nil
         context = nil
         virtualMachine = nil
+    }
+
+    /// Suspends until an invocation has crossed the actor boundary and installed
+    /// its JavaScript cancellation callback. This avoids timer-based lifecycle
+    /// coordination in callers that must cancel an invocation deterministically.
+    func waitUntilInvocationStarted() async {
+        guard activeInvocation == nil, !disposed else { return }
+        await withCheckedContinuation { continuation in
+            invocationStartWaiters.append(continuation)
+        }
     }
 
     private func evaluate(_ source: String, filename: String, in context: JSContext) throws {
@@ -176,6 +189,12 @@ actor HanlinJavaScriptCoreSession {
         context?.setObject(nil, forKeyedSubscript: "__hanlinResolve" as NSString)
         context?.setObject(nil, forKeyedSubscript: "__hanlinReject" as NSString)
         context?.exceptionHandler = nil
+    }
+
+    private func resumeInvocationStartWaiters() {
+        let waiters = invocationStartWaiters
+        invocationStartWaiters.removeAll(keepingCapacity: false)
+        waiters.forEach { $0.resume() }
     }
 
     private static func redactedCode(from message: String?) -> String {

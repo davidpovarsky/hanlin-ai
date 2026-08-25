@@ -230,7 +230,7 @@ struct HanlinJavaScriptCoreEngineTests {
                 parameters: .object(["hang": .bool(true), "value": .null])
             )
         }
-        try await Task.sleep(for: .milliseconds(20))
+        await session.waitUntilInvocationStarted()
         hanging.cancel()
         do {
             _ = try await hanging.value

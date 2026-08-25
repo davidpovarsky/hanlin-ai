@@ -63,7 +63,9 @@ test('lifecycle planner accepts brokered actions and rejects shell syntax', () =
 function runWorker(workerData) {
   return new Promise((resolve, reject) => {
     const worker = new Worker(executionWorkerURL, { workerData });
-    worker.once('message', resolve);
+    worker.once('message', message => {
+      worker.terminate().then(() => resolve(message), reject);
+    });
     worker.once('error', reject);
   });
 }

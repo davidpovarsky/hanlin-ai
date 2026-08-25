@@ -342,6 +342,10 @@ async function executeJavaScript(body) {
     worker.once('exit', code => { if (state.cancelled) finish({ executionID: id, stdout: '', stderr: '', value: null, exitCode: code, didTimeOut: false, wasCancelled: true, outputWasTruncated: false }); });
   });
   executions.delete(id);
+  // A worker posts its result before Node has necessarily completed module-loader
+  // teardown. Wait for termination before removing the module root so concurrent
+  // filesystem cleanup cannot surface as EBADF/ENOENT from the loader.
+  await state.worker?.terminate();
   await fs.rm(executionRoot, { recursive: true, force: true });
   result.durationMilliseconds = Date.now() - started;
   return result;
