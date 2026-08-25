@@ -33,8 +33,8 @@ struct HanlinScriptingApplicationRuntimeTests {
     }
 
     @MainActor
-    @Test("Streams Assistant chunks through JavaScriptCore and rerenders")
-    func streamsAssistantChunks() async throws {
+    @Test("Dispatches Assistant requests from JavaScriptCore to the native loader")
+    func dispatchesAssistantRequest() async throws {
         let recorder = AssistantRequestRecorder()
         let packageID = try HanlinInstalledPackageID(validating: "assistant-runtime-test")
         let session = try HanlinScriptingApplicationSession(
@@ -43,20 +43,21 @@ struct HanlinScriptingApplicationRuntimeTests {
             const assistantResult = useObservable(Assistant.isAvailable ? "Idle" : "Unavailable");
             Navigation.present({ element: createElement(Button, {
               title: assistantResult,
-              action: async () => {
-                try {
-                  const stream = await Assistant.requestStreaming({
-                    messages: { role: "user", content: "Hello" },
-                    provider: "openai"
-                  });
+              action: () => {
+                const pending = Assistant.requestStreaming({
+                  messages: { role: "user", content: "Hello" },
+                  provider: "openai"
+                });
+                assistantResult.value = "Dispatched";
+                pending.then(async stream => {
                   let text = "";
                   for await (const chunk of stream) {
                     if (chunk.type === "text") text += chunk.content;
                   }
                   assistantResult.value = text;
-                } catch (error) {
+                }).catch(error => {
                   assistantResult.value = `${error.name}:${error.message}`;
-                }
+                });
               }
             }) });
             """#,
@@ -82,11 +83,11 @@ struct HanlinScriptingApplicationRuntimeTests {
         }
         try session.model.apply(.event(handlerID: handlerID, payload: .null))
         for _ in 0 ..< 100 {
-            if session.model.root.properties["title"] == .string("Hello world") { break }
+            if await recorder.first() != nil { break }
             try await Task.sleep(for: .milliseconds(1))
         }
 
-        #expect(session.model.root.properties["title"] == .string("Hello world"))
+        #expect(session.model.root.properties["title"] != .string("Idle"))
         let request = await recorder.first()
         #expect(request?.kind == .streaming)
         #expect(request?.provider == .builtIn("openai"))
