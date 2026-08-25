@@ -43875,24 +43875,31 @@
       "verifiedByFixture": false
     },
     {
-      "allowedContexts": [],
+      "allowedContexts": [
+        "mainApplication"
+      ],
       "allowedOrigins": [],
-      "behaviorDifferences": [],
+      "behaviorDifferences": [
+        "SQLite.open and openInMemory provide package-confined databases over the system SQLite library with asynchronous execute, fetchAll, fetchSet, fetchOne and ordered transaction steps. Positional and named scalar arguments, multi-statement schema setup, foreign keys, WAL and bounded busy timeouts are implemented. Schema-introspection and table/index convenience methods remain unimplemented and are not claimed."
+      ],
       "behaviorMatched": false,
       "declarationFile": "global.d.ts",
       "declarationLine": 17612,
       "declaredByScripting": true,
-      "hanlinAPIVersion": null,
-      "hanlinSymbol": null,
-      "implementedByHanlin": false,
-      "notes": "The authorized ambient API has no complete runtime binding and conformance test yet; declaration presence is not treated as support.",
+      "hanlinAPIVersion": "hanlin.storage/1.0",
+      "hanlinSymbol": "HanlinScriptingSQLiteStore",
+      "implementedByHanlin": true,
+      "notes": "Database paths are resolved through the same symlink-safe per-package VFS used by FileManager; statements, bindings, open handles and returned rows are bounded.",
       "referenceCategory": "namespace",
       "referenceSignatureHash": "e49b715163538f2e9b407c711b3d3dc45e7b5ddad955dadb792e019a4d29b175",
       "referenceSymbol": "SQLite",
-      "requiredCapability": null,
+      "requiredCapability": "files",
       "requiredEntitlement": null,
-      "status": "not-yet-implemented",
-      "tests": [],
+      "status": "partial",
+      "tests": [
+        "Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs",
+        "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift"
+      ],
       "verifiedByFixture": false
     },
     {

@@ -16888,10 +16888,12 @@
     },
     {
       "symbol": "SQLite",
-      "state": "unsupported",
-      "operation": "unimplemented",
-      "capability": null,
-      "contexts": [],
+      "state": "partial",
+      "operation": "HanlinScriptingSQLiteStore",
+      "capability": "files",
+      "contexts": [
+        "mainApplication"
+      ],
       "declarationEvidence": [
         {
           "category": "namespace",

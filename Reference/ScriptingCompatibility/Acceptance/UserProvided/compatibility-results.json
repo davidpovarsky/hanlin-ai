@@ -32,8 +32,8 @@
       "runtimeLaunch": {"status": "passed-node-hosted-bootstrap", "presented": true, "rootKind": "navigationSplitView"},
       "uiRender": {"status": "passed-structural-smoke", "renderedNodeCount": 15, "evidence": "The untouched package reaches its initial split-navigation UI after registering its real Live Activity builder; async state hydration completes without a reentrant render loop."},
       "interaction": {"status": "shared-runtime-verified", "passed": ["LiveActivity register/start/update/end instance lifecycle", "Live Activity update listeners", "coalesced reentrant rendering and same-value state suppression"], "notExercised": ["real-project control automation on Simulator", "Dynamic Island visual validation"]},
-      "nativeServices": {"status": "partial", "passed": ["FileManager/Path bounded VFS", "buffered fetch/Web primitives", "Storage", "Assistant requestStreaming/requestStructuredData bridge with ordered chunks, structured JSON and cancellation", "ActivityKit start/update/end adapter with typed Lock Screen and Dynamic Island regions"], "blockers": ["configured Assistant provider adapter", "SQLite binding", "Location binding", "physical-device Live Activity validation"]},
-      "remainingBlockers": ["45 source/API-usage errors", "Assistant provider and remaining native-service adapters", "physical-device Live Activity validation and broad ScriptUI semantics"]
+      "nativeServices": {"status": "partial", "passed": ["FileManager/Path bounded VFS", "buffered fetch/Web primitives", "Storage", "package-confined SQLite execute/fetch with positional and named bindings", "Assistant requestStreaming/requestStructuredData bridge with ordered chunks, structured JSON and cancellation", "ActivityKit start/update/end adapter with typed Lock Screen and Dynamic Island regions"], "blockers": ["configured Assistant provider adapter", "Location binding", "physical-device Live Activity validation"]},
+      "remainingBlockers": ["45 source/API-usage errors", "Assistant provider, Location and remaining native-service adapters", "physical-device Live Activity validation and broad ScriptUI semantics"]
     },
     {
       "id": "new-agent-21",

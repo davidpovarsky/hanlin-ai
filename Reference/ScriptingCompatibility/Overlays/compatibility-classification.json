@@ -102,6 +102,17 @@
   ],
   "symbols": [
     {
+      "symbol": "SQLite",
+      "status": "partial",
+      "hanlinSymbol": "HanlinScriptingSQLiteStore",
+      "hanlinAPIVersion": "hanlin.storage/1.0",
+      "requiredCapability": "files",
+      "allowedContexts": ["mainApplication"],
+      "behaviorDifferences": ["SQLite.open and openInMemory provide package-confined databases over the system SQLite library with asynchronous execute, fetchAll, fetchSet, fetchOne and ordered transaction steps. Positional and named scalar arguments, multi-statement schema setup, foreign keys, WAL and bounded busy timeouts are implemented. Schema-introspection and table/index convenience methods remain unimplemented and are not claimed."],
+      "tests": ["Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs", "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift"],
+      "notes": "Database paths are resolved through the same symlink-safe per-package VFS used by FileManager; statements, bindings, open handles and returned rows are bounded."
+    },
+    {
       "symbol": "LiveActivityUI",
       "status": "partial",
       "hanlinSymbol": "HanlinLiveActivityUILayout",

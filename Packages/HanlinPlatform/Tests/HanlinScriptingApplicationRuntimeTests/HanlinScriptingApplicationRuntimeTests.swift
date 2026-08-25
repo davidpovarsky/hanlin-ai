@@ -53,4 +53,37 @@ struct HanlinScriptingApplicationRuntimeTests {
         #expect(structured["type"] as? String == "structured")
         #expect((structured["content"] as? [String: Any])?["answer"] as? String == "verified")
     }
+
+    @Test("SQLite executes parameterized statements and returns typed rows")
+    func sqliteRoundTrip() throws {
+        let root = FileManager.default.temporaryDirectory.appending(
+            path: "hanlin-sqlite-test-\(UUID().uuidString)", directoryHint: .isDirectory
+        )
+        defer { try? FileManager.default.removeItem(at: root) }
+        let fileSystem = try HanlinScriptingPackageFileSystem(
+            installedPackageID: "sqlite-test",
+            allowed: true,
+            runtimeRoot: root,
+            packageSourceDirectory: nil
+        )
+        let store = HanlinScriptingSQLiteStore(fileSystem: fileSystem)
+        let prefix = #"{"handle":"database-1","path":"/app-group/history.sqlite","configuration":{"foreignKeysEnabled":true,"journalMode":"wal","busyMode":1},"#
+        _ = try store.perform(
+            operation: "sqlite.execute",
+            payloadJSON: prefix + #""sql":"CREATE TABLE items (id TEXT PRIMARY KEY, count INTEGER, enabled INTEGER)","arguments":null}"#
+        )
+        _ = try store.perform(
+            operation: "sqlite.execute",
+            payloadJSON: prefix + #""sql":"INSERT INTO items VALUES (:id, :count, :enabled)","arguments":{"id":"one","count":7,"enabled":1}}"#
+        )
+        let result = try store.perform(
+            operation: "sqlite.fetchAll",
+            payloadJSON: prefix + #""sql":"SELECT id, count, enabled FROM items WHERE id = ?","arguments":["one"]}"#
+        )
+        let rows = try #require(result as? [[String: Any]])
+        #expect(rows.count == 1)
+        #expect(rows[0]["id"] as? String == "one")
+        #expect((rows[0]["count"] as? NSNumber)?.intValue == 7)
+        #expect((rows[0]["enabled"] as? NSNumber)?.intValue == 1)
+    }
 }

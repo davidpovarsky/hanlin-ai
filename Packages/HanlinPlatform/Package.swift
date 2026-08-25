@@ -180,7 +180,8 @@ let package = Package(
             ],
             linkerSettings: [
                 .linkedFramework("JavaScriptCore"),
-                .linkedFramework("UniformTypeIdentifiers")
+                .linkedFramework("UniformTypeIdentifiers"),
+                .linkedLibrary("sqlite3")
             ]
         ),
         .testTarget(

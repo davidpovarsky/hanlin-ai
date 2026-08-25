@@ -513,6 +513,29 @@ final class HanlinScriptingPackageFileSystem: @unchecked Sendable {
         ]
     }
 
+    func databaseURL(for path: String) throws -> URL {
+        lock.lock()
+        defer { lock.unlock() }
+        guard allowed else {
+            throw HanlinScriptingNativeError(
+                name: "Error", code: "permission_denied",
+                message: "The files capability is not granted."
+            )
+        }
+        let target = try resolve(path, requireExisting: false)
+        guard !target.readOnly else {
+            throw HanlinScriptingNativeError(
+                name: "Error", code: "read_only",
+                message: "A SQLite database cannot be opened in the scripts directory."
+            )
+        }
+        try fileManager.createDirectory(
+            at: target.url.deletingLastPathComponent(),
+            withIntermediateDirectories: true
+        )
+        return target.url
+    }
+
     func perform(operation: String, payload: [String: Any]) throws -> Any {
         lock.lock()
         defer { lock.unlock() }

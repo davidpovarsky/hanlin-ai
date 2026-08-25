@@ -19,6 +19,7 @@ function runtime() {
   const files = new Map();
   let rendered;
   const assistantRequests = [];
+  const sqliteRequests = [];
   const cancelledRequests = new Set();
   const success = value => JSON.stringify({ ok: true, value });
   const failure = (code, message) => JSON.stringify({
@@ -78,6 +79,7 @@ function runtime() {
       queueMicrotask(() => {
         try {
           const payload = JSON.parse(json);
+          if (operation.startsWith("sqlite.")) sqliteRequests.push({ operation, payload });
           const value = operation === "network.fetch"
             ? { url: payload.url, status: 200, headers: { "content-type": "application/json" }, bodyBase64: Buffer.from('{"ok":true}').toString("base64") }
             : operation === "liveActivity.start"
@@ -86,6 +88,10 @@ function runtime() {
               ? true
             : operation === "liveActivity.areActivitiesEnabled"
               ? true
+            : operation === "sqlite.execute"
+              ? null
+            : operation === "sqlite.fetchAll"
+              ? [{ id: payload.arguments[0], title: "stored" }]
             : operation === "runtime.delay"
               ? null
             : fileOperation(operation, payload);
@@ -118,7 +124,7 @@ function runtime() {
     __hanlinCancelNative(id) { cancelledRequests.add(id); },
   });
   vm.runInContext(bootstrap, context, { filename: "hanlin-scripting-ui-runtime.js" });
-  return { context, rendered: () => rendered, assistantRequests, cancelledRequests };
+  return { context, rendered: () => rendered, assistantRequests, sqliteRequests, cancelledRequests };
 }
 
 test("Path, binary Data, Storage, and synchronous FileManager preserve values", () => {
@@ -493,4 +499,24 @@ test("LiveActivity register, start, update, listeners, and end use the native li
     started: true, updated: true, ended: true, id: "activity-1", active: false,
     states: ["active", "active", "ended"],
   });
+});
+
+test("SQLite preserves package paths, configurations, bound arguments, and row objects", async () => {
+  const { context, sqliteRequests } = runtime();
+  const rows = await vm.runInContext(`
+    (async () => {
+      const database = SQLite.open(Path.join(FileManager.appGroupDocumentsDirectory, "history.sqlite"), {
+        foreignKeysEnabled: true, journalMode: "wal", busyMode: 5, maximumReaderCount: 4,
+      });
+      await database.execute("CREATE TABLE items (id TEXT, title TEXT)");
+      await database.execute("INSERT INTO items VALUES (?, ?)", ["item-1", "stored"]);
+      return database.fetchAll("SELECT * FROM items WHERE id = ?", ["item-1"]);
+    })()
+  `, context);
+  assert.deepEqual(JSON.parse(JSON.stringify(rows)), [{ id: "item-1", title: "stored" }]);
+  assert.equal(sqliteRequests.length, 3);
+  assert.equal(sqliteRequests[0].payload.path, "/app-group/history.sqlite");
+  assert.equal(sqliteRequests[0].payload.configuration.foreignKeysEnabled, true);
+  assert.equal(sqliteRequests[0].payload.configuration.journalMode, "wal");
+  assert.deepEqual(sqliteRequests[2].payload.arguments, ["item-1"]);
 });

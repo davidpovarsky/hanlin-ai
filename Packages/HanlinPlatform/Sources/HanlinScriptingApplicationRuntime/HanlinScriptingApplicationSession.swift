@@ -12,6 +12,7 @@ public final class HanlinScriptingApplicationSession {
     private let virtualMachine: JSVirtualMachine
     private let storage: HanlinScriptingPackageStorage
     private let fileSystem: HanlinScriptingPackageFileSystem
+    private let sqliteStore: HanlinScriptingSQLiteStore
     private let networkAllowed: Bool
     private let networkLoader: HanlinScriptingNetworkLoader
     private let assistantAllowed: Bool
@@ -52,6 +53,7 @@ public final class HanlinScriptingApplicationSession {
             runtimeRoot: runtimeRoot,
             packageSourceDirectory: packageSourceDirectory
         )
+        sqliteStore = HanlinScriptingSQLiteStore(fileSystem: fileSystem)
         self.networkAllowed = networkAllowed
         self.networkLoader = networkLoader
         self.assistantAllowed = assistantAllowed
@@ -295,6 +297,18 @@ public final class HanlinScriptingApplicationSession {
                     let payload = try HanlinScriptingNativeJSON.decodeObject(payloadJSON)
                     return HanlinScriptingNativeJSON.success(
                         try fileSystem.perform(operation: operation, payload: payload)
+                    )
+                } catch {
+                    return HanlinScriptingNativeJSON.failure(error)
+                }
+            }.value
+        }
+        if operation.hasPrefix("sqlite.") {
+            let sqliteStore = sqliteStore
+            return try await Task.detached(priority: .userInitiated) {
+                do {
+                    return HanlinScriptingNativeJSON.success(
+                        try sqliteStore.perform(operation: operation, payloadJSON: payloadJSON)
                     )
                 } catch {
                     return HanlinScriptingNativeJSON.failure(error)
@@ -1846,6 +1860,78 @@ private extension HanlinScriptingApplicationSession {
         dismiss() { return Promise.resolve(); },
         stopConversation() { return Promise.resolve(); }
       });
+      let sqliteHandleCursor = 0;
+      function sqliteArguments(value) {
+        if (value == null) return null;
+        if (value instanceof Date) return value.getTime();
+        if (value instanceof HanlinData) return value.toBase64String();
+        if (Array.isArray(value)) return value.map(sqliteArguments);
+        if (typeof value === "object") {
+          const output = {};
+          for (const [key, member] of Object.entries(value)) output[key] = sqliteArguments(member);
+          return output;
+        }
+        if (["string", "number", "boolean"].includes(typeof value)) return value;
+        throw new TypeError("Unsupported SQLite argument type");
+      }
+      function reviveSQLite(value) {
+        if (Array.isArray(value)) return value.map(reviveSQLite);
+        if (value && typeof value === "object") {
+          if (typeof value.__hanlinSQLiteData === "string") return HanlinData.fromBase64String(value.__hanlinSQLiteData);
+          const output = {};
+          for (const [key, member] of Object.entries(value)) output[key] = reviveSQLite(member);
+          return output;
+        }
+        return value;
+      }
+      class HanlinSQLiteDatabase {
+        constructor(path, configuration) {
+          this.path = path;
+          this.configuration = configuration;
+          this.handle = `sqlite-${++sqliteHandleCursor}`;
+        }
+        _call(operation, sql, argumentsValue) {
+          if (typeof sql !== "string" || sql.length === 0) return Promise.reject(new TypeError("SQL is required"));
+          return nativeCallAsync(operation, {
+            handle: this.handle, path: this.path, configuration: this.configuration,
+            sql, arguments: sqliteArguments(argumentsValue)
+          }).then(reviveSQLite);
+        }
+        execute(sql, argumentsValue = null) { return this._call("sqlite.execute", sql, argumentsValue); }
+        fetchAll(sql, argumentsValue = null) { return this._call("sqlite.fetchAll", sql, argumentsValue); }
+        fetchSet(sql, argumentsValue = null) { return this.fetchAll(sql, argumentsValue); }
+        async fetchOne(sql, argumentsValue = null) {
+          const rows = await this.fetchAll(sql, argumentsValue);
+          if (rows.length === 0) throw new Error("SQLite query returned no rows");
+          return rows[0];
+        }
+        async transaction(steps) {
+          const values = Array.isArray(steps) ? steps : [steps];
+          await this.execute("BEGIN IMMEDIATE");
+          try {
+            for (const step of values) await this.execute(step.sql, step.args ?? null);
+            await this.execute("COMMIT");
+          } catch (error) {
+            try { await this.execute("ROLLBACK"); } catch {}
+            throw error;
+          }
+        }
+      }
+      const SQLite = Object.freeze({
+        open(path, configuration = {}) {
+          return new HanlinSQLiteDatabase(normalizePath(path), {
+            foreignKeysEnabled: configuration.foreignKeysEnabled === true,
+            readonly: configuration.readonly === true,
+            label: configuration.label == null ? null : String(configuration.label),
+            busyMode: typeof configuration.busyMode === "number" ? configuration.busyMode : "immediateError",
+            journalMode: configuration.journalMode === "wal" ? "wal" : "default",
+            maximumReaderCount: Number(configuration.maximumReaderCount ?? 1)
+          });
+        },
+        openInMemory(name = "default", configuration = {}) {
+          return new HanlinSQLiteDatabase(`:memory:${String(name)}`, configuration);
+        }
+      });
       const liveActivityBuilders = new Map();
       class HanlinLiveActivity {
         constructor(name, builder, activityId = null) {
@@ -1935,7 +2021,7 @@ private extension HanlinScriptingApplicationSession {
         FormData: HanlinFormData, Request: HanlinRequest, Response: HanlinResponse,
         fetch: hanlinFetch, DOMException: HanlinDOMException, AbortEvent: HanlinAbortEvent,
         AbortSignal: HanlinAbortSignal, AbortController: HanlinAbortController,
-        Storage, Assistant, LiveActivity, Script, Device, Widget, AppIntentProtocol, AppIntentManager,
+        Storage, SQLite, Assistant, LiveActivity, Script, Device, Widget, AppIntentProtocol, AppIntentManager,
         Color: Object.freeze({}),
         __hanlinResolveNative: resolveNativeRequest,
         __hanlinAssistantReceive: receiveAssistantChunk,
