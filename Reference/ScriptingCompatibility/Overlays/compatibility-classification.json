@@ -29,21 +29,25 @@
         "AppIntentProtocol",
         "BarChart",
         "Button",
+        "Capsule",
         "Chart",
         "Circle",
         "Color",
         "ControlGroup",
         "ContentUnavailableView",
         "Device",
+        "Divider",
         "DisclosureGroup",
         "Form",
         "Fragment",
         "Group",
+        "GroupBox",
         "HStack",
         "Image",
         "Label",
         "LazyVGrid",
         "List",
+        "Link",
         "Markdown",
         "Menu",
         "Navigation",
@@ -78,6 +82,7 @@
         "useEffectEvent",
         "useMemo",
         "useObservable",
+        "useReducer",
         "useRef",
         "useState"
       ],
@@ -85,13 +90,13 @@
       "hanlinSymbol": "HanlinScriptingApplicationSession",
       "hanlinAPIVersion": "hanlin.scriptui/1.0",
       "allowedContexts": ["mainApplication"],
-      "behaviorDifferences": ["The live JavaScriptCore bridge implements the listed component, hook, navigation and presentation subset, including observable subscription, NavigationStack paths, dynamic string NavigationDestination builders, direct NavigationLink destinations, split-view bindings, ScrollViewReader proxy scrolling and native back propagation; declaration members outside that tested subset remain unavailable and are not synthesized dynamically."],
+      "behaviorDifferences": ["The live JavaScriptCore bridge implements the listed component, hook, navigation and presentation subset, including observable subscription, reducer state, native URL links, NavigationStack paths, dynamic string NavigationDestination builders, direct NavigationLink destinations, split-view bindings, ScrollViewReader proxy scrolling and native back propagation; declaration members outside that tested subset remain unavailable and are not synthesized dynamically."],
       "tests": [
         "AI_HLYTests/HanlinScriptingRuntimeTests.swift",
         "Packages/HanlinPlatform/Tests/HanlinScriptUITests/HanlinScriptUIReconcilerTests.swift",
         "Scripts/ScriptingReference/smoke-scripting-package-runtime.mjs"
       ],
-      "notes": "Validated with the untouched 62-module Sefaria project reaching a native split-navigation root, a real 49-module package rendering a 356-node interactive ScriptUI tree, the real 35-module FileManager package, and targeted two-way navigation, scrolling and control tests."
+      "notes": "Validated with untouched Sefaria and agent projects reaching native split-navigation roots, a real 49-source-module package rendering a 356-node interactive ScriptUI tree, the real FileManager package, and targeted state, navigation, scrolling and control tests."
     }
   ],
   "symbols": [

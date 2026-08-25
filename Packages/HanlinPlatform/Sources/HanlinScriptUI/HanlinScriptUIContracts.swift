@@ -6,6 +6,7 @@ public enum HanlinScriptUIPrimitive: String, Codable, CaseIterable, Hashable, Se
     case text
     case image
     case button
+    case link
     case menu
     case toggle
     case textField
@@ -15,6 +16,7 @@ public enum HanlinScriptUIPrimitive: String, Codable, CaseIterable, Hashable, Se
     case scrollView
     case form
     case group
+    case groupBox
     case label
     case controlGroup
     case picker
@@ -32,6 +34,7 @@ public enum HanlinScriptUIPrimitive: String, Codable, CaseIterable, Hashable, Se
     case chart
     case barChart
     case circle
+    case capsule
     case rectangle
     case roundedRectangle
     case presentation

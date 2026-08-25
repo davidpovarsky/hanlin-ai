@@ -980,12 +980,12 @@ private extension HanlinScriptingApplicationSession {
         NavigationSplitView: "navigationSplitView", ScrollViewReader: "scrollViewReader",
         NavigationLink: "navigationLink", NavigationDestination: "navigationDestination",
         TabView: "tabView", Tab: "tab",
-        List: "scrollView", Form: "form", Section: "group", GroupBox: "group",
+        List: "scrollView", Form: "form", Section: "group", GroupBox: "groupBox",
         LazyVStack: "vStack", LazyVGrid: "lazyVGrid", Grid: "vStack", LazyHStack: "hStack",
         LazyHGrid: "hStack", ControlGroup: "controlGroup", Toolbar: "group", ToolbarItem: "group",
-        Label: "label", Menu: "menu", Link: "button", Toggle: "toggle", Picker: "picker",
+        Label: "label", Menu: "menu", Link: "link", Toggle: "toggle", Picker: "picker",
         Slider: "slider", DisclosureGroup: "disclosureGroup", BarChart: "barChart", Chart: "chart",
-        RoundedRectangle: "roundedRectangle", Rectangle: "rectangle", Capsule: "roundedRectangle",
+        RoundedRectangle: "roundedRectangle", Rectangle: "rectangle", Capsule: "capsule",
         Circle: "circle", ContentUnavailableView: "contentUnavailableView", EmptyView: "group", Markdown: "markdown",
         SVG: "svg"
       });
@@ -1080,6 +1080,25 @@ private extension HanlinScriptingApplicationSession {
 
       function useCallback(callback, dependencies = []) { return useMemo(() => callback, dependencies); }
 
+      function useReducer(reducer, initialState, initializer = undefined) {
+        if (typeof reducer !== "function") throw new TypeError("HANLIN_UI:invalid_reducer");
+        const index = hookCursor++;
+        if (!(index in state)) {
+          const reducerState = {
+            value: typeof initializer === "function" ? initializer(initialState) : initialState,
+            reducer,
+            dispatch: null
+          };
+          reducerState.dispatch = action => {
+            reducerState.value = reducerState.reducer(reducerState.value, action);
+            requestRender();
+          };
+          state[index] = reducerState;
+        }
+        state[index].reducer = reducer;
+        return [state[index].value, state[index].dispatch];
+      }
+
       function useEffect(setup, dependencies = []) {
         const index = hookCursor++;
         const previous = effects.get(index);
@@ -1166,6 +1185,7 @@ private extension HanlinScriptingApplicationSession {
           properties.onPress = properties.action ?? properties.onPress ?? properties.onChanged ?? null;
           properties.title = properties.title ?? properties.label ?? "";
         }
+        if (value.kind === "link") properties.url = String(value.properties.url ?? "");
         if (value.kind === "toggle") {
           const source = value.properties.value ?? value.properties.isOn;
           const current = source?.__hanlinObservable ? source.value : source;
@@ -1197,6 +1217,11 @@ private extension HanlinScriptingApplicationSession {
           properties.descriptionCount = descriptionNodes.length;
           properties.actionCount = actionNodes.length;
           children = [...labelNodes, ...descriptionNodes, ...actionNodes, ...children];
+        }
+        if (value.kind === "groupBox") {
+          const labelNodes = materialize(value.properties.label);
+          properties.labelCount = labelNodes.length;
+          children = [...labelNodes, ...children];
         }
         if (value.kind === "disclosureGroup") {
           const source = value.properties.isExpanded;
@@ -1440,7 +1465,7 @@ private extension HanlinScriptingApplicationSession {
       const AppIntentManager = Object.freeze({ register(options) { return options; } });
 
       Object.assign(globalThis, {
-        createElement, Fragment, useState, useObservable, useRef, useMemo, useCallback,
+        createElement, Fragment, useState, useObservable, useReducer, useRef, useMemo, useCallback,
         useEffect, useEffectEvent, createContext, useContext, ForEach, Navigation,
         Data: HanlinData, Path, FileManager, Headers: HanlinHeaders, Blob: HanlinBlob,
         FormData: HanlinFormData, Request: HanlinRequest, Response: HanlinResponse,

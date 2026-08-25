@@ -162,7 +162,7 @@ struct HanlinScriptUIReconcilerTests {
     func acceptancePrimitiveWireRepresentation() throws {
         let primitives: [HanlinScriptUIPrimitive] = [
             .contentUnavailableView, .disclosureGroup, .slider, .lazyVGrid,
-            .navigationSplitView, .scrollViewReader
+            .navigationSplitView, .scrollViewReader, .link, .groupBox, .capsule
         ]
         for primitive in primitives {
             let node = HanlinScriptUINode(kind: primitive, properties: ["value": .number(18)])

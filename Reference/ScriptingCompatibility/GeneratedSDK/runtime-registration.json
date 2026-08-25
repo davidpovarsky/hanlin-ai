@@ -3667,10 +3667,12 @@
     },
     {
       "symbol": "Capsule",
-      "state": "unsupported",
-      "operation": "unimplemented",
+      "state": "partial",
+      "operation": "HanlinScriptingApplicationSession",
       "capability": null,
-      "contexts": [],
+      "contexts": [
+        "mainApplication"
+      ],
       "declarationEvidence": [
         {
           "category": "const",
@@ -6059,10 +6061,12 @@
     },
     {
       "symbol": "Divider",
-      "state": "unsupported",
-      "operation": "unimplemented",
+      "state": "partial",
+      "operation": "HanlinScriptingApplicationSession",
       "capability": null,
-      "contexts": [],
+      "contexts": [
+        "mainApplication"
+      ],
       "declarationEvidence": [
         {
           "category": "const",
@@ -8762,10 +8766,12 @@
     },
     {
       "symbol": "GroupBox",
-      "state": "unsupported",
-      "operation": "unimplemented",
+      "state": "partial",
+      "operation": "HanlinScriptingApplicationSession",
       "capability": null,
-      "contexts": [],
+      "contexts": [
+        "mainApplication"
+      ],
       "declarationEvidence": [
         {
           "category": "const",
@@ -12085,10 +12091,12 @@
     },
     {
       "symbol": "Link",
-      "state": "unsupported",
-      "operation": "unimplemented",
+      "state": "partial",
+      "operation": "HanlinScriptingApplicationSession",
       "capability": null,
-      "contexts": [],
+      "contexts": [
+        "mainApplication"
+      ],
       "declarationEvidence": [
         {
           "category": "const",
@@ -34210,10 +34218,12 @@
     },
     {
       "symbol": "useReducer",
-      "state": "unsupported",
-      "operation": "unimplemented",
+      "state": "partial",
+      "operation": "HanlinScriptingApplicationSession",
       "capability": null,
-      "contexts": [],
+      "contexts": [
+        "mainApplication"
+      ],
       "declarationEvidence": [
         {
           "category": "function",

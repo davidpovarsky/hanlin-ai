@@ -164,7 +164,7 @@ private struct HanlinExtensionNodeView: View {
             Image(systemName: text("systemName") ?? "photo")
         case .hStack:
             HStack { children }
-        case .vStack, .fragment, .group, .form, .lazyVGrid, .scrollViewReader:
+        case .vStack, .fragment, .group, .groupBox, .form, .lazyVGrid, .scrollViewReader:
             VStack { children }
         case .zStack:
             ZStack { children }
@@ -184,13 +184,15 @@ private struct HanlinExtensionNodeView: View {
             VStack { children }
         case .slider:
             ProgressView(value: number("value"), total: number("max") ?? 1)
-        case .button, .menu, .toggle, .textField, .scrollView, .navigationStack, .navigationSplitView,
+        case .button, .link, .menu, .toggle, .textField, .scrollView, .navigationStack, .navigationSplitView,
              .navigationLink, .navigationDestination, .picker, .svg, .tabView, .tab:
             Label("Open Hanlin", systemImage: "arrow.up.forward.app")
         case .chart, .barChart:
             VStack { children }
         case .circle:
             Circle().fill(.secondary)
+        case .capsule:
+            Capsule().fill(.secondary)
         case .rectangle:
             Rectangle().fill(.secondary)
         case .roundedRectangle:

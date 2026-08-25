@@ -1,4 +1,5 @@
 import Charts
+import Foundation
 import HanlinPlatformContracts
 import Observation
 import SwiftUI
@@ -201,6 +202,12 @@ private struct HanlinScriptUINodeView: View {
                 if node.children.isEmpty { Text(node.string("title") ?? "") } else { children(node) }
             }
             .accessibilityHint(node.string("accessibilityHint") ?? "")
+        case .link:
+            if let value = node.string("url"), let url = URL(string: value) {
+                Link(destination: url) {
+                    if node.children.isEmpty { Text(value) } else { children(node) }
+                }
+            }
         case .menu:
             Menu {
                 children(node)
@@ -240,6 +247,16 @@ private struct HanlinScriptUINodeView: View {
             )
         case .controlGroup:
             ControlGroup { children(node) }
+        case .groupBox:
+            GroupBox {
+                childRange(node, from: node.integer("labelCount"))
+            } label: {
+                if node.integer("labelCount") > 0 {
+                    childRange(node, from: 0, count: node.integer("labelCount"))
+                } else if let title = node.string("title") {
+                    Text(title)
+                }
+            }
         case .picker:
             Picker(node.string("title") ?? "", selection: Binding(
                 get: { node.string("value") ?? "" },
@@ -385,6 +402,12 @@ private struct HanlinScriptUINodeView: View {
             .frame(height: node.nestedDimension("frame", "height"))
         case .circle:
             Circle().fill(node.color("fill") ?? node.color("foregroundStyle") ?? .secondary)
+                .frame(
+                    width: node.nestedDimension("frame", "width"),
+                    height: node.nestedDimension("frame", "height")
+                )
+        case .capsule:
+            Capsule().fill(node.color("fill") ?? node.color("foregroundStyle") ?? .secondary)
                 .frame(
                     width: node.nestedDimension("frame", "width"),
                     height: node.nestedDimension("frame", "height")

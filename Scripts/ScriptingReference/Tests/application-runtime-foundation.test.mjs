@@ -318,3 +318,34 @@ test("Observable subscribers receive changes and can unsubscribe without affecti
   `, context);
   assert.deepEqual([...values], [2]);
 });
+
+test("useReducer keeps state and Link retains its native URL destination", () => {
+  const { context, rendered } = runtime();
+  vm.runInContext(`
+    let dispatch;
+    function App() {
+      const [count, send] = useReducer((state, action) => state + action, 2, value => value * 2);
+      dispatch = send;
+      return createElement(Link, { url: "https://example.test/item" }, "Count:" + count);
+    }
+    Navigation.present({ element: createElement(App) });
+  `, context);
+  assert.equal(rendered().kind, "link");
+  assert.equal(rendered().properties.url, "https://example.test/item");
+  assert.equal(rendered().children[0].properties.text, "Count:4");
+  vm.runInContext("dispatch(3)", context);
+  assert.equal(rendered().children[0].properties.text, "Count:7");
+});
+
+test("GroupBox keeps its label separate and Capsule remains a native shape", () => {
+  const { context, rendered } = runtime();
+  vm.runInContext(`
+    Navigation.present({ element: createElement(GroupBox, {
+      label: createElement(Label, { title: "Summary", systemImage: "info.circle" }),
+    }, createElement(Capsule, { fill: "systemBlue", frame: { width: 80, height: 24 } })) });
+  `, context);
+  const root = rendered();
+  assert.equal(root.kind, "groupBox");
+  assert.equal(root.properties.labelCount, 1);
+  assert.deepEqual(root.children.map(node => node.kind), ["label", "capsule"]);
+});

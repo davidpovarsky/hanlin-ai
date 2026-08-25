@@ -8,7 +8,7 @@
     {
       "id": "filemanager-2",
       "typecheck": {"status": "source-project-issue", "errorCount": 5, "evidence": "Internal hook/configuration and localization-interface inconsistencies reproduce against the untouched authoritative declarations."},
-      "compileBundle": {"status": "passed-for-smoke-profile", "emittedModuleCount": 35, "importedScriptingRuntimeSymbolCount": 33},
+      "compileBundle": {"status": "passed-for-smoke-profile", "emittedModuleCount": 36, "importedScriptingRuntimeSymbolCount": 33},
       "runtimeLaunch": {"status": "passed-node-hosted-bootstrap", "presented": true, "rootKind": "vStack"},
       "uiRender": {"status": "passed-structural-smoke", "renderedNodeCount": 26, "evidence": "The untouched 35-module FileManager source graph launched through the exact application bootstrap with native-broker-shaped filesystem responses."},
       "interaction": {"status": "shared-runtime-verified", "passed": ["observable navigation path push/back synchronization", "dynamic NavigationDestination building", "Picker selection rerender"], "notExercised": ["real-project control automation on Simulator"]},
@@ -18,7 +18,7 @@
     {
       "id": "sefaria-multi-engine",
       "typecheck": {"status": "source-and-authoritative-api-usage-issues", "errorCount": 4, "evidence": "Picker callback narrowing, a missing project field, widened shape literals, and an incompatible composed callback."},
-      "compileBundle": {"status": "passed-for-smoke-profile", "emittedModuleCount": 62, "importedScriptingRuntimeSymbolCount": 33},
+      "compileBundle": {"status": "passed-for-smoke-profile", "emittedModuleCount": 70, "importedScriptingRuntimeSymbolCount": 33},
       "runtimeLaunch": {"status": "passed-node-hosted-bootstrap", "presented": true, "rootKind": "navigationSplitView"},
       "uiRender": {"status": "passed-structural-smoke", "renderedNodeCount": 29, "evidence": "The untouched 62-module project reaches its initial split-navigation UI through the exact application bootstrap while starting its library-index cache flow."},
       "interaction": {"status": "shared-runtime-verified", "passed": ["NavigationSplitView visibility and preferred-column bindings", "ScrollViewReader scrollTo target and anchor propagation", "DisclosureGroup and Slider rerender", "Observable subscribe/unsubscribe"], "notExercised": ["real-project control automation on Simulator"]},
@@ -28,8 +28,8 @@
     {
       "id": "nativ-ai-9",
       "typecheck": {"status": "source-and-authoritative-api-usage-issues", "errorCount": 45, "evidence": "Errors reproduce against the untouched declarations and include invalid literals, missing imports, undeclared props, and project model mismatches."},
-      "compileBundle": {"status": "transpile-passed-bundle-blocked", "emittedModuleCount": 86, "blocker": "Required ScriptUI and Live Activity values are not authorized by conformance evidence."},
-      "runtimeLaunch": {"status": "blocked", "blockers": ["LiveActivityUI family", "NavigationSplitView family", "useReducer", "Path", "Picker", "DisclosureGroup"]},
+      "compileBundle": {"status": "transpile-passed-bundle-blocked", "emittedModuleCount": 86, "blocker": "Required Live Activity and remaining container values are not authorized by conformance evidence."},
+      "runtimeLaunch": {"status": "blocked", "blockers": ["LiveActivityUI", "LiveActivityUIExpandedCenter"]},
       "uiRender": {"status": "not-reached"},
       "interaction": {"status": "not-reached"},
       "nativeServices": {"status": "partial", "passed": ["FileManager/Path bounded VFS", "buffered fetch/Web primitives", "Storage"], "blockers": ["Assistant binding", "SQLite binding", "Location binding", "real Live Activity execution"]},
@@ -38,18 +38,18 @@
     {
       "id": "new-agent-21",
       "typecheck": {"status": "source-project-issue", "errorCount": 4, "evidence": "Three optional/required card-prop mismatches and a missing WeatherWind.speed field reproduce against the declarations."},
-      "compileBundle": {"status": "transpile-passed-bundle-blocked", "emittedModuleCount": 70, "blocker": "Required runtime UI values are unimplemented or behavior-unverified."},
-      "runtimeLaunch": {"status": "blocked", "blockers": ["useReducer", "NavigationSplitView family", "Picker", "Link", "Divider"]},
-      "uiRender": {"status": "not-reached"},
-      "interaction": {"status": "not-reached"},
+      "compileBundle": {"status": "passed-for-smoke-profile", "emittedModuleCount": 77, "importedScriptingRuntimeSymbolCount": 29},
+      "runtimeLaunch": {"status": "passed-node-hosted-bootstrap", "presented": true, "rootKind": "navigationSplitView"},
+      "uiRender": {"status": "passed-structural-smoke", "renderedNodeCount": 40, "evidence": "The untouched package launches after resolving its CommonJS JSON tool descriptors through the same module shape used by the native compiler."},
+      "interaction": {"status": "shared-runtime-verified", "passed": ["useReducer dispatch and rerender", "native Link URL retention", "NavigationSplitView bindings", "Picker interaction"], "notExercised": ["real-project control automation on Simulator"]},
       "nativeServices": {"status": "partial", "passed": ["AssistantTool execute registration/invocation/cancellation/state lifecycle", "FileManager/Path bounded VFS", "buffered fetch/Web primitives", "Storage"], "blockers": ["Assistant requests", "approval/tool UI", "Location", "Widget execution"]},
-      "remainingBlockers": ["Four source errors", "Assistant request and approval/UI flows", "native services and broader navigation/UI"]
+      "remainingBlockers": ["Four source errors", "Assistant request and approval/UI flows", "native-service execution and real-project Simulator validation"]
     },
     {
       "id": "smart-eating-updated-7",
       "priority": "regression-critical",
       "typecheck": {"status": "passed", "errorCount": 0},
-      "compileBundle": {"status": "passed-for-smoke-profile", "emittedModuleCount": 49, "importedScriptingRuntimeSymbolCount": 31},
+      "compileBundle": {"status": "passed-for-smoke-profile", "emittedModuleCount": 50, "importedScriptingRuntimeSymbolCount": 31},
       "runtimeLaunch": {"status": "passed-node-hosted-bootstrap", "presented": true, "rootKind": "tabView"},
       "uiRender": {"status": "passed-structural-smoke", "renderedNodeCount": 356, "limitation": "The archived project was structurally rendered in the Node-hosted exact bootstrap; Xcode/Simulator validated the shared app and runtime tests but did not visually launch this archived project."},
       "interaction": {"status": "not-exercised-on-real-project", "evidence": "The shared runtime has hook/event/rerender tests, but this archived app was not driven through its controls."},

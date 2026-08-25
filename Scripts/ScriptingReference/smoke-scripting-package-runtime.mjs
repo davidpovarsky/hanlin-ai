@@ -12,6 +12,12 @@ const modules = new Map();
 const importedScriptingSymbols = new Set();
 
 for (const file of walk(packageRoot)) {
+  if (/\.json$/i.test(file)) {
+    const relative = path.relative(packageRoot, file).replaceAll("\\", "/");
+    const value = JSON.parse(fs.readFileSync(file, "utf8"));
+    modules.set(relative, `module.exports = ${JSON.stringify(value)};`);
+    continue;
+  }
   if (!/\.(?:tsx?|jsx?)$/i.test(file) || file.endsWith(".d.ts")) continue;
   const relative = path.relative(packageRoot, file).replaceAll("\\", "/");
   const sourceText = fs.readFileSync(file, "utf8");
@@ -124,7 +130,8 @@ function resolve(from, specifier) {
   if (specifier === "scripting") return specifier;
   const base = from.split("/").slice(0, -1).join("/");
   const candidate = normalize(`${base}/${specifier}`);
-  return [candidate, `${candidate}.js`, `${candidate}/index.js`].find(value => modules.has(value));
+  return [candidate, `${candidate}.js`, `${candidate}.json`, `${candidate}/index.js`]
+    .find(value => modules.has(value));
 }
 function load(specifier, from = "") {
   if (specifier === "scripting") return globalThis;
