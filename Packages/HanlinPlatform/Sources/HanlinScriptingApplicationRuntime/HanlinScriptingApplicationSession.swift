@@ -5,8 +5,8 @@ import HanlinPlatformContracts
 import HanlinScriptUI
 
 @MainActor
-final class HanlinScriptingApplicationSession {
-    let model: HanlinScriptUIModel
+public final class HanlinScriptingApplicationSession {
+    public let model: HanlinScriptUIModel
 
     private let context: JSContext
     private let virtualMachine: JSVirtualMachine
@@ -17,7 +17,7 @@ final class HanlinScriptingApplicationSession {
     private var nativeTasks: [String: Task<Void, Never>] = [:]
     private var disposed = false
 
-    init(
+    public init(
         installedPackageID: HanlinInstalledPackageID,
         program: String,
         filename: String,
@@ -61,7 +61,7 @@ final class HanlinScriptingApplicationSession {
         }
     }
 
-    func dispatch(handlerID: String, payload: HanlinValue) {
+    public func dispatch(handlerID: String, payload: HanlinValue) {
         guard !disposed,
               let payloadJSON = try? payload.jsonValue(destination: .javaScriptBinary64).canonicalJSONData(),
               let payloadString = String(data: payloadJSON, encoding: .utf8),
@@ -78,13 +78,13 @@ final class HanlinScriptingApplicationSession {
         }
     }
 
-    func dismiss() {
+    public func dismiss() {
         guard !disposed else { return }
         context.evaluateScript("globalThis.__hanlinDismiss?.();")
         dispose()
     }
 
-    func dispose() {
+    public func dispose() {
         guard !disposed else { return }
         disposed = true
         context.evaluateScript("globalThis.__hanlinDispose?.();")

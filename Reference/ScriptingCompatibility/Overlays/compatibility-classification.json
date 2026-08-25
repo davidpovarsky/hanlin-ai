@@ -93,6 +93,7 @@
       "behaviorDifferences": ["The live JavaScriptCore bridge implements the listed component, hook, navigation and presentation subset, including observable subscription, reducer state, native URL links, NavigationStack paths, dynamic string NavigationDestination builders, direct NavigationLink destinations, split-view bindings, ScrollViewReader proxy scrolling and native back propagation; declaration members outside that tested subset remain unavailable and are not synthesized dynamically."],
       "tests": [
         "AI_HLYTests/HanlinScriptingRuntimeTests.swift",
+        "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift",
         "Packages/HanlinPlatform/Tests/HanlinScriptUITests/HanlinScriptUIReconcilerTests.swift",
         "Scripts/ScriptingReference/smoke-scripting-package-runtime.mjs"
       ],

@@ -59,7 +59,7 @@ if (rejectedImports.length > 0) {
 
 const swift = fs.readFileSync(path.join(
   repositoryRoot,
-  "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingApplicationSession.swift"
+  "Packages/HanlinPlatform/Sources/HanlinScriptingApplicationRuntime/HanlinScriptingApplicationSession.swift"
 ), "utf8");
 const quotes = '"'.repeat(3);
 const marker = `static let bootstrap = #${quotes}`;

@@ -23,6 +23,7 @@
 		A10000000000000000000074 /* HanlinScriptStore in Frameworks */ = {isa = PBXBuildFile; productRef = C10000000000000000000019 /* HanlinScriptStore */; };
 		A10000000000000000000075 /* HanlinScriptingSDK in Frameworks */ = {isa = PBXBuildFile; productRef = C10000000000000000000020 /* HanlinScriptingSDK */; };
 		A10000000000000000000076 /* HanlinScriptExtensions in Frameworks */ = {isa = PBXBuildFile; productRef = C10000000000000000000021 /* HanlinScriptExtensions */; };
+		A10000000000000000000077 /* HanlinScriptingApplicationRuntime in Frameworks */ = {isa = PBXBuildFile; productRef = C10000000000000000000023 /* HanlinScriptingApplicationRuntime */; };
 		D20000000000000000000001 /* HanlinScriptingWidgets.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = D20000000000000000000020 /* HanlinScriptingWidgets.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, CodeSignOnCopy, ); }; };
 		D20000000000000000000002 /* HanlinScriptExtensions in Frameworks */ = {isa = PBXBuildFile; productRef = C10000000000000000000021 /* HanlinScriptExtensions */; };
 		D20000000000000000000003 /* HanlinScriptUI in Frameworks */ = {isa = PBXBuildFile; productRef = C10000000000000000000022 /* HanlinScriptUI */; };
@@ -221,6 +222,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A10000000000000000000077 /* HanlinScriptingApplicationRuntime in Frameworks */,
 				A10000000000000000000076 /* HanlinScriptExtensions in Frameworks */,
 				A10000000000000000000075 /* HanlinScriptingSDK in Frameworks */,
 				A10000000000000000000074 /* HanlinScriptStore in Frameworks */,
@@ -332,6 +334,7 @@
 			);
 			name = AI_Hanlin;
 			packageProductDependencies = (
+				C10000000000000000000023 /* HanlinScriptingApplicationRuntime */,
 				C10000000000000000000021 /* HanlinScriptExtensions */,
 				C10000000000000000000020 /* HanlinScriptingSDK */,
 				C10000000000000000000019 /* HanlinScriptStore */,
@@ -1057,6 +1060,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = A10000000000000000000044 /* XCLocalSwiftPackageReference "HanlinPlatform" */;
 			productName = HanlinScriptUI;
+		};
+		C10000000000000000000023 /* HanlinScriptingApplicationRuntime */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A10000000000000000000044 /* XCLocalSwiftPackageReference "HanlinPlatform" */;
+			productName = HanlinScriptingApplicationRuntime;
 		};
 		C10000000000000000000020 /* HanlinScriptingSDK */ = {
 			isa = XCSwiftPackageProductDependency;

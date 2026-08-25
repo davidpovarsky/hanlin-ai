@@ -7,7 +7,7 @@ import vm from "node:vm";
 const repositoryRoot = path.resolve(import.meta.dirname, "../../..");
 const swift = fs.readFileSync(path.join(
   repositoryRoot,
-  "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingApplicationSession.swift",
+  "Packages/HanlinPlatform/Sources/HanlinScriptingApplicationRuntime/HanlinScriptingApplicationSession.swift",
 ), "utf8");
 const marker = `static let bootstrap = #${'"'.repeat(3)}`;
 const start = swift.indexOf(marker) + marker.length;

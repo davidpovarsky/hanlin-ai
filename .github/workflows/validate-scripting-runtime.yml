@@ -1,0 +1,109 @@
+name: Validate Scripting Runtime
+
+on:
+  workflow_dispatch:
+    inputs:
+      force_clean_build:
+        description: Ignore the cached SwiftPM build and compile the runtime from scratch
+        required: true
+        default: false
+        type: boolean
+
+permissions:
+  contents: read
+
+jobs:
+  validate-scripting-runtime:
+    name: Compile and test isolated Scripting runtime
+    runs-on: macos-26
+    timeout-minutes: 20
+
+    env:
+      PACKAGE_PATH: Packages/HanlinPlatform
+
+    steps:
+      - name: Select newest stable Xcode 26
+        id: toolchain
+        shell: bash
+        run: |
+          set -euo pipefail
+          selected_xcode="$(find /Applications -maxdepth 1 -type d -name 'Xcode_26*.app' -print \
+            | grep -E '/Xcode_26([._][0-9]+)*\.app$' \
+            | sort -V \
+            | tail -1)"
+          test -n "$selected_xcode"
+          sudo xcode-select -s "$selected_xcode/Contents/Developer"
+          xcode_build="$(xcodebuild -version | sed -n '2s/^Build version //p')"
+          echo "build=$xcode_build" >> "$GITHUB_OUTPUT"
+          xcodebuild -version
+          swift --version
+
+      - name: Check out exact validation commit
+        uses: actions/checkout@v4
+        with:
+          clean: true
+          fetch-depth: 1
+
+      - name: Set up pinned Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.17.0
+
+      - name: Hash isolated runtime inputs
+        id: runtime-inputs
+        shell: bash
+        run: |
+          set -euo pipefail
+          source_hash="$({
+            find \
+              Packages/HanlinPlatform/Sources/HanlinScriptingApplicationRuntime \
+              Packages/HanlinPlatform/Sources/HanlinScriptUI \
+              Packages/HanlinPlatform/Sources/HanlinScriptExtensions \
+              Packages/HanlinPlatform/Sources/HanlinPlatformContracts \
+              -type f -print0
+            printf '%s\0' Packages/HanlinPlatform/Package.swift
+            if [ -f Packages/HanlinPlatform/Package.resolved ]; then
+              printf '%s\0' Packages/HanlinPlatform/Package.resolved
+            fi
+          } | sort -z | xargs -0 shasum -a 256 | shasum -a 256 | awk '{print $1}')"
+          echo "source-hash=$source_hash" >> "$GITHUB_OUTPUT"
+
+      - name: Restore isolated SwiftPM compiler cache
+        if: ${{ !inputs.force_clean_build }}
+        uses: actions/cache@v4
+        with:
+          path: Packages/HanlinPlatform/.build
+          key: ${{ runner.os }}-xcode-${{ steps.toolchain.outputs.build }}-scripting-v1-${{ steps.runtime-inputs.outputs.source-hash }}
+          restore-keys: |
+            ${{ runner.os }}-xcode-${{ steps.toolchain.outputs.build }}-scripting-v1-
+
+      - name: Verify generated runtime metadata
+        shell: bash
+        run: |
+          set -euo pipefail
+          node Scripts/ScriptingReference/build-scripting-inventory.mjs --check
+          node Scripts/ScriptingReference/build-scripting-sdk.mjs --check
+          node Scripts/ScriptingReference/validate-json-and-schema.mjs
+          node Scripts/ScriptingReference/verify-compatibility-classification.mjs
+          node Scripts/ScriptingReference/verify-user-provided-projects.mjs
+
+      - name: Test JavaScriptCore bootstrap semantics
+        shell: bash
+        run: node --test Scripts/ScriptingReference/Tests/*.test.mjs
+
+      - name: Resolve isolated package dependencies
+        shell: bash
+        run: swift package --package-path "$PACKAGE_PATH" resolve
+
+      - name: Compile runtime and extension renderers only
+        shell: bash
+        run: |
+          set -euo pipefail
+          swift build --package-path "$PACKAGE_PATH" --target HanlinScriptingApplicationRuntime
+          swift build --package-path "$PACKAGE_PATH" --target HanlinScriptExtensions
+
+      - name: Execute isolated runtime tests
+        shell: bash
+        run: >-
+          swift test --package-path "$PACKAGE_PATH"
+          --filter HanlinScriptingApplicationRuntimeTests

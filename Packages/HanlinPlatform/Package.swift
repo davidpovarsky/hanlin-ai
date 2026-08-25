@@ -48,6 +48,10 @@ let package = Package(
         .library(
             name: "HanlinScriptExtensions",
             targets: ["HanlinScriptExtensions"]
+        ),
+        .library(
+            name: "HanlinScriptingApplicationRuntime",
+            targets: ["HanlinScriptingApplicationRuntime"]
         )
     ],
     dependencies: [
@@ -167,6 +171,24 @@ let package = Package(
         .testTarget(
             name: "HanlinScriptExtensionsTests",
             dependencies: ["HanlinScriptExtensions"]
+        ),
+        .target(
+            name: "HanlinScriptingApplicationRuntime",
+            dependencies: [
+                "HanlinPlatformContracts",
+                "HanlinScriptUI"
+            ],
+            linkerSettings: [
+                .linkedFramework("JavaScriptCore"),
+                .linkedFramework("UniformTypeIdentifiers")
+            ]
+        ),
+        .testTarget(
+            name: "HanlinScriptingApplicationRuntimeTests",
+            dependencies: [
+                "HanlinPlatformContracts",
+                "HanlinScriptingApplicationRuntime"
+            ]
         )
     ],
     swiftLanguageModes: [.v6]

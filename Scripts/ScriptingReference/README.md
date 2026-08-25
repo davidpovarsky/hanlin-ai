@@ -71,3 +71,24 @@ only into a temporary or ignored build directory; never edit them in place.
 `build-scripting-inventory.mjs` uses a deterministic Phase 0 declaration lexer.
 It creates traceable obligations, not runtime-support claims. Compiler-backed
 symbol analysis and executable fixture lanes are Phase 6 gates.
+
+## Fast runtime validation
+
+The JavaScriptCore application session and its native service adapters are in
+the `HanlinScriptingApplicationRuntime` SwiftPM target. The extension-safe
+Widget and Live Activity renderer is compiled by `HanlinScriptExtensions`.
+Neither target requires building the full application.
+
+On macOS with the repository Xcode toolchain selected:
+
+```bash
+swift build --package-path Packages/HanlinPlatform --target HanlinScriptingApplicationRuntime
+swift build --package-path Packages/HanlinPlatform --target HanlinScriptExtensions
+swift test --package-path Packages/HanlinPlatform --filter HanlinScriptingApplicationRuntimeTests
+node --test Scripts/ScriptingReference/Tests/*.test.mjs
+```
+
+The manually dispatched `Validate Scripting Runtime` GitHub Actions workflow
+runs this lane and restores a SwiftPM compiler cache keyed by Xcode and the
+isolated runtime inputs. Use the full iOS workflow only for meaningful app,
+Simulator, extension, archive, or IPA checkpoints.

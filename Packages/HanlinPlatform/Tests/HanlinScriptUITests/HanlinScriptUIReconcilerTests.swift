@@ -1,3 +1,4 @@
+import Foundation
 import HanlinPlatformContracts
 @testable import HanlinScriptUI
 import Testing

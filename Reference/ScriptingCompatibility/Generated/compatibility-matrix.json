@@ -2377,6 +2377,7 @@
       "status": "partial",
       "tests": [
         "AI_HLYTests/HanlinScriptingRuntimeTests.swift",
+        "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift",
         "Packages/HanlinPlatform/Tests/HanlinScriptUITests/HanlinScriptUIReconcilerTests.swift",
         "Scripts/ScriptingReference/smoke-scripting-package-runtime.mjs"
       ],
@@ -2427,6 +2428,7 @@
       "status": "partial",
       "tests": [
         "AI_HLYTests/HanlinScriptingRuntimeTests.swift",
+        "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift",
         "Packages/HanlinPlatform/Tests/HanlinScriptUITests/HanlinScriptUIReconcilerTests.swift",
         "Scripts/ScriptingReference/smoke-scripting-package-runtime.mjs"
       ],
@@ -5262,6 +5264,7 @@
       "status": "partial",
       "tests": [
         "AI_HLYTests/HanlinScriptingRuntimeTests.swift",
+        "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift",
         "Packages/HanlinPlatform/Tests/HanlinScriptUITests/HanlinScriptUIReconcilerTests.swift",
         "Scripts/ScriptingReference/smoke-scripting-package-runtime.mjs"
       ],
@@ -6218,6 +6221,7 @@
       "status": "partial",
       "tests": [
         "AI_HLYTests/HanlinScriptingRuntimeTests.swift",
+        "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift",
         "Packages/HanlinPlatform/Tests/HanlinScriptUITests/HanlinScriptUIReconcilerTests.swift",
         "Scripts/ScriptingReference/smoke-scripting-package-runtime.mjs"
       ],
@@ -6289,6 +6293,7 @@
       "status": "partial",
       "tests": [
         "AI_HLYTests/HanlinScriptingRuntimeTests.swift",
+        "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift",
         "Packages/HanlinPlatform/Tests/HanlinScriptUITests/HanlinScriptUIReconcilerTests.swift",
         "Scripts/ScriptingReference/smoke-scripting-package-runtime.mjs"
       ],
@@ -7137,6 +7142,7 @@
       "status": "partial",
       "tests": [
         "AI_HLYTests/HanlinScriptingRuntimeTests.swift",
+        "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift",
         "Packages/HanlinPlatform/Tests/HanlinScriptUITests/HanlinScriptUIReconcilerTests.swift",
         "Scripts/ScriptingReference/smoke-scripting-package-runtime.mjs"
       ],
@@ -7691,6 +7697,7 @@
       "status": "partial",
       "tests": [
         "AI_HLYTests/HanlinScriptingRuntimeTests.swift",
+        "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift",
         "Packages/HanlinPlatform/Tests/HanlinScriptUITests/HanlinScriptUIReconcilerTests.swift",
         "Scripts/ScriptingReference/smoke-scripting-package-runtime.mjs"
       ],
@@ -7888,6 +7895,7 @@
       "status": "partial",
       "tests": [
         "AI_HLYTests/HanlinScriptingRuntimeTests.swift",
+        "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift",
         "Packages/HanlinPlatform/Tests/HanlinScriptUITests/HanlinScriptUIReconcilerTests.swift",
         "Scripts/ScriptingReference/smoke-scripting-package-runtime.mjs"
       ],
@@ -8400,6 +8408,7 @@
       "status": "partial",
       "tests": [
         "AI_HLYTests/HanlinScriptingRuntimeTests.swift",
+        "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift",
         "Packages/HanlinPlatform/Tests/HanlinScriptUITests/HanlinScriptUIReconcilerTests.swift",
         "Scripts/ScriptingReference/smoke-scripting-package-runtime.mjs"
       ],
@@ -9731,6 +9740,7 @@
       "status": "partial",
       "tests": [
         "AI_HLYTests/HanlinScriptingRuntimeTests.swift",
+        "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift",
         "Packages/HanlinPlatform/Tests/HanlinScriptUITests/HanlinScriptUIReconcilerTests.swift",
         "Scripts/ScriptingReference/smoke-scripting-package-runtime.mjs"
       ],
@@ -9949,6 +9959,7 @@
       "status": "partial",
       "tests": [
         "AI_HLYTests/HanlinScriptingRuntimeTests.swift",
+        "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift",
         "Packages/HanlinPlatform/Tests/HanlinScriptUITests/HanlinScriptUIReconcilerTests.swift",
         "Scripts/ScriptingReference/smoke-scripting-package-runtime.mjs"
       ],
@@ -10440,6 +10451,7 @@
       "status": "partial",
       "tests": [
         "AI_HLYTests/HanlinScriptingRuntimeTests.swift",
+        "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift",
         "Packages/HanlinPlatform/Tests/HanlinScriptUITests/HanlinScriptUIReconcilerTests.swift",
         "Scripts/ScriptingReference/smoke-scripting-package-runtime.mjs"
       ],
@@ -10469,6 +10481,7 @@
       "status": "partial",
       "tests": [
         "AI_HLYTests/HanlinScriptingRuntimeTests.swift",
+        "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift",
         "Packages/HanlinPlatform/Tests/HanlinScriptUITests/HanlinScriptUIReconcilerTests.swift",
         "Scripts/ScriptingReference/smoke-scripting-package-runtime.mjs"
       ],
@@ -10645,6 +10658,7 @@
       "status": "partial",
       "tests": [
         "AI_HLYTests/HanlinScriptingRuntimeTests.swift",
+        "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift",
         "Packages/HanlinPlatform/Tests/HanlinScriptUITests/HanlinScriptUIReconcilerTests.swift",
         "Scripts/ScriptingReference/smoke-scripting-package-runtime.mjs"
       ],
@@ -10674,6 +10688,7 @@
       "status": "partial",
       "tests": [
         "AI_HLYTests/HanlinScriptingRuntimeTests.swift",
+        "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift",
         "Packages/HanlinPlatform/Tests/HanlinScriptUITests/HanlinScriptUIReconcilerTests.swift",
         "Scripts/ScriptingReference/smoke-scripting-package-runtime.mjs"
       ],
@@ -12390,6 +12405,7 @@
       "status": "partial",
       "tests": [
         "AI_HLYTests/HanlinScriptingRuntimeTests.swift",
+        "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift",
         "Packages/HanlinPlatform/Tests/HanlinScriptUITests/HanlinScriptUIReconcilerTests.swift",
         "Scripts/ScriptingReference/smoke-scripting-package-runtime.mjs"
       ],
@@ -12419,6 +12435,7 @@
       "status": "partial",
       "tests": [
         "AI_HLYTests/HanlinScriptingRuntimeTests.swift",
+        "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift",
         "Packages/HanlinPlatform/Tests/HanlinScriptUITests/HanlinScriptUIReconcilerTests.swift",
         "Scripts/ScriptingReference/smoke-scripting-package-runtime.mjs"
       ],
@@ -12742,6 +12759,7 @@
       "status": "partial",
       "tests": [
         "AI_HLYTests/HanlinScriptingRuntimeTests.swift",
+        "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift",
         "Packages/HanlinPlatform/Tests/HanlinScriptUITests/HanlinScriptUIReconcilerTests.swift",
         "Scripts/ScriptingReference/smoke-scripting-package-runtime.mjs"
       ],
@@ -13107,6 +13125,7 @@
       "status": "partial",
       "tests": [
         "AI_HLYTests/HanlinScriptingRuntimeTests.swift",
+        "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift",
         "Packages/HanlinPlatform/Tests/HanlinScriptUITests/HanlinScriptUIReconcilerTests.swift",
         "Scripts/ScriptingReference/smoke-scripting-package-runtime.mjs"
       ],
@@ -16272,6 +16291,7 @@
       "status": "partial",
       "tests": [
         "AI_HLYTests/HanlinScriptingRuntimeTests.swift",
+        "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift",
         "Packages/HanlinPlatform/Tests/HanlinScriptUITests/HanlinScriptUIReconcilerTests.swift",
         "Scripts/ScriptingReference/smoke-scripting-package-runtime.mjs"
       ],
@@ -16322,6 +16342,7 @@
       "status": "partial",
       "tests": [
         "AI_HLYTests/HanlinScriptingRuntimeTests.swift",
+        "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift",
         "Packages/HanlinPlatform/Tests/HanlinScriptUITests/HanlinScriptUIReconcilerTests.swift",
         "Scripts/ScriptingReference/smoke-scripting-package-runtime.mjs"
       ],
@@ -19585,6 +19606,7 @@
       "status": "partial",
       "tests": [
         "AI_HLYTests/HanlinScriptingRuntimeTests.swift",
+        "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift",
         "Packages/HanlinPlatform/Tests/HanlinScriptUITests/HanlinScriptUIReconcilerTests.swift",
         "Scripts/ScriptingReference/smoke-scripting-package-runtime.mjs"
       ],
@@ -19635,6 +19657,7 @@
       "status": "partial",
       "tests": [
         "AI_HLYTests/HanlinScriptingRuntimeTests.swift",
+        "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift",
         "Packages/HanlinPlatform/Tests/HanlinScriptUITests/HanlinScriptUIReconcilerTests.swift",
         "Scripts/ScriptingReference/smoke-scripting-package-runtime.mjs"
       ],
@@ -22523,6 +22546,7 @@
       "status": "partial",
       "tests": [
         "AI_HLYTests/HanlinScriptingRuntimeTests.swift",
+        "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift",
         "Packages/HanlinPlatform/Tests/HanlinScriptUITests/HanlinScriptUIReconcilerTests.swift",
         "Scripts/ScriptingReference/smoke-scripting-package-runtime.mjs"
       ],
@@ -22993,6 +23017,7 @@
       "status": "partial",
       "tests": [
         "AI_HLYTests/HanlinScriptingRuntimeTests.swift",
+        "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift",
         "Packages/HanlinPlatform/Tests/HanlinScriptUITests/HanlinScriptUIReconcilerTests.swift",
         "Scripts/ScriptingReference/smoke-scripting-package-runtime.mjs"
       ],
@@ -25899,6 +25924,7 @@
       "status": "partial",
       "tests": [
         "AI_HLYTests/HanlinScriptingRuntimeTests.swift",
+        "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift",
         "Packages/HanlinPlatform/Tests/HanlinScriptUITests/HanlinScriptUIReconcilerTests.swift",
         "Scripts/ScriptingReference/smoke-scripting-package-runtime.mjs"
       ],
@@ -26180,6 +26206,7 @@
       "status": "partial",
       "tests": [
         "AI_HLYTests/HanlinScriptingRuntimeTests.swift",
+        "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift",
         "Packages/HanlinPlatform/Tests/HanlinScriptUITests/HanlinScriptUIReconcilerTests.swift",
         "Scripts/ScriptingReference/smoke-scripting-package-runtime.mjs"
       ],
@@ -26482,6 +26509,7 @@
       "status": "partial",
       "tests": [
         "AI_HLYTests/HanlinScriptingRuntimeTests.swift",
+        "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift",
         "Packages/HanlinPlatform/Tests/HanlinScriptUITests/HanlinScriptUIReconcilerTests.swift",
         "Scripts/ScriptingReference/smoke-scripting-package-runtime.mjs"
       ],
@@ -26763,6 +26791,7 @@
       "status": "partial",
       "tests": [
         "AI_HLYTests/HanlinScriptingRuntimeTests.swift",
+        "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift",
         "Packages/HanlinPlatform/Tests/HanlinScriptUITests/HanlinScriptUIReconcilerTests.swift",
         "Scripts/ScriptingReference/smoke-scripting-package-runtime.mjs"
       ],
@@ -28700,6 +28729,7 @@
       "status": "partial",
       "tests": [
         "AI_HLYTests/HanlinScriptingRuntimeTests.swift",
+        "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift",
         "Packages/HanlinPlatform/Tests/HanlinScriptUITests/HanlinScriptUIReconcilerTests.swift",
         "Scripts/ScriptingReference/smoke-scripting-package-runtime.mjs"
       ],
@@ -29485,6 +29515,7 @@
       "status": "partial",
       "tests": [
         "AI_HLYTests/HanlinScriptingRuntimeTests.swift",
+        "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift",
         "Packages/HanlinPlatform/Tests/HanlinScriptUITests/HanlinScriptUIReconcilerTests.swift",
         "Scripts/ScriptingReference/smoke-scripting-package-runtime.mjs"
       ],
@@ -29535,6 +29566,7 @@
       "status": "partial",
       "tests": [
         "AI_HLYTests/HanlinScriptingRuntimeTests.swift",
+        "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift",
         "Packages/HanlinPlatform/Tests/HanlinScriptUITests/HanlinScriptUIReconcilerTests.swift",
         "Scripts/ScriptingReference/smoke-scripting-package-runtime.mjs"
       ],
@@ -30383,6 +30415,7 @@
       "status": "partial",
       "tests": [
         "AI_HLYTests/HanlinScriptingRuntimeTests.swift",
+        "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift",
         "Packages/HanlinPlatform/Tests/HanlinScriptUITests/HanlinScriptUIReconcilerTests.swift",
         "Scripts/ScriptingReference/smoke-scripting-package-runtime.mjs"
       ],
@@ -30454,6 +30487,7 @@
       "status": "partial",
       "tests": [
         "AI_HLYTests/HanlinScriptingRuntimeTests.swift",
+        "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift",
         "Packages/HanlinPlatform/Tests/HanlinScriptUITests/HanlinScriptUIReconcilerTests.swift",
         "Scripts/ScriptingReference/smoke-scripting-package-runtime.mjs"
       ],
@@ -30504,6 +30538,7 @@
       "status": "partial",
       "tests": [
         "AI_HLYTests/HanlinScriptingRuntimeTests.swift",
+        "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift",
         "Packages/HanlinPlatform/Tests/HanlinScriptUITests/HanlinScriptUIReconcilerTests.swift",
         "Scripts/ScriptingReference/smoke-scripting-package-runtime.mjs"
       ],
@@ -30575,6 +30610,7 @@
       "status": "partial",
       "tests": [
         "AI_HLYTests/HanlinScriptingRuntimeTests.swift",
+        "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift",
         "Packages/HanlinPlatform/Tests/HanlinScriptUITests/HanlinScriptUIReconcilerTests.swift",
         "Scripts/ScriptingReference/smoke-scripting-package-runtime.mjs"
       ],
@@ -30667,6 +30703,7 @@
       "status": "partial",
       "tests": [
         "AI_HLYTests/HanlinScriptingRuntimeTests.swift",
+        "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift",
         "Packages/HanlinPlatform/Tests/HanlinScriptUITests/HanlinScriptUIReconcilerTests.swift",
         "Scripts/ScriptingReference/smoke-scripting-package-runtime.mjs"
       ],
@@ -32851,6 +32888,7 @@
       "status": "partial",
       "tests": [
         "AI_HLYTests/HanlinScriptingRuntimeTests.swift",
+        "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift",
         "Packages/HanlinPlatform/Tests/HanlinScriptUITests/HanlinScriptUIReconcilerTests.swift",
         "Scripts/ScriptingReference/smoke-scripting-package-runtime.mjs"
       ],
@@ -34308,6 +34346,7 @@
       "status": "partial",
       "tests": [
         "AI_HLYTests/HanlinScriptingRuntimeTests.swift",
+        "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift",
         "Packages/HanlinPlatform/Tests/HanlinScriptUITests/HanlinScriptUIReconcilerTests.swift",
         "Scripts/ScriptingReference/smoke-scripting-package-runtime.mjs"
       ],
@@ -35933,6 +35972,7 @@
       "status": "partial",
       "tests": [
         "AI_HLYTests/HanlinScriptingRuntimeTests.swift",
+        "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift",
         "Packages/HanlinPlatform/Tests/HanlinScriptUITests/HanlinScriptUIReconcilerTests.swift",
         "Scripts/ScriptingReference/smoke-scripting-package-runtime.mjs"
       ],
@@ -39025,6 +39065,7 @@
       "status": "partial",
       "tests": [
         "AI_HLYTests/HanlinScriptingRuntimeTests.swift",
+        "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift",
         "Packages/HanlinPlatform/Tests/HanlinScriptUITests/HanlinScriptUIReconcilerTests.swift",
         "Scripts/ScriptingReference/smoke-scripting-package-runtime.mjs"
       ],
@@ -40512,6 +40553,7 @@
       "status": "partial",
       "tests": [
         "AI_HLYTests/HanlinScriptingRuntimeTests.swift",
+        "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift",
         "Packages/HanlinPlatform/Tests/HanlinScriptUITests/HanlinScriptUIReconcilerTests.swift",
         "Scripts/ScriptingReference/smoke-scripting-package-runtime.mjs"
       ],
@@ -40541,6 +40583,7 @@
       "status": "partial",
       "tests": [
         "AI_HLYTests/HanlinScriptingRuntimeTests.swift",
+        "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift",
         "Packages/HanlinPlatform/Tests/HanlinScriptUITests/HanlinScriptUIReconcilerTests.swift",
         "Scripts/ScriptingReference/smoke-scripting-package-runtime.mjs"
       ],
@@ -40759,6 +40802,7 @@
       "status": "partial",
       "tests": [
         "AI_HLYTests/HanlinScriptingRuntimeTests.swift",
+        "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift",
         "Packages/HanlinPlatform/Tests/HanlinScriptUITests/HanlinScriptUIReconcilerTests.swift",
         "Scripts/ScriptingReference/smoke-scripting-package-runtime.mjs"
       ],
@@ -43056,6 +43100,7 @@
       "status": "partial",
       "tests": [
         "AI_HLYTests/HanlinScriptingRuntimeTests.swift",
+        "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift",
         "Packages/HanlinPlatform/Tests/HanlinScriptUITests/HanlinScriptUIReconcilerTests.swift",
         "Scripts/ScriptingReference/smoke-scripting-package-runtime.mjs"
       ],
@@ -43421,6 +43466,7 @@
       "status": "partial",
       "tests": [
         "AI_HLYTests/HanlinScriptingRuntimeTests.swift",
+        "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift",
         "Packages/HanlinPlatform/Tests/HanlinScriptUITests/HanlinScriptUIReconcilerTests.swift",
         "Scripts/ScriptingReference/smoke-scripting-package-runtime.mjs"
       ],
@@ -45245,6 +45291,7 @@
       "status": "partial",
       "tests": [
         "AI_HLYTests/HanlinScriptingRuntimeTests.swift",
+        "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift",
         "Packages/HanlinPlatform/Tests/HanlinScriptUITests/HanlinScriptUIReconcilerTests.swift",
         "Scripts/ScriptingReference/smoke-scripting-package-runtime.mjs"
       ],
@@ -45820,6 +45867,7 @@
       "status": "partial",
       "tests": [
         "AI_HLYTests/HanlinScriptingRuntimeTests.swift",
+        "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift",
         "Packages/HanlinPlatform/Tests/HanlinScriptUITests/HanlinScriptUIReconcilerTests.swift",
         "Scripts/ScriptingReference/smoke-scripting-package-runtime.mjs"
       ],
@@ -45975,6 +46023,7 @@
       "status": "partial",
       "tests": [
         "AI_HLYTests/HanlinScriptingRuntimeTests.swift",
+        "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift",
         "Packages/HanlinPlatform/Tests/HanlinScriptUITests/HanlinScriptUIReconcilerTests.swift",
         "Scripts/ScriptingReference/smoke-scripting-package-runtime.mjs"
       ],
@@ -46445,6 +46494,7 @@
       "status": "partial",
       "tests": [
         "AI_HLYTests/HanlinScriptingRuntimeTests.swift",
+        "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift",
         "Packages/HanlinPlatform/Tests/HanlinScriptUITests/HanlinScriptUIReconcilerTests.swift",
         "Scripts/ScriptingReference/smoke-scripting-package-runtime.mjs"
       ],
@@ -46600,6 +46650,7 @@
       "status": "partial",
       "tests": [
         "AI_HLYTests/HanlinScriptingRuntimeTests.swift",
+        "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift",
         "Packages/HanlinPlatform/Tests/HanlinScriptUITests/HanlinScriptUIReconcilerTests.swift",
         "Scripts/ScriptingReference/smoke-scripting-package-runtime.mjs"
       ],
@@ -47049,6 +47100,7 @@
       "status": "partial",
       "tests": [
         "AI_HLYTests/HanlinScriptingRuntimeTests.swift",
+        "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift",
         "Packages/HanlinPlatform/Tests/HanlinScriptUITests/HanlinScriptUIReconcilerTests.swift",
         "Scripts/ScriptingReference/smoke-scripting-package-runtime.mjs"
       ],
@@ -47309,6 +47361,7 @@
       "status": "partial",
       "tests": [
         "AI_HLYTests/HanlinScriptingRuntimeTests.swift",
+        "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift",
         "Packages/HanlinPlatform/Tests/HanlinScriptUITests/HanlinScriptUIReconcilerTests.swift",
         "Scripts/ScriptingReference/smoke-scripting-package-runtime.mjs"
       ],
@@ -47380,6 +47433,7 @@
       "status": "partial",
       "tests": [
         "AI_HLYTests/HanlinScriptingRuntimeTests.swift",
+        "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift",
         "Packages/HanlinPlatform/Tests/HanlinScriptUITests/HanlinScriptUIReconcilerTests.swift",
         "Scripts/ScriptingReference/smoke-scripting-package-runtime.mjs"
       ],
@@ -49026,6 +49080,7 @@
       "status": "partial",
       "tests": [
         "AI_HLYTests/HanlinScriptingRuntimeTests.swift",
+        "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift",
         "Packages/HanlinPlatform/Tests/HanlinScriptUITests/HanlinScriptUIReconcilerTests.swift",
         "Scripts/ScriptingReference/smoke-scripting-package-runtime.mjs"
       ],
@@ -49097,6 +49152,7 @@
       "status": "partial",
       "tests": [
         "AI_HLYTests/HanlinScriptingRuntimeTests.swift",
+        "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift",
         "Packages/HanlinPlatform/Tests/HanlinScriptUITests/HanlinScriptUIReconcilerTests.swift",
         "Scripts/ScriptingReference/smoke-scripting-package-runtime.mjs"
       ],
@@ -49147,6 +49203,7 @@
       "status": "partial",
       "tests": [
         "AI_HLYTests/HanlinScriptingRuntimeTests.swift",
+        "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift",
         "Packages/HanlinPlatform/Tests/HanlinScriptUITests/HanlinScriptUIReconcilerTests.swift",
         "Scripts/ScriptingReference/smoke-scripting-package-runtime.mjs"
       ],
@@ -49176,6 +49233,7 @@
       "status": "partial",
       "tests": [
         "AI_HLYTests/HanlinScriptingRuntimeTests.swift",
+        "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift",
         "Packages/HanlinPlatform/Tests/HanlinScriptUITests/HanlinScriptUIReconcilerTests.swift",
         "Scripts/ScriptingReference/smoke-scripting-package-runtime.mjs"
       ],
@@ -49226,6 +49284,7 @@
       "status": "partial",
       "tests": [
         "AI_HLYTests/HanlinScriptingRuntimeTests.swift",
+        "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift",
         "Packages/HanlinPlatform/Tests/HanlinScriptUITests/HanlinScriptUIReconcilerTests.swift",
         "Scripts/ScriptingReference/smoke-scripting-package-runtime.mjs"
       ],
@@ -49255,6 +49314,7 @@
       "status": "partial",
       "tests": [
         "AI_HLYTests/HanlinScriptingRuntimeTests.swift",
+        "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift",
         "Packages/HanlinPlatform/Tests/HanlinScriptUITests/HanlinScriptUIReconcilerTests.swift",
         "Scripts/ScriptingReference/smoke-scripting-package-runtime.mjs"
       ],
@@ -49284,6 +49344,7 @@
       "status": "partial",
       "tests": [
         "AI_HLYTests/HanlinScriptingRuntimeTests.swift",
+        "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift",
         "Packages/HanlinPlatform/Tests/HanlinScriptUITests/HanlinScriptUIReconcilerTests.swift",
         "Scripts/ScriptingReference/smoke-scripting-package-runtime.mjs"
       ],
@@ -49376,6 +49437,7 @@
       "status": "partial",
       "tests": [
         "AI_HLYTests/HanlinScriptingRuntimeTests.swift",
+        "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift",
         "Packages/HanlinPlatform/Tests/HanlinScriptUITests/HanlinScriptUIReconcilerTests.swift",
         "Scripts/ScriptingReference/smoke-scripting-package-runtime.mjs"
       ],
@@ -49405,6 +49467,7 @@
       "status": "partial",
       "tests": [
         "AI_HLYTests/HanlinScriptingRuntimeTests.swift",
+        "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift",
         "Packages/HanlinPlatform/Tests/HanlinScriptUITests/HanlinScriptUIReconcilerTests.swift",
         "Scripts/ScriptingReference/smoke-scripting-package-runtime.mjs"
       ],
@@ -49434,6 +49497,7 @@
       "status": "partial",
       "tests": [
         "AI_HLYTests/HanlinScriptingRuntimeTests.swift",
+        "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift",
         "Packages/HanlinPlatform/Tests/HanlinScriptUITests/HanlinScriptUIReconcilerTests.swift",
         "Scripts/ScriptingReference/smoke-scripting-package-runtime.mjs"
       ],
@@ -49463,6 +49527,7 @@
       "status": "partial",
       "tests": [
         "AI_HLYTests/HanlinScriptingRuntimeTests.swift",
+        "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift",
         "Packages/HanlinPlatform/Tests/HanlinScriptUITests/HanlinScriptUIReconcilerTests.swift",
         "Scripts/ScriptingReference/smoke-scripting-package-runtime.mjs"
       ],
@@ -49492,6 +49557,7 @@
       "status": "partial",
       "tests": [
         "AI_HLYTests/HanlinScriptingRuntimeTests.swift",
+        "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift",
         "Packages/HanlinPlatform/Tests/HanlinScriptUITests/HanlinScriptUIReconcilerTests.swift",
         "Scripts/ScriptingReference/smoke-scripting-package-runtime.mjs"
       ],
@@ -49605,6 +49671,7 @@
       "status": "partial",
       "tests": [
         "AI_HLYTests/HanlinScriptingRuntimeTests.swift",
+        "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift",
         "Packages/HanlinPlatform/Tests/HanlinScriptUITests/HanlinScriptUIReconcilerTests.swift",
         "Scripts/ScriptingReference/smoke-scripting-package-runtime.mjs"
       ],
@@ -49634,6 +49701,7 @@
       "status": "partial",
       "tests": [
         "AI_HLYTests/HanlinScriptingRuntimeTests.swift",
+        "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift",
         "Packages/HanlinPlatform/Tests/HanlinScriptUITests/HanlinScriptUIReconcilerTests.swift",
         "Scripts/ScriptingReference/smoke-scripting-package-runtime.mjs"
       ],
@@ -50356,6 +50424,7 @@
       "status": "partial",
       "tests": [
         "AI_HLYTests/HanlinScriptingRuntimeTests.swift",
+        "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift",
         "Packages/HanlinPlatform/Tests/HanlinScriptUITests/HanlinScriptUIReconcilerTests.swift",
         "Scripts/ScriptingReference/smoke-scripting-package-runtime.mjs"
       ],
@@ -52029,6 +52098,7 @@
       "status": "partial",
       "tests": [
         "AI_HLYTests/HanlinScriptingRuntimeTests.swift",
+        "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift",
         "Packages/HanlinPlatform/Tests/HanlinScriptUITests/HanlinScriptUIReconcilerTests.swift",
         "Scripts/ScriptingReference/smoke-scripting-package-runtime.mjs"
       ],

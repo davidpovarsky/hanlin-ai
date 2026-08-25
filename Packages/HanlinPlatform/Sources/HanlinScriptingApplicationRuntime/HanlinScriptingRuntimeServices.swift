@@ -1,28 +1,35 @@
 import Foundation
 import UniformTypeIdentifiers
 
-struct HanlinScriptingFetchRequest: Decodable, Sendable {
-    let url: String
-    let method: String
-    let headers: [String: String]
-    let bodyBase64: String?
-    let timeout: Double?
-    let allowInsecureRequest: Bool
+public struct HanlinScriptingFetchRequest: Decodable, Sendable {
+    public let url: String
+    public let method: String
+    public let headers: [String: String]
+    public let bodyBase64: String?
+    public let timeout: Double?
+    public let allowInsecureRequest: Bool
 }
 
-struct HanlinScriptingFetchResponse: Sendable {
-    let url: String
-    let status: Int
-    let headers: [String: String]
-    let body: Data
+public struct HanlinScriptingFetchResponse: Sendable {
+    public let url: String
+    public let status: Int
+    public let headers: [String: String]
+    public let body: Data
+
+    public init(url: String, status: Int, headers: [String: String], body: Data) {
+        self.url = url
+        self.status = status
+        self.headers = headers
+        self.body = body
+    }
 }
 
-typealias HanlinScriptingNetworkLoader = @Sendable (
+public typealias HanlinScriptingNetworkLoader = @Sendable (
     HanlinScriptingFetchRequest
 ) async throws -> HanlinScriptingFetchResponse
 
-enum HanlinScriptingURLSessionLoader {
-    static func load(_ request: HanlinScriptingFetchRequest) async throws -> HanlinScriptingFetchResponse {
+public enum HanlinScriptingURLSessionLoader {
+    public static func load(_ request: HanlinScriptingFetchRequest) async throws -> HanlinScriptingFetchResponse {
         guard let url = URL(string: request.url), let scheme = url.scheme?.lowercased(),
               scheme == "https" || (scheme == "http" && request.allowInsecureRequest) else {
             throw HanlinScriptingNativeError(
