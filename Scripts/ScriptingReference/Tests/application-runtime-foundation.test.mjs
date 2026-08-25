@@ -80,6 +80,12 @@ function runtime() {
           const payload = JSON.parse(json);
           const value = operation === "network.fetch"
             ? { url: payload.url, status: 200, headers: { "content-type": "application/json" }, bodyBase64: Buffer.from('{"ok":true}').toString("base64") }
+            : operation === "liveActivity.start"
+              ? { activityId: "activity-1" }
+            : operation === "liveActivity.update" || operation === "liveActivity.end"
+              ? true
+            : operation === "liveActivity.areActivitiesEnabled"
+              ? true
             : operation === "runtime.delay"
               ? null
             : fileOperation(operation, payload);
@@ -435,4 +441,56 @@ test("GroupBox keeps its label separate and Capsule remains a native shape", () 
   assert.equal(root.kind, "groupBox");
   assert.equal(root.properties.labelCount, 1);
   assert.deepEqual(root.children.map(node => node.kind), ["label", "capsule"]);
+});
+
+test("LiveActivityUI preserves lock-screen and every Dynamic Island region", () => {
+  const { context, rendered } = runtime();
+  vm.runInContext(`
+    Navigation.present({ element: createElement(LiveActivityUI, {
+      content: createElement(Text, null, "lock"),
+      compactLeading: createElement(Text, null, "compact-leading"),
+      compactTrailing: createElement(Text, null, "compact-trailing"),
+      minimal: createElement(Image, { systemName: "sparkles" }),
+    },
+      createElement(LiveActivityUIExpandedLeading, null, createElement(Text, null, "expanded-leading")),
+      createElement(LiveActivityUIExpandedTrailing, null, createElement(Text, null, "expanded-trailing")),
+      createElement(LiveActivityUIExpandedCenter, null, createElement(Text, null, "expanded-center")),
+      createElement(LiveActivityUIExpandedBottom, null, createElement(Text, null, "expanded-bottom")),
+    ) });
+  `, context);
+  const root = rendered();
+  assert.equal(root.kind, "liveActivityUI");
+  assert.deepEqual(root.children.map(node => node.kind), [
+    "liveActivityContent", "liveActivityCompactLeading", "liveActivityCompactTrailing",
+    "liveActivityMinimal", "liveActivityExpandedLeading", "liveActivityExpandedTrailing",
+    "liveActivityExpandedCenter", "liveActivityExpandedBottom",
+  ]);
+  assert.equal(root.children[0].children[0].properties.text, "lock");
+  assert.equal(root.children[3].children[0].properties.systemName, "sparkles");
+  assert.equal(root.children[7].children[0].properties.text, "expanded-bottom");
+});
+
+test("LiveActivity register, start, update, listeners, and end use the native lifecycle", async () => {
+  const { context } = runtime();
+  const result = await vm.runInContext(`
+    (async () => {
+      const makeActivity = LiveActivity.register("demo", state => createElement(LiveActivityUI, {
+        content: createElement(Text, null, state.title),
+        compactLeading: createElement(Text, null, "L"),
+        compactTrailing: createElement(Text, null, "T"),
+        minimal: createElement(Text, null, "M"),
+      }, createElement(LiveActivityUIExpandedCenter, null, createElement(Text, null, "C"))));
+      const activity = makeActivity();
+      const states = [];
+      activity.addUpdateListener(state => states.push(state));
+      const started = await activity.start({ title: "one" }, { staleDate: 1000, relevanceScore: 1 });
+      const updated = await activity.update({ title: "two" });
+      const ended = await activity.end({ title: "done" }, { dismissTimeInterval: 0 });
+      return { started, updated, ended, id: activity.activityId, active: activity.started, states };
+    })()
+  `, context);
+  assert.deepEqual(JSON.parse(JSON.stringify(result)), {
+    started: true, updated: true, ended: true, id: "activity-1", active: false,
+    states: ["active", "active", "ended"],
+  });
 });

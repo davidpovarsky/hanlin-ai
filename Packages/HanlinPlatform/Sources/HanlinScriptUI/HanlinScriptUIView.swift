@@ -425,6 +425,10 @@ private struct HanlinScriptUINodeView: View {
                     width: node.nestedDimension("frame", "width"),
                     height: node.nestedDimension("frame", "height")
                 )
+        case .liveActivityUI, .liveActivityContent, .liveActivityCompactLeading,
+             .liveActivityCompactTrailing, .liveActivityMinimal, .liveActivityExpandedLeading,
+             .liveActivityExpandedTrailing, .liveActivityExpandedCenter, .liveActivityExpandedBottom:
+            Group { children(node) }
         case .presentation, .navigationDestination:
             EmptyView()
         case .navigationStack:

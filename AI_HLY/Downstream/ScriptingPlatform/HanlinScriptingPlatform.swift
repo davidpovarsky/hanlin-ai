@@ -38,6 +38,7 @@ final class HanlinScriptingPlatform {
     private var bundler: HanlinScriptingBundler?
     private var extensionStore: HanlinScriptExtensionStore?
     private var applicationSession: HanlinScriptingApplicationSession?
+    private var liveActivityRevisions: [String: UInt64] = [:]
     private let stagingRoot: URL?
 
     private init() {
@@ -356,7 +357,12 @@ final class HanlinScriptingPlatform {
                 storageAllowed: package.grantedCapabilities.contains(storageCapability),
                 filesAllowed: package.grantedCapabilities.contains(filesCapability),
                 networkAllowed: package.grantedCapabilities.contains(networkCapability),
-                packageSourceDirectory: artifactRoot.appending(path: "source", directoryHint: .isDirectory)
+                packageSourceDirectory: artifactRoot.appending(path: "source", directoryHint: .isDirectory),
+                liveActivityAllowed: true,
+                liveActivityLoader: { [weak self] request in
+                    guard let self else { throw CancellationError() }
+                    return try await self.performLiveActivity(request, installedPackageID: id)
+                }
             )
             applicationSession = session
             activeApplicationID = id
@@ -373,6 +379,67 @@ final class HanlinScriptingPlatform {
         applicationSession = nil
         activeApplicationID = nil
         activeApplicationModel = nil
+    }
+
+    private func performLiveActivity(
+        _ request: HanlinScriptingLiveActivityRequest,
+        installedPackageID: HanlinInstalledPackageID
+    ) async throws -> HanlinScriptingLiveActivityResult {
+#if os(iOS)
+        if request.action == .areActivitiesEnabled {
+            return .success(HanlinScriptLiveActivityController.areActivitiesEnabled)
+        }
+        guard let root = request.root, let stateJSON = request.stateJSON else {
+            throw HanlinScriptingPlatformError.invalidLiveActivityPayload
+        }
+        let state = try HanlinValue(jsonValue: HanlinJSONValue.decodeCanonicalJSON(stateJSON))
+        let title = request.name ?? "Live Activity"
+        switch request.action {
+        case .start:
+            let logicalID = UUID().uuidString.lowercased()
+            let content = HanlinGenericLiveActivityAttributes.ContentState(
+                revision: 1, title: title, state: state, root: root
+            )
+            let systemID = try HanlinScriptLiveActivityController.start(
+                attributes: .init(installedPackageID: installedPackageID.rawValue, activityID: logicalID),
+                state: content,
+                staleDate: request.staleDate,
+                relevanceScore: request.relevanceScore ?? 0
+            )
+            liveActivityRevisions[systemID] = 1
+            return .started(activityID: systemID)
+        case .update:
+            guard let activityID = request.activityID else {
+                throw HanlinScriptingPlatformError.invalidLiveActivityPayload
+            }
+            let revision = (liveActivityRevisions[activityID] ?? 0) + 1
+            let success = await HanlinScriptLiveActivityController.update(
+                systemActivityID: activityID,
+                state: .init(revision: revision, title: title, state: state, root: root),
+                staleDate: request.staleDate,
+                relevanceScore: request.relevanceScore ?? 0
+            )
+            if success { liveActivityRevisions[activityID] = revision }
+            return .success(success)
+        case .end:
+            guard let activityID = request.activityID else {
+                throw HanlinScriptingPlatformError.invalidLiveActivityPayload
+            }
+            let revision = (liveActivityRevisions[activityID] ?? 0) + 1
+            let success = await HanlinScriptLiveActivityController.end(
+                systemActivityID: activityID,
+                finalState: .init(revision: revision, title: title, state: state, root: root),
+                dismissTimeInterval: request.dismissTimeInterval
+            )
+            if success { liveActivityRevisions[activityID] = nil }
+            return .success(success)
+        case .areActivitiesEnabled:
+            return .success(HanlinScriptLiveActivityController.areActivitiesEnabled)
+        }
+#else
+        _ = installedPackageID
+        throw HanlinScriptingPlatformError.invalidLiveActivityPayload
+#endif
     }
 
     nonisolated static func stablePackageID(for manifest: HanlinScriptingManifest) throws -> HanlinPackageID {
@@ -493,6 +560,7 @@ private enum HanlinScriptingPlatformError: Error {
     case artifactEnumerationFailed
     case compiledEntrypointTooLarge
     case invalidEntrypointPath
+    case invalidLiveActivityPayload
 }
 
 private extension JSONEncoder {

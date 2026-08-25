@@ -28,12 +28,12 @@
     {
       "id": "nativ-ai-9",
       "typecheck": {"status": "source-and-authoritative-api-usage-issues", "errorCount": 45, "evidence": "Errors reproduce against the untouched declarations and include invalid literals, missing imports, undeclared props, and project model mismatches."},
-      "compileBundle": {"status": "transpile-passed-bundle-blocked", "emittedModuleCount": 86, "blocker": "Required Live Activity and remaining container values are not authorized by conformance evidence."},
-      "runtimeLaunch": {"status": "blocked", "blockers": ["LiveActivityUI", "LiveActivityUIExpandedCenter"]},
-      "uiRender": {"status": "not-reached"},
-      "interaction": {"status": "not-reached"},
-      "nativeServices": {"status": "partial", "passed": ["FileManager/Path bounded VFS", "buffered fetch/Web primitives", "Storage", "Assistant requestStreaming/requestStructuredData bridge with ordered chunks, structured JSON and cancellation"], "blockers": ["configured Assistant provider adapter", "SQLite binding", "Location binding", "real Live Activity execution"]},
-      "remainingBlockers": ["45 source/API-usage errors", "Assistant provider and remaining native-service adapters", "Live Activity and broad ScriptUI semantics"]
+      "compileBundle": {"status": "passed-for-smoke-profile", "emittedModuleCount": 98, "importedScriptingRuntimeSymbolCount": 45},
+      "runtimeLaunch": {"status": "passed-node-hosted-bootstrap", "presented": true, "rootKind": "navigationSplitView"},
+      "uiRender": {"status": "passed-structural-smoke", "renderedNodeCount": 15, "evidence": "The untouched package reaches its initial split-navigation UI after registering its real Live Activity builder; async state hydration completes without a reentrant render loop."},
+      "interaction": {"status": "shared-runtime-verified", "passed": ["LiveActivity register/start/update/end instance lifecycle", "Live Activity update listeners", "coalesced reentrant rendering and same-value state suppression"], "notExercised": ["real-project control automation on Simulator", "Dynamic Island visual validation"]},
+      "nativeServices": {"status": "partial", "passed": ["FileManager/Path bounded VFS", "buffered fetch/Web primitives", "Storage", "Assistant requestStreaming/requestStructuredData bridge with ordered chunks, structured JSON and cancellation", "ActivityKit start/update/end adapter with typed Lock Screen and Dynamic Island regions"], "blockers": ["configured Assistant provider adapter", "SQLite binding", "Location binding", "physical-device Live Activity validation"]},
+      "remainingBlockers": ["45 source/API-usage errors", "Assistant provider and remaining native-service adapters", "physical-device Live Activity validation and broad ScriptUI semantics"]
     },
     {
       "id": "new-agent-21",
@@ -51,7 +51,7 @@
       "typecheck": {"status": "passed", "errorCount": 0},
       "compileBundle": {"status": "passed-for-smoke-profile", "emittedModuleCount": 50, "importedScriptingRuntimeSymbolCount": 31},
       "runtimeLaunch": {"status": "passed-node-hosted-bootstrap", "presented": true, "rootKind": "tabView"},
-      "uiRender": {"status": "passed-structural-smoke", "renderedNodeCount": 356, "limitation": "The archived project was structurally rendered in the Node-hosted exact bootstrap; Xcode/Simulator validated the shared app and runtime tests but did not visually launch this archived project."},
+      "uiRender": {"status": "passed-structural-smoke", "renderedNodeCount": 382, "limitation": "The async-hydrated initial tree was structurally rendered after coalescing reentrant updates; Xcode/Simulator validated the shared app and runtime tests but did not visually launch this archived project."},
       "interaction": {"status": "not-exercised-on-real-project", "evidence": "The shared runtime has hook/event/rerender tests, but this archived app was not driven through its controls."},
       "nativeServices": {"status": "partial", "passed": ["package-isolated Storage binding during launch"], "notExercised": ["Assistant", "Health", "Notification"], "placeholdersNotClaimed": ["Widget", "AppIntent"]},
       "remainingBlockers": ["real-project interaction automation", "visual Simulator/device evidence", "Health/Notification/Assistant flows", "real widget and App Intent execution"]

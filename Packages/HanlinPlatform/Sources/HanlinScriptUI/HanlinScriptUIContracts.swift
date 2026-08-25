@@ -37,6 +37,15 @@ public enum HanlinScriptUIPrimitive: String, Codable, CaseIterable, Hashable, Se
     case capsule
     case rectangle
     case roundedRectangle
+    case liveActivityUI
+    case liveActivityContent
+    case liveActivityCompactLeading
+    case liveActivityCompactTrailing
+    case liveActivityMinimal
+    case liveActivityExpandedLeading
+    case liveActivityExpandedTrailing
+    case liveActivityExpandedCenter
+    case liveActivityExpandedBottom
     case presentation
     case navigationStack
     case navigationLink

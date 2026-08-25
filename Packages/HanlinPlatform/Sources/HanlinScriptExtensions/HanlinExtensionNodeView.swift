@@ -51,6 +51,10 @@ public struct HanlinExtensionNodeView: View {
             Rectangle().fill(.secondary)
         case .roundedRectangle:
             RoundedRectangle(cornerRadius: 12).fill(.secondary)
+        case .liveActivityUI, .liveActivityContent, .liveActivityCompactLeading,
+             .liveActivityCompactTrailing, .liveActivityMinimal, .liveActivityExpandedLeading,
+             .liveActivityExpandedTrailing, .liveActivityExpandedCenter, .liveActivityExpandedBottom:
+            Group { children }
         case .presentation:
             EmptyView()
         }

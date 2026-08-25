@@ -16,6 +16,8 @@ public final class HanlinScriptingApplicationSession {
     private let networkLoader: HanlinScriptingNetworkLoader
     private let assistantAllowed: Bool
     private let assistantLoader: HanlinScriptingAssistantLoader
+    private let liveActivityAllowed: Bool
+    private let liveActivityLoader: HanlinScriptingLiveActivityLoader
     private var nativeTasks: [String: Task<Void, Never>] = [:]
     private var disposed = false
 
@@ -30,7 +32,9 @@ public final class HanlinScriptingApplicationSession {
         packageSourceDirectory: URL? = nil,
         networkLoader: @escaping HanlinScriptingNetworkLoader = HanlinScriptingURLSessionLoader.load,
         assistantAllowed: Bool = false,
-        assistantLoader: @escaping HanlinScriptingAssistantLoader = HanlinScriptingUnavailableAssistantLoader.load
+        assistantLoader: @escaping HanlinScriptingAssistantLoader = HanlinScriptingUnavailableAssistantLoader.load,
+        liveActivityAllowed: Bool = false,
+        liveActivityLoader: @escaping HanlinScriptingLiveActivityLoader = HanlinScriptingUnavailableLiveActivityLoader.load
     ) throws {
         guard let virtualMachine = JSVirtualMachine(),
               let context = JSContext(virtualMachine: virtualMachine) else {
@@ -52,6 +56,8 @@ public final class HanlinScriptingApplicationSession {
         self.networkLoader = networkLoader
         self.assistantAllowed = assistantAllowed
         self.assistantLoader = assistantLoader
+        self.liveActivityAllowed = liveActivityAllowed
+        self.liveActivityLoader = liveActivityLoader
 
         let router = HanlinScriptingUIEventRouter()
         model = HanlinScriptUIModel(root: .init(kind: .fragment)) { handlerID, payload in
@@ -319,6 +325,72 @@ public final class HanlinScriptingApplicationSession {
                 "bodyBase64": response.body.base64EncodedString(),
             ])
         }
+        if operation.hasPrefix("liveActivity.") {
+            guard liveActivityAllowed else {
+                throw HanlinScriptingNativeError(
+                    name: "Error",
+                    code: "permission_denied",
+                    message: "Live Activities are not available for this package."
+                )
+            }
+            let payload = try HanlinScriptingNativeJSON.decodeObject(payloadJSON)
+            let actionName = String(operation.dropFirst("liveActivity.".count))
+                .replacingOccurrences(of: "areActivitiesEnabled", with: "are_activities_enabled")
+            guard let action = HanlinScriptingLiveActivityAction(rawValue: actionName) else {
+                throw HanlinScriptingNativeError(
+                    name: "Error", code: "unsupported_operation",
+                    message: "The Live Activity operation is unavailable."
+                )
+            }
+            let name = payload["name"] as? String
+            let activityID = payload["activityId"] as? String
+            guard name?.utf8.count ?? 0 <= 256, activityID?.utf8.count ?? 0 <= 256 else {
+                throw HanlinScriptingNativeError(
+                    name: "TypeError", code: "invalid_payload",
+                    message: "The Live Activity identifier is too large."
+                )
+            }
+            let stateJSON: Data? = try payload["state"].map { state in
+                guard JSONSerialization.isValidJSONObject(state) else {
+                    throw HanlinScriptingNativeError(
+                        name: "TypeError", code: "invalid_payload",
+                        message: "The Live Activity state must be a JSON object or array."
+                    )
+                }
+                let data = try JSONSerialization.data(withJSONObject: state, options: [.sortedKeys])
+                guard data.count <= 1_048_576 else {
+                    throw HanlinScriptingNativeError(
+                        name: "TypeError", code: "invalid_payload",
+                        message: "The Live Activity state is too large."
+                    )
+                }
+                return data
+            }
+            let root = try payload["root"].map { try Self.decodeNode($0, depth: 0) }
+            let options = payload["options"] as? [String: Any] ?? [:]
+            let staleMilliseconds = (options["staleDate"] as? NSNumber)?.doubleValue
+            let relevanceScore = (options["relevanceScore"] as? NSNumber)?.doubleValue
+            let dismissTimeInterval = (options["dismissTimeInterval"] as? NSNumber)?.doubleValue
+            for value in [staleMilliseconds, relevanceScore, dismissTimeInterval].compactMap({ $0 }) {
+                guard value.isFinite else {
+                    throw HanlinScriptingNativeError(
+                        name: "TypeError", code: "invalid_payload",
+                        message: "Live Activity options must be finite numbers."
+                    )
+                }
+            }
+            let result = try await liveActivityLoader(.init(
+                action: action,
+                name: name,
+                activityID: activityID,
+                stateJSON: stateJSON,
+                root: root,
+                staleDate: staleMilliseconds.map { Date(timeIntervalSince1970: $0 / 1_000) },
+                relevanceScore: relevanceScore,
+                dismissTimeInterval: dismissTimeInterval
+            ))
+            return HanlinScriptingNativeJSON.success(result.nativeObject())
+        }
         throw HanlinScriptingNativeError(
             name: "Error",
             code: "unsupported_operation",
@@ -584,6 +656,7 @@ private extension HanlinScriptingApplicationSession {
       let dismissPresentation = null;
       let rendering = false;
       let renderPending = false;
+      let renderScheduled = false;
       let scrollRevision = 0;
       let scrollTarget = null;
       let scrollAnchor = null;
@@ -1208,7 +1281,12 @@ private extension HanlinScriptingApplicationSession {
         Slider: "slider", DisclosureGroup: "disclosureGroup", BarChart: "barChart", Chart: "chart",
         RoundedRectangle: "roundedRectangle", Rectangle: "rectangle", Capsule: "capsule",
         Circle: "circle", ContentUnavailableView: "contentUnavailableView", EmptyView: "group", Markdown: "markdown",
-        SVG: "svg"
+        SVG: "svg",
+        LiveActivityUI: "liveActivityUI",
+        LiveActivityUIExpandedLeading: "liveActivityExpandedLeading",
+        LiveActivityUIExpandedTrailing: "liveActivityExpandedTrailing",
+        LiveActivityUIExpandedCenter: "liveActivityExpandedCenter",
+        LiveActivityUIExpandedBottom: "liveActivityExpandedBottom"
       });
 
       function flatten(value, output = []) {
@@ -1252,7 +1330,9 @@ private extension HanlinScriptingApplicationSession {
       function useState(initialValue) {
         const index = nextState(initialValue);
         return [state[index], value => {
-          state[index] = typeof value === "function" ? value(state[index]) : value;
+          const next = typeof value === "function" ? value(state[index]) : value;
+          if (Object.is(next, state[index])) return;
+          state[index] = next;
           requestRender();
         }];
       }
@@ -1269,6 +1349,7 @@ private extension HanlinScriptingApplicationSession {
           get value() { return observableState.value; },
           setValue(value) {
             const next = typeof value === "function" ? value(observableState.value) : value;
+            if (Object.is(next, observableState.value)) return;
             observableState.value = next;
             for (const subscriber of [...observableState.subscribers]) subscriber(next);
             requestRender();
@@ -1311,7 +1392,9 @@ private extension HanlinScriptingApplicationSession {
             dispatch: null
           };
           reducerState.dispatch = action => {
-            reducerState.value = reducerState.reducer(reducerState.value, action);
+            const next = reducerState.reducer(reducerState.value, action);
+            if (Object.is(next, reducerState.value)) return;
+            reducerState.value = next;
             requestRender();
           };
           state[index] = reducerState;
@@ -1522,6 +1605,18 @@ private extension HanlinScriptingApplicationSession {
             throw new TypeError("HANLIN_UI:svg_size");
           }
         }
+        if (value.kind === "liveActivityUI") {
+          const region = (kind, configured) => ({
+            kind, key: null, properties: {}, children: materialize(configured)
+          });
+          children = [
+            region("liveActivityContent", value.properties.content),
+            region("liveActivityCompactLeading", value.properties.compactLeading),
+            region("liveActivityCompactTrailing", value.properties.compactTrailing),
+            region("liveActivityMinimal", value.properties.minimal),
+            ...children
+          ];
+        }
         const routeDefinitions = [];
         if (value.kind === "navigationLink") {
           const route = value.properties.value == null
@@ -1622,11 +1717,22 @@ private extension HanlinScriptingApplicationSession {
           __hanlinNativeRender(JSON.stringify(root));
         } finally {
           rendering = false;
-          if (renderPending) { renderPending = false; render(); }
+          if (renderPending && !renderScheduled) {
+            renderScheduled = true;
+            queueMicrotask(() => {
+              renderScheduled = false;
+              if (!renderPending) return;
+              renderPending = false;
+              render();
+            });
+          }
         }
       }
 
-      function requestRender() { render(); }
+      function requestRender() {
+        if (rendering) { renderPending = true; return; }
+        render();
+      }
 
       function ForEach(properties) {
         const source = properties.data ?? properties.values ?? [];
@@ -1740,6 +1846,78 @@ private extension HanlinScriptingApplicationSession {
         dismiss() { return Promise.resolve(); },
         stopConversation() { return Promise.resolve(); }
       });
+      const liveActivityBuilders = new Map();
+      class HanlinLiveActivity {
+        constructor(name, builder, activityId = null) {
+          this.name = name;
+          this.builder = builder;
+          this._activityId = activityId;
+          this._started = activityId != null;
+          this._updateListeners = new Set();
+        }
+        get activityId() { return this._activityId ?? undefined; }
+        get started() { return this._started; }
+        _payload(state, options = {}) {
+          const nodes = materialize(this.builder(state));
+          if (nodes.length !== 1 || nodes[0].kind !== "liveActivityUI") {
+            throw new TypeError("A Live Activity builder must return LiveActivityUI");
+          }
+          return { name: this.name, activityId: this._activityId, state, root: nodes[0], options };
+        }
+        async start(state, options = {}) {
+          if (this._started) return false;
+          const result = await nativeCallAsync("liveActivity.start", this._payload(state, options));
+          if (!result || typeof result.activityId !== "string" || result.activityId.length === 0) return false;
+          this._activityId = result.activityId;
+          this._started = true;
+          this._notify("active");
+          return true;
+        }
+        async update(state, options = {}) {
+          if (!this._started || !this._activityId) return false;
+          const result = await nativeCallAsync("liveActivity.update", this._payload(state, options));
+          if (result === true) this._notify("active");
+          return result === true;
+        }
+        async end(state, options = {}) {
+          if (!this._started || !this._activityId) return false;
+          const result = await nativeCallAsync("liveActivity.end", this._payload(state, options));
+          if (result === true) {
+            this._started = false;
+            this._notify("ended");
+          }
+          return result === true;
+        }
+        getActivityState() { return Promise.resolve(this._started ? "active" : this._activityId ? "ended" : null); }
+        addUpdateListener(listener) {
+          if (typeof listener !== "function") throw new TypeError("A Live Activity listener must be a function");
+          this._updateListeners.add(listener);
+        }
+        removeUpdateListener(listener) { this._updateListeners.delete(listener); }
+        _notify(state) { for (const listener of [...this._updateListeners]) listener(state); }
+      }
+      const LiveActivity = Object.freeze({
+        register(name, builder) {
+          if (typeof name !== "string" || name.length === 0 || name.length > 256 || typeof builder !== "function") {
+            throw new TypeError("A Live Activity name and builder are required");
+          }
+          liveActivityBuilders.set(name, builder);
+          return () => new HanlinLiveActivity(name, builder);
+        },
+        areActivitiesEnabled() {
+          return nativeCallAsync("liveActivity.areActivitiesEnabled").then(Boolean, () => false);
+        },
+        from(activityId, name) {
+          const builder = liveActivityBuilders.get(name);
+          return Promise.resolve(builder && activityId ? new HanlinLiveActivity(name, builder, String(activityId)) : null);
+        },
+        getActivityState() { return Promise.resolve(null); },
+        getAllActivities() { return Promise.resolve([]); },
+        getAllActivitiesIds() { return Promise.resolve([]); },
+        endAllActivities() { return Promise.resolve(false); },
+        addActivitiesEnabledListener() {}, removeActivitiesEnabledListener() {},
+        addActivityUpdateListener() {}, removeActivityUpdateListener() {}
+      });
       const Script = Object.freeze({
         name: "Hanlin Scripting App", directory: FileManager.scriptsDirectory,
         queryParameters: {}, shareFiles: [],
@@ -1757,7 +1935,7 @@ private extension HanlinScriptingApplicationSession {
         FormData: HanlinFormData, Request: HanlinRequest, Response: HanlinResponse,
         fetch: hanlinFetch, DOMException: HanlinDOMException, AbortEvent: HanlinAbortEvent,
         AbortSignal: HanlinAbortSignal, AbortController: HanlinAbortController,
-        Storage, Assistant, Script, Device, Widget, AppIntentProtocol, AppIntentManager,
+        Storage, Assistant, LiveActivity, Script, Device, Widget, AppIntentProtocol, AppIntentManager,
         Color: Object.freeze({}),
         __hanlinResolveNative: resolveNativeRequest,
         __hanlinAssistantReceive: receiveAssistantChunk,

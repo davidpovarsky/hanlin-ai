@@ -1,5 +1,73 @@
 import Foundation
+import HanlinScriptUI
 import UniformTypeIdentifiers
+
+public enum HanlinScriptingLiveActivityAction: String, Sendable {
+    case start
+    case update
+    case end
+    case areActivitiesEnabled = "are_activities_enabled"
+}
+
+public struct HanlinScriptingLiveActivityRequest: Sendable {
+    public let action: HanlinScriptingLiveActivityAction
+    public let name: String?
+    public let activityID: String?
+    public let stateJSON: Data?
+    public let root: HanlinScriptUINode?
+    public let staleDate: Date?
+    public let relevanceScore: Double?
+    public let dismissTimeInterval: Double?
+
+    public init(
+        action: HanlinScriptingLiveActivityAction,
+        name: String? = nil,
+        activityID: String? = nil,
+        stateJSON: Data? = nil,
+        root: HanlinScriptUINode? = nil,
+        staleDate: Date? = nil,
+        relevanceScore: Double? = nil,
+        dismissTimeInterval: Double? = nil
+    ) {
+        self.action = action
+        self.name = name
+        self.activityID = activityID
+        self.stateJSON = stateJSON
+        self.root = root
+        self.staleDate = staleDate
+        self.relevanceScore = relevanceScore
+        self.dismissTimeInterval = dismissTimeInterval
+    }
+}
+
+public enum HanlinScriptingLiveActivityResult: Sendable {
+    case started(activityID: String)
+    case success(Bool)
+
+    func nativeObject() -> Any {
+        switch self {
+        case let .started(activityID): ["activityId": activityID]
+        case let .success(value): value
+        }
+    }
+}
+
+public typealias HanlinScriptingLiveActivityLoader = @MainActor @Sendable (
+    HanlinScriptingLiveActivityRequest
+) async throws -> HanlinScriptingLiveActivityResult
+
+public enum HanlinScriptingUnavailableLiveActivityLoader {
+    public static func load(
+        _ request: HanlinScriptingLiveActivityRequest
+    ) async throws -> HanlinScriptingLiveActivityResult {
+        _ = request
+        throw HanlinScriptingNativeError(
+            name: "Error",
+            code: "live_activity_unavailable",
+            message: "The Live Activity service is unavailable."
+        )
+    }
+}
 
 public enum HanlinScriptingAssistantRequestKind: String, Sendable {
     case streaming

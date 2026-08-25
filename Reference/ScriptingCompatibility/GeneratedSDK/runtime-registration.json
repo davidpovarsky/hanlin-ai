@@ -12221,6 +12221,7 @@
       "operation": "HanlinScriptLiveActivityController",
       "capability": null,
       "contexts": [
+        "mainApplication",
         "liveActivity"
       ],
       "declarationEvidence": [
@@ -12339,10 +12340,13 @@
     },
     {
       "symbol": "LiveActivityUI",
-      "state": "unsupported",
-      "operation": "unimplemented",
+      "state": "partial",
+      "operation": "HanlinLiveActivityUILayout",
       "capability": null,
-      "contexts": [],
+      "contexts": [
+        "mainApplication",
+        "liveActivity"
+      ],
       "declarationEvidence": [
         {
           "category": "function",
@@ -12369,10 +12373,13 @@
     },
     {
       "symbol": "LiveActivityUIExpandedBottom",
-      "state": "unsupported",
-      "operation": "unimplemented",
+      "state": "partial",
+      "operation": "HanlinLiveActivityUILayout.expandedBottom",
       "capability": null,
-      "contexts": [],
+      "contexts": [
+        "mainApplication",
+        "liveActivity"
+      ],
       "declarationEvidence": [
         {
           "category": "function",
@@ -12384,10 +12391,13 @@
     },
     {
       "symbol": "LiveActivityUIExpandedCenter",
-      "state": "unsupported",
-      "operation": "unimplemented",
+      "state": "partial",
+      "operation": "HanlinLiveActivityUILayout.expandedCenter",
       "capability": null,
-      "contexts": [],
+      "contexts": [
+        "mainApplication",
+        "liveActivity"
+      ],
       "declarationEvidence": [
         {
           "category": "function",
@@ -12399,10 +12409,13 @@
     },
     {
       "symbol": "LiveActivityUIExpandedLeading",
-      "state": "unsupported",
-      "operation": "unimplemented",
+      "state": "partial",
+      "operation": "HanlinLiveActivityUILayout.expandedLeading",
       "capability": null,
-      "contexts": [],
+      "contexts": [
+        "mainApplication",
+        "liveActivity"
+      ],
       "declarationEvidence": [
         {
           "category": "function",
@@ -12414,10 +12427,13 @@
     },
     {
       "symbol": "LiveActivityUIExpandedTrailing",
-      "state": "unsupported",
-      "operation": "unimplemented",
+      "state": "partial",
+      "operation": "HanlinLiveActivityUILayout.expandedTrailing",
       "capability": null,
-      "contexts": [],
+      "contexts": [
+        "mainApplication",
+        "liveActivity"
+      ],
       "declarationEvidence": [
         {
           "category": "function",

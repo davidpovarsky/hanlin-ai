@@ -119,23 +119,78 @@ struct HanlinScriptingWidget: Widget {
 struct HanlinScriptingLiveActivityWidget: Widget {
     var body: some WidgetConfiguration {
         ActivityConfiguration(for: HanlinGenericLiveActivityAttributes.self) { context in
-            HanlinExtensionNodeView(node: context.state.root)
+            HanlinLiveActivityLockScreenView(root: context.state.root)
                 .padding()
                 .activityBackgroundTint(Color.clear)
         } dynamicIsland: { context in
             DynamicIsland {
-                DynamicIslandExpandedRegion(.leading) { Image(systemName: "curlybraces") }
-                DynamicIslandExpandedRegion(.center) { Text(context.state.title).lineLimit(2) }
+                DynamicIslandExpandedRegion(.leading) {
+                    HanlinLiveActivityRegionView(root: context.state.root, region: .expandedLeading)
+                }
+                DynamicIslandExpandedRegion(.trailing) {
+                    HanlinLiveActivityRegionView(root: context.state.root, region: .expandedTrailing)
+                }
+                DynamicIslandExpandedRegion(.center) {
+                    HanlinLiveActivityRegionView(root: context.state.root, region: .expandedCenter)
+                }
                 DynamicIslandExpandedRegion(.bottom) {
-                    HanlinExtensionNodeView(node: context.state.root).lineLimit(2)
+                    HanlinLiveActivityRegionView(root: context.state.root, region: .expandedBottom)
                 }
             } compactLeading: {
-                Image(systemName: "curlybraces")
+                HanlinLiveActivityRegionView(root: context.state.root, region: .compactLeading)
             } compactTrailing: {
-                Text("\(context.state.revision)")
+                HanlinLiveActivityRegionView(root: context.state.root, region: .compactTrailing)
             } minimal: {
-                Image(systemName: "curlybraces")
+                HanlinLiveActivityRegionView(root: context.state.root, region: .minimal)
             }
+        }
+    }
+}
+
+private struct HanlinLiveActivityLockScreenView: View {
+    let root: HanlinScriptUINode
+
+    var body: some View {
+        if let layout = try? HanlinLiveActivityUILayout(root: root) {
+            HanlinExtensionNodeView(node: layout.content)
+        } else {
+            HanlinExtensionNodeView(node: root)
+        }
+    }
+}
+
+private struct HanlinLiveActivityRegionView: View {
+    enum Region {
+        case compactLeading
+        case compactTrailing
+        case minimal
+        case expandedLeading
+        case expandedTrailing
+        case expandedCenter
+        case expandedBottom
+    }
+
+    let root: HanlinScriptUINode
+    let region: Region
+
+    @ViewBuilder
+    var body: some View {
+        if let layout = try? HanlinLiveActivityUILayout(root: root), let node = node(in: layout) {
+            HanlinExtensionNodeView(node: node)
+        } else {
+            EmptyView()
+        }
+    }
+
+    private func node(in layout: HanlinLiveActivityUILayout) -> HanlinScriptUINode? {
+        switch region {
+        case .compactLeading: layout.compactLeading
+        case .compactTrailing: layout.compactTrailing
+        case .minimal: layout.minimal
+        case .expandedLeading: layout.expandedLeading
+        case .expandedTrailing: layout.expandedTrailing
+        case .expandedCenter: layout.expandedCenter
+        case .expandedBottom: layout.expandedBottom
         }
     }
 }
