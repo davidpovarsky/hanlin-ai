@@ -292,7 +292,7 @@ public final class HanlinScriptingApplicationSession {
         }
         if operation.hasPrefix("file.") {
             let fileSystem = fileSystem
-            return try await Task.detached(priority: .userInitiated) {
+            return await Task.detached(priority: .userInitiated) {
                 do {
                     let payload = try HanlinScriptingNativeJSON.decodeObject(payloadJSON)
                     return HanlinScriptingNativeJSON.success(

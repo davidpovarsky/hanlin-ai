@@ -166,14 +166,18 @@ final class HanlinScriptingSQLiteStore: @unchecked Sendable {
 
     private func columnValue(_ statement: OpaquePointer, index: Int32) -> Any {
         switch sqlite3_column_type(statement, index) {
-        case SQLITE_INTEGER: NSNumber(value: sqlite3_column_int64(statement, index))
-        case SQLITE_FLOAT: NSNumber(value: sqlite3_column_double(statement, index))
-        case SQLITE_TEXT: sqlite3_column_text(statement, index).map { String(cString: $0) } ?? ""
+        case SQLITE_INTEGER:
+            return NSNumber(value: sqlite3_column_int64(statement, index))
+        case SQLITE_FLOAT:
+            return NSNumber(value: sqlite3_column_double(statement, index))
+        case SQLITE_TEXT:
+            return sqlite3_column_text(statement, index).map { String(cString: $0) } ?? ""
         case SQLITE_BLOB:
             guard let bytes = sqlite3_column_blob(statement, index) else { return NSNull() }
             let data = Data(bytes: bytes, count: Int(sqlite3_column_bytes(statement, index)))
             return ["__hanlinSQLiteData": data.base64EncodedString()]
-        default: NSNull()
+        default:
+            return NSNull()
         }
     }
 
