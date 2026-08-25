@@ -450,7 +450,6 @@ final class HanlinScriptingPackageFileSystem: @unchecked Sendable {
         case .typeDirectory: "directory"
         case .typeSymbolicLink: "link"
         case .typeSocket: "unixDomainSock"
-        case .typeFifo: "pipe"
         default: "notFound"
         }
     }
