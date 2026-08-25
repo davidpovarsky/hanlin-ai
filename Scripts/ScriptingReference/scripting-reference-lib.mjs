@@ -1003,9 +1003,19 @@ export async function createGeneratedOutputs(plan) {
   if (compatibilityClassification.schemaVersion !== 1) {
     throw new Error("Unsupported compatibility classification overlay.");
   }
+  const expandedClassifications = [
+    ...compatibilityClassification.symbols,
+    ...(compatibilityClassification.symbolGroups ?? []).flatMap((group) => {
+      const { symbols: groupedSymbols, ...classification } = group;
+      return groupedSymbols.map((symbol) => ({ ...classification, symbol }));
+    }),
+  ];
   const symbolClassifications = new Map(
-    compatibilityClassification.symbols.map((entry) => [entry.symbol, entry]),
+    expandedClassifications.map((entry) => [entry.symbol, entry]),
   );
+  if (symbolClassifications.size !== expandedClassifications.length) {
+    throw new Error("Duplicate compatibility classification symbol.");
+  }
   const compatibilityMatrix = symbolIndex.map((symbol) => {
     const classification = symbolClassifications.get(symbol.referenceSymbol)
       ?? compatibilityClassification.declarationDefaults[symbol.declarationFile];

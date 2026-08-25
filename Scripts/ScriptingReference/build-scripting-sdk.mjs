@@ -23,7 +23,17 @@ if (inventory.baselineID !== baseline.baselineID) throw new Error('API inventory
 if (overlay.schemaVersion !== 1 || !Array.isArray(overlay.symbols)) throw new Error('Unsupported foundation runtime overlay.');
 
 const foundationBySymbol = new Map(overlay.symbols.map(entry => [entry.symbol, entry]));
-const classificationBySymbol = new Map(classification.symbols.map(entry => [entry.symbol, entry]));
+const expandedClassifications = [
+  ...classification.symbols,
+  ...(classification.symbolGroups ?? []).flatMap(group => {
+    const { symbols, ...entry } = group;
+    return symbols.map(symbol => ({ ...entry, symbol }));
+  }),
+];
+const classificationBySymbol = new Map(expandedClassifications.map(entry => [entry.symbol, entry]));
+if (classificationBySymbol.size !== expandedClassifications.length) {
+  throw new Error('Duplicate compatibility classification symbol.');
+}
 const inventoryBySymbol = Map.groupBy(inventory.symbols, entry => entry.name);
 for (const symbol of [...foundationBySymbol.keys(), ...classificationBySymbol.keys()]) {
   if (!inventoryBySymbol.has(symbol)) throw new Error(`Classified symbol is absent from the authorized baseline: ${symbol}`);

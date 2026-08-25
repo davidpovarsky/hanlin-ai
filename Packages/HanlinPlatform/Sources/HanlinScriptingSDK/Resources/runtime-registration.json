@@ -1681,10 +1681,12 @@
     },
     {
       "symbol": "AppIntentManager",
-      "state": "unsupported",
-      "operation": "unimplemented",
+      "state": "partial",
+      "operation": "HanlinScriptingApplicationSession",
       "capability": null,
-      "contexts": [],
+      "contexts": [
+        "mainApplication"
+      ],
       "declarationEvidence": [
         {
           "category": "class",
@@ -1711,10 +1713,12 @@
     },
     {
       "symbol": "AppIntentProtocol",
-      "state": "unsupported",
-      "operation": "unimplemented",
+      "state": "partial",
+      "operation": "HanlinScriptingApplicationSession",
       "capability": null,
-      "contexts": [],
+      "contexts": [
+        "mainApplication"
+      ],
       "declarationEvidence": [
         {
           "category": "enum",
@@ -2709,10 +2713,12 @@
     },
     {
       "symbol": "BarChart",
-      "state": "unsupported",
-      "operation": "unimplemented",
+      "state": "partial",
+      "operation": "HanlinScriptingApplicationSession",
       "capability": null,
-      "contexts": [],
+      "contexts": [
+        "mainApplication"
+      ],
       "declarationEvidence": [
         {
           "category": "const",
@@ -3156,10 +3162,12 @@
     },
     {
       "symbol": "Button",
-      "state": "unsupported",
-      "operation": "unimplemented",
+      "state": "partial",
+      "operation": "HanlinScriptingApplicationSession",
       "capability": null,
-      "contexts": [],
+      "contexts": [
+        "mainApplication"
+      ],
       "declarationEvidence": [
         {
           "category": "class",
@@ -3723,10 +3731,12 @@
     },
     {
       "symbol": "Chart",
-      "state": "unsupported",
-      "operation": "unimplemented",
+      "state": "partial",
+      "operation": "HanlinScriptingApplicationSession",
       "capability": null,
-      "contexts": [],
+      "contexts": [
+        "mainApplication"
+      ],
       "declarationEvidence": [
         {
           "category": "const",
@@ -4113,10 +4123,12 @@
     },
     {
       "symbol": "Circle",
-      "state": "unsupported",
-      "operation": "unimplemented",
+      "state": "partial",
+      "operation": "HanlinScriptingApplicationSession",
       "capability": null,
-      "contexts": [],
+      "contexts": [
+        "mainApplication"
+      ],
       "declarationEvidence": [
         {
           "category": "const",
@@ -4224,10 +4236,12 @@
     },
     {
       "symbol": "Color",
-      "state": "unsupported",
-      "operation": "unimplemented",
+      "state": "partial",
+      "operation": "HanlinScriptingApplicationSession",
       "capability": null,
-      "contexts": [],
+      "contexts": [
+        "mainApplication"
+      ],
       "declarationEvidence": [
         {
           "category": "type",
@@ -5766,10 +5780,12 @@
     },
     {
       "symbol": "Device",
-      "state": "unsupported",
-      "operation": "unimplemented",
+      "state": "partial",
+      "operation": "HanlinScriptingApplicationSession",
       "capability": null,
-      "contexts": [],
+      "contexts": [
+        "mainApplication"
+      ],
       "declarationEvidence": [
         {
           "category": "namespace",
@@ -7525,10 +7541,12 @@
     },
     {
       "symbol": "Fragment",
-      "state": "unsupported",
-      "operation": "unimplemented",
+      "state": "partial",
+      "operation": "HanlinScriptingApplicationSession",
       "capability": null,
-      "contexts": [],
+      "contexts": [
+        "mainApplication"
+      ],
       "declarationEvidence": [
         {
           "category": "const",
@@ -9073,10 +9091,12 @@
     },
     {
       "symbol": "HStack",
-      "state": "unsupported",
-      "operation": "unimplemented",
+      "state": "partial",
+      "operation": "HanlinScriptingApplicationSession",
       "capability": null,
-      "contexts": [],
+      "contexts": [
+        "mainApplication"
+      ],
       "declarationEvidence": [
         {
           "category": "const",
@@ -10507,10 +10527,12 @@
     },
     {
       "symbol": "Image",
-      "state": "unsupported",
-      "operation": "unimplemented",
+      "state": "partial",
+      "operation": "HanlinScriptingApplicationSession",
       "capability": null,
-      "contexts": [],
+      "contexts": [
+        "mainApplication"
+      ],
       "declarationEvidence": [
         {
           "category": "const",
@@ -12073,10 +12095,12 @@
     },
     {
       "symbol": "List",
-      "state": "unsupported",
-      "operation": "unimplemented",
+      "state": "partial",
+      "operation": "HanlinScriptingApplicationSession",
       "capability": null,
-      "contexts": [],
+      "contexts": [
+        "mainApplication"
+      ],
       "declarationEvidence": [
         {
           "category": "const",
@@ -13835,10 +13859,12 @@
     },
     {
       "symbol": "Menu",
-      "state": "unsupported",
-      "operation": "unimplemented",
+      "state": "partial",
+      "operation": "HanlinScriptingApplicationSession",
       "capability": null,
-      "contexts": [],
+      "contexts": [
+        "mainApplication"
+      ],
       "declarationEvidence": [
         {
           "category": "type",
@@ -14201,10 +14227,12 @@
     },
     {
       "symbol": "Navigation",
-      "state": "unsupported",
-      "operation": "unimplemented",
+      "state": "partial",
+      "operation": "HanlinScriptingApplicationSession",
       "capability": null,
-      "contexts": [],
+      "contexts": [
+        "mainApplication"
+      ],
       "declarationEvidence": [
         {
           "category": "namespace",
@@ -14396,10 +14424,12 @@
     },
     {
       "symbol": "NavigationStack",
-      "state": "unsupported",
-      "operation": "unimplemented",
+      "state": "partial",
+      "operation": "HanlinScriptingApplicationSession",
       "capability": null,
-      "contexts": [],
+      "contexts": [
+        "mainApplication"
+      ],
       "declarationEvidence": [
         {
           "category": "const",
@@ -15619,10 +15649,12 @@
     },
     {
       "symbol": "ProgressView",
-      "state": "unsupported",
-      "operation": "unimplemented",
+      "state": "partial",
+      "operation": "HanlinScriptingApplicationSession",
       "capability": null,
-      "contexts": [],
+      "contexts": [
+        "mainApplication"
+      ],
       "declarationEvidence": [
         {
           "category": "const",
@@ -16644,10 +16676,12 @@
     },
     {
       "symbol": "RoundedRectangle",
-      "state": "unsupported",
-      "operation": "unimplemented",
+      "state": "partial",
+      "operation": "HanlinScriptingApplicationSession",
       "capability": null,
-      "contexts": [],
+      "contexts": [
+        "mainApplication"
+      ],
       "declarationEvidence": [
         {
           "category": "const",
@@ -17504,10 +17538,12 @@
     },
     {
       "symbol": "Section",
-      "state": "unsupported",
-      "operation": "unimplemented",
+      "state": "partial",
+      "operation": "HanlinScriptingApplicationSession",
       "capability": null,
-      "contexts": [],
+      "contexts": [
+        "mainApplication"
+      ],
       "declarationEvidence": [
         {
           "category": "const",
@@ -18284,10 +18320,12 @@
     },
     {
       "symbol": "Spacer",
-      "state": "unsupported",
-      "operation": "unimplemented",
+      "state": "partial",
+      "operation": "HanlinScriptingApplicationSession",
       "capability": null,
-      "contexts": [],
+      "contexts": [
+        "mainApplication"
+      ],
       "declarationEvidence": [
         {
           "category": "const",
@@ -19038,10 +19076,12 @@
     },
     {
       "symbol": "Tab",
-      "state": "unsupported",
-      "operation": "unimplemented",
+      "state": "partial",
+      "operation": "HanlinScriptingApplicationSession",
       "capability": null,
-      "contexts": [],
+      "contexts": [
+        "mainApplication"
+      ],
       "declarationEvidence": [
         {
           "category": "const",
@@ -19143,10 +19183,12 @@
     },
     {
       "symbol": "TabView",
-      "state": "unsupported",
-      "operation": "unimplemented",
+      "state": "partial",
+      "operation": "HanlinScriptingApplicationSession",
       "capability": null,
-      "contexts": [],
+      "contexts": [
+        "mainApplication"
+      ],
       "declarationEvidence": [
         {
           "category": "const",
@@ -19329,10 +19371,12 @@
     },
     {
       "symbol": "Text",
-      "state": "unsupported",
-      "operation": "unimplemented",
+      "state": "partial",
+      "operation": "HanlinScriptingApplicationSession",
       "capability": null,
-      "contexts": [],
+      "contexts": [
+        "mainApplication"
+      ],
       "declarationEvidence": [
         {
           "category": "const",
@@ -19420,10 +19464,12 @@
     },
     {
       "symbol": "TextField",
-      "state": "unsupported",
-      "operation": "unimplemented",
+      "state": "partial",
+      "operation": "HanlinScriptingApplicationSession",
       "capability": null,
-      "contexts": [],
+      "contexts": [
+        "mainApplication"
+      ],
       "declarationEvidence": [
         {
           "category": "const",
@@ -19765,10 +19811,12 @@
     },
     {
       "symbol": "Toggle",
-      "state": "unsupported",
-      "operation": "unimplemented",
+      "state": "partial",
+      "operation": "HanlinScriptingApplicationSession",
       "capability": null,
-      "contexts": [],
+      "contexts": [
+        "mainApplication"
+      ],
       "declarationEvidence": [
         {
           "category": "const",
@@ -19870,10 +19918,12 @@
     },
     {
       "symbol": "Toolbar",
-      "state": "unsupported",
-      "operation": "unimplemented",
+      "state": "partial",
+      "operation": "HanlinScriptingApplicationSession",
       "capability": null,
-      "contexts": [],
+      "contexts": [
+        "mainApplication"
+      ],
       "declarationEvidence": [
         {
           "category": "function",
@@ -19900,10 +19950,12 @@
     },
     {
       "symbol": "ToolbarItem",
-      "state": "unsupported",
-      "operation": "unimplemented",
+      "state": "partial",
+      "operation": "HanlinScriptingApplicationSession",
       "capability": null,
-      "contexts": [],
+      "contexts": [
+        "mainApplication"
+      ],
       "declarationEvidence": [
         {
           "category": "const",
@@ -20771,10 +20823,12 @@
     },
     {
       "symbol": "VStack",
-      "state": "unsupported",
-      "operation": "unimplemented",
+      "state": "partial",
+      "operation": "HanlinScriptingApplicationSession",
       "capability": null,
-      "contexts": [],
+      "contexts": [
+        "mainApplication"
+      ],
       "declarationEvidence": [
         {
           "category": "const",
@@ -21706,10 +21760,12 @@
     },
     {
       "symbol": "ZStack",
-      "state": "unsupported",
-      "operation": "unimplemented",
+      "state": "partial",
+      "operation": "HanlinScriptingApplicationSession",
       "capability": null,
-      "contexts": [],
+      "contexts": [
+        "mainApplication"
+      ],
       "declarationEvidence": [
         {
           "category": "const",
@@ -23643,10 +23699,12 @@
     },
     {
       "symbol": "createContext",
-      "state": "unsupported",
-      "operation": "unimplemented",
+      "state": "partial",
+      "operation": "HanlinScriptingApplicationSession",
       "capability": null,
-      "contexts": [],
+      "contexts": [
+        "mainApplication"
+      ],
       "declarationEvidence": [
         {
           "category": "function",
@@ -23754,10 +23812,12 @@
     },
     {
       "symbol": "createElement",
-      "state": "unsupported",
-      "operation": "unimplemented",
+      "state": "partial",
+      "operation": "HanlinScriptingApplicationSession",
       "capability": null,
-      "contexts": [],
+      "contexts": [
+        "mainApplication"
+      ],
       "declarationEvidence": [
         {
           "category": "function",
@@ -33940,10 +34000,12 @@
     },
     {
       "symbol": "useCallback",
-      "state": "unsupported",
-      "operation": "unimplemented",
+      "state": "partial",
+      "operation": "HanlinScriptingApplicationSession",
       "capability": null,
-      "contexts": [],
+      "contexts": [
+        "mainApplication"
+      ],
       "declarationEvidence": [
         {
           "category": "function",
@@ -33985,10 +34047,12 @@
     },
     {
       "symbol": "useContext",
-      "state": "unsupported",
-      "operation": "unimplemented",
+      "state": "partial",
+      "operation": "HanlinScriptingApplicationSession",
       "capability": null,
-      "contexts": [],
+      "contexts": [
+        "mainApplication"
+      ],
       "declarationEvidence": [
         {
           "category": "function",
@@ -34015,10 +34079,12 @@
     },
     {
       "symbol": "useEffect",
-      "state": "unsupported",
-      "operation": "unimplemented",
+      "state": "partial",
+      "operation": "HanlinScriptingApplicationSession",
       "capability": null,
-      "contexts": [],
+      "contexts": [
+        "mainApplication"
+      ],
       "declarationEvidence": [
         {
           "category": "function",
@@ -34030,10 +34096,12 @@
     },
     {
       "symbol": "useEffectEvent",
-      "state": "unsupported",
-      "operation": "unimplemented",
+      "state": "partial",
+      "operation": "HanlinScriptingApplicationSession",
       "capability": null,
-      "contexts": [],
+      "contexts": [
+        "mainApplication"
+      ],
       "declarationEvidence": [
         {
           "category": "function",
@@ -34060,10 +34128,12 @@
     },
     {
       "symbol": "useMemo",
-      "state": "unsupported",
-      "operation": "unimplemented",
+      "state": "partial",
+      "operation": "HanlinScriptingApplicationSession",
       "capability": null,
-      "contexts": [],
+      "contexts": [
+        "mainApplication"
+      ],
       "declarationEvidence": [
         {
           "category": "function",
@@ -34075,10 +34145,12 @@
     },
     {
       "symbol": "useObservable",
-      "state": "unsupported",
-      "operation": "unimplemented",
+      "state": "partial",
+      "operation": "HanlinScriptingApplicationSession",
       "capability": null,
-      "contexts": [],
+      "contexts": [
+        "mainApplication"
+      ],
       "declarationEvidence": [
         {
           "category": "function",
@@ -34117,10 +34189,12 @@
     },
     {
       "symbol": "useRef",
-      "state": "unsupported",
-      "operation": "unimplemented",
+      "state": "partial",
+      "operation": "HanlinScriptingApplicationSession",
       "capability": null,
-      "contexts": [],
+      "contexts": [
+        "mainApplication"
+      ],
       "declarationEvidence": [
         {
           "category": "function",
@@ -34159,10 +34233,12 @@
     },
     {
       "symbol": "useState",
-      "state": "unsupported",
-      "operation": "unimplemented",
+      "state": "partial",
+      "operation": "HanlinScriptingApplicationSession",
       "capability": null,
-      "contexts": [],
+      "contexts": [
+        "mainApplication"
+      ],
       "declarationEvidence": [
         {
           "category": "function",

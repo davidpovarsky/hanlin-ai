@@ -9,11 +9,23 @@ if (!process.argv[2]) {
 const packageRoot = path.resolve(process.argv[2]);
 const repositoryRoot = path.resolve(import.meta.dirname, "../..");
 const modules = new Map();
+const importedScriptingSymbols = new Set();
 
 for (const file of walk(packageRoot)) {
   if (!/\.(?:tsx?|jsx?)$/i.test(file) || file.endsWith(".d.ts")) continue;
   const relative = path.relative(packageRoot, file).replaceAll("\\", "/");
-  const output = ts.transpileModule(fs.readFileSync(file, "utf8"), {
+  const sourceText = fs.readFileSync(file, "utf8");
+  const sourceFile = ts.createSourceFile(relative, sourceText, ts.ScriptTarget.ESNext, true);
+  for (const statement of sourceFile.statements) {
+    if (!ts.isImportDeclaration(statement)
+        || statement.moduleSpecifier.text !== "scripting"
+        || !statement.importClause?.namedBindings
+        || !ts.isNamedImports(statement.importClause.namedBindings)) continue;
+    for (const element of statement.importClause.namedBindings.elements) {
+      importedScriptingSymbols.add(element.propertyName?.text ?? element.name.text);
+    }
+  }
+  const output = ts.transpileModule(sourceText, {
     fileName: relative,
     compilerOptions: {
       target: ts.ScriptTarget.ESNext,
@@ -25,6 +37,16 @@ for (const file of walk(packageRoot)) {
     },
   }).outputText;
   modules.set(relative.replace(/\.(?:tsx?|jsx?)$/i, ".js"), output);
+}
+
+const registration = JSON.parse(fs.readFileSync(path.join(
+  repositoryRoot,
+  "Packages/HanlinPlatform/Sources/HanlinScriptingSDK/Resources/runtime-registration.json"
+), "utf8"));
+const runtimeStates = new Map(registration.records.map(record => [record.symbol, record.state]));
+const rejectedImports = [...importedScriptingSymbols].filter(symbol => runtimeStates.get(symbol) === "unsupported");
+if (rejectedImports.length > 0) {
+  throw new Error(`Acceptance imports remain runtime-unsupported: ${rejectedImports.join(", ")}`);
 }
 
 const swift = fs.readFileSync(path.join(
@@ -78,6 +100,7 @@ load("index.js");
 if (!globalThis.__hanlinHasPresentedUI || !rendered) throw new Error("Package did not render ScriptUI");
 console.log(JSON.stringify({
   emittedModuleCount: modules.size,
+  importedScriptingSymbolCount: importedScriptingSymbols.size,
   rootKind: rendered.kind,
   renderedNodeCount: count(rendered),
   presented: globalThis.__hanlinHasPresentedUI,

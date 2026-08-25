@@ -22,6 +22,61 @@
       "notes": "A capability-gated network broker exists, but this declaration is not yet connected through the package runtime as a tested Web-compatible binding."
     }
   },
+  "symbolGroups": [
+    {
+      "symbols": [
+        "AppIntentManager",
+        "AppIntentProtocol",
+        "BarChart",
+        "Button",
+        "Chart",
+        "Circle",
+        "Color",
+        "Device",
+        "Fragment",
+        "HStack",
+        "Image",
+        "List",
+        "Menu",
+        "Navigation",
+        "NavigationStack",
+        "ProgressView",
+        "RoundedRectangle",
+        "Section",
+        "Spacer",
+        "Tab",
+        "TabView",
+        "Text",
+        "TextField",
+        "Toggle",
+        "Toolbar",
+        "ToolbarItem",
+        "VStack",
+        "ZStack",
+        "createContext",
+        "createElement",
+        "useCallback",
+        "useContext",
+        "useEffect",
+        "useEffectEvent",
+        "useMemo",
+        "useObservable",
+        "useRef",
+        "useState"
+      ],
+      "status": "partial",
+      "hanlinSymbol": "HanlinScriptingApplicationSession",
+      "hanlinAPIVersion": "hanlin.scriptui/1.0",
+      "allowedContexts": ["mainApplication"],
+      "behaviorDifferences": ["The live JavaScriptCore bridge implements the listed component, hook, navigation and presentation subset; declaration members outside that tested subset remain unavailable and are not synthesized dynamically."],
+      "tests": [
+        "AI_HLYTests/HanlinScriptingRuntimeTests.swift",
+        "Packages/HanlinPlatform/Tests/HanlinScriptUITests/HanlinScriptUIReconcilerTests.swift",
+        "Scripts/ScriptingReference/smoke-scripting-package-runtime.mjs"
+      ],
+      "notes": "Validated with a real 49-module acceptance package that renders a 321-node interactive ScriptUI tree."
+    }
+  ],
   "symbols": [
     {
       "symbol": "AssistantTool",
@@ -40,9 +95,9 @@
       "hanlinSymbol": "HanlinScriptUIModel",
       "hanlinAPIVersion": "hanlin.wire/2.0",
       "allowedContexts": ["mainApplication", "widget", "appIntent", "liveActivity"],
-      "behaviorDifferences": ["Lifecycle contracts and resume delivery exist, but the TypeScript 7 package compiler cannot currently produce an installable runtime artifact on iOS."],
-      "tests": ["Packages/HanlinPlatform/Tests/HanlinScriptUITests/HanlinScriptUIReconcilerTests.swift"],
-      "notes": "Lifecycle and resume infrastructure is implemented behind a blocked compiler/install gate."
+      "behaviorDifferences": ["The live app session supports exit, basic metadata and deterministic dismissal; minimize/resume parity and the broader Script namespace remain partial."],
+      "tests": ["AI_HLYTests/HanlinScriptingRuntimeTests.swift", "Packages/HanlinPlatform/Tests/HanlinScriptUITests/HanlinScriptUIReconcilerTests.swift"],
+      "notes": "Connected to installed scripting-jsc app artifacts and native ScriptUI presentation."
     },
     {
       "symbol": "Storage",
@@ -51,9 +106,9 @@
       "hanlinAPIVersion": "hanlin.services/1.0",
       "requiredCapability": "storage",
       "allowedContexts": ["mainApplication", "backgroundTask", "appIntent"],
-      "behaviorDifferences": ["Namespacing, authorization and quotas are implemented; the generated JavaScript binding is not connected to an installable package runtime."],
-      "tests": ["Packages/HanlinPlatform/Tests/HanlinScriptServicesTests/HanlinScriptServiceBrokerTests.swift"],
-      "notes": "Host broker implemented; end-to-end Scripting binding pending."
+      "behaviorDifferences": ["The live synchronous binding is package-namespaced, capability-gated and quota-bounded; it does not yet expose the complete Storage namespace or broker audit stream."],
+      "tests": ["AI_HLYTests/HanlinScriptingRuntimeTests.swift", "Packages/HanlinPlatform/Tests/HanlinScriptServicesTests/HanlinScriptServiceBrokerTests.swift"],
+      "notes": "Connected to installed scripting-jsc app sessions with revocation closing the active session."
     },
     {
       "symbol": "FileManager",
