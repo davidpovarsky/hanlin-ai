@@ -152,7 +152,23 @@ struct HanlinScriptUIReconcilerTests {
 
         #expect(model.navigationPath.map(\.id) == ["documents"])
         model.updateNavigationPath([])
-        #expect(events == [("event-path", .array([]))])
+        #expect(events.count == 1)
+        #expect(events.first?.0 == "event-path")
+        #expect(events.first?.1 == .array([]))
+    }
+
+    @MainActor
+    @Test("Interactive acceptance primitives retain their wire representation")
+    func acceptancePrimitiveWireRepresentation() throws {
+        let primitives: [HanlinScriptUIPrimitive] = [
+            .contentUnavailableView, .disclosureGroup, .slider, .lazyVGrid,
+            .navigationSplitView, .scrollViewReader
+        ]
+        for primitive in primitives {
+            let node = HanlinScriptUINode(kind: primitive, properties: ["value": .number(18)])
+            let data = try JSONEncoder().encode(node)
+            #expect(try JSONDecoder().decode(HanlinScriptUINode.self, from: data) == node)
+        }
     }
 
     @MainActor

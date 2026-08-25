@@ -18,12 +18,12 @@
     {
       "id": "sefaria-multi-engine",
       "typecheck": {"status": "source-and-authoritative-api-usage-issues", "errorCount": 4, "evidence": "Picker callback narrowing, a missing project field, widened shape literals, and an incompatible composed callback."},
-      "compileBundle": {"status": "transpile-passed-bundle-blocked", "emittedModuleCount": 62, "blocker": "Required ScriptUI values remain runtime-unsupported or behavior-unverified."},
-      "runtimeLaunch": {"status": "blocked", "blockers": ["ContentUnavailableView", "DisclosureGroup", "Slider", "Picker", "NavigationDestination", "LazyVGrid", "NavigationSplitView", "ScrollViewReader"]},
-      "uiRender": {"status": "not-reached"},
-      "interaction": {"status": "not-reached"},
-      "nativeServices": {"status": "implementation-verified-outside-project-launch", "passed": ["private Storage JSON/Data namespace", "FileManager/Path bounded VFS", "buffered fetch/Headers/Request/Response with cancellation"], "blockers": ["Spotlight entrypoint", "project launch remains gated by ScriptUI symbols"]},
-      "remainingBlockers": ["Four source/API-usage errors", "split navigation and reader/proxy semantics", "Spotlight and native entrypoint coverage"]
+      "compileBundle": {"status": "passed-for-smoke-profile", "emittedModuleCount": 62, "importedScriptingRuntimeSymbolCount": 33},
+      "runtimeLaunch": {"status": "passed-node-hosted-bootstrap", "presented": true, "rootKind": "navigationSplitView"},
+      "uiRender": {"status": "passed-structural-smoke", "renderedNodeCount": 29, "evidence": "The untouched 62-module project reaches its initial split-navigation UI through the exact application bootstrap while starting its library-index cache flow."},
+      "interaction": {"status": "shared-runtime-verified", "passed": ["NavigationSplitView visibility and preferred-column bindings", "ScrollViewReader scrollTo target and anchor propagation", "DisclosureGroup and Slider rerender", "Observable subscribe/unsubscribe"], "notExercised": ["real-project control automation on Simulator"]},
+      "nativeServices": {"status": "partial", "passed": ["private Storage JSON/Data namespace", "FileManager/Path bounded VFS", "buffered fetch/Headers/Request/Response with cancellation"], "blockers": ["Spotlight entrypoint and indexing", "real-project Simulator launch"]},
+      "remainingBlockers": ["Four source/API-usage errors", "Spotlight/native entrypoint coverage", "real-project Simulator interaction and visual validation"]
     },
     {
       "id": "nativ-ai-9",

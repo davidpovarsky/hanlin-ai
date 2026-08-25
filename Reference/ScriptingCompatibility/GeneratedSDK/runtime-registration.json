@@ -5023,10 +5023,12 @@
     },
     {
       "symbol": "ContentUnavailableView",
-      "state": "unsupported",
-      "operation": "unimplemented",
+      "state": "partial",
+      "operation": "HanlinScriptingApplicationSession",
       "capability": null,
-      "contexts": [],
+      "contexts": [
+        "mainApplication"
+      ],
       "declarationEvidence": [
         {
           "category": "const",
@@ -5965,10 +5967,12 @@
     },
     {
       "symbol": "DisclosureGroup",
-      "state": "unsupported",
-      "operation": "unimplemented",
+      "state": "partial",
+      "operation": "HanlinScriptingApplicationSession",
       "capability": null,
-      "contexts": [],
+      "contexts": [
+        "mainApplication"
+      ],
       "declarationEvidence": [
         {
           "category": "const",
@@ -11884,10 +11888,12 @@
     },
     {
       "symbol": "LazyVGrid",
-      "state": "unsupported",
-      "operation": "unimplemented",
+      "state": "partial",
+      "operation": "HanlinScriptingApplicationSession",
       "capability": null,
-      "contexts": [],
+      "contexts": [
+        "mainApplication"
+      ],
       "declarationEvidence": [
         {
           "category": "const",
@@ -14369,10 +14375,12 @@
     },
     {
       "symbol": "NavigationSplitView",
-      "state": "unsupported",
-      "operation": "unimplemented",
+      "state": "partial",
+      "operation": "HanlinScriptingApplicationSession",
       "capability": null,
-      "contexts": [],
+      "contexts": [
+        "mainApplication"
+      ],
       "declarationEvidence": [
         {
           "category": "const",
@@ -16149,10 +16157,12 @@
     },
     {
       "symbol": "Rectangle",
-      "state": "unsupported",
-      "operation": "unimplemented",
+      "state": "partial",
+      "operation": "HanlinScriptingApplicationSession",
       "capability": null,
-      "contexts": [],
+      "contexts": [
+        "mainApplication"
+      ],
       "declarationEvidence": [
         {
           "category": "const",
@@ -17476,10 +17486,12 @@
     },
     {
       "symbol": "ScrollViewReader",
-      "state": "unsupported",
-      "operation": "unimplemented",
+      "state": "partial",
+      "operation": "HanlinScriptingApplicationSession",
       "capability": null,
-      "contexts": [],
+      "contexts": [
+        "mainApplication"
+      ],
       "declarationEvidence": [
         {
           "category": "const",
@@ -18108,10 +18120,12 @@
     },
     {
       "symbol": "Slider",
-      "state": "unsupported",
-      "operation": "unimplemented",
+      "state": "partial",
+      "operation": "HanlinScriptingApplicationSession",
       "capability": null,
-      "contexts": [],
+      "contexts": [
+        "mainApplication"
+      ],
       "declarationEvidence": [
         {
           "category": "const",

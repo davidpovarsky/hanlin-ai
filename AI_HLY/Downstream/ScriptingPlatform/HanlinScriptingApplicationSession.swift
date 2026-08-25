@@ -510,6 +510,9 @@ private extension HanlinScriptingApplicationSession {
       let dismissPresentation = null;
       let rendering = false;
       let renderPending = false;
+      let scrollRevision = 0;
+      let scrollTarget = null;
+      let scrollAnchor = null;
       let nativeRequestCounter = 0;
       const nativeRequests = new Map();
 
@@ -974,15 +977,16 @@ private extension HanlinScriptingApplicationSession {
         SecureField: "textField", HStack: "hStack", VStack: "vStack", ZStack: "zStack",
         ScrollView: "scrollView", Group: "group", Spacer: "spacer", Divider: "divider",
         ProgressView: "progress", NavigationStack: "navigationStack",
+        NavigationSplitView: "navigationSplitView", ScrollViewReader: "scrollViewReader",
         NavigationLink: "navigationLink", NavigationDestination: "navigationDestination",
         TabView: "tabView", Tab: "tab",
         List: "scrollView", Form: "form", Section: "group", GroupBox: "group",
-        LazyVStack: "vStack", LazyVGrid: "vStack", Grid: "vStack", LazyHStack: "hStack",
+        LazyVStack: "vStack", LazyVGrid: "lazyVGrid", Grid: "vStack", LazyHStack: "hStack",
         LazyHGrid: "hStack", ControlGroup: "controlGroup", Toolbar: "group", ToolbarItem: "group",
         Label: "label", Menu: "menu", Link: "button", Toggle: "toggle", Picker: "picker",
-        Slider: "progress", BarChart: "barChart", Chart: "chart",
+        Slider: "slider", DisclosureGroup: "disclosureGroup", BarChart: "barChart", Chart: "chart",
         RoundedRectangle: "roundedRectangle", Rectangle: "rectangle", Capsule: "roundedRectangle",
-        Circle: "circle", ContentUnavailableView: "vStack", EmptyView: "group", Markdown: "markdown",
+        Circle: "circle", ContentUnavailableView: "contentUnavailableView", EmptyView: "group", Markdown: "markdown",
         SVG: "svg"
       });
 
@@ -1033,11 +1037,26 @@ private extension HanlinScriptingApplicationSession {
       }
 
       function useObservable(initialValue) {
-        const index = nextState(initialValue);
+        const index = hookCursor++;
+        if (!(index in state)) state[index] = {
+          value: typeof initialValue === "function" ? initialValue() : initialValue,
+          subscribers: new Set()
+        };
+        const observableState = state[index];
         return Object.freeze({
           __hanlinObservable: true,
-          get value() { return state[index]; },
-          setValue(value) { state[index] = typeof value === "function" ? value(state[index]) : value; requestRender(); }
+          get value() { return observableState.value; },
+          setValue(value) {
+            const next = typeof value === "function" ? value(observableState.value) : value;
+            observableState.value = next;
+            for (const subscriber of [...observableState.subscribers]) subscriber(next);
+            requestRender();
+          },
+          subscribe(subscriber) {
+            if (typeof subscriber !== "function") throw new TypeError("HANLIN_UI:observable_subscriber");
+            observableState.subscribers.add(subscriber);
+          },
+          unsubscribe(subscriber) { observableState.subscribers.delete(subscriber); }
         });
       }
 
@@ -1126,7 +1145,9 @@ private extension HanlinScriptingApplicationSession {
           const builder = configuredDestination.children.find(child => typeof child === "function");
           if (typeof builder === "function") navigationDestinationBuilders.push(builder);
         }
-        let children = flatten(value.children.map(materialize));
+        let children = value.kind === "scrollViewReader"
+          ? []
+          : flatten(value.children.map(materialize));
         if (value.hostName === "Section") {
           children = [
             ...materialize(value.properties.header),
@@ -1167,6 +1188,81 @@ private extension HanlinScriptingApplicationSession {
             if (source?.__hanlinObservable) source.setValue(selectedValue);
             if (typeof value.properties.onChanged === "function") value.properties.onChanged(selectedValue);
           });
+        }
+        if (value.kind === "contentUnavailableView") {
+          const labelNodes = materialize(value.properties.label);
+          const descriptionNodes = materialize(value.properties.description);
+          const actionNodes = materialize(value.properties.actions);
+          properties.labelCount = labelNodes.length;
+          properties.descriptionCount = descriptionNodes.length;
+          properties.actionCount = actionNodes.length;
+          children = [...labelNodes, ...descriptionNodes, ...actionNodes, ...children];
+        }
+        if (value.kind === "disclosureGroup") {
+          const source = value.properties.isExpanded;
+          const current = source?.__hanlinObservable ? source.value : source;
+          const labelNodes = materialize(value.properties.label);
+          properties.isExpanded = current === true;
+          properties.labelCount = labelNodes.length;
+          properties.onChange = registerHandler(next => {
+            if (source?.__hanlinObservable) source.setValue(next);
+            if (typeof value.properties.onChanged === "function") value.properties.onChanged(next);
+          });
+          children = [...labelNodes, ...children];
+        }
+        if (value.kind === "slider") {
+          const source = value.properties.value;
+          const current = source?.__hanlinObservable ? source.value : source;
+          const labelNodes = materialize(value.properties.label);
+          properties.value = Number(current ?? value.properties.min ?? 0);
+          properties.labelCount = labelNodes.length;
+          properties.onChange = registerHandler(next => {
+            const number = Number(next);
+            if (source?.__hanlinObservable) source.setValue(number);
+            if (typeof value.properties.onChanged === "function") value.properties.onChanged(number);
+          });
+          properties.onEditingChange = typeof value.properties.onEditingChanged === "function"
+            ? registerHandler(value.properties.onEditingChanged)
+            : null;
+          children = [...labelNodes, ...children];
+        }
+        if (value.kind === "navigationSplitView") {
+          const visibility = value.properties.columnVisibility;
+          const compactColumn = value.properties.preferredCompactColumn;
+          const visibilityValue = visibility?.__hanlinObservable
+            ? visibility.value : visibility?.value ?? visibility;
+          const compactValue = compactColumn?.__hanlinObservable
+            ? compactColumn.value : compactColumn?.value ?? compactColumn;
+          const sidebarNodes = materialize(value.properties.sidebar);
+          const contentNodes = materialize(value.properties.content);
+          properties.columnVisibility = String(visibilityValue ?? "automatic");
+          properties.preferredCompactColumn = String(compactValue ?? "detail");
+          properties.sidebarCount = sidebarNodes.length;
+          properties.contentCount = contentNodes.length;
+          properties.onColumnVisibilityChange = registerHandler(next => {
+            if (visibility?.__hanlinObservable) visibility.setValue(next);
+            if (typeof visibility?.onChanged === "function") visibility.onChanged(next);
+          });
+          properties.onPreferredCompactColumnChange = registerHandler(next => {
+            if (compactColumn?.__hanlinObservable) compactColumn.setValue(next);
+            if (typeof compactColumn?.onChanged === "function") compactColumn.onChanged(next);
+          });
+          children = [...sidebarNodes, ...contentNodes, ...children];
+        }
+        if (value.kind === "scrollViewReader") {
+          const builder = value.children.find(child => typeof child === "function");
+          const proxy = Object.freeze({
+            scrollTo(id, anchor = null) {
+              scrollTarget = String(id);
+              scrollAnchor = anchor == null ? null : String(anchor);
+              scrollRevision += 1;
+              requestRender();
+            }
+          });
+          children = typeof builder === "function" ? materialize(builder(proxy)) : children;
+          properties.scrollTarget = scrollTarget;
+          properties.scrollAnchor = scrollAnchor;
+          properties.scrollRevision = scrollRevision;
         }
         if (value.kind === "svg") {
           if (typeof value.properties.code === "string") {

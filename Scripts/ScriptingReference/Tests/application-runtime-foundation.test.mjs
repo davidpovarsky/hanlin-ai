@@ -217,3 +217,104 @@ test("Form, Label, Markdown, ControlGroup, ScrollView, Group, and Picker retain 
   assert.equal(group.children[3].children[0].properties.content, "**Ready**");
   assert.match(group.children[4].properties.code, /^<svg/);
 });
+
+test("ContentUnavailableView, DisclosureGroup, Slider, and LazyVGrid preserve native semantics", () => {
+  const { context, rendered } = runtime();
+  vm.runInContext(`
+    const expanded = useObservable(false);
+    const amount = useObservable(18);
+    Navigation.present({ element: createElement(VStack, null,
+      createElement(ContentUnavailableView, {
+        label: createElement(Label, { title: "No results", systemImage: "magnifyingglass" }),
+        description: createElement(Text, null, "Try another query"),
+        actions: [createElement(Button, { title: "Retry" })],
+      }),
+      createElement(DisclosureGroup, { title: "Details", isExpanded: expanded },
+        createElement(Text, null, "Expanded content"),
+      ),
+      createElement(Slider, { value: amount, min: 12, max: 36, step: 1 }),
+      createElement(LazyVGrid, {
+        columns: [{ size: { type: "flexible" } }, { size: { type: "fixed", value: 80 } }],
+        spacing: 8,
+      }, createElement(Text, null, "Cell")),
+    ) });
+  `, context);
+
+  let root = rendered();
+  assert.deepEqual(root.children.map(node => node.kind), [
+    "contentUnavailableView", "disclosureGroup", "slider", "lazyVGrid",
+  ]);
+  const unavailable = root.children[0];
+  assert.deepEqual(
+    [unavailable.properties.labelCount, unavailable.properties.descriptionCount, unavailable.properties.actionCount],
+    [1, 1, 1],
+  );
+  assert.deepEqual(unavailable.children.map(node => node.kind), ["label", "text", "button"]);
+  assert.equal(root.children[1].properties.isExpanded, false);
+  context.__hanlinDispatch(root.children[1].properties.onChange, "true");
+  root = rendered();
+  assert.equal(root.children[1].properties.isExpanded, true);
+  assert.equal(root.children[2].properties.value, 18);
+  context.__hanlinDispatch(root.children[2].properties.onChange, "24");
+  root = rendered();
+  assert.equal(root.children[2].properties.value, 24);
+  assert.equal(root.children[3].properties.columns.length, 2);
+});
+
+test("NavigationSplitView bindings and ScrollViewReader proxy round-trip through native properties", () => {
+  const { context, rendered } = runtime();
+  vm.runInContext(`
+    const visibility = useObservable("all");
+    const compactColumn = useObservable("detail");
+    const reader = useRef(null);
+    Navigation.present({ element: createElement(NavigationSplitView, {
+      columnVisibility: visibility,
+      preferredCompactColumn: compactColumn,
+      sidebar: createElement(Text, null, "Sidebar"),
+      content: createElement(Text, null, "Content"),
+    }, createElement(ScrollViewReader, null, proxy => {
+      reader.current = proxy;
+      return createElement(ScrollView, null, createElement(Text, { id: "segment-7" }, "Detail"));
+    })) });
+    reader.current.scrollTo("segment-7", "center");
+  `, context);
+
+  let root = rendered();
+  assert.equal(root.kind, "navigationSplitView");
+  assert.equal(root.properties.sidebarCount, 1);
+  assert.equal(root.properties.contentCount, 1);
+  assert.equal(root.properties.columnVisibility, "all");
+  const reader = root.children[2];
+  assert.equal(reader.kind, "scrollViewReader");
+  assert.equal(reader.properties.scrollTarget, "segment-7");
+  assert.equal(reader.properties.scrollAnchor, "center");
+  assert.equal(reader.children[0].children[0].properties.id, "segment-7");
+
+  context.__hanlinDispatch(root.properties.onColumnVisibilityChange, '"detailOnly"');
+  context.__hanlinDispatch(root.properties.onPreferredCompactColumnChange, '"sidebar"');
+  root = rendered();
+  assert.equal(root.properties.columnVisibility, "detailOnly");
+  assert.equal(root.properties.preferredCompactColumn, "sidebar");
+});
+
+test("Observable subscribers receive changes and can unsubscribe without affecting rendering", () => {
+  const { context } = runtime();
+  const values = vm.runInContext(`
+    (() => {
+      const received = [];
+      let observable;
+      function App() {
+        observable = useObservable(1);
+        return createElement(Text, null, String(observable.value));
+      }
+      Navigation.present({ element: createElement(App) });
+      const subscriber = value => received.push(value);
+      observable.subscribe(subscriber);
+      observable.setValue(2);
+      observable.unsubscribe(subscriber);
+      observable.setValue(3);
+      return received;
+    })()
+  `, context);
+  assert.deepEqual([...values], [2]);
+});

@@ -91,7 +91,7 @@ public final class HanlinScriptUIModel {
         dispatch(handlerID: handlerID, payload: .bool(false))
     }
 
-    fileprivate func updateNavigationPath(_ path: [HanlinScriptUIRoute]) {
+    func updateNavigationPath(_ path: [HanlinScriptUIRoute]) {
         navigationPath = path
         dispatch(
             handlerID: navigationPathChangeHandlerID,
@@ -181,7 +181,8 @@ private struct HanlinScriptUINodeView: View {
 
     @ViewBuilder
     var body: some View {
-        switch node.kind {
+        Group {
+            switch node.kind {
         case .fragment, .group:
             Group { children(node) }
         case .text:
@@ -249,6 +250,105 @@ private struct HanlinScriptUINodeView: View {
                     HanlinScriptUINodeView(node: child, model: model)
                         .tag(child.string("tag") ?? child.string("text") ?? String(index))
                 }
+            }
+        case .contentUnavailableView:
+            ContentUnavailableView {
+                if node.integer("labelCount") > 0 {
+                    childRange(node, from: 0, count: node.integer("labelCount"))
+                } else {
+                    Label(node.string("title") ?? "", systemImage: node.string("systemImage") ?? "tray")
+                }
+            } description: {
+                if node.integer("descriptionCount") > 0 {
+                    childRange(
+                        node,
+                        from: node.integer("labelCount"),
+                        count: node.integer("descriptionCount")
+                    )
+                } else if let description = node.string("description") {
+                    Text(description)
+                }
+            } actions: {
+                childRange(
+                    node,
+                    from: node.integer("labelCount") + node.integer("descriptionCount"),
+                    count: node.integer("actionCount")
+                )
+            }
+        case .disclosureGroup:
+            DisclosureGroup(isExpanded: Binding(
+                get: { node.bool("isExpanded") ?? false },
+                set: { model.dispatch(handlerID: node.string("onChange"), payload: .bool($0)) }
+            )) {
+                childRange(node, from: node.integer("labelCount"))
+            } label: {
+                if node.integer("labelCount") > 0 {
+                    childRange(node, from: 0, count: node.integer("labelCount"))
+                } else {
+                    Text(node.string("title") ?? "")
+                }
+            }
+        case .slider:
+            Slider(
+                value: Binding(
+                    get: { node.number("value") ?? node.number("min") ?? 0 },
+                    set: { model.dispatch(handlerID: node.string("onChange"), payload: .number($0)) }
+                ),
+                in: (node.number("min") ?? 0)...(node.number("max") ?? 1),
+                step: max(node.number("step") ?? 1, .leastNonzeroMagnitude),
+                onEditingChanged: {
+                    model.dispatch(handlerID: node.string("onEditingChange"), payload: .bool($0))
+                }
+            ) {
+                if node.integer("labelCount") > 0 {
+                    childRange(node, from: 0, count: node.integer("labelCount"))
+                } else {
+                    Text(node.string("title") ?? "Value")
+                }
+            }
+        case .lazyVGrid:
+            LazyVGrid(
+                columns: node.gridColumns(),
+                alignment: .leading,
+                spacing: node.dimension("spacing")
+            ) { children(node) }
+            .padding(node.edgeInsets())
+        case .navigationSplitView:
+            if node.integer("contentCount") > 0 {
+                NavigationSplitView(
+                    columnVisibility: splitVisibilityBinding,
+                    preferredCompactColumn: preferredCompactColumnBinding
+                ) {
+                    childRange(node, from: 0, count: node.integer("sidebarCount"))
+                } content: {
+                    childRange(
+                        node,
+                        from: node.integer("sidebarCount"),
+                        count: node.integer("contentCount")
+                    )
+                } detail: {
+                    childRange(
+                        node,
+                        from: node.integer("sidebarCount") + node.integer("contentCount")
+                    )
+                }
+            } else {
+                NavigationSplitView(
+                    columnVisibility: splitVisibilityBinding,
+                    preferredCompactColumn: preferredCompactColumnBinding
+                ) {
+                    childRange(node, from: 0, count: node.integer("sidebarCount"))
+                } detail: {
+                    childRange(node, from: node.integer("sidebarCount"))
+                }
+            }
+        case .scrollViewReader:
+            ScrollViewReader { proxy in
+                children(node)
+                    .onChange(of: node.integer("scrollRevision"), initial: true) { _, _ in
+                        guard let target = node.string("scrollTarget") else { return }
+                        proxy.scrollTo(target, anchor: node.scrollAnchor())
+                    }
             }
         case .markdown:
             Text(node.markdown())
@@ -326,13 +426,48 @@ private struct HanlinScriptUINodeView: View {
             children(node)
                 .tabItem { Label(node.string("title") ?? "", systemImage: node.string("systemName") ?? "circle") }
                 .tag(node.string("id"))
+            }
         }
+        .hanlinID(node.string("id") ?? node.key)
+    }
+
+    private var splitVisibilityBinding: Binding<NavigationSplitViewVisibility> {
+        Binding(
+            get: { node.splitVisibility() },
+            set: {
+                model.dispatch(
+                    handlerID: node.string("onColumnVisibilityChange"),
+                    payload: .string($0.hanlinName)
+                )
+            }
+        )
+    }
+
+    private var preferredCompactColumnBinding: Binding<NavigationSplitViewColumn> {
+        Binding(
+            get: { node.preferredCompactColumn() },
+            set: {
+                model.dispatch(
+                    handlerID: node.string("onPreferredCompactColumnChange"),
+                    payload: .string($0.hanlinName)
+                )
+            }
+        )
     }
 
     @ViewBuilder
     private func children(_ node: HanlinScriptUINode) -> some View {
         ForEach(node.children.indices, id: \.self) { index in
             HanlinScriptUINodeView(node: node.children[index], model: model)
+        }
+    }
+
+    @ViewBuilder
+    private func childRange(_ node: HanlinScriptUINode, from start: Int, count: Int? = nil) -> some View {
+        let lowerBound = min(max(start, 0), node.children.count)
+        let upperBound = min(lowerBound + max(count ?? (node.children.count - lowerBound), 0), node.children.count)
+        ForEach(Array(node.children[lowerBound..<upperBound]).indices, id: \.self) { index in
+            HanlinScriptUINodeView(node: node.children[lowerBound + index], model: model)
         }
     }
 }
@@ -373,6 +508,69 @@ private extension HanlinScriptUINode {
         switch properties[name] {
         case let .integer(value): Double(value)
         case let .number(value): value
+        default: nil
+        }
+    }
+
+    func integer(_ name: String) -> Int {
+        switch properties[name] {
+        case let .integer(value): Int(value)
+        case let .number(value): Int(value)
+        default: 0
+        }
+    }
+
+    func gridColumns() -> [GridItem] {
+        guard case let .array(values)? = properties["columns"] else {
+            return [.init(.flexible())]
+        }
+        let columns = values.compactMap { value -> GridItem? in
+            guard case let .object(column) = value,
+                  case let .object(size)? = column["size"] else { return nil }
+            func number(_ object: HanlinObject<HanlinValue>, _ key: String) -> CGFloat? {
+                switch object[key] {
+                case let .integer(value): CGFloat(value)
+                case let .number(value): CGFloat(value)
+                default: nil
+                }
+            }
+            let type: String? = if case let .string(value)? = size["type"] { value } else { nil }
+            let minimum = number(size, "minimum") ?? 10
+            let maximum = number(size, "maximum") ?? .infinity
+            let gridSize: GridItem.Size = switch type {
+            case "fixed": .fixed(number(size, "value") ?? minimum)
+            case "adaptive": .adaptive(minimum: minimum, maximum: maximum)
+            default: .flexible(minimum: minimum, maximum: maximum)
+            }
+            return .init(gridSize, spacing: number(column, "spacing"))
+        }
+        return columns.isEmpty ? [.init(.flexible())] : columns
+    }
+
+    func splitVisibility() -> NavigationSplitViewVisibility {
+        switch string("columnVisibility") {
+        case "all": .all
+        case "doubleColumn": .doubleColumn
+        case "detailOnly": .detailOnly
+        default: .automatic
+        }
+    }
+
+    func preferredCompactColumn() -> NavigationSplitViewColumn {
+        switch string("preferredCompactColumn") {
+        case "sidebar": .sidebar
+        case "content": .content
+        default: .detail
+        }
+    }
+
+    func scrollAnchor() -> UnitPoint? {
+        switch string("scrollAnchor") {
+        case "top": .top
+        case "bottom": .bottom
+        case "leading": .leading
+        case "trailing": .trailing
+        case "center": .center
         default: nil
         }
     }
@@ -520,4 +718,28 @@ private struct HanlinScriptUIChartMark: Identifiable {
     let id: Int
     let label: String
     let value: Double
+}
+
+private extension View {
+    @ViewBuilder
+    func hanlinID(_ value: String?) -> some View {
+        if let value { id(value) } else { self }
+    }
+}
+
+private extension NavigationSplitViewVisibility {
+    var hanlinName: String {
+        if self == .all { "all" }
+        else if self == .doubleColumn { "doubleColumn" }
+        else if self == .detailOnly { "detailOnly" }
+        else { "automatic" }
+    }
+}
+
+private extension NavigationSplitViewColumn {
+    var hanlinName: String {
+        if self == .sidebar { "sidebar" }
+        else if self == .content { "content" }
+        else { "detail" }
+    }
 }

@@ -18,6 +18,12 @@ public enum HanlinScriptUIPrimitive: String, Codable, CaseIterable, Hashable, Se
     case label
     case controlGroup
     case picker
+    case contentUnavailableView
+    case disclosureGroup
+    case slider
+    case lazyVGrid
+    case navigationSplitView
+    case scrollViewReader
     case markdown
     case svg
     case spacer
