@@ -14,6 +14,8 @@ public final class HanlinScriptingApplicationSession {
     private let fileSystem: HanlinScriptingPackageFileSystem
     private let networkAllowed: Bool
     private let networkLoader: HanlinScriptingNetworkLoader
+    private let assistantAllowed: Bool
+    private let assistantLoader: HanlinScriptingAssistantLoader
     private var nativeTasks: [String: Task<Void, Never>] = [:]
     private var disposed = false
 
@@ -26,7 +28,9 @@ public final class HanlinScriptingApplicationSession {
         networkAllowed: Bool = false,
         runtimeRoot: URL? = nil,
         packageSourceDirectory: URL? = nil,
-        networkLoader: @escaping HanlinScriptingNetworkLoader = HanlinScriptingURLSessionLoader.load
+        networkLoader: @escaping HanlinScriptingNetworkLoader = HanlinScriptingURLSessionLoader.load,
+        assistantAllowed: Bool = false,
+        assistantLoader: @escaping HanlinScriptingAssistantLoader = HanlinScriptingUnavailableAssistantLoader.load
     ) throws {
         guard let virtualMachine = JSVirtualMachine(),
               let context = JSContext(virtualMachine: virtualMachine) else {
@@ -46,6 +50,8 @@ public final class HanlinScriptingApplicationSession {
         )
         self.networkAllowed = networkAllowed
         self.networkLoader = networkLoader
+        self.assistantAllowed = assistantAllowed
+        self.assistantLoader = assistantLoader
 
         let router = HanlinScriptingUIEventRouter()
         model = HanlinScriptUIModel(root: .init(kind: .fragment)) { handlerID, payload in
@@ -103,6 +109,8 @@ public final class HanlinScriptingApplicationSession {
         context.setObject(nil, forKeyedSubscript: "__hanlinNativeFileInfo" as NSString)
         context.setObject(nil, forKeyedSubscript: "__hanlinNativeFileSync" as NSString)
         context.setObject(nil, forKeyedSubscript: "__hanlinNativeAsync" as NSString)
+        context.setObject(nil, forKeyedSubscript: "__hanlinNativeAssistantAvailable" as NSString)
+        context.setObject(nil, forKeyedSubscript: "__hanlinNativeAssistantStart" as NSString)
         context.setObject(nil, forKeyedSubscript: "__hanlinCancelNative" as NSString)
     }
 
@@ -156,6 +164,13 @@ public final class HanlinScriptingApplicationSession {
             [weak self] requestID, operation, json in
             self?.enqueueNativeRequest(id: requestID, operation: operation, payloadJSON: json)
         }
+        let assistantStart: @convention(block) (String, String) -> Void = {
+            [weak self] requestID, json in
+            self?.enqueueAssistantRequest(id: requestID, payloadJSON: json)
+        }
+        let assistantAvailable: @convention(block) () -> Bool = { [assistantAllowed] in
+            assistantAllowed
+        }
         let cancelNative: @convention(block) (String) -> Void = { [weak self] requestID in
             self?.nativeTasks[requestID]?.cancel()
         }
@@ -171,7 +186,58 @@ public final class HanlinScriptingApplicationSession {
         context.setObject(fileInfo, forKeyedSubscript: "__hanlinNativeFileInfo" as NSString)
         context.setObject(fileSync, forKeyedSubscript: "__hanlinNativeFileSync" as NSString)
         context.setObject(nativeAsync, forKeyedSubscript: "__hanlinNativeAsync" as NSString)
+        context.setObject(
+            assistantAvailable,
+            forKeyedSubscript: "__hanlinNativeAssistantAvailable" as NSString
+        )
+        context.setObject(assistantStart, forKeyedSubscript: "__hanlinNativeAssistantStart" as NSString)
         context.setObject(cancelNative, forKeyedSubscript: "__hanlinCancelNative" as NSString)
+    }
+
+    private func enqueueAssistantRequest(id: String, payloadJSON: String) {
+        guard !disposed, assistantAllowed, !id.isEmpty, id.utf8.count <= 128,
+              nativeTasks[id] == nil else {
+            resolveAssistantRequest(
+                id: id,
+                resultJSON: HanlinScriptingNativeJSON.failure(HanlinScriptingNativeError(
+                    name: "Error",
+                    code: assistantAllowed ? "invalid_request" : "permission_denied",
+                    message: assistantAllowed
+                        ? "The Assistant request could not be started."
+                        : "The Assistant capability is not granted."
+                ))
+            )
+            return
+        }
+        let task = Task { @MainActor [weak self] in
+            guard let self else { return }
+            do {
+                let request = try HanlinScriptingAssistantPayloadDecoder.decode(payloadJSON)
+                let stream = try await assistantLoader(request)
+                for try await chunk in stream {
+                    try Task.checkCancellation()
+                    resolveAssistantRequest(
+                        id: id,
+                        resultJSON: HanlinScriptingNativeJSON.success(try chunk.nativeObject())
+                    )
+                }
+                try Task.checkCancellation()
+                resolveAssistantRequest(id: id, resultJSON: HanlinScriptingNativeJSON.success(NSNull()))
+            } catch is CancellationError {
+                resolveAssistantRequest(
+                    id: id,
+                    resultJSON: HanlinScriptingNativeJSON.failure(HanlinScriptingNativeError(
+                        name: "AbortError",
+                        code: "cancelled",
+                        message: "The Assistant request was cancelled."
+                    ))
+                )
+            } catch {
+                resolveAssistantRequest(id: id, resultJSON: HanlinScriptingNativeJSON.failure(error))
+            }
+            nativeTasks[id] = nil
+        }
+        nativeTasks[id] = task
     }
 
     private func enqueueNativeRequest(id: String, operation: String, payloadJSON: String) {
@@ -273,6 +339,17 @@ public final class HanlinScriptingApplicationSession {
         if exception != nil {
             nativeTasks[id]?.cancel()
         }
+    }
+
+    private func resolveAssistantRequest(id: String, resultJSON: String) {
+        guard !disposed,
+              let function = context.objectForKeyedSubscript("__hanlinAssistantReceive"),
+              !function.isUndefined else { return }
+        var exception: JSValue?
+        context.exceptionHandler = { _, value in exception = value }
+        function.call(withArguments: [id, resultJSON])
+        context.exceptionHandler = nil
+        if exception != nil { nativeTasks[id]?.cancel() }
     }
 
     private func evaluate(_ source: String, filename: String) throws {
@@ -515,6 +592,7 @@ private extension HanlinScriptingApplicationSession {
       let scrollAnchor = null;
       let nativeRequestCounter = 0;
       const nativeRequests = new Map();
+      const assistantStreams = new Map();
 
       function nativeError(value) {
         const error = new Error(value?.message || "The native operation failed.");
@@ -555,6 +633,152 @@ private extension HanlinScriptingApplicationSession {
         request.signal?.removeEventListener("abort", request.onAbort);
         try { request.resolve(decodeNativeResult(json)); }
         catch (error) { request.reject(error); }
+      }
+
+      class HanlinAssistantStream {
+        constructor(id) {
+          this.id = id;
+          this.queue = [];
+          this.waiter = null;
+          this.terminalError = null;
+          this.finished = false;
+          this.cancelled = false;
+        }
+        [Symbol.asyncIterator]() { return this; }
+        next() {
+          if (this.queue.length > 0) return Promise.resolve({ value: this.queue.shift(), done: false });
+          if (this.terminalError) return Promise.reject(this.terminalError);
+          if (this.finished) return Promise.resolve({ value: undefined, done: true });
+          if (this.waiter) return Promise.reject(new TypeError("Assistant streams must be read sequentially"));
+          return new Promise((resolve, reject) => { this.waiter = { resolve, reject }; });
+        }
+        return() {
+          if (!this.finished && !this.cancelled) {
+            this.cancelled = true;
+            assistantStreams.delete(this.id);
+            __hanlinCancelNative(this.id);
+          }
+          this.finished = true;
+          this.waiter?.resolve({ value: undefined, done: true });
+          this.waiter = null;
+          this.queue.length = 0;
+          return Promise.resolve({ value: undefined, done: true });
+        }
+        push(chunk) {
+          if (this.finished || this.cancelled) return;
+          if (this.waiter) {
+            const waiter = this.waiter;
+            this.waiter = null;
+            waiter.resolve({ value: chunk, done: false });
+          } else {
+            if (this.queue.length >= 256) {
+              this.fail(new Error("Assistant stream buffer limit exceeded"));
+              __hanlinCancelNative(this.id);
+              return;
+            }
+            this.queue.push(chunk);
+          }
+        }
+        finish() {
+          if (this.finished || this.cancelled) return;
+          this.finished = true;
+          assistantStreams.delete(this.id);
+          this.waiter?.resolve({ value: undefined, done: true });
+          this.waiter = null;
+        }
+        fail(error) {
+          if (this.finished || this.cancelled) return;
+          this.finished = true;
+          this.terminalError = error;
+          assistantStreams.delete(this.id);
+          this.waiter?.reject(error);
+          this.waiter = null;
+          this.queue.length = 0;
+        }
+      }
+
+      function receiveAssistantChunk(id, json) {
+        const stream = assistantStreams.get(id);
+        if (!stream) return;
+        let result;
+        try { result = JSON.parse(json); }
+        catch (_) { stream.fail(new Error("The Assistant bridge returned invalid JSON.")); return; }
+        if (!result.ok) { stream.fail(nativeError(result.error)); return; }
+        if (result.value === null) { stream.finish(); return; }
+        stream.push(result.value);
+      }
+
+      function normalizeAssistantProvider(provider) {
+        if (provider == null) return null;
+        if (["openai", "gemini", "anthropic", "deepseek", "openrouter"].includes(provider)) {
+          return provider;
+        }
+        if (typeof provider === "object" && provider !== null
+            && Object.keys(provider).length === 1
+            && typeof provider.custom === "string" && provider.custom.length > 0) {
+          return { custom: provider.custom };
+        }
+        throw new TypeError("Invalid Assistant provider");
+      }
+
+      function validateAssistantContent(content, depth = 0) {
+        if (depth > 16) throw new TypeError("Assistant message content is too deeply nested");
+        if (typeof content === "string") return;
+        if (Array.isArray(content)) {
+          if (content.length > 64) throw new TypeError("Assistant message content is too large");
+          content.forEach(item => validateAssistantContent(item, depth + 1));
+          return;
+        }
+        if (!content || typeof content !== "object") throw new TypeError("Invalid Assistant message content");
+        if (content.type === "text" && typeof content.content === "string") return;
+        if (content.type === "image" && typeof content.content === "string"
+            && content.content.startsWith("data:image/") && content.content.includes(";base64,")) return;
+        if (content.type === "document" && content.content && typeof content.content === "object"
+            && typeof content.content.mediaType === "string"
+            && typeof content.content.data === "string") return;
+        throw new TypeError("Invalid Assistant message content");
+      }
+
+      function normalizeAssistantMessages(messages) {
+        const values = Array.isArray(messages) ? messages : [messages];
+        if (values.length === 0 || values.length > 128) throw new TypeError("Assistant messages are required");
+        return values.map(message => {
+          if (!message || (message.role !== "user" && message.role !== "assistant")) {
+            throw new TypeError("Invalid Assistant message role");
+          }
+          validateAssistantContent(message.content);
+          return { role: message.role, content: message.content };
+        });
+      }
+
+      function validateAssistantSchema(schema, state = { nodes: 0 }, depth = 0) {
+        if (!schema || typeof schema !== "object" || Array.isArray(schema) || depth > 32) {
+          throw new TypeError("Invalid Assistant JSON schema");
+        }
+        if (++state.nodes > 4096) throw new TypeError("Assistant JSON schema is too large");
+        if (!["string", "number", "boolean", "object", "array"].includes(schema.type)) {
+          throw new TypeError("Invalid Assistant JSON schema type");
+        }
+        if (typeof schema.description !== "string") throw new TypeError("Assistant schema descriptions are required");
+        if (schema.required !== undefined && typeof schema.required !== "boolean") {
+          throw new TypeError("Invalid Assistant schema required flag");
+        }
+        if (schema.type === "object") {
+          if (!schema.properties || typeof schema.properties !== "object" || Array.isArray(schema.properties)) {
+            throw new TypeError("Assistant object schemas require properties");
+          }
+          for (const value of Object.values(schema.properties)) validateAssistantSchema(value, state, depth + 1);
+        }
+        if (schema.type === "array") validateAssistantSchema(schema.items, state, depth + 1);
+        return schema;
+      }
+
+      function startAssistantStream(payload) {
+        const id = `assistant-${++nativeRequestCounter}`;
+        const stream = new HanlinAssistantStream(id);
+        assistantStreams.set(id, stream);
+        __hanlinNativeAssistantStart(id, JSON.stringify(payload));
+        return stream;
       }
 
       class HanlinDOMException extends Error {
@@ -1454,6 +1678,67 @@ private extension HanlinScriptingApplicationSession {
         },
         clear() { if (!__hanlinNativeStorageClear()) throw new Error("HANLIN_STORAGE:clear_failed"); }
       });
+      const Assistant = Object.freeze({
+        get isAvailable() { return __hanlinNativeAssistantAvailable(); },
+        isPresented: false,
+        hasActiveConversation: false,
+        requestStreaming(options) {
+          if (!this.isAvailable) return Promise.reject(new Error("Assistant is not available"));
+          try {
+            if (!options || typeof options !== "object") throw new TypeError("Assistant options are required");
+            const systemPrompt = options.systemPrompt == null ? null : String(options.systemPrompt);
+            const messages = normalizeAssistantMessages(options.messages);
+            const provider = normalizeAssistantProvider(options.provider);
+            const modelId = options.modelId == null ? null : String(options.modelId);
+            return Promise.resolve(startAssistantStream({
+              kind: "streaming", systemPrompt, messages, provider, modelId
+            }));
+          } catch (error) { return Promise.reject(error); }
+        },
+        requestStructuredData(prompt, imagesOrSchema, schemaOrOptions, maybeOptions) {
+          if (!this.isAvailable) return Promise.reject(new Error("Assistant is not available"));
+          try {
+            if (typeof prompt !== "string" || prompt.length === 0) {
+              throw new TypeError("A non-empty Assistant prompt is required");
+            }
+            const hasImages = Array.isArray(imagesOrSchema);
+            const images = hasImages ? imagesOrSchema : [];
+            const schema = hasImages ? schemaOrOptions : imagesOrSchema;
+            const options = (hasImages ? maybeOptions : schemaOrOptions) ?? {};
+            if (!images.every(image => typeof image === "string"
+                && image.startsWith("data:image/") && image.includes(";base64,"))) {
+              throw new TypeError("Assistant images must be data URIs");
+            }
+            validateAssistantSchema(schema);
+            const stream = startAssistantStream({
+              kind: "structured_data",
+              prompt,
+              images,
+              schema,
+              provider: normalizeAssistantProvider(options.provider),
+              modelId: options.modelId == null ? null : String(options.modelId)
+            });
+            return (async () => {
+              let result;
+              for await (const chunk of stream) {
+                if (chunk?.type !== "structured" || result !== undefined) {
+                  await stream.return();
+                  throw new TypeError("The Assistant returned an invalid structured response");
+                }
+                result = chunk.content;
+              }
+              if (result === undefined) throw new TypeError("The Assistant returned no structured response");
+              return result;
+            })();
+          } catch (error) { return Promise.reject(error); }
+        },
+        startConversation() {
+          return Promise.reject(new Error("Assistant conversation UI is not available"));
+        },
+        present() { return Promise.reject(new Error("Assistant conversation UI is not available")); },
+        dismiss() { return Promise.resolve(); },
+        stopConversation() { return Promise.resolve(); }
+      });
       const Script = Object.freeze({
         name: "Hanlin Scripting App", directory: FileManager.scriptsDirectory,
         queryParameters: {}, shareFiles: [],
@@ -1471,9 +1756,10 @@ private extension HanlinScriptingApplicationSession {
         FormData: HanlinFormData, Request: HanlinRequest, Response: HanlinResponse,
         fetch: hanlinFetch, DOMException: HanlinDOMException, AbortEvent: HanlinAbortEvent,
         AbortSignal: HanlinAbortSignal, AbortController: HanlinAbortController,
-        Storage, Script, Device, Widget, AppIntentProtocol, AppIntentManager,
+        Storage, Assistant, Script, Device, Widget, AppIntentProtocol, AppIntentManager,
         Color: Object.freeze({}),
         __hanlinResolveNative: resolveNativeRequest,
+        __hanlinAssistantReceive: receiveAssistantChunk,
         __hanlinHasPresentedUI: false,
         __hanlinDispatch(handlerID, payloadJSON) {
           const handler = handlers.get(handlerID);
@@ -1489,7 +1775,11 @@ private extension HanlinScriptingApplicationSession {
             __hanlinCancelNative(requestID);
             pending.reject(abortError("The scripting session was disposed."));
           }
-          nativeRequests.clear(); effects.clear(); handlers.clear(); presentedElement = null;
+          for (const [requestID, stream] of assistantStreams) {
+            __hanlinCancelNative(requestID);
+            stream.fail(abortError("The scripting session was disposed."));
+          }
+          nativeRequests.clear(); assistantStreams.clear(); effects.clear(); handlers.clear(); presentedElement = null;
         }
       });
     })();

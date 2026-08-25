@@ -3,7 +3,7 @@
   "baselineID": "scripting-compat-2026-08-25-0b7b8e715573",
   "files": {
     "scripting-foundation.d.ts": "8892c4f35bdf65cf92ab26aabacf807b62c8a573a8b73b166a8ec153b608bb7b",
-    "runtime-registration.json": "ba89a6fd83c07d2311494b508631a5606cf82075fef7fcbff8b82fec77390e4b",
+    "runtime-registration.json": "086ba1687104c7defec3092597b393f90997d4e79776cc03c68b97619479911c",
     "global.d.ts": "d5ed4b23de93d9f5c93fcf372736f8288e436e117fa008cdd9ac69a2656a949c",
     "node.d.ts": "05be426cfb2493524d8ef5a167f9e30128257457289b6c14a87a14c23d5f0602",
     "safari-ext.d.ts": "b86c4909673f425deb596e67c328cacad2f43022aa12ece1a03aee0e464815ae",

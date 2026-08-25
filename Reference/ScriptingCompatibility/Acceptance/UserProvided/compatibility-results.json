@@ -32,8 +32,8 @@
       "runtimeLaunch": {"status": "blocked", "blockers": ["LiveActivityUI", "LiveActivityUIExpandedCenter"]},
       "uiRender": {"status": "not-reached"},
       "interaction": {"status": "not-reached"},
-      "nativeServices": {"status": "partial", "passed": ["FileManager/Path bounded VFS", "buffered fetch/Web primitives", "Storage"], "blockers": ["Assistant binding", "SQLite binding", "Location binding", "real Live Activity execution"]},
-      "remainingBlockers": ["45 source/API-usage errors", "agent/native-service bindings", "Live Activity and broad ScriptUI semantics"]
+      "nativeServices": {"status": "partial", "passed": ["FileManager/Path bounded VFS", "buffered fetch/Web primitives", "Storage", "Assistant requestStreaming/requestStructuredData bridge with ordered chunks, structured JSON and cancellation"], "blockers": ["configured Assistant provider adapter", "SQLite binding", "Location binding", "real Live Activity execution"]},
+      "remainingBlockers": ["45 source/API-usage errors", "Assistant provider and remaining native-service adapters", "Live Activity and broad ScriptUI semantics"]
     },
     {
       "id": "new-agent-21",
@@ -42,8 +42,8 @@
       "runtimeLaunch": {"status": "passed-node-hosted-bootstrap", "presented": true, "rootKind": "navigationSplitView"},
       "uiRender": {"status": "passed-structural-smoke", "renderedNodeCount": 40, "evidence": "The untouched package launches after resolving its CommonJS JSON tool descriptors through the same module shape used by the native compiler."},
       "interaction": {"status": "shared-runtime-verified", "passed": ["useReducer dispatch and rerender", "native Link URL retention", "NavigationSplitView bindings", "Picker interaction"], "notExercised": ["real-project control automation on Simulator"]},
-      "nativeServices": {"status": "partial", "passed": ["AssistantTool execute registration/invocation/cancellation/state lifecycle", "FileManager/Path bounded VFS", "buffered fetch/Web primitives", "Storage"], "blockers": ["Assistant requests", "approval/tool UI", "Location", "Widget execution"]},
-      "remainingBlockers": ["Four source errors", "Assistant request and approval/UI flows", "native-service execution and real-project Simulator validation"]
+      "nativeServices": {"status": "partial", "passed": ["AssistantTool execute registration/invocation/cancellation/state lifecycle", "Assistant requestStreaming/requestStructuredData bridge with ordered chunks, structured JSON and cancellation", "FileManager/Path bounded VFS", "buffered fetch/Web primitives", "Storage"], "blockers": ["configured Assistant provider adapter", "approval/tool UI", "Location", "Widget execution"]},
+      "remainingBlockers": ["Four source errors", "Assistant provider and approval/UI flows", "native-service execution and real-project Simulator validation"]
     },
     {
       "id": "smart-eating-updated-7",

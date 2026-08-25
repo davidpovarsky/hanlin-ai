@@ -113,6 +113,14 @@ globalThis.__hanlinNativeAsync = (id) => queueMicrotask(() => globalThis.__hanli
     error: { name: "Error", code: "unavailable_in_smoke", message: "Native async I/O was not requested by this smoke fixture." },
   }),
 ));
+globalThis.__hanlinNativeAssistantAvailable = () => false;
+globalThis.__hanlinNativeAssistantStart = id => queueMicrotask(() => globalThis.__hanlinAssistantReceive(
+  id,
+  JSON.stringify({
+    ok: false,
+    error: { name: "Error", code: "unavailable_in_smoke", message: "Assistant is unavailable in the launch-only smoke fixture." },
+  }),
+));
 globalThis.__hanlinCancelNative = () => {};
 vm.runInThisContext(bootstrap, { filename: "hanlin-scripting-ui-runtime.js" });
 

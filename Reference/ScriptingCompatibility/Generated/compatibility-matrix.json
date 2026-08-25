@@ -2777,24 +2777,31 @@
       "verifiedByFixture": false
     },
     {
-      "allowedContexts": [],
+      "allowedContexts": [
+        "mainApplication"
+      ],
       "allowedOrigins": [],
-      "behaviorDifferences": [],
+      "behaviorDifferences": [
+        "The live JavaScriptCore binding implements requestStreaming and both requestStructuredData overloads over a capability-gated native AsyncThrowingStream transport, including text/reasoning/usage chunks, bounded multimodal payloads, provider selection, schema validation, sequential iteration, early-return cancellation, native errors and deterministic teardown; a configured provider adapter and the system-hosted conversation UI remain separate requirements, so conversation methods are not claimed as supported."
+      ],
       "behaviorMatched": false,
       "declarationFile": "global.d.ts",
       "declarationLine": 10940,
       "declaredByScripting": true,
-      "hanlinAPIVersion": null,
-      "hanlinSymbol": null,
-      "implementedByHanlin": false,
-      "notes": "The authorized ambient API has no complete runtime binding and conformance test yet; declaration presence is not treated as support.",
+      "hanlinAPIVersion": "hanlin.services/1.0",
+      "hanlinSymbol": "HanlinScriptingAssistantLoader",
+      "implementedByHanlin": true,
+      "notes": "The transport and JavaScript semantics used by the nativ-ai, new-agent and smart-eating acceptance projects are implemented without changing those projects. Launch-only fixtures intentionally leave the Assistant capability unavailable until the host injects an authorized provider loader.",
       "referenceCategory": "namespace",
       "referenceSignatureHash": "e180b1c9a89021d4fc5bfd6854876337495118e534b500196d6d3310d713c348",
       "referenceSymbol": "Assistant",
-      "requiredCapability": null,
+      "requiredCapability": "assistant",
       "requiredEntitlement": null,
-      "status": "not-yet-implemented",
-      "tests": [],
+      "status": "partial",
+      "tests": [
+        "Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs",
+        "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift"
+      ],
       "verifiedByFixture": false
     },
     {

@@ -2,6 +2,18 @@ import HanlinPlatformContracts
 @testable import HanlinScriptingApplicationRuntime
 import Testing
 
+private actor AssistantRequestRecorder {
+    private var requests: [HanlinScriptingAssistantRequest] = []
+
+    func append(_ request: HanlinScriptingAssistantRequest) {
+        requests.append(request)
+    }
+
+    func first() -> HanlinScriptingAssistantRequest? {
+        requests.first
+    }
+}
+
 @Suite("Scripting application runtime")
 struct HanlinScriptingApplicationRuntimeTests {
     @MainActor
@@ -18,5 +30,61 @@ struct HanlinScriptingApplicationRuntimeTests {
 
         #expect(session.model.root.kind == .text)
         #expect(session.model.root.properties["text"] == .string("Ready"))
+    }
+
+    @MainActor
+    @Test("Streams Assistant chunks through JavaScriptCore and rerenders")
+    func streamsAssistantChunks() async throws {
+        let recorder = AssistantRequestRecorder()
+        let packageID = try HanlinInstalledPackageID(validating: "assistant-runtime-test")
+        let session = try HanlinScriptingApplicationSession(
+            installedPackageID: packageID,
+            program: #"""
+            const assistantResult = useObservable("Idle");
+            Navigation.present({ element: createElement(Button, {
+              title: assistantResult,
+              action: async () => {
+                const stream = await Assistant.requestStreaming({
+                  messages: { role: "user", content: "Hello" },
+                  provider: "openai"
+                });
+                let text = "";
+                for await (const chunk of stream) {
+                  if (chunk.type === "text") text += chunk.content;
+                }
+                assistantResult.value = text;
+              }
+            }) });
+            """#,
+            filename: "compiled/index.js",
+            storageAllowed: false,
+            assistantAllowed: true,
+            assistantLoader: { request in
+                await recorder.append(request)
+                return AsyncThrowingStream { continuation in
+                    continuation.yield(.text("Hello "))
+                    continuation.yield(.reasoning("verified"))
+                    continuation.yield(.text("world"))
+                    continuation.yield(.usage(.init(inputTokens: 1, outputTokens: 2)))
+                    continuation.finish()
+                }
+            }
+        )
+        defer { session.dispose() }
+
+        guard case let .string(handlerID)? = session.model.root.properties["onPress"] else {
+            Issue.record("The Assistant test button did not expose an event handler")
+            return
+        }
+        session.dispatch(handlerID: handlerID, payload: .null)
+        for _ in 0 ..< 100 where session.model.root.properties["title"] != .string("Hello world") {
+            await Task.yield()
+        }
+
+        #expect(session.model.root.properties["title"] == .string("Hello world"))
+        let request = await recorder.first()
+        #expect(request?.kind == .streaming)
+        #expect(request?.provider == .builtIn("openai"))
+        #expect(request?.messagesJSON != nil)
     }
 }

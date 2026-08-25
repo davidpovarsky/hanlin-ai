@@ -1910,10 +1910,12 @@
     },
     {
       "symbol": "Assistant",
-      "state": "unsupported",
-      "operation": "unimplemented",
-      "capability": null,
-      "contexts": [],
+      "state": "partial",
+      "operation": "HanlinScriptingAssistantLoader",
+      "capability": "assistant",
+      "contexts": [
+        "mainApplication"
+      ],
       "declarationEvidence": [
         {
           "category": "namespace",

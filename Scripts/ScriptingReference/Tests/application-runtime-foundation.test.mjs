@@ -18,6 +18,8 @@ function runtime() {
   const binaryStorage = new Map();
   const files = new Map();
   let rendered;
+  const assistantRequests = [];
+  const cancelledRequests = new Set();
   const success = value => JSON.stringify({ ok: true, value });
   const failure = (code, message) => JSON.stringify({
     ok: false,
@@ -87,10 +89,30 @@ function runtime() {
         }
       });
     },
-    __hanlinCancelNative() {},
+    __hanlinNativeAssistantAvailable() { return true; },
+    __hanlinNativeAssistantStart(id, json) {
+      const request = JSON.parse(json);
+      assistantRequests.push(request);
+      const chunks = request.kind === "structured_data"
+        ? [{ type: "structured", content: { answer: "verified", count: request.images.length } }]
+        : [
+            { type: "text", content: "Hello " },
+            { type: "reasoning", content: "checked" },
+            { type: "text", content: "world" },
+            { type: "usage", content: { totalCost: null, cacheReadTokens: null, cacheWriteTokens: null, inputTokens: 3, outputTokens: 2 } },
+          ];
+      const emit = () => {
+        if (cancelledRequests.has(id)) return;
+        const chunk = chunks.shift();
+        context.__hanlinAssistantReceive(id, success(chunk ?? null));
+        if (chunk) queueMicrotask(emit);
+      };
+      queueMicrotask(emit);
+    },
+    __hanlinCancelNative(id) { cancelledRequests.add(id); },
   });
   vm.runInContext(bootstrap, context, { filename: "hanlin-scripting-ui-runtime.js" });
-  return { context, rendered: () => rendered };
+  return { context, rendered: () => rendered, assistantRequests, cancelledRequests };
 }
 
 test("Path, binary Data, Storage, and synchronous FileManager preserve values", () => {
@@ -150,6 +172,71 @@ test("AbortController rejects before dispatch and disposal cancels pending nativ
     })()
   `, context);
   assert.equal(timeoutName, "TimeoutError");
+  assert.doesNotThrow(() => context.__hanlinDispose());
+});
+
+test("Assistant streams ordered text, reasoning, and usage chunks through the native channel", async () => {
+  const { context, assistantRequests } = runtime();
+  const result = await vm.runInContext(`
+    (async () => {
+      const stream = await Assistant.requestStreaming({
+        systemPrompt: "Be concise",
+        messages: [{ role: "user", content: "Greet me" }],
+        provider: { custom: "https://assistant.example/v1" },
+        modelId: "test-model",
+      });
+      const chunks = [];
+      for await (const chunk of stream) chunks.push(chunk);
+      return JSON.stringify(chunks);
+    })()
+  `, context);
+  const chunks = JSON.parse(result);
+  assert.deepEqual(chunks.map(chunk => chunk.type), ["text", "reasoning", "text", "usage"]);
+  assert.equal(chunks.filter(chunk => chunk.type === "text").map(chunk => chunk.content).join(""), "Hello world");
+  assert.equal(chunks.at(-1).content.outputTokens, 2);
+  assert.deepEqual(assistantRequests[0].provider, { custom: "https://assistant.example/v1" });
+  assert.equal(assistantRequests[0].modelId, "test-model");
+});
+
+test("Assistant structured requests preserve schemas and image overloads", async () => {
+  const { context, assistantRequests } = runtime();
+  const result = await vm.runInContext(`
+    Assistant.requestStructuredData(
+      "Inspect",
+      ["data:image/png;base64,AA=="],
+      {
+        type: "object",
+        description: "Result",
+        properties: {
+          answer: { type: "string", description: "Answer" },
+          count: { type: "number", description: "Image count" },
+        },
+      },
+      { provider: "openai" },
+    )
+  `, context);
+  assert.equal(JSON.stringify(result), JSON.stringify({ answer: "verified", count: 1 }));
+  assert.equal(assistantRequests[0].kind, "structured_data");
+  assert.equal(assistantRequests[0].provider, "openai");
+  assert.equal(assistantRequests[0].schema.properties.answer.type, "string");
+});
+
+test("Breaking Assistant iteration cancels native work and malformed input never dispatches", async () => {
+  const { context, assistantRequests, cancelledRequests } = runtime();
+  const requestID = await vm.runInContext(`
+    (async () => {
+      const stream = await Assistant.requestStreaming({ messages: { role: "user", content: "Stop" } });
+      const id = stream.id;
+      for await (const chunk of stream) { if (chunk.type === "text") break; }
+      return id;
+    })()
+  `, context);
+  assert.equal(cancelledRequests.has(requestID), true);
+  await assert.rejects(
+    vm.runInContext(`Assistant.requestStreaming({ messages: { role: "system", content: "bad" } })`, context),
+    /message role/,
+  );
+  assert.equal(assistantRequests.length, 1);
   assert.doesNotThrow(() => context.__hanlinDispose());
 });
 

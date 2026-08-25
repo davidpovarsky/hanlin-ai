@@ -1,6 +1,93 @@
 import Foundation
 import UniformTypeIdentifiers
 
+public enum HanlinScriptingAssistantRequestKind: String, Sendable {
+    case streaming
+    case structuredData = "structured_data"
+}
+
+public enum HanlinScriptingAssistantProvider: Hashable, Sendable {
+    case builtIn(String)
+    case custom(String)
+}
+
+public struct HanlinScriptingAssistantRequest: Sendable {
+    public let kind: HanlinScriptingAssistantRequestKind
+    public let prompt: String?
+    public let images: [String]
+    public let schemaJSON: Data?
+    public let systemPrompt: String?
+    public let messagesJSON: Data?
+    public let provider: HanlinScriptingAssistantProvider?
+    public let modelID: String?
+
+    public init(
+        kind: HanlinScriptingAssistantRequestKind,
+        prompt: String? = nil,
+        images: [String] = [],
+        schemaJSON: Data? = nil,
+        systemPrompt: String? = nil,
+        messagesJSON: Data? = nil,
+        provider: HanlinScriptingAssistantProvider? = nil,
+        modelID: String? = nil
+    ) {
+        self.kind = kind
+        self.prompt = prompt
+        self.images = images
+        self.schemaJSON = schemaJSON
+        self.systemPrompt = systemPrompt
+        self.messagesJSON = messagesJSON
+        self.provider = provider
+        self.modelID = modelID
+    }
+}
+
+public struct HanlinScriptingAssistantUsage: Hashable, Sendable {
+    public let totalCost: Double?
+    public let cacheReadTokens: Int?
+    public let cacheWriteTokens: Int?
+    public let inputTokens: Int
+    public let outputTokens: Int
+
+    public init(
+        totalCost: Double? = nil,
+        cacheReadTokens: Int? = nil,
+        cacheWriteTokens: Int? = nil,
+        inputTokens: Int,
+        outputTokens: Int
+    ) {
+        self.totalCost = totalCost
+        self.cacheReadTokens = cacheReadTokens
+        self.cacheWriteTokens = cacheWriteTokens
+        self.inputTokens = inputTokens
+        self.outputTokens = outputTokens
+    }
+}
+
+public enum HanlinScriptingAssistantChunk: Sendable {
+    case text(String)
+    case reasoning(String)
+    case usage(HanlinScriptingAssistantUsage)
+    case structuredJSON(Data)
+}
+
+public typealias HanlinScriptingAssistantLoader = @Sendable (
+    HanlinScriptingAssistantRequest
+) async throws -> AsyncThrowingStream<HanlinScriptingAssistantChunk, Error>
+
+public enum HanlinScriptingUnavailableAssistantLoader {
+    public static func load(
+        _ request: HanlinScriptingAssistantRequest
+    ) async throws -> AsyncThrowingStream<HanlinScriptingAssistantChunk, Error> {
+        _ = request
+        throw HanlinScriptingNativeError(
+            name: "Error",
+            code: "assistant_unavailable",
+            message: "The Assistant service is unavailable."
+        )
+    }
+}
+
 public struct HanlinScriptingFetchRequest: Decodable, Sendable {
     public let url: String
     public let method: String
@@ -121,6 +208,176 @@ struct HanlinScriptingNativeError: Error, Sendable {
     let name: String
     let code: String
     let message: String
+}
+
+enum HanlinScriptingAssistantPayloadDecoder {
+    private static let builtInProviders: Set<String> = [
+        "openai", "gemini", "anthropic", "deepseek", "openrouter",
+    ]
+
+    static func decode(_ json: String) throws -> HanlinScriptingAssistantRequest {
+        guard json.utf8.count <= 8 * 1_024 * 1_024 else {
+            throw invalid("The Assistant request is too large.")
+        }
+        let payload = try HanlinScriptingNativeJSON.decodeObject(json)
+        guard let rawKind = payload["kind"] as? String,
+              let kind = HanlinScriptingAssistantRequestKind(rawValue: rawKind) else {
+            throw invalid("The Assistant request kind is invalid.")
+        }
+        let provider = try decodeProvider(payload["provider"])
+        let modelID = try optionalString(payload["modelId"], name: "modelId", maximumBytes: 512)
+
+        switch kind {
+        case .streaming:
+            let systemPrompt = try optionalString(
+                payload["systemPrompt"],
+                name: "systemPrompt",
+                maximumBytes: 1_048_576,
+                allowsNull: true
+            )
+            guard let rawMessages = payload["messages"], !(rawMessages is NSNull),
+                  JSONSerialization.isValidJSONObject([rawMessages]) else {
+                throw invalid("Assistant streaming messages are required.")
+            }
+            let messagesJSON = try JSONSerialization.data(
+                withJSONObject: rawMessages,
+                options: [.sortedKeys]
+            )
+            guard messagesJSON.count <= 6 * 1_024 * 1_024 else {
+                throw invalid("Assistant streaming messages are too large.")
+            }
+            return .init(
+                kind: kind,
+                systemPrompt: systemPrompt,
+                messagesJSON: messagesJSON,
+                provider: provider,
+                modelID: modelID
+            )
+        case .structuredData:
+            guard let prompt = payload["prompt"] as? String,
+                  !prompt.isEmpty,
+                  prompt.utf8.count <= 1_048_576 else {
+                throw invalid("A non-empty Assistant prompt is required.")
+            }
+            guard let schema = payload["schema"] as? [String: Any],
+                  JSONSerialization.isValidJSONObject(schema) else {
+                throw invalid("A JSON object schema is required.")
+            }
+            let schemaJSON = try JSONSerialization.data(
+                withJSONObject: schema,
+                options: [.sortedKeys]
+            )
+            guard schemaJSON.count <= 1_048_576 else {
+                throw invalid("The Assistant schema is too large.")
+            }
+            let images = try decodeImages(payload["images"])
+            return .init(
+                kind: kind,
+                prompt: prompt,
+                images: images,
+                schemaJSON: schemaJSON,
+                provider: provider,
+                modelID: modelID
+            )
+        }
+    }
+
+    private static func decodeProvider(_ value: Any?) throws -> HanlinScriptingAssistantProvider? {
+        guard let value, !(value is NSNull) else { return nil }
+        if let value = value as? String, builtInProviders.contains(value) {
+            return .builtIn(value)
+        }
+        if let object = value as? [String: Any], object.count == 1,
+           let custom = object["custom"] as? String,
+           !custom.isEmpty, custom.utf8.count <= 2_048 {
+            return .custom(custom)
+        }
+        throw invalid("The Assistant provider is invalid.")
+    }
+
+    private static func decodeImages(_ value: Any?) throws -> [String] {
+        guard let value, !(value is NSNull) else { return [] }
+        guard let images = value as? [String], images.count <= 16 else {
+            throw invalid("Assistant images must be a bounded array of data URIs.")
+        }
+        var byteCount = 0
+        for image in images {
+            byteCount += image.utf8.count
+            guard image.hasPrefix("data:image/"), image.contains(";base64,"),
+                  image.utf8.count <= 4 * 1_024 * 1_024,
+                  byteCount <= 8 * 1_024 * 1_024 else {
+                throw invalid("An Assistant image data URI is invalid or too large.")
+            }
+        }
+        return images
+    }
+
+    private static func optionalString(
+        _ value: Any?,
+        name: String,
+        maximumBytes: Int,
+        allowsNull: Bool = false
+    ) throws -> String? {
+        guard let value else { return nil }
+        if value is NSNull, allowsNull { return nil }
+        guard let string = value as? String, string.utf8.count <= maximumBytes else {
+            throw invalid("The Assistant \(name) value is invalid.")
+        }
+        return string
+    }
+
+    private static func invalid(_ message: String) -> HanlinScriptingNativeError {
+        .init(name: "TypeError", code: "invalid_assistant_request", message: message)
+    }
+}
+
+extension HanlinScriptingAssistantChunk {
+    func nativeObject() throws -> [String: Any] {
+        switch self {
+        case let .text(content):
+            return ["type": "text", "content": content]
+        case let .reasoning(content):
+            return ["type": "reasoning", "content": content]
+        case let .usage(usage):
+            guard usage.inputTokens >= 0, usage.outputTokens >= 0,
+                  usage.cacheReadTokens.map({ $0 >= 0 }) ?? true,
+                  usage.cacheWriteTokens.map({ $0 >= 0 }) ?? true,
+                  usage.totalCost.map(\.isFinite) ?? true else {
+                throw HanlinScriptingNativeError(
+                    name: "TypeError",
+                    code: "invalid_assistant_chunk",
+                    message: "The Assistant usage chunk is invalid."
+                )
+            }
+            return [
+                "type": "usage",
+                "content": [
+                    "totalCost": usage.totalCost.map { $0 as Any } ?? NSNull(),
+                    "cacheReadTokens": usage.cacheReadTokens.map { $0 as Any } ?? NSNull(),
+                    "cacheWriteTokens": usage.cacheWriteTokens.map { $0 as Any } ?? NSNull(),
+                    "inputTokens": usage.inputTokens,
+                    "outputTokens": usage.outputTokens,
+                ],
+            ]
+        case let .structuredJSON(data):
+            guard data.count <= 8 * 1_024 * 1_024 else {
+                throw HanlinScriptingNativeError(
+                    name: "TypeError",
+                    code: "invalid_assistant_chunk",
+                    message: "The Assistant structured result is too large."
+                )
+            }
+            let value = try JSONSerialization.jsonObject(with: data)
+            guard JSONSerialization.isValidJSONObject([value]) else {
+                throw HanlinScriptingNativeError(
+                    name: "TypeError",
+                    code: "invalid_assistant_chunk",
+                    message: "The Assistant structured result is not valid JSON."
+                )
+            }
+            return ["type": "structured", "content": value]
+        }
+    }
 }
 
 final class HanlinScriptingPackageFileSystem: @unchecked Sendable {
