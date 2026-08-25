@@ -1,0 +1,60 @@
+{
+  "schemaVersion": 1,
+  "measuredAt": "2026-08-25",
+  "baselineID": "scripting-compat-2026-08-25-0b7b8e715573",
+  "compilerVersion": "7.0.2",
+  "environment": "Windows local static and Node-hosted JSC-bootstrap smoke; no Xcode, Simulator, or device run in this measurement",
+  "projects": [
+    {
+      "id": "filemanager-2",
+      "typecheck": {"status": "source-project-issue", "errorCount": 5, "evidence": "Internal hook/configuration and localization-interface inconsistencies reproduce against the untouched authoritative declarations."},
+      "compileBundle": {"status": "transpile-passed-bundle-blocked", "emittedModuleCount": 36, "blocker": "The production registry rejects required unimplemented or behavior-unverified Scripting values before evaluation."},
+      "runtimeLaunch": {"status": "blocked", "blockers": ["SVG", "NavigationDestination", "Path", "Intent", "NavigationLink", "Picker and other unverified ScriptUI values"]},
+      "uiRender": {"status": "not-reached"},
+      "interaction": {"status": "not-reached"},
+      "nativeServices": {"status": "blocked", "blockers": ["FileManager JavaScript binding", "Path runtime semantics", "Intent input bridge"]},
+      "remainingBlockers": ["Five independent source errors", "FileManager/Path binding", "broader ScriptUI and navigation behavior"]
+    },
+    {
+      "id": "sefaria-multi-engine",
+      "typecheck": {"status": "source-and-authoritative-api-usage-issues", "errorCount": 4, "evidence": "Picker callback narrowing, a missing project field, widened shape literals, and an incompatible composed callback."},
+      "compileBundle": {"status": "transpile-passed-bundle-blocked", "emittedModuleCount": 62, "blocker": "Required ScriptUI values remain runtime-unsupported or behavior-unverified."},
+      "runtimeLaunch": {"status": "blocked", "blockers": ["ContentUnavailableView", "DisclosureGroup", "Slider", "Picker", "NavigationDestination", "LazyVGrid", "NavigationSplitView", "ScrollViewReader"]},
+      "uiRender": {"status": "not-reached"},
+      "interaction": {"status": "not-reached"},
+      "nativeServices": {"status": "blocked", "blockers": ["complete Storage binding", "FileManager binding", "fetch/Web compatibility", "Spotlight entrypoint"]},
+      "remainingBlockers": ["Four source/API-usage errors", "split navigation and reader/proxy semantics", "storage/network/native entrypoint coverage"]
+    },
+    {
+      "id": "nativ-ai-9",
+      "typecheck": {"status": "source-and-authoritative-api-usage-issues", "errorCount": 45, "evidence": "Errors reproduce against the untouched declarations and include invalid literals, missing imports, undeclared props, and project model mismatches."},
+      "compileBundle": {"status": "transpile-passed-bundle-blocked", "emittedModuleCount": 86, "blocker": "Required ScriptUI and Live Activity values are not authorized by conformance evidence."},
+      "runtimeLaunch": {"status": "blocked", "blockers": ["LiveActivityUI family", "NavigationSplitView family", "useReducer", "Path", "Picker", "DisclosureGroup"]},
+      "uiRender": {"status": "not-reached"},
+      "interaction": {"status": "not-reached"},
+      "nativeServices": {"status": "blocked", "blockers": ["Assistant binding", "SQLite binding", "FileManager binding", "Location binding", "fetch", "real Live Activity execution"]},
+      "remainingBlockers": ["45 source/API-usage errors", "agent/native-service bindings", "Live Activity and broad ScriptUI semantics"]
+    },
+    {
+      "id": "new-agent-21",
+      "typecheck": {"status": "source-project-issue", "errorCount": 4, "evidence": "Three optional/required card-prop mismatches and a missing WeatherWind.speed field reproduce against the declarations."},
+      "compileBundle": {"status": "transpile-passed-bundle-blocked", "emittedModuleCount": 70, "blocker": "Required runtime UI values are unimplemented or behavior-unverified."},
+      "runtimeLaunch": {"status": "blocked", "blockers": ["useReducer", "NavigationSplitView family", "Picker", "Link", "Divider"]},
+      "uiRender": {"status": "not-reached"},
+      "interaction": {"status": "not-reached"},
+      "nativeServices": {"status": "blocked", "blockers": ["AssistantTool/Assistant execution", "Location", "fetch", "FileManager", "Widget execution"]},
+      "remainingBlockers": ["Four source errors", "assistant tool lifecycle", "native services and broader navigation/UI"]
+    },
+    {
+      "id": "smart-eating-updated-7",
+      "priority": "regression-critical",
+      "typecheck": {"status": "passed", "errorCount": 0},
+      "compileBundle": {"status": "passed-for-smoke-profile", "emittedModuleCount": 49, "importedScriptingRuntimeSymbolCount": 31},
+      "runtimeLaunch": {"status": "passed-node-hosted-bootstrap", "presented": true, "rootKind": "tabView"},
+      "uiRender": {"status": "passed-structural-smoke", "renderedNodeCount": 342, "limitation": "No Xcode/Simulator visual verification was run in this measurement."},
+      "interaction": {"status": "not-exercised-on-real-project", "evidence": "The shared runtime has hook/event/rerender tests, but this archived app was not driven through its controls."},
+      "nativeServices": {"status": "partial", "passed": ["package-isolated Storage binding during launch"], "notExercised": ["Assistant", "Health", "Notification"], "placeholdersNotClaimed": ["Widget", "AppIntent"]},
+      "remainingBlockers": ["real-project interaction automation", "visual Simulator/device evidence", "Health/Notification/Assistant flows", "real widget and App Intent execution"]
+    }
+  ]
+}

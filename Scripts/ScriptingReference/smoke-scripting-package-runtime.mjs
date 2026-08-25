@@ -15,18 +15,9 @@ for (const file of walk(packageRoot)) {
   if (!/\.(?:tsx?|jsx?)$/i.test(file) || file.endsWith(".d.ts")) continue;
   const relative = path.relative(packageRoot, file).replaceAll("\\", "/");
   const sourceText = fs.readFileSync(file, "utf8");
-  const sourceFile = ts.createSourceFile(relative, sourceText, ts.ScriptTarget.ESNext, true);
-  for (const statement of sourceFile.statements) {
-    if (!ts.isImportDeclaration(statement)
-        || statement.moduleSpecifier.text !== "scripting"
-        || !statement.importClause?.namedBindings
-        || !ts.isNamedImports(statement.importClause.namedBindings)) continue;
-    for (const element of statement.importClause.namedBindings.elements) {
-      importedScriptingSymbols.add(element.propertyName?.text ?? element.name.text);
-    }
-  }
-  const output = ts.transpileModule(sourceText, {
+  const transpilation = ts.transpileModule(sourceText, {
     fileName: relative,
+    reportDiagnostics: true,
     compilerOptions: {
       target: ts.ScriptTarget.ESNext,
       module: ts.ModuleKind.CommonJS,
@@ -35,8 +26,19 @@ for (const file of walk(packageRoot)) {
       jsxFragmentFactory: "Fragment",
       esModuleInterop: true,
     },
-  }).outputText;
-  modules.set(relative.replace(/\.(?:tsx?|jsx?)$/i, ".js"), output);
+  });
+  const errors = (transpilation.diagnostics ?? []).filter(diagnostic =>
+    diagnostic.category === ts.DiagnosticCategory.Error
+  );
+  if (errors.length > 0) {
+    throw new Error(ts.formatDiagnostics(errors, {
+      getCanonicalFileName: value => value,
+      getCurrentDirectory: () => packageRoot,
+      getNewLine: () => "\n",
+    }));
+  }
+  collectRuntimeScriptingSymbols(transpilation.outputText, importedScriptingSymbols);
+  modules.set(relative.replace(/\.(?:tsx?|jsx?)$/i, ".js"), transpilation.outputText);
 }
 
 const registration = JSON.parse(fs.readFileSync(path.join(
@@ -115,4 +117,24 @@ function walk(directory) {
 }
 function count(node) {
   return 1 + (node.children ?? []).reduce((sum, child) => sum + count(child), 0);
+}
+
+function collectRuntimeScriptingSymbols(outputText, symbols) {
+  const aliases = [...outputText.matchAll(
+    /\b(?:const|let|var)\s+([A-Za-z_$][\w$]*)\s*=\s*require\(["']scripting["']\)/g,
+  )].map(match => match[1]);
+  for (const alias of aliases) {
+    const escaped = alias.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    for (const match of outputText.matchAll(new RegExp(`\\b${escaped}\\.([A-Za-z_$][\\w$]*)`, "g"))) {
+      symbols.add(match[1]);
+    }
+  }
+  for (const match of outputText.matchAll(
+    /\b(?:const|let|var)\s*\{([^}]+)\}\s*=\s*require\(["']scripting["']\)/g,
+  )) {
+    for (const binding of match[1].split(",")) {
+      const importedName = binding.trim().split(/\s*:\s*/)[0];
+      if (/^[A-Za-z_$][\w$]*$/.test(importedName)) symbols.add(importedName);
+    }
+  }
 }

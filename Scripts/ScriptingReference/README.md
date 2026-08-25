@@ -57,6 +57,17 @@ node .\Scripts\ScriptingReference\typecheck-acceptance-packages.mjs `
   --directory .\artifacts\real-scripting-inputs
 ```
 
+Verify the byte-for-byte copies of the five captured user projects:
+
+```powershell
+node .\Scripts\ScriptingReference\verify-user-provided-projects.mjs
+```
+
+Their immutable archives, inventory, source-project classifications, and staged
+runtime results live under
+`Reference/ScriptingCompatibility/Acceptance/UserProvided/`. Extract originals
+only into a temporary or ignored build directory; never edit them in place.
+
 `build-scripting-inventory.mjs` uses a deterministic Phase 0 declaration lexer.
 It creates traceable obligations, not runtime-support claims. Compiler-backed
 symbol analysis and executable fixture lanes are Phase 6 gates.
