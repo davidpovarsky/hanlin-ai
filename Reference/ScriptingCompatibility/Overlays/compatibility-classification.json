@@ -81,13 +81,13 @@
     {
       "symbol": "AssistantTool",
       "status": "partial",
-      "hanlinSymbol": "HanlinCanonicalToolAuthority.ScriptSource",
+      "hanlinSymbol": "HanlinJavaScriptCoreSession",
       "hanlinAPIVersion": "hanlin.script/1.0",
       "requiredCapability": "assistant",
       "allowedContexts": ["mainApplication"],
-      "behaviorDifferences": ["The legacy checked-artifact ABI implements execute-tool registration, routing, cancellation and structured results; the full Scripting package compiler lane remains unavailable."],
-      "tests": ["AI_HLYTests/HanlinScriptingRuntimeTests.swift"],
-      "notes": "Operational for integrity-checked legacy artifacts and intentionally not claimed as full namespace compatibility."
+      "behaviorDifferences": ["The checked-artifact JavaScriptCore ABI implements execute-tool registration, canonical invocation, bounded call state, replaceable progress reports, cooperative onCancel, host task cancellation, timeout, deterministic disposal and session reuse; approval requests, interactive tool UI and ScriptEditorProvider remain unavailable."],
+      "tests": ["AI_HLYTests/HanlinScriptingRuntimeTests.swift", "Scripts/ScriptingReference/Tests/assistant-tool-runtime.test.mjs"],
+      "notes": "Operational for integrity-checked scripting-jsc assistant-tool artifacts and routed through the canonical native/MCP/Scripting tool authority."
     },
     {
       "symbol": "Script",

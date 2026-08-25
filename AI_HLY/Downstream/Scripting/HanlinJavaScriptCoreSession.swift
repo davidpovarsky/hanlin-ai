@@ -40,6 +40,7 @@ actor HanlinJavaScriptCoreSession {
     private var virtualMachine: JSVirtualMachine?
     private var context: JSContext?
     private let configuration: Configuration
+    private var activeInvocation: (id: UUID, continuation: HanlinJSCInvocationContinuation)?
     private var disposed = false
 
     init(configuration: Configuration = .scriptingCompatibility) throws {
@@ -65,6 +66,9 @@ actor HanlinJavaScriptCoreSession {
 
     func invoke(toolIndex: Int, parameters: HanlinValue) async throws -> HanlinValue {
         let context = try activeContext()
+        guard activeInvocation == nil else {
+            throw HanlinScriptingError.unavailableProvider("worker_session_busy")
+        }
         guard !Task.isCancelled else { throw HanlinScriptingError.cancelled }
         let input = try HanlinValue.object([
             "__hanlinToolIndex": .integer(Int64(toolIndex)),
@@ -79,29 +83,44 @@ actor HanlinJavaScriptCoreSession {
             throw HanlinScriptingError.invalidBridgeValue("input_encoding")
         }
 
-        let result: String = try await withCheckedThrowingContinuation { continuation in
-            let bridge = HanlinJSCInvocationContinuation(continuation)
-            let resolve: @convention(block) (String) -> Void = { value in
-                bridge.resolve(value)
-            }
-            let reject: @convention(block) (JSValue) -> Void = { error in
-                bridge.reject(.moduleEvaluationFailed(
-                    Self.redactedCode(from: error.toString())
-                ))
-            }
-            context.setObject(resolve, forKeyedSubscript: "__hanlinResolve" as NSString)
-            context.setObject(reject, forKeyedSubscript: "__hanlinReject" as NSString)
-            context.exceptionHandler = { _, value in
-                reject(value ?? JSValue(undefinedIn: context))
-            }
-            context.evaluateScript(
-                "Promise.resolve(globalThis.__hanlinInvoke(\(literal))).then(__hanlinResolve, __hanlinReject);",
-                withSourceURL: URL(string: "hanlin://invoke.js")
-            )
+        let invocationID = UUID()
+        let timeoutTask = Task { [weak self] in
+            try? await Task.sleep(for: .seconds(30))
+            await self?.timeoutInvocation(id: invocationID)
         }
-        context.setObject(nil, forKeyedSubscript: "__hanlinResolve" as NSString)
-        context.setObject(nil, forKeyedSubscript: "__hanlinReject" as NSString)
-        context.exceptionHandler = nil
+        defer { timeoutTask.cancel() }
+        let result: String
+        do {
+            result = try await withTaskCancellationHandler {
+                try await withCheckedThrowingContinuation { continuation in
+                    let bridge = HanlinJSCInvocationContinuation(continuation)
+                    activeInvocation = (invocationID, bridge)
+                    let resolve: @convention(block) (String) -> Void = { value in
+                        bridge.resolve(value)
+                    }
+                    let reject: @convention(block) (JSValue) -> Void = { error in
+                        bridge.reject(.moduleEvaluationFailed(
+                            Self.redactedCode(from: error.toString())
+                        ))
+                    }
+                    context.setObject(resolve, forKeyedSubscript: "__hanlinResolve" as NSString)
+                    context.setObject(reject, forKeyedSubscript: "__hanlinReject" as NSString)
+                    context.exceptionHandler = { _, value in
+                        reject(value ?? JSValue(undefinedIn: context))
+                    }
+                    context.evaluateScript(
+                        "Promise.resolve(globalThis.__hanlinInvoke(\(literal))).then(__hanlinResolve, __hanlinReject);",
+                        withSourceURL: URL(string: "hanlin://invoke.js")
+                    )
+                }
+            } onCancel: { [weak self] in
+                Task { await self?.cancelInvocation(id: invocationID) }
+            }
+        } catch {
+            finishInvocation(id: invocationID)
+            throw error
+        }
+        finishInvocation(id: invocationID)
         guard !Task.isCancelled else { throw HanlinScriptingError.cancelled }
         let data = Data(result.utf8)
         guard data.count <= configuration.maximumOutputBytes else {
@@ -114,6 +133,9 @@ actor HanlinJavaScriptCoreSession {
     func dispose() {
         guard !disposed else { return }
         disposed = true
+        context?.evaluateScript("globalThis.__hanlinCancelCurrent?.();")
+        activeInvocation?.continuation.reject(.unavailableProvider("disposed_session"))
+        activeInvocation = nil
         context?.exceptionHandler = nil
         context = nil
         virtualMachine = nil
@@ -134,6 +156,26 @@ actor HanlinJavaScriptCoreSession {
             throw HanlinScriptingError.unavailableProvider("disposed_session")
         }
         return context
+    }
+
+    private func cancelInvocation(id: UUID) {
+        guard activeInvocation?.id == id else { return }
+        context?.evaluateScript("globalThis.__hanlinCancelCurrent?.();")
+        activeInvocation?.continuation.reject(.cancelled)
+    }
+
+    private func timeoutInvocation(id: UUID) {
+        guard activeInvocation?.id == id else { return }
+        context?.evaluateScript("globalThis.__hanlinCancelCurrent?.();")
+        activeInvocation?.continuation.reject(.executionTimedOut)
+    }
+
+    private func finishInvocation(id: UUID) {
+        guard activeInvocation?.id == id else { return }
+        activeInvocation = nil
+        context?.setObject(nil, forKeyedSubscript: "__hanlinResolve" as NSString)
+        context?.setObject(nil, forKeyedSubscript: "__hanlinReject" as NSString)
+        context?.exceptionHandler = nil
     }
 
     private static func redactedCode(from message: String?) -> String {

@@ -13,6 +13,10 @@ enum HanlinScriptValueBridge {
       const minimumInteger = -(1n << 63n);
       const maximumInteger = (1n << 63n) - 1n;
       const executeTools = [];
+      const toolState = new Map();
+      const toolReports = [];
+      let currentToolCancelled = false;
+      let currentOnCancel = null;
 
       function fail(code) {
         throw new TypeError(`HANLIN_BRIDGE:${code}`);
@@ -174,8 +178,39 @@ enum HanlinScriptValueBridge {
           if (executeTools.length >= 64) fail("tool_registration_limit");
           executeTools.push(execute);
           return async (parameters) => execute(parameters);
-        }
+        },
+        report(message, id = undefined) {
+          if (typeof message !== "string") fail("report_message");
+          checkText(message, limits.maximumStringBytes, "string_limit");
+          const reportID = id == null ? null : String(id);
+          if (reportID != null) {
+            const existing = toolReports.findIndex(item => item.id === reportID);
+            if (existing >= 0) { toolReports[existing] = { id: reportID, message }; return; }
+          }
+          if (toolReports.length >= 256) fail("report_limit");
+          toolReports.push({ id: reportID, message });
+        },
+        getState(key) { return toolState.has(String(key)) ? toolState.get(String(key)) : null; },
+        setState(key, value) {
+          const normalized = String(key);
+          checkText(normalized, limits.maximumKeyBytes, "key_limit");
+          encode(value);
+          toolState.set(normalized, value);
+        },
+        removeState(key) { toolState.delete(String(key)); },
+        clearState() { toolState.clear(); }
       };
+      Object.defineProperties(assistantTool, {
+        isCancelled: { enumerable: true, get() { return currentToolCancelled; } },
+        onCancel: {
+          enumerable: true,
+          get() { return currentOnCancel; },
+          set(value) {
+            if (value != null && typeof value !== "function") fail("on_cancel_not_function");
+            currentOnCancel = value;
+          }
+        }
+      });
 
       Object.defineProperty(globalThis, "AssistantTool", {
         configurable: false,
@@ -201,6 +236,10 @@ enum HanlinScriptValueBridge {
         writable: false,
         value: async (canonicalInput) => {
           if (executeTools.length === 0) throw new Error("HANLIN_ABI:missing_execute_tool");
+          currentToolCancelled = false;
+          currentOnCancel = null;
+          toolState.clear();
+          toolReports.length = 0;
           const decoded = decode(JSON.parse(canonicalInput));
           const isNamedInvocation = decoded !== null
             && typeof decoded === "object"
@@ -230,6 +269,26 @@ enum HanlinScriptValueBridge {
           }
           return JSON.stringify(encodedResult);
         }
+      });
+      Object.defineProperty(globalThis, "__hanlinCancelCurrent", {
+        configurable: false,
+        enumerable: false,
+        writable: false,
+        value: () => {
+          if (currentToolCancelled) return null;
+          currentToolCancelled = true;
+          const callback = currentOnCancel;
+          currentOnCancel = null;
+          if (typeof callback !== "function") return null;
+          try { return callback() ?? null; }
+          catch (_) { return null; }
+        }
+      });
+      Object.defineProperty(globalThis, "__hanlinToolReports", {
+        configurable: false,
+        enumerable: false,
+        writable: false,
+        value: () => toolReports.map(item => ({ ...item }))
       });
     })();
     """#

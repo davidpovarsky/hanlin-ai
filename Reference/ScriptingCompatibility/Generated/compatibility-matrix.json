@@ -2969,16 +2969,16 @@
       ],
       "allowedOrigins": [],
       "behaviorDifferences": [
-        "The legacy checked-artifact ABI implements execute-tool registration, routing, cancellation and structured results; the full Scripting package compiler lane remains unavailable."
+        "The checked-artifact JavaScriptCore ABI implements execute-tool registration, canonical invocation, bounded call state, replaceable progress reports, cooperative onCancel, host task cancellation, timeout, deterministic disposal and session reuse; approval requests, interactive tool UI and ScriptEditorProvider remain unavailable."
       ],
       "behaviorMatched": false,
       "declarationFile": "global.d.ts",
       "declarationLine": 11460,
       "declaredByScripting": true,
       "hanlinAPIVersion": "hanlin.script/1.0",
-      "hanlinSymbol": "HanlinCanonicalToolAuthority.ScriptSource",
+      "hanlinSymbol": "HanlinJavaScriptCoreSession",
       "implementedByHanlin": true,
-      "notes": "Operational for integrity-checked legacy artifacts and intentionally not claimed as full namespace compatibility.",
+      "notes": "Operational for integrity-checked scripting-jsc assistant-tool artifacts and routed through the canonical native/MCP/Scripting tool authority.",
       "referenceCategory": "namespace",
       "referenceSignatureHash": "0ee2ed212c9589e0ea83b4dff9841f4a814a068bcc58b3a447fc5d31d71917aa",
       "referenceSymbol": "AssistantTool",
@@ -2986,7 +2986,8 @@
       "requiredEntitlement": null,
       "status": "partial",
       "tests": [
-        "AI_HLYTests/HanlinScriptingRuntimeTests.swift"
+        "AI_HLYTests/HanlinScriptingRuntimeTests.swift",
+        "Scripts/ScriptingReference/Tests/assistant-tool-runtime.test.mjs"
       ],
       "verifiedByFixture": false
     },

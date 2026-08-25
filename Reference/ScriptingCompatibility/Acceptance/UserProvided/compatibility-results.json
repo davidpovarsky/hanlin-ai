@@ -3,17 +3,17 @@
   "measuredAt": "2026-08-25",
   "baselineID": "scripting-compat-2026-08-25-0b7b8e715573",
   "compilerVersion": "7.0.2",
-  "environment": "Windows local static and Node-hosted JSC-bootstrap smoke; no Xcode, Simulator, or device run in this measurement",
+  "environment": "Windows local static and Node-hosted bootstrap tests plus GitHub Actions run 32827640058 on Xcode 26.6: Swift 6 contracts/tests, downstream JSC tests, arm64 iOS Simulator build and launch, generic iOS 26 device build, unsigned IPA packaging and dyld-closure validation",
   "projects": [
     {
       "id": "filemanager-2",
       "typecheck": {"status": "source-project-issue", "errorCount": 5, "evidence": "Internal hook/configuration and localization-interface inconsistencies reproduce against the untouched authoritative declarations."},
       "compileBundle": {"status": "transpile-passed-bundle-blocked", "emittedModuleCount": 36, "blocker": "The production registry rejects required unimplemented or behavior-unverified Scripting values before evaluation."},
-      "runtimeLaunch": {"status": "blocked", "blockers": ["SVG", "NavigationDestination", "Path", "Intent", "NavigationLink", "Picker and other unverified ScriptUI values"]},
+      "runtimeLaunch": {"status": "blocked", "blockers": ["SVG", "NavigationDestination", "Intent", "NavigationLink", "Picker and other unverified ScriptUI values"]},
       "uiRender": {"status": "not-reached"},
       "interaction": {"status": "not-reached"},
-      "nativeServices": {"status": "blocked", "blockers": ["FileManager JavaScript binding", "Path runtime semantics", "Intent input bridge"]},
-      "remainingBlockers": ["Five independent source errors", "FileManager/Path binding", "broader ScriptUI and navigation behavior"]
+      "nativeServices": {"status": "implementation-verified-outside-project-launch", "passed": ["FileManager native VFS sync/async binding", "Path runtime semantics", "binary Data bridge", "capability denial and lifecycle tests"], "blockers": ["Intent input bridge", "project launch remains gated by ScriptUI symbols"]},
+      "remainingBlockers": ["Five independent source errors", "broader ScriptUI and navigation behavior", "Intent input bridge"]
     },
     {
       "id": "sefaria-multi-engine",
@@ -22,8 +22,8 @@
       "runtimeLaunch": {"status": "blocked", "blockers": ["ContentUnavailableView", "DisclosureGroup", "Slider", "Picker", "NavigationDestination", "LazyVGrid", "NavigationSplitView", "ScrollViewReader"]},
       "uiRender": {"status": "not-reached"},
       "interaction": {"status": "not-reached"},
-      "nativeServices": {"status": "blocked", "blockers": ["complete Storage binding", "FileManager binding", "fetch/Web compatibility", "Spotlight entrypoint"]},
-      "remainingBlockers": ["Four source/API-usage errors", "split navigation and reader/proxy semantics", "storage/network/native entrypoint coverage"]
+      "nativeServices": {"status": "implementation-verified-outside-project-launch", "passed": ["private Storage JSON/Data namespace", "FileManager/Path bounded VFS", "buffered fetch/Headers/Request/Response with cancellation"], "blockers": ["Spotlight entrypoint", "project launch remains gated by ScriptUI symbols"]},
+      "remainingBlockers": ["Four source/API-usage errors", "split navigation and reader/proxy semantics", "Spotlight and native entrypoint coverage"]
     },
     {
       "id": "nativ-ai-9",
@@ -32,7 +32,7 @@
       "runtimeLaunch": {"status": "blocked", "blockers": ["LiveActivityUI family", "NavigationSplitView family", "useReducer", "Path", "Picker", "DisclosureGroup"]},
       "uiRender": {"status": "not-reached"},
       "interaction": {"status": "not-reached"},
-      "nativeServices": {"status": "blocked", "blockers": ["Assistant binding", "SQLite binding", "FileManager binding", "Location binding", "fetch", "real Live Activity execution"]},
+      "nativeServices": {"status": "partial", "passed": ["FileManager/Path bounded VFS", "buffered fetch/Web primitives", "Storage"], "blockers": ["Assistant binding", "SQLite binding", "Location binding", "real Live Activity execution"]},
       "remainingBlockers": ["45 source/API-usage errors", "agent/native-service bindings", "Live Activity and broad ScriptUI semantics"]
     },
     {
@@ -42,8 +42,8 @@
       "runtimeLaunch": {"status": "blocked", "blockers": ["useReducer", "NavigationSplitView family", "Picker", "Link", "Divider"]},
       "uiRender": {"status": "not-reached"},
       "interaction": {"status": "not-reached"},
-      "nativeServices": {"status": "blocked", "blockers": ["AssistantTool/Assistant execution", "Location", "fetch", "FileManager", "Widget execution"]},
-      "remainingBlockers": ["Four source errors", "assistant tool lifecycle", "native services and broader navigation/UI"]
+      "nativeServices": {"status": "partial", "passed": ["AssistantTool execute registration/invocation/cancellation/state lifecycle", "FileManager/Path bounded VFS", "buffered fetch/Web primitives", "Storage"], "blockers": ["Assistant requests", "approval/tool UI", "Location", "Widget execution"]},
+      "remainingBlockers": ["Four source errors", "Assistant request and approval/UI flows", "native services and broader navigation/UI"]
     },
     {
       "id": "smart-eating-updated-7",
@@ -51,7 +51,7 @@
       "typecheck": {"status": "passed", "errorCount": 0},
       "compileBundle": {"status": "passed-for-smoke-profile", "emittedModuleCount": 49, "importedScriptingRuntimeSymbolCount": 31},
       "runtimeLaunch": {"status": "passed-node-hosted-bootstrap", "presented": true, "rootKind": "tabView"},
-      "uiRender": {"status": "passed-structural-smoke", "renderedNodeCount": 342, "limitation": "No Xcode/Simulator visual verification was run in this measurement."},
+      "uiRender": {"status": "passed-structural-smoke", "renderedNodeCount": 354, "limitation": "The archived project was structurally rendered in the Node-hosted exact bootstrap; Xcode/Simulator validated the shared app and runtime tests but did not visually launch this archived project."},
       "interaction": {"status": "not-exercised-on-real-project", "evidence": "The shared runtime has hook/event/rerender tests, but this archived app was not driven through its controls."},
       "nativeServices": {"status": "partial", "passed": ["package-isolated Storage binding during launch"], "notExercised": ["Assistant", "Health", "Notification"], "placeholdersNotClaimed": ["Widget", "AppIntent"]},
       "remainingBlockers": ["real-project interaction automation", "visual Simulator/device evidence", "Health/Notification/Assistant flows", "real widget and App Intent execution"]

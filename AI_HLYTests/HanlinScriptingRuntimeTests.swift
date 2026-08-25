@@ -160,6 +160,96 @@ struct HanlinJavaScriptCoreEngineTests {
         #expect(secondMessage == "2")
         await session.dispose()
     }
+
+    @Test("Implements AssistantTool call state, progress replacement, cancellation, and reuse")
+    func assistantToolLifecycle() async throws {
+        let session = try HanlinJavaScriptCoreSession()
+        try await session.loadProgram(
+            #"""
+            globalThis.cancelMarker = "none";
+            AssistantTool.registerExecuteTool((parameters) => {
+              if (parameters.hang) {
+                AssistantTool.onCancel = () => { globalThis.cancelMarker = "cancelled"; return "cancelled"; };
+                return new Promise(() => {});
+              }
+              AssistantTool.setState("value", parameters.value);
+              AssistantTool.report("first", "progress");
+              AssistantTool.report("second", "progress");
+              const reports = globalThis.__hanlinToolReports();
+              return {
+                success: AssistantTool.getState("value") === parameters.value
+                  && reports.length === 1
+                  && reports[0].message === "second"
+                  && !AssistantTool.isCancelled,
+                message: globalThis.cancelMarker
+              };
+            });
+            """#,
+            filename: "assistant_tool.js",
+            expectedToolCount: 1
+        )
+
+        let first = try await session.invoke(
+            toolIndex: 0,
+            parameters: .object(["hang": .bool(false), "value": .string("stored")])
+        )
+        guard case let .object(firstMembers) = first,
+              case let .bool(firstSuccess)? = firstMembers["success"] else {
+            Issue.record("AssistantTool state and reports did not cross the bridge")
+            await session.dispose()
+            return
+        }
+        #expect(firstSuccess)
+
+        let hanging = Task {
+            try await session.invoke(
+                toolIndex: 0,
+                parameters: .object(["hang": .bool(true), "value": .null])
+            )
+        }
+        try await Task.sleep(for: .milliseconds(20))
+        hanging.cancel()
+        do {
+            _ = try await hanging.value
+            Issue.record("Cancelled AssistantTool invocation unexpectedly completed")
+        } catch let error as HanlinScriptingError {
+            #expect(error == .cancelled)
+        }
+
+        let afterCancellation = try await session.invoke(
+            toolIndex: 0,
+            parameters: .object(["hang": .bool(false), "value": .string("next")])
+        )
+        guard case let .object(members) = afterCancellation,
+              case let .string(message)? = members["message"] else {
+            Issue.record("AssistantTool session was not reusable after cancellation")
+            await session.dispose()
+            return
+        }
+        #expect(message == "cancelled")
+        await session.dispose()
+    }
+
+    @Test("Disposal resumes a pending JavaScriptCore invocation")
+    func disposalResumesPendingInvocation() async throws {
+        let session = try HanlinJavaScriptCoreSession()
+        try await session.loadProgram(
+            "AssistantTool.registerExecuteTool(() => new Promise(() => {}));",
+            filename: "assistant_tool.js",
+            expectedToolCount: 1
+        )
+        let pending = Task {
+            try await session.invoke(toolIndex: 0, parameters: .object([:]))
+        }
+        try await Task.sleep(for: .milliseconds(20))
+        await session.dispose()
+        do {
+            _ = try await pending.value
+            Issue.record("Disposed JavaScriptCore invocation unexpectedly completed")
+        } catch let error as HanlinScriptingError {
+            #expect(error == .unavailableProvider("disposed_session"))
+        }
+    }
 }
 
 @Suite("Installed Scripting application runtime", .serialized)
