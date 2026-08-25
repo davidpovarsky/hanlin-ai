@@ -40,7 +40,7 @@ struct HanlinScriptingApplicationRuntimeTests {
         let session = try HanlinScriptingApplicationSession(
             installedPackageID: packageID,
             program: #"""
-            const assistantResult = useObservable("Idle");
+            const assistantResult = useObservable(Assistant.isAvailable ? "Idle" : "Unavailable");
             const assistantStream = Assistant.requestStreaming({
               messages: { role: "user", content: "Hello" },
               provider: "openai"
@@ -48,12 +48,16 @@ struct HanlinScriptingApplicationRuntimeTests {
             Navigation.present({ element: createElement(Button, {
               title: assistantResult,
               action: async () => {
-                const stream = await assistantStream;
-                let text = "";
-                for await (const chunk of stream) {
-                  if (chunk.type === "text") text += chunk.content;
+                try {
+                  const stream = await assistantStream;
+                  let text = "";
+                  for await (const chunk of stream) {
+                    if (chunk.type === "text") text += chunk.content;
+                  }
+                  assistantResult.value = text;
+                } catch (error) {
+                  assistantResult.value = `${error.name}:${error.message}`;
                 }
-                assistantResult.value = text;
               }
             }) });
             """#,
