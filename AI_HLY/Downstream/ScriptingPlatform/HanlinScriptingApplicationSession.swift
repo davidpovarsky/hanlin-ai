@@ -503,6 +503,7 @@ private extension HanlinScriptingApplicationSession {
       const effects = new Map();
       const handlers = new Map();
       const contexts = new Map();
+      let navigationDestinationBuilders = [];
       let hookCursor = 0;
       let handlerCursor = 0;
       let presentedElement = null;
@@ -973,14 +974,16 @@ private extension HanlinScriptingApplicationSession {
         SecureField: "textField", HStack: "hStack", VStack: "vStack", ZStack: "zStack",
         ScrollView: "scrollView", Group: "group", Spacer: "spacer", Divider: "divider",
         ProgressView: "progress", NavigationStack: "navigationStack",
-        NavigationLink: "navigationLink", TabView: "tabView", Tab: "tab",
-        List: "scrollView", Form: "scrollView", Section: "group", GroupBox: "group",
+        NavigationLink: "navigationLink", NavigationDestination: "navigationDestination",
+        TabView: "tabView", Tab: "tab",
+        List: "scrollView", Form: "form", Section: "group", GroupBox: "group",
         LazyVStack: "vStack", LazyVGrid: "vStack", Grid: "vStack", LazyHStack: "hStack",
-        LazyHGrid: "hStack", ControlGroup: "hStack", Toolbar: "group", ToolbarItem: "group",
-        Label: "hStack", Menu: "menu", Link: "button", Toggle: "toggle", Picker: "group",
+        LazyHGrid: "hStack", ControlGroup: "controlGroup", Toolbar: "group", ToolbarItem: "group",
+        Label: "label", Menu: "menu", Link: "button", Toggle: "toggle", Picker: "picker",
         Slider: "progress", BarChart: "barChart", Chart: "chart",
         RoundedRectangle: "roundedRectangle", Rectangle: "rectangle", Capsule: "roundedRectangle",
-        Circle: "circle", ContentUnavailableView: "vStack", EmptyView: "group", Markdown: "text"
+        Circle: "circle", ContentUnavailableView: "vStack", EmptyView: "group", Markdown: "markdown",
+        SVG: "svg"
       });
 
       function flatten(value, output = []) {
@@ -1112,6 +1115,17 @@ private extension HanlinScriptingApplicationSession {
         }
         if (value.__hanlinComponent) return materialize(value.type(value.properties));
         if (!value.__hanlinHost) throw new TypeError("HANLIN_UI:invalid_node");
+        if (value.hostName === "NavigationDestination") {
+          const builder = value.children.find(child => typeof child === "function");
+          if (typeof builder === "function") navigationDestinationBuilders.push(builder);
+          return [];
+        }
+        const configuredDestination = value.properties.navigationDestination;
+        if (configuredDestination?.__hanlinHost
+            && configuredDestination.hostName === "NavigationDestination") {
+          const builder = configuredDestination.children.find(child => typeof child === "function");
+          if (typeof builder === "function") navigationDestinationBuilders.push(builder);
+        }
         let children = flatten(value.children.map(materialize));
         if (value.hostName === "Section") {
           children = [
@@ -1141,6 +1155,72 @@ private extension HanlinScriptingApplicationSession {
           });
         }
         if (value.kind === "textField") properties.onChange = properties.onChanged ?? properties.onChange ?? null;
+        if (value.kind === "label") {
+          properties.title = properties.title ?? "";
+          properties.systemImage = properties.systemImage ?? "circle";
+        }
+        if (value.kind === "picker") {
+          const source = value.properties.value ?? value.properties.selection;
+          const current = source?.__hanlinObservable ? source.value : source;
+          properties.value = current == null ? "" : String(current);
+          properties.onChange = registerHandler(selectedValue => {
+            if (source?.__hanlinObservable) source.setValue(selectedValue);
+            if (typeof value.properties.onChanged === "function") value.properties.onChanged(selectedValue);
+          });
+        }
+        if (value.kind === "svg") {
+          if (typeof value.properties.code === "string") {
+            properties.code = value.properties.code;
+          } else if (typeof value.properties.filePath === "string") {
+            properties.code = FileManager.readAsStringSync(value.properties.filePath);
+          } else {
+            throw new TypeError("HANLIN_UI:svg_source");
+          }
+          if (properties.code.length > 2 * 1024 * 1024) {
+            throw new TypeError("HANLIN_UI:svg_size");
+          }
+        }
+        const routeDefinitions = [];
+        if (value.kind === "navigationLink") {
+          const route = value.properties.value == null
+            ? `destination-${handlerCursor++}`
+            : String(value.properties.value);
+          const destination = value.properties.destination;
+          const builder = navigationDestinationBuilders.at(-1);
+          const destinationNodes = destination != null
+            ? materialize(destination)
+            : typeof builder === "function" && value.properties.value != null
+              ? materialize(builder(String(value.properties.value)))
+              : [];
+          properties.route = route;
+          if (destinationNodes.length > 0) {
+            routeDefinitions.push({
+              kind: "navigationDestination", key: `route-${route}`,
+              properties: { route }, children: destinationNodes
+            });
+          }
+        }
+        if (value.kind === "navigationStack") {
+          const source = value.properties.path;
+          const path = source?.__hanlinObservable ? source.value : source;
+          properties.path = Array.isArray(path) ? path.map(String) : [];
+          properties.onPathChange = registerHandler(nextPath => {
+            const normalized = Array.isArray(nextPath) ? nextPath.map(String) : [];
+            if (source?.__hanlinObservable) source.setValue(normalized);
+          });
+          const builder = navigationDestinationBuilders.at(-1);
+          if (typeof builder === "function") {
+            for (const route of properties.path) {
+              const destinationNodes = materialize(builder(route));
+              if (destinationNodes.length > 0) {
+                routeDefinitions.push({
+                  kind: "navigationDestination", key: `route-${route}`,
+                  properties: { route }, children: destinationNodes
+                });
+              }
+            }
+          }
+        }
         if (value.kind === "tabView" && value.properties.selection?.__hanlinObservable) {
           properties.onChange = registerHandler(selectedValue => {
             const current = value.properties.selection.value;
@@ -1184,7 +1264,7 @@ private extension HanlinScriptingApplicationSession {
             break;
           }
         }
-        return [node, ...presentations];
+        return [node, ...routeDefinitions, ...presentations];
       }
 
       function render() {
@@ -1194,6 +1274,7 @@ private extension HanlinScriptingApplicationSession {
           hookCursor = 0;
           handlerCursor = 0;
           handlers.clear();
+          navigationDestinationBuilders = [];
           const nodes = materialize(presentedElement);
           const root = nodes.length === 1 ? nodes[0] : { kind: "fragment", key: null, properties: {}, children: nodes };
           __hanlinNativeRender(JSON.stringify(root));
@@ -1253,7 +1334,8 @@ private extension HanlinScriptingApplicationSession {
         clear() { if (!__hanlinNativeStorageClear()) throw new Error("HANLIN_STORAGE:clear_failed"); }
       });
       const Script = Object.freeze({
-        name: "Hanlin Scripting App", queryParameters: {}, shareFiles: [],
+        name: "Hanlin Scripting App", directory: FileManager.scriptsDirectory,
+        queryParameters: {}, shareFiles: [],
         exit() {}, minimize() {}, onResume() { return () => {}; }
       });
       const Device = Object.freeze({ systemLanguageCode: "en", systemName: "iOS" });

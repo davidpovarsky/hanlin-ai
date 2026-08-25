@@ -69,12 +69,17 @@ enum HanlinScriptToolOutputPart: Hashable, Sendable {
         case let .text(text):
             return .object(["type": .string("text"), "text": .string(text)])
         case let .image(base64, mimeType):
-            var members: [String: HanlinValue] = [
+            if let mimeType {
+                return .object([
+                    "type": .string("image"),
+                    "base64": .string(base64),
+                    "mimeType": .string(mimeType),
+                ])
+            }
+            return .object([
                 "type": .string("image"),
                 "base64": .string(base64),
-            ]
-            if let mimeType { members["mimeType"] = .string(mimeType) }
-            return .object(members)
+            ])
         }
     }
 }

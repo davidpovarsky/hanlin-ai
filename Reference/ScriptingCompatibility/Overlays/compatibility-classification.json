@@ -32,17 +32,27 @@
         "Chart",
         "Circle",
         "Color",
+        "ControlGroup",
         "Device",
+        "Form",
         "Fragment",
+        "Group",
         "HStack",
         "Image",
+        "Label",
         "List",
+        "Markdown",
         "Menu",
         "Navigation",
+        "NavigationDestination",
+        "NavigationLink",
         "NavigationStack",
+        "Picker",
         "ProgressView",
         "RoundedRectangle",
         "Section",
+        "ScrollView",
+        "SVG",
         "Spacer",
         "Tab",
         "TabView",
@@ -68,13 +78,13 @@
       "hanlinSymbol": "HanlinScriptingApplicationSession",
       "hanlinAPIVersion": "hanlin.scriptui/1.0",
       "allowedContexts": ["mainApplication"],
-      "behaviorDifferences": ["The live JavaScriptCore bridge implements the listed component, hook, navigation and presentation subset; declaration members outside that tested subset remain unavailable and are not synthesized dynamically."],
+      "behaviorDifferences": ["The live JavaScriptCore bridge implements the listed component, hook, navigation and presentation subset, including observable NavigationStack paths, dynamic string NavigationDestination builders, direct NavigationLink destinations and native back propagation; declaration members outside that tested subset remain unavailable and are not synthesized dynamically."],
       "tests": [
         "AI_HLYTests/HanlinScriptingRuntimeTests.swift",
         "Packages/HanlinPlatform/Tests/HanlinScriptUITests/HanlinScriptUIReconcilerTests.swift",
         "Scripts/ScriptingReference/smoke-scripting-package-runtime.mjs"
       ],
-      "notes": "Validated with a real 49-module acceptance package that renders a 321-node interactive ScriptUI tree."
+      "notes": "Validated with a real 49-module acceptance package that renders a 356-node interactive ScriptUI tree, the real 35-module FileManager package, and targeted two-way navigation and control tests."
     }
   ],
   "symbols": [

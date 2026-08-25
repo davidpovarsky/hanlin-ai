@@ -152,3 +152,68 @@ test("AbortController rejects before dispatch and disposal cancels pending nativ
   assert.equal(timeoutName, "TimeoutError");
   assert.doesNotThrow(() => context.__hanlinDispose());
 });
+
+test("NavigationStack materializes dynamic destinations and sends native back to its observable path", () => {
+  const { context, rendered } = runtime();
+  vm.runInContext(`
+    const navigationPath = useObservable(["/documents/folder"]);
+    const destination = createElement(
+      NavigationDestination,
+      null,
+      page => createElement(Text, null, "Destination:" + page),
+    );
+    Navigation.present({ element: createElement(
+      NavigationStack,
+      { path: navigationPath },
+      createElement(VStack, { navigationDestination: destination }, createElement(Text, null, "Root")),
+    ) });
+  `, context);
+
+  const root = rendered();
+  const stack = root.kind === "navigationStack"
+    ? root
+    : root.children.find(node => node.kind === "navigationStack");
+  const route = root.children.find(node => node.kind === "navigationDestination");
+  assert.deepEqual(stack.properties.path, ["/documents/folder"]);
+  assert.equal(route.properties.route, "/documents/folder");
+  assert.equal(route.children[0].properties.text, "Destination:/documents/folder");
+
+  context.__hanlinDispatch(stack.properties.onPathChange, "[]");
+  const updatedRoot = rendered();
+  const updatedStack = updatedRoot.kind === "navigationStack"
+    ? updatedRoot
+    : updatedRoot.children.find(node => node.kind === "navigationStack");
+  assert.deepEqual(updatedStack.properties.path, []);
+});
+
+test("Form, Label, Markdown, ControlGroup, ScrollView, Group, and Picker retain interactive semantics", () => {
+  const { context, rendered } = runtime();
+  vm.runInContext(`
+    const selection = useObservable("he");
+    Navigation.present({ element: createElement(Form, { navigationTitle: "Preferences" },
+      createElement(Group, null,
+        createElement(Label, { title: "Language", systemImage: "globe" }),
+        createElement(Picker, { title: "Language", value: selection },
+          createElement(Text, { tag: "en" }, "English"),
+          createElement(Text, { tag: "he" }, "Hebrew"),
+        ),
+        createElement(ControlGroup, null, createElement(Button, { title: "Done" })),
+        createElement(ScrollView, null, createElement(Markdown, { content: "**Ready**" })),
+        createElement(SVG, { code: '<svg xmlns="http://www.w3.org/2000/svg"><circle r="4"/></svg>' }),
+      ),
+    ) });
+  `, context);
+
+  const form = rendered();
+  assert.equal(form.kind, "form");
+  const group = form.children[0];
+  assert.deepEqual(group.children.map(node => node.kind), [
+    "label", "picker", "controlGroup", "scrollView", "svg",
+  ]);
+  const picker = group.children[1];
+  assert.equal(picker.properties.value, "he");
+  context.__hanlinDispatch(picker.properties.onChange, '\"en\"');
+  assert.equal(rendered().children[0].children[1].properties.value, "en");
+  assert.equal(group.children[3].children[0].properties.content, "**Ready**");
+  assert.match(group.children[4].properties.code, /^<svg/);
+});

@@ -14,6 +14,7 @@ public final class HanlinScriptUIModel {
     public private(set) var scenePhase: HanlinScriptUIScenePhase = .inactive
     public private(set) var lastResumePayload: HanlinScriptResumePayload?
     private var routeDestinations: [String: HanlinScriptUINode] = [:]
+    private var navigationPathChangeHandlerID: String?
     private let eventSink: @MainActor (String, HanlinValue) -> Void
 
     public init(
@@ -28,6 +29,17 @@ public final class HanlinScriptUIModel {
         switch command {
         case let .render(node):
             root = node
+            routeDestinations = node.navigationDestinations()
+            if let stack = node.firstNavigationStack() {
+                navigationPathChangeHandlerID = stack.string("onPathChange")
+                let routeIDs = stack.stringArray("path") ?? []
+                navigationPath = routeIDs.compactMap { id in
+                    routeDestinations[id] == nil ? nil : HanlinScriptUIRoute(id: id, payload: .string(id))
+                }
+            } else {
+                navigationPathChangeHandlerID = nil
+                navigationPath = []
+            }
             if let selection = node.initialTabSelection() { selectedTab = selection }
             activePresentation = node.presentation()
         case let .patches(patches): root = try HanlinScriptUIReconciler.apply(patches, to: root)
@@ -78,6 +90,14 @@ public final class HanlinScriptUIModel {
         activePresentation = nil
         dispatch(handlerID: handlerID, payload: .bool(false))
     }
+
+    fileprivate func updateNavigationPath(_ path: [HanlinScriptUIRoute]) {
+        navigationPath = path
+        dispatch(
+            handlerID: navigationPathChangeHandlerID,
+            payload: .array(path.map { .string($0.id) })
+        )
+    }
 }
 
 public struct HanlinScriptUIView: View {
@@ -126,7 +146,7 @@ public struct HanlinScriptUIView: View {
     private var sheetView: some View {
         NavigationStack(path: Binding(
             get: { model.navigationPath },
-            set: { model.navigationPath = $0 }
+            set: { model.updateNavigationPath($0) }
         )) {
             HanlinScriptUINodeView(node: model.root, model: model)
                 .navigationDestination(for: HanlinScriptUIRoute.self) { route in
@@ -209,6 +229,36 @@ private struct HanlinScriptUINodeView: View {
         case .scrollView:
             ScrollView { LazyVStack(alignment: .leading) { children(node) } }
                 .navigationTitle(node.string("navigationTitle") ?? "")
+        case .form:
+            Form { children(node) }
+                .navigationTitle(node.string("navigationTitle") ?? "")
+        case .label:
+            Label(
+                node.string("title") ?? "",
+                systemImage: node.string("systemImage") ?? "circle"
+            )
+        case .controlGroup:
+            ControlGroup { children(node) }
+        case .picker:
+            Picker(node.string("title") ?? "", selection: Binding(
+                get: { node.string("value") ?? "" },
+                set: { model.dispatch(handlerID: node.string("onChange"), payload: .string($0)) }
+            )) {
+                ForEach(node.children.indices, id: \.self) { index in
+                    let child = node.children[index]
+                    HanlinScriptUINodeView(node: child, model: model)
+                        .tag(child.string("tag") ?? child.string("text") ?? String(index))
+                }
+            }
+        case .markdown:
+            Text(node.markdown())
+                .textSelection(.enabled)
+        case .svg:
+            HanlinSVGView(code: node.string("code") ?? "")
+                .frame(
+                    width: node.nestedDimension("frame", "width"),
+                    height: node.nestedDimension("frame", "height")
+                )
         case .spacer:
             Spacer(minLength: node.dimension("minimumLength"))
         case .divider:
@@ -252,7 +302,7 @@ private struct HanlinScriptUINodeView: View {
                     width: node.nestedDimension("frame", "width"),
                     height: node.nestedDimension("frame", "height")
                 )
-        case .presentation:
+        case .presentation, .navigationDestination:
             EmptyView()
         case .navigationStack:
             children(node)
@@ -293,12 +343,43 @@ private extension HanlinScriptUINode {
         return value
     }
 
+    func stringArray(_ name: String) -> [String]? {
+        guard case let .array(values)? = properties[name] else { return nil }
+        return values.compactMap { value in
+            guard case let .string(text) = value else { return nil }
+            return text
+        }
+    }
+
+    func navigationDestinations() -> [String: HanlinScriptUINode] {
+        var destinations: [String: HanlinScriptUINode] = [:]
+        if kind == .navigationDestination,
+           let route = string("route"),
+           let destination = children.first {
+            destinations[route] = destination
+        }
+        for child in children {
+            destinations.merge(child.navigationDestinations()) { _, latest in latest }
+        }
+        return destinations
+    }
+
+    func firstNavigationStack() -> HanlinScriptUINode? {
+        if kind == .navigationStack { return self }
+        return children.lazy.compactMap { $0.firstNavigationStack() }.first
+    }
+
     func number(_ name: String) -> Double? {
         switch properties[name] {
         case let .integer(value): Double(value)
         case let .number(value): value
         default: nil
         }
+    }
+
+    func markdown() -> AttributedString {
+        let source = string("content") ?? string("text") ?? ""
+        return (try? AttributedString(markdown: source)) ?? AttributedString(source)
     }
 
     func bool(_ name: String) -> Bool? {

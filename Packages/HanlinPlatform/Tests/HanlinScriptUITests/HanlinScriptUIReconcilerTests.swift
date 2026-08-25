@@ -1,9 +1,22 @@
 import HanlinPlatformContracts
-import HanlinScriptUI
+@testable import HanlinScriptUI
 import Testing
 
 @Suite("ScriptUI reconciler")
 struct HanlinScriptUIReconcilerTests {
+    @Test("SVG sanitizer accepts local vector markup and rejects active or remote content")
+    func svgSanitizer() {
+        #expect(HanlinSVGSanitizer.sanitize(
+            #"<svg xmlns="http://www.w3.org/2000/svg"><path d="M0 0h10v10z"/></svg>"#
+        ) != nil)
+        #expect(HanlinSVGSanitizer.sanitize(
+            #"<svg xmlns="http://www.w3.org/2000/svg"><script>alert(1)</script></svg>"#
+        ) == nil)
+        #expect(HanlinSVGSanitizer.sanitize(
+            #"<svg xmlns="http://www.w3.org/2000/svg"><image href="https://example.test/a.png"/></svg>"#
+        ) == nil)
+    }
+
     @Test("Produces deterministic patches that recreate an unkeyed tree")
     func unkeyedDiff() throws {
         let old = stack([
@@ -116,6 +129,30 @@ struct HanlinScriptUIReconcilerTests {
         #expect(model.activePresentation?.style == .sheet)
         #expect(model.activePresentation?.content == text("Presented"))
         #expect(model.activePresentation?.dismissHandlerID == "event-1")
+    }
+
+    @MainActor
+    @Test("Rendered navigation destinations synchronize path and native back events")
+    func renderedNavigationDestinations() throws {
+        var events: [(String, HanlinValue)] = []
+        let destination = text("Folder")
+        let model = HanlinScriptUIModel(root: stack([])) { events.append(($0, $1)) }
+        try model.apply(.render(.init(
+            kind: .navigationStack,
+            properties: [
+                "path": .array([.string("documents")]),
+                "onPathChange": .string("event-path"),
+            ],
+            children: [.init(
+                kind: .navigationDestination,
+                properties: ["route": .string("documents")],
+                children: [destination]
+            )]
+        )))
+
+        #expect(model.navigationPath.map(\.id) == ["documents"])
+        model.updateNavigationPath([])
+        #expect(events == [("event-path", .array([]))])
     }
 
     @MainActor

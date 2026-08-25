@@ -13,7 +13,13 @@ public enum HanlinScriptUIPrimitive: String, Codable, CaseIterable, Hashable, Se
     case vStack
     case zStack
     case scrollView
+    case form
     case group
+    case label
+    case controlGroup
+    case picker
+    case markdown
+    case svg
     case spacer
     case divider
     case progress
@@ -25,6 +31,7 @@ public enum HanlinScriptUIPrimitive: String, Codable, CaseIterable, Hashable, Se
     case presentation
     case navigationStack
     case navigationLink
+    case navigationDestination
     case tabView
     case tab
 }

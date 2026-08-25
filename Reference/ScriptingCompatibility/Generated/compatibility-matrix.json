@@ -2359,7 +2359,7 @@
       ],
       "allowedOrigins": [],
       "behaviorDifferences": [
-        "The live JavaScriptCore bridge implements the listed component, hook, navigation and presentation subset; declaration members outside that tested subset remain unavailable and are not synthesized dynamically."
+        "The live JavaScriptCore bridge implements the listed component, hook, navigation and presentation subset, including observable NavigationStack paths, dynamic string NavigationDestination builders, direct NavigationLink destinations and native back propagation; declaration members outside that tested subset remain unavailable and are not synthesized dynamically."
       ],
       "behaviorMatched": false,
       "declarationFile": "scripting.d.ts",
@@ -2368,7 +2368,7 @@
       "hanlinAPIVersion": "hanlin.scriptui/1.0",
       "hanlinSymbol": "HanlinScriptingApplicationSession",
       "implementedByHanlin": true,
-      "notes": "Validated with a real 49-module acceptance package that renders a 321-node interactive ScriptUI tree.",
+      "notes": "Validated with a real 49-module acceptance package that renders a 356-node interactive ScriptUI tree, the real 35-module FileManager package, and targeted two-way navigation and control tests.",
       "referenceCategory": "class",
       "referenceSignatureHash": "cf996ee9db6123d52b950f2f2d4945bf05b53e99460438708b0a1bec3cb4e59f",
       "referenceSymbol": "AppIntentManager",
@@ -2409,7 +2409,7 @@
       ],
       "allowedOrigins": [],
       "behaviorDifferences": [
-        "The live JavaScriptCore bridge implements the listed component, hook, navigation and presentation subset; declaration members outside that tested subset remain unavailable and are not synthesized dynamically."
+        "The live JavaScriptCore bridge implements the listed component, hook, navigation and presentation subset, including observable NavigationStack paths, dynamic string NavigationDestination builders, direct NavigationLink destinations and native back propagation; declaration members outside that tested subset remain unavailable and are not synthesized dynamically."
       ],
       "behaviorMatched": false,
       "declarationFile": "scripting.d.ts",
@@ -2418,7 +2418,7 @@
       "hanlinAPIVersion": "hanlin.scriptui/1.0",
       "hanlinSymbol": "HanlinScriptingApplicationSession",
       "implementedByHanlin": true,
-      "notes": "Validated with a real 49-module acceptance package that renders a 321-node interactive ScriptUI tree.",
+      "notes": "Validated with a real 49-module acceptance package that renders a 356-node interactive ScriptUI tree, the real 35-module FileManager package, and targeted two-way navigation and control tests.",
       "referenceCategory": "enum",
       "referenceSignatureHash": "0de16feef30b5586a05a62837ce599a57fec4f52793f66244e9758481ce49735",
       "referenceSymbol": "AppIntentProtocol",
@@ -2969,7 +2969,7 @@
       ],
       "allowedOrigins": [],
       "behaviorDifferences": [
-        "The checked-artifact JavaScriptCore ABI implements execute-tool registration, canonical invocation, bounded call state, replaceable progress reports, cooperative onCancel, host task cancellation, timeout, deterministic disposal and session reuse; approval requests, interactive tool UI and ScriptEditorProvider remain unavailable."
+        "The checked-artifact JavaScriptCore ABI implements execute-tool registration, legacy and structured user/assistant output parts (including bounded embedded images rendered natively), canonical invocation, bounded call state, replaceable progress reports, cooperative onCancel, host task cancellation, timeout, deterministic disposal and session reuse; approval requests, registerUIView and ScriptEditorProvider remain unavailable."
       ],
       "behaviorMatched": false,
       "declarationFile": "global.d.ts",
@@ -5244,7 +5244,7 @@
       ],
       "allowedOrigins": [],
       "behaviorDifferences": [
-        "The live JavaScriptCore bridge implements the listed component, hook, navigation and presentation subset; declaration members outside that tested subset remain unavailable and are not synthesized dynamically."
+        "The live JavaScriptCore bridge implements the listed component, hook, navigation and presentation subset, including observable NavigationStack paths, dynamic string NavigationDestination builders, direct NavigationLink destinations and native back propagation; declaration members outside that tested subset remain unavailable and are not synthesized dynamically."
       ],
       "behaviorMatched": false,
       "declarationFile": "scripting.d.ts",
@@ -5253,7 +5253,7 @@
       "hanlinAPIVersion": "hanlin.scriptui/1.0",
       "hanlinSymbol": "HanlinScriptingApplicationSession",
       "implementedByHanlin": true,
-      "notes": "Validated with a real 49-module acceptance package that renders a 321-node interactive ScriptUI tree.",
+      "notes": "Validated with a real 49-module acceptance package that renders a 356-node interactive ScriptUI tree, the real 35-module FileManager package, and targeted two-way navigation and control tests.",
       "referenceCategory": "const",
       "referenceSignatureHash": "9d0daf9b2422d9d59fadecf936f41999bfadf662bbff94912a33cbe4a16fde70",
       "referenceSymbol": "BarChart",
@@ -6200,7 +6200,7 @@
       ],
       "allowedOrigins": [],
       "behaviorDifferences": [
-        "The live JavaScriptCore bridge implements the listed component, hook, navigation and presentation subset; declaration members outside that tested subset remain unavailable and are not synthesized dynamically."
+        "The live JavaScriptCore bridge implements the listed component, hook, navigation and presentation subset, including observable NavigationStack paths, dynamic string NavigationDestination builders, direct NavigationLink destinations and native back propagation; declaration members outside that tested subset remain unavailable and are not synthesized dynamically."
       ],
       "behaviorMatched": false,
       "declarationFile": "global.d.ts",
@@ -6209,7 +6209,7 @@
       "hanlinAPIVersion": "hanlin.scriptui/1.0",
       "hanlinSymbol": "HanlinScriptingApplicationSession",
       "implementedByHanlin": true,
-      "notes": "Validated with a real 49-module acceptance package that renders a 321-node interactive ScriptUI tree.",
+      "notes": "Validated with a real 49-module acceptance package that renders a 356-node interactive ScriptUI tree, the real 35-module FileManager package, and targeted two-way navigation and control tests.",
       "referenceCategory": "class",
       "referenceSignatureHash": "c0b1c39d9dee344e5f23ce5f6b3e72945f8cb56b6ed992f437f1f318d7a32341",
       "referenceSymbol": "Button",
@@ -6271,7 +6271,7 @@
       ],
       "allowedOrigins": [],
       "behaviorDifferences": [
-        "The live JavaScriptCore bridge implements the listed component, hook, navigation and presentation subset; declaration members outside that tested subset remain unavailable and are not synthesized dynamically."
+        "The live JavaScriptCore bridge implements the listed component, hook, navigation and presentation subset, including observable NavigationStack paths, dynamic string NavigationDestination builders, direct NavigationLink destinations and native back propagation; declaration members outside that tested subset remain unavailable and are not synthesized dynamically."
       ],
       "behaviorMatched": false,
       "declarationFile": "scripting.d.ts",
@@ -6280,7 +6280,7 @@
       "hanlinAPIVersion": "hanlin.scriptui/1.0",
       "hanlinSymbol": "HanlinScriptingApplicationSession",
       "implementedByHanlin": true,
-      "notes": "Validated with a real 49-module acceptance package that renders a 321-node interactive ScriptUI tree.",
+      "notes": "Validated with a real 49-module acceptance package that renders a 356-node interactive ScriptUI tree, the real 35-module FileManager package, and targeted two-way navigation and control tests.",
       "referenceCategory": "const",
       "referenceSignatureHash": "69fd60ef50903d8609bc93f300270039ad02d4f48c92fee6254fbd4e322887e3",
       "referenceSymbol": "Button",
@@ -7665,7 +7665,7 @@
       ],
       "allowedOrigins": [],
       "behaviorDifferences": [
-        "The live JavaScriptCore bridge implements the listed component, hook, navigation and presentation subset; declaration members outside that tested subset remain unavailable and are not synthesized dynamically."
+        "The live JavaScriptCore bridge implements the listed component, hook, navigation and presentation subset, including observable NavigationStack paths, dynamic string NavigationDestination builders, direct NavigationLink destinations and native back propagation; declaration members outside that tested subset remain unavailable and are not synthesized dynamically."
       ],
       "behaviorMatched": false,
       "declarationFile": "scripting.d.ts",
@@ -7674,7 +7674,7 @@
       "hanlinAPIVersion": "hanlin.scriptui/1.0",
       "hanlinSymbol": "HanlinScriptingApplicationSession",
       "implementedByHanlin": true,
-      "notes": "Validated with a real 49-module acceptance package that renders a 321-node interactive ScriptUI tree.",
+      "notes": "Validated with a real 49-module acceptance package that renders a 356-node interactive ScriptUI tree, the real 35-module FileManager package, and targeted two-way navigation and control tests.",
       "referenceCategory": "const",
       "referenceSignatureHash": "105430b0099b8e3e50d05ab18f1f317b57a994172bb5c8593d448834a72c844f",
       "referenceSymbol": "Chart",
@@ -7862,7 +7862,7 @@
       ],
       "allowedOrigins": [],
       "behaviorDifferences": [
-        "The live JavaScriptCore bridge implements the listed component, hook, navigation and presentation subset; declaration members outside that tested subset remain unavailable and are not synthesized dynamically."
+        "The live JavaScriptCore bridge implements the listed component, hook, navigation and presentation subset, including observable NavigationStack paths, dynamic string NavigationDestination builders, direct NavigationLink destinations and native back propagation; declaration members outside that tested subset remain unavailable and are not synthesized dynamically."
       ],
       "behaviorMatched": false,
       "declarationFile": "scripting.d.ts",
@@ -7871,7 +7871,7 @@
       "hanlinAPIVersion": "hanlin.scriptui/1.0",
       "hanlinSymbol": "HanlinScriptingApplicationSession",
       "implementedByHanlin": true,
-      "notes": "Validated with a real 49-module acceptance package that renders a 321-node interactive ScriptUI tree.",
+      "notes": "Validated with a real 49-module acceptance package that renders a 356-node interactive ScriptUI tree, the real 35-module FileManager package, and targeted two-way navigation and control tests.",
       "referenceCategory": "const",
       "referenceSignatureHash": "1ef0d8af53b37f13b3f732cc2b0f5bf14e411fc0eac74c391272e91be2efa32e",
       "referenceSymbol": "Circle",
@@ -8374,7 +8374,7 @@
       ],
       "allowedOrigins": [],
       "behaviorDifferences": [
-        "The live JavaScriptCore bridge implements the listed component, hook, navigation and presentation subset; declaration members outside that tested subset remain unavailable and are not synthesized dynamically."
+        "The live JavaScriptCore bridge implements the listed component, hook, navigation and presentation subset, including observable NavigationStack paths, dynamic string NavigationDestination builders, direct NavigationLink destinations and native back propagation; declaration members outside that tested subset remain unavailable and are not synthesized dynamically."
       ],
       "behaviorMatched": false,
       "declarationFile": "scripting.d.ts",
@@ -8383,7 +8383,7 @@
       "hanlinAPIVersion": "hanlin.scriptui/1.0",
       "hanlinSymbol": "HanlinScriptingApplicationSession",
       "implementedByHanlin": true,
-      "notes": "Validated with a real 49-module acceptance package that renders a 321-node interactive ScriptUI tree.",
+      "notes": "Validated with a real 49-module acceptance package that renders a 356-node interactive ScriptUI tree, the real 35-module FileManager package, and targeted two-way navigation and control tests.",
       "referenceCategory": "type",
       "referenceSignatureHash": "ba7d24063fbe283f28ce420057ab90bd37d1be74251a2516bce5745116d82d7e",
       "referenceSymbol": "Color",
@@ -9910,24 +9910,32 @@
       "verifiedByFixture": false
     },
     {
-      "allowedContexts": [],
+      "allowedContexts": [
+        "mainApplication"
+      ],
       "allowedOrigins": [],
-      "behaviorDifferences": [],
+      "behaviorDifferences": [
+        "The live JavaScriptCore bridge implements the listed component, hook, navigation and presentation subset, including observable NavigationStack paths, dynamic string NavigationDestination builders, direct NavigationLink destinations and native back propagation; declaration members outside that tested subset remain unavailable and are not synthesized dynamically."
+      ],
       "behaviorMatched": false,
       "declarationFile": "scripting.d.ts",
       "declarationLine": 6317,
       "declaredByScripting": true,
-      "hanlinAPIVersion": null,
-      "hanlinSymbol": null,
-      "implementedByHanlin": false,
-      "notes": "The symbol is authorized for compatibility work but lacks a complete observable binding and conformance test.",
+      "hanlinAPIVersion": "hanlin.scriptui/1.0",
+      "hanlinSymbol": "HanlinScriptingApplicationSession",
+      "implementedByHanlin": true,
+      "notes": "Validated with a real 49-module acceptance package that renders a 356-node interactive ScriptUI tree, the real 35-module FileManager package, and targeted two-way navigation and control tests.",
       "referenceCategory": "const",
       "referenceSignatureHash": "dc2d8a5925b09c1c92437679e1687ef77743112505748a4525dfd678a8472ece",
       "referenceSymbol": "ControlGroup",
       "requiredCapability": null,
       "requiredEntitlement": null,
-      "status": "not-yet-implemented",
-      "tests": [],
+      "status": "partial",
+      "tests": [
+        "AI_HLYTests/HanlinScriptingRuntimeTests.swift",
+        "Packages/HanlinPlatform/Tests/HanlinScriptUITests/HanlinScriptUIReconcilerTests.swift",
+        "Scripts/ScriptingReference/smoke-scripting-package-runtime.mjs"
+      ],
       "verifiedByFixture": false
     },
     {
@@ -10398,7 +10406,7 @@
       ],
       "allowedOrigins": [],
       "behaviorDifferences": [
-        "The live JavaScriptCore bridge implements the listed component, hook, navigation and presentation subset; declaration members outside that tested subset remain unavailable and are not synthesized dynamically."
+        "The live JavaScriptCore bridge implements the listed component, hook, navigation and presentation subset, including observable NavigationStack paths, dynamic string NavigationDestination builders, direct NavigationLink destinations and native back propagation; declaration members outside that tested subset remain unavailable and are not synthesized dynamically."
       ],
       "behaviorMatched": false,
       "declarationFile": "node.d.ts",
@@ -10407,7 +10415,7 @@
       "hanlinAPIVersion": "hanlin.scriptui/1.0",
       "hanlinSymbol": "HanlinScriptingApplicationSession",
       "implementedByHanlin": true,
-      "notes": "Validated with a real 49-module acceptance package that renders a 321-node interactive ScriptUI tree.",
+      "notes": "Validated with a real 49-module acceptance package that renders a 356-node interactive ScriptUI tree, the real 35-module FileManager package, and targeted two-way navigation and control tests.",
       "referenceCategory": "function",
       "referenceSignatureHash": "cdf77fe87b341b6696760807658c55de27ff1b124184a6b26740afe7de9fc75e",
       "referenceSymbol": "createContext",
@@ -10427,7 +10435,7 @@
       ],
       "allowedOrigins": [],
       "behaviorDifferences": [
-        "The live JavaScriptCore bridge implements the listed component, hook, navigation and presentation subset; declaration members outside that tested subset remain unavailable and are not synthesized dynamically."
+        "The live JavaScriptCore bridge implements the listed component, hook, navigation and presentation subset, including observable NavigationStack paths, dynamic string NavigationDestination builders, direct NavigationLink destinations and native back propagation; declaration members outside that tested subset remain unavailable and are not synthesized dynamically."
       ],
       "behaviorMatched": false,
       "declarationFile": "scripting.d.ts",
@@ -10436,7 +10444,7 @@
       "hanlinAPIVersion": "hanlin.scriptui/1.0",
       "hanlinSymbol": "HanlinScriptingApplicationSession",
       "implementedByHanlin": true,
-      "notes": "Validated with a real 49-module acceptance package that renders a 321-node interactive ScriptUI tree.",
+      "notes": "Validated with a real 49-module acceptance package that renders a 356-node interactive ScriptUI tree, the real 35-module FileManager package, and targeted two-way navigation and control tests.",
       "referenceCategory": "function",
       "referenceSignatureHash": "8c0788ea18b6cf8ff8e068fb209d32240d3098aabe4d724da85393263541e1dd",
       "referenceSymbol": "createContext",
@@ -10603,7 +10611,7 @@
       ],
       "allowedOrigins": [],
       "behaviorDifferences": [
-        "The live JavaScriptCore bridge implements the listed component, hook, navigation and presentation subset; declaration members outside that tested subset remain unavailable and are not synthesized dynamically."
+        "The live JavaScriptCore bridge implements the listed component, hook, navigation and presentation subset, including observable NavigationStack paths, dynamic string NavigationDestination builders, direct NavigationLink destinations and native back propagation; declaration members outside that tested subset remain unavailable and are not synthesized dynamically."
       ],
       "behaviorMatched": false,
       "declarationFile": "scripting.d.ts",
@@ -10612,7 +10620,7 @@
       "hanlinAPIVersion": "hanlin.scriptui/1.0",
       "hanlinSymbol": "HanlinScriptingApplicationSession",
       "implementedByHanlin": true,
-      "notes": "Validated with a real 49-module acceptance package that renders a 321-node interactive ScriptUI tree.",
+      "notes": "Validated with a real 49-module acceptance package that renders a 356-node interactive ScriptUI tree, the real 35-module FileManager package, and targeted two-way navigation and control tests.",
       "referenceCategory": "function",
       "referenceSignatureHash": "a72e032b1a95215183fdc3a69d56f0f9de6b2c83df8db076b73afa4ce55334e8",
       "referenceSymbol": "createElement",
@@ -10632,7 +10640,7 @@
       ],
       "allowedOrigins": [],
       "behaviorDifferences": [
-        "The live JavaScriptCore bridge implements the listed component, hook, navigation and presentation subset; declaration members outside that tested subset remain unavailable and are not synthesized dynamically."
+        "The live JavaScriptCore bridge implements the listed component, hook, navigation and presentation subset, including observable NavigationStack paths, dynamic string NavigationDestination builders, direct NavigationLink destinations and native back propagation; declaration members outside that tested subset remain unavailable and are not synthesized dynamically."
       ],
       "behaviorMatched": false,
       "declarationFile": "scripting.d.ts",
@@ -10641,7 +10649,7 @@
       "hanlinAPIVersion": "hanlin.scriptui/1.0",
       "hanlinSymbol": "HanlinScriptingApplicationSession",
       "implementedByHanlin": true,
-      "notes": "Validated with a real 49-module acceptance package that renders a 321-node interactive ScriptUI tree.",
+      "notes": "Validated with a real 49-module acceptance package that renders a 356-node interactive ScriptUI tree, the real 35-module FileManager package, and targeted two-way navigation and control tests.",
       "referenceCategory": "const",
       "referenceSignatureHash": "a354f4bbfb6265469ffb120987f753bbc3d2dbf5eb9623678b9ed0a15ceee133",
       "referenceSymbol": "createElement",
@@ -12348,7 +12356,7 @@
       ],
       "allowedOrigins": [],
       "behaviorDifferences": [
-        "The live JavaScriptCore bridge implements the listed component, hook, navigation and presentation subset; declaration members outside that tested subset remain unavailable and are not synthesized dynamically."
+        "The live JavaScriptCore bridge implements the listed component, hook, navigation and presentation subset, including observable NavigationStack paths, dynamic string NavigationDestination builders, direct NavigationLink destinations and native back propagation; declaration members outside that tested subset remain unavailable and are not synthesized dynamically."
       ],
       "behaviorMatched": false,
       "declarationFile": "global.d.ts",
@@ -12357,7 +12365,7 @@
       "hanlinAPIVersion": "hanlin.scriptui/1.0",
       "hanlinSymbol": "HanlinScriptingApplicationSession",
       "implementedByHanlin": true,
-      "notes": "Validated with a real 49-module acceptance package that renders a 321-node interactive ScriptUI tree.",
+      "notes": "Validated with a real 49-module acceptance package that renders a 356-node interactive ScriptUI tree, the real 35-module FileManager package, and targeted two-way navigation and control tests.",
       "referenceCategory": "namespace",
       "referenceSignatureHash": "6559097ca8cfe14e4485d61967a9e5818e3a96bd94fcca418afb53cf4b1f625c",
       "referenceSymbol": "Device",
@@ -12377,7 +12385,7 @@
       ],
       "allowedOrigins": [],
       "behaviorDifferences": [
-        "The live JavaScriptCore bridge implements the listed component, hook, navigation and presentation subset; declaration members outside that tested subset remain unavailable and are not synthesized dynamically."
+        "The live JavaScriptCore bridge implements the listed component, hook, navigation and presentation subset, including observable NavigationStack paths, dynamic string NavigationDestination builders, direct NavigationLink destinations and native back propagation; declaration members outside that tested subset remain unavailable and are not synthesized dynamically."
       ],
       "behaviorMatched": false,
       "declarationFile": "scripting.d.ts",
@@ -12386,7 +12394,7 @@
       "hanlinAPIVersion": "hanlin.scriptui/1.0",
       "hanlinSymbol": "HanlinScriptingApplicationSession",
       "implementedByHanlin": true,
-      "notes": "Validated with a real 49-module acceptance package that renders a 321-node interactive ScriptUI tree.",
+      "notes": "Validated with a real 49-module acceptance package that renders a 356-node interactive ScriptUI tree, the real 35-module FileManager package, and targeted two-way navigation and control tests.",
       "referenceCategory": "const",
       "referenceSignatureHash": "b964f8cdba66644b0b97a307178520458b51d9ebdc2b09409c80d873af5532bf",
       "referenceSymbol": "Device",
@@ -16209,24 +16217,32 @@
       "verifiedByFixture": false
     },
     {
-      "allowedContexts": [],
+      "allowedContexts": [
+        "mainApplication"
+      ],
       "allowedOrigins": [],
-      "behaviorDifferences": [],
+      "behaviorDifferences": [
+        "The live JavaScriptCore bridge implements the listed component, hook, navigation and presentation subset, including observable NavigationStack paths, dynamic string NavigationDestination builders, direct NavigationLink destinations and native back propagation; declaration members outside that tested subset remain unavailable and are not synthesized dynamically."
+      ],
       "behaviorMatched": false,
       "declarationFile": "scripting.d.ts",
       "declarationLine": 6735,
       "declaredByScripting": true,
-      "hanlinAPIVersion": null,
-      "hanlinSymbol": null,
-      "implementedByHanlin": false,
-      "notes": "The symbol is authorized for compatibility work but lacks a complete observable binding and conformance test.",
+      "hanlinAPIVersion": "hanlin.scriptui/1.0",
+      "hanlinSymbol": "HanlinScriptingApplicationSession",
+      "implementedByHanlin": true,
+      "notes": "Validated with a real 49-module acceptance package that renders a 356-node interactive ScriptUI tree, the real 35-module FileManager package, and targeted two-way navigation and control tests.",
       "referenceCategory": "const",
       "referenceSignatureHash": "4f36fc72512287887aedd462796ff999cd3670b8dcf29ac65a8a8eb4672a000a",
       "referenceSymbol": "Form",
       "requiredCapability": null,
       "requiredEntitlement": null,
-      "status": "not-yet-implemented",
-      "tests": [],
+      "status": "partial",
+      "tests": [
+        "AI_HLYTests/HanlinScriptingRuntimeTests.swift",
+        "Packages/HanlinPlatform/Tests/HanlinScriptUITests/HanlinScriptUIReconcilerTests.swift",
+        "Scripts/ScriptingReference/smoke-scripting-package-runtime.mjs"
+      ],
       "verifiedByFixture": false
     },
     {
@@ -16256,7 +16272,7 @@
       ],
       "allowedOrigins": [],
       "behaviorDifferences": [
-        "The live JavaScriptCore bridge implements the listed component, hook, navigation and presentation subset; declaration members outside that tested subset remain unavailable and are not synthesized dynamically."
+        "The live JavaScriptCore bridge implements the listed component, hook, navigation and presentation subset, including observable NavigationStack paths, dynamic string NavigationDestination builders, direct NavigationLink destinations and native back propagation; declaration members outside that tested subset remain unavailable and are not synthesized dynamically."
       ],
       "behaviorMatched": false,
       "declarationFile": "scripting.d.ts",
@@ -16265,7 +16281,7 @@
       "hanlinAPIVersion": "hanlin.scriptui/1.0",
       "hanlinSymbol": "HanlinScriptingApplicationSession",
       "implementedByHanlin": true,
-      "notes": "Validated with a real 49-module acceptance package that renders a 321-node interactive ScriptUI tree.",
+      "notes": "Validated with a real 49-module acceptance package that renders a 356-node interactive ScriptUI tree, the real 35-module FileManager package, and targeted two-way navigation and control tests.",
       "referenceCategory": "const",
       "referenceSignatureHash": "b20231039e64cdbbf2b96bd5d17021a45a1664500c55cc905eb0114fc6c2c355",
       "referenceSymbol": "Fragment",
@@ -19556,24 +19572,32 @@
       "verifiedByFixture": false
     },
     {
-      "allowedContexts": [],
+      "allowedContexts": [
+        "mainApplication"
+      ],
       "allowedOrigins": [],
-      "behaviorDifferences": [],
+      "behaviorDifferences": [
+        "The live JavaScriptCore bridge implements the listed component, hook, navigation and presentation subset, including observable NavigationStack paths, dynamic string NavigationDestination builders, direct NavigationLink destinations and native back propagation; declaration members outside that tested subset remain unavailable and are not synthesized dynamically."
+      ],
       "behaviorMatched": false,
       "declarationFile": "scripting.d.ts",
       "declarationLine": 6969,
       "declaredByScripting": true,
-      "hanlinAPIVersion": null,
-      "hanlinSymbol": null,
-      "implementedByHanlin": false,
-      "notes": "The symbol is authorized for compatibility work but lacks a complete observable binding and conformance test.",
+      "hanlinAPIVersion": "hanlin.scriptui/1.0",
+      "hanlinSymbol": "HanlinScriptingApplicationSession",
+      "implementedByHanlin": true,
+      "notes": "Validated with a real 49-module acceptance package that renders a 356-node interactive ScriptUI tree, the real 35-module FileManager package, and targeted two-way navigation and control tests.",
       "referenceCategory": "const",
       "referenceSignatureHash": "55f9a7a73a30d65d5f7151dbcc6354856852da7f7a9aff5df40a49686cad7f4d",
       "referenceSymbol": "Group",
       "requiredCapability": null,
       "requiredEntitlement": null,
-      "status": "not-yet-implemented",
-      "tests": [],
+      "status": "partial",
+      "tests": [
+        "AI_HLYTests/HanlinScriptingRuntimeTests.swift",
+        "Packages/HanlinPlatform/Tests/HanlinScriptUITests/HanlinScriptUIReconcilerTests.swift",
+        "Scripts/ScriptingReference/smoke-scripting-package-runtime.mjs"
+      ],
       "verifiedByFixture": false
     },
     {
@@ -22441,7 +22465,7 @@
       ],
       "allowedOrigins": [],
       "behaviorDifferences": [
-        "The live JavaScriptCore bridge implements the listed component, hook, navigation and presentation subset; declaration members outside that tested subset remain unavailable and are not synthesized dynamically."
+        "The live JavaScriptCore bridge implements the listed component, hook, navigation and presentation subset, including observable NavigationStack paths, dynamic string NavigationDestination builders, direct NavigationLink destinations and native back propagation; declaration members outside that tested subset remain unavailable and are not synthesized dynamically."
       ],
       "behaviorMatched": false,
       "declarationFile": "scripting.d.ts",
@@ -22450,7 +22474,7 @@
       "hanlinAPIVersion": "hanlin.scriptui/1.0",
       "hanlinSymbol": "HanlinScriptingApplicationSession",
       "implementedByHanlin": true,
-      "notes": "Validated with a real 49-module acceptance package that renders a 321-node interactive ScriptUI tree.",
+      "notes": "Validated with a real 49-module acceptance package that renders a 356-node interactive ScriptUI tree, the real 35-module FileManager package, and targeted two-way navigation and control tests.",
       "referenceCategory": "const",
       "referenceSignatureHash": "1e1033400646cd4b1d1b535ab2430cb32331212a71d0fcbd08c3bbd560f2c627",
       "referenceSymbol": "HStack",
@@ -22911,7 +22935,7 @@
       ],
       "allowedOrigins": [],
       "behaviorDifferences": [
-        "The live JavaScriptCore bridge implements the listed component, hook, navigation and presentation subset; declaration members outside that tested subset remain unavailable and are not synthesized dynamically."
+        "The live JavaScriptCore bridge implements the listed component, hook, navigation and presentation subset, including observable NavigationStack paths, dynamic string NavigationDestination builders, direct NavigationLink destinations and native back propagation; declaration members outside that tested subset remain unavailable and are not synthesized dynamically."
       ],
       "behaviorMatched": false,
       "declarationFile": "scripting.d.ts",
@@ -22920,7 +22944,7 @@
       "hanlinAPIVersion": "hanlin.scriptui/1.0",
       "hanlinSymbol": "HanlinScriptingApplicationSession",
       "implementedByHanlin": true,
-      "notes": "Validated with a real 49-module acceptance package that renders a 321-node interactive ScriptUI tree.",
+      "notes": "Validated with a real 49-module acceptance package that renders a 356-node interactive ScriptUI tree, the real 35-module FileManager package, and targeted two-way navigation and control tests.",
       "referenceCategory": "const",
       "referenceSignatureHash": "298bc27da4b84ae03aa4316b08962204a1e505e7c3df6919115a3723b8b9c7a4",
       "referenceSymbol": "Image",
@@ -25812,24 +25836,32 @@
       "verifiedByFixture": false
     },
     {
-      "allowedContexts": [],
+      "allowedContexts": [
+        "mainApplication"
+      ],
       "allowedOrigins": [],
-      "behaviorDifferences": [],
+      "behaviorDifferences": [
+        "The live JavaScriptCore bridge implements the listed component, hook, navigation and presentation subset, including observable NavigationStack paths, dynamic string NavigationDestination builders, direct NavigationLink destinations and native back propagation; declaration members outside that tested subset remain unavailable and are not synthesized dynamically."
+      ],
       "behaviorMatched": false,
       "declarationFile": "scripting.d.ts",
       "declarationLine": 7201,
       "declaredByScripting": true,
-      "hanlinAPIVersion": null,
-      "hanlinSymbol": null,
-      "implementedByHanlin": false,
-      "notes": "The symbol is authorized for compatibility work but lacks a complete observable binding and conformance test.",
+      "hanlinAPIVersion": "hanlin.scriptui/1.0",
+      "hanlinSymbol": "HanlinScriptingApplicationSession",
+      "implementedByHanlin": true,
+      "notes": "Validated with a real 49-module acceptance package that renders a 356-node interactive ScriptUI tree, the real 35-module FileManager package, and targeted two-way navigation and control tests.",
       "referenceCategory": "const",
       "referenceSignatureHash": "59fbe12c5dd7b39ee49f35d5c833c26cf73e23b7c34e8875bf8ad689dae51901",
       "referenceSymbol": "Label",
       "requiredCapability": null,
       "requiredEntitlement": null,
-      "status": "not-yet-implemented",
-      "tests": [],
+      "status": "partial",
+      "tests": [
+        "AI_HLYTests/HanlinScriptingRuntimeTests.swift",
+        "Packages/HanlinPlatform/Tests/HanlinScriptUITests/HanlinScriptUIReconcilerTests.swift",
+        "Scripts/ScriptingReference/smoke-scripting-package-runtime.mjs"
+      ],
       "verifiedByFixture": false
     },
     {
@@ -26657,7 +26689,7 @@
       ],
       "allowedOrigins": [],
       "behaviorDifferences": [
-        "The live JavaScriptCore bridge implements the listed component, hook, navigation and presentation subset; declaration members outside that tested subset remain unavailable and are not synthesized dynamically."
+        "The live JavaScriptCore bridge implements the listed component, hook, navigation and presentation subset, including observable NavigationStack paths, dynamic string NavigationDestination builders, direct NavigationLink destinations and native back propagation; declaration members outside that tested subset remain unavailable and are not synthesized dynamically."
       ],
       "behaviorMatched": false,
       "declarationFile": "scripting.d.ts",
@@ -26666,7 +26698,7 @@
       "hanlinAPIVersion": "hanlin.scriptui/1.0",
       "hanlinSymbol": "HanlinScriptingApplicationSession",
       "implementedByHanlin": true,
-      "notes": "Validated with a real 49-module acceptance package that renders a 321-node interactive ScriptUI tree.",
+      "notes": "Validated with a real 49-module acceptance package that renders a 356-node interactive ScriptUI tree, the real 35-module FileManager package, and targeted two-way navigation and control tests.",
       "referenceCategory": "const",
       "referenceSignatureHash": "1962ea2e9ebcf736ea5958d24a915bbcbcdd05a46cd071b257a0b0cd3aaca419",
       "referenceSymbol": "List",
@@ -28589,24 +28621,32 @@
       "verifiedByFixture": false
     },
     {
-      "allowedContexts": [],
+      "allowedContexts": [
+        "mainApplication"
+      ],
       "allowedOrigins": [],
-      "behaviorDifferences": [],
+      "behaviorDifferences": [
+        "The live JavaScriptCore bridge implements the listed component, hook, navigation and presentation subset, including observable NavigationStack paths, dynamic string NavigationDestination builders, direct NavigationLink destinations and native back propagation; declaration members outside that tested subset remain unavailable and are not synthesized dynamically."
+      ],
       "behaviorMatched": false,
       "declarationFile": "scripting.d.ts",
       "declarationLine": 7938,
       "declaredByScripting": true,
-      "hanlinAPIVersion": null,
-      "hanlinSymbol": null,
-      "implementedByHanlin": false,
-      "notes": "The symbol is authorized for compatibility work but lacks a complete observable binding and conformance test.",
+      "hanlinAPIVersion": "hanlin.scriptui/1.0",
+      "hanlinSymbol": "HanlinScriptingApplicationSession",
+      "implementedByHanlin": true,
+      "notes": "Validated with a real 49-module acceptance package that renders a 356-node interactive ScriptUI tree, the real 35-module FileManager package, and targeted two-way navigation and control tests.",
       "referenceCategory": "const",
       "referenceSignatureHash": "768b293de85c65f9af8b2ce01f61d7f9417c3393cd1efdda204c3083d02fec8a",
       "referenceSymbol": "Markdown",
       "requiredCapability": null,
       "requiredEntitlement": null,
-      "status": "not-yet-implemented",
-      "tests": [],
+      "status": "partial",
+      "tests": [
+        "AI_HLYTests/HanlinScriptingRuntimeTests.swift",
+        "Packages/HanlinPlatform/Tests/HanlinScriptUITests/HanlinScriptUIReconcilerTests.swift",
+        "Scripts/ScriptingReference/smoke-scripting-package-runtime.mjs"
+      ],
       "verifiedByFixture": false
     },
     {
@@ -29371,7 +29411,7 @@
       ],
       "allowedOrigins": [],
       "behaviorDifferences": [
-        "The live JavaScriptCore bridge implements the listed component, hook, navigation and presentation subset; declaration members outside that tested subset remain unavailable and are not synthesized dynamically."
+        "The live JavaScriptCore bridge implements the listed component, hook, navigation and presentation subset, including observable NavigationStack paths, dynamic string NavigationDestination builders, direct NavigationLink destinations and native back propagation; declaration members outside that tested subset remain unavailable and are not synthesized dynamically."
       ],
       "behaviorMatched": false,
       "declarationFile": "global.d.ts",
@@ -29380,7 +29420,7 @@
       "hanlinAPIVersion": "hanlin.scriptui/1.0",
       "hanlinSymbol": "HanlinScriptingApplicationSession",
       "implementedByHanlin": true,
-      "notes": "Validated with a real 49-module acceptance package that renders a 321-node interactive ScriptUI tree.",
+      "notes": "Validated with a real 49-module acceptance package that renders a 356-node interactive ScriptUI tree, the real 35-module FileManager package, and targeted two-way navigation and control tests.",
       "referenceCategory": "type",
       "referenceSignatureHash": "9a8595a1ef5fb41a594a37a1aa7771240a03aec15855e14344ac925c8a41f40b",
       "referenceSymbol": "Menu",
@@ -29421,7 +29461,7 @@
       ],
       "allowedOrigins": [],
       "behaviorDifferences": [
-        "The live JavaScriptCore bridge implements the listed component, hook, navigation and presentation subset; declaration members outside that tested subset remain unavailable and are not synthesized dynamically."
+        "The live JavaScriptCore bridge implements the listed component, hook, navigation and presentation subset, including observable NavigationStack paths, dynamic string NavigationDestination builders, direct NavigationLink destinations and native back propagation; declaration members outside that tested subset remain unavailable and are not synthesized dynamically."
       ],
       "behaviorMatched": false,
       "declarationFile": "scripting.d.ts",
@@ -29430,7 +29470,7 @@
       "hanlinAPIVersion": "hanlin.scriptui/1.0",
       "hanlinSymbol": "HanlinScriptingApplicationSession",
       "implementedByHanlin": true,
-      "notes": "Validated with a real 49-module acceptance package that renders a 321-node interactive ScriptUI tree.",
+      "notes": "Validated with a real 49-module acceptance package that renders a 356-node interactive ScriptUI tree, the real 35-module FileManager package, and targeted two-way navigation and control tests.",
       "referenceCategory": "const",
       "referenceSignatureHash": "edef8137e631bceedf085145de512b21470f5089e67daea665e7d99ce5b5cb48",
       "referenceSymbol": "Menu",
@@ -30264,24 +30304,32 @@
       "verifiedByFixture": false
     },
     {
-      "allowedContexts": [],
+      "allowedContexts": [
+        "mainApplication"
+      ],
       "allowedOrigins": [],
-      "behaviorDifferences": [],
+      "behaviorDifferences": [
+        "The live JavaScriptCore bridge implements the listed component, hook, navigation and presentation subset, including observable NavigationStack paths, dynamic string NavigationDestination builders, direct NavigationLink destinations and native back propagation; declaration members outside that tested subset remain unavailable and are not synthesized dynamically."
+      ],
       "behaviorMatched": false,
       "declarationFile": "scripting.d.ts",
       "declarationLine": 8018,
       "declaredByScripting": true,
-      "hanlinAPIVersion": null,
-      "hanlinSymbol": null,
-      "implementedByHanlin": false,
-      "notes": "The symbol is authorized for compatibility work but lacks a complete observable binding and conformance test.",
+      "hanlinAPIVersion": "hanlin.scriptui/1.0",
+      "hanlinSymbol": "HanlinScriptingApplicationSession",
+      "implementedByHanlin": true,
+      "notes": "Validated with a real 49-module acceptance package that renders a 356-node interactive ScriptUI tree, the real 35-module FileManager package, and targeted two-way navigation and control tests.",
       "referenceCategory": "const",
       "referenceSignatureHash": "b867b07a9afa0a616213f37371e5cc756bcc67b26f5a1db28a426d6fa6f582b9",
       "referenceSymbol": "NavigationDestination",
       "requiredCapability": null,
       "requiredEntitlement": null,
-      "status": "not-yet-implemented",
-      "tests": [],
+      "status": "partial",
+      "tests": [
+        "AI_HLYTests/HanlinScriptingRuntimeTests.swift",
+        "Packages/HanlinPlatform/Tests/HanlinScriptUITests/HanlinScriptUIReconcilerTests.swift",
+        "Scripts/ScriptingReference/smoke-scripting-package-runtime.mjs"
+      ],
       "verifiedByFixture": false
     },
     {
@@ -30327,24 +30375,32 @@
       "verifiedByFixture": false
     },
     {
-      "allowedContexts": [],
+      "allowedContexts": [
+        "mainApplication"
+      ],
       "allowedOrigins": [],
-      "behaviorDifferences": [],
+      "behaviorDifferences": [
+        "The live JavaScriptCore bridge implements the listed component, hook, navigation and presentation subset, including observable NavigationStack paths, dynamic string NavigationDestination builders, direct NavigationLink destinations and native back propagation; declaration members outside that tested subset remain unavailable and are not synthesized dynamically."
+      ],
       "behaviorMatched": false,
       "declarationFile": "scripting.d.ts",
       "declarationLine": 8040,
       "declaredByScripting": true,
-      "hanlinAPIVersion": null,
-      "hanlinSymbol": null,
-      "implementedByHanlin": false,
-      "notes": "The symbol is authorized for compatibility work but lacks a complete observable binding and conformance test.",
+      "hanlinAPIVersion": "hanlin.scriptui/1.0",
+      "hanlinSymbol": "HanlinScriptingApplicationSession",
+      "implementedByHanlin": true,
+      "notes": "Validated with a real 49-module acceptance package that renders a 356-node interactive ScriptUI tree, the real 35-module FileManager package, and targeted two-way navigation and control tests.",
       "referenceCategory": "const",
       "referenceSignatureHash": "3f8c2156401f7cb14ea16e8fb01e525babf81f2032131fdb3a0bc9c45759f30d",
       "referenceSymbol": "NavigationLink",
       "requiredCapability": null,
       "requiredEntitlement": null,
-      "status": "not-yet-implemented",
-      "tests": [],
+      "status": "partial",
+      "tests": [
+        "AI_HLYTests/HanlinScriptingRuntimeTests.swift",
+        "Packages/HanlinPlatform/Tests/HanlinScriptUITests/HanlinScriptUIReconcilerTests.swift",
+        "Scripts/ScriptingReference/smoke-scripting-package-runtime.mjs"
+      ],
       "verifiedByFixture": false
     },
     {
@@ -30374,7 +30430,7 @@
       ],
       "allowedOrigins": [],
       "behaviorDifferences": [
-        "The live JavaScriptCore bridge implements the listed component, hook, navigation and presentation subset; declaration members outside that tested subset remain unavailable and are not synthesized dynamically."
+        "The live JavaScriptCore bridge implements the listed component, hook, navigation and presentation subset, including observable NavigationStack paths, dynamic string NavigationDestination builders, direct NavigationLink destinations and native back propagation; declaration members outside that tested subset remain unavailable and are not synthesized dynamically."
       ],
       "behaviorMatched": false,
       "declarationFile": "scripting.d.ts",
@@ -30383,7 +30439,7 @@
       "hanlinAPIVersion": "hanlin.scriptui/1.0",
       "hanlinSymbol": "HanlinScriptingApplicationSession",
       "implementedByHanlin": true,
-      "notes": "Validated with a real 49-module acceptance package that renders a 321-node interactive ScriptUI tree.",
+      "notes": "Validated with a real 49-module acceptance package that renders a 356-node interactive ScriptUI tree, the real 35-module FileManager package, and targeted two-way navigation and control tests.",
       "referenceCategory": "namespace",
       "referenceSignatureHash": "dcc1ace40e0131580d89fe5741957859e3ba048e5928b4afe046ae32624d429b",
       "referenceSymbol": "Navigation",
@@ -30529,7 +30585,7 @@
       ],
       "allowedOrigins": [],
       "behaviorDifferences": [
-        "The live JavaScriptCore bridge implements the listed component, hook, navigation and presentation subset; declaration members outside that tested subset remain unavailable and are not synthesized dynamically."
+        "The live JavaScriptCore bridge implements the listed component, hook, navigation and presentation subset, including observable NavigationStack paths, dynamic string NavigationDestination builders, direct NavigationLink destinations and native back propagation; declaration members outside that tested subset remain unavailable and are not synthesized dynamically."
       ],
       "behaviorMatched": false,
       "declarationFile": "scripting.d.ts",
@@ -30538,7 +30594,7 @@
       "hanlinAPIVersion": "hanlin.scriptui/1.0",
       "hanlinSymbol": "HanlinScriptingApplicationSession",
       "implementedByHanlin": true,
-      "notes": "Validated with a real 49-module acceptance package that renders a 321-node interactive ScriptUI tree.",
+      "notes": "Validated with a real 49-module acceptance package that renders a 356-node interactive ScriptUI tree, the real 35-module FileManager package, and targeted two-way navigation and control tests.",
       "referenceCategory": "const",
       "referenceSignatureHash": "488191a6e18d99d14ac04b812bf493f0871b52e37b28cc8ea8da93e41a94051a",
       "referenceSymbol": "NavigationStack",
@@ -32708,24 +32764,32 @@
       "verifiedByFixture": false
     },
     {
-      "allowedContexts": [],
+      "allowedContexts": [
+        "mainApplication"
+      ],
       "allowedOrigins": [],
-      "behaviorDifferences": [],
+      "behaviorDifferences": [
+        "The live JavaScriptCore bridge implements the listed component, hook, navigation and presentation subset, including observable NavigationStack paths, dynamic string NavigationDestination builders, direct NavigationLink destinations and native back propagation; declaration members outside that tested subset remain unavailable and are not synthesized dynamically."
+      ],
       "behaviorMatched": false,
       "declarationFile": "scripting.d.ts",
       "declarationLine": 8315,
       "declaredByScripting": true,
-      "hanlinAPIVersion": null,
-      "hanlinSymbol": null,
-      "implementedByHanlin": false,
-      "notes": "The symbol is authorized for compatibility work but lacks a complete observable binding and conformance test.",
+      "hanlinAPIVersion": "hanlin.scriptui/1.0",
+      "hanlinSymbol": "HanlinScriptingApplicationSession",
+      "implementedByHanlin": true,
+      "notes": "Validated with a real 49-module acceptance package that renders a 356-node interactive ScriptUI tree, the real 35-module FileManager package, and targeted two-way navigation and control tests.",
       "referenceCategory": "const",
       "referenceSignatureHash": "87bf0be62adc97c5ceafd98d735f67ed07fd20c8dbd0f33480db7410e7fe3515",
       "referenceSymbol": "Picker",
       "requiredCapability": null,
       "requiredEntitlement": null,
-      "status": "not-yet-implemented",
-      "tests": [],
+      "status": "partial",
+      "tests": [
+        "AI_HLYTests/HanlinScriptingRuntimeTests.swift",
+        "Packages/HanlinPlatform/Tests/HanlinScriptUITests/HanlinScriptUIReconcilerTests.swift",
+        "Scripts/ScriptingReference/smoke-scripting-package-runtime.mjs"
+      ],
       "verifiedByFixture": false
     },
     {
@@ -34162,7 +34226,7 @@
       ],
       "allowedOrigins": [],
       "behaviorDifferences": [
-        "The live JavaScriptCore bridge implements the listed component, hook, navigation and presentation subset; declaration members outside that tested subset remain unavailable and are not synthesized dynamically."
+        "The live JavaScriptCore bridge implements the listed component, hook, navigation and presentation subset, including observable NavigationStack paths, dynamic string NavigationDestination builders, direct NavigationLink destinations and native back propagation; declaration members outside that tested subset remain unavailable and are not synthesized dynamically."
       ],
       "behaviorMatched": false,
       "declarationFile": "scripting.d.ts",
@@ -34171,7 +34235,7 @@
       "hanlinAPIVersion": "hanlin.scriptui/1.0",
       "hanlinSymbol": "HanlinScriptingApplicationSession",
       "implementedByHanlin": true,
-      "notes": "Validated with a real 49-module acceptance package that renders a 321-node interactive ScriptUI tree.",
+      "notes": "Validated with a real 49-module acceptance package that renders a 356-node interactive ScriptUI tree, the real 35-module FileManager package, and targeted two-way navigation and control tests.",
       "referenceCategory": "const",
       "referenceSignatureHash": "a0191e01ca4fab645e83649aa20a32d04b82c5dae9a79b97e84ba41070daae52",
       "referenceSymbol": "ProgressView",
@@ -38871,7 +38935,7 @@
       ],
       "allowedOrigins": [],
       "behaviorDifferences": [
-        "The live JavaScriptCore bridge implements the listed component, hook, navigation and presentation subset; declaration members outside that tested subset remain unavailable and are not synthesized dynamically."
+        "The live JavaScriptCore bridge implements the listed component, hook, navigation and presentation subset, including observable NavigationStack paths, dynamic string NavigationDestination builders, direct NavigationLink destinations and native back propagation; declaration members outside that tested subset remain unavailable and are not synthesized dynamically."
       ],
       "behaviorMatched": false,
       "declarationFile": "scripting.d.ts",
@@ -38880,7 +38944,7 @@
       "hanlinAPIVersion": "hanlin.scriptui/1.0",
       "hanlinSymbol": "HanlinScriptingApplicationSession",
       "implementedByHanlin": true,
-      "notes": "Validated with a real 49-module acceptance package that renders a 321-node interactive ScriptUI tree.",
+      "notes": "Validated with a real 49-module acceptance package that renders a 356-node interactive ScriptUI tree, the real 35-module FileManager package, and targeted two-way navigation and control tests.",
       "referenceCategory": "const",
       "referenceSignatureHash": "0551c8a024f367d3272eb39edafe9a0a031c12f2e27e1ab5c0cda8841c987c19",
       "referenceSymbol": "RoundedRectangle",
@@ -40374,24 +40438,32 @@
       "verifiedByFixture": false
     },
     {
-      "allowedContexts": [],
+      "allowedContexts": [
+        "mainApplication"
+      ],
       "allowedOrigins": [],
-      "behaviorDifferences": [],
+      "behaviorDifferences": [
+        "The live JavaScriptCore bridge implements the listed component, hook, navigation and presentation subset, including observable NavigationStack paths, dynamic string NavigationDestination builders, direct NavigationLink destinations and native back propagation; declaration members outside that tested subset remain unavailable and are not synthesized dynamically."
+      ],
       "behaviorMatched": false,
       "declarationFile": "scripting.d.ts",
       "declarationLine": 8434,
       "declaredByScripting": true,
-      "hanlinAPIVersion": null,
-      "hanlinSymbol": null,
-      "implementedByHanlin": false,
-      "notes": "The symbol is authorized for compatibility work but lacks a complete observable binding and conformance test.",
+      "hanlinAPIVersion": "hanlin.scriptui/1.0",
+      "hanlinSymbol": "HanlinScriptingApplicationSession",
+      "implementedByHanlin": true,
+      "notes": "Validated with a real 49-module acceptance package that renders a 356-node interactive ScriptUI tree, the real 35-module FileManager package, and targeted two-way navigation and control tests.",
       "referenceCategory": "const",
       "referenceSignatureHash": "9ebad008cc066f756e4e2155b54174fa4fceeea2fe0c9d6c96ec0b0cb0ddbfb7",
       "referenceSymbol": "ScrollView",
       "requiredCapability": null,
       "requiredEntitlement": null,
-      "status": "not-yet-implemented",
-      "tests": [],
+      "status": "partial",
+      "tests": [
+        "AI_HLYTests/HanlinScriptingRuntimeTests.swift",
+        "Packages/HanlinPlatform/Tests/HanlinScriptUITests/HanlinScriptUIReconcilerTests.swift",
+        "Scripts/ScriptingReference/smoke-scripting-package-runtime.mjs"
+      ],
       "verifiedByFixture": false
     },
     {
@@ -40589,7 +40661,7 @@
       ],
       "allowedOrigins": [],
       "behaviorDifferences": [
-        "The live JavaScriptCore bridge implements the listed component, hook, navigation and presentation subset; declaration members outside that tested subset remain unavailable and are not synthesized dynamically."
+        "The live JavaScriptCore bridge implements the listed component, hook, navigation and presentation subset, including observable NavigationStack paths, dynamic string NavigationDestination builders, direct NavigationLink destinations and native back propagation; declaration members outside that tested subset remain unavailable and are not synthesized dynamically."
       ],
       "behaviorMatched": false,
       "declarationFile": "scripting.d.ts",
@@ -40598,7 +40670,7 @@
       "hanlinAPIVersion": "hanlin.scriptui/1.0",
       "hanlinSymbol": "HanlinScriptingApplicationSession",
       "implementedByHanlin": true,
-      "notes": "Validated with a real 49-module acceptance package that renders a 321-node interactive ScriptUI tree.",
+      "notes": "Validated with a real 49-module acceptance package that renders a 356-node interactive ScriptUI tree, the real 35-module FileManager package, and targeted two-way navigation and control tests.",
       "referenceCategory": "const",
       "referenceSignatureHash": "552302568d52a49c854adfa36722d2a23cacb8ce1dd5b835e3db2a66f211138d",
       "referenceSymbol": "Section",
@@ -43243,7 +43315,7 @@
       ],
       "allowedOrigins": [],
       "behaviorDifferences": [
-        "The live JavaScriptCore bridge implements the listed component, hook, navigation and presentation subset; declaration members outside that tested subset remain unavailable and are not synthesized dynamically."
+        "The live JavaScriptCore bridge implements the listed component, hook, navigation and presentation subset, including observable NavigationStack paths, dynamic string NavigationDestination builders, direct NavigationLink destinations and native back propagation; declaration members outside that tested subset remain unavailable and are not synthesized dynamically."
       ],
       "behaviorMatched": false,
       "declarationFile": "scripting.d.ts",
@@ -43252,7 +43324,7 @@
       "hanlinAPIVersion": "hanlin.scriptui/1.0",
       "hanlinSymbol": "HanlinScriptingApplicationSession",
       "implementedByHanlin": true,
-      "notes": "Validated with a real 49-module acceptance package that renders a 321-node interactive ScriptUI tree.",
+      "notes": "Validated with a real 49-module acceptance package that renders a 356-node interactive ScriptUI tree, the real 35-module FileManager package, and targeted two-way navigation and control tests.",
       "referenceCategory": "const",
       "referenceSignatureHash": "23e2df70bc03297424c4032f42ad50e5274a7e0a5573b20a421f820b653e1dd3",
       "referenceSymbol": "Spacer",
@@ -45062,24 +45134,32 @@
       "verifiedByFixture": false
     },
     {
-      "allowedContexts": [],
+      "allowedContexts": [
+        "mainApplication"
+      ],
       "allowedOrigins": [],
-      "behaviorDifferences": [],
+      "behaviorDifferences": [
+        "The live JavaScriptCore bridge implements the listed component, hook, navigation and presentation subset, including observable NavigationStack paths, dynamic string NavigationDestination builders, direct NavigationLink destinations and native back propagation; declaration members outside that tested subset remain unavailable and are not synthesized dynamically."
+      ],
       "behaviorMatched": false,
       "declarationFile": "scripting.d.ts",
       "declarationLine": 8928,
       "declaredByScripting": true,
-      "hanlinAPIVersion": null,
-      "hanlinSymbol": null,
-      "implementedByHanlin": false,
-      "notes": "The symbol is authorized for compatibility work but lacks a complete observable binding and conformance test.",
+      "hanlinAPIVersion": "hanlin.scriptui/1.0",
+      "hanlinSymbol": "HanlinScriptingApplicationSession",
+      "implementedByHanlin": true,
+      "notes": "Validated with a real 49-module acceptance package that renders a 356-node interactive ScriptUI tree, the real 35-module FileManager package, and targeted two-way navigation and control tests.",
       "referenceCategory": "const",
       "referenceSignatureHash": "d9a269248374ebada9f1cd8d62eddfb9a3eaf99ffd1bc8e7ace55b2e23ca6038",
       "referenceSymbol": "SVG",
       "requiredCapability": null,
       "requiredEntitlement": null,
-      "status": "not-yet-implemented",
-      "tests": [],
+      "status": "partial",
+      "tests": [
+        "AI_HLYTests/HanlinScriptingRuntimeTests.swift",
+        "Packages/HanlinPlatform/Tests/HanlinScriptUITests/HanlinScriptUIReconcilerTests.swift",
+        "Scripts/ScriptingReference/smoke-scripting-package-runtime.mjs"
+      ],
       "verifiedByFixture": false
     },
     {
@@ -45634,7 +45714,7 @@
       ],
       "allowedOrigins": [],
       "behaviorDifferences": [
-        "The live JavaScriptCore bridge implements the listed component, hook, navigation and presentation subset; declaration members outside that tested subset remain unavailable and are not synthesized dynamically."
+        "The live JavaScriptCore bridge implements the listed component, hook, navigation and presentation subset, including observable NavigationStack paths, dynamic string NavigationDestination builders, direct NavigationLink destinations and native back propagation; declaration members outside that tested subset remain unavailable and are not synthesized dynamically."
       ],
       "behaviorMatched": false,
       "declarationFile": "scripting.d.ts",
@@ -45643,7 +45723,7 @@
       "hanlinAPIVersion": "hanlin.scriptui/1.0",
       "hanlinSymbol": "HanlinScriptingApplicationSession",
       "implementedByHanlin": true,
-      "notes": "Validated with a real 49-module acceptance package that renders a 321-node interactive ScriptUI tree.",
+      "notes": "Validated with a real 49-module acceptance package that renders a 356-node interactive ScriptUI tree, the real 35-module FileManager package, and targeted two-way navigation and control tests.",
       "referenceCategory": "const",
       "referenceSignatureHash": "d1f1875239ad7430d19f6b248da82309852168920df0c03fdd8b592fe2c1e2e9",
       "referenceSymbol": "Tab",
@@ -45789,7 +45869,7 @@
       ],
       "allowedOrigins": [],
       "behaviorDifferences": [
-        "The live JavaScriptCore bridge implements the listed component, hook, navigation and presentation subset; declaration members outside that tested subset remain unavailable and are not synthesized dynamically."
+        "The live JavaScriptCore bridge implements the listed component, hook, navigation and presentation subset, including observable NavigationStack paths, dynamic string NavigationDestination builders, direct NavigationLink destinations and native back propagation; declaration members outside that tested subset remain unavailable and are not synthesized dynamically."
       ],
       "behaviorMatched": false,
       "declarationFile": "scripting.d.ts",
@@ -45798,7 +45878,7 @@
       "hanlinAPIVersion": "hanlin.scriptui/1.0",
       "hanlinSymbol": "HanlinScriptingApplicationSession",
       "implementedByHanlin": true,
-      "notes": "Validated with a real 49-module acceptance package that renders a 321-node interactive ScriptUI tree.",
+      "notes": "Validated with a real 49-module acceptance package that renders a 356-node interactive ScriptUI tree, the real 35-module FileManager package, and targeted two-way navigation and control tests.",
       "referenceCategory": "const",
       "referenceSignatureHash": "b876ed4800f58a8953217f96c39fdf3feed175e8149164a58c25705b658fd5a2",
       "referenceSymbol": "TabView",
@@ -46259,7 +46339,7 @@
       ],
       "allowedOrigins": [],
       "behaviorDifferences": [
-        "The live JavaScriptCore bridge implements the listed component, hook, navigation and presentation subset; declaration members outside that tested subset remain unavailable and are not synthesized dynamically."
+        "The live JavaScriptCore bridge implements the listed component, hook, navigation and presentation subset, including observable NavigationStack paths, dynamic string NavigationDestination builders, direct NavigationLink destinations and native back propagation; declaration members outside that tested subset remain unavailable and are not synthesized dynamically."
       ],
       "behaviorMatched": false,
       "declarationFile": "scripting.d.ts",
@@ -46268,7 +46348,7 @@
       "hanlinAPIVersion": "hanlin.scriptui/1.0",
       "hanlinSymbol": "HanlinScriptingApplicationSession",
       "implementedByHanlin": true,
-      "notes": "Validated with a real 49-module acceptance package that renders a 321-node interactive ScriptUI tree.",
+      "notes": "Validated with a real 49-module acceptance package that renders a 356-node interactive ScriptUI tree, the real 35-module FileManager package, and targeted two-way navigation and control tests.",
       "referenceCategory": "const",
       "referenceSignatureHash": "1795746633f9f1c111d69520f9d85d184d2345e83dcb6ab171885d26ad4c764e",
       "referenceSymbol": "TextField",
@@ -46414,7 +46494,7 @@
       ],
       "allowedOrigins": [],
       "behaviorDifferences": [
-        "The live JavaScriptCore bridge implements the listed component, hook, navigation and presentation subset; declaration members outside that tested subset remain unavailable and are not synthesized dynamically."
+        "The live JavaScriptCore bridge implements the listed component, hook, navigation and presentation subset, including observable NavigationStack paths, dynamic string NavigationDestination builders, direct NavigationLink destinations and native back propagation; declaration members outside that tested subset remain unavailable and are not synthesized dynamically."
       ],
       "behaviorMatched": false,
       "declarationFile": "scripting.d.ts",
@@ -46423,7 +46503,7 @@
       "hanlinAPIVersion": "hanlin.scriptui/1.0",
       "hanlinSymbol": "HanlinScriptingApplicationSession",
       "implementedByHanlin": true,
-      "notes": "Validated with a real 49-module acceptance package that renders a 321-node interactive ScriptUI tree.",
+      "notes": "Validated with a real 49-module acceptance package that renders a 356-node interactive ScriptUI tree, the real 35-module FileManager package, and targeted two-way navigation and control tests.",
       "referenceCategory": "const",
       "referenceSignatureHash": "cc3e3c24e1d321bb6630594acdeb0bbc5eaae66b0910474d249d90515572c22f",
       "referenceSymbol": "Text",
@@ -46863,7 +46943,7 @@
       ],
       "allowedOrigins": [],
       "behaviorDifferences": [
-        "The live JavaScriptCore bridge implements the listed component, hook, navigation and presentation subset; declaration members outside that tested subset remain unavailable and are not synthesized dynamically."
+        "The live JavaScriptCore bridge implements the listed component, hook, navigation and presentation subset, including observable NavigationStack paths, dynamic string NavigationDestination builders, direct NavigationLink destinations and native back propagation; declaration members outside that tested subset remain unavailable and are not synthesized dynamically."
       ],
       "behaviorMatched": false,
       "declarationFile": "scripting.d.ts",
@@ -46872,7 +46952,7 @@
       "hanlinAPIVersion": "hanlin.scriptui/1.0",
       "hanlinSymbol": "HanlinScriptingApplicationSession",
       "implementedByHanlin": true,
-      "notes": "Validated with a real 49-module acceptance package that renders a 321-node interactive ScriptUI tree.",
+      "notes": "Validated with a real 49-module acceptance package that renders a 356-node interactive ScriptUI tree, the real 35-module FileManager package, and targeted two-way navigation and control tests.",
       "referenceCategory": "const",
       "referenceSignatureHash": "5e0624b35a72a6ccb6674794173d55ee175706f10baa35f481563c7b7465d9c1",
       "referenceSymbol": "Toggle",
@@ -47123,7 +47203,7 @@
       ],
       "allowedOrigins": [],
       "behaviorDifferences": [
-        "The live JavaScriptCore bridge implements the listed component, hook, navigation and presentation subset; declaration members outside that tested subset remain unavailable and are not synthesized dynamically."
+        "The live JavaScriptCore bridge implements the listed component, hook, navigation and presentation subset, including observable NavigationStack paths, dynamic string NavigationDestination builders, direct NavigationLink destinations and native back propagation; declaration members outside that tested subset remain unavailable and are not synthesized dynamically."
       ],
       "behaviorMatched": false,
       "declarationFile": "scripting.d.ts",
@@ -47132,7 +47212,7 @@
       "hanlinAPIVersion": "hanlin.scriptui/1.0",
       "hanlinSymbol": "HanlinScriptingApplicationSession",
       "implementedByHanlin": true,
-      "notes": "Validated with a real 49-module acceptance package that renders a 321-node interactive ScriptUI tree.",
+      "notes": "Validated with a real 49-module acceptance package that renders a 356-node interactive ScriptUI tree, the real 35-module FileManager package, and targeted two-way navigation and control tests.",
       "referenceCategory": "const",
       "referenceSignatureHash": "9d3caedeb6ef1922fd1c5a83a49570cfbad631c1594bb71dff012616b588a6a5",
       "referenceSymbol": "ToolbarItem",
@@ -47194,7 +47274,7 @@
       ],
       "allowedOrigins": [],
       "behaviorDifferences": [
-        "The live JavaScriptCore bridge implements the listed component, hook, navigation and presentation subset; declaration members outside that tested subset remain unavailable and are not synthesized dynamically."
+        "The live JavaScriptCore bridge implements the listed component, hook, navigation and presentation subset, including observable NavigationStack paths, dynamic string NavigationDestination builders, direct NavigationLink destinations and native back propagation; declaration members outside that tested subset remain unavailable and are not synthesized dynamically."
       ],
       "behaviorMatched": false,
       "declarationFile": "scripting.d.ts",
@@ -47203,7 +47283,7 @@
       "hanlinAPIVersion": "hanlin.scriptui/1.0",
       "hanlinSymbol": "HanlinScriptingApplicationSession",
       "implementedByHanlin": true,
-      "notes": "Validated with a real 49-module acceptance package that renders a 321-node interactive ScriptUI tree.",
+      "notes": "Validated with a real 49-module acceptance package that renders a 356-node interactive ScriptUI tree, the real 35-module FileManager package, and targeted two-way navigation and control tests.",
       "referenceCategory": "function",
       "referenceSignatureHash": "4ef4df6bf493e3f89a6429df891839a0342f6abb6608065574119aa88e653578",
       "referenceSymbol": "Toolbar",
@@ -48840,7 +48920,7 @@
       ],
       "allowedOrigins": [],
       "behaviorDifferences": [
-        "The live JavaScriptCore bridge implements the listed component, hook, navigation and presentation subset; declaration members outside that tested subset remain unavailable and are not synthesized dynamically."
+        "The live JavaScriptCore bridge implements the listed component, hook, navigation and presentation subset, including observable NavigationStack paths, dynamic string NavigationDestination builders, direct NavigationLink destinations and native back propagation; declaration members outside that tested subset remain unavailable and are not synthesized dynamically."
       ],
       "behaviorMatched": false,
       "declarationFile": "scripting.d.ts",
@@ -48849,7 +48929,7 @@
       "hanlinAPIVersion": "hanlin.scriptui/1.0",
       "hanlinSymbol": "HanlinScriptingApplicationSession",
       "implementedByHanlin": true,
-      "notes": "Validated with a real 49-module acceptance package that renders a 321-node interactive ScriptUI tree.",
+      "notes": "Validated with a real 49-module acceptance package that renders a 356-node interactive ScriptUI tree, the real 35-module FileManager package, and targeted two-way navigation and control tests.",
       "referenceCategory": "function",
       "referenceSignatureHash": "2f51c27e0f0719dba445def2146e357d304d82ca3bd981e4d114235cf39dbb58",
       "referenceSymbol": "useCallback",
@@ -48911,7 +48991,7 @@
       ],
       "allowedOrigins": [],
       "behaviorDifferences": [
-        "The live JavaScriptCore bridge implements the listed component, hook, navigation and presentation subset; declaration members outside that tested subset remain unavailable and are not synthesized dynamically."
+        "The live JavaScriptCore bridge implements the listed component, hook, navigation and presentation subset, including observable NavigationStack paths, dynamic string NavigationDestination builders, direct NavigationLink destinations and native back propagation; declaration members outside that tested subset remain unavailable and are not synthesized dynamically."
       ],
       "behaviorMatched": false,
       "declarationFile": "scripting.d.ts",
@@ -48920,7 +49000,7 @@
       "hanlinAPIVersion": "hanlin.scriptui/1.0",
       "hanlinSymbol": "HanlinScriptingApplicationSession",
       "implementedByHanlin": true,
-      "notes": "Validated with a real 49-module acceptance package that renders a 321-node interactive ScriptUI tree.",
+      "notes": "Validated with a real 49-module acceptance package that renders a 356-node interactive ScriptUI tree, the real 35-module FileManager package, and targeted two-way navigation and control tests.",
       "referenceCategory": "function",
       "referenceSignatureHash": "b6fc5fe35351c3fc17b915e028584d2132716954f3bee2ea6ce5ec429469ceb0",
       "referenceSymbol": "useContext",
@@ -48961,7 +49041,7 @@
       ],
       "allowedOrigins": [],
       "behaviorDifferences": [
-        "The live JavaScriptCore bridge implements the listed component, hook, navigation and presentation subset; declaration members outside that tested subset remain unavailable and are not synthesized dynamically."
+        "The live JavaScriptCore bridge implements the listed component, hook, navigation and presentation subset, including observable NavigationStack paths, dynamic string NavigationDestination builders, direct NavigationLink destinations and native back propagation; declaration members outside that tested subset remain unavailable and are not synthesized dynamically."
       ],
       "behaviorMatched": false,
       "declarationFile": "scripting.d.ts",
@@ -48970,7 +49050,7 @@
       "hanlinAPIVersion": "hanlin.scriptui/1.0",
       "hanlinSymbol": "HanlinScriptingApplicationSession",
       "implementedByHanlin": true,
-      "notes": "Validated with a real 49-module acceptance package that renders a 321-node interactive ScriptUI tree.",
+      "notes": "Validated with a real 49-module acceptance package that renders a 356-node interactive ScriptUI tree, the real 35-module FileManager package, and targeted two-way navigation and control tests.",
       "referenceCategory": "function",
       "referenceSignatureHash": "578ae71a477925661d90491a100240e0928dc96203ba047e5ae82bb78e45a759",
       "referenceSymbol": "useEffectEvent",
@@ -48990,7 +49070,7 @@
       ],
       "allowedOrigins": [],
       "behaviorDifferences": [
-        "The live JavaScriptCore bridge implements the listed component, hook, navigation and presentation subset; declaration members outside that tested subset remain unavailable and are not synthesized dynamically."
+        "The live JavaScriptCore bridge implements the listed component, hook, navigation and presentation subset, including observable NavigationStack paths, dynamic string NavigationDestination builders, direct NavigationLink destinations and native back propagation; declaration members outside that tested subset remain unavailable and are not synthesized dynamically."
       ],
       "behaviorMatched": false,
       "declarationFile": "scripting.d.ts",
@@ -48999,7 +49079,7 @@
       "hanlinAPIVersion": "hanlin.scriptui/1.0",
       "hanlinSymbol": "HanlinScriptingApplicationSession",
       "implementedByHanlin": true,
-      "notes": "Validated with a real 49-module acceptance package that renders a 321-node interactive ScriptUI tree.",
+      "notes": "Validated with a real 49-module acceptance package that renders a 356-node interactive ScriptUI tree, the real 35-module FileManager package, and targeted two-way navigation and control tests.",
       "referenceCategory": "function",
       "referenceSignatureHash": "a9e92cc09e4f30a02c8fe23278a09e7c7e51c5d607cfd11bfeded05a81e3276a",
       "referenceSymbol": "useEffect",
@@ -49040,7 +49120,7 @@
       ],
       "allowedOrigins": [],
       "behaviorDifferences": [
-        "The live JavaScriptCore bridge implements the listed component, hook, navigation and presentation subset; declaration members outside that tested subset remain unavailable and are not synthesized dynamically."
+        "The live JavaScriptCore bridge implements the listed component, hook, navigation and presentation subset, including observable NavigationStack paths, dynamic string NavigationDestination builders, direct NavigationLink destinations and native back propagation; declaration members outside that tested subset remain unavailable and are not synthesized dynamically."
       ],
       "behaviorMatched": false,
       "declarationFile": "scripting.d.ts",
@@ -49049,7 +49129,7 @@
       "hanlinAPIVersion": "hanlin.scriptui/1.0",
       "hanlinSymbol": "HanlinScriptingApplicationSession",
       "implementedByHanlin": true,
-      "notes": "Validated with a real 49-module acceptance package that renders a 321-node interactive ScriptUI tree.",
+      "notes": "Validated with a real 49-module acceptance package that renders a 356-node interactive ScriptUI tree, the real 35-module FileManager package, and targeted two-way navigation and control tests.",
       "referenceCategory": "function",
       "referenceSignatureHash": "7bdcc5a0694b662f19f9d22e78dfbefdfc50e62f66eac11cd2b3f0d17e82c81c",
       "referenceSymbol": "useMemo",
@@ -49069,7 +49149,7 @@
       ],
       "allowedOrigins": [],
       "behaviorDifferences": [
-        "The live JavaScriptCore bridge implements the listed component, hook, navigation and presentation subset; declaration members outside that tested subset remain unavailable and are not synthesized dynamically."
+        "The live JavaScriptCore bridge implements the listed component, hook, navigation and presentation subset, including observable NavigationStack paths, dynamic string NavigationDestination builders, direct NavigationLink destinations and native back propagation; declaration members outside that tested subset remain unavailable and are not synthesized dynamically."
       ],
       "behaviorMatched": false,
       "declarationFile": "scripting.d.ts",
@@ -49078,7 +49158,7 @@
       "hanlinAPIVersion": "hanlin.scriptui/1.0",
       "hanlinSymbol": "HanlinScriptingApplicationSession",
       "implementedByHanlin": true,
-      "notes": "Validated with a real 49-module acceptance package that renders a 321-node interactive ScriptUI tree.",
+      "notes": "Validated with a real 49-module acceptance package that renders a 356-node interactive ScriptUI tree, the real 35-module FileManager package, and targeted two-way navigation and control tests.",
       "referenceCategory": "function",
       "referenceSignatureHash": "86efa944b95d9d521eb8e533fb321ef52869fefd742f6e9dd646a4ce5e159bb9",
       "referenceSymbol": "useObservable",
@@ -49098,7 +49178,7 @@
       ],
       "allowedOrigins": [],
       "behaviorDifferences": [
-        "The live JavaScriptCore bridge implements the listed component, hook, navigation and presentation subset; declaration members outside that tested subset remain unavailable and are not synthesized dynamically."
+        "The live JavaScriptCore bridge implements the listed component, hook, navigation and presentation subset, including observable NavigationStack paths, dynamic string NavigationDestination builders, direct NavigationLink destinations and native back propagation; declaration members outside that tested subset remain unavailable and are not synthesized dynamically."
       ],
       "behaviorMatched": false,
       "declarationFile": "scripting.d.ts",
@@ -49107,7 +49187,7 @@
       "hanlinAPIVersion": "hanlin.scriptui/1.0",
       "hanlinSymbol": "HanlinScriptingApplicationSession",
       "implementedByHanlin": true,
-      "notes": "Validated with a real 49-module acceptance package that renders a 321-node interactive ScriptUI tree.",
+      "notes": "Validated with a real 49-module acceptance package that renders a 356-node interactive ScriptUI tree, the real 35-module FileManager package, and targeted two-way navigation and control tests.",
       "referenceCategory": "function",
       "referenceSignatureHash": "720780bd41a3d117ba2ced794717c45499bd55b7be5b9f799c64aa2a37ce9ac0",
       "referenceSymbol": "useObservable",
@@ -49232,7 +49312,7 @@
       ],
       "allowedOrigins": [],
       "behaviorDifferences": [
-        "The live JavaScriptCore bridge implements the listed component, hook, navigation and presentation subset; declaration members outside that tested subset remain unavailable and are not synthesized dynamically."
+        "The live JavaScriptCore bridge implements the listed component, hook, navigation and presentation subset, including observable NavigationStack paths, dynamic string NavigationDestination builders, direct NavigationLink destinations and native back propagation; declaration members outside that tested subset remain unavailable and are not synthesized dynamically."
       ],
       "behaviorMatched": false,
       "declarationFile": "scripting.d.ts",
@@ -49241,7 +49321,7 @@
       "hanlinAPIVersion": "hanlin.scriptui/1.0",
       "hanlinSymbol": "HanlinScriptingApplicationSession",
       "implementedByHanlin": true,
-      "notes": "Validated with a real 49-module acceptance package that renders a 321-node interactive ScriptUI tree.",
+      "notes": "Validated with a real 49-module acceptance package that renders a 356-node interactive ScriptUI tree, the real 35-module FileManager package, and targeted two-way navigation and control tests.",
       "referenceCategory": "function",
       "referenceSignatureHash": "4360ff6ce4828ecfebd002b763666a90768ee927282531816bed237734c9e5a7",
       "referenceSymbol": "useRef",
@@ -49261,7 +49341,7 @@
       ],
       "allowedOrigins": [],
       "behaviorDifferences": [
-        "The live JavaScriptCore bridge implements the listed component, hook, navigation and presentation subset; declaration members outside that tested subset remain unavailable and are not synthesized dynamically."
+        "The live JavaScriptCore bridge implements the listed component, hook, navigation and presentation subset, including observable NavigationStack paths, dynamic string NavigationDestination builders, direct NavigationLink destinations and native back propagation; declaration members outside that tested subset remain unavailable and are not synthesized dynamically."
       ],
       "behaviorMatched": false,
       "declarationFile": "scripting.d.ts",
@@ -49270,7 +49350,7 @@
       "hanlinAPIVersion": "hanlin.scriptui/1.0",
       "hanlinSymbol": "HanlinScriptingApplicationSession",
       "implementedByHanlin": true,
-      "notes": "Validated with a real 49-module acceptance package that renders a 321-node interactive ScriptUI tree.",
+      "notes": "Validated with a real 49-module acceptance package that renders a 356-node interactive ScriptUI tree, the real 35-module FileManager package, and targeted two-way navigation and control tests.",
       "referenceCategory": "function",
       "referenceSignatureHash": "809d0c61371b4563477b3a7e2f6d4a427b3664d14f6b3626e4a8400dfeb8ea79",
       "referenceSymbol": "useRef",
@@ -49290,7 +49370,7 @@
       ],
       "allowedOrigins": [],
       "behaviorDifferences": [
-        "The live JavaScriptCore bridge implements the listed component, hook, navigation and presentation subset; declaration members outside that tested subset remain unavailable and are not synthesized dynamically."
+        "The live JavaScriptCore bridge implements the listed component, hook, navigation and presentation subset, including observable NavigationStack paths, dynamic string NavigationDestination builders, direct NavigationLink destinations and native back propagation; declaration members outside that tested subset remain unavailable and are not synthesized dynamically."
       ],
       "behaviorMatched": false,
       "declarationFile": "scripting.d.ts",
@@ -49299,7 +49379,7 @@
       "hanlinAPIVersion": "hanlin.scriptui/1.0",
       "hanlinSymbol": "HanlinScriptingApplicationSession",
       "implementedByHanlin": true,
-      "notes": "Validated with a real 49-module acceptance package that renders a 321-node interactive ScriptUI tree.",
+      "notes": "Validated with a real 49-module acceptance package that renders a 356-node interactive ScriptUI tree, the real 35-module FileManager package, and targeted two-way navigation and control tests.",
       "referenceCategory": "function",
       "referenceSignatureHash": "5d0b23b9682541bf2038e1947a21a27408438a2ac512564ff47140cf0aea7c12",
       "referenceSymbol": "useRef",
@@ -49403,7 +49483,7 @@
       ],
       "allowedOrigins": [],
       "behaviorDifferences": [
-        "The live JavaScriptCore bridge implements the listed component, hook, navigation and presentation subset; declaration members outside that tested subset remain unavailable and are not synthesized dynamically."
+        "The live JavaScriptCore bridge implements the listed component, hook, navigation and presentation subset, including observable NavigationStack paths, dynamic string NavigationDestination builders, direct NavigationLink destinations and native back propagation; declaration members outside that tested subset remain unavailable and are not synthesized dynamically."
       ],
       "behaviorMatched": false,
       "declarationFile": "scripting.d.ts",
@@ -49412,7 +49492,7 @@
       "hanlinAPIVersion": "hanlin.scriptui/1.0",
       "hanlinSymbol": "HanlinScriptingApplicationSession",
       "implementedByHanlin": true,
-      "notes": "Validated with a real 49-module acceptance package that renders a 321-node interactive ScriptUI tree.",
+      "notes": "Validated with a real 49-module acceptance package that renders a 356-node interactive ScriptUI tree, the real 35-module FileManager package, and targeted two-way navigation and control tests.",
       "referenceCategory": "function",
       "referenceSignatureHash": "6f19d536da582debec499465bb88c5c754c99bc88ff11beaf27a79175c75b9e1",
       "referenceSymbol": "useState",
@@ -49432,7 +49512,7 @@
       ],
       "allowedOrigins": [],
       "behaviorDifferences": [
-        "The live JavaScriptCore bridge implements the listed component, hook, navigation and presentation subset; declaration members outside that tested subset remain unavailable and are not synthesized dynamically."
+        "The live JavaScriptCore bridge implements the listed component, hook, navigation and presentation subset, including observable NavigationStack paths, dynamic string NavigationDestination builders, direct NavigationLink destinations and native back propagation; declaration members outside that tested subset remain unavailable and are not synthesized dynamically."
       ],
       "behaviorMatched": false,
       "declarationFile": "scripting.d.ts",
@@ -49441,7 +49521,7 @@
       "hanlinAPIVersion": "hanlin.scriptui/1.0",
       "hanlinSymbol": "HanlinScriptingApplicationSession",
       "implementedByHanlin": true,
-      "notes": "Validated with a real 49-module acceptance package that renders a 321-node interactive ScriptUI tree.",
+      "notes": "Validated with a real 49-module acceptance package that renders a 356-node interactive ScriptUI tree, the real 35-module FileManager package, and targeted two-way navigation and control tests.",
       "referenceCategory": "function",
       "referenceSignatureHash": "22c0d2dc272b532231b544189844f540e58ff29fde853cba3779050570096df3",
       "referenceSymbol": "useState",
@@ -50154,7 +50234,7 @@
       ],
       "allowedOrigins": [],
       "behaviorDifferences": [
-        "The live JavaScriptCore bridge implements the listed component, hook, navigation and presentation subset; declaration members outside that tested subset remain unavailable and are not synthesized dynamically."
+        "The live JavaScriptCore bridge implements the listed component, hook, navigation and presentation subset, including observable NavigationStack paths, dynamic string NavigationDestination builders, direct NavigationLink destinations and native back propagation; declaration members outside that tested subset remain unavailable and are not synthesized dynamically."
       ],
       "behaviorMatched": false,
       "declarationFile": "scripting.d.ts",
@@ -50163,7 +50243,7 @@
       "hanlinAPIVersion": "hanlin.scriptui/1.0",
       "hanlinSymbol": "HanlinScriptingApplicationSession",
       "implementedByHanlin": true,
-      "notes": "Validated with a real 49-module acceptance package that renders a 321-node interactive ScriptUI tree.",
+      "notes": "Validated with a real 49-module acceptance package that renders a 356-node interactive ScriptUI tree, the real 35-module FileManager package, and targeted two-way navigation and control tests.",
       "referenceCategory": "const",
       "referenceSignatureHash": "10e46faf82a64375032616aa27dd56925f8fa5b0200bc90067b64c4c5259241b",
       "referenceSymbol": "VStack",
@@ -51827,7 +51907,7 @@
       ],
       "allowedOrigins": [],
       "behaviorDifferences": [
-        "The live JavaScriptCore bridge implements the listed component, hook, navigation and presentation subset; declaration members outside that tested subset remain unavailable and are not synthesized dynamically."
+        "The live JavaScriptCore bridge implements the listed component, hook, navigation and presentation subset, including observable NavigationStack paths, dynamic string NavigationDestination builders, direct NavigationLink destinations and native back propagation; declaration members outside that tested subset remain unavailable and are not synthesized dynamically."
       ],
       "behaviorMatched": false,
       "declarationFile": "scripting.d.ts",
@@ -51836,7 +51916,7 @@
       "hanlinAPIVersion": "hanlin.scriptui/1.0",
       "hanlinSymbol": "HanlinScriptingApplicationSession",
       "implementedByHanlin": true,
-      "notes": "Validated with a real 49-module acceptance package that renders a 321-node interactive ScriptUI tree.",
+      "notes": "Validated with a real 49-module acceptance package that renders a 356-node interactive ScriptUI tree, the real 35-module FileManager package, and targeted two-way navigation and control tests.",
       "referenceCategory": "const",
       "referenceSignatureHash": "048d6b0ad1cf403e299a052d0141d9a8cc9d0bb0bf33dd221a7dd71d548a3d70",
       "referenceSymbol": "ZStack",

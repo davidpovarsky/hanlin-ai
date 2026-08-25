@@ -85,10 +85,21 @@ globalThis.__hanlinNativeFileInfo = () => JSON.stringify({
     isWebDAVAvailable: false,
   },
 });
-globalThis.__hanlinNativeFileSync = () => JSON.stringify({
-  ok: false,
-  error: { name: "Error", code: "unavailable_in_smoke", message: "Filesystem I/O was not requested by this smoke fixture." },
-});
+globalThis.__hanlinNativeFileSync = (operation, payloadJSON) => {
+  const payload = JSON.parse(payloadJSON);
+  if (operation === "file.readData" && typeof payload.path === "string" && payload.path.startsWith("/scripts/")) {
+    const relative = payload.path.slice("/scripts/".length);
+    const absolute = path.resolve(packageRoot, relative);
+    const packagePrefix = `${packageRoot}${path.sep}`;
+    if (absolute.startsWith(packagePrefix) && fs.existsSync(absolute) && fs.statSync(absolute).isFile()) {
+      return JSON.stringify({ ok: true, value: fs.readFileSync(absolute).toString("base64") });
+    }
+  }
+  return JSON.stringify({
+    ok: false,
+    error: { name: "Error", code: "unavailable_in_smoke", message: "Filesystem operation unavailable in smoke fixture." },
+  });
+};
 globalThis.__hanlinNativeAsync = (id) => queueMicrotask(() => globalThis.__hanlinResolveNative(
   id,
   JSON.stringify({
@@ -135,6 +146,8 @@ console.log(JSON.stringify({
   renderedNodeCount: count(rendered),
   presented: globalThis.__hanlinHasPresentedUI,
 }));
+globalThis.__hanlinDispose();
+process.exit(0);
 
 function walk(directory) {
   return fs.readdirSync(directory, { withFileTypes: true }).flatMap(entry => {

@@ -8,12 +8,12 @@
     {
       "id": "filemanager-2",
       "typecheck": {"status": "source-project-issue", "errorCount": 5, "evidence": "Internal hook/configuration and localization-interface inconsistencies reproduce against the untouched authoritative declarations."},
-      "compileBundle": {"status": "transpile-passed-bundle-blocked", "emittedModuleCount": 36, "blocker": "The production registry rejects required unimplemented or behavior-unverified Scripting values before evaluation."},
-      "runtimeLaunch": {"status": "blocked", "blockers": ["SVG", "NavigationDestination", "Intent", "NavigationLink", "Picker and other unverified ScriptUI values"]},
-      "uiRender": {"status": "not-reached"},
-      "interaction": {"status": "not-reached"},
-      "nativeServices": {"status": "implementation-verified-outside-project-launch", "passed": ["FileManager native VFS sync/async binding", "Path runtime semantics", "binary Data bridge", "capability denial and lifecycle tests"], "blockers": ["Intent input bridge", "project launch remains gated by ScriptUI symbols"]},
-      "remainingBlockers": ["Five independent source errors", "broader ScriptUI and navigation behavior", "Intent input bridge"]
+      "compileBundle": {"status": "passed-for-smoke-profile", "emittedModuleCount": 35, "importedScriptingRuntimeSymbolCount": 33},
+      "runtimeLaunch": {"status": "passed-node-hosted-bootstrap", "presented": true, "rootKind": "vStack"},
+      "uiRender": {"status": "passed-structural-smoke", "renderedNodeCount": 26, "evidence": "The untouched 35-module FileManager source graph launched through the exact application bootstrap with native-broker-shaped filesystem responses."},
+      "interaction": {"status": "shared-runtime-verified", "passed": ["observable navigation path push/back synchronization", "dynamic NavigationDestination building", "Picker selection rerender"], "notExercised": ["real-project control automation on Simulator"]},
+      "nativeServices": {"status": "partial", "passed": ["FileManager native VFS sync/async binding", "Path runtime semantics", "binary Data bridge", "local SVG loading through the bounded /scripts mount", "capability denial and lifecycle tests"], "blockers": ["Intent input bridge", "QuickLook/editor/import UI services"]},
+      "remainingBlockers": ["Five independent source errors", "real-project Simulator interaction and visual validation", "Intent, QuickLook, editor and document import services"]
     },
     {
       "id": "sefaria-multi-engine",
@@ -51,7 +51,7 @@
       "typecheck": {"status": "passed", "errorCount": 0},
       "compileBundle": {"status": "passed-for-smoke-profile", "emittedModuleCount": 49, "importedScriptingRuntimeSymbolCount": 31},
       "runtimeLaunch": {"status": "passed-node-hosted-bootstrap", "presented": true, "rootKind": "tabView"},
-      "uiRender": {"status": "passed-structural-smoke", "renderedNodeCount": 354, "limitation": "The archived project was structurally rendered in the Node-hosted exact bootstrap; Xcode/Simulator validated the shared app and runtime tests but did not visually launch this archived project."},
+      "uiRender": {"status": "passed-structural-smoke", "renderedNodeCount": 356, "limitation": "The archived project was structurally rendered in the Node-hosted exact bootstrap; Xcode/Simulator validated the shared app and runtime tests but did not visually launch this archived project."},
       "interaction": {"status": "not-exercised-on-real-project", "evidence": "The shared runtime has hook/event/rerender tests, but this archived app was not driven through its controls."},
       "nativeServices": {"status": "partial", "passed": ["package-isolated Storage binding during launch"], "notExercised": ["Assistant", "Health", "Notification"], "placeholdersNotClaimed": ["Widget", "AppIntent"]},
       "remainingBlockers": ["real-project interaction automation", "visual Simulator/device evidence", "Health/Notification/Assistant flows", "real widget and App Intent execution"]
