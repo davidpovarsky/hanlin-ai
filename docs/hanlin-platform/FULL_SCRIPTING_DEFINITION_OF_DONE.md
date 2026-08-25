@@ -1,6 +1,7 @@
 # Full Scripting platform definition of done
 
-Status: multi-runtime core implemented; end-to-end and release gates remain open.
+Status: current declarations and live ScriptUI app path integrated; end-to-end
+and release gates remain open.
 
 This checklist is the repository traceability companion to
 `canonical-contracts/SCRIPTING_INTEGRATION_GATES.md`. A checked item requires
@@ -22,6 +23,9 @@ UI presence, a placeholder, or a declaration-only binding is not completion.
 - [x] Test fixtures are bundled and have no checkout-path fallback.
 - [x] Xcode 26 engine tests pass on exact implementation commit
   `af8b8288507614c2db1853ca724c4652df571a1f` in run `32693925085`.
+- [x] Xcode 26.6 fast validation builds and launches the live ScriptUI app path
+  on exact implementation commit `b680fba0f1bc3c75735a4cd7ad23550c5407ac61`
+  in run `32792945237`.
 
 ## Package, compiler, and runtime
 
@@ -40,6 +44,9 @@ UI presence, a placeholder, or a declaration-only binding is not completion.
 
 - [x] SDK bindings and compatibility matrix are generated deterministically
   from the immutable authorized baseline.
+- [x] All five declarations in the current Scripting export are vendored
+  byte-for-byte, included in SDK/compiler resources, drift-checked, and used
+  together by the TypeScript 7 acceptance typecheck.
 - [ ] ScriptUI provides TSX, typed virtual nodes, reconciliation, hooks, events,
   effects, native SwiftUI rendering, navigation, presentation, RTL, Dynamic
   Type, accessibility, keyboard/pointer, and multiwindow behavior.
@@ -68,6 +75,9 @@ UI presence, a placeholder, or a declaration-only binding is not completion.
 - [ ] Every supplied acceptance package has analyzer/compile snapshots,
   install/relaunch/catalog, launch/render/events, allow/deny/revoke,
   entrypoint, update/rollback, and uninstall coverage.
+- [ ] The five available packages typecheck cleanly against the current export.
+  One passes; four currently expose source-level diagnostics, and the sixth
+  acceptance package has not been supplied.
 - [ ] SG-0 through SG-10 are closed with code and test links.
 - [x] Performance budgets, migrations, corruption recovery, authoring guide,
   diagnostics, and troubleshooting are documented.

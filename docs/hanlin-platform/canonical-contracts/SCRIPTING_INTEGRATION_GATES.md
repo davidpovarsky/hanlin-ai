@@ -5,17 +5,18 @@ and close only when their pass criteria are demonstrated.
 
 ## 1. Verified repository facts
 
-- Authorized baseline ID:
-  `scripting-compat-2026-07-22-8d7d33d9369e`.
+- Authorized current baseline ID:
+  `scripting-compat-2026-08-25-0b7b8e715573`.
 - Aggregate SHA-256:
-  `8d7d33d9369ee555d15adf10c867abbfb85834eced7e7596a627b70ff627ff36`.
-- 999 reference files; declarations, docs, examples, and compiler metadata are
-  immutable originals.
+  `0b7b8e715573ffc1656f530d9eba6cc019e6742294392278edbee812bd45a1c9`.
+- 999 baseline files, including the five current declaration files exported
+  together by Scripting on 2026-08-25. Vendored declaration bytes are immutable;
+  the preceding 2026-07-22 baseline remains documented in `BASELINE_HISTORY.md`.
 - Reference compiler metadata pins TypeScript 7.0.2 with strict mode,
   `ESNext`, CommonJS, classic JSX, `createElement`, and `Fragment`.
 - Embedded RuntimeCore lock pins TypeScript 6.0.3.
-- Generated compatibility records classify all 2,419 approved symbol records:
-  13 partial and 2,406 not yet implemented, with no planned/unknown state.
+- Generated compatibility records classify all 2,440 approved symbol records:
+  60 partial and 2,380 not yet implemented, with no planned/unknown state.
 - Current TypeScript runtime supports one-source compilation and full project
   compilation endpoints, but that is not evidence that Scripting declarations,
   JSX runtime, module resolution, host APIs, or lifecycle are compatible.
@@ -39,15 +40,15 @@ choice; no engine fallback is permitted.
 | --- | --- | --- |
 | SG-0 | Closed | Owner authorization and `HANLIN_FULL_SCRIPTING_EXECUTION_PLAN_HE.md` decisions |
 | SG-1 | Closed locally | Baseline and generated-resource drift checks pass deterministically |
-| SG-2 | Implemented contract; production adapter pending | dual compiler provenance is typed; NodeMobile 6.0.3 project emitter must be connected to install and proven under Xcode |
+| SG-2 | Implemented; full evidence pending | dual compiler provenance is typed and NodeMobile 6.0.3 is connected to install; deterministic real-package smoke passes, while full project installation evidence under Xcode remains |
 | SG-3 | Implemented; verification pending | Typed wire, lossless values, limits and deterministic tests exist; randomized Xcode round trips remain |
-| SG-4 | Partial | Safe preview and atomic store exist; production install fails closed while SG-2 is blocked |
-| SG-5 | Partial | typed profiles, persistent JSC assistant route and QuickJS limits exist; runtime-v2, worker, ScriptUI and Xcode leak evidence remain |
+| SG-4 | Partial | Safe preview, on-device compile, atomic install, rollback and recovery exist; complete real-package lifecycle evidence remains |
+| SG-5 | Partial | typed profiles, persistent live JSC ScriptUI sessions and QuickJS limits exist; broader lifecycle, runtime-v2, worker and Xcode leak evidence remain |
 | SG-6 | Partial | Capability brokers and Apple adapters exist; real-package revoke/expiry/bypass evidence remains blocked |
-| SG-7 | Partial | ScriptUI and generic extensions exist; Xcode, device and real-fixture evidence remain |
+| SG-7 | Partial | Live ScriptUI hooks/events/navigation/presentation and generic extensions exist; parity, extension, device and full real-fixture evidence remain |
 | SG-8 | Partial | Multi-tool schemas, routing, structured results and cancellation exist; production-package and approval/progress evidence remain |
 | SG-9 | Implemented; verification pending | Atomic generations, recovery and stale-integrity isolation exist; Xcode migration/device evidence remains |
-| SG-10 | Blocked | Run `32693925085` passed the implemented Xcode/Simulator surface; one fixture is missing, SG-2 remains blocked, physical-device real-package acceptance is absent, and performance is unmeasured |
+| SG-10 | Blocked | Fast run `32792945237` built and launched the live-app path; one fixture is missing, four supplied packages have source diagnostics, full current-suite/IPA and physical-device real-package acceptance are absent, and performance is unmeasured |
 
 ## 3. Gates
 

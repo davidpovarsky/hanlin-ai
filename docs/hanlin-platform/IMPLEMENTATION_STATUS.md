@@ -1,10 +1,10 @@
 # Hanlin platform implementation status
 
-Last updated: 2026-08-24
+Last updated: 2026-08-25
 Execution contract: Revision 2.0
 Current gate: multi-runtime cutover in progress; release acceptance blocked
 
-## Multi-runtime Scripting continuation — implemented core, integration pending
+## Multi-runtime Scripting continuation — live app path integrated, acceptance pending
 
 Implemented on `codex/full-scripting-multiruntime`:
 
@@ -20,16 +20,30 @@ Implemented on `codex/full-scripting-multiruntime`:
 - Import Preview and installed details disclose the chosen runtime and reason;
 - compiler provenance can distinguish TypeScript 7.0.2 host typecheck from the
   TypeScript 6.0.3 NodeMobile emitter, bundler, and runtime engine versions.
+- the current five-file declaration export from Scripting is vendored byte-for-byte
+  as baseline `scripting-compat-2026-08-25-0b7b8e715573`; the generated SDK and
+  on-device compiler consume `global.d.ts`, `node.d.ts`, `safari-ext.d.ts`,
+  `scripting.d.ts`, and `web-fetch.d.ts` together;
+- Package Center installation is connected to the on-device project emitter, and
+  installed `scripting-jsc` applications launch their integrity-verified active
+  generation into a persistent live ScriptUI session with state, events,
+  navigation, presentation, charts, tabs, and package-scoped storage;
+- a real 49-source acceptance package typechecks without diagnostics, emits and
+  executes as CommonJS, and produces a 321-node ScriptUI tree in the host smoke test.
 
-Still not complete: the Package Center production install method remains
-closed, Node/Python Hybrid worker entrypoints are not yet published through the
-package registry, and the Python `scripting` compatibility module is absent.
-JSC hard memory/time limits are unsupported by verified public API and are not
-claimed. Local Node fixture checks pass. The implemented core, extension
-targets, Release device build, unsigned IPA, and iPad Simulator acceptance
-passed full workflow run `32693925085` on exact implementation commit
-`af8b8288507614c2db1853ca724c4652df571a1f`; this is not physical-device or
-real-Scripting-package evidence and does not close the remaining gates.
+Still not complete: four supplied packages have genuine source diagnostics under
+the current declarations, the sixth package is unavailable, and the complete
+import/install/relaunch/update/rollback/uninstall sequence has not been exercised
+with the acceptance packages under Xcode. FileManager, fetch, Assistant, Health,
+and most other declared service families are not connected to the live JavaScript
+session; storage is intentionally partial because its live binding does not yet
+flow through the service broker audit stream. Node/Python Hybrid conformance and
+the Python `scripting` compatibility module also remain open. JSC hard memory/time
+limits are unsupported by verified public API and are not claimed. Fast workflow
+run `32792945237` built the exact live-app implementation commit
+`b680fba0f1bc3c75735a4cd7ad23550c5407ac61`, built downstream tests, and launched
+the iPad Simulator successfully; it did not run the full test/IPA lane and does
+not close the remaining gates.
 
 ## Earlier full Scripting work
 
@@ -55,7 +69,7 @@ Implemented on source branch `codex/full-scripting-platform`:
 - generic Widget, App Intent and Live Activity infrastructure backed by
   integrity-checked, versioned App Group snapshots and a durable resume queue;
 - deterministic compatibility generation and evidence-based classification for
-  all 2,419 authorized symbol records, with no `planned` or `unknown` state;
+  all 2,440 current authorized symbol records, with no `planned` or `unknown` state;
 - locked acceptance input metadata, an external-byte verifier, versioned release
   performance budgets, recovery guidance and an authoring guide.
 
@@ -64,15 +78,17 @@ Current release truth:
 - TypeScript 7.0.2 is the authoritative host/CI typecheck lane. Its stable 7.0
   release is a native command-line compiler; the vendor states the programmatic
   API changes in 7.1, and no official iOS artifact exists. NodeMobile's pinned
-  TypeScript 6.0.3 is the authorized on-device emitter lane, but production
-  Package Center integration for that lane is not yet implemented;
+  TypeScript 6.0.3 is the authorized on-device emitter lane. Package Center
+  integration for that lane is implemented, but full acceptance-package
+  lifecycle evidence remains pending;
 - five supplied acceptance packages match their locked SHA-256 values. The
   sixth package, `זמני היום ולוח לימוד יומי 3.zip`, has not been supplied;
 - Windows has no functioning Apple SDK/Xcode environment. GitHub Actions run
-  `32693925085` verified package tests, extension compilation, a Release iOS 26
-  device build, unsigned IPA packaging, and iPad Simulator acceptance. Physical
-  device execution, real-package acceptance, and performance measurements remain
-  unverified, so SG-10 stays open;
+  `32792945237` verified the live-app implementation with Xcode 26.6, iOS 26.5
+  Simulator SDK, iOS 26 deployment target, Swift 6, downstream test compilation,
+  and iPad Simulator launch. Full-suite/IPA evidence for the current declaration
+  integration, physical-device execution, complete real-package acceptance, and
+  performance measurements remain unverified, so SG-10 stays open;
 - exact gate states and remaining evidence are recorded in
   `canonical-contracts/SCRIPTING_INTEGRATION_GATES.md`.
 
