@@ -20,6 +20,7 @@ function runtime() {
   let rendered;
   const assistantRequests = [];
   const sqliteRequests = [];
+  const locationRequests = [];
   const cancelledRequests = new Set();
   const success = value => JSON.stringify({ ok: true, value });
   const failure = (code, message) => JSON.stringify({
@@ -80,6 +81,7 @@ function runtime() {
         try {
           const payload = JSON.parse(json);
           if (operation.startsWith("sqlite.")) sqliteRequests.push({ operation, payload });
+          if (operation.startsWith("location.")) locationRequests.push({ operation, payload });
           const value = operation === "network.fetch"
             ? { url: payload.url, status: 200, headers: { "content-type": "application/json" }, bodyBase64: Buffer.from('{"ok":true}').toString("base64") }
             : operation === "liveActivity.start"
@@ -92,6 +94,14 @@ function runtime() {
               ? null
             : operation === "sqlite.fetchAll"
               ? [{ id: payload.arguments[0], title: "stored" }]
+            : operation === "location.requestCurrent"
+              ? { latitude: 31.7683, longitude: 35.2137, timestamp: 123456789 }
+            : operation === "location.reverseGeocode"
+              ? [{ location: { latitude: payload.latitude, longitude: payload.longitude, timestamp: 123456789 }, name: "Jerusalem", locality: "Jerusalem", country: "Israel" }]
+            : operation === "location.geocodeAddress"
+              ? [{ location: { latitude: 31.7683, longitude: 35.2137, timestamp: 123456789 }, name: payload.address, locality: "Jerusalem", country: "Israel" }]
+            : operation === "location.setAccuracy"
+              ? null
             : operation === "runtime.delay"
               ? null
             : fileOperation(operation, payload);
@@ -124,7 +134,7 @@ function runtime() {
     __hanlinCancelNative(id) { cancelledRequests.add(id); },
   });
   vm.runInContext(bootstrap, context, { filename: "hanlin-scripting-ui-runtime.js" });
-  return { context, rendered: () => rendered, assistantRequests, sqliteRequests, cancelledRequests };
+  return { context, rendered: () => rendered, assistantRequests, sqliteRequests, locationRequests, cancelledRequests };
 }
 
 test("Path, binary Data, Storage, and synchronous FileManager preserve values", () => {
@@ -519,4 +529,31 @@ test("SQLite preserves package paths, configurations, bound arguments, and row o
   assert.equal(sqliteRequests[0].payload.configuration.foreignKeysEnabled, true);
   assert.equal(sqliteRequests[0].payload.configuration.journalMode, "wal");
   assert.deepEqual(sqliteRequests[2].payload.arguments, ["item-1"]);
+});
+
+test("Location current position, accuracy, and modern geocoding use the native async channel", async () => {
+  const { context, locationRequests } = runtime();
+  const result = await vm.runInContext(`
+    (async () => {
+      await Location.setAccuracy("hundredMeters");
+      const current = await Location.requestCurrent({ forceRequest: true });
+      const reverse = await Location.reverseGeocode({
+        latitude: current.latitude,
+        longitude: current.longitude,
+        locale: "he_IL",
+      });
+      const forward = await Location.geocodeAddress({ address: "Jerusalem", locale: "en_US" });
+      return { accuracy: Location.accuracy, current, reverse, forward };
+    })()
+  `, context);
+  const value = JSON.parse(JSON.stringify(result));
+  assert.equal(value.accuracy, "hundredMeters");
+  assert.deepEqual(value.current, { latitude: 31.7683, longitude: 35.2137, timestamp: 123456789 });
+  assert.equal(value.reverse[0].locality, "Jerusalem");
+  assert.equal(value.forward[0].name, "Jerusalem");
+  assert.deepEqual(locationRequests.map(request => request.operation), [
+    "location.setAccuracy", "location.requestCurrent", "location.reverseGeocode", "location.geocodeAddress",
+  ]);
+  assert.equal(locationRequests[1].payload.forceRequest, true);
+  assert.equal(locationRequests[2].payload.locale, "he_IL");
 });

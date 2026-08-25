@@ -79,6 +79,31 @@ public struct HanlinScriptLocationValue: Codable, Hashable, Sendable {
     }
 }
 
+public struct HanlinScriptPlacemarkValue: Codable, Hashable, Sendable {
+    public let location: HanlinScriptLocationValue
+    public let timeZoneIdentifier: String?
+    public let name: String?
+    public let locality: String?
+    public let isoCountryCode: String?
+    public let country: String?
+
+    public init(
+        location: HanlinScriptLocationValue,
+        timeZoneIdentifier: String? = nil,
+        name: String? = nil,
+        locality: String? = nil,
+        isoCountryCode: String? = nil,
+        country: String? = nil
+    ) {
+        self.location = location
+        self.timeZoneIdentifier = timeZoneIdentifier
+        self.name = name
+        self.locality = locality
+        self.isoCountryCode = isoCountryCode
+        self.country = country
+    }
+}
+
 public struct HanlinScriptLocalNotification: Codable, Hashable, Sendable {
     public let id: String
     public let title: String

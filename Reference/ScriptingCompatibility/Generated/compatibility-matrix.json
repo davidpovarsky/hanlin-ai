@@ -27568,7 +27568,7 @@
       ],
       "allowedOrigins": [],
       "behaviorDifferences": [
-        "Modern Core Location live updates are implemented, but runtime binding and full declaration coverage are pending."
+        "Implements capability-gated requestCurrent with cache/force semantics, setAccuracy, and bounded forward/reverse geocoding through modern MapKit requests. Heading, continuous location streams, map picking, background configuration, distance/activity filters and the less-structured legacy placemark fields remain unavailable."
       ],
       "behaviorMatched": false,
       "declarationFile": "global.d.ts",
@@ -27577,7 +27577,7 @@
       "hanlinAPIVersion": "hanlin.services/1.0",
       "hanlinSymbol": "HanlinLocationService",
       "implementedByHanlin": true,
-      "notes": "Device adapter exists with explicit authorization paths.",
+      "notes": "Uses CLLocationUpdate.liveUpdates plus MKGeocodingRequest/MKReverseGeocodingRequest and the nondeprecated MKMapItem location/addressRepresentations surface.",
       "referenceCategory": "namespace",
       "referenceSignatureHash": "ca4cdada0e6afe7c02fb45cf49a47f9039c94238bbaee1b5f64b4d487b780a11",
       "referenceSymbol": "Location",
@@ -27585,7 +27585,9 @@
       "requiredEntitlement": "NSLocationWhenInUseUsageDescription",
       "status": "partial",
       "tests": [
-        "Packages/HanlinPlatform/Tests/HanlinScriptDeviceServicesTests/HanlinAppleServiceContractsTests.swift"
+        "Packages/HanlinPlatform/Tests/HanlinScriptDeviceServicesTests/HanlinAppleServiceContractsTests.swift",
+        "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift",
+        "Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs"
       ],
       "verifiedByFixture": false
     },
@@ -27595,7 +27597,7 @@
       ],
       "allowedOrigins": [],
       "behaviorDifferences": [
-        "Modern Core Location live updates are implemented, but runtime binding and full declaration coverage are pending."
+        "Implements capability-gated requestCurrent with cache/force semantics, setAccuracy, and bounded forward/reverse geocoding through modern MapKit requests. Heading, continuous location streams, map picking, background configuration, distance/activity filters and the less-structured legacy placemark fields remain unavailable."
       ],
       "behaviorMatched": false,
       "declarationFile": "global.d.ts",
@@ -27604,7 +27606,7 @@
       "hanlinAPIVersion": "hanlin.services/1.0",
       "hanlinSymbol": "HanlinLocationService",
       "implementedByHanlin": true,
-      "notes": "Device adapter exists with explicit authorization paths.",
+      "notes": "Uses CLLocationUpdate.liveUpdates plus MKGeocodingRequest/MKReverseGeocodingRequest and the nondeprecated MKMapItem location/addressRepresentations surface.",
       "referenceCategory": "type",
       "referenceSignatureHash": "580463ba2943e84b6e35b38463a15f9678ade71950c53689548d905c8d2fe5c7",
       "referenceSymbol": "Location",
@@ -27612,7 +27614,9 @@
       "requiredEntitlement": "NSLocationWhenInUseUsageDescription",
       "status": "partial",
       "tests": [
-        "Packages/HanlinPlatform/Tests/HanlinScriptDeviceServicesTests/HanlinAppleServiceContractsTests.swift"
+        "Packages/HanlinPlatform/Tests/HanlinScriptDeviceServicesTests/HanlinAppleServiceContractsTests.swift",
+        "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift",
+        "Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs"
       ],
       "verifiedByFixture": false
     },

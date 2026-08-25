@@ -302,9 +302,9 @@
       "requiredCapability": "location",
       "requiredEntitlement": "NSLocationWhenInUseUsageDescription",
       "allowedContexts": ["mainApplication"],
-      "behaviorDifferences": ["Modern Core Location live updates are implemented, but runtime binding and full declaration coverage are pending."],
-      "tests": ["Packages/HanlinPlatform/Tests/HanlinScriptDeviceServicesTests/HanlinAppleServiceContractsTests.swift"],
-      "notes": "Device adapter exists with explicit authorization paths."
+      "behaviorDifferences": ["Implements capability-gated requestCurrent with cache/force semantics, setAccuracy, and bounded forward/reverse geocoding through modern MapKit requests. Heading, continuous location streams, map picking, background configuration, distance/activity filters and the less-structured legacy placemark fields remain unavailable."],
+      "tests": ["Packages/HanlinPlatform/Tests/HanlinScriptDeviceServicesTests/HanlinAppleServiceContractsTests.swift", "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift", "Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs"],
+      "notes": "Uses CLLocationUpdate.liveUpdates plus MKGeocodingRequest/MKReverseGeocodingRequest and the nondeprecated MKMapItem location/addressRepresentations surface."
     },
     {
       "symbol": "Notification",

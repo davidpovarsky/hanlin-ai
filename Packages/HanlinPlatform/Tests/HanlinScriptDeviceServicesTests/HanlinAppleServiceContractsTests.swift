@@ -1,5 +1,6 @@
 import HanlinPlatformContracts
 import HanlinScriptDeviceServices
+import Foundation
 import Testing
 
 @Suite("Apple Scripting service availability")
@@ -21,5 +22,28 @@ struct HanlinAppleServiceContractsTests {
         #expect(try #require(records[.location]).requiredUsageDescriptions.contains("NSLocationWhenInUseUsageDescription"))
         #expect(try #require(records[.calendar]).requiredUsageDescriptions.contains("NSCalendarsFullAccessUsageDescription"))
         #expect(!(try #require(records[.health]).allowedContexts.contains(.widget)))
+    }
+
+    @Test("Location and placemark values preserve modern MapKit result fields")
+    func locationValues() {
+        let location = HanlinScriptLocationValue(
+            latitude: 31.7683,
+            longitude: 35.2137,
+            altitude: 754,
+            horizontalAccuracy: 10,
+            timestamp: Date(timeIntervalSince1970: 123)
+        )
+        let placemark = HanlinScriptPlacemarkValue(
+            location: location,
+            timeZoneIdentifier: "Asia/Jerusalem",
+            name: "Jerusalem",
+            locality: "Jerusalem",
+            isoCountryCode: "IL",
+            country: "Israel"
+        )
+        #expect(placemark.location == location)
+        #expect(placemark.timeZoneIdentifier == "Asia/Jerusalem")
+        #expect(placemark.locality == "Jerusalem")
+        #expect(placemark.isoCountryCode == "IL")
     }
 }

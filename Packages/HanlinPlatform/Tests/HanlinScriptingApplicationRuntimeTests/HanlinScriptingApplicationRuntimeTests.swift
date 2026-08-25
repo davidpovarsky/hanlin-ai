@@ -86,4 +86,41 @@ struct HanlinScriptingApplicationRuntimeTests {
         #expect((rows[0]["count"] as? NSNumber)?.intValue == 7)
         #expect((rows[0]["enabled"] as? NSNumber)?.intValue == 1)
     }
+
+    @Test("Location requests validate capabilities, coordinates, locales, and accuracy")
+    func locationPayloads() throws {
+        let current = try HanlinScriptingLocationPayloadDecoder.decode(
+            operation: "location.requestCurrent",
+            json: #"{"forceRequest":true}"#
+        )
+        #expect(current.action == .requestCurrent)
+        #expect(current.forceRequest)
+
+        let reverse = try HanlinScriptingLocationPayloadDecoder.decode(
+            operation: "location.reverseGeocode",
+            json: #"{"latitude":31.7683,"longitude":35.2137,"locale":"he_IL"}"#
+        )
+        #expect(reverse.latitude == 31.7683)
+        #expect(reverse.longitude == 35.2137)
+        #expect(reverse.localeIdentifier == "he_IL")
+
+        let accuracy = try HanlinScriptingLocationPayloadDecoder.decode(
+            operation: "location.setAccuracy",
+            json: #"{"accuracy":"hundredMeters"}"#
+        )
+        #expect(accuracy.accuracy == "hundredMeters")
+
+        #expect(throws: (any Error).self) {
+            try HanlinScriptingLocationPayloadDecoder.decode(
+                operation: "location.reverseGeocode",
+                json: #"{"latitude":91,"longitude":35}"#
+            )
+        }
+        #expect(throws: (any Error).self) {
+            try HanlinScriptingLocationPayloadDecoder.decode(
+                operation: "location.setAccuracy",
+                json: #"{"accuracy":"unbounded"}"#
+            )
+        }
+    }
 }

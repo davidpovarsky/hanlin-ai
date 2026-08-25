@@ -4,6 +4,7 @@ import HanlinPlatformContracts
 import HanlinScriptCompiler
 import HanlinScriptContracts
 import HanlinScriptExtensions
+import HanlinScriptDeviceServices
 import HanlinScriptStore
 import HanlinScriptUI
 import HanlinScriptingSDK
@@ -38,6 +39,7 @@ final class HanlinScriptingPlatform {
     private var bundler: HanlinScriptingBundler?
     private var extensionStore: HanlinScriptExtensionStore?
     private var applicationSession: HanlinScriptingApplicationSession?
+    private let locationService = HanlinAppleLocationService()
     private var liveActivityRevisions: [String: UInt64] = [:]
     private let stagingRoot: URL?
 
@@ -350,6 +352,7 @@ final class HanlinScriptingPlatform {
             let storageCapability = try HanlinCapabilityID(validating: "storage")
             let filesCapability = try HanlinCapabilityID(validating: "files")
             let networkCapability = try HanlinCapabilityID(validating: "network")
+            let locationCapability = try HanlinCapabilityID(validating: "location")
             let session = try HanlinScriptingApplicationSession(
                 installedPackageID: id,
                 program: program,
@@ -358,6 +361,11 @@ final class HanlinScriptingPlatform {
                 filesAllowed: package.grantedCapabilities.contains(filesCapability),
                 networkAllowed: package.grantedCapabilities.contains(networkCapability),
                 packageSourceDirectory: artifactRoot.appending(path: "source", directoryHint: .isDirectory),
+                locationAllowed: package.grantedCapabilities.contains(locationCapability),
+                locationLoader: { [weak self] request in
+                    guard let self else { throw CancellationError() }
+                    return try await self.performLocation(request)
+                },
                 liveActivityAllowed: true,
                 liveActivityLoader: { [weak self] request in
                     guard let self else { throw CancellationError() }
@@ -379,6 +387,64 @@ final class HanlinScriptingPlatform {
         applicationSession = nil
         activeApplicationID = nil
         activeApplicationModel = nil
+    }
+
+    private func performLocation(
+        _ request: HanlinScriptingLocationRequest
+    ) async throws -> HanlinScriptingLocationResult {
+        switch request.action {
+        case .requestCurrent:
+            let value = try await locationService.currentLocation(forceRequest: request.forceRequest)
+            return .location(Self.scriptingLocation(value))
+        case .geocodeAddress:
+            guard let address = request.address else {
+                throw HanlinScriptingPlatformError.invalidLocationPayload
+            }
+            let values = try await locationService.geocodeAddress(
+                address,
+                localeIdentifier: request.localeIdentifier
+            )
+            return .placemarks(values.map(Self.scriptingPlacemark))
+        case .reverseGeocode:
+            guard let latitude = request.latitude, let longitude = request.longitude else {
+                throw HanlinScriptingPlatformError.invalidLocationPayload
+            }
+            let values = try await locationService.reverseGeocode(
+                latitude: latitude,
+                longitude: longitude,
+                localeIdentifier: request.localeIdentifier
+            )
+            return .placemarks(values.map(Self.scriptingPlacemark))
+        case .setAccuracy:
+            guard let accuracy = request.accuracy else {
+                throw HanlinScriptingPlatformError.invalidLocationPayload
+            }
+            try locationService.setAccuracy(accuracy)
+            return .success
+        }
+    }
+
+    private static func scriptingLocation(
+        _ value: HanlinScriptLocationValue
+    ) -> HanlinScriptingLocationInfo {
+        .init(
+            latitude: value.latitude,
+            longitude: value.longitude,
+            timestampMilliseconds: value.timestamp.timeIntervalSince1970 * 1_000
+        )
+    }
+
+    private static func scriptingPlacemark(
+        _ value: HanlinScriptPlacemarkValue
+    ) -> HanlinScriptingLocationPlacemark {
+        .init(
+            location: scriptingLocation(value.location),
+            timeZoneIdentifier: value.timeZoneIdentifier,
+            name: value.name,
+            locality: value.locality,
+            isoCountryCode: value.isoCountryCode,
+            country: value.country
+        )
     }
 
     private func performLiveActivity(
@@ -561,6 +627,7 @@ private enum HanlinScriptingPlatformError: Error {
     case compiledEntrypointTooLarge
     case invalidEntrypointPath
     case invalidLiveActivityPayload
+    case invalidLocationPayload
 }
 
 private extension JSONEncoder {

@@ -15,6 +15,8 @@ public final class HanlinScriptingApplicationSession {
     private let sqliteStore: HanlinScriptingSQLiteStore
     private let networkAllowed: Bool
     private let networkLoader: HanlinScriptingNetworkLoader
+    private let locationAllowed: Bool
+    private let locationLoader: HanlinScriptingLocationLoader
     private let assistantAllowed: Bool
     private let assistantLoader: HanlinScriptingAssistantLoader
     private let liveActivityAllowed: Bool
@@ -32,6 +34,8 @@ public final class HanlinScriptingApplicationSession {
         runtimeRoot: URL? = nil,
         packageSourceDirectory: URL? = nil,
         networkLoader: @escaping HanlinScriptingNetworkLoader = HanlinScriptingURLSessionLoader.load,
+        locationAllowed: Bool = false,
+        locationLoader: @escaping HanlinScriptingLocationLoader = HanlinScriptingUnavailableLocationLoader.load,
         assistantAllowed: Bool = false,
         assistantLoader: @escaping HanlinScriptingAssistantLoader = HanlinScriptingUnavailableAssistantLoader.load,
         liveActivityAllowed: Bool = false,
@@ -56,6 +60,8 @@ public final class HanlinScriptingApplicationSession {
         sqliteStore = HanlinScriptingSQLiteStore(fileSystem: fileSystem)
         self.networkAllowed = networkAllowed
         self.networkLoader = networkLoader
+        self.locationAllowed = locationAllowed
+        self.locationLoader = locationLoader
         self.assistantAllowed = assistantAllowed
         self.assistantLoader = assistantLoader
         self.liveActivityAllowed = liveActivityAllowed
@@ -338,6 +344,21 @@ public final class HanlinScriptingApplicationSession {
                 "headers": response.headers,
                 "bodyBase64": response.body.base64EncodedString(),
             ])
+        }
+        if operation.hasPrefix("location.") {
+            guard locationAllowed else {
+                throw HanlinScriptingNativeError(
+                    name: "Error",
+                    code: "permission_denied",
+                    message: "The Location capability is not granted."
+                )
+            }
+            let request = try HanlinScriptingLocationPayloadDecoder.decode(
+                operation: operation,
+                json: payloadJSON
+            )
+            let result = try await locationLoader(request)
+            return HanlinScriptingNativeJSON.success(result.nativeObject)
         }
         if operation.hasPrefix("liveActivity.") {
             guard liveActivityAllowed else {
@@ -1280,6 +1301,55 @@ private extension HanlinScriptingApplicationSession {
         ));
       }
 
+      const locationAccuracies = new Set([
+        "best", "tenMeters", "hundredMeters", "kilometer", "threeKilometers",
+        "bestForNavigation", "reduced"
+      ]);
+      let locationAccuracy = "best";
+      const Location = {
+        get accuracy() { return locationAccuracy; },
+        requestCurrent(options = {}) {
+          if (options == null || typeof options !== "object" || Array.isArray(options)) {
+            return Promise.reject(new TypeError("Location options must be an object"));
+          }
+          if (options.forceRequest !== undefined && typeof options.forceRequest !== "boolean") {
+            return Promise.reject(new TypeError("Location forceRequest must be a Boolean"));
+          }
+          return nativeCallAsync("location.requestCurrent", {
+            forceRequest: options.forceRequest ?? false
+          });
+        },
+        geocodeAddress(options) {
+          if (!options || typeof options.address !== "string") {
+            return Promise.reject(new TypeError("Location geocoding requires an address"));
+          }
+          return nativeCallAsync("location.geocodeAddress", {
+            address: options.address,
+            locale: options.locale ?? null
+          });
+        },
+        reverseGeocode(options) {
+          if (!options || typeof options !== "object") {
+            return Promise.reject(new TypeError("Location reverse geocoding requires coordinates"));
+          }
+          return nativeCallAsync("location.reverseGeocode", {
+            latitude: options.latitude,
+            longitude: options.longitude,
+            locale: options.locale ?? null
+          });
+        },
+        setAccuracy(accuracy) {
+          if (!locationAccuracies.has(accuracy)) {
+            return Promise.reject(new TypeError("Invalid Location accuracy"));
+          }
+          return nativeCallAsync("location.setAccuracy", { accuracy }).then(value => {
+            locationAccuracy = accuracy;
+            return value;
+          });
+        }
+      };
+      Object.freeze(Location);
+
       const hostKinds = Object.freeze({
         Text: "text", Image: "image", Button: "button", TextField: "textField",
         SecureField: "textField", HStack: "hStack", VStack: "vStack", ZStack: "zStack",
@@ -2021,7 +2091,7 @@ private extension HanlinScriptingApplicationSession {
         FormData: HanlinFormData, Request: HanlinRequest, Response: HanlinResponse,
         fetch: hanlinFetch, DOMException: HanlinDOMException, AbortEvent: HanlinAbortEvent,
         AbortSignal: HanlinAbortSignal, AbortController: HanlinAbortController,
-        Storage, SQLite, Assistant, LiveActivity, Script, Device, Widget, AppIntentProtocol, AppIntentManager,
+        Storage, SQLite, Assistant, Location, LiveActivity, Script, Device, Widget, AppIntentProtocol, AppIntentManager,
         Color: Object.freeze({}),
         __hanlinResolveNative: resolveNativeRequest,
         __hanlinAssistantReceive: receiveAssistantChunk,

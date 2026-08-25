@@ -2,6 +2,201 @@ import Foundation
 import HanlinScriptUI
 import UniformTypeIdentifiers
 
+public enum HanlinScriptingLocationAction: String, Sendable {
+    case requestCurrent = "request_current"
+    case geocodeAddress = "geocode_address"
+    case reverseGeocode = "reverse_geocode"
+    case setAccuracy = "set_accuracy"
+}
+
+public struct HanlinScriptingLocationRequest: Sendable {
+    public let action: HanlinScriptingLocationAction
+    public let forceRequest: Bool
+    public let address: String?
+    public let latitude: Double?
+    public let longitude: Double?
+    public let localeIdentifier: String?
+    public let accuracy: String?
+
+    public init(
+        action: HanlinScriptingLocationAction,
+        forceRequest: Bool = false,
+        address: String? = nil,
+        latitude: Double? = nil,
+        longitude: Double? = nil,
+        localeIdentifier: String? = nil,
+        accuracy: String? = nil
+    ) {
+        self.action = action
+        self.forceRequest = forceRequest
+        self.address = address
+        self.latitude = latitude
+        self.longitude = longitude
+        self.localeIdentifier = localeIdentifier
+        self.accuracy = accuracy
+    }
+}
+
+public struct HanlinScriptingLocationInfo: Hashable, Sendable {
+    public let latitude: Double
+    public let longitude: Double
+    public let timestampMilliseconds: Double
+
+    public init(latitude: Double, longitude: Double, timestampMilliseconds: Double) {
+        self.latitude = latitude
+        self.longitude = longitude
+        self.timestampMilliseconds = timestampMilliseconds
+    }
+
+    var nativeObject: [String: Any] {
+        [
+            "latitude": latitude,
+            "longitude": longitude,
+            "timestamp": timestampMilliseconds,
+        ]
+    }
+}
+
+public struct HanlinScriptingLocationPlacemark: Hashable, Sendable {
+    public let location: HanlinScriptingLocationInfo?
+    public let timeZoneIdentifier: String?
+    public let name: String?
+    public let locality: String?
+    public let isoCountryCode: String?
+    public let country: String?
+
+    public init(
+        location: HanlinScriptingLocationInfo? = nil,
+        timeZoneIdentifier: String? = nil,
+        name: String? = nil,
+        locality: String? = nil,
+        isoCountryCode: String? = nil,
+        country: String? = nil
+    ) {
+        self.location = location
+        self.timeZoneIdentifier = timeZoneIdentifier
+        self.name = name
+        self.locality = locality
+        self.isoCountryCode = isoCountryCode
+        self.country = country
+    }
+
+    var nativeObject: [String: Any] {
+        var object: [String: Any] = [:]
+        if let location { object["location"] = location.nativeObject }
+        if let timeZoneIdentifier { object["timeZone"] = timeZoneIdentifier }
+        if let name { object["name"] = name }
+        if let locality { object["locality"] = locality }
+        if let isoCountryCode { object["isoCountryCode"] = isoCountryCode }
+        if let country { object["country"] = country }
+        return object
+    }
+}
+
+public enum HanlinScriptingLocationResult: Sendable {
+    case location(HanlinScriptingLocationInfo?)
+    case placemarks([HanlinScriptingLocationPlacemark]?)
+    case success
+
+    var nativeObject: Any {
+        switch self {
+        case let .location(value): value?.nativeObject ?? NSNull()
+        case let .placemarks(values): values?.map(\.nativeObject) ?? NSNull()
+        case .success: NSNull()
+        }
+    }
+}
+
+public typealias HanlinScriptingLocationLoader = @MainActor @Sendable (
+    HanlinScriptingLocationRequest
+) async throws -> HanlinScriptingLocationResult
+
+public enum HanlinScriptingUnavailableLocationLoader {
+    public static func load(
+        _ request: HanlinScriptingLocationRequest
+    ) async throws -> HanlinScriptingLocationResult {
+        _ = request
+        throw HanlinScriptingNativeError(
+            name: "Error",
+            code: "location_unavailable",
+            message: "The Location service is unavailable."
+        )
+    }
+}
+
+enum HanlinScriptingLocationPayloadDecoder {
+    private static let accuracies: Set<String> = [
+        "best", "tenMeters", "hundredMeters", "kilometer", "threeKilometers",
+        "bestForNavigation", "reduced",
+    ]
+
+    static func decode(operation: String, json: String) throws -> HanlinScriptingLocationRequest {
+        let prefix = "location."
+        guard operation.hasPrefix(prefix),
+              let action = HanlinScriptingLocationAction(
+                rawValue: String(operation.dropFirst(prefix.count))
+                    .replacingOccurrences(of: "requestCurrent", with: "request_current")
+                    .replacingOccurrences(of: "geocodeAddress", with: "geocode_address")
+                    .replacingOccurrences(of: "reverseGeocode", with: "reverse_geocode")
+                    .replacingOccurrences(of: "setAccuracy", with: "set_accuracy")
+              ) else {
+            throw invalid("The Location operation is unavailable.")
+        }
+        let payload = try HanlinScriptingNativeJSON.decodeObject(json)
+        let locale = try optionalString(payload["locale"], name: "locale", maximumBytes: 128)
+        switch action {
+        case .requestCurrent:
+            guard payload["forceRequest"] == nil || payload["forceRequest"] is Bool else {
+                throw invalid("Location forceRequest must be a Boolean.")
+            }
+            return .init(action: action, forceRequest: payload["forceRequest"] as? Bool ?? false)
+        case .geocodeAddress:
+            guard let address = payload["address"] as? String,
+                  !address.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty,
+                  address.utf8.count <= 4_096 else {
+                throw invalid("Location geocoding requires a bounded, non-empty address.")
+            }
+            return .init(action: action, address: address, localeIdentifier: locale)
+        case .reverseGeocode:
+            guard let latitude = finiteDouble(payload["latitude"]), (-90 ... 90).contains(latitude),
+                  let longitude = finiteDouble(payload["longitude"]), (-180 ... 180).contains(longitude) else {
+                throw invalid("Location reverse geocoding requires valid coordinates.")
+            }
+            return .init(
+                action: action,
+                latitude: latitude,
+                longitude: longitude,
+                localeIdentifier: locale
+            )
+        case .setAccuracy:
+            guard let accuracy = payload["accuracy"] as? String, accuracies.contains(accuracy) else {
+                throw invalid("The requested Location accuracy is invalid.")
+            }
+            return .init(action: action, accuracy: accuracy)
+        }
+    }
+
+    private static func finiteDouble(_ value: Any?) -> Double? {
+        guard !(value is Bool), let number = value as? NSNumber,
+              number.doubleValue.isFinite else { return nil }
+        return number.doubleValue
+    }
+
+    private static func optionalString(
+        _ value: Any?, name: String, maximumBytes: Int
+    ) throws -> String? {
+        guard let value, !(value is NSNull) else { return nil }
+        guard let string = value as? String, !string.isEmpty, string.utf8.count <= maximumBytes else {
+            throw invalid("The Location \(name) is invalid.")
+        }
+        return string
+    }
+
+    private static func invalid(_ message: String) -> HanlinScriptingNativeError {
+        .init(name: "TypeError", code: "invalid_location_request", message: message)
+    }
+}
+
 public enum HanlinScriptingLiveActivityAction: String, Sendable {
     case start
     case update
