@@ -5,6 +5,7 @@ import HanlinScriptCompiler
 import HanlinScriptContracts
 import HanlinScriptExtensions
 import HanlinScriptStore
+import HanlinScriptUI
 import HanlinScriptingSDK
 import Observation
 
@@ -27,6 +28,8 @@ final class HanlinScriptingPlatform {
     private(set) var bootstrapError: String?
     private(set) var pendingResumeCommands: [HanlinScriptResumeCommand] = []
     private(set) var approvedCapabilities: Set<HanlinCapabilityID> = []
+    private(set) var activeApplicationID: HanlinInstalledPackageID?
+    private(set) var activeApplicationModel: HanlinScriptUIModel?
 
     private let packageCenter = HanlinPackageCenter()
     private var stagedPackage: HanlinStagedPackage?
@@ -34,6 +37,7 @@ final class HanlinScriptingPlatform {
     private var store: HanlinAtomicScriptStore?
     private var bundler: HanlinScriptingBundler?
     private var extensionStore: HanlinScriptExtensionStore?
+    private var applicationSession: HanlinScriptingApplicationSession?
     private let stagingRoot: URL?
 
     private init() {
@@ -257,9 +261,14 @@ final class HanlinScriptingPlatform {
         activity = .failed(Self.safeMessage(error))
     }
 
+    func clearFailure() {
+        if case .failed = activity { activity = .idle }
+    }
+
     func uninstall(_ id: HanlinInstalledPackageID) async {
         guard let store else { return }
         do {
+            if activeApplicationID == id { dismissActiveApplication() }
             try await store.uninstall(id)
             installedPackages = try await store.snapshots()
         } catch {
@@ -270,6 +279,7 @@ final class HanlinScriptingPlatform {
     func rollback(_ id: HanlinInstalledPackageID, to generation: UInt64) async {
         guard let store else { return }
         do {
+            if activeApplicationID == id { dismissActiveApplication() }
             _ = try await store.rollback(id, to: generation)
             installedPackages = try await store.snapshots()
         } catch {
@@ -280,6 +290,7 @@ final class HanlinScriptingPlatform {
     func setEnabled(_ enabled: Bool, for id: HanlinInstalledPackageID) async {
         guard let store else { return }
         do {
+            if !enabled, activeApplicationID == id { dismissActiveApplication() }
             try await store.setEnabled(enabled, for: id)
             installedPackages = try await store.snapshots()
         } catch {
@@ -294,11 +305,69 @@ final class HanlinScriptingPlatform {
     ) async {
         guard let store else { return }
         do {
+            if !granted, activeApplicationID == id { dismissActiveApplication() }
             try await store.setCapabilityGranted(granted, capability: capability, for: id)
             installedPackages = try await store.snapshots()
         } catch {
             activity = .failed(Self.safeMessage(error))
         }
+    }
+
+    func launch(_ id: HanlinInstalledPackageID) async {
+        guard let store,
+              let package = installedPackages.first(where: { $0.record.installedPackageID == id }) else {
+            activity = .failed("The installed package could not be found.")
+            return
+        }
+        guard package.enabled else {
+            activity = .failed("Enable this package before launching it.")
+            return
+        }
+        guard let entrypoint = package.entrypoints.first(where: { $0.kind == .app }) else {
+            activity = .failed("This package does not contain an app entrypoint.")
+            return
+        }
+        guard entrypoint.runtimeProfile == .scriptingJSC else {
+            activity = .failed("Interactive ScriptUI currently requires the scripting-jsc runtime.")
+            return
+        }
+        let required = Set(entrypoint.requiredCapabilities.filter(\.required).map(\.capabilityID))
+        guard required.isSubset(of: Set(package.grantedCapabilities)) else {
+            activity = .failed("Grant every required capability before launching this package.")
+            return
+        }
+        do {
+            let artifactRoot = try await store.activeArtifactURL(for: id)
+            let compiledPath = try Self.compiledPath(for: entrypoint.sourcePath)
+            let compiledURL = artifactRoot.appending(path: compiledPath, directoryHint: .notDirectory)
+            let attributes = try FileManager.default.attributesOfItem(atPath: compiledURL.path())
+            guard let bytes = attributes[.size] as? NSNumber, bytes.intValue <= 4 * 1_024 * 1_024 else {
+                throw HanlinScriptingPlatformError.compiledEntrypointTooLarge
+            }
+            let program = try String(contentsOf: compiledURL, encoding: .utf8)
+            dismissActiveApplication()
+            let storageCapability = try HanlinCapabilityID(validating: "storage")
+            let session = try HanlinScriptingApplicationSession(
+                installedPackageID: id,
+                program: program,
+                filename: compiledPath,
+                storageAllowed: package.grantedCapabilities.contains(storageCapability)
+            )
+            applicationSession = session
+            activeApplicationID = id
+            activeApplicationModel = session.model
+            activity = .idle
+        } catch {
+            dismissActiveApplication()
+            activity = .failed(Self.safeMessage(error))
+        }
+    }
+
+    func dismissActiveApplication() {
+        applicationSession?.dismiss()
+        applicationSession = nil
+        activeApplicationID = nil
+        activeApplicationModel = nil
     }
 
     nonisolated static func stablePackageID(for manifest: HanlinScriptingManifest) throws -> HanlinPackageID {
@@ -322,6 +391,21 @@ final class HanlinScriptingPlatform {
         let destination = artifactRoot.appending(path: "source", directoryHint: .isDirectory)
         try FileManager.default.createDirectory(at: artifactRoot, withIntermediateDirectories: true)
         try FileManager.default.copyItem(at: source, to: destination)
+    }
+
+    nonisolated private static func compiledPath(for sourcePath: String) throws -> String {
+        guard sourcePath.hasPrefix("source/"), !sourcePath.contains(".."), !sourcePath.contains("\\") else {
+            throw HanlinScriptingPlatformError.invalidEntrypointPath
+        }
+        let relative = String(sourcePath.dropFirst("source/".count))
+        guard let dot = relative.lastIndex(of: "."), dot > relative.startIndex else {
+            throw HanlinScriptingPlatformError.invalidEntrypointPath
+        }
+        let extensionName = relative[relative.index(after: dot)...].lowercased()
+        guard ["ts", "tsx", "js", "jsx"].contains(extensionName) else {
+            throw HanlinScriptingPlatformError.invalidEntrypointPath
+        }
+        return "compiled/\(relative[..<dot]).js"
     }
 
     nonisolated private static func completeArtifactManifest(
@@ -402,6 +486,8 @@ final class HanlinScriptingPlatform {
 
 private enum HanlinScriptingPlatformError: Error {
     case artifactEnumerationFailed
+    case compiledEntrypointTooLarge
+    case invalidEntrypointPath
 }
 
 private extension JSONEncoder {

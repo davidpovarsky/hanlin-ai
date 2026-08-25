@@ -6,6 +6,8 @@ public enum HanlinScriptUIPrimitive: String, Codable, CaseIterable, Hashable, Se
     case text
     case image
     case button
+    case menu
+    case toggle
     case textField
     case hStack
     case vStack
@@ -15,6 +17,12 @@ public enum HanlinScriptUIPrimitive: String, Codable, CaseIterable, Hashable, Se
     case spacer
     case divider
     case progress
+    case chart
+    case barChart
+    case circle
+    case rectangle
+    case roundedRectangle
+    case presentation
     case navigationStack
     case navigationLink
     case tabView
@@ -102,19 +110,22 @@ public struct HanlinScriptUIPresentation: Codable, Hashable, Identifiable, Senda
     public let title: String?
     public let message: String?
     public let content: HanlinScriptUINode?
+    public let dismissHandlerID: String?
 
     public init(
         id: String,
         style: HanlinScriptUIPresentationStyle,
         title: String? = nil,
         message: String? = nil,
-        content: HanlinScriptUINode? = nil
+        content: HanlinScriptUINode? = nil,
+        dismissHandlerID: String? = nil
     ) {
         self.id = id
         self.style = style
         self.title = title
         self.message = message
         self.content = content
+        self.dismissHandlerID = dismissHandlerID
     }
 }
 

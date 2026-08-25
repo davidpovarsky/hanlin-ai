@@ -174,9 +174,19 @@ private struct HanlinExtensionNodeView: View {
             Divider()
         case .progress:
             ProgressView()
-        case .button, .textField, .scrollView, .navigationStack, .navigationLink,
-             .tabView, .tab:
+        case .button, .menu, .toggle, .textField, .scrollView, .navigationStack,
+             .navigationLink, .tabView, .tab:
             Label("Open Hanlin", systemImage: "arrow.up.forward.app")
+        case .chart, .barChart:
+            VStack { children }
+        case .circle:
+            Circle().fill(.secondary)
+        case .rectangle:
+            Rectangle().fill(.secondary)
+        case .roundedRectangle:
+            RoundedRectangle(cornerRadius: 12).fill(.secondary)
+        case .presentation:
+            EmptyView()
         }
     }
 

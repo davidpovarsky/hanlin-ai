@@ -162,6 +162,65 @@ struct HanlinJavaScriptCoreEngineTests {
     }
 }
 
+@Suite("Installed Scripting application runtime", .serialized)
+struct HanlinScriptingApplicationRuntimeTests {
+    @MainActor
+    @Test("Renders multi-component ScriptUI and reconciles stateful events")
+    func interactiveScriptUI() throws {
+        let packageID = try HanlinInstalledPackageID(validating: "install-script-ui-acceptance")
+        let session = try HanlinScriptingApplicationSession(
+            installedPackageID: packageID,
+            program: #"""
+            Storage.clear();
+            Storage.set("launch-count", 1);
+            function App() {
+              const [count, setCount] = useState(Storage.get("launch-count"));
+              return createElement(VStack, { spacing: 8 },
+                createElement(Text, null, "Count ", count),
+                createElement(Button, {
+                  title: "Increment",
+                  action: () => {
+                    Storage.set("launch-count", count + 1);
+                    setCount(value => value + 1);
+                  }
+                })
+              );
+            }
+            Navigation.present({ element: createElement(App, null) });
+            """#,
+            filename: "compiled/index.js",
+            storageAllowed: true
+        )
+        #expect(session.model.root.kind == .vStack)
+        #expect(session.model.root.children.first?.properties["text"] == .string("Count 1"))
+        guard case let .string(handlerID)? = session.model.root.children.last?.properties["onPress"] else {
+            Issue.record("The button action was not bridged to a typed handler identity")
+            session.dispose()
+            return
+        }
+        try session.model.apply(.event(handlerID: handlerID, payload: .null))
+        #expect(session.model.root.children.first?.properties["text"] == .string("Count 2"))
+        session.dismiss()
+    }
+
+    @MainActor
+    @Test("Denies package storage when the capability is not granted")
+    func deniedStorage() throws {
+        let packageID = try HanlinInstalledPackageID(validating: "install-script-ui-denied")
+        do {
+            _ = try HanlinScriptingApplicationSession(
+                installedPackageID: packageID,
+                program: #"Storage.get("not-granted"); Navigation.present({ element: createElement(Text, null, "No") });"#,
+                filename: "compiled/index.js",
+                storageAllowed: false
+            )
+            Issue.record("Storage was available without the package capability")
+        } catch {
+            // Expected: the denied synchronous Storage access aborts launch.
+        }
+    }
+}
+
 @Suite("Trusted Scripting worker routes", .serialized)
 struct HanlinTrustedWorkerRouteTests {
     @Test("NodeMobile worker registers and invokes multiple typed tools")

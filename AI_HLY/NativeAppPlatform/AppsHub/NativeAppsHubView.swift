@@ -1,6 +1,7 @@
 import SwiftUI
 import SwiftData
 import HanlinPlatformContracts
+import HanlinScriptUI
 import HanlinScriptStore
 #if os(iOS)
 import UIKit
@@ -119,6 +120,23 @@ struct NativeAppsHubView: View {
                     }
                 }
             }
+            .fullScreenCover(isPresented: Binding(
+                get: { scriptingPlatform.activeApplicationModel != nil },
+                set: { if !$0 { scriptingPlatform.dismissActiveApplication() } }
+            )) {
+                ScriptingApplicationContainerView(platform: scriptingPlatform)
+            }
+            .alert("Script App Error", isPresented: Binding(
+                get: {
+                    if case .failed = scriptingPlatform.activity { return true }
+                    return false
+                },
+                set: { if !$0 { scriptingPlatform.clearFailure() } }
+            )) {
+                Button("OK") { scriptingPlatform.clearFailure() }
+            } message: {
+                if case let .failed(message) = scriptingPlatform.activity { Text(message) }
+            }
             .task {
                 await scriptingPlatform.restore()
             }
@@ -156,13 +174,18 @@ struct NativeAppsHubView: View {
 
     private func scriptingPackageCard(_ package: HanlinStoredPackageSnapshot) -> some View {
         Button {
-            scriptingPackageID = package.record.installedPackageID
+            Task { await scriptingPlatform.launch(package.record.installedPackageID) }
         } label: {
             ScriptingPackageCardView(package: package)
         }
         .buttonStyle(.plain)
         .disabled(isEditingApps)
         .contextMenu {
+            Button {
+                Task { await scriptingPlatform.launch(package.record.installedPackageID) }
+            } label: {
+                Label("Open", systemImage: "play.fill")
+            }
             Button {
                 scriptingPackageID = package.record.installedPackageID
             } label: {

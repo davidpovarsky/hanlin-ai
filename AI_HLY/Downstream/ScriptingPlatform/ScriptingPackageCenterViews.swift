@@ -1,6 +1,7 @@
 import HanlinPlatformContracts
 import HanlinScriptContracts
 import HanlinScriptStore
+import HanlinScriptUI
 import SwiftUI
 import UniformTypeIdentifiers
 
@@ -236,5 +237,31 @@ struct ScriptingInstalledPackageDetailView: View {
                 Task { await platform.setEnabled(value, for: packageID) }
             }
         )
+    }
+}
+
+struct ScriptingApplicationContainerView: View {
+    let platform: HanlinScriptingPlatform
+    @Environment(\.dismiss) private var dismiss
+
+    var body: some View {
+        NavigationStack {
+            Group {
+                if let model = platform.activeApplicationModel {
+                    HanlinScriptUIView(model: model)
+                } else {
+                    ContentUnavailableView("Script App Unavailable", systemImage: "exclamationmark.triangle")
+                }
+            }
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button("Close") {
+                        platform.dismissActiveApplication()
+                        dismiss()
+                    }
+                }
+            }
+        }
+        .onDisappear { platform.dismissActiveApplication() }
     }
 }

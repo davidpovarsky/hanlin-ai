@@ -98,6 +98,27 @@ struct HanlinScriptUIReconcilerTests {
     }
 
     @MainActor
+    @Test("Rendered presentation nodes drive native modal state")
+    func renderedPresentation() throws {
+        let model = HanlinScriptUIModel(root: stack([])) { _, _ in }
+        try model.apply(.render(stack([
+            .init(
+                kind: .presentation,
+                properties: [
+                    "id": .string("sheet.event-1"),
+                    "style": .string("sheet"),
+                    "onDismiss": .string("event-1")
+                ],
+                children: [text("Presented")]
+            )
+        ])))
+        #expect(model.activePresentation?.id == "sheet.event-1")
+        #expect(model.activePresentation?.style == .sheet)
+        #expect(model.activePresentation?.content == text("Presented"))
+        #expect(model.activePresentation?.dismissHandlerID == "event-1")
+    }
+
+    @MainActor
     @Test("Unknown routes and invalid pops fail closed")
     func navigationFailures() throws {
         let model = HanlinScriptUIModel(root: stack([])) { _, _ in }
