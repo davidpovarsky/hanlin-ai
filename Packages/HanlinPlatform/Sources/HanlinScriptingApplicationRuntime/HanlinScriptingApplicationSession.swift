@@ -168,9 +168,6 @@ public final class HanlinScriptingApplicationSession {
             [weak self] requestID, json in
             self?.enqueueAssistantRequest(id: requestID, payloadJSON: json)
         }
-        let assistantAvailable: @convention(block) () -> Bool = { [assistantAllowed] in
-            assistantAllowed
-        }
         let cancelNative: @convention(block) (String) -> Void = { [weak self] requestID in
             self?.nativeTasks[requestID]?.cancel()
         }
@@ -187,7 +184,7 @@ public final class HanlinScriptingApplicationSession {
         context.setObject(fileSync, forKeyedSubscript: "__hanlinNativeFileSync" as NSString)
         context.setObject(nativeAsync, forKeyedSubscript: "__hanlinNativeAsync" as NSString)
         context.setObject(
-            assistantAvailable,
+            assistantAllowed,
             forKeyedSubscript: "__hanlinNativeAssistantAvailable" as NSString
         )
         context.setObject(assistantStart, forKeyedSubscript: "__hanlinNativeAssistantStart" as NSString)
@@ -1679,7 +1676,11 @@ private extension HanlinScriptingApplicationSession {
         clear() { if (!__hanlinNativeStorageClear()) throw new Error("HANLIN_STORAGE:clear_failed"); }
       });
       const Assistant = Object.freeze({
-        get isAvailable() { return __hanlinNativeAssistantAvailable(); },
+        get isAvailable() {
+          return typeof __hanlinNativeAssistantAvailable === "function"
+            ? __hanlinNativeAssistantAvailable()
+            : Boolean(__hanlinNativeAssistantAvailable);
+        },
         isPresented: false,
         hasActiveConversation: false,
         requestStreaming(options) {
