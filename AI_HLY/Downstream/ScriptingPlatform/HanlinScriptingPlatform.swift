@@ -10,6 +10,7 @@ import HanlinScriptUI
 import HanlinScriptingSDK
 import Observation
 import SwiftData
+import WidgetKit
 
 @MainActor
 @Observable
@@ -108,6 +109,8 @@ final class HanlinScriptingPlatform {
         do {
             installedPackages = try await store.restore()
             pendingResumeCommands = try extensionStore?.pendingCommands() ?? []
+            try await refreshExtensionSnapshot()
+            try await processPendingResumeCommands()
         } catch {
             bootstrapError = Self.safeMessage(error)
         }
@@ -247,6 +250,7 @@ final class HanlinScriptingPlatform {
             }.value
             installedPackages = try await store.snapshots()
             _ = installed
+            try await refreshExtensionSnapshot()
             discardPreview()
             activity = .idle
         } catch {
@@ -282,6 +286,7 @@ final class HanlinScriptingPlatform {
             if activeApplicationID == id { dismissActiveApplication() }
             try await store.uninstall(id)
             installedPackages = try await store.snapshots()
+            try await refreshExtensionSnapshot()
         } catch {
             activity = .failed(Self.safeMessage(error))
         }
@@ -293,6 +298,7 @@ final class HanlinScriptingPlatform {
             if activeApplicationID == id { dismissActiveApplication() }
             _ = try await store.rollback(id, to: generation)
             installedPackages = try await store.snapshots()
+            try await refreshExtensionSnapshot()
         } catch {
             activity = .failed(Self.safeMessage(error))
         }
@@ -304,6 +310,7 @@ final class HanlinScriptingPlatform {
             if !enabled, activeApplicationID == id { dismissActiveApplication() }
             try await store.setEnabled(enabled, for: id)
             installedPackages = try await store.snapshots()
+            try await refreshExtensionSnapshot()
         } catch {
             activity = .failed(Self.safeMessage(error))
         }
@@ -319,6 +326,7 @@ final class HanlinScriptingPlatform {
             if !granted, activeApplicationID == id { dismissActiveApplication() }
             try await store.setCapabilityGranted(granted, capability: capability, for: id)
             installedPackages = try await store.snapshots()
+            try await refreshExtensionSnapshot()
         } catch {
             activity = .failed(Self.safeMessage(error))
         }
@@ -423,6 +431,147 @@ final class HanlinScriptingPlatform {
         applicationSession = nil
         activeApplicationID = nil
         activeApplicationModel = nil
+    }
+
+    private func refreshExtensionSnapshot() async throws {
+        guard let store, let extensionStore else { return }
+        let storageCapability = try HanlinCapabilityID(validating: "storage")
+        let filesCapability = try HanlinCapabilityID(validating: "files")
+        var widgets: [HanlinScriptWidgetSnapshot] = []
+        var intentEntities: [HanlinScriptIntentEntityRecord] = []
+
+        for package in installedPackages where package.enabled {
+            let artifactRoot = try await store.activeArtifactURL(for: package.record.installedPackageID)
+            let displayName = package.manifest?.name ?? package.record.packageID.rawValue
+            let granted = Set(package.grantedCapabilities)
+
+            for entrypoint in package.entrypoints where entrypoint.runtimeProfile == .scriptingJSC {
+                let required = Set(entrypoint.requiredCapabilities.filter(\.required).map(\.capabilityID))
+                guard required.isSubset(of: granted) else { continue }
+                guard entrypoint.kind == .widget || entrypoint.kind == .appIntent else { continue }
+                let compiledPath = try Self.compiledPath(for: entrypoint.sourcePath)
+                let compiledURL = artifactRoot.appending(path: compiledPath, directoryHint: .notDirectory)
+                let attributes = try FileManager.default.attributesOfItem(atPath: compiledURL.path())
+                guard let bytes = attributes[.size] as? NSNumber, bytes.intValue <= 4 * 1_024 * 1_024 else {
+                    throw HanlinScriptingPlatformError.compiledEntrypointTooLarge
+                }
+                let program = try String(contentsOf: compiledURL, encoding: .utf8)
+                let identity = HanlinScriptExtensionIdentity(
+                    installedPackageID: package.record.installedPackageID,
+                    packageID: package.record.packageID,
+                    generation: package.record.activeGeneration,
+                    entrypointID: entrypoint.id
+                )
+
+                if entrypoint.kind == .widget {
+                    for family in ["systemSmall", "systemMedium", "systemLarge", "systemExtraLarge"] {
+                        let presentation = try {
+                            let session = try HanlinScriptingApplicationSession(
+                                installedPackageID: package.record.installedPackageID,
+                                program: program,
+                                filename: compiledPath,
+                                entrypointContext: .widget(family: family),
+                                storageAllowed: granted.contains(storageCapability),
+                                filesAllowed: granted.contains(filesCapability),
+                                packageSourceDirectory: artifactRoot.appending(path: "source", directoryHint: .isDirectory)
+                            )
+                            defer { session.dispose() }
+                            return session.widgetPresentation
+                        }()
+                        guard let presentation else { continue }
+                        let minimumRefresh = Date.now.addingTimeInterval(60)
+                        widgets.append(.init(
+                            identity: identity,
+                            displayName: displayName,
+                            family: family,
+                            actionIdentity: package.entrypoints.first(where: {
+                                $0.kind == .appIntent && $0.runtimeProfile == .scriptingJSC
+                            }).map {
+                                .init(
+                                    installedPackageID: package.record.installedPackageID,
+                                    packageID: package.record.packageID,
+                                    generation: package.record.activeGeneration,
+                                    entrypointID: $0.id
+                                )
+                            },
+                            validUntil: max(presentation.reloadDate ?? Date.now.addingTimeInterval(900), minimumRefresh),
+                            root: presentation.root
+                        ))
+                    }
+                } else {
+                    let registrations = try {
+                        let session = try HanlinScriptingApplicationSession(
+                            installedPackageID: package.record.installedPackageID,
+                            program: program,
+                            filename: compiledPath,
+                            entrypointContext: .appIntentRegistration,
+                            storageAllowed: granted.contains(storageCapability),
+                            filesAllowed: granted.contains(filesCapability),
+                            packageSourceDirectory: artifactRoot.appending(path: "source", directoryHint: .isDirectory)
+                        )
+                        defer { session.dispose() }
+                        return session.appIntentRegistrations
+                    }()
+                    intentEntities.append(contentsOf: registrations.map {
+                        .init(identity: identity, id: $0.name, displayName: $0.name)
+                    })
+                }
+            }
+        }
+
+        try extensionStore.save(.init(
+            generatedAt: .now,
+            widgets: widgets,
+            intentEntities: intentEntities
+        ))
+    }
+
+    private func processPendingResumeCommands() async throws {
+        guard let store else { return }
+        for command in pendingResumeCommands {
+            let identity = command.invocation.identity
+            guard let package = installedPackages.first(where: {
+                $0.record.installedPackageID == identity.installedPackageID
+                    && $0.record.packageID == identity.packageID
+                    && $0.record.activeGeneration == identity.generation
+                    && $0.enabled
+            }), let entrypoint = package.entrypoints.first(where: {
+                $0.id == identity.entrypointID && $0.kind == .appIntent
+                    && $0.runtimeProfile == .scriptingJSC
+            }), let actionName = command.invocation.entityID else { continue }
+            let required = Set(entrypoint.requiredCapabilities.filter(\.required).map(\.capabilityID))
+            let granted = Set(package.grantedCapabilities)
+            guard required.isSubset(of: granted) else { continue }
+            let storageCapability = try HanlinCapabilityID(validating: "storage")
+            let filesCapability = try HanlinCapabilityID(validating: "files")
+            let artifactRoot = try await store.activeArtifactURL(for: identity.installedPackageID)
+            let compiledPath = try Self.compiledPath(for: entrypoint.sourcePath)
+            let compiledURL = artifactRoot.appending(path: compiledPath, directoryHint: .notDirectory)
+            let program = try String(contentsOf: compiledURL, encoding: .utf8)
+            let requestedWidgetReload = try await {
+                let session = try HanlinScriptingApplicationSession(
+                    installedPackageID: identity.installedPackageID,
+                    program: program,
+                    filename: compiledPath,
+                    entrypointContext: .appIntentRegistration,
+                    storageAllowed: granted.contains(storageCapability),
+                    filesAllowed: granted.contains(filesCapability),
+                    packageSourceDirectory: artifactRoot.appending(path: "source", directoryHint: .isDirectory)
+                )
+                defer { session.dispose() }
+                _ = try await session.invokeAppIntent(
+                    name: actionName,
+                    parameters: command.invocation.parameters
+                )
+                return session.requestedWidgetReload
+            }()
+            try extensionStore?.acknowledge(command.id)
+            pendingResumeCommands.removeAll { $0.id == command.id }
+            if requestedWidgetReload {
+                try await refreshExtensionSnapshot()
+                WidgetCenter.shared.reloadTimelines(ofKind: "com.hanlin.scripting.widget")
+            }
+        }
     }
 
     private func performLocation(

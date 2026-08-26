@@ -70,6 +70,13 @@ struct HanlinScriptExtensionStoreTests {
             widgets: [.init(
                 identity: identity,
                 displayName: "Demo",
+                family: "systemLarge",
+                actionIdentity: .init(
+                    installedPackageID: identity.installedPackageID,
+                    packageID: identity.packageID,
+                    generation: identity.generation,
+                    entrypointID: "app-intents.main"
+                ),
                 validUntil: Date(timeIntervalSince1970: 120),
                 root: .init(kind: .text, properties: ["text": .string("Hello")])
             )],

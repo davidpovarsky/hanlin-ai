@@ -1,12 +1,15 @@
+import AppIntents
 import HanlinPlatformContracts
 import HanlinScriptUI
 import SwiftUI
 
 public struct HanlinExtensionNodeView: View {
     private let node: HanlinScriptUINode
+    private let identity: HanlinScriptExtensionIdentity?
 
-    public init(node: HanlinScriptUINode) {
+    public init(node: HanlinScriptUINode, identity: HanlinScriptExtensionIdentity? = nil) {
         self.node = node
+        self.identity = identity
     }
 
     @ViewBuilder
@@ -38,7 +41,13 @@ public struct HanlinExtensionNodeView: View {
             VStack { children }
         case .slider:
             ProgressView(value: number("value"), total: number("max") ?? 1)
-        case .button, .link, .menu, .toggle, .textField, .scrollView, .navigationStack, .navigationSplitView,
+        case .button:
+            if let intent = scriptActionIntent {
+                Button(intent: intent) { children }
+            } else {
+                VStack { children }
+            }
+        case .link, .menu, .toggle, .textField, .scrollView, .navigationStack, .navigationSplitView,
              .navigationLink, .navigationDestination, .picker, .svg, .tabView, .tab:
             Label("Open Hanlin", systemImage: "arrow.up.forward.app")
         case .chart, .barChart:
@@ -63,8 +72,21 @@ public struct HanlinExtensionNodeView: View {
     @ViewBuilder
     private var children: some View {
         ForEach(Array(node.children.enumerated()), id: \.offset) { _, child in
-            HanlinExtensionNodeView(node: child)
+            HanlinExtensionNodeView(node: child, identity: identity)
         }
+    }
+
+    private var scriptActionIntent: HanlinInvokeScriptActionIntent? {
+        guard let identity,
+              case let .object(descriptor)? = node.properties["intent"],
+              descriptor["__hanlinAppIntent"] == .bool(true),
+              case let .string(name)? = descriptor["name"] else { return nil }
+        let parameters = descriptor["parameters"] ?? .object([:])
+        guard let data = try? parameters
+            .jsonValue(destination: .javaScriptBinary64)
+            .canonicalJSONData(),
+              let json = String(data: data, encoding: .utf8) else { return nil }
+        return .init(identity: identity, actionName: name, parametersJSON: json)
     }
 
     private func text(_ key: String) -> String? {

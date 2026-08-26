@@ -4,9 +4,38 @@ import Foundation
 import HanlinPlatformContracts
 import HanlinScriptUI
 
+public enum HanlinScriptingEntrypointContext: Equatable, Sendable {
+    case application
+    case widget(family: String, parameter: String = "")
+    case appIntentRegistration
+}
+
+public struct HanlinScriptingWidgetPresentation: Equatable, Sendable {
+    public let root: HanlinScriptUINode
+    public let reloadDate: Date?
+
+    public init(root: HanlinScriptUINode, reloadDate: Date?) {
+        self.root = root
+        self.reloadDate = reloadDate
+    }
+}
+
+public struct HanlinScriptingAppIntentRegistration: Equatable, Sendable {
+    public let name: String
+    public let protocolName: String
+
+    public init(name: String, protocolName: String) {
+        self.name = name
+        self.protocolName = protocolName
+    }
+}
+
 @MainActor
 public final class HanlinScriptingApplicationSession {
     public let model: HanlinScriptUIModel
+    public private(set) var widgetPresentation: HanlinScriptingWidgetPresentation?
+    public private(set) var appIntentRegistrations: [HanlinScriptingAppIntentRegistration] = []
+    public private(set) var requestedWidgetReload = false
 
     private let context: JSContext
     private let virtualMachine: JSVirtualMachine
@@ -29,13 +58,16 @@ public final class HanlinScriptingApplicationSession {
     private let liveActivityAllowed: Bool
     private let liveActivityLoader: HanlinScriptingLiveActivityLoader
     private let deviceSnapshot: HanlinScriptingDeviceSnapshot
+    private let entrypointContext: HanlinScriptingEntrypointContext
     private var nativeTasks: [String: Task<Void, Never>] = [:]
+    private var appIntentResults: [String: Result<HanlinValue?, any Error>] = [:]
     private var disposed = false
 
     public init(
         installedPackageID: HanlinInstalledPackageID,
         program: String,
         filename: String,
+        entrypointContext: HanlinScriptingEntrypointContext = .application,
         storageAllowed: Bool,
         filesAllowed: Bool = false,
         networkAllowed: Bool = false,
@@ -90,6 +122,7 @@ public final class HanlinScriptingApplicationSession {
         self.liveActivityAllowed = liveActivityAllowed
         self.liveActivityLoader = liveActivityLoader
         self.deviceSnapshot = deviceSnapshot
+        self.entrypointContext = entrypointContext
 
         let router = HanlinScriptingUIEventRouter()
         model = HanlinScriptUIModel(root: .init(kind: .fragment)) { handlerID, payload in
@@ -100,8 +133,17 @@ public final class HanlinScriptingApplicationSession {
         installNativeBridges()
         try evaluate(Self.bootstrap, filename: "hanlin-scripting-ui-runtime.js")
         try evaluate(program, filename: filename)
-        guard context.objectForKeyedSubscript("__hanlinHasPresentedUI")?.toBool() == true else {
-            throw HanlinScriptingApplicationError.missingPresentedUI
+        switch entrypointContext {
+        case .application:
+            guard context.objectForKeyedSubscript("__hanlinHasPresentedUI")?.toBool() == true else {
+                throw HanlinScriptingApplicationError.missingPresentedUI
+            }
+        case .widget:
+            guard widgetPresentation != nil else {
+                throw HanlinScriptingApplicationError.missingWidgetPresentation
+            }
+        case .appIntentRegistration:
+            break
         }
     }
 
@@ -120,6 +162,31 @@ public final class HanlinScriptingApplicationSession {
             // Runtime errors remain contained to this package session. The UI keeps
             // its last valid tree rather than replacing it with an unsafe partial tree.
         }
+    }
+
+    public func invokeAppIntent(name: String, parameters: HanlinValue) async throws -> HanlinValue? {
+        guard case .appIntentRegistration = entrypointContext,
+              appIntentRegistrations.contains(where: { $0.name == name }),
+              let parametersData = try? parameters.jsonValue(destination: .javaScriptBinary64).canonicalJSONData(),
+              let parametersJSON = String(data: parametersData, encoding: .utf8),
+              let nameLiteral = Self.javaScriptLiteral(name),
+              let parametersLiteral = Self.javaScriptLiteral(parametersJSON) else {
+            throw HanlinScriptingApplicationError.unknownAppIntent
+        }
+        let requestID = UUID().uuidString.lowercased()
+        guard let requestLiteral = Self.javaScriptLiteral(requestID) else {
+            throw HanlinScriptingApplicationError.unknownAppIntent
+        }
+        try evaluate(
+            "globalThis.__hanlinInvokeAppIntent(\(requestLiteral), \(nameLiteral), \(parametersLiteral));",
+            filename: "hanlin-app-intent.js"
+        )
+        await waitForNativeQuiescence()
+        try evaluate("void 0;", filename: "hanlin-app-intent-quiescence.js")
+        guard let result = appIntentResults.removeValue(forKey: requestID) else {
+            throw HanlinScriptingApplicationError.appIntentDidNotComplete
+        }
+        return try result.get()
     }
 
     func waitForNativeQuiescence() async {
@@ -144,6 +211,7 @@ public final class HanlinScriptingApplicationSession {
         context.evaluateScript("globalThis.__hanlinDispose?.();")
         nativeTasks.values.forEach { $0.cancel() }
         nativeTasks.removeAll(keepingCapacity: false)
+        appIntentResults.removeAll(keepingCapacity: false)
         context.exceptionHandler = nil
         context.setObject(nil, forKeyedSubscript: "__hanlinNativeRender" as NSString)
         context.setObject(nil, forKeyedSubscript: "__hanlinNativeStorageGet" as NSString)
@@ -162,6 +230,13 @@ public final class HanlinScriptingApplicationSession {
         context.setObject(nil, forKeyedSubscript: "__hanlinCancelNative" as NSString)
         context.setObject(nil, forKeyedSubscript: "__hanlinNativeDeviceSnapshot" as NSString)
         context.setObject(nil, forKeyedSubscript: "__hanlinNativeHealthDataAvailable" as NSString)
+        context.setObject(nil, forKeyedSubscript: "__hanlinNativeWidgetPresent" as NSString)
+        context.setObject(nil, forKeyedSubscript: "__hanlinNativeWidgetReloadAll" as NSString)
+        context.setObject(nil, forKeyedSubscript: "__hanlinNativeAppIntentRegister" as NSString)
+        context.setObject(nil, forKeyedSubscript: "__hanlinNativeAppIntentComplete" as NSString)
+        context.setObject(nil, forKeyedSubscript: "__hanlinNativeEntrypointKind" as NSString)
+        context.setObject(nil, forKeyedSubscript: "__hanlinNativeWidgetFamily" as NSString)
+        context.setObject(nil, forKeyedSubscript: "__hanlinNativeWidgetParameter" as NSString)
     }
 
     private func installNativeBridges() {
@@ -221,6 +296,56 @@ public final class HanlinScriptingApplicationSession {
         let cancelNative: @convention(block) (String) -> Void = { [weak self] requestID in
             self?.nativeTasks[requestID]?.cancel()
         }
+        let widgetPresent: @convention(block) (String) -> Bool = { [weak self] json in
+            guard let self, !self.disposed, json.utf8.count <= 1_048_576,
+                  case .widget = self.entrypointContext,
+                  let data = json.data(using: .utf8),
+                  let object = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
+                  let rootObject = object["root"],
+                  let root = try? Self.decodeNode(rootObject, depth: 0) else { return false }
+            let milliseconds = (object["reloadDate"] as? NSNumber)?.doubleValue
+            self.widgetPresentation = .init(
+                root: root,
+                reloadDate: milliseconds.map { Date(timeIntervalSince1970: $0 / 1_000) }
+            )
+            return true
+        }
+        let widgetReloadAll: @convention(block) () -> Void = { [weak self] in
+            self?.requestedWidgetReload = true
+        }
+        let appIntentRegister: @convention(block) (String) -> Bool = { [weak self] json in
+            guard let self, !self.disposed,
+                  case .appIntentRegistration = self.entrypointContext,
+                  json.utf8.count <= 16_384,
+                  let data = json.data(using: .utf8),
+                  let object = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
+                  let name = object["name"] as? String,
+                  let protocolName = object["protocol"] as? String,
+                  !name.isEmpty, name.utf8.count <= 256,
+                  !protocolName.isEmpty, protocolName.utf8.count <= 128,
+                  !self.appIntentRegistrations.contains(where: { $0.name == name }) else { return false }
+            self.appIntentRegistrations.append(.init(name: name, protocolName: protocolName))
+            return true
+        }
+        let appIntentComplete: @convention(block) (String, Bool, String) -> Void = {
+            [weak self] requestID, succeeded, json in
+            guard let self, !self.disposed, requestID.utf8.count <= 128,
+                  self.appIntentResults[requestID] == nil else { return }
+            if succeeded {
+                guard json.utf8.count <= 1_048_576,
+                      let data = json.data(using: .utf8),
+                      let object = try? JSONSerialization.jsonObject(with: data),
+                      let value = try? Self.bridgeValue(object, depth: 0) else {
+                    self.appIntentResults[requestID] = .failure(HanlinScriptingApplicationError.invalidAppIntentResult)
+                    return
+                }
+                self.appIntentResults[requestID] = .success(value)
+            } else {
+                self.appIntentResults[requestID] = .failure(
+                    HanlinScriptingApplicationError.appIntentFailed(String(json.prefix(512)))
+                )
+            }
+        }
         context.setObject(render, forKeyedSubscript: "__hanlinNativeRender" as NSString)
         context.setObject(storageGet, forKeyedSubscript: "__hanlinNativeStorageGet" as NSString)
         context.setObject(storageSet, forKeyedSubscript: "__hanlinNativeStorageSet" as NSString)
@@ -247,6 +372,20 @@ public final class HanlinScriptingApplicationSession {
             healthAllowed && healthDataAvailable,
             forKeyedSubscript: "__hanlinNativeHealthDataAvailable" as NSString
         )
+        context.setObject(widgetPresent, forKeyedSubscript: "__hanlinNativeWidgetPresent" as NSString)
+        context.setObject(widgetReloadAll, forKeyedSubscript: "__hanlinNativeWidgetReloadAll" as NSString)
+        context.setObject(appIntentRegister, forKeyedSubscript: "__hanlinNativeAppIntentRegister" as NSString)
+        context.setObject(appIntentComplete, forKeyedSubscript: "__hanlinNativeAppIntentComplete" as NSString)
+        switch entrypointContext {
+        case .application:
+            context.setObject("application", forKeyedSubscript: "__hanlinNativeEntrypointKind" as NSString)
+        case let .widget(family, parameter):
+            context.setObject("widget", forKeyedSubscript: "__hanlinNativeEntrypointKind" as NSString)
+            context.setObject(family, forKeyedSubscript: "__hanlinNativeWidgetFamily" as NSString)
+            context.setObject(parameter, forKeyedSubscript: "__hanlinNativeWidgetParameter" as NSString)
+        case .appIntentRegistration:
+            context.setObject("appIntent", forKeyedSubscript: "__hanlinNativeEntrypointKind" as NSString)
+        }
     }
 
     private func enqueueAssistantRequest(id: String, payloadJSON: String) {
@@ -768,6 +907,11 @@ private enum HanlinScriptingApplicationError: Error, LocalizedError {
     case evaluationFailed(String)
     case invalidUITree
     case missingPresentedUI
+    case missingWidgetPresentation
+    case unknownAppIntent
+    case appIntentDidNotComplete
+    case invalidAppIntentResult
+    case appIntentFailed(String)
 
     var errorDescription: String? {
         switch self {
@@ -776,6 +920,11 @@ private enum HanlinScriptingApplicationError: Error, LocalizedError {
         case let .evaluationFailed(message): "The script failed during launch: \(message)"
         case .invalidUITree: "The script produced an invalid or unsupported UI tree."
         case .missingPresentedUI: "The app entrypoint did not call Navigation.present."
+        case .missingWidgetPresentation: "The widget entrypoint did not call Widget.present."
+        case .unknownAppIntent: "The requested App Intent is not registered."
+        case .appIntentDidNotComplete: "The App Intent did not complete."
+        case .invalidAppIntentResult: "The App Intent returned an unsupported value."
+        case let .appIntentFailed(message): "The App Intent failed: \(message)"
         }
     }
 }
@@ -2417,9 +2566,53 @@ private extension HanlinScriptingApplicationSession {
         preferredLanguages: Object.freeze([...(deviceSnapshot.preferredLanguages ?? [])]),
         systemLocales: Object.freeze([...(deviceSnapshot.systemLocales ?? [])])
       });
-      const Widget = Object.freeze({ family: "systemMedium", reloadAll() {}, present() {} });
+      const appIntentRegistrations = new Map();
+      const Widget = Object.freeze({
+        family: typeof globalThis.__hanlinNativeWidgetFamily === "string"
+          ? globalThis.__hanlinNativeWidgetFamily : "systemMedium",
+        widgetParameter: typeof globalThis.__hanlinNativeWidgetParameter === "string"
+          ? globalThis.__hanlinNativeWidgetParameter : "",
+        reloadAll() { globalThis.__hanlinNativeWidgetReloadAll?.(); },
+        present(element, reloadPolicy = null) {
+          if (globalThis.__hanlinNativeEntrypointKind !== "widget") {
+            throw new Error("Widget.present is only available to a widget entrypoint");
+          }
+          const nodes = materialize(element);
+          if (nodes.length !== 1) throw new TypeError("Widget.present requires exactly one root view");
+          const date = reloadPolicy?.date;
+          const reloadDate = date instanceof Date && Number.isFinite(date.getTime())
+            ? date.getTime() : null;
+          if (!globalThis.__hanlinNativeWidgetPresent(JSON.stringify({ root: nodes[0], reloadDate }))) {
+            throw new Error("The widget presentation was rejected");
+          }
+        }
+      });
       const AppIntentProtocol = Object.freeze({ AppIntent: "AppIntent" });
-      const AppIntentManager = Object.freeze({ register(options) { return options; } });
+      const AppIntentManager = Object.freeze({
+        register(options) {
+          if (!options || typeof options.name !== "string" || typeof options.perform !== "function") {
+            throw new TypeError("An App Intent name and perform function are required");
+          }
+          const protocolName = String(options.protocol ?? AppIntentProtocol.AppIntent);
+          if (globalThis.__hanlinNativeEntrypointKind === "appIntent") {
+            if (!globalThis.__hanlinNativeAppIntentRegister(JSON.stringify({
+              name: options.name, protocol: protocolName
+            }))) throw new Error("The App Intent registration was rejected");
+            appIntentRegistrations.set(options.name, options.perform);
+          } else if (globalThis.__hanlinNativeEntrypointKind !== "widget") {
+            throw new Error("AppIntentManager.register is only available to Widget and App Intent entrypoints");
+          }
+          const factory = parameters => Object.freeze({
+            __hanlinAppIntent: true,
+            name: options.name,
+            parameters: parameters ?? {}
+          });
+          Object.defineProperties(factory, {
+            intentName: { value: options.name }, protocol: { value: protocolName }
+          });
+          return Object.freeze(factory);
+        }
+      });
 
       Object.assign(globalThis, {
         createElement, Fragment, useState, useObservable, useReducer, useRef, useMemo, useCallback,
@@ -2441,6 +2634,23 @@ private extension HanlinScriptingApplicationSession {
           if (typeof handler !== "function") throw new Error("HANLIN_UI:unknown_handler");
           const result = handler(JSON.parse(payloadJSON));
           Promise.resolve(result).catch(() => {});
+        },
+        __hanlinInvokeAppIntent(requestID, name, parametersJSON) {
+          const perform = appIntentRegistrations.get(name);
+          if (typeof perform !== "function") {
+            __hanlinNativeAppIntentComplete(requestID, false, "The App Intent is not registered");
+            return;
+          }
+          let parameters;
+          try { parameters = JSON.parse(parametersJSON); }
+          catch (error) {
+            __hanlinNativeAppIntentComplete(requestID, false, String(error?.message ?? error));
+            return;
+          }
+          Promise.resolve().then(() => perform(parameters)).then(
+            value => __hanlinNativeAppIntentComplete(requestID, true, JSON.stringify(value ?? null)),
+            error => __hanlinNativeAppIntentComplete(requestID, false, String(error?.message ?? error))
+          );
         },
         __hanlinDismiss() { dismissPresentation?.(null); dismissPresentation = null; },
         __hanlinDispose() {

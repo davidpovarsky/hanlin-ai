@@ -22,6 +22,49 @@ struct HanlinScriptingApplicationRuntimeTests {
     }
 
     @MainActor
+    @Test("Renders a family-specific widget and preserves its reload date")
+    func rendersWidgetEntrypoint() throws {
+        let packageID = try HanlinInstalledPackageID(validating: "widget-runtime-test")
+        let session = try HanlinScriptingApplicationSession(
+            installedPackageID: packageID,
+            program: #"Widget.present(createElement(Text, null, Widget.family), { policy: "after", date: new Date(1_800_000) });"#,
+            filename: "compiled/widget.js",
+            entrypointContext: .widget(family: "systemLarge", parameter: "daily"),
+            storageAllowed: true
+        )
+        defer { session.dispose() }
+
+        #expect(session.widgetPresentation?.root.kind == .text)
+        #expect(session.widgetPresentation?.root.properties["text"] == .string("systemLarge"))
+        #expect(session.widgetPresentation?.reloadDate == Date(timeIntervalSince1970: 1_800))
+    }
+
+    @MainActor
+    @Test("Registers bounded App Intent actions without requiring application UI")
+    func registersAppIntents() async throws {
+        let packageID = try HanlinInstalledPackageID(validating: "app-intent-runtime-test")
+        let session = try HanlinScriptingApplicationSession(
+            installedPackageID: packageID,
+            program: #"AppIntentManager.register({ name: "CompleteStationIntent", protocol: AppIntentProtocol.AppIntent, perform: async params => { Widget.reloadAll(); return { stationId: params.stationId }; } });"#,
+            filename: "compiled/app_intents.js",
+            entrypointContext: .appIntentRegistration,
+            storageAllowed: true
+        )
+        defer { session.dispose() }
+
+        #expect(session.appIntentRegistrations == [.init(
+            name: "CompleteStationIntent",
+            protocolName: "AppIntent"
+        )])
+        let result = try await session.invokeAppIntent(
+            name: "CompleteStationIntent",
+            parameters: .object(try .init(uniqueMembers: [("stationId", .integer(7))]))
+        )
+        #expect(result == .object(try .init(uniqueMembers: [("stationId", .integer(7))])))
+        #expect(session.requestedWidgetReload)
+    }
+
+    @MainActor
     @Test("Projects the native device snapshot into an immutable Scripting Device object")
     func deviceSnapshot() throws {
         let packageID = try HanlinInstalledPackageID(validating: "device-runtime-test")

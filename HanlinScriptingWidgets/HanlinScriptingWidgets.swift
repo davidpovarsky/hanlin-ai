@@ -38,9 +38,12 @@ struct HanlinScriptPackageEntityQuery: EntityQuery {
 
     private func availableEntities() throws -> [HanlinScriptPackageEntity] {
         let snapshot = try HanlinScriptExtensionStore().load()
-        return snapshot?.widgets.map {
-            HanlinScriptPackageEntity(
-                id: Self.id($0.identity),
+        var seen: Set<String> = []
+        return snapshot?.widgets.compactMap {
+            let id = Self.id($0.identity)
+            guard seen.insert(id).inserted else { return nil }
+            return HanlinScriptPackageEntity(
+                id: id,
                 displayName: $0.displayName,
                 identity: $0.identity
             )
@@ -74,26 +77,39 @@ struct HanlinWidgetTimelineProvider: AppIntentTimelineProvider {
         for configuration: HanlinWidgetConfigurationIntent,
         in context: Context
     ) async -> HanlinWidgetEntry {
-        .init(date: .now, snapshot: selectedSnapshot(configuration))
+        .init(date: .now, snapshot: selectedSnapshot(configuration, family: context.family))
     }
 
     func timeline(
         for configuration: HanlinWidgetConfigurationIntent,
         in context: Context
     ) async -> Timeline<HanlinWidgetEntry> {
-        let selected = selectedSnapshot(configuration)
+        let selected = selectedSnapshot(configuration, family: context.family)
         let refresh = max(selected?.validUntil ?? Date.now.addingTimeInterval(900), .now)
         return Timeline(entries: [.init(date: .now, snapshot: selected)], policy: .after(refresh))
     }
 
     private func selectedSnapshot(
-        _ configuration: HanlinWidgetConfigurationIntent
+        _ configuration: HanlinWidgetConfigurationIntent,
+        family: WidgetFamily
     ) -> HanlinScriptWidgetSnapshot? {
         guard let snapshots = try? HanlinScriptExtensionStore().load()?.widgets else { return nil }
-        guard let selected = configuration.package else { return snapshots.first }
-        return snapshots.first {
-            HanlinScriptPackageEntityQuery.id($0.identity) == selected.id
+        let familyName = switch family {
+        case .systemSmall: "systemSmall"
+        case .systemMedium: "systemMedium"
+        case .systemLarge: "systemLarge"
+        case .systemExtraLarge: "systemExtraLarge"
+        case .accessoryCircular: "accessoryCircular"
+        case .accessoryRectangular: "accessoryRectangular"
+        case .accessoryInline: "accessoryInline"
+        @unknown default: "systemMedium"
         }
+        if let selected = configuration.package {
+            return snapshots.first {
+                HanlinScriptPackageEntityQuery.id($0.identity) == selected.id && $0.family == familyName
+            }
+        }
+        return snapshots.first { $0.family == familyName }
     }
 }
 
@@ -112,7 +128,7 @@ struct HanlinScriptingWidget: Widget {
         }
         .configurationDisplayName("Script Package")
         .description("Displays an extension-safe snapshot from an installed Script package.")
-        .supportedFamilies([.systemSmall, .systemMedium, .systemLarge])
+        .supportedFamilies([.systemSmall, .systemMedium, .systemLarge, .systemExtraLarge])
     }
 }
 
@@ -200,7 +216,10 @@ private struct HanlinExtensionSnapshotView: View {
 
     var body: some View {
         if let snapshot {
-            HanlinExtensionNodeView(node: snapshot.root)
+            HanlinExtensionNodeView(
+                node: snapshot.root,
+                identity: snapshot.actionIdentity ?? snapshot.identity
+            )
         } else {
             ContentUnavailableView("Choose a Script Package", systemImage: "curlybraces.square")
         }

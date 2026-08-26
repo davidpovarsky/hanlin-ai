@@ -30,6 +30,8 @@ public struct HanlinScriptExtensionIdentity: Codable, Hashable, Sendable {
 public struct HanlinScriptWidgetSnapshot: Codable, Hashable, Sendable {
     public let identity: HanlinScriptExtensionIdentity
     public let displayName: String
+    public let family: String
+    public let actionIdentity: HanlinScriptExtensionIdentity?
     public let validUntil: Date
     public let relevance: Double
     public let root: HanlinScriptUINode
@@ -38,6 +40,8 @@ public struct HanlinScriptWidgetSnapshot: Codable, Hashable, Sendable {
     public init(
         identity: HanlinScriptExtensionIdentity,
         displayName: String,
+        family: String = "systemMedium",
+        actionIdentity: HanlinScriptExtensionIdentity? = nil,
         validUntil: Date,
         relevance: Double = 0,
         root: HanlinScriptUINode,
@@ -45,10 +49,28 @@ public struct HanlinScriptWidgetSnapshot: Codable, Hashable, Sendable {
     ) {
         self.identity = identity
         self.displayName = displayName
+        self.family = family
+        self.actionIdentity = actionIdentity
         self.validUntil = validUntil
         self.relevance = relevance
         self.root = root
         self.deepLink = deepLink
+    }
+
+    private enum CodingKeys: String, CodingKey {
+        case identity, displayName, family, actionIdentity, validUntil, relevance, root, deepLink
+    }
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        identity = try container.decode(HanlinScriptExtensionIdentity.self, forKey: .identity)
+        displayName = try container.decode(String.self, forKey: .displayName)
+        family = try container.decodeIfPresent(String.self, forKey: .family) ?? "systemMedium"
+        actionIdentity = try container.decodeIfPresent(HanlinScriptExtensionIdentity.self, forKey: .actionIdentity)
+        validUntil = try container.decode(Date.self, forKey: .validUntil)
+        relevance = try container.decode(Double.self, forKey: .relevance)
+        root = try container.decode(HanlinScriptUINode.self, forKey: .root)
+        deepLink = try container.decodeIfPresent(URL.self, forKey: .deepLink)
     }
 }
 

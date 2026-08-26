@@ -13,7 +13,7 @@ const marker = `static let bootstrap = #${'"'.repeat(3)}`;
 const start = swift.indexOf(marker) + marker.length;
 const bootstrap = swift.slice(start, swift.indexOf(`${'"'.repeat(3)}#`, start));
 
-function runtime() {
+function runtime(entrypointKind = "application", widgetFamily = "systemMedium") {
   const storage = new Map();
   const binaryStorage = new Map();
   const files = new Map();
@@ -24,6 +24,9 @@ function runtime() {
   const healthRequests = [];
   const notificationRequests = [];
   const cancelledRequests = new Set();
+  const widgetPresentations = [];
+  const appIntentRegistrations = [];
+  const appIntentCompletions = [];
   const success = value => JSON.stringify({ ok: true, value });
   const failure = (code, message) => JSON.stringify({
     ok: false,
@@ -171,13 +174,52 @@ function runtime() {
       systemScriptCode: "Hebr",
     },
     __hanlinNativeHealthDataAvailable: true,
+    __hanlinNativeEntrypointKind: entrypointKind,
+    __hanlinNativeWidgetFamily: widgetFamily,
+    __hanlinNativeWidgetParameter: "daily",
+    __hanlinNativeWidgetPresent(json) { widgetPresentations.push(JSON.parse(json)); return true; },
+    __hanlinNativeWidgetReloadAll() {},
+    __hanlinNativeAppIntentRegister(json) { appIntentRegistrations.push(JSON.parse(json)); return true; },
+    __hanlinNativeAppIntentComplete(id, succeeded, json) { appIntentCompletions.push({ id, succeeded, json }); },
   });
   vm.runInContext(bootstrap, context, { filename: "hanlin-scripting-ui-runtime.js" });
   return {
     context, rendered: () => rendered, assistantRequests, sqliteRequests, locationRequests,
-    healthRequests, notificationRequests, cancelledRequests,
+    healthRequests, notificationRequests, cancelledRequests, widgetPresentations,
+    appIntentRegistrations, appIntentCompletions,
   };
 }
+
+test("Smart-eating Widget and App Intent entrypoints preserve family, parameters, and execution", async () => {
+  const widget = runtime("widget", "systemLarge");
+  vm.runInContext(`
+    const CompleteStationIntent = AppIntentManager.register({
+      name: "CompleteStationIntent", protocol: AppIntentProtocol.AppIntent,
+      perform: async params => params.stationId,
+    });
+    Widget.present(createElement(Button, { intent: CompleteStationIntent({ stationId: 7 }) },
+      createElement(Text, null, Widget.family)), { policy: "after", date: new Date(1800000) });
+  `, widget.context);
+  assert.equal(widget.widgetPresentations[0].root.kind, "button");
+  assert.equal(widget.widgetPresentations[0].root.properties.intent.name, "CompleteStationIntent");
+  assert.deepEqual(widget.widgetPresentations[0].root.properties.intent.parameters, { stationId: 7 });
+  assert.equal(widget.widgetPresentations[0].reloadDate, 1800000);
+
+  const appIntent = runtime("appIntent");
+  vm.runInContext(`
+    AppIntentManager.register({
+      name: "CompleteStationIntent", protocol: AppIntentProtocol.AppIntent,
+      perform: async params => ({ completed: params.stationId }),
+    });
+    __hanlinInvokeAppIntent("request-1", "CompleteStationIntent", '{"stationId":7}');
+  `, appIntent.context);
+  await new Promise(resolve => queueMicrotask(resolve));
+  await new Promise(resolve => queueMicrotask(resolve));
+  assert.deepEqual(appIntent.appIntentRegistrations, [{ name: "CompleteStationIntent", protocol: "AppIntent" }]);
+  assert.deepEqual(appIntent.appIntentCompletions, [{
+    id: "request-1", succeeded: true, json: '{"completed":7}',
+  }]);
+});
 
 test("Device exposes the immutable native launch snapshot", () => {
   const { context } = runtime();

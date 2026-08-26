@@ -3,7 +3,7 @@
   "measuredAt": "2026-08-26",
   "baselineID": "scripting-compat-2026-08-26-a91e6672cb47",
   "compilerVersion": "7.0.2",
-  "environment": "Windows local static and Node-hosted bootstrap tests plus GitHub Actions run 32827640058 on Xcode 26.6: Swift 6 contracts/tests, downstream JSC tests, arm64 iOS Simulator build and launch, generic iOS 26 device build, unsigned IPA packaging and dyld-closure validation",
+  "environment": "Windows local static and Node-hosted bootstrap tests plus GitHub Actions runs 32939382620 and 32939692642 on Xcode 26.6: Swift 6 contracts/tests, downstream JSC tests, generic iOS Simulator/device compilation, and full arm64 iPad Simulator app build and launch",
   "projects": [
     {
       "id": "filemanager-2",
@@ -52,9 +52,9 @@
       "compileBundle": {"status": "passed-for-smoke-profile", "emittedModuleCount": 50, "importedScriptingRuntimeSymbolCount": 31},
       "runtimeLaunch": {"status": "passed-node-hosted-bootstrap", "presented": true, "rootKind": "tabView"},
       "uiRender": {"status": "passed-structural-smoke", "renderedNodeCount": 382, "limitation": "The async-hydrated initial tree was structurally rendered after coalescing reentrant updates; Xcode/Simulator validated the shared app and runtime tests but did not visually launch this archived project."},
-      "interaction": {"status": "not-exercised-on-real-project", "evidence": "The shared runtime has hook/event/rerender tests, but this archived app was not driven through its controls."},
-      "nativeServices": {"status": "partial", "passed": ["package-isolated Storage binding during launch"], "notExercised": ["Assistant", "Health", "Notification"], "placeholdersNotClaimed": ["Widget", "AppIntent"]},
-      "remainingBlockers": ["real-project interaction automation", "visual Simulator/device evidence", "Health/Notification/Assistant flows", "real widget and App Intent execution"]
+      "interaction": {"status": "partial", "evidence": "The untouched widget entrypoint executed for systemSmall, systemMedium, and systemLarge and materialized its real interactive App Intent descriptors; foreground app controls still require real-project Simulator automation."},
+      "nativeServices": {"status": "partial", "passed": ["package-isolated Storage binding during launch", "Health statistics/activity-summary/workout runtime and HealthKit adapter", "recurring Notification serialization and UserNotifications adapter", "untouched Widget entrypoint execution for three families (27/70/77 nodes)", "untouched App Intent registration for CompleteStationIntent and OpenStationIntent", "typed widget-button parameter transport, foreground action execution, Storage mutation path, snapshot regeneration and WidgetKit reload"], "notExercised": ["Assistant with a live configured provider", "physical widget-button invocation"]},
+      "remainingBlockers": ["foreground real-project interaction automation", "visual widget/foreground Simulator evidence", "live Assistant provider probe", "physical widget-button and notification delivery validation"]
     }
   ]
 }

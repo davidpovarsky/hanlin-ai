@@ -345,9 +345,9 @@
       "hanlinSymbol": "HanlinScriptingWidget",
       "hanlinAPIVersion": "hanlin.extensions/1.0",
       "allowedContexts": ["widget"],
-      "behaviorDifferences": ["A precompiled generic widget renders a safe ScriptUI subset from snapshots; arbitrary package execution and unsupported nodes are excluded."],
-      "tests": ["Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinScriptExtensionStoreTests.swift"],
-      "notes": "Extension-safe snapshot transport is implemented; package compilation and device verification remain pending."
+      "behaviorDifferences": ["A precompiled generic widget renders a safe ScriptUI subset from integrity-checked snapshots. Hanlin executes each installed widget entrypoint in a bounded JavaScriptCore widget context for every supported family, preserves Widget.family, App Intent button parameters and reload dates, and publishes family-specific snapshots. Unsupported ScriptUI nodes remain excluded rather than running arbitrary code inside WidgetKit."],
+      "tests": ["Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinScriptExtensionStoreTests.swift", "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift", "Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs", "Scripts/ScriptingReference/smoke-scripting-package-runtime.mjs"],
+      "notes": "The untouched smart-eating widget entrypoint renders systemSmall, systemMedium and systemLarge trees with 27, 70 and 77 nodes. The generic widget extension and full application compile and launch on the Xcode 26 iPad Simulator; visual and physical-device interaction remain pending."
     },
     {
       "symbol": "LiveActivity",
@@ -365,9 +365,9 @@
       "hanlinSymbol": "HanlinRunScriptActionIntent",
       "hanlinAPIVersion": "hanlin.extensions/1.0",
       "allowedContexts": ["appIntent"],
-      "behaviorDifferences": ["One static AppIntent uses dynamic AppEntity records and foreground resume; installed packages cannot add new Swift AppIntent types."],
-      "tests": ["Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinScriptExtensionStoreTests.swift"],
-      "notes": "Generic dynamic action transport exists and requires Xcode discovery verification."
+      "behaviorDifferences": ["One static parameterized AppIntent transports dynamic package actions because installed packages cannot add new Swift AppIntent types. AppIntentManager.register produces callable widget descriptors, registrations are published as AppEntity records, widget buttons enqueue bounded typed parameters, and the foreground host executes the original registered async perform function before regenerating snapshots and requesting WidgetKit reload."],
+      "tests": ["Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinScriptExtensionStoreTests.swift", "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift", "Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs", "Scripts/ScriptingReference/smoke-scripting-package-runtime.mjs"],
+      "notes": "The untouched smart-eating app_intents entrypoint registers CompleteStationIntent and OpenStationIntent. Static AppIntent discovery, application compilation and iPad Simulator launch are Xcode-verified; physical widget-button invocation remains pending."
     }
   ]
 }

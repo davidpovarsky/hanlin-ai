@@ -7,6 +7,9 @@ if (!process.argv[2]) {
   throw new Error("Usage: smoke-scripting-package-runtime.mjs <extracted-package-root>");
 }
 const packageRoot = path.resolve(process.argv[2]);
+const entrypoint = (process.argv[3] ?? "index.tsx").replace(/\.(?:tsx?|jsx?)$/i, ".js");
+const entrypointContext = process.argv[4] ?? "application";
+const widgetFamily = process.argv[5] ?? "systemMedium";
 const repositoryRoot = path.resolve(import.meta.dirname, "../..");
 const modules = new Map();
 const importedScriptingSymbols = new Set();
@@ -67,6 +70,8 @@ const start = swift.indexOf(marker) + marker.length;
 const bootstrap = swift.slice(start, swift.indexOf(`${quotes}#`, start));
 const storage = new Map();
 let rendered;
+let widgetPresentation;
+const appIntentRegistrations = [];
 globalThis.__hanlinNativeRender = json => { rendered = JSON.parse(json); };
 globalThis.__hanlinNativeStorageGet = key => JSON.stringify(
   storage.has(key)
@@ -122,6 +127,13 @@ globalThis.__hanlinNativeAssistantStart = id => queueMicrotask(() => globalThis.
   }),
 ));
 globalThis.__hanlinCancelNative = () => {};
+globalThis.__hanlinNativeEntrypointKind = entrypointContext;
+globalThis.__hanlinNativeWidgetFamily = widgetFamily;
+globalThis.__hanlinNativeWidgetParameter = "acceptance";
+globalThis.__hanlinNativeWidgetPresent = json => { widgetPresentation = JSON.parse(json); return true; };
+globalThis.__hanlinNativeWidgetReloadAll = () => {};
+globalThis.__hanlinNativeAppIntentRegister = json => { appIntentRegistrations.push(JSON.parse(json)); return true; };
+globalThis.__hanlinNativeAppIntentComplete = () => {};
 vm.runInThisContext(bootstrap, { filename: "hanlin-scripting-ui-runtime.js" });
 
 const cache = new Map();
@@ -152,14 +164,27 @@ function load(specifier, from = "") {
   factory(value => load(value, id), module, module.exports);
   return module.exports;
 }
-load("index.js");
-if (!globalThis.__hanlinHasPresentedUI || !rendered) throw new Error("Package did not render ScriptUI");
+load(entrypoint);
+if (entrypointContext === "application" && (!globalThis.__hanlinHasPresentedUI || !rendered)) {
+  throw new Error("Package did not render ScriptUI");
+}
+if (entrypointContext === "widget" && !widgetPresentation) {
+  throw new Error("Package did not present a Widget");
+}
+if (entrypointContext === "appIntent" && appIntentRegistrations.length === 0) {
+  throw new Error("Package did not register an App Intent");
+}
+const root = entrypointContext === "widget" ? widgetPresentation.root : rendered;
 console.log(JSON.stringify({
   emittedModuleCount: modules.size,
   importedScriptingSymbolCount: importedScriptingSymbols.size,
-  rootKind: rendered.kind,
-  renderedNodeCount: count(rendered),
-  presented: globalThis.__hanlinHasPresentedUI,
+  entrypoint,
+  entrypointContext,
+  widgetFamily: entrypointContext === "widget" ? widgetFamily : undefined,
+  rootKind: root?.kind,
+  renderedNodeCount: root ? count(root) : 0,
+  presented: entrypointContext === "widget" ? Boolean(widgetPresentation) : globalThis.__hanlinHasPresentedUI,
+  appIntentNames: appIntentRegistrations.map(record => record.name),
 }));
 globalThis.__hanlinDispose();
 process.exit(0);
