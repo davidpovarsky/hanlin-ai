@@ -17,6 +17,11 @@ public final class HanlinScriptingApplicationSession {
     private let networkLoader: HanlinScriptingNetworkLoader
     private let locationAllowed: Bool
     private let locationLoader: HanlinScriptingLocationLoader
+    private let healthAllowed: Bool
+    private let healthDataAvailable: Bool
+    private let healthStatisticsLoader: HanlinScriptingHealthStatisticsLoader
+    private let notificationsAllowed: Bool
+    private let notificationLoader: HanlinScriptingNotificationLoader
     private let assistantAllowed: Bool
     private let assistantLoader: HanlinScriptingAssistantLoader
     private let liveActivityAllowed: Bool
@@ -37,6 +42,11 @@ public final class HanlinScriptingApplicationSession {
         networkLoader: @escaping HanlinScriptingNetworkLoader = HanlinScriptingURLSessionLoader.load,
         locationAllowed: Bool = false,
         locationLoader: @escaping HanlinScriptingLocationLoader = HanlinScriptingUnavailableLocationLoader.load,
+        healthAllowed: Bool = false,
+        healthDataAvailable: Bool = false,
+        healthStatisticsLoader: @escaping HanlinScriptingHealthStatisticsLoader = HanlinScriptingUnavailableHealthStatisticsLoader.load,
+        notificationsAllowed: Bool = false,
+        notificationLoader: @escaping HanlinScriptingNotificationLoader = HanlinScriptingUnavailableNotificationLoader.load,
         assistantAllowed: Bool = false,
         assistantLoader: @escaping HanlinScriptingAssistantLoader = HanlinScriptingUnavailableAssistantLoader.load,
         liveActivityAllowed: Bool = false,
@@ -64,6 +74,11 @@ public final class HanlinScriptingApplicationSession {
         self.networkLoader = networkLoader
         self.locationAllowed = locationAllowed
         self.locationLoader = locationLoader
+        self.healthAllowed = healthAllowed
+        self.healthDataAvailable = healthDataAvailable
+        self.healthStatisticsLoader = healthStatisticsLoader
+        self.notificationsAllowed = notificationsAllowed
+        self.notificationLoader = notificationLoader
         self.assistantAllowed = assistantAllowed
         self.assistantLoader = assistantLoader
         self.liveActivityAllowed = liveActivityAllowed
@@ -130,6 +145,7 @@ public final class HanlinScriptingApplicationSession {
         context.setObject(nil, forKeyedSubscript: "__hanlinNativeAssistantStart" as NSString)
         context.setObject(nil, forKeyedSubscript: "__hanlinCancelNative" as NSString)
         context.setObject(nil, forKeyedSubscript: "__hanlinNativeDeviceSnapshot" as NSString)
+        context.setObject(nil, forKeyedSubscript: "__hanlinNativeHealthDataAvailable" as NSString)
     }
 
     private func installNativeBridges() {
@@ -210,6 +226,10 @@ public final class HanlinScriptingApplicationSession {
         context.setObject(
             deviceSnapshot.nativeObject,
             forKeyedSubscript: "__hanlinNativeDeviceSnapshot" as NSString
+        )
+        context.setObject(
+            healthAllowed && healthDataAvailable,
+            forKeyedSubscript: "__hanlinNativeHealthDataAvailable" as NSString
         )
     }
 
@@ -367,6 +387,39 @@ public final class HanlinScriptingApplicationSession {
             )
             let result = try await locationLoader(request)
             return HanlinScriptingNativeJSON.success(result.nativeObject)
+        }
+        if operation == "health.queryStatistics" {
+            guard healthAllowed else {
+                throw HanlinScriptingNativeError(
+                    name: "Error",
+                    code: "permission_denied",
+                    message: "The Health capability is not granted."
+                )
+            }
+            guard healthDataAvailable else {
+                throw HanlinScriptingNativeError(
+                    name: "Error",
+                    code: "health_unavailable",
+                    message: "Health data is unavailable on this device."
+                )
+            }
+            let request = try HanlinScriptingHealthPayloadDecoder.decodeStatistics(payloadJSON)
+            let result = try await healthStatisticsLoader(request)
+            return HanlinScriptingNativeJSON.success(result?.nativeObject ?? NSNull())
+        }
+        if operation.hasPrefix("notification.") {
+            guard notificationsAllowed else {
+                throw HanlinScriptingNativeError(
+                    name: "Error",
+                    code: "permission_denied",
+                    message: "The Notifications capability is not granted."
+                )
+            }
+            let request = try HanlinScriptingNotificationPayloadDecoder.decode(
+                operation: operation,
+                json: payloadJSON
+            )
+            return HanlinScriptingNativeJSON.success(try await notificationLoader(request))
         }
         if operation.hasPrefix("liveActivity.") {
             guard liveActivityAllowed else {
@@ -1358,6 +1411,164 @@ private extension HanlinScriptingApplicationSession {
       };
       Object.freeze(Location);
 
+      const dateComponentKeys = Object.freeze([
+        "calendar", "timeZone", "era", "year", "yearForWeekOfYear", "quarter", "month",
+        "weekOfMonth", "weekOfYear", "weekday", "weekdayOrdinal", "day", "hour", "minute",
+        "second", "nanosecond"
+      ]);
+      class DateComponents {
+        constructor(options = {}) {
+          if (options == null || typeof options !== "object" || Array.isArray(options)) {
+            throw new TypeError("DateComponents options must be an object");
+          }
+          for (const key of dateComponentKeys) {
+            if (Object.hasOwn(options, key)) this[key] = options[key];
+          }
+        }
+        get date() {
+          if (this.year == null || this.month == null || this.day == null) return null;
+          const value = new Date(
+            Number(this.year), Number(this.month) - 1, Number(this.day),
+            Number(this.hour ?? 0), Number(this.minute ?? 0), Number(this.second ?? 0),
+            Math.floor(Number(this.nanosecond ?? 0) / 1000000)
+          );
+          return Number.isNaN(value.getTime()) ? null : value;
+        }
+        get isValidDate() { return this.date != null; }
+        toJSON() {
+          const value = {};
+          for (const key of dateComponentKeys) if (this[key] != null) value[key] = this[key];
+          return value;
+        }
+        static fromDate(date) {
+          const value = new Date(date);
+          if (Number.isNaN(value.getTime())) throw new TypeError("A valid date is required");
+          return new DateComponents({
+            year: value.getFullYear(), month: value.getMonth() + 1, day: value.getDate(),
+            weekday: value.getDay() + 1, hour: value.getHours(), minute: value.getMinutes(),
+            second: value.getSeconds(), nanosecond: value.getMilliseconds() * 1000000
+          });
+        }
+        static forHourly(date) { const value = this.fromDate(date); return new DateComponents({ minute: value.minute }); }
+        static forDaily(date) { const value = this.fromDate(date); return new DateComponents({ hour: value.hour, minute: value.minute }); }
+        static forWeekly(date) { const value = this.fromDate(date); return new DateComponents({ weekday: value.weekday, hour: value.hour, minute: value.minute }); }
+        static forMonthly(date) { const value = this.fromDate(date); return new DateComponents({ day: value.day, hour: value.hour, minute: value.minute }); }
+      }
+
+      class CalendarNotificationTrigger {
+        constructor(options) {
+          if (!options || !(options.dateMatching instanceof DateComponents) || typeof options.repeats !== "boolean") {
+            throw new TypeError("A CalendarNotificationTrigger requires DateComponents and repeats");
+          }
+          this.dateComponents = options.dateMatching;
+          this.repeats = options.repeats;
+          Object.freeze(this);
+        }
+        nextTriggerDate() { return this.dateComponents.date; }
+        toJSON() { return { type: "calendar", dateMatching: this.dateComponents, repeats: this.repeats }; }
+      }
+
+      class TimeIntervalNotificationTrigger {
+        constructor(options) {
+          const interval = Number(options?.timeInterval);
+          if (!Number.isFinite(interval) || interval <= 0 || typeof options?.repeats !== "boolean") {
+            throw new TypeError("A TimeIntervalNotificationTrigger requires a positive interval and repeats");
+          }
+          this.timeInterval = interval;
+          this.repeats = options.repeats;
+          Object.freeze(this);
+        }
+        nextTriggerDate() { return new Date(Date.now() + this.timeInterval * 1000); }
+        toJSON() { return { type: "timeInterval", timeInterval: this.timeInterval, repeats: this.repeats }; }
+      }
+
+      class HealthUnit {
+        constructor(unitString) { this.unitString = String(unitString); Object.freeze(this); }
+        multiplied(unit) { return new HealthUnit(`${this.unitString}*${unit?.unitString ?? unit}`); }
+        divided(unit) { return new HealthUnit(`${this.unitString}/${unit?.unitString ?? unit}`); }
+        static count() { return new HealthUnit("count"); }
+        static minute() { return new HealthUnit("min"); }
+        static hour() { return new HealthUnit("hr"); }
+        static second() { return new HealthUnit("s"); }
+        static meter() { return new HealthUnit("m"); }
+        static kilocalorie() { return new HealthUnit("kcal"); }
+        static countPerMinute() { return new HealthUnit("count/min"); }
+      }
+
+      function healthUnitMatches(actual, requested) {
+        if (!(requested instanceof HealthUnit)) throw new TypeError("A HealthUnit is required");
+        const normalize = value => String(value).replace(/\s+/g, "").replace("1/min", "count/min");
+        return normalize(actual) === normalize(requested.unitString);
+      }
+      class HealthStatistics {
+        constructor(value) {
+          this.quantityType = value.quantityType;
+          this.sources = null;
+          this.startDate = new Date(value.startDate);
+          this.endDate = new Date(value.endDate);
+          this._unit = value.unit;
+          this._sum = value.sum;
+          this._average = value.average;
+          Object.freeze(this);
+        }
+        sumQuantity(unit, source = undefined) {
+          return source === undefined && healthUnitMatches(this._unit, unit) ? this._sum ?? null : null;
+        }
+        averageQuantity(unit, source = undefined) {
+          return source === undefined && healthUnitMatches(this._unit, unit) ? this._average ?? null : null;
+        }
+        duration() { return null; }
+        minimumQuantity() { return null; }
+        maximumQuantity() { return null; }
+        mostRecentQuantity() { return null; }
+        mostRecentQuantityDateInterval() { return null; }
+      }
+      const healthStatisticsOptions = new Set(["cumulativeSum", "discreteAverage"]);
+      const Health = Object.freeze({
+        isHealthDataAvailable: globalThis.__hanlinNativeHealthDataAvailable === true,
+        queryStatistics(quantityType, options = {}) {
+          if (typeof quantityType !== "string" || options == null || typeof options !== "object") {
+            return Promise.reject(new TypeError("Health.queryStatistics requires a quantity type and options"));
+          }
+          const requested = options.statisticsOptions == null
+            ? [] : Array.isArray(options.statisticsOptions) ? options.statisticsOptions : [options.statisticsOptions];
+          if (!requested.length || requested.some(value => !healthStatisticsOptions.has(value))) {
+            return Promise.reject(new TypeError("A Health statistics option is unsupported"));
+          }
+          const startDate = options.startDate == null ? new Date(0) : new Date(options.startDate);
+          const endDate = options.endDate == null ? new Date() : new Date(options.endDate);
+          if (Number.isNaN(startDate.getTime()) || Number.isNaN(endDate.getTime())) {
+            return Promise.reject(new TypeError("Health statistics dates are invalid"));
+          }
+          return nativeCallAsync("health.queryStatistics", {
+            quantityType, startDate: startDate.getTime(), endDate: endDate.getTime(),
+            statisticsOptions: requested
+          }).then(value => value == null ? null : new HealthStatistics(value));
+        }
+      });
+
+      const unsupportedNotificationFields = ["sound", "iconImageData", "actions", "customUI", "tapAction"];
+      const Notification = Object.freeze({
+        current: null,
+        schedule(options) {
+          if (!options || typeof options !== "object" || typeof options.title !== "string" || !options.title.length) {
+            return Promise.reject(new TypeError("Notification.schedule requires a title"));
+          }
+          if (unsupportedNotificationFields.some(key => options[key] != null && options[key] !== false)) {
+            return Promise.reject(new TypeError("A requested Notification feature is not supported yet"));
+          }
+          return nativeCallAsync("notification.schedule", {
+            title: options.title, subtitle: options.subtitle, body: options.body, badge: options.badge,
+            silent: options.silent, interruptionLevel: options.interruptionLevel,
+            userInfo: options.userInfo, threadIdentifier: options.threadIdentifier,
+            trigger: options.trigger ?? null
+          }).then(Boolean);
+        },
+        removeAllPendingsOfCurrentScript() {
+          return nativeCallAsync("notification.removeAllPendingsOfCurrentScript").then(() => undefined);
+        }
+      });
+
       const hostKinds = Object.freeze({
         Text: "text", Image: "image", Button: "button", TextField: "textField",
         SecureField: "textField", HStack: "hStack", VStack: "vStack", ZStack: "zStack",
@@ -2105,7 +2316,9 @@ private extension HanlinScriptingApplicationSession {
         FormData: HanlinFormData, Request: HanlinRequest, Response: HanlinResponse,
         fetch: hanlinFetch, DOMException: HanlinDOMException, AbortEvent: HanlinAbortEvent,
         AbortSignal: HanlinAbortSignal, AbortController: HanlinAbortController,
-        Storage, SQLite, Assistant, Location, LiveActivity, Script, Device, Widget, AppIntentProtocol, AppIntentManager,
+        Storage, SQLite, Assistant, Location, Health, HealthUnit, HealthStatistics,
+        Notification, DateComponents, CalendarNotificationTrigger, TimeIntervalNotificationTrigger,
+        LiveActivity, Script, Device, Widget, AppIntentProtocol, AppIntentManager,
         Color: Object.freeze({}),
         __hanlinResolveNative: resolveNativeRequest,
         __hanlinAssistantReceive: receiveAssistantChunk,

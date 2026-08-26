@@ -170,4 +170,113 @@ struct HanlinScriptingApplicationRuntimeTests {
             )
         }
     }
+
+    @Test("Health and Notification payloads reject unsupported or unbounded requests")
+    func healthAndNotificationPayloads() throws {
+        let health = try HanlinScriptingHealthPayloadDecoder.decodeStatistics(#"""
+        {
+          "quantityType":"heartRate",
+          "startDate":1759276800000,
+          "endDate":1759363200000,
+          "statisticsOptions":["discreteAverage"]
+        }
+        """#)
+        #expect(health.metric == .heartRate)
+        #expect(health.options == [.discreteAverage])
+
+        let notification = try HanlinScriptingNotificationPayloadDecoder.decode(
+            operation: "notification.schedule",
+            json: #"""
+            {
+              "title":"Meal reminder",
+              "interruptionLevel":"timeSensitive",
+              "trigger":{
+                "type":"calendar",
+                "dateMatching":{"hour":12,"minute":30,"timeZone":"Asia/Jerusalem"},
+                "repeats":true
+              }
+            }
+            """#
+        )
+        #expect(notification.action == .schedule)
+        #expect(notification.interruptionLevel == "timeSensitive")
+        guard case let .calendar(components, timeZone, repeats) = notification.trigger else {
+            Issue.record("Expected a calendar notification trigger")
+            return
+        }
+        #expect(components == ["hour": 12, "minute": 30])
+        #expect(timeZone == "Asia/Jerusalem")
+        #expect(repeats)
+
+        #expect(throws: (any Error).self) {
+            try HanlinScriptingHealthPayloadDecoder.decodeStatistics(
+                #"{"quantityType":"stepCount","startDate":0,"endDate":9999999999999,"statisticsOptions":["cumulativeSum"]}"#
+            )
+        }
+        #expect(throws: (any Error).self) {
+            try HanlinScriptingNotificationPayloadDecoder.decode(
+                operation: "notification.schedule",
+                json: #"{"title":"Invalid","trigger":{"type":"timeInterval","timeInterval":30,"repeats":true}}"#
+            )
+        }
+    }
+
+    @MainActor
+    @Test("Runs smart-eating Health statistics and recurring Notification primitives end to end")
+    func healthAndNotificationRuntime() async throws {
+        let packageID = try HanlinInstalledPackageID(validating: "health-notification-runtime-test")
+        let session = try HanlinScriptingApplicationSession(
+            installedPackageID: packageID,
+            program: #"""
+            Navigation.present({ element: createElement(Text, null, "Waiting") });
+            const components = new DateComponents({ hour: 8, minute: 15 });
+            Promise.all([
+              Health.queryStatistics("stepCount", {
+                startDate: new Date("2025-10-01T00:00:00Z"),
+                endDate: new Date("2025-10-01T23:59:59Z"),
+                statisticsOptions: ["cumulativeSum"]
+              }),
+              Notification.schedule({
+                title: "Breakfast",
+                trigger: new CalendarNotificationTrigger({ dateMatching: components, repeats: true }),
+                interruptionLevel: "timeSensitive"
+              })
+            ]).then(([stats, scheduled]) => Navigation.present({ element: createElement(
+              Text, null, JSON.stringify([stats.sumQuantity(HealthUnit.count()), scheduled])
+            ) }));
+            """#,
+            filename: "compiled/index.js",
+            storageAllowed: false,
+            healthAllowed: true,
+            healthDataAvailable: true,
+            healthStatisticsLoader: { request in
+                #expect(request.metric == .stepCount)
+                #expect(request.options == [.cumulativeSum])
+                return .init(
+                    metric: request.metric,
+                    unit: "count",
+                    startDate: request.startDate,
+                    endDate: request.endDate,
+                    sum: 8_432
+                )
+            },
+            notificationsAllowed: true,
+            notificationLoader: { request in
+                #expect(request.action == .schedule)
+                guard case let .calendar(components, _, repeats) = request.trigger else {
+                    Issue.record("Expected the serialized calendar trigger")
+                    return false
+                }
+                #expect(components == ["hour": 8, "minute": 15])
+                #expect(repeats)
+                return true
+            }
+        )
+        defer { session.dispose() }
+
+        for _ in 0 ..< 100 where session.model.root.properties["text"] != .string("[8432,true]") {
+            await Task.yield()
+        }
+        #expect(session.model.root.properties["text"] == .string("[8432,true]"))
+    }
 }

@@ -21,6 +21,8 @@ function runtime() {
   const assistantRequests = [];
   const sqliteRequests = [];
   const locationRequests = [];
+  const healthRequests = [];
+  const notificationRequests = [];
   const cancelledRequests = new Set();
   const success = value => JSON.stringify({ ok: true, value });
   const failure = (code, message) => JSON.stringify({
@@ -82,6 +84,8 @@ function runtime() {
           const payload = JSON.parse(json);
           if (operation.startsWith("sqlite.")) sqliteRequests.push({ operation, payload });
           if (operation.startsWith("location.")) locationRequests.push({ operation, payload });
+          if (operation.startsWith("health.")) healthRequests.push({ operation, payload });
+          if (operation.startsWith("notification.")) notificationRequests.push({ operation, payload });
           const value = operation === "network.fetch"
             ? { url: payload.url, status: 200, headers: { "content-type": "application/json" }, bodyBase64: Buffer.from('{"ok":true}').toString("base64") }
             : operation === "liveActivity.start"
@@ -102,6 +106,10 @@ function runtime() {
               ? [{ location: { latitude: 31.7683, longitude: 35.2137, timestamp: 123456789 }, name: payload.address, locality: "Jerusalem", country: "Israel" }]
             : operation === "location.setAccuracy"
               ? null
+            : operation === "health.queryStatistics"
+              ? { quantityType: payload.quantityType, unit: "count", startDate: payload.startDate, endDate: payload.endDate, sum: 8432, average: null }
+            : operation === "notification.schedule" || operation === "notification.removeAllPendingsOfCurrentScript"
+              ? true
             : operation === "runtime.delay"
               ? null
             : fileOperation(operation, payload);
@@ -142,9 +150,13 @@ function runtime() {
       systemLanguageTag: "he-IL", systemLanguageCode: "he", systemCountryCode: "IL",
       systemScriptCode: "Hebr",
     },
+    __hanlinNativeHealthDataAvailable: true,
   });
   vm.runInContext(bootstrap, context, { filename: "hanlin-scripting-ui-runtime.js" });
-  return { context, rendered: () => rendered, assistantRequests, sqliteRequests, locationRequests, cancelledRequests };
+  return {
+    context, rendered: () => rendered, assistantRequests, sqliteRequests, locationRequests,
+    healthRequests, notificationRequests, cancelledRequests,
+  };
 }
 
 test("Device exposes the immutable native launch snapshot", () => {
@@ -578,4 +590,39 @@ test("Location current position, accuracy, and modern geocoding use the native a
   ]);
   assert.equal(locationRequests[1].payload.forceRequest, true);
   assert.equal(locationRequests[2].payload.locale, "he_IL");
+});
+
+test("Smart-eating Health statistics and recurring notifications preserve Scripting payloads", async () => {
+  const { context, healthRequests, notificationRequests } = runtime();
+  const result = await vm.runInContext(`
+    (async () => {
+      const statistics = await Health.queryStatistics("stepCount", {
+        startDate: new Date("2025-10-01T00:00:00Z"),
+        endDate: new Date("2025-10-01T23:59:59Z"),
+        statisticsOptions: ["cumulativeSum"],
+      });
+      const components = new DateComponents({ hour: 8, minute: 15 });
+      const scheduled = await Notification.schedule({
+        title: "Breakfast",
+        interruptionLevel: "timeSensitive",
+        trigger: new CalendarNotificationTrigger({ dateMatching: components, repeats: true }),
+      });
+      await Notification.removeAllPendingsOfCurrentScript();
+      return {
+        available: Health.isHealthDataAvailable,
+        steps: statistics.sumQuantity(HealthUnit.count()),
+        scheduled,
+      };
+    })()
+  `, context);
+  assert.deepEqual(JSON.parse(JSON.stringify(result)), {
+    available: true, steps: 8432, scheduled: true,
+  });
+  assert.equal(healthRequests[0].operation, "health.queryStatistics");
+  assert.deepEqual(healthRequests[0].payload.statisticsOptions, ["cumulativeSum"]);
+  assert.equal(notificationRequests[0].operation, "notification.schedule");
+  assert.deepEqual(notificationRequests[0].payload.trigger, {
+    type: "calendar", dateMatching: { hour: 8, minute: 15 }, repeats: true,
+  });
+  assert.equal(notificationRequests[1].operation, "notification.removeAllPendingsOfCurrentScript");
 });

@@ -19,9 +19,45 @@ struct HanlinAppleServiceContractsTests {
             uniqueKeysWithValues: HanlinAppleServiceAvailability.current.map { ($0.family, $0) }
         )
         #expect(try #require(records[.health]).requiredEntitlements == ["com.apple.developer.healthkit"])
+        #expect(try #require(records[.notifications]).requiredEntitlements == [
+            "com.apple.developer.usernotifications.time-sensitive"
+        ])
         #expect(try #require(records[.location]).requiredUsageDescriptions.contains("NSLocationWhenInUseUsageDescription"))
         #expect(try #require(records[.calendar]).requiredUsageDescriptions.contains("NSCalendarsFullAccessUsageDescription"))
         #expect(!(try #require(records[.health]).allowedContexts.contains(.widget)))
+    }
+
+    @Test("Health and notification bridge values preserve declared Scripting semantics")
+    func healthAndNotificationValues() {
+        let start = Date(timeIntervalSince1970: 100)
+        let end = Date(timeIntervalSince1970: 200)
+        let statistics = HanlinScriptHealthStatistics(
+            metric: .heartRate,
+            unit: "count/min",
+            startDate: start,
+            endDate: end,
+            average: 72
+        )
+        #expect(statistics.metric.rawValue == "heartRate")
+        #expect(statistics.average == 72)
+
+        let notification = HanlinScriptLocalNotification(
+            id: "hanlin.package.reminder",
+            title: "Meal reminder",
+            interruptionLevel: "timeSensitive",
+            trigger: .calendar(
+                components: ["hour": 12, "minute": 30],
+                timeZoneIdentifier: "Asia/Jerusalem",
+                repeats: true
+            )
+        )
+        guard case let .calendar(components, timeZone, repeats) = notification.trigger else {
+            Issue.record("Expected a calendar notification")
+            return
+        }
+        #expect(components["hour"] == 12)
+        #expect(timeZone == "Asia/Jerusalem")
+        #expect(repeats)
     }
 
     @Test("Location and placemark values preserve modern MapKit result fields")

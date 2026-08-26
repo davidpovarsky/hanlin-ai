@@ -21287,7 +21287,7 @@
       ],
       "allowedOrigins": [],
       "behaviorDifferences": [
-        "Async HealthKit authorization and statistics are implemented for configured types; broad Health declarations remain unbound."
+        "The live JavaScriptCore namespace exposes isHealthDataAvailable and capability-gated queryStatistics for stepCount, distanceWalkingRunning, activeEnergyBurned and heartRate. cumulativeSum and discreteAverage are backed by HealthKit and return Scripting-compatible HealthStatistics/HealthUnit values. Other statistics options, samples, activity summaries, workouts, characteristics and writes remain unavailable and are rejected rather than fabricated."
       ],
       "behaviorMatched": false,
       "declarationFile": "global.d.ts",
@@ -21296,7 +21296,7 @@
       "hanlinAPIVersion": "hanlin.services/1.0",
       "hanlinSymbol": "HanlinHealthService",
       "implementedByHanlin": true,
-      "notes": "Sensitive adapter exists behind both local grants and OS authorization.",
+      "notes": "Each query is bounded to one year and requires both the package capability grant and HealthKit read authorization.",
       "referenceCategory": "namespace",
       "referenceSignatureHash": "6a6ef271268e45cecda073c0099d74b715c5db374074f344152480e7135f1e0e",
       "referenceSymbol": "Health",
@@ -21304,7 +21304,8 @@
       "requiredEntitlement": "com.apple.developer.healthkit",
       "status": "partial",
       "tests": [
-        "Packages/HanlinPlatform/Tests/HanlinScriptDeviceServicesTests/HanlinAppleServiceContractsTests.swift"
+        "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift",
+        "Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs"
       ],
       "verifiedByFixture": false
     },
@@ -31097,7 +31098,7 @@
       ],
       "allowedOrigins": [],
       "behaviorDifferences": [
-        "Authorization and scheduling adapter exists; the complete Scripting namespace is not bound."
+        "The live JavaScriptCore namespace implements capability-gated schedule with immediate, time-interval and calendar triggers, content, badge, sound suppression, interruption level, thread and JSON userInfo, plus package-scoped removal of pending requests. Delivered/pending queries, location triggers, actions, custom UI, custom sounds/icons, tap actions, badge updates and launch context remain unavailable and are rejected rather than silently emulated."
       ],
       "behaviorMatched": false,
       "declarationFile": "scripting.d.ts",
@@ -31106,15 +31107,16 @@
       "hanlinAPIVersion": "hanlin.services/1.0",
       "hanlinSymbol": "HanlinNotificationService",
       "implementedByHanlin": true,
-      "notes": "Host adapter implemented with denied and unsupported paths.",
+      "notes": "Uses UserNotifications with per-installed-package identifier prefixes and requests OS authorization at the first schedule.",
       "referenceCategory": "namespace",
       "referenceSignatureHash": "ff05f8078377bf4b04e2d1b4ddf2f64b4cc748fc7cfbda54e59b2e8f0da41185",
       "referenceSymbol": "Notification",
       "requiredCapability": "notifications",
-      "requiredEntitlement": null,
+      "requiredEntitlement": "com.apple.developer.usernotifications.time-sensitive",
       "status": "partial",
       "tests": [
-        "Packages/HanlinPlatform/Tests/HanlinScriptDeviceServicesTests/HanlinAppleServiceContractsTests.swift"
+        "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift",
+        "Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs"
       ],
       "verifiedByFixture": false
     },

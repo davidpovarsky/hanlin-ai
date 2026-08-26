@@ -321,10 +321,11 @@
       "hanlinSymbol": "HanlinNotificationService",
       "hanlinAPIVersion": "hanlin.services/1.0",
       "requiredCapability": "notifications",
+      "requiredEntitlement": "com.apple.developer.usernotifications.time-sensitive",
       "allowedContexts": ["mainApplication"],
-      "behaviorDifferences": ["Authorization and scheduling adapter exists; the complete Scripting namespace is not bound."],
-      "tests": ["Packages/HanlinPlatform/Tests/HanlinScriptDeviceServicesTests/HanlinAppleServiceContractsTests.swift"],
-      "notes": "Host adapter implemented with denied and unsupported paths."
+      "behaviorDifferences": ["The live JavaScriptCore namespace implements capability-gated schedule with immediate, time-interval and calendar triggers, content, badge, sound suppression, interruption level, thread and JSON userInfo, plus package-scoped removal of pending requests. Delivered/pending queries, location triggers, actions, custom UI, custom sounds/icons, tap actions, badge updates and launch context remain unavailable and are rejected rather than silently emulated."],
+      "tests": ["Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift", "Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs"],
+      "notes": "Uses UserNotifications with per-installed-package identifier prefixes and requests OS authorization at the first schedule."
     },
     {
       "symbol": "Health",
@@ -334,9 +335,9 @@
       "requiredCapability": "health",
       "requiredEntitlement": "com.apple.developer.healthkit",
       "allowedContexts": ["mainApplication"],
-      "behaviorDifferences": ["Async HealthKit authorization and statistics are implemented for configured types; broad Health declarations remain unbound."],
-      "tests": ["Packages/HanlinPlatform/Tests/HanlinScriptDeviceServicesTests/HanlinAppleServiceContractsTests.swift"],
-      "notes": "Sensitive adapter exists behind both local grants and OS authorization."
+      "behaviorDifferences": ["The live JavaScriptCore namespace exposes isHealthDataAvailable and capability-gated queryStatistics for stepCount, distanceWalkingRunning, activeEnergyBurned and heartRate. cumulativeSum and discreteAverage are backed by HealthKit and return Scripting-compatible HealthStatistics/HealthUnit values. Other statistics options, samples, activity summaries, workouts, characteristics and writes remain unavailable and are rejected rather than fabricated."],
+      "tests": ["Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift", "Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs"],
+      "notes": "Each query is bounded to one year and requires both the package capability grant and HealthKit read authorization."
     },
     {
       "symbol": "Widget",

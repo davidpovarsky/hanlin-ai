@@ -42,6 +42,8 @@ final class HanlinScriptingPlatform {
     private var applicationSession: HanlinScriptingApplicationSession?
     private var modelContext: ModelContext?
     private let locationService = HanlinAppleLocationService()
+    private let healthService = HanlinAppleHealthService()
+    private let notificationService = HanlinAppleNotificationService()
     private var liveActivityRevisions: [String: UInt64] = [:]
     private let stagingRoot: URL?
 
@@ -359,6 +361,8 @@ final class HanlinScriptingPlatform {
             let filesCapability = try HanlinCapabilityID(validating: "files")
             let networkCapability = try HanlinCapabilityID(validating: "network")
             let locationCapability = try HanlinCapabilityID(validating: "location")
+            let healthCapability = try HanlinCapabilityID(validating: "health")
+            let notificationsCapability = try HanlinCapabilityID(validating: "notifications")
             let assistantCapability = try HanlinCapabilityID(validating: "assistant")
             let session = try HanlinScriptingApplicationSession(
                 installedPackageID: id,
@@ -372,6 +376,17 @@ final class HanlinScriptingPlatform {
                 locationLoader: { [weak self] request in
                     guard let self else { throw CancellationError() }
                     return try await self.performLocation(request)
+                },
+                healthAllowed: package.grantedCapabilities.contains(healthCapability),
+                healthDataAvailable: HanlinAppleHealthService.isHealthDataAvailable,
+                healthStatisticsLoader: { [weak self] request in
+                    guard let self else { throw CancellationError() }
+                    return try await self.performHealthStatistics(request)
+                },
+                notificationsAllowed: package.grantedCapabilities.contains(notificationsCapability),
+                notificationLoader: { [weak self] request in
+                    guard let self else { throw CancellationError() }
+                    return try await self.performNotification(request, installedPackageID: id)
                 },
                 assistantAllowed: package.grantedCapabilities.contains(assistantCapability),
                 assistantLoader: { [weak self] request in
@@ -448,6 +463,78 @@ final class HanlinScriptingPlatform {
             )
         }
         return try await HanlinScriptingAssistantProviderAdapter(context: modelContext).load(request)
+    }
+
+    private func performHealthStatistics(
+        _ request: HanlinScriptingHealthStatisticsRequest
+    ) async throws -> HanlinScriptingHealthStatisticsResult? {
+        let metric: HanlinScriptHealthMetric = switch request.metric {
+        case .stepCount: .steps
+        case .distanceWalkingRunning: .walkingRunningDistance
+        case .activeEnergyBurned: .activeEnergy
+        case .heartRate: .heartRate
+        }
+        let options = Set(request.options.map { option -> HanlinScriptHealthStatisticsOption in
+            switch option {
+            case .cumulativeSum: .cumulativeSum
+            case .discreteAverage: .discreteAverage
+            }
+        })
+        guard let result = try await healthService.statistics(
+            metric,
+            from: request.startDate,
+            to: request.endDate,
+            options: options
+        ) else { return nil }
+        return .init(
+            metric: request.metric,
+            unit: result.unit,
+            startDate: result.startDate,
+            endDate: result.endDate,
+            sum: result.sum,
+            average: result.average
+        )
+    }
+
+    private func performNotification(
+        _ request: HanlinScriptingNotificationRequest,
+        installedPackageID: HanlinInstalledPackageID
+    ) async throws -> Bool {
+        let identifierPrefix = "hanlin.\(installedPackageID.rawValue)."
+        switch request.action {
+        case .removeAllPendingsOfCurrentScript:
+            await notificationService.removePending(identifierPrefix: identifierPrefix)
+            return true
+        case .schedule:
+            guard let title = request.title, let trigger = request.trigger else {
+                throw HanlinScriptingPlatformError.invalidNotificationPayload
+            }
+            let nativeTrigger: HanlinScriptLocalNotificationTrigger = switch trigger {
+            case .immediate:
+                .immediate
+            case let .timeInterval(seconds, repeats):
+                .timeInterval(seconds: seconds, repeats: repeats)
+            case let .calendar(components, timeZoneIdentifier, repeats):
+                .calendar(
+                    components: components,
+                    timeZoneIdentifier: timeZoneIdentifier,
+                    repeats: repeats
+                )
+            }
+            try await notificationService.schedule(.init(
+                id: identifierPrefix + UUID().uuidString.lowercased(),
+                title: title,
+                subtitle: request.subtitle ?? "",
+                body: request.body ?? "",
+                badge: request.badge,
+                silent: request.silent,
+                interruptionLevel: request.interruptionLevel,
+                threadIdentifier: request.threadIdentifier ?? "",
+                userInfoJSON: request.userInfoJSON,
+                trigger: nativeTrigger
+            ))
+            return true
+        }
     }
 
     private static func scriptingLocation(
@@ -654,6 +741,7 @@ private enum HanlinScriptingPlatformError: Error {
     case invalidEntrypointPath
     case invalidLiveActivityPayload
     case invalidLocationPayload
+    case invalidNotificationPayload
 }
 
 private extension JSONEncoder {

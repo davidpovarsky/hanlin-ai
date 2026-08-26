@@ -322,6 +322,311 @@ enum HanlinScriptingLocationPayloadDecoder {
     }
 }
 
+public enum HanlinScriptingHealthMetric: String, Sendable {
+    case stepCount
+    case distanceWalkingRunning
+    case activeEnergyBurned
+    case heartRate
+}
+
+public enum HanlinScriptingHealthStatisticsOption: String, Hashable, Sendable {
+    case cumulativeSum
+    case discreteAverage
+}
+
+public struct HanlinScriptingHealthStatisticsRequest: Sendable {
+    public let metric: HanlinScriptingHealthMetric
+    public let startDate: Date
+    public let endDate: Date
+    public let options: Set<HanlinScriptingHealthStatisticsOption>
+
+    public init(
+        metric: HanlinScriptingHealthMetric,
+        startDate: Date,
+        endDate: Date,
+        options: Set<HanlinScriptingHealthStatisticsOption>
+    ) {
+        self.metric = metric
+        self.startDate = startDate
+        self.endDate = endDate
+        self.options = options
+    }
+}
+
+public struct HanlinScriptingHealthStatisticsResult: Sendable {
+    public let metric: HanlinScriptingHealthMetric
+    public let unit: String
+    public let startDate: Date
+    public let endDate: Date
+    public let sum: Double?
+    public let average: Double?
+
+    public init(
+        metric: HanlinScriptingHealthMetric,
+        unit: String,
+        startDate: Date,
+        endDate: Date,
+        sum: Double? = nil,
+        average: Double? = nil
+    ) {
+        self.metric = metric
+        self.unit = unit
+        self.startDate = startDate
+        self.endDate = endDate
+        self.sum = sum
+        self.average = average
+    }
+
+    var nativeObject: [String: Any] {
+        var value: [String: Any] = [
+            "quantityType": metric.rawValue,
+            "unit": unit,
+            "startDate": startDate.timeIntervalSince1970 * 1_000,
+            "endDate": endDate.timeIntervalSince1970 * 1_000,
+        ]
+        value["sum"] = sum ?? NSNull()
+        value["average"] = average ?? NSNull()
+        return value
+    }
+}
+
+public typealias HanlinScriptingHealthStatisticsLoader = @MainActor @Sendable (
+    HanlinScriptingHealthStatisticsRequest
+) async throws -> HanlinScriptingHealthStatisticsResult?
+
+public enum HanlinScriptingUnavailableHealthStatisticsLoader {
+    public static func load(
+        _ request: HanlinScriptingHealthStatisticsRequest
+    ) async throws -> HanlinScriptingHealthStatisticsResult? {
+        _ = request
+        throw HanlinScriptingNativeError(
+            name: "Error",
+            code: "health_unavailable",
+            message: "Health data is unavailable."
+        )
+    }
+}
+
+enum HanlinScriptingHealthPayloadDecoder {
+    static func decodeStatistics(_ json: String) throws -> HanlinScriptingHealthStatisticsRequest {
+        let payload = try HanlinScriptingNativeJSON.decodeObject(json)
+        guard let metricName = payload["quantityType"] as? String,
+              let metric = HanlinScriptingHealthMetric(rawValue: metricName) else {
+            throw invalid("The Health quantity type is unsupported.")
+        }
+        let startDate = try date(payload["startDate"], name: "startDate")
+        let endDate = try date(payload["endDate"], name: "endDate")
+        guard startDate <= endDate,
+              endDate.timeIntervalSince(startDate) <= 366 * 24 * 60 * 60 else {
+            throw invalid("The Health date range is invalid or exceeds one year.")
+        }
+        guard let names = payload["statisticsOptions"] as? [String],
+              !names.isEmpty, names.count <= 2 else {
+            throw invalid("Health statisticsOptions must be a non-empty bounded array.")
+        }
+        let options = Set(names.compactMap(HanlinScriptingHealthStatisticsOption.init(rawValue:)))
+        guard options.count == Set(names).count else {
+            throw invalid("A requested Health statistics option is unsupported.")
+        }
+        return .init(metric: metric, startDate: startDate, endDate: endDate, options: options)
+    }
+
+    private static func date(_ value: Any?, name: String) throws -> Date {
+        if !(value is Bool), let number = value as? NSNumber,
+           number.doubleValue.isFinite {
+            return Date(timeIntervalSince1970: number.doubleValue / 1_000)
+        }
+        if let string = value as? String {
+            let formatter = ISO8601DateFormatter()
+            formatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
+            if let value = formatter.date(from: string) { return value }
+            formatter.formatOptions = [.withInternetDateTime]
+            if let value = formatter.date(from: string) { return value }
+        }
+        throw invalid("Health \(name) must be a valid date.")
+    }
+
+    private static func invalid(_ message: String) -> HanlinScriptingNativeError {
+        .init(name: "TypeError", code: "invalid_health_request", message: message)
+    }
+}
+
+public enum HanlinScriptingNotificationAction: String, Sendable {
+    case schedule
+    case removeAllPendingsOfCurrentScript = "remove_all_pendings_of_current_script"
+}
+
+public enum HanlinScriptingNotificationTrigger: Sendable {
+    case immediate
+    case timeInterval(seconds: Double, repeats: Bool)
+    case calendar(components: [String: Int], timeZoneIdentifier: String?, repeats: Bool)
+}
+
+public struct HanlinScriptingNotificationRequest: Sendable {
+    public let action: HanlinScriptingNotificationAction
+    public let title: String?
+    public let subtitle: String?
+    public let body: String?
+    public let badge: Int?
+    public let silent: Bool
+    public let interruptionLevel: String?
+    public let threadIdentifier: String?
+    public let userInfoJSON: Data?
+    public let trigger: HanlinScriptingNotificationTrigger?
+
+    public init(
+        action: HanlinScriptingNotificationAction,
+        title: String? = nil,
+        subtitle: String? = nil,
+        body: String? = nil,
+        badge: Int? = nil,
+        silent: Bool = false,
+        interruptionLevel: String? = nil,
+        threadIdentifier: String? = nil,
+        userInfoJSON: Data? = nil,
+        trigger: HanlinScriptingNotificationTrigger? = nil
+    ) {
+        self.action = action
+        self.title = title
+        self.subtitle = subtitle
+        self.body = body
+        self.badge = badge
+        self.silent = silent
+        self.interruptionLevel = interruptionLevel
+        self.threadIdentifier = threadIdentifier
+        self.userInfoJSON = userInfoJSON
+        self.trigger = trigger
+    }
+}
+
+public typealias HanlinScriptingNotificationLoader = @MainActor @Sendable (
+    HanlinScriptingNotificationRequest
+) async throws -> Bool
+
+public enum HanlinScriptingUnavailableNotificationLoader {
+    public static func load(_ request: HanlinScriptingNotificationRequest) async throws -> Bool {
+        _ = request
+        throw HanlinScriptingNativeError(
+            name: "Error",
+            code: "notifications_unavailable",
+            message: "Notifications are unavailable."
+        )
+    }
+}
+
+enum HanlinScriptingNotificationPayloadDecoder {
+    private static let componentNames = Set([
+        "era", "year", "yearForWeekOfYear", "quarter", "month", "weekOfMonth",
+        "weekOfYear", "weekday", "weekdayOrdinal", "day", "hour", "minute", "second", "nanosecond",
+    ])
+    private static let interruptionLevels = Set(["active", "passive", "timeSensitive"])
+
+    static func decode(operation: String, json: String) throws -> HanlinScriptingNotificationRequest {
+        if operation == "notification.removeAllPendingsOfCurrentScript" {
+            return .init(action: .removeAllPendingsOfCurrentScript)
+        }
+        guard operation == "notification.schedule" else {
+            throw invalid("The Notification operation is unavailable.")
+        }
+        let payload = try HanlinScriptingNativeJSON.decodeObject(json)
+        let title = try requiredString(payload["title"], name: "title", maximumBytes: 1_024)
+        let subtitle = try optionalString(payload["subtitle"], name: "subtitle", maximumBytes: 2_048)
+        let body = try optionalString(payload["body"], name: "body", maximumBytes: 8_192)
+        let thread = try optionalString(payload["threadIdentifier"], name: "threadIdentifier", maximumBytes: 512)
+        let level = try optionalString(payload["interruptionLevel"], name: "interruptionLevel", maximumBytes: 32)
+        if let level, !interruptionLevels.contains(level) {
+            throw invalid("The Notification interruptionLevel is invalid.")
+        }
+        guard payload["silent"] == nil || payload["silent"] is Bool else {
+            throw invalid("Notification silent must be a Boolean.")
+        }
+        let badge: Int? = try payload["badge"].map { value in
+            guard !(value is Bool), let number = value as? NSNumber,
+                  number.doubleValue.rounded() == number.doubleValue,
+                  (0 ... 999_999).contains(number.intValue) else {
+                throw invalid("The Notification badge is invalid.")
+            }
+            return number.intValue
+        }
+        let userInfoJSON: Data? = try payload["userInfo"].map { value in
+            guard JSONSerialization.isValidJSONObject(value) else {
+                throw invalid("Notification userInfo must contain JSON values.")
+            }
+            let data = try JSONSerialization.data(withJSONObject: value, options: [.sortedKeys])
+            guard data.count <= 65_536 else { throw invalid("Notification userInfo is too large.") }
+            return data
+        }
+        return .init(
+            action: .schedule,
+            title: title,
+            subtitle: subtitle,
+            body: body,
+            badge: badge,
+            silent: payload["silent"] as? Bool ?? false,
+            interruptionLevel: level,
+            threadIdentifier: thread,
+            userInfoJSON: userInfoJSON,
+            trigger: try trigger(payload["trigger"])
+        )
+    }
+
+    private static func trigger(_ value: Any?) throws -> HanlinScriptingNotificationTrigger {
+        guard let value, !(value is NSNull) else { return .immediate }
+        guard let object = value as? [String: Any], let type = object["type"] as? String else {
+            throw invalid("The Notification trigger is invalid.")
+        }
+        guard object["repeats"] == nil || object["repeats"] is Bool else {
+            throw invalid("Notification trigger repeats must be a Boolean.")
+        }
+        let repeats = object["repeats"] as? Bool ?? false
+        switch type {
+        case "timeInterval":
+            guard !(object["timeInterval"] is Bool), let number = object["timeInterval"] as? NSNumber,
+                  number.doubleValue.isFinite,
+                  number.doubleValue >= (repeats ? 60 : 1), number.doubleValue <= 366 * 24 * 60 * 60 else {
+                throw invalid("The Notification time interval is invalid.")
+            }
+            return .timeInterval(seconds: number.doubleValue, repeats: repeats)
+        case "calendar":
+            guard let raw = object["dateMatching"] as? [String: Any], !raw.isEmpty else {
+                throw invalid("A calendar Notification requires date components.")
+            }
+            var components: [String: Int] = [:]
+            for (key, value) in raw where componentNames.contains(key) {
+                guard !(value is Bool), let number = value as? NSNumber,
+                      number.doubleValue.rounded() == number.doubleValue else {
+                    throw invalid("A Notification date component is invalid.")
+                }
+                components[key] = number.intValue
+            }
+            guard !components.isEmpty else { throw invalid("A calendar Notification requires date components.") }
+            let timeZone = try optionalString(raw["timeZone"], name: "timeZone", maximumBytes: 128)
+            return .calendar(components: components, timeZoneIdentifier: timeZone, repeats: repeats)
+        default:
+            throw invalid("The Notification trigger type is unsupported.")
+        }
+    }
+
+    private static func requiredString(_ value: Any?, name: String, maximumBytes: Int) throws -> String {
+        guard let value = try optionalString(value, name: name, maximumBytes: maximumBytes), !value.isEmpty else {
+            throw invalid("Notification \(name) is required.")
+        }
+        return value
+    }
+
+    private static func optionalString(_ value: Any?, name: String, maximumBytes: Int) throws -> String? {
+        guard let value, !(value is NSNull) else { return nil }
+        guard let string = value as? String, string.utf8.count <= maximumBytes else {
+            throw invalid("Notification \(name) is invalid.")
+        }
+        return string
+    }
+
+    private static func invalid(_ message: String) -> HanlinScriptingNativeError {
+        .init(name: "TypeError", code: "invalid_notification_request", message: message)
+    }
+}
+
 public enum HanlinScriptingLiveActivityAction: String, Sendable {
     case start
     case update

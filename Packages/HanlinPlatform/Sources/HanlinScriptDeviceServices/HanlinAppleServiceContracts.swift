@@ -36,7 +36,7 @@ public struct HanlinAppleServiceAvailability: Codable, Hashable, Sendable {
         .init(
             family: .notifications,
             allowedContexts: [.mainApplication, .appIntent, .backgroundTask],
-            requiredEntitlements: ["aps-environment"]
+            requiredEntitlements: ["com.apple.developer.usernotifications.time-sensitive"]
         ),
         .init(
             family: .health,
@@ -104,26 +104,84 @@ public struct HanlinScriptPlacemarkValue: Codable, Hashable, Sendable {
     }
 }
 
+public enum HanlinScriptLocalNotificationTrigger: Codable, Hashable, Sendable {
+    case immediate
+    case timeInterval(seconds: Double, repeats: Bool)
+    case calendar(components: [String: Int], timeZoneIdentifier: String?, repeats: Bool)
+}
+
 public struct HanlinScriptLocalNotification: Codable, Hashable, Sendable {
     public let id: String
     public let title: String
+    public let subtitle: String
     public let body: String
-    public let fireDate: Date
-    public let userInfo: [String: String]
+    public let badge: Int?
+    public let silent: Bool
+    public let interruptionLevel: String?
+    public let threadIdentifier: String
+    public let userInfoJSON: Data?
+    public let trigger: HanlinScriptLocalNotificationTrigger
 
-    public init(id: String, title: String, body: String, fireDate: Date, userInfo: [String: String] = [:]) {
+    public init(
+        id: String,
+        title: String,
+        subtitle: String = "",
+        body: String = "",
+        badge: Int? = nil,
+        silent: Bool = false,
+        interruptionLevel: String? = nil,
+        threadIdentifier: String = "",
+        userInfoJSON: Data? = nil,
+        trigger: HanlinScriptLocalNotificationTrigger = .immediate
+    ) {
         self.id = id
         self.title = title
+        self.subtitle = subtitle
         self.body = body
-        self.fireDate = fireDate
-        self.userInfo = userInfo
+        self.badge = badge
+        self.silent = silent
+        self.interruptionLevel = interruptionLevel
+        self.threadIdentifier = threadIdentifier
+        self.userInfoJSON = userInfoJSON
+        self.trigger = trigger
     }
 }
 
 public enum HanlinScriptHealthMetric: String, Codable, CaseIterable, Hashable, Sendable {
-    case steps
-    case walkingRunningDistance
-    case activeEnergy
+    case steps = "stepCount"
+    case walkingRunningDistance = "distanceWalkingRunning"
+    case activeEnergy = "activeEnergyBurned"
+    case heartRate
+}
+
+public enum HanlinScriptHealthStatisticsOption: String, Codable, CaseIterable, Hashable, Sendable {
+    case cumulativeSum
+    case discreteAverage
+}
+
+public struct HanlinScriptHealthStatistics: Codable, Hashable, Sendable {
+    public let metric: HanlinScriptHealthMetric
+    public let unit: String
+    public let startDate: Date
+    public let endDate: Date
+    public let sum: Double?
+    public let average: Double?
+
+    public init(
+        metric: HanlinScriptHealthMetric,
+        unit: String,
+        startDate: Date,
+        endDate: Date,
+        sum: Double? = nil,
+        average: Double? = nil
+    ) {
+        self.metric = metric
+        self.unit = unit
+        self.startDate = startDate
+        self.endDate = endDate
+        self.sum = sum
+        self.average = average
+    }
 }
 
 public struct HanlinScriptHealthQuantity: Codable, Hashable, Sendable {
