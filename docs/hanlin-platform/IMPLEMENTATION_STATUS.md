@@ -21,7 +21,8 @@ Implemented on `codex/full-scripting-multiruntime`:
 - compiler provenance can distinguish TypeScript 7.0.2 host typecheck from the
   TypeScript 6.0.3 NodeMobile emitter, bundler, and runtime engine versions.
 - the current five-file declaration export from Scripting is vendored byte-for-byte
-  as baseline `scripting-compat-2026-08-25-0b7b8e715573`; the generated SDK and
+  in baseline `scripting-compat-2026-08-26-a91e6672cb47`; that baseline also
+  contains the user-provided 2026-08-26 documentation refresh, while the generated SDK and
   on-device compiler consume `global.d.ts`, `node.d.ts`, `safari-ext.d.ts`,
   `scripting.d.ts`, and `web-fetch.d.ts` together;
 - Package Center installation is connected to the on-device project emitter, and

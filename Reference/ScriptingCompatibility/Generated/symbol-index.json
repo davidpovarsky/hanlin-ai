@@ -1,5 +1,5 @@
 {
-  "baselineID": "scripting-compat-2026-08-25-0b7b8e715573",
+  "baselineID": "scripting-compat-2026-08-26-a91e6672cb47",
   "schemaVersion": 1,
   "symbols": [
     {
@@ -11951,7 +11951,9 @@
       "documents": [
         "av_capture_session/live_photo/en.md",
         "av_capture_session/live_photo/index.tsx",
-        "av_capture_session/live_photo/zh.md"
+        "av_capture_session/live_photo/zh.md",
+        "live_photo/en.md",
+        "live_photo/zh.md"
       ],
       "line": 3122,
       "referenceCategory": "class",
@@ -21765,7 +21767,10 @@
     },
     {
       "declarationFile": "global.d.ts",
-      "documents": [],
+      "documents": [
+        "video_editor/en.md",
+        "video_editor/zh.md"
+      ],
       "line": 17588,
       "referenceCategory": "namespace",
       "referenceSignatureHash": "34450a09d4275990dff26fc646ccb0f4ad6d3e31fad33efdd4bea6be3041474c",

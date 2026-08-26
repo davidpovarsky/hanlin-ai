@@ -1,5 +1,5 @@
 {
-  "baselineID": "scripting-compat-2026-08-25-0b7b8e715573",
+  "baselineID": "scripting-compat-2026-08-26-a91e6672cb47",
   "documents": [
     {
       "bytes": 5665,
@@ -106,19 +106,19 @@
       "title": "zh"
     },
     {
-      "bytes": 10699,
+      "bytes": 17644,
       "language": "en",
       "links": [],
       "path": "archive/en.md",
-      "sha256": "12b624f73cda3446c58fe8fc7443184ba57fb3948ebdd7cffcc52d9bd8f548e9",
+      "sha256": "a064baff77e76074e84ebe7e618d75e32fbceb7395093067a0e2647876ff2552",
       "title": "en"
     },
     {
-      "bytes": 10523,
+      "bytes": 16985,
       "language": "zh",
       "links": [],
       "path": "archive/zh.md",
-      "sha256": "e823f37a8c42c0669832d293b29d1372d9c6369687c03a8ca06ebd4bf59f27b6",
+      "sha256": "5bde2a63e16203eadf08fd0a450f1746fb37e7dc16722381759916decef0063a",
       "title": "zh"
     },
     {
@@ -418,11 +418,11 @@
       "title": "zh"
     },
     {
-      "bytes": 5839,
+      "bytes": 6166,
       "language": "en",
       "links": [],
       "path": "av_capture_session/live_photo/en.md",
-      "sha256": "6916e5914861ec056bbd96eb706f2a4f309e62c02d6189cda0df96439348e3b5",
+      "sha256": "37b96e46afb96f4be61b7e51309f13781abef040ac13fc757ee528e63949310a",
       "title": "en"
     },
     {
@@ -434,11 +434,11 @@
       "title": "index"
     },
     {
-      "bytes": 5189,
+      "bytes": 5487,
       "language": "zh",
       "links": [],
       "path": "av_capture_session/live_photo/zh.md",
-      "sha256": "1f2eaad2c8fdf9ad30b5064c0da8922c63db58fc50639eb054a7d17ff234adb3",
+      "sha256": "e37d92d96ac7c6381a71607c0650010eb7f56e292cee5895a1d31454729721db",
       "title": "zh"
     },
     {
@@ -730,23 +730,23 @@
       "title": "zh"
     },
     {
-      "bytes": 1256,
+      "bytes": 7465,
       "language": "en",
       "links": [
         "capture_scripts/en.md"
       ],
       "path": "capture_scripts_store/en.md",
-      "sha256": "4511da9248b399db6ffe5998439394eb98ba8bbe56df11e819ffe96f66bae6cc",
+      "sha256": "70b358b182dab929b24ae713886fc4fdc73bc2a997ef853fe9d4223c1b996d7b",
       "title": "en"
     },
     {
-      "bytes": 1236,
+      "bytes": 6910,
       "language": "zh",
       "links": [
         "capture_scripts/zh.md"
       ],
       "path": "capture_scripts_store/zh.md",
-      "sha256": "f6f09a19bdfcc68993d30235c8007fb4421bc361225648b6b88bb7eebeca060e",
+      "sha256": "8f57ae876f8ed16579adcca4d8e0bcacda8803856add836516a178c575c1ed68",
       "title": "zh"
     },
     {
@@ -790,31 +790,33 @@
       "title": "zh"
     },
     {
-      "bytes": 4717,
+      "bytes": 10577,
       "language": "en",
       "links": [
         "capture_scripts_httpclient/en.md",
         "capture_scripts_notification/en.md",
         "capture_scripts_store/en.md",
+        "capture_scripts_store/en.md",
         "capture_scripts_utils/en.md",
         "capture_scripts_utils/en.md"
       ],
       "path": "capture_scripts/en.md",
-      "sha256": "00d5ac097283e6d141f7ec298f14dcd2fc7deabdf50b0b71ad8fad84fcb404d1",
+      "sha256": "9342bbad39b86d93c1e8a294fa2ef531bed56117411235e3915baa4f94a1224f",
       "title": "en"
     },
     {
-      "bytes": 4352,
+      "bytes": 9884,
       "language": "zh",
       "links": [
         "capture_scripts_httpclient/zh.md",
         "capture_scripts_notification/zh.md",
         "capture_scripts_store/zh.md",
+        "capture_scripts_store/zh.md",
         "capture_scripts_utils/zh.md",
         "capture_scripts_utils/zh.md"
       ],
       "path": "capture_scripts/zh.md",
-      "sha256": "803b1626152a7e186e896463bc2dcfb62f6924b88a7e3a64d6f51c54f36b2d7f",
+      "sha256": "db4058c1d5d3dfe91bb73e68068d2401b5e566bae83d3e67dc3f8201ed994408",
       "title": "zh"
     },
     {
@@ -994,11 +996,11 @@
       "title": "zh"
     },
     {
-      "bytes": 291879,
+      "bytes": 298087,
       "language": "json",
       "links": [],
       "path": "doc.json",
-      "sha256": "61128b769da3b162b120f37eaabf07355f1721bbe2b020aa9e340d7025569c0e",
+      "sha256": "7972786ea610b78770146eab079265cdf0ba5ecca7e06a5348138e19bc8d915b",
       "title": "doc"
     },
     {
@@ -1698,6 +1700,22 @@
       "title": "helper_views"
     },
     {
+      "bytes": 5357,
+      "language": "en",
+      "links": [],
+      "path": "home_screen_ui/en.md",
+      "sha256": "4cb059f44ae73e2c5fc5c42fdc51b6e5c12b483ed7e2905eae877e6c32bfa900",
+      "title": "en"
+    },
+    {
+      "bytes": 4926,
+      "language": "zh",
+      "links": [],
+      "path": "home_screen_ui/zh.md",
+      "sha256": "cfd75bd440ca138ecbd519cc8c3cfd9ecffa64fd9d6ec2343b3ab81bfaa80ef2",
+      "title": "zh"
+    },
+    {
       "bytes": 1677,
       "language": "en",
       "links": [],
@@ -1914,19 +1932,19 @@
       "title": "zh"
     },
     {
-      "bytes": 3717,
+      "bytes": 4539,
       "language": "en",
       "links": [],
       "path": "image_io/en.md",
-      "sha256": "a7b6af5956df3c9af92f18971ded8439d25a10da2cc6dfb2183382a1604b36b6",
+      "sha256": "bd82bdf8d53d20dcfe229f3b5db9975e4993eeb9a7e4cff070d2a9645aa72465",
       "title": "en"
     },
     {
-      "bytes": 3562,
+      "bytes": 4377,
       "language": "zh",
       "links": [],
       "path": "image_io/zh.md",
-      "sha256": "a2f35efaeb6342ff33249117a8829c8874659124105de0e82ac7b27d324f85f3",
+      "sha256": "673c611e9504b5bb6e9766dbc2803ca75a2412dcf498538e2b8ad93f142d2191",
       "title": "zh"
     },
     {
@@ -2167,6 +2185,22 @@
       "links": [],
       "path": "live_activity/zh.md",
       "sha256": "3091b31d68784f539e02b6d3b4a8d477439bf547336d4c53840090d10e5fefa8",
+      "title": "zh"
+    },
+    {
+      "bytes": 6534,
+      "language": "en",
+      "links": [],
+      "path": "live_photo/en.md",
+      "sha256": "c688b821b7dcf7dc9478bc020c79b1b425909a7d175842c302f55f849a862b3c",
+      "title": "en"
+    },
+    {
+      "bytes": 5957,
+      "language": "zh",
+      "links": [],
+      "path": "live_photo/zh.md",
+      "sha256": "1ad5cf2de5da8724eb9f8cd47544b3473afbc54cafabf6f54b7c00a7907b1242",
       "title": "zh"
     },
     {
@@ -3000,19 +3034,19 @@
       "title": "zh"
     },
     {
-      "bytes": 9181,
+      "bytes": 9179,
       "language": "en",
       "links": [],
       "path": "safari_browser_scripts/en.md",
-      "sha256": "2a60b9bfed8387ed42375e7d17d31acb528112e0a502e38c4ddb1bf67e5ae3f4",
+      "sha256": "6e400ed065fbd61bd31075d38b62fea52194e794f6d161207ac87727a17c1197",
       "title": "en"
     },
     {
-      "bytes": 9035,
+      "bytes": 9033,
       "language": "zh",
       "links": [],
       "path": "safari_browser_scripts/zh.md",
-      "sha256": "06f80fa10bc524e945f96f47925c98dfb019ca674924a5df7c604c748d141ac0",
+      "sha256": "95083c48de7d661d636cc9bef9c0d47496f5849f580c6d175c491c3c96c6e50c",
       "title": "zh"
     },
     {
@@ -3080,19 +3114,19 @@
       "title": "script"
     },
     {
-      "bytes": 7913,
+      "bytes": 8082,
       "language": "en",
       "links": [],
       "path": "script/api/en.md",
-      "sha256": "66104b29fd22b83d5657d175b4b5cb4dabae0db18b4f9580e6a98870bf697d0a",
+      "sha256": "b5e37f97feca63328a33b6c6e1da3603bce69a40314a8421a53be596b872598c",
       "title": "en"
     },
     {
-      "bytes": 7834,
+      "bytes": 8012,
       "language": "zh",
       "links": [],
       "path": "script/api/zh.md",
-      "sha256": "ad8087ea5eebccf306e33d358b4b0afbb47eb47bcfca9ed2c328f9ce6959e088",
+      "sha256": "a47ef6f3481cf8e6afb4d4b24a8cefb212ad02c93b5e56633faded0ef7ceb9e3",
       "title": "zh"
     },
     {
@@ -3733,6 +3767,22 @@
       "links": [],
       "path": "uuid/zh.md",
       "sha256": "18478a512ddef70eea1d7dee83cac5bcd0453b1268ba845779226c33993d20f0",
+      "title": "zh"
+    },
+    {
+      "bytes": 6113,
+      "language": "en",
+      "links": [],
+      "path": "video_editor/en.md",
+      "sha256": "7c55a93b987a4bc502f49390408510b023f1e98d2532200db5c692dc0dd62794",
+      "title": "en"
+    },
+    {
+      "bytes": 5426,
+      "language": "zh",
+      "links": [],
+      "path": "video_editor/zh.md",
+      "sha256": "7734d7e3d5ff7e566993ac12c3cccf0d2ea04c9b92c48d2dfba3c953d386afa2",
       "title": "zh"
     },
     {
@@ -4728,19 +4778,19 @@
       "title": "zh"
     },
     {
-      "bytes": 6634,
+      "bytes": 7128,
       "language": "en",
       "links": [],
       "path": "view_modifiers/pip/en.md",
-      "sha256": "2b6c8e4d91d099fef39522f79b8d75d01308182c01090ea5e61875ce1a4b69c3",
+      "sha256": "669bfb5f0d8feb6b557f3c0f552d015772a11c44f2a92c5e08056d2f410eab92",
       "title": "en"
     },
     {
-      "bytes": 6218,
+      "bytes": 6697,
       "language": "zh",
       "links": [],
       "path": "view_modifiers/pip/zh.md",
-      "sha256": "0837597cec6bc030247a4d560115d4728d3dc2e890bb3d5b2fbacba6182a7a16",
+      "sha256": "3a9244cc296b7792986bd419866986c06d32ad439cba30df0f78e89b2866c20b",
       "title": "zh"
     },
     {
@@ -6376,11 +6426,11 @@
       "title": "zh"
     },
     {
-      "bytes": 7399,
+      "bytes": 8166,
       "language": "en",
       "links": [],
       "path": "views/editor/en.md",
-      "sha256": "18dc716e5730e7927fcf9cce680e3751bfa0c70b579fc5df6ffe6e84b623dfae",
+      "sha256": "157777b1658f5e5fc4d34224ad999d72abdf01db054c47c9b990145a0d04e58b",
       "title": "en"
     },
     {
@@ -6392,11 +6442,11 @@
       "title": "index"
     },
     {
-      "bytes": 6894,
+      "bytes": 7627,
       "language": "zh",
       "links": [],
       "path": "views/editor/zh.md",
-      "sha256": "ec59956df8c4ab92fbfdcf39038b910dc0c89befa547e3d9007ddefead66ba0f",
+      "sha256": "dcc72df934d54d0465ee5f39473e7d885318a5830408a040d2b12c84056e559c",
       "title": "zh"
     },
     {
@@ -7024,11 +7074,11 @@
       "title": "two_column"
     },
     {
-      "bytes": 5200,
+      "bytes": 5689,
       "language": "en",
       "links": [],
       "path": "views/navigation/navigation_stack/en.md",
-      "sha256": "e6f57e5a3979fabbe6a89c2610f515e2724d9ed00cf06d87a1514d1b5d8f0934",
+      "sha256": "491c77d251ae365a60637cf7fba69aa22d2877a089a8d6b2fc483c5e20857fb7",
       "title": "en"
     },
     {
@@ -7048,11 +7098,11 @@
       "title": "with_navigation_link"
     },
     {
-      "bytes": 4938,
+      "bytes": 5431,
       "language": "zh",
       "links": [],
       "path": "views/navigation/navigation_stack/zh.md",
-      "sha256": "33adc6bed5c7d7426aa03537fa9cc2ff251bbf4a6499fd813b081492930ce8bb",
+      "sha256": "0e2bcf705729168f00c2ce0cadbb3af3f2f074a5520acc3eb2e6b130055bf422",
       "title": "zh"
     },
     {
@@ -7544,19 +7594,19 @@
       "title": "zh"
     },
     {
-      "bytes": 5438,
+      "bytes": 7338,
       "language": "en",
       "links": [],
       "path": "widget_api/en.md",
-      "sha256": "27892a7cd4322a570527d0075b0a73246f6bd3869a6e0cf47f320e7f7ddfe446",
+      "sha256": "8d232f6f305db07f08faecc1d274de29685996f6688a4283357e43e1c71ec9ae",
       "title": "en"
     },
     {
-      "bytes": 5268,
+      "bytes": 7044,
       "language": "zh",
       "links": [],
       "path": "widget_api/zh.md",
-      "sha256": "82f6f436fc75b40ccf2b23a420922c3a1d5480259108a8be3a1765c91cac8cd1",
+      "sha256": "de3fe892abc13f4470327ef8a5464d33a8360ec9a61943c4d0385bf24a7b5017",
       "title": "zh"
     },
     {

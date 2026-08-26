@@ -302,9 +302,9 @@ To open a new tab use `GM.openInTab(url)`; to close a tab use `GM.closeTab(id)` 
 
 ## Installed Scripts
 
-Safari's extension popup can install userscripts from the current page or from a URL. Installed scripts can be enabled, disabled, updated, or deleted in the popup and in Tools > Development > Safari Browser Scripts.
+Safari's extension popup can install userscripts from the current page or from a URL. Installed scripts can be enabled, disabled, updated, or deleted in the popup and in More > Development > Safari Browser Scripts.
 
-Use the Tools page to inspect:
+Use the More page to inspect:
 
 - Installed userscripts.
 - GM storage JSON files.

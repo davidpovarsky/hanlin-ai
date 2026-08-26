@@ -1,16 +1,16 @@
 # Scripting Compatibility Import Report
 
-Baseline: `scripting-compat-2026-08-25-0b7b8e715573`
+Baseline: `scripting-compat-2026-08-26-a91e6672cb47`
 
 ## Result
 
-- Aggregate SHA-256: `0b7b8e715573ffc1656f530d9eba6cc019e6742294392278edbee812bd45a1c9`
-- Source files inspected: 999
+- Aggregate SHA-256: `a91e6672cb470fcd5c3185a29ed25832a187008de55e7acd40e4008331efc125`
+- Source files inspected: 1005
 - Source directories inspected: 0
-- Imported files: 999
-- Imported bytes: 5933046
+- Imported files: 1005
+- Imported bytes: 6019985
 - Declaration files: 5
-- Documentation files: 942
+- Documentation files: 948
 - Project-example files: 49
 - Excluded files under approved roots: 0
 - Reparse points discovered: 0

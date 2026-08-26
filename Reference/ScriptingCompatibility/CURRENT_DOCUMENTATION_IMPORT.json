@@ -1,0 +1,14 @@
+{
+  "aggregateSHA256": "a91e6672cb470fcd5c3185a29ed25832a187008de55e7acd40e4008331efc125",
+  "baselineID": "scripting-compat-2026-08-26-a91e6672cb47",
+  "documentationBytes": 4569560,
+  "documentationFileCount": 948,
+  "importedAt": "2026-08-26T03:24:35+03:00",
+  "importedAtUTC": "2026-08-26T00:24:35.000Z",
+  "previousDocumentationFileCount": 942,
+  "schemaVersion": 1,
+  "sourceArchiveBytes": 4814694,
+  "sourceArchiveForImportRecord": "C:\\Users\\DAVID\\Downloads\\Scripting Documentation (1).zip",
+  "sourceArchiveRole": "read-only-provenance-only",
+  "sourceArchiveSHA256": "ff2a1810a874c8a32e113eb2fc1729b4801e19a56700a954bc93b2ca36a3cbf7"
+}

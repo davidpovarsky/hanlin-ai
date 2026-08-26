@@ -1,5 +1,5 @@
 {
-  "baselineID": "scripting-compat-2026-08-25-0b7b8e715573",
+  "baselineID": "scripting-compat-2026-08-26-a91e6672cb47",
   "brokenDocumentationLinks": [],
   "compilerVersionDifference": {
     "differs": true,
@@ -65,6 +65,11 @@
     },
     {
       "document": "capture_scripts/en.md",
+      "link": "capture_scripts_store/en.md",
+      "resolved": "capture_scripts_store/en.md"
+    },
+    {
+      "document": "capture_scripts/en.md",
       "link": "capture_scripts_utils/en.md",
       "resolved": "capture_scripts_utils/en.md"
     },
@@ -87,6 +92,11 @@
       "document": "capture_scripts/en.md",
       "link": "capture_scripts_utils/en.md",
       "resolved": "capture_scripts_utils/en.md"
+    },
+    {
+      "document": "capture_scripts/zh.md",
+      "link": "capture_scripts_store/zh.md",
+      "resolved": "capture_scripts_store/zh.md"
     },
     {
       "document": "capture_scripts/zh.md",
@@ -3018,10 +3028,10 @@
     "brokenDocumentationLinks": 0,
     "declarationFiles": 5,
     "declarationSymbols": 2440,
-    "documentationFiles": 942,
-    "documentationMarkdownChinese": 402,
-    "documentationMarkdownEnglish": 402,
-    "documentationRootRelativeFallbacks": 20,
+    "documentationFiles": 948,
+    "documentationMarkdownChinese": 405,
+    "documentationMarkdownEnglish": 405,
+    "documentationRootRelativeFallbacks": 22,
     "duplicateSymbolNames": 158,
     "fixtures": 177
   }

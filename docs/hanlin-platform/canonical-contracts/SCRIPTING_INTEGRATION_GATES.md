@@ -6,7 +6,9 @@ and close only when their pass criteria are demonstrated.
 ## 1. Verified repository facts
 
 - Authorized current baseline ID:
-  `scripting-compat-2026-08-25-0b7b8e715573`.
+  `scripting-compat-2026-08-26-a91e6672cb47`; its declaration bytes are
+  unchanged from the 2026-08-25 export and its documentation tree comes from
+  the user-provided 2026-08-26 archive.
 - Aggregate SHA-256:
   `0b7b8e715573ffc1656f530d9eba6cc019e6742294392278edbee812bd45a1c9`.
 - 999 baseline files, including the five current declaration files exported

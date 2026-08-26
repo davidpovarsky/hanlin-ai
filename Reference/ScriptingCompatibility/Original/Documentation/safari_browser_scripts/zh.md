@@ -302,9 +302,9 @@ interface ScriptingTabInfo {
 
 ## 已安装脚本
 
-Safari 扩展弹窗支持从当前页面或 URL 安装 userscript。已安装脚本可以在弹窗和 Tools > Development > Safari Browser Scripts 中启用、禁用、更新或删除。
+Safari 扩展弹窗支持从当前页面或 URL 安装 userscript。已安装脚本可以在弹窗和 More > Development > Safari Browser Scripts 中启用、禁用、更新或删除。
 
-Tools 页面可以查看：
+More 页面可以查看：
 
 - 已安装的 userscript。
 - GM 存储 JSON 文件。

@@ -27,6 +27,18 @@
         },
         "children": [
           {
+            "pro": true,
+            "title": {
+              "en": "Home Screen UI",
+              "zh": "首页 UI"
+            },
+            "subtitle": {
+              "en": "A script that provides a `home_screen_default_ui.tsx` file can now be rendered as a tab on the app's home screen. Turn on Show Home Tab in Settings.",
+              "zh": "提供 `home_screen_default_ui.tsx` 的脚本现在可以作为 App 首页的一个 Tab 渲染。在「设置」中打开 Show Home Tab 开关。"
+            },
+            "readme": "home_screen_ui/"
+          },
+          {
             "title": {
               "en": "Notification Sounds",
               "zh": "通知铃声"
@@ -36,6 +48,30 @@
               "zh": "Notification.schedule 新增 `sound` 选项可播放自定义铃声,本地通知现在默认有声。可在「工具 > 通知 > 通知铃声」中导入和管理自定义铃声。"
             },
             "readme": "notification/"
+          },
+          {
+            "pro": true,
+            "title": {
+              "en": "Encrypted 7z Archives",
+              "zh": "加密 7z 归档"
+            },
+            "subtitle": {
+              "en": "Archive adds create7z, list7z, and extract7z for creating, inspecting, and extracting AES-256 encrypted 7z archives with progress and cancellation.",
+              "zh": "Archive 新增 create7z、list7z 和 extract7z，可创建、查看和解压 AES-256 加密的 7z 归档，并支持进度和取消。"
+            },
+            "readme": "archive/"
+          },
+          {
+            "pro": true,
+            "title": {
+              "en": "AES-256 ZIP Archives",
+              "zh": "AES-256 ZIP 归档"
+            },
+            "subtitle": {
+              "en": "Archive adds createZip and extractZip for creating and extracting regular or WinZip AES-256 encrypted ZIP archives without loading whole files into memory.",
+              "zh": "Archive 新增 createZip 和 extractZip，可创建和解压普通或使用 WinZip AES-256 加密的 ZIP 归档，并适合处理大文件。"
+            },
+            "readme": "archive/"
           },
           {
             "title": {
@@ -357,7 +393,6 @@
             ],
             "readme": "ui_image/"
           },
-
           {
             "title": {
               "en": "MapSnapshotter: Overlays & Annotations",
@@ -405,6 +440,71 @@
               "环境值"
             ],
             "readme": "views/environment_values_reader/"
+          },
+          {
+            "pro": true,
+            "title": {
+              "en": "Live Photos from Ordinary Videos",
+              "zh": "把普通视频变成实况照片"
+            },
+            "subtitle": {
+              "en": "LivePhoto.createFromVideo turns any local video into a still + movie pair that Photos.saveLivePhoto accepts, with stillTime for the cover frame and maxDuration for the length (10 seconds by default, up to the whole video).",
+              "zh": "LivePhoto.createFromVideo 把任意本地视频转成 Photos.saveLivePhoto 能接受的静态图 + 视频资源对,用 stillTime 指定封面帧、maxDuration 指定时长(默认 10 秒,最长可到整段视频)。"
+            },
+            "keywords": [
+              "LivePhoto",
+              "createFromVideo",
+              "Live Photo",
+              "saveLivePhoto",
+              "3302",
+              "实况照片",
+              "视频转实况",
+              "动态照片"
+            ],
+            "readme": "live_photo/"
+          },
+          {
+            "title": {
+              "en": "ImageIO: makerApple",
+              "zh": "ImageIO：makerApple"
+            },
+            "subtitle": {
+              "en": "readMetadata and writeImage now expose the Apple Maker Note as makerApple, whose key '17' holds the Live Photo asset identifier.",
+              "zh": "readMetadata 与 writeImage 现在支持 Apple Maker Note(makerApple),其中键 '17' 存放实况照片的 asset identifier。"
+            },
+            "keywords": [
+              "ImageIO",
+              "makerApple",
+              "MakerNote",
+              "asset identifier",
+              "元数据",
+              "实况照片标识"
+            ],
+            "readme": "image_io/"
+          },
+          {
+            "pro": true,
+            "title": {
+              "en": "Trim Videos in a Script",
+              "zh": "在脚本中裁剪视频"
+            },
+            "subtitle": {
+              "en": "The new VideoEditor API opens the system video trimming interface. VideoEditor.present resolves with the trimmed video's file path, or null when the user cancels, with maximumDuration and quality to bound the result.",
+              "zh": "新增 VideoEditor API,用于打开系统视频裁剪界面。VideoEditor.present 返回裁剪结果的文件路径,用户取消时返回 null,并可用 maximumDuration 与 quality 限定结果。"
+            },
+            "keywords": [
+              "VideoEditor",
+              "present",
+              "canEditVideo",
+              "trim",
+              "video",
+              "maximumDuration",
+              "quality",
+              "裁剪",
+              "剪辑",
+              "视频"
+            ],
+            "readme": "video_editor/"
           }
         ]
       },
@@ -1995,6 +2095,18 @@
       "zh": "在控制中心或锁屏界面添加按钮（Button）或开关（Toggle）控件。"
     },
     "readme": "control_widget/"
+  },
+  {
+    "pro": true,
+    "title": {
+      "en": "Home Screen UI",
+      "zh": "首页 UI"
+    },
+    "subtitle": {
+      "en": "Render a script's UI as a tab on the app's home screen with home_screen_default_ui.tsx.",
+      "zh": "用 home_screen_default_ui.tsx 把脚本的 UI 渲染成 App 首页的一个 Tab。"
+    },
+    "readme": "home_screen_ui/"
   },
   {
     "title": {
@@ -5417,8 +5529,8 @@
           "zh": "Archive（归档）"
         },
         "subtitle": {
-          "en": "This class provides a comprehensive interface for working with archive files (such as ZIP).",
-          "zh": "该类用于读取、创建与修改压缩归档文件（如 ZIP 格式）"
+          "en": "Create, inspect, update, and extract ZIP and AES-256 encrypted 7z archives.",
+          "zh": "创建、查看、修改和解压 ZIP 与 AES-256 加密的 7z 归档。"
         },
         "readme": "archive/"
       },
@@ -6113,6 +6225,29 @@
         ],
         "readme": "photos/",
         "example": "photos/index"
+      },
+      {
+        "pro": true,
+        "title": {
+          "en": "Live Photo from a video",
+          "zh": "把视频变成实况照片"
+        },
+        "subtitle": {
+          "en": "LivePhoto.createFromVideo turns an ordinary local video into a still + movie pair that Photos.saveLivePhoto accepts, instead of failing with PHPhotosErrorDomain 3302. Trim to any length up to the whole video.",
+          "zh": "LivePhoto.createFromVideo 把普通本地视频转成 Photos.saveLivePhoto 能接受的静态图 + 视频资源对,不再报 PHPhotosErrorDomain 3302。时长可裁到任意长度,最长为整段视频。"
+        },
+        "keywords": [
+          "LivePhoto",
+          "createFromVideo",
+          "Live Photo",
+          "saveLivePhoto",
+          "3302",
+          "video to live photo",
+          "实况照片",
+          "视频转实况",
+          "动态照片"
+        ],
+        "readme": "live_photo/"
       },
       {
         "pro": true,
@@ -7000,6 +7135,18 @@
           "zh": "用于在不离开 Scripting 应用的情况下，展示 App Store 中某个应用的详情页面。"
         },
         "readme": "app_store/"
+      },
+      {
+        "pro": true,
+        "title": {
+          "en": "VideoEditor",
+          "zh": "VideoEditor"
+        },
+        "subtitle": {
+          "en": "This API presents the system video trimming interface and returns the trimmed video.",
+          "zh": "用于唤起系统视频裁剪界面，并返回裁剪后的视频。"
+        },
+        "readme": "video_editor/"
       },
       {
         "pro": true,

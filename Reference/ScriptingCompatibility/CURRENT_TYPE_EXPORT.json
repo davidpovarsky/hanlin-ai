@@ -1,6 +1,6 @@
 {
-  "aggregateSHA256": "0b7b8e715573ffc1656f530d9eba6cc019e6742294392278edbee812bd45a1c9",
-  "baselineID": "scripting-compat-2026-08-25-0b7b8e715573",
+  "aggregateSHA256": "a91e6672cb470fcd5c3185a29ed25832a187008de55e7acd40e4008331efc125",
+  "baselineID": "scripting-compat-2026-08-26-a91e6672cb47",
   "declarationSet": [
     {
       "bytes": 713964,

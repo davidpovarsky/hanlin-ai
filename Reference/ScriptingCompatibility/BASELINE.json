@@ -1,7 +1,19 @@
 {
-  "aggregateSHA256": "0b7b8e715573ffc1656f530d9eba6cc019e6742294392278edbee812bd45a1c9",
+  "aggregateSHA256": "a91e6672cb470fcd5c3185a29ed25832a187008de55e7acd40e4008331efc125",
   "authorizedForDirectUse": true,
-  "baselineID": "scripting-compat-2026-08-25-0b7b8e715573",
+  "baselineID": "scripting-compat-2026-08-26-a91e6672cb47",
+  "currentDocumentationImport": {
+    "documentationBytes": 4569560,
+    "documentationFileCount": 948,
+    "importedAt": "2026-08-26T03:24:35+03:00",
+    "importedAtUTC": "2026-08-26T00:24:35.000Z",
+    "previousDocumentationFileCount": 942,
+    "schemaVersion": 1,
+    "sourceArchiveBytes": 4814694,
+    "sourceArchiveForImportRecord": "C:\\Users\\DAVID\\Downloads\\Scripting Documentation (1).zip",
+    "sourceArchiveRole": "read-only-provenance-only",
+    "sourceArchiveSHA256": "ff2a1810a874c8a32e113eb2fc1729b4801e19a56700a954bc93b2ca36a3cbf7"
+  },
   "currentTypeExport": {
     "declarationSet": [
       {
@@ -41,26 +53,26 @@
     "byCategory": {
       "compiler": 3,
       "declaration": 5,
-      "documentation": 942,
+      "documentation": 948,
       "example": 49
     },
     "byLanguage": {
-      "en": 402,
+      "en": 405,
       "json": 8,
       "markdown": 5,
       "tsx": 155,
       "typescript": 27,
-      "zh": 402
+      "zh": 405
     },
-    "total": 999
+    "total": 1005
   },
-  "generatedAt": "2026-08-24T23:00:21.000Z",
+  "generatedAt": "2026-08-26T00:24:35.000Z",
   "generationTimestampPolicy": "latest-imported-source-mtime",
   "schemaVersion": 1,
   "sourceObservations": {
     "excludedUnderApprovedRoots": 0,
     "inspectedDirectories": 0,
-    "inspectedFiles": 999,
+    "inspectedFiles": 1005,
     "reparsePoints": 0,
     "requiredCandidateCounts": {
       "global.d.ts": 2,

@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "measuredAt": "2026-08-25",
-  "baselineID": "scripting-compat-2026-08-25-0b7b8e715573",
+  "measuredAt": "2026-08-26",
+  "baselineID": "scripting-compat-2026-08-26-a91e6672cb47",
   "compilerVersion": "7.0.2",
   "environment": "Windows local static and Node-hosted bootstrap tests plus GitHub Actions run 32827640058 on Xcode 26.6: Swift 6 contracts/tests, downstream JSC tests, arm64 iOS Simulator build and launch, generic iOS 26 device build, unsigned IPA packaging and dyld-closure validation",
   "projects": [

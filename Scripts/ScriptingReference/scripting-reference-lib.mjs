@@ -722,6 +722,9 @@ export async function createMetadataOutputs(plan) {
   if (plan.typeExport) {
     baseline.currentTypeExport = plan.typeExport;
   }
+  if (plan.documentationImport) {
+    baseline.currentDocumentationImport = plan.documentationImport;
+  }
   const sums = {
     schemaVersion: 1,
     algorithm: "SHA-256",
@@ -1228,6 +1231,7 @@ export async function loadPlanFromRepository() {
     declarationHeaderVersion: baseline.declarationHeaderVersion,
     typescriptPackageVersion: baseline.typescriptPackageVersion,
     typeExport: baseline.currentTypeExport ?? null,
+    documentationImport: baseline.currentDocumentationImport ?? null,
   };
 }
 
