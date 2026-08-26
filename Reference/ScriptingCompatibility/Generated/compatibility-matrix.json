@@ -34998,7 +34998,7 @@
       ],
       "allowedOrigins": [],
       "behaviorDifferences": [
-        "previewURLs resolves only package-confined or currently security-scoped file paths and presents QLPreviewController until the user finishes. Text and UIImage previews remain unavailable and reject explicitly."
+        "previewURLs resolves only package-confined or currently security-scoped file paths and presents QLPreviewController until the user finishes. previewText presents selectable text and previewImage presents a decoded UIImage bridge value; both resolve only after the user finishes. The fullscreen hint currently uses the host's standard modal presentation."
       ],
       "behaviorMatched": false,
       "declarationFile": "global.d.ts",
@@ -35007,7 +35007,7 @@
       "hanlinAPIVersion": "hanlin.services/1.0",
       "hanlinSymbol": "HanlinScriptingApplicationSession.QuickLook",
       "implementedByHanlin": true,
-      "notes": "Implements the untouched FileManager file-preview path while preventing remote or arbitrary absolute URL previews.",
+      "notes": "Implements the untouched FileManager file and UIImage preview paths while preventing remote or arbitrary absolute URL previews.",
       "referenceCategory": "namespace",
       "referenceSignatureHash": "50855ac41130ab206be7b1e4b7a1ac959c05427802a83a351354d7188eb50253",
       "referenceSymbol": "QuickLook",
@@ -48197,7 +48197,7 @@
       ],
       "allowedOrigins": [],
       "behaviorDifferences": [
-        "Photo-picker and camera results preserve encoded image bytes in an opaque UIImage bridge value. Data.fromJPEG and UIImage.toJPEGData perform real native UIImage JPEG encoding at the requested bounded compression quality. General constructors, geometry, transforms, symbols, PNG encoding and ScriptUI UIImage rendering remain unavailable and are not claimed."
+        "Photo-picker, camera and UIImage.fromFile preserve encoded image bytes in an opaque UIImage bridge value. Data.fromJPEG and UIImage.toJPEGData perform real native UIImage JPEG encoding at the requested bounded compression quality, and QuickLook decodes the value for native preview. Other constructors, geometry, transforms, symbols, PNG encoding and ScriptUI UIImage rendering remain unavailable and are not claimed."
       ],
       "behaviorMatched": false,
       "declarationFile": "global.d.ts",

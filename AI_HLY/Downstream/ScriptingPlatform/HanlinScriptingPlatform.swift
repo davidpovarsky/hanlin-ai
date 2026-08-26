@@ -484,6 +484,12 @@ final class HanlinScriptingPlatform {
                 message: "Another system interface is already presented."
             )
         }
+        if case let .previewImage(data) = request, UIImage(data: data) == nil {
+            throw HanlinScriptingNativeError(
+                name: "Error", code: "image_decode_failed",
+                message: "The image could not be decoded for preview."
+            )
+        }
         return try await withTaskCancellationHandler {
             try await withCheckedThrowingContinuation { continuation in
                 systemUIContinuation = continuation

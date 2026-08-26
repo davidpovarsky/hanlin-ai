@@ -254,6 +254,10 @@ struct HanlinScriptingApplicationRuntimeTests {
               await FileManager.copyFile(picked[0], destination);
               const directory = await DocumentPicker.pickDirectory();
               await QuickLook.previewURLs([encodeURI(destination)]);
+              const imagePath = Path.join(FileManager.documentsDirectory, "preview.jpg");
+              FileManager.writeAsDataSync(imagePath, Data.fromIntArray([255, 216, 1, 255, 217]));
+              await QuickLook.previewImage(UIImage.fromFile(imagePath));
+              await QuickLook.previewText("selected-content");
               DocumentPicker.stopAcessingSecurityScopedResources();
               Navigation.present({ element: createElement(Text, null, JSON.stringify([
                 FileManager.readAsStringSync(destination), directory != null
@@ -285,6 +289,14 @@ struct HanlinScriptingApplicationRuntimeTests {
                     let content = try String(contentsOf: url, encoding: .utf8)
                     #expect(content == "selected-content")
                     return .completed
+                case let .previewImage(data):
+                    operations.append("previewImage")
+                    #expect(data == Data([255, 216, 1, 255, 217]))
+                    return .completed
+                case let .previewText(text):
+                    operations.append("previewText")
+                    #expect(text == "selected-content")
+                    return .completed
                 case .pickPhotos, .takePhoto:
                     Issue.record("Unexpected Photos system UI request")
                     return .completed
@@ -295,7 +307,7 @@ struct HanlinScriptingApplicationRuntimeTests {
 
         await session.waitForNativeQuiescence()
         #expect(session.model.root.properties["text"] == .string(#"["selected-content",true]"#))
-        #expect(operations == ["pickFiles", "pickDirectory", "previewURLs"])
+        #expect(operations == ["pickFiles", "pickDirectory", "previewURLs", "previewImage", "previewText"])
     }
 
     @MainActor
@@ -334,7 +346,7 @@ struct HanlinScriptingApplicationRuntimeTests {
                 case .takePhoto:
                     operations.append("takePhoto")
                     return .image(captured)
-                case .pickFiles, .pickDirectory, .previewURLs:
+                case .pickFiles, .pickDirectory, .previewURLs, .previewText, .previewImage:
                     Issue.record("Unexpected file system UI request")
                     return .completed
                 }

@@ -46,6 +46,8 @@ public enum HanlinScriptingSystemUIRequest: Sendable {
     )
     case pickDirectory
     case previewURLs([URL])
+    case previewText(String)
+    case previewImage(Data)
     case pickPhotos(limit: Int)
     case takePhoto
 }

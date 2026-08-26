@@ -585,7 +585,7 @@ public final class HanlinScriptingApplicationSession {
                 try await systemLoader(operation, payloadJSON).nativeObject
             )
         }
-        if operation.hasPrefix("documentPicker.") || operation == "quickLook.previewURLs" {
+        if operation.hasPrefix("documentPicker.") || operation.hasPrefix("quickLook.") {
             guard filesAllowed else {
                 throw HanlinScriptingNativeError(
                     name: "Error", code: "permission_denied",
@@ -618,6 +618,26 @@ public final class HanlinScriptingApplicationSession {
                 guard !paths.isEmpty else { throw Self.invalidSystemUIRequest("QuickLook requires at least one URL.") }
                 let urls = try paths.map(fileSystem.previewURL(for:))
                 guard case .completed = try await systemUILoader(.previewURLs(urls)) else {
+                    throw Self.invalidSystemUIResult()
+                }
+                return HanlinScriptingNativeJSON.success(NSNull())
+            case "quickLook.previewText":
+                guard let text = payload["text"] as? String,
+                      text.utf8.count <= 4 * 1_024 * 1_024 else {
+                    throw Self.invalidSystemUIRequest("QuickLook preview text is invalid or too large.")
+                }
+                guard case .completed = try await systemUILoader(.previewText(text)) else {
+                    throw Self.invalidSystemUIResult()
+                }
+                return HanlinScriptingNativeJSON.success(NSNull())
+            case "quickLook.previewImage":
+                guard let base64 = payload["base64"] as? String,
+                      base64.utf8.count <= 96 * 1_024 * 1_024,
+                      let data = Data(base64Encoded: base64), !data.isEmpty,
+                      data.count <= 64 * 1_024 * 1_024 else {
+                    throw Self.invalidSystemUIRequest("QuickLook preview image is invalid or too large.")
+                }
+                guard case .completed = try await systemUILoader(.previewImage(data)) else {
                     throw Self.invalidSystemUIResult()
                 }
                 return HanlinScriptingNativeJSON.success(NSNull())
@@ -1505,6 +1525,10 @@ private extension HanlinScriptingApplicationSession {
         toBase64String() { return this._encodedData.toBase64String(); }
         static fromData(data) {
           try { return data instanceof HanlinData && data.size > 0 ? new HanlinUIImage(data) : null; }
+          catch (_) { return null; }
+        }
+        static fromFile(path) {
+          try { return this.fromData(HanlinData.fromFile(path)); }
           catch (_) { return null; }
         }
         static fromBase64String(value) { return this.fromData(HanlinData.fromBase64String(value)); }
@@ -2896,8 +2920,20 @@ private extension HanlinScriptingApplicationSession {
           }
           return nativeCallAsync("quickLook.previewURLs", { urls, fullscreen });
         },
-        previewText() { return Promise.reject(new Error("QuickLook text previews are not supported yet")); },
-        previewImage() { return Promise.reject(new Error("QuickLook image previews are not supported yet")); }
+        previewText(text, fullscreen = false) {
+          if (typeof text !== "string" || typeof fullscreen !== "boolean") {
+            return Promise.reject(new TypeError("QuickLook.previewText requires text and a Boolean fullscreen value"));
+          }
+          return nativeCallAsync("quickLook.previewText", { text, fullscreen });
+        },
+        previewImage(image, fullscreen = false) {
+          if (!(image instanceof HanlinUIImage) || typeof fullscreen !== "boolean") {
+            return Promise.reject(new TypeError("QuickLook.previewImage requires a UIImage and a Boolean fullscreen value"));
+          }
+          return nativeCallAsync("quickLook.previewImage", {
+            base64: image.toBase64String(), fullscreen
+          });
+        }
       });
       const Photos = Object.freeze({
         pickPhotos(count) {

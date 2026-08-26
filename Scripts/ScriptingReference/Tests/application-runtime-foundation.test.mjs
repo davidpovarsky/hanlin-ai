@@ -149,7 +149,7 @@ function runtime(entrypointKind = "application", widgetFamily = "systemMedium") 
               ? (files.set("/external/source.txt", Buffer.from("selected-content").toString("base64")), ["/external/source.txt"])
             : operation === "documentPicker.pickDirectory"
               ? "/external/folder"
-            : operation === "documentPicker.stopAccessingSecurityScopedResources" || operation === "quickLook.previewURLs"
+            : operation === "documentPicker.stopAccessingSecurityScopedResources" || operation.startsWith("quickLook.")
               ? null
             : operation === "photos.pickPhotos"
               ? [Buffer.from("selected-photo").toString("base64")]
@@ -303,6 +303,10 @@ test("FileManager imports DocumentPicker files and opens its package copy in Qui
       await FileManager.copyFile(selected[0], destination);
       const directory = await DocumentPicker.pickDirectory();
       await QuickLook.previewURLs([encodeURI(destination)]);
+      const imagePath = Path.join(FileManager.documentsDirectory, "preview.jpg");
+      FileManager.writeAsDataSync(imagePath, Data.fromIntArray([255, 216, 1, 255, 217]));
+      await QuickLook.previewImage(UIImage.fromFile(imagePath));
+      await QuickLook.previewText("selected-content");
       DocumentPicker.stopAcessingSecurityScopedResources();
       return [await FileManager.readAsString(destination), directory];
     })()
@@ -315,6 +319,8 @@ test("FileManager imports DocumentPicker files and opens its package copy in Qui
     } },
     { operation: "documentPicker.pickDirectory", payload: { initialDirectory: null } },
     { operation: "quickLook.previewURLs", payload: { urls: ["/documents/imported.txt"], fullscreen: false } },
+    { operation: "quickLook.previewImage", payload: { base64: "/9gB/9k=", fullscreen: false } },
+    { operation: "quickLook.previewText", payload: { text: "selected-content", fullscreen: false } },
     { operation: "documentPicker.stopAccessingSecurityScopedResources", payload: {} },
   ]);
 });

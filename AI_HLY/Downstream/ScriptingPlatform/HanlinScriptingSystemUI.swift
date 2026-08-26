@@ -32,10 +32,67 @@ struct HanlinScriptingSystemUIPresentationView: View {
             )
         case let .previewURLs(urls):
             HanlinQuickLookController(urls: urls, completion: completion)
+        case let .previewText(text):
+            HanlinQuickLookTextPreview(text: text, completion: completion)
+        case let .previewImage(data):
+            if let image = UIImage(data: data) {
+                HanlinQuickLookImagePreview(image: image, completion: completion)
+            } else {
+                ContentUnavailableView("Image Unavailable", systemImage: "photo.badge.exclamationmark")
+            }
         case let .pickPhotos(limit):
             HanlinPhotoPickerController(limit: limit, completion: completion)
         case .takePhoto:
             HanlinCameraPickerController(completion: completion)
+        }
+    }
+}
+
+private struct HanlinQuickLookTextPreview: View {
+    let text: String
+    let completion: (Result<HanlinScriptingSystemUIResult, any Error>) -> Void
+
+    var body: some View {
+        NavigationStack {
+            ScrollView {
+                Text(text)
+                    .textSelection(.enabled)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding()
+            }
+            .navigationTitle("Preview")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar { doneButton }
+        }
+    }
+
+    private var doneButton: some ToolbarContent {
+        ToolbarItem(placement: .confirmationAction) {
+            Button("Done") { completion(.success(.completed)) }
+        }
+    }
+}
+
+private struct HanlinQuickLookImagePreview: View {
+    let image: UIImage
+    let completion: (Result<HanlinScriptingSystemUIResult, any Error>) -> Void
+
+    var body: some View {
+        NavigationStack {
+            ScrollView([.horizontal, .vertical]) {
+                Image(uiImage: image)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+            }
+            .background(.black)
+            .navigationTitle("Preview")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .confirmationAction) {
+                    Button("Done") { completion(.success(.completed)) }
+                }
+            }
         }
     }
 }
