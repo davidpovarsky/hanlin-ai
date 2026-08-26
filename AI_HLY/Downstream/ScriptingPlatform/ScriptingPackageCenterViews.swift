@@ -262,6 +262,15 @@ struct ScriptingApplicationContainerView: View {
                 }
             }
         }
+        .sheet(item: Binding(
+            get: { platform.systemUIPresentation },
+            set: { value in if value == nil { platform.cancelSystemUI() } }
+        )) { presentation in
+            HanlinScriptingSystemUIPresentationView(presentation: presentation) { result in
+                platform.completeSystemUI(id: presentation.id, result: result)
+            }
+            .interactiveDismissDisabled()
+        }
         .onDisappear { platform.dismissActiveApplication() }
     }
 }

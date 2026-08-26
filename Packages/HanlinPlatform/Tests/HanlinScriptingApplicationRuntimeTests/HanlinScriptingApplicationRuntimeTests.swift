@@ -225,6 +225,73 @@ struct HanlinScriptingApplicationRuntimeTests {
         }
     }
 
+    @MainActor
+    @Test("Imports FileManager selections and previews the package copy through system UI")
+    func documentPickerAndQuickLookRuntime() async throws {
+        let root = FileManager.default.temporaryDirectory.appending(
+            path: "hanlin-system-ui-\(UUID().uuidString)",
+            directoryHint: .isDirectory
+        )
+        let selectedDirectory = root.appending(path: "Selected", directoryHint: .isDirectory)
+        let selectedFile = selectedDirectory.appending(path: "source note.txt", directoryHint: .notDirectory)
+        try FileManager.default.createDirectory(at: selectedDirectory, withIntermediateDirectories: true)
+        try Data("selected-content".utf8).write(to: selectedFile)
+        defer { try? FileManager.default.removeItem(at: root) }
+
+        let packageID = try HanlinInstalledPackageID(validating: "system-ui-runtime-test")
+        var operations: [String] = []
+        let session = try HanlinScriptingApplicationSession(
+            installedPackageID: packageID,
+            program: #"""
+            Navigation.present({ element: createElement(Text, null, "Waiting") });
+            (async () => {
+              const picked = await DocumentPicker.pickFiles({
+                allowsMultipleSelection: true,
+                shouldShowFileExtensions: true,
+                types: ["public.text"]
+              });
+              const destination = Path.join(FileManager.documentsDirectory, "imported.txt");
+              await FileManager.copyFile(picked[0], destination);
+              const directory = await DocumentPicker.pickDirectory();
+              await QuickLook.previewURLs([encodeURI(destination)]);
+              DocumentPicker.stopAcessingSecurityScopedResources();
+              Navigation.present({ element: createElement(Text, null, JSON.stringify([
+                FileManager.readAsStringSync(destination), directory != null
+              ])) });
+            })().catch(error => {
+              Navigation.present({ element: createElement(Text, null, `ERROR:${error?.message ?? error}`) });
+            });
+            """#,
+            filename: "compiled/file-manager-system-ui.js",
+            storageAllowed: false,
+            filesAllowed: true,
+            runtimeRoot: root.appending(path: "Runtime", directoryHint: .isDirectory),
+            systemUILoader: { request in
+                switch request {
+                case let .pickFiles(multiple, extensions, types):
+                    operations.append("pickFiles")
+                    #expect(multiple)
+                    #expect(extensions)
+                    #expect(types == ["public.text"])
+                    return .urls([selectedFile])
+                case .pickDirectory:
+                    operations.append("pickDirectory")
+                    return .urls([selectedDirectory])
+                case let .previewURLs(urls):
+                    operations.append("previewURLs")
+                    #expect(urls.count == 1)
+                    #expect(try String(contentsOf: #require(urls.first), encoding: .utf8) == "selected-content")
+                    return .completed
+                }
+            }
+        )
+        defer { session.dispose() }
+
+        await session.waitForNativeQuiescence()
+        #expect(session.model.root.properties["text"] == .string(#"["selected-content",true]"#))
+        #expect(operations == ["pickFiles", "pickDirectory", "previewURLs"])
+    }
+
     @Test("Decodes bounded Assistant requests and emits Web-compatible chunks")
     func assistantNativePayloads() throws {
         let request = try HanlinScriptingAssistantPayloadDecoder.decode(#"""

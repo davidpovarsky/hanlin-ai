@@ -24,6 +24,7 @@ function runtime(entrypointKind = "application", widgetFamily = "systemMedium") 
   const healthRequests = [];
   const notificationRequests = [];
   const reminderRequests = [];
+  const systemUIRequests = [];
   const systemRequests = [];
   const cancelledRequests = new Set();
   const widgetPresentations = [];
@@ -92,6 +93,7 @@ function runtime(entrypointKind = "application", widgetFamily = "systemMedium") 
           if (operation.startsWith("health.")) healthRequests.push({ operation, payload });
           if (operation.startsWith("notification.")) notificationRequests.push({ operation, payload });
           if (operation.startsWith("reminder.")) reminderRequests.push({ operation, payload });
+          if (operation.startsWith("documentPicker.") || operation.startsWith("quickLook.")) systemUIRequests.push({ operation, payload });
           if (operation.startsWith("pasteboard.") || operation.startsWith("safari.")) systemRequests.push({ operation, payload });
           const value = operation === "network.fetch"
             ? { url: payload.url, status: 200, headers: { "content-type": "application/json" }, bodyBase64: Buffer.from('{"ok":true}').toString("base64") }
@@ -139,6 +141,12 @@ function runtime(entrypointKind = "application", widgetFamily = "systemMedium") 
               ? true
             : operation === "reminder.save"
               ? "eventkit-reminder-id"
+            : operation === "documentPicker.pickFiles"
+              ? (files.set("/external/source.txt", Buffer.from("selected-content").toString("base64")), ["/external/source.txt"])
+            : operation === "documentPicker.pickDirectory"
+              ? "/external/folder"
+            : operation === "documentPicker.stopAccessingSecurityScopedResources" || operation === "quickLook.previewURLs"
+              ? null
             : operation === "pasteboard.setString"
               ? (storage.set("pasteboard-string", JSON.stringify(payload.value)), null)
             : operation === "pasteboard.getString"
@@ -197,7 +205,7 @@ function runtime(entrypointKind = "application", widgetFamily = "systemMedium") 
   vm.runInContext(bootstrap, context, { filename: "hanlin-scripting-ui-runtime.js" });
   return {
     context, rendered: () => rendered, assistantRequests, sqliteRequests, locationRequests,
-    healthRequests, notificationRequests, reminderRequests, systemRequests, cancelledRequests, widgetPresentations,
+    healthRequests, notificationRequests, reminderRequests, systemUIRequests, systemRequests, cancelledRequests, widgetPresentations,
     appIntentRegistrations, appIntentCompletions,
   };
 }
@@ -274,6 +282,33 @@ test("nativ-ai creates a Reminder with DateComponents and receives its identifie
       dueDateComponents: { year: 2027, month: 2, day: 3, hour: 18, minute: 45 },
     },
   }]);
+});
+
+test("FileManager imports DocumentPicker files and opens its package copy in QuickLook", async () => {
+  const { context, systemUIRequests } = runtime();
+  const result = await vm.runInContext(`
+    (async () => {
+      const selected = await DocumentPicker.pickFiles({
+        allowsMultipleSelection: true, shouldShowFileExtensions: true, types: ["public.text"]
+      });
+      const destination = Path.join(FileManager.documentsDirectory, "imported.txt");
+      await FileManager.copyFile(selected[0], destination);
+      const directory = await DocumentPicker.pickDirectory();
+      await QuickLook.previewURLs([encodeURI(destination)]);
+      DocumentPicker.stopAcessingSecurityScopedResources();
+      return [await FileManager.readAsString(destination), directory];
+    })()
+  `, context);
+  await new Promise(resolve => queueMicrotask(resolve));
+  assert.deepEqual(JSON.parse(JSON.stringify(result)), ["selected-content", "/external/folder"]);
+  assert.deepEqual(systemUIRequests, [
+    { operation: "documentPicker.pickFiles", payload: {
+      allowsMultipleSelection: true, shouldShowFileExtensions: true, types: ["public.text"],
+    } },
+    { operation: "documentPicker.pickDirectory", payload: { initialDirectory: null } },
+    { operation: "quickLook.previewURLs", payload: { urls: ["/documents/imported.txt"], fullscreen: false } },
+    { operation: "documentPicker.stopAccessingSecurityScopedResources", payload: {} },
+  ]);
 });
 
 test("Device exposes the immutable native launch snapshot", () => {

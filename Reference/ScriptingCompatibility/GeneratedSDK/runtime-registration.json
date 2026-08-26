@@ -6095,10 +6095,12 @@
     },
     {
       "symbol": "DocumentPicker",
-      "state": "unsupported",
-      "operation": "unimplemented",
-      "capability": null,
-      "contexts": [],
+      "state": "partial",
+      "operation": "HanlinScriptingApplicationSession.DocumentPicker",
+      "capability": "files",
+      "contexts": [
+        "mainApplication"
+      ],
       "declarationEvidence": [
         {
           "category": "namespace",
@@ -15867,10 +15869,12 @@
     },
     {
       "symbol": "QuickLook",
-      "state": "unsupported",
-      "operation": "unimplemented",
-      "capability": null,
-      "contexts": [],
+      "state": "partial",
+      "operation": "HanlinScriptingApplicationSession.QuickLook",
+      "capability": "files",
+      "contexts": [
+        "mainApplication"
+      ],
       "declarationEvidence": [
         {
           "category": "namespace",

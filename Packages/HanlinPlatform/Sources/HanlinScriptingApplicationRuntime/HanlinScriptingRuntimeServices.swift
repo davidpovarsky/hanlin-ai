@@ -38,6 +38,36 @@ public enum HanlinScriptingUnavailableSystemLoader {
     }
 }
 
+public enum HanlinScriptingSystemUIRequest: Sendable {
+    case pickFiles(
+        allowsMultipleSelection: Bool,
+        shouldShowFileExtensions: Bool,
+        contentTypeIdentifiers: [String]
+    )
+    case pickDirectory
+    case previewURLs([URL])
+}
+
+public enum HanlinScriptingSystemUIResult: Sendable {
+    case urls([URL])
+    case completed
+}
+
+public typealias HanlinScriptingSystemUILoader = @MainActor @Sendable (
+    HanlinScriptingSystemUIRequest
+) async throws -> HanlinScriptingSystemUIResult
+
+public enum HanlinScriptingUnavailableSystemUILoader {
+    public static func load(_ request: HanlinScriptingSystemUIRequest) async throws -> HanlinScriptingSystemUIResult {
+        _ = request
+        throw HanlinScriptingNativeError(
+            name: "Error",
+            code: "system_ui_unavailable",
+            message: "The requested system UI is unavailable."
+        )
+    }
+}
+
 public struct HanlinScriptingDeviceSnapshot: Hashable, Sendable {
     public struct Screen: Hashable, Sendable {
         public let width: Double
@@ -1443,6 +1473,12 @@ final class HanlinScriptingPackageFileSystem: @unchecked Sendable {
         let readOnly: Bool
     }
 
+    private struct ExternalRoot {
+        let url: URL
+        let isDirectory: Bool
+        let ownsSecurityScope: Bool
+    }
+
     private let lock = NSLock()
     private let fileManager = FileManager()
     private let documentsRoot: URL
@@ -1452,6 +1488,7 @@ final class HanlinScriptingPackageFileSystem: @unchecked Sendable {
     private let allowed: Bool
     private let maximumBytes = 64 * 1_024 * 1_024
     private let maximumReadBytes = 16 * 1_024 * 1_024
+    private var externalRoots: [ExternalRoot] = []
 
     init(
         installedPackageID: String,
@@ -1499,6 +1536,52 @@ final class HanlinScriptingPackageFileSystem: @unchecked Sendable {
             "isiCloudEnabled": false,
             "isWebDAVAvailable": false,
         ]
+    }
+
+    func grantExternalURLs(_ urls: [URL]) throws -> [String] {
+        lock.lock()
+        defer { lock.unlock() }
+        guard allowed, urls.count <= 128 else {
+            throw HanlinScriptingNativeError(
+                name: "Error", code: "permission_denied",
+                message: "External file access is unavailable."
+            )
+        }
+        return try urls.map { rawURL in
+            let url = rawURL.standardizedFileURL.resolvingSymlinksInPath()
+            guard url.isFileURL, url.path().utf8.count <= 8_192,
+                  fileManager.fileExists(atPath: url.path()) else {
+                throw invalid("The selected file URL is invalid.")
+            }
+            let values = try url.resourceValues(forKeys: [.isDirectoryKey, .isSymbolicLinkKey])
+            guard values.isSymbolicLink != true else {
+                throw invalid("Selected symbolic links are unavailable.")
+            }
+            if !externalRoots.contains(where: { $0.url == url }) {
+                externalRoots.append(.init(
+                    url: url,
+                    isDirectory: values.isDirectory == true,
+                    ownsSecurityScope: url.startAccessingSecurityScopedResource()
+                ))
+            }
+            return url.path()
+        }
+    }
+
+    func stopAccessingExternalURLs() {
+        lock.lock()
+        defer { lock.unlock() }
+        for root in externalRoots where root.ownsSecurityScope {
+            root.url.stopAccessingSecurityScopedResource()
+        }
+        externalRoots.removeAll()
+    }
+
+    func previewURL(for path: String) throws -> URL {
+        lock.lock()
+        defer { lock.unlock() }
+        let decoded = path.removingPercentEncoding ?? path
+        return try resolve(decoded, requireExisting: true).url
     }
 
     func databaseURL(for path: String) throws -> URL {
@@ -1759,7 +1842,17 @@ final class HanlinScriptingPackageFileSystem: @unchecked Sendable {
         } else if !path.hasPrefix("/") {
             mapping = (documentsRoot, path, false)
         } else {
-            throw invalid("The file path is outside the package filesystem.")
+            let candidate = URL(filePath: path).standardizedFileURL.resolvingSymlinksInPath()
+            guard let external = externalRoots.first(where: { root in
+                if root.isDirectory {
+                    let prefix = root.url.path().hasSuffix("/") ? root.url.path() : root.url.path() + "/"
+                    return candidate == root.url || candidate.path().hasPrefix(prefix)
+                }
+                return candidate == root.url
+            }) else {
+                throw invalid("The file path is outside the package filesystem.")
+            }
+            return .init(url: candidate, root: external.url, readOnly: true)
         }
         let components = mapping.relative.split(separator: "/", omittingEmptySubsequences: true)
         guard !components.contains(".."), !components.contains(".") else {

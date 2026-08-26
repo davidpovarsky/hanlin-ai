@@ -12,8 +12,8 @@
       "runtimeLaunch": {"status": "passed-node-hosted-bootstrap", "presented": true, "rootKind": "vStack"},
       "uiRender": {"status": "passed-structural-smoke", "renderedNodeCount": 26, "evidence": "The untouched 35-module FileManager source graph launched through the exact application bootstrap with native-broker-shaped filesystem responses."},
       "interaction": {"status": "shared-runtime-verified", "passed": ["observable navigation path push/back synchronization", "dynamic NavigationDestination building", "Picker selection rerender"], "notExercised": ["real-project control automation on Simulator"]},
-      "nativeServices": {"status": "partial", "passed": ["FileManager native VFS sync/async binding", "Path runtime semantics", "binary Data bridge", "local SVG loading through the bounded /scripts mount", "Pasteboard.setString native system bridge", "capability denial and lifecycle tests"], "blockers": ["Intent input bridge", "QuickLook/editor/import UI services"]},
-      "remainingBlockers": ["Five independent source errors", "real-project Simulator interaction and visual validation", "Intent, QuickLook, editor and document import services"]
+      "nativeServices": {"status": "partial", "passed": ["FileManager native VFS sync/async binding", "Path runtime semantics", "binary Data bridge", "local SVG loading through the bounded /scripts mount", "Pasteboard.setString native system bridge", "DocumentPicker multi-file and directory selection with package-scoped security access", "QuickLook package-file URL presentation", "capability denial and lifecycle tests"], "blockers": ["Intent input bridge", "QuickLook UIImage preview", "editor services", "DocumentPicker bookmarks/export"]},
+      "remainingBlockers": ["Five independent source errors", "real-project Simulator interaction and visual validation", "Intent and editor services", "advanced DocumentPicker and QuickLook image operations"]
     },
     {
       "id": "sefaria-multi-engine",

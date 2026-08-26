@@ -337,9 +337,9 @@ public struct HanlinScriptAnalyzer: Sendable {
 
     private static func ambientScriptingSymbols(in source: String) -> Set<String> {
         let candidates = [
-            "Assistant", "AssistantTool", "CacheStorage", "FileManager", "Health",
+            "Assistant", "AssistantTool", "CacheStorage", "DocumentPicker", "FileManager", "Health",
             "IntentMemoryStorage", "Location", "Notification", "OpenURL", "Pasteboard", "Reminder",
-            "Safari", "Storage", "addLocationListener"
+            "QuickLook", "Safari", "Storage", "addLocationListener"
         ]
         return Set(candidates.filter { symbol in
             matches("\\b\(NSRegularExpression.escapedPattern(for: symbol))\\b", source)
@@ -368,7 +368,7 @@ public struct HanlinScriptAnalyzer: Sendable {
     private static func inferredCapability(for symbol: String) -> HanlinCapabilityID? {
         let mapping: [(Set<String>, String)] = [
             (["Storage", "CacheStorage", "IntentMemoryStorage"], "storage"),
-            (["FileManager"], "files"),
+            (["DocumentPicker", "FileManager", "QuickLook"], "files"),
             (["fetch", "Request", "Response", "Headers"], "network"),
             (["Assistant", "AssistantTool"], "assistant"),
             (["Location", "addLocationListener"], "location"),

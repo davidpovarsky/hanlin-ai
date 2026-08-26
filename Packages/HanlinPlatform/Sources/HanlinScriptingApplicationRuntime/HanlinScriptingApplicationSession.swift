@@ -41,6 +41,7 @@ public final class HanlinScriptingApplicationSession {
     private let virtualMachine: JSVirtualMachine
     private let storage: HanlinScriptingPackageStorage
     private let fileSystem: HanlinScriptingPackageFileSystem
+    private let filesAllowed: Bool
     private let sqliteStore: HanlinScriptingSQLiteStore
     private let networkAllowed: Bool
     private let networkLoader: HanlinScriptingNetworkLoader
@@ -61,6 +62,7 @@ public final class HanlinScriptingApplicationSession {
     private let liveActivityLoader: HanlinScriptingLiveActivityLoader
     private let deviceSnapshot: HanlinScriptingDeviceSnapshot
     private let systemLoader: HanlinScriptingSystemLoader
+    private let systemUILoader: HanlinScriptingSystemUILoader
     private let entrypointContext: HanlinScriptingEntrypointContext
     private var nativeTasks: [String: Task<Void, Never>] = [:]
     private var appIntentResults: [String: Result<HanlinValue?, any Error>] = [:]
@@ -93,7 +95,8 @@ public final class HanlinScriptingApplicationSession {
         liveActivityAllowed: Bool = false,
         liveActivityLoader: @escaping HanlinScriptingLiveActivityLoader = HanlinScriptingUnavailableLiveActivityLoader.load,
         deviceSnapshot: HanlinScriptingDeviceSnapshot = .unavailable,
-        systemLoader: @escaping HanlinScriptingSystemLoader = HanlinScriptingUnavailableSystemLoader.load
+        systemLoader: @escaping HanlinScriptingSystemLoader = HanlinScriptingUnavailableSystemLoader.load,
+        systemUILoader: @escaping HanlinScriptingSystemUILoader = HanlinScriptingUnavailableSystemUILoader.load
     ) throws {
         guard let virtualMachine = JSVirtualMachine(),
               let context = JSContext(virtualMachine: virtualMachine) else {
@@ -111,6 +114,7 @@ public final class HanlinScriptingApplicationSession {
             runtimeRoot: runtimeRoot,
             packageSourceDirectory: packageSourceDirectory
         )
+        self.filesAllowed = filesAllowed
         sqliteStore = HanlinScriptingSQLiteStore(fileSystem: fileSystem)
         self.networkAllowed = networkAllowed
         self.networkLoader = networkLoader
@@ -131,6 +135,7 @@ public final class HanlinScriptingApplicationSession {
         self.liveActivityLoader = liveActivityLoader
         self.deviceSnapshot = deviceSnapshot
         self.systemLoader = systemLoader
+        self.systemUILoader = systemUILoader
         self.entrypointContext = entrypointContext
 
         let router = HanlinScriptingUIEventRouter()
@@ -227,6 +232,7 @@ public final class HanlinScriptingApplicationSession {
         nativeTasks.values.forEach { $0.cancel() }
         nativeTasks.removeAll(keepingCapacity: false)
         appIntentResults.removeAll(keepingCapacity: false)
+        fileSystem.stopAccessingExternalURLs()
         context.exceptionHandler = nil
         context.setObject(nil, forKeyedSubscript: "__hanlinNativeRender" as NSString)
         context.setObject(nil, forKeyedSubscript: "__hanlinNativeStorageGet" as NSString)
@@ -548,6 +554,46 @@ public final class HanlinScriptingApplicationSession {
                 try await systemLoader(operation, payloadJSON).nativeObject
             )
         }
+        if operation.hasPrefix("documentPicker.") || operation == "quickLook.previewURLs" {
+            guard filesAllowed else {
+                throw HanlinScriptingNativeError(
+                    name: "Error", code: "permission_denied",
+                    message: "The files capability is not granted."
+                )
+            }
+            let payload = try HanlinScriptingNativeJSON.decodeObject(payloadJSON)
+            switch operation {
+            case "documentPicker.pickFiles":
+                let multiple = try Self.optionalBoolean(payload["allowsMultipleSelection"], name: "allowsMultipleSelection") ?? false
+                let extensions = try Self.optionalBoolean(payload["shouldShowFileExtensions"], name: "shouldShowFileExtensions") ?? true
+                let types = try Self.boundedStrings(payload["types"], maximumCount: 64, maximumBytes: 256)
+                guard case let .urls(urls) = try await systemUILoader(.pickFiles(
+                    allowsMultipleSelection: multiple,
+                    shouldShowFileExtensions: extensions,
+                    contentTypeIdentifiers: types
+                )) else { throw Self.invalidSystemUIResult() }
+                return HanlinScriptingNativeJSON.success(try fileSystem.grantExternalURLs(urls))
+            case "documentPicker.pickDirectory":
+                guard case let .urls(urls) = try await systemUILoader(.pickDirectory) else {
+                    throw Self.invalidSystemUIResult()
+                }
+                let paths = try fileSystem.grantExternalURLs(Array(urls.prefix(1)))
+                return HanlinScriptingNativeJSON.success(paths.first.map { $0 as Any } ?? NSNull())
+            case "documentPicker.stopAccessingSecurityScopedResources":
+                fileSystem.stopAccessingExternalURLs()
+                return HanlinScriptingNativeJSON.success(NSNull())
+            case "quickLook.previewURLs":
+                let paths = try Self.boundedStrings(payload["urls"], maximumCount: 128, maximumBytes: 8_192)
+                guard !paths.isEmpty else { throw Self.invalidSystemUIRequest("QuickLook requires at least one URL.") }
+                let urls = try paths.map(fileSystem.previewURL(for:))
+                guard case .completed = try await systemUILoader(.previewURLs(urls)) else {
+                    throw Self.invalidSystemUIResult()
+                }
+                return HanlinScriptingNativeJSON.success(NSNull())
+            default:
+                throw Self.invalidSystemUIRequest("The requested system UI operation is unavailable.")
+            }
+        }
         if operation.hasPrefix("location.") {
             guard locationAllowed else {
                 throw HanlinScriptingNativeError(
@@ -708,6 +754,41 @@ public final class HanlinScriptingApplicationSession {
                 message: "Health data is unavailable on this device."
             )
         }
+    }
+
+    private static func optionalBoolean(_ value: Any?, name: String) throws -> Bool? {
+        guard let value, !(value is NSNull) else { return nil }
+        guard let number = value as? NSNumber,
+              CFGetTypeID(number) == CFBooleanGetTypeID() else {
+            throw invalidSystemUIRequest("DocumentPicker \(name) must be a Boolean.")
+        }
+        return number.boolValue
+    }
+
+    private static func boundedStrings(
+        _ value: Any?,
+        maximumCount: Int,
+        maximumBytes: Int
+    ) throws -> [String] {
+        guard let value, !(value is NSNull) else { return [] }
+        guard let values = value as? [Any], values.count <= maximumCount else {
+            throw invalidSystemUIRequest("The system UI string list is invalid.")
+        }
+        return try values.map { value in
+            guard let string = value as? String,
+                  !string.isEmpty, string.utf8.count <= maximumBytes else {
+                throw invalidSystemUIRequest("A system UI string value is invalid.")
+            }
+            return string
+        }
+    }
+
+    private static func invalidSystemUIRequest(_ message: String) -> HanlinScriptingNativeError {
+        .init(name: "TypeError", code: "invalid_system_ui_request", message: message)
+    }
+
+    private static func invalidSystemUIResult() -> HanlinScriptingNativeError {
+        .init(name: "Error", code: "invalid_system_ui_result", message: "The system UI returned an invalid result.")
     }
 
     private func resolveNativeRequest(id: String, resultJSON: String) {
@@ -2678,6 +2759,40 @@ private extension HanlinScriptingApplicationSession {
         onChanged: null,
         onRemoved: null
       });
+      const DocumentPicker = Object.freeze({
+        pickFiles(options = {}) {
+          if (options == null || typeof options !== "object" || Array.isArray(options)) {
+            return Promise.reject(new TypeError("DocumentPicker options must be an object"));
+          }
+          return nativeCallAsync("documentPicker.pickFiles", {
+            allowsMultipleSelection: options.allowsMultipleSelection ?? false,
+            shouldShowFileExtensions: options.shouldShowFileExtensions ?? true,
+            types: options.types ?? []
+          });
+        },
+        pickDirectory(initialDirectory = null) {
+          if (initialDirectory != null && typeof initialDirectory !== "string") {
+            return Promise.reject(new TypeError("DocumentPicker initialDirectory must be a string or null"));
+          }
+          return nativeCallAsync("documentPicker.pickDirectory", { initialDirectory });
+        },
+        stopAcessingSecurityScopedResources() {
+          nativeCallAsync("documentPicker.stopAccessingSecurityScopedResources", {}).catch(() => {});
+        },
+        pickFileBookmark() { return Promise.reject(new Error("DocumentPicker bookmarks are not supported yet")); },
+        pickDirectoryBookmark() { return Promise.reject(new Error("DocumentPicker bookmarks are not supported yet")); },
+        exportFiles() { return Promise.reject(new Error("DocumentPicker export is not supported yet")); }
+      });
+      const QuickLook = Object.freeze({
+        previewURLs(urls, fullscreen = false) {
+          if (!Array.isArray(urls) || urls.some(url => typeof url !== "string") || typeof fullscreen !== "boolean") {
+            return Promise.reject(new TypeError("QuickLook.previewURLs requires URL strings and a Boolean fullscreen value"));
+          }
+          return nativeCallAsync("quickLook.previewURLs", { urls, fullscreen });
+        },
+        previewText() { return Promise.reject(new Error("QuickLook text previews are not supported yet")); },
+        previewImage() { return Promise.reject(new Error("QuickLook image previews are not supported yet")); }
+      });
       const Safari = Object.freeze({
         openURL(url) {
           if (typeof url !== "string" || url.length === 0 || url.length > 8192) {
@@ -2745,7 +2860,8 @@ private extension HanlinScriptingApplicationSession {
         Storage, SQLite, Assistant, Location, Health, HealthUnit, HealthStatistics,
         HealthActivitySummary, HealthWorkout,
         Notification, Reminder, DateComponents, CalendarNotificationTrigger, TimeIntervalNotificationTrigger,
-        LiveActivity, Script, Device, Pasteboard, Safari, Widget, AppIntentProtocol, AppIntentManager,
+        LiveActivity, Script, Device, Pasteboard, DocumentPicker, QuickLook, Safari,
+        Widget, AppIntentProtocol, AppIntentManager,
         Color: Object.freeze({}),
         __hanlinResolveNative: resolveNativeRequest,
         __hanlinAssistantReceive: receiveAssistantChunk,

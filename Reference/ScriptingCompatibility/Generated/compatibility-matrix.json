@@ -13181,24 +13181,31 @@
       "verifiedByFixture": false
     },
     {
-      "allowedContexts": [],
+      "allowedContexts": [
+        "mainApplication"
+      ],
       "allowedOrigins": [],
-      "behaviorDifferences": [],
+      "behaviorDifferences": [
+        "pickFiles and pickDirectory present the native Files picker, retain bounded security-scoped access for the running package, and expose selected paths only to that package filesystem. stopAcessingSecurityScopedResources releases every retained scope. Persistent bookmarks, initial-directory routing and export remain unavailable and reject explicitly."
+      ],
       "behaviorMatched": false,
       "declarationFile": "global.d.ts",
       "declarationLine": 4187,
       "declaredByScripting": true,
-      "hanlinAPIVersion": null,
-      "hanlinSymbol": null,
-      "implementedByHanlin": false,
-      "notes": "The authorized ambient API has no complete runtime binding and conformance test yet; declaration presence is not treated as support.",
+      "hanlinAPIVersion": "hanlin.services/1.0",
+      "hanlinSymbol": "HanlinScriptingApplicationSession.DocumentPicker",
+      "implementedByHanlin": true,
+      "notes": "Implements the untouched FileManager multi-file and directory import paths without expanding general filesystem access.",
       "referenceCategory": "namespace",
       "referenceSignatureHash": "cb6c3d7bbb1223eaa858a99965fe4cb54a50b3e1ecf650c11371f547bdd618f9",
       "referenceSymbol": "DocumentPicker",
-      "requiredCapability": null,
+      "requiredCapability": "files",
       "requiredEntitlement": null,
-      "status": "not-yet-implemented",
-      "tests": [],
+      "status": "partial",
+      "tests": [
+        "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift",
+        "Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs"
+      ],
       "verifiedByFixture": false
     },
     {
@@ -34978,24 +34985,31 @@
       "verifiedByFixture": false
     },
     {
-      "allowedContexts": [],
+      "allowedContexts": [
+        "mainApplication"
+      ],
       "allowedOrigins": [],
-      "behaviorDifferences": [],
+      "behaviorDifferences": [
+        "previewURLs resolves only package-confined or currently security-scoped file paths and presents QLPreviewController until the user finishes. Text and UIImage previews remain unavailable and reject explicitly."
+      ],
       "behaviorMatched": false,
       "declarationFile": "global.d.ts",
       "declarationLine": 1188,
       "declaredByScripting": true,
-      "hanlinAPIVersion": null,
-      "hanlinSymbol": null,
-      "implementedByHanlin": false,
-      "notes": "The authorized ambient API has no complete runtime binding and conformance test yet; declaration presence is not treated as support.",
+      "hanlinAPIVersion": "hanlin.services/1.0",
+      "hanlinSymbol": "HanlinScriptingApplicationSession.QuickLook",
+      "implementedByHanlin": true,
+      "notes": "Implements the untouched FileManager file-preview path while preventing remote or arbitrary absolute URL previews.",
       "referenceCategory": "namespace",
       "referenceSignatureHash": "50855ac41130ab206be7b1e4b7a1ac959c05427802a83a351354d7188eb50253",
       "referenceSymbol": "QuickLook",
-      "requiredCapability": null,
+      "requiredCapability": "files",
       "requiredEntitlement": null,
-      "status": "not-yet-implemented",
-      "tests": [],
+      "status": "partial",
+      "tests": [
+        "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift",
+        "Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs"
+      ],
       "verifiedByFixture": false
     },
     {

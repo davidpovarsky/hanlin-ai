@@ -34,6 +34,7 @@ final class HanlinScriptingPlatform {
     private(set) var approvedCapabilities: Set<HanlinCapabilityID> = []
     private(set) var activeApplicationID: HanlinInstalledPackageID?
     private(set) var activeApplicationModel: HanlinScriptUIModel?
+    private(set) var systemUIPresentation: HanlinScriptingSystemUIPresentation?
 
     private let packageCenter = HanlinPackageCenter()
     private var stagedPackage: HanlinStagedPackage?
@@ -42,6 +43,7 @@ final class HanlinScriptingPlatform {
     private var bundler: HanlinScriptingBundler?
     private var extensionStore: HanlinScriptExtensionStore?
     private var applicationSession: HanlinScriptingApplicationSession?
+    private var systemUIContinuation: CheckedContinuation<HanlinScriptingSystemUIResult, any Error>?
     private var modelContext: ModelContext?
     private let locationService = HanlinAppleLocationService()
     private let healthService = HanlinAppleHealthService()
@@ -426,6 +428,10 @@ final class HanlinScriptingPlatform {
                 systemLoader: { [weak self] operation, payloadJSON in
                     guard let self else { throw CancellationError() }
                     return try await self.performSystemOperation(operation, payloadJSON: payloadJSON)
+                },
+                systemUILoader: { [weak self] request in
+                    guard let self else { throw CancellationError() }
+                    return try await self.presentSystemUI(request)
                 }
             )
             applicationSession = session
@@ -439,10 +445,50 @@ final class HanlinScriptingPlatform {
     }
 
     func dismissActiveApplication() {
+        cancelSystemUI()
         applicationSession?.dismiss()
         applicationSession = nil
         activeApplicationID = nil
         activeApplicationModel = nil
+    }
+
+    func completeSystemUI(
+        id: UUID,
+        result: Result<HanlinScriptingSystemUIResult, any Error>
+    ) {
+        guard systemUIPresentation?.id == id, let continuation = systemUIContinuation else { return }
+        systemUIPresentation = nil
+        systemUIContinuation = nil
+        continuation.resume(with: result)
+    }
+
+    func cancelSystemUI() {
+        guard let continuation = systemUIContinuation else {
+            systemUIPresentation = nil
+            return
+        }
+        systemUIPresentation = nil
+        systemUIContinuation = nil
+        continuation.resume(throwing: CancellationError())
+    }
+
+    private func presentSystemUI(
+        _ request: HanlinScriptingSystemUIRequest
+    ) async throws -> HanlinScriptingSystemUIResult {
+        guard systemUIContinuation == nil else {
+            throw HanlinScriptingNativeError(
+                name: "Error", code: "system_ui_busy",
+                message: "Another system interface is already presented."
+            )
+        }
+        return try await withTaskCancellationHandler {
+            try await withCheckedThrowingContinuation { continuation in
+                systemUIContinuation = continuation
+                systemUIPresentation = .init(id: UUID(), request: request)
+            }
+        } onCancel: { [weak self] in
+            Task { @MainActor in self?.cancelSystemUI() }
+        }
     }
 
     private func refreshExtensionSnapshot() async throws {

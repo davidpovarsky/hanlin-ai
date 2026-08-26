@@ -381,6 +381,28 @@
       "notes": "Implements the untouched nativ-ai reminder tool flow and requests modern full Reminders access only when save is invoked."
     },
     {
+      "symbol": "DocumentPicker",
+      "status": "partial",
+      "hanlinSymbol": "HanlinScriptingApplicationSession.DocumentPicker",
+      "hanlinAPIVersion": "hanlin.services/1.0",
+      "requiredCapability": "files",
+      "allowedContexts": ["mainApplication"],
+      "behaviorDifferences": ["pickFiles and pickDirectory present the native Files picker, retain bounded security-scoped access for the running package, and expose selected paths only to that package filesystem. stopAcessingSecurityScopedResources releases every retained scope. Persistent bookmarks, initial-directory routing and export remain unavailable and reject explicitly."],
+      "tests": ["Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift", "Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs"],
+      "notes": "Implements the untouched FileManager multi-file and directory import paths without expanding general filesystem access."
+    },
+    {
+      "symbol": "QuickLook",
+      "status": "partial",
+      "hanlinSymbol": "HanlinScriptingApplicationSession.QuickLook",
+      "hanlinAPIVersion": "hanlin.services/1.0",
+      "requiredCapability": "files",
+      "allowedContexts": ["mainApplication"],
+      "behaviorDifferences": ["previewURLs resolves only package-confined or currently security-scoped file paths and presents QLPreviewController until the user finishes. Text and UIImage previews remain unavailable and reject explicitly."],
+      "tests": ["Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift", "Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs"],
+      "notes": "Implements the untouched FileManager file-preview path while preventing remote or arbitrary absolute URL previews."
+    },
+    {
       "symbol": "LiveActivity",
       "status": "partial",
       "hanlinSymbol": "HanlinScriptLiveActivityController",
