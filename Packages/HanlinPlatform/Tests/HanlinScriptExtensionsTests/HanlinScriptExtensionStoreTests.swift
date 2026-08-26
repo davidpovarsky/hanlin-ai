@@ -6,6 +6,37 @@ import Testing
 
 @Suite("Scripting extension snapshot store")
 struct HanlinScriptExtensionStoreTests {
+    @Test("Decodes the visual properties used by the smart-eating widgets")
+    func smartEatingWidgetStyle() throws {
+        let node = HanlinScriptUINode(kind: .text, properties: [
+            "font": .integer(14),
+            "fontWeight": .string("semibold"),
+            "foregroundStyle": .string("systemGreen"),
+            "padding": .integer(8),
+            "frame": .object(try .init(uniqueMembers: [
+                ("width", .integer(32)), ("height", .integer(18)),
+            ])),
+            "opacity": .number(0.75),
+            "lineLimit": .integer(2),
+            "minimumScaleFactor": .number(0.6),
+            "strikethrough": .object(try .init(uniqueMembers: [
+                ("pattern", .string("solid")),
+            ])),
+        ])
+
+        let style = HanlinExtensionNodeStyle(node: node)
+        #expect(style.fontSize == 14)
+        #expect(style.fontWeight == "semibold")
+        #expect(style.foregroundStyle == "systemGreen")
+        #expect(style.padding == 8)
+        #expect(style.frameWidth == 32)
+        #expect(style.frameHeight == 18)
+        #expect(style.opacity == 0.75)
+        #expect(style.lineLimit == 2)
+        #expect(style.minimumScaleFactor == 0.6)
+        #expect(style.strikethrough)
+    }
+
     @Test("Extracts every Scripting Live Activity presentation region")
     func liveActivityUILayout() throws {
         func region(_ kind: HanlinScriptUIPrimitive, _ text: String) -> HanlinScriptUINode {
