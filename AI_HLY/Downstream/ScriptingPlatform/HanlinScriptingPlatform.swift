@@ -534,17 +534,18 @@ final class HanlinScriptingPlatform {
             limit: request.limit,
             reversed: request.reversed
         ).map { workout in
-            let statistics = Dictionary(uniqueKeysWithValues: workout.statistics.compactMap { metric, value in
-                guard let runtimeMetric = Self.runtimeHealthMetric(metric) else { return nil }
-                return (runtimeMetric, HanlinScriptingHealthStatisticsResult(
+            var statistics: [HanlinScriptingHealthMetric: HanlinScriptingHealthStatisticsResult] = [:]
+            for (metric, value) in workout.statistics {
+                let runtimeMetric = Self.runtimeHealthMetric(metric)
+                statistics[runtimeMetric] = .init(
                     metric: runtimeMetric,
                     unit: value.unit,
                     startDate: value.startDate,
                     endDate: value.endDate,
                     sum: value.sum,
                     average: value.average
-                ))
-            })
+                )
+            }
             return .init(
                 uuid: workout.uuid,
                 workoutActivityType: workout.workoutActivityType,
@@ -568,7 +569,7 @@ final class HanlinScriptingPlatform {
 
     private static func runtimeHealthMetric(
         _ metric: HanlinScriptHealthMetric
-    ) -> HanlinScriptingHealthMetric? {
+    ) -> HanlinScriptingHealthMetric {
         switch metric {
         case .steps: .stepCount
         case .walkingRunningDistance: .distanceWalkingRunning

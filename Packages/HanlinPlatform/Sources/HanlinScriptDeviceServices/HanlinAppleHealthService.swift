@@ -90,7 +90,7 @@ public actor HanlinAppleHealthService {
             throw HanlinAppleDeviceServiceError.unavailable(.health)
         }
         try await store.requestAuthorization(toShare: [], read: [HKObjectType.activitySummaryType()])
-        var calendar = Calendar.current
+        let calendar = Calendar.current
         guard let inclusiveEnd = calendar.date(from: endComponents),
               let exclusiveEnd = calendar.date(byAdding: .day, value: 1, to: inclusiveEnd) else {
             throw HanlinAppleDeviceServiceError.invalidRequest("health_activity_summary_range")
@@ -147,12 +147,13 @@ public actor HanlinAppleHealthService {
         )
         let values: [HKWorkout] = try await descriptor.result(for: store)
         return values.map { workout in
-            let statistics = Dictionary(uniqueKeysWithValues: HanlinScriptHealthMetric.allCases.compactMap { metric in
+            var statistics: [HanlinScriptHealthMetric: HanlinScriptHealthStatistics] = [:]
+            for metric in HanlinScriptHealthMetric.allCases {
                 guard let native = try? quantityType(metric),
                       let value = workout.statistics(for: native),
-                      let result = healthStatistics(value, metric: metric) else { return nil }
-                return (metric, result)
-            })
+                      let result = healthStatistics(value, metric: metric) else { continue }
+                statistics[metric] = result
+            }
             return .init(
                 uuid: workout.uuid.uuidString.lowercased(),
                 workoutActivityType: workout.workoutActivityType.rawValue,
