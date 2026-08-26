@@ -46,6 +46,52 @@ struct HanlinScriptingSystemUIPresentationView: View {
             HanlinCameraPickerController(completion: completion)
         case let .dialog(request):
             HanlinDialogController(request: request, completion: completion)
+        case let .editor(request):
+            HanlinEditorView(request: request, completion: completion)
+        }
+    }
+}
+
+private struct HanlinEditorView: View {
+    let request: HanlinScriptingEditorRequest
+    let completion: (Result<HanlinScriptingSystemUIResult, any Error>) -> Void
+    @State private var content: String
+
+    init(
+        request: HanlinScriptingEditorRequest,
+        completion: @escaping (Result<HanlinScriptingSystemUIResult, any Error>) -> Void
+    ) {
+        self.request = request
+        self.completion = completion
+        _content = State(initialValue: request.content)
+    }
+
+    var body: some View {
+        NavigationStack {
+            Group {
+                if request.readOnly {
+                    ScrollView {
+                        Text(content)
+                            .font(.system(.body, design: .monospaced))
+                            .textSelection(.enabled)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .padding()
+                    }
+                } else {
+                    TextEditor(text: $content)
+                        .font(.system(.body, design: .monospaced))
+                        .textInputAutocapitalization(.never)
+                        .autocorrectionDisabled()
+                        .padding(.horizontal, 8)
+                }
+            }
+            .navigationTitle(request.navigationTitle ?? "Editor")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .confirmationAction) {
+                    Button("Done") { completion(.success(.text(content))) }
+                }
+            }
         }
     }
 }

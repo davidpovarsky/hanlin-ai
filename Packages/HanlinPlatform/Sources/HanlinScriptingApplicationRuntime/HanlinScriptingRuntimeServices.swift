@@ -51,6 +51,29 @@ public enum HanlinScriptingSystemUIRequest: Sendable {
     case pickPhotos(limit: Int)
     case takePhoto
     case dialog(HanlinScriptingDialogRequest)
+    case editor(HanlinScriptingEditorRequest)
+}
+
+public struct HanlinScriptingEditorRequest: Sendable {
+    public let content: String
+    public let fileExtension: String
+    public let readOnly: Bool
+    public let navigationTitle: String?
+    public let fullscreen: Bool
+
+    public init(
+        content: String,
+        fileExtension: String,
+        readOnly: Bool,
+        navigationTitle: String? = nil,
+        fullscreen: Bool = false
+    ) {
+        self.content = content
+        self.fileExtension = fileExtension
+        self.readOnly = readOnly
+        self.navigationTitle = navigationTitle
+        self.fullscreen = fullscreen
+    }
 }
 
 public enum HanlinScriptingDialogKind: String, Equatable, Sendable {

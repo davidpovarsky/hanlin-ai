@@ -753,6 +753,33 @@ public final class HanlinScriptingApplicationSession {
                 throw Self.invalidSystemUIResult()
             }
         }
+        if operation == "editor.present" {
+            let payload = try HanlinScriptingNativeJSON.decodeObject(payloadJSON)
+            guard let content = payload["content"] as? String,
+                  content.utf8.count <= 4 * 1_024 * 1_024,
+                  let fileExtension = payload["ext"] as? String,
+                  Self.editorExtensions.contains(fileExtension) else {
+                throw Self.invalidEditorRequest("Editor content or extension is invalid.")
+            }
+            let readOnly = try Self.editorBoolean(payload["readOnly"], name: "readOnly") ?? false
+            let fullscreen = try Self.editorBoolean(payload["fullscreen"], name: "fullscreen") ?? false
+            let navigationTitle = try Self.dialogString(
+                payload["navigationTitle"], name: "navigationTitle", maximumBytes: 4_096
+            )
+            guard case let .text(result) = try await systemUILoader(.editor(.init(
+                content: content,
+                fileExtension: fileExtension,
+                readOnly: readOnly,
+                navigationTitle: navigationTitle,
+                fullscreen: fullscreen
+            ))), let result else {
+                throw Self.invalidSystemUIResult()
+            }
+            guard result.utf8.count <= 4 * 1_024 * 1_024 else {
+                throw Self.invalidEditorRequest("The edited content is too large.")
+            }
+            return HanlinScriptingNativeJSON.success(result)
+        }
         if operation.hasPrefix("location.") {
             guard locationAllowed else {
                 throw HanlinScriptingNativeError(
@@ -972,6 +999,23 @@ public final class HanlinScriptingApplicationSession {
 
     private static func invalidDialogRequest(_ message: String) -> HanlinScriptingNativeError {
         .init(name: "TypeError", code: "invalid_dialog_request", message: message)
+    }
+
+    private static let editorExtensions: Set<String> = [
+        "tsx", "ts", "js", "jsx", "txt", "md", "css", "html", "json",
+    ]
+
+    private static func editorBoolean(_ value: Any?, name: String) throws -> Bool? {
+        guard let value, !(value is NSNull) else { return nil }
+        guard let number = value as? NSNumber,
+              CFGetTypeID(number) == CFBooleanGetTypeID() else {
+            throw invalidEditorRequest("Editor \(name) must be a Boolean.")
+        }
+        return number.boolValue
+    }
+
+    private static func invalidEditorRequest(_ message: String) -> HanlinScriptingNativeError {
+        .init(name: "TypeError", code: "invalid_editor_request", message: message)
     }
 
     private static func invalidSystemUIResult() -> HanlinScriptingNativeError {
@@ -3074,6 +3118,130 @@ private extension HanlinScriptingApplicationSession {
           catch (error) { return Promise.reject(error); }
         }
       });
+      class EditorController {
+        constructor(options = {}) {
+          if (!options || typeof options !== "object" || Array.isArray(options)) {
+            throw new TypeError("EditorController options must be an object");
+          }
+          const content = options.content ?? "";
+          const ext = options.ext ?? "txt";
+          if (typeof content !== "string" || content.length > 4 * 1024 * 1024
+              || !["tsx", "ts", "js", "jsx", "txt", "md", "css", "html", "json"].includes(ext)
+              || (options.readOnly != null && typeof options.readOnly !== "boolean")) {
+            throw new TypeError("EditorController options are invalid");
+          }
+          this.ext = ext;
+          this.readOnly = options.readOnly ?? false;
+          this._content = content;
+          this._selection = { start: 0, end: 0 };
+          this._disposed = false;
+          this._presentPromise = null;
+          this._abortController = null;
+          this._dismissRequested = false;
+          this.onContentChanged = undefined;
+        }
+        get content() { return this._content; }
+        set content(value) {
+          if (this._disposed) throw new Error("EditorController has been disposed");
+          if (typeof value !== "string" || value.length > 4 * 1024 * 1024) {
+            throw new TypeError("Editor content must be a bounded string");
+          }
+          this._content = value;
+          this._selection = { start: Math.min(this._selection.start, value.length), end: Math.min(this._selection.end, value.length) };
+        }
+        present(options = {}) {
+          if (this._disposed) return Promise.reject(new Error("EditorController has been disposed"));
+          if (this._presentPromise) return Promise.reject(new Error("EditorController is already presented"));
+          if (!options || typeof options !== "object" || Array.isArray(options)
+              || (options.fullscreen != null && typeof options.fullscreen !== "boolean")) {
+            return Promise.reject(new TypeError("Editor presentation options are invalid"));
+          }
+          this._dismissRequested = false;
+          this._abortController = new HanlinAbortController();
+          const before = this._content;
+          const request = nativeCallAsync("editor.present", {
+            content: before,
+            ext: this.ext,
+            readOnly: this.readOnly,
+            navigationTitle: options.navigationTitle ?? null,
+            scriptName: options.scriptName ?? null,
+            fullscreen: options.fullscreen ?? false
+          }, this._abortController.signal).then(content => {
+            this._content = content;
+            if (content !== before && typeof this.onContentChanged === "function") this.onContentChanged(content);
+          }).catch(error => {
+            if (this._dismissRequested && error?.name === "AbortError") return;
+            throw error;
+          }).finally(() => {
+            this._presentPromise = null;
+            this._abortController = null;
+            this._dismissRequested = false;
+          });
+          this._presentPromise = request;
+          return request;
+        }
+        dismiss() {
+          if (!this._presentPromise) return Promise.resolve();
+          this._dismissRequested = true;
+          this._abortController.abort();
+          return this._presentPromise;
+        }
+        dispose() {
+          if (this._disposed) return;
+          this._disposed = true;
+          if (this._presentPromise) {
+            this._dismissRequested = true;
+            this._abortController.abort();
+          }
+          this.onContentChanged = undefined;
+        }
+        appendContent(text) {
+          if (typeof text !== "string") throw new TypeError("Editor text must be a string");
+          this.content = this._content + text;
+        }
+        selectAll() { this._selection = { start: 0, end: this._content.length }; }
+        setSelection(start, end) {
+          if (!Number.isInteger(start) || !Number.isInteger(end) || start < 0 || end < start || end > this._content.length) {
+            throw new RangeError("Editor selection is invalid");
+          }
+          this._selection = { start, end };
+        }
+        getSelectedText() {
+          if (this._disposed) return Promise.reject(new Error("EditorController has been disposed"));
+          return Promise.resolve(this._content.slice(this._selection.start, this._selection.end));
+        }
+        replaceSelection(text) {
+          if (typeof text !== "string") throw new TypeError("Editor replacement must be a string");
+          const { start, end } = this._selection;
+          this.content = this._content.slice(0, start) + text + this._content.slice(end);
+          this._selection = { start: start + text.length, end: start + text.length };
+        }
+        searchText(query, options = {}) {
+          if (typeof query !== "string" || !options || typeof options !== "object") {
+            return Promise.reject(new TypeError("Editor search is invalid"));
+          }
+          try {
+            const escaped = options.regexp ? query : query.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+            const source = options.wholeWord ? `\\b(?:${escaped})\\b` : escaped;
+            const expression = new RegExp(source, options.caseSensitive ? "g" : "gi");
+            const ranges = [];
+            let match;
+            while ((match = expression.exec(this._content)) !== null) {
+              const start = match.index; const end = start + match[0].length;
+              ranges.push({ start, end, line: this._content.slice(0, start).split("\n").length });
+              if (match[0].length === 0) expression.lastIndex += 1;
+            }
+            return Promise.resolve(ranges);
+          } catch (error) { return Promise.reject(error); }
+        }
+        scrollToLine() { throw new Error("Editor viewport control is unavailable"); }
+        scrollToPosition() { throw new Error("Editor viewport control is unavailable"); }
+        scrollSelectionIntoView() { throw new Error("Editor viewport control is unavailable"); }
+        undo() { throw new Error("Editor undo is unavailable"); }
+        redo() { throw new Error("Editor redo is unavailable"); }
+        toggleLineComment() { throw new Error("Editor comment toggling is unavailable"); }
+        toggleBlockComment() { throw new Error("Editor comment toggling is unavailable"); }
+      }
       const Safari = Object.freeze({
         openURL(url) {
           if (typeof url !== "string" || url.length === 0 || url.length > 8192) {
@@ -3141,7 +3309,8 @@ private extension HanlinScriptingApplicationSession {
         Storage, SQLite, Assistant, Location, Health, HealthUnit, HealthStatistics,
         HealthActivitySummary, HealthWorkout,
         Notification, Reminder, DateComponents, CalendarNotificationTrigger, TimeIntervalNotificationTrigger,
-        LiveActivity, Script, Device, Pasteboard, DocumentPicker, QuickLook, Photos, Dialog, Safari,
+        LiveActivity, Script, Device, Pasteboard, DocumentPicker, QuickLook, Photos, Dialog,
+        EditorController, Safari,
         Widget, AppIntentProtocol, AppIntentManager,
         Color: Object.freeze({}),
         __hanlinResolveNative: resolveNativeRequest,

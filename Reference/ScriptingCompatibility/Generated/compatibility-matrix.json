@@ -13853,24 +13853,31 @@
       "verifiedByFixture": false
     },
     {
-      "allowedContexts": [],
+      "allowedContexts": [
+        "mainApplication"
+      ],
       "allowedOrigins": [],
-      "behaviorDifferences": [],
+      "behaviorDifferences": [
+        "The controller preserves bounded content, declared text extensions, read-only mode, repeated modal presentation, user-edited content, onContentChanged on completed user edits, disposal and cancellation-backed dismiss. Selection, replacement, append and whole-document search operate on the controller text model. The modal host uses native SwiftUI TextEditor/selectable monospaced text without syntax highlighting. Inline Editor rendering, viewport commands, undo/redo and comment toggles remain unavailable and throw explicitly."
+      ],
       "behaviorMatched": false,
       "declarationFile": "global.d.ts",
       "declarationLine": 10167,
       "declaredByScripting": true,
-      "hanlinAPIVersion": null,
-      "hanlinSymbol": null,
-      "implementedByHanlin": false,
-      "notes": "The authorized ambient API has no complete runtime binding and conformance test yet; declaration presence is not treated as support.",
+      "hanlinAPIVersion": "hanlin.ui/1.0",
+      "hanlinSymbol": "HanlinScriptingApplicationSession.EditorController",
+      "implementedByHanlin": true,
+      "notes": "Implements the untouched FileManager editable and read-only EditorController.present/content/dispose flow.",
       "referenceCategory": "class",
       "referenceSignatureHash": "1a3c394db2b67bfc349450170fd9f1479fa0b76c965c42e90ba971bd80e4cdbd",
       "referenceSymbol": "EditorController",
       "requiredCapability": null,
       "requiredEntitlement": null,
-      "status": "not-yet-implemented",
-      "tests": [],
+      "status": "partial",
+      "tests": [
+        "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift",
+        "Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs"
+      ],
       "verifiedByFixture": false
     },
     {

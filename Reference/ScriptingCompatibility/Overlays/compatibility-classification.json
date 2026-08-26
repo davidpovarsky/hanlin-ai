@@ -434,6 +434,16 @@
       "notes": "Implements the untouched FileManager create/rename/delete flows and nativ-ai confirmation, rename and error dialogs."
     },
     {
+      "symbol": "EditorController",
+      "status": "partial",
+      "hanlinSymbol": "HanlinScriptingApplicationSession.EditorController",
+      "hanlinAPIVersion": "hanlin.ui/1.0",
+      "allowedContexts": ["mainApplication"],
+      "behaviorDifferences": ["The controller preserves bounded content, declared text extensions, read-only mode, repeated modal presentation, user-edited content, onContentChanged on completed user edits, disposal and cancellation-backed dismiss. Selection, replacement, append and whole-document search operate on the controller text model. The modal host uses native SwiftUI TextEditor/selectable monospaced text without syntax highlighting. Inline Editor rendering, viewport commands, undo/redo and comment toggles remain unavailable and throw explicitly."],
+      "tests": ["Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift", "Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs"],
+      "notes": "Implements the untouched FileManager editable and read-only EditorController.present/content/dispose flow."
+    },
+    {
       "symbol": "LiveActivity",
       "status": "partial",
       "hanlinSymbol": "HanlinScriptLiveActivityController",

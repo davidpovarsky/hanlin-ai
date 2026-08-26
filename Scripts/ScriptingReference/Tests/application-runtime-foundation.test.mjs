@@ -97,7 +97,7 @@ function runtime(entrypointKind = "application", widgetFamily = "systemMedium") 
           if (operation.startsWith("health.")) healthRequests.push({ operation, payload });
           if (operation.startsWith("notification.")) notificationRequests.push({ operation, payload });
           if (operation.startsWith("reminder.")) reminderRequests.push({ operation, payload });
-          if (operation.startsWith("documentPicker.") || operation.startsWith("quickLook.") || operation.startsWith("photos.") || operation.startsWith("dialog.")) systemUIRequests.push({ operation, payload });
+          if (operation.startsWith("documentPicker.") || operation.startsWith("quickLook.") || operation.startsWith("photos.") || operation.startsWith("dialog.") || operation.startsWith("editor.")) systemUIRequests.push({ operation, payload });
           if (operation.startsWith("pasteboard.") || operation.startsWith("safari.")) systemRequests.push({ operation, payload });
           const value = operation === "network.fetch"
             ? { url: payload.url, status: 200, headers: { "content-type": "application/json" }, bodyBase64: Buffer.from('{"ok":true}').toString("base64") }
@@ -163,6 +163,8 @@ function runtime(entrypointKind = "application", widgetFamily = "systemMedium") 
               ? `${payload.defaultValue ?? ""}-edited`
             : operation === "dialog.actionSheet"
               ? 1
+            : operation === "editor.present"
+              ? (payload.readOnly ? payload.content : `${payload.content}\nEdited`)
             : operation === "pasteboard.setString"
               ? (storage.set("pasteboard-string", JSON.stringify(payload.value)), null)
             : operation === "pasteboard.getString"
@@ -383,6 +385,36 @@ test("FileManager and nativ-ai dialogs preserve alerts, confirmation, prompts, a
     { operation: "dialog.actionSheet", payload: {
       title: "Choose", cancelButton: true,
       actions: [{ label: "Open" }, { label: "Delete", destructive: true }],
+    } },
+  ]);
+});
+
+test("FileManager EditorController presents editable and read-only text with lifecycle state", async () => {
+  const { context, systemUIRequests } = runtime();
+  const result = await vm.runInContext(`
+    (async () => {
+      const editable = new EditorController({ content: "const value = 1", ext: "ts" });
+      await editable.present({ navigationTitle: "script.ts" });
+      const ranges = await editable.searchText("value", { wholeWord: true });
+      editable.setSelection(ranges[0].start, ranges[0].end);
+      const selected = await editable.getSelectedText();
+      const content = editable.content;
+      editable.dispose();
+      const preview = new EditorController({ content: "read only", ext: "txt", readOnly: true });
+      await preview.present({ navigationTitle: "note.txt" });
+      preview.dispose();
+      return [content, selected, preview.content];
+    })()
+  `, context);
+  assert.deepEqual(JSON.parse(JSON.stringify(result)), ["const value = 1\nEdited", "value", "read only"]);
+  assert.deepEqual(systemUIRequests, [
+    { operation: "editor.present", payload: {
+      content: "const value = 1", ext: "ts", readOnly: false,
+      navigationTitle: "script.ts", scriptName: null, fullscreen: false,
+    } },
+    { operation: "editor.present", payload: {
+      content: "read only", ext: "txt", readOnly: true,
+      navigationTitle: "note.txt", scriptName: null, fullscreen: false,
     } },
   ]);
 });

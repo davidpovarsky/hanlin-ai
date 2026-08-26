@@ -297,7 +297,7 @@ struct HanlinScriptingApplicationRuntimeTests {
                     operations.append("previewText")
                     #expect(text == "selected-content")
                     return .completed
-                case .pickPhotos, .takePhoto, .dialog:
+                case .pickPhotos, .takePhoto, .dialog, .editor:
                     Issue.record("Unexpected Photos system UI request")
                     return .completed
                 }
@@ -346,7 +346,7 @@ struct HanlinScriptingApplicationRuntimeTests {
                 case .takePhoto:
                     operations.append("takePhoto")
                     return .image(captured)
-                case .pickFiles, .pickDirectory, .previewURLs, .previewText, .previewImage, .dialog:
+                case .pickFiles, .pickDirectory, .previewURLs, .previewText, .previewImage, .dialog, .editor:
                     Issue.record("Unexpected file system UI request")
                     return .completed
                 }
@@ -434,6 +434,52 @@ struct HanlinScriptingApplicationRuntimeTests {
             #"[true,"renamed.txt",1]"#
         ))
         #expect(operations == [.alert, .confirm, .prompt, .actionSheet])
+    }
+
+    @MainActor
+    @Test("Runs the exact FileManager EditorController presentation and content lifecycle")
+    func editorControllerRuntime() async throws {
+        let packageID = try HanlinInstalledPackageID(validating: "editor-runtime-test")
+        var requests: [HanlinScriptingEditorRequest] = []
+        let session = try HanlinScriptingApplicationSession(
+            installedPackageID: packageID,
+            program: #"""
+            Navigation.present({ element: createElement(Text, null, "Waiting") });
+            (async () => {
+              const controller = new EditorController({ content: "const value = 1", ext: "ts" });
+              await controller.present({ navigationTitle: "script.ts" });
+              const ranges = await controller.searchText("value", { wholeWord: true });
+              controller.setSelection(ranges[0].start, ranges[0].end);
+              const selected = await controller.getSelectedText();
+              const content = controller.content;
+              controller.dispose();
+              Navigation.present({ element: createElement(Text, null,
+                JSON.stringify([content, selected])) });
+            })().catch(error => {
+              Navigation.present({ element: createElement(Text, null, `ERROR:${error?.message ?? error}`) });
+            });
+            """#,
+            filename: "compiled/file-editor.js",
+            storageAllowed: false,
+            systemUILoader: { request in
+                guard case let .editor(editor) = request else {
+                    Issue.record("Unexpected non-editor system UI request")
+                    return .completed
+                }
+                requests.append(editor)
+                return .text(editor.content + "\nEdited")
+            }
+        )
+        defer { session.dispose() }
+
+        await session.waitForNativeQuiescence()
+        #expect(session.model.root.properties["text"] == .string(
+            #"["const value = 1\nEdited","value"]"#
+        ))
+        #expect(requests.count == 1)
+        #expect(requests[0].fileExtension == "ts")
+        #expect(requests[0].navigationTitle == "script.ts")
+        #expect(!requests[0].readOnly)
     }
 
     @Test("Decodes bounded Assistant requests and emits Web-compatible chunks")
