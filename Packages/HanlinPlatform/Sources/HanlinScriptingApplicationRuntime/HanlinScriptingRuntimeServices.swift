@@ -407,6 +407,150 @@ public enum HanlinScriptingUnavailableHealthStatisticsLoader {
     }
 }
 
+public struct HanlinScriptingHealthActivitySummariesRequest: Sendable {
+    public let startComponents: [String: Int]
+    public let endComponents: [String: Int]
+
+    public init(startComponents: [String: Int], endComponents: [String: Int]) {
+        self.startComponents = startComponents
+        self.endComponents = endComponents
+    }
+}
+
+public struct HanlinScriptingHealthActivitySummaryResult: Sendable {
+    public let dateComponents: [String: Int]
+    public let activityMoveMode: Int
+    public let activeEnergyBurned: Double
+    public let activeEnergyBurnedGoal: Double
+    public let appleMoveTime: Double
+    public let appleMoveTimeGoal: Double
+    public let appleExerciseTime: Double
+    public let appleExerciseTimeGoal: Double
+    public let appleStandHours: Double
+    public let appleStandHoursGoal: Double
+
+    public init(
+        dateComponents: [String: Int],
+        activityMoveMode: Int,
+        activeEnergyBurned: Double,
+        activeEnergyBurnedGoal: Double,
+        appleMoveTime: Double,
+        appleMoveTimeGoal: Double,
+        appleExerciseTime: Double,
+        appleExerciseTimeGoal: Double,
+        appleStandHours: Double,
+        appleStandHoursGoal: Double
+    ) {
+        self.dateComponents = dateComponents
+        self.activityMoveMode = activityMoveMode
+        self.activeEnergyBurned = activeEnergyBurned
+        self.activeEnergyBurnedGoal = activeEnergyBurnedGoal
+        self.appleMoveTime = appleMoveTime
+        self.appleMoveTimeGoal = appleMoveTimeGoal
+        self.appleExerciseTime = appleExerciseTime
+        self.appleExerciseTimeGoal = appleExerciseTimeGoal
+        self.appleStandHours = appleStandHours
+        self.appleStandHoursGoal = appleStandHoursGoal
+    }
+
+    var nativeObject: [String: Any] {
+        [
+            "dateComponents": dateComponents,
+            "activityMoveMode": activityMoveMode,
+            "activeEnergyBurned": activeEnergyBurned,
+            "activeEnergyBurnedGoal": activeEnergyBurnedGoal,
+            "appleMoveTime": appleMoveTime,
+            "appleMoveTimeGoal": appleMoveTimeGoal,
+            "appleExerciseTime": appleExerciseTime,
+            "appleExerciseTimeGoal": appleExerciseTimeGoal,
+            "appleStandHours": appleStandHours,
+            "appleStandHoursGoal": appleStandHoursGoal,
+        ]
+    }
+}
+
+public typealias HanlinScriptingHealthActivitySummariesLoader = @MainActor @Sendable (
+    HanlinScriptingHealthActivitySummariesRequest
+) async throws -> [HanlinScriptingHealthActivitySummaryResult]
+
+public enum HanlinScriptingUnavailableHealthActivitySummariesLoader {
+    public static func load(
+        _ request: HanlinScriptingHealthActivitySummariesRequest
+    ) async throws -> [HanlinScriptingHealthActivitySummaryResult] {
+        _ = request
+        throw HanlinScriptingNativeError(
+            name: "Error", code: "health_unavailable", message: "Health data is unavailable."
+        )
+    }
+}
+
+public struct HanlinScriptingHealthWorkoutsRequest: Sendable {
+    public let startDate: Date
+    public let endDate: Date
+    public let limit: Int
+    public let reversed: Bool
+
+    public init(startDate: Date, endDate: Date, limit: Int, reversed: Bool) {
+        self.startDate = startDate
+        self.endDate = endDate
+        self.limit = limit
+        self.reversed = reversed
+    }
+}
+
+public struct HanlinScriptingHealthWorkoutResult: Sendable {
+    public let uuid: String
+    public let workoutActivityType: UInt
+    public let startDate: Date
+    public let endDate: Date
+    public let duration: Double
+    public let statistics: [HanlinScriptingHealthMetric: HanlinScriptingHealthStatisticsResult]
+
+    public init(
+        uuid: String,
+        workoutActivityType: UInt,
+        startDate: Date,
+        endDate: Date,
+        duration: Double,
+        statistics: [HanlinScriptingHealthMetric: HanlinScriptingHealthStatisticsResult]
+    ) {
+        self.uuid = uuid
+        self.workoutActivityType = workoutActivityType
+        self.startDate = startDate
+        self.endDate = endDate
+        self.duration = duration
+        self.statistics = statistics
+    }
+
+    var nativeObject: [String: Any] {
+        [
+            "uuid": uuid,
+            "workoutActivityType": workoutActivityType,
+            "startDate": startDate.timeIntervalSince1970 * 1_000,
+            "endDate": endDate.timeIntervalSince1970 * 1_000,
+            "duration": duration,
+            "allStatistics": Dictionary(uniqueKeysWithValues: statistics.map {
+                ($0.key.rawValue, $0.value.nativeObject)
+            }),
+        ]
+    }
+}
+
+public typealias HanlinScriptingHealthWorkoutsLoader = @MainActor @Sendable (
+    HanlinScriptingHealthWorkoutsRequest
+) async throws -> [HanlinScriptingHealthWorkoutResult]
+
+public enum HanlinScriptingUnavailableHealthWorkoutsLoader {
+    public static func load(
+        _ request: HanlinScriptingHealthWorkoutsRequest
+    ) async throws -> [HanlinScriptingHealthWorkoutResult] {
+        _ = request
+        throw HanlinScriptingNativeError(
+            name: "Error", code: "health_unavailable", message: "Health data is unavailable."
+        )
+    }
+}
+
 enum HanlinScriptingHealthPayloadDecoder {
     static func decodeStatistics(_ json: String) throws -> HanlinScriptingHealthStatisticsRequest {
         let payload = try HanlinScriptingNativeJSON.decodeObject(json)
@@ -429,6 +573,71 @@ enum HanlinScriptingHealthPayloadDecoder {
             throw invalid("A requested Health statistics option is unsupported.")
         }
         return .init(metric: metric, startDate: startDate, endDate: endDate, options: options)
+    }
+
+    static func decodeActivitySummaries(_ json: String) throws -> HanlinScriptingHealthActivitySummariesRequest {
+        let payload = try HanlinScriptingNativeJSON.decodeObject(json)
+        let start = try dateComponents(payload["start"], name: "start")
+        let end = try dateComponents(payload["end"], name: "end")
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.timeZone = .gmt
+        guard let startDate = calendar.date(from: DateComponents(
+            year: start["year"], month: start["month"], day: start["day"]
+        )), let endDate = calendar.date(from: DateComponents(
+            year: end["year"], month: end["month"], day: end["day"]
+        )), startDate <= endDate,
+        endDate.timeIntervalSince(startDate) <= 366 * 24 * 60 * 60 else {
+            throw invalid("The Health activity-summary range is invalid or exceeds one year.")
+        }
+        return .init(startComponents: start, endComponents: end)
+    }
+
+    static func decodeWorkouts(_ json: String) throws -> HanlinScriptingHealthWorkoutsRequest {
+        let payload = try HanlinScriptingNativeJSON.decodeObject(json)
+        let now = Date()
+        let start = try payload["startDate"].map { try date($0, name: "startDate") }
+            ?? now.addingTimeInterval(-30 * 24 * 60 * 60)
+        let end = try payload["endDate"].map { try date($0, name: "endDate") } ?? now
+        guard start <= end, end.timeIntervalSince(start) <= 366 * 24 * 60 * 60 else {
+            throw invalid("The Health workout range is invalid or exceeds one year.")
+        }
+        let limit = try payload["limit"].map { value -> Int in
+            guard !(value is Bool), let number = value as? NSNumber,
+                  number.doubleValue.rounded() == number.doubleValue,
+                  (1 ... 500).contains(number.intValue) else {
+                throw invalid("The Health workout limit is invalid.")
+            }
+            return number.intValue
+        } ?? 100
+        var reversed = false
+        if let descriptors = payload["sortDescriptors"] as? [[String: Any]], let first = descriptors.first {
+            guard descriptors.count == 1, first["key"] as? String == "startDate",
+                  let order = first["order"] as? String, ["forward", "reverse"].contains(order) else {
+                throw invalid("Only a startDate Health workout sort descriptor is currently supported.")
+            }
+            reversed = order == "reverse"
+        } else if payload["sortDescriptors"] != nil {
+            throw invalid("Health workout sortDescriptors are invalid.")
+        }
+        return .init(startDate: start, endDate: end, limit: limit, reversed: reversed)
+    }
+
+    private static func dateComponents(_ value: Any?, name: String) throws -> [String: Int] {
+        guard let object = value as? [String: Any] else {
+            throw invalid("Health \(name) must be DateComponents.")
+        }
+        var result: [String: Int] = [:]
+        for key in ["era", "year", "month", "day"] where object[key] != nil {
+            guard !(object[key] is Bool), let number = object[key] as? NSNumber,
+                  number.doubleValue.rounded() == number.doubleValue else {
+                throw invalid("A Health date component is invalid.")
+            }
+            result[key] = number.intValue
+        }
+        guard result["year"] != nil, result["month"] != nil, result["day"] != nil else {
+            throw invalid("Health DateComponents require year, month and day.")
+        }
+        return result
     }
 
     private static func date(_ value: Any?, name: String) throws -> Date {

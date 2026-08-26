@@ -21287,7 +21287,7 @@
       ],
       "allowedOrigins": [],
       "behaviorDifferences": [
-        "The live JavaScriptCore namespace exposes isHealthDataAvailable and capability-gated queryStatistics for stepCount, distanceWalkingRunning, activeEnergyBurned and heartRate. cumulativeSum and discreteAverage are backed by HealthKit and return Scripting-compatible HealthStatistics/HealthUnit values. Other statistics options, samples, activity summaries, workouts, characteristics and writes remain unavailable and are rejected rather than fabricated."
+        "The live JavaScriptCore namespace exposes isHealthDataAvailable; capability-gated queryStatistics for stepCount, distanceWalkingRunning, activeEnergyBurned and heartRate; bounded activity-summary ranges; and bounded workout queries sorted by startDate. cumulativeSum/discreteAverage, activity ring quantities, workout identity/dates/duration/type, and available step/distance/energy/heart-rate workout statistics are backed by HealthKit and projected as Scripting-compatible HealthStatistics, HealthActivitySummary, HealthWorkout and HealthUnit values. Other statistics options, raw samples, workout events/metadata/source details, characteristics and writes remain unavailable and are rejected rather than fabricated."
       ],
       "behaviorMatched": false,
       "declarationFile": "global.d.ts",
@@ -21296,7 +21296,7 @@
       "hanlinAPIVersion": "hanlin.services/1.0",
       "hanlinSymbol": "HanlinHealthService",
       "implementedByHanlin": true,
-      "notes": "Each query is bounded to one year and requires both the package capability grant and HealthKit read authorization.",
+      "notes": "Each query is bounded to one year (workouts also to 500 results) and requires both the package capability grant and the corresponding HealthKit read authorization.",
       "referenceCategory": "namespace",
       "referenceSignatureHash": "6a6ef271268e45cecda073c0099d74b715c5db374074f344152480e7135f1e0e",
       "referenceSymbol": "Health",

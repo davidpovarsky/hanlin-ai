@@ -20,6 +20,8 @@ public final class HanlinScriptingApplicationSession {
     private let healthAllowed: Bool
     private let healthDataAvailable: Bool
     private let healthStatisticsLoader: HanlinScriptingHealthStatisticsLoader
+    private let healthActivitySummariesLoader: HanlinScriptingHealthActivitySummariesLoader
+    private let healthWorkoutsLoader: HanlinScriptingHealthWorkoutsLoader
     private let notificationsAllowed: Bool
     private let notificationLoader: HanlinScriptingNotificationLoader
     private let assistantAllowed: Bool
@@ -45,6 +47,8 @@ public final class HanlinScriptingApplicationSession {
         healthAllowed: Bool = false,
         healthDataAvailable: Bool = false,
         healthStatisticsLoader: @escaping HanlinScriptingHealthStatisticsLoader = HanlinScriptingUnavailableHealthStatisticsLoader.load,
+        healthActivitySummariesLoader: @escaping HanlinScriptingHealthActivitySummariesLoader = HanlinScriptingUnavailableHealthActivitySummariesLoader.load,
+        healthWorkoutsLoader: @escaping HanlinScriptingHealthWorkoutsLoader = HanlinScriptingUnavailableHealthWorkoutsLoader.load,
         notificationsAllowed: Bool = false,
         notificationLoader: @escaping HanlinScriptingNotificationLoader = HanlinScriptingUnavailableNotificationLoader.load,
         assistantAllowed: Bool = false,
@@ -77,6 +81,8 @@ public final class HanlinScriptingApplicationSession {
         self.healthAllowed = healthAllowed
         self.healthDataAvailable = healthDataAvailable
         self.healthStatisticsLoader = healthStatisticsLoader
+        self.healthActivitySummariesLoader = healthActivitySummariesLoader
+        self.healthWorkoutsLoader = healthWorkoutsLoader
         self.notificationsAllowed = notificationsAllowed
         self.notificationLoader = notificationLoader
         self.assistantAllowed = assistantAllowed
@@ -407,6 +413,18 @@ public final class HanlinScriptingApplicationSession {
             let result = try await healthStatisticsLoader(request)
             return HanlinScriptingNativeJSON.success(result?.nativeObject ?? NSNull())
         }
+        if operation == "health.queryActivitySummaries" {
+            try ensureHealthAvailable()
+            let request = try HanlinScriptingHealthPayloadDecoder.decodeActivitySummaries(payloadJSON)
+            let results = try await healthActivitySummariesLoader(request)
+            return HanlinScriptingNativeJSON.success(results.map(\.nativeObject))
+        }
+        if operation == "health.queryWorkouts" {
+            try ensureHealthAvailable()
+            let request = try HanlinScriptingHealthPayloadDecoder.decodeWorkouts(payloadJSON)
+            let results = try await healthWorkoutsLoader(request)
+            return HanlinScriptingNativeJSON.success(results.map(\.nativeObject))
+        }
         if operation.hasPrefix("notification.") {
             guard notificationsAllowed else {
                 throw HanlinScriptingNativeError(
@@ -492,6 +510,21 @@ public final class HanlinScriptingApplicationSession {
             code: "unsupported_operation",
             message: "The requested native operation is unavailable."
         )
+    }
+
+    private func ensureHealthAvailable() throws {
+        guard healthAllowed else {
+            throw HanlinScriptingNativeError(
+                name: "Error", code: "permission_denied",
+                message: "The Health capability is not granted."
+            )
+        }
+        guard healthDataAvailable else {
+            throw HanlinScriptingNativeError(
+                name: "Error", code: "health_unavailable",
+                message: "Health data is unavailable on this device."
+            )
+        }
     }
 
     private func resolveNativeRequest(id: String, resultJSON: String) {
@@ -1523,6 +1556,42 @@ private extension HanlinScriptingApplicationSession {
         mostRecentQuantity() { return null; }
         mostRecentQuantityDateInterval() { return null; }
       }
+      class HealthActivitySummary {
+        constructor(value) {
+          this.dateComponents = new DateComponents(value.dateComponents);
+          this.activityMoveMode = value.activityMoveMode;
+          this._values = value;
+          Object.freeze(this);
+        }
+        _quantity(key, unit, expectedUnit) {
+          if (!healthUnitMatches(expectedUnit, unit)) throw new TypeError("The HealthUnit is incompatible");
+          return this._values[key];
+        }
+        activeEnergyBurned(unit) { return this._quantity("activeEnergyBurned", unit, "kcal"); }
+        activeEnergyBurnedGoal(unit) { return this._quantity("activeEnergyBurnedGoal", unit, "kcal"); }
+        appleMoveTime(unit) { return this._quantity("appleMoveTime", unit, "min"); }
+        appleMoveTimeGoal(unit) { return this._quantity("appleMoveTimeGoal", unit, "min"); }
+        appleExerciseTime(unit) { return this._quantity("appleExerciseTime", unit, "min"); }
+        appleExerciseTimeGoal(unit) { return this._quantity("appleExerciseTimeGoal", unit, "min"); }
+        appleStandHours(unit) { return this._quantity("appleStandHours", unit, "count"); }
+        appleStandHoursGoal(unit) { return this._quantity("appleStandHoursGoal", unit, "count"); }
+      }
+      class HealthWorkout {
+        constructor(value) {
+          this.uuid = value.uuid;
+          this.workoutActivityType = value.workoutActivityType;
+          this.startDate = new Date(value.startDate);
+          this.endDate = new Date(value.endDate);
+          this.duration = value.duration;
+          this.metadata = null;
+          this.device = null;
+          this.workoutEvents = null;
+          this.allStatistics = Object.freeze(Object.fromEntries(Object.entries(value.allStatistics ?? {}).map(
+            ([key, statistics]) => [key, statistics == null ? null : new HealthStatistics(statistics)]
+          )));
+          Object.freeze(this);
+        }
+      }
       const healthStatisticsOptions = new Set(["cumulativeSum", "discreteAverage"]);
       const Health = Object.freeze({
         isHealthDataAvailable: globalThis.__hanlinNativeHealthDataAvailable === true,
@@ -1544,6 +1613,39 @@ private extension HanlinScriptingApplicationSession {
             quantityType, startDate: startDate.getTime(), endDate: endDate.getTime(),
             statisticsOptions: requested
           }).then(value => value == null ? null : new HealthStatistics(value));
+        },
+        queryActivitySummaries(options) {
+          if (!options || !(options.start instanceof DateComponents) || !(options.end instanceof DateComponents)) {
+            return Promise.reject(new TypeError("Health.queryActivitySummaries requires start and end DateComponents"));
+          }
+          return nativeCallAsync("health.queryActivitySummaries", {
+            start: options.start, end: options.end
+          }).then(values => values.map(value => new HealthActivitySummary(value)));
+        },
+        queryWorkouts(options = {}) {
+          if (options == null || typeof options !== "object" || Array.isArray(options)) {
+            return Promise.reject(new TypeError("Health.queryWorkouts options must be an object"));
+          }
+          if (options.strictStartDate != null || options.strictEndDate != null || options.requestPermissions != null) {
+            return Promise.reject(new TypeError("A requested Health workout option is not supported yet"));
+          }
+          const payload = {
+            limit: options.limit,
+            sortDescriptors: options.sortDescriptors,
+          };
+          if (options.startDate != null) {
+            const date = new Date(options.startDate);
+            if (Number.isNaN(date.getTime())) return Promise.reject(new TypeError("Health workout startDate is invalid"));
+            payload.startDate = date.getTime();
+          }
+          if (options.endDate != null) {
+            const date = new Date(options.endDate);
+            if (Number.isNaN(date.getTime())) return Promise.reject(new TypeError("Health workout endDate is invalid"));
+            payload.endDate = date.getTime();
+          }
+          return nativeCallAsync("health.queryWorkouts", payload).then(
+            values => values.map(value => new HealthWorkout(value))
+          );
         }
       });
 
@@ -2317,6 +2419,7 @@ private extension HanlinScriptingApplicationSession {
         fetch: hanlinFetch, DOMException: HanlinDOMException, AbortEvent: HanlinAbortEvent,
         AbortSignal: HanlinAbortSignal, AbortController: HanlinAbortController,
         Storage, SQLite, Assistant, Location, Health, HealthUnit, HealthStatistics,
+        HealthActivitySummary, HealthWorkout,
         Notification, DateComponents, CalendarNotificationTrigger, TimeIntervalNotificationTrigger,
         LiveActivity, Script, Device, Widget, AppIntentProtocol, AppIntentManager,
         Color: Object.freeze({}),

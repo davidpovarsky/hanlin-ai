@@ -335,9 +335,9 @@
       "requiredCapability": "health",
       "requiredEntitlement": "com.apple.developer.healthkit",
       "allowedContexts": ["mainApplication"],
-      "behaviorDifferences": ["The live JavaScriptCore namespace exposes isHealthDataAvailable and capability-gated queryStatistics for stepCount, distanceWalkingRunning, activeEnergyBurned and heartRate. cumulativeSum and discreteAverage are backed by HealthKit and return Scripting-compatible HealthStatistics/HealthUnit values. Other statistics options, samples, activity summaries, workouts, characteristics and writes remain unavailable and are rejected rather than fabricated."],
+      "behaviorDifferences": ["The live JavaScriptCore namespace exposes isHealthDataAvailable; capability-gated queryStatistics for stepCount, distanceWalkingRunning, activeEnergyBurned and heartRate; bounded activity-summary ranges; and bounded workout queries sorted by startDate. cumulativeSum/discreteAverage, activity ring quantities, workout identity/dates/duration/type, and available step/distance/energy/heart-rate workout statistics are backed by HealthKit and projected as Scripting-compatible HealthStatistics, HealthActivitySummary, HealthWorkout and HealthUnit values. Other statistics options, raw samples, workout events/metadata/source details, characteristics and writes remain unavailable and are rejected rather than fabricated."],
       "tests": ["Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift", "Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs"],
-      "notes": "Each query is bounded to one year and requires both the package capability grant and HealthKit read authorization."
+      "notes": "Each query is bounded to one year (workouts also to 500 results) and requires both the package capability grant and the corresponding HealthKit read authorization."
     },
     {
       "symbol": "Widget",

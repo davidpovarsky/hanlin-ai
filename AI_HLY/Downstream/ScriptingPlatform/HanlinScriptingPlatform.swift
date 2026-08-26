@@ -383,6 +383,14 @@ final class HanlinScriptingPlatform {
                     guard let self else { throw CancellationError() }
                     return try await self.performHealthStatistics(request)
                 },
+                healthActivitySummariesLoader: { [weak self] request in
+                    guard let self else { throw CancellationError() }
+                    return try await self.performHealthActivitySummaries(request)
+                },
+                healthWorkoutsLoader: { [weak self] request in
+                    guard let self else { throw CancellationError() }
+                    return try await self.performHealthWorkouts(request)
+                },
                 notificationsAllowed: package.grantedCapabilities.contains(notificationsCapability),
                 notificationLoader: { [weak self] request in
                     guard let self else { throw CancellationError() }
@@ -494,6 +502,79 @@ final class HanlinScriptingPlatform {
             sum: result.sum,
             average: result.average
         )
+    }
+
+    private func performHealthActivitySummaries(
+        _ request: HanlinScriptingHealthActivitySummariesRequest
+    ) async throws -> [HanlinScriptingHealthActivitySummaryResult] {
+        let start = Self.dateComponents(request.startComponents)
+        let end = Self.dateComponents(request.endComponents)
+        return try await healthService.activitySummaries(from: start, to: end).map { value in
+            .init(
+                dateComponents: value.dateComponents,
+                activityMoveMode: value.activityMoveMode,
+                activeEnergyBurned: value.activeEnergyBurned,
+                activeEnergyBurnedGoal: value.activeEnergyBurnedGoal,
+                appleMoveTime: value.appleMoveTime,
+                appleMoveTimeGoal: value.appleMoveTimeGoal,
+                appleExerciseTime: value.appleExerciseTime,
+                appleExerciseTimeGoal: value.appleExerciseTimeGoal,
+                appleStandHours: value.appleStandHours,
+                appleStandHoursGoal: value.appleStandHoursGoal
+            )
+        }
+    }
+
+    private func performHealthWorkouts(
+        _ request: HanlinScriptingHealthWorkoutsRequest
+    ) async throws -> [HanlinScriptingHealthWorkoutResult] {
+        try await healthService.workouts(
+            from: request.startDate,
+            to: request.endDate,
+            limit: request.limit,
+            reversed: request.reversed
+        ).map { workout in
+            let statistics = Dictionary(uniqueKeysWithValues: workout.statistics.compactMap { metric, value in
+                guard let runtimeMetric = Self.runtimeHealthMetric(metric) else { return nil }
+                return (runtimeMetric, HanlinScriptingHealthStatisticsResult(
+                    metric: runtimeMetric,
+                    unit: value.unit,
+                    startDate: value.startDate,
+                    endDate: value.endDate,
+                    sum: value.sum,
+                    average: value.average
+                ))
+            })
+            return .init(
+                uuid: workout.uuid,
+                workoutActivityType: workout.workoutActivityType,
+                startDate: workout.startDate,
+                endDate: workout.endDate,
+                duration: workout.duration,
+                statistics: statistics
+            )
+        }
+    }
+
+    private static func dateComponents(_ values: [String: Int]) -> DateComponents {
+        var components = DateComponents()
+        components.calendar = .current
+        components.era = values["era"]
+        components.year = values["year"]
+        components.month = values["month"]
+        components.day = values["day"]
+        return components
+    }
+
+    private static func runtimeHealthMetric(
+        _ metric: HanlinScriptHealthMetric
+    ) -> HanlinScriptingHealthMetric? {
+        switch metric {
+        case .steps: .stepCount
+        case .walkingRunningDistance: .distanceWalkingRunning
+        case .activeEnergy: .activeEnergyBurned
+        case .heartRate: .heartRate
+        }
     }
 
     private func performNotification(

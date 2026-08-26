@@ -108,6 +108,26 @@ function runtime() {
               ? null
             : operation === "health.queryStatistics"
               ? { quantityType: payload.quantityType, unit: "count", startDate: payload.startDate, endDate: payload.endDate, sum: 8432, average: null }
+            : operation === "health.queryActivitySummaries"
+              ? [{
+                  dateComponents: { year: 2025, month: 10, day: 1 }, activityMoveMode: 1,
+                  activeEnergyBurned: 510, activeEnergyBurnedGoal: 600,
+                  appleMoveTime: 0, appleMoveTimeGoal: 0,
+                  appleExerciseTime: 34, appleExerciseTimeGoal: 30,
+                  appleStandHours: 9, appleStandHoursGoal: 12,
+                }]
+            : operation === "health.queryWorkouts"
+              ? [{
+                  uuid: "workout-1", workoutActivityType: 37,
+                  startDate: payload.startDate, endDate: payload.startDate + 1800000, duration: 1800,
+                  allStatistics: {
+                    activeEnergyBurned: {
+                      quantityType: "activeEnergyBurned", unit: "kcal",
+                      startDate: payload.startDate, endDate: payload.startDate + 1800000,
+                      sum: 240, average: null,
+                    },
+                  },
+                }]
             : operation === "notification.schedule" || operation === "notification.removeAllPendingsOfCurrentScript"
               ? true
             : operation === "runtime.delay"
@@ -607,19 +627,34 @@ test("Smart-eating Health statistics and recurring notifications preserve Script
         interruptionLevel: "timeSensitive",
         trigger: new CalendarNotificationTrigger({ dateMatching: components, repeats: true }),
       });
+      const activity = await Health.queryActivitySummaries({
+        start: DateComponents.fromDate(new Date("2025-10-01T12:00:00Z")),
+        end: DateComponents.fromDate(new Date("2025-10-01T12:00:00Z")),
+      });
+      const workouts = await Health.queryWorkouts({
+        startDate: new Date("2025-10-01T00:00:00Z"),
+        endDate: new Date("2025-10-01T23:59:59Z"),
+        sortDescriptors: [{ key: "startDate", order: "reverse" }],
+      });
       await Notification.removeAllPendingsOfCurrentScript();
       return {
         available: Health.isHealthDataAvailable,
         steps: statistics.sumQuantity(HealthUnit.count()),
+        exercise: activity[0].appleExerciseTime(HealthUnit.minute()),
+        workoutDuration: workouts[0].duration,
+        calories: workouts[0].allStatistics.activeEnergyBurned.sumQuantity(HealthUnit.kilocalorie()),
         scheduled,
       };
     })()
   `, context);
   assert.deepEqual(JSON.parse(JSON.stringify(result)), {
-    available: true, steps: 8432, scheduled: true,
+    available: true, steps: 8432, exercise: 34, workoutDuration: 1800, calories: 240, scheduled: true,
   });
   assert.equal(healthRequests[0].operation, "health.queryStatistics");
   assert.deepEqual(healthRequests[0].payload.statisticsOptions, ["cumulativeSum"]);
+  assert.equal(healthRequests[1].operation, "health.queryActivitySummaries");
+  assert.equal(healthRequests[2].operation, "health.queryWorkouts");
+  assert.equal(healthRequests[2].payload.sortDescriptors[0].order, "reverse");
   assert.equal(notificationRequests[0].operation, "notification.schedule");
   assert.deepEqual(notificationRequests[0].payload.trigger, {
     type: "calendar", dateMatching: { hour: 8, minute: 15 }, repeats: true,

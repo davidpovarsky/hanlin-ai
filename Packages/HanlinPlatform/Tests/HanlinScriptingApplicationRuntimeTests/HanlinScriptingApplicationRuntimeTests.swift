@@ -240,9 +240,22 @@ struct HanlinScriptingApplicationRuntimeTests {
                 title: "Breakfast",
                 trigger: new CalendarNotificationTrigger({ dateMatching: components, repeats: true }),
                 interruptionLevel: "timeSensitive"
+              }),
+              Health.queryActivitySummaries({
+                start: DateComponents.fromDate(new Date("2025-10-01T12:00:00Z")),
+                end: DateComponents.fromDate(new Date("2025-10-01T12:00:00Z"))
+              }),
+              Health.queryWorkouts({
+                startDate: new Date("2025-10-01T00:00:00Z"),
+                endDate: new Date("2025-10-01T23:59:59Z"),
+                sortDescriptors: [{ key: "startDate", order: "reverse" }]
               })
-            ]).then(([stats, scheduled]) => Navigation.present({ element: createElement(
-              Text, null, JSON.stringify([stats.sumQuantity(HealthUnit.count()), scheduled])
+            ]).then(([stats, scheduled, activity, workouts]) => Navigation.present({ element: createElement(
+              Text, null, JSON.stringify([
+                stats.sumQuantity(HealthUnit.count()), scheduled,
+                activity[0].appleExerciseTime(HealthUnit.minute()), workouts[0].duration,
+                workouts[0].allStatistics.activeEnergyBurned.sumQuantity(HealthUnit.kilocalorie())
+              ])
             ) }));
             """#,
             filename: "compiled/index.js",
@@ -260,6 +273,40 @@ struct HanlinScriptingApplicationRuntimeTests {
                     sum: 8_432
                 )
             },
+            healthActivitySummariesLoader: { request in
+                #expect(request.startComponents["year"] == 2025)
+                return [.init(
+                    dateComponents: ["year": 2025, "month": 10, "day": 1],
+                    activityMoveMode: 1,
+                    activeEnergyBurned: 510,
+                    activeEnergyBurnedGoal: 600,
+                    appleMoveTime: 0,
+                    appleMoveTimeGoal: 0,
+                    appleExerciseTime: 34,
+                    appleExerciseTimeGoal: 30,
+                    appleStandHours: 9,
+                    appleStandHoursGoal: 12
+                )]
+            },
+            healthWorkoutsLoader: { request in
+                #expect(request.reversed)
+                return [.init(
+                    uuid: "workout-1",
+                    workoutActivityType: 37,
+                    startDate: request.startDate,
+                    endDate: request.startDate.addingTimeInterval(1_800),
+                    duration: 1_800,
+                    statistics: [
+                        .activeEnergyBurned: .init(
+                            metric: .activeEnergyBurned,
+                            unit: "kcal",
+                            startDate: request.startDate,
+                            endDate: request.startDate.addingTimeInterval(1_800),
+                            sum: 240
+                        )
+                    ]
+                )]
+            },
             notificationsAllowed: true,
             notificationLoader: { request in
                 #expect(request.action == .schedule)
@@ -274,9 +321,10 @@ struct HanlinScriptingApplicationRuntimeTests {
         )
         defer { session.dispose() }
 
-        for _ in 0 ..< 100 where session.model.root.properties["text"] != .string("[8432,true]") {
+        let expected = "[8432,true,34,1800,240]"
+        for _ in 0 ..< 100 where session.model.root.properties["text"] != .string(expected) {
             await Task.yield()
         }
-        #expect(session.model.root.properties["text"] == .string("[8432,true]"))
+        #expect(session.model.root.properties["text"] == .string(expected))
     }
 }

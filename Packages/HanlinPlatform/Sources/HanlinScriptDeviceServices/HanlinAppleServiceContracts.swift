@@ -184,6 +184,68 @@ public struct HanlinScriptHealthStatistics: Codable, Hashable, Sendable {
     }
 }
 
+public struct HanlinScriptHealthActivitySummary: Codable, Hashable, Sendable {
+    public let dateComponents: [String: Int]
+    public let activityMoveMode: Int
+    public let activeEnergyBurned: Double
+    public let activeEnergyBurnedGoal: Double
+    public let appleMoveTime: Double
+    public let appleMoveTimeGoal: Double
+    public let appleExerciseTime: Double
+    public let appleExerciseTimeGoal: Double
+    public let appleStandHours: Double
+    public let appleStandHoursGoal: Double
+
+    public init(
+        dateComponents: [String: Int],
+        activityMoveMode: Int,
+        activeEnergyBurned: Double,
+        activeEnergyBurnedGoal: Double,
+        appleMoveTime: Double,
+        appleMoveTimeGoal: Double,
+        appleExerciseTime: Double,
+        appleExerciseTimeGoal: Double,
+        appleStandHours: Double,
+        appleStandHoursGoal: Double
+    ) {
+        self.dateComponents = dateComponents
+        self.activityMoveMode = activityMoveMode
+        self.activeEnergyBurned = activeEnergyBurned
+        self.activeEnergyBurnedGoal = activeEnergyBurnedGoal
+        self.appleMoveTime = appleMoveTime
+        self.appleMoveTimeGoal = appleMoveTimeGoal
+        self.appleExerciseTime = appleExerciseTime
+        self.appleExerciseTimeGoal = appleExerciseTimeGoal
+        self.appleStandHours = appleStandHours
+        self.appleStandHoursGoal = appleStandHoursGoal
+    }
+}
+
+public struct HanlinScriptHealthWorkout: Codable, Hashable, Sendable {
+    public let uuid: String
+    public let workoutActivityType: UInt
+    public let startDate: Date
+    public let endDate: Date
+    public let duration: Double
+    public let statistics: [HanlinScriptHealthMetric: HanlinScriptHealthStatistics]
+
+    public init(
+        uuid: String,
+        workoutActivityType: UInt,
+        startDate: Date,
+        endDate: Date,
+        duration: Double,
+        statistics: [HanlinScriptHealthMetric: HanlinScriptHealthStatistics]
+    ) {
+        self.uuid = uuid
+        self.workoutActivityType = workoutActivityType
+        self.startDate = startDate
+        self.endDate = endDate
+        self.duration = duration
+        self.statistics = statistics
+    }
+}
+
 public struct HanlinScriptHealthQuantity: Codable, Hashable, Sendable {
     public let metric: HanlinScriptHealthMetric
     public let value: Double
