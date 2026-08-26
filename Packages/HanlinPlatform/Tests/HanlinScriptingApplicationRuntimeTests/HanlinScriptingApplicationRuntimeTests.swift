@@ -182,7 +182,9 @@ struct HanlinScriptingApplicationRuntimeTests {
               Navigation.present({ element: createElement(Text, null, JSON.stringify({
                 ok: true, identifier: reminder.identifier
               })) });
-            })();
+            })().catch(error => {
+              Navigation.present({ element: createElement(Text, null, `ERROR:${error?.message ?? error}`) });
+            });
             """#,
             filename: "compiled/tools/reminder.js",
             storageAllowed: false,
