@@ -322,9 +322,7 @@ struct HanlinScriptingApplicationRuntimeTests {
         defer { session.dispose() }
 
         let expected = "[8432,true,34,1800,240]"
-        for _ in 0 ..< 100 where session.model.root.properties["text"] != .string(expected) {
-            await Task.yield()
-        }
+        await session.waitForNativeQuiescence()
         #expect(session.model.root.properties["text"] == .string(expected))
     }
 }

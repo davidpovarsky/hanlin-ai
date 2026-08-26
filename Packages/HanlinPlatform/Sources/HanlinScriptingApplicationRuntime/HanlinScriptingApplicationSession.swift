@@ -122,6 +122,12 @@ public final class HanlinScriptingApplicationSession {
         }
     }
 
+    func waitForNativeQuiescence() async {
+        while let task = nativeTasks.values.first {
+            await task.value
+        }
+    }
+
     public func dismiss() {
         guard !disposed else { return }
         context.evaluateScript("globalThis.__hanlinDismiss?.();")
