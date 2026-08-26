@@ -1549,9 +1549,10 @@ final class HanlinScriptingPackageFileSystem: @unchecked Sendable {
         }
         return try urls.map { rawURL in
             let url = rawURL.standardizedFileURL.resolvingSymlinksInPath()
-            guard url.isFileURL, url.path().utf8.count <= 8_192,
-                  fileManager.fileExists(atPath: url.path()) else {
-                throw invalid("The selected file URL is invalid.")
+            guard url.isFileURL else { throw invalid("The selected URL is not a file URL.") }
+            guard url.path().utf8.count <= 8_192 else { throw invalid("The selected file path is too large.") }
+            guard fileManager.fileExists(atPath: url.path()) else {
+                throw invalid("The selected file or directory no longer exists.")
             }
             let values = try url.resourceValues(forKeys: [.isDirectoryKey, .isSymbolicLinkKey])
             guard values.isSymbolicLink != true else {
