@@ -7,8 +7,15 @@ enum HanlinAppleDeviceSnapshotProvider {
         let device = UIDevice.current
         let wasBatteryMonitoringEnabled = device.isBatteryMonitoringEnabled
         if !wasBatteryMonitoringEnabled { device.isBatteryMonitoringEnabled = true }
+        let wasGeneratingOrientationNotifications = device.isGeneratingDeviceOrientationNotifications
+        if !wasGeneratingOrientationNotifications {
+            device.beginGeneratingDeviceOrientationNotifications()
+        }
         defer {
             if !wasBatteryMonitoringEnabled { device.isBatteryMonitoringEnabled = false }
+            if !wasGeneratingOrientationNotifications {
+                device.endGeneratingDeviceOrientationNotifications()
+            }
         }
 
         let scene = UIApplication.shared.connectedScenes
@@ -17,7 +24,7 @@ enum HanlinAppleDeviceSnapshotProvider {
             .first
         let screen = scene?.screen
         let bounds = screen?.bounds ?? .zero
-        let orientation = orientationName(scene?.interfaceOrientation)
+        let orientation = orientationName(device.orientation)
         let locale = Locale.current
         let languageTag = Locale.preferredLanguages.first ?? locale.identifier
 
@@ -58,13 +65,16 @@ enum HanlinAppleDeviceSnapshotProvider {
         }
     }
 
-    private static func orientationName(_ orientation: UIInterfaceOrientation?) -> String {
+    private static func orientationName(_ orientation: UIDeviceOrientation) -> String {
         switch orientation {
         case .portrait: "portrait"
         case .portraitUpsideDown: "portraitUpsideDown"
         case .landscapeLeft: "landscapeLeft"
         case .landscapeRight: "landscapeRight"
-        default: "unknown"
+        case .faceUp: "faceUp"
+        case .faceDown: "faceDown"
+        case .unknown: "unknown"
+        @unknown default: "unknown"
         }
     }
 
