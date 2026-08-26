@@ -256,6 +256,8 @@ struct HanlinScriptingApplicationRuntimeTests {
                 activity[0].appleExerciseTime(HealthUnit.minute()), workouts[0].duration,
                 workouts[0].allStatistics.activeEnergyBurned.sumQuantity(HealthUnit.kilocalorie())
               ])
+            ) })).catch(error => Navigation.present({ element: createElement(
+              Text, null, `ERROR:${error?.name}:${error?.message}`
             ) }));
             """#,
             filename: "compiled/index.js",
