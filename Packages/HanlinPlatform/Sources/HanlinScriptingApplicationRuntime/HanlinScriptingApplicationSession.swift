@@ -123,8 +123,12 @@ public final class HanlinScriptingApplicationSession {
     }
 
     func waitForNativeQuiescence() async {
-        while let task = nativeTasks.values.first {
-            await task.value
+        while true {
+            while let task = nativeTasks.values.first {
+                await task.value
+            }
+            try? evaluate("void 0;", filename: "hanlin-native-quiescence.js")
+            if nativeTasks.isEmpty { return }
         }
     }
 
