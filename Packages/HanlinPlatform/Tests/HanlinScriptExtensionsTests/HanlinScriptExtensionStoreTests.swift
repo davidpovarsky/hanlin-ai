@@ -1,6 +1,6 @@
 import Foundation
 import HanlinPlatformContracts
-import HanlinScriptExtensions
+@testable import HanlinScriptExtensions
 import HanlinScriptUI
 import Testing
 
