@@ -38,7 +38,7 @@ enum HanlinAppleDeviceSnapshotProvider {
             screen: .init(
                 width: bounds.width,
                 height: bounds.height,
-                scale: screen?.scale ?? 1
+                scale: Double(screen?.scale ?? 1)
             ),
             batteryState: batteryStateName(device.batteryState),
             batteryLevel: Double(device.batteryLevel),
