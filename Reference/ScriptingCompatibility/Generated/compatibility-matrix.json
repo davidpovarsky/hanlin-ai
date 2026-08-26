@@ -12449,24 +12449,31 @@
       "verifiedByFixture": false
     },
     {
-      "allowedContexts": [],
+      "allowedContexts": [
+        "mainApplication"
+      ],
       "allowedOrigins": [],
-      "behaviorDifferences": [],
+      "behaviorDifferences": [
+        "alert, confirm, prompt and actionSheet use native UIAlertController presentation and resolve only after the selected action. String and object overloads, custom labels, secure/default/selected prompt text, keyboard type, destructive actions and nullable cancellation results are preserved. Inputs and action counts are bounded by the host."
+      ],
       "behaviorMatched": false,
       "declarationFile": "global.d.ts",
       "declarationLine": 1206,
       "declaredByScripting": true,
-      "hanlinAPIVersion": null,
-      "hanlinSymbol": null,
+      "hanlinAPIVersion": "hanlin.ui/1.0",
+      "hanlinSymbol": "HanlinScriptingApplicationSession.Dialog",
       "implementedByHanlin": false,
-      "notes": "The authorized ambient API has no complete runtime binding and conformance test yet; declaration presence is not treated as support.",
+      "notes": "Implements the untouched FileManager create/rename/delete flows and nativ-ai confirmation, rename and error dialogs.",
       "referenceCategory": "namespace",
       "referenceSignatureHash": "bc3e7cde7862875000a8f09962534efcde604151fe6d7b6024cdf72d41920aa2",
       "referenceSymbol": "Dialog",
       "requiredCapability": null,
       "requiredEntitlement": null,
-      "status": "not-yet-implemented",
-      "tests": [],
+      "status": "supported",
+      "tests": [
+        "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift",
+        "Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs"
+      ],
       "verifiedByFixture": false
     },
     {
@@ -12491,24 +12498,31 @@
       "verifiedByFixture": false
     },
     {
-      "allowedContexts": [],
+      "allowedContexts": [
+        "mainApplication"
+      ],
       "allowedOrigins": [],
-      "behaviorDifferences": [],
+      "behaviorDifferences": [
+        "alert, confirm, prompt and actionSheet use native UIAlertController presentation and resolve only after the selected action. String and object overloads, custom labels, secure/default/selected prompt text, keyboard type, destructive actions and nullable cancellation results are preserved. Inputs and action counts are bounded by the host."
+      ],
       "behaviorMatched": false,
       "declarationFile": "scripting.d.ts",
       "declarationLine": 10208,
       "declaredByScripting": true,
-      "hanlinAPIVersion": null,
-      "hanlinSymbol": null,
+      "hanlinAPIVersion": "hanlin.ui/1.0",
+      "hanlinSymbol": "HanlinScriptingApplicationSession.Dialog",
       "implementedByHanlin": false,
-      "notes": "The symbol is authorized for compatibility work but lacks a complete observable binding and conformance test.",
+      "notes": "Implements the untouched FileManager create/rename/delete flows and nativ-ai confirmation, rename and error dialogs.",
       "referenceCategory": "type",
       "referenceSignatureHash": "786162e2ebe009367077310396ad6f2ce216c610a0bfed33992b79ce3c2d91ee",
       "referenceSymbol": "Dialog",
       "requiredCapability": null,
       "requiredEntitlement": null,
-      "status": "not-yet-implemented",
-      "tests": [],
+      "status": "supported",
+      "tests": [
+        "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift",
+        "Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs"
+      ],
       "verifiedByFixture": false
     },
     {

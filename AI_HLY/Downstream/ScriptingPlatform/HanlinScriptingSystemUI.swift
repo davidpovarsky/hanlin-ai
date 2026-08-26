@@ -44,6 +44,116 @@ struct HanlinScriptingSystemUIPresentationView: View {
             HanlinPhotoPickerController(limit: limit, completion: completion)
         case .takePhoto:
             HanlinCameraPickerController(completion: completion)
+        case let .dialog(request):
+            HanlinDialogController(request: request, completion: completion)
+        }
+    }
+}
+
+private struct HanlinDialogController: UIViewControllerRepresentable {
+    let request: HanlinScriptingDialogRequest
+    let completion: (Result<HanlinScriptingSystemUIResult, any Error>) -> Void
+
+    func makeUIViewController(context: Context) -> HanlinDialogPresenterViewController {
+        HanlinDialogPresenterViewController(request: request, completion: completion)
+    }
+
+    func updateUIViewController(
+        _ controller: HanlinDialogPresenterViewController,
+        context: Context
+    ) {}
+}
+
+@MainActor
+private final class HanlinDialogPresenterViewController: UIViewController {
+    private let request: HanlinScriptingDialogRequest
+    private let completion: (Result<HanlinScriptingSystemUIResult, any Error>) -> Void
+    private var didPresentDialog = false
+
+    init(
+        request: HanlinScriptingDialogRequest,
+        completion: @escaping (Result<HanlinScriptingSystemUIResult, any Error>) -> Void
+    ) {
+        self.request = request
+        self.completion = completion
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    @available(*, unavailable)
+    required init?(coder: NSCoder) { fatalError("init(coder:) is unavailable") }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        guard !didPresentDialog else { return }
+        didPresentDialog = true
+        presentDialog()
+    }
+
+    private func presentDialog() {
+        let style: UIAlertController.Style = request.kind == .actionSheet ? .actionSheet : .alert
+        let alert = UIAlertController(title: request.title, message: request.message, preferredStyle: style)
+        switch request.kind {
+        case .alert:
+            alert.addAction(UIAlertAction(title: request.confirmLabel ?? "OK", style: .default) {
+                [completion] _ in completion(.success(.completed))
+            })
+        case .confirm:
+            alert.addAction(UIAlertAction(title: request.cancelLabel ?? "Cancel", style: .cancel) {
+                [completion] _ in completion(.success(.boolean(false)))
+            })
+            alert.addAction(UIAlertAction(title: request.confirmLabel ?? "OK", style: .default) {
+                [completion] _ in completion(.success(.boolean(true)))
+            })
+        case .prompt:
+            alert.addTextField { [request] textField in
+                textField.text = request.defaultValue
+                textField.placeholder = request.placeholder
+                textField.isSecureTextEntry = request.obscureText
+                textField.keyboardType = Self.keyboardType(request.keyboardType)
+            }
+            alert.addAction(UIAlertAction(title: request.cancelLabel ?? "Cancel", style: .cancel) {
+                [completion] _ in completion(.success(.text(nil)))
+            })
+            alert.addAction(UIAlertAction(title: request.confirmLabel ?? "OK", style: .default) {
+                [weak alert, completion] _ in completion(.success(.text(alert?.textFields?.first?.text)))
+            })
+        case .actionSheet:
+            for (index, action) in request.actions.enumerated() {
+                alert.addAction(UIAlertAction(
+                    title: action.label,
+                    style: action.destructive ? .destructive : .default
+                ) { [completion] _ in completion(.success(.index(index))) })
+            }
+            if request.cancelButton {
+                alert.addAction(UIAlertAction(title: request.cancelLabel ?? "Cancel", style: .cancel) {
+                    [completion] _ in completion(.success(.index(nil)))
+                })
+            }
+            alert.popoverPresentationController?.sourceView = view
+            alert.popoverPresentationController?.sourceRect = CGRect(
+                x: view.bounds.midX, y: view.bounds.midY, width: 1, height: 1
+            )
+        }
+        present(alert, animated: true) { [request, weak alert] in
+            guard request.kind == .prompt, request.selectAll else { return }
+            alert?.textFields?.first?.selectAll(nil)
+        }
+    }
+
+    private static func keyboardType(_ value: String?) -> UIKeyboardType {
+        switch value {
+        case "asciiCapable": .asciiCapable
+        case "numbersAndPunctuation": .numbersAndPunctuation
+        case "URL": .URL
+        case "numberPad": .numberPad
+        case "phonePad": .phonePad
+        case "namePhonePad": .namePhonePad
+        case "emailAddress": .emailAddress
+        case "decimalPad": .decimalPad
+        case "twitter": .twitter
+        case "webSearch": .webSearch
+        case "asciiCapableNumberPad": .asciiCapableNumberPad
+        default: .default
         }
     }
 }

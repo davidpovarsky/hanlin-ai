@@ -424,6 +424,16 @@
       "notes": "Provides the exact image-to-Data path used by untouched nativ-ai chat attachments and background-photo persistence."
     },
     {
+      "symbol": "Dialog",
+      "status": "supported",
+      "hanlinSymbol": "HanlinScriptingApplicationSession.Dialog",
+      "hanlinAPIVersion": "hanlin.ui/1.0",
+      "allowedContexts": ["mainApplication"],
+      "behaviorDifferences": ["alert, confirm, prompt and actionSheet use native UIAlertController presentation and resolve only after the selected action. String and object overloads, custom labels, secure/default/selected prompt text, keyboard type, destructive actions and nullable cancellation results are preserved. Inputs and action counts are bounded by the host."],
+      "tests": ["Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift", "Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs"],
+      "notes": "Implements the untouched FileManager create/rename/delete flows and nativ-ai confirmation, rename and error dialogs."
+    },
+    {
       "symbol": "LiveActivity",
       "status": "partial",
       "hanlinSymbol": "HanlinScriptLiveActivityController",

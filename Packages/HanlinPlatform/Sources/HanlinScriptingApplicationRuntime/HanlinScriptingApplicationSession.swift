@@ -678,6 +678,81 @@ public final class HanlinScriptingApplicationSession {
                 throw Self.invalidPhotosRequest("The requested Photos operation is unavailable.")
             }
         }
+        if operation.hasPrefix("dialog.") {
+            let actionName = String(operation.dropFirst("dialog.".count))
+            guard let kind = HanlinScriptingDialogKind(rawValue: actionName) else {
+                throw Self.invalidDialogRequest("The requested Dialog operation is unavailable.")
+            }
+            let payload = try HanlinScriptingNativeJSON.decodeObject(payloadJSON)
+            let title = try Self.dialogString(payload["title"], name: "title", maximumBytes: 4_096)
+            let message = try Self.dialogString(payload["message"], name: "message", maximumBytes: 64 * 1_024)
+            let confirmLabel = try Self.dialogString(
+                payload["confirmLabel"] ?? payload["buttonLabel"],
+                name: "confirmLabel", maximumBytes: 512
+            )
+            let cancelLabel = try Self.dialogString(payload["cancelLabel"], name: "cancelLabel", maximumBytes: 512)
+            let defaultValue = try Self.dialogString(payload["defaultValue"], name: "defaultValue", maximumBytes: 64 * 1_024)
+            let placeholder = try Self.dialogString(payload["placeholder"], name: "placeholder", maximumBytes: 4_096)
+            let keyboardType = try Self.dialogString(payload["keyboardType"], name: "keyboardType", maximumBytes: 128)
+            let obscureText = try Self.dialogBoolean(payload["obscureText"], name: "obscureText") ?? false
+            let selectAll = try Self.dialogBoolean(payload["selectAll"], name: "selectAll") ?? false
+            let cancelButton = try Self.dialogBoolean(payload["cancelButton"], name: "cancelButton") ?? true
+            var actions: [HanlinScriptingDialogAction] = []
+            if let actionValues = payload["actions"] {
+                guard let actionValues = actionValues as? [Any], actionValues.count <= 64 else {
+                    throw Self.invalidDialogRequest("Dialog actions are invalid or too numerous.")
+                }
+                actions = try actionValues.map { value in
+                    guard let value = value as? [String: Any],
+                          let label = try Self.dialogString(value["label"], name: "action label", maximumBytes: 512),
+                          !label.isEmpty else {
+                        throw Self.invalidDialogRequest("Every Dialog action requires a label.")
+                    }
+                    return .init(
+                        label: label,
+                        destructive: try Self.dialogBoolean(value["destructive"], name: "destructive") ?? false
+                    )
+                }
+            }
+            switch kind {
+            case .alert:
+                guard message != nil else { throw Self.invalidDialogRequest("Dialog.alert requires a message.") }
+            case .confirm:
+                guard message != nil else { throw Self.invalidDialogRequest("Dialog.confirm requires a message.") }
+            case .prompt:
+                guard title != nil else { throw Self.invalidDialogRequest("Dialog.prompt requires a title.") }
+            case .actionSheet:
+                guard title != nil, !actions.isEmpty else {
+                    throw Self.invalidDialogRequest("Dialog.actionSheet requires a title and at least one action.")
+                }
+            }
+            let result = try await systemUILoader(.dialog(.init(
+                kind: kind,
+                title: title,
+                message: message,
+                confirmLabel: confirmLabel,
+                cancelLabel: cancelLabel,
+                defaultValue: defaultValue,
+                placeholder: placeholder,
+                obscureText: obscureText,
+                selectAll: selectAll,
+                keyboardType: keyboardType,
+                cancelButton: cancelButton,
+                actions: actions
+            )))
+            switch (kind, result) {
+            case (.alert, .completed):
+                return HanlinScriptingNativeJSON.success(NSNull())
+            case let (.confirm, .boolean(value)):
+                return HanlinScriptingNativeJSON.success(value)
+            case let (.prompt, .text(value)):
+                return HanlinScriptingNativeJSON.success(value ?? NSNull())
+            case let (.actionSheet, .index(value)):
+                return HanlinScriptingNativeJSON.success(value.map { $0 as Any } ?? NSNull())
+            default:
+                throw Self.invalidSystemUIResult()
+            }
+        }
         if operation.hasPrefix("location.") {
             guard locationAllowed else {
                 throw HanlinScriptingNativeError(
@@ -873,6 +948,30 @@ public final class HanlinScriptingApplicationSession {
 
     private static func invalidPhotosRequest(_ message: String) -> HanlinScriptingNativeError {
         .init(name: "TypeError", code: "invalid_photos_request", message: message)
+    }
+
+    private static func dialogString(
+        _ value: Any?, name: String, maximumBytes: Int
+    ) throws -> String? {
+        guard let value, !(value is NSNull) else { return nil }
+        guard let string = value as? String, string.utf8.count <= maximumBytes,
+              !string.contains("\0") else {
+            throw invalidDialogRequest("Dialog \(name) is invalid or too large.")
+        }
+        return string
+    }
+
+    private static func dialogBoolean(_ value: Any?, name: String) throws -> Bool? {
+        guard let value, !(value is NSNull) else { return nil }
+        guard let number = value as? NSNumber,
+              CFGetTypeID(number) == CFBooleanGetTypeID() else {
+            throw invalidDialogRequest("Dialog \(name) must be a Boolean.")
+        }
+        return number.boolValue
+    }
+
+    private static func invalidDialogRequest(_ message: String) -> HanlinScriptingNativeError {
+        .init(name: "TypeError", code: "invalid_dialog_request", message: message)
     }
 
     private static func invalidSystemUIResult() -> HanlinScriptingNativeError {
@@ -2950,6 +3049,31 @@ private extension HanlinScriptingApplicationSession {
           );
         }
       });
+      function normalizedDialogInput(input, prompt = false) {
+        if (typeof input === "string") return prompt ? { title: input } : { message: input };
+        if (!input || typeof input !== "object" || Array.isArray(input)) {
+          throw new TypeError("Dialog options must be a string or object");
+        }
+        return { ...input };
+      }
+      const Dialog = Object.freeze({
+        alert(input) {
+          try { return nativeCallAsync("dialog.alert", normalizedDialogInput(input)); }
+          catch (error) { return Promise.reject(error); }
+        },
+        confirm(input) {
+          try { return nativeCallAsync("dialog.confirm", normalizedDialogInput(input)).then(Boolean); }
+          catch (error) { return Promise.reject(error); }
+        },
+        prompt(input) {
+          try { return nativeCallAsync("dialog.prompt", normalizedDialogInput(input, true)); }
+          catch (error) { return Promise.reject(error); }
+        },
+        actionSheet(input) {
+          try { return nativeCallAsync("dialog.actionSheet", normalizedDialogInput(input)); }
+          catch (error) { return Promise.reject(error); }
+        }
+      });
       const Safari = Object.freeze({
         openURL(url) {
           if (typeof url !== "string" || url.length === 0 || url.length > 8192) {
@@ -3017,7 +3141,7 @@ private extension HanlinScriptingApplicationSession {
         Storage, SQLite, Assistant, Location, Health, HealthUnit, HealthStatistics,
         HealthActivitySummary, HealthWorkout,
         Notification, Reminder, DateComponents, CalendarNotificationTrigger, TimeIntervalNotificationTrigger,
-        LiveActivity, Script, Device, Pasteboard, DocumentPicker, QuickLook, Photos, Safari,
+        LiveActivity, Script, Device, Pasteboard, DocumentPicker, QuickLook, Photos, Dialog, Safari,
         Widget, AppIntentProtocol, AppIntentManager,
         Color: Object.freeze({}),
         __hanlinResolveNative: resolveNativeRequest,

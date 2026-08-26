@@ -97,7 +97,7 @@ function runtime(entrypointKind = "application", widgetFamily = "systemMedium") 
           if (operation.startsWith("health.")) healthRequests.push({ operation, payload });
           if (operation.startsWith("notification.")) notificationRequests.push({ operation, payload });
           if (operation.startsWith("reminder.")) reminderRequests.push({ operation, payload });
-          if (operation.startsWith("documentPicker.") || operation.startsWith("quickLook.") || operation.startsWith("photos.")) systemUIRequests.push({ operation, payload });
+          if (operation.startsWith("documentPicker.") || operation.startsWith("quickLook.") || operation.startsWith("photos.") || operation.startsWith("dialog.")) systemUIRequests.push({ operation, payload });
           if (operation.startsWith("pasteboard.") || operation.startsWith("safari.")) systemRequests.push({ operation, payload });
           const value = operation === "network.fetch"
             ? { url: payload.url, status: 200, headers: { "content-type": "application/json" }, bodyBase64: Buffer.from('{"ok":true}').toString("base64") }
@@ -155,6 +155,14 @@ function runtime(entrypointKind = "application", widgetFamily = "systemMedium") 
               ? [Buffer.from("selected-photo").toString("base64")]
             : operation === "photos.takePhoto"
               ? Buffer.from("camera-photo").toString("base64")
+            : operation === "dialog.alert"
+              ? null
+            : operation === "dialog.confirm"
+              ? true
+            : operation === "dialog.prompt"
+              ? `${payload.defaultValue ?? ""}-edited`
+            : operation === "dialog.actionSheet"
+              ? 1
             : operation === "pasteboard.setString"
               ? (storage.set("pasteboard-string", JSON.stringify(payload.value)), null)
             : operation === "pasteboard.getString"
@@ -340,6 +348,42 @@ test("nativ-ai photo picker and camera values encode through UIImage and Data.fr
   assert.deepEqual(systemUIRequests, [
     { operation: "photos.pickPhotos", payload: { count: 8 } },
     { operation: "photos.takePhoto", payload: {} },
+  ]);
+});
+
+test("FileManager and nativ-ai dialogs preserve alerts, confirmation, prompts, and actions", async () => {
+  const { context, systemUIRequests } = runtime();
+  const result = await vm.runInContext(`
+    (async () => {
+      await Dialog.alert({ title: "Notice", message: "Saved", buttonLabel: "Done" });
+      const confirmed = await Dialog.confirm({
+        title: "Delete", message: "Delete file?", cancelLabel: "Keep", confirmLabel: "Delete"
+      });
+      const name = await Dialog.prompt({
+        title: "Rename", defaultValue: "draft.txt", placeholder: "Name",
+        selectAll: true, obscureText: false, keyboardType: "default"
+      });
+      const action = await Dialog.actionSheet({
+        title: "Choose", cancelButton: true,
+        actions: [{ label: "Open" }, { label: "Delete", destructive: true }]
+      });
+      return [confirmed, name, action];
+    })()
+  `, context);
+  assert.deepEqual(JSON.parse(JSON.stringify(result)), [true, "draft.txt-edited", 1]);
+  assert.deepEqual(systemUIRequests, [
+    { operation: "dialog.alert", payload: { title: "Notice", message: "Saved", buttonLabel: "Done" } },
+    { operation: "dialog.confirm", payload: {
+      title: "Delete", message: "Delete file?", cancelLabel: "Keep", confirmLabel: "Delete",
+    } },
+    { operation: "dialog.prompt", payload: {
+      title: "Rename", defaultValue: "draft.txt", placeholder: "Name",
+      selectAll: true, obscureText: false, keyboardType: "default",
+    } },
+    { operation: "dialog.actionSheet", payload: {
+      title: "Choose", cancelButton: true,
+      actions: [{ label: "Open" }, { label: "Delete", destructive: true }],
+    } },
   ]);
 });
 

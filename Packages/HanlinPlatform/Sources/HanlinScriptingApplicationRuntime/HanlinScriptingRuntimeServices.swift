@@ -50,12 +50,76 @@ public enum HanlinScriptingSystemUIRequest: Sendable {
     case previewImage(Data)
     case pickPhotos(limit: Int)
     case takePhoto
+    case dialog(HanlinScriptingDialogRequest)
+}
+
+public enum HanlinScriptingDialogKind: String, Equatable, Sendable {
+    case alert
+    case confirm
+    case prompt
+    case actionSheet
+}
+
+public struct HanlinScriptingDialogAction: Sendable {
+    public let label: String
+    public let destructive: Bool
+
+    public init(label: String, destructive: Bool = false) {
+        self.label = label
+        self.destructive = destructive
+    }
+}
+
+public struct HanlinScriptingDialogRequest: Sendable {
+    public let kind: HanlinScriptingDialogKind
+    public let title: String?
+    public let message: String?
+    public let confirmLabel: String?
+    public let cancelLabel: String?
+    public let defaultValue: String?
+    public let placeholder: String?
+    public let obscureText: Bool
+    public let selectAll: Bool
+    public let keyboardType: String?
+    public let cancelButton: Bool
+    public let actions: [HanlinScriptingDialogAction]
+
+    public init(
+        kind: HanlinScriptingDialogKind,
+        title: String? = nil,
+        message: String? = nil,
+        confirmLabel: String? = nil,
+        cancelLabel: String? = nil,
+        defaultValue: String? = nil,
+        placeholder: String? = nil,
+        obscureText: Bool = false,
+        selectAll: Bool = false,
+        keyboardType: String? = nil,
+        cancelButton: Bool = true,
+        actions: [HanlinScriptingDialogAction] = []
+    ) {
+        self.kind = kind
+        self.title = title
+        self.message = message
+        self.confirmLabel = confirmLabel
+        self.cancelLabel = cancelLabel
+        self.defaultValue = defaultValue
+        self.placeholder = placeholder
+        self.obscureText = obscureText
+        self.selectAll = selectAll
+        self.keyboardType = keyboardType
+        self.cancelButton = cancelButton
+        self.actions = actions
+    }
 }
 
 public enum HanlinScriptingSystemUIResult: Sendable {
     case urls([URL])
     case images([Data])
     case image(Data?)
+    case boolean(Bool)
+    case text(String?)
+    case index(Int?)
     case completed
 }
 

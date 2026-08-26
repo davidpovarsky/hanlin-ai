@@ -297,7 +297,7 @@ struct HanlinScriptingApplicationRuntimeTests {
                     operations.append("previewText")
                     #expect(text == "selected-content")
                     return .completed
-                case .pickPhotos, .takePhoto:
+                case .pickPhotos, .takePhoto, .dialog:
                     Issue.record("Unexpected Photos system UI request")
                     return .completed
                 }
@@ -346,7 +346,7 @@ struct HanlinScriptingApplicationRuntimeTests {
                 case .takePhoto:
                     operations.append("takePhoto")
                     return .image(captured)
-                case .pickFiles, .pickDirectory, .previewURLs, .previewText, .previewImage:
+                case .pickFiles, .pickDirectory, .previewURLs, .previewText, .previewImage, .dialog:
                     Issue.record("Unexpected file system UI request")
                     return .completed
                 }
@@ -365,6 +365,75 @@ struct HanlinScriptingApplicationRuntimeTests {
         ))
         #expect(operations == ["pickPhotos", "takePhoto"])
         #expect(qualities == [0.82, 0.88])
+    }
+
+    @MainActor
+    @Test("Runs FileManager and nativ-ai Dialog interactions through native modal results")
+    func dialogRuntime() async throws {
+        let packageID = try HanlinInstalledPackageID(validating: "dialog-runtime-test")
+        var operations: [HanlinScriptingDialogKind] = []
+        let session = try HanlinScriptingApplicationSession(
+            installedPackageID: packageID,
+            program: #"""
+            Navigation.present({ element: createElement(Text, null, "Waiting") });
+            (async () => {
+              await Dialog.alert({ title: "Notice", message: "Saved", buttonLabel: "Done" });
+              const confirmed = await Dialog.confirm({
+                title: "Delete", message: "Delete file?", cancelLabel: "Keep", confirmLabel: "Delete"
+              });
+              const name = await Dialog.prompt({
+                title: "Rename", defaultValue: "draft.txt", placeholder: "Name",
+                selectAll: true, obscureText: false, keyboardType: "default"
+              });
+              const action = await Dialog.actionSheet({
+                title: "Choose", cancelButton: true,
+                actions: [{ label: "Open" }, { label: "Delete", destructive: true }]
+              });
+              Navigation.present({ element: createElement(Text, null,
+                JSON.stringify([confirmed, name, action])) });
+            })().catch(error => {
+              Navigation.present({ element: createElement(Text, null, `ERROR:${error?.message ?? error}`) });
+            });
+            """#,
+            filename: "compiled/dialogs.js",
+            storageAllowed: false,
+            systemUILoader: { request in
+                guard case let .dialog(dialog) = request else {
+                    Issue.record("Unexpected non-Dialog system UI request")
+                    return .completed
+                }
+                operations.append(dialog.kind)
+                switch dialog.kind {
+                case .alert:
+                    #expect(dialog.title == "Notice")
+                    #expect(dialog.message == "Saved")
+                    #expect(dialog.confirmLabel == "Done")
+                    return .completed
+                case .confirm:
+                    #expect(dialog.cancelLabel == "Keep")
+                    #expect(dialog.confirmLabel == "Delete")
+                    return .boolean(true)
+                case .prompt:
+                    #expect(dialog.defaultValue == "draft.txt")
+                    #expect(dialog.placeholder == "Name")
+                    #expect(dialog.selectAll)
+                    #expect(!dialog.obscureText)
+                    return .text("renamed.txt")
+                case .actionSheet:
+                    #expect(dialog.cancelButton)
+                    #expect(dialog.actions.count == 2)
+                    #expect(dialog.actions[1].destructive)
+                    return .index(1)
+                }
+            }
+        )
+        defer { session.dispose() }
+
+        await session.waitForNativeQuiescence()
+        #expect(session.model.root.properties["text"] == .string(
+            #"[true,"renamed.txt",1]"#
+        ))
+        #expect(operations == [.alert, .confirm, .prompt, .actionSheet])
     }
 
     @Test("Decodes bounded Assistant requests and emits Web-compatible chunks")
