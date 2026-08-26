@@ -1551,8 +1551,8 @@ final class HanlinScriptingPackageFileSystem: @unchecked Sendable {
         return try urls.map { rawURL in
             let selectedURL = rawURL.standardizedFileURL
             guard selectedURL.isFileURL else { throw invalid("The selected URL is not a file URL.") }
-            guard selectedURL.path().utf8.count <= 8_192 else { throw invalid("The selected file path is too large.") }
-            guard fileManager.fileExists(atPath: selectedURL.path()) else {
+            guard selectedURL.path(percentEncoded: false).utf8.count <= 8_192 else { throw invalid("The selected file path is too large.") }
+            guard fileManager.fileExists(atPath: selectedURL.path(percentEncoded: false)) else {
                 throw invalid("The selected file or directory no longer exists.")
             }
             let values = try selectedURL.resourceValues(forKeys: [.isDirectoryKey, .isSymbolicLinkKey])
@@ -1568,7 +1568,7 @@ final class HanlinScriptingPackageFileSystem: @unchecked Sendable {
                     ownsSecurityScope: selectedURL.startAccessingSecurityScopedResource()
                 ))
             }
-            return selectedURL.path()
+            return selectedURL.path(percentEncoded: false)
         }
     }
 
@@ -1635,7 +1635,7 @@ final class HanlinScriptingPackageFileSystem: @unchecked Sendable {
             let recursive = payload["recursive"] as? Bool ?? false
             return try directoryContents(at: target.url, recursive: recursive)
         case "file.exists":
-            return fileManager.fileExists(atPath: try resolved(payload, "path").url.path())
+            return fileManager.fileExists(atPath: try resolved(payload, "path").url.path(percentEncoded: false))
         case "file.isFile":
             return try fileType(payload) == .typeRegular
         case "file.isDirectory":
@@ -1705,7 +1705,7 @@ final class HanlinScriptingPackageFileSystem: @unchecked Sendable {
 
     private func readData(_ payload: [String: Any]) throws -> Data {
         let target = try readable(payload, "path")
-        let attributes = try fileManager.attributesOfItem(atPath: target.url.path())
+        let attributes = try fileManager.attributesOfItem(atPath: target.url.path(percentEncoded: false))
         guard (attributes[.size] as? NSNumber)?.intValue ?? 0 <= maximumReadBytes else {
             throw quota()
         }
@@ -1714,7 +1714,7 @@ final class HanlinScriptingPackageFileSystem: @unchecked Sendable {
 
     private func directoryContents(at url: URL, recursive: Bool) throws -> [String] {
         if !recursive {
-            return try fileManager.contentsOfDirectory(atPath: url.path()).sorted()
+            return try fileManager.contentsOfDirectory(atPath: url.path(percentEncoded: false)).sorted()
         }
         guard let enumerator = fileManager.enumerator(
             at: url,
@@ -1725,14 +1725,16 @@ final class HanlinScriptingPackageFileSystem: @unchecked Sendable {
         for case let item as URL in enumerator {
             let values = try item.resourceValues(forKeys: [.isSymbolicLinkKey])
             if values.isSymbolicLink == true { enumerator.skipDescendants() }
-            result.append(String(item.path().dropFirst(url.path().count + 1)))
+            let itemPath = item.path(percentEncoded: false)
+            let rootPath = url.path(percentEncoded: false)
+            result.append(String(itemPath.dropFirst(rootPath.count + 1)))
         }
         return result.sorted()
     }
 
     private func stat(_ payload: [String: Any]) throws -> [String: Any] {
         let target = try readable(payload, "path")
-        let attributes = try fileManager.attributesOfItem(atPath: target.url.path())
+        let attributes = try fileManager.attributesOfItem(atPath: target.url.path(percentEncoded: false))
         let type = attributes[.type] as? FileAttributeType
         return [
             "creationDate": milliseconds(attributes[.creationDate] as? Date),
@@ -1754,8 +1756,8 @@ final class HanlinScriptingPackageFileSystem: @unchecked Sendable {
             requireExisting: false,
             followFinalSymbolicLink: followsLinks
         )
-        guard fileManager.fileExists(atPath: target.url.path()) else { return nil }
-        return try fileManager.attributesOfItem(atPath: target.url.path())[.type] as? FileAttributeType
+        guard fileManager.fileExists(atPath: target.url.path(percentEncoded: false)) else { return nil }
+        return try fileManager.attributesOfItem(atPath: target.url.path(percentEncoded: false))[.type] as? FileAttributeType
     }
 
     private func checkQuota(replacing target: URL, withByteCount byteCount: Int) throws {
@@ -1769,8 +1771,8 @@ final class HanlinScriptingPackageFileSystem: @unchecked Sendable {
     }
 
     private func recursiveSize(_ url: URL) throws -> Int {
-        guard fileManager.fileExists(atPath: url.path()) else { return 0 }
-        let attributes = try fileManager.attributesOfItem(atPath: url.path())
+        guard fileManager.fileExists(atPath: url.path(percentEncoded: false)) else { return 0 }
+        let attributes = try fileManager.attributesOfItem(atPath: url.path(percentEncoded: false))
         guard attributes[.type] as? FileAttributeType == .typeDirectory else {
             return (attributes[.size] as? NSNumber)?.intValue ?? 0
         }
@@ -1794,7 +1796,7 @@ final class HanlinScriptingPackageFileSystem: @unchecked Sendable {
 
     private func readable(_ payload: [String: Any], _ key: String) throws -> ResolvedPath {
         let value = try resolved(payload, key)
-        guard fileManager.fileExists(atPath: value.url.path()) else {
+        guard fileManager.fileExists(atPath: value.url.path(percentEncoded: false)) else {
             throw HanlinScriptingNativeError(
                 name: "Error",
                 code: "not_found",
@@ -1849,8 +1851,9 @@ final class HanlinScriptingPackageFileSystem: @unchecked Sendable {
             let candidate = URL(filePath: path).standardizedFileURL.resolvingSymlinksInPath()
             guard let external = externalRoots.first(where: { root in
                 if root.isDirectory {
-                    let prefix = root.url.path().hasSuffix("/") ? root.url.path() : root.url.path() + "/"
-                    return candidate == root.url || candidate.path().hasPrefix(prefix)
+                    let rootPath = root.url.path(percentEncoded: false)
+                    let prefix = rootPath.hasSuffix("/") ? rootPath : rootPath + "/"
+                    return candidate == root.url || candidate.path(percentEncoded: false).hasPrefix(prefix)
                 }
                 return candidate == root.url
             }) else {
@@ -1865,7 +1868,7 @@ final class HanlinScriptingPackageFileSystem: @unchecked Sendable {
         let candidate = components.reduce(mapping.root) {
             $0.appending(path: String($1), directoryHint: .inferFromPath)
         }.standardizedFileURL
-        let candidateExists = fileManager.fileExists(atPath: candidate.path())
+        let candidateExists = fileManager.fileExists(atPath: candidate.path(percentEncoded: false))
         let checkedURL = if followFinalSymbolicLink && (requireExisting || candidateExists) {
             candidate.resolvingSymlinksInPath()
         } else {
@@ -1873,8 +1876,9 @@ final class HanlinScriptingPackageFileSystem: @unchecked Sendable {
                 .appending(path: candidate.lastPathComponent, directoryHint: .inferFromPath)
         }
         let root = mapping.root.standardizedFileURL.resolvingSymlinksInPath()
-        let rootPath = root.path().hasSuffix("/") ? root.path() : root.path() + "/"
-        guard checkedURL == root || checkedURL.path().hasPrefix(rootPath) else {
+        let decodedRootPath = root.path(percentEncoded: false)
+        let rootPath = decodedRootPath.hasSuffix("/") ? decodedRootPath : decodedRootPath + "/"
+        guard checkedURL == root || checkedURL.path(percentEncoded: false).hasPrefix(rootPath) else {
             throw invalid("The file path escapes its package root.")
         }
         return ResolvedPath(url: checkedURL, root: root, readOnly: mapping.readOnly)
