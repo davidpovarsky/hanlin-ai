@@ -954,7 +954,8 @@ enum HanlinScriptingReminderPayloadDecoder {
     }
 
     private static func integer(_ value: Any, name: String) throws -> Int {
-        guard !(value is Bool), let number = value as? NSNumber,
+        guard let number = value as? NSNumber,
+              CFGetTypeID(number) != CFBooleanGetTypeID(),
               number.doubleValue.isFinite,
               number.doubleValue.rounded() == number.doubleValue,
               number.doubleValue >= Double(Int.min), number.doubleValue <= Double(Int.max) else {
