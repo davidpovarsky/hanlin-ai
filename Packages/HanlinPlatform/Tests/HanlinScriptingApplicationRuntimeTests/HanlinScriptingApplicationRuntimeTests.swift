@@ -111,6 +111,47 @@ struct HanlinScriptingApplicationRuntimeTests {
         ))
     }
 
+    @MainActor
+    @Test("Runs FileManager and nativ-ai Pasteboard and Safari calls through the native system channel")
+    func pasteboardAndSafariRuntime() async throws {
+        let packageID = try HanlinInstalledPackageID(validating: "system-service-runtime-test")
+        let recorder = HanlinSystemOperationRecorder()
+        let session = try HanlinScriptingApplicationSession(
+            installedPackageID: packageID,
+            program: #"""
+            Navigation.present({ element: createElement(Text, null, "Waiting") });
+            Promise.all([
+              Pasteboard.setString("/documents/report.txt"),
+              Safari.openURL("https://example.com/settings")
+            ]).then(async ([, opened]) => {
+              const copied = await Pasteboard.getString();
+              Navigation.present({ element: createElement(Text, null, JSON.stringify([copied, opened])) });
+            });
+            """#,
+            filename: "compiled/index.js",
+            storageAllowed: false,
+            systemLoader: { operation, payloadJSON in
+                recorder.operations.append(operation)
+                if operation == "pasteboard.setString" {
+                    let payload = try #require(
+                        JSONSerialization.jsonObject(with: Data(payloadJSON.utf8)) as? [String: String]
+                    )
+                    #expect(payload["value"] == "/documents/report.txt")
+                    return .null
+                }
+                if operation == "pasteboard.getString" { return .string("/documents/report.txt") }
+                if operation == "safari.openURL" { return .bool(true) }
+                Issue.record("Unexpected system operation: \(operation)")
+                return .null
+            }
+        )
+        defer { session.dispose() }
+
+        await session.waitForNativeQuiescence()
+        #expect(session.model.root.properties["text"] == .string(#"["/documents/report.txt",true]"#))
+        #expect(recorder.operations == ["pasteboard.setString", "safari.openURL", "pasteboard.getString"])
+    }
+
     @Test("Decodes bounded Assistant requests and emits Web-compatible chunks")
     func assistantNativePayloads() throws {
         let request = try HanlinScriptingAssistantPayloadDecoder.decode(#"""
@@ -375,4 +416,9 @@ struct HanlinScriptingApplicationRuntimeTests {
         await session.waitForNativeQuiescence()
         #expect(session.model.root.properties["text"] == .string(expected))
     }
+}
+
+@MainActor
+private final class HanlinSystemOperationRecorder {
+    var operations: [String] = []
 }

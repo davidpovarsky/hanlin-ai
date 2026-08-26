@@ -15073,10 +15073,12 @@
     },
     {
       "symbol": "Pasteboard",
-      "state": "unsupported",
-      "operation": "unimplemented",
+      "state": "partial",
+      "operation": "HanlinScriptingApplicationSession.Pasteboard",
       "capability": null,
-      "contexts": [],
+      "contexts": [
+        "mainApplication"
+      ],
       "declarationEvidence": [
         {
           "category": "namespace",
@@ -17027,10 +17029,12 @@
     },
     {
       "symbol": "Safari",
-      "state": "unsupported",
-      "operation": "unimplemented",
+      "state": "partial",
+      "operation": "HanlinScriptingApplicationSession.Safari",
       "capability": null,
-      "contexts": [],
+      "contexts": [
+        "mainApplication"
+      ],
       "declarationEvidence": [
         {
           "category": "namespace",

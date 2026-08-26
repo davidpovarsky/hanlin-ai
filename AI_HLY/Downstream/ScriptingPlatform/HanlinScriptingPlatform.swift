@@ -10,6 +10,7 @@ import HanlinScriptUI
 import HanlinScriptingSDK
 import Observation
 import SwiftData
+import UIKit
 import WidgetKit
 
 @MainActor
@@ -414,7 +415,11 @@ final class HanlinScriptingPlatform {
                     guard let self else { throw CancellationError() }
                     return try await self.performLiveActivity(request, installedPackageID: id)
                 },
-                deviceSnapshot: HanlinAppleDeviceSnapshotProvider.snapshot()
+                deviceSnapshot: HanlinAppleDeviceSnapshotProvider.snapshot(),
+                systemLoader: { [weak self] operation, payloadJSON in
+                    guard let self else { throw CancellationError() }
+                    return try await self.performSystemOperation(operation, payloadJSON: payloadJSON)
+                }
             )
             applicationSession = session
             activeApplicationID = id
@@ -571,6 +576,88 @@ final class HanlinScriptingPlatform {
                 try await refreshExtensionSnapshot()
                 WidgetCenter.shared.reloadTimelines(ofKind: "com.hanlin.scripting.widget")
             }
+        }
+    }
+
+    private func performSystemOperation(
+        _ operation: String,
+        payloadJSON: String
+    ) async throws -> HanlinScriptingSystemResult {
+        guard payloadJSON.utf8.count <= 256 * 1_024,
+              let data = payloadJSON.data(using: .utf8),
+              let payload = try JSONSerialization.jsonObject(with: data) as? [String: Any] else {
+            throw HanlinScriptingPlatformError.invalidSystemServicePayload
+        }
+        let pasteboard = UIPasteboard.general
+        switch operation {
+        case "pasteboard.changeCount": return .integer(pasteboard.changeCount)
+        case "pasteboard.hasStrings": return .bool(pasteboard.hasStrings)
+        case "pasteboard.hasImages": return .bool(pasteboard.hasImages)
+        case "pasteboard.hasURLs": return .bool(pasteboard.hasURLs)
+        case "pasteboard.numberOfItems": return .integer(pasteboard.numberOfItems)
+        case "pasteboard.getString": return .string(pasteboard.string)
+        case "pasteboard.getStrings": return .strings(pasteboard.strings)
+        case "pasteboard.getURL": return .string(pasteboard.url?.absoluteString)
+        case "pasteboard.getURLs": return .strings(pasteboard.urls?.map(\.absoluteString))
+        case "pasteboard.setString":
+            pasteboard.string = try Self.optionalBoundedString(payload["value"], limit: 1_048_576)
+            return .null
+        case "pasteboard.setStrings":
+            pasteboard.strings = try Self.optionalBoundedStrings(payload["value"])
+            return .null
+        case "pasteboard.setURL":
+            pasteboard.url = try Self.optionalURL(payload["value"])
+            return .null
+        case "pasteboard.setURLs":
+            pasteboard.urls = try Self.optionalURLs(payload["value"])
+            return .null
+        case "safari.openURL":
+            guard let urlString = try Self.optionalBoundedString(payload["url"], limit: 8_192),
+                  let url = URL(string: urlString), url.scheme != nil else {
+                throw HanlinScriptingPlatformError.invalidSystemServicePayload
+            }
+            return .bool(await UIApplication.shared.open(url, options: [:]))
+        default:
+            throw HanlinScriptingPlatformError.invalidSystemServicePayload
+        }
+    }
+
+    nonisolated private static func optionalBoundedString(_ value: Any?, limit: Int) throws -> String? {
+        if value == nil || value is NSNull { return nil }
+        guard let value = value as? String, value.utf8.count <= limit, !value.contains("\0") else {
+            throw HanlinScriptingPlatformError.invalidSystemServicePayload
+        }
+        return value
+    }
+
+    nonisolated private static func optionalBoundedStrings(_ value: Any?) throws -> [String]? {
+        if value == nil || value is NSNull { return nil }
+        guard let values = value as? [Any], values.count <= 128 else {
+            throw HanlinScriptingPlatformError.invalidSystemServicePayload
+        }
+        return try values.map {
+            guard let value = try optionalBoundedString($0, limit: 1_048_576) else {
+                throw HanlinScriptingPlatformError.invalidSystemServicePayload
+            }
+            return value
+        }
+    }
+
+    nonisolated private static func optionalURL(_ value: Any?) throws -> URL? {
+        guard let string = try optionalBoundedString(value, limit: 8_192) else { return nil }
+        guard let url = URL(string: string), url.scheme != nil else {
+            throw HanlinScriptingPlatformError.invalidSystemServicePayload
+        }
+        return url
+    }
+
+    nonisolated private static func optionalURLs(_ value: Any?) throws -> [URL]? {
+        guard let strings = try optionalBoundedStrings(value) else { return nil }
+        return try strings.map {
+            guard $0.utf8.count <= 8_192, let url = URL(string: $0), url.scheme != nil else {
+                throw HanlinScriptingPlatformError.invalidSystemServicePayload
+            }
+            return url
         }
     }
 
@@ -973,6 +1060,7 @@ private enum HanlinScriptingPlatformError: Error {
     case invalidLiveActivityPayload
     case invalidLocationPayload
     case invalidNotificationPayload
+    case invalidSystemServicePayload
 }
 
 private extension JSONEncoder {

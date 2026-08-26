@@ -32195,24 +32195,31 @@
       "verifiedByFixture": false
     },
     {
-      "allowedContexts": [],
+      "allowedContexts": [
+        "mainApplication"
+      ],
       "allowedOrigins": [],
-      "behaviorDifferences": [],
+      "behaviorDifferences": [
+        "Text and URL metadata, single-value and bounded multi-value reads/writes use the iOS system pasteboard through an asynchronous native channel. Image values, arbitrary UTType item dictionaries, expiration/local-only options and change callbacks remain unavailable and reject explicitly."
+      ],
       "behaviorMatched": false,
       "declarationFile": "global.d.ts",
       "declarationLine": 1033,
       "declaredByScripting": true,
-      "hanlinAPIVersion": null,
-      "hanlinSymbol": null,
-      "implementedByHanlin": false,
-      "notes": "The authorized ambient API has no complete runtime binding and conformance test yet; declaration presence is not treated as support.",
+      "hanlinAPIVersion": "hanlin.services/1.0",
+      "hanlinSymbol": "HanlinScriptingApplicationSession.Pasteboard",
+      "implementedByHanlin": true,
+      "notes": "Implements the untouched FileManager and nativ-ai setString calls without modifying either project.",
       "referenceCategory": "namespace",
       "referenceSignatureHash": "21dc915b07fa0836fefb6e97e2fb6fd33a40dbd3a211533fc15d255e99c6cc78",
       "referenceSymbol": "Pasteboard",
       "requiredCapability": null,
       "requiredEntitlement": null,
-      "status": "not-yet-implemented",
-      "tests": [],
+      "status": "partial",
+      "tests": [
+        "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift",
+        "Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs"
+      ],
       "verifiedByFixture": false
     },
     {
@@ -39501,24 +39508,31 @@
       "verifiedByFixture": false
     },
     {
-      "allowedContexts": [],
+      "allowedContexts": [
+        "mainApplication"
+      ],
       "allowedOrigins": [],
-      "behaviorDifferences": [],
+      "behaviorDifferences": [
+        "openURL validates a bounded URL with an explicit scheme and delegates to the modern UIApplication asynchronous open operation. In-app SFSafariViewController presentation remains unavailable and rejects explicitly."
+      ],
       "behaviorMatched": false,
       "declarationFile": "global.d.ts",
       "declarationLine": 1143,
       "declaredByScripting": true,
-      "hanlinAPIVersion": null,
-      "hanlinSymbol": null,
-      "implementedByHanlin": false,
-      "notes": "The authorized ambient API has no complete runtime binding and conformance test yet; declaration presence is not treated as support.",
+      "hanlinAPIVersion": "hanlin.services/1.0",
+      "hanlinSymbol": "HanlinScriptingApplicationSession.Safari",
+      "implementedByHanlin": true,
+      "notes": "Implements the untouched nativ-ai SettingsScreen.openURL path.",
       "referenceCategory": "namespace",
       "referenceSignatureHash": "ad0de2eb0f4a605a4fc0d2172ff451f651a22807b1768fe211a2d2a01926a414",
       "referenceSymbol": "Safari",
       "requiredCapability": null,
       "requiredEntitlement": null,
-      "status": "not-yet-implemented",
-      "tests": [],
+      "status": "partial",
+      "tests": [
+        "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift",
+        "Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs"
+      ],
       "verifiedByFixture": false
     },
     {

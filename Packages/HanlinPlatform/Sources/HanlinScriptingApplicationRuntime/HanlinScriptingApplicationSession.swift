@@ -58,6 +58,7 @@ public final class HanlinScriptingApplicationSession {
     private let liveActivityAllowed: Bool
     private let liveActivityLoader: HanlinScriptingLiveActivityLoader
     private let deviceSnapshot: HanlinScriptingDeviceSnapshot
+    private let systemLoader: HanlinScriptingSystemLoader
     private let entrypointContext: HanlinScriptingEntrypointContext
     private var nativeTasks: [String: Task<Void, Never>] = [:]
     private var appIntentResults: [String: Result<HanlinValue?, any Error>] = [:]
@@ -87,7 +88,8 @@ public final class HanlinScriptingApplicationSession {
         assistantLoader: @escaping HanlinScriptingAssistantLoader = HanlinScriptingUnavailableAssistantLoader.load,
         liveActivityAllowed: Bool = false,
         liveActivityLoader: @escaping HanlinScriptingLiveActivityLoader = HanlinScriptingUnavailableLiveActivityLoader.load,
-        deviceSnapshot: HanlinScriptingDeviceSnapshot = .unavailable
+        deviceSnapshot: HanlinScriptingDeviceSnapshot = .unavailable,
+        systemLoader: @escaping HanlinScriptingSystemLoader = HanlinScriptingUnavailableSystemLoader.load
     ) throws {
         guard let virtualMachine = JSVirtualMachine(),
               let context = JSContext(virtualMachine: virtualMachine) else {
@@ -122,6 +124,7 @@ public final class HanlinScriptingApplicationSession {
         self.liveActivityAllowed = liveActivityAllowed
         self.liveActivityLoader = liveActivityLoader
         self.deviceSnapshot = deviceSnapshot
+        self.systemLoader = systemLoader
         self.entrypointContext = entrypointContext
 
         let router = HanlinScriptingUIEventRouter()
@@ -527,6 +530,11 @@ public final class HanlinScriptingApplicationSession {
                 "headers": response.headers,
                 "bodyBase64": response.body.base64EncodedString(),
             ])
+        }
+        if operation.hasPrefix("pasteboard.") || operation == "safari.openURL" {
+            return HanlinScriptingNativeJSON.success(
+                try await systemLoader(operation, payloadJSON).nativeObject
+            )
         }
         if operation.hasPrefix("location.") {
             guard locationAllowed else {
@@ -2566,6 +2574,58 @@ private extension HanlinScriptingApplicationSession {
         preferredLanguages: Object.freeze([...(deviceSnapshot.preferredLanguages ?? [])]),
         systemLocales: Object.freeze([...(deviceSnapshot.systemLocales ?? [])])
       });
+      function pasteboardCall(operation, payload = {}) {
+        return nativeCallAsync(`pasteboard.${operation}`, payload);
+      }
+      const Pasteboard = Object.freeze({
+        get changeCount() { return pasteboardCall("changeCount"); },
+        get hasStrings() { return pasteboardCall("hasStrings"); },
+        get hasImages() { return pasteboardCall("hasImages"); },
+        get hasURLs() { return pasteboardCall("hasURLs"); },
+        get numberOfItems() { return pasteboardCall("numberOfItems"); },
+        getString() { return pasteboardCall("getString"); },
+        setString(value) {
+          if (value != null && typeof value !== "string") return Promise.reject(new TypeError("Pasteboard string must be a string or null"));
+          return pasteboardCall("setString", { value });
+        },
+        getStrings() { return pasteboardCall("getStrings"); },
+        setStrings(value) {
+          if (value != null && (!Array.isArray(value) || value.some(item => typeof item !== "string"))) {
+            return Promise.reject(new TypeError("Pasteboard strings must be an array of strings or null"));
+          }
+          return pasteboardCall("setStrings", { value });
+        },
+        getURL() { return pasteboardCall("getURL"); },
+        setURL(value) {
+          if (value != null && typeof value !== "string") return Promise.reject(new TypeError("Pasteboard URL must be a string or null"));
+          return pasteboardCall("setURL", { value });
+        },
+        getURLs() { return pasteboardCall("getURLs"); },
+        setURLs(value) {
+          if (value != null && (!Array.isArray(value) || value.some(item => typeof item !== "string"))) {
+            return Promise.reject(new TypeError("Pasteboard URLs must be an array of strings or null"));
+          }
+          return pasteboardCall("setURLs", { value });
+        },
+        getImage() { return Promise.reject(new Error("Pasteboard images are not yet available")); },
+        setImage() { return Promise.reject(new Error("Pasteboard images are not yet available")); },
+        getImages() { return Promise.reject(new Error("Pasteboard images are not yet available")); },
+        setImages() { return Promise.reject(new Error("Pasteboard images are not yet available")); },
+        addItems() { return Promise.reject(new Error("Typed Pasteboard items are not yet available")); },
+        setItems() { return Promise.reject(new Error("Typed Pasteboard items are not yet available")); },
+        getItems() { return Promise.reject(new Error("Typed Pasteboard items are not yet available")); },
+        onChanged: null,
+        onRemoved: null
+      });
+      const Safari = Object.freeze({
+        openURL(url) {
+          if (typeof url !== "string" || url.length === 0 || url.length > 8192) {
+            return Promise.reject(new TypeError("Safari.openURL requires a bounded URL string"));
+          }
+          return nativeCallAsync("safari.openURL", { url }).then(Boolean);
+        },
+        present() { return Promise.reject(new Error("In-app Safari presentation is not yet available")); }
+      });
       const appIntentRegistrations = new Map();
       const Widget = Object.freeze({
         family: typeof globalThis.__hanlinNativeWidgetFamily === "string"
@@ -2624,7 +2684,7 @@ private extension HanlinScriptingApplicationSession {
         Storage, SQLite, Assistant, Location, Health, HealthUnit, HealthStatistics,
         HealthActivitySummary, HealthWorkout,
         Notification, DateComponents, CalendarNotificationTrigger, TimeIntervalNotificationTrigger,
-        LiveActivity, Script, Device, Widget, AppIntentProtocol, AppIntentManager,
+        LiveActivity, Script, Device, Pasteboard, Safari, Widget, AppIntentProtocol, AppIntentManager,
         Color: Object.freeze({}),
         __hanlinResolveNative: resolveNativeRequest,
         __hanlinAssistantReceive: receiveAssistantChunk,

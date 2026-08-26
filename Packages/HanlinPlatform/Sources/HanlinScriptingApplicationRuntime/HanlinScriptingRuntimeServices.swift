@@ -3,6 +3,41 @@ import Foundation
 import HanlinScriptUI
 import UniformTypeIdentifiers
 
+public enum HanlinScriptingSystemResult: Sendable {
+    case null
+    case bool(Bool)
+    case integer(Int)
+    case string(String?)
+    case strings([String]?)
+
+    var nativeObject: Any {
+        switch self {
+        case .null: NSNull()
+        case let .bool(value): value
+        case let .integer(value): value
+        case let .string(value): value ?? NSNull()
+        case let .strings(value): value ?? NSNull()
+        }
+    }
+}
+
+public typealias HanlinScriptingSystemLoader = @MainActor @Sendable (
+    _ operation: String,
+    _ payloadJSON: String
+) async throws -> HanlinScriptingSystemResult
+
+public enum HanlinScriptingUnavailableSystemLoader {
+    public static func load(operation: String, payloadJSON: String) async throws -> HanlinScriptingSystemResult {
+        _ = operation
+        _ = payloadJSON
+        throw HanlinScriptingNativeError(
+            name: "Error",
+            code: "service_unavailable",
+            message: "The requested system service is unavailable."
+        )
+    }
+}
+
 public struct HanlinScriptingDeviceSnapshot: Hashable, Sendable {
     public struct Screen: Hashable, Sendable {
         public let width: Double

@@ -23,6 +23,7 @@ function runtime(entrypointKind = "application", widgetFamily = "systemMedium") 
   const locationRequests = [];
   const healthRequests = [];
   const notificationRequests = [];
+  const systemRequests = [];
   const cancelledRequests = new Set();
   const widgetPresentations = [];
   const appIntentRegistrations = [];
@@ -89,6 +90,7 @@ function runtime(entrypointKind = "application", widgetFamily = "systemMedium") 
           if (operation.startsWith("location.")) locationRequests.push({ operation, payload });
           if (operation.startsWith("health.")) healthRequests.push({ operation, payload });
           if (operation.startsWith("notification.")) notificationRequests.push({ operation, payload });
+          if (operation.startsWith("pasteboard.") || operation.startsWith("safari.")) systemRequests.push({ operation, payload });
           const value = operation === "network.fetch"
             ? { url: payload.url, status: 200, headers: { "content-type": "application/json" }, bodyBase64: Buffer.from('{"ok":true}').toString("base64") }
             : operation === "liveActivity.start"
@@ -133,6 +135,12 @@ function runtime(entrypointKind = "application", widgetFamily = "systemMedium") 
                 }]
             : operation === "notification.schedule" || operation === "notification.removeAllPendingsOfCurrentScript"
               ? true
+            : operation === "pasteboard.setString"
+              ? (storage.set("pasteboard-string", JSON.stringify(payload.value)), null)
+            : operation === "pasteboard.getString"
+              ? JSON.parse(storage.get("pasteboard-string") ?? "null")
+            : operation === "safari.openURL"
+              ? payload.url.startsWith("https://")
             : operation === "runtime.delay"
               ? null
             : fileOperation(operation, payload);
@@ -185,7 +193,7 @@ function runtime(entrypointKind = "application", widgetFamily = "systemMedium") 
   vm.runInContext(bootstrap, context, { filename: "hanlin-scripting-ui-runtime.js" });
   return {
     context, rendered: () => rendered, assistantRequests, sqliteRequests, locationRequests,
-    healthRequests, notificationRequests, cancelledRequests, widgetPresentations,
+    healthRequests, notificationRequests, systemRequests, cancelledRequests, widgetPresentations,
     appIntentRegistrations, appIntentCompletions,
   };
 }
@@ -219,6 +227,22 @@ test("Smart-eating Widget and App Intent entrypoints preserve family, parameters
   assert.deepEqual(appIntent.appIntentCompletions, [{
     id: "request-1", succeeded: true, json: '{"completed":7}',
   }]);
+});
+
+test("FileManager and nativ-ai use native Pasteboard and Safari primitives", async () => {
+  const { context, systemRequests } = runtime();
+  const result = await vm.runInContext(`
+    (async () => {
+      await Pasteboard.setString("/documents/report.txt");
+      return [await Pasteboard.getString(), await Safari.openURL("https://example.com/settings")];
+    })()
+  `, context);
+  assert.deepEqual(JSON.parse(JSON.stringify(result)), ["/documents/report.txt", true]);
+  assert.deepEqual(systemRequests, [
+    { operation: "pasteboard.setString", payload: { value: "/documents/report.txt" } },
+    { operation: "pasteboard.getString", payload: {} },
+    { operation: "safari.openURL", payload: { url: "https://example.com/settings" } },
+  ]);
 });
 
 test("Device exposes the immutable native launch snapshot", () => {
