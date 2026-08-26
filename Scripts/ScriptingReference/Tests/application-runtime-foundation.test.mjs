@@ -23,6 +23,7 @@ function runtime(entrypointKind = "application", widgetFamily = "systemMedium") 
   const locationRequests = [];
   const healthRequests = [];
   const notificationRequests = [];
+  const reminderRequests = [];
   const systemRequests = [];
   const cancelledRequests = new Set();
   const widgetPresentations = [];
@@ -90,6 +91,7 @@ function runtime(entrypointKind = "application", widgetFamily = "systemMedium") 
           if (operation.startsWith("location.")) locationRequests.push({ operation, payload });
           if (operation.startsWith("health.")) healthRequests.push({ operation, payload });
           if (operation.startsWith("notification.")) notificationRequests.push({ operation, payload });
+          if (operation.startsWith("reminder.")) reminderRequests.push({ operation, payload });
           if (operation.startsWith("pasteboard.") || operation.startsWith("safari.")) systemRequests.push({ operation, payload });
           const value = operation === "network.fetch"
             ? { url: payload.url, status: 200, headers: { "content-type": "application/json" }, bodyBase64: Buffer.from('{"ok":true}').toString("base64") }
@@ -135,6 +137,8 @@ function runtime(entrypointKind = "application", widgetFamily = "systemMedium") 
                 }]
             : operation === "notification.schedule" || operation === "notification.removeAllPendingsOfCurrentScript"
               ? true
+            : operation === "reminder.save"
+              ? "eventkit-reminder-id"
             : operation === "pasteboard.setString"
               ? (storage.set("pasteboard-string", JSON.stringify(payload.value)), null)
             : operation === "pasteboard.getString"
@@ -193,7 +197,7 @@ function runtime(entrypointKind = "application", widgetFamily = "systemMedium") 
   vm.runInContext(bootstrap, context, { filename: "hanlin-scripting-ui-runtime.js" });
   return {
     context, rendered: () => rendered, assistantRequests, sqliteRequests, locationRequests,
-    healthRequests, notificationRequests, systemRequests, cancelledRequests, widgetPresentations,
+    healthRequests, notificationRequests, reminderRequests, systemRequests, cancelledRequests, widgetPresentations,
     appIntentRegistrations, appIntentCompletions,
   };
 }
@@ -243,6 +247,33 @@ test("FileManager and nativ-ai use native Pasteboard and Safari primitives", asy
     { operation: "pasteboard.getString", payload: {} },
     { operation: "safari.openURL", payload: { url: "https://example.com/settings" } },
   ]);
+});
+
+test("nativ-ai creates a Reminder with DateComponents and receives its identifier", async () => {
+  const { context, reminderRequests } = runtime();
+  const result = await vm.runInContext(`
+    (async () => {
+      const reminder = new Reminder();
+      reminder.title = "Take medicine";
+      reminder.notes = "After dinner";
+      reminder.dueDateComponents = new DateComponents({
+        year: 2027, month: 2, day: 3, hour: 18, minute: 45
+      });
+      reminder.priority = 1;
+      await reminder.save();
+      return { ok: true, identifier: reminder.identifier };
+    })()
+  `, context);
+  assert.deepEqual(JSON.parse(JSON.stringify(result)), {
+    ok: true, identifier: "eventkit-reminder-id",
+  });
+  assert.deepEqual(reminderRequests, [{
+    operation: "reminder.save",
+    payload: {
+      title: "Take medicine", notes: "After dinner", priority: 1,
+      dueDateComponents: { year: 2027, month: 2, day: 3, hour: 18, minute: 45 },
+    },
+  }]);
 });
 
 test("Device exposes the immutable native launch snapshot", () => {

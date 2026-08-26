@@ -152,6 +152,77 @@ struct HanlinScriptingApplicationRuntimeTests {
         #expect(recorder.operations == ["pasteboard.setString", "safari.openURL", "pasteboard.getString"])
     }
 
+    @MainActor
+    @Test("Runs the nativ-ai Reminder creation flow and returns the EventKit identifier")
+    func reminderRuntime() async throws {
+        let packageID = try HanlinInstalledPackageID(validating: "reminder-runtime-test")
+        let session = try HanlinScriptingApplicationSession(
+            installedPackageID: packageID,
+            program: #"""
+            Navigation.present({ element: createElement(Text, null, "Waiting") });
+            (async () => {
+              const params = {
+                title: "Take medicine",
+                notes: "After dinner",
+                dueDateISO: "2027-02-03T18:45:00Z",
+                priority: "high"
+              };
+              const reminder = new Reminder();
+              reminder.title = params.title || "Reminder";
+              if (params.notes) reminder.notes = params.notes;
+              if (params.dueDateISO) {
+                const date = new Date(params.dueDateISO);
+                reminder.dueDateComponents = new DateComponents({
+                  year: date.getUTCFullYear(), month: date.getUTCMonth() + 1,
+                  day: date.getUTCDate(), hour: date.getUTCHours(), minute: date.getUTCMinutes()
+                });
+              }
+              reminder.priority = params.priority === "high" ? 1 : 0;
+              await reminder.save();
+              Navigation.present({ element: createElement(Text, null, JSON.stringify({
+                ok: true, identifier: reminder.identifier
+              })) });
+            })();
+            """#,
+            filename: "compiled/tools/reminder.js",
+            storageAllowed: false,
+            remindersAllowed: true,
+            reminderLoader: { request in
+                #expect(request.title == "Take medicine")
+                #expect(request.notes == "After dinner")
+                #expect(request.priority == 1)
+                #expect(request.dueDateComponents == [
+                    "year": 2027, "month": 2, "day": 3, "hour": 18, "minute": 45,
+                ])
+                return "eventkit-reminder-id"
+            }
+        )
+        defer { session.dispose() }
+
+        await session.waitForNativeQuiescence()
+        #expect(session.model.root.properties["text"] == .string(
+            #"{"ok":true,"identifier":"eventkit-reminder-id"}"#
+        ))
+    }
+
+    @Test("Rejects malformed Reminder payloads before invoking EventKit")
+    func reminderPayloadValidation() throws {
+        let request = try HanlinScriptingReminderPayloadDecoder.decode(
+            operation: "reminder.save",
+            json: #"{"title":"Call home","notes":null,"priority":5,"dueDateComponents":{"year":2027,"month":3,"day":4}}"#
+        )
+        #expect(request.title == "Call home")
+        #expect(request.priority == 5)
+        #expect(request.dueDateComponents == ["year": 2027, "month": 3, "day": 4])
+
+        #expect(throws: HanlinScriptingNativeError.self) {
+            try HanlinScriptingReminderPayloadDecoder.decode(
+                operation: "reminder.save",
+                json: #"{"title":"","priority":20}"#
+            )
+        }
+    }
+
     @Test("Decodes bounded Assistant requests and emits Web-compatible chunks")
     func assistantNativePayloads() throws {
         let request = try HanlinScriptingAssistantPayloadDecoder.decode(#"""

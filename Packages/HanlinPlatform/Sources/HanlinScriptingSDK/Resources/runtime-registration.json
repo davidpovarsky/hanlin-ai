@@ -16373,10 +16373,12 @@
     },
     {
       "symbol": "Reminder",
-      "state": "unsupported",
-      "operation": "unimplemented",
-      "capability": null,
-      "contexts": [],
+      "state": "partial",
+      "operation": "HanlinScriptingApplicationSession.Reminder",
+      "capability": "reminders",
+      "contexts": [
+        "mainApplication"
+      ],
       "declarationEvidence": [
         {
           "category": "class",

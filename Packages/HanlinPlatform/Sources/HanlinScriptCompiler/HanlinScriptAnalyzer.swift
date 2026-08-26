@@ -338,7 +338,7 @@ public struct HanlinScriptAnalyzer: Sendable {
     private static func ambientScriptingSymbols(in source: String) -> Set<String> {
         let candidates = [
             "Assistant", "AssistantTool", "CacheStorage", "FileManager", "Health",
-            "IntentMemoryStorage", "Location", "Notification", "OpenURL", "Pasteboard",
+            "IntentMemoryStorage", "Location", "Notification", "OpenURL", "Pasteboard", "Reminder",
             "Safari", "Storage", "addLocationListener"
         ]
         return Set(candidates.filter { symbol in
@@ -373,6 +373,7 @@ public struct HanlinScriptAnalyzer: Sendable {
             (["Assistant", "AssistantTool"], "assistant"),
             (["Location", "addLocationListener"], "location"),
             (["Notification"], "notifications"),
+            (["Reminder"], "reminders"),
             (["Health"], "health"),
             (["Pasteboard"], "pasteboard"),
             (["OpenURL", "Safari"], "open-url")

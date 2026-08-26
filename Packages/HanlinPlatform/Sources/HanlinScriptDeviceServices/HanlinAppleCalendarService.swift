@@ -32,5 +32,76 @@ public final class HanlinAppleCalendarService {
             )
         }
     }
+
+    public func saveReminder(
+        title: String,
+        notes: String?,
+        priority: Int,
+        dueDateComponentValues: [String: Int]?,
+        timeZoneIdentifier: String?
+    ) async throws -> String {
+        guard !title.isEmpty, title.utf8.count <= 4_096,
+              notes?.utf8.count ?? 0 <= 65_536,
+              (0 ... 9).contains(priority) else {
+            throw HanlinAppleDeviceServiceError.invalidRequest("reminder_payload")
+        }
+        guard try await requestReminderAuthorization() else {
+            throw HanlinAppleDeviceServiceError.denied(.reminders)
+        }
+        guard let calendar = store.defaultCalendarForNewReminders() else {
+            throw HanlinAppleDeviceServiceError.unavailable(.reminders)
+        }
+
+        let reminder = EKReminder(eventStore: store)
+        reminder.calendar = calendar
+        reminder.title = title
+        reminder.notes = notes
+        reminder.priority = priority
+        if let values = dueDateComponentValues {
+            reminder.dueDateComponents = try Self.dateComponents(
+                values,
+                timeZoneIdentifier: timeZoneIdentifier
+            )
+        }
+        try store.save(reminder, commit: true)
+        return reminder.calendarItemIdentifier
+    }
+
+    private static func dateComponents(
+        _ values: [String: Int],
+        timeZoneIdentifier: String?
+    ) throws -> DateComponents {
+        guard !values.isEmpty else {
+            throw HanlinAppleDeviceServiceError.invalidRequest("reminder_due_date")
+        }
+        var components = DateComponents()
+        components.calendar = .current
+        if let timeZoneIdentifier {
+            guard let timeZone = TimeZone(identifier: timeZoneIdentifier) else {
+                throw HanlinAppleDeviceServiceError.invalidRequest("reminder_time_zone")
+            }
+            components.timeZone = timeZone
+        } else {
+            components.timeZone = .current
+        }
+        components.era = values["era"]
+        components.year = values["year"]
+        components.yearForWeekOfYear = values["yearForWeekOfYear"]
+        components.quarter = values["quarter"]
+        components.month = values["month"]
+        components.weekOfMonth = values["weekOfMonth"]
+        components.weekOfYear = values["weekOfYear"]
+        components.weekday = values["weekday"]
+        components.weekdayOrdinal = values["weekdayOrdinal"]
+        components.day = values["day"]
+        components.hour = values["hour"]
+        components.minute = values["minute"]
+        components.second = values["second"]
+        components.nanosecond = values["nanosecond"]
+        guard components.isValidDate(in: components.calendar ?? .current) else {
+            throw HanlinAppleDeviceServiceError.invalidRequest("reminder_due_date")
+        }
+        return components
+    }
 }
 #endif

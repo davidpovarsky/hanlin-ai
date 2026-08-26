@@ -58,7 +58,7 @@ struct HanlinScriptAnalyzerTests {
     func ambientGlobals() throws {
         let fixture = try package(files: [
             "script.json": #"{"name":"Ambient Fixture","version":"1.0.0"}"#,
-            "index.ts": "Storage.set('key', 'value'); FileManager.readAsString('file.txt')"
+            "index.ts": "Storage.set('key', 'value'); FileManager.readAsString('file.txt'); new Reminder().save()"
         ])
         defer { try? FileManager.default.removeItem(at: fixture.stagingRoot) }
         let preview = try HanlinScriptAnalyzer(inventory: .init(
@@ -66,14 +66,16 @@ struct HanlinScriptAnalyzerTests {
             baselineDigest: String(repeating: "e", count: 64),
             symbols: [
                 .init(symbol: "Storage", state: .partial),
-                .init(symbol: "FileManager", state: .partial)
+                .init(symbol: "FileManager", state: .partial),
+                .init(symbol: "Reminder", state: .partial)
             ]
         )).analyze(fixture)
         #expect(Set(preview.requestedCapabilities.map { $0.capabilityID.rawValue }) == [
-            "files", "storage"
+            "files", "reminders", "storage"
         ])
         #expect(preview.findings.contains { $0.symbol == "Storage" })
         #expect(preview.findings.contains { $0.symbol == "FileManager" })
+        #expect(preview.findings.contains { $0.symbol == "Reminder" })
     }
 
     @Test("Rejects dynamic imports, eval, unresolved paths, and arbitrary bare modules")

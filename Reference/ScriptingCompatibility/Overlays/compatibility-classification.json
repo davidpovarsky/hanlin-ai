@@ -370,6 +370,17 @@
       "notes": "Implements the untouched nativ-ai SettingsScreen.openURL path."
     },
     {
+      "symbol": "Reminder",
+      "status": "partial",
+      "hanlinSymbol": "HanlinScriptingApplicationSession.Reminder",
+      "hanlinAPIVersion": "hanlin.services/1.0",
+      "requiredCapability": "reminders",
+      "allowedContexts": ["mainApplication"],
+      "behaviorDifferences": ["Creating and saving a reminder with a bounded title, optional notes, priority and DateComponents uses EventKit and returns the native calendar-item identifier. Editing existing reminders, completion state, recurrence rules, alarms, calendar selection, deletion and queries remain unavailable and reject explicitly."],
+      "tests": ["Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift", "Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs"],
+      "notes": "Implements the untouched nativ-ai reminder tool flow and requests modern full Reminders access only when save is invoked."
+    },
+    {
       "symbol": "LiveActivity",
       "status": "partial",
       "hanlinSymbol": "HanlinScriptLiveActivityController",

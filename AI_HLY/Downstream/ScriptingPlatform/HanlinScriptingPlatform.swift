@@ -46,6 +46,7 @@ final class HanlinScriptingPlatform {
     private let locationService = HanlinAppleLocationService()
     private let healthService = HanlinAppleHealthService()
     private let notificationService = HanlinAppleNotificationService()
+    private let calendarService = HanlinAppleCalendarService()
     private var liveActivityRevisions: [String: UInt64] = [:]
     private let stagingRoot: URL?
 
@@ -372,6 +373,7 @@ final class HanlinScriptingPlatform {
             let locationCapability = try HanlinCapabilityID(validating: "location")
             let healthCapability = try HanlinCapabilityID(validating: "health")
             let notificationsCapability = try HanlinCapabilityID(validating: "notifications")
+            let remindersCapability = try HanlinCapabilityID(validating: "reminders")
             let assistantCapability = try HanlinCapabilityID(validating: "assistant")
             let session = try HanlinScriptingApplicationSession(
                 installedPackageID: id,
@@ -404,6 +406,11 @@ final class HanlinScriptingPlatform {
                 notificationLoader: { [weak self] request in
                     guard let self else { throw CancellationError() }
                     return try await self.performNotification(request, installedPackageID: id)
+                },
+                remindersAllowed: package.grantedCapabilities.contains(remindersCapability),
+                reminderLoader: { [weak self] request in
+                    guard let self else { throw CancellationError() }
+                    return try await self.performReminderSave(request)
                 },
                 assistantAllowed: package.grantedCapabilities.contains(assistantCapability),
                 assistantLoader: { [weak self] request in
@@ -853,6 +860,18 @@ final class HanlinScriptingPlatform {
             ))
             return true
         }
+    }
+
+    private func performReminderSave(
+        _ request: HanlinScriptingReminderSaveRequest
+    ) async throws -> String {
+        try await calendarService.saveReminder(
+            title: request.title,
+            notes: request.notes,
+            priority: request.priority,
+            dueDateComponentValues: request.dueDateComponents,
+            timeZoneIdentifier: request.timeZoneIdentifier
+        )
     }
 
     private static func scriptingLocation(

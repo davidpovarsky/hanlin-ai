@@ -873,6 +873,116 @@ enum HanlinScriptingNotificationPayloadDecoder {
     }
 }
 
+public struct HanlinScriptingReminderSaveRequest: Sendable {
+    public let title: String
+    public let notes: String?
+    public let priority: Int
+    public let dueDateComponents: [String: Int]?
+    public let timeZoneIdentifier: String?
+
+    public init(
+        title: String,
+        notes: String? = nil,
+        priority: Int = 0,
+        dueDateComponents: [String: Int]? = nil,
+        timeZoneIdentifier: String? = nil
+    ) {
+        self.title = title
+        self.notes = notes
+        self.priority = priority
+        self.dueDateComponents = dueDateComponents
+        self.timeZoneIdentifier = timeZoneIdentifier
+    }
+}
+
+public typealias HanlinScriptingReminderLoader = @MainActor @Sendable (
+    HanlinScriptingReminderSaveRequest
+) async throws -> String
+
+public enum HanlinScriptingUnavailableReminderLoader {
+    public static func load(_ request: HanlinScriptingReminderSaveRequest) async throws -> String {
+        _ = request
+        throw HanlinScriptingNativeError(
+            name: "Error",
+            code: "reminders_unavailable",
+            message: "Reminders are unavailable."
+        )
+    }
+}
+
+enum HanlinScriptingReminderPayloadDecoder {
+    private static let componentNames = Set([
+        "era", "year", "yearForWeekOfYear", "quarter", "month", "weekOfMonth",
+        "weekOfYear", "weekday", "weekdayOrdinal", "day", "hour", "minute", "second", "nanosecond",
+    ])
+
+    static func decode(operation: String, json: String) throws -> HanlinScriptingReminderSaveRequest {
+        guard operation == "reminder.save" else {
+            throw invalid("The Reminder operation is unavailable.")
+        }
+        let payload = try HanlinScriptingNativeJSON.decodeObject(json)
+        let title = try requiredString(payload["title"], name: "title", maximumBytes: 4_096)
+        let notes = try optionalString(payload["notes"], name: "notes", maximumBytes: 65_536)
+        let priority = try integer(payload["priority"] ?? 0, name: "priority")
+        guard (0 ... 9).contains(priority) else {
+            throw invalid("Reminder priority must be between 0 and 9.")
+        }
+
+        var components: [String: Int]?
+        var timeZoneIdentifier: String?
+        if let rawValue = payload["dueDateComponents"], !(rawValue is NSNull) {
+            guard let raw = rawValue as? [String: Any] else {
+                throw invalid("Reminder dueDateComponents must be DateComponents.")
+            }
+            var decoded: [String: Int] = [:]
+            for (key, value) in raw where componentNames.contains(key) {
+                decoded[key] = try integer(value, name: "date component")
+            }
+            guard !decoded.isEmpty else {
+                throw invalid("Reminder dueDateComponents must contain date values.")
+            }
+            components = decoded
+            timeZoneIdentifier = try optionalString(raw["timeZone"], name: "timeZone", maximumBytes: 128)
+        }
+        return .init(
+            title: title,
+            notes: notes,
+            priority: priority,
+            dueDateComponents: components,
+            timeZoneIdentifier: timeZoneIdentifier
+        )
+    }
+
+    private static func integer(_ value: Any, name: String) throws -> Int {
+        guard !(value is Bool), let number = value as? NSNumber,
+              number.doubleValue.isFinite,
+              number.doubleValue.rounded() == number.doubleValue,
+              number.doubleValue >= Double(Int.min), number.doubleValue <= Double(Int.max) else {
+            throw invalid("Reminder \(name) is invalid.")
+        }
+        return number.intValue
+    }
+
+    private static func requiredString(_ value: Any?, name: String, maximumBytes: Int) throws -> String {
+        guard let value = try optionalString(value, name: name, maximumBytes: maximumBytes), !value.isEmpty else {
+            throw invalid("Reminder \(name) is required.")
+        }
+        return value
+    }
+
+    private static func optionalString(_ value: Any?, name: String, maximumBytes: Int) throws -> String? {
+        guard let value, !(value is NSNull) else { return nil }
+        guard let string = value as? String, string.utf8.count <= maximumBytes else {
+            throw invalid("Reminder \(name) is invalid.")
+        }
+        return string
+    }
+
+    private static func invalid(_ message: String) -> HanlinScriptingNativeError {
+        .init(name: "TypeError", code: "invalid_reminder_request", message: message)
+    }
+}
+
 public enum HanlinScriptingLiveActivityAction: String, Sendable {
     case start
     case update

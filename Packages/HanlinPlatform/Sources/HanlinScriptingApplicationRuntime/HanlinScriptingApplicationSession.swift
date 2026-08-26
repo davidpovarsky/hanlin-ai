@@ -53,6 +53,8 @@ public final class HanlinScriptingApplicationSession {
     private let healthWorkoutsLoader: HanlinScriptingHealthWorkoutsLoader
     private let notificationsAllowed: Bool
     private let notificationLoader: HanlinScriptingNotificationLoader
+    private let remindersAllowed: Bool
+    private let reminderLoader: HanlinScriptingReminderLoader
     private let assistantAllowed: Bool
     private let assistantLoader: HanlinScriptingAssistantLoader
     private let liveActivityAllowed: Bool
@@ -84,6 +86,8 @@ public final class HanlinScriptingApplicationSession {
         healthWorkoutsLoader: @escaping HanlinScriptingHealthWorkoutsLoader = HanlinScriptingUnavailableHealthWorkoutsLoader.load,
         notificationsAllowed: Bool = false,
         notificationLoader: @escaping HanlinScriptingNotificationLoader = HanlinScriptingUnavailableNotificationLoader.load,
+        remindersAllowed: Bool = false,
+        reminderLoader: @escaping HanlinScriptingReminderLoader = HanlinScriptingUnavailableReminderLoader.load,
         assistantAllowed: Bool = false,
         assistantLoader: @escaping HanlinScriptingAssistantLoader = HanlinScriptingUnavailableAssistantLoader.load,
         liveActivityAllowed: Bool = false,
@@ -119,6 +123,8 @@ public final class HanlinScriptingApplicationSession {
         self.healthWorkoutsLoader = healthWorkoutsLoader
         self.notificationsAllowed = notificationsAllowed
         self.notificationLoader = notificationLoader
+        self.remindersAllowed = remindersAllowed
+        self.reminderLoader = reminderLoader
         self.assistantAllowed = assistantAllowed
         self.assistantLoader = assistantLoader
         self.liveActivityAllowed = liveActivityAllowed
@@ -595,6 +601,20 @@ public final class HanlinScriptingApplicationSession {
                 json: payloadJSON
             )
             return HanlinScriptingNativeJSON.success(try await notificationLoader(request))
+        }
+        if operation.hasPrefix("reminder.") {
+            guard remindersAllowed else {
+                throw HanlinScriptingNativeError(
+                    name: "Error",
+                    code: "permission_denied",
+                    message: "The Reminders capability is not granted."
+                )
+            }
+            let request = try HanlinScriptingReminderPayloadDecoder.decode(
+                operation: operation,
+                json: payloadJSON
+            )
+            return HanlinScriptingNativeJSON.success(try await reminderLoader(request))
         }
         if operation.hasPrefix("liveActivity.") {
             guard liveActivityAllowed else {
@@ -1655,6 +1675,41 @@ private extension HanlinScriptingApplicationSession {
         static forMonthly(date) { const value = this.fromDate(date); return new DateComponents({ day: value.day, hour: value.hour, minute: value.minute }); }
       }
 
+      class Reminder {
+        constructor() {
+          this.identifier = null;
+          this.calendar = null;
+          this.title = "";
+          this.notes = null;
+          this.isCompleted = false;
+          this.priority = 0;
+          this.completionDate = null;
+          this.dueDateComponents = null;
+          this.recurrenceRules = [];
+          this.alarms = [];
+        }
+        save() {
+          if (typeof this.title !== "string" || this.title.length === 0) {
+            return Promise.reject(new TypeError("Reminder title is required"));
+          }
+          if (this.dueDateComponents != null && !(this.dueDateComponents instanceof DateComponents)) {
+            return Promise.reject(new TypeError("Reminder dueDateComponents must be DateComponents"));
+          }
+          if (this.isCompleted || this.completionDate != null || this.recurrenceRules.length || this.alarms.length) {
+            return Promise.reject(new TypeError("The requested Reminder feature is not supported yet"));
+          }
+          return nativeCallAsync("reminder.save", {
+            title: this.title,
+            notes: this.notes,
+            priority: this.priority,
+            dueDateComponents: this.dueDateComponents
+          }).then(identifier => { this.identifier = identifier; });
+        }
+        remove() { return Promise.reject(new Error("Reminder.remove is not supported yet")); }
+        static getAll() { return Promise.reject(new Error("Reminder.getAll is not supported yet")); }
+        static getCalendars() { return Promise.reject(new Error("Reminder.getCalendars is not supported yet")); }
+      }
+
       class CalendarNotificationTrigger {
         constructor(options) {
           if (!options || !(options.dateMatching instanceof DateComponents) || typeof options.repeats !== "boolean") {
@@ -2683,7 +2738,7 @@ private extension HanlinScriptingApplicationSession {
         AbortSignal: HanlinAbortSignal, AbortController: HanlinAbortController,
         Storage, SQLite, Assistant, Location, Health, HealthUnit, HealthStatistics,
         HealthActivitySummary, HealthWorkout,
-        Notification, DateComponents, CalendarNotificationTrigger, TimeIntervalNotificationTrigger,
+        Notification, Reminder, DateComponents, CalendarNotificationTrigger, TimeIntervalNotificationTrigger,
         LiveActivity, Script, Device, Pasteboard, Safari, Widget, AppIntentProtocol, AppIntentManager,
         Color: Object.freeze({}),
         __hanlinResolveNative: resolveNativeRequest,
