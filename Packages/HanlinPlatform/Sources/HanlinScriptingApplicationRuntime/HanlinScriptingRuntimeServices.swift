@@ -1,3 +1,4 @@
+import CoreFoundation
 import Foundation
 import HanlinScriptUI
 import UniformTypeIdentifiers
@@ -628,7 +629,8 @@ enum HanlinScriptingHealthPayloadDecoder {
         }
         var result: [String: Int] = [:]
         for key in ["era", "year", "month", "day"] where object[key] != nil {
-            guard !(object[key] is Bool), let number = object[key] as? NSNumber,
+            guard let number = object[key] as? NSNumber,
+                  CFGetTypeID(number) != CFBooleanGetTypeID(),
                   number.doubleValue.rounded() == number.doubleValue else {
                 throw invalid("A Health date component is invalid.")
             }

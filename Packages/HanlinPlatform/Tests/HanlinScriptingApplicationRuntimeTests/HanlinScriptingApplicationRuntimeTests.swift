@@ -184,6 +184,11 @@ struct HanlinScriptingApplicationRuntimeTests {
         #expect(health.metric == .heartRate)
         #expect(health.options == [.discreteAverage])
 
+        let activity = try HanlinScriptingHealthPayloadDecoder.decodeActivitySummaries(
+            #"{"start":{"year":2025,"month":10,"day":1},"end":{"year":2025,"month":10,"day":1}}"#
+        )
+        #expect(activity.startComponents["day"] == 1)
+
         let notification = try HanlinScriptingNotificationPayloadDecoder.decode(
             operation: "notification.schedule",
             json: #"""
