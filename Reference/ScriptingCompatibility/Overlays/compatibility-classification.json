@@ -403,6 +403,27 @@
       "notes": "Implements the untouched FileManager file-preview path while preventing remote or arbitrary absolute URL previews."
     },
     {
+      "symbol": "Photos",
+      "status": "partial",
+      "hanlinSymbol": "HanlinScriptingApplicationSession.Photos",
+      "hanlinAPIVersion": "hanlin.services/1.0",
+      "requiredCapability": "photos",
+      "allowedContexts": ["mainApplication"],
+      "behaviorDifferences": ["pickPhotos presents PHPickerViewController with ordered, image-only, bounded selection and requires no broad photo-library authorization. takePhoto presents the system camera interface full screen and returns null on cancellation. Both return native-selected images as encoded UIImage bridge values. Asset queries, albums, saving, advanced filters, metadata and Live Photos remain unavailable and are not claimed."],
+      "tests": ["Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift", "Packages/HanlinPlatform/Tests/HanlinScriptCompilerTests/HanlinScriptAnalyzerTests.swift", "Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs"],
+      "notes": "Implements the untouched nativ-ai Photos.pickPhotos and Photos.takePhoto attachment flows."
+    },
+    {
+      "symbol": "UIImage",
+      "status": "partial",
+      "hanlinSymbol": "HanlinScriptingApplicationSession.UIImage",
+      "hanlinAPIVersion": "hanlin.runtime/1.0",
+      "allowedContexts": ["mainApplication"],
+      "behaviorDifferences": ["Photo-picker and camera results preserve encoded image bytes in an opaque UIImage bridge value. Data.fromJPEG and UIImage.toJPEGData perform real native UIImage JPEG encoding at the requested bounded compression quality. General constructors, geometry, transforms, symbols, PNG encoding and ScriptUI UIImage rendering remain unavailable and are not claimed."],
+      "tests": ["Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift", "Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs"],
+      "notes": "Provides the exact image-to-Data path used by untouched nativ-ai chat attachments and background-photo persistence."
+    },
+    {
       "symbol": "LiveActivity",
       "status": "partial",
       "hanlinSymbol": "HanlinScriptLiveActivityController",

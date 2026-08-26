@@ -46,16 +46,37 @@ public enum HanlinScriptingSystemUIRequest: Sendable {
     )
     case pickDirectory
     case previewURLs([URL])
+    case pickPhotos(limit: Int)
+    case takePhoto
 }
 
 public enum HanlinScriptingSystemUIResult: Sendable {
     case urls([URL])
+    case images([Data])
+    case image(Data?)
     case completed
 }
 
 public typealias HanlinScriptingSystemUILoader = @MainActor @Sendable (
     HanlinScriptingSystemUIRequest
 ) async throws -> HanlinScriptingSystemUIResult
+
+public typealias HanlinScriptingImageJPEGEncoder = @MainActor @Sendable (
+    _ encodedImage: Data,
+    _ compressionQuality: Double
+) throws -> Data
+
+public enum HanlinScriptingUnavailableImageJPEGEncoder {
+    public static func encode(_ encodedImage: Data, compressionQuality: Double) throws -> Data {
+        _ = encodedImage
+        _ = compressionQuality
+        throw HanlinScriptingNativeError(
+            name: "Error",
+            code: "image_codec_unavailable",
+            message: "Image encoding is unavailable."
+        )
+    }
+}
 
 public enum HanlinScriptingUnavailableSystemUILoader {
     public static func load(_ request: HanlinScriptingSystemUIRequest) async throws -> HanlinScriptingSystemUIResult {

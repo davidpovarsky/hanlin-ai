@@ -32783,24 +32783,32 @@
       "verifiedByFixture": false
     },
     {
-      "allowedContexts": [],
+      "allowedContexts": [
+        "mainApplication"
+      ],
       "allowedOrigins": [],
-      "behaviorDifferences": [],
+      "behaviorDifferences": [
+        "pickPhotos presents PHPickerViewController with ordered, image-only, bounded selection and requires no broad photo-library authorization. takePhoto presents the system camera interface full screen and returns null on cancellation. Both return native-selected images as encoded UIImage bridge values. Asset queries, albums, saving, advanced filters, metadata and Live Photos remain unavailable and are not claimed."
+      ],
       "behaviorMatched": false,
       "declarationFile": "global.d.ts",
       "declarationLine": 3570,
       "declaredByScripting": true,
-      "hanlinAPIVersion": null,
-      "hanlinSymbol": null,
-      "implementedByHanlin": false,
-      "notes": "The authorized ambient API has no complete runtime binding and conformance test yet; declaration presence is not treated as support.",
+      "hanlinAPIVersion": "hanlin.services/1.0",
+      "hanlinSymbol": "HanlinScriptingApplicationSession.Photos",
+      "implementedByHanlin": true,
+      "notes": "Implements the untouched nativ-ai Photos.pickPhotos and Photos.takePhoto attachment flows.",
       "referenceCategory": "namespace",
       "referenceSignatureHash": "3f409b2b57031f27e6cb4300a920120f8fd027c8db9659fabad7a7b1f6122e2c",
       "referenceSymbol": "Photos",
-      "requiredCapability": null,
+      "requiredCapability": "photos",
       "requiredEntitlement": null,
-      "status": "not-yet-implemented",
-      "tests": [],
+      "status": "partial",
+      "tests": [
+        "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift",
+        "Packages/HanlinPlatform/Tests/HanlinScriptCompilerTests/HanlinScriptAnalyzerTests.swift",
+        "Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs"
+      ],
       "verifiedByFixture": false
     },
     {
@@ -48184,24 +48192,31 @@
       "verifiedByFixture": false
     },
     {
-      "allowedContexts": [],
+      "allowedContexts": [
+        "mainApplication"
+      ],
       "allowedOrigins": [],
-      "behaviorDifferences": [],
+      "behaviorDifferences": [
+        "Photo-picker and camera results preserve encoded image bytes in an opaque UIImage bridge value. Data.fromJPEG and UIImage.toJPEGData perform real native UIImage JPEG encoding at the requested bounded compression quality. General constructors, geometry, transforms, symbols, PNG encoding and ScriptUI UIImage rendering remain unavailable and are not claimed."
+      ],
       "behaviorMatched": false,
       "declarationFile": "global.d.ts",
       "declarationLine": 683,
       "declaredByScripting": true,
-      "hanlinAPIVersion": null,
-      "hanlinSymbol": null,
-      "implementedByHanlin": false,
-      "notes": "The authorized ambient API has no complete runtime binding and conformance test yet; declaration presence is not treated as support.",
+      "hanlinAPIVersion": "hanlin.runtime/1.0",
+      "hanlinSymbol": "HanlinScriptingApplicationSession.UIImage",
+      "implementedByHanlin": true,
+      "notes": "Provides the exact image-to-Data path used by untouched nativ-ai chat attachments and background-photo persistence.",
       "referenceCategory": "class",
       "referenceSignatureHash": "c65c64b2c6890e61595518e93cba7d6e9cb8148e3cf2a4bb19ef7b02aaa1504e",
       "referenceSymbol": "UIImage",
       "requiredCapability": null,
       "requiredEntitlement": null,
-      "status": "not-yet-implemented",
-      "tests": [],
+      "status": "partial",
+      "tests": [
+        "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift",
+        "Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs"
+      ],
       "verifiedByFixture": false
     },
     {

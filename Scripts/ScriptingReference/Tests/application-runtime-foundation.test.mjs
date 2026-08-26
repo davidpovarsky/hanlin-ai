@@ -84,6 +84,10 @@ function runtime(entrypointKind = "application", widgetFamily = "systemMedium") 
       try { return success(fileOperation(operation, JSON.parse(json))); }
       catch (error) { return failure("file_failure", error.message); }
     },
+    __hanlinNativeImageJPEG(base64, quality) {
+      if (quality < 0 || quality > 1) return failure("invalid_image", "invalid quality");
+      return success(base64);
+    },
     __hanlinNativeAsync(id, operation, json) {
       queueMicrotask(() => {
         try {
@@ -93,7 +97,7 @@ function runtime(entrypointKind = "application", widgetFamily = "systemMedium") 
           if (operation.startsWith("health.")) healthRequests.push({ operation, payload });
           if (operation.startsWith("notification.")) notificationRequests.push({ operation, payload });
           if (operation.startsWith("reminder.")) reminderRequests.push({ operation, payload });
-          if (operation.startsWith("documentPicker.") || operation.startsWith("quickLook.")) systemUIRequests.push({ operation, payload });
+          if (operation.startsWith("documentPicker.") || operation.startsWith("quickLook.") || operation.startsWith("photos.")) systemUIRequests.push({ operation, payload });
           if (operation.startsWith("pasteboard.") || operation.startsWith("safari.")) systemRequests.push({ operation, payload });
           const value = operation === "network.fetch"
             ? { url: payload.url, status: 200, headers: { "content-type": "application/json" }, bodyBase64: Buffer.from('{"ok":true}').toString("base64") }
@@ -147,6 +151,10 @@ function runtime(entrypointKind = "application", widgetFamily = "systemMedium") 
               ? "/external/folder"
             : operation === "documentPicker.stopAccessingSecurityScopedResources" || operation === "quickLook.previewURLs"
               ? null
+            : operation === "photos.pickPhotos"
+              ? [Buffer.from("selected-photo").toString("base64")]
+            : operation === "photos.takePhoto"
+              ? Buffer.from("camera-photo").toString("base64")
             : operation === "pasteboard.setString"
               ? (storage.set("pasteboard-string", JSON.stringify(payload.value)), null)
             : operation === "pasteboard.getString"
@@ -308,6 +316,24 @@ test("FileManager imports DocumentPicker files and opens its package copy in Qui
     { operation: "documentPicker.pickDirectory", payload: { initialDirectory: null } },
     { operation: "quickLook.previewURLs", payload: { urls: ["/documents/imported.txt"], fullscreen: false } },
     { operation: "documentPicker.stopAccessingSecurityScopedResources", payload: {} },
+  ]);
+});
+
+test("nativ-ai photo picker and camera values encode through UIImage and Data.fromJPEG", async () => {
+  const { context, systemUIRequests } = runtime();
+  const result = await vm.runInContext(`
+    (async () => {
+      const photos = await Photos.pickPhotos(8);
+      const selected = Data.fromJPEG(photos[0], 0.82);
+      const camera = await Photos.takePhoto();
+      const captured = Data.fromJPEG(camera, 0.88);
+      return [photos.length, selected.toRawString("ascii"), captured.toRawString("ascii")];
+    })()
+  `, context);
+  assert.deepEqual(JSON.parse(JSON.stringify(result)), [1, "selected-photo", "camera-photo"]);
+  assert.deepEqual(systemUIRequests, [
+    { operation: "photos.pickPhotos", payload: { count: 8 } },
+    { operation: "photos.takePhoto", payload: {} },
   ]);
 });
 

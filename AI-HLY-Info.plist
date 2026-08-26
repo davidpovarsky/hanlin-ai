@@ -26,6 +26,8 @@
 		<key>NSAllowsLocalNetworking</key>
 		<true/>
 	</dict>
+	<key>NSCameraUsageDescription</key>
+	<string>Hanlin uses the camera only when a running Scripting package asks you to take a photo.</string>
 	<key>LSSupportsOpeningDocumentsInPlace</key>
 	<true/>
 	<key>MKDirectionsApplicationSupportedModes</key>

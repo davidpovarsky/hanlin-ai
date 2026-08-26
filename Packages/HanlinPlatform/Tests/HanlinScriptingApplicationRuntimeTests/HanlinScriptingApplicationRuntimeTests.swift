@@ -285,6 +285,9 @@ struct HanlinScriptingApplicationRuntimeTests {
                     let content = try String(contentsOf: url, encoding: .utf8)
                     #expect(content == "selected-content")
                     return .completed
+                case .pickPhotos, .takePhoto:
+                    Issue.record("Unexpected Photos system UI request")
+                    return .completed
                 }
             }
         )
@@ -293,6 +296,63 @@ struct HanlinScriptingApplicationRuntimeTests {
         await session.waitForNativeQuiescence()
         #expect(session.model.root.properties["text"] == .string(#"["selected-content",true]"#))
         #expect(operations == ["pickFiles", "pickDirectory", "previewURLs"])
+    }
+
+    @MainActor
+    @Test("Runs the exact nativ-ai photo attachment primitives with real encoded image values")
+    func photosRuntime() async throws {
+        let packageID = try HanlinInstalledPackageID(validating: "photos-runtime-test")
+        var operations: [String] = []
+        var qualities: [Double] = []
+        let selected = Data([0xFF, 0xD8, 0x01, 0xFF, 0xD9])
+        let captured = Data([0xFF, 0xD8, 0x02, 0xFF, 0xD9])
+        let session = try HanlinScriptingApplicationSession(
+            installedPackageID: packageID,
+            program: #"""
+            Navigation.present({ element: createElement(Text, null, "Waiting") });
+            (async () => {
+              const photos = await Photos.pickPhotos(8);
+              const pickedData = Data.fromJPEG(photos[0], 0.82);
+              const image = await Photos.takePhoto();
+              const cameraData = image ? Data.fromJPEG(image, 0.88) : null;
+              Navigation.present({ element: createElement(Text, null, JSON.stringify([
+                photos.length, pickedData?.toRawString("ascii"), cameraData?.toRawString("ascii")
+              ])) });
+            })().catch(error => {
+              Navigation.present({ element: createElement(Text, null, `ERROR:${error?.message ?? error}`) });
+            });
+            """#,
+            filename: "compiled/nativ-ai-photos.js",
+            storageAllowed: false,
+            photosAllowed: true,
+            systemUILoader: { request in
+                switch request {
+                case let .pickPhotos(limit):
+                    operations.append("pickPhotos")
+                    #expect(limit == 8)
+                    return .images([selected])
+                case .takePhoto:
+                    operations.append("takePhoto")
+                    return .image(captured)
+                case .pickFiles, .pickDirectory, .previewURLs:
+                    Issue.record("Unexpected file system UI request")
+                    return .completed
+                }
+            },
+            imageJPEGEncoder: { data, quality in
+                qualities.append(quality)
+                #expect(data == (qualities.count == 1 ? selected : captured))
+                return Data((quality < 0.85 ? "picked-jpeg" : "camera-jpeg").utf8)
+            }
+        )
+        defer { session.dispose() }
+
+        await session.waitForNativeQuiescence()
+        #expect(session.model.root.properties["text"] == .string(
+            #"[1,"picked-jpeg","camera-jpeg"]"#
+        ))
+        #expect(operations == ["pickPhotos", "takePhoto"])
+        #expect(qualities == [0.82, 0.88])
     }
 
     @Test("Decodes bounded Assistant requests and emits Web-compatible chunks")

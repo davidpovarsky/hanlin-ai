@@ -58,7 +58,7 @@ struct HanlinScriptAnalyzerTests {
     func ambientGlobals() throws {
         let fixture = try package(files: [
             "script.json": #"{"name":"Ambient Fixture","version":"1.0.0"}"#,
-            "index.ts": "Storage.set('key', 'value'); FileManager.readAsString('file.txt'); DocumentPicker.pickFiles(); QuickLook.previewURLs([]); new Reminder().save()"
+            "index.ts": "Storage.set('key', 'value'); FileManager.readAsString('file.txt'); DocumentPicker.pickFiles(); QuickLook.previewURLs([]); Photos.pickPhotos(1); new Reminder().save()"
         ])
         defer { try? FileManager.default.removeItem(at: fixture.stagingRoot) }
         let preview = try HanlinScriptAnalyzer(inventory: .init(
@@ -69,16 +69,18 @@ struct HanlinScriptAnalyzerTests {
                 .init(symbol: "FileManager", state: .partial),
                 .init(symbol: "DocumentPicker", state: .partial),
                 .init(symbol: "QuickLook", state: .partial),
+                .init(symbol: "Photos", state: .partial),
                 .init(symbol: "Reminder", state: .partial)
             ]
         )).analyze(fixture)
         #expect(Set(preview.requestedCapabilities.map { $0.capabilityID.rawValue }) == [
-            "files", "reminders", "storage"
+            "files", "photos", "reminders", "storage"
         ])
         #expect(preview.findings.contains { $0.symbol == "Storage" })
         #expect(preview.findings.contains { $0.symbol == "FileManager" })
         #expect(preview.findings.contains { $0.symbol == "DocumentPicker" })
         #expect(preview.findings.contains { $0.symbol == "QuickLook" })
+        #expect(preview.findings.contains { $0.symbol == "Photos" })
         #expect(preview.findings.contains { $0.symbol == "Reminder" })
     }
 

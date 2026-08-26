@@ -56,6 +56,7 @@ public final class HanlinScriptingApplicationSession {
     private let notificationLoader: HanlinScriptingNotificationLoader
     private let remindersAllowed: Bool
     private let reminderLoader: HanlinScriptingReminderLoader
+    private let photosAllowed: Bool
     private let assistantAllowed: Bool
     private let assistantLoader: HanlinScriptingAssistantLoader
     private let liveActivityAllowed: Bool
@@ -63,6 +64,7 @@ public final class HanlinScriptingApplicationSession {
     private let deviceSnapshot: HanlinScriptingDeviceSnapshot
     private let systemLoader: HanlinScriptingSystemLoader
     private let systemUILoader: HanlinScriptingSystemUILoader
+    private let imageJPEGEncoder: HanlinScriptingImageJPEGEncoder
     private let entrypointContext: HanlinScriptingEntrypointContext
     private var nativeTasks: [String: Task<Void, Never>] = [:]
     private var appIntentResults: [String: Result<HanlinValue?, any Error>] = [:]
@@ -90,13 +92,15 @@ public final class HanlinScriptingApplicationSession {
         notificationLoader: @escaping HanlinScriptingNotificationLoader = HanlinScriptingUnavailableNotificationLoader.load,
         remindersAllowed: Bool = false,
         reminderLoader: @escaping HanlinScriptingReminderLoader = HanlinScriptingUnavailableReminderLoader.load,
+        photosAllowed: Bool = false,
         assistantAllowed: Bool = false,
         assistantLoader: @escaping HanlinScriptingAssistantLoader = HanlinScriptingUnavailableAssistantLoader.load,
         liveActivityAllowed: Bool = false,
         liveActivityLoader: @escaping HanlinScriptingLiveActivityLoader = HanlinScriptingUnavailableLiveActivityLoader.load,
         deviceSnapshot: HanlinScriptingDeviceSnapshot = .unavailable,
         systemLoader: @escaping HanlinScriptingSystemLoader = HanlinScriptingUnavailableSystemLoader.load,
-        systemUILoader: @escaping HanlinScriptingSystemUILoader = HanlinScriptingUnavailableSystemUILoader.load
+        systemUILoader: @escaping HanlinScriptingSystemUILoader = HanlinScriptingUnavailableSystemUILoader.load,
+        imageJPEGEncoder: @escaping HanlinScriptingImageJPEGEncoder = HanlinScriptingUnavailableImageJPEGEncoder.encode
     ) throws {
         guard let virtualMachine = JSVirtualMachine(),
               let context = JSContext(virtualMachine: virtualMachine) else {
@@ -129,6 +133,7 @@ public final class HanlinScriptingApplicationSession {
         self.notificationLoader = notificationLoader
         self.remindersAllowed = remindersAllowed
         self.reminderLoader = reminderLoader
+        self.photosAllowed = photosAllowed
         self.assistantAllowed = assistantAllowed
         self.assistantLoader = assistantLoader
         self.liveActivityAllowed = liveActivityAllowed
@@ -136,6 +141,7 @@ public final class HanlinScriptingApplicationSession {
         self.deviceSnapshot = deviceSnapshot
         self.systemLoader = systemLoader
         self.systemUILoader = systemUILoader
+        self.imageJPEGEncoder = imageJPEGEncoder
         self.entrypointContext = entrypointContext
 
         let router = HanlinScriptingUIEventRouter()
@@ -245,6 +251,7 @@ public final class HanlinScriptingApplicationSession {
         context.setObject(nil, forKeyedSubscript: "__hanlinNativeStorageSetData" as NSString)
         context.setObject(nil, forKeyedSubscript: "__hanlinNativeFileInfo" as NSString)
         context.setObject(nil, forKeyedSubscript: "__hanlinNativeFileSync" as NSString)
+        context.setObject(nil, forKeyedSubscript: "__hanlinNativeImageJPEG" as NSString)
         context.setObject(nil, forKeyedSubscript: "__hanlinNativeAsync" as NSString)
         context.setObject(nil, forKeyedSubscript: "__hanlinNativeAssistantAvailable" as NSString)
         context.setObject(nil, forKeyedSubscript: "__hanlinNativeAssistantStart" as NSString)
@@ -309,6 +316,29 @@ public final class HanlinScriptingApplicationSession {
         let nativeAsync: @convention(block) (String, String, String) -> Void = {
             [weak self] requestID, operation, json in
             self?.enqueueNativeRequest(id: requestID, operation: operation, payloadJSON: json)
+        }
+        let imageJPEG: @convention(block) (String, Double) -> String = {
+            [imageJPEGEncoder] base64, quality in
+            do {
+                guard quality.isFinite, (0 ... 1).contains(quality),
+                      let data = Data(base64Encoded: base64), !data.isEmpty,
+                      data.count <= 64 * 1_024 * 1_024 else {
+                    throw HanlinScriptingNativeError(
+                        name: "TypeError", code: "invalid_image",
+                        message: "The image or compression quality is invalid."
+                    )
+                }
+                let encoded = try imageJPEGEncoder(data, quality)
+                guard !encoded.isEmpty, encoded.count <= 64 * 1_024 * 1_024 else {
+                    throw HanlinScriptingNativeError(
+                        name: "Error", code: "image_encoding_failed",
+                        message: "The image could not be encoded as JPEG."
+                    )
+                }
+                return HanlinScriptingNativeJSON.success(encoded.base64EncodedString())
+            } catch {
+                return HanlinScriptingNativeJSON.failure(error)
+            }
         }
         let assistantStart: @convention(block) (String, String) -> Void = {
             [weak self] requestID, json in
@@ -378,6 +408,7 @@ public final class HanlinScriptingApplicationSession {
         context.setObject(storageSetData, forKeyedSubscript: "__hanlinNativeStorageSetData" as NSString)
         context.setObject(fileInfo, forKeyedSubscript: "__hanlinNativeFileInfo" as NSString)
         context.setObject(fileSync, forKeyedSubscript: "__hanlinNativeFileSync" as NSString)
+        context.setObject(imageJPEG, forKeyedSubscript: "__hanlinNativeImageJPEG" as NSString)
         context.setObject(nativeAsync, forKeyedSubscript: "__hanlinNativeAsync" as NSString)
         context.setObject(
             assistantAllowed,
@@ -594,6 +625,39 @@ public final class HanlinScriptingApplicationSession {
                 throw Self.invalidSystemUIRequest("The requested system UI operation is unavailable.")
             }
         }
+        if operation.hasPrefix("photos.") {
+            guard photosAllowed else {
+                throw HanlinScriptingNativeError(
+                    name: "Error", code: "permission_denied",
+                    message: "The Photos capability is not granted."
+                )
+            }
+            let payload = try HanlinScriptingNativeJSON.decodeObject(payloadJSON)
+            switch operation {
+            case "photos.pickPhotos":
+                guard let number = payload["count"] as? NSNumber,
+                      CFGetTypeID(number) != CFBooleanGetTypeID(),
+                      number.doubleValue.isFinite,
+                      number.doubleValue.rounded(.towardZero) == number.doubleValue,
+                      (1 ... 100).contains(number.intValue) else {
+                    throw Self.invalidPhotosRequest("Photos.pickPhotos count must be an integer from 1 through 100.")
+                }
+                guard case let .images(images) = try await systemUILoader(.pickPhotos(limit: number.intValue)) else {
+                    throw Self.invalidSystemUIResult()
+                }
+                return HanlinScriptingNativeJSON.success(images.map { $0.base64EncodedString() })
+            case "photos.takePhoto":
+                guard payload.isEmpty else {
+                    throw Self.invalidPhotosRequest("Photos.takePhoto does not accept options.")
+                }
+                guard case let .image(image) = try await systemUILoader(.takePhoto) else {
+                    throw Self.invalidSystemUIResult()
+                }
+                return HanlinScriptingNativeJSON.success(image?.base64EncodedString() ?? NSNull())
+            default:
+                throw Self.invalidPhotosRequest("The requested Photos operation is unavailable.")
+            }
+        }
         if operation.hasPrefix("location.") {
             guard locationAllowed else {
                 throw HanlinScriptingNativeError(
@@ -785,6 +849,10 @@ public final class HanlinScriptingApplicationSession {
 
     private static func invalidSystemUIRequest(_ message: String) -> HanlinScriptingNativeError {
         .init(name: "TypeError", code: "invalid_system_ui_request", message: message)
+    }
+
+    private static func invalidPhotosRequest(_ message: String) -> HanlinScriptingNativeError {
+        .init(name: "TypeError", code: "invalid_photos_request", message: message)
     }
 
     private static func invalidSystemUIResult() -> HanlinScriptingNativeError {
@@ -1402,6 +1470,44 @@ private extension HanlinScriptingApplicationSession {
         static combine(values) {
           const output = new HanlinData(); for (const value of values) output.append(value); return output;
         }
+        static fromJPEG(image, compressionQuality = 1) {
+          if (!(image instanceof HanlinUIImage)) return null;
+          if (typeof compressionQuality !== "number" || !Number.isFinite(compressionQuality)
+              || compressionQuality < 0 || compressionQuality > 1) return null;
+          return image.toJPEGData(compressionQuality);
+        }
+        static fromPNG(image) {
+          return image instanceof HanlinUIImage ? image.toPNGData() : null;
+        }
+      }
+
+      class HanlinUIImage {
+        constructor(encodedData) {
+          if (!(encodedData instanceof HanlinData) || encodedData.size === 0) {
+            throw new TypeError("UIImage requires non-empty encoded image data");
+          }
+          this._encodedData = encodedData.slice();
+          this.size = Object.freeze({ width: 0, height: 0 });
+          this.scale = 1;
+          this.imageOrientation = "up";
+        }
+        toJPEGData(compressionQuality = 1) {
+          if (typeof compressionQuality !== "number" || !Number.isFinite(compressionQuality)
+              || compressionQuality < 0 || compressionQuality > 1) return null;
+          try {
+            const base64 = decodeNativeResult(__hanlinNativeImageJPEG(
+              this._encodedData.toBase64String(), compressionQuality
+            ));
+            return HanlinData.fromBase64String(base64);
+          } catch (_) { return null; }
+        }
+        toPNGData() { return null; }
+        toBase64String() { return this._encodedData.toBase64String(); }
+        static fromData(data) {
+          try { return data instanceof HanlinData && data.size > 0 ? new HanlinUIImage(data) : null; }
+          catch (_) { return null; }
+        }
+        static fromBase64String(value) { return this.fromData(HanlinData.fromBase64String(value)); }
       }
 
       function normalizePath(path) {
@@ -2793,6 +2899,21 @@ private extension HanlinScriptingApplicationSession {
         previewText() { return Promise.reject(new Error("QuickLook text previews are not supported yet")); },
         previewImage() { return Promise.reject(new Error("QuickLook image previews are not supported yet")); }
       });
+      const Photos = Object.freeze({
+        pickPhotos(count) {
+          if (!Number.isInteger(count) || count < 1 || count > 100) {
+            return Promise.reject(new TypeError("Photos.pickPhotos count must be an integer from 1 through 100"));
+          }
+          return nativeCallAsync("photos.pickPhotos", { count }).then(values =>
+            values.map(value => HanlinUIImage.fromBase64String(value)).filter(Boolean)
+          );
+        },
+        takePhoto() {
+          return nativeCallAsync("photos.takePhoto", {}).then(value =>
+            value == null ? null : HanlinUIImage.fromBase64String(value)
+          );
+        }
+      });
       const Safari = Object.freeze({
         openURL(url) {
           if (typeof url !== "string" || url.length === 0 || url.length > 8192) {
@@ -2853,14 +2974,14 @@ private extension HanlinScriptingApplicationSession {
       Object.assign(globalThis, {
         createElement, Fragment, useState, useObservable, useReducer, useRef, useMemo, useCallback,
         useEffect, useEffectEvent, createContext, useContext, ForEach, Navigation,
-        Data: HanlinData, Path, FileManager, Headers: HanlinHeaders, Blob: HanlinBlob,
+        Data: HanlinData, UIImage: HanlinUIImage, Path, FileManager, Headers: HanlinHeaders, Blob: HanlinBlob,
         FormData: HanlinFormData, Request: HanlinRequest, Response: HanlinResponse,
         fetch: hanlinFetch, DOMException: HanlinDOMException, AbortEvent: HanlinAbortEvent,
         AbortSignal: HanlinAbortSignal, AbortController: HanlinAbortController,
         Storage, SQLite, Assistant, Location, Health, HealthUnit, HealthStatistics,
         HealthActivitySummary, HealthWorkout,
         Notification, Reminder, DateComponents, CalendarNotificationTrigger, TimeIntervalNotificationTrigger,
-        LiveActivity, Script, Device, Pasteboard, DocumentPicker, QuickLook, Safari,
+        LiveActivity, Script, Device, Pasteboard, DocumentPicker, QuickLook, Photos, Safari,
         Widget, AppIntentProtocol, AppIntentManager,
         Color: Object.freeze({}),
         __hanlinResolveNative: resolveNativeRequest,

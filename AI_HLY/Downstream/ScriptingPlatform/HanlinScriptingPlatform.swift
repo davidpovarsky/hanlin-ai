@@ -376,6 +376,7 @@ final class HanlinScriptingPlatform {
             let healthCapability = try HanlinCapabilityID(validating: "health")
             let notificationsCapability = try HanlinCapabilityID(validating: "notifications")
             let remindersCapability = try HanlinCapabilityID(validating: "reminders")
+            let photosCapability = try HanlinCapabilityID(validating: "photos")
             let assistantCapability = try HanlinCapabilityID(validating: "assistant")
             let session = try HanlinScriptingApplicationSession(
                 installedPackageID: id,
@@ -414,6 +415,7 @@ final class HanlinScriptingPlatform {
                     guard let self else { throw CancellationError() }
                     return try await self.performReminderSave(request)
                 },
+                photosAllowed: package.grantedCapabilities.contains(photosCapability),
                 assistantAllowed: package.grantedCapabilities.contains(assistantCapability),
                 assistantLoader: { [weak self] request in
                     guard let self else { throw CancellationError() }
@@ -432,7 +434,8 @@ final class HanlinScriptingPlatform {
                 systemUILoader: { [weak self] request in
                     guard let self else { throw CancellationError() }
                     return try await self.presentSystemUI(request)
-                }
+                },
+                imageJPEGEncoder: Self.encodeJPEG
             )
             applicationSession = session
             activeApplicationID = id
@@ -673,6 +676,17 @@ final class HanlinScriptingPlatform {
         default:
             throw HanlinScriptingPlatformError.invalidSystemServicePayload
         }
+    }
+
+    private static func encodeJPEG(_ encodedImage: Data, compressionQuality: Double) throws -> Data {
+        guard let image = UIImage(data: encodedImage),
+              let data = image.jpegData(compressionQuality: compressionQuality) else {
+            throw HanlinScriptingNativeError(
+                name: "Error", code: "image_encoding_failed",
+                message: "The image could not be encoded as JPEG."
+            )
+        }
+        return data
     }
 
     nonisolated private static func optionalBoundedString(_ value: Any?, limit: Int) throws -> String? {
