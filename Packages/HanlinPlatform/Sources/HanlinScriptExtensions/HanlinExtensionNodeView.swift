@@ -26,11 +26,11 @@ public struct HanlinExtensionNodeView: View {
         case .image:
             Image(systemName: text("systemName") ?? "photo")
         case .hStack:
-            HStack(alignment: verticalAlignment, spacing: number("spacing").map(CGFloat.init)) { children }
+            HStack(alignment: verticalAlignment, spacing: number("spacing").map { CGFloat($0) }) { children }
         case .vStack:
-            VStack(alignment: horizontalAlignment, spacing: number("spacing").map(CGFloat.init)) { children }
+            VStack(alignment: horizontalAlignment, spacing: number("spacing").map { CGFloat($0) }) { children }
         case .fragment, .group, .groupBox, .form, .lazyVGrid, .scrollViewReader:
-            VStack(spacing: number("spacing").map(CGFloat.init)) { children }
+            VStack(spacing: number("spacing").map { CGFloat($0) }) { children }
         case .zStack:
             ZStack(alignment: stackAlignment) { children }
         case .spacer:
@@ -255,7 +255,7 @@ private struct HanlinExtensionFrameModifier: ViewModifier {
     @ViewBuilder
     func body(content: Content) -> some View {
         if width != nil || height != nil {
-            content.frame(width: width.map(CGFloat.init), height: height.map(CGFloat.init))
+            content.frame(width: width.map { CGFloat($0) }, height: height.map { CGFloat($0) })
         } else {
             content
         }
