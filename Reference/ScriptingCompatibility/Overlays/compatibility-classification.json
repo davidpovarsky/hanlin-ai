@@ -195,9 +195,19 @@
       "hanlinSymbol": "HanlinScriptUIModel",
       "hanlinAPIVersion": "hanlin.wire/2.0",
       "allowedContexts": ["mainApplication", "widget", "appIntent", "liveActivity"],
-      "behaviorDifferences": ["The live app session supports exit, basic metadata and deterministic dismissal; minimize/resume parity and the broader Script namespace remain partial."],
-      "tests": ["AI_HLYTests/HanlinScriptingRuntimeTests.swift", "Packages/HanlinPlatform/Tests/HanlinScriptUITests/HanlinScriptUIReconcilerTests.swift"],
-      "notes": "Connected to installed scripting-jsc app artifacts and native ScriptUI presentation."
+      "behaviorDifferences": ["Script.exit serializes plain or typed Intent results exactly once into the native session, including interactive intent entrypoints that first await Navigation.present. Basic metadata and deterministic dismissal are available; minimize/resume parity and the broader Script namespace remain partial."],
+      "tests": ["Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift", "Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs"],
+      "notes": "Connected to installed scripting-jsc app artifacts, native ScriptUI presentation and the intent result bridge."
+    },
+    {
+      "symbol": "Intent",
+      "status": "partial",
+      "hanlinSymbol": "HanlinScriptingApplicationSession.Intent",
+      "hanlinAPIVersion": "hanlin.extensions/1.0",
+      "allowedContexts": ["appIntent", "mainApplication"],
+      "behaviorDifferences": ["A typed intent entrypoint context injects shortcut text/JSON/file input, shared text and URL arrays, image paths and file URLs. imagesParameter lazily decodes and caches package-visible UIImage values. text, attributedText, url, json, image, file, fileURL and single-root view results retain their discriminated wire form through Script.exit. App Intents confirmation/snippet UI and continueInForeground still require additional host integration and reject explicitly."],
+      "tests": ["Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift", "Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs"],
+      "notes": "Implements the input and return-value runtime used by intent.tsx, including the untouched FileManager interactive intent entrypoint."
     },
     {
       "symbol": "Storage",
@@ -425,7 +435,7 @@
     },
     {
       "symbol": "Dialog",
-      "status": "supported",
+      "status": "implemented",
       "hanlinSymbol": "HanlinScriptingApplicationSession.Dialog",
       "hanlinAPIVersion": "hanlin.ui/1.0",
       "allowedContexts": ["mainApplication"],

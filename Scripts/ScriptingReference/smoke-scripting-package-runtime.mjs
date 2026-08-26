@@ -72,6 +72,7 @@ const storage = new Map();
 let rendered;
 let widgetPresentation;
 const appIntentRegistrations = [];
+const scriptExits = [];
 globalThis.__hanlinNativeRender = json => { rendered = JSON.parse(json); };
 globalThis.__hanlinNativeStorageGet = key => JSON.stringify(
   storage.has(key)
@@ -128,12 +129,20 @@ globalThis.__hanlinNativeAssistantStart = id => queueMicrotask(() => globalThis.
 ));
 globalThis.__hanlinCancelNative = () => {};
 globalThis.__hanlinNativeEntrypointKind = entrypointContext;
+globalThis.__hanlinNativeIntentInputJSON = JSON.stringify({
+  shortcutParameter: { type: "text", value: "acceptance" },
+  textsParameter: ["acceptance"],
+  urlsParameter: ["https://example.com"],
+  imagePathsParameter: [],
+  fileURLsParameter: [],
+});
 globalThis.__hanlinNativeWidgetFamily = widgetFamily;
 globalThis.__hanlinNativeWidgetParameter = "acceptance";
 globalThis.__hanlinNativeWidgetPresent = json => { widgetPresentation = JSON.parse(json); return true; };
 globalThis.__hanlinNativeWidgetReloadAll = () => {};
 globalThis.__hanlinNativeAppIntentRegister = json => { appIntentRegistrations.push(JSON.parse(json)); return true; };
 globalThis.__hanlinNativeAppIntentComplete = () => {};
+globalThis.__hanlinNativeScriptExit = json => { scriptExits.push(JSON.parse(json)); return true; };
 vm.runInThisContext(bootstrap, { filename: "hanlin-scripting-ui-runtime.js" });
 
 const cache = new Map();
@@ -168,6 +177,9 @@ load(entrypoint);
 if (entrypointContext === "application" && (!globalThis.__hanlinHasPresentedUI || !rendered)) {
   throw new Error("Package did not render ScriptUI");
 }
+if (entrypointContext === "intent" && (!globalThis.__hanlinHasPresentedUI || !rendered)) {
+  throw new Error("Intent package did not render ScriptUI");
+}
 if (entrypointContext === "widget" && !widgetPresentation) {
   throw new Error("Package did not present a Widget");
 }
@@ -185,6 +197,7 @@ console.log(JSON.stringify({
   renderedNodeCount: root ? count(root) : 0,
   presented: entrypointContext === "widget" ? Boolean(widgetPresentation) : globalThis.__hanlinHasPresentedUI,
   appIntentNames: appIntentRegistrations.map(record => record.name),
+  scriptExitCount: scriptExits.length,
 }));
 globalThis.__hanlinDispose();
 process.exit(0);

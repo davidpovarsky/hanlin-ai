@@ -13,7 +13,7 @@ const marker = `static let bootstrap = #${'"'.repeat(3)}`;
 const start = swift.indexOf(marker) + marker.length;
 const bootstrap = swift.slice(start, swift.indexOf(`${'"'.repeat(3)}#`, start));
 
-function runtime(entrypointKind = "application", widgetFamily = "systemMedium") {
+function runtime(entrypointKind = "application", widgetFamily = "systemMedium", intentInput = {}) {
   const storage = new Map();
   const binaryStorage = new Map();
   const files = new Map();
@@ -30,6 +30,7 @@ function runtime(entrypointKind = "application", widgetFamily = "systemMedium") 
   const widgetPresentations = [];
   const appIntentRegistrations = [];
   const appIntentCompletions = [];
+  const scriptExits = [];
   const success = value => JSON.stringify({ ok: true, value });
   const failure = (code, message) => JSON.stringify({
     ok: false,
@@ -213,18 +214,20 @@ function runtime(entrypointKind = "application", widgetFamily = "systemMedium") 
     },
     __hanlinNativeHealthDataAvailable: true,
     __hanlinNativeEntrypointKind: entrypointKind,
+    __hanlinNativeIntentInputJSON: JSON.stringify(intentInput),
     __hanlinNativeWidgetFamily: widgetFamily,
     __hanlinNativeWidgetParameter: "daily",
     __hanlinNativeWidgetPresent(json) { widgetPresentations.push(JSON.parse(json)); return true; },
     __hanlinNativeWidgetReloadAll() {},
     __hanlinNativeAppIntentRegister(json) { appIntentRegistrations.push(JSON.parse(json)); return true; },
     __hanlinNativeAppIntentComplete(id, succeeded, json) { appIntentCompletions.push({ id, succeeded, json }); },
+    __hanlinNativeScriptExit(json) { scriptExits.push(JSON.parse(json)); return true; },
   });
   vm.runInContext(bootstrap, context, { filename: "hanlin-scripting-ui-runtime.js" });
   return {
     context, rendered: () => rendered, assistantRequests, sqliteRequests, locationRequests,
     healthRequests, notificationRequests, reminderRequests, systemUIRequests, systemRequests, cancelledRequests, widgetPresentations,
-    appIntentRegistrations, appIntentCompletions,
+    appIntentRegistrations, appIntentCompletions, scriptExits,
   };
 }
 
@@ -257,6 +260,51 @@ test("Smart-eating Widget and App Intent entrypoints preserve family, parameters
   assert.deepEqual(appIntent.appIntentCompletions, [{
     id: "request-1", succeeded: true, json: '{"completed":7}',
   }]);
+});
+
+test("FileManager intent entrypoint receives native input and returns typed results", async () => {
+  const intent = runtime("intent", "systemMedium", {
+    shortcutParameter: { type: "json", value: { command: "browse" } },
+    textsParameter: ["shared text"],
+    urlsParameter: ["https://example.com"],
+    imagePathsParameter: ["/documents/shared.jpg"],
+    fileURLsParameter: ["/documents/report.txt"],
+  });
+  vm.runInContext(`
+    FileManager.writeAsDataSync("/documents/shared.jpg", Data.fromRawString("image"));
+    const firstImages = Intent.imagesParameter;
+    if (firstImages !== Intent.imagesParameter || !(firstImages[0] instanceof UIImage)) {
+      throw new Error("Intent images were not lazily decoded and cached");
+    }
+    Script.exit(Intent.json({
+      shortcut: Intent.shortcutParameter,
+      text: Intent.textsParameter[0],
+      url: Intent.urlsParameter[0],
+      imageCount: firstImages.length,
+      file: Intent.fileURLsParameter[0]
+    }));
+    Script.exit(Intent.text("ignored second exit"));
+  `, intent.context);
+  assert.deepEqual(intent.scriptExits, [{
+    type: "json",
+    value: {
+      shortcut: { type: "json", value: { command: "browse" } },
+      text: "shared text",
+      url: "https://example.com",
+      imageCount: 1,
+      file: "/documents/report.txt",
+    },
+  }]);
+
+  const view = runtime("intent");
+  await vm.runInContext(`
+    Intent.view(createElement(Text, null, "Ready"), Intent.text(42))
+      .then(value => Script.exit(value));
+  `, view.context);
+  await new Promise(resolve => queueMicrotask(resolve));
+  assert.equal(view.scriptExits[0].type, "IntentViewValue");
+  assert.equal(view.scriptExits[0].value.view.kind, "text");
+  assert.deepEqual(view.scriptExits[0].value.value, { type: "text", value: "42" });
 });
 
 test("FileManager and nativ-ai use native Pasteboard and Safari primitives", async () => {

@@ -12456,20 +12456,20 @@
       "behaviorDifferences": [
         "alert, confirm, prompt and actionSheet use native UIAlertController presentation and resolve only after the selected action. String and object overloads, custom labels, secure/default/selected prompt text, keyboard type, destructive actions and nullable cancellation results are preserved. Inputs and action counts are bounded by the host."
       ],
-      "behaviorMatched": false,
+      "behaviorMatched": true,
       "declarationFile": "global.d.ts",
       "declarationLine": 1206,
       "declaredByScripting": true,
       "hanlinAPIVersion": "hanlin.ui/1.0",
       "hanlinSymbol": "HanlinScriptingApplicationSession.Dialog",
-      "implementedByHanlin": false,
+      "implementedByHanlin": true,
       "notes": "Implements the untouched FileManager create/rename/delete flows and nativ-ai confirmation, rename and error dialogs.",
       "referenceCategory": "namespace",
       "referenceSignatureHash": "bc3e7cde7862875000a8f09962534efcde604151fe6d7b6024cdf72d41920aa2",
       "referenceSymbol": "Dialog",
       "requiredCapability": null,
       "requiredEntitlement": null,
-      "status": "supported",
+      "status": "implemented",
       "tests": [
         "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift",
         "Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs"
@@ -12505,20 +12505,20 @@
       "behaviorDifferences": [
         "alert, confirm, prompt and actionSheet use native UIAlertController presentation and resolve only after the selected action. String and object overloads, custom labels, secure/default/selected prompt text, keyboard type, destructive actions and nullable cancellation results are preserved. Inputs and action counts are bounded by the host."
       ],
-      "behaviorMatched": false,
+      "behaviorMatched": true,
       "declarationFile": "scripting.d.ts",
       "declarationLine": 10208,
       "declaredByScripting": true,
       "hanlinAPIVersion": "hanlin.ui/1.0",
       "hanlinSymbol": "HanlinScriptingApplicationSession.Dialog",
-      "implementedByHanlin": false,
+      "implementedByHanlin": true,
       "notes": "Implements the untouched FileManager create/rename/delete flows and nativ-ai confirmation, rename and error dialogs.",
       "referenceCategory": "type",
       "referenceSignatureHash": "786162e2ebe009367077310396ad6f2ce216c610a0bfed33992b79ce3c2d91ee",
       "referenceSymbol": "Dialog",
       "requiredCapability": null,
       "requiredEntitlement": null,
-      "status": "supported",
+      "status": "implemented",
       "tests": [
         "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift",
         "Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs"
@@ -23690,24 +23690,32 @@
       "verifiedByFixture": false
     },
     {
-      "allowedContexts": [],
+      "allowedContexts": [
+        "appIntent",
+        "mainApplication"
+      ],
       "allowedOrigins": [],
-      "behaviorDifferences": [],
+      "behaviorDifferences": [
+        "A typed intent entrypoint context injects shortcut text/JSON/file input, shared text and URL arrays, image paths and file URLs. imagesParameter lazily decodes and caches package-visible UIImage values. text, attributedText, url, json, image, file, fileURL and single-root view results retain their discriminated wire form through Script.exit. App Intents confirmation/snippet UI and continueInForeground still require additional host integration and reject explicitly."
+      ],
       "behaviorMatched": false,
       "declarationFile": "scripting.d.ts",
       "declarationLine": 10094,
       "declaredByScripting": true,
-      "hanlinAPIVersion": null,
-      "hanlinSymbol": null,
-      "implementedByHanlin": false,
-      "notes": "The symbol is authorized for compatibility work but lacks a complete observable binding and conformance test.",
+      "hanlinAPIVersion": "hanlin.extensions/1.0",
+      "hanlinSymbol": "HanlinScriptingApplicationSession.Intent",
+      "implementedByHanlin": true,
+      "notes": "Implements the input and return-value runtime used by intent.tsx, including the untouched FileManager interactive intent entrypoint.",
       "referenceCategory": "namespace",
       "referenceSignatureHash": "c491743dee7c8a54199465d32b7f235c2919bf3e35590e3c636a8a30771f51fa",
       "referenceSymbol": "Intent",
       "requiredCapability": null,
       "requiredEntitlement": null,
-      "status": "not-yet-implemented",
-      "tests": [],
+      "status": "partial",
+      "tests": [
+        "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift",
+        "Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs"
+      ],
       "verifiedByFixture": false
     },
     {
@@ -40140,7 +40148,7 @@
       ],
       "allowedOrigins": [],
       "behaviorDifferences": [
-        "The live app session supports exit, basic metadata and deterministic dismissal; minimize/resume parity and the broader Script namespace remain partial."
+        "Script.exit serializes plain or typed Intent results exactly once into the native session, including interactive intent entrypoints that first await Navigation.present. Basic metadata and deterministic dismissal are available; minimize/resume parity and the broader Script namespace remain partial."
       ],
       "behaviorMatched": false,
       "declarationFile": "global.d.ts",
@@ -40149,7 +40157,7 @@
       "hanlinAPIVersion": "hanlin.wire/2.0",
       "hanlinSymbol": "HanlinScriptUIModel",
       "implementedByHanlin": true,
-      "notes": "Connected to installed scripting-jsc app artifacts and native ScriptUI presentation.",
+      "notes": "Connected to installed scripting-jsc app artifacts, native ScriptUI presentation and the intent result bridge.",
       "referenceCategory": "type",
       "referenceSignatureHash": "d80a8c1dd899c78a0b5b6193898735e0af4f8450d6ef3ce9fb652b33c93a28f4",
       "referenceSymbol": "Script",
@@ -40157,8 +40165,8 @@
       "requiredEntitlement": null,
       "status": "partial",
       "tests": [
-        "AI_HLYTests/HanlinScriptingRuntimeTests.swift",
-        "Packages/HanlinPlatform/Tests/HanlinScriptUITests/HanlinScriptUIReconcilerTests.swift"
+        "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift",
+        "Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs"
       ],
       "verifiedByFixture": false
     },
@@ -40381,7 +40389,7 @@
       ],
       "allowedOrigins": [],
       "behaviorDifferences": [
-        "The live app session supports exit, basic metadata and deterministic dismissal; minimize/resume parity and the broader Script namespace remain partial."
+        "Script.exit serializes plain or typed Intent results exactly once into the native session, including interactive intent entrypoints that first await Navigation.present. Basic metadata and deterministic dismissal are available; minimize/resume parity and the broader Script namespace remain partial."
       ],
       "behaviorMatched": false,
       "declarationFile": "node.d.ts",
@@ -40390,7 +40398,7 @@
       "hanlinAPIVersion": "hanlin.wire/2.0",
       "hanlinSymbol": "HanlinScriptUIModel",
       "implementedByHanlin": true,
-      "notes": "Connected to installed scripting-jsc app artifacts and native ScriptUI presentation.",
+      "notes": "Connected to installed scripting-jsc app artifacts, native ScriptUI presentation and the intent result bridge.",
       "referenceCategory": "class",
       "referenceSignatureHash": "620537c6245d89ccacb15e5eccb8dba0c669b11c425d8786f150526b5c836bcb",
       "referenceSymbol": "Script",
@@ -40398,8 +40406,8 @@
       "requiredEntitlement": null,
       "status": "partial",
       "tests": [
-        "AI_HLYTests/HanlinScriptingRuntimeTests.swift",
-        "Packages/HanlinPlatform/Tests/HanlinScriptUITests/HanlinScriptUIReconcilerTests.swift"
+        "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift",
+        "Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs"
       ],
       "verifiedByFixture": false
     },
@@ -40412,7 +40420,7 @@
       ],
       "allowedOrigins": [],
       "behaviorDifferences": [
-        "The live app session supports exit, basic metadata and deterministic dismissal; minimize/resume parity and the broader Script namespace remain partial."
+        "Script.exit serializes plain or typed Intent results exactly once into the native session, including interactive intent entrypoints that first await Navigation.present. Basic metadata and deterministic dismissal are available; minimize/resume parity and the broader Script namespace remain partial."
       ],
       "behaviorMatched": false,
       "declarationFile": "scripting.d.ts",
@@ -40421,7 +40429,7 @@
       "hanlinAPIVersion": "hanlin.wire/2.0",
       "hanlinSymbol": "HanlinScriptUIModel",
       "implementedByHanlin": true,
-      "notes": "Connected to installed scripting-jsc app artifacts and native ScriptUI presentation.",
+      "notes": "Connected to installed scripting-jsc app artifacts, native ScriptUI presentation and the intent result bridge.",
       "referenceCategory": "namespace",
       "referenceSignatureHash": "74c613dabc592b7d74af7f819efc37fbe90b8ea00dc4e16588ac5d7f7e1b77d8",
       "referenceSymbol": "Script",
@@ -40429,8 +40437,8 @@
       "requiredEntitlement": null,
       "status": "partial",
       "tests": [
-        "AI_HLYTests/HanlinScriptingRuntimeTests.swift",
-        "Packages/HanlinPlatform/Tests/HanlinScriptUITests/HanlinScriptUIReconcilerTests.swift"
+        "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift",
+        "Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs"
       ],
       "verifiedByFixture": false
     },

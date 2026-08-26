@@ -6,8 +6,61 @@ import HanlinScriptUI
 
 public enum HanlinScriptingEntrypointContext: Equatable, Sendable {
     case application
+    case intent(HanlinScriptingIntentInput = .init())
     case widget(family: String, parameter: String = "")
     case appIntentRegistration
+}
+
+public enum HanlinScriptingShortcutParameter: Equatable, Sendable {
+    case text(String)
+    case json(HanlinValue)
+    case fileURL(String)
+}
+
+public struct HanlinScriptingIntentInput: Equatable, Sendable {
+    public let shortcutParameter: HanlinScriptingShortcutParameter?
+    public let texts: [String]?
+    public let urls: [String]?
+    public let imagePaths: [String]?
+    public let fileURLs: [String]?
+
+    public init(
+        shortcutParameter: HanlinScriptingShortcutParameter? = nil,
+        texts: [String]? = nil,
+        urls: [String]? = nil,
+        imagePaths: [String]? = nil,
+        fileURLs: [String]? = nil
+    ) {
+        self.shortcutParameter = shortcutParameter
+        self.texts = texts
+        self.urls = urls
+        self.imagePaths = imagePaths
+        self.fileURLs = fileURLs
+    }
+
+    fileprivate func json() throws -> String {
+        var object: [String: Any] = [:]
+        switch shortcutParameter {
+        case let .text(value):
+            object["shortcutParameter"] = ["type": "text", "value": value]
+        case let .json(value):
+            let data = try value.jsonValue(destination: .javaScriptBinary64).canonicalJSONData()
+            object["shortcutParameter"] = [
+                "type": "json",
+                "value": try JSONSerialization.jsonObject(with: data)
+            ]
+        case let .fileURL(value):
+            object["shortcutParameter"] = ["type": "fileURL", "value": value]
+        case nil:
+            break
+        }
+        if let texts { object["textsParameter"] = texts }
+        if let urls { object["urlsParameter"] = urls }
+        if let imagePaths { object["imagePathsParameter"] = imagePaths }
+        if let fileURLs { object["fileURLsParameter"] = fileURLs }
+        let data = try JSONSerialization.data(withJSONObject: object, options: [.sortedKeys])
+        return String(decoding: data, as: UTF8.self)
+    }
 }
 
 public struct HanlinScriptingWidgetPresentation: Equatable, Sendable {
@@ -36,6 +89,8 @@ public final class HanlinScriptingApplicationSession {
     public private(set) var widgetPresentation: HanlinScriptingWidgetPresentation?
     public private(set) var appIntentRegistrations: [HanlinScriptingAppIntentRegistration] = []
     public private(set) var requestedWidgetReload = false
+    public private(set) var scriptDidExit = false
+    public private(set) var scriptResult: HanlinValue?
 
     private let context: JSContext
     private let virtualMachine: JSVirtualMachine
@@ -158,6 +213,8 @@ public final class HanlinScriptingApplicationSession {
             guard context.objectForKeyedSubscript("__hanlinHasPresentedUI")?.toBool() == true else {
                 throw HanlinScriptingApplicationError.missingPresentedUI
             }
+        case .intent:
+            break
         case .widget:
             guard widgetPresentation != nil else {
                 throw HanlinScriptingApplicationError.missingWidgetPresentation
@@ -262,6 +319,8 @@ public final class HanlinScriptingApplicationSession {
         context.setObject(nil, forKeyedSubscript: "__hanlinNativeWidgetReloadAll" as NSString)
         context.setObject(nil, forKeyedSubscript: "__hanlinNativeAppIntentRegister" as NSString)
         context.setObject(nil, forKeyedSubscript: "__hanlinNativeAppIntentComplete" as NSString)
+        context.setObject(nil, forKeyedSubscript: "__hanlinNativeScriptExit" as NSString)
+        context.setObject(nil, forKeyedSubscript: "__hanlinNativeIntentInputJSON" as NSString)
         context.setObject(nil, forKeyedSubscript: "__hanlinNativeEntrypointKind" as NSString)
         context.setObject(nil, forKeyedSubscript: "__hanlinNativeWidgetFamily" as NSString)
         context.setObject(nil, forKeyedSubscript: "__hanlinNativeWidgetParameter" as NSString)
@@ -397,6 +456,16 @@ public final class HanlinScriptingApplicationSession {
                 )
             }
         }
+        let scriptExit: @convention(block) (String) -> Bool = { [weak self] json in
+            guard let self, !self.disposed, !self.scriptDidExit,
+                  json.utf8.count <= 16 * 1_024 * 1_024,
+                  let data = json.data(using: .utf8),
+                  let object = try? JSONSerialization.jsonObject(with: data),
+                  let value = try? Self.bridgeValue(object, depth: 0) else { return false }
+            self.scriptResult = value
+            self.scriptDidExit = true
+            return true
+        }
         context.setObject(render, forKeyedSubscript: "__hanlinNativeRender" as NSString)
         context.setObject(storageGet, forKeyedSubscript: "__hanlinNativeStorageGet" as NSString)
         context.setObject(storageSet, forKeyedSubscript: "__hanlinNativeStorageSet" as NSString)
@@ -428,9 +497,16 @@ public final class HanlinScriptingApplicationSession {
         context.setObject(widgetReloadAll, forKeyedSubscript: "__hanlinNativeWidgetReloadAll" as NSString)
         context.setObject(appIntentRegister, forKeyedSubscript: "__hanlinNativeAppIntentRegister" as NSString)
         context.setObject(appIntentComplete, forKeyedSubscript: "__hanlinNativeAppIntentComplete" as NSString)
+        context.setObject(scriptExit, forKeyedSubscript: "__hanlinNativeScriptExit" as NSString)
         switch entrypointContext {
         case .application:
             context.setObject("application", forKeyedSubscript: "__hanlinNativeEntrypointKind" as NSString)
+        case let .intent(input):
+            context.setObject("intent", forKeyedSubscript: "__hanlinNativeEntrypointKind" as NSString)
+            context.setObject(
+                (try? input.json()) ?? "{}",
+                forKeyedSubscript: "__hanlinNativeIntentInputJSON" as NSString
+            )
         case let .widget(family, parameter):
             context.setObject("widget", forKeyedSubscript: "__hanlinNativeEntrypointKind" as NSString)
             context.setObject(family, forKeyedSubscript: "__hanlinNativeWidgetFamily" as NSString)
@@ -2977,10 +3053,108 @@ private extension HanlinScriptingApplicationSession {
         addActivitiesEnabledListener() {}, removeActivitiesEnabledListener() {},
         addActivityUpdateListener() {}, removeActivityUpdateListener() {}
       });
+      class HanlinIntentValue {
+        constructor(value, type) {
+          this.value = value;
+          this.type = type;
+        }
+        toJson() { return { type: this.type, value: this.value }; }
+        toJSON() { return this.toJson(); }
+      }
+      class IntentTextValue extends HanlinIntentValue {
+        constructor(value) { super(String(value), "text"); }
+      }
+      class IntentAttributedTextValue extends HanlinIntentValue {
+        constructor(value) { super(String(value), "attributedText"); }
+      }
+      class IntentURLValue extends HanlinIntentValue {
+        constructor(value) { super(String(value), "url"); }
+      }
+      class IntentJsonValue extends HanlinIntentValue {
+        constructor(value) {
+          if (value == null || typeof value !== "object") {
+            throw new TypeError("Intent.json requires an object or array");
+          }
+          super(value, "json");
+        }
+      }
+      class IntentFileValue extends HanlinIntentValue {
+        constructor(value) { super(String(value), "file"); }
+      }
+      class IntentFileURLValue extends HanlinIntentValue {
+        constructor(value) { super(String(value), "fileURL"); }
+      }
+      class IntentImageValue extends HanlinIntentValue {
+        constructor(value) {
+          if (!(value instanceof HanlinUIImage)) throw new TypeError("Intent.image requires a UIImage");
+          super(value, "image");
+        }
+        toJson() { return { type: this.type, value: { base64: this.value.toBase64String() } }; }
+      }
+      class IntentViewValue extends HanlinIntentValue {
+        constructor(value) { super(value, "IntentViewValue"); }
+      }
+      const intentInput = (() => {
+        if (globalThis.__hanlinNativeEntrypointKind !== "intent"
+            || typeof globalThis.__hanlinNativeIntentInputJSON !== "string") return {};
+        try { return JSON.parse(globalThis.__hanlinNativeIntentInputJSON); }
+        catch (_) { return {}; }
+      })();
+      let decodedIntentImages;
+      const Intent = {
+        shortcutParameter: intentInput.shortcutParameter,
+        textsParameter: intentInput.textsParameter,
+        urlsParameter: intentInput.urlsParameter,
+        imagePathsParameter: intentInput.imagePathsParameter,
+        fileURLsParameter: intentInput.fileURLsParameter,
+        text(value) { return new IntentTextValue(value); },
+        attributedText(value) { return new IntentAttributedTextValue(value); },
+        url(value) { return new IntentURLValue(value); },
+        json(value) { return new IntentJsonValue(value); },
+        image(value) { return new IntentImageValue(value); },
+        file(value) { return new IntentFileValue(value); },
+        fileURL(value) { return new IntentFileURLValue(value); },
+        view(node, value = null) {
+          const nodes = materialize(node);
+          if (nodes.length !== 1) return Promise.reject(new TypeError("Intent.view requires exactly one root view"));
+          if (value != null && !(value instanceof HanlinIntentValue)) {
+            return Promise.reject(new TypeError("Intent.view requires an Intent value"));
+          }
+          return Promise.resolve(new IntentViewValue({ view: nodes[0], value: value?.toJson() ?? null }));
+        },
+        requestConfirmation() {
+          return Promise.reject(new Error("Intent confirmation requires an App Intents execution host"));
+        },
+        continueInForeground() {
+          return Promise.reject(new Error("Foreground continuation requires an App Intents execution host"));
+        }
+      };
+      Object.defineProperty(Intent, "imagesParameter", {
+        enumerable: true,
+        get() {
+          if (decodedIntentImages !== undefined) return decodedIntentImages;
+          decodedIntentImages = Array.isArray(Intent.imagePathsParameter)
+            ? Intent.imagePathsParameter.map(path => HanlinUIImage.fromFile(path)).filter(Boolean)
+            : undefined;
+          return decodedIntentImages;
+        }
+      });
+      Object.freeze(Intent);
+      let scriptExited = false;
       const Script = Object.freeze({
         name: "Hanlin Scripting App", directory: FileManager.scriptsDirectory,
         queryParameters: {}, shareFiles: [],
-        exit() {}, minimize() {}, onResume() { return () => {}; }
+        exit(result = null) {
+          if (scriptExited) return;
+          const value = result instanceof HanlinIntentValue ? result.toJson() : result;
+          const json = JSON.stringify(value ?? null);
+          if (json === undefined) throw new TypeError("Script.exit result must be serializable");
+          if (!globalThis.__hanlinNativeScriptExit(json)) {
+            throw new Error("The native host rejected the Script.exit result");
+          }
+          scriptExited = true;
+        },
+        minimize() {}, onResume() { return () => {}; }
       });
       const deviceSnapshot = globalThis.__hanlinNativeDeviceSnapshot ?? {};
       const Device = Object.freeze({
@@ -3309,7 +3483,10 @@ private extension HanlinScriptingApplicationSession {
         Storage, SQLite, Assistant, Location, Health, HealthUnit, HealthStatistics,
         HealthActivitySummary, HealthWorkout,
         Notification, Reminder, DateComponents, CalendarNotificationTrigger, TimeIntervalNotificationTrigger,
-        LiveActivity, Script, Device, Pasteboard, DocumentPicker, QuickLook, Photos, Dialog,
+        LiveActivity, Intent, IntentValue: HanlinIntentValue, IntentTextValue,
+        IntentAttributedTextValue, IntentURLValue, IntentJsonValue, IntentFileValue,
+        IntentFileURLValue, IntentImageValue, IntentViewValue,
+        Script, Device, Pasteboard, DocumentPicker, QuickLook, Photos, Dialog,
         EditorController, Safari,
         Widget, AppIntentProtocol, AppIntentManager,
         Color: Object.freeze({}),

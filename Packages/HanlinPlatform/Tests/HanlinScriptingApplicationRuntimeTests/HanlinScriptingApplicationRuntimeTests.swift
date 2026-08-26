@@ -65,6 +65,43 @@ struct HanlinScriptingApplicationRuntimeTests {
     }
 
     @MainActor
+    @Test("Receives intent inputs and captures typed Script.exit results")
+    func runsIntentEntrypoint() throws {
+        let packageID = try HanlinInstalledPackageID(validating: "intent-runtime-test")
+        let shortcutJSON = try HanlinValue(jsonValue: .object(.init(uniqueMembers: [
+            ("command", .string("browse"))
+        ])))
+        let session = try HanlinScriptingApplicationSession(
+            installedPackageID: packageID,
+            program: #"""
+            Script.exit(Intent.json({
+              shortcut: Intent.shortcutParameter,
+              text: Intent.textsParameter[0],
+              url: Intent.urlsParameter[0],
+              imagePath: Intent.imagePathsParameter[0],
+              fileURL: Intent.fileURLsParameter[0]
+            }));
+            Script.exit(Intent.text("ignored"));
+            """#,
+            filename: "compiled/intent.js",
+            entrypointContext: .intent(.init(
+                shortcutParameter: .json(shortcutJSON),
+                texts: ["shared text"],
+                urls: ["https://example.com"],
+                imagePaths: ["/documents/shared.jpg"],
+                fileURLs: ["/documents/report.txt"]
+            )),
+            storageAllowed: false
+        )
+        defer { session.dispose() }
+
+        let expectedJSON = #"{"type":"json","value":{"fileURL":"/documents/report.txt","imagePath":"/documents/shared.jpg","shortcut":{"type":"json","value":{"command":"browse"}},"text":"shared text","url":"https://example.com"}}"#
+        let expected = try HanlinValue(jsonValue: HanlinJSONValue.decodeCanonicalJSON(Data(expectedJSON.utf8)))
+        #expect(session.scriptDidExit)
+        #expect(session.scriptResult == expected)
+    }
+
+    @MainActor
     @Test("Projects the native device snapshot into an immutable Scripting Device object")
     func deviceSnapshot() throws {
         let packageID = try HanlinInstalledPackageID(validating: "device-runtime-test")
