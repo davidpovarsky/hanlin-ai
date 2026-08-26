@@ -1475,6 +1475,7 @@ final class HanlinScriptingPackageFileSystem: @unchecked Sendable {
 
     private struct ExternalRoot {
         let url: URL
+        let scopeURL: URL
         let isDirectory: Bool
         let ownsSecurityScope: Bool
     }
@@ -1548,24 +1549,26 @@ final class HanlinScriptingPackageFileSystem: @unchecked Sendable {
             )
         }
         return try urls.map { rawURL in
-            let url = rawURL.standardizedFileURL.resolvingSymlinksInPath()
-            guard url.isFileURL else { throw invalid("The selected URL is not a file URL.") }
-            guard url.path().utf8.count <= 8_192 else { throw invalid("The selected file path is too large.") }
-            guard fileManager.fileExists(atPath: url.path()) else {
+            let selectedURL = rawURL.standardizedFileURL
+            guard selectedURL.isFileURL else { throw invalid("The selected URL is not a file URL.") }
+            guard selectedURL.path().utf8.count <= 8_192 else { throw invalid("The selected file path is too large.") }
+            guard fileManager.fileExists(atPath: selectedURL.path()) else {
                 throw invalid("The selected file or directory no longer exists.")
             }
-            let values = try url.resourceValues(forKeys: [.isDirectoryKey, .isSymbolicLinkKey])
+            let values = try selectedURL.resourceValues(forKeys: [.isDirectoryKey, .isSymbolicLinkKey])
             guard values.isSymbolicLink != true else {
                 throw invalid("Selected symbolic links are unavailable.")
             }
+            let url = selectedURL.resolvingSymlinksInPath()
             if !externalRoots.contains(where: { $0.url == url }) {
                 externalRoots.append(.init(
                     url: url,
+                    scopeURL: selectedURL,
                     isDirectory: values.isDirectory == true,
-                    ownsSecurityScope: url.startAccessingSecurityScopedResource()
+                    ownsSecurityScope: selectedURL.startAccessingSecurityScopedResource()
                 ))
             }
-            return url.path()
+            return selectedURL.path()
         }
     }
 
@@ -1573,7 +1576,7 @@ final class HanlinScriptingPackageFileSystem: @unchecked Sendable {
         lock.lock()
         defer { lock.unlock() }
         for root in externalRoots where root.ownsSecurityScope {
-            root.url.stopAccessingSecurityScopedResource()
+            root.scopeURL.stopAccessingSecurityScopedResource()
         }
         externalRoots.removeAll()
     }
