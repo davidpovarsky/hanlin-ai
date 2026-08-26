@@ -280,7 +280,9 @@ struct HanlinScriptingApplicationRuntimeTests {
                 case let .previewURLs(urls):
                     operations.append("previewURLs")
                     #expect(urls.count == 1)
-                    #expect(try String(contentsOf: #require(urls.first), encoding: .utf8) == "selected-content")
+                    let url = try #require(urls.first)
+                    let content = try String(contentsOf: url, encoding: .utf8)
+                    #expect(content == "selected-content")
                     return .completed
                 }
             }
