@@ -26,11 +26,11 @@ public struct HanlinExtensionNodeView: View {
         case .image:
             Image(systemName: text("systemName") ?? "photo")
         case .hStack:
-            HStack(alignment: verticalAlignment, spacing: number("spacing")) { children }
+            HStack(alignment: verticalAlignment, spacing: number("spacing").map(CGFloat.init)) { children }
         case .vStack:
-            VStack(alignment: horizontalAlignment, spacing: number("spacing")) { children }
+            VStack(alignment: horizontalAlignment, spacing: number("spacing").map(CGFloat.init)) { children }
         case .fragment, .group, .groupBox, .form, .lazyVGrid, .scrollViewReader:
-            VStack(spacing: number("spacing")) { children }
+            VStack(spacing: number("spacing").map(CGFloat.init)) { children }
         case .zStack:
             ZStack(alignment: stackAlignment) { children }
         case .spacer:
@@ -69,7 +69,7 @@ public struct HanlinExtensionNodeView: View {
         case .rectangle:
             Rectangle().fill(color("fill") ?? .secondary)
         case .roundedRectangle:
-            RoundedRectangle(cornerRadius: number("cornerRadius") ?? 12)
+            RoundedRectangle(cornerRadius: CGFloat(number("cornerRadius") ?? 12))
                 .fill(color("fill") ?? .secondary)
         case .liveActivityUI, .liveActivityContent, .liveActivityCompactLeading,
              .liveActivityCompactTrailing, .liveActivityMinimal, .liveActivityExpandedLeading,
@@ -200,7 +200,7 @@ private struct HanlinExtensionNodeStyleModifier: ViewModifier {
 
     func body(content: Content) -> some View {
         content
-            .font(style.fontSize.map { .system(size: $0) })
+            .font(style.fontSize.map { .system(size: CGFloat($0)) })
             .fontWeight(weight)
             .lineLimit(style.lineLimit)
             .minimumScaleFactor(style.minimumScaleFactor)
@@ -244,7 +244,7 @@ private struct HanlinExtensionPaddingModifier: ViewModifier {
 
     @ViewBuilder
     func body(content: Content) -> some View {
-        if let value { content.padding(value) } else { content }
+        if let value { content.padding(CGFloat(value)) } else { content }
     }
 }
 
@@ -255,7 +255,7 @@ private struct HanlinExtensionFrameModifier: ViewModifier {
     @ViewBuilder
     func body(content: Content) -> some View {
         if width != nil || height != nil {
-            content.frame(width: width, height: height)
+            content.frame(width: width.map(CGFloat.init), height: height.map(CGFloat.init))
         } else {
             content
         }
