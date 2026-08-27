@@ -4164,9 +4164,11 @@
     {
       "symbol": "Clipboard",
       "state": "unsupported",
-      "operation": "unimplemented",
-      "capability": null,
-      "contexts": [],
+      "operation": "HanlinScriptingApplicationSession.Clipboard",
+      "capability": "pasteboard",
+      "contexts": [
+        "mainApplication"
+      ],
       "declarationEvidence": [
         {
           "category": "namespace",

@@ -140,6 +140,16 @@
   ],
   "symbols": [
     {
+      "symbol": "Clipboard",
+      "status": "implemented",
+      "hanlinSymbol": "HanlinScriptingApplicationSession.Clipboard",
+      "hanlinAPIVersion": "hanlin.services/1.0",
+      "requiredCapability": "pasteboard",
+      "allowedContexts": ["mainApplication"],
+      "tests": ["Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift", "Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs"],
+      "notes": "The deprecated copyText/getText compatibility namespace delegates exactly to the bounded asynchronous Pasteboard string channel and inherits its fail-closed capability enforcement."
+    },
+    {
       "symbol": "Crypto",
       "status": "partial",
       "hanlinSymbol": "HanlinScriptingApplicationSession.Crypto",

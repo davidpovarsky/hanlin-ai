@@ -8150,24 +8150,29 @@
       "verifiedByFixture": false
     },
     {
-      "allowedContexts": [],
+      "allowedContexts": [
+        "mainApplication"
+      ],
       "allowedOrigins": [],
       "behaviorDifferences": [],
-      "behaviorMatched": false,
+      "behaviorMatched": true,
       "declarationFile": "global.d.ts",
       "declarationLine": 1010,
       "declaredByScripting": true,
-      "hanlinAPIVersion": null,
-      "hanlinSymbol": null,
-      "implementedByHanlin": false,
-      "notes": "The authorized ambient API has no complete runtime binding and conformance test yet; declaration presence is not treated as support.",
+      "hanlinAPIVersion": "hanlin.services/1.0",
+      "hanlinSymbol": "HanlinScriptingApplicationSession.Clipboard",
+      "implementedByHanlin": true,
+      "notes": "The deprecated copyText/getText compatibility namespace delegates exactly to the bounded asynchronous Pasteboard string channel and inherits its fail-closed capability enforcement.",
       "referenceCategory": "namespace",
       "referenceSignatureHash": "93d1cf3d1c58b2aa781d5fed60d3fc60e0263d69f4b9e2ba451256cca6941804",
       "referenceSymbol": "Clipboard",
-      "requiredCapability": null,
+      "requiredCapability": "pasteboard",
       "requiredEntitlement": null,
-      "status": "not-yet-implemented",
-      "tests": [],
+      "status": "implemented",
+      "tests": [
+        "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift",
+        "Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs"
+      ],
       "verifiedByFixture": false
     },
     {

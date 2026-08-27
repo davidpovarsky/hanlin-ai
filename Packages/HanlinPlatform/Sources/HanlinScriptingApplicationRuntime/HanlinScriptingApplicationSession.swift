@@ -3668,6 +3668,13 @@ private extension HanlinScriptingApplicationSession {
         onChanged: null,
         onRemoved: null
       });
+      const Clipboard = Object.freeze({
+        copyText(text) {
+          if (typeof text !== "string") return Promise.reject(new TypeError("Clipboard text must be a string"));
+          return Pasteboard.setString(text);
+        },
+        getText() { return Pasteboard.getString(); }
+      });
       const DocumentPicker = Object.freeze({
         pickFiles(options = {}) {
           if (options == null || typeof options !== "object" || Array.isArray(options)) {
@@ -3977,7 +3984,7 @@ private extension HanlinScriptingApplicationSession {
         createElement, Fragment, useState, useObservable, useReducer, useRef, useMemo, useCallback,
         useEffect, useEffectEvent, createContext, useContext, ForEach, Navigation,
         Data: HanlinData, UIImage: HanlinUIImage, Crypto, UUID, Path, FileManager, Headers: HanlinHeaders, Blob: HanlinBlob,
-        FormData: HanlinFormData, Request: HanlinRequest, Response: HanlinResponse,
+        FormData: HanlinFormData, Request: HanlinRequest, Response: HanlinResponse, Clipboard,
         fetch: hanlinFetch, DOMException: HanlinDOMException, AbortEvent: HanlinAbortEvent,
         AbortSignal: HanlinAbortSignal, AbortController: HanlinAbortController,
         Storage, SQLite, Assistant, Location, Health, HealthUnit, HealthStatistics,

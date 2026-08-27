@@ -237,6 +237,35 @@ struct HanlinScriptingApplicationRuntimeTests {
     }
 
     @MainActor
+    @Test("Routes deprecated Clipboard through the Pasteboard capability")
+    func clipboardCompatibilityRuntime() async throws {
+        let packageID = try HanlinInstalledPackageID(validating: "clipboard-runtime-test")
+        var operations: [String] = []
+        let session = try HanlinScriptingApplicationSession(
+            installedPackageID: packageID,
+            program: #"""
+            Navigation.present({ element: createElement(Text, null, "Waiting") });
+            (async () => {
+              await Clipboard.copyText("legacy text");
+              Navigation.present({ element: createElement(Text, null, await Clipboard.getText()) });
+            })();
+            """#,
+            filename: "compiled/clipboard.js",
+            storageAllowed: false,
+            pasteboardAllowed: true,
+            systemLoader: { operation, _ in
+                operations.append(operation)
+                return operation == "pasteboard.getString" ? .string("legacy text") : .null
+            }
+        )
+        defer { session.dispose() }
+
+        await session.waitForNativeQuiescence()
+        #expect(session.model.root.properties["text"] == .string("legacy text"))
+        #expect(operations == ["pasteboard.setString", "pasteboard.getString"])
+    }
+
+    @MainActor
     @Test("Bridges typed Pasteboard items and privacy options without losing value types")
     func typedPasteboardItemsRuntime() async throws {
         let packageID = try HanlinInstalledPackageID(validating: "typed-pasteboard-runtime-test")

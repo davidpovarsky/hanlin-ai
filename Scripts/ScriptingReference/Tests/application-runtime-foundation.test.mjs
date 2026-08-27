@@ -433,6 +433,19 @@ test("FileManager and nativ-ai use native Pasteboard and Safari primitives", asy
   ]);
 });
 
+test("Deprecated Clipboard delegates to the capability-gated Pasteboard channel", async () => {
+  const { context, systemRequests } = runtime();
+  const result = await vm.runInContext(`(async () => {
+    await Clipboard.copyText("legacy text");
+    return await Clipboard.getText();
+  })()`, context);
+  assert.equal(result, "legacy text");
+  assert.deepEqual(systemRequests, [
+    { operation: "pasteboard.setString", payload: { value: "legacy text" } },
+    { operation: "pasteboard.getString", payload: {} },
+  ]);
+});
+
 test("Pasteboard typed items preserve strings, Data, UIImage, and privacy options", async () => {
   const { context, systemRequests } = runtime();
   const result = await vm.runInContext(`
