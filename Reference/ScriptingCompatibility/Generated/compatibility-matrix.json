@@ -805,24 +805,29 @@
       "verifiedByFixture": false
     },
     {
-      "allowedContexts": [],
+      "allowedContexts": [
+        "mainApplication"
+      ],
       "allowedOrigins": [],
       "behaviorDifferences": [],
-      "behaviorMatched": false,
+      "behaviorMatched": true,
       "declarationFile": "global.d.ts",
       "declarationLine": 1122,
       "declaredByScripting": true,
-      "hanlinAPIVersion": null,
-      "hanlinSymbol": null,
-      "implementedByHanlin": false,
-      "notes": "The authorized ambient API has no complete runtime binding and conformance test yet; declaration presence is not treated as support.",
+      "hanlinAPIVersion": "hanlin.services/1.0",
+      "hanlinSymbol": "HanlinScriptingApplicationSession.Pasteboard",
+      "implementedByHanlin": true,
+      "notes": "Typed UTType item dictionaries round-trip strings, Data and UIImage values through a bounded capability-gated native bridge. setItems also preserves local-only and expiration-date privacy options.",
       "referenceCategory": "function",
       "referenceSignatureHash": "fc7fd0e99151e1f997c13db2c9cfc54aa245aa26114c1777e68c184ef06671f7",
       "referenceSymbol": "addItems",
-      "requiredCapability": null,
+      "requiredCapability": "pasteboard",
       "requiredEntitlement": null,
-      "status": "not-yet-implemented",
-      "tests": [],
+      "status": "implemented",
+      "tests": [
+        "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift",
+        "Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs"
+      ],
       "verifiedByFixture": false
     },
     {
@@ -17406,24 +17411,29 @@
       "verifiedByFixture": false
     },
     {
-      "allowedContexts": [],
+      "allowedContexts": [
+        "mainApplication"
+      ],
       "allowedOrigins": [],
       "behaviorDifferences": [],
-      "behaviorMatched": false,
+      "behaviorMatched": true,
       "declarationFile": "global.d.ts",
       "declarationLine": 1137,
       "declaredByScripting": true,
-      "hanlinAPIVersion": null,
-      "hanlinSymbol": null,
-      "implementedByHanlin": false,
-      "notes": "The authorized ambient API has no complete runtime binding and conformance test yet; declaration presence is not treated as support.",
+      "hanlinAPIVersion": "hanlin.services/1.0",
+      "hanlinSymbol": "HanlinScriptingApplicationSession.Pasteboard",
+      "implementedByHanlin": true,
+      "notes": "Typed UTType item dictionaries round-trip strings, Data and UIImage values through a bounded capability-gated native bridge. setItems also preserves local-only and expiration-date privacy options.",
       "referenceCategory": "function",
       "referenceSignatureHash": "9a7f540f4f37ae7272770b4ddfd08a71ffee6a941631ef3ebd3180b5e410d027",
       "referenceSymbol": "getItems",
-      "requiredCapability": null,
+      "requiredCapability": "pasteboard",
       "requiredEntitlement": null,
-      "status": "not-yet-implemented",
-      "tests": [],
+      "status": "implemented",
+      "tests": [
+        "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift",
+        "Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs"
+      ],
       "verifiedByFixture": false
     },
     {
@@ -32271,7 +32281,7 @@
       ],
       "allowedOrigins": [],
       "behaviorDifferences": [
-        "Text, URL and image values, including bounded multi-value reads and writes, use the iOS system pasteboard through an asynchronous capability-gated native channel. Images cross the bridge as bounded encoded UIImage values. Arbitrary UTType item dictionaries, expiration/local-only options and change callbacks remain unavailable and reject explicitly."
+        "Text, URL, image and typed UTType dictionary values use the iOS system pasteboard through an asynchronous capability-gated native channel with bounded payloads. Typed items preserve string, Data and UIImage representations plus expiration/local-only options. onChanged and onRemoved callbacks remain unavailable."
       ],
       "behaviorMatched": false,
       "declarationFile": "global.d.ts",
@@ -41811,24 +41821,29 @@
       "verifiedByFixture": false
     },
     {
-      "allowedContexts": [],
+      "allowedContexts": [
+        "mainApplication"
+      ],
       "allowedOrigins": [],
       "behaviorDifferences": [],
-      "behaviorMatched": false,
+      "behaviorMatched": true,
       "declarationFile": "global.d.ts",
       "declarationLine": 1130,
       "declaredByScripting": true,
-      "hanlinAPIVersion": null,
-      "hanlinSymbol": null,
-      "implementedByHanlin": false,
-      "notes": "The authorized ambient API has no complete runtime binding and conformance test yet; declaration presence is not treated as support.",
+      "hanlinAPIVersion": "hanlin.services/1.0",
+      "hanlinSymbol": "HanlinScriptingApplicationSession.Pasteboard",
+      "implementedByHanlin": true,
+      "notes": "Typed UTType item dictionaries round-trip strings, Data and UIImage values through a bounded capability-gated native bridge. setItems also preserves local-only and expiration-date privacy options.",
       "referenceCategory": "function",
       "referenceSignatureHash": "b9e5b262ca5bcfdd86f78f98704f2a937ffdbd23352b8066418097f615ff0f0c",
       "referenceSymbol": "setItems",
-      "requiredCapability": null,
+      "requiredCapability": "pasteboard",
       "requiredEntitlement": null,
-      "status": "not-yet-implemented",
-      "tests": [],
+      "status": "implemented",
+      "tests": [
+        "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift",
+        "Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs"
+      ],
       "verifiedByFixture": false
     },
     {

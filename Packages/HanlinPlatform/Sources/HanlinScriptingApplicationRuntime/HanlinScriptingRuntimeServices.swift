@@ -9,6 +9,7 @@ public enum HanlinScriptingSystemResult: Sendable {
     case integer(Int)
     case string(String?)
     case strings([String]?)
+    case pasteboardItems([HanlinScriptingPasteboardItem]?)
 
     var nativeObject: Any {
         switch self {
@@ -17,7 +18,34 @@ public enum HanlinScriptingSystemResult: Sendable {
         case let .integer(value): value
         case let .string(value): value ?? NSNull()
         case let .strings(value): value ?? NSNull()
+        case let .pasteboardItems(value): value?.map(\.nativeObject) ?? NSNull()
         }
+    }
+}
+
+public struct HanlinScriptingPasteboardItem: Sendable {
+    public enum Representation: Sendable {
+        case string(String)
+        case data(Data)
+        case image(Data)
+
+        fileprivate var nativeObject: [String: String] {
+            switch self {
+            case let .string(value): ["kind": "string", "value": value]
+            case let .data(value): ["kind": "data", "value": value.base64EncodedString()]
+            case let .image(value): ["kind": "image", "value": value.base64EncodedString()]
+            }
+        }
+    }
+
+    public let representations: [String: Representation]
+
+    public init(representations: [String: Representation]) {
+        self.representations = representations
+    }
+
+    fileprivate var nativeObject: [String: [String: String]] {
+        representations.mapValues(\.nativeObject)
     }
 }
 

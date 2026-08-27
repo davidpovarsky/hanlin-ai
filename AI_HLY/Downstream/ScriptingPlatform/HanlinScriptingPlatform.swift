@@ -1,4 +1,5 @@
 import CryptoKit
+import CoreFoundation
 import Foundation
 import HanlinPlatformContracts
 import HanlinScriptCompiler
@@ -708,6 +709,22 @@ final class HanlinScriptingPlatform {
                 return image
             }
             return .null
+        case "pasteboard.addItems":
+            pasteboard.addItems(try Self.pasteboardItems(from: payload["items"]))
+            return .null
+        case "pasteboard.setItems":
+            let items = try Self.pasteboardItems(from: payload["items"])
+            var options: [UIPasteboard.OptionsKey: Any] = [:]
+            if let localOnly = try Self.optionalBoolean(payload["localOnly"]) {
+                options[.localOnly] = localOnly
+            }
+            if let milliseconds = try Self.optionalFiniteNumber(payload["expirationMilliseconds"]) {
+                options[.expirationDate] = Date(timeIntervalSince1970: milliseconds / 1_000)
+            }
+            pasteboard.setItems(items, options: options)
+            return .null
+        case "pasteboard.getItems":
+            return .pasteboardItems(try Self.encodedPasteboardItems(pasteboard.items))
         case "safari.openURL":
             guard let urlString = try Self.optionalBoundedString(payload["url"], limit: 8_192),
                   let url = URL(string: urlString), url.scheme != nil else {
@@ -746,6 +763,119 @@ final class HanlinScriptingPlatform {
             throw HanlinScriptingPlatformError.invalidSystemServicePayload
         }
         return image
+    }
+
+    private static func pasteboardItems(from value: Any?) throws -> [[String: Any]] {
+        guard let wireItems = value as? [Any], wireItems.count <= 64 else {
+            throw HanlinScriptingPlatformError.invalidSystemServicePayload
+        }
+        var totalBytes = 0
+        return try wireItems.map { wireItem in
+            guard let representations = wireItem as? [String: Any], representations.count <= 64 else {
+                throw HanlinScriptingPlatformError.invalidSystemServicePayload
+            }
+            return try representations.reduce(into: [String: Any]()) { item, entry in
+                let identifier = entry.key
+                guard !identifier.isEmpty, identifier.utf8.count <= 512, !identifier.contains("\0"),
+                      let wireValue = entry.value as? [String: Any],
+                      let kind = wireValue["kind"] as? String,
+                      let encodedValue = wireValue["value"] as? String else {
+                    throw HanlinScriptingPlatformError.invalidSystemServicePayload
+                }
+                switch kind {
+                case "string":
+                    let byteCount = encodedValue.utf8.count
+                    guard byteCount <= 1_048_576 else {
+                        throw HanlinScriptingPlatformError.invalidSystemServicePayload
+                    }
+                    totalBytes += byteCount
+                    item[identifier] = encodedValue
+                case "data", "image":
+                    guard encodedValue.utf8.count <= 24 * 1_024 * 1_024,
+                          let data = Data(base64Encoded: encodedValue) else {
+                        throw HanlinScriptingPlatformError.invalidSystemServicePayload
+                    }
+                    totalBytes += data.count
+                    if kind == "image" {
+                        guard let image = UIImage(data: data) else {
+                            throw HanlinScriptingPlatformError.invalidSystemServicePayload
+                        }
+                        item[identifier] = image
+                    } else {
+                        item[identifier] = data
+                    }
+                default:
+                    throw HanlinScriptingPlatformError.invalidSystemServicePayload
+                }
+                guard totalBytes <= 16 * 1_024 * 1_024 else {
+                    throw HanlinScriptingPlatformError.invalidSystemServicePayload
+                }
+            }
+        }
+    }
+
+    private static func encodedPasteboardItems(
+        _ items: [[String: Any]]
+    ) throws -> [HanlinScriptingPasteboardItem] {
+        guard items.count <= 64 else {
+            throw HanlinScriptingPlatformError.invalidSystemServicePayload
+        }
+        var totalBytes = 0
+        return try items.map { item in
+            guard item.count <= 64 else {
+                throw HanlinScriptingPlatformError.invalidSystemServicePayload
+            }
+            var representations: [String: HanlinScriptingPasteboardItem.Representation] = [:]
+            for (identifier, value) in item {
+                guard !identifier.isEmpty, identifier.utf8.count <= 512, !identifier.contains("\0") else {
+                    throw HanlinScriptingPlatformError.invalidSystemServicePayload
+                }
+                let representation: HanlinScriptingPasteboardItem.Representation?
+                if let string = value as? String {
+                    let byteCount = string.utf8.count
+                    guard byteCount <= 1_048_576 else {
+                        throw HanlinScriptingPlatformError.invalidSystemServicePayload
+                    }
+                    totalBytes += byteCount
+                    representation = .string(string)
+                } else if let image = value as? UIImage {
+                    let data = try encodedPasteboardImage(image)
+                    totalBytes += data.count
+                    representation = .image(data)
+                } else if let data = value as? Data {
+                    totalBytes += data.count
+                    representation = .data(data)
+                } else if let url = value as? URL {
+                    let string = url.absoluteString
+                    totalBytes += string.utf8.count
+                    representation = .string(string)
+                } else {
+                    representation = nil
+                }
+                guard totalBytes <= 16 * 1_024 * 1_024 else {
+                    throw HanlinScriptingPlatformError.invalidSystemServicePayload
+                }
+                if let representation { representations[identifier] = representation }
+            }
+            return HanlinScriptingPasteboardItem(representations: representations)
+        }
+    }
+
+    private static func optionalBoolean(_ value: Any?) throws -> Bool? {
+        if value == nil || value is NSNull { return nil }
+        guard let number = value as? NSNumber, CFGetTypeID(number) == CFBooleanGetTypeID() else {
+            throw HanlinScriptingPlatformError.invalidSystemServicePayload
+        }
+        return number.boolValue
+    }
+
+    private static func optionalFiniteNumber(_ value: Any?) throws -> Double? {
+        if value == nil || value is NSNull { return nil }
+        guard let number = value as? NSNumber,
+              CFGetTypeID(number) != CFBooleanGetTypeID(), number.doubleValue.isFinite else {
+            throw HanlinScriptingPlatformError.invalidSystemServicePayload
+        }
+        return number.doubleValue
     }
 
     nonisolated private static func optionalBoundedString(_ value: Any?, limit: Int) throws -> String? {

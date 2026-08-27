@@ -123,6 +123,19 @@
         "Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs"
       ],
       "notes": "The declared file-bookmark and native export values and operations are connected end to end with bounded validation, package-local persistence, security-scope lifecycle handling, cancellation semantics and deterministic contract coverage."
+    },
+    {
+      "symbols": ["addItems", "getItems", "setItems"],
+      "status": "implemented",
+      "hanlinSymbol": "HanlinScriptingApplicationSession.Pasteboard",
+      "hanlinAPIVersion": "hanlin.services/1.0",
+      "requiredCapability": "pasteboard",
+      "allowedContexts": ["mainApplication"],
+      "tests": [
+        "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift",
+        "Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs"
+      ],
+      "notes": "Typed UTType item dictionaries round-trip strings, Data and UIImage values through a bounded capability-gated native bridge. setItems also preserves local-only and expiration-date privacy options."
     }
   ],
   "symbols": [
@@ -392,7 +405,7 @@
       "hanlinAPIVersion": "hanlin.services/1.0",
       "requiredCapability": "pasteboard",
       "allowedContexts": ["mainApplication"],
-      "behaviorDifferences": ["Text, URL and image values, including bounded multi-value reads and writes, use the iOS system pasteboard through an asynchronous capability-gated native channel. Images cross the bridge as bounded encoded UIImage values. Arbitrary UTType item dictionaries, expiration/local-only options and change callbacks remain unavailable and reject explicitly."],
+      "behaviorDifferences": ["Text, URL, image and typed UTType dictionary values use the iOS system pasteboard through an asynchronous capability-gated native channel with bounded payloads. Typed items preserve string, Data and UIImage representations plus expiration/local-only options. onChanged and onRemoved callbacks remain unavailable."],
       "tests": ["Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift", "Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs"],
       "notes": "Implements the untouched FileManager and nativ-ai setString calls without modifying either project."
     },

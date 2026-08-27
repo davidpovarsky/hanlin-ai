@@ -22434,9 +22434,11 @@
     {
       "symbol": "addItems",
       "state": "unsupported",
-      "operation": "unimplemented",
-      "capability": null,
-      "contexts": [],
+      "operation": "HanlinScriptingApplicationSession.Pasteboard",
+      "capability": "pasteboard",
+      "contexts": [
+        "mainApplication"
+      ],
       "declarationEvidence": [
         {
           "category": "function",
@@ -25977,9 +25979,11 @@
     {
       "symbol": "getItems",
       "state": "unsupported",
-      "operation": "unimplemented",
-      "capability": null,
-      "contexts": [],
+      "operation": "HanlinScriptingApplicationSession.Pasteboard",
+      "capability": "pasteboard",
+      "contexts": [
+        "mainApplication"
+      ],
       "declarationEvidence": [
         {
           "category": "function",
@@ -32334,9 +32338,11 @@
     {
       "symbol": "setItems",
       "state": "unsupported",
-      "operation": "unimplemented",
-      "capability": null,
-      "contexts": [],
+      "operation": "HanlinScriptingApplicationSession.Pasteboard",
+      "capability": "pasteboard",
+      "contexts": [
+        "mainApplication"
+      ],
       "declarationEvidence": [
         {
           "category": "function",

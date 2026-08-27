@@ -237,6 +237,81 @@ struct HanlinScriptingApplicationRuntimeTests {
     }
 
     @MainActor
+    @Test("Bridges typed Pasteboard items and privacy options without losing value types")
+    func typedPasteboardItemsRuntime() async throws {
+        let packageID = try HanlinInstalledPackageID(validating: "typed-pasteboard-runtime-test")
+        let recorder = HanlinSystemOperationRecorder()
+        let session = try HanlinScriptingApplicationSession(
+            installedPackageID: packageID,
+            program: #"""
+            Navigation.present({ element: createElement(Text, null, "Waiting") });
+            (async () => {
+              const image = UIImage.fromBase64String("aW1hZ2U=");
+              await Pasteboard.setItems([{
+                "public.utf8-plain-text": "hello",
+                "public.data": Data.fromRawString("bytes"),
+                "public.png": image
+              }], {
+                localOnly: true,
+                expirationDate: new Date("2027-01-15T08:00:00Z")
+              });
+              await Pasteboard.addItems([{ "public.utf8-plain-text": "appended" }]);
+              const items = await Pasteboard.getItems();
+              Navigation.present({ element: createElement(Text, null, JSON.stringify([
+                items[0]["public.utf8-plain-text"],
+                items[0]["public.data"] instanceof Data,
+                items[0]["public.data"].toHexString(),
+                items[0]["public.png"] instanceof UIImage
+              ])) });
+            })();
+            """#,
+            filename: "compiled/typed-pasteboard.js",
+            storageAllowed: false,
+            pasteboardAllowed: true,
+            systemLoader: { operation, payloadJSON in
+                recorder.operations.append(operation)
+                let payload = try #require(
+                    JSONSerialization.jsonObject(with: Data(payloadJSON.utf8)) as? [String: Any]
+                )
+                switch operation {
+                case "pasteboard.setItems":
+                    #expect((payload["localOnly"] as? Bool) == true)
+                    #expect((payload["expirationMilliseconds"] as? Double) == 1_800_000_000_000)
+                    let items = try #require(payload["items"] as? [[String: [String: String]]])
+                    #expect(items == [[
+                        "public.utf8-plain-text": ["kind": "string", "value": "hello"],
+                        "public.data": ["kind": "data", "value": "Ynl0ZXM="],
+                        "public.png": ["kind": "image", "value": "aW1hZ2U="],
+                    ]])
+                    return .null
+                case "pasteboard.addItems":
+                    let items = try #require(payload["items"] as? [[String: [String: String]]])
+                    #expect(items == [[
+                        "public.utf8-plain-text": ["kind": "string", "value": "appended"],
+                    ]])
+                    return .null
+                case "pasteboard.getItems":
+                    return .pasteboardItems([.init(representations: [
+                        "public.utf8-plain-text": .string("native"),
+                        "public.data": .data(Data([1, 2, 3])),
+                        "public.png": .image(Data("image".utf8)),
+                    ])])
+                default:
+                    Issue.record("Unexpected system operation: \(operation)")
+                    return .null
+                }
+            }
+        )
+        defer { session.dispose() }
+
+        await session.waitForNativeQuiescence()
+        #expect(session.model.root.properties["text"] == .string(#"["native",true,"010203",true]"#))
+        #expect(recorder.operations == [
+            "pasteboard.setItems", "pasteboard.addItems", "pasteboard.getItems",
+        ])
+    }
+
+    @MainActor
     @Test("Runs the nativ-ai Reminder creation flow and returns the EventKit identifier")
     func reminderRuntime() async throws {
         let packageID = try HanlinInstalledPackageID(validating: "reminder-runtime-test")

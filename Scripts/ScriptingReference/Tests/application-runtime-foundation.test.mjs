@@ -198,6 +198,14 @@ function runtime(entrypointKind = "application", widgetFamily = "systemMedium", 
               ? (storage.set("pasteboard-images", JSON.stringify(payload.values)), null)
             : operation === "pasteboard.getImages"
               ? JSON.parse(storage.get("pasteboard-images") ?? "null")
+            : operation === "pasteboard.setItems"
+              ? (storage.set("pasteboard-items", JSON.stringify(payload.items)), null)
+            : operation === "pasteboard.addItems"
+              ? (storage.set("pasteboard-items", JSON.stringify([
+                  ...JSON.parse(storage.get("pasteboard-items") ?? "[]"), ...payload.items,
+                ])), null)
+            : operation === "pasteboard.getItems"
+              ? JSON.parse(storage.get("pasteboard-items") ?? "null")
             : operation === "safari.openURL"
               ? payload.url.startsWith("https://")
             : operation === "safari.present"
@@ -370,6 +378,48 @@ test("FileManager and nativ-ai use native Pasteboard and Safari primitives", asy
   ]);
   assert.deepEqual(systemUIRequests, [
     { operation: "safari.present", payload: { url: "https://example.com/help", fullscreen: false } },
+  ]);
+});
+
+test("Pasteboard typed items preserve strings, Data, UIImage, and privacy options", async () => {
+  const { context, systemRequests } = runtime();
+  const result = await vm.runInContext(`
+    (async () => {
+      const image = UIImage.fromData(Data.fromString("encoded-image"));
+      await Pasteboard.setItems([{
+        "public.utf8-plain-text": "hello",
+        "public.data": Data.fromString("bytes"),
+        "public.png": image
+      }], {
+        localOnly: true,
+        expirationDate: new Date("2027-01-15T08:00:00Z")
+      });
+      await Pasteboard.addItems([{ "public.utf8-plain-text": "appended" }]);
+      const items = await Pasteboard.getItems();
+      return [
+        items[0]["public.utf8-plain-text"],
+        items[0]["public.data"] instanceof Data,
+        items[0]["public.data"].toRawString(),
+        items[0]["public.png"] instanceof UIImage,
+        items[1]["public.utf8-plain-text"]
+      ];
+    })()
+  `, context);
+  assert.deepEqual(JSON.parse(JSON.stringify(result)), ["hello", true, "bytes", true, "appended"]);
+  assert.deepEqual(systemRequests, [
+    { operation: "pasteboard.setItems", payload: {
+      items: [{
+        "public.utf8-plain-text": { kind: "string", value: "hello" },
+        "public.data": { kind: "data", value: Buffer.from("bytes").toString("base64") },
+        "public.png": { kind: "image", value: Buffer.from("encoded-image").toString("base64") },
+      }],
+      localOnly: true,
+      expirationMilliseconds: 1800000000000,
+    } },
+    { operation: "pasteboard.addItems", payload: { items: [{
+      "public.utf8-plain-text": { kind: "string", value: "appended" },
+    }] } },
+    { operation: "pasteboard.getItems", payload: {} },
   ]);
 });
 

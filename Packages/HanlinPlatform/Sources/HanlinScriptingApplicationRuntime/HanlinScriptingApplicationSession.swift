@@ -3322,6 +3322,52 @@ private extension HanlinScriptingApplicationSession {
       function pasteboardCall(operation, payload = {}) {
         return nativeCallAsync(`pasteboard.${operation}`, payload);
       }
+      function encodePasteboardItems(items) {
+        if (!Array.isArray(items) || items.length > 64) {
+          throw new TypeError("Pasteboard items must be an array containing at most 64 items");
+        }
+        return items.map(item => {
+          if (!item || typeof item !== "object" || Array.isArray(item)) {
+            throw new TypeError("Each Pasteboard item must be an object");
+          }
+          const entries = Object.entries(item);
+          if (entries.length > 64) throw new TypeError("A Pasteboard item may contain at most 64 representations");
+          return Object.fromEntries(entries.map(([identifier, value]) => {
+            if (!identifier || identifier.length > 512 || identifier.includes("\0")) {
+              throw new TypeError("Pasteboard representation identifiers must be bounded UTType strings");
+            }
+            if (typeof value === "string") return [identifier, { kind: "string", value }];
+            if (value instanceof HanlinUIImage) {
+              return [identifier, { kind: "image", value: value.toBase64String() }];
+            }
+            if (value instanceof HanlinData) {
+              return [identifier, { kind: "data", value: value.toBase64String() }];
+            }
+            throw new TypeError("Pasteboard representations must be strings, UIImage, or Data values");
+          }));
+        });
+      }
+      function decodePasteboardItems(items) {
+        if (items == null) return null;
+        if (!Array.isArray(items)) throw new Error("HANLIN_PASTEBOARD:invalid_native_result");
+        return items.map(item => Object.fromEntries(Object.entries(item).map(([identifier, representation]) => {
+          if (!representation || typeof representation !== "object") {
+            throw new Error("HANLIN_PASTEBOARD:invalid_native_result");
+          }
+          if (representation.kind === "string" && typeof representation.value === "string") {
+            return [identifier, representation.value];
+          }
+          const data = typeof representation.value === "string"
+            ? HanlinData.fromBase64String(representation.value) : null;
+          if (!data) throw new Error("HANLIN_PASTEBOARD:invalid_native_result");
+          if (representation.kind === "data") return [identifier, data];
+          if (representation.kind === "image") {
+            const image = HanlinUIImage.fromData(data);
+            if (image) return [identifier, image];
+          }
+          throw new Error("HANLIN_PASTEBOARD:invalid_native_result");
+        })));
+      }
       const Pasteboard = Object.freeze({
         get changeCount() { return pasteboardCall("changeCount"); },
         get hasStrings() { return pasteboardCall("hasStrings"); },
@@ -3372,9 +3418,30 @@ private extension HanlinScriptingApplicationSession {
           }
           return pasteboardCall("setImages", { values: values?.map(value => value.toBase64String()) ?? null });
         },
-        addItems() { return Promise.reject(new Error("Typed Pasteboard items are not yet available")); },
-        setItems() { return Promise.reject(new Error("Typed Pasteboard items are not yet available")); },
-        getItems() { return Promise.reject(new Error("Typed Pasteboard items are not yet available")); },
+        addItems(items) {
+          try { return pasteboardCall("addItems", { items: encodePasteboardItems(items) }); }
+          catch (error) { return Promise.reject(error); }
+        },
+        setItems(items, options = {}) {
+          try {
+            if (!options || typeof options !== "object" || Array.isArray(options)) {
+              throw new TypeError("Pasteboard options must be an object");
+            }
+            if (options.localOnly != null && typeof options.localOnly !== "boolean") {
+              throw new TypeError("Pasteboard localOnly must be a Boolean");
+            }
+            if (options.expirationDate != null
+                && (!(options.expirationDate instanceof Date) || !Number.isFinite(options.expirationDate.getTime()))) {
+              throw new TypeError("Pasteboard expirationDate must be a valid Date");
+            }
+            return pasteboardCall("setItems", {
+              items: encodePasteboardItems(items),
+              localOnly: options.localOnly ?? null,
+              expirationMilliseconds: options.expirationDate?.getTime() ?? null
+            });
+          } catch (error) { return Promise.reject(error); }
+        },
+        getItems() { return pasteboardCall("getItems").then(decodePasteboardItems); },
         onChanged: null,
         onRemoved: null
       });
