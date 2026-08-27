@@ -56,8 +56,17 @@ actor HanlinNodeMobileScriptingCompiler: HanlinTrustedCompilerClient {
                 column: diagnostic.column
             )
         }
-        let compilerVersion = response.compilerVersion ?? "unknown"
         let compilerIntegrity = response.compilerIntegrity ?? "unknown"
+        // nodejs-mobile can expose a CommonJS module namespace without the
+        // synthetic `version` named export even though the pinned TypeScript
+        // compiler itself loaded and emitted successfully. The integrity value
+        // is the stronger identity signal: recover the canonical version only
+        // when it exactly matches the trusted compiler pin. Missing or altered
+        // integrity still fails closed in HanlinScriptingBundler.
+        let compilerVersion = response.compilerVersion
+            ?? (compilerIntegrity == HanlinScriptingBundler.compilerIntegrity
+                ? HanlinScriptingBundler.compilerVersion
+                : "unknown")
         let modules = response.succeeded
             ? try bundledEntrypoints(project: project, workspace: workspace, emittedFiles: response.emittedFiles)
             : []
