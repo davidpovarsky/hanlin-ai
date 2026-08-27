@@ -60,11 +60,8 @@ public struct HanlinPackageCenter: Sendable {
         default: throw HanlinPackageCenterError.unsupportedSourceFormat
         }
 
-        let sourceAttributes = try fileManager.attributesOfItem(atPath: sourceURL.path())
-        let byteCount = (sourceAttributes[.size] as? NSNumber)?.int64Value ?? 0
-        guard byteCount >= 0, byteCount <= archivePolicy.limits.maximumArchiveBytes else {
-            throw HanlinPackageCenterError.sourceTooLarge
-        }
+        let accessed = sourceURL.startAccessingSecurityScopedResource()
+        defer { if accessed { sourceURL.stopAccessingSecurityScopedResource() } }
 
         let stagingRoot = stagingParent.appending(
             path: "scripting-import-\(UUID().uuidString.lowercased())",
@@ -76,12 +73,22 @@ public struct HanlinPackageCenter: Sendable {
         )
         let extractedRoot = stagingRoot.appending(path: "extracted", directoryHint: .isDirectory)
         do {
+            // Keep the Files/Document Picker URL as a URL. Converting it through
+            // URL.path() yields a percent-encoded filesystem path on modern
+            // Foundation (for example "File%20Provider%20Storage"), which
+            // FileManager then treats as a literal path and re-encodes as %2520.
+            // Reading URL resource values also keeps security-scoped and File
+            // Provider URLs on the URL-based API surface.
+            let sourceValues = try sourceURL.resourceValues(forKeys: [.fileSizeKey])
+            let byteCount = Int64(sourceValues.fileSize ?? 0)
+            guard byteCount >= 0, byteCount <= archivePolicy.limits.maximumArchiveBytes else {
+                throw HanlinPackageCenterError.sourceTooLarge
+            }
+
             try fileManager.createDirectory(
                 at: stagingRoot,
                 withIntermediateDirectories: false
             )
-            let accessed = sourceURL.startAccessingSecurityScopedResource()
-            defer { if accessed { sourceURL.stopAccessingSecurityScopedResource() } }
             try fileManager.copyItem(at: sourceURL, to: archiveURL)
             let archiveData = try Data(contentsOf: archiveURL, options: .mappedIfSafe)
             let digest = SHA256.hash(data: archiveData).map { String(format: "%02x", $0) }.joined()
@@ -154,7 +161,7 @@ public struct HanlinPackageCenter: Sendable {
         guard Self.contains(package.stagingRoot, in: package.stagingRoot.deletingLastPathComponent()) else {
             throw HanlinPackageCenterError.stagingFailed
         }
-        if fileManager.fileExists(atPath: package.stagingRoot.path()) {
+        if fileManager.fileExists(atPath: package.stagingRoot.path(percentEncoded: false)) {
             try fileManager.removeItem(at: package.stagingRoot)
         }
     }
@@ -175,11 +182,11 @@ public struct HanlinPackageCenter: Sendable {
     }
 
     private static func contains(_ child: URL, in root: URL) -> Bool {
-        let standardizedRootPath = root.standardizedFileURL.path()
+        let standardizedRootPath = root.standardizedFileURL.path(percentEncoded: false)
         let rootPath = standardizedRootPath.hasSuffix("/") && standardizedRootPath.count > 1
             ? String(standardizedRootPath.dropLast())
             : standardizedRootPath
-        let childPath = child.standardizedFileURL.path()
+        let childPath = child.standardizedFileURL.path(percentEncoded: false)
         return childPath == rootPath || childPath.hasPrefix(rootPath + "/")
     }
 
