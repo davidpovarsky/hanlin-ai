@@ -1,5 +1,6 @@
 @preconcurrency import JavaScriptCore
 import CoreFoundation
+import CryptoKit
 import Foundation
 import HanlinPlatformContracts
 import HanlinScriptUI
@@ -315,6 +316,7 @@ public final class HanlinScriptingApplicationSession {
         context.setObject(nil, forKeyedSubscript: "__hanlinNativeFileInfo" as NSString)
         context.setObject(nil, forKeyedSubscript: "__hanlinNativeFileSync" as NSString)
         context.setObject(nil, forKeyedSubscript: "__hanlinNativeImageJPEG" as NSString)
+        context.setObject(nil, forKeyedSubscript: "__hanlinNativeCrypto" as NSString)
         context.setObject(nil, forKeyedSubscript: "__hanlinNativeAsync" as NSString)
         context.setObject(nil, forKeyedSubscript: "__hanlinNativeAssistantAvailable" as NSString)
         context.setObject(nil, forKeyedSubscript: "__hanlinNativeAssistantStart" as NSString)
@@ -405,6 +407,13 @@ public final class HanlinScriptingApplicationSession {
                 return HanlinScriptingNativeJSON.failure(error)
             }
         }
+        let crypto: @convention(block) (String, String) -> String = { operation, json in
+            do {
+                return HanlinScriptingNativeJSON.success(try Self.performCrypto(operation: operation, json: json))
+            } catch {
+                return HanlinScriptingNativeJSON.failure(error)
+            }
+        }
         let assistantStart: @convention(block) (String, String) -> Void = {
             [weak self] requestID, json in
             self?.enqueueAssistantRequest(id: requestID, payloadJSON: json)
@@ -484,6 +493,7 @@ public final class HanlinScriptingApplicationSession {
         context.setObject(fileInfo, forKeyedSubscript: "__hanlinNativeFileInfo" as NSString)
         context.setObject(fileSync, forKeyedSubscript: "__hanlinNativeFileSync" as NSString)
         context.setObject(imageJPEG, forKeyedSubscript: "__hanlinNativeImageJPEG" as NSString)
+        context.setObject(crypto, forKeyedSubscript: "__hanlinNativeCrypto" as NSString)
         context.setObject(nativeAsync, forKeyedSubscript: "__hanlinNativeAsync" as NSString)
         context.setObject(
             assistantAllowed,
@@ -1093,6 +1103,75 @@ public final class HanlinScriptingApplicationSession {
             throw invalidSystemUIRequest("DocumentPicker \(name) must be a Boolean.")
         }
         return number.boolValue
+    }
+
+    private static func performCrypto(operation: String, json: String) throws -> Any {
+        let payload = try HanlinScriptingNativeJSON.decodeObject(json)
+        if operation == "uuid" { return Foundation.UUID().uuidString }
+        if operation == "generateKey" {
+            guard let size = payload["size"] as? NSNumber else { throw invalidCryptoRequest() }
+            let keySize: SymmetricKeySize = switch size.intValue {
+            case 128: .bits128
+            case 192: .bits192
+            case 256: .bits256
+            default: throw invalidCryptoRequest()
+            }
+            return SymmetricKey(size: keySize).withUnsafeBytes { Data($0).base64EncodedString() }
+        }
+        let data = try cryptoData(payload["data"], maximumBytes: 4 * 1_024 * 1_024)
+        switch operation {
+        case "md5": return Data(Insecure.MD5.hash(data: data)).base64EncodedString()
+        case "sha1": return Data(Insecure.SHA1.hash(data: data)).base64EncodedString()
+        case "sha256": return Data(SHA256.hash(data: data)).base64EncodedString()
+        case "sha384": return Data(SHA384.hash(data: data)).base64EncodedString()
+        case "sha512": return Data(SHA512.hash(data: data)).base64EncodedString()
+        case "hmacMD5", "hmacSHA1", "hmacSHA256", "hmacSHA384", "hmacSHA512":
+            let key = SymmetricKey(data: try cryptoData(payload["key"], maximumBytes: 1_024))
+            let authenticationCode: Data = switch operation {
+            case "hmacMD5": Data(HMAC<Insecure.MD5>.authenticationCode(for: data, using: key))
+            case "hmacSHA1": Data(HMAC<Insecure.SHA1>.authenticationCode(for: data, using: key))
+            case "hmacSHA256": Data(HMAC<SHA256>.authenticationCode(for: data, using: key))
+            case "hmacSHA384": Data(HMAC<SHA384>.authenticationCode(for: data, using: key))
+            default: Data(HMAC<SHA512>.authenticationCode(for: data, using: key))
+            }
+            return authenticationCode.base64EncodedString()
+        case "encryptAESGCM", "decryptAESGCM":
+            let keyData = try cryptoData(payload["key"], maximumBytes: 32)
+            guard [16, 24, 32].contains(keyData.count) else { throw invalidCryptoRequest() }
+            let key = SymmetricKey(data: keyData)
+            let aad = try optionalCryptoData(payload["aad"], maximumBytes: 1_048_576) ?? Data()
+            if operation == "encryptAESGCM" {
+                let nonce: AES.GCM.Nonce?
+                if let data = try optionalCryptoData(payload["iv"], maximumBytes: 32) {
+                    nonce = try .init(data: data)
+                } else {
+                    nonce = nil
+                }
+                let box = try AES.GCM.seal(data, using: key, nonce: nonce, authenticating: aad)
+                guard let combined = box.combined else { throw invalidCryptoRequest() }
+                return combined.base64EncodedString()
+            }
+            let box = try AES.GCM.SealedBox(combined: data)
+            return try AES.GCM.open(box, using: key, authenticating: aad).base64EncodedString()
+        default: throw invalidCryptoRequest()
+        }
+    }
+
+    private static func cryptoData(_ value: Any?, maximumBytes: Int) throws -> Data {
+        guard let value = value as? String, value.utf8.count <= maximumBytes * 2,
+              let data = Data(base64Encoded: value), data.count <= maximumBytes else {
+            throw invalidCryptoRequest()
+        }
+        return data
+    }
+
+    private static func optionalCryptoData(_ value: Any?, maximumBytes: Int) throws -> Data? {
+        guard let value, !(value is NSNull) else { return nil }
+        return try cryptoData(value, maximumBytes: maximumBytes)
+    }
+
+    private static func invalidCryptoRequest() -> HanlinScriptingNativeError {
+        .init(name: "TypeError", code: "invalid_crypto_request", message: "The Crypto request is invalid.")
     }
 
     private func initialDirectoryURL(_ value: Any?) throws -> URL? {
@@ -1903,6 +1982,62 @@ private extension HanlinScriptingApplicationSession {
         }
         static fromBase64String(value) { return this.fromData(HanlinData.fromBase64String(value)); }
       }
+
+      function cryptoCall(operation, payload) {
+        return decodeNativeResult(__hanlinNativeCrypto(operation, JSON.stringify(payload)));
+      }
+      function cryptoData(value, name) {
+        if (!(value instanceof HanlinData) || value.size > 4 * 1024 * 1024) {
+          throw new TypeError(`Crypto ${name} must be bounded Data`);
+        }
+        return value.toBase64String();
+      }
+      function cryptoDigest(operation, data) {
+        return HanlinData.fromBase64String(cryptoCall(operation, { data: cryptoData(data, "data") }));
+      }
+      function cryptoHMAC(operation, data, key) {
+        return HanlinData.fromBase64String(cryptoCall(operation, {
+          data: cryptoData(data, "data"), key: cryptoData(key, "key")
+        }));
+      }
+      const Crypto = Object.freeze({
+        generateSymmetricKey(size = 256) {
+          if (![128, 192, 256].includes(size)) throw new RangeError("Crypto key size must be 128, 192, or 256 bits");
+          return HanlinData.fromBase64String(cryptoCall("generateKey", { size }));
+        },
+        md5(data) { return cryptoDigest("md5", data); },
+        sha1(data) { return cryptoDigest("sha1", data); },
+        sha256(data) { return cryptoDigest("sha256", data); },
+        sha384(data) { return cryptoDigest("sha384", data); },
+        sha512(data) { return cryptoDigest("sha512", data); },
+        hmacMD5(data, key) { return cryptoHMAC("hmacMD5", data, key); },
+        hmacSHA1(data, key) { return cryptoHMAC("hmacSHA1", data, key); },
+        hmacSHA224() { throw new Error("Crypto.hmacSHA224 is unavailable"); },
+        hmacSHA256(data, key) { return cryptoHMAC("hmacSHA256", data, key); },
+        hmacSHA384(data, key) { return cryptoHMAC("hmacSHA384", data, key); },
+        hmacSHA512(data, key) { return cryptoHMAC("hmacSHA512", data, key); },
+        encryptAESGCM(data, key, options = {}) {
+          if (!options || typeof options !== "object" || Array.isArray(options)) throw new TypeError("Crypto AES options are invalid");
+          try {
+            const value = cryptoCall("encryptAESGCM", {
+              data: cryptoData(data, "data"), key: cryptoData(key, "key"),
+              iv: options.iv == null ? null : cryptoData(options.iv, "iv"),
+              aad: options.aad == null ? null : cryptoData(options.aad, "aad")
+            });
+            return HanlinData.fromBase64String(value);
+          } catch (_) { return null; }
+        },
+        decryptAESGCM(data, key, aad = null) {
+          try {
+            const value = cryptoCall("decryptAESGCM", {
+              data: cryptoData(data, "data"), key: cryptoData(key, "key"),
+              aad: aad == null ? null : cryptoData(aad, "aad")
+            });
+            return HanlinData.fromBase64String(value);
+          } catch (_) { return null; }
+        }
+      });
+      const UUID = Object.freeze({ string() { return cryptoCall("uuid", {}); } });
 
       function normalizePath(path) {
         if (typeof path !== "string") throw new TypeError("Path must be a string");
@@ -3841,7 +3976,7 @@ private extension HanlinScriptingApplicationSession {
       Object.assign(globalThis, {
         createElement, Fragment, useState, useObservable, useReducer, useRef, useMemo, useCallback,
         useEffect, useEffectEvent, createContext, useContext, ForEach, Navigation,
-        Data: HanlinData, UIImage: HanlinUIImage, Path, FileManager, Headers: HanlinHeaders, Blob: HanlinBlob,
+        Data: HanlinData, UIImage: HanlinUIImage, Crypto, UUID, Path, FileManager, Headers: HanlinHeaders, Blob: HanlinBlob,
         FormData: HanlinFormData, Request: HanlinRequest, Response: HanlinResponse,
         fetch: hanlinFetch, DOMException: HanlinDOMException, AbortEvent: HanlinAbortEvent,
         AbortSignal: HanlinAbortSignal, AbortController: HanlinAbortController,

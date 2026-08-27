@@ -5336,10 +5336,12 @@
     },
     {
       "symbol": "Crypto",
-      "state": "unsupported",
-      "operation": "unimplemented",
+      "state": "partial",
+      "operation": "HanlinScriptingApplicationSession.Crypto",
       "capability": null,
-      "contexts": [],
+      "contexts": [
+        "mainApplication"
+      ],
       "declarationEvidence": [
         {
           "category": "namespace",
@@ -20673,9 +20675,11 @@
     {
       "symbol": "UUID",
       "state": "unsupported",
-      "operation": "unimplemented",
+      "operation": "Foundation.UUID",
       "capability": null,
-      "contexts": [],
+      "contexts": [
+        "mainApplication"
+      ],
       "declarationEvidence": [
         {
           "category": "namespace",

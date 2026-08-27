@@ -11195,24 +11195,31 @@
       "verifiedByFixture": false
     },
     {
-      "allowedContexts": [],
+      "allowedContexts": [
+        "mainApplication"
+      ],
       "allowedOrigins": [],
-      "behaviorDifferences": [],
+      "behaviorDifferences": [
+        "Bounded synchronous native operations use CryptoKit for random 128/192/256-bit symmetric keys, MD5, SHA-1, SHA-256/384/512, matching HMAC variants, and authenticated AES-GCM combined boxes with optional nonce and AAD. MD5 and SHA-1 are exposed only for declaration compatibility and remain cryptographically insecure. HMAC-SHA224 remains explicitly unavailable because CryptoKit has no SHA-224 hash implementation."
+      ],
       "behaviorMatched": false,
       "declarationFile": "global.d.ts",
       "declarationLine": 486,
       "declaredByScripting": true,
-      "hanlinAPIVersion": null,
-      "hanlinSymbol": null,
-      "implementedByHanlin": false,
-      "notes": "The authorized ambient API has no complete runtime binding and conformance test yet; declaration presence is not treated as support.",
+      "hanlinAPIVersion": "hanlin.crypto/1.0",
+      "hanlinSymbol": "HanlinScriptingApplicationSession.Crypto",
+      "implementedByHanlin": true,
+      "notes": "Known digest and HMAC vectors plus AES-GCM authenticated round-trip and generated-key length are covered without implementing cryptography in JavaScript.",
       "referenceCategory": "namespace",
       "referenceSignatureHash": "6d06400cb7a66ab011d4640c84ba88e4418658582c051b51c4032c4eb6f27975",
       "referenceSymbol": "Crypto",
       "requiredCapability": null,
       "requiredEntitlement": null,
-      "status": "not-yet-implemented",
-      "tests": [],
+      "status": "partial",
+      "tests": [
+        "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift",
+        "Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs"
+      ],
       "verifiedByFixture": false
     },
     {
@@ -49969,24 +49976,29 @@
       "verifiedByFixture": false
     },
     {
-      "allowedContexts": [],
+      "allowedContexts": [
+        "mainApplication"
+      ],
       "allowedOrigins": [],
       "behaviorDifferences": [],
-      "behaviorMatched": false,
+      "behaviorMatched": true,
       "declarationFile": "global.d.ts",
       "declarationLine": 628,
       "declaredByScripting": true,
-      "hanlinAPIVersion": null,
-      "hanlinSymbol": null,
-      "implementedByHanlin": false,
-      "notes": "The authorized ambient API has no complete runtime binding and conformance test yet; declaration presence is not treated as support.",
+      "hanlinAPIVersion": "hanlin.crypto/1.0",
+      "hanlinSymbol": "Foundation.UUID",
+      "implementedByHanlin": true,
+      "notes": "UUID.string returns a native Foundation UUID string through the bounded synchronous utility bridge.",
       "referenceCategory": "namespace",
       "referenceSignatureHash": "bb87755e027fe128d96f777170205b58705500b1db1ee8d8e7b89e0204a3c26f",
       "referenceSymbol": "UUID",
       "requiredCapability": null,
       "requiredEntitlement": null,
-      "status": "not-yet-implemented",
-      "tests": [],
+      "status": "implemented",
+      "tests": [
+        "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift",
+        "Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs"
+      ],
       "verifiedByFixture": false
     },
     {

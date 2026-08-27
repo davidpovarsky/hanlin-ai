@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import nodeCrypto from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";
 import test from "node:test";
@@ -99,6 +100,33 @@ function runtime(entrypointKind = "application", widgetFamily = "systemMedium", 
     __hanlinNativeImageJPEG(base64, quality) {
       if (quality < 0 || quality > 1) return failure("invalid_image", "invalid quality");
       return success(base64);
+    },
+    __hanlinNativeCrypto(operation, json) {
+      try {
+        const payload = JSON.parse(json);
+        if (operation === "uuid") return success(nodeCrypto.randomUUID().toUpperCase());
+        if (operation === "generateKey") return success(nodeCrypto.randomBytes(payload.size / 8).toString("base64"));
+        const data = Buffer.from(payload.data, "base64");
+        const hashNames = { md5: "md5", sha1: "sha1", sha256: "sha256", sha384: "sha384", sha512: "sha512" };
+        if (hashNames[operation]) return success(nodeCrypto.createHash(hashNames[operation]).update(data).digest("base64"));
+        const hmacNames = { hmacMD5: "md5", hmacSHA1: "sha1", hmacSHA256: "sha256", hmacSHA384: "sha384", hmacSHA512: "sha512" };
+        if (hmacNames[operation]) return success(nodeCrypto.createHmac(hmacNames[operation], Buffer.from(payload.key, "base64")).update(data).digest("base64"));
+        const key = Buffer.from(payload.key, "base64");
+        const aad = payload.aad == null ? Buffer.alloc(0) : Buffer.from(payload.aad, "base64");
+        if (operation === "encryptAESGCM") {
+          const iv = payload.iv == null ? nodeCrypto.randomBytes(12) : Buffer.from(payload.iv, "base64");
+          const cipher = nodeCrypto.createCipheriv(`aes-${key.length * 8}-gcm`, key, iv);
+          cipher.setAAD(aad);
+          return success(Buffer.concat([iv, cipher.update(data), cipher.final(), cipher.getAuthTag()]).toString("base64"));
+        }
+        if (operation === "decryptAESGCM") {
+          const iv = data.subarray(0, 12); const tag = data.subarray(data.length - 16);
+          const decipher = nodeCrypto.createDecipheriv(`aes-${key.length * 8}-gcm`, key, iv);
+          decipher.setAAD(aad); decipher.setAuthTag(tag);
+          return success(Buffer.concat([decipher.update(data.subarray(12, -16)), decipher.final()]).toString("base64"));
+        }
+        throw new Error("unsupported crypto operation");
+      } catch (error) { return failure("crypto_failure", error.message); }
     },
     __hanlinNativeAsync(id, operation, json) {
       queueMicrotask(() => {
@@ -444,6 +472,34 @@ test("Pasteboard typed items preserve strings, Data, UIImage, and privacy option
       "public.utf8-plain-text": { kind: "string", value: "appended" },
     }] } },
     { operation: "pasteboard.getItems", payload: {} },
+  ]);
+});
+
+test("Crypto hashes, HMAC, keys, UUID, and AES-GCM use bounded native primitives", () => {
+  const { context } = runtime();
+  const result = vm.runInContext(`(() => {
+    const abc = Data.fromString("abc");
+    const message = Data.fromString("The quick brown fox jumps over the lazy dog");
+    const key = Data.fromString("key");
+    const aesKey = Data.fromHexString("000102030405060708090a0b0c0d0e0f");
+    const iv = Data.fromHexString("000102030405060708090a0b");
+    const aad = Data.fromString("metadata");
+    const encrypted = Crypto.encryptAESGCM(message, aesKey, { iv, aad });
+    const decrypted = Crypto.decryptAESGCM(encrypted, aesKey, aad);
+    return [
+      Crypto.md5(abc).toHexString(), Crypto.sha1(abc).toHexString(),
+      Crypto.sha256(abc).toHexString(), Crypto.sha384(abc).size, Crypto.sha512(abc).size,
+      Crypto.hmacSHA256(message, key).toHexString(), Crypto.generateSymmetricKey(256).size,
+      decrypted.toRawString(), /^[0-9A-F-]{36}$/.test(UUID.string())
+    ];
+  })()`, context);
+  assert.deepEqual(JSON.parse(JSON.stringify(result)), [
+    "900150983cd24fb0d6963f7d28e17f72",
+    "a9993e364706816aba3e25717850c26c9cd0d89d",
+    "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad",
+    48, 64,
+    "f7bc83f430538424b13298e6aa6fb143ef4d59a14946175997479dbc2d1a3cd8",
+    32, "The quick brown fox jumps over the lazy dog", true,
   ]);
 });
 

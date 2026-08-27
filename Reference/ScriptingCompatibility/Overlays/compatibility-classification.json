@@ -140,6 +140,25 @@
   ],
   "symbols": [
     {
+      "symbol": "Crypto",
+      "status": "partial",
+      "hanlinSymbol": "HanlinScriptingApplicationSession.Crypto",
+      "hanlinAPIVersion": "hanlin.crypto/1.0",
+      "allowedContexts": ["mainApplication"],
+      "behaviorDifferences": ["Bounded synchronous native operations use CryptoKit for random 128/192/256-bit symmetric keys, MD5, SHA-1, SHA-256/384/512, matching HMAC variants, and authenticated AES-GCM combined boxes with optional nonce and AAD. MD5 and SHA-1 are exposed only for declaration compatibility and remain cryptographically insecure. HMAC-SHA224 remains explicitly unavailable because CryptoKit has no SHA-224 hash implementation."],
+      "tests": ["Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift", "Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs"],
+      "notes": "Known digest and HMAC vectors plus AES-GCM authenticated round-trip and generated-key length are covered without implementing cryptography in JavaScript."
+    },
+    {
+      "symbol": "UUID",
+      "status": "implemented",
+      "hanlinSymbol": "Foundation.UUID",
+      "hanlinAPIVersion": "hanlin.crypto/1.0",
+      "allowedContexts": ["mainApplication"],
+      "tests": ["Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift", "Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs"],
+      "notes": "UUID.string returns a native Foundation UUID string through the bounded synchronous utility bridge."
+    },
+    {
       "symbol": "Device",
       "status": "partial",
       "hanlinSymbol": "HanlinScriptingDeviceSnapshot",
