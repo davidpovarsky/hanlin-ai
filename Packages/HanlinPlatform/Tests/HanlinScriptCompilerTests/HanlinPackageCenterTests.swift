@@ -26,10 +26,58 @@ struct HanlinPackageCenterTests {
         #expect(package.manifest.name == "Fixture")
         #expect(package.inspection.wrapperDirectory == "Fixture")
         #expect(FileManager.default.fileExists(
-            atPath: package.packageRoot.appending(path: "index.tsx").path()
+            atPath: package.packageRoot.appending(path: "index.tsx").path(percentEncoded: false)
         ))
         try HanlinPackageCenter().discard(package)
-        #expect(!FileManager.default.fileExists(atPath: package.stagingRoot.path()))
+        #expect(!FileManager.default.fileExists(atPath: package.stagingRoot.path(percentEncoded: false)))
+    }
+
+    @Test("Imports archives from File Provider paths containing spaces")
+    func fileProviderPathWithSpaces() throws {
+        let root = try temporaryDirectory()
+        defer { try? FileManager.default.removeItem(at: root) }
+        let providerRoot = root.appending(path: "File Provider Storage", directoryHint: .isDirectory)
+        try FileManager.default.createDirectory(at: providerRoot, withIntermediateDirectories: false)
+        let archiveURL = providerRoot.appending(path: "test.zip", directoryHint: .notDirectory)
+        try makeArchive(
+            at: archiveURL,
+            files: [
+                "script.json": Data(#"{"name":"File Provider Fixture","version":"1.0.0","entry":"index.tsx"}"#.utf8),
+                "index.tsx": Data("export default null".utf8)
+            ]
+        )
+
+        let package = try HanlinPackageCenter().stageAndInspect(
+            sourceURL: archiveURL,
+            stagingParent: root
+        )
+        #expect(package.source.originalFileName == "test.zip")
+        #expect(package.manifest.name == "File Provider Fixture")
+        #expect(!package.archiveURL.absoluteString.contains("%2520"))
+    }
+
+    @Test("Imports archives whose source paths contain Unicode and spaces")
+    func unicodeSourcePath() throws {
+        let root = try temporaryDirectory()
+        defer { try? FileManager.default.removeItem(at: root) }
+        let sourceRoot = root.appending(path: "scripts 2", directoryHint: .isDirectory)
+        try FileManager.default.createDirectory(at: sourceRoot, withIntermediateDirectories: false)
+        let archiveURL = sourceRoot.appending(path: "אכילה חכמה.zip", directoryHint: .notDirectory)
+        try makeArchive(
+            at: archiveURL,
+            files: [
+                "script.json": Data(#"{"name":"Unicode Fixture","version":"1.0.0","entry":"index.tsx"}"#.utf8),
+                "index.tsx": Data("export default null".utf8)
+            ]
+        )
+
+        let package = try HanlinPackageCenter().stageAndInspect(
+            sourceURL: archiveURL,
+            stagingParent: root
+        )
+        #expect(package.source.originalFileName == "אכילה חכמה.zip")
+        #expect(package.manifest.name == "Unicode Fixture")
+        #expect(!package.archiveURL.absoluteString.contains("%2520"))
     }
 
     @Test("Malformed manifests fail before a staged package can escape")
