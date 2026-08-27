@@ -5816,9 +5816,11 @@
     {
       "symbol": "Dialog",
       "state": "unsupported",
-      "operation": "unimplemented",
+      "operation": "HanlinScriptingApplicationSession.Dialog",
       "capability": null,
-      "contexts": [],
+      "contexts": [
+        "mainApplication"
+      ],
       "declarationEvidence": [
         {
           "category": "namespace",
@@ -6113,9 +6115,11 @@
     {
       "symbol": "DocumentPickerBookmarkResult",
       "state": "unsupported",
-      "operation": "unimplemented",
-      "capability": null,
-      "contexts": [],
+      "operation": "HanlinScriptingPackageFileSystem",
+      "capability": "files",
+      "contexts": [
+        "mainApplication"
+      ],
       "declarationEvidence": [
         {
           "category": "type",
@@ -6523,10 +6527,12 @@
     },
     {
       "symbol": "EditorController",
-      "state": "unsupported",
-      "operation": "unimplemented",
+      "state": "partial",
+      "operation": "HanlinScriptingApplicationSession.EditorController",
       "capability": null,
-      "contexts": [],
+      "contexts": [
+        "mainApplication"
+      ],
       "declarationEvidence": [
         {
           "category": "class",
@@ -7037,9 +7043,11 @@
     {
       "symbol": "ExportFilesOptions",
       "state": "unsupported",
-      "operation": "unimplemented",
-      "capability": null,
-      "contexts": [],
+      "operation": "HanlinScriptingPackageFileSystem",
+      "capability": "files",
+      "contexts": [
+        "mainApplication"
+      ],
       "declarationEvidence": [
         {
           "category": "type",
@@ -10915,10 +10923,13 @@
     },
     {
       "symbol": "Intent",
-      "state": "unsupported",
-      "operation": "unimplemented",
+      "state": "partial",
+      "operation": "HanlinScriptingApplicationSession.Intent",
       "capability": null,
-      "contexts": [],
+      "contexts": [
+        "appIntent",
+        "mainApplication"
+      ],
       "declarationEvidence": [
         {
           "category": "namespace",
@@ -15077,7 +15088,7 @@
       "symbol": "Pasteboard",
       "state": "partial",
       "operation": "HanlinScriptingApplicationSession.Pasteboard",
-      "capability": null,
+      "capability": "pasteboard",
       "contexts": [
         "mainApplication"
       ],
@@ -15259,10 +15270,12 @@
     },
     {
       "symbol": "Photos",
-      "state": "unsupported",
-      "operation": "unimplemented",
-      "capability": null,
-      "contexts": [],
+      "state": "partial",
+      "operation": "HanlinScriptingApplicationSession.Photos",
+      "capability": "photos",
+      "contexts": [
+        "mainApplication"
+      ],
       "declarationEvidence": [
         {
           "category": "namespace",
@@ -15290,9 +15303,11 @@
     {
       "symbol": "PickDirectoryBookmarkOptions",
       "state": "unsupported",
-      "operation": "unimplemented",
-      "capability": null,
-      "contexts": [],
+      "operation": "HanlinScriptingPackageFileSystem",
+      "capability": "files",
+      "contexts": [
+        "mainApplication"
+      ],
       "declarationEvidence": [
         {
           "category": "type",
@@ -15305,9 +15320,11 @@
     {
       "symbol": "PickFileBookmarkOptions",
       "state": "unsupported",
-      "operation": "unimplemented",
-      "capability": null,
-      "contexts": [],
+      "operation": "HanlinScriptingPackageFileSystem",
+      "capability": "files",
+      "contexts": [
+        "mainApplication"
+      ],
       "declarationEvidence": [
         {
           "category": "type",
@@ -17037,7 +17054,7 @@
       "symbol": "Safari",
       "state": "partial",
       "operation": "HanlinScriptingApplicationSession.Safari",
-      "capability": null,
+      "capability": "open-url",
       "contexts": [
         "mainApplication"
       ],
@@ -20425,10 +20442,12 @@
     },
     {
       "symbol": "UIImage",
-      "state": "unsupported",
-      "operation": "unimplemented",
+      "state": "partial",
+      "operation": "HanlinScriptingApplicationSession.UIImage",
       "capability": null,
-      "contexts": [],
+      "contexts": [
+        "mainApplication"
+      ],
       "declarationEvidence": [
         {
           "category": "class",
@@ -22368,9 +22387,11 @@
     {
       "symbol": "addFileBookmark",
       "state": "unsupported",
-      "operation": "unimplemented",
-      "capability": null,
-      "contexts": [],
+      "operation": "HanlinScriptingPackageFileSystem",
+      "capability": "files",
+      "contexts": [
+        "mainApplication"
+      ],
       "declarationEvidence": [
         {
           "category": "function",
@@ -23100,9 +23121,11 @@
     {
       "symbol": "bookmarkExists",
       "state": "unsupported",
-      "operation": "unimplemented",
-      "capability": null,
-      "contexts": [],
+      "operation": "HanlinScriptingPackageFileSystem",
+      "capability": "files",
+      "contexts": [
+        "mainApplication"
+      ],
       "declarationEvidence": [
         {
           "category": "function",
@@ -23115,9 +23138,11 @@
     {
       "symbol": "bookmarkedPath",
       "state": "unsupported",
-      "operation": "unimplemented",
-      "capability": null,
-      "contexts": [],
+      "operation": "HanlinScriptingPackageFileSystem",
+      "capability": "files",
+      "contexts": [
+        "mainApplication"
+      ],
       "declarationEvidence": [
         {
           "category": "function",
@@ -25083,9 +25108,11 @@
     {
       "symbol": "exportFiles",
       "state": "unsupported",
-      "operation": "unimplemented",
-      "capability": null,
-      "contexts": [],
+      "operation": "HanlinScriptingPackageFileSystem",
+      "capability": "files",
+      "contexts": [
+        "mainApplication"
+      ],
       "declarationEvidence": [
         {
           "category": "function",
@@ -25627,9 +25654,11 @@
     {
       "symbol": "getAllFileBookmarks",
       "state": "unsupported",
-      "operation": "unimplemented",
-      "capability": null,
-      "contexts": [],
+      "operation": "HanlinScriptingPackageFileSystem",
+      "capability": "files",
+      "contexts": [
+        "mainApplication"
+      ],
       "declarationEvidence": [
         {
           "category": "function",
@@ -29041,9 +29070,11 @@
     {
       "symbol": "pickDirectoryBookmark",
       "state": "unsupported",
-      "operation": "unimplemented",
-      "capability": null,
-      "contexts": [],
+      "operation": "HanlinScriptingPackageFileSystem",
+      "capability": "files",
+      "contexts": [
+        "mainApplication"
+      ],
       "declarationEvidence": [
         {
           "category": "function",
@@ -29056,9 +29087,11 @@
     {
       "symbol": "pickFileBookmark",
       "state": "unsupported",
-      "operation": "unimplemented",
-      "capability": null,
-      "contexts": [],
+      "operation": "HanlinScriptingPackageFileSystem",
+      "capability": "files",
+      "contexts": [
+        "mainApplication"
+      ],
       "declarationEvidence": [
         {
           "category": "function",
@@ -30598,9 +30631,11 @@
     {
       "symbol": "removeFileBookmark",
       "state": "unsupported",
-      "operation": "unimplemented",
-      "capability": null,
-      "contexts": [],
+      "operation": "HanlinScriptingPackageFileSystem",
+      "capability": "files",
+      "contexts": [
+        "mainApplication"
+      ],
       "declarationEvidence": [
         {
           "category": "function",

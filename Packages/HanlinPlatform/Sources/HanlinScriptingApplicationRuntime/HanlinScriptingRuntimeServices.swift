@@ -42,9 +42,11 @@ public enum HanlinScriptingSystemUIRequest: Sendable {
     case pickFiles(
         allowsMultipleSelection: Bool,
         shouldShowFileExtensions: Bool,
-        contentTypeIdentifiers: [String]
+        contentTypeIdentifiers: [String],
+        initialDirectory: URL?
     )
-    case pickDirectory
+    case pickDirectory(initialDirectory: URL?)
+    case exportFiles(urls: [URL], initialDirectory: URL?)
     case previewURLs([URL])
     case previewText(String)
     case previewImage(Data)
@@ -52,6 +54,7 @@ public enum HanlinScriptingSystemUIRequest: Sendable {
     case takePhoto
     case dialog(HanlinScriptingDialogRequest)
     case editor(HanlinScriptingEditorRequest)
+    case safari(url: URL, fullscreen: Bool)
 }
 
 public struct HanlinScriptingEditorRequest: Sendable {
@@ -1577,6 +1580,10 @@ extension HanlinScriptingAssistantChunk {
 }
 
 final class HanlinScriptingPackageFileSystem: @unchecked Sendable {
+    private struct BookmarkRegistry: Codable {
+        var entries: [String: Data]
+    }
+
     private struct ResolvedPath {
         let url: URL
         let root: URL
@@ -1588,6 +1595,7 @@ final class HanlinScriptingPackageFileSystem: @unchecked Sendable {
         let scopeURL: URL
         let isDirectory: Bool
         let ownsSecurityScope: Bool
+        let readOnly: Bool
     }
 
     private let lock = NSLock()
@@ -1596,10 +1604,12 @@ final class HanlinScriptingPackageFileSystem: @unchecked Sendable {
     private let appGroupRoot: URL
     private let temporaryRoot: URL
     private let scriptsRoot: URL
+    private let bookmarksURL: URL
     private let allowed: Bool
     private let maximumBytes = 64 * 1_024 * 1_024
     private let maximumReadBytes = 16 * 1_024 * 1_024
     private var externalRoots: [ExternalRoot] = []
+    private var bookmarks: [String: Data]
 
     init(
         installedPackageID: String,
@@ -1629,7 +1639,24 @@ final class HanlinScriptingPackageFileSystem: @unchecked Sendable {
         appGroupRoot = baseRoot.appending(path: "AppGroupDocuments", directoryHint: .isDirectory)
         temporaryRoot = baseRoot.appending(path: "Temporary", directoryHint: .isDirectory)
         scriptsRoot = packageSourceDirectory ?? baseRoot.appending(path: "Scripts", directoryHint: .isDirectory)
+        bookmarksURL = baseRoot.appending(path: "FileBookmarks.json", directoryHint: .notDirectory)
         self.allowed = allowed
+        if fileManager.fileExists(atPath: bookmarksURL.path(percentEncoded: false)) {
+            do {
+                bookmarks = try JSONDecoder().decode(
+                    BookmarkRegistry.self,
+                    from: Data(contentsOf: bookmarksURL, options: .mappedIfSafe)
+                ).entries
+            } catch {
+                throw HanlinScriptingNativeError(
+                    name: "Error",
+                    code: "bookmark_registry_invalid",
+                    message: "The package file bookmark registry is invalid."
+                )
+            }
+        } else {
+            bookmarks = [:]
+        }
         try fileManager.createDirectory(at: documentsRoot, withIntermediateDirectories: true)
         try fileManager.createDirectory(at: appGroupRoot, withIntermediateDirectories: true)
         try fileManager.createDirectory(at: temporaryRoot, withIntermediateDirectories: true)
@@ -1649,7 +1676,7 @@ final class HanlinScriptingPackageFileSystem: @unchecked Sendable {
         ]
     }
 
-    func grantExternalURLs(_ urls: [URL]) throws -> [String] {
+    func grantExternalURLs(_ urls: [URL], readOnly: Bool = true) throws -> [String] {
         lock.lock()
         defer { lock.unlock() }
         guard allowed, urls.count <= 128 else {
@@ -1670,12 +1697,24 @@ final class HanlinScriptingPackageFileSystem: @unchecked Sendable {
                 throw invalid("Selected symbolic links are unavailable.")
             }
             let url = selectedURL.resolvingSymlinksInPath()
-            if !externalRoots.contains(where: { $0.url == url }) {
+            if let index = externalRoots.firstIndex(where: { $0.url == url }) {
+                if externalRoots[index].readOnly && !readOnly {
+                    let existing = externalRoots[index]
+                    externalRoots[index] = .init(
+                        url: existing.url,
+                        scopeURL: existing.scopeURL,
+                        isDirectory: existing.isDirectory,
+                        ownsSecurityScope: existing.ownsSecurityScope,
+                        readOnly: false
+                    )
+                }
+            } else {
                 externalRoots.append(.init(
                     url: url,
                     scopeURL: selectedURL,
                     isDirectory: values.isDirectory == true,
-                    ownsSecurityScope: selectedURL.startAccessingSecurityScopedResource()
+                    ownsSecurityScope: selectedURL.startAccessingSecurityScopedResource(),
+                    readOnly: readOnly
                 ))
             }
             return selectedURL.path(percentEncoded: false)
@@ -1689,6 +1728,55 @@ final class HanlinScriptingPackageFileSystem: @unchecked Sendable {
             root.scopeURL.stopAccessingSecurityScopedResource()
         }
         externalRoots.removeAll()
+    }
+
+    func containsBookmark(named name: String) -> Bool {
+        lock.withLock { bookmarks[name] != nil }
+    }
+
+    func addBookmark(path: String, name: String?) throws -> String? {
+        try lock.withLock { try addBookmarkLocked(path: path, name: name) }
+    }
+
+    func stageExportFiles(_ files: [(name: String, data: Data)]) throws -> (directory: URL, urls: [URL]) {
+        try lock.withLock {
+            guard allowed else { throw permissionDenied() }
+            guard !files.isEmpty, files.count <= 64 else {
+                throw invalid("DocumentPicker export requires from one through 64 files.")
+            }
+            let totalBytes = files.reduce(0) { $0 + $1.data.count }
+            guard totalBytes <= maximumReadBytes else { throw quota() }
+            let directory = temporaryRoot
+                .appending(path: ".exports", directoryHint: .isDirectory)
+                .appending(path: UUID().uuidString.lowercased(), directoryHint: .isDirectory)
+            try fileManager.createDirectory(at: directory, withIntermediateDirectories: true)
+            do {
+                var usedNames: Set<String> = []
+                let urls = try files.map { file in
+                    guard let name = validFileName(file.name), usedNames.insert(name).inserted else {
+                        throw invalid("Every exported file requires a unique safe name.")
+                    }
+                    let url = directory.appending(path: name, directoryHint: .notDirectory)
+                    try file.data.write(to: url, options: .atomic)
+                    return url
+                }
+                return (directory, urls)
+            } catch {
+                try? fileManager.removeItem(at: directory)
+                throw error
+            }
+        }
+    }
+
+    func removeStagedExports(at directory: URL) {
+        lock.withLock {
+            let exportsRoot = temporaryRoot.appending(path: ".exports", directoryHint: .isDirectory)
+                .standardizedFileURL
+            let candidate = directory.standardizedFileURL
+            let prefix = exportsRoot.path(percentEncoded: false) + "/"
+            guard candidate.path(percentEncoded: false).hasPrefix(prefix) else { return }
+            try? fileManager.removeItem(at: candidate)
+        }
     }
 
     func previewURL(for path: String) throws -> URL {
@@ -1732,6 +1820,34 @@ final class HanlinScriptingPackageFileSystem: @unchecked Sendable {
             )
         }
         switch operation {
+        case "file.addBookmark":
+            guard let path = payload["path"] as? String else { throw invalid("A bookmark path is required.") }
+            return try addBookmarkLocked(path: path, name: payload["name"] as? String) ?? NSNull()
+        case "file.removeBookmark":
+            guard let name = bookmarkName(payload["name"]) else { return false }
+            let removedURL = resolvedBookmarkURL(named: name)
+            guard bookmarks.removeValue(forKey: name) != nil else { return false }
+            externalRoots.removeAll { root in
+                guard root.url.path(percentEncoded: false) == removedURL?.path(percentEncoded: false) else {
+                    return false
+                }
+                if root.ownsSecurityScope { root.scopeURL.stopAccessingSecurityScopedResource() }
+                return true
+            }
+            try persistBookmarks()
+            return true
+        case "file.bookmarkExists":
+            guard let name = bookmarkName(payload["name"]) else { return false }
+            return try resolveBookmark(named: name) != nil
+        case "file.allBookmarks":
+            return try Array(bookmarks.keys).sorted().compactMap { name -> [String: String]? in
+                guard let url = try resolveBookmark(named: name) else { return nil }
+                return ["name": name, "path": url.path(percentEncoded: false)]
+            }
+        case "file.bookmarkedPath":
+            guard let name = bookmarkName(payload["name"]),
+                  let url = try resolveBookmark(named: name) else { return NSNull() }
+            return url.path(percentEncoded: false)
         case "file.createDirectory":
             let target = try writable(payload, "path")
             let recursive = payload["recursive"] as? Bool ?? false
@@ -1820,6 +1936,106 @@ final class HanlinScriptingPackageFileSystem: @unchecked Sendable {
             throw quota()
         }
         return try Data(contentsOf: target.url, options: .mappedIfSafe)
+    }
+
+    private func addBookmarkLocked(path: String, name: String?) throws -> String? {
+        guard allowed else { throw permissionDenied() }
+        let target = try resolve(path, requireExisting: true)
+        let requestedName = name ?? target.url.lastPathComponent
+        guard let validName = bookmarkName(requestedName), bookmarks[validName] == nil else { return nil }
+        let data = try target.url.bookmarkData(
+            options: [.withSecurityScope],
+            includingResourceValuesForKeys: nil,
+            relativeTo: nil
+        )
+        bookmarks[validName] = data
+        do {
+            try persistBookmarks()
+            return validName
+        } catch {
+            bookmarks.removeValue(forKey: validName)
+            throw error
+        }
+    }
+
+    private func resolveBookmark(named name: String) throws -> URL? {
+        guard let data = bookmarks[name] else { return nil }
+        var stale = false
+        let selectedURL: URL
+        do {
+            selectedURL = try URL(
+                resolvingBookmarkData: data,
+                options: [.withSecurityScope, .withoutUI],
+                relativeTo: nil,
+                bookmarkDataIsStale: &stale
+            ).standardizedFileURL
+            guard selectedURL.isFileURL,
+                  fileManager.fileExists(atPath: selectedURL.path(percentEncoded: false)) else {
+                throw invalid("The bookmarked file or directory is no longer available.")
+            }
+        } catch {
+            bookmarks.removeValue(forKey: name)
+            try persistBookmarks()
+            return nil
+        }
+        let values = try selectedURL.resourceValues(forKeys: [.isDirectoryKey, .isSymbolicLinkKey])
+        guard values.isSymbolicLink != true else {
+            bookmarks.removeValue(forKey: name)
+            try persistBookmarks()
+            return nil
+        }
+        if stale {
+            bookmarks[name] = try selectedURL.bookmarkData(
+                options: [.withSecurityScope],
+                includingResourceValuesForKeys: nil,
+                relativeTo: nil
+            )
+            try persistBookmarks()
+        }
+        let resolvedURL = selectedURL.resolvingSymlinksInPath()
+        if !externalRoots.contains(where: { $0.url == resolvedURL }) {
+            externalRoots.append(.init(
+                url: resolvedURL,
+                scopeURL: selectedURL,
+                isDirectory: values.isDirectory == true,
+                ownsSecurityScope: selectedURL.startAccessingSecurityScopedResource(),
+                readOnly: false
+            ))
+        }
+        return selectedURL
+    }
+
+    private func resolvedBookmarkURL(named name: String) -> URL? {
+        guard let data = bookmarks[name] else { return nil }
+        var stale = false
+        return try? URL(
+            resolvingBookmarkData: data,
+            options: [.withSecurityScope, .withoutUI],
+            relativeTo: nil,
+            bookmarkDataIsStale: &stale
+        ).standardizedFileURL.resolvingSymlinksInPath()
+    }
+
+    private func persistBookmarks() throws {
+        let encoder = JSONEncoder()
+        encoder.outputFormatting = [.sortedKeys]
+        try encoder.encode(BookmarkRegistry(entries: bookmarks)).write(to: bookmarksURL, options: .atomic)
+    }
+
+    private func bookmarkName(_ value: Any?) -> String? {
+        guard let value = value as? String,
+              !value.isEmpty, value.utf8.count <= 512,
+              !value.contains("/"), !value.contains("\\"), !value.contains("\0"),
+              value != ".", value != ".." else { return nil }
+        return value
+    }
+
+    private func validFileName(_ value: String) -> String? {
+        bookmarkName(value)
+    }
+
+    private func permissionDenied() -> HanlinScriptingNativeError {
+        .init(name: "Error", code: "permission_denied", message: "The files capability is not granted.")
     }
 
     private func directoryContents(at url: URL, recursive: Bool) throws -> [String] {
@@ -1969,7 +2185,7 @@ final class HanlinScriptingPackageFileSystem: @unchecked Sendable {
             }) else {
                 throw invalid("The file path is outside the package filesystem.")
             }
-            return .init(url: candidate, root: external.url, readOnly: true)
+            return .init(url: candidate, root: external.url, readOnly: external.readOnly)
         }
         let components = mapping.relative.split(separator: "/", omittingEmptySubsequences: true)
         guard !components.contains(".."), !components.contains(".") else {

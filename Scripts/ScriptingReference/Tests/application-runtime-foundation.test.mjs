@@ -17,6 +17,7 @@ function runtime(entrypointKind = "application", widgetFamily = "systemMedium", 
   const storage = new Map();
   const binaryStorage = new Map();
   const files = new Map();
+  const bookmarks = new Map();
   let rendered;
   const assistantRequests = [];
   const sqliteRequests = [];
@@ -60,6 +61,16 @@ function runtime(entrypointKind = "application", widgetFamily = "systemMedium", 
       case "file.rename": files.set(payload.newPath, files.get(payload.path)); files.delete(payload.path); return null;
       case "file.copy": files.set(payload.newPath, files.get(payload.path)); return null;
       case "file.mimeType": return "text/plain";
+      case "file.addBookmark": {
+        const name = payload.name ?? payload.path.split("/").at(-1);
+        if (bookmarks.has(name)) return null;
+        bookmarks.set(name, payload.path);
+        return name;
+      }
+      case "file.removeBookmark": return bookmarks.delete(payload.name);
+      case "file.bookmarkExists": return bookmarks.has(payload.name);
+      case "file.allBookmarks": return [...bookmarks].map(([name, filePath]) => ({ name, path: filePath }));
+      case "file.bookmarkedPath": return bookmarks.get(payload.name) ?? null;
       default: throw new Error(`unsupported ${operation}`);
     }
   };
@@ -98,8 +109,8 @@ function runtime(entrypointKind = "application", widgetFamily = "systemMedium", 
           if (operation.startsWith("health.")) healthRequests.push({ operation, payload });
           if (operation.startsWith("notification.")) notificationRequests.push({ operation, payload });
           if (operation.startsWith("reminder.")) reminderRequests.push({ operation, payload });
-          if (operation.startsWith("documentPicker.") || operation.startsWith("quickLook.") || operation.startsWith("photos.") || operation.startsWith("dialog.") || operation.startsWith("editor.")) systemUIRequests.push({ operation, payload });
-          if (operation.startsWith("pasteboard.") || operation.startsWith("safari.")) systemRequests.push({ operation, payload });
+          if (operation.startsWith("documentPicker.") || operation.startsWith("quickLook.") || operation.startsWith("photos.") || operation.startsWith("dialog.") || operation.startsWith("editor.") || operation === "safari.present") systemUIRequests.push({ operation, payload });
+          if (operation.startsWith("pasteboard.") || operation === "safari.openURL") systemRequests.push({ operation, payload });
           const value = operation === "network.fetch"
             ? { url: payload.url, status: 200, headers: { "content-type": "application/json" }, bodyBase64: Buffer.from('{"ok":true}').toString("base64") }
             : operation === "liveActivity.start"
@@ -150,6 +161,15 @@ function runtime(entrypointKind = "application", widgetFamily = "systemMedium", 
               ? (files.set("/external/source.txt", Buffer.from("selected-content").toString("base64")), ["/external/source.txt"])
             : operation === "documentPicker.pickDirectory"
               ? "/external/folder"
+            : operation === "documentPicker.pickFileBookmark"
+              ? (files.set("/external/bookmarked.txt", Buffer.from("bookmarked-content").toString("base64")),
+                bookmarks.set(payload.preferredName ?? "bookmarked.txt", "/external/bookmarked.txt"),
+                { path: "/external/bookmarked.txt", bookmarkName: payload.preferredName ?? "bookmarked.txt" })
+            : operation === "documentPicker.pickDirectoryBookmark"
+              ? (bookmarks.set(payload.preferredName ?? "folder", "/external/folder"),
+                { path: "/external/folder", bookmarkName: payload.preferredName ?? "folder" })
+            : operation === "documentPicker.exportFiles"
+              ? payload.files.map(file => `/external/export/${file.name}`)
             : operation === "documentPicker.stopAccessingSecurityScopedResources" || operation.startsWith("quickLook.")
               ? null
             : operation === "photos.pickPhotos"
@@ -170,8 +190,18 @@ function runtime(entrypointKind = "application", widgetFamily = "systemMedium", 
               ? (storage.set("pasteboard-string", JSON.stringify(payload.value)), null)
             : operation === "pasteboard.getString"
               ? JSON.parse(storage.get("pasteboard-string") ?? "null")
+            : operation === "pasteboard.setImage"
+              ? (storage.set("pasteboard-image", JSON.stringify(payload.value)), null)
+            : operation === "pasteboard.getImage"
+              ? JSON.parse(storage.get("pasteboard-image") ?? "null")
+            : operation === "pasteboard.setImages"
+              ? (storage.set("pasteboard-images", JSON.stringify(payload.values)), null)
+            : operation === "pasteboard.getImages"
+              ? JSON.parse(storage.get("pasteboard-images") ?? "null")
             : operation === "safari.openURL"
               ? payload.url.startsWith("https://")
+            : operation === "safari.present"
+              ? null
             : operation === "runtime.delay"
               ? null
             : fileOperation(operation, payload);
@@ -308,18 +338,38 @@ test("FileManager intent entrypoint receives native input and returns typed resu
 });
 
 test("FileManager and nativ-ai use native Pasteboard and Safari primitives", async () => {
-  const { context, systemRequests } = runtime();
+  const { context, systemRequests, systemUIRequests } = runtime();
   const result = await vm.runInContext(`
     (async () => {
       await Pasteboard.setString("/documents/report.txt");
-      return [await Pasteboard.getString(), await Safari.openURL("https://example.com/settings")];
+      const image = UIImage.fromData(Data.fromString("encoded-image"));
+      await Pasteboard.setImage(image);
+      await Pasteboard.setImages([image, image]);
+      await Safari.present("https://example.com/help", false);
+      const copiedImage = await Pasteboard.getImage();
+      const copiedImages = await Pasteboard.getImages();
+      return [
+        await Pasteboard.getString(), await Safari.openURL("https://example.com/settings"),
+        copiedImage.toBase64String(), copiedImages.length
+      ];
     })()
   `, context);
-  assert.deepEqual(JSON.parse(JSON.stringify(result)), ["/documents/report.txt", true]);
+  assert.deepEqual(JSON.parse(JSON.stringify(result)), [
+    "/documents/report.txt", true, Buffer.from("encoded-image").toString("base64"), 2,
+  ]);
   assert.deepEqual(systemRequests, [
     { operation: "pasteboard.setString", payload: { value: "/documents/report.txt" } },
+    { operation: "pasteboard.setImage", payload: { value: Buffer.from("encoded-image").toString("base64") } },
+    { operation: "pasteboard.setImages", payload: { values: [
+      Buffer.from("encoded-image").toString("base64"), Buffer.from("encoded-image").toString("base64"),
+    ] } },
+    { operation: "pasteboard.getImage", payload: {} },
+    { operation: "pasteboard.getImages", payload: {} },
     { operation: "pasteboard.getString", payload: {} },
     { operation: "safari.openURL", payload: { url: "https://example.com/settings" } },
+  ]);
+  assert.deepEqual(systemUIRequests, [
+    { operation: "safari.present", payload: { url: "https://example.com/help", fullscreen: false } },
   ]);
 });
 
@@ -373,13 +423,47 @@ test("FileManager imports DocumentPicker files and opens its package copy in Qui
   assert.deepEqual(JSON.parse(JSON.stringify(result)), ["selected-content", "/external/folder"]);
   assert.deepEqual(systemUIRequests, [
     { operation: "documentPicker.pickFiles", payload: {
-      allowsMultipleSelection: true, shouldShowFileExtensions: true, types: ["public.text"],
+      allowsMultipleSelection: true, shouldShowFileExtensions: true, types: ["public.text"], initialDirectory: null,
     } },
     { operation: "documentPicker.pickDirectory", payload: { initialDirectory: null } },
     { operation: "quickLook.previewURLs", payload: { urls: ["/documents/imported.txt"], fullscreen: false } },
     { operation: "quickLook.previewImage", payload: { base64: "/9gB/9k=", fullscreen: false } },
     { operation: "quickLook.previewText", payload: { text: "selected-content", fullscreen: false } },
     { operation: "documentPicker.stopAccessingSecurityScopedResources", payload: {} },
+  ]);
+});
+
+test("FileManager persists bookmark bindings and DocumentPicker serializes bookmark and export requests", async () => {
+  const { context, systemUIRequests } = runtime();
+  const result = await vm.runInContext(`
+    (async () => {
+      const selected = await DocumentPicker.pickFileBookmark({
+        preferredName: "report", types: ["public.text"], shouldShowFileExtensions: false
+      });
+      const added = FileManager.addFileBookmark(selected.path, "report-copy");
+      const exported = await DocumentPicker.exportFiles({
+        files: [{ name: "result.txt", data: Data.fromString("done") }]
+      });
+      return [
+        selected.bookmarkName, FileManager.bookmarkExists("report"),
+        FileManager.bookmarkedPath("report"), added,
+        FileManager.getAllFileBookmarks().map(value => value.name).sort(), exported
+      ];
+    })()
+  `, context);
+  assert.deepEqual(JSON.parse(JSON.stringify(result)), [
+    "report", true, "/external/bookmarked.txt", "report-copy",
+    ["report", "report-copy"], ["/external/export/result.txt"],
+  ]);
+  assert.deepEqual(systemUIRequests, [
+    { operation: "documentPicker.pickFileBookmark", payload: {
+      preferredName: "report", initialDirectory: null,
+      shouldShowFileExtensions: false, types: ["public.text"],
+    } },
+    { operation: "documentPicker.exportFiles", payload: {
+      initialDirectory: null,
+      files: [{ name: "result.txt", base64: Buffer.from("done").toString("base64") }],
+    } },
   ]);
 });
 

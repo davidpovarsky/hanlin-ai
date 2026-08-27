@@ -1,5 +1,6 @@
 import QuickLook
 @preconcurrency import PhotosUI
+import SafariServices
 import SwiftUI
 import UniformTypeIdentifiers
 import UIKit
@@ -16,18 +17,26 @@ struct HanlinScriptingSystemUIPresentationView: View {
     @ViewBuilder
     var body: some View {
         switch presentation.request {
-        case let .pickFiles(allowsMultipleSelection, shouldShowFileExtensions, contentTypeIdentifiers):
+        case let .pickFiles(allowsMultipleSelection, shouldShowFileExtensions, contentTypeIdentifiers, initialDirectory):
             HanlinDocumentPickerController(
                 contentTypes: contentTypeIdentifiers.compactMap(UTType.init),
                 allowsMultipleSelection: allowsMultipleSelection,
                 shouldShowFileExtensions: shouldShowFileExtensions,
+                initialDirectory: initialDirectory,
                 completion: completion
             )
-        case .pickDirectory:
+        case let .pickDirectory(initialDirectory):
             HanlinDocumentPickerController(
                 contentTypes: [.folder],
                 allowsMultipleSelection: false,
                 shouldShowFileExtensions: true,
+                initialDirectory: initialDirectory,
+                completion: completion
+            )
+        case let .exportFiles(urls, initialDirectory):
+            HanlinDocumentExportController(
+                urls: urls,
+                initialDirectory: initialDirectory,
                 completion: completion
             )
         case let .previewURLs(urls):
@@ -48,6 +57,40 @@ struct HanlinScriptingSystemUIPresentationView: View {
             HanlinDialogController(request: request, completion: completion)
         case let .editor(request):
             HanlinEditorView(request: request, completion: completion)
+        case let .safari(url, _):
+            HanlinSafariController(url: url, completion: completion)
+        }
+    }
+}
+
+private struct HanlinSafariController: UIViewControllerRepresentable {
+    let url: URL
+    let completion: (Result<HanlinScriptingSystemUIResult, any Error>) -> Void
+
+    func makeCoordinator() -> Coordinator { Coordinator(completion: completion) }
+
+    func makeUIViewController(context: Context) -> SFSafariViewController {
+        let controller = SFSafariViewController(url: url)
+        controller.delegate = context.coordinator
+        controller.dismissButtonStyle = .close
+        return controller
+    }
+
+    func updateUIViewController(_ controller: SFSafariViewController, context: Context) {}
+
+    @MainActor
+    final class Coordinator: NSObject, SFSafariViewControllerDelegate {
+        private let completion: (Result<HanlinScriptingSystemUIResult, any Error>) -> Void
+        private var completed = false
+
+        init(completion: @escaping (Result<HanlinScriptingSystemUIResult, any Error>) -> Void) {
+            self.completion = completion
+        }
+
+        func safariViewControllerDidFinish(_ controller: SFSafariViewController) {
+            guard !completed else { return }
+            completed = true
+            completion(.success(.completed))
         }
     }
 }
@@ -402,6 +445,7 @@ private struct HanlinDocumentPickerController: UIViewControllerRepresentable {
     let contentTypes: [UTType]
     let allowsMultipleSelection: Bool
     let shouldShowFileExtensions: Bool
+    let initialDirectory: URL?
     let completion: (Result<HanlinScriptingSystemUIResult, any Error>) -> Void
 
     func makeCoordinator() -> Coordinator { Coordinator(completion: completion) }
@@ -414,6 +458,49 @@ private struct HanlinDocumentPickerController: UIViewControllerRepresentable {
         picker.delegate = context.coordinator
         picker.allowsMultipleSelection = allowsMultipleSelection
         picker.shouldShowFileExtensions = shouldShowFileExtensions
+        picker.directoryURL = initialDirectory
+        return picker
+    }
+
+    func updateUIViewController(_ controller: UIDocumentPickerViewController, context: Context) {}
+
+    @MainActor
+    final class Coordinator: NSObject, UIDocumentPickerDelegate {
+        private let completion: (Result<HanlinScriptingSystemUIResult, any Error>) -> Void
+        private var completed = false
+
+        init(completion: @escaping (Result<HanlinScriptingSystemUIResult, any Error>) -> Void) {
+            self.completion = completion
+        }
+
+        func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
+            finish(.success(.urls(urls)))
+        }
+
+        func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
+            finish(.success(.urls([])))
+        }
+
+        private func finish(_ result: Result<HanlinScriptingSystemUIResult, any Error>) {
+            guard !completed else { return }
+            completed = true
+            completion(result)
+        }
+    }
+}
+
+private struct HanlinDocumentExportController: UIViewControllerRepresentable {
+    let urls: [URL]
+    let initialDirectory: URL?
+    let completion: (Result<HanlinScriptingSystemUIResult, any Error>) -> Void
+
+    func makeCoordinator() -> Coordinator { Coordinator(completion: completion) }
+
+    func makeUIViewController(context: Context) -> UIDocumentPickerViewController {
+        let picker = UIDocumentPickerViewController(forExporting: urls, asCopy: true)
+        picker.delegate = context.coordinator
+        picker.directoryURL = initialDirectory
+        picker.shouldShowFileExtensions = true
         return picker
     }
 

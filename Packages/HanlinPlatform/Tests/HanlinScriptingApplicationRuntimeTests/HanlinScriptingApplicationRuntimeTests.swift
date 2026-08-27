@@ -153,13 +153,15 @@ struct HanlinScriptingApplicationRuntimeTests {
     func pasteboardAndSafariRuntime() async throws {
         let packageID = try HanlinInstalledPackageID(validating: "system-service-runtime-test")
         let recorder = HanlinSystemOperationRecorder()
+        var safariPresentations: [(URL, Bool)] = []
         let session = try HanlinScriptingApplicationSession(
             installedPackageID: packageID,
             program: #"""
             Navigation.present({ element: createElement(Text, null, "Waiting") });
             Promise.all([
               Pasteboard.setString("/documents/report.txt"),
-              Safari.openURL("https://example.com/settings")
+              Safari.openURL("https://example.com/settings"),
+              Safari.present("https://example.com/help", false)
             ]).then(async ([, opened]) => {
               const copied = await Pasteboard.getString();
               Navigation.present({ element: createElement(Text, null, JSON.stringify([copied, opened])) });
@@ -167,6 +169,8 @@ struct HanlinScriptingApplicationRuntimeTests {
             """#,
             filename: "compiled/index.js",
             storageAllowed: false,
+            pasteboardAllowed: true,
+            openURLAllowed: true,
             systemLoader: { operation, payloadJSON in
                 recorder.operations.append(operation)
                 if operation == "pasteboard.setString" {
@@ -180,6 +184,14 @@ struct HanlinScriptingApplicationRuntimeTests {
                 if operation == "safari.openURL" { return .bool(true) }
                 Issue.record("Unexpected system operation: \(operation)")
                 return .null
+            },
+            systemUILoader: { request in
+                guard case let .safari(url, fullscreen) = request else {
+                    Issue.record("Unexpected system UI request")
+                    return .completed
+                }
+                safariPresentations.append((url, fullscreen))
+                return .completed
             }
         )
         defer { session.dispose() }
@@ -187,6 +199,41 @@ struct HanlinScriptingApplicationRuntimeTests {
         await session.waitForNativeQuiescence()
         #expect(session.model.root.properties["text"] == .string(#"["/documents/report.txt",true]"#))
         #expect(recorder.operations == ["pasteboard.setString", "safari.openURL", "pasteboard.getString"])
+        #expect(safariPresentations.count == 1)
+        #expect(safariPresentations[0].0.absoluteString == "https://example.com/help")
+        #expect(!safariPresentations[0].1)
+    }
+
+    @MainActor
+    @Test("Denies Pasteboard and open-URL operations before invoking the native system loader")
+    func pasteboardAndSafariRequireCapabilities() async throws {
+        let packageID = try HanlinInstalledPackageID(validating: "system-service-permission-test")
+        var invokedLoader = false
+        let session = try HanlinScriptingApplicationSession(
+            installedPackageID: packageID,
+            program: #"""
+            Navigation.present({ element: createElement(Text, null, "Waiting") });
+            Promise.allSettled([
+              Pasteboard.getString(),
+              Safari.openURL("https://example.com/settings")
+            ]).then(results => Navigation.present({ element: createElement(
+              Text, null, JSON.stringify(results.map(result => result.reason?.code ?? "missing"))
+            ) }));
+            """#,
+            filename: "compiled/permission-test.js",
+            storageAllowed: false,
+            systemLoader: { _, _ in
+                invokedLoader = true
+                return .null
+            }
+        )
+        defer { session.dispose() }
+
+        await session.waitForNativeQuiescence()
+        #expect(session.model.root.properties["text"] == .string(
+            #"["permission_denied","permission_denied"]"#
+        ))
+        #expect(!invokedLoader)
     }
 
     @MainActor
@@ -271,6 +318,7 @@ struct HanlinScriptingApplicationRuntimeTests {
         )
         let selectedDirectory = root.appending(path: "Selected", directoryHint: .isDirectory)
         let selectedFile = selectedDirectory.appending(path: "source note.txt", directoryHint: .notDirectory)
+        let exportedFile = selectedDirectory.appending(path: "exported.txt", directoryHint: .notDirectory)
         try FileManager.default.createDirectory(at: selectedDirectory, withIntermediateDirectories: true)
         try Data("selected-content".utf8).write(to: selectedFile)
         defer { try? FileManager.default.removeItem(at: root) }
@@ -290,6 +338,12 @@ struct HanlinScriptingApplicationRuntimeTests {
               const destination = Path.join(FileManager.documentsDirectory, "imported.txt");
               await FileManager.copyFile(picked[0], destination);
               const directory = await DocumentPicker.pickDirectory();
+              const bookmark = await DocumentPicker.pickFileBookmark({ preferredName: "source-note" });
+              const restored = FileManager.bookmarkedPath("source-note");
+              const bookmarks = FileManager.getAllFileBookmarks();
+              const exported = await DocumentPicker.exportFiles({
+                files: [{ data: Data.fromString("exported-content"), name: "exported.txt" }]
+              });
               await QuickLook.previewURLs([encodeURI(destination)]);
               const imagePath = Path.join(FileManager.documentsDirectory, "preview.jpg");
               FileManager.writeAsDataSync(imagePath, Data.fromIntArray([255, 216, 1, 255, 217]));
@@ -297,7 +351,9 @@ struct HanlinScriptingApplicationRuntimeTests {
               await QuickLook.previewText("selected-content");
               DocumentPicker.stopAcessingSecurityScopedResources();
               Navigation.present({ element: createElement(Text, null, JSON.stringify([
-                FileManager.readAsStringSync(destination), directory != null
+                FileManager.readAsStringSync(destination), directory != null,
+                bookmark.bookmarkName, FileManager.readAsStringSync(restored),
+                bookmarks.map(value => value.name), exported.length
               ])) });
             })().catch(error => {
               Navigation.present({ element: createElement(Text, null, `ERROR:${error?.message ?? error}`) });
@@ -309,16 +365,25 @@ struct HanlinScriptingApplicationRuntimeTests {
             runtimeRoot: root.appending(path: "Runtime", directoryHint: .isDirectory),
             systemUILoader: { request in
                 switch request {
-                case let .pickFiles(multiple, extensions, types):
+                case let .pickFiles(multiple, extensions, types, initialDirectory):
                     operations.append("pickFiles")
                     #expect(FileManager.default.fileExists(atPath: selectedFile.path(percentEncoded: false)))
                     #expect(multiple)
                     #expect(extensions)
-                    #expect(types == ["public.text"])
+                    #expect(types == (operations.count == 1 ? ["public.text"] : []))
+                    #expect(initialDirectory == nil)
                     return .urls([selectedFile])
-                case .pickDirectory:
+                case let .pickDirectory(initialDirectory):
                     operations.append("pickDirectory")
+                    #expect(initialDirectory == nil)
                     return .urls([selectedDirectory])
+                case let .exportFiles(urls, initialDirectory):
+                    operations.append("exportFiles")
+                    #expect(initialDirectory == nil)
+                    let staged = try #require(urls.first)
+                    #expect(try String(contentsOf: staged, encoding: .utf8) == "exported-content")
+                    try FileManager.default.copyItem(at: staged, to: exportedFile)
+                    return .urls([exportedFile])
                 case let .previewURLs(urls):
                     operations.append("previewURLs")
                     #expect(urls.count == 1)
@@ -334,7 +399,7 @@ struct HanlinScriptingApplicationRuntimeTests {
                     operations.append("previewText")
                     #expect(text == "selected-content")
                     return .completed
-                case .pickPhotos, .takePhoto, .dialog, .editor:
+                case .pickPhotos, .takePhoto, .dialog, .editor, .safari:
                     Issue.record("Unexpected Photos system UI request")
                     return .completed
                 }
@@ -343,8 +408,32 @@ struct HanlinScriptingApplicationRuntimeTests {
         defer { session.dispose() }
 
         await session.waitForNativeQuiescence()
-        #expect(session.model.root.properties["text"] == .string(#"["selected-content",true]"#))
-        #expect(operations == ["pickFiles", "pickDirectory", "previewURLs", "previewImage", "previewText"])
+        #expect(session.model.root.properties["text"] == .string(
+            #"["selected-content",true,"source-note","selected-content",["source-note"],1]"#
+        ))
+        #expect(operations == [
+            "pickFiles", "pickDirectory", "pickFiles", "exportFiles",
+            "previewURLs", "previewImage", "previewText",
+        ])
+        session.dispose()
+
+        let restoredFileSystem = try HanlinScriptingPackageFileSystem(
+            installedPackageID: packageID.rawValue,
+            allowed: true,
+            runtimeRoot: root.appending(path: "Runtime", directoryHint: .isDirectory),
+            packageSourceDirectory: nil
+        )
+        let restoredPath = try #require(restoredFileSystem.perform(
+            operation: "file.bookmarkedPath",
+            payload: ["name": "source-note"]
+        ) as? String)
+        #expect(try String(contentsOfFile: restoredPath, encoding: .utf8) == "selected-content")
+        _ = try restoredFileSystem.perform(
+            operation: "file.writeData",
+            payload: ["path": restoredPath, "base64": Data("updated-content".utf8).base64EncodedString()]
+        )
+        #expect(try String(contentsOfFile: restoredPath, encoding: .utf8) == "updated-content")
+        restoredFileSystem.stopAccessingExternalURLs()
     }
 
     @MainActor
@@ -383,7 +472,7 @@ struct HanlinScriptingApplicationRuntimeTests {
                 case .takePhoto:
                     operations.append("takePhoto")
                     return .image(captured)
-                case .pickFiles, .pickDirectory, .previewURLs, .previewText, .previewImage, .dialog, .editor:
+                case .pickFiles, .pickDirectory, .exportFiles, .previewURLs, .previewText, .previewImage, .dialog, .editor, .safari:
                     Issue.record("Unexpected file system UI request")
                     return .completed
                 }

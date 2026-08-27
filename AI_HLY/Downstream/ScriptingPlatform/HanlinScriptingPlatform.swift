@@ -378,6 +378,8 @@ final class HanlinScriptingPlatform {
             let remindersCapability = try HanlinCapabilityID(validating: "reminders")
             let photosCapability = try HanlinCapabilityID(validating: "photos")
             let assistantCapability = try HanlinCapabilityID(validating: "assistant")
+            let pasteboardCapability = try HanlinCapabilityID(validating: "pasteboard")
+            let openURLCapability = try HanlinCapabilityID(validating: "open-url")
             let session = try HanlinScriptingApplicationSession(
                 installedPackageID: id,
                 program: program,
@@ -416,6 +418,8 @@ final class HanlinScriptingPlatform {
                     return try await self.performReminderSave(request)
                 },
                 photosAllowed: package.grantedCapabilities.contains(photosCapability),
+                pasteboardAllowed: package.grantedCapabilities.contains(pasteboardCapability),
+                openURLAllowed: package.grantedCapabilities.contains(openURLCapability),
                 assistantAllowed: package.grantedCapabilities.contains(assistantCapability),
                 assistantLoader: { [weak self] request in
                     guard let self else { throw CancellationError() }
@@ -645,7 +649,7 @@ final class HanlinScriptingPlatform {
         _ operation: String,
         payloadJSON: String
     ) async throws -> HanlinScriptingSystemResult {
-        guard payloadJSON.utf8.count <= 256 * 1_024,
+        guard payloadJSON.utf8.count <= 24 * 1_024 * 1_024,
               let data = payloadJSON.data(using: .utf8),
               let payload = try JSONSerialization.jsonObject(with: data) as? [String: Any] else {
             throw HanlinScriptingPlatformError.invalidSystemServicePayload
@@ -661,6 +665,12 @@ final class HanlinScriptingPlatform {
         case "pasteboard.getStrings": return .strings(pasteboard.strings)
         case "pasteboard.getURL": return .string(pasteboard.url?.absoluteString)
         case "pasteboard.getURLs": return .strings(pasteboard.urls?.map(\.absoluteString))
+        case "pasteboard.getImage":
+            return .string(try pasteboard.image.map(Self.encodedPasteboardImage)?.base64EncodedString())
+        case "pasteboard.getImages":
+            return .strings(try pasteboard.images?.prefix(16).map {
+                try Self.encodedPasteboardImage($0).base64EncodedString()
+            })
         case "pasteboard.setString":
             pasteboard.string = try Self.optionalBoundedString(payload["value"], limit: 1_048_576)
             return .null
@@ -672,6 +682,31 @@ final class HanlinScriptingPlatform {
             return .null
         case "pasteboard.setURLs":
             pasteboard.urls = try Self.optionalURLs(payload["value"])
+            return .null
+        case "pasteboard.setImage":
+            pasteboard.image = try Self.optionalPasteboardImage(payload["value"])
+            return .null
+        case "pasteboard.setImages":
+            guard let values = payload["values"] else {
+                pasteboard.images = nil
+                return .null
+            }
+            guard let values = values as? [Any], values.count <= 16 else {
+                throw HanlinScriptingPlatformError.invalidSystemServicePayload
+            }
+            var totalBytes = 0
+            pasteboard.images = try values.map { value in
+                guard let encoded = value as? String,
+                      encoded.utf8.count <= 24 * 1_024 * 1_024,
+                      let data = Data(base64Encoded: encoded) else {
+                    throw HanlinScriptingPlatformError.invalidSystemServicePayload
+                }
+                totalBytes += data.count
+                guard totalBytes <= 16 * 1_024 * 1_024, let image = UIImage(data: data) else {
+                    throw HanlinScriptingPlatformError.invalidSystemServicePayload
+                }
+                return image
+            }
             return .null
         case "safari.openURL":
             guard let urlString = try Self.optionalBoundedString(payload["url"], limit: 8_192),
@@ -693,6 +728,24 @@ final class HanlinScriptingPlatform {
             )
         }
         return data
+    }
+
+    private static func encodedPasteboardImage(_ image: UIImage) throws -> Data {
+        guard let data = image.pngData(), data.count <= 16 * 1_024 * 1_024 else {
+            throw HanlinScriptingPlatformError.invalidSystemServicePayload
+        }
+        return data
+    }
+
+    private static func optionalPasteboardImage(_ value: Any?) throws -> UIImage? {
+        guard let value, !(value is NSNull) else { return nil }
+        guard let encoded = value as? String,
+              encoded.utf8.count <= 24 * 1_024 * 1_024,
+              let data = Data(base64Encoded: encoded), data.count <= 16 * 1_024 * 1_024,
+              let image = UIImage(data: data) else {
+            throw HanlinScriptingPlatformError.invalidSystemServicePayload
+        }
+        return image
     }
 
     nonisolated private static func optionalBoundedString(_ value: Any?, limit: Int) throws -> String? {

@@ -112,6 +112,8 @@ public final class HanlinScriptingApplicationSession {
     private let remindersAllowed: Bool
     private let reminderLoader: HanlinScriptingReminderLoader
     private let photosAllowed: Bool
+    private let pasteboardAllowed: Bool
+    private let openURLAllowed: Bool
     private let assistantAllowed: Bool
     private let assistantLoader: HanlinScriptingAssistantLoader
     private let liveActivityAllowed: Bool
@@ -148,6 +150,8 @@ public final class HanlinScriptingApplicationSession {
         remindersAllowed: Bool = false,
         reminderLoader: @escaping HanlinScriptingReminderLoader = HanlinScriptingUnavailableReminderLoader.load,
         photosAllowed: Bool = false,
+        pasteboardAllowed: Bool = false,
+        openURLAllowed: Bool = false,
         assistantAllowed: Bool = false,
         assistantLoader: @escaping HanlinScriptingAssistantLoader = HanlinScriptingUnavailableAssistantLoader.load,
         liveActivityAllowed: Bool = false,
@@ -189,6 +193,8 @@ public final class HanlinScriptingApplicationSession {
         self.remindersAllowed = remindersAllowed
         self.reminderLoader = reminderLoader
         self.photosAllowed = photosAllowed
+        self.pasteboardAllowed = pasteboardAllowed
+        self.openURLAllowed = openURLAllowed
         self.assistantAllowed = assistantAllowed
         self.assistantLoader = assistantLoader
         self.liveActivityAllowed = liveActivityAllowed
@@ -656,7 +662,37 @@ public final class HanlinScriptingApplicationSession {
                 "bodyBase64": response.body.base64EncodedString(),
             ])
         }
+        if operation == "safari.present" {
+            guard openURLAllowed else {
+                throw HanlinScriptingNativeError(
+                    name: "Error", code: "permission_denied",
+                    message: "The Open URL capability is not granted."
+                )
+            }
+            let payload = try HanlinScriptingNativeJSON.decodeObject(payloadJSON)
+            guard let value = payload["url"] as? String, value.utf8.count <= 8_192,
+                  let url = URL(string: value), ["http", "https"].contains(url.scheme?.lowercased()) else {
+                throw HanlinScriptingNativeError(
+                    name: "TypeError", code: "invalid_url",
+                    message: "Safari.present requires a bounded HTTP or HTTPS URL."
+                )
+            }
+            let fullscreen = try Self.optionalBoolean(payload["fullscreen"], name: "fullscreen") ?? true
+            guard case .completed = try await systemUILoader(.safari(url: url, fullscreen: fullscreen)) else {
+                throw Self.invalidSystemUIResult()
+            }
+            return HanlinScriptingNativeJSON.success(NSNull())
+        }
         if operation.hasPrefix("pasteboard.") || operation == "safari.openURL" {
+            let allowed = operation.hasPrefix("pasteboard.") ? pasteboardAllowed : openURLAllowed
+            guard allowed else {
+                throw HanlinScriptingNativeError(
+                    name: "Error", code: "permission_denied",
+                    message: operation.hasPrefix("pasteboard.")
+                        ? "The Pasteboard capability is not granted."
+                        : "The Open URL capability is not granted."
+                )
+            }
             return HanlinScriptingNativeJSON.success(
                 try await systemLoader(operation, payloadJSON).nativeObject
             )
@@ -674,18 +710,50 @@ public final class HanlinScriptingApplicationSession {
                 let multiple = try Self.optionalBoolean(payload["allowsMultipleSelection"], name: "allowsMultipleSelection") ?? false
                 let extensions = try Self.optionalBoolean(payload["shouldShowFileExtensions"], name: "shouldShowFileExtensions") ?? true
                 let types = try Self.boundedStrings(payload["types"], maximumCount: 64, maximumBytes: 256)
+                let initialDirectory = try initialDirectoryURL(payload["initialDirectory"])
                 guard case let .urls(urls) = try await systemUILoader(.pickFiles(
                     allowsMultipleSelection: multiple,
                     shouldShowFileExtensions: extensions,
-                    contentTypeIdentifiers: types
+                    contentTypeIdentifiers: types,
+                    initialDirectory: initialDirectory
                 )) else { throw Self.invalidSystemUIResult() }
                 return HanlinScriptingNativeJSON.success(try fileSystem.grantExternalURLs(urls))
             case "documentPicker.pickDirectory":
-                guard case let .urls(urls) = try await systemUILoader(.pickDirectory) else {
+                let initialDirectory = try initialDirectoryURL(payload["initialDirectory"])
+                guard case let .urls(urls) = try await systemUILoader(.pickDirectory(
+                    initialDirectory: initialDirectory
+                )) else {
                     throw Self.invalidSystemUIResult()
                 }
                 let paths = try fileSystem.grantExternalURLs(Array(urls.prefix(1)))
                 return HanlinScriptingNativeJSON.success(paths.first.map { $0 as Any } ?? NSNull())
+            case "documentPicker.pickFileBookmark":
+                let extensions = try Self.optionalBoolean(payload["shouldShowFileExtensions"], name: "shouldShowFileExtensions") ?? true
+                let types = try Self.boundedStrings(payload["types"], maximumCount: 64, maximumBytes: 256)
+                let initialDirectory = try initialDirectoryURL(payload["initialDirectory"])
+                guard case let .urls(urls) = try await systemUILoader(.pickFiles(
+                    allowsMultipleSelection: false,
+                    shouldShowFileExtensions: extensions,
+                    contentTypeIdentifiers: types,
+                    initialDirectory: initialDirectory
+                )) else { throw Self.invalidSystemUIResult() }
+                return try await savePickedBookmark(urls: urls, preferredNameValue: payload["preferredName"])
+            case "documentPicker.pickDirectoryBookmark":
+                let initialDirectory = try initialDirectoryURL(payload["initialDirectory"])
+                guard case let .urls(urls) = try await systemUILoader(.pickDirectory(
+                    initialDirectory: initialDirectory
+                )) else { throw Self.invalidSystemUIResult() }
+                return try await savePickedBookmark(urls: urls, preferredNameValue: payload["preferredName"])
+            case "documentPicker.exportFiles":
+                let files = try Self.exportFiles(payload["files"])
+                let staged = try fileSystem.stageExportFiles(files)
+                defer { fileSystem.removeStagedExports(at: staged.directory) }
+                let initialDirectory = try initialDirectoryURL(payload["initialDirectory"])
+                guard case let .urls(urls) = try await systemUILoader(.exportFiles(
+                    urls: staged.urls,
+                    initialDirectory: initialDirectory
+                )) else { throw Self.invalidSystemUIResult() }
+                return HanlinScriptingNativeJSON.success(urls.map { $0.path(percentEncoded: false) })
             case "documentPicker.stopAccessingSecurityScopedResources":
                 fileSystem.stopAccessingExternalURLs()
                 return HanlinScriptingNativeJSON.success(NSNull())
@@ -1025,6 +1093,89 @@ public final class HanlinScriptingApplicationSession {
             throw invalidSystemUIRequest("DocumentPicker \(name) must be a Boolean.")
         }
         return number.boolValue
+    }
+
+    private func initialDirectoryURL(_ value: Any?) throws -> URL? {
+        guard let value, !(value is NSNull) else { return nil }
+        guard let path = value as? String, !path.isEmpty, path.utf8.count <= 8_192 else {
+            throw Self.invalidSystemUIRequest("DocumentPicker initialDirectory must be a valid file path.")
+        }
+        let url = try fileSystem.previewURL(for: path)
+        let values = try url.resourceValues(forKeys: [.isDirectoryKey])
+        guard values.isDirectory == true else {
+            throw Self.invalidSystemUIRequest("DocumentPicker initialDirectory must refer to a directory.")
+        }
+        return url
+    }
+
+    private func savePickedBookmark(urls: [URL], preferredNameValue: Any?) async throws -> String {
+        guard let selectedURL = urls.first else { return HanlinScriptingNativeJSON.success(NSNull()) }
+        let paths = try fileSystem.grantExternalURLs([selectedURL], readOnly: false)
+        guard let path = paths.first else { return HanlinScriptingNativeJSON.success(NSNull()) }
+        let preferredName = try Self.optionalBookmarkName(preferredNameValue)
+        var candidate = preferredName ?? selectedURL.lastPathComponent
+        for _ in 0 ..< 8 {
+            guard Self.isValidBookmarkName(candidate) else {
+                throw Self.invalidSystemUIRequest("The file bookmark name is invalid.")
+            }
+            if !fileSystem.containsBookmark(named: candidate) {
+                guard let savedName = try fileSystem.addBookmark(path: path, name: candidate) else {
+                    throw Self.invalidSystemUIRequest("The file bookmark could not be saved.")
+                }
+                return HanlinScriptingNativeJSON.success([
+                    "path": path,
+                    "bookmarkName": savedName,
+                ])
+            }
+            guard case let .text(replacement) = try await systemUILoader(.dialog(.init(
+                kind: .prompt,
+                title: "Rename Bookmark",
+                message: "A file bookmark named ‘\(candidate)’ already exists.",
+                confirmLabel: "Save",
+                cancelLabel: "Cancel",
+                defaultValue: candidate,
+                placeholder: "Bookmark Name",
+                selectAll: true
+            ))) else { throw Self.invalidSystemUIResult() }
+            guard let replacement else { return HanlinScriptingNativeJSON.success(NSNull()) }
+            candidate = replacement
+        }
+        throw Self.invalidSystemUIRequest("A unique file bookmark name was not provided.")
+    }
+
+    private static func optionalBookmarkName(_ value: Any?) throws -> String? {
+        guard let value, !(value is NSNull) else { return nil }
+        guard let name = value as? String, isValidBookmarkName(name) else {
+            throw invalidSystemUIRequest("The preferred file bookmark name is invalid.")
+        }
+        return name
+    }
+
+    private static func isValidBookmarkName(_ name: String) -> Bool {
+        !name.isEmpty && name.utf8.count <= 512
+            && !name.contains("/") && !name.contains("\\") && !name.contains("\0")
+            && name != "." && name != ".."
+    }
+
+    private static func exportFiles(_ value: Any?) throws -> [(name: String, data: Data)] {
+        guard let values = value as? [Any], !values.isEmpty, values.count <= 64 else {
+            throw invalidSystemUIRequest("DocumentPicker export requires from one through 64 files.")
+        }
+        var totalBytes = 0
+        return try values.map { value in
+            guard let file = value as? [String: Any],
+                  let name = file["name"] as? String, isValidBookmarkName(name),
+                  let base64 = file["base64"] as? String,
+                  base64.utf8.count <= 24 * 1_024 * 1_024,
+                  let data = Data(base64Encoded: base64) else {
+                throw invalidSystemUIRequest("An exported file is invalid.")
+            }
+            totalBytes += data.count
+            guard totalBytes <= 16 * 1_024 * 1_024 else {
+                throw invalidSystemUIRequest("The exported files exceed the 16 MiB limit.")
+            }
+            return (name, data)
+        }
     }
 
     private static func boundedStrings(
@@ -1848,8 +1999,13 @@ private extension HanlinScriptingApplicationSession {
         isBinaryFileSync(path) { return this.readAsDataSync(path).toIntArray().includes(0); },
         isFileStoredIniCloud() { return false; }, isiCloudFileDownloaded() { return false; },
         downloadFileFromiCloud() { return Promise.resolve(false); },
-        addFileBookmark() { return null; }, removeFileBookmark() { return false; },
-        bookmarkExists() { return false; }, getAllFileBookmarks() { return []; }, bookmarkedPath() { return null; }
+        addFileBookmark(path, name = null) {
+          return nativeCallSync("file.addBookmark", filePayload(path, { name }));
+        },
+        removeFileBookmark(name) { return nativeCallSync("file.removeBookmark", { name }); },
+        bookmarkExists(name) { return nativeCallSync("file.bookmarkExists", { name }); },
+        getAllFileBookmarks() { return nativeCallSync("file.allBookmarks", {}); },
+        bookmarkedPath(name) { return nativeCallSync("file.bookmarkedPath", { name }); }
       };
       Object.defineProperties(FileManager, {
         iCloudDocumentsDirectory: { get() { throw new Error("HANLIN_FILE:iCloud_unavailable"); } },
@@ -3196,10 +3352,26 @@ private extension HanlinScriptingApplicationSession {
           }
           return pasteboardCall("setURLs", { value });
         },
-        getImage() { return Promise.reject(new Error("Pasteboard images are not yet available")); },
-        setImage() { return Promise.reject(new Error("Pasteboard images are not yet available")); },
-        getImages() { return Promise.reject(new Error("Pasteboard images are not yet available")); },
-        setImages() { return Promise.reject(new Error("Pasteboard images are not yet available")); },
+        getImage() {
+          return pasteboardCall("getImage").then(value => value == null
+            ? null : HanlinUIImage.fromData(HanlinData.fromBase64String(value)));
+        },
+        setImage(value) {
+          if (value != null && !(value instanceof HanlinUIImage)) {
+            return Promise.reject(new TypeError("Pasteboard image must be a UIImage or null"));
+          }
+          return pasteboardCall("setImage", { value: value?.toBase64String() ?? null });
+        },
+        getImages() {
+          return pasteboardCall("getImages").then(values => values?.map(value =>
+            HanlinUIImage.fromData(HanlinData.fromBase64String(value))) ?? null);
+        },
+        setImages(values) {
+          if (values != null && (!Array.isArray(values) || values.some(value => !(value instanceof HanlinUIImage)))) {
+            return Promise.reject(new TypeError("Pasteboard images must be an array of UIImage values or null"));
+          }
+          return pasteboardCall("setImages", { values: values?.map(value => value.toBase64String()) ?? null });
+        },
         addItems() { return Promise.reject(new Error("Typed Pasteboard items are not yet available")); },
         setItems() { return Promise.reject(new Error("Typed Pasteboard items are not yet available")); },
         getItems() { return Promise.reject(new Error("Typed Pasteboard items are not yet available")); },
@@ -3214,7 +3386,8 @@ private extension HanlinScriptingApplicationSession {
           return nativeCallAsync("documentPicker.pickFiles", {
             allowsMultipleSelection: options.allowsMultipleSelection ?? false,
             shouldShowFileExtensions: options.shouldShowFileExtensions ?? true,
-            types: options.types ?? []
+            types: options.types ?? [],
+            initialDirectory: options.initialDirectory ?? null
           });
         },
         pickDirectory(initialDirectory = null) {
@@ -3226,9 +3399,41 @@ private extension HanlinScriptingApplicationSession {
         stopAcessingSecurityScopedResources() {
           nativeCallAsync("documentPicker.stopAccessingSecurityScopedResources", {}).catch(() => {});
         },
-        pickFileBookmark() { return Promise.reject(new Error("DocumentPicker bookmarks are not supported yet")); },
-        pickDirectoryBookmark() { return Promise.reject(new Error("DocumentPicker bookmarks are not supported yet")); },
-        exportFiles() { return Promise.reject(new Error("DocumentPicker export is not supported yet")); }
+        pickFileBookmark(options = {}) {
+          if (options == null || typeof options !== "object" || Array.isArray(options)) {
+            return Promise.reject(new TypeError("DocumentPicker bookmark options must be an object"));
+          }
+          return nativeCallAsync("documentPicker.pickFileBookmark", {
+            preferredName: options.preferredName ?? null,
+            initialDirectory: options.initialDirectory ?? null,
+            shouldShowFileExtensions: options.shouldShowFileExtensions ?? true,
+            types: options.types ?? []
+          });
+        },
+        pickDirectoryBookmark(options = {}) {
+          if (options == null || typeof options !== "object" || Array.isArray(options)) {
+            return Promise.reject(new TypeError("DocumentPicker bookmark options must be an object"));
+          }
+          return nativeCallAsync("documentPicker.pickDirectoryBookmark", {
+            preferredName: options.preferredName ?? null,
+            initialDirectory: options.initialDirectory ?? null
+          });
+        },
+        exportFiles(options) {
+          if (!options || typeof options !== "object" || Array.isArray(options) || !Array.isArray(options.files)) {
+            return Promise.reject(new TypeError("DocumentPicker export options require files"));
+          }
+          const files = options.files.map(file => {
+            if (!file || typeof file !== "object" || typeof file.name !== "string" || !(file.data instanceof HanlinData)) {
+              throw new TypeError("Every exported file requires a name and Data value");
+            }
+            return { name: file.name, base64: file.data.toBase64String() };
+          });
+          return nativeCallAsync("documentPicker.exportFiles", {
+            initialDirectory: options.initialDirectory ?? null,
+            files
+          });
+        }
       });
       const QuickLook = Object.freeze({
         previewURLs(urls, fullscreen = false) {
@@ -3423,7 +3628,12 @@ private extension HanlinScriptingApplicationSession {
           }
           return nativeCallAsync("safari.openURL", { url }).then(Boolean);
         },
-        present() { return Promise.reject(new Error("In-app Safari presentation is not yet available")); }
+        present(url, fullscreen = true) {
+          if (typeof url !== "string" || url.length === 0 || url.length > 8192 || typeof fullscreen !== "boolean") {
+            return Promise.reject(new TypeError("Safari.present requires a bounded URL and Boolean fullscreen value"));
+          }
+          return nativeCallAsync("safari.present", { url, fullscreen });
+        }
       });
       const appIntentRegistrations = new Map();
       const Widget = Object.freeze({

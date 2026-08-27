@@ -97,6 +97,32 @@
         "Scripts/ScriptingReference/smoke-scripting-package-runtime.mjs"
       ],
       "notes": "Validated with untouched Sefaria and agent projects reaching native split-navigation roots, a real 49-source-module package rendering a 356-node interactive ScriptUI tree, the real FileManager package, and targeted state, navigation, scrolling and control tests."
+    },
+    {
+      "symbols": [
+        "addFileBookmark",
+        "bookmarkExists",
+        "bookmarkedPath",
+        "DocumentPickerBookmarkResult",
+        "exportFiles",
+        "ExportFilesOptions",
+        "getAllFileBookmarks",
+        "pickDirectoryBookmark",
+        "PickDirectoryBookmarkOptions",
+        "pickFileBookmark",
+        "PickFileBookmarkOptions",
+        "removeFileBookmark"
+      ],
+      "status": "implemented",
+      "hanlinSymbol": "HanlinScriptingPackageFileSystem",
+      "hanlinAPIVersion": "hanlin.services/1.0",
+      "requiredCapability": "files",
+      "allowedContexts": ["mainApplication"],
+      "tests": [
+        "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift",
+        "Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs"
+      ],
+      "notes": "The declared file-bookmark and native export values and operations are connected end to end with bounded validation, package-local persistence, security-scope lifecycle handling, cancellation semantics and deterministic contract coverage."
     }
   ],
   "symbols": [
@@ -227,7 +253,7 @@
       "hanlinAPIVersion": "hanlin.services/1.0",
       "requiredCapability": "files",
       "allowedContexts": ["mainApplication", "backgroundTask", "appIntent"],
-      "behaviorDifferences": ["Hanlin exposes documents, app-group, temporary and read-only package-source roots through a bounded capability-gated VFS; iCloud, WebDAV, bookmarks, links and archive operations remain unavailable."],
+      "behaviorDifferences": ["Hanlin exposes documents, app-group, temporary and read-only package-source roots through a bounded capability-gated VFS. File bookmarks are persisted per installed package as security-scoped bookmark data, restored lazily across launches, refreshed when stale, removed when revoked or missing, and released with the package session. iCloud, WebDAV, links and archive operations remain unavailable."],
       "tests": ["AI_HLYTests/HanlinScriptingRuntimeTests.swift", "Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs", "Packages/HanlinPlatform/Tests/HanlinScriptServicesTests/HanlinScriptServiceBrokerTests.swift"],
       "notes": "The synchronous and Promise APIs used by the real FileManager acceptance project are connected to native filesystem operations; raw paths outside package roots are rejected."
     },
@@ -364,8 +390,9 @@
       "status": "partial",
       "hanlinSymbol": "HanlinScriptingApplicationSession.Pasteboard",
       "hanlinAPIVersion": "hanlin.services/1.0",
+      "requiredCapability": "pasteboard",
       "allowedContexts": ["mainApplication"],
-      "behaviorDifferences": ["Text and URL metadata, single-value and bounded multi-value reads/writes use the iOS system pasteboard through an asynchronous native channel. Image values, arbitrary UTType item dictionaries, expiration/local-only options and change callbacks remain unavailable and reject explicitly."],
+      "behaviorDifferences": ["Text, URL and image values, including bounded multi-value reads and writes, use the iOS system pasteboard through an asynchronous capability-gated native channel. Images cross the bridge as bounded encoded UIImage values. Arbitrary UTType item dictionaries, expiration/local-only options and change callbacks remain unavailable and reject explicitly."],
       "tests": ["Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift", "Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs"],
       "notes": "Implements the untouched FileManager and nativ-ai setString calls without modifying either project."
     },
@@ -374,8 +401,9 @@
       "status": "partial",
       "hanlinSymbol": "HanlinScriptingApplicationSession.Safari",
       "hanlinAPIVersion": "hanlin.services/1.0",
+      "requiredCapability": "open-url",
       "allowedContexts": ["mainApplication"],
-      "behaviorDifferences": ["openURL validates a bounded URL with an explicit scheme and delegates to the modern UIApplication asynchronous open operation. In-app SFSafariViewController presentation remains unavailable and rejects explicitly."],
+      "behaviorDifferences": ["openURL validates a bounded URL with an explicit scheme and delegates to the modern UIApplication asynchronous open operation. present accepts bounded HTTP/HTTPS URLs, presents SFSafariViewController in-app, and resolves when the user closes it. The fullscreen hint is transported but the current sheet host uses its standard adaptive presentation."],
       "tests": ["Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift", "Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs"],
       "notes": "Implements the untouched nativ-ai SettingsScreen.openURL path."
     },
@@ -397,9 +425,9 @@
       "hanlinAPIVersion": "hanlin.services/1.0",
       "requiredCapability": "files",
       "allowedContexts": ["mainApplication"],
-      "behaviorDifferences": ["pickFiles and pickDirectory present the native Files picker, retain bounded security-scoped access for the running package, and expose selected paths only to that package filesystem. stopAcessingSecurityScopedResources releases every retained scope. Persistent bookmarks, initial-directory routing and export remain unavailable and reject explicitly."],
+      "behaviorDifferences": ["pickFiles, pickDirectory and bookmark variants present the native Files picker with validated initial-directory routing. Selected paths remain package-scoped; named security-scoped bookmarks persist across launches and duplicate names require explicit user renaming. exportFiles stages bounded Data values under the package temporary root, presents the native export picker, deletes staging data at completion, and returns an empty array on cancellation. stopAcessingSecurityScopedResources releases every retained scope."],
       "tests": ["Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift", "Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs"],
-      "notes": "Implements the untouched FileManager multi-file and directory import paths without expanding general filesystem access."
+      "notes": "Implements the untouched FileManager import, persistent bookmark and native export paths without expanding general filesystem access."
     },
     {
       "symbol": "QuickLook",

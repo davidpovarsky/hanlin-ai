@@ -737,24 +737,29 @@
       "verifiedByFixture": false
     },
     {
-      "allowedContexts": [],
+      "allowedContexts": [
+        "mainApplication"
+      ],
       "allowedOrigins": [],
       "behaviorDifferences": [],
-      "behaviorMatched": false,
+      "behaviorMatched": true,
       "declarationFile": "global.d.ts",
       "declarationLine": 2856,
       "declaredByScripting": true,
-      "hanlinAPIVersion": null,
-      "hanlinSymbol": null,
-      "implementedByHanlin": false,
-      "notes": "The authorized ambient API has no complete runtime binding and conformance test yet; declaration presence is not treated as support.",
+      "hanlinAPIVersion": "hanlin.services/1.0",
+      "hanlinSymbol": "HanlinScriptingPackageFileSystem",
+      "implementedByHanlin": true,
+      "notes": "The declared file-bookmark and native export values and operations are connected end to end with bounded validation, package-local persistence, security-scope lifecycle handling, cancellation semantics and deterministic contract coverage.",
       "referenceCategory": "function",
       "referenceSignatureHash": "bf4bc313d8777501eb0d3ffa1aea9c67104d80c0097081a56caacddab6b0afc3",
       "referenceSymbol": "addFileBookmark",
-      "requiredCapability": null,
+      "requiredCapability": "files",
       "requiredEntitlement": null,
-      "status": "not-yet-implemented",
-      "tests": [],
+      "status": "implemented",
+      "tests": [
+        "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift",
+        "Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs"
+      ],
       "verifiedByFixture": false
     },
     {
@@ -5999,45 +6004,55 @@
       "verifiedByFixture": false
     },
     {
-      "allowedContexts": [],
+      "allowedContexts": [
+        "mainApplication"
+      ],
       "allowedOrigins": [],
       "behaviorDifferences": [],
-      "behaviorMatched": false,
+      "behaviorMatched": true,
       "declarationFile": "global.d.ts",
       "declarationLine": 2886,
       "declaredByScripting": true,
-      "hanlinAPIVersion": null,
-      "hanlinSymbol": null,
-      "implementedByHanlin": false,
-      "notes": "The authorized ambient API has no complete runtime binding and conformance test yet; declaration presence is not treated as support.",
+      "hanlinAPIVersion": "hanlin.services/1.0",
+      "hanlinSymbol": "HanlinScriptingPackageFileSystem",
+      "implementedByHanlin": true,
+      "notes": "The declared file-bookmark and native export values and operations are connected end to end with bounded validation, package-local persistence, security-scope lifecycle handling, cancellation semantics and deterministic contract coverage.",
       "referenceCategory": "function",
       "referenceSignatureHash": "edcb3d19890fed4ddbf9b88d1877671408e0a5ae3d36e5821a9315b3d8c65b8e",
       "referenceSymbol": "bookmarkedPath",
-      "requiredCapability": null,
+      "requiredCapability": "files",
       "requiredEntitlement": null,
-      "status": "not-yet-implemented",
-      "tests": [],
+      "status": "implemented",
+      "tests": [
+        "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift",
+        "Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs"
+      ],
       "verifiedByFixture": false
     },
     {
-      "allowedContexts": [],
+      "allowedContexts": [
+        "mainApplication"
+      ],
       "allowedOrigins": [],
       "behaviorDifferences": [],
-      "behaviorMatched": false,
+      "behaviorMatched": true,
       "declarationFile": "global.d.ts",
       "declarationLine": 2867,
       "declaredByScripting": true,
-      "hanlinAPIVersion": null,
-      "hanlinSymbol": null,
-      "implementedByHanlin": false,
-      "notes": "The authorized ambient API has no complete runtime binding and conformance test yet; declaration presence is not treated as support.",
+      "hanlinAPIVersion": "hanlin.services/1.0",
+      "hanlinSymbol": "HanlinScriptingPackageFileSystem",
+      "implementedByHanlin": true,
+      "notes": "The declared file-bookmark and native export values and operations are connected end to end with bounded validation, package-local persistence, security-scope lifecycle handling, cancellation semantics and deterministic contract coverage.",
       "referenceCategory": "function",
       "referenceSignatureHash": "936d03843ffd84144b2432f7a8b07698cbc4a345dccdfcfc26321b88c7bd9d84",
       "referenceSymbol": "bookmarkExists",
-      "requiredCapability": null,
+      "requiredCapability": "files",
       "requiredEntitlement": null,
-      "status": "not-yet-implemented",
-      "tests": [],
+      "status": "implemented",
+      "tests": [
+        "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift",
+        "Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs"
+      ],
       "verifiedByFixture": false
     },
     {
@@ -13174,24 +13189,29 @@
       "verifiedByFixture": false
     },
     {
-      "allowedContexts": [],
+      "allowedContexts": [
+        "mainApplication"
+      ],
       "allowedOrigins": [],
       "behaviorDifferences": [],
-      "behaviorMatched": false,
+      "behaviorMatched": true,
       "declarationFile": "global.d.ts",
       "declarationLine": 3959,
       "declaredByScripting": true,
-      "hanlinAPIVersion": null,
-      "hanlinSymbol": null,
-      "implementedByHanlin": false,
-      "notes": "The authorized ambient API has no complete runtime binding and conformance test yet; declaration presence is not treated as support.",
+      "hanlinAPIVersion": "hanlin.services/1.0",
+      "hanlinSymbol": "HanlinScriptingPackageFileSystem",
+      "implementedByHanlin": true,
+      "notes": "The declared file-bookmark and native export values and operations are connected end to end with bounded validation, package-local persistence, security-scope lifecycle handling, cancellation semantics and deterministic contract coverage.",
       "referenceCategory": "type",
       "referenceSignatureHash": "2fb27fc1320f683d50c797f69abc8f661ab47d571708ebc2a19612502d65d3ed",
       "referenceSymbol": "DocumentPickerBookmarkResult",
-      "requiredCapability": null,
+      "requiredCapability": "files",
       "requiredEntitlement": null,
-      "status": "not-yet-implemented",
-      "tests": [],
+      "status": "implemented",
+      "tests": [
+        "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift",
+        "Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs"
+      ],
       "verifiedByFixture": false
     },
     {
@@ -13200,7 +13220,7 @@
       ],
       "allowedOrigins": [],
       "behaviorDifferences": [
-        "pickFiles and pickDirectory present the native Files picker, retain bounded security-scoped access for the running package, and expose selected paths only to that package filesystem. stopAcessingSecurityScopedResources releases every retained scope. Persistent bookmarks, initial-directory routing and export remain unavailable and reject explicitly."
+        "pickFiles, pickDirectory and bookmark variants present the native Files picker with validated initial-directory routing. Selected paths remain package-scoped; named security-scoped bookmarks persist across launches and duplicate names require explicit user renaming. exportFiles stages bounded Data values under the package temporary root, presents the native export picker, deletes staging data at completion, and returns an empty array on cancellation. stopAcessingSecurityScopedResources releases every retained scope."
       ],
       "behaviorMatched": false,
       "declarationFile": "global.d.ts",
@@ -13209,7 +13229,7 @@
       "hanlinAPIVersion": "hanlin.services/1.0",
       "hanlinSymbol": "HanlinScriptingApplicationSession.DocumentPicker",
       "implementedByHanlin": true,
-      "notes": "Implements the untouched FileManager multi-file and directory import paths without expanding general filesystem access.",
+      "notes": "Implements the untouched FileManager import, persistent bookmark and native export paths without expanding general filesystem access.",
       "referenceCategory": "namespace",
       "referenceSignatureHash": "cb6c3d7bbb1223eaa858a99965fe4cb54a50b3e1ecf650c11371f547bdd618f9",
       "referenceSymbol": "DocumentPicker",
@@ -14931,45 +14951,55 @@
       "verifiedByFixture": false
     },
     {
-      "allowedContexts": [],
+      "allowedContexts": [
+        "mainApplication"
+      ],
       "allowedOrigins": [],
       "behaviorDifferences": [],
-      "behaviorMatched": false,
+      "behaviorMatched": true,
       "declarationFile": "global.d.ts",
       "declarationLine": 4252,
       "declaredByScripting": true,
-      "hanlinAPIVersion": null,
-      "hanlinSymbol": null,
-      "implementedByHanlin": false,
-      "notes": "The authorized ambient API has no complete runtime binding and conformance test yet; declaration presence is not treated as support.",
+      "hanlinAPIVersion": "hanlin.services/1.0",
+      "hanlinSymbol": "HanlinScriptingPackageFileSystem",
+      "implementedByHanlin": true,
+      "notes": "The declared file-bookmark and native export values and operations are connected end to end with bounded validation, package-local persistence, security-scope lifecycle handling, cancellation semantics and deterministic contract coverage.",
       "referenceCategory": "function",
       "referenceSignatureHash": "0509ca5fd7c4c30085c672ddec0f1ab390c73ba5af911c60efcfd90c4bcce3ba",
       "referenceSymbol": "exportFiles",
-      "requiredCapability": null,
+      "requiredCapability": "files",
       "requiredEntitlement": null,
-      "status": "not-yet-implemented",
-      "tests": [],
+      "status": "implemented",
+      "tests": [
+        "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift",
+        "Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs"
+      ],
       "verifiedByFixture": false
     },
     {
-      "allowedContexts": [],
+      "allowedContexts": [
+        "mainApplication"
+      ],
       "allowedOrigins": [],
       "behaviorDifferences": [],
-      "behaviorMatched": false,
+      "behaviorMatched": true,
       "declarationFile": "global.d.ts",
       "declarationLine": 3970,
       "declaredByScripting": true,
-      "hanlinAPIVersion": null,
-      "hanlinSymbol": null,
-      "implementedByHanlin": false,
-      "notes": "The authorized ambient API has no complete runtime binding and conformance test yet; declaration presence is not treated as support.",
+      "hanlinAPIVersion": "hanlin.services/1.0",
+      "hanlinSymbol": "HanlinScriptingPackageFileSystem",
+      "implementedByHanlin": true,
+      "notes": "The declared file-bookmark and native export values and operations are connected end to end with bounded validation, package-local persistence, security-scope lifecycle handling, cancellation semantics and deterministic contract coverage.",
       "referenceCategory": "type",
       "referenceSignatureHash": "5f564d70b60989bc8a9903a0c48e331628671eae28ae08f75ad799c04376697f",
       "referenceSymbol": "ExportFilesOptions",
-      "requiredCapability": null,
+      "requiredCapability": "files",
       "requiredEntitlement": null,
-      "status": "not-yet-implemented",
-      "tests": [],
+      "status": "implemented",
+      "tests": [
+        "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift",
+        "Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs"
+      ],
       "verifiedByFixture": false
     },
     {
@@ -15505,7 +15535,7 @@
       ],
       "allowedOrigins": [],
       "behaviorDifferences": [
-        "Hanlin exposes documents, app-group, temporary and read-only package-source roots through a bounded capability-gated VFS; iCloud, WebDAV, bookmarks, links and archive operations remain unavailable."
+        "Hanlin exposes documents, app-group, temporary and read-only package-source roots through a bounded capability-gated VFS. File bookmarks are persisted per installed package as security-scoped bookmark data, restored lazily across launches, refreshed when stale, removed when revoked or missing, and released with the package session. iCloud, WebDAV, links and archive operations remain unavailable."
       ],
       "behaviorMatched": false,
       "declarationFile": "global.d.ts",
@@ -16846,24 +16876,29 @@
       "verifiedByFixture": false
     },
     {
-      "allowedContexts": [],
+      "allowedContexts": [
+        "mainApplication"
+      ],
       "allowedOrigins": [],
       "behaviorDifferences": [],
-      "behaviorMatched": false,
+      "behaviorMatched": true,
       "declarationFile": "global.d.ts",
       "declarationLine": 2872,
       "declaredByScripting": true,
-      "hanlinAPIVersion": null,
-      "hanlinSymbol": null,
-      "implementedByHanlin": false,
-      "notes": "The authorized ambient API has no complete runtime binding and conformance test yet; declaration presence is not treated as support.",
+      "hanlinAPIVersion": "hanlin.services/1.0",
+      "hanlinSymbol": "HanlinScriptingPackageFileSystem",
+      "implementedByHanlin": true,
+      "notes": "The declared file-bookmark and native export values and operations are connected end to end with bounded validation, package-local persistence, security-scope lifecycle handling, cancellation semantics and deterministic contract coverage.",
       "referenceCategory": "function",
       "referenceSignatureHash": "735afe765851d1c13b9caeec1a3cbfdd5799975f09f20cb51c18a87d593bdf15",
       "referenceSymbol": "getAllFileBookmarks",
-      "requiredCapability": null,
+      "requiredCapability": "files",
       "requiredEntitlement": null,
-      "status": "not-yet-implemented",
-      "tests": [],
+      "status": "implemented",
+      "tests": [
+        "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift",
+        "Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs"
+      ],
       "verifiedByFixture": false
     },
     {
@@ -32236,7 +32271,7 @@
       ],
       "allowedOrigins": [],
       "behaviorDifferences": [
-        "Text and URL metadata, single-value and bounded multi-value reads/writes use the iOS system pasteboard through an asynchronous native channel. Image values, arbitrary UTType item dictionaries, expiration/local-only options and change callbacks remain unavailable and reject explicitly."
+        "Text, URL and image values, including bounded multi-value reads and writes, use the iOS system pasteboard through an asynchronous capability-gated native channel. Images cross the bridge as bounded encoded UIImage values. Arbitrary UTType item dictionaries, expiration/local-only options and change callbacks remain unavailable and reject explicitly."
       ],
       "behaviorMatched": false,
       "declarationFile": "global.d.ts",
@@ -32249,7 +32284,7 @@
       "referenceCategory": "namespace",
       "referenceSignatureHash": "21dc915b07fa0836fefb6e97e2fb6fd33a40dbd3a211533fc15d255e99c6cc78",
       "referenceSymbol": "Pasteboard",
-      "requiredCapability": null,
+      "requiredCapability": "pasteboard",
       "requiredEntitlement": null,
       "status": "partial",
       "tests": [
@@ -32883,45 +32918,55 @@
       "verifiedByFixture": false
     },
     {
-      "allowedContexts": [],
+      "allowedContexts": [
+        "mainApplication"
+      ],
       "allowedOrigins": [],
       "behaviorDifferences": [],
-      "behaviorMatched": false,
+      "behaviorMatched": true,
       "declarationFile": "global.d.ts",
       "declarationLine": 4229,
       "declaredByScripting": true,
-      "hanlinAPIVersion": null,
-      "hanlinSymbol": null,
-      "implementedByHanlin": false,
-      "notes": "The authorized ambient API has no complete runtime binding and conformance test yet; declaration presence is not treated as support.",
+      "hanlinAPIVersion": "hanlin.services/1.0",
+      "hanlinSymbol": "HanlinScriptingPackageFileSystem",
+      "implementedByHanlin": true,
+      "notes": "The declared file-bookmark and native export values and operations are connected end to end with bounded validation, package-local persistence, security-scope lifecycle handling, cancellation semantics and deterministic contract coverage.",
       "referenceCategory": "function",
       "referenceSignatureHash": "699519d9e7b12eeeedd0a4e9128aa6dfbd81be2bbde283efeff56f1476cc88ac",
       "referenceSymbol": "pickDirectoryBookmark",
-      "requiredCapability": null,
+      "requiredCapability": "files",
       "requiredEntitlement": null,
-      "status": "not-yet-implemented",
-      "tests": [],
+      "status": "implemented",
+      "tests": [
+        "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift",
+        "Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs"
+      ],
       "verifiedByFixture": false
     },
     {
-      "allowedContexts": [],
+      "allowedContexts": [
+        "mainApplication"
+      ],
       "allowedOrigins": [],
       "behaviorDifferences": [],
-      "behaviorMatched": false,
+      "behaviorMatched": true,
       "declarationFile": "global.d.ts",
       "declarationLine": 3947,
       "declaredByScripting": true,
-      "hanlinAPIVersion": null,
-      "hanlinSymbol": null,
-      "implementedByHanlin": false,
-      "notes": "The authorized ambient API has no complete runtime binding and conformance test yet; declaration presence is not treated as support.",
+      "hanlinAPIVersion": "hanlin.services/1.0",
+      "hanlinSymbol": "HanlinScriptingPackageFileSystem",
+      "implementedByHanlin": true,
+      "notes": "The declared file-bookmark and native export values and operations are connected end to end with bounded validation, package-local persistence, security-scope lifecycle handling, cancellation semantics and deterministic contract coverage.",
       "referenceCategory": "type",
       "referenceSignatureHash": "7fce0ec1b3bc156bfdd15fd93737590ff81a020176a52139c1536e7ed4bd8884",
       "referenceSymbol": "PickDirectoryBookmarkOptions",
-      "requiredCapability": null,
+      "requiredCapability": "files",
       "requiredEntitlement": null,
-      "status": "not-yet-implemented",
-      "tests": [],
+      "status": "implemented",
+      "tests": [
+        "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift",
+        "Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs"
+      ],
       "verifiedByFixture": false
     },
     {
@@ -33039,45 +33084,55 @@
       "verifiedByFixture": false
     },
     {
-      "allowedContexts": [],
+      "allowedContexts": [
+        "mainApplication"
+      ],
       "allowedOrigins": [],
       "behaviorDifferences": [],
-      "behaviorMatched": false,
+      "behaviorMatched": true,
       "declarationFile": "global.d.ts",
       "declarationLine": 4221,
       "declaredByScripting": true,
-      "hanlinAPIVersion": null,
-      "hanlinSymbol": null,
-      "implementedByHanlin": false,
-      "notes": "The authorized ambient API has no complete runtime binding and conformance test yet; declaration presence is not treated as support.",
+      "hanlinAPIVersion": "hanlin.services/1.0",
+      "hanlinSymbol": "HanlinScriptingPackageFileSystem",
+      "implementedByHanlin": true,
+      "notes": "The declared file-bookmark and native export values and operations are connected end to end with bounded validation, package-local persistence, security-scope lifecycle handling, cancellation semantics and deterministic contract coverage.",
       "referenceCategory": "function",
       "referenceSignatureHash": "17c7f24d8da32738a82eb4862510e0b5c1e6e1c53eb02ae248211d58d400a346",
       "referenceSymbol": "pickFileBookmark",
-      "requiredCapability": null,
+      "requiredCapability": "files",
       "requiredEntitlement": null,
-      "status": "not-yet-implemented",
-      "tests": [],
+      "status": "implemented",
+      "tests": [
+        "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift",
+        "Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs"
+      ],
       "verifiedByFixture": false
     },
     {
-      "allowedContexts": [],
+      "allowedContexts": [
+        "mainApplication"
+      ],
       "allowedOrigins": [],
       "behaviorDifferences": [],
-      "behaviorMatched": false,
+      "behaviorMatched": true,
       "declarationFile": "global.d.ts",
       "declarationLine": 3926,
       "declaredByScripting": true,
-      "hanlinAPIVersion": null,
-      "hanlinSymbol": null,
-      "implementedByHanlin": false,
-      "notes": "The authorized ambient API has no complete runtime binding and conformance test yet; declaration presence is not treated as support.",
+      "hanlinAPIVersion": "hanlin.services/1.0",
+      "hanlinSymbol": "HanlinScriptingPackageFileSystem",
+      "implementedByHanlin": true,
+      "notes": "The declared file-bookmark and native export values and operations are connected end to end with bounded validation, package-local persistence, security-scope lifecycle handling, cancellation semantics and deterministic contract coverage.",
       "referenceCategory": "type",
       "referenceSignatureHash": "07161140ae24a578b3d45d36bc655ad243b9da30ce183f66161ee1ce2a3a919e",
       "referenceSymbol": "PickFileBookmarkOptions",
-      "requiredCapability": null,
+      "requiredCapability": "files",
       "requiredEntitlement": null,
-      "status": "not-yet-implemented",
-      "tests": [],
+      "status": "implemented",
+      "tests": [
+        "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift",
+        "Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs"
+      ],
       "verifiedByFixture": false
     },
     {
@@ -37019,24 +37074,29 @@
       "verifiedByFixture": false
     },
     {
-      "allowedContexts": [],
+      "allowedContexts": [
+        "mainApplication"
+      ],
       "allowedOrigins": [],
       "behaviorDifferences": [],
-      "behaviorMatched": false,
+      "behaviorMatched": true,
       "declarationFile": "global.d.ts",
       "declarationLine": 2862,
       "declaredByScripting": true,
-      "hanlinAPIVersion": null,
-      "hanlinSymbol": null,
-      "implementedByHanlin": false,
-      "notes": "The authorized ambient API has no complete runtime binding and conformance test yet; declaration presence is not treated as support.",
+      "hanlinAPIVersion": "hanlin.services/1.0",
+      "hanlinSymbol": "HanlinScriptingPackageFileSystem",
+      "implementedByHanlin": true,
+      "notes": "The declared file-bookmark and native export values and operations are connected end to end with bounded validation, package-local persistence, security-scope lifecycle handling, cancellation semantics and deterministic contract coverage.",
       "referenceCategory": "function",
       "referenceSignatureHash": "07276650b90e074d425ac1df9bb38df3475c28f45dbe1831fe200a78f395fc5d",
       "referenceSymbol": "removeFileBookmark",
-      "requiredCapability": null,
+      "requiredCapability": "files",
       "requiredEntitlement": null,
-      "status": "not-yet-implemented",
-      "tests": [],
+      "status": "implemented",
+      "tests": [
+        "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift",
+        "Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs"
+      ],
       "verifiedByFixture": false
     },
     {
@@ -39571,7 +39631,7 @@
       ],
       "allowedOrigins": [],
       "behaviorDifferences": [
-        "openURL validates a bounded URL with an explicit scheme and delegates to the modern UIApplication asynchronous open operation. In-app SFSafariViewController presentation remains unavailable and rejects explicitly."
+        "openURL validates a bounded URL with an explicit scheme and delegates to the modern UIApplication asynchronous open operation. present accepts bounded HTTP/HTTPS URLs, presents SFSafariViewController in-app, and resolves when the user closes it. The fullscreen hint is transported but the current sheet host uses its standard adaptive presentation."
       ],
       "behaviorMatched": false,
       "declarationFile": "global.d.ts",
@@ -39584,7 +39644,7 @@
       "referenceCategory": "namespace",
       "referenceSignatureHash": "ad0de2eb0f4a605a4fc0d2172ff451f651a22807b1768fe211a2d2a01926a414",
       "referenceSymbol": "Safari",
-      "requiredCapability": null,
+      "requiredCapability": "open-url",
       "requiredEntitlement": null,
       "status": "partial",
       "tests": [
