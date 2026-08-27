@@ -6541,24 +6541,31 @@
       "verifiedByFixture": false
     },
     {
-      "allowedContexts": [],
+      "allowedContexts": [
+        "mainApplication"
+      ],
       "allowedOrigins": [],
-      "behaviorDifferences": [],
+      "behaviorDifferences": [
+        "forReminders and defaultForReminders return real EventKit calendar identities, titles, types and editability for Reminder filtering and assignment. Event calendars, sources, colors, creation, mutation, deletion and chooser presentation remain unavailable."
+      ],
       "behaviorMatched": false,
       "declarationFile": "global.d.ts",
       "declarationLine": 4950,
       "declaredByScripting": true,
-      "hanlinAPIVersion": null,
-      "hanlinSymbol": null,
-      "implementedByHanlin": false,
-      "notes": "The authorized ambient API has no complete runtime binding and conformance test yet; declaration presence is not treated as support.",
+      "hanlinAPIVersion": "hanlin.services/1.0",
+      "hanlinSymbol": "HanlinScriptingApplicationSession.Calendar",
+      "implementedByHanlin": true,
+      "notes": "The Calendar bridge is intentionally limited to the reminder-calendar subset completed in this unit and remains classified partial.",
       "referenceCategory": "class",
       "referenceSignatureHash": "e8c7708b03f0e760ff07cedf097f8eae25691158339ff9461cccab72f3d053b4",
       "referenceSymbol": "Calendar",
-      "requiredCapability": null,
+      "requiredCapability": "reminders",
       "requiredEntitlement": null,
-      "status": "not-yet-implemented",
-      "tests": [],
+      "status": "partial",
+      "tests": [
+        "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift",
+        "Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs"
+      ],
       "verifiedByFixture": false
     },
     {
@@ -36809,7 +36816,7 @@
       ],
       "allowedOrigins": [],
       "behaviorDifferences": [
-        "Creating and saving a reminder with a bounded title, optional notes, priority and DateComponents uses EventKit and returns the native calendar-item identifier. Editing existing reminders, completion state, recurrence rules, alarms, calendar selection, deletion and queries remain unavailable and reject explicitly."
+        "Bounded Reminder create/update, completion state, calendar selection, identifier lookup, deletion, all/incomplete/completed queries and calendar discovery use EventKit through a capability-gated async bridge. DateComponents and completion dates round-trip with stable calendar-item identities. Recurrence rules, alarms and attendee values remain unavailable and reject explicitly."
       ],
       "behaviorMatched": false,
       "declarationFile": "global.d.ts",
@@ -36818,7 +36825,7 @@
       "hanlinAPIVersion": "hanlin.services/1.0",
       "hanlinSymbol": "HanlinScriptingApplicationSession.Reminder",
       "implementedByHanlin": true,
-      "notes": "Implements the untouched nativ-ai reminder tool flow and requests modern full Reminders access only when save is invoked.",
+      "notes": "Implements the untouched nativ-ai reminder tool flow and requests modern full Reminders access only when an EventKit operation is invoked. Query results are bounded and malformed identities, calendars, dates and ranges fail closed.",
       "referenceCategory": "class",
       "referenceSignatureHash": "7be248b1d0976453bfefbabd2c8e1ca77a3db2ac77e0cc497efcd264a4d0ea14",
       "referenceSymbol": "Reminder",

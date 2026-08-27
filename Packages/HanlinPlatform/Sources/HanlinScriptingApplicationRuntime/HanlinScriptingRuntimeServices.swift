@@ -1045,33 +1045,130 @@ enum HanlinScriptingNotificationPayloadDecoder {
 }
 
 public struct HanlinScriptingReminderSaveRequest: Sendable {
+    public let identifier: String?
+    public let calendarIdentifier: String?
     public let title: String
     public let notes: String?
     public let priority: Int
+    public let isCompleted: Bool
+    public let completionDateMilliseconds: Double?
     public let dueDateComponents: [String: Int]?
     public let timeZoneIdentifier: String?
 
     public init(
+        identifier: String? = nil,
+        calendarIdentifier: String? = nil,
         title: String,
         notes: String? = nil,
         priority: Int = 0,
+        isCompleted: Bool = false,
+        completionDateMilliseconds: Double? = nil,
         dueDateComponents: [String: Int]? = nil,
         timeZoneIdentifier: String? = nil
     ) {
+        self.identifier = identifier
+        self.calendarIdentifier = calendarIdentifier
         self.title = title
         self.notes = notes
         self.priority = priority
+        self.isCompleted = isCompleted
+        self.completionDateMilliseconds = completionDateMilliseconds
         self.dueDateComponents = dueDateComponents
         self.timeZoneIdentifier = timeZoneIdentifier
     }
 }
 
+public struct HanlinScriptingReminderQuery: Sendable {
+    public enum Kind: Sendable { case all, incomplete, completed }
+    public let kind: Kind
+    public let startMilliseconds: Double?
+    public let endMilliseconds: Double?
+    public let calendarIdentifiers: [String]
+}
+
+public enum HanlinScriptingReminderRequest: Sendable {
+    case save(HanlinScriptingReminderSaveRequest)
+    case remove(identifier: String)
+    case get(identifier: String)
+    case fetch(HanlinScriptingReminderQuery)
+    case calendars
+    case defaultCalendar
+}
+
+public struct HanlinScriptingCalendarValue: Sendable {
+    public let identifier: String
+    public let title: String
+    public let type: Int
+    public let allowsContentModifications: Bool
+
+    public init(identifier: String, title: String, type: Int, allowsContentModifications: Bool) {
+        self.identifier = identifier
+        self.title = title
+        self.type = type
+        self.allowsContentModifications = allowsContentModifications
+    }
+
+    fileprivate var nativeObject: [String: Any] {
+        ["identifier": identifier, "title": title, "type": type,
+         "allowsContentModifications": allowsContentModifications]
+    }
+}
+
+public struct HanlinScriptingReminderValue: Sendable {
+    public let identifier: String
+    public let calendar: HanlinScriptingCalendarValue
+    public let title: String
+    public let notes: String?
+    public let priority: Int
+    public let isCompleted: Bool
+    public let completionDateMilliseconds: Double?
+    public let dueDateComponents: [String: Int]?
+    public let timeZoneIdentifier: String?
+
+    public init(identifier: String, calendar: HanlinScriptingCalendarValue, title: String, notes: String?,
+                priority: Int, isCompleted: Bool, completionDateMilliseconds: Double?,
+                dueDateComponents: [String: Int]?, timeZoneIdentifier: String?) {
+        self.identifier = identifier; self.calendar = calendar; self.title = title; self.notes = notes
+        self.priority = priority; self.isCompleted = isCompleted
+        self.completionDateMilliseconds = completionDateMilliseconds
+        self.dueDateComponents = dueDateComponents; self.timeZoneIdentifier = timeZoneIdentifier
+    }
+
+    fileprivate var nativeObject: [String: Any] {
+        ["identifier": identifier, "calendar": calendar.nativeObject, "title": title,
+         "notes": notes ?? NSNull(), "priority": priority, "isCompleted": isCompleted,
+         "completionDateMilliseconds": completionDateMilliseconds ?? NSNull(),
+         "dueDateComponents": dueDateComponents ?? NSNull(),
+         "timeZoneIdentifier": timeZoneIdentifier ?? NSNull()]
+    }
+}
+
+public enum HanlinScriptingReminderResult: Sendable {
+    case identifier(String)
+    case completed
+    case reminder(HanlinScriptingReminderValue?)
+    case reminders([HanlinScriptingReminderValue])
+    case calendars([HanlinScriptingCalendarValue])
+    case calendar(HanlinScriptingCalendarValue?)
+
+    var nativeObject: Any {
+        switch self {
+        case let .identifier(value): value
+        case .completed: NSNull()
+        case let .reminder(value): value?.nativeObject ?? NSNull()
+        case let .reminders(values): values.map(\.nativeObject)
+        case let .calendars(values): values.map(\.nativeObject)
+        case let .calendar(value): value?.nativeObject ?? NSNull()
+        }
+    }
+}
+
 public typealias HanlinScriptingReminderLoader = @MainActor @Sendable (
-    HanlinScriptingReminderSaveRequest
-) async throws -> String
+    HanlinScriptingReminderRequest
+) async throws -> HanlinScriptingReminderResult
 
 public enum HanlinScriptingUnavailableReminderLoader {
-    public static func load(_ request: HanlinScriptingReminderSaveRequest) async throws -> String {
+    public static func load(_ request: HanlinScriptingReminderRequest) async throws -> HanlinScriptingReminderResult {
         _ = request
         throw HanlinScriptingNativeError(
             name: "Error",
@@ -1087,17 +1184,35 @@ enum HanlinScriptingReminderPayloadDecoder {
         "weekOfYear", "weekday", "weekdayOrdinal", "day", "hour", "minute", "second", "nanosecond",
     ])
 
-    static func decode(operation: String, json: String) throws -> HanlinScriptingReminderSaveRequest {
-        guard operation == "reminder.save" else {
-            throw invalid("The Reminder operation is unavailable.")
-        }
+    static func decode(operation: String, json: String) throws -> HanlinScriptingReminderRequest {
         let payload = try HanlinScriptingNativeJSON.decodeObject(json)
+        if operation == "reminder.remove" || operation == "reminder.get" {
+            let identifier = try requiredString(payload["identifier"], name: "identifier", maximumBytes: 512)
+            return operation == "reminder.remove" ? .remove(identifier: identifier) : .get(identifier: identifier)
+        }
+        if operation == "reminder.getAll" || operation == "reminder.getIncompletes" || operation == "reminder.getCompleteds" {
+            let kind: HanlinScriptingReminderQuery.Kind = operation == "reminder.getAll" ? .all
+                : operation == "reminder.getIncompletes" ? .incomplete : .completed
+            let start = try optionalNumber(payload["startMilliseconds"], name: "startDate")
+            let end = try optionalNumber(payload["endMilliseconds"], name: "endDate")
+            if let start, let end, start > end { throw invalid("Reminder date range is invalid.") }
+            let calendars = try optionalStrings(payload["calendarIdentifiers"], name: "calendars")
+            return .fetch(.init(kind: kind, startMilliseconds: start, endMilliseconds: end,
+                                calendarIdentifiers: calendars))
+        }
+        if operation == "reminder.calendars" { return .calendars }
+        if operation == "reminder.defaultCalendar" { return .defaultCalendar }
+        guard operation == "reminder.save" else { throw invalid("The Reminder operation is unavailable.") }
+        let identifier = try optionalString(payload["identifier"], name: "identifier", maximumBytes: 512)
+        let calendarIdentifier = try optionalString(payload["calendarIdentifier"], name: "calendar", maximumBytes: 512)
         let title = try requiredString(payload["title"], name: "title", maximumBytes: 4_096)
         let notes = try optionalString(payload["notes"], name: "notes", maximumBytes: 65_536)
         let priority = try integer(payload["priority"] ?? 0, name: "priority")
         guard (0 ... 9).contains(priority) else {
             throw invalid("Reminder priority must be between 0 and 9.")
         }
+        let isCompleted = try boolean(payload["isCompleted"] ?? false, name: "isCompleted")
+        let completionDate = try optionalNumber(payload["completionDateMilliseconds"], name: "completionDate")
 
         var components: [String: Int]?
         var timeZoneIdentifier: String?
@@ -1115,13 +1230,42 @@ enum HanlinScriptingReminderPayloadDecoder {
             components = decoded
             timeZoneIdentifier = try optionalString(raw["timeZone"], name: "timeZone", maximumBytes: 128)
         }
-        return .init(
+        return .save(.init(
+            identifier: identifier,
+            calendarIdentifier: calendarIdentifier,
             title: title,
             notes: notes,
             priority: priority,
+            isCompleted: isCompleted,
+            completionDateMilliseconds: completionDate,
             dueDateComponents: components,
             timeZoneIdentifier: timeZoneIdentifier
-        )
+        ))
+    }
+
+    private static func boolean(_ value: Any, name: String) throws -> Bool {
+        guard let number = value as? NSNumber, CFGetTypeID(number) == CFBooleanGetTypeID() else {
+            throw invalid("Reminder \(name) is invalid.")
+        }
+        return number.boolValue
+    }
+
+    private static func optionalNumber(_ value: Any?, name: String) throws -> Double? {
+        guard let value, !(value is NSNull) else { return nil }
+        guard let number = value as? NSNumber, CFGetTypeID(number) != CFBooleanGetTypeID(),
+              number.doubleValue.isFinite,
+              abs(number.doubleValue) <= 8_640_000_000_000_000 else {
+            throw invalid("Reminder \(name) is invalid.")
+        }
+        return number.doubleValue
+    }
+
+    private static func optionalStrings(_ value: Any?, name: String) throws -> [String] {
+        guard let value, !(value is NSNull) else { return [] }
+        guard let values = value as? [Any], values.count <= 64 else {
+            throw invalid("Reminder \(name) is invalid.")
+        }
+        return try values.map { try requiredString($0, name: name, maximumBytes: 512) }
     }
 
     private static func integer(_ value: Any, name: String) throws -> Int {

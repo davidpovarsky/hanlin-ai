@@ -3279,10 +3279,12 @@
     },
     {
       "symbol": "Calendar",
-      "state": "unsupported",
-      "operation": "unimplemented",
-      "capability": null,
-      "contexts": [],
+      "state": "partial",
+      "operation": "HanlinScriptingApplicationSession.Calendar",
+      "capability": "reminders",
+      "contexts": [
+        "mainApplication"
+      ],
       "declarationEvidence": [
         {
           "category": "class",

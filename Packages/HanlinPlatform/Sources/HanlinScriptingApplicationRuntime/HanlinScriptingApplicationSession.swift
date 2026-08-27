@@ -996,7 +996,7 @@ public final class HanlinScriptingApplicationSession {
                 operation: operation,
                 json: payloadJSON
             )
-            return HanlinScriptingNativeJSON.success(try await reminderLoader(request))
+            return HanlinScriptingNativeJSON.success(try await reminderLoader(request).nativeObject)
         }
         if operation.hasPrefix("liveActivity.") {
             guard liveActivityAllowed else {
@@ -2267,16 +2267,68 @@ private extension HanlinScriptingApplicationSession {
         static forMonthly(date) { const value = this.fromDate(date); return new DateComponents({ day: value.day, hour: value.hour, minute: value.minute }); }
       }
 
+      class HanlinCalendar {
+        constructor(value) {
+          const types = ["local", "calDAV", "exchange", "subscription", "birthday"];
+          if (!types[value.type]) throw new Error("HANLIN_REMINDER:invalid_calendar_type");
+          this.identifier = String(value.identifier);
+          this.title = String(value.title ?? "");
+          this.type = types[value.type];
+          this.allowsContentModifications = value.allowsContentModifications === true;
+          this.isForEvents = false;
+          this.isForReminders = true;
+          this.isSubscribed = false;
+          this.allowedEntityTypes = "reminder";
+          this.color = null;
+          this.source = null;
+          this.supportedEventAvailabilities = [];
+        }
+        static forReminders() {
+          return nativeCallAsync("reminder.calendars", {}).then(values => values.map(value => new HanlinCalendar(value)));
+        }
+        static defaultForReminders() {
+          return nativeCallAsync("reminder.defaultCalendar", {})
+            .then(value => value == null ? null : new HanlinCalendar(value));
+        }
+      }
+
+      function reminderDateMilliseconds(value, name) {
+        if (value == null) return null;
+        if (!(value instanceof Date) || !Number.isFinite(value.getTime())) {
+          throw new TypeError(`Reminder ${name} must be a valid Date`);
+        }
+        return value.getTime();
+      }
+      function reminderQueryPayload(options = {}) {
+        if (!options || typeof options !== "object" || Array.isArray(options)) {
+          throw new TypeError("Reminder query options must be an object");
+        }
+        if (options.calendars != null && (!Array.isArray(options.calendars)
+            || options.calendars.some(value => !(value instanceof HanlinCalendar)))) {
+          throw new TypeError("Reminder calendars must be Calendar values");
+        }
+        return {
+          startMilliseconds: reminderDateMilliseconds(options.startDate, "startDate"),
+          endMilliseconds: reminderDateMilliseconds(options.endDate, "endDate"),
+          calendarIdentifiers: options.calendars?.map(value => value.identifier) ?? []
+        };
+      }
+
       class Reminder {
-        constructor() {
-          this.identifier = null;
-          this.calendar = null;
-          this.title = "";
-          this.notes = null;
-          this.isCompleted = false;
-          this.priority = 0;
-          this.completionDate = null;
-          this.dueDateComponents = null;
+        constructor(value = null) {
+          this.identifier = value?.identifier ?? null;
+          this.calendar = value?.calendar ? new HanlinCalendar(value.calendar) : null;
+          this.title = value?.title ?? "";
+          this.notes = value?.notes ?? null;
+          this.isCompleted = value?.isCompleted === true;
+          this.priority = value?.priority ?? 0;
+          this.completionDate = value?.completionDateMilliseconds == null
+            ? null : new Date(value.completionDateMilliseconds);
+          this.dueDateComponents = value?.dueDateComponents == null
+            ? null : new DateComponents({
+                ...value.dueDateComponents,
+                ...(value.timeZoneIdentifier == null ? {} : { timeZone: value.timeZoneIdentifier })
+              });
           this.recurrenceRules = [];
           this.alarms = [];
         }
@@ -2287,19 +2339,55 @@ private extension HanlinScriptingApplicationSession {
           if (this.dueDateComponents != null && !(this.dueDateComponents instanceof DateComponents)) {
             return Promise.reject(new TypeError("Reminder dueDateComponents must be DateComponents"));
           }
-          if (this.isCompleted || this.completionDate != null || this.recurrenceRules.length || this.alarms.length) {
+          if (this.recurrenceRules.length || this.alarms.length) {
             return Promise.reject(new TypeError("The requested Reminder feature is not supported yet"));
           }
+          let completionDateMilliseconds;
+          try { completionDateMilliseconds = reminderDateMilliseconds(this.completionDate, "completionDate"); }
+          catch (error) { return Promise.reject(error); }
+          if (completionDateMilliseconds != null) this.isCompleted = true;
           return nativeCallAsync("reminder.save", {
+            identifier: this.identifier,
+            calendarIdentifier: this.calendar?.identifier ?? null,
             title: this.title,
             notes: this.notes,
             priority: this.priority,
+            isCompleted: this.isCompleted,
+            completionDateMilliseconds,
             dueDateComponents: this.dueDateComponents
           }).then(identifier => { this.identifier = identifier; });
         }
-        remove() { return Promise.reject(new Error("Reminder.remove is not supported yet")); }
-        static getAll() { return Promise.reject(new Error("Reminder.getAll is not supported yet")); }
-        static getCalendars() { return Promise.reject(new Error("Reminder.getCalendars is not supported yet")); }
+        remove() {
+          if (typeof this.identifier !== "string" || !this.identifier) {
+            return Promise.reject(new TypeError("A saved Reminder identifier is required"));
+          }
+          return nativeCallAsync("reminder.remove", { identifier: this.identifier });
+        }
+        static get(identifier) {
+          if (typeof identifier !== "string" || !identifier) {
+            return Promise.reject(new TypeError("A Reminder identifier is required"));
+          }
+          return nativeCallAsync("reminder.get", { identifier }).then(value => value == null ? null : new Reminder(value));
+        }
+        static getAll(calendars = null) {
+          try {
+            const payload = reminderQueryPayload({ calendars });
+            return nativeCallAsync("reminder.getAll", payload).then(values => values.map(value => new Reminder(value)));
+          } catch (error) { return Promise.reject(error); }
+        }
+        static getIncompletes(options = {}) {
+          try {
+            return nativeCallAsync("reminder.getIncompletes", reminderQueryPayload(options))
+              .then(values => values.map(value => new Reminder(value)));
+          } catch (error) { return Promise.reject(error); }
+        }
+        static getCompleteds(options = {}) {
+          try {
+            return nativeCallAsync("reminder.getCompleteds", reminderQueryPayload(options))
+              .then(values => values.map(value => new Reminder(value)));
+          } catch (error) { return Promise.reject(error); }
+        }
+        static getCalendars() { return HanlinCalendar.forReminders(); }
       }
 
       class CalendarNotificationTrigger {
@@ -3759,7 +3847,7 @@ private extension HanlinScriptingApplicationSession {
         AbortSignal: HanlinAbortSignal, AbortController: HanlinAbortController,
         Storage, SQLite, Assistant, Location, Health, HealthUnit, HealthStatistics,
         HealthActivitySummary, HealthWorkout,
-        Notification, Reminder, DateComponents, CalendarNotificationTrigger, TimeIntervalNotificationTrigger,
+        Notification, Reminder, Calendar: HanlinCalendar, DateComponents, CalendarNotificationTrigger, TimeIntervalNotificationTrigger,
         LiveActivity, Intent, IntentValue: HanlinIntentValue, IntentTextValue,
         IntentAttributedTextValue, IntentURLValue, IntentJsonValue, IntentFileValue,
         IntentFileURLValue, IntentImageValue, IntentViewValue,

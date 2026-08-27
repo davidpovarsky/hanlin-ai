@@ -157,6 +157,30 @@ function runtime(entrypointKind = "application", widgetFamily = "systemMedium", 
               ? true
             : operation === "reminder.save"
               ? "eventkit-reminder-id"
+            : operation === "reminder.calendars"
+              ? [{ identifier: "calendar-1", title: "Reminders", type: 0, allowsContentModifications: true }]
+            : operation === "reminder.defaultCalendar"
+              ? { identifier: "calendar-1", title: "Reminders", type: 0, allowsContentModifications: true }
+            : operation === "reminder.get"
+              ? {
+                  identifier: payload.identifier,
+                  calendar: { identifier: "calendar-1", title: "Reminders", type: 0, allowsContentModifications: true },
+                  title: "Fetched", notes: null, priority: 5, isCompleted: false,
+                  completionDateMilliseconds: null,
+                  dueDateComponents: { year: 2027, month: 3, day: 4 }, timeZoneIdentifier: "UTC",
+                }
+            : operation === "reminder.getAll" || operation === "reminder.getIncompletes"
+                || operation === "reminder.getCompleteds"
+              ? [{
+                  identifier: "reminder-1",
+                  calendar: { identifier: "calendar-1", title: "Reminders", type: 0, allowsContentModifications: true },
+                  title: "Fetched", notes: null, priority: 5,
+                  isCompleted: operation === "reminder.getCompleteds",
+                  completionDateMilliseconds: operation === "reminder.getCompleteds" ? 1800000000000 : null,
+                  dueDateComponents: { year: 2027, month: 3, day: 4 }, timeZoneIdentifier: "UTC",
+                }]
+            : operation === "reminder.remove"
+              ? null
             : operation === "documentPicker.pickFiles"
               ? (files.set("/external/source.txt", Buffer.from("selected-content").toString("base64")), ["/external/source.txt"])
             : operation === "documentPicker.pickDirectory"
@@ -444,10 +468,46 @@ test("nativ-ai creates a Reminder with DateComponents and receives its identifie
   assert.deepEqual(reminderRequests, [{
     operation: "reminder.save",
     payload: {
+      identifier: null, calendarIdentifier: null,
       title: "Take medicine", notes: "After dinner", priority: 1,
+      isCompleted: false, completionDateMilliseconds: null,
       dueDateComponents: { year: 2027, month: 2, day: 3, hour: 18, minute: 45 },
     },
   }]);
+});
+
+test("Reminder fetch, query, calendar, update, and remove preserve EventKit identities", async () => {
+  const { context, reminderRequests } = runtime();
+  const result = await vm.runInContext(`
+    (async () => {
+      const calendars = await Calendar.forReminders();
+      const defaultCalendar = await Calendar.defaultForReminders();
+      const reminder = await Reminder.get("reminder-1");
+      reminder.calendar = calendars[0];
+      reminder.isCompleted = true;
+      reminder.completionDate = new Date("2027-01-15T08:00:00Z");
+      await reminder.save();
+      const all = await Reminder.getAll(calendars);
+      const incomplete = await Reminder.getIncompletes({
+        startDate: new Date("2027-01-01T00:00:00Z"), calendars
+      });
+      const completed = await Reminder.getCompleteds({
+        endDate: new Date("2027-12-31T23:59:59Z"), calendars
+      });
+      await reminder.remove();
+      return [calendars[0] instanceof Calendar, defaultCalendar.identifier, reminder.title, all.length,
+        incomplete.length, completed[0].isCompleted, completed[0].completionDate instanceof Date];
+    })()
+  `, context);
+  assert.deepEqual(JSON.parse(JSON.stringify(result)), [true, "calendar-1", "Fetched", 1, 1, true, true]);
+  assert.deepEqual(reminderRequests.map(value => value.operation), [
+    "reminder.calendars", "reminder.defaultCalendar", "reminder.get", "reminder.save", "reminder.getAll",
+    "reminder.getIncompletes", "reminder.getCompleteds", "reminder.remove",
+  ]);
+  assert.equal(reminderRequests[3].payload.identifier, "reminder-1");
+  assert.equal(reminderRequests[3].payload.calendarIdentifier, "calendar-1");
+  assert.equal(reminderRequests[3].payload.completionDateMilliseconds, 1800000000000);
+  assert.deepEqual(reminderRequests[4].payload.calendarIdentifiers, ["calendar-1"]);
 });
 
 test("FileManager imports DocumentPicker files and opens its package copy in QuickLook", async () => {

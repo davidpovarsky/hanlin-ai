@@ -416,7 +416,7 @@ final class HanlinScriptingPlatform {
                 remindersAllowed: package.grantedCapabilities.contains(remindersCapability),
                 reminderLoader: { [weak self] request in
                     guard let self else { throw CancellationError() }
-                    return try await self.performReminderSave(request)
+                    return try await self.performReminder(request)
                 },
                 photosAllowed: package.grantedCapabilities.contains(photosCapability),
                 pasteboardAllowed: package.grantedCapabilities.contains(pasteboardCapability),
@@ -1111,15 +1111,62 @@ final class HanlinScriptingPlatform {
         }
     }
 
-    private func performReminderSave(
-        _ request: HanlinScriptingReminderSaveRequest
-    ) async throws -> String {
-        try await calendarService.saveReminder(
-            title: request.title,
-            notes: request.notes,
-            priority: request.priority,
-            dueDateComponentValues: request.dueDateComponents,
-            timeZoneIdentifier: request.timeZoneIdentifier
+    private func performReminder(
+        _ request: HanlinScriptingReminderRequest
+    ) async throws -> HanlinScriptingReminderResult {
+        switch request {
+        case let .save(value):
+            return .identifier(try await calendarService.saveReminder(
+                identifier: value.identifier,
+                calendarIdentifier: value.calendarIdentifier,
+                title: value.title,
+                notes: value.notes,
+                priority: value.priority,
+                isCompleted: value.isCompleted,
+                completionDate: value.completionDateMilliseconds.map {
+                    Date(timeIntervalSince1970: $0 / 1_000)
+                },
+                dueDateComponentValues: value.dueDateComponents,
+                timeZoneIdentifier: value.timeZoneIdentifier
+            ))
+        case let .remove(identifier):
+            try await calendarService.removeReminder(identifier: identifier)
+            return .completed
+        case let .get(identifier):
+            return .reminder(try await calendarService.reminder(identifier: identifier).map(Self.scriptingReminder))
+        case let .fetch(query):
+            let completed: Bool? = switch query.kind {
+            case .all: nil
+            case .incomplete: false
+            case .completed: true
+            }
+            let values = try await calendarService.reminders(
+                completed: completed,
+                startDate: query.startMilliseconds.map { Date(timeIntervalSince1970: $0 / 1_000) },
+                endDate: query.endMilliseconds.map { Date(timeIntervalSince1970: $0 / 1_000) },
+                calendarIdentifiers: query.calendarIdentifiers
+            )
+            return .reminders(values.map(Self.scriptingReminder))
+        case .calendars:
+            return .calendars(try await calendarService.reminderCalendars().map(Self.scriptingCalendar))
+        case .defaultCalendar:
+            return .calendar(try await calendarService.defaultReminderCalendar().map(Self.scriptingCalendar))
+        }
+    }
+
+    private static func scriptingCalendar(_ value: HanlinScriptReminderCalendar) -> HanlinScriptingCalendarValue {
+        .init(identifier: value.identifier, title: value.title, type: value.type,
+              allowsContentModifications: value.allowsContentModifications)
+    }
+
+    private static func scriptingReminder(_ value: HanlinScriptReminderItem) -> HanlinScriptingReminderValue {
+        .init(
+            identifier: value.identifier, calendar: scriptingCalendar(value.calendar),
+            title: value.title, notes: value.notes, priority: value.priority,
+            isCompleted: value.isCompleted,
+            completionDateMilliseconds: value.completionDate.map { $0.timeIntervalSince1970 * 1_000 },
+            dueDateComponents: value.dueDateComponentValues,
+            timeZoneIdentifier: value.timeZoneIdentifier
         )
     }
 

@@ -349,13 +349,17 @@ struct HanlinScriptingApplicationRuntimeTests {
             storageAllowed: false,
             remindersAllowed: true,
             reminderLoader: { request in
+                guard case let .save(request) = request else {
+                    Issue.record("Expected Reminder save request")
+                    return .completed
+                }
                 #expect(request.title == "Take medicine")
                 #expect(request.notes == "After dinner")
                 #expect(request.priority == 1)
                 #expect(request.dueDateComponents == [
                     "year": 2027, "month": 2, "day": 3, "hour": 18, "minute": 45,
                 ])
-                return "eventkit-reminder-id"
+                return .identifier("eventkit-reminder-id")
             }
         )
         defer { session.dispose() }
@@ -366,12 +370,99 @@ struct HanlinScriptingApplicationRuntimeTests {
         ))
     }
 
+    @MainActor
+    @Test("Bridges Reminder CRUD, filtered queries, and reminder calendars")
+    func reminderCRUDRuntime() async throws {
+        let packageID = try HanlinInstalledPackageID(validating: "reminder-crud-runtime-test")
+        let calendar = HanlinScriptingCalendarValue(
+            identifier: "calendar-1", title: "Reminders", type: 0, allowsContentModifications: true
+        )
+        let reminder = HanlinScriptingReminderValue(
+            identifier: "reminder-1", calendar: calendar, title: "Fetched", notes: nil,
+            priority: 5, isCompleted: false, completionDateMilliseconds: nil,
+            dueDateComponents: ["year": 2027, "month": 3, "day": 4], timeZoneIdentifier: "UTC"
+        )
+        var operations: [String] = []
+        let session = try HanlinScriptingApplicationSession(
+            installedPackageID: packageID,
+            program: #"""
+            Navigation.present({ element: createElement(Text, null, "Waiting") });
+            (async () => {
+              const calendars = await Calendar.forReminders();
+              const defaultCalendar = await Calendar.defaultForReminders();
+              const reminder = await Reminder.get("reminder-1");
+              reminder.calendar = calendars[0];
+              reminder.isCompleted = true;
+              reminder.completionDate = new Date("2027-01-15T08:00:00Z");
+              await reminder.save();
+              const all = await Reminder.getAll(calendars);
+              const incomplete = await Reminder.getIncompletes({ calendars });
+              const completed = await Reminder.getCompleteds({ calendars });
+              await reminder.remove();
+              Navigation.present({ element: createElement(Text, null, JSON.stringify([
+                defaultCalendar.identifier, reminder.identifier, all.length,
+                incomplete.length, completed.length
+              ])) });
+            })();
+            """#,
+            filename: "compiled/reminder-crud.js",
+            storageAllowed: false,
+            remindersAllowed: true,
+            reminderLoader: { request in
+                switch request {
+                case .calendars:
+                    operations.append("calendars")
+                    return .calendars([calendar])
+                case .defaultCalendar:
+                    operations.append("defaultCalendar")
+                    return .calendar(calendar)
+                case let .get(identifier):
+                    operations.append("get")
+                    #expect(identifier == "reminder-1")
+                    return .reminder(reminder)
+                case let .save(value):
+                    operations.append("save")
+                    #expect(value.identifier == "reminder-1")
+                    #expect(value.calendarIdentifier == "calendar-1")
+                    #expect(value.isCompleted)
+                    #expect(value.completionDateMilliseconds == 1_800_000_000_000)
+                    return .identifier("reminder-1")
+                case let .fetch(query):
+                    operations.append(switch query.kind {
+                    case .all: "all"
+                    case .incomplete: "incomplete"
+                    case .completed: "completed"
+                    })
+                    #expect(query.calendarIdentifiers == ["calendar-1"])
+                    return .reminders([reminder])
+                case let .remove(identifier):
+                    operations.append("remove")
+                    #expect(identifier == "reminder-1")
+                    return .completed
+                }
+            }
+        )
+        defer { session.dispose() }
+
+        await session.waitForNativeQuiescence()
+        #expect(session.model.root.properties["text"] == .string(
+            #"["calendar-1","reminder-1",1,1,1]"#
+        ))
+        #expect(operations == [
+            "calendars", "defaultCalendar", "get", "save", "all", "incomplete", "completed", "remove",
+        ])
+    }
+
     @Test("Rejects malformed Reminder payloads before invoking EventKit")
     func reminderPayloadValidation() throws {
-        let request = try HanlinScriptingReminderPayloadDecoder.decode(
+        let decoded = try HanlinScriptingReminderPayloadDecoder.decode(
             operation: "reminder.save",
             json: #"{"title":"Call home","notes":null,"priority":5,"dueDateComponents":{"year":2027,"month":3,"day":4}}"#
         )
+        guard case let .save(request) = decoded else {
+            Issue.record("Expected Reminder save request")
+            return
+        }
         #expect(request.title == "Call home")
         #expect(request.priority == 5)
         #expect(request.dueDateComponents == ["year": 2027, "month": 3, "day": 4])
