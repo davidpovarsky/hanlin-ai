@@ -81,6 +81,7 @@ struct MyApp: App {
 
     private var runsNativeScriptPOC: Bool {
         ProcessInfo.processInfo.environment["HANLIN_NATIVESCRIPT_POC"] == "1"
+            || ProcessInfo.processInfo.arguments.contains("--hanlin-nativescript-poc")
     }
     
     var body: some Scene {
