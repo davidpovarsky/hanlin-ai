@@ -1608,7 +1608,7 @@ jobs:
           if [ "${{ inputs.nativescript_poc_only }}" = "true" ]; then
             set +e
             SIMCTL_CHILD_HANLIN_NATIVESCRIPT_POC=1 \
-              xcrun simctl launch "$SIMULATOR_UDID" "$BUNDLE_ID" 2>&1 \
+              xcrun simctl launch "$SIMULATOR_UDID" "$BUNDLE_ID" --hanlin-nativescript-poc 2>&1 \
               | tee "$LOG_DIR/08-fast-launch-output.txt"
             launch_status=${PIPESTATUS[0]}
             set -e
