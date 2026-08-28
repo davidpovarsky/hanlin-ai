@@ -20,9 +20,7 @@ typedef NS_ERROR_ENUM(HanlinNativeScriptRuntimeErrorDomain, HanlinNativeScriptRu
 
 - (instancetype)init NS_UNAVAILABLE;
 
-- (BOOL)runScript:(NSString *)script
-           runLoop:(BOOL)runLoop
-             error:(NSError * _Nullable * _Nullable)error;
+- (BOOL)runMainApplicationWithError:(NSError * _Nullable * _Nullable)error;
 
 - (void)shutdown;
 

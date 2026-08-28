@@ -50,21 +50,7 @@ public final class HanlinNativeScriptSession {
             Self.activeSession = self
             isActive = true
 
-            let entryURL = applicationRoot
-                .appending(path: "bundle.mjs", directoryHint: .notDirectory)
-                .absoluteString
-            let packageName = try Self.packageName(at: applicationRoot)
-            let encodedURL = try JSONEncoder().encode(entryURL)
-            let encodedName = try JSONEncoder().encode(packageName)
-            guard let quotedURL = String(data: encodedURL, encoding: .utf8),
-                  let quotedName = String(data: encodedName, encoding: .utf8) else {
-                throw HanlinNativeScriptError.bootstrapFailed("could not encode the entry URL")
-            }
-            try host.runScript(
-                "globalThis.__HANLIN_NATIVESCRIPT_PACKAGE_NAME__ = \(quotedName); "
-                    + "import(\(quotedURL)).catch(error => { console.error('[Hanlin NativeScript]', error && (error.stack || error.message || error)); });",
-                runLoop: true
-            )
+            try host.runMainApplication()
         } catch {
             shutdown()
             throw HanlinNativeScriptError.bootstrapFailed(error.localizedDescription)
@@ -87,15 +73,5 @@ public final class HanlinNativeScriptSession {
         MainActor.assumeIsolated {
             shutdown()
         }
-    }
-
-    private static func packageName(at root: URL) throws -> String {
-        struct Manifest: Decodable { let name: String }
-        let data = try Data(contentsOf: root.appending(path: "package.json"))
-        let name = try JSONDecoder().decode(Manifest.self, from: data).name
-        guard !name.isEmpty else {
-            throw HanlinNativeScriptError.invalidApplicationRoot("package.json has an empty name")
-        }
-        return name
     }
 }
