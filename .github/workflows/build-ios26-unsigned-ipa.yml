@@ -353,6 +353,30 @@ jobs:
             "${build_actions[@]}" 2>&1 | tee "$LOG_DIR/08-ios-device.log"
           echo "$(( $(date +%s) - started_at ))" > "$LOG_DIR/08-ios-device-duration-seconds.txt"
 
+      - name: Compile the NativeScript runtime package for simulator and device
+        working-directory: Packages/HanlinNativeScriptRuntime
+        run: |
+          set -euxo pipefail
+          package_scheme="$(xcodebuild -list -json | python3 -c '
+          import json, sys
+          document = json.load(sys.stdin)
+          container = document.get("workspace") or document.get("project") or {}
+          schemes = container.get("schemes") or []
+          preferred = "HanlinNativeScriptRuntime-Package"
+          print(preferred if preferred in schemes else schemes[0] if len(schemes) == 1 else "")
+          ')"
+          test -n "$package_scheme"
+          for destination in "generic/platform=iOS Simulator" "generic/platform=iOS"; do
+            xcodebuild \
+              -scheme "$package_scheme" \
+              -configuration Debug \
+              -destination "$destination" \
+              -derivedDataPath "$GITHUB_WORKSPACE/build/NativeScriptPackageDerivedData" \
+              CODE_SIGNING_ALLOWED=NO \
+              SWIFT_STRICT_CONCURRENCY=complete \
+              build
+          done 2>&1 | tee "$LOG_DIR/08-nativescript-package.log"
+
       - name: Save successful Phase 1 device compiler cache
         if: ${{ success() && !inputs.force_clean_build }}
         uses: actions/cache/save@v6
@@ -419,6 +443,11 @@ jobs:
           node-version: 24.5.0
           cache: npm
           cache-dependency-path: AI_HLY/Downstream/RuntimeCore/Node/Host/package-lock.json
+
+      - name: Install pinned NativeScript metadata tooling
+        run: |
+          set -euxo pipefail
+          npm ci --ignore-scripts --no-audit --no-fund --prefix Scripts/NativeScript
 
       - name: Prepare log folders
         run: |
@@ -1148,6 +1177,11 @@ jobs:
           node-version: 24.5.0
           cache: npm
           cache-dependency-path: AI_HLY/Downstream/RuntimeCore/Node/Host/package-lock.json
+
+      - name: Install pinned NativeScript metadata tooling
+        run: |
+          set -euxo pipefail
+          npm ci --ignore-scripts --no-audit --no-fund --prefix Scripts/NativeScript
 
       - name: Prepare simulator logs and select stable Xcode 26
         id: simulator-toolchain
