@@ -1482,7 +1482,7 @@ jobs:
           cp "$APP_PATH/commandDictionary.plist" "$LOG_DIR/commandDictionary.plist"
           cp "$APP_PATH/extraCommandsDictionary.plist" "$LOG_DIR/extraCommandsDictionary.plist"
           find "$APP_PATH" -maxdepth 4 -print | sort > "$LOG_DIR/07-built-app-resources.txt"
-          if [ "${{ inputs.fast_validation_only }}" != "true" ]; then
+          if [ "${{ inputs.fast_validation_only }}" != "true" ] && [ "${{ inputs.nativescript_poc_only }}" != "true" ]; then
             python3 Scripts/Runtime/validate-app-dyld-closure.py \
               --app "$APP_PATH" \
               --platform iphonesimulator \
@@ -1490,7 +1490,7 @@ jobs:
               --text-output "$LOG_DIR/07-simulator-dyld-closure.txt"
           else
             printf '%s\n' \
-              "Skipped production dyld-closure validation for the Debug fast-validation app." \
+              "Skipped production dyld-closure validation for the Debug validation app." \
               > "$LOG_DIR/07-simulator-dyld-closure-skipped.txt"
           fi
 
