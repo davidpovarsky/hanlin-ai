@@ -1,0 +1,20 @@
+{
+  "name": "hanlin-nativescript-tooling",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "main": "Fixtures/Source/app.ts",
+  "scripts": {
+    "check:fixture": "tsc --noEmit",
+    "prepare:fixture": "npm run check:fixture && vite build --mode production -- --env.ios"
+  },
+  "dependencies": {
+    "@nativescript/core": "9.1.0"
+  },
+  "devDependencies": {
+    "@nativescript/ios": "9.1.0",
+    "@nativescript/vite": "8.0.0",
+    "typescript": "5.9.3",
+    "vite": "8.0.0"
+  }
+}

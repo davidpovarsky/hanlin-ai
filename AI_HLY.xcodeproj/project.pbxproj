@@ -25,6 +25,7 @@
 		A10000000000000000000076 /* HanlinScriptExtensions in Frameworks */ = {isa = PBXBuildFile; productRef = C10000000000000000000021 /* HanlinScriptExtensions */; };
 		A10000000000000000000077 /* HanlinScriptingApplicationRuntime in Frameworks */ = {isa = PBXBuildFile; productRef = C10000000000000000000023 /* HanlinScriptingApplicationRuntime */; };
 		A10000000000000000000078 /* HanlinScriptDeviceServices in Frameworks */ = {isa = PBXBuildFile; productRef = C10000000000000000000024 /* HanlinScriptDeviceServices */; };
+		A10000000000000000000079 /* HanlinNativeScriptRuntime in Frameworks */ = {isa = PBXBuildFile; productRef = C10000000000000000000025 /* HanlinNativeScriptRuntime */; };
 		D20000000000000000000001 /* HanlinScriptingWidgets.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = D20000000000000000000020 /* HanlinScriptingWidgets.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, CodeSignOnCopy, ); }; };
 		D20000000000000000000002 /* HanlinScriptExtensions in Frameworks */ = {isa = PBXBuildFile; productRef = C10000000000000000000021 /* HanlinScriptExtensions */; };
 		D20000000000000000000003 /* HanlinScriptUI in Frameworks */ = {isa = PBXBuildFile; productRef = C10000000000000000000022 /* HanlinScriptUI */; };
@@ -223,6 +224,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A10000000000000000000079 /* HanlinNativeScriptRuntime in Frameworks */,
 				A10000000000000000000078 /* HanlinScriptDeviceServices in Frameworks */,
 				A10000000000000000000077 /* HanlinScriptingApplicationRuntime in Frameworks */,
 				A10000000000000000000076 /* HanlinScriptExtensions in Frameworks */,
@@ -336,6 +338,7 @@
 			);
 			name = AI_Hanlin;
 			packageProductDependencies = (
+				C10000000000000000000025 /* HanlinNativeScriptRuntime */,
 				C10000000000000000000024 /* HanlinScriptDeviceServices */,
 				C10000000000000000000023 /* HanlinScriptingApplicationRuntime */,
 				C10000000000000000000021 /* HanlinScriptExtensions */,
@@ -444,6 +447,7 @@
 			mainGroup = D7B6C3B82D50A55D004E3AD6;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
+				A10000000000000000000046 /* XCLocalSwiftPackageReference "HanlinNativeScriptRuntime" */,
 				A10000000000000000000045 /* XCLocalSwiftPackageReference "HanlinQuickJS" */,
 				A10000000000000000000044 /* XCLocalSwiftPackageReference "HanlinPlatform" */,
 				A10000000000000000000043 /* XCLocalSwiftPackageReference "IOSSystemLite" */,
@@ -752,6 +756,10 @@
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = NO;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				ENABLE_PREVIEWS = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(CONFIGURATION_BUILD_DIR)",
+				);
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "AI-HLY-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = Hylic.AI;
@@ -784,7 +792,30 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
+				LD = "$(SRCROOT)/Scripts/NativeScript/hanlin-nsld.sh";
+				LDPLUSPLUS = "$(SRCROOT)/Scripts/NativeScript/hanlin-nsld.sh";
 				MARKETING_VERSION = 0.7.3;
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-sectcreate",
+					__DATA,
+					__TNSMetadata,
+					"$(CONFIGURATION_BUILD_DIR)/metadata-$(CURRENT_ARCH).bin",
+					"-licucore",
+					"-lz",
+					"-lc++",
+					"-framework",
+					Foundation,
+					"-framework",
+					UIKit,
+					"-framework",
+					CoreGraphics,
+					"-framework",
+					CoreServices,
+					"-framework",
+					Security,
+				);
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = "cherryai.com.AI-Hanlin";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -869,6 +900,10 @@
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = NO;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				ENABLE_PREVIEWS = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(CONFIGURATION_BUILD_DIR)",
+				);
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "AI-HLY-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = Hylic.AI;
@@ -901,7 +936,30 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
+				LD = "$(SRCROOT)/Scripts/NativeScript/hanlin-nsld.sh";
+				LDPLUSPLUS = "$(SRCROOT)/Scripts/NativeScript/hanlin-nsld.sh";
 				MARKETING_VERSION = 0.7.3;
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-sectcreate",
+					__DATA,
+					__TNSMetadata,
+					"$(CONFIGURATION_BUILD_DIR)/metadata-$(CURRENT_ARCH).bin",
+					"-licucore",
+					"-lz",
+					"-lc++",
+					"-framework",
+					Foundation,
+					"-framework",
+					UIKit,
+					"-framework",
+					CoreGraphics,
+					"-framework",
+					CoreServices,
+					"-framework",
+					Security,
+				);
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = "cherryai.com.AI-Hanlin";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -961,6 +1019,10 @@
 		A10000000000000000000045 /* XCLocalSwiftPackageReference "HanlinQuickJS" */ = {
 			isa = XCLocalSwiftPackageReference;
 			relativePath = Packages/HanlinQuickJS;
+		};
+		A10000000000000000000046 /* XCLocalSwiftPackageReference "HanlinNativeScriptRuntime" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Packages/HanlinNativeScriptRuntime;
 		};
 		A10000000000000000000044 /* XCLocalSwiftPackageReference "HanlinPlatform" */ = {
 			isa = XCLocalSwiftPackageReference;
@@ -1075,6 +1137,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = A10000000000000000000044 /* XCLocalSwiftPackageReference "HanlinPlatform" */;
 			productName = HanlinScriptDeviceServices;
+		};
+		C10000000000000000000025 /* HanlinNativeScriptRuntime */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A10000000000000000000046 /* XCLocalSwiftPackageReference "HanlinNativeScriptRuntime" */;
+			productName = HanlinNativeScriptRuntime;
 		};
 		C10000000000000000000020 /* HanlinScriptingSDK */ = {
 			isa = XCSwiftPackageProductDependency;

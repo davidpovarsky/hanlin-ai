@@ -122,6 +122,8 @@ Vendor/NodeMobile/NODE_LICENSE.generated.txt
 Vendor/Python/
 AI_HLY/Downstream/RuntimeCore/Node/Host/node_modules/
 Scripts/ScriptingCompiler/node_modules/
+Scripts/NativeScript/node_modules/
+Scripts/NativeScript/.ns-vite-build/
 AI_HLY/RuntimeHostResources.zip
 
 # Logs

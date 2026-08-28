@@ -1,0 +1,6 @@
+{
+  "name": "fixture-a",
+  "version": "1.0.0",
+  "main": "bundle.mjs",
+  "hanlinRuntime": "hanlin-nativescript"
+}
