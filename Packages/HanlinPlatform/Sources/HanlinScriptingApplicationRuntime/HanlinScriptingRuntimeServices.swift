@@ -1770,6 +1770,22 @@ final class HanlinScriptingPackageFileSystem: @unchecked Sendable {
         let readOnly: Bool
     }
 
+    private static var bookmarkCreationOptions: URL.BookmarkCreationOptions {
+#if os(macOS) || targetEnvironment(macCatalyst)
+        [.withSecurityScope]
+#else
+        []
+#endif
+    }
+
+    private static var bookmarkResolutionOptions: URL.BookmarkResolutionOptions {
+#if os(macOS) || targetEnvironment(macCatalyst)
+        [.withSecurityScope, .withoutUI]
+#else
+        [.withoutUI]
+#endif
+    }
+
     private let lock = NSLock()
     private let fileManager = FileManager()
     private let documentsRoot: URL
@@ -2116,7 +2132,7 @@ final class HanlinScriptingPackageFileSystem: @unchecked Sendable {
         let requestedName = name ?? target.url.lastPathComponent
         guard let validName = bookmarkName(requestedName), bookmarks[validName] == nil else { return nil }
         let data = try target.url.bookmarkData(
-            options: [.withSecurityScope],
+            options: Self.bookmarkCreationOptions,
             includingResourceValuesForKeys: nil,
             relativeTo: nil
         )
@@ -2137,7 +2153,7 @@ final class HanlinScriptingPackageFileSystem: @unchecked Sendable {
         do {
             selectedURL = try URL(
                 resolvingBookmarkData: data,
-                options: [.withSecurityScope, .withoutUI],
+                options: Self.bookmarkResolutionOptions,
                 relativeTo: nil,
                 bookmarkDataIsStale: &stale
             ).standardizedFileURL
@@ -2158,7 +2174,7 @@ final class HanlinScriptingPackageFileSystem: @unchecked Sendable {
         }
         if stale {
             bookmarks[name] = try selectedURL.bookmarkData(
-                options: [.withSecurityScope],
+                options: Self.bookmarkCreationOptions,
                 includingResourceValuesForKeys: nil,
                 relativeTo: nil
             )
@@ -2182,7 +2198,7 @@ final class HanlinScriptingPackageFileSystem: @unchecked Sendable {
         var stale = false
         return try? URL(
             resolvingBookmarkData: data,
-            options: [.withSecurityScope, .withoutUI],
+            options: Self.bookmarkResolutionOptions,
             relativeTo: nil,
             bookmarkDataIsStale: &stale
         ).standardizedFileURL.resolvingSymlinksInPath()
