@@ -61,7 +61,7 @@ static NSError *HanlinNativeScriptError(HanlinNativeScriptRuntimeErrorCode code,
     return self;
 }
 
-- (BOOL)runScript:(NSString *)script runLoop:(BOOL)runLoop error:(NSError **)error {
+- (BOOL)runMainApplicationWithError:(NSError **)error {
     if (!self.runtime) {
         if (error) {
             *error = HanlinNativeScriptError(
@@ -73,7 +73,10 @@ static NSError *HanlinNativeScriptError(HanlinNativeScriptRuntimeErrorCode code,
     }
     try {
         @try {
-            [self.runtime runScriptString:script runLoop:runLoop];
+            // Use the runtime's supported package entry loader. Application.run()
+            // detects NativeScriptEmbedder's delegate and attaches to the host
+            // controller without starting a second UIApplicationMain.
+            [self.runtime runMainApplication];
         } @catch (NSException *exception) {
             if (error) {
                 *error = HanlinNativeScriptError(
