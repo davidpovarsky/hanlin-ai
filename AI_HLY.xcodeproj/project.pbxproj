@@ -321,6 +321,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = D7B6C3E52D50A55E004E3AD6 /* Build configuration list for PBXNativeTarget "AI_Hanlin" */;
 			buildPhases = (
+				A10000000000000000000051 /* Generate NativeScript metadata */,
 				D7B6C3BD2D50A55D004E3AD6 /* Sources */,
 				D7B6C3BE2D50A55D004E3AD6 /* Frameworks */,
 				D7B6C3BF2D50A55D004E3AD6 /* Resources */,
@@ -501,6 +502,26 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		A10000000000000000000051 /* Generate NativeScript metadata */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Generate NativeScript metadata";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(CONFIGURATION_BUILD_DIR)/metadata-$(CURRENT_ARCH).bin",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/bash;
+			shellScript = "set -euo pipefail\nhost_arch=\"$(uname -m)\"\ngenerator_root=\"$SRCROOT/Scripts/NativeScript/node_modules/@nativescript/ios/framework/internal/metadata-generator-$host_arch/bin\"\ngenerator=\"$generator_root/build-step-metadata-generator.py\"\nif [[ ! -x \"$generator\" ]]; then\n  echo \"NativeScript metadata generator is missing: $generator\" >&2\n  exit 1\nfi\npushd \"$generator_root\" >/dev/null\n\"$generator\" \"$CURRENT_ARCH\"\npopd >/dev/null\ntest -f \"$CONFIGURATION_BUILD_DIR/metadata-$CURRENT_ARCH.bin\"\n";
+			showEnvVarsInLog = 0;
+		};
 		A10000000000000000000050 /* Process Python libraries */ = {
 			isa = PBXShellScriptBuildPhase;
 			alwaysOutOfDate = 1;
