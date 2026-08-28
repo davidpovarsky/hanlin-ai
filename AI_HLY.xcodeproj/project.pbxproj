@@ -504,6 +504,7 @@
 /* Begin PBXShellScriptBuildPhase section */
 		A10000000000000000000051 /* Generate NativeScript metadata */ = {
 			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
 			files = (
 			);
@@ -515,11 +516,10 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(CONFIGURATION_BUILD_DIR)/metadata-$(CURRENT_ARCH).bin",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/bash;
-			shellScript = "set -euo pipefail\nhost_arch=\"$(uname -m)\"\ngenerator_root=\"$SRCROOT/Scripts/NativeScript/node_modules/@nativescript/ios/framework/internal/metadata-generator-$host_arch/bin\"\ngenerator=\"$generator_root/build-step-metadata-generator.py\"\nif [[ ! -x \"$generator\" ]]; then\n  echo \"NativeScript metadata generator is missing: $generator\" >&2\n  exit 1\nfi\npushd \"$generator_root\" >/dev/null\n\"$generator\" \"$CURRENT_ARCH\"\npopd >/dev/null\ntest -f \"$CONFIGURATION_BUILD_DIR/metadata-$CURRENT_ARCH.bin\"\n";
+			shellScript = "set -euo pipefail\nhost_arch=\"$(uname -m)\"\ntarget_arch=\"${CURRENT_ARCH:-}\"\nif [[ -z \"$target_arch\" || \"$target_arch\" == \"undefined_arch\" ]]; then\n  target_arch=\"${ARCHS%% *}\"\nfi\ngenerator_root=\"$SRCROOT/Scripts/NativeScript/node_modules/@nativescript/ios/framework/internal/metadata-generator-$host_arch/bin\"\ngenerator=\"$generator_root/build-step-metadata-generator.py\"\nif [[ ! -x \"$generator\" ]]; then\n  echo \"NativeScript metadata generator is missing: $generator\" >&2\n  exit 1\nfi\npushd \"$generator_root\" >/dev/null\n\"$generator\" \"$target_arch\"\npopd >/dev/null\ntest -f \"$CONFIGURATION_BUILD_DIR/metadata-$target_arch.bin\"\n";
 			showEnvVarsInLog = 0;
 		};
 		A10000000000000000000050 /* Process Python libraries */ = {
