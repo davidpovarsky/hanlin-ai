@@ -80,8 +80,22 @@ struct MyApp: App {
     @Environment(\.scenePhase) private var scenePhase
 
     private var runsNativeScriptPOC: Bool {
-        ProcessInfo.processInfo.environment["HANLIN_NATIVESCRIPT_POC"] == "1"
-            || ProcessInfo.processInfo.arguments.contains("--hanlin-nativescript-poc")
+        if ProcessInfo.processInfo.environment["HANLIN_NATIVESCRIPT_POC"] == "1"
+            || ProcessInfo.processInfo.arguments.contains("--hanlin-nativescript-poc") {
+            return true
+        }
+
+        guard let applicationSupport = try? FileManager.default.url(
+            for: .applicationSupportDirectory,
+            in: .userDomainMask,
+            appropriateFor: nil,
+            create: false
+        ) else {
+            return false
+        }
+        let diagnosticBundle = applicationSupport
+            .appending(path: "HanlinNativeScriptPOC/fixture-a/nativescript/app/bundle.mjs")
+        return FileManager.default.fileExists(atPath: diagnosticBundle.path(percentEncoded: false))
     }
     
     var body: some Scene {
