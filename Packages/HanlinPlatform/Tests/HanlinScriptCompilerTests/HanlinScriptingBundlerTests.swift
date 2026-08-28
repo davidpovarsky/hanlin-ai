@@ -29,6 +29,7 @@ struct HanlinScriptingBundlerTests {
         // Match Scripting's authoritative compiler profile: declaration internals
         // are trusted, while package source files remain strictly typechecked.
         #expect(request.options.skipLibCheck == true)
+        #expect(request.options.moduleResolution == "Bundler")
     }
 
     @Test("Fails closed on preview errors and compiler identity mismatch")

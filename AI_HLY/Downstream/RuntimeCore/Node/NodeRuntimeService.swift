@@ -364,18 +364,24 @@ actor NodeRuntimeService {
     }
 
     private func prepareHostRuntime() throws -> URL {
-        let version = "4"
-        let destination = fileLayout.nodeRuntime.appending(path: "host-v\(version)", directoryHint: .isDirectory)
-        let marker = destination.appending(path: ".ready")
-        if FileManager.default.fileExists(atPath: marker.path) { return destination }
         guard let archive = Bundle.main.url(forResource: "RuntimeHostResources", withExtension: "zip") else {
             throw RuntimeCoreError.runtimeFailure("RuntimeHostResources.zip is missing. Run Scripts/Runtime/prepare-runtime-core.sh before building.")
         }
+        
+        // Compute SHA-256 hash of the bundled RuntimeHostResources.zip
+        let archiveData = try Data(contentsOf: archive)
+        let digest = SHA256.hash(data: archiveData)
+        let archiveHash = digest.map { String(format: "%02x", $0) }.joined()
+        
+        let destination = fileLayout.nodeRuntime.appending(path: "host-\(archiveHash)", directoryHint: .isDirectory)
+        let marker = destination.appending(path: ".ready")
+        if FileManager.default.fileExists(atPath: marker.path) { return destination }
+        
         let staging = fileLayout.staging.appending(path: "host-\(UUID().uuidString)", directoryHint: .isDirectory)
         try FileManager.default.createDirectory(at: staging, withIntermediateDirectories: true)
         do {
             try FileManager.default.unzipItem(at: archive, to: staging)
-            try Data(version.utf8).write(to: staging.appending(path: ".ready"), options: .atomic)
+            try Data(archiveHash.utf8).write(to: staging.appending(path: ".ready"), options: .atomic)
             if FileManager.default.fileExists(atPath: destination.path) { try FileManager.default.removeItem(at: destination) }
             try FileManager.default.moveItem(at: staging, to: destination)
             return destination

@@ -1,0 +1,129 @@
+===== Get-Location =====
+C:\Users\DAVID\Code\hanlin-ai
+EXIT_CODE=
+
+===== git status --short --branch =====
+## codex/fix-ios-system-dyld-closure
+EXIT_CODE=0
+
+===== git status --porcelain=v2 =====
+EXIT_CODE=0
+
+===== git branch --show-current =====
+codex/fix-ios-system-dyld-closure
+EXIT_CODE=0
+
+===== git branch -vv =====
+  backup/broken-agent-evidence-ui-fcbc26e fcbc26e Extend evidence coverage for retrieval tools
+  codex/agent-ui-surgical-recovery        023863d [origin/codex/agent-ui-surgical-recovery] Fix CI compilation errors
+  codex/app-runtime-core                  2ee94cd [origin/codex/app-runtime-core] Bridge legacy LLM streaming safely into Swift 6
+  codex/embedded-mcp-runtime              6a416b7 [origin/codex/embedded-mcp-runtime] fix: redirect embedded npm runtime paths
+* codex/fix-ios-system-dyld-closure       1c7c9a4 test(ios): launch full application in simulator
+  codex/native-app-platform-integration   707f0fb [origin/codex/native-app-platform-integration] Unify native app tool groups and compact tool UI
+  codex/unified-agent-activity-runtime    fcbc26e [origin/codex/unified-agent-activity-runtime] Extend evidence coverage for retrieval tools
+  hebrew-localization-foundation          18ecfdc [origin/hebrew-localization-foundation] feat: complete Hebrew localization pass
+  main                                    37feac3 [origin/main] Fix iOS 26 IPA workflow to build by scheme
+  native-tool-search-foundation           17ffbf4 [origin/native-tool-search-foundation: behind 1] feat: add native tool search foundation
+EXIT_CODE=0
+
+===== git rev-parse HEAD =====
+1c7c9a41b3687cfb0d6e819baa2a77c32e357224
+EXIT_CODE=0
+
+===== git rev-parse --show-toplevel =====
+C:/Users/DAVID/Code/hanlin-ai
+EXIT_CODE=0
+
+===== git remote -v =====
+origin	https://github.com/davidpovarsky/hanlin-ai.git (fetch)
+origin	https://github.com/davidpovarsky/hanlin-ai.git (push)
+EXIT_CODE=0
+
+===== git log --oneline --decorate --graph -30 =====
+* 1c7c9a4 (HEAD -> codex/fix-ios-system-dyld-closure) test(ios): launch full application in simulator
+* b3b3d6c ci(ios): validate complete Mach-O dyld closure
+* 078001c build(runtime): separate app link dependencies from bundle identity
+* 3a1ddc9 fix(ios-system): embed curl transitive frameworks
+* 2ee94cd (origin/codex/app-runtime-core, codex/app-runtime-core) Bridge legacy LLM streaming safely into Swift 6
+* 012ea0d Fix RuntimeCore package manager compilation
+* e8ca335 Complete transactional RuntimeCore package execution
+* b1604ee Resolve remaining Swift 6 concurrency boundaries
+* bca4626 Fix Swift 6 UI concurrency boundaries
+* 02fe8e2 Scope Swift 6 isolation to runtime owners
+* 8a12b6c Document RuntimeCore on-device acceptance
+* 1cea544 Adopt MainActor default isolation for Swift 6
+* 07a711a Avoid no-op RuntimeCore rebuild proposals
+* 0090ffc Resolve initial Swift 6 concurrency diagnostics
+* 16775f4 Add verified RuntimeCore dependency update workflow
+* aac2c82 Fix Swift 6 ios_system integration
+* 9547eea Fix iOS 26 package manifest and add Node package probes
+* 3ce985e Fix Xcode project syntax and expand runtime preflight
+* b2a99fb Integrate shared RuntimeCore engines and package UI
+* a7539ad ci(ipa): avoid pipefail on diagnostic truncation
+* f0f03b9 ci(runtime): consume verified bundle in IPA build
+* 89de9af ci(runtime): validate release metadata
+* c01c01e ci(runtime): separate embedded smoke probes
+* 2e49030 ci(runtime): reuse completed bundle artifacts
+* 5af416c ci(runtime): make bundle smoke and upload verification strict
+* 8a76070 ci(runtime): parallelize cached RuntimeCore bundle build
+* 3701459 ci(runtime): split runtime bundle preparation scripts
+* 9a1aa73 ci: bridge RuntimeCore source validation
+* 1d7af07 feat: add RuntimeCore dependency foundation
+* 6a416b7 (origin/codex/embedded-mcp-runtime, codex/embedded-mcp-runtime) fix: redirect embedded npm runtime paths
+EXIT_CODE=0
+
+===== git reflog --date=iso -40 =====
+1c7c9a4 HEAD@{2026-07-22 05:13:52 +0300}: commit: test(ios): launch full application in simulator
+b3b3d6c HEAD@{2026-07-22 05:09:41 +0300}: commit: ci(ios): validate complete Mach-O dyld closure
+078001c HEAD@{2026-07-22 05:02:23 +0300}: commit (amend): build(runtime): separate app link dependencies from bundle identity
+dee9167 HEAD@{2026-07-22 05:01:46 +0300}: commit: build(runtime): separate app link dependencies from bundle identity
+3a1ddc9 HEAD@{2026-07-22 04:57:46 +0300}: commit: fix(ios-system): embed curl transitive frameworks
+2ee94cd HEAD@{2026-07-22 04:48:28 +0300}: checkout: moving from codex/app-runtime-core to codex/fix-ios-system-dyld-closure
+2ee94cd HEAD@{2026-07-22 03:41:43 +0300}: commit: Bridge legacy LLM streaming safely into Swift 6
+012ea0d HEAD@{2026-07-22 03:33:39 +0300}: commit: Fix RuntimeCore package manager compilation
+e8ca335 HEAD@{2026-07-22 03:24:21 +0300}: commit: Complete transactional RuntimeCore package execution
+b1604ee HEAD@{2026-07-22 03:24:19 +0300}: commit: Resolve remaining Swift 6 concurrency boundaries
+bca4626 HEAD@{2026-07-22 03:04:03 +0300}: commit: Fix Swift 6 UI concurrency boundaries
+02fe8e2 HEAD@{2026-07-22 02:49:21 +0300}: commit: Scope Swift 6 isolation to runtime owners
+8a12b6c HEAD@{2026-07-22 02:47:10 +0300}: commit: Document RuntimeCore on-device acceptance
+1cea544 HEAD@{2026-07-22 02:41:19 +0300}: commit: Adopt MainActor default isolation for Swift 6
+07a711a HEAD@{2026-07-22 02:38:07 +0300}: commit: Avoid no-op RuntimeCore rebuild proposals
+0090ffc HEAD@{2026-07-22 02:32:34 +0300}: commit: Resolve initial Swift 6 concurrency diagnostics
+16775f4 HEAD@{2026-07-22 02:32:34 +0300}: commit: Add verified RuntimeCore dependency update workflow
+aac2c82 HEAD@{2026-07-22 02:20:52 +0300}: commit: Fix Swift 6 ios_system integration
+9547eea HEAD@{2026-07-22 02:14:26 +0300}: commit: Fix iOS 26 package manifest and add Node package probes
+3ce985e HEAD@{2026-07-22 02:11:16 +0300}: commit: Fix Xcode project syntax and expand runtime preflight
+b2a99fb HEAD@{2026-07-22 01:59:12 +0300}: commit: Integrate shared RuntimeCore engines and package UI
+a7539ad HEAD@{2026-07-22 00:20:49 +0300}: commit: ci(ipa): avoid pipefail on diagnostic truncation
+f0f03b9 HEAD@{2026-07-22 00:16:16 +0300}: commit: ci(runtime): consume verified bundle in IPA build
+89de9af HEAD@{2026-07-21 23:59:15 +0300}: commit: ci(runtime): validate release metadata
+c01c01e HEAD@{2026-07-21 23:39:37 +0300}: commit: ci(runtime): separate embedded smoke probes
+2e49030 HEAD@{2026-07-21 23:19:27 +0300}: commit: ci(runtime): reuse completed bundle artifacts
+5af416c HEAD@{2026-07-21 23:02:17 +0300}: commit: ci(runtime): make bundle smoke and upload verification strict
+8a76070 HEAD@{2026-07-21 19:49:33 +0300}: commit: ci(runtime): parallelize cached RuntimeCore bundle build
+3701459 HEAD@{2026-07-21 19:49:18 +0300}: commit: ci(runtime): split runtime bundle preparation scripts
+9a1aa73 HEAD@{2026-07-21 14:00:40 +0300}: commit: ci: bridge RuntimeCore source validation
+1d7af07 HEAD@{2026-07-21 13:59:09 +0300}: commit: feat: add RuntimeCore dependency foundation
+6a416b7 HEAD@{2026-07-21 13:44:44 +0300}: checkout: moving from codex/embedded-mcp-runtime to codex/app-runtime-core
+6a416b7 HEAD@{2026-07-21 02:35:25 +0300}: commit: fix: redirect embedded npm runtime paths
+43629ff HEAD@{2026-07-21 02:08:05 +0300}: commit: feat: persist MCP bin choices
+ea5a737 HEAD@{2026-07-21 01:51:33 +0300}: commit: feat: stream MCP install and tool updates
+fe66cca HEAD@{2026-07-21 01:33:18 +0300}: commit: feat: complete MCP package management
+8573ae6 HEAD@{2026-07-21 01:00:17 +0300}: commit: fix: acknowledge transport shutdown response
+c20091d HEAD@{2026-07-21 00:40:40 +0300}: commit: fix: resolve Xcode MCP integration errors
+671a89c HEAD@{2026-07-21 00:33:34 +0300}: commit: fix: exclude MCP documentation from app resources
+f45d89a HEAD@{2026-07-21 00:30:09 +0300}: commit: fix: make MCP host npm staging deterministic
+EXIT_CODE=0
+
+===== git diff --stat =====
+EXIT_CODE=0
+
+===== git diff --cached --stat =====
+EXIT_CODE=0
+
+===== git ls-files --others --exclude-standard =====
+EXIT_CODE=0
+
+===== baseline ancestor check =====
+EXIT_CODE=0
+

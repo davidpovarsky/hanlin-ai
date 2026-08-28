@@ -204,7 +204,10 @@ public struct HanlinScriptingBundler: Sendable {
         let sources = try loadSources(at: package.packageRoot, paths: preview.dependencyGraph.modules)
         // The authoritative Scripting profile uses skipLibCheck for the exported
         // declaration bundle while retaining strict checking for package source.
-        let options = HanlinVirtualCompilerOptions(skipLibCheck: true)
+        let options = HanlinVirtualCompilerOptions(
+            moduleResolution: "Bundler",
+            skipLibCheck: true
+        )
         let project = HanlinVirtualTypeScriptProject(
             sources: sources,
             declarationFiles: scriptingDeclarations,
