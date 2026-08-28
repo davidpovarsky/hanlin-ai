@@ -1606,7 +1606,7 @@ jobs:
             for elapsed in $(seq 1 45); do
               xcrun simctl spawn "$SIMULATOR_UDID" log show \
                 --style compact \
-                --last 2m \
+                --last 10m \
                 --predicate "processID == $APP_PID" \
                 > "$LOG_DIR/08-application.log" 2>&1 || true
               if grep -Fq 'HANLIN_NS_INITIALIZED_EXTERNAL_ROOT' "$LOG_DIR/08-application.log" \
@@ -1614,6 +1614,10 @@ jobs:
                 && grep -Fq 'HANLIN_NS_CORE_UI_READY controls=Label,Button' "$LOG_DIR/08-application.log" \
                 && grep -Fq 'HANLIN_NS_NATIVE_API_OK' "$LOG_DIR/08-application.log"; then
                 break
+              fi
+              if grep -Fq 'HANLIN_NS_POC_FAILED' "$LOG_DIR/08-application.log"; then
+                echo "NativeScript POC reported a bootstrap failure." >&2
+                exit 1
               fi
               if ! xcrun simctl spawn "$SIMULATOR_UDID" launchctl print "pid/$APP_PID" >/dev/null 2>&1; then
                 echo "NativeScript POC app exited before reaching ready state." >&2
@@ -1631,7 +1635,7 @@ jobs:
             for elapsed in $(seq 1 30); do
               xcrun simctl spawn "$SIMULATOR_UDID" log show \
                 --style compact \
-                --last 2m \
+                --last 10m \
                 --predicate "processID == $APP_PID" \
                 > "$LOG_DIR/08-application.log" 2>&1 || true
               if grep -Fq 'HANLIN_NS_SHUTDOWN_OK' "$LOG_DIR/08-application.log"; then

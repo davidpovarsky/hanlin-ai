@@ -21,8 +21,6 @@ declare const NSUserDefaults: {
   };
 };
 
-declare function NSLog(message: string): void;
-
 declare global {
   var __HANLIN_NATIVESCRIPT_PACKAGE_NAME__: string | undefined;
 }
@@ -34,7 +32,6 @@ const proof = `${packageName}|${systemName}|${systemVersion}`;
 
 function logMarker(message: string): void {
   console.log(message);
-  NSLog(message);
 }
 
 logMarker(`HANLIN_NS_FIXTURE_STARTED package=${packageName}`);
