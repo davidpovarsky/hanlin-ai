@@ -10,7 +10,8 @@ Install with `npm ci --prefix Scripts/NativeScript`. Prepare the two small test
 roots with `node Scripts/NativeScript/prepare-fixture.mjs`. Generated output and
 `node_modules` are intentionally not committed.
 
-`hanlin-nsld.sh` runs the pinned upstream metadata generator for the current
-architecture immediately before delegating to Xcode's real linker. The app
-links the result into `__DATA,__TNSMetadata`; NativeScript uses that standard
-section when `Config.MetadataPtr` is not set.
+The app target's `Generate NativeScript metadata` phase runs the pinned
+upstream generator and declares its architecture-specific output before
+linking. `hanlin-nsld.sh` delegates the final link to Xcode's real linker. The
+app embeds the generated file in `__DATA,__TNSMetadata`; NativeScript uses that
+standard section when `Config.MetadataPtr` is not set.

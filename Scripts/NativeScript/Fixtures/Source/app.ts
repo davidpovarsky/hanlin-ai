@@ -21,6 +21,8 @@ declare const NSUserDefaults: {
   };
 };
 
+declare function NSLog(message: string): void;
+
 declare global {
   var __HANLIN_NATIVESCRIPT_PACKAGE_NAME__: string | undefined;
 }
@@ -30,8 +32,13 @@ const systemName = UIDevice.currentDevice.systemName;
 const systemVersion = UIDevice.currentDevice.systemVersion;
 const proof = `${packageName}|${systemName}|${systemVersion}`;
 
-console.log(`HANLIN_NS_FIXTURE_STARTED package=${packageName}`);
-console.log(`HANLIN_NS_NATIVE_API_OK system=${systemName} version=${systemVersion}`);
+function logMarker(message: string): void {
+  console.log(message);
+  NSLog(message);
+}
+
+logMarker(`HANLIN_NS_FIXTURE_STARTED package=${packageName}`);
+logMarker(`HANLIN_NS_NATIVE_API_OK system=${systemName} version=${systemVersion}`);
 
 NSUserDefaults.standardUserDefaults.setObjectForKey(
   proof,
@@ -66,7 +73,7 @@ Application.run({
     layout.addChild(device as unknown as View);
     layout.addChild(button as unknown as View);
     page.content = layout;
-    console.log('HANLIN_NS_CORE_UI_READY controls=Label,Button');
+    logMarker('HANLIN_NS_CORE_UI_READY controls=Label,Button');
     return page;
   }
 });

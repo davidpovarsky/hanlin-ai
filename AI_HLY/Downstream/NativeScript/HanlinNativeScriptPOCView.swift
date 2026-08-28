@@ -13,7 +13,7 @@ struct HanlinNativeScriptPOCView: UIViewControllerRepresentable {
             guard let session else { return }
             session.shutdown()
             self.session = nil
-            print("HANLIN_NS_SHUTDOWN_OK")
+            NSLog("HANLIN_NS_SHUTDOWN_OK")
         }
 
         deinit {
@@ -39,7 +39,7 @@ struct HanlinNativeScriptPOCView: UIViewControllerRepresentable {
             let session = try HanlinNativeScriptSession(applicationRoot: fixtureRoot)
             context.coordinator.session = session
             try session.start()
-            print("HANLIN_NS_INITIALIZED_EXTERNAL_ROOT path=\(fixtureRoot.path(percentEncoded: false))")
+            NSLog("HANLIN_NS_INITIALIZED_EXTERNAL_ROOT path=\(fixtureRoot.path(percentEncoded: false))")
 
             context.coordinator.shutdownTask = Task { @MainActor [weak coordinator = context.coordinator] in
                 try? await Task.sleep(for: .seconds(20))
@@ -48,7 +48,7 @@ struct HanlinNativeScriptPOCView: UIViewControllerRepresentable {
             }
             return session.containerController
         } catch {
-            print("HANLIN_NS_POC_FAILED error=\(error.localizedDescription)")
+            NSLog("HANLIN_NS_POC_FAILED error=\(error.localizedDescription)")
             return failureController(message: error.localizedDescription)
         }
     }
