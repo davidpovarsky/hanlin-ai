@@ -489,11 +489,12 @@ struct HanlinScriptingApplicationRuntimeTests {
                     #expect(value.completionDateMilliseconds == 1_800_000_000_000)
                     return .identifier("reminder-1")
                 case let .fetch(query):
-                    operations.append(switch query.kind {
+                    let operation = switch query.kind {
                     case .all: "all"
                     case .incomplete: "incomplete"
                     case .completed: "completed"
-                    })
+                    }
+                    operations.append(operation)
                     #expect(query.calendarIdentifiers == ["calendar-1"])
                     return .reminders([reminder])
                 case let .remove(identifier):

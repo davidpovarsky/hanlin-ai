@@ -8,6 +8,7 @@ import HanlinScriptExtensions
 import HanlinScriptDeviceServices
 import HanlinScriptStore
 import HanlinScriptUI
+import HanlinScriptingApplicationRuntime
 import HanlinScriptingSDK
 import Observation
 import SwiftData
