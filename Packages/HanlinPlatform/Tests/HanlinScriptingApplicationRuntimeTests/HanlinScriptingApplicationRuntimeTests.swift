@@ -596,7 +596,7 @@ struct HanlinScriptingApplicationRuntimeTests {
                 case let .pickFiles(multiple, extensions, types, initialDirectory):
                     operations.append("pickFiles")
                     #expect(FileManager.default.fileExists(atPath: selectedFile.path(percentEncoded: false)))
-                    #expect(multiple)
+                    #expect(multiple == (operations.count == 1))
                     #expect(extensions)
                     #expect(types == (operations.count == 1 ? ["public.text"] : []))
                     #expect(initialDirectory == nil)
