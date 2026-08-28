@@ -20,7 +20,8 @@ if [[ -z "$target_arch" ]]; then
     exit 1
 fi
 
-tool_root="$SRCROOT/Scripts/NativeScript/node_modules/@nativescript/ios/framework/internal"
+script_root="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+tool_root="$script_root/node_modules/@nativescript/ios/framework/internal"
 host_arch="$(uname -m)"
 generator_root="$tool_root/metadata-generator-$host_arch/bin"
 generator="$generator_root/build-step-metadata-generator.py"
@@ -36,7 +37,7 @@ popd >/dev/null
 
 if [[ -n "${NS_LD:-}" && -x "${NS_LD}" ]]; then
     real_linker="$NS_LD"
-elif [[ -x "$DT_TOOLCHAIN_DIR/usr/bin/clang" ]]; then
+elif [[ -n "${DT_TOOLCHAIN_DIR:-}" && -x "$DT_TOOLCHAIN_DIR/usr/bin/clang" ]]; then
     real_linker="$DT_TOOLCHAIN_DIR/usr/bin/clang"
 else
     real_linker="$(xcrun --find clang)"
