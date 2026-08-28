@@ -5,9 +5,10 @@
 //  Created by zhiyuan20002 on 3/2/25.
 //
 
-import SwiftUI
-import SwiftData
 import AppIntents
+import Foundation
+import SwiftData
+import SwiftUI
 
 // MARK: - 安全数组访问扩展
 extension Collection {
@@ -77,24 +78,32 @@ struct MyApp: App {
     @MainActor @StateObject private var appDataManager = AppDataManager()
     @State private var deepLinkTarget: String? = nil
     @Environment(\.scenePhase) private var scenePhase
+
+    private var runsNativeScriptPOC: Bool {
+        ProcessInfo.processInfo.environment["HANLIN_NATIVESCRIPT_POC"] == "1"
+    }
     
     var body: some Scene {
         WindowGroup {
-            MainTabView(deepLinkTarget: $deepLinkTarget)
-                .modelContainer(appDataManager.modelContainer)
-                .task {
-                    appDataManager.preloadDataIfNeeded()
-                    await RuntimeLifecycleBridge.prepareApplication()
-                    await RuntimeLifecycleBridge.handleScenePhase(scenePhase)
-                }
-                .onChange(of: scenePhase) { _, newPhase in
-                    Task { await RuntimeLifecycleBridge.handleScenePhase(newPhase) }
-                }
-                .onOpenURL { url in
-                    if url.host == "openVisionView" {
-                        deepLinkTarget = "vision"
+            if runsNativeScriptPOC {
+                HanlinNativeScriptPOCView()
+            } else {
+                MainTabView(deepLinkTarget: $deepLinkTarget)
+                    .modelContainer(appDataManager.modelContainer)
+                    .task {
+                        appDataManager.preloadDataIfNeeded()
+                        await RuntimeLifecycleBridge.prepareApplication()
+                        await RuntimeLifecycleBridge.handleScenePhase(scenePhase)
                     }
-                }
+                    .onChange(of: scenePhase) { _, newPhase in
+                        Task { await RuntimeLifecycleBridge.handleScenePhase(newPhase) }
+                    }
+                    .onOpenURL { url in
+                        if url.host == "openVisionView" {
+                            deepLinkTarget = "vision"
+                        }
+                    }
+            }
         }
 
         WindowGroup("Mini App", for: NativeAppLaunchRequest.self) { $request in

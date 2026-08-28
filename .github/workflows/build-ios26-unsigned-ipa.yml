@@ -18,6 +18,11 @@ on:
         required: true
         default: false
         type: boolean
+      nativescript_poc_only:
+        description: Run only the post-install NativeScript simulator POC
+        required: true
+        default: false
+        type: boolean
       force_clean_build:
         description: Discard compiler build state and perform a clean diagnostic rebuild
         required: true
@@ -37,7 +42,7 @@ permissions:
 
 jobs:
   validate-hanlin-platform-phase1:
-    if: ${{ github.event_name == 'workflow_dispatch' && !inputs.runtime_bundle_only }}
+    if: ${{ github.event_name == 'workflow_dispatch' && !inputs.runtime_bundle_only && !inputs.nativescript_poc_only }}
     name: Validate baseline, contracts, tests, and iOS compilation
     runs-on: macos-26
     timeout-minutes: 60
@@ -425,7 +430,7 @@ jobs:
       contents: write
 
   build-ios26-unsigned-ipa:
-    if: ${{ !inputs.runtime_bundle_only && !inputs.phase1_validation_only && !inputs.fast_validation_only }}
+    if: ${{ !inputs.runtime_bundle_only && !inputs.phase1_validation_only && !inputs.fast_validation_only && !inputs.nativescript_poc_only }}
     name: Build unsigned IPA with Xcode 26
     runs-on: macos-26
     timeout-minutes: 60
@@ -1179,7 +1184,7 @@ jobs:
     env:
       PROJECT_PATH: AI_HLY.xcodeproj
       SCHEME_NAME: AI_HLY
-      CONFIGURATION: ${{ inputs.fast_validation_only && 'Debug' || 'Release' }}
+      CONFIGURATION: ${{ (inputs.fast_validation_only || inputs.nativescript_poc_only) && 'Debug' || 'Release' }}
       DERIVED_DATA_PATH: build/SimulatorDerivedData
       CLONED_PACKAGES_PATH: build/SourcePackages
       LOG_DIR: simulator-logs
@@ -1421,6 +1426,7 @@ jobs:
           echo "Same-run simulator no-op rebuild duration: ${duration_seconds}s"
 
       - name: Build downstream unit tests
+        if: ${{ !inputs.nativescript_poc_only }}
         run: |
           set -euxo pipefail
           rm -rf "$LOG_DIR/DownstreamTestsBuildResult.xcresult"
@@ -1525,10 +1531,11 @@ jobs:
 
           xcrun simctl boot "$SIMULATOR_UDID" 2>/dev/null || true
           xcrun simctl bootstatus "$SIMULATOR_UDID" -b 2>&1 | tee "$LOG_DIR/08-bootstatus.log"
-          rm -rf "$LOG_DIR/DownstreamTestsResult.xcresult"
-          started_at="$(date +%s)"
-          set +e
-          xcodebuild test-without-building \
+          if [ "${{ inputs.nativescript_poc_only }}" != "true" ]; then
+            rm -rf "$LOG_DIR/DownstreamTestsResult.xcresult"
+            started_at="$(date +%s)"
+            set +e
+            xcodebuild test-without-building \
             -project "$PROJECT_PATH" \
             -scheme "$SCHEME_NAME" \
             -configuration "$CONFIGURATION" \
@@ -1540,19 +1547,18 @@ jobs:
             -skipMacroValidation \
             -only-testing:AI_HLYTests \
             2>&1 | tee "$LOG_DIR/08-downstream-unit-tests.log"
-          downstream_test_status="${PIPESTATUS[0]}"
-          set -e
-          echo "$(( $(date +%s) - started_at ))" > "$LOG_DIR/08-downstream-unit-tests-duration-seconds.txt"
-          if [ "$downstream_test_status" -ne 0 ]; then
-            xcrun xcresulttool get test-results tests \
+            downstream_test_status="${PIPESTATUS[0]}"
+            set -e
+            echo "$(( $(date +%s) - started_at ))" > "$LOG_DIR/08-downstream-unit-tests-duration-seconds.txt"
+            if [ "$downstream_test_status" -ne 0 ]; then
+              xcrun xcresulttool get test-results tests \
               --path "$LOG_DIR/DownstreamTestsResult.xcresult" \
-              --format json \
-              | tee "$LOG_DIR/08-downstream-unit-test-results.json" || true
-            exit "$downstream_test_status"
-          fi
-          rm -rf "$LOG_DIR/ScriptingAcceptanceResult.xcresult"
-          scripting_started_at="$(date +%s)"
-          xcodebuild test-without-building \
+              --format json 2>&1 | tee "$LOG_DIR/08-downstream-unit-test-results.json" || true
+              exit "$downstream_test_status"
+            fi
+            rm -rf "$LOG_DIR/ScriptingAcceptanceResult.xcresult"
+            scripting_started_at="$(date +%s)"
+            xcodebuild test-without-building \
             -project "$PROJECT_PATH" \
             -scheme "$SCHEME_NAME" \
             -configuration "$CONFIGURATION" \
@@ -1564,18 +1570,119 @@ jobs:
             -skipMacroValidation \
             -only-testing:AI_HLYTests/HanlinScriptingAcceptanceTests \
             2>&1 | tee "$LOG_DIR/08-scripting-acceptance.log"
-          echo "$(( $(date +%s) - scripting_started_at ))" > "$LOG_DIR/08-scripting-acceptance-duration-seconds.txt"
+            echo "$(( $(date +%s) - scripting_started_at ))" > "$LOG_DIR/08-scripting-acceptance-duration-seconds.txt"
+          fi
           xcrun simctl boot "$SIMULATOR_UDID" 2>/dev/null || true
           xcrun simctl bootstatus "$SIMULATOR_UDID" -b 2>&1 \
             | tee "$LOG_DIR/08-post-tests-bootstatus.log"
           xcrun simctl uninstall "$SIMULATOR_UDID" "$BUNDLE_ID" 2>/dev/null || true
           xcrun simctl install "$SIMULATOR_UDID" "$APP_PATH"
+
+          if [ "${{ inputs.nativescript_poc_only }}" = "true" ]; then
+            test -z "$(find "$APP_PATH" -path '*fixture-a*' -print -quit)"
+            DATA_CONTAINER="$(xcrun simctl get_app_container "$SIMULATOR_UDID" "$BUNDLE_ID" data)"
+            FIXTURE_SOURCE="$GITHUB_WORKSPACE/Scripts/NativeScript/Prepared/fixture-a/nativescript/app"
+            FIXTURE_DESTINATION="$DATA_CONTAINER/Library/Application Support/HanlinNativeScriptPOC/fixture-a/nativescript/app"
+            test -f "$FIXTURE_SOURCE/bundle.mjs"
+            test -f "$FIXTURE_SOURCE/package.json"
+            test ! -e "$FIXTURE_DESTINATION"
+            mkdir -p "$(dirname "$FIXTURE_DESTINATION")"
+            ditto "$FIXTURE_SOURCE" "$FIXTURE_DESTINATION"
+            test -f "$FIXTURE_DESTINATION/bundle.mjs"
+            test -f "$FIXTURE_DESTINATION/package.json"
+            {
+              echo "install_completed_before_fixture_copy=true"
+              echo "app_path=$APP_PATH"
+              echo "data_container=$DATA_CONTAINER"
+              echo "fixture_destination=$FIXTURE_DESTINATION"
+              shasum -a 256 "$FIXTURE_DESTINATION/bundle.mjs"
+            } | tee "$LOG_DIR/08-nativescript-post-install-fixture.txt"
+          fi
           touch "$LOG_DIR/launch-marker"
 
           cleanup() {
             xcrun simctl terminate "$SIMULATOR_UDID" "$BUNDLE_ID" 2>/dev/null || true
           }
           trap cleanup EXIT
+
+          if [ "${{ inputs.nativescript_poc_only }}" = "true" ]; then
+            set +e
+            SIMCTL_CHILD_HANLIN_NATIVESCRIPT_POC=1 \
+              xcrun simctl launch "$SIMULATOR_UDID" "$BUNDLE_ID" 2>&1 \
+              | tee "$LOG_DIR/08-fast-launch-output.txt"
+            launch_status=${PIPESTATUS[0]}
+            set -e
+            test "$launch_status" -eq 0
+            APP_PID="$(awk -F ': ' -v bundle="$BUNDLE_ID" '$1 == bundle { print $2 }' "$LOG_DIR/08-fast-launch-output.txt" | tail -1)"
+            test -n "$APP_PID"
+            printf '%s\n' "$APP_PID" > "$LOG_DIR/launch-pid.txt"
+            for elapsed in $(seq 1 45); do
+              xcrun simctl spawn "$SIMULATOR_UDID" log show \
+                --style compact \
+                --last 2m \
+                --predicate "processID == $APP_PID" \
+                > "$LOG_DIR/08-application.log" 2>&1 || true
+              if grep -Fq 'HANLIN_NS_INITIALIZED_EXTERNAL_ROOT' "$LOG_DIR/08-application.log" \
+                && grep -Fq 'HANLIN_NS_FIXTURE_STARTED' "$LOG_DIR/08-application.log" \
+                && grep -Fq 'HANLIN_NS_CORE_UI_READY controls=Label,Button' "$LOG_DIR/08-application.log" \
+                && grep -Fq 'HANLIN_NS_NATIVE_API_OK' "$LOG_DIR/08-application.log"; then
+                break
+              fi
+              if ! xcrun simctl spawn "$SIMULATOR_UDID" launchctl print "pid/$APP_PID" >/dev/null 2>&1; then
+                echo "NativeScript POC app exited before reaching ready state." >&2
+                exit 1
+              fi
+              sleep 1
+            done
+            grep -Fq 'HANLIN_NS_INITIALIZED_EXTERNAL_ROOT' "$LOG_DIR/08-application.log"
+            grep -Fq 'HANLIN_NS_FIXTURE_STARTED' "$LOG_DIR/08-application.log"
+            grep -Fq 'HANLIN_NS_CORE_UI_READY controls=Label,Button' "$LOG_DIR/08-application.log"
+            grep -Fq 'HANLIN_NS_NATIVE_API_OK' "$LOG_DIR/08-application.log"
+            ! grep -Fq 'HANLIN_NS_POC_FAILED' "$LOG_DIR/08-application.log"
+            xcrun simctl io "$SIMULATOR_UDID" screenshot "$LOG_DIR/08-nativescript-ui.png"
+
+            for elapsed in $(seq 1 30); do
+              xcrun simctl spawn "$SIMULATOR_UDID" log show \
+                --style compact \
+                --last 2m \
+                --predicate "processID == $APP_PID" \
+                > "$LOG_DIR/08-application.log" 2>&1 || true
+              if grep -Fq 'HANLIN_NS_SHUTDOWN_OK' "$LOG_DIR/08-application.log"; then
+                break
+              fi
+              xcrun simctl spawn "$SIMULATOR_UDID" launchctl print "pid/$APP_PID" >/dev/null
+              sleep 1
+            done
+            grep -Fq 'HANLIN_NS_SHUTDOWN_OK' "$LOG_DIR/08-application.log"
+            xcrun simctl spawn "$SIMULATOR_UDID" launchctl print "pid/$APP_PID" >/dev/null
+            sleep 3
+            xcrun simctl spawn "$SIMULATOR_UDID" launchctl print "pid/$APP_PID" >/dev/null
+
+            : > "$LOG_DIR/08-new-diagnostic-reports.txt"
+            for diagnostic_root in \
+              "$HOME/Library/Logs/DiagnosticReports" \
+              "$HOME/Library/Developer/CoreSimulator/Devices/$SIMULATOR_UDID/data/Library/Logs/CrashReporter" \
+              "$HOME/Library/Developer/CoreSimulator/Devices/$SIMULATOR_UDID/data/Library/Logs/DiagnosticReports"; do
+              if [ -d "$diagnostic_root" ]; then
+                find "$diagnostic_root" -type f -newer "$LOG_DIR/launch-marker" -print \
+                  >> "$LOG_DIR/08-new-diagnostic-reports.txt"
+              fi
+            done
+            while IFS= read -r diagnostic_report; do
+              report_name="$(basename "$diagnostic_report")"
+              case "$report_name" in
+                "$APP_EXECUTABLE"*|"$BUNDLE_ID"*)
+                  echo "NativeScript POC generated crash report: $diagnostic_report" >&2
+                  exit 1
+                  ;;
+              esac
+            done < "$LOG_DIR/08-new-diagnostic-reports.txt"
+            printf '%s\n' "23" > "$LOG_DIR/alive-duration-seconds.txt"
+            printf '%s\n' "nativescript-post-install-poc" > "$LOG_DIR/validation-profile.txt"
+            trap - EXIT
+            cleanup
+            exit 0
+          fi
 
           if [ "${{ inputs.fast_validation_only }}" = "true" ]; then
             set +e
