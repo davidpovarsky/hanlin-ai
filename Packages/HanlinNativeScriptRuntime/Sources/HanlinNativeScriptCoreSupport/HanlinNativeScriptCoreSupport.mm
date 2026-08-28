@@ -32,21 +32,23 @@ static NSError *HanlinNativeScriptError(HanlinNativeScriptRuntimeErrorCode code,
     self = [super init];
     if (!self) { return nil; }
 
-    @try {
-        Config *config = [[Config alloc] init];
-        config.BaseDir = baseDirectory;
-        config.ApplicationPath = applicationPath;
-        config.IsDebug = NO;
-        config.LogToSystemConsole = YES;
-        self.runtime = [[NativeScript alloc] initWithConfig:config];
-    } @catch (NSException *exception) {
-        if (error) {
-            *error = HanlinNativeScriptError(
-                HanlinNativeScriptRuntimeErrorInitializationFailed,
-                exception.reason ?: @"NativeScript runtime initialization failed."
-            );
+    try {
+        @try {
+            Config *config = [[Config alloc] init];
+            config.BaseDir = baseDirectory;
+            config.ApplicationPath = applicationPath;
+            config.IsDebug = NO;
+            config.LogToSystemConsole = YES;
+            self.runtime = [[NativeScript alloc] initWithConfig:config];
+        } @catch (NSException *exception) {
+            if (error) {
+                *error = HanlinNativeScriptError(
+                    HanlinNativeScriptRuntimeErrorInitializationFailed,
+                    exception.reason ?: @"NativeScript runtime initialization failed."
+                );
+            }
+            return nil;
         }
-        return nil;
     } catch (...) {
         if (error) {
             *error = HanlinNativeScriptError(
@@ -69,16 +71,18 @@ static NSError *HanlinNativeScriptError(HanlinNativeScriptRuntimeErrorCode code,
         }
         return NO;
     }
-    @try {
-        [self.runtime runScriptString:script runLoop:runLoop];
-    } @catch (NSException *exception) {
-        if (error) {
-            *error = HanlinNativeScriptError(
-                HanlinNativeScriptRuntimeErrorExecutionFailed,
-                exception.reason ?: @"NativeScript script execution failed."
-            );
+    try {
+        @try {
+            [self.runtime runScriptString:script runLoop:runLoop];
+        } @catch (NSException *exception) {
+            if (error) {
+                *error = HanlinNativeScriptError(
+                    HanlinNativeScriptRuntimeErrorExecutionFailed,
+                    exception.reason ?: @"NativeScript script execution failed."
+                );
+            }
+            return NO;
         }
-        return NO;
     } catch (...) {
         if (error) {
             *error = HanlinNativeScriptError(
