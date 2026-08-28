@@ -73,52 +73,39 @@ class AppDataManager: ObservableObject {
     }
 }
 
+#if HANLIN_NATIVESCRIPT_POC
+@main
+struct HanlinNativeScriptPOCApp: App {
+    var body: some Scene {
+        WindowGroup {
+            HanlinNativeScriptPOCView()
+        }
+    }
+}
+#else
 @main
 struct MyApp: App {
     @MainActor @StateObject private var appDataManager = AppDataManager()
     @State private var deepLinkTarget: String? = nil
     @Environment(\.scenePhase) private var scenePhase
 
-    private var runsNativeScriptPOC: Bool {
-        if ProcessInfo.processInfo.environment["HANLIN_NATIVESCRIPT_POC"] == "1"
-            || ProcessInfo.processInfo.arguments.contains("--hanlin-nativescript-poc") {
-            return true
-        }
-
-        guard let applicationSupport = try? FileManager.default.url(
-            for: .applicationSupportDirectory,
-            in: .userDomainMask,
-            appropriateFor: nil,
-            create: false
-        ) else {
-            return false
-        }
-        let diagnosticBundle = applicationSupport
-            .appending(path: "HanlinNativeScriptPOC/fixture-a/nativescript/app/bundle.mjs")
-        return FileManager.default.fileExists(atPath: diagnosticBundle.path(percentEncoded: false))
-    }
-    
     var body: some Scene {
         WindowGroup {
-            if runsNativeScriptPOC {
-                HanlinNativeScriptPOCView()
-            } else {
-                MainTabView(deepLinkTarget: $deepLinkTarget)
-                    .modelContainer(appDataManager.modelContainer)
-                    .task {
-                        appDataManager.preloadDataIfNeeded()
-                        await RuntimeLifecycleBridge.prepareApplication()
-                        await RuntimeLifecycleBridge.handleScenePhase(scenePhase)
+            MainTabView(deepLinkTarget: $deepLinkTarget)
+                .modelContainer(appDataManager.modelContainer)
+                .task {
+                    appDataManager.preloadDataIfNeeded()
+                    await RuntimeLifecycleBridge.prepareApplication()
+                    await RuntimeLifecycleBridge.handleScenePhase(scenePhase)
+                }
+                .onChange(of: scenePhase) { _, newPhase in
+                    Task { await RuntimeLifecycleBridge.handleScenePhase(newPhase) }
+                }
+                .onOpenURL { url in
+                    if url.host == "openVisionView" {
+                        deepLinkTarget = "vision"
                     }
-                    .onChange(of: scenePhase) { _, newPhase in
-                        Task { await RuntimeLifecycleBridge.handleScenePhase(newPhase) }
-                    }
-                    .onOpenURL { url in
-                        if url.host == "openVisionView" {
-                            deepLinkTarget = "vision"
-                        }
-                    }
-            }
+                }
         }
 
         WindowGroup("Mini App", for: NativeAppLaunchRequest.self) { $request in
@@ -136,4 +123,5 @@ struct MyApp: App {
         }
     }
 }
+#endif
 
