@@ -8,7 +8,7 @@ public actor HanlinAppleNotificationService {
     public init(center: UNUserNotificationCenter = .current()) { self.center = center }
 
     public func requestAuthorization() async throws -> Bool {
-        try await center.requestAuthorization(options: [.alert, .badge, .sound, .timeSensitive])
+        try await center.requestAuthorization(options: [.alert, .badge, .sound])
     }
 
     public func schedule(_ notification: HanlinScriptLocalNotification) async throws {

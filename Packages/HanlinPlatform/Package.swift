@@ -151,6 +151,7 @@ let package = Package(
         ),
         .target(
             name: "HanlinScriptDeviceServices",
+            exclude: ["README.md"],
             dependencies: [
                 "HanlinPlatformContracts",
                 "HanlinScriptServices"
