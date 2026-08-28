@@ -151,11 +151,11 @@ let package = Package(
         ),
         .target(
             name: "HanlinScriptDeviceServices",
-            exclude: ["README.md"],
             dependencies: [
                 "HanlinPlatformContracts",
                 "HanlinScriptServices"
-            ]
+            ],
+            exclude: ["README.md"]
         ),
         .testTarget(
             name: "HanlinScriptDeviceServicesTests",
