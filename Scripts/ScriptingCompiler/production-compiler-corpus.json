@@ -2,7 +2,8 @@
   "schemaVersion": 1,
   "discoveryRoots": [
     "AI_HLYTests/Fixtures/ScriptingFixtures.bundle/ProductionCompilerCorpus",
-    "Reference/ScriptingCompatibility/Original/Examples"
+    "Reference/ScriptingCompatibility/Original/Examples",
+    "Scripts/ScriptingCompiler/Fixtures/RealWorldPackages"
   ],
   "expectations": {
     "Reference/ScriptingCompatibility/Original/Examples/Map Snapshot": {

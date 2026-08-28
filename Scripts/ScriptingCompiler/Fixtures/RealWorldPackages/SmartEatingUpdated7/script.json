@@ -1,0 +1,43 @@
+{
+  "intentInputTypes" : [
+
+  ],
+  "description" : null,
+  "icon" : "lightbulb.fill",
+  "remoteResource" : null,
+  "author" : {
+    "name" : "david povarsky",
+    "email" : "davidpovarski1@gmail.com",
+    "homepage" : null
+  },
+  "name" : "אכילה חכמה מעודכן 7",
+  "localizedNames" : {
+    "en" : "",
+    "es" : "",
+    "de" : "",
+    "fr" : "",
+    "ja" : "",
+    "ru" : "",
+    "it" : "",
+    "zh" : "",
+    "pt" : ""
+  },
+  "version" : "1.0.0",
+  "iconImage" : null,
+  "localizedDescriptions" : {
+    "it" : "",
+    "zh" : "",
+    "ja" : "",
+    "en" : "",
+    "ru" : "",
+    "de" : "",
+    "pt" : "",
+    "es" : "",
+    "fr" : ""
+  },
+  "contributors" : [
+
+  ],
+  "runInApp" : false,
+  "color" : "rgba(128, 138, 148,1)"
+}
