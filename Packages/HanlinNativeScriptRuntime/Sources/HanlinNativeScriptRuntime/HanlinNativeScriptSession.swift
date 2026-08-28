@@ -29,7 +29,7 @@ public final class HanlinNativeScriptSession {
                 throw HanlinNativeScriptError.missingPreparedFile(required)
             }
         }
-        applicationRoot = root
+        self.applicationRoot = root
         presenter = HanlinNativeScriptPresenter()
         containerController = presenter.containerController
     }
