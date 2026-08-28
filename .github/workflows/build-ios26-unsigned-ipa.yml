@@ -244,6 +244,14 @@ jobs:
           npm test --prefix Scripts/ScriptingCompiler \
             2>&1 | tee "$LOG_DIR/02-scripting-compiler.log"
 
+      - name: Scripting Production Compiler Acceptance
+        run: |
+          set -euxo pipefail
+          npm ci --ignore-scripts --no-audit --no-fund \
+            --prefix AI_HLY/Downstream/RuntimeCore/Node/Host
+          npm run test:production --prefix Scripts/ScriptingCompiler \
+            2>&1 | tee "$LOG_DIR/02-production-compiler-acceptance.log"
+
       - name: Resolve the Phase 1 Swift package
         run: |
           set -euxo pipefail
@@ -637,6 +645,16 @@ jobs:
             2>&1 | tee "$LOG_DIR/04-mcp-server-everything-integration.log"
           node Scripts/Runtime/validate-mcp-install-dedup.mjs \
             2>&1 | tee "$LOG_DIR/04-mcp-install-dedup.log"
+
+      - name: Scripting Production Compiler Acceptance
+        run: |
+          set -euxo pipefail
+          npm ci --ignore-scripts --no-audit --no-fund \
+            --prefix Scripts/ScriptingCompiler
+          npm ci --ignore-scripts --no-audit --no-fund \
+            --prefix AI_HLY/Downstream/RuntimeCore/Node/Host
+          npm run test:production --prefix Scripts/ScriptingCompiler \
+            2>&1 | tee "$LOG_DIR/04-production-compiler-acceptance.log"
 
       - name: Package current RuntimeCore host resources
         run: |

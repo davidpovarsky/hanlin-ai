@@ -37,7 +37,7 @@ actor HanlinNodeMobileScriptingCompiler: HanlinTrustedCompilerClient {
             )
             try file.bytes.write(to: destination, options: .atomic)
         }
-        let configuration = try compilerConfiguration(project)
+        let configuration = try HanlinProductionCompilerProfile.configurationData(for: project)
         try configuration.write(
             to: workspace.appending(path: "tsconfig.json", directoryHint: .notDirectory),
             options: .atomic
@@ -88,35 +88,6 @@ actor HanlinNodeMobileScriptingCompiler: HanlinTrustedCompilerClient {
         )
     }
 
-    private func compilerConfiguration(_ project: HanlinVirtualTypeScriptProject) throws -> Data {
-        let files = (project.sources + project.declarationFiles).map(\.logicalPath).sorted()
-        let json: [String: Any] = [
-            "compilerOptions": [
-                "target": project.options.target,
-                "module": project.options.module,
-                "moduleResolution": project.options.moduleResolution,
-                "strict": project.options.strict,
-                "sourceMap": project.options.sourceMap,
-                "inlineSources": true,
-                "skipLibCheck": project.options.skipLibCheck,
-                "jsx": project.options.jsxRuntime,
-                "jsxFactory": "createElement",
-                "jsxFragmentFactory": "Fragment",
-                "allowJs": true,
-                "checkJs": true,
-                "resolveJsonModule": true,
-                "esModuleInterop": true,
-                "types": [],
-                "paths": ["scripting": ["./virtual/scripting.d.ts"]],
-                "rootDir": ".",
-                "outDir": "dist",
-                "newLine": "lf",
-            ],
-            "files": files,
-        ]
-        return try JSONSerialization.data(withJSONObject: json, options: [.sortedKeys])
-    }
-
     private func bundledEntrypoints(
         project: HanlinVirtualTypeScriptProject,
         workspace: URL,
@@ -129,10 +100,9 @@ actor HanlinNodeMobileScriptingCompiler: HanlinTrustedCompilerClient {
             emittedModules[logicalPath] = try String(contentsOf: url, encoding: .utf8)
         }
         for source in project.sources where source.logicalPath.hasSuffix(".json") {
-            let logicalPath = source.logicalPath.replacingOccurrences(of: #"\.json$"#, with: ".js", options: .regularExpression)
             let object = try JSONSerialization.jsonObject(with: source.bytes)
             let canonical = try JSONSerialization.data(withJSONObject: object, options: [.sortedKeys, .withoutEscapingSlashes])
-            emittedModules[logicalPath] = "module.exports = \(String(decoding: canonical, as: UTF8.self));"
+            emittedModules[source.logicalPath] = "module.exports = \(String(decoding: canonical, as: UTF8.self));"
         }
         let definitions = try emittedModules.keys.sorted().map { logicalPath in
             let id = try Self.javascriptString(logicalPath)

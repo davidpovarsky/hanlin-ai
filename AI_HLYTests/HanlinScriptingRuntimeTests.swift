@@ -1,5 +1,9 @@
 import Foundation
 import HanlinPlatformContracts
+import HanlinScriptCompiler
+import HanlinScriptContracts
+import HanlinScriptingApplicationRuntime
+import HanlinScriptingSDK
 import Testing
 @testable import AI_Hanlin
 
@@ -147,6 +151,81 @@ struct HanlinScriptingAcceptanceTests {
             let snapshots = await registry.snapshots()
             #expect(snapshots.isEmpty)
         }
+    }
+}
+
+@Suite("Scripting production compiler acceptance", .serialized)
+struct HanlinScriptingProductionCompilerAcceptanceTests {
+    @MainActor
+    @Test("Compiles every supported raw corpus package through NodeMobile and the real bundler")
+    func supportedCorpus() async throws {
+        let authority = try productionCompilerAuthority()
+        let fixtures = try productionCompilerFixtures(expected: "success")
+        #expect(fixtures.map(\.lastPathComponent).sorted() == ["ValidScriptUI", "ValidStorageModules"])
+
+        for fixture in fixtures {
+            let staged = try stagedProductionCompilerFixture(fixture)
+            defer { try? FileManager.default.removeItem(at: staged.stagingRoot) }
+            let preview = try authority.analyzer.analyze(staged)
+            #expect(preview.canInstall, "\(fixture.lastPathComponent) failed import analysis")
+            let bundle = try await authority.bundler.bundle(
+                package: staged,
+                preview: preview,
+                context: .app
+            )
+            #expect(bundle.manifest.compilerVersion == HanlinScriptingBundler.compilerVersion)
+            #expect(!bundle.modules.isEmpty)
+            #expect(bundle.modules.allSatisfy { !$0.javaScript.isEmpty })
+
+            let module = try #require(bundle.modules.first)
+            let session = try HanlinScriptingApplicationSession(
+                installedPackageID: try HanlinInstalledPackageID(
+                    validating: "compiler-acceptance.\(fixture.lastPathComponent.lowercased())"
+                ),
+                program: String(decoding: module.javaScript, as: UTF8.self),
+                filename: module.logicalPath,
+                storageAllowed: true
+            )
+            if fixture.lastPathComponent == "ValidScriptUI" {
+                #expect(session.model.root.kind == .vStack)
+            }
+            session.dispose()
+        }
+    }
+
+    @MainActor
+    @Test("Rejects mistyped Scripting and DOM APIs without weakening strict checking")
+    func strictFailures() async throws {
+        let authority = try productionCompilerAuthority()
+        let expectedCodes = [
+            "InvalidScriptingAPI": 2339,
+            "InvalidDOMGlobal": 2304,
+        ]
+        for (name, code) in expectedCodes {
+            let fixture = try productionCompilerFixture(named: name)
+            let staged = try stagedProductionCompilerFixture(fixture)
+            defer { try? FileManager.default.removeItem(at: staged.stagingRoot) }
+            let preview = try authority.analyzer.analyze(staged)
+            #expect(preview.canInstall)
+            do {
+                _ = try await authority.bundler.bundle(
+                    package: staged,
+                    preview: preview,
+                    context: .app
+                )
+                Issue.record("\(name) unexpectedly compiled")
+            } catch let HanlinScriptingBundlerError.compilerFailed(diagnostics) {
+                #expect(diagnostics.contains { $0.code == code })
+            }
+        }
+
+        let bareImport = try stagedProductionCompilerFixture(
+            productionCompilerFixture(named: "InvalidBareImport")
+        )
+        defer { try? FileManager.default.removeItem(at: bareImport.stagingRoot) }
+        let preview = try authority.analyzer.analyze(bareImport)
+        #expect(!preview.canInstall)
+        #expect(preview.dependencyGraph.unresolvedSpecifiers == ["unsupported-package"])
     }
 }
 
@@ -899,4 +978,125 @@ private func materializedMalformedPackage() throws -> URL {
         to: directory.appending(path: "hanlin-script.json", directoryHint: .notDirectory)
     )
     return directory
+}
+
+private struct ProductionCompilerAuthority {
+    let analyzer: HanlinScriptAnalyzer
+    let bundler: HanlinScriptingBundler
+}
+
+private struct ProductionCompilerExpectation: Decodable {
+    let expected: String
+}
+
+private func productionCompilerAuthority() throws -> ProductionCompilerAuthority {
+    let metadata = try HanlinScriptingSDK.metadata()
+    let inventory = HanlinCompatibilityInventory(
+        baselineID: metadata.baselineID,
+        baselineDigest: metadata.baselineDigest,
+        symbols: try metadata.records.map { record in
+            .init(
+                symbol: record.symbol,
+                state: record.state,
+                requiredCapability: try record.capability.map(HanlinCapabilityID.init(validating:)),
+                allowedContexts: record.contexts.contains("all")
+                    ? Set(HanlinExecutionContext.allCases)
+                    : Set(record.contexts.compactMap(HanlinExecutionContext.init(rawValue:)))
+            )
+        }
+    )
+    return ProductionCompilerAuthority(
+        analyzer: HanlinScriptAnalyzer(inventory: inventory),
+        bundler: HanlinScriptingBundler(
+            baseline: inventory,
+            abiVersion: HanlinScriptContractSupport.multiRuntime.abiVersion.description,
+            scriptingDeclarations: try HanlinScriptingSDK.declarationFiles().map {
+                HanlinVirtualSourceFile(
+                    logicalPath: "virtual/\($0.name)",
+                    bytes: $0.data
+                )
+            },
+            compiler: HanlinNodeMobileScriptingCompiler()
+        )
+    )
+}
+
+private func productionCompilerFixtures(expected: String) throws -> [URL] {
+    let root = try bundledFixtureDirectory("ProductionCompilerCorpus")
+    return try FileManager.default.contentsOfDirectory(
+        at: root,
+        includingPropertiesForKeys: [.isDirectoryKey],
+        options: [.skipsHiddenFiles]
+    ).filter { fixture in
+        guard fixture.hasDirectoryPath else { return false }
+        let expectationURL = fixture.appending(
+            path: "compiler-acceptance.json",
+            directoryHint: .notDirectory
+        )
+        let expectation = try JSONDecoder().decode(
+            ProductionCompilerExpectation.self,
+            from: Data(contentsOf: expectationURL)
+        )
+        return expectation.expected == expected
+    }.sorted { $0.lastPathComponent < $1.lastPathComponent }
+}
+
+private func productionCompilerFixture(named name: String) throws -> URL {
+    let fixture = try bundledFixtureDirectory("ProductionCompilerCorpus").appending(
+        path: name,
+        directoryHint: .isDirectory
+    )
+    guard FileManager.default.fileExists(atPath: fixture.path()) else {
+        throw HanlinScriptingError.unavailableProvider("production_fixture_missing_\(name)")
+    }
+    return fixture
+}
+
+private func stagedProductionCompilerFixture(_ source: URL) throws -> HanlinStagedPackage {
+    let stagingRoot = FileManager.default.temporaryDirectory.appending(
+        path: "hanlin-production-compiler-\(UUID().uuidString.lowercased())",
+        directoryHint: .isDirectory
+    )
+    let packageRoot = stagingRoot.appending(path: "package", directoryHint: .isDirectory)
+    try FileManager.default.createDirectory(at: stagingRoot, withIntermediateDirectories: false)
+    do {
+        try FileManager.default.copyItem(at: source, to: packageRoot)
+        let manifestData = try Data(contentsOf: packageRoot.appending(path: "script.json"))
+        let manifest = try JSONDecoder().decode(HanlinScriptingManifest.self, from: manifestData)
+        let files = FileManager.default.enumerator(
+            at: packageRoot,
+            includingPropertiesForKeys: [.isRegularFileKey],
+            options: [.skipsHiddenFiles]
+        )?.compactMap { $0 as? URL } ?? []
+        let regularFiles = try files.filter {
+            try $0.resourceValues(forKeys: [.isRegularFileKey]).isRegularFile == true
+        }
+        let byteCount = try regularFiles.reduce(Int64(0)) { partial, url in
+            partial + Int64(try Data(contentsOf: url).count)
+        }
+        return HanlinStagedPackage(
+            source: .init(
+                originalFileName: "\(source.lastPathComponent).scripting",
+                format: .scripting,
+                contentSHA256: String(repeating: "d", count: 64),
+                byteCount: byteCount,
+                importedAt: Date(timeIntervalSince1970: 1)
+            ),
+            stagingRoot: stagingRoot,
+            archiveURL: stagingRoot.appending(path: "fixture.scripting"),
+            packageRoot: packageRoot,
+            inspection: .init(
+                fileCount: regularFiles.count,
+                directoryCount: 1,
+                compressedBytes: byteCount,
+                uncompressedBytes: byteCount,
+                maximumDepth: 3,
+                manifestPath: "script.json"
+            ),
+            manifest: manifest
+        )
+    } catch {
+        try? FileManager.default.removeItem(at: stagingRoot)
+        throw error
+    }
 }

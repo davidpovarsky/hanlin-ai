@@ -5,7 +5,8 @@
   "license": "MIT",
   "scripts": {
     "generate": "node compile-scripting-fixtures.mjs --write",
-    "test": "node verify-quickjs-source.mjs && node compile-scripting-fixtures.mjs --check"
+    "test": "node verify-quickjs-source.mjs && node compile-scripting-fixtures.mjs --check",
+    "test:production": "node production-compiler-acceptance.mjs"
   },
   "devDependencies": {
     "typescript": "7.0.2"

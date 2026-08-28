@@ -30,6 +30,52 @@ struct HanlinScriptingBundlerTests {
         // are trusted, while package source files remain strictly typechecked.
         #expect(request.options.skipLibCheck == true)
         #expect(request.options.moduleResolution == "Bundler")
+        #expect(request.options.libraries == ["ESNext"])
+    }
+
+    @Test("Production compiler profile excludes DOM libraries and cannot drift")
+    func productionCompilerProfile() throws {
+        let options = try HanlinProductionCompilerProfile.projectOptions()
+        let project = HanlinVirtualTypeScriptProject(
+            sources: [.init(logicalPath: "index.ts", bytes: Data("Storage.clear()".utf8))],
+            declarationFiles: [
+                .init(
+                    logicalPath: "virtual/scripting.d.ts",
+                    bytes: Data("declare namespace Storage { function clear(): void }".utf8)
+                )
+            ],
+            entrypoints: ["index.ts"],
+            options: options
+        )
+        let data = try HanlinProductionCompilerProfile.configurationData(for: project)
+        let root = try #require(JSONSerialization.jsonObject(with: data) as? [String: Any])
+        let compilerOptions = try #require(root["compilerOptions"] as? [String: Any])
+
+        #expect(compilerOptions["lib"] as? [String] == ["ESNext"])
+        #expect(compilerOptions["types"] as? [String] == [])
+        #expect(compilerOptions["strict"] as? Bool == true)
+        #expect(compilerOptions["moduleResolution"] as? String == "Bundler")
+        #expect(compilerOptions["skipLibCheck"] as? Bool == true)
+        #expect(root["files"] as? [String] == ["index.ts", "virtual/scripting.d.ts"])
+
+        let polluted = HanlinVirtualTypeScriptProject(
+            sources: project.sources,
+            declarationFiles: project.declarationFiles,
+            entrypoints: project.entrypoints,
+            options: .init(
+                target: options.target,
+                libraries: ["ESNext", "DOM"],
+                module: options.module,
+                moduleResolution: options.moduleResolution,
+                strict: options.strict,
+                sourceMap: options.sourceMap,
+                skipLibCheck: options.skipLibCheck,
+                jsxRuntime: options.jsxRuntime
+            )
+        )
+        #expect(throws: HanlinProductionCompilerProfileError.projectOptionsMismatch) {
+            _ = try HanlinProductionCompilerProfile.configurationData(for: polluted)
+        }
     }
 
     @Test("Fails closed on preview errors and compiler identity mismatch")

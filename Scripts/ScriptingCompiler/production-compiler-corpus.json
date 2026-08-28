@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "discoveryRoots": [
+    "AI_HLYTests/Fixtures/ScriptingFixtures.bundle/ProductionCompilerCorpus",
+    "Reference/ScriptingCompatibility/Original/Examples"
+  ],
+  "expectations": {
+    "Reference/ScriptingCompatibility/Original/Examples/Map Snapshot": {
+      "expected": "failure",
+      "diagnosticCodes": [
+        2322
+      ],
+      "reason": "The preserved upstream example currently contains a strict nullability error at lib/mapSnapshot.ts:448."
+    },
+    "Reference/ScriptingCompatibility/Original/Examples/Transit Nearby": {
+      "expected": "success"
+    }
+  }
+}

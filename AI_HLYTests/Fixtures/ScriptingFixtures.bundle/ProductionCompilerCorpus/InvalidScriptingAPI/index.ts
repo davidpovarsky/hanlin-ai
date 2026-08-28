@@ -1,0 +1,1 @@
+Storage.nonexistentScriptingAPI("must fail")

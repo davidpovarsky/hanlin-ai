@@ -15,6 +15,7 @@ public struct HanlinVirtualSourceFile: Codable, Hashable, Sendable {
 
 public struct HanlinVirtualCompilerOptions: Codable, Hashable, Sendable {
     public let target: String
+    public let libraries: [String]
     public let module: String
     public let moduleResolution: String
     public let strict: Bool
@@ -24,6 +25,7 @@ public struct HanlinVirtualCompilerOptions: Codable, Hashable, Sendable {
 
     public init(
         target: String = "ESNext",
+        libraries: [String] = ["ESNext"],
         module: String = "CommonJS",
         moduleResolution: String = "Node10",
         strict: Bool = true,
@@ -32,6 +34,7 @@ public struct HanlinVirtualCompilerOptions: Codable, Hashable, Sendable {
         jsxRuntime: String = "react"
     ) {
         self.target = target
+        self.libraries = libraries
         self.module = module
         self.moduleResolution = moduleResolution
         self.strict = strict
@@ -204,10 +207,7 @@ public struct HanlinScriptingBundler: Sendable {
         let sources = try loadSources(at: package.packageRoot, paths: preview.dependencyGraph.modules)
         // The authoritative Scripting profile uses skipLibCheck for the exported
         // declaration bundle while retaining strict checking for package source.
-        let options = HanlinVirtualCompilerOptions(
-            moduleResolution: "Bundler",
-            skipLibCheck: true
-        )
+        let options = try HanlinProductionCompilerProfile.projectOptions()
         let project = HanlinVirtualTypeScriptProject(
             sources: sources,
             declarationFiles: scriptingDeclarations,

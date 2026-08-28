@@ -1,0 +1,6 @@
+{
+  "name": "Invalid DOM Global",
+  "version": "1.0.0",
+  "entry": "index.ts",
+  "runInApp": true
+}

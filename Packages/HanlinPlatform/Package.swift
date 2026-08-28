@@ -86,7 +86,8 @@ let package = Package(
                 "HanlinPlatformContracts",
                 "HanlinScriptContracts",
                 .product(name: "ZIPFoundation", package: "ZIPFoundation")
-            ]
+            ],
+            resources: [.process("Resources")]
         ),
         .testTarget(
             name: "HanlinScriptCompilerTests",
