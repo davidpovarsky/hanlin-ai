@@ -21,7 +21,9 @@ let package = Package(
         .target(
             name: "HanlinNativeScriptCoreSupport",
             dependencies: [
-                .product(name: "NativeScript", package: "ios-spm")
+                .product(name: "NativeScript", package: "ios-spm"),
+                "TNSWidgets",
+                "NSCWinterTC",
             ],
             path: "Sources/HanlinNativeScriptCoreSupport",
             publicHeadersPath: "include",
@@ -33,7 +35,11 @@ let package = Package(
             name: "HanlinNativeScriptRuntime",
             dependencies: ["HanlinNativeScriptCoreSupport"],
             path: "Sources/HanlinNativeScriptRuntime"
-        )
+        ),
+        // @nativescript/core ships these native frameworks separately from
+        // ios-spm. The preparation script derives and stages the pinned assets.
+        .binaryTarget(name: "TNSWidgets", path: "Artifacts/TNSWidgets.xcframework"),
+        .binaryTarget(name: "NSCWinterTC", path: "Artifacts/NSCWinterTC.xcframework"),
     ],
     swiftLanguageModes: [.v6]
 )

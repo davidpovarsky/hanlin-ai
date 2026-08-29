@@ -107,6 +107,14 @@ jobs:
         with:
           node-version: 24.5.0
 
+      - name: Prepare pinned NativeScript iOS dependency closure
+        run: |
+          set -euxo pipefail
+          npm ci --ignore-scripts --no-audit --no-fund --prefix Scripts/NativeScript
+          npm run prepare:ios-dependencies --prefix Scripts/NativeScript
+          node Scripts/NativeScript/prepare-fixture.mjs
+          npm run preflight:ios-dependencies --prefix Scripts/NativeScript
+
       - name: Prepare validation logs
         run: |
           set -euxo pipefail
@@ -457,10 +465,13 @@ jobs:
           cache: npm
           cache-dependency-path: AI_HLY/Downstream/RuntimeCore/Node/Host/package-lock.json
 
-      - name: Install pinned NativeScript metadata tooling
+      - name: Prepare pinned NativeScript iOS dependency closure
         run: |
           set -euxo pipefail
           npm ci --ignore-scripts --no-audit --no-fund --prefix Scripts/NativeScript
+          npm run prepare:ios-dependencies --prefix Scripts/NativeScript
+          node Scripts/NativeScript/prepare-fixture.mjs
+          npm run preflight:ios-dependencies --prefix Scripts/NativeScript
 
       - name: Prepare log folders
         run: |
@@ -987,6 +998,7 @@ jobs:
               --repository-root . \
               --app "$APP_PATH" \
               --json-output "$LOG_DIR/08-ios-system-resources.json"
+            npm run preflight:ios-dependencies --prefix Scripts/NativeScript -- --app "$APP_PATH"
             cp "$APP_PATH/commandDictionary.plist" "$LOG_DIR/commandDictionary.plist"
             cp "$APP_PATH/extraCommandsDictionary.plist" "$LOG_DIR/extraCommandsDictionary.plist"
 
@@ -1201,10 +1213,13 @@ jobs:
           cache: npm
           cache-dependency-path: AI_HLY/Downstream/RuntimeCore/Node/Host/package-lock.json
 
-      - name: Install pinned NativeScript metadata tooling
+      - name: Prepare pinned NativeScript iOS dependency closure
         run: |
           set -euxo pipefail
           npm ci --ignore-scripts --no-audit --no-fund --prefix Scripts/NativeScript
+          npm run prepare:ios-dependencies --prefix Scripts/NativeScript
+          node Scripts/NativeScript/prepare-fixture.mjs
+          npm run preflight:ios-dependencies --prefix Scripts/NativeScript
 
       - name: Prepare simulator logs and select stable Xcode 26
         id: simulator-toolchain
@@ -1484,6 +1499,7 @@ jobs:
             --repository-root . \
             --app "$APP_PATH" \
             --json-output "$LOG_DIR/07-simulator-ios-system-resources.json"
+          npm run preflight:ios-dependencies --prefix Scripts/NativeScript -- --app "$APP_PATH"
           cp "$APP_PATH/commandDictionary.plist" "$LOG_DIR/commandDictionary.plist"
           cp "$APP_PATH/extraCommandsDictionary.plist" "$LOG_DIR/extraCommandsDictionary.plist"
           find "$APP_PATH" -maxdepth 4 -print | sort > "$LOG_DIR/07-built-app-resources.txt"

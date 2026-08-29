@@ -6,7 +6,9 @@
   "main": "Fixtures/Source/app.ts",
   "scripts": {
     "check:fixture": "tsc --noEmit",
-    "prepare:fixture": "npm run check:fixture && vite build --mode production -- --env.ios"
+    "prepare:fixture": "npm run check:fixture && vite build --mode production -- --env.ios",
+    "prepare:ios-dependencies": "node prepare-ios-dependencies.mjs",
+    "preflight:ios-dependencies": "node preflight-ios-dependencies.mjs"
   },
   "dependencies": {
     "@nativescript/core": "9.1.0"
