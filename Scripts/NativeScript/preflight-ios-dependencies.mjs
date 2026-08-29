@@ -32,7 +32,9 @@ const appIndex = process.argv.indexOf('--app');
 if (appIndex >= 0) {
   const argument = process.argv[appIndex + 1];
   if (!argument) throw new Error('--app requires an application path');
-  const appRoot = resolve(argument);
+  // npm --prefix changes the script working directory. Interpret relative app
+  // paths from the repository root so CI and direct invocations agree.
+  const appRoot = resolve(repositoryRoot, argument);
   for (const name of ['NativeScript', ...expected]) {
     const binary = resolve(appRoot, 'Frameworks', `${name}.framework`, name);
     await access(binary);
