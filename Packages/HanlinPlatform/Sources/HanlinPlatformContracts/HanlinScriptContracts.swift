@@ -80,7 +80,7 @@ public struct HanlinScriptRuntimeDescriptor: Codable, Hashable, Sendable {
         switch profile {
         case .scriptingJSC, .hanlinQuickJS: .localUnverified
         case .hanlinNode: .publisherVerified
-        case .hanlinPython: .integrityVerified
+        case .hanlinPython, .hanlinNativeScript: .integrityVerified
         }
     }
 }
@@ -303,6 +303,9 @@ public struct HanlinScriptPackageManifest: Codable, Hashable, Sendable {
             ["ts", "tsx", "js", "jsx"].contains(sourceExtension)
                 && compiledExtension == "js"
                 && entrypoint.sourcePath != entrypoint.compiledPath
+        case .hanlinNativeScript:
+            ["js", "mjs"].contains(sourceExtension)
+                && ["js", "mjs"].contains(compiledExtension)
         }
         if !validEntrypointMapping {
             issues.append(.init(
@@ -491,7 +494,8 @@ public struct HanlinScriptContractSupport: Hashable, Sendable {
             .scriptingJSC: .init(engine: "JavaScriptCore", version: "Apple"),
             .hanlinQuickJS: .init(engine: "quickjs-ng", version: "0.16.1"),
             .hanlinNode: .init(engine: "NodeMobile", version: "24.5.0"),
-            .hanlinPython: .init(engine: "CPython", version: "3.14.6")
+            .hanlinPython: .init(engine: "CPython", version: "3.14.6"),
+            .hanlinNativeScript: .init(engine: "NativeScript", version: "9.1.0")
         ]
     )
 }

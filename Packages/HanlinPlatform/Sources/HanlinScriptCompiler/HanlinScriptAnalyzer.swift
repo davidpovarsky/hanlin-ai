@@ -62,6 +62,8 @@ public struct HanlinScriptAnalyzer: Sendable {
     public func analyze(_ package: HanlinStagedPackage) throws -> HanlinImportPreview {
         let files = try packageFiles(root: package.packageRoot)
         let sourcePaths = files.keys.filter(Self.isModule).sorted()
+        let nativeScriptDeclared = package.manifest.unknownFields["hanlinRuntime"]
+            == .string(HanlinRuntimeProfile.hanlinNativeScript.rawValue)
         let entrypoints = discoverEntrypoints(
             manifest: package.manifest,
             sourcePaths: sourcePaths
@@ -81,7 +83,7 @@ public struct HanlinScriptAnalyzer: Sendable {
                 ))
                 continue
             }
-            if Self.matches(#"\bimport\s*\("#, source) {
+            if !nativeScriptDeclared, Self.matches(#"\bimport\s*\("#, source) {
                 findings.append(.init(
                     state: .unsupported,
                     severity: .error,
@@ -89,7 +91,7 @@ public struct HanlinScriptAnalyzer: Sendable {
                     message: "Dynamic import is not supported in installed packages."
                 ))
             }
-            if Self.matches(#"\beval\s*\("#, source) {
+            if !nativeScriptDeclared, Self.matches(#"\beval\s*\("#, source) {
                 findings.append(.init(
                     state: .unsupported,
                     severity: .error,
@@ -97,8 +99,10 @@ public struct HanlinScriptAnalyzer: Sendable {
                     message: "eval is forbidden by the package module policy."
                 ))
             }
-            importedSymbols.formUnion(Self.scriptingImports(in: source))
-            importedSymbols.formUnion(Self.ambientScriptingSymbols(in: source))
+            if !nativeScriptDeclared {
+                importedSymbols.formUnion(Self.scriptingImports(in: source))
+                importedSymbols.formUnion(Self.ambientScriptingSymbols(in: source))
+            }
             for specifier in Self.moduleSpecifiers(in: source) {
                 let resolved = resolve(
                     specifier: specifier,
@@ -122,6 +126,14 @@ public struct HanlinScriptAnalyzer: Sendable {
                     ))
                 }
             }
+        }
+
+        if nativeScriptDeclared {
+            Self.validatePreparedNativeScriptApplication(
+                files: files,
+                entrypoints: entrypoints,
+                findings: &findings
+            )
         }
 
         var capabilities: [HanlinCapabilityID: HanlinCapabilityRequest] = [:]
@@ -208,6 +220,43 @@ public struct HanlinScriptAnalyzer: Sendable {
         )
     }
 
+    private static func validatePreparedNativeScriptApplication(
+        files: [String: Data],
+        entrypoints: [HanlinPackageEntrypointDescriptor],
+        findings: inout [HanlinCompatibilityFinding]
+    ) {
+        guard entrypoints.count == 1, let entrypoint = entrypoints.first, entrypoint.kind == .app else {
+            findings.append(.init(
+                state: .unsupported,
+                severity: .error,
+                message: "A NativeScript package must declare exactly one foreground app entrypoint."
+            ))
+            return
+        }
+        let packageJSONPath = URL(filePath: entrypoint.sourcePath)
+            .deletingLastPathComponent()
+            .appending(path: "package.json")
+            .relativePath
+        guard let packageJSONData = files[packageJSONPath],
+              let packageJSON = try? JSONSerialization.jsonObject(with: packageJSONData) as? [String: Any],
+              packageJSON["main"] as? String == URL(filePath: entrypoint.sourcePath).lastPathComponent,
+              packageJSON["hanlinRuntime"] as? String == HanlinRuntimeProfile.hanlinNativeScript.rawValue else {
+            findings.append(.init(
+                state: .unsupported,
+                severity: .error,
+                sourcePath: packageJSONPath,
+                message: "NativeScript requires a prepared app package.json with matching main and hanlinRuntime fields."
+            ))
+            return
+        }
+        findings.append(.init(
+            state: .supported,
+            severity: .information,
+            sourcePath: entrypoint.sourcePath,
+            message: "Prepared NativeScript application structure is valid."
+        ))
+    }
+
     private func packageFiles(root: URL) throws -> [String: Data] {
         let keys: [URLResourceKey] = [.isRegularFileKey, .isSymbolicLinkKey]
         guard let enumerator = fileManager.enumerator(
@@ -271,8 +320,16 @@ public struct HanlinScriptAnalyzer: Sendable {
             candidates.append((path, kind, [context], policy))
         }
         return candidates.map { path, kind, contexts, policy in
-            let profile: HanlinRuntimeProfile = path.lowercased().hasSuffix(".py")
-                ? .hanlinPython : .scriptingJSC
+            let requestedRuntime = manifest.unknownFields["hanlinRuntime"].flatMap { value -> String? in
+                if case let .string(rawValue) = value { rawValue } else { nil }
+            }
+            let profile: HanlinRuntimeProfile = if requestedRuntime == HanlinRuntimeProfile.hanlinNativeScript.rawValue {
+                .hanlinNativeScript
+            } else if path.lowercased().hasSuffix(".py") {
+                .hanlinPython
+            } else {
+                .scriptingJSC
+            }
             return .init(
                 id: kind.rawValue,
                 kind: kind,
@@ -304,8 +361,8 @@ public struct HanlinScriptAnalyzer: Sendable {
             }
         }
         let base = components.joined(separator: "/")
-        let candidates = [base, "\(base).ts", "\(base).tsx", "\(base).js", "\(base).jsx", "\(base).json",
-                          "\(base)/index.ts", "\(base)/index.tsx", "\(base)/index.js", "\(base)/index.jsx"]
+        let candidates = [base, "\(base).ts", "\(base).tsx", "\(base).js", "\(base).jsx", "\(base).mjs", "\(base).json",
+                          "\(base)/index.ts", "\(base)/index.tsx", "\(base)/index.js", "\(base)/index.jsx", "\(base)/index.mjs"]
         return candidates.first(where: modulePaths.contains)
     }
 
@@ -384,13 +441,13 @@ public struct HanlinScriptAnalyzer: Sendable {
     }
 
     private static func isModule(_ path: String) -> Bool {
-        ["ts", "tsx", "js", "jsx", "json", "py"].contains(
+        ["ts", "tsx", "js", "jsx", "mjs", "json", "py"].contains(
             URL(filePath: path).pathExtension.lowercased()
         )
     }
 
     private static func isSource(_ path: String) -> Bool {
-        ["ts", "tsx", "js", "jsx", "py"].contains(
+        ["ts", "tsx", "js", "jsx", "mjs", "py"].contains(
             URL(filePath: path).pathExtension.lowercased()
         )
     }

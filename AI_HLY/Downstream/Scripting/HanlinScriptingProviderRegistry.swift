@@ -190,6 +190,8 @@ actor HanlinScriptingProviderRegistry {
             .node(try HanlinNodeWorkerSession(identifier: package.providerInstanceID.rawValue))
         case .hanlinPython:
             .python(try HanlinPythonWorkerSession(identifier: package.providerInstanceID.rawValue))
+        case .hanlinNativeScript:
+            throw HanlinScriptingError.unsupportedABI("nativescript_is_foreground_only")
         }
         do {
             try await session.loadProgram(

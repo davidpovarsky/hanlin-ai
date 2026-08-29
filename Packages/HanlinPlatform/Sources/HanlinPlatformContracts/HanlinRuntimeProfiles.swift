@@ -5,6 +5,7 @@ public enum HanlinRuntimeProfile: String, Codable, CaseIterable, Hashable, Senda
     case hanlinQuickJS = "hanlin-quickjs"
     case hanlinNode = "hanlin-node"
     case hanlinPython = "hanlin-python"
+    case hanlinNativeScript = "hanlin-nativescript"
 
     public var runtimeKind: HanlinRuntimeKind {
         switch self {
@@ -12,6 +13,7 @@ public enum HanlinRuntimeProfile: String, Codable, CaseIterable, Hashable, Senda
         case .hanlinQuickJS: .quickJS
         case .hanlinNode: .node
         case .hanlinPython: .localPython
+        case .hanlinNativeScript: .native
         }
     }
 }
@@ -79,6 +81,11 @@ public struct HanlinRuntimeCapabilities: Codable, Hashable, Sendable {
         case .hanlinPython:
             .init(persistentContext: true, hardMemoryLimit: false, hardStackLimit: false,
                   hardInterruption: false, asyncHostCalls: true, modules: true, scriptUI: false,
+                  extensionSafe: false, trustedCodeOnly: true, filesystem: .verifiedWorkspace,
+                  network: .capabilityBroker)
+        case .hanlinNativeScript:
+            .init(persistentContext: true, hardMemoryLimit: false, hardStackLimit: false,
+                  hardInterruption: false, asyncHostCalls: true, modules: true, scriptUI: true,
                   extensionSafe: false, trustedCodeOnly: true, filesystem: .verifiedWorkspace,
                   network: .capabilityBroker)
         }

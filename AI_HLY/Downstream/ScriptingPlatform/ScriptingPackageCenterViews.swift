@@ -22,6 +22,7 @@ struct ScriptingPackageImportView: View {
                 } label: {
                     Label("Import Script Package", systemImage: "doc.badge.plus")
                 }
+                .accessibilityIdentifier("hanlin-file-importer")
                 Text("Choose a .scripting or .zip package. Hanlin copies it into private staging and performs Import Preview without executing package code.")
                     .font(.footnote)
                     .foregroundStyle(.secondary)
@@ -31,6 +32,7 @@ struct ScriptingPackageImportView: View {
                 ScriptingImportPreviewSections(preview: preview, platform: platform)
                 Section {
                     Button("Install") { Task { await platform.installPreview() } }
+                        .accessibilityIdentifier("hanlin-package-install")
                         .disabled(!preview.canInstall || platform.activity == .installing)
                     Button("Discard", role: .destructive) { platform.discardPreview() }
                 }
@@ -129,6 +131,7 @@ private struct ScriptingImportPreviewSections: View {
         case .hanlinQuickJS: return "Hanlin manifest selected constrained JavaScript."
         case .hanlinNode: return "Hanlin manifest selected a trusted Node worker."
         case .hanlinPython: return "Python entrypoint requires trusted local execution."
+        case .hanlinNativeScript: return "NativeScript 9.1 provides trusted Apple-native interop and Core UI."
         }
     }
 }
@@ -249,6 +252,8 @@ struct ScriptingApplicationContainerView: View {
             Group {
                 if let model = platform.activeApplicationModel {
                     HanlinScriptUIView(model: model)
+                } else if let controller = platform.activeNativeScriptController {
+                    HanlinHostedViewController(controller: controller)
                 } else {
                     ContentUnavailableView("Script App Unavailable", systemImage: "exclamationmark.triangle")
                 }
@@ -259,6 +264,7 @@ struct ScriptingApplicationContainerView: View {
                         platform.dismissActiveApplication()
                         dismiss()
                     }
+                    .accessibilityIdentifier("hanlin-script-app-close")
                 }
             }
         }
@@ -273,4 +279,11 @@ struct ScriptingApplicationContainerView: View {
         }
         .onDisappear { platform.dismissActiveApplication() }
     }
+}
+
+private struct HanlinHostedViewController: UIViewControllerRepresentable {
+    let controller: UIViewController
+
+    func makeUIViewController(context: Context) -> UIViewController { controller }
+    func updateUIViewController(_ uiViewController: UIViewController, context: Context) {}
 }

@@ -26,6 +26,20 @@
             buildForRunning = "NO"
             buildForProfiling = "NO"
             buildForArchiving = "NO"
+            buildForAnalyzing = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "E30000000000000000000003"
+               BuildableName = "AI_HLYUITests.xctest"
+               BlueprintName = "AI_HLYUITests"
+               ReferencedContainer = "container:AI_HLY.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "NO"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
@@ -52,6 +66,17 @@
                BlueprintIdentifier = "B10000000000000000000007"
                BuildableName = "AI_HLYTests.xctest"
                BlueprintName = "AI_HLYTests"
+               ReferencedContainer = "container:AI_HLY.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO"
+            parallelizable = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "E30000000000000000000003"
+               BuildableName = "AI_HLYUITests.xctest"
+               BlueprintName = "AI_HLYUITests"
                ReferencedContainer = "container:AI_HLY.xcodeproj">
             </BuildableReference>
          </TestableReference>

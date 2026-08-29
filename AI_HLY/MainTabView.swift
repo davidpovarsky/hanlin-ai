@@ -49,6 +49,7 @@ struct MainTabView: View {
             NativeAppsHubView()
                 .tabItem {
                     Label(String(localized: "Apps"), systemImage: "square.grid.2x2")
+                        .accessibilityIdentifier("hanlin-apps-tab")
                 }
                 .tag(4)
             

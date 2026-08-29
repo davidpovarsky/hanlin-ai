@@ -81,6 +81,7 @@ struct NativeAppsHubView: View {
                     } label: {
                         Image(systemName: "plus")
                     }
+                    .accessibilityIdentifier("hanlin-apps-add")
                 }
             }
             .overlay {
@@ -121,7 +122,10 @@ struct NativeAppsHubView: View {
                 }
             }
             .fullScreenCover(isPresented: Binding(
-                get: { scriptingPlatform.activeApplicationModel != nil },
+                get: {
+                    scriptingPlatform.activeApplicationModel != nil
+                        || scriptingPlatform.activeNativeScriptController != nil
+                },
                 set: { if !$0 { scriptingPlatform.dismissActiveApplication() } }
             )) {
                 ScriptingApplicationContainerView(platform: scriptingPlatform)
@@ -180,6 +184,7 @@ struct NativeAppsHubView: View {
             ScriptingPackageCardView(package: package)
         }
         .buttonStyle(.plain)
+        .accessibilityIdentifier("hanlin-package-\(package.record.installedPackageID.rawValue)")
         .disabled(isEditingApps)
         .contextMenu {
             Button {

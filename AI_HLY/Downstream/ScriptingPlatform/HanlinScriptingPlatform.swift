@@ -10,6 +10,7 @@ import HanlinScriptStore
 import HanlinScriptUI
 import HanlinScriptingApplicationRuntime
 import HanlinScriptingSDK
+import HanlinNativeScriptRuntime
 import Observation
 import SwiftData
 import UIKit
@@ -36,6 +37,7 @@ final class HanlinScriptingPlatform {
     private(set) var approvedCapabilities: Set<HanlinCapabilityID> = []
     private(set) var activeApplicationID: HanlinInstalledPackageID?
     private(set) var activeApplicationModel: HanlinScriptUIModel?
+    private(set) var activeNativeScriptController: UIViewController?
     private(set) var systemUIPresentation: HanlinScriptingSystemUIPresentation?
 
     private let packageCenter = HanlinPackageCenter()
@@ -45,6 +47,7 @@ final class HanlinScriptingPlatform {
     private var bundler: HanlinScriptingBundler?
     private var extensionStore: HanlinScriptExtensionStore?
     private var applicationSession: HanlinScriptingApplicationSession?
+    private var nativeScriptSession: HanlinNativeScriptSession?
     private var systemUIContinuation: CheckedContinuation<HanlinScriptingSystemUIResult, any Error>?
     private var modelContext: ModelContext?
     private let locationService = HanlinAppleLocationService()
@@ -186,7 +189,7 @@ final class HanlinScriptingPlatform {
                 defer { try? FileManager.default.removeItem(at: artifactRoot) }
                 try Self.copyPackageSource(from: stagedPackage.packageRoot, to: artifactRoot)
                 let contexts = Set(preview.entrypoints
-                    .filter { $0.runtimeProfile != .hanlinPython }
+                    .filter { ![.hanlinPython, .hanlinNativeScript].contains($0.runtimeProfile) }
                     .map(\.kind))
                     .sorted { $0.rawValue < $1.rawValue }
                 guard !preview.entrypoints.isEmpty else {
@@ -200,7 +203,9 @@ final class HanlinScriptingPlatform {
                         context: context
                     ))
                 }
-                let compiled = if bundles.isEmpty {
+                let compiled = if preview.entrypoints.contains(where: { $0.runtimeProfile == .hanlinNativeScript }) {
+                    try Self.nativeScriptSourceBundle(preview: preview)
+                } else if bundles.isEmpty {
                     try Self.pythonSourceBundle(preview: preview)
                 } else {
                     try bundler.merged(bundles)
@@ -352,13 +357,32 @@ final class HanlinScriptingPlatform {
             activity = .failed("This package does not contain an app entrypoint.")
             return
         }
-        guard entrypoint.runtimeProfile == .scriptingJSC else {
-            activity = .failed("Interactive ScriptUI currently requires the scripting-jsc runtime.")
-            return
-        }
         let required = Set(entrypoint.requiredCapabilities.filter(\.required).map(\.capabilityID))
         guard required.isSubset(of: Set(package.grantedCapabilities)) else {
             activity = .failed("Grant every required capability before launching this package.")
+            return
+        }
+        if entrypoint.runtimeProfile == .hanlinNativeScript {
+            do {
+                let artifactRoot = try await store.activeArtifactURL(for: id)
+                let entrypointURL = artifactRoot.appending(path: entrypoint.sourcePath, directoryHint: .notDirectory)
+                dismissActiveApplication()
+                let session = try HanlinNativeScriptSession(
+                    applicationRoot: entrypointURL.deletingLastPathComponent()
+                )
+                try session.start()
+                nativeScriptSession = session
+                activeApplicationID = id
+                activeNativeScriptController = session.containerController
+                activity = .idle
+            } catch {
+                dismissActiveApplication()
+                activity = .failed(Self.safeMessage(error))
+            }
+            return
+        }
+        guard entrypoint.runtimeProfile == .scriptingJSC else {
+            activity = .failed("This interactive entrypoint does not have a foreground runtime.")
             return
         }
         do {
@@ -457,8 +481,14 @@ final class HanlinScriptingPlatform {
         cancelSystemUI()
         applicationSession?.dismiss()
         applicationSession = nil
+        if nativeScriptSession != nil {
+            NSLog("HANLIN_NS_PRODUCTION_SHUTDOWN_OK")
+        }
+        nativeScriptSession?.shutdown()
+        nativeScriptSession = nil
         activeApplicationID = nil
         activeApplicationModel = nil
+        activeNativeScriptController = nil
     }
 
     func completeSystemUI(
@@ -1355,6 +1385,36 @@ final class HanlinScriptingPlatform {
             manifest: .init(
                 compilerVersion: "CPython-3.14.6",
                 compilerIntegrity: "200ef60eb67be0483ceb638daa9048f84f41a9a952707a5ad4c3198037c7b583",
+                compilerOptionsHash: optionsHash,
+                baselineID: metadata.baselineID,
+                baselineDigest: metadata.baselineDigest,
+                hanlinABIVersion: HanlinScriptContractSupport.multiRuntime.abiVersion.description,
+                packageContentDigest: preview.source.contentSHA256,
+                cacheFingerprint: fingerprint,
+                files: []
+            ),
+            modules: [],
+            diagnostics: []
+        )
+    }
+
+    nonisolated private static func nativeScriptSourceBundle(
+        preview: HanlinImportPreview
+    ) throws -> HanlinScriptingBundle {
+        let metadata = try HanlinScriptingSDK.metadata()
+        let optionsHash = SHA256.hash(data: Data("nativescript-source-v1".utf8))
+            .map { String(format: "%02x", $0) }.joined()
+        let fingerprint = SHA256.hash(data: Data([
+            preview.source.contentSHA256,
+            "NativeScript-9.1.0",
+            metadata.baselineID,
+            metadata.baselineDigest,
+            optionsHash,
+        ].joined(separator: "\n").utf8)).map { String(format: "%02x", $0) }.joined()
+        return .init(
+            manifest: .init(
+                compilerVersion: "NativeScript-9.1.0-prepared",
+                compilerIntegrity: preview.source.contentSHA256,
                 compilerOptionsHash: optionsHash,
                 baselineID: metadata.baselineID,
                 baselineDigest: metadata.baselineDigest,

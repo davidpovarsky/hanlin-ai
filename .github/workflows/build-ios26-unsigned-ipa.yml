@@ -114,6 +114,17 @@ jobs:
           npm ci --ignore-scripts --no-audit --no-fund --prefix Scripts/NativeScript
           npm run prepare:ios-dependencies --prefix Scripts/NativeScript
           node Scripts/NativeScript/prepare-fixture.mjs
+          npm run prepare:production-package --prefix Scripts/NativeScript
+          (
+            cd build/NativeScriptE2E/package
+            zip -qry ../HanlinNativeScriptProduction.scripting .
+          )
+          (
+            cd build/NativeScriptE2E/malformed
+            zip -qry ../HanlinNativeScriptMalformed.scripting .
+          )
+          test -s build/NativeScriptE2E/HanlinNativeScriptProduction.scripting
+          test -s build/NativeScriptE2E/HanlinNativeScriptMalformed.scripting
           npm run preflight:ios-dependencies --prefix Scripts/NativeScript
 
       - name: Prepare validation logs
@@ -855,6 +866,7 @@ jobs:
             --directory-root . \
             AI_HLY \
             AI_HLYTests \
+            AI_HLYUITests \
             Packages \
             AI_HLY.xcodeproj \
             Config.xcconfig \
@@ -1448,7 +1460,7 @@ jobs:
           echo "$duration_seconds" > "$LOG_DIR/06-warm-rebuild-duration-seconds.txt"
           echo "Same-run simulator no-op rebuild duration: ${duration_seconds}s"
 
-      - name: Build downstream unit tests
+      - name: Build downstream unit and production UI tests
         if: ${{ !inputs.nativescript_poc_only }}
         run: |
           set -euxo pipefail
@@ -1467,6 +1479,7 @@ jobs:
             -skipPackagePluginValidation \
             -skipMacroValidation \
             -only-testing:AI_HLYTests \
+            -only-testing:AI_HLYUITests \
             ENABLE_TESTABILITY=YES \
             IPHONEOS_DEPLOYMENT_TARGET="$IOS_DEPLOYMENT_TARGET" \
             ARCHS=arm64 \
@@ -1555,6 +1568,18 @@ jobs:
 
           xcrun simctl boot "$SIMULATOR_UDID" 2>/dev/null || true
           xcrun simctl bootstatus "$SIMULATOR_UDID" -b 2>&1 | tee "$LOG_DIR/08-bootstatus.log"
+          if [ "${{ inputs.fast_validation_only }}" != "true" ] && [ "${{ inputs.nativescript_poc_only }}" != "true" ]; then
+            FILES_CONTAINER="$(xcrun simctl get_app_container "$SIMULATOR_UDID" com.apple.DocumentsApp data)"
+            test -n "$FILES_CONTAINER"
+            mkdir -p "$FILES_CONTAINER/Documents"
+            cp build/NativeScriptE2E/HanlinNativeScriptProduction.scripting "$FILES_CONTAINER/Documents/"
+            cp build/NativeScriptE2E/HanlinNativeScriptMalformed.scripting "$FILES_CONTAINER/Documents/"
+            {
+              echo "files_container=$FILES_CONTAINER"
+              shasum -a 256 "$FILES_CONTAINER/Documents/HanlinNativeScriptProduction.scripting"
+              shasum -a 256 "$FILES_CONTAINER/Documents/HanlinNativeScriptMalformed.scripting"
+            } | tee "$LOG_DIR/08-nativescript-files-staging.log"
+          fi
           if [ "${{ inputs.nativescript_poc_only }}" != "true" ]; then
             rm -rf "$LOG_DIR/DownstreamTestsResult.xcresult"
             started_at="$(date +%s)"
@@ -1595,6 +1620,44 @@ jobs:
             -only-testing:AI_HLYTests/HanlinScriptingAcceptanceTests \
             2>&1 | tee "$LOG_DIR/08-scripting-acceptance.log"
             echo "$(( $(date +%s) - scripting_started_at ))" > "$LOG_DIR/08-scripting-acceptance-duration-seconds.txt"
+            if [ "${{ inputs.fast_validation_only }}" != "true" ]; then
+              rm -rf "$LOG_DIR/NativeScriptProductionE2EResult.xcresult"
+              nativescript_e2e_started_at="$(date +%s)"
+              set +e
+              xcodebuild test-without-building \
+              -project "$PROJECT_PATH" \
+              -scheme "$SCHEME_NAME" \
+              -configuration "$CONFIGURATION" \
+              -destination "platform=iOS Simulator,id=$SIMULATOR_UDID" \
+              -derivedDataPath "$DERIVED_DATA_PATH" \
+              -clonedSourcePackagesDirPath "$CLONED_PACKAGES_PATH" \
+              -resultBundlePath "$LOG_DIR/NativeScriptProductionE2EResult.xcresult" \
+              -skipPackagePluginValidation \
+              -skipMacroValidation \
+              -only-testing:AI_HLYUITests/HanlinNativeScriptProductionE2ETests \
+              2>&1 | tee "$LOG_DIR/08-nativescript-production-ui-tests.log"
+              nativescript_e2e_status="${PIPESTATUS[0]}"
+              set -e
+              echo "$(( $(date +%s) - nativescript_e2e_started_at ))" > "$LOG_DIR/08-nativescript-production-ui-tests-duration-seconds.txt"
+              xcrun simctl spawn "$SIMULATOR_UDID" log show \
+                --style compact \
+                --last 15m \
+                --predicate "process == '$APP_EXECUTABLE'" \
+                > "$LOG_DIR/08-nativescript-production.log" 2>&1 || true
+              if [ "$nativescript_e2e_status" -ne 0 ]; then
+                xcrun xcresulttool get test-results tests \
+                  --path "$LOG_DIR/NativeScriptProductionE2EResult.xcresult" \
+                  --format json 2>&1 | tee "$LOG_DIR/08-nativescript-production-ui-test-results.json" || true
+                exit "$nativescript_e2e_status"
+              fi
+              grep -Fq 'HANLIN_NS_INITIALIZED_EXTERNAL_ROOT' "$LOG_DIR/08-nativescript-production.log"
+              grep -Fq 'HANLIN_NS_FIXTURE_STARTED' "$LOG_DIR/08-nativescript-production.log"
+              grep -Fq 'HANLIN_NS_NATIVE_API_OK' "$LOG_DIR/08-nativescript-production.log"
+              grep -Fq 'HANLIN_NS_SCRIPTING_ADAPTER_OK' "$LOG_DIR/08-nativescript-production.log"
+              grep -Fq 'HANLIN_NS_MODULE_RESOURCE_OK' "$LOG_DIR/08-nativescript-production.log"
+              grep -Fq 'HANLIN_NS_CORE_UI_READY controls=Label,Button' "$LOG_DIR/08-nativescript-production.log"
+              grep -Fq 'HANLIN_NS_PRODUCTION_SHUTDOWN_OK' "$LOG_DIR/08-nativescript-production.log"
+            fi
           fi
           xcrun simctl boot "$SIMULATOR_UDID" 2>/dev/null || true
           xcrun simctl bootstatus "$SIMULATOR_UDID" -b 2>&1 \

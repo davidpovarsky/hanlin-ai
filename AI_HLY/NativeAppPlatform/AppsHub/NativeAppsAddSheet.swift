@@ -20,6 +20,7 @@ struct NativeAppsAddSheet: View {
                     } label: {
                         Label("Import Script Package", systemImage: "doc.badge.plus")
                     }
+                    .accessibilityIdentifier("hanlin-import-script-package")
                 }
 
                 Section("Bundled Apps") {

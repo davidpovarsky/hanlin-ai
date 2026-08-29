@@ -50,6 +50,13 @@
 			remoteGlobalIDString = D7B6C3C02D50A55D004E3AD6;
 			remoteInfo = AI_Hanlin;
 		};
+		E3000000000000000000000A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D7B6C3B92D50A55D004E3AD6 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D7B6C3C02D50A55D004E3AD6;
+			remoteInfo = AI_Hanlin;
+		};
 		D20000000000000000000010 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D7B6C3B92D50A55D004E3AD6 /* Project object */;
@@ -93,6 +100,7 @@
 		A10000000000000000000063 /* extraCommandsDictionary.plist */ = {isa = PBXFileReference; explicitFileType = text; name = extraCommandsDictionary.plist; path = Packages/IOSSystemLite/Sources/IOSSystemLite/Resources/extraCommandsDictionary.plist; sourceTree = SOURCE_ROOT; };
 		D7B6C3C12D50A55D004E3AD6 /* AI_Hanlin.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AI_Hanlin.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B10000000000000000000002 /* AI_HLYTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AI_HLYTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		E30000000000000000000001 /* AI_HLYUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AI_HLYUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D20000000000000000000020 /* HanlinScriptingWidgets.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = HanlinScriptingWidgets.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		D7C6558C2E6C731A0041F1C7 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -209,6 +217,11 @@
 			path = AI_HLYTests;
 			sourceTree = "<group>";
 		};
+		E30000000000000000000002 /* AI_HLYUITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = AI_HLYUITests;
+			sourceTree = "<group>";
+		};
 		D20000000000000000000030 /* HanlinScriptingWidgets */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
@@ -259,6 +272,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		E30000000000000000000005 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D20000000000000000000040 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -296,6 +316,7 @@
 			children = (
 				D7B6C3C32D50A55D004E3AD6 /* AI_HLY */,
 				B10000000000000000000003 /* AI_HLYTests */,
+				E30000000000000000000002 /* AI_HLYUITests */,
 				D20000000000000000000030 /* HanlinScriptingWidgets */,
 				A10000000000000000000064 /* IOSSystemLite Resources */,
 				D73E23062D817B1300ACC644 /* Frameworks */,
@@ -309,6 +330,7 @@
 			children = (
 				D7B6C3C12D50A55D004E3AD6 /* AI_Hanlin.app */,
 				B10000000000000000000002 /* AI_HLYTests.xctest */,
+				E30000000000000000000001 /* AI_HLYUITests.xctest */,
 				D20000000000000000000020 /* HanlinScriptingWidgets.appex */,
 			);
 			name = Products;
@@ -389,6 +411,29 @@
 			productReference = B10000000000000000000002 /* AI_HLYTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		E30000000000000000000003 /* AI_HLYUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E30000000000000000000009 /* Build configuration list for PBXNativeTarget "AI_HLYUITests" */;
+			buildPhases = (
+				E30000000000000000000004 /* Sources */,
+				E30000000000000000000005 /* Frameworks */,
+				E30000000000000000000006 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				E3000000000000000000000B /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				E30000000000000000000002 /* AI_HLYUITests */,
+			);
+			name = AI_HLYUITests;
+			packageProductDependencies = (
+			);
+			productName = AI_HLYUITests;
+			productReference = E30000000000000000000001 /* AI_HLYUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 		D20000000000000000000050 /* HanlinScriptingWidgets */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = D20000000000000000000072 /* Build configuration list for PBXNativeTarget "HanlinScriptingWidgets" */;
@@ -431,6 +476,10 @@
 						CreatedOnToolsVersion = 26.0;
 						TestTargetID = D7B6C3C02D50A55D004E3AD6;
 					};
+					E30000000000000000000003 = {
+						CreatedOnToolsVersion = 26.0;
+						TestTargetID = D7B6C3C02D50A55D004E3AD6;
+					};
 					D20000000000000000000050 = {
 						CreatedOnToolsVersion = 26.0;
 					};
@@ -470,6 +519,7 @@
 			targets = (
 				D7B6C3C02D50A55D004E3AD6 /* AI_Hanlin */,
 				B10000000000000000000007 /* AI_HLYTests */,
+				E30000000000000000000003 /* AI_HLYUITests */,
 				D20000000000000000000050 /* HanlinScriptingWidgets */,
 			);
 		};
@@ -486,6 +536,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		B10000000000000000000006 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E30000000000000000000006 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -550,6 +607,11 @@
 			target = D7B6C3C02D50A55D004E3AD6 /* AI_Hanlin */;
 			targetProxy = B1000000000000000000000B /* PBXContainerItemProxy */;
 		};
+		E3000000000000000000000B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D7B6C3C02D50A55D004E3AD6 /* AI_Hanlin */;
+			targetProxy = E3000000000000000000000A /* PBXContainerItemProxy */;
+		};
 		D20000000000000000000060 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = D20000000000000000000050 /* HanlinScriptingWidgets */;
@@ -559,6 +621,13 @@
 
 /* Begin PBXSourcesBuildPhase section */
 		B10000000000000000000005 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E30000000000000000000004 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -582,6 +651,42 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
+		E30000000000000000000007 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 87242QY66T;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "cherryai.com.AI-HanlinUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = AI_Hanlin;
+			};
+			name = Debug;
+		};
+		E30000000000000000000008 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 87242QY66T;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "cherryai.com.AI-HanlinUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = AI_Hanlin;
+			};
+			name = Release;
+		};
 		B10000000000000000000008 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1030,6 +1135,15 @@
 			buildConfigurations = (
 				B10000000000000000000008 /* Debug */,
 				B10000000000000000000009 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E30000000000000000000009 /* Build configuration list for PBXNativeTarget "AI_HLYUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E30000000000000000000007 /* Debug */,
+				E30000000000000000000008 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

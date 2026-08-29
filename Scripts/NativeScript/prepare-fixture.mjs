@@ -22,6 +22,11 @@ const result = spawnSync(
 if (result.error) throw result.error;
 if (result.status !== 0) process.exit(result.status ?? 1);
 
+await cp(
+  resolve(scriptRoot, 'Fixtures', 'Source', 'fixture-resource.txt'),
+  resolve(buildRoot, 'fixture-resource.txt')
+);
+
 for (const name of ['fixture-a', 'fixture-b']) {
   const destination = resolve(outputRoot, name, 'nativescript', 'app');
   await mkdir(destination, { recursive: true });

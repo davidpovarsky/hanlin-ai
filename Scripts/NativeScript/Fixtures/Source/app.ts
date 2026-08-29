@@ -4,8 +4,10 @@ import {
   Label,
   Page,
   StackLayout,
-  View
+  View,
+  knownFolders
 } from '@nativescript/core';
+import { localModuleProof } from './local-module';
 
 declare const UIDevice: {
   currentDevice: {
@@ -19,6 +21,10 @@ declare const NSUserDefaults: {
     setObjectForKey(value: string, key: string): void;
     synchronize(): boolean;
   };
+};
+
+declare const HanlinNativeScriptCompatibility: {
+  roundTripValueKey(value: string, key: string): string;
 };
 
 declare global {
@@ -36,6 +42,21 @@ function logMarker(message: string): void {
 
 logMarker(`HANLIN_NS_FIXTURE_STARTED package=${packageName}`);
 logMarker(`HANLIN_NS_NATIVE_API_OK system=${systemName} version=${systemVersion}`);
+
+const compatibilityProof = HanlinNativeScriptCompatibility.roundTripValueKey(
+  `compatibility-${packageName}`,
+  packageName
+);
+if (compatibilityProof !== `compatibility-${packageName}`) {
+  throw new Error('Hanlin Scripting compatibility round-trip failed');
+}
+logMarker('HANLIN_NS_SCRIPTING_ADAPTER_OK adapter=HanlinNativeScriptCompatibility');
+
+const resourceProof = knownFolders.currentApp().getFile('fixture-resource.txt').readTextSync().trim();
+if (localModuleProof(resourceProof) !== 'local-module:bundled-resource') {
+  throw new Error('NativeScript local module/resource proof failed');
+}
+logMarker('HANLIN_NS_MODULE_RESOURCE_OK module=local-module resource=fixture-resource.txt');
 
 NSUserDefaults.standardUserDefaults.setObjectForKey(
   proof,

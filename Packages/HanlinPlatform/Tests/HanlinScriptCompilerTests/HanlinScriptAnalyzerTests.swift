@@ -54,6 +54,40 @@ struct HanlinScriptAnalyzerTests {
         #expect(entrypoint.runtimeProfile.runtimeKind == .localPython)
     }
 
+    @Test("Routes only explicitly declared NativeScript packages to the native runtime")
+    func nativeScriptProfile() throws {
+        let fixture = try package(files: [
+            "script.json": #"{"name":"NativeScript Fixture","version":"1.0.0","entry":"nativescript/app/bundle.mjs","hanlinRuntime":"hanlin-nativescript"}"#,
+            "nativescript/app/bundle.mjs": #"import "./local-module.mjs"; console.log("native")"#,
+            "nativescript/app/local-module.mjs": "export const value = 1",
+            "nativescript/app/package.json": #"{"name":"fixture","main":"bundle.mjs","hanlinRuntime":"hanlin-nativescript"}"#
+        ])
+        defer { try? FileManager.default.removeItem(at: fixture.stagingRoot) }
+        let preview = try HanlinScriptAnalyzer(inventory: .init(
+            baselineID: "fixture",
+            baselineDigest: String(repeating: "f", count: 64),
+            symbols: []
+        )).analyze(fixture)
+        let entrypoint = try #require(preview.entrypoints.first)
+        #expect(preview.canInstall)
+        #expect(entrypoint.sourcePath == "nativescript/app/bundle.mjs")
+        #expect(entrypoint.runtimeProfile == .hanlinNativeScript)
+        #expect(entrypoint.runtimeProfile.runtimeKind == .native)
+        #expect(preview.dependencyGraph.unresolvedSpecifiers.isEmpty)
+
+        let ordinaryFixture = try package(files: [
+            "script.json": #"{"name":"Ordinary Fixture","version":"1.0.0","entry":"index.mjs"}"#,
+            "index.mjs": "console.log('ordinary')"
+        ])
+        defer { try? FileManager.default.removeItem(at: ordinaryFixture.stagingRoot) }
+        let ordinaryPreview = try HanlinScriptAnalyzer(inventory: .init(
+            baselineID: "fixture",
+            baselineDigest: String(repeating: "f", count: 64),
+            symbols: []
+        )).analyze(ordinaryFixture)
+        #expect(ordinaryPreview.entrypoints.first?.runtimeProfile == .scriptingJSC)
+    }
+
     @Test("Detects capability-bearing ambient Scripting globals")
     func ambientGlobals() throws {
         let fixture = try package(files: [
