@@ -655,6 +655,8 @@ jobs:
             --prefix AI_HLY/Downstream/RuntimeCore/Node/Host
           npm run test:production --prefix Scripts/ScriptingCompiler \
             2>&1 | tee "$LOG_DIR/04-production-compiler-acceptance.log"
+          rm -rf AI_HLY/Downstream/RuntimeCore/Node/Host/node_modules
+          test ! -e AI_HLY/Downstream/RuntimeCore/Node/Host/node_modules
 
       - name: Package current RuntimeCore host resources
         run: |

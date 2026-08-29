@@ -178,12 +178,15 @@ struct HanlinScriptingProductionCompilerAcceptanceTests {
             #expect(bundle.modules.allSatisfy { !$0.javaScript.isEmpty })
 
             let module = try #require(bundle.modules.first)
+            let entrypointContext: HanlinScriptingEntrypointContext =
+                fixture.lastPathComponent == "ValidScriptUI" ? .application : .intent()
             let session = try HanlinScriptingApplicationSession(
                 installedPackageID: try HanlinInstalledPackageID(
                     validating: "compiler-acceptance.\(fixture.lastPathComponent.lowercased())"
                 ),
                 program: String(decoding: module.javaScript, as: UTF8.self),
                 filename: module.logicalPath,
+                entrypointContext: entrypointContext,
                 storageAllowed: true
             )
             if fixture.lastPathComponent == "ValidScriptUI" {
