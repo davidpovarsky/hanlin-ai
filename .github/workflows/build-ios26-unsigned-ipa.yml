@@ -110,6 +110,7 @@ jobs:
       - name: Prepare pinned NativeScript iOS dependency closure
         run: |
           set -euxo pipefail
+          mkdir -p "$LOG_DIR"
           npm ci --ignore-scripts --no-audit --no-fund --prefix Scripts/NativeScript
           npm run prepare:ios-dependencies --prefix Scripts/NativeScript
           node Scripts/NativeScript/prepare-fixture.mjs
@@ -468,6 +469,7 @@ jobs:
       - name: Prepare pinned NativeScript iOS dependency closure
         run: |
           set -euxo pipefail
+          mkdir -p "$LOG_DIR"
           npm ci --ignore-scripts --no-audit --no-fund --prefix Scripts/NativeScript
           npm run prepare:ios-dependencies --prefix Scripts/NativeScript
           node Scripts/NativeScript/prepare-fixture.mjs
@@ -1216,6 +1218,7 @@ jobs:
       - name: Prepare pinned NativeScript iOS dependency closure
         run: |
           set -euxo pipefail
+          mkdir -p "$LOG_DIR"
           npm ci --ignore-scripts --no-audit --no-fund --prefix Scripts/NativeScript
           npm run prepare:ios-dependencies --prefix Scripts/NativeScript
           node Scripts/NativeScript/prepare-fixture.mjs

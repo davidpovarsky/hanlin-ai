@@ -116,6 +116,7 @@ Thumbs.db
 # Authorized immutable Scripting compatibility inputs are hash-verified data.
 !Reference/ScriptingCompatibility/Original/Compiler/tsconfig.json
 !Reference/ScriptingCompatibility/Original/Examples/**/tsconfig.json
+!Scripts/NativeScript/tsconfig.json
 Config.xcconfig
 Vendor/NodeMobile/NodeMobile.xcframework/
 Vendor/NodeMobile/NODE_LICENSE.generated.txt
