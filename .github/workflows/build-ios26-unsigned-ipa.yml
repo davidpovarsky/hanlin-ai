@@ -1424,8 +1424,8 @@ jobs:
             "${poc_build_settings[@]+"${poc_build_settings[@]}"}" \
             "${build_actions[@]}" 2>&1 | tee "$LOG_DIR/06-xcodebuild-simulator.log"
           echo "$(( $(date +%s) - started_at ))" > "$LOG_DIR/06-app-compilation-duration-seconds.txt"
-          APP_PATH="$(find "$DERIVED_DATA_PATH/Build/Products" -path "*${CONFIGURATION}-iphonesimulator/*.app" -type d -print -quit)"
-          test -n "$APP_PATH"
+          APP_PATH="$DERIVED_DATA_PATH/Build/Products/${CONFIGURATION}-iphonesimulator/AI_Hanlin.app"
+          test -d "$APP_PATH"
           rm -rf build/SimulatorRuntimeApp
           mkdir -p build/SimulatorRuntimeApp
           ditto "$APP_PATH" build/SimulatorRuntimeApp/AI_Hanlin.app
