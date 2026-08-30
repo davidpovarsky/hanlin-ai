@@ -82,6 +82,7 @@ struct MyApp: App {
         WindowGroup {
             MainTabView(deepLinkTarget: $deepLinkTarget)
                 .modelContainer(appDataManager.modelContainer)
+                .modifier(HanlinScriptRestartRegressionModifier())
                 .task {
                     appDataManager.preloadDataIfNeeded()
                     await RuntimeLifecycleBridge.prepareApplication()

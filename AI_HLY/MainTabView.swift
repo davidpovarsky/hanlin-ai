@@ -11,7 +11,7 @@ import SwiftData
 struct MainTabView: View {
     
     @Binding var deepLinkTarget: String?
-    @State private var selectedTab: Int = 0
+    @State private var selectedTab: Int = ProcessInfo.processInfo.environment["HANLIN_SCRIPT_RESTART_REPRO_PHASE"] == nil ? 0 : 4
     @State private var hideTabBar: Bool = false
     
     var body: some View {

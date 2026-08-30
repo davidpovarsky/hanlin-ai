@@ -137,6 +137,7 @@ AI_HLY/RuntimeHostResources.zip
 
 # Archives
 *.zip
+!AI_HLYTests/Fixtures/ScriptingFixtures.bundle/PhysicalIPad/smart-eating-normalized.zip
 *.tar
 *.gz
 
