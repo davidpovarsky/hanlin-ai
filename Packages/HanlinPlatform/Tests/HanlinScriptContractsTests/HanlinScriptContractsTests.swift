@@ -5,6 +5,24 @@ import Testing
 
 @Suite("Full Scripting contracts")
 struct HanlinScriptContractsTests {
+    @Test("Capability approval normalizes requests and retains explicit grants")
+    func capabilityApprovalState() throws {
+        let network = try HanlinCapabilityID(validating: "network")
+        let storage = try HanlinCapabilityID(validating: "storage")
+        var state = HanlinCapabilityApprovalState(requests: [
+            .init(capabilityID: network, required: false, purpose: "Optional network"),
+            .init(capabilityID: network, required: true, purpose: "Required network"),
+            .init(capabilityID: storage, required: true, purpose: "Required storage"),
+        ])
+        #expect(state.requiredCapabilities == [network, storage])
+        #expect(state.missingRequiredCapabilities == [network, storage])
+
+        state.setApproved(true, capability: network)
+        state.setApproved(true, capability: storage)
+        #expect(state.hasApprovedEveryRequiredCapability)
+        #expect(state.approvedCapabilities == [network, storage])
+    }
+
 
     @Test("Legacy installed entrypoint migrates to its historical QuickJS profile")
     func legacyEntrypointRuntimeMigration() throws {

@@ -3,6 +3,14 @@ name: Build iOS 26 Unsigned IPA
 on:
   workflow_dispatch:
     inputs:
+      validation_mode:
+        description: Choose full verification (including IPA) or only the iPad Simulator production-path checks
+        required: true
+        default: full
+        type: choice
+        options:
+          - full
+          - simulator-only
       runtime_bundle_only:
         description: Validate and publish the pinned RuntimeCore bundle without building the app
         required: true
@@ -37,7 +45,7 @@ permissions:
 
 jobs:
   validate-hanlin-platform-phase1:
-    if: ${{ github.event_name == 'workflow_dispatch' && !inputs.runtime_bundle_only }}
+    if: ${{ github.event_name == 'workflow_dispatch' && !inputs.runtime_bundle_only && inputs.validation_mode != 'simulator-only' }}
     name: Validate baseline, contracts, tests, and iOS compilation
     runs-on: macos-26
     timeout-minutes: 60
@@ -401,7 +409,7 @@ jobs:
       contents: write
 
   build-ios26-unsigned-ipa:
-    if: ${{ !inputs.runtime_bundle_only && !inputs.phase1_validation_only && !inputs.fast_validation_only }}
+    if: ${{ github.event_name == 'push' || (!inputs.runtime_bundle_only && !inputs.phase1_validation_only && !inputs.fast_validation_only && inputs.validation_mode == 'full') }}
     name: Build unsigned IPA with Xcode 26
     runs-on: macos-26
     timeout-minutes: 60
@@ -1145,14 +1153,14 @@ jobs:
 
   full-app-simulator-smoke:
     if: ${{ github.event_name == 'workflow_dispatch' && !inputs.runtime_bundle_only && !inputs.phase1_validation_only }}
-    name: Launch full app on iPad Simulator
+    name: Script Package Production E2E and host-app smoke - iPad Simulator
     runs-on: macos-26
     timeout-minutes: 90
 
     env:
       PROJECT_PATH: AI_HLY.xcodeproj
       SCHEME_NAME: AI_HLY
-      CONFIGURATION: ${{ inputs.fast_validation_only && 'Debug' || 'Release' }}
+      CONFIGURATION: ${{ (inputs.validation_mode == 'simulator-only' || inputs.fast_validation_only) && 'Debug' || 'Release' }}
       DERIVED_DATA_PATH: build/SimulatorDerivedData
       CLONED_PACKAGES_PATH: build/SourcePackages
       LOG_DIR: simulator-logs
@@ -1444,7 +1452,8 @@ jobs:
           cp "$APP_PATH/commandDictionary.plist" "$LOG_DIR/commandDictionary.plist"
           cp "$APP_PATH/extraCommandsDictionary.plist" "$LOG_DIR/extraCommandsDictionary.plist"
           find "$APP_PATH" -maxdepth 4 -print | sort > "$LOG_DIR/07-built-app-resources.txt"
-          if [ "${{ inputs.fast_validation_only }}" != "true" ]; then
+          if [ "${{ inputs.validation_mode }}" != "simulator-only" ] \
+            && [ "${{ inputs.fast_validation_only }}" != "true" ]; then
             python3 Scripts/Runtime/validate-app-dyld-closure.py \
               --app "$APP_PATH" \
               --platform iphonesimulator \
@@ -1533,6 +1542,21 @@ jobs:
             -only-testing:AI_HLYTests/HanlinScriptingAcceptanceTests \
             2>&1 | tee "$LOG_DIR/08-scripting-acceptance.log"
           echo "$(( $(date +%s) - scripting_started_at ))" > "$LOG_DIR/08-scripting-acceptance-duration-seconds.txt"
+          rm -rf "$LOG_DIR/ScriptPackageProductionE2EResult.xcresult"
+          package_e2e_started_at="$(date +%s)"
+          xcodebuild test-without-building \
+            -project "$PROJECT_PATH" \
+            -scheme "$SCHEME_NAME" \
+            -configuration "$CONFIGURATION" \
+            -destination "platform=iOS Simulator,id=$SIMULATOR_UDID" \
+            -derivedDataPath "$DERIVED_DATA_PATH" \
+            -clonedSourcePackagesDirPath "$CLONED_PACKAGES_PATH" \
+            -resultBundlePath "$LOG_DIR/ScriptPackageProductionE2EResult.xcresult" \
+            -skipPackagePluginValidation \
+            -skipMacroValidation \
+            -only-testing:AI_HLYTests/HanlinScriptPackageProductionE2ETests \
+            2>&1 | tee "$LOG_DIR/08-script-package-production-e2e.log"
+          echo "$(( $(date +%s) - package_e2e_started_at ))" > "$LOG_DIR/08-script-package-production-e2e-duration-seconds.txt"
           xcrun simctl boot "$SIMULATOR_UDID" 2>/dev/null || true
           xcrun simctl bootstatus "$SIMULATOR_UDID" -b 2>&1 \
             | tee "$LOG_DIR/08-post-tests-bootstatus.log"
@@ -1545,7 +1569,8 @@ jobs:
           }
           trap cleanup EXIT
 
-          if [ "${{ inputs.fast_validation_only }}" = "true" ]; then
+          if [ "${{ inputs.validation_mode }}" = "simulator-only" ] \
+            || [ "${{ inputs.fast_validation_only }}" = "true" ]; then
             set +e
             xcrun simctl launch "$SIMULATOR_UDID" "$BUNDLE_ID" 2>&1 \
               | tee "$LOG_DIR/08-fast-launch-output.txt"
@@ -1565,7 +1590,7 @@ jobs:
               --predicate "processID == $APP_PID" \
               > "$LOG_DIR/08-application.log" 2>&1 || true
             printf '%s\n' "15" > "$LOG_DIR/alive-duration-seconds.txt"
-            printf '%s\n' "fast-debug-tests-and-launch" > "$LOG_DIR/validation-profile.txt"
+            printf '%s\n' "script-package-production-e2e-and-host-smoke" > "$LOG_DIR/validation-profile.txt"
             trap - EXIT
             cleanup
             exit 0
@@ -1747,8 +1772,18 @@ jobs:
         if: always()
         run: |
           set +e
+          for result in "$LOG_DIR"/*.xcresult; do
+            [ -d "$result" ] || continue
+            result_name="$(basename "$result" .xcresult)"
+            xcrun xcresulttool get test-results tests \
+              --path "$result" \
+              --format json \
+              > "$LOG_DIR/${result_name}-test-results.json" 2>/dev/null || true
+          done
           if [ -f "$LOG_DIR/simulator-udid.txt" ]; then
             SIMULATOR_UDID="$(cat "$LOG_DIR/simulator-udid.txt")"
+            xcrun simctl io "$SIMULATOR_UDID" screenshot "$LOG_DIR/09-final-simulator-screen.png" \
+              2>"$LOG_DIR/09-screenshot-error.log" || true
             xcrun simctl spawn "$SIMULATOR_UDID" log show --style compact --last 10m \
               > "$LOG_DIR/09-simulator-system.log" 2>&1 || true
             if [ -f "$LOG_DIR/bundle-id.txt" ]; then
@@ -1779,11 +1814,11 @@ jobs:
             done
           fi
 
-      - name: Upload simulator smoke evidence
+      - name: Upload simulator production E2E and host smoke evidence
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: AI_Hanlin-iOS26-simulator-smoke-logs
+          name: AI_Hanlin-iOS26-script-package-production-e2e
           path: simulator-logs
           if-no-files-found: error
           retention-days: 14

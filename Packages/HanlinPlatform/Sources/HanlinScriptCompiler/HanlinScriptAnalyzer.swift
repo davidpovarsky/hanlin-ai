@@ -165,30 +165,34 @@ public struct HanlinScriptAnalyzer: Sendable {
         }
         _ = resources // Resource descriptors are produced by the install plan in the next stage.
 
+        let resolvedEntrypoints = entrypoints.map { descriptor in
+            var requested = descriptor.requiredCapabilities
+            requested.append(contentsOf: capabilities.values.filter { candidate in
+                !requested.contains { $0.capabilityID == candidate.capabilityID }
+            })
+            return HanlinPackageEntrypointDescriptor(
+                id: descriptor.id,
+                kind: descriptor.kind,
+                sourcePath: descriptor.sourcePath,
+                exportedSymbol: descriptor.exportedSymbol,
+                supportedContexts: descriptor.supportedContexts,
+                requiredCapabilities: requested.sorted {
+                    $0.capabilityID.rawValue < $1.capabilityID.rawValue
+                },
+                runtimePolicyID: descriptor.runtimePolicyID,
+                runtimeProfile: descriptor.runtimeProfile,
+                artifactDigest: descriptor.artifactDigest,
+                compatibility: descriptor.compatibility
+            )
+        }
+        let approvalState = HanlinCapabilityApprovalState(
+            requests: resolvedEntrypoints.flatMap(\.requiredCapabilities)
+        )
         return HanlinImportPreview(
             source: package.source,
             archive: package.inspection,
             manifest: package.manifest,
-            entrypoints: entrypoints.map { descriptor in
-                var requested = descriptor.requiredCapabilities
-                requested.append(contentsOf: capabilities.values.filter { candidate in
-                    !requested.contains { $0.capabilityID == candidate.capabilityID }
-                })
-                return .init(
-                    id: descriptor.id,
-                    kind: descriptor.kind,
-                    sourcePath: descriptor.sourcePath,
-                    exportedSymbol: descriptor.exportedSymbol,
-                    supportedContexts: descriptor.supportedContexts,
-                    requiredCapabilities: requested.sorted {
-                        $0.capabilityID.rawValue < $1.capabilityID.rawValue
-                    },
-                    runtimePolicyID: descriptor.runtimePolicyID,
-                    runtimeProfile: descriptor.runtimeProfile,
-                    artifactDigest: descriptor.artifactDigest,
-                    compatibility: descriptor.compatibility
-                )
-            },
+            entrypoints: resolvedEntrypoints,
             dependencyGraph: .init(
                 modules: sourcePaths,
                 edges: edges.sorted {
@@ -196,9 +200,7 @@ public struct HanlinScriptAnalyzer: Sendable {
                 },
                 unresolvedSpecifiers: unresolved.sorted()
             ),
-            requestedCapabilities: capabilities.values.sorted {
-                $0.capabilityID.rawValue < $1.capabilityID.rawValue
-            },
+            requestedCapabilities: approvalState.requests,
             findings: findings.sorted {
                 ($0.sourcePath ?? "", $0.symbol ?? "", $0.message)
                     < ($1.sourcePath ?? "", $1.symbol ?? "", $1.message)

@@ -232,6 +232,87 @@ struct HanlinScriptingProductionCompilerAcceptanceTests {
     }
 }
 
+@Suite("Script Package production installation E2E", .serialized)
+struct HanlinScriptPackageProductionE2ETests {
+    @MainActor
+    @Test("Exports, imports, approves, installs, restores, launches, and renders through production")
+    func productionPackageFlow() async throws {
+        let root = FileManager.default.temporaryDirectory.appending(
+            path: "hanlin-production-package-e2e-\(UUID().uuidString.lowercased())",
+            directoryHint: .isDirectory
+        )
+        defer { try? FileManager.default.removeItem(at: root) }
+        let source = root.appending(path: "ProductionE2E", directoryHint: .isDirectory)
+        try FileManager.default.createDirectory(at: source, withIntermediateDirectories: true)
+        try Data(#"{"name":"Production Package E2E","version":"1.0.0","entry":"index.tsx","runInApp":true}"#.utf8)
+            .write(to: source.appending(path: "script.json"), options: .atomic)
+        try Data(#"""
+        import { Navigation, Text } from "scripting"
+        Storage.set("production-e2e", "passed")
+        Navigation.present({ element: <Text>Production Package E2E Passed</Text> })
+        """#.utf8).write(to: source.appending(path: "index.tsx"), options: .atomic)
+        let archive = root.appending(path: "production-e2e.scripting", directoryHint: .notDirectory)
+        try HanlinScriptingPackageExporter().exportPackage(at: source, to: archive)
+
+        let platformRoot = root.appending(path: "Platform", directoryHint: .isDirectory)
+        let platform = HanlinScriptingPlatform(rootOverride: platformRoot)
+        await platform.importPackage(from: archive)
+        let preview = try #require(platform.preview)
+        let storage = try HanlinCapabilityID(validating: "storage")
+        #expect(preview.requestedCapabilities.map(\.capabilityID).contains(storage))
+
+        await platform.installPreview()
+        #expect(platform.activity == .failed("Approve every required capability before installing this package."))
+        platform.setCapabilityApproved(true, capability: storage)
+        await platform.installPreview()
+        #expect(platform.activity == .idle)
+        let installed = try #require(platform.installedPackages.first)
+        #expect(installed.grantedCapabilities == [storage])
+
+        await platform.launch(installed.record.installedPackageID)
+        #expect(platform.activeApplicationModel?.root.properties["text"] == .string("Production Package E2E Passed"))
+        platform.dismissActiveApplication()
+
+        // Reproduce the on-device upgrade state that caused a new, valid
+        // installation to be reported as artifactManifestMissing: an older
+        // unrelated generation is present without the current artifact contract.
+        let staleManifest = platformRoot.appending(
+            path: "Installed/packages/\(installed.record.installedPackageID.rawValue)/generations/1/artifact-manifest.json",
+            directoryHint: .notDirectory
+        )
+        try FileManager.default.removeItem(at: staleManifest)
+        let secondSource = root.appending(path: "ProductionE2ESecond", directoryHint: .isDirectory)
+        try FileManager.default.createDirectory(at: secondSource, withIntermediateDirectories: true)
+        try Data(#"{"name":"Production Package E2E Second","version":"1.0.0","entry":"index.tsx","runInApp":true}"#.utf8)
+            .write(to: secondSource.appending(path: "script.json"), options: .atomic)
+        try Data(#"""
+        import { Navigation, Text } from "scripting"
+        Storage.set("production-e2e-second", "passed")
+        Navigation.present({ element: <Text>Second Production Package Passed</Text> })
+        """#.utf8).write(to: secondSource.appending(path: "index.tsx"), options: .atomic)
+        let secondArchive = root.appending(path: "production-e2e-second.scripting", directoryHint: .notDirectory)
+        try HanlinScriptingPackageExporter().exportPackage(at: secondSource, to: secondArchive)
+        await platform.importPackage(from: secondArchive)
+        platform.setCapabilityApproved(true, capability: storage)
+        await platform.installPreview()
+        #expect(platform.activity == .idle)
+        #expect(platform.installedPackages.count == 2)
+        let second = try #require(platform.installedPackages.first {
+            $0.manifest?.name == "Production Package E2E Second"
+        })
+        await platform.launch(second.record.installedPackageID)
+        #expect(platform.activeApplicationModel?.root.properties["text"] == .string("Second Production Package Passed"))
+        platform.dismissActiveApplication()
+
+        let restored = HanlinScriptingPlatform(rootOverride: platformRoot)
+        await restored.restore()
+        #expect(restored.installedPackages.count == 2)
+        await restored.launch(second.record.installedPackageID)
+        #expect(restored.activeApplicationModel?.root.properties["text"] == .string("Second Production Package Passed"))
+        restored.dismissActiveApplication()
+    }
+}
+
 @Suite("Scripting JavaScriptCore compatibility engine", .serialized)
 struct HanlinJavaScriptCoreEngineTests {
     @Test("Keeps a persistent isolated context and exposes no privileged globals")

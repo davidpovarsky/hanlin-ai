@@ -2,6 +2,7 @@ import CryptoKit
 import Foundation
 import HanlinPlatformContracts
 import HanlinScriptContracts
+import OSLog
 
 public enum HanlinInstallFaultPoint: String, Codable, CaseIterable, Sendable {
     case journalPersisted
@@ -27,6 +28,7 @@ public enum HanlinAtomicScriptStoreError: Error, Equatable, Sendable {
     case sourceAndArtifactDigestMatchRequired
     case artifactManifestMissing
     case artifactManifestMismatch(String)
+    case requiredCapabilitiesNotGranted([HanlinCapabilityID])
     case unsupportedRegistryVersion(UInt32)
     case corruptRegistry
     case invalidGeneration(UInt64)
@@ -96,6 +98,7 @@ public struct HanlinStoredPackageSnapshot: Codable, Hashable, Sendable {
 }
 
 public actor HanlinAtomicScriptStore {
+    private static let logger = Logger(subsystem: "com.hanlin.ai", category: "ScriptArtifactStore")
     private struct Registry: Codable, Sendable {
         let schemaVersion: UInt32
         var revision: UInt64
@@ -332,6 +335,15 @@ public actor HanlinAtomicScriptStore {
         artifactManifest: HanlinPackageArtifactManifest,
         installedAt: Date
     ) throws -> HanlinInstalledPackageRecord {
+        let approvalState = HanlinCapabilityApprovalState(
+            requests: plan.requestedCapabilities + plan.entrypoints.flatMap(\.requiredCapabilities),
+            approvedCapabilities: Set(plan.grantedCapabilities)
+        )
+        guard approvalState.hasApprovedEveryRequiredCapability else {
+            throw HanlinAtomicScriptStoreError.requiredCapabilitiesNotGranted(
+                approvalState.missingRequiredCapabilities
+            )
+        }
         guard plan.sourceDigest == artifactManifest.packageContentDigest else {
             throw HanlinAtomicScriptStoreError.sourceAndArtifactDigestMatchRequired
         }
@@ -444,6 +456,13 @@ public actor HanlinAtomicScriptStore {
     ) throws -> HanlinPackageArtifactManifest {
         let url = directory.appending(path: "artifact-manifest.json", directoryHint: .notDirectory)
         guard fileManager.fileExists(atPath: url.path()) else {
+            let discovered = (try? fileManager.contentsOfDirectory(
+                at: directory,
+                includingPropertiesForKeys: nil
+            ).map(\.lastPathComponent).sorted().prefix(32).joined(separator: ",")) ?? "unreadable"
+            Self.logger.error(
+                "phase=artifact-manifest-resolution expected=artifact-manifest.json directory=\(directory.lastPathComponent, privacy: .public) discovered=\(discovered, privacy: .public)"
+            )
             throw HanlinAtomicScriptStoreError.artifactManifestMissing
         }
         let manifest = try decoder.decode(HanlinPackageArtifactManifest.self, from: Data(contentsOf: url))

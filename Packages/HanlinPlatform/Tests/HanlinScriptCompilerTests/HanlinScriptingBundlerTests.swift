@@ -165,6 +165,37 @@ struct HanlinScriptingBundlerTests {
         #expect(decoded == bundle.manifest)
     }
 
+    @Test("Install artifact writer atomically closes the bundler-store manifest contract")
+    func installArtifactWrite() async throws {
+        let fixture = try makeFixture()
+        defer { try? FileManager.default.removeItem(at: fixture.package.stagingRoot) }
+        let output = fixture.package.stagingRoot.appending(
+            path: "install-artifact",
+            directoryHint: .isDirectory
+        )
+        let bundler = makeBundler(compiler: CompilerStub(result: successfulResult()))
+        let bundle = try await bundler.bundle(
+            package: fixture.package,
+            preview: fixture.preview,
+            context: .app
+        )
+
+        let manifest = try bundler.writeInstallArtifact(
+            bundle,
+            packageRoot: fixture.package.packageRoot,
+            to: output
+        )
+        let decoded = try JSONDecoder().decode(
+            HanlinPackageArtifactManifest.self,
+            from: Data(contentsOf: output.appending(path: "artifact-manifest.json"))
+        )
+        #expect(decoded == manifest)
+        #expect(manifest.files.contains { $0.logicalPath == "source/index.tsx" })
+        #expect(FileManager.default.fileExists(
+            atPath: output.appending(path: "source/lib/value.ts").path()
+        ))
+    }
+
     private func makeBundler(compiler: some HanlinTrustedCompilerClient) -> HanlinScriptingBundler {
         HanlinScriptingBundler(
             baseline: .init(

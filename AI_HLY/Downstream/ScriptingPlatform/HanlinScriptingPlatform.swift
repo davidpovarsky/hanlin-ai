@@ -11,6 +11,7 @@ import HanlinScriptUI
 import HanlinScriptingApplicationRuntime
 import HanlinScriptingSDK
 import Observation
+import OSLog
 import SwiftData
 import UIKit
 import WidgetKit
@@ -33,7 +34,8 @@ final class HanlinScriptingPlatform {
     private(set) var installedPackages: [HanlinStoredPackageSnapshot] = []
     private(set) var bootstrapError: String?
     private(set) var pendingResumeCommands: [HanlinScriptResumeCommand] = []
-    private(set) var approvedCapabilities: Set<HanlinCapabilityID> = []
+    private(set) var capabilityApprovals = HanlinCapabilityApprovalState(requests: [])
+    var approvedCapabilities: Set<HanlinCapabilityID> { capabilityApprovals.approvedCapabilities }
     private(set) var activeApplicationID: HanlinInstalledPackageID?
     private(set) var activeApplicationModel: HanlinScriptUIModel?
     private(set) var systemUIPresentation: HanlinScriptingSystemUIPresentation?
@@ -53,8 +55,9 @@ final class HanlinScriptingPlatform {
     private let calendarService = HanlinAppleCalendarService()
     private var liveActivityRevisions: [String: UInt64] = [:]
     private let stagingRoot: URL?
+    private static let logger = Logger(subsystem: "com.hanlin.ai", category: "ScriptPackageInstall")
 
-    private init() {
+    init(rootOverride: URL? = nil) {
         do {
             let metadata = try HanlinScriptingSDK.metadata()
             analyzer = HanlinScriptAnalyzer(inventory: .init(
@@ -95,8 +98,10 @@ final class HanlinScriptingPlatform {
                 },
                 compiler: HanlinNodeMobileScriptingCompiler()
             )
-            let applicationSupport = try Self.applicationSupportDirectory()
-            let platformRoot = applicationSupport.appending(path: "ScriptingPlatform", directoryHint: .isDirectory)
+            let platformRoot = try rootOverride ?? Self.applicationSupportDirectory().appending(
+                path: "ScriptingPlatform",
+                directoryHint: .isDirectory
+            )
             let staging = platformRoot.appending(path: "ImportStaging", directoryHint: .isDirectory)
             try FileManager.default.createDirectory(at: staging, withIntermediateDirectories: true)
             store = try HanlinAtomicScriptStore(
@@ -158,6 +163,7 @@ final class HanlinScriptingPlatform {
             }.value
             stagedPackage = result.0
             preview = result.1
+            capabilityApprovals = .init(requests: result.1.requestedCapabilities)
             activity = .previewReady
         } catch {
             activity = .failed(Self.safeMessage(error))
@@ -170,8 +176,9 @@ final class HanlinScriptingPlatform {
             activity = .failed("This package did not pass Import Preview.")
             return
         }
-        let required = Set(preview.requestedCapabilities.filter(\.required).map(\.capabilityID))
-        guard required.isSubset(of: approvedCapabilities) else {
+        guard capabilityApprovals.hasApprovedEveryRequiredCapability else {
+            let missing = capabilityApprovals.missingRequiredCapabilities.map(\.rawValue).joined(separator: ",")
+            Self.logger.error("install phase=capability-validation missing=\(missing, privacy: .public)")
             activity = .failed("Approve every required capability before installing this package.")
             return
         }
@@ -180,11 +187,10 @@ final class HanlinScriptingPlatform {
             path: "artifact-\(UUID().uuidString.lowercased())",
             directoryHint: .isDirectory
         )
-        let grantedCapabilities = approvedCapabilities.sorted { $0.rawValue < $1.rawValue }
+        let grantedCapabilities = capabilityApprovals.approvedCapabilities.sorted { $0.rawValue < $1.rawValue }
         do {
             let installed = try await Task.detached(priority: .userInitiated) {
                 defer { try? FileManager.default.removeItem(at: artifactRoot) }
-                try Self.copyPackageSource(from: stagedPackage.packageRoot, to: artifactRoot)
                 let contexts = Set(preview.entrypoints
                     .filter { $0.runtimeProfile != .hanlinPython }
                     .map(\.kind))
@@ -205,14 +211,10 @@ final class HanlinScriptingPlatform {
                 } else {
                     try bundler.merged(bundles)
                 }
-                try bundler.write(compiled, to: artifactRoot)
-                let completeManifest = try Self.completeArtifactManifest(
-                    compiled.manifest,
-                    artifactRoot: artifactRoot
-                )
-                try JSONEncoder.canonical.encode(completeManifest).write(
-                    to: artifactRoot.appending(path: "artifact-manifest.json"),
-                    options: .atomic
+                let completeManifest = try bundler.writeInstallArtifact(
+                    compiled,
+                    packageRoot: stagedPackage.packageRoot,
+                    to: artifactRoot
                 )
                 let packageID = try Self.stablePackageID(for: preview.manifest ?? stagedPackage.manifest)
                 let installedID = try HanlinInstalledPackageID(validating: "install-\(packageID.rawValue)")
@@ -265,15 +267,14 @@ final class HanlinScriptingPlatform {
     }
 
     func setCapabilityApproved(_ approved: Bool, capability: HanlinCapabilityID) {
-        if approved { approvedCapabilities.insert(capability) }
-        else { approvedCapabilities.remove(capability) }
+        capabilityApprovals.setApproved(approved, capability: capability)
     }
 
     func discardPreview() {
         if let stagedPackage { try? packageCenter.discard(stagedPackage) }
         stagedPackage = nil
         preview = nil
-        approvedCapabilities.removeAll(keepingCapacity: false)
+        capabilityApprovals = .init(requests: [])
         if case .failed = activity {} else { activity = .idle }
     }
 
@@ -514,14 +515,18 @@ final class HanlinScriptingPlatform {
         var intentEntities: [HanlinScriptIntentEntityRecord] = []
 
         for package in installedPackages where package.enabled {
+            let extensionEntrypoints = package.entrypoints.filter {
+                $0.runtimeProfile == .scriptingJSC && ($0.kind == .widget || $0.kind == .appIntent)
+            }
+            guard !extensionEntrypoints.isEmpty else { continue }
+            do {
             let artifactRoot = try await store.activeArtifactURL(for: package.record.installedPackageID)
             let displayName = package.manifest?.name ?? package.record.packageID.rawValue
             let granted = Set(package.grantedCapabilities)
 
-            for entrypoint in package.entrypoints where entrypoint.runtimeProfile == .scriptingJSC {
+            for entrypoint in extensionEntrypoints {
                 let required = Set(entrypoint.requiredCapabilities.filter(\.required).map(\.capabilityID))
                 guard required.isSubset(of: granted) else { continue }
-                guard entrypoint.kind == .widget || entrypoint.kind == .appIntent else { continue }
                 let compiledPath = try Self.compiledPath(for: entrypoint.sourcePath)
                 let compiledURL = artifactRoot.appending(path: compiledPath, directoryHint: .notDirectory)
                 let attributes = try FileManager.default.attributesOfItem(atPath: compiledURL.path())
@@ -589,6 +594,11 @@ final class HanlinScriptingPlatform {
                         .init(identity: identity, id: $0.name, displayName: $0.name)
                     })
                 }
+            }
+            } catch {
+                Self.logger.error(
+                    "extension-refresh package=\(package.record.installedPackageID.rawValue, privacy: .public) phase=artifact-resolution error=\(Self.safeMessage(error), privacy: .public)"
+                )
             }
         }
 
@@ -1272,12 +1282,6 @@ final class HanlinScriptingPlatform {
         String(String(describing: error).prefix(512))
     }
 
-    nonisolated private static func copyPackageSource(from source: URL, to artifactRoot: URL) throws {
-        let destination = artifactRoot.appending(path: "source", directoryHint: .isDirectory)
-        try FileManager.default.createDirectory(at: artifactRoot, withIntermediateDirectories: true)
-        try FileManager.default.copyItem(at: source, to: destination)
-    }
-
     nonisolated private static func compiledPath(for sourcePath: String) throws -> String {
         guard sourcePath.hasPrefix("source/"), !sourcePath.contains(".."), !sourcePath.contains("\\") else {
             throw HanlinScriptingPlatformError.invalidEntrypointPath
@@ -1291,50 +1295,6 @@ final class HanlinScriptingPlatform {
             throw HanlinScriptingPlatformError.invalidEntrypointPath
         }
         return "compiled/\(relative[..<dot]).js"
-    }
-
-    nonisolated private static func completeArtifactManifest(
-        _ compiled: HanlinPackageArtifactManifest,
-        artifactRoot: URL
-    ) throws -> HanlinPackageArtifactManifest {
-        let sourceRoot = artifactRoot.appending(path: "source", directoryHint: .isDirectory)
-        guard let enumerator = FileManager.default.enumerator(
-            at: sourceRoot,
-            includingPropertiesForKeys: [.isRegularFileKey, .isSymbolicLinkKey],
-            options: [.skipsHiddenFiles]
-        ) else { throw HanlinScriptingPlatformError.artifactEnumerationFailed }
-        var files = compiled.files
-        for case let url as URL in enumerator {
-            let values = try url.resourceValues(forKeys: [.isRegularFileKey, .isSymbolicLinkKey])
-            guard values.isSymbolicLink != true else { throw HanlinScriptingPlatformError.artifactEnumerationFailed }
-            guard values.isRegularFile == true else { continue }
-            let relative = String(url.path().dropFirst(sourceRoot.path().count + 1))
-                .replacingOccurrences(of: "\\", with: "/")
-            let data = try Data(contentsOf: url)
-            files.append(.init(
-                logicalPath: "source/\(relative)",
-                sha256: SHA256.hash(data: data).map { String(format: "%02x", $0) }.joined(),
-                byteCount: Int64(data.count),
-                context: .app
-            ))
-        }
-        files.sort { $0.logicalPath < $1.logicalPath }
-        guard Set(files.map(\.logicalPath)).count == files.count else {
-            throw HanlinScriptingPlatformError.artifactEnumerationFailed
-        }
-        let fingerprint = SHA256.hash(data: Data(files.map { "\($0.logicalPath):\($0.sha256)" }.joined(separator: "\n").utf8))
-            .map { String(format: "%02x", $0) }.joined()
-        return .init(
-            compilerVersion: compiled.compilerVersion,
-            compilerIntegrity: compiled.compilerIntegrity,
-            compilerOptionsHash: compiled.compilerOptionsHash,
-            baselineID: compiled.baselineID,
-            baselineDigest: compiled.baselineDigest,
-            hanlinABIVersion: compiled.hanlinABIVersion,
-            packageContentDigest: compiled.packageContentDigest,
-            cacheFingerprint: fingerprint,
-            files: files
-        )
     }
 
     nonisolated private static func pythonSourceBundle(

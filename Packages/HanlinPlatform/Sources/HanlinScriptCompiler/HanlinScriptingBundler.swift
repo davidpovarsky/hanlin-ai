@@ -305,6 +305,41 @@ public struct HanlinScriptingBundler: Sendable {
         )
     }
 
+    /// Materializes the exact artifact-directory contract consumed by
+    /// `HanlinAtomicScriptStore`. The directory is promoted only after the
+    /// complete source-inclusive artifact manifest has been written and
+    /// verified, so the store never observes a partially assembled artifact.
+    public func writeInstallArtifact(
+        _ bundle: HanlinScriptingBundle,
+        packageRoot: URL,
+        to root: URL
+    ) throws -> HanlinPackageArtifactManifest {
+        guard !fileManager.fileExists(atPath: root.path(percentEncoded: false)) else {
+            throw HanlinScriptingBundlerError.invalidCompilerOutput("artifact_destination_exists")
+        }
+        let temporary = root.deletingLastPathComponent().appending(
+            path: ".hanlin-artifact-\(UUID().uuidString.lowercased())",
+            directoryHint: .isDirectory
+        )
+        defer { try? fileManager.removeItem(at: temporary) }
+        try fileManager.createDirectory(at: temporary, withIntermediateDirectories: false)
+        try fileManager.copyItem(
+            at: packageRoot,
+            to: temporary.appending(path: "source", directoryHint: .isDirectory)
+        )
+        try write(bundle, to: temporary)
+        let complete = try completeArtifactManifest(bundle.manifest, artifactRoot: temporary)
+        let encoder = JSONEncoder()
+        encoder.outputFormatting = [.sortedKeys]
+        try encoder.encode(complete).write(
+            to: temporary.appending(path: "artifact-manifest.json", directoryHint: .notDirectory),
+            options: .atomic
+        )
+        try verifyArtifactManifest(complete, at: temporary)
+        try fileManager.moveItem(at: temporary, to: root)
+        return complete
+    }
+
     public func merged(_ bundles: [HanlinScriptingBundle]) throws -> HanlinScriptingBundle {
         guard let first = bundles.first else { throw HanlinScriptingBundlerError.previewRejected }
         let manifests = bundles.map(\.manifest)
@@ -338,6 +373,78 @@ public struct HanlinScriptingBundler: Sendable {
             modules: modules,
             diagnostics: bundles.flatMap(\.diagnostics)
         )
+    }
+
+    private func completeArtifactManifest(
+        _ compiled: HanlinPackageArtifactManifest,
+        artifactRoot: URL
+    ) throws -> HanlinPackageArtifactManifest {
+        let sourceRoot = artifactRoot.appending(path: "source", directoryHint: .isDirectory)
+        let sourceRootPath = sourceRoot.standardizedFileURL.path(percentEncoded: false)
+        guard let enumerator = fileManager.enumerator(
+            at: sourceRoot,
+            includingPropertiesForKeys: [.isRegularFileKey, .isSymbolicLinkKey],
+            options: [.skipsHiddenFiles]
+        ) else {
+            throw HanlinScriptingBundlerError.invalidCompilerOutput("artifact_source_enumeration_failed")
+        }
+        var files = compiled.files
+        for case let url as URL in enumerator {
+            let values = try url.resourceValues(forKeys: [.isRegularFileKey, .isSymbolicLinkKey])
+            guard values.isSymbolicLink != true else {
+                throw HanlinScriptingBundlerError.invalidCompilerOutput("artifact_source_symlink")
+            }
+            guard values.isRegularFile == true else { continue }
+            let path = url.standardizedFileURL.path(percentEncoded: false)
+            guard path.hasPrefix(sourceRootPath + "/") else {
+                throw HanlinScriptingBundlerError.invalidCompilerOutput("artifact_source_escaped")
+            }
+            let relative = String(path.dropFirst(sourceRootPath.count + 1))
+                .replacingOccurrences(of: "\\", with: "/")
+            let data = try Data(contentsOf: url)
+            files.append(.init(
+                logicalPath: "source/\(relative)",
+                sha256: Self.sha256(data),
+                byteCount: Int64(data.count),
+                context: .app
+            ))
+        }
+        files.sort { $0.logicalPath < $1.logicalPath }
+        guard Set(files.map(\.logicalPath)).count == files.count else {
+            throw HanlinScriptingBundlerError.invalidCompilerOutput("duplicate_artifact_path")
+        }
+        let fingerprint = Self.sha256(Data(
+            files.map { "\($0.logicalPath):\($0.sha256)" }.joined(separator: "\n").utf8
+        ))
+        return .init(
+            schemaVersion: compiled.schemaVersion,
+            compilerVersion: compiled.compilerVersion,
+            compilerIntegrity: compiled.compilerIntegrity,
+            compilerOptionsHash: compiled.compilerOptionsHash,
+            baselineID: compiled.baselineID,
+            baselineDigest: compiled.baselineDigest,
+            hanlinABIVersion: compiled.hanlinABIVersion,
+            packageContentDigest: compiled.packageContentDigest,
+            cacheFingerprint: fingerprint,
+            files: files
+        )
+    }
+
+    private func verifyArtifactManifest(
+        _ manifest: HanlinPackageArtifactManifest,
+        at root: URL
+    ) throws {
+        let manifestURL = root.appending(path: "artifact-manifest.json", directoryHint: .notDirectory)
+        guard fileManager.fileExists(atPath: manifestURL.path(percentEncoded: false)) else {
+            throw HanlinScriptingBundlerError.invalidCompilerOutput("artifact_manifest_missing")
+        }
+        for file in manifest.files {
+            let url = try containedURL(file.logicalPath, root: root)
+            let data = try Data(contentsOf: url)
+            guard Int64(data.count) == file.byteCount, Self.sha256(data) == file.sha256 else {
+                throw HanlinScriptingBundlerError.invalidCompilerOutput("artifact_file_mismatch:\(file.logicalPath)")
+            }
+        }
     }
 
     private func loadSources(at root: URL, paths: [String]) throws -> [HanlinVirtualSourceFile] {
