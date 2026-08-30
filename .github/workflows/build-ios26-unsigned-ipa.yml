@@ -1502,46 +1502,52 @@ jobs:
 
           xcrun simctl boot "$SIMULATOR_UDID" 2>/dev/null || true
           xcrun simctl bootstatus "$SIMULATOR_UDID" -b 2>&1 | tee "$LOG_DIR/08-bootstatus.log"
-          rm -rf "$LOG_DIR/DownstreamTestsResult.xcresult"
-          started_at="$(date +%s)"
-          set +e
-          xcodebuild test-without-building \
-            -project "$PROJECT_PATH" \
-            -scheme "$SCHEME_NAME" \
-            -configuration "$CONFIGURATION" \
-            -destination "platform=iOS Simulator,id=$SIMULATOR_UDID" \
-            -derivedDataPath "$DERIVED_DATA_PATH" \
-            -clonedSourcePackagesDirPath "$CLONED_PACKAGES_PATH" \
-            -resultBundlePath "$LOG_DIR/DownstreamTestsResult.xcresult" \
-            -skipPackagePluginValidation \
-            -skipMacroValidation \
-            -only-testing:AI_HLYTests \
-            2>&1 | tee "$LOG_DIR/08-downstream-unit-tests.log"
-          downstream_test_status="${PIPESTATUS[0]}"
-          set -e
-          echo "$(( $(date +%s) - started_at ))" > "$LOG_DIR/08-downstream-unit-tests-duration-seconds.txt"
-          if [ "$downstream_test_status" -ne 0 ]; then
-            xcrun xcresulttool get test-results tests \
-              --path "$LOG_DIR/DownstreamTestsResult.xcresult" \
-              --format json \
-              | tee "$LOG_DIR/08-downstream-unit-test-results.json" || true
-            exit "$downstream_test_status"
+          if [ "${{ inputs.validation_mode }}" != "simulator-only" ]; then
+            rm -rf "$LOG_DIR/DownstreamTestsResult.xcresult"
+            started_at="$(date +%s)"
+            set +e
+            xcodebuild test-without-building \
+              -project "$PROJECT_PATH" \
+              -scheme "$SCHEME_NAME" \
+              -configuration "$CONFIGURATION" \
+              -destination "platform=iOS Simulator,id=$SIMULATOR_UDID" \
+              -derivedDataPath "$DERIVED_DATA_PATH" \
+              -clonedSourcePackagesDirPath "$CLONED_PACKAGES_PATH" \
+              -resultBundlePath "$LOG_DIR/DownstreamTestsResult.xcresult" \
+              -skipPackagePluginValidation \
+              -skipMacroValidation \
+              -only-testing:AI_HLYTests \
+              2>&1 | tee "$LOG_DIR/08-downstream-unit-tests.log"
+            downstream_test_status="${PIPESTATUS[0]}"
+            set -e
+            echo "$(( $(date +%s) - started_at ))" > "$LOG_DIR/08-downstream-unit-tests-duration-seconds.txt"
+            if [ "$downstream_test_status" -ne 0 ]; then
+              xcrun xcresulttool get test-results tests \
+                --path "$LOG_DIR/DownstreamTestsResult.xcresult" \
+                --format json \
+                | tee "$LOG_DIR/08-downstream-unit-test-results.json" || true
+              exit "$downstream_test_status"
+            fi
+            rm -rf "$LOG_DIR/ScriptingAcceptanceResult.xcresult"
+            scripting_started_at="$(date +%s)"
+            xcodebuild test-without-building \
+              -project "$PROJECT_PATH" \
+              -scheme "$SCHEME_NAME" \
+              -configuration "$CONFIGURATION" \
+              -destination "platform=iOS Simulator,id=$SIMULATOR_UDID" \
+              -derivedDataPath "$DERIVED_DATA_PATH" \
+              -clonedSourcePackagesDirPath "$CLONED_PACKAGES_PATH" \
+              -resultBundlePath "$LOG_DIR/ScriptingAcceptanceResult.xcresult" \
+              -skipPackagePluginValidation \
+              -skipMacroValidation \
+              -only-testing:AI_HLYTests/HanlinScriptingAcceptanceTests \
+              2>&1 | tee "$LOG_DIR/08-scripting-acceptance.log"
+            echo "$(( $(date +%s) - scripting_started_at ))" > "$LOG_DIR/08-scripting-acceptance-duration-seconds.txt"
+          else
+            printf '%s\n' \
+              "Skipped unrelated downstream suites in focused simulator-only validation." \
+              > "$LOG_DIR/08-focused-validation.txt"
           fi
-          rm -rf "$LOG_DIR/ScriptingAcceptanceResult.xcresult"
-          scripting_started_at="$(date +%s)"
-          xcodebuild test-without-building \
-            -project "$PROJECT_PATH" \
-            -scheme "$SCHEME_NAME" \
-            -configuration "$CONFIGURATION" \
-            -destination "platform=iOS Simulator,id=$SIMULATOR_UDID" \
-            -derivedDataPath "$DERIVED_DATA_PATH" \
-            -clonedSourcePackagesDirPath "$CLONED_PACKAGES_PATH" \
-            -resultBundlePath "$LOG_DIR/ScriptingAcceptanceResult.xcresult" \
-            -skipPackagePluginValidation \
-            -skipMacroValidation \
-            -only-testing:AI_HLYTests/HanlinScriptingAcceptanceTests \
-            2>&1 | tee "$LOG_DIR/08-scripting-acceptance.log"
-          echo "$(( $(date +%s) - scripting_started_at ))" > "$LOG_DIR/08-scripting-acceptance-duration-seconds.txt"
           rm -rf "$LOG_DIR/ScriptPackageProductionE2EResult.xcresult"
           package_e2e_started_at="$(date +%s)"
           xcodebuild test-without-building \
