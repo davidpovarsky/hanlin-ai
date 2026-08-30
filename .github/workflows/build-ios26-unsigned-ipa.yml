@@ -1596,6 +1596,7 @@ jobs:
             -resultBundlePath "$LOG_DIR/DownstreamTestsResult.xcresult" \
             -skipPackagePluginValidation \
             -skipMacroValidation \
+            -parallel-testing-enabled NO \
             -only-testing:AI_HLYTests \
             2>&1 | tee "$LOG_DIR/08-downstream-unit-tests.log"
             downstream_test_status="${PIPESTATUS[0]}"
