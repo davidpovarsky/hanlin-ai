@@ -9,6 +9,7 @@ final class HanlinNativeScriptProductionE2ETests: XCTestCase {
     override func setUpWithError() throws {
         continueAfterFailure = false
         app.launchArguments += ["-AppleLanguages", "(en)", "-AppleLocale", "en_US"]
+        app.launchEnvironment["HANLIN_UNIT_TEST_HOST"] = "0"
         app.launch()
     }
 

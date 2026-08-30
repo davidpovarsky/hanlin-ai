@@ -4,7 +4,9 @@ import SwiftUI
 @MainActor
 enum RuntimeLifecycleBridge {
     private static var isUnitTestHost: Bool {
-        ProcessInfo.processInfo.environment["XCTestConfigurationFilePath"] != nil
+        let environment = ProcessInfo.processInfo.environment
+        return environment["HANLIN_UNIT_TEST_HOST"] == "1"
+            || environment["XCTestConfigurationFilePath"] != nil
     }
 
     private static var preparationTask: Task<Void, Never>?
