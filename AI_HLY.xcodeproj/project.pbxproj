@@ -117,6 +117,7 @@
 		A10000000000000000000030 /* Exceptions for AI_HLY folder in AI_Hanlin target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				Downstream/RuntimeCore/Node/Host/node_modules,
 				Downstream/RuntimeCore/README.md,
 				Downstream/MCP/README.md,
 				Downstream/Scripting/README.md,
