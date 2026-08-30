@@ -27,7 +27,13 @@ public struct HanlinScriptingPackageExporter: Sendable {
             throw HanlinScriptingPackageExporterError.destinationExists
         }
         let wrapper = try normalizedWrapper(wrapperDirectory ?? packageRoot.lastPathComponent)
-        let rootPath = packageRoot.standardizedFileURL.path(percentEncoded: false)
+        // Temporary-directory URLs on Apple platforms can mix the `/var` and
+        // `/private/var` spellings for the same location. Resolve that system
+        // alias before enforcing package-root containment.
+        let rootPath = packageRoot
+            .resolvingSymlinksInPath()
+            .standardizedFileURL
+            .path(percentEncoded: false)
         guard let enumerator = fileManager.enumerator(
             at: packageRoot,
             includingPropertiesForKeys: [.isRegularFileKey, .isSymbolicLinkKey],
@@ -42,7 +48,10 @@ public struct HanlinScriptingPackageExporter: Sendable {
                 throw HanlinScriptingPackageExporterError.unsafeSourcePath(url.lastPathComponent)
             }
             guard values.isRegularFile == true else { continue }
-            let path = url.standardizedFileURL.path(percentEncoded: false)
+            let path = url
+                .resolvingSymlinksInPath()
+                .standardizedFileURL
+                .path(percentEncoded: false)
             guard path.hasPrefix(rootPath + "/") else {
                 throw HanlinScriptingPackageExporterError.unsafeSourcePath(url.lastPathComponent)
             }
