@@ -3,6 +3,10 @@ import SwiftUI
 
 @MainActor
 enum RuntimeLifecycleBridge {
+    private static var isUnitTestHost: Bool {
+        ProcessInfo.processInfo.environment["XCTestConfigurationFilePath"] != nil
+    }
+
     private static var preparationTask: Task<Void, Never>?
     private static var prepared = false
     private static var sceneTransitionTask: Task<Void, Never>?
@@ -17,6 +21,7 @@ enum RuntimeLifecycleBridge {
         }
         let task = Task { @MainActor in
             try? await AppRuntimeCore.shared.prepareStorage()
+            guard !isUnitTestHost else { return }
 #if targetEnvironment(simulator)
             let acceptance = ProcessInfo.processInfo.environment["HANLIN_RUNTIME_ACCEPTANCE"]
             if acceptance == "shell" {
@@ -36,6 +41,7 @@ enum RuntimeLifecycleBridge {
     }
 
     static func handleScenePhase(_ phase: ScenePhase) async {
+        guard !isUnitTestHost else { return }
         let predecessor = sceneTransitionTask
         let transitionID = UUID()
         let task = Task { @MainActor in
