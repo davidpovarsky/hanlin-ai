@@ -380,7 +380,6 @@ public struct HanlinScriptingBundler: Sendable {
         artifactRoot: URL
     ) throws -> HanlinPackageArtifactManifest {
         let sourceRoot = artifactRoot.appending(path: "source", directoryHint: .isDirectory)
-        let sourceRootPath = sourceRoot.standardizedFileURL.path(percentEncoded: false)
         guard let enumerator = fileManager.enumerator(
             at: sourceRoot,
             includingPropertiesForKeys: [.isRegularFileKey, .isSymbolicLinkKey],
@@ -395,12 +394,15 @@ public struct HanlinScriptingBundler: Sendable {
                 throw HanlinScriptingBundlerError.invalidCompilerOutput("artifact_source_symlink")
             }
             guard values.isRegularFile == true else { continue }
-            let path = url.standardizedFileURL.path(percentEncoded: false)
-            guard path.hasPrefix(sourceRootPath + "/") else {
+            let depth = enumerator.level
+            guard depth > 0, url.pathComponents.count >= depth else {
                 throw HanlinScriptingBundlerError.invalidCompilerOutput("artifact_source_escaped")
             }
-            let relative = String(path.dropFirst(sourceRootPath.count + 1))
+            let relative = url.pathComponents.suffix(depth).joined(separator: "/")
                 .replacingOccurrences(of: "\\", with: "/")
+            guard HanlinArchivePolicy.normalizedRelativePath(relative) == relative else {
+                throw HanlinScriptingBundlerError.invalidCompilerOutput("artifact_source_escaped")
+            }
             let data = try Data(contentsOf: url)
             files.append(.init(
                 logicalPath: "source/\(relative)",
