@@ -27,13 +27,6 @@ public struct HanlinScriptingPackageExporter: Sendable {
             throw HanlinScriptingPackageExporterError.destinationExists
         }
         let wrapper = try normalizedWrapper(wrapperDirectory ?? packageRoot.lastPathComponent)
-        // Temporary-directory URLs on Apple platforms can mix the `/var` and
-        // `/private/var` spellings for the same location. Resolve that system
-        // alias before enforcing package-root containment.
-        let rootPath = packageRoot
-            .resolvingSymlinksInPath()
-            .standardizedFileURL
-            .path(percentEncoded: false)
         guard let enumerator = fileManager.enumerator(
             at: packageRoot,
             includingPropertiesForKeys: [.isRegularFileKey, .isSymbolicLinkKey],
@@ -48,14 +41,14 @@ public struct HanlinScriptingPackageExporter: Sendable {
                 throw HanlinScriptingPackageExporterError.unsafeSourcePath(url.lastPathComponent)
             }
             guard values.isRegularFile == true else { continue }
-            let path = url
-                .resolvingSymlinksInPath()
-                .standardizedFileURL
-                .path(percentEncoded: false)
-            guard path.hasPrefix(rootPath + "/") else {
+            let depth = enumerator.level
+            guard depth > 0, url.pathComponents.count >= depth else {
                 throw HanlinScriptingPackageExporterError.unsafeSourcePath(url.lastPathComponent)
             }
-            let relative = String(path.dropFirst(rootPath.count + 1))
+            // DirectoryEnumerator only yields descendants of packageRoot. Its
+            // level remains stable even when iOS represents the same sandbox
+            // once as `/var/...` and once as `/private/var/...`.
+            let relative = url.pathComponents.suffix(depth).joined(separator: "/")
                 .replacingOccurrences(of: "\\", with: "/")
                 .precomposedStringWithCanonicalMapping
             guard let normalized = HanlinArchivePolicy.normalizedRelativePath(relative) else {
