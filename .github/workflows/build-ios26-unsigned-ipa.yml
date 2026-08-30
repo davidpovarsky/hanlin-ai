@@ -114,17 +114,6 @@ jobs:
           npm ci --ignore-scripts --no-audit --no-fund --prefix Scripts/NativeScript
           npm run prepare:ios-dependencies --prefix Scripts/NativeScript
           node Scripts/NativeScript/prepare-fixture.mjs
-          npm run prepare:production-package --prefix Scripts/NativeScript
-          (
-            cd build/NativeScriptE2E/package
-            zip -qry ../HanlinNativeScriptProduction.scripting .
-          )
-          (
-            cd build/NativeScriptE2E/malformed
-            zip -qry ../HanlinNativeScriptMalformed.scripting .
-          )
-          test -s build/NativeScriptE2E/HanlinNativeScriptProduction.scripting
-          test -s build/NativeScriptE2E/HanlinNativeScriptMalformed.scripting
           npm run preflight:ios-dependencies --prefix Scripts/NativeScript
 
       - name: Prepare validation logs
@@ -1236,6 +1225,17 @@ jobs:
           npm ci --ignore-scripts --no-audit --no-fund --prefix Scripts/NativeScript
           npm run prepare:ios-dependencies --prefix Scripts/NativeScript
           node Scripts/NativeScript/prepare-fixture.mjs
+          npm run prepare:production-package --prefix Scripts/NativeScript
+          (
+            cd build/NativeScriptE2E/package
+            zip -qry ../HanlinNativeScriptProduction.scripting .
+          )
+          (
+            cd build/NativeScriptE2E/malformed
+            zip -qry ../HanlinNativeScriptMalformed.scripting .
+          )
+          test -s build/NativeScriptE2E/HanlinNativeScriptProduction.scripting
+          test -s build/NativeScriptE2E/HanlinNativeScriptMalformed.scripting
           npm run preflight:ios-dependencies --prefix Scripts/NativeScript
 
       - name: Prepare simulator logs and select stable Xcode 26
