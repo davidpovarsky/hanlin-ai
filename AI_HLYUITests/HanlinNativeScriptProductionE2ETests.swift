@@ -1,5 +1,6 @@
 import XCTest
 
+@MainActor
 final class HanlinNativeScriptProductionE2ETests: XCTestCase {
     private let app = XCUIApplication()
     private let documents = XCUIApplication(bundleIdentifier: "com.apple.DocumentsApp")
