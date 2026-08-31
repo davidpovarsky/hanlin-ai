@@ -2,8 +2,8 @@
 #include <Foundation/Foundation.h>
 #include <NodeMobile/NodeMobile.h>
 #include <atomic>
+#include <cstring>
 #include <vector>
-#include <string>
 
 @interface HanlinNodeEngine : NSObject
 + (void)runArguments:(NSArray<NSString *> *)arguments;
@@ -13,17 +13,26 @@
 
 + (void)runArguments:(NSArray<NSString *> *)arguments {
     @autoreleasepool {
-        std::vector<std::string> storage;
-        storage.reserve(arguments.count);
+        // Node/libuv rewrites argv in place and requires every argument string
+        // to live in one contiguous allocation for the entire node_start call.
+        size_t storageSize = 0;
         for (NSString *argument in arguments) {
             const char *value = argument.UTF8String;
-            storage.emplace_back(value == nullptr ? "" : value);
+            storageSize += (value == nullptr ? 0 : std::strlen(value)) + 1;
         }
 
+        std::vector<char> storage(storageSize, '\0');
         std::vector<char *> argv;
-        argv.reserve(storage.size());
-        for (std::string &argument : storage) {
-            argv.push_back(argument.data());
+        argv.reserve(arguments.count);
+        char *position = storage.data();
+        for (NSString *argument in arguments) {
+            const char *value = argument.UTF8String;
+            const size_t length = value == nullptr ? 0 : std::strlen(value);
+            argv.push_back(position);
+            if (length > 0) {
+                std::memcpy(position, value, length);
+            }
+            position += length + 1;
         }
         node_start(static_cast<int>(argv.size()), argv.data());
     }
