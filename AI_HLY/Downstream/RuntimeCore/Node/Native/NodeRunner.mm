@@ -2,8 +2,8 @@
 #include <Foundation/Foundation.h>
 #include <NodeMobile/NodeMobile.h>
 #include <atomic>
+#include <cstdlib>
 #include <cstring>
-#include <vector>
 
 @interface HanlinNodeEngine : NSObject
 + (void)runArguments:(NSArray<NSString *> *)arguments;
@@ -21,20 +21,32 @@
             storageSize += (value == nullptr ? 0 : std::strlen(value)) + 1;
         }
 
-        std::vector<char> storage(storageSize, '\0');
-        std::vector<char *> argv;
-        argv.reserve(arguments.count);
-        char *position = storage.data();
+        // Match NodeMobile's native iOS runner: node_start/uv_setup_args is a
+        // process-lifetime one-shot API, so keep C-owned argv storage alive for
+        // that lifetime instead of placing it in destructible C++ containers.
+        char *storage = static_cast<char *>(std::calloc(storageSize, sizeof(char)));
+        char **argv = static_cast<char **>(
+            std::calloc(arguments.count + 1, sizeof(char *))
+        );
+        if (storage == nullptr || argv == nullptr) {
+            std::free(storage);
+            std::free(argv);
+            return;
+        }
+
+        char *position = storage;
+        NSUInteger index = 0;
         for (NSString *argument in arguments) {
             const char *value = argument.UTF8String;
             const size_t length = value == nullptr ? 0 : std::strlen(value);
-            argv.push_back(position);
+            argv[index] = position;
             if (length > 0) {
                 std::memcpy(position, value, length);
             }
             position += length + 1;
+            index += 1;
         }
-        node_start(static_cast<int>(argv.size()), argv.data());
+        node_start(static_cast<int>(arguments.count), argv);
     }
 }
 
