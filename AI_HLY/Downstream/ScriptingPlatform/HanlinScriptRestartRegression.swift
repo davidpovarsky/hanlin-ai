@@ -1,12 +1,13 @@
 import Foundation
 import HanlinScriptContracts
 import HanlinScriptStore
+import Observation
 import SwiftUI
 
 /// Simulator-only evidence harness selected by an explicit CI environment variable.
 /// Production launches do not create or execute this modifier's driver.
 struct HanlinScriptRestartRegressionModifier: ViewModifier {
-    @State private var status = "Preparing Script App restart reproduction"
+    @State private var controller = HanlinScriptRestartRegressionController()
 
     private var phase: String? {
         ProcessInfo.processInfo.environment["HANLIN_SCRIPT_RESTART_REPRO_PHASE"]
@@ -16,7 +17,7 @@ struct HanlinScriptRestartRegressionModifier: ViewModifier {
         content
             .overlay(alignment: .bottom) {
                 if phase != nil {
-                    Text(status)
+                    Text(controller.status)
                         .font(.headline)
                         .multilineTextAlignment(.center)
                         .padding(.horizontal, 20)
@@ -27,12 +28,36 @@ struct HanlinScriptRestartRegressionModifier: ViewModifier {
                         .accessibilityIdentifier("script-restart-repro-status")
                 }
             }
-            .task(id: phase) {
-                guard let phase else { return }
-                let driver = HanlinScriptRestartRegressionDriver()
-                await driver.run(phase: phase) { value in status = value }
+            .onAppear {
+                controller.start(phase: phase)
+            }
+            .onChange(of: phase) { _, newPhase in
+                controller.start(phase: newPhase)
             }
     }
+}
+
+@MainActor
+@Observable
+private final class HanlinScriptRestartRegressionController {
+    var status = "Preparing Script App restart reproduction"
+    @ObservationIgnored private var driverTask: Task<Void, Never>?
+    @ObservationIgnored private var activePhase: String?
+
+    func start(phase: String?) {
+        guard let phase, phase != activePhase else { return }
+        driverTask?.cancel()
+        activePhase = phase
+        // The external CI process owns the checkpoint lifecycle. Keeping this
+        // task in the controller prevents an overlay re-render from cancelling
+        // the driver between two process-boundary checkpoints.
+        driverTask = Task { [weak self] in
+            guard let self else { return }
+            let driver = HanlinScriptRestartRegressionDriver()
+            await driver.run(phase: phase) { [weak self] value in self?.status = value }
+        }
+    }
+
 }
 
 @MainActor

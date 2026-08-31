@@ -33,7 +33,8 @@ wait_checkpoint() {
   checkpoint="$1"
   pid="$2"
   ready="$(checkpoint_path "$checkpoint.ready")"
-  for elapsed in $(seq 1 900); do
+  deadline=$((SECONDS + 300))
+  while [ "$SECONDS" -lt "$deadline" ]; do
     if [ -f "$ready" ]; then return 0; fi
     if ! xcrun simctl spawn "$SIMULATOR_UDID" launchctl print "pid/$pid" >/dev/null 2>&1; then
       echo "Host process $pid exited before checkpoint $checkpoint" >&2

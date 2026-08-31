@@ -404,11 +404,16 @@ struct HanlinScriptPackagePhysicalIPadRegressionTests {
         }
         await platform.installPreview()
         if case let .failed(message) = platform.activity {
+            let filesystem = physicalIPadFilesystemSnapshot(at: platformRoot)
             try Data(message.utf8).write(
                 to: evidenceRoot.appending(path: "install-error.txt"),
                 options: .atomic
             )
-            Issue.record("Exact physical-iPad fixture failed installation: \(message)")
+            try Data(filesystem.utf8).write(
+                to: evidenceRoot.appending(path: "install-filesystem.txt"),
+                options: .atomic
+            )
+            Issue.record("Exact physical-iPad fixture failed installation: \(message); filesystem=\(filesystem)")
         }
         #expect(platform.activity == .idle)
         let installed = try #require(platform.installedPackages.first)
@@ -1312,6 +1317,19 @@ private func physicalIPadArchiveFixture() throws -> URL {
         throw HanlinScriptingError.unavailableProvider("physical_ipad_archive_missing")
     }
     return fixture
+}
+
+private func physicalIPadFilesystemSnapshot(at root: URL) -> String {
+    guard let enumerator = FileManager.default.enumerator(
+        at: root,
+        includingPropertiesForKeys: nil,
+        options: [.skipsHiddenFiles]
+    ) else { return "<unreadable>" }
+    let prefix = root.path(percentEncoded: false) + "/"
+    let entries = enumerator.compactMap { $0 as? URL }.prefix(256).map {
+        $0.path(percentEncoded: false).replacingOccurrences(of: prefix, with: "")
+    }
+    return entries.sorted().joined(separator: ",")
 }
 
 private struct PhysicalIPadArtifactPaths: Codable {
