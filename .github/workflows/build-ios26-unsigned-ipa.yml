@@ -1482,6 +1482,7 @@ jobs:
             -skipMacroValidation \
             -only-testing:AI_HLYTests \
             -only-testing:AI_HLYUITests \
+            -enableAddressSanitizer YES \
             ENABLE_TESTABILITY=YES \
             IPHONEOS_DEPLOYMENT_TARGET="$IOS_DEPLOYMENT_TARGET" \
             ARCHS=arm64 \
@@ -1597,7 +1598,8 @@ jobs:
             -skipPackagePluginValidation \
             -skipMacroValidation \
             -parallel-testing-enabled NO \
-            -only-testing:AI_HLYTests \
+            -enableAddressSanitizer YES \
+            -only-testing:AI_HLYTests/HanlinTrustedWorkerRouteTests/nodeWorkerInvocation \
             2>&1 | tee "$LOG_DIR/08-downstream-unit-tests.log"
             downstream_test_status="${PIPESTATUS[0]}"
             set -e
