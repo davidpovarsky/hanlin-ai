@@ -7,16 +7,12 @@ import SwiftUI
 /// Simulator-only evidence harness selected by an explicit CI environment variable.
 /// Production launches do not create or execute this modifier's driver.
 struct HanlinScriptRestartRegressionModifier: ViewModifier {
-    @State private var controller = HanlinScriptRestartRegressionController()
-
-    private var phase: String? {
-        ProcessInfo.processInfo.environment["HANLIN_SCRIPT_RESTART_REPRO_PHASE"]
-    }
+    @State private var controller = HanlinScriptRestartRegressionController.shared
 
     func body(content: Content) -> some View {
         content
             .overlay(alignment: .bottom) {
-                if phase != nil {
+                if controller.isActive {
                     Text(controller.status)
                         .font(.headline)
                         .multilineTextAlignment(.center)
@@ -28,26 +24,30 @@ struct HanlinScriptRestartRegressionModifier: ViewModifier {
                         .accessibilityIdentifier("script-restart-repro-status")
                 }
             }
-            .onAppear {
-                controller.start(phase: phase)
-            }
-            .onChange(of: phase) { _, newPhase in
-                controller.start(phase: newPhase)
-            }
     }
 }
 
 @MainActor
 @Observable
-private final class HanlinScriptRestartRegressionController {
+final class HanlinScriptRestartRegressionController {
+    static let shared = HanlinScriptRestartRegressionController()
+
     var status = "Preparing Script App restart reproduction"
+    private(set) var isActive = false
     @ObservationIgnored private var driverTask: Task<Void, Never>?
     @ObservationIgnored private var activePhase: String?
 
-    func start(phase: String?) {
+    private init() {}
+
+    func startFromEnvironment() {
+        start(phase: ProcessInfo.processInfo.environment["HANLIN_SCRIPT_RESTART_REPRO_PHASE"])
+    }
+
+    private func start(phase: String?) {
         guard let phase, phase != activePhase else { return }
         driverTask?.cancel()
         activePhase = phase
+        isActive = true
         // The external CI process owns the checkpoint lifecycle. Keeping this
         // task in the controller prevents an overlay re-render from cancelling
         // the driver between two process-boundary checkpoints.

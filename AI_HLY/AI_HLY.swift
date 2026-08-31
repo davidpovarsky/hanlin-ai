@@ -77,6 +77,11 @@ struct MyApp: App {
     @MainActor @StateObject private var appDataManager = AppDataManager()
     @State private var deepLinkTarget: String? = nil
     @Environment(\.scenePhase) private var scenePhase
+
+    @MainActor
+    init() {
+        HanlinScriptRestartRegressionController.shared.startFromEnvironment()
+    }
     
     var body: some Scene {
         WindowGroup {

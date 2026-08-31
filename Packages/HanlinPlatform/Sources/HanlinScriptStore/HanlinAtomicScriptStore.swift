@@ -360,7 +360,11 @@ public actor HanlinAtomicScriptStore {
         )
         try persist(journal)
         try faults.check(.journalPersisted)
-        try fileManager.copyItem(at: artifactDirectory, to: staged)
+        try stageArtifact(
+            from: artifactDirectory,
+            to: staged,
+            expectedManifest: artifactManifest
+        )
         _ = try loadAndVerifyManifest(at: staged, expected: artifactManifest)
         try encoder.encode(GenerationMetadata(
             packageID: plan.packageID,
@@ -460,8 +464,12 @@ public actor HanlinAtomicScriptStore {
                 at: directory,
                 includingPropertiesForKeys: nil
             ).map(\.lastPathComponent).sorted().prefix(32).joined(separator: ",")) ?? "unreadable"
+            let expectedPath = url.path(percentEncoded: false)
+            let parentExists = fileManager.fileExists(atPath: directory.path(percentEncoded: false))
+            let standardizedPath = url.standardizedFileURL.path(percentEncoded: false)
+            let symlinkResolvedPath = url.resolvingSymlinksInPath().path(percentEncoded: false)
             Self.logger.error(
-                "phase=artifact-manifest-resolution expected=artifact-manifest.json directory=\(directory.lastPathComponent, privacy: .public) discovered=\(discovered, privacy: .public)"
+                "phase=artifact-manifest-resolution expected=\(expectedPath, privacy: .public) parentExists=\(parentExists, privacy: .public) standardized=\(standardizedPath, privacy: .public) symlinkResolved=\(symlinkResolvedPath, privacy: .public) discovered=\(discovered, privacy: .public)"
             )
             throw HanlinAtomicScriptStoreError.artifactManifestMissing
         }
@@ -477,6 +485,37 @@ public actor HanlinAtomicScriptStore {
             else { throw HanlinAtomicScriptStoreError.artifactManifestMismatch(file.logicalPath) }
         }
         return manifest
+    }
+
+    /// Stages the verified payload before publishing its manifest commit marker.
+    /// A recursive directory copy does not define an observable child ordering;
+    /// the store must not use the manifest as a completeness marker until every
+    /// other artifact entry has finished copying.
+    private func stageArtifact(
+        from source: URL,
+        to destination: URL,
+        expectedManifest: HanlinPackageArtifactManifest
+    ) throws {
+        _ = try loadAndVerifyManifest(at: source, expected: expectedManifest)
+        let manifestName = "artifact-manifest.json"
+        let entries = try fileManager.contentsOfDirectory(
+            at: source,
+            includingPropertiesForKeys: nil
+        ).sorted { $0.lastPathComponent < $1.lastPathComponent }
+        guard entries.contains(where: { $0.lastPathComponent == manifestName }) else {
+            throw HanlinAtomicScriptStoreError.artifactManifestMissing
+        }
+        try fileManager.createDirectory(at: destination, withIntermediateDirectories: false)
+        for entry in entries where entry.lastPathComponent != manifestName {
+            try fileManager.copyItem(
+                at: entry,
+                to: destination.appending(path: entry.lastPathComponent)
+            )
+        }
+        try fileManager.copyItem(
+            at: source.appending(path: manifestName, directoryHint: .notDirectory),
+            to: destination.appending(path: manifestName, directoryHint: .notDirectory)
+        )
     }
 
     private func persistRegistry() throws {
