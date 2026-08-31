@@ -18,7 +18,7 @@ const hashScript = path.join(runtimeDirectory, 'compute-runtime-dependency-hash.
 const lockValidationScript = path.join(runtimeDirectory, 'validate-runtime-lock.mjs');
 const manifestGenerationScript = path.join(runtimeDirectory, 'generate-runtime-manifest.mjs');
 const packageValidationScript = path.join(runtimeDirectory, 'validate-ios-system-package.mjs');
-const expectedHash = '7d967563db0809a4efa0f07b75d6b5928379a3b6f3aafb886899a79f59512a93';
+const expectedHash = '93417cff5ce62098919711e7f6d239a6501fd7a5de1621e38eb2fb5cc8c79269';
 
 test('IOSSystemLite matches every locked component and application-link dependency', () => {
   const output = execFileSync(process.execPath, [packageValidationScript, lockPath, packagePath], { encoding: 'utf8' });

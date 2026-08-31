@@ -14,6 +14,8 @@ assert(lock.runtimeBundle?.formatVersion === 1, 'runtimeBundle.formatVersion mus
 assertRepository(lock.node?.sourceRepository, 'node.sourceRepository');
 assert(sha40.test(lock.node?.commit ?? ''), 'node.commit must be a lowercase 40-character SHA');
 assert(/^24\.\d+\.\d+$/.test(lock.node?.version ?? ''), 'node.version must be Node 24');
+assert(Array.isArray(lock.node?.exportedSymbols), 'node.exportedSymbols must be an array');
+assert(lock.node.exportedSymbols.length === 1 && lock.node.exportedSymbols[0] === '_node_start', 'node.exportedSymbols must contain only _node_start');
 assertUrlAndHash(lock.node?.sourceArchive, 'node.sourceArchive');
 assertRepository(lock.python?.sourceRepository, 'python.sourceRepository');
 assert(sha40.test(lock.python?.commit ?? ''), 'python.commit must be a lowercase 40-character SHA');

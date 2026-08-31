@@ -202,7 +202,7 @@ jobs:
             echo "CCACHE_NOHASHDIR=true"
           } >> "$GITHUB_ENV"
           lock_hash="$(shasum -a 256 RuntimeDependencies.lock.json | awk '{print $1}')"
-          script_hash="$(shasum -a 256 Scripts/Runtime/build-node-slice.sh | awk '{print $1}')"
+          script_hash="$(shasum -a 256 Scripts/Runtime/build-node-slice.sh Scripts/Runtime/NodeMobile.exports | shasum -a 256 | awk '{print $1}')"
           base="hanlin-node24-ccache-v1-${RUNNER_OS}-${RUNNER_ARCH}-${XCODE_BUILD}-${NODE_COMMIT}-${TARGET}-${lock_hash}-${script_hash}"
           echo "base=$base" >> "$GITHUB_OUTPUT"
 
@@ -279,7 +279,7 @@ jobs:
           tail -200 "$evidence/build.log" > "$evidence/compiler-last-200.log" 2>/dev/null || true
           printf '%s\n' "$CACHE_MATCHED_KEY" > "$evidence/cache-restored-key.txt"
           printf '%s\n' "./tools/ios_framework_prepare.sh ${TARGET}" > "$evidence/failed-command.txt"
-          shasum -a 256 RuntimeDependencies.lock.json Scripts/Runtime/build-node-slice.sh > "$evidence/input-hashes.txt"
+          shasum -a 256 RuntimeDependencies.lock.json Scripts/Runtime/build-node-slice.sh Scripts/Runtime/NodeMobile.exports > "$evidence/input-hashes.txt"
           if [[ -d "$output" ]]; then
             cp "$evidence/build.log" "$output/build.log" 2>/dev/null || true
             cp "$evidence/heartbeat.log" "$output/heartbeat.log" 2>/dev/null || true

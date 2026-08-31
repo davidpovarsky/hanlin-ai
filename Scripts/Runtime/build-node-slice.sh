@@ -10,6 +10,7 @@ readonly TARGET="$1"
 readonly SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 readonly REPOSITORY_ROOT="$(cd "${SCRIPT_DIR}/../.." && pwd)"
 readonly LOCK_FILE="${REPOSITORY_ROOT}/RuntimeDependencies.lock.json"
+readonly EXPORTS_FILE="${SCRIPT_DIR}/NodeMobile.exports"
 readonly NODE_SOURCE_ROOT="${NODE_SOURCE_ROOT:?NODE_SOURCE_ROOT must identify the prepared pinned source}"
 readonly OUTPUT_ROOT="${REPOSITORY_ROOT}/build/node-slices/${TARGET}"
 readonly CCACHE_STATS_FILE="${CCACHE_STATS_FILE:-${OUTPUT_ROOT}/ccache-stats.txt}"
@@ -29,6 +30,30 @@ started_at="$(date +%s)"
 rm -rf "${OUTPUT_ROOT}"
 mkdir -p "${OUTPUT_ROOT}"
 
+readonly NODE_FRAMEWORK_PROJECT="${NODE_SOURCE_ROOT}/tools/ios-framework/NodeMobile.xcodeproj/project.pbxproj"
+readonly NODE_FRAMEWORK_EXPORTS="${NODE_SOURCE_ROOT}/tools/ios-framework/NodeMobile/NodeMobile.exports"
+test -f "${NODE_FRAMEWORK_PROJECT}"
+test -f "${EXPORTS_FILE}"
+mkdir -p "$(dirname "${NODE_FRAMEWORK_EXPORTS}")"
+cp "${EXPORTS_FILE}" "${NODE_FRAMEWORK_EXPORTS}"
+
+node - "${LOCK_FILE}" "${EXPORTS_FILE}" "${NODE_FRAMEWORK_PROJECT}" "${NODE_FRAMEWORK_EXPORTS}" <<'NODE'
+const fs = require('node:fs');
+const [lockPath, exportsPath, projectPath, injectedExportsPath] = process.argv.slice(2);
+const lock = JSON.parse(fs.readFileSync(lockPath, 'utf8'));
+const expected = lock.node.exportedSymbols.join('\n') + '\n';
+const actual = fs.readFileSync(exportsPath, 'utf8');
+if (actual !== expected) throw new Error('NodeMobile.exports does not match node.exportedSymbols in the runtime lock');
+
+const marker = '\t\t\t\tDEFINES_MODULE = YES;';
+let project = fs.readFileSync(projectPath, 'utf8');
+const occurrences = project.split(marker).length - 1;
+if (occurrences !== 2) throw new Error(`Expected two NodeMobile build configurations, found ${occurrences}`);
+const setting = `${marker}\n\t\t\t\tEXPORTED_SYMBOLS_FILE = ${JSON.stringify(injectedExportsPath)};`;
+project = project.split(marker).join(setting);
+fs.writeFileSync(projectPath, project);
+NODE
+
 cd "${NODE_SOURCE_ROOT}"
 ./tools/ios_framework_prepare.sh "${TARGET}"
 
@@ -43,6 +68,14 @@ fi
 platform="$(/usr/libexec/PlistBuddy -c 'Print :CFBundleSupportedPlatforms:0' "${SOURCE_FRAMEWORK}/Info.plist")"
 if [[ "${platform}" != "${EXPECTED_PLATFORM}" ]]; then
   echo "Unexpected ${TARGET} framework platform: ${platform}" >&2
+  exit 1
+fi
+
+exported_symbols="$(nm -gjU "${SOURCE_FRAMEWORK}/NodeMobile" | sort -u)"
+expected_symbols="$(sed '/^[[:space:]]*$/d' "${EXPORTS_FILE}" | sort -u)"
+if [[ "${exported_symbols}" != "${expected_symbols}" ]]; then
+  printf 'Unexpected NodeMobile exported symbols. Expected:\n%s\nActual:\n%s\n' \
+    "${expected_symbols}" "${exported_symbols}" >&2
   exit 1
 fi
 
