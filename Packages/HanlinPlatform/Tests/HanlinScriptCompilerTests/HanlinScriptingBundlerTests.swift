@@ -156,8 +156,12 @@ struct HanlinScriptingBundlerTests {
         let bundler = makeBundler(compiler: CompilerStub(result: successfulResult()))
         let bundle = try await bundler.bundle(package: fixture.package, preview: fixture.preview, context: .app)
         try bundler.write(bundle, to: output)
-        #expect(FileManager.default.fileExists(atPath: output.appending(path: "index.js").path()))
-        #expect(FileManager.default.fileExists(atPath: output.appending(path: "index.js.map").path()))
+        #expect(FileManager.default.fileExists(
+            atPath: output.appending(path: "index.js").path(percentEncoded: false)
+        ))
+        #expect(FileManager.default.fileExists(
+            atPath: output.appending(path: "index.js.map").path(percentEncoded: false)
+        ))
         let decoded = try JSONDecoder().decode(
             HanlinPackageArtifactManifest.self,
             from: Data(contentsOf: output.appending(path: "artifact-manifest.json"))
@@ -192,7 +196,7 @@ struct HanlinScriptingBundlerTests {
         #expect(decoded == manifest)
         #expect(manifest.files.contains { $0.logicalPath == "source/index.tsx" })
         #expect(FileManager.default.fileExists(
-            atPath: output.appending(path: "source/lib/value.ts").path()
+            atPath: output.appending(path: "source/lib/value.ts").path(percentEncoded: false)
         ))
     }
 

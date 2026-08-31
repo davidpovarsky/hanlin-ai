@@ -330,7 +330,7 @@ struct HanlinScriptPackagePhysicalIPadRegressionTests {
             directoryHint: .isDirectory
         )
         let platformRoot = evidenceRoot.appending(path: "Platform", directoryHint: .isDirectory)
-        if FileManager.default.fileExists(atPath: evidenceRoot.path()) {
+        if FileManager.default.fileExists(atPath: evidenceRoot.path(percentEncoded: false)) {
             try FileManager.default.removeItem(at: evidenceRoot)
         }
         try FileManager.default.createDirectory(at: evidenceRoot, withIntermediateDirectories: true)
@@ -348,14 +348,14 @@ struct HanlinScriptPackagePhysicalIPadRegressionTests {
             platformRoot: platformRoot,
             evidenceRoot: evidenceRoot
         )
-        #expect(!FileManager.default.fileExists(atPath: providerCopy.path()))
+        #expect(!FileManager.default.fileExists(atPath: providerCopy.path(percentEncoded: false)))
 
         let generationRoot = platformRoot.appending(
             path: "Installed/packages/\(installed.record.installedPackageID.rawValue)/generations/\(installed.record.activeGeneration)",
             directoryHint: .isDirectory
         )
         let manifestURL = generationRoot.appending(path: "artifact-manifest.json", directoryHint: .notDirectory)
-        #expect(FileManager.default.fileExists(atPath: manifestURL.path()))
+        #expect(FileManager.default.fileExists(atPath: manifestURL.path(percentEncoded: false)))
         try writePhysicalIPadEvidence(
             checkpoint: "before-cold-restoration",
             evidenceRoot: evidenceRoot,
@@ -370,7 +370,7 @@ struct HanlinScriptPackagePhysicalIPadRegressionTests {
         })
         #expect(restoredPackage.record.activeGeneration == installed.record.activeGeneration)
         #expect(restoredPackage.availableGenerations.contains(installed.record.activeGeneration))
-        #expect(FileManager.default.fileExists(atPath: manifestURL.path()))
+        #expect(FileManager.default.fileExists(atPath: manifestURL.path(percentEncoded: false)))
         await restored.launch(restoredPackage.record.installedPackageID)
         if case let .failed(message) = restored.activity {
             Issue.record("Cold launch failed: \(message)")
@@ -1124,12 +1124,12 @@ private func bundledFixtureDirectory(_ name: String) throws -> URL {
         bundle.url(forResource: "ScriptingFixtures", withExtension: "bundle")
     ].compactMap { $0 }
     guard let root = roots.first(where: {
-        FileManager.default.fileExists(atPath: $0.path())
+        FileManager.default.fileExists(atPath: $0.path(percentEncoded: false))
     }) else {
         throw HanlinScriptingError.unavailableProvider("fixture_bundle_missing")
     }
     let directory = root.appending(path: name, directoryHint: .isDirectory)
-    guard FileManager.default.fileExists(atPath: directory.path()) else {
+    guard FileManager.default.fileExists(atPath: directory.path(percentEncoded: false)) else {
         throw HanlinScriptingError.unavailableProvider("fixture_missing_\(name)")
     }
     return directory
@@ -1253,7 +1253,7 @@ private func productionCompilerFixture(named name: String) throws -> URL {
         path: name,
         directoryHint: .isDirectory
     )
-    guard FileManager.default.fileExists(atPath: fixture.path()) else {
+    guard FileManager.default.fileExists(atPath: fixture.path(percentEncoded: false)) else {
         throw HanlinScriptingError.unavailableProvider("production_fixture_missing_\(name)")
     }
     return fixture
@@ -1313,7 +1313,7 @@ private func physicalIPadArchiveFixture() throws -> URL {
         path: "smart-eating-normalized.zip",
         directoryHint: .notDirectory
     )
-    guard FileManager.default.fileExists(atPath: fixture.path()) else {
+    guard FileManager.default.fileExists(atPath: fixture.path(percentEncoded: false)) else {
         throw HanlinScriptingError.unavailableProvider("physical_ipad_archive_missing")
     }
     return fixture
@@ -1382,8 +1382,8 @@ private func writePhysicalIPadEvidence(
         packageRoot: packageRoot.path(percentEncoded: false),
         artifactRoot: artifactRoot.path(percentEncoded: false),
         artifactManifestURL: manifest.path(percentEncoded: false),
-        artifactManifestExists: manager.fileExists(atPath: manifest.path()),
-        artifactManifestParentExists: manager.fileExists(atPath: artifactRoot.path()),
+        artifactManifestExists: manager.fileExists(atPath: manifest.path(percentEncoded: false)),
+        artifactManifestParentExists: manager.fileExists(atPath: artifactRoot.path(percentEncoded: false)),
         entrypoints: package.entrypoints.map(\.sourcePath).sorted(),
         importStagingEntries: try directoryNames(
             at: platformRoot.appending(path: "ImportStaging", directoryHint: .isDirectory)
@@ -1400,7 +1400,7 @@ private func writePhysicalIPadEvidence(
     )
 
     let registry = installRoot.appending(path: "registry/catalog.json", directoryHint: .notDirectory)
-    if manager.fileExists(atPath: registry.path()) {
+    if manager.fileExists(atPath: registry.path(percentEncoded: false)) {
         try manager.copyItem(
             at: registry,
             to: evidenceRoot.appending(path: "registry-\(checkpoint).json")
@@ -1414,7 +1414,7 @@ private func writePhysicalIPadEvidence(
 }
 
 private func directoryNames(at directory: URL) throws -> [String] {
-    guard FileManager.default.fileExists(atPath: directory.path()) else { return [] }
+    guard FileManager.default.fileExists(atPath: directory.path(percentEncoded: false)) else { return [] }
     return try FileManager.default.contentsOfDirectory(
         at: directory,
         includingPropertiesForKeys: nil,
