@@ -366,7 +366,9 @@ final class HanlinScriptingPlatform {
             let artifactRoot = try await store.activeArtifactURL(for: id)
             let compiledPath = try Self.compiledPath(for: entrypoint.sourcePath)
             let compiledURL = artifactRoot.appending(path: compiledPath, directoryHint: .notDirectory)
-            let attributes = try FileManager.default.attributesOfItem(atPath: compiledURL.path())
+            let attributes = try FileManager.default.attributesOfItem(
+                atPath: compiledURL.path(percentEncoded: false)
+            )
             guard let bytes = attributes[.size] as? NSNumber, bytes.intValue <= 4 * 1_024 * 1_024 else {
                 throw HanlinScriptingPlatformError.compiledEntrypointTooLarge
             }
@@ -529,7 +531,9 @@ final class HanlinScriptingPlatform {
                 guard required.isSubset(of: granted) else { continue }
                 let compiledPath = try Self.compiledPath(for: entrypoint.sourcePath)
                 let compiledURL = artifactRoot.appending(path: compiledPath, directoryHint: .notDirectory)
-                let attributes = try FileManager.default.attributesOfItem(atPath: compiledURL.path())
+                let attributes = try FileManager.default.attributesOfItem(
+                    atPath: compiledURL.path(percentEncoded: false)
+                )
                 guard let bytes = attributes[.size] as? NSNumber, bytes.intValue <= 4 * 1_024 * 1_024 else {
                     throw HanlinScriptingPlatformError.compiledEntrypointTooLarge
                 }

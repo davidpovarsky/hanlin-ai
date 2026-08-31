@@ -181,7 +181,7 @@ struct HanlinAtomicScriptStoreTests {
             path: "packages/\(fixture.installedID.rawValue)/generations/1/artifact-manifest.json",
             directoryHint: .notDirectory
         )
-        #expect(FileManager.default.fileExists(atPath: activeManifest.path()))
+        #expect(FileManager.default.fileExists(atPath: activeManifest.path(percentEncoded: false)))
 
         let abandonedStaging = fixture.storeRoot.appending(
             path: "staging/abandoned-unreferenced-artifact",
@@ -198,9 +198,9 @@ struct HanlinAtomicScriptStoreTests {
         #expect(restored[0].availableGenerations == [1])
         #expect(resolvedActive.resolvingSymlinksInPath() == activeManifest.deletingLastPathComponent().resolvingSymlinksInPath())
         #expect(FileManager.default.fileExists(
-            atPath: resolvedActive.appending(path: "artifact-manifest.json").path()
+            atPath: resolvedActive.appending(path: "artifact-manifest.json").path(percentEncoded: false)
         ))
-        #expect(!FileManager.default.fileExists(atPath: abandonedStaging.path()))
+        #expect(!FileManager.default.fileExists(atPath: abandonedStaging.path(percentEncoded: false)))
     }
 
     @Test("Required capabilities are rejected until the production grant representation approves them")
@@ -310,7 +310,7 @@ private struct Fixture {
 
     init() throws {
         root = FileManager.default.temporaryDirectory.appending(
-            path: "hanlin-store-tests-\(UUID().uuidString.lowercased())",
+            path: "hanlin store tests \(UUID().uuidString.lowercased())",
             directoryHint: .isDirectory
         )
         storeRoot = root.appending(path: "store", directoryHint: .isDirectory)

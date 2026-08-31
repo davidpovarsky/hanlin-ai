@@ -160,7 +160,7 @@ private struct HanlinScriptRestartRegressionDriver {
             path: "continue-\(name)",
             directoryHint: .notDirectory
         )
-        while !manager.fileExists(atPath: continuation.path()) {
+        while !manager.fileExists(atPath: continuation.path(percentEncoded: false)) {
             try Task.checkCancellation()
             try await Task.sleep(for: .milliseconds(200))
         }

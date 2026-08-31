@@ -303,7 +303,7 @@ public actor HanlinAtomicScriptStore {
         try faults.check(.journalPersisted)
         let installed = packageURL(id)
         let tombstone = tombstoneURL(transactionID)
-        if fileManager.fileExists(atPath: installed.path()) {
+        if fileManager.fileExists(atPath: installed.path(percentEncoded: false)) {
             try fileManager.moveItem(at: installed, to: tombstone)
         }
         journal.phase = .uninstallMoved
@@ -360,11 +360,7 @@ public actor HanlinAtomicScriptStore {
         )
         try persist(journal)
         try faults.check(.journalPersisted)
-        try stageArtifact(
-            from: artifactDirectory,
-            to: staged,
-            expectedManifest: artifactManifest
-        )
+        try fileManager.copyItem(at: artifactDirectory, to: staged)
         _ = try loadAndVerifyManifest(at: staged, expected: artifactManifest)
         try encoder.encode(GenerationMetadata(
             packageID: plan.packageID,
@@ -430,7 +426,7 @@ public actor HanlinAtomicScriptStore {
             case .uninstall:
                 let tombstone = tombstoneURL(journal.transactionID)
                 if journal.phase == .uninstallMoved, registry.packages[id.rawValue] != nil {
-                    if fileManager.fileExists(atPath: tombstone.path()) {
+                    if fileManager.fileExists(atPath: tombstone.path(percentEncoded: false)) {
                         try fileManager.moveItem(at: tombstone, to: packageURL(id))
                     }
                 } else {
@@ -449,7 +445,7 @@ public actor HanlinAtomicScriptStore {
 
     private func generations(for id: HanlinInstalledPackageID) throws -> [UInt64] {
         let directory = packageURL(id).appending(path: "generations", directoryHint: .isDirectory)
-        guard fileManager.fileExists(atPath: directory.path()) else { return [] }
+        guard fileManager.fileExists(atPath: directory.path(percentEncoded: false)) else { return [] }
         return try fileManager.contentsOfDirectory(at: directory, includingPropertiesForKeys: nil)
             .compactMap { UInt64($0.lastPathComponent) }.sorted()
     }
@@ -459,7 +455,7 @@ public actor HanlinAtomicScriptStore {
         expected: HanlinPackageArtifactManifest? = nil
     ) throws -> HanlinPackageArtifactManifest {
         let url = directory.appending(path: "artifact-manifest.json", directoryHint: .notDirectory)
-        guard fileManager.fileExists(atPath: url.path()) else {
+        guard fileManager.fileExists(atPath: url.path(percentEncoded: false)) else {
             let discovered = (try? fileManager.contentsOfDirectory(
                 at: directory,
                 includingPropertiesForKeys: nil
@@ -487,40 +483,9 @@ public actor HanlinAtomicScriptStore {
         return manifest
     }
 
-    /// Stages the verified payload before publishing its manifest commit marker.
-    /// A recursive directory copy does not define an observable child ordering;
-    /// the store must not use the manifest as a completeness marker until every
-    /// other artifact entry has finished copying.
-    private func stageArtifact(
-        from source: URL,
-        to destination: URL,
-        expectedManifest: HanlinPackageArtifactManifest
-    ) throws {
-        _ = try loadAndVerifyManifest(at: source, expected: expectedManifest)
-        let manifestName = "artifact-manifest.json"
-        let entries = try fileManager.contentsOfDirectory(
-            at: source,
-            includingPropertiesForKeys: nil
-        ).sorted { $0.lastPathComponent < $1.lastPathComponent }
-        guard entries.contains(where: { $0.lastPathComponent == manifestName }) else {
-            throw HanlinAtomicScriptStoreError.artifactManifestMissing
-        }
-        try fileManager.createDirectory(at: destination, withIntermediateDirectories: false)
-        for entry in entries where entry.lastPathComponent != manifestName {
-            try fileManager.copyItem(
-                at: entry,
-                to: destination.appending(path: entry.lastPathComponent)
-            )
-        }
-        try fileManager.copyItem(
-            at: source.appending(path: manifestName, directoryHint: .notDirectory),
-            to: destination.appending(path: manifestName, directoryHint: .notDirectory)
-        )
-    }
-
     private func persistRegistry() throws {
         let data = try encoder.encode(registry)
-        if fileManager.fileExists(atPath: registryURL.path()) {
+        if fileManager.fileExists(atPath: registryURL.path(percentEncoded: false)) {
             try? fileManager.removeItem(at: backupRegistryURL)
             try fileManager.copyItem(at: registryURL, to: backupRegistryURL)
         }
@@ -575,7 +540,7 @@ public actor HanlinAtomicScriptStore {
             )
         }
         let registryURL = root.appending(path: "registry/catalog.json")
-        if !fileManager.fileExists(atPath: registryURL.path()) {
+        if !fileManager.fileExists(atPath: registryURL.path(percentEncoded: false)) {
             let encoder = JSONEncoder()
             encoder.outputFormatting = [.sortedKeys]
             encoder.dateEncodingStrategy = .millisecondsSince1970
