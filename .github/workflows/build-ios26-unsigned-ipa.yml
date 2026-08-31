@@ -681,7 +681,7 @@ jobs:
         run: |
           set -euxo pipefail
           bash Scripts/Runtime/prepare-runtime-core.sh 2>&1 | tee "$LOG_DIR/04-prepare-runtime-core.log"
-          grep -Fq "Prepared verified RuntimeCore 7d967563db0809a4efa0f07b75d6b5928379a3b6f3aafb886899a79f59512a93" "$LOG_DIR/04-prepare-runtime-core.log"
+          grep -Fq "Prepared verified RuntimeCore 93417cff5ce62098919711e7f6d239a6501fd7a5de1621e38eb2fb5cc8c79269" "$LOG_DIR/04-prepare-runtime-core.log"
 
       - name: Verify MCP host on pinned Node 24.5.0
         run: |
@@ -729,7 +729,7 @@ jobs:
         run: |
           set -euxo pipefail
           test "$(node Scripts/Runtime/compute-runtime-dependency-hash.mjs RuntimeDependencies.lock.json)" = \
-            "7d967563db0809a4efa0f07b75d6b5928379a3b6f3aafb886899a79f59512a93"
+            "93417cff5ce62098919711e7f6d239a6501fd7a5de1621e38eb2fb5cc8c79269"
           git diff --exit-code -- RuntimeDependencies.lock.json
           if grep -E '(configure|cmake|ninja|make).*(Node|nodejs|V8|Python)' \
             "$LOG_DIR/04-prepare-runtime-core.log" "$LOG_DIR/04-package-runtime-host.log"; then
@@ -1341,7 +1341,7 @@ jobs:
         run: |
           set -euxo pipefail
           bash Scripts/Runtime/prepare-runtime-core.sh 2>&1 | tee "$LOG_DIR/02-prepare-runtime-core.log"
-          grep -Fq "Prepared verified RuntimeCore 7d967563db0809a4efa0f07b75d6b5928379a3b6f3aafb886899a79f59512a93" "$LOG_DIR/02-prepare-runtime-core.log"
+          grep -Fq "Prepared verified RuntimeCore 93417cff5ce62098919711e7f6d239a6501fd7a5de1621e38eb2fb5cc8c79269" "$LOG_DIR/02-prepare-runtime-core.log"
 
       - name: Package current RuntimeCore host resources
         run: |

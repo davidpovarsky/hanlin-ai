@@ -88,7 +88,7 @@ if (overrides.overrides?.['fast-uri'] !== overrides.packages?.['fast-uri']?.vers
 if (!/^sha512-/.test(overrides.packages?.['fast-uri']?.integrity ?? '')) throw new Error('fast-uri override integrity is missing');
 NODE
 
-readonly EXPECTED_RUNTIME_DEPENDENCY_HASH="7d967563db0809a4efa0f07b75d6b5928379a3b6f3aafb886899a79f59512a93"
+readonly EXPECTED_RUNTIME_DEPENDENCY_HASH="93417cff5ce62098919711e7f6d239a6501fd7a5de1621e38eb2fb5cc8c79269"
 runtime_dependency_hash="$(node "${SCRIPT_DIR}/compute-runtime-dependency-hash.mjs" "${LOCK_FILE}")"
 [[ "${runtime_dependency_hash}" == "${EXPECTED_RUNTIME_DEPENDENCY_HASH}" ]] || {
   echo "Runtime dependency hash changed unexpectedly: ${runtime_dependency_hash}" >&2
