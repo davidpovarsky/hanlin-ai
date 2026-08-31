@@ -169,6 +169,12 @@ static bool hanlin_begin_operation(
     )) {
         return false;
     }
+    /*
+     * Swift actors are serial but not thread-affine. QuickJS derives its
+     * stack limit from the current native thread's stack top, so refresh that
+     * reference before every actor-isolated operation.
+     */
+    JS_UpdateStackTop(session->runtime);
     JS_HanlinResetMemoryLimitExceeded(session->runtime);
     atomic_store_explicit(
         &session->interrupt_reason,
