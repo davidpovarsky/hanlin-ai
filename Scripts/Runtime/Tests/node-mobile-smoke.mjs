@@ -54,7 +54,7 @@ try {
       result.hostStartup = Number.isInteger(ready.port)
         && ready.port > 0
         && ready.nodeVersion === process.versions.node
-        && ready.protocolVersion === 1;
+        && ready.protocolVersion === 2;
       result.hostProtocolVersion = ready.protocolVersion;
       result.hostNodeVersion = ready.nodeVersion;
       if (result.hostStartup) break;

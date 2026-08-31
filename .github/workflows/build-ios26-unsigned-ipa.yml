@@ -8,6 +8,11 @@ on:
         required: true
         default: false
         type: boolean
+      runtime_reuse_artifacts_run_id:
+        description: Reuse completed RuntimeCore input artifacts from an earlier run
+        required: false
+        default: ''
+        type: string
       phase1_validation_only:
         description: Validate the Phase 0 baseline and Phase 1 contracts without building the app
         required: true
@@ -434,6 +439,7 @@ jobs:
     with:
       publish_release: true
       force_rebuild: false
+      reuse_artifacts_run_id: ${{ inputs.runtime_reuse_artifacts_run_id }}
     permissions:
       actions: read
       contents: write
