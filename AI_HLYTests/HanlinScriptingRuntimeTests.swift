@@ -3,6 +3,7 @@ import Foundation
 import HanlinPlatformContracts
 import HanlinScriptCompiler
 import HanlinScriptContracts
+import HanlinScriptStore
 import HanlinScriptingApplicationRuntime
 import HanlinScriptingSDK
 import Testing

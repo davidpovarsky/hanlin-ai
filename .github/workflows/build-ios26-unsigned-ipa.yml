@@ -1860,5 +1860,5 @@ jobs:
         with:
           name: script-app-node-restart-repro
           path: simulator-logs/script-app-node-restart-repro
-          if-no-files-found: error
+          if-no-files-found: warn
           retention-days: 14
