@@ -116,16 +116,12 @@ Thumbs.db
 # Authorized immutable Scripting compatibility inputs are hash-verified data.
 !Reference/ScriptingCompatibility/Original/Compiler/tsconfig.json
 !Reference/ScriptingCompatibility/Original/Examples/**/tsconfig.json
-!Scripts/NativeScript/tsconfig.json
 Config.xcconfig
 Vendor/NodeMobile/NodeMobile.xcframework/
 Vendor/NodeMobile/NODE_LICENSE.generated.txt
 Vendor/Python/
 AI_HLY/Downstream/RuntimeCore/Node/Host/node_modules/
 Scripts/ScriptingCompiler/node_modules/
-Scripts/NativeScript/node_modules/
-Scripts/NativeScript/.ns-vite-build/
-Packages/HanlinNativeScriptRuntime/Artifacts/
 AI_HLY/RuntimeHostResources.zip
 
 # Logs
@@ -141,6 +137,7 @@ AI_HLY/RuntimeHostResources.zip
 
 # Archives
 *.zip
+!AI_HLYTests/Fixtures/ScriptingFixtures.bundle/PhysicalIPad/smart-eating-normalized.zip
 *.tar
 *.gz
 

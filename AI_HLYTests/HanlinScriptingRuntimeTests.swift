@@ -1,7 +1,9 @@
+import CryptoKit
 import Foundation
 import HanlinPlatformContracts
 import HanlinScriptCompiler
 import HanlinScriptContracts
+import HanlinScriptStore
 import HanlinScriptingApplicationRuntime
 import HanlinScriptingSDK
 import Testing
@@ -229,6 +231,208 @@ struct HanlinScriptingProductionCompilerAcceptanceTests {
         let preview = try authority.analyzer.analyze(bareImport)
         #expect(!preview.canInstall)
         #expect(preview.dependencyGraph.unresolvedSpecifiers == ["unsupported-package"])
+    }
+}
+
+@Suite("Script Package production installation E2E", .serialized)
+struct HanlinScriptPackageProductionE2ETests {
+    @MainActor
+    @Test("Exports, imports, approves, installs, restores, launches, and renders through production")
+    func productionPackageFlow() async throws {
+        let root = FileManager.default.temporaryDirectory.appending(
+            path: "hanlin-production-package-e2e-\(UUID().uuidString.lowercased())",
+            directoryHint: .isDirectory
+        )
+        defer { try? FileManager.default.removeItem(at: root) }
+        let source = root.appending(path: "ProductionE2E", directoryHint: .isDirectory)
+        try FileManager.default.createDirectory(at: source, withIntermediateDirectories: true)
+        try Data(#"{"name":"Production Package E2E","version":"1.0.0","entry":"index.tsx","runInApp":true}"#.utf8)
+            .write(to: source.appending(path: "script.json"), options: .atomic)
+        try Data(#"""
+        import { Navigation, Text } from "scripting"
+        Storage.set("production-e2e", "passed")
+        Navigation.present({ element: <Text>Production Package E2E Passed</Text> })
+        """#.utf8).write(to: source.appending(path: "index.tsx"), options: .atomic)
+        let archive = root.appending(path: "production-e2e.scripting", directoryHint: .notDirectory)
+        try HanlinScriptingPackageExporter().exportPackage(at: source, to: archive)
+
+        let platformRoot = root.appending(path: "Platform", directoryHint: .isDirectory)
+        let platform = HanlinScriptingPlatform(rootOverride: platformRoot)
+        await platform.importPackage(from: archive)
+        let preview = try #require(platform.preview)
+        let storage = try HanlinCapabilityID(validating: "storage")
+        #expect(preview.requestedCapabilities.map(\.capabilityID).contains(storage))
+
+        await platform.installPreview()
+        #expect(platform.activity == .failed("Approve every required capability before installing this package."))
+        platform.setCapabilityApproved(true, capability: storage)
+        await platform.installPreview()
+        #expect(platform.activity == .idle)
+        let installed = try #require(platform.installedPackages.first)
+        #expect(installed.grantedCapabilities == [storage])
+
+        await platform.launch(installed.record.installedPackageID)
+        #expect(platform.activeApplicationModel?.root.properties["text"] == .string("Production Package E2E Passed"))
+        platform.dismissActiveApplication()
+
+        // Reproduce the on-device upgrade state that caused a new, valid
+        // installation to be reported as artifactManifestMissing: an older
+        // unrelated generation is present without the current artifact contract.
+        let staleManifest = platformRoot.appending(
+            path: "Installed/packages/\(installed.record.installedPackageID.rawValue)/generations/1/artifact-manifest.json",
+            directoryHint: .notDirectory
+        )
+        try FileManager.default.removeItem(at: staleManifest)
+        let secondSource = root.appending(path: "ProductionE2ESecond", directoryHint: .isDirectory)
+        try FileManager.default.createDirectory(at: secondSource, withIntermediateDirectories: true)
+        try Data(#"{"name":"Production Package E2E Second","version":"1.0.0","entry":"index.tsx","runInApp":true}"#.utf8)
+            .write(to: secondSource.appending(path: "script.json"), options: .atomic)
+        try Data(#"""
+        import { Navigation, Text } from "scripting"
+        Storage.set("production-e2e-second", "passed")
+        Navigation.present({ element: <Text>Second Production Package Passed</Text> })
+        """#.utf8).write(to: secondSource.appending(path: "index.tsx"), options: .atomic)
+        let secondArchive = root.appending(path: "production-e2e-second.scripting", directoryHint: .notDirectory)
+        try HanlinScriptingPackageExporter().exportPackage(at: secondSource, to: secondArchive)
+        await platform.importPackage(from: secondArchive)
+        platform.setCapabilityApproved(true, capability: storage)
+        await platform.installPreview()
+        #expect(platform.activity == .idle)
+        #expect(platform.installedPackages.count == 2)
+        let second = try #require(platform.installedPackages.first {
+            $0.manifest?.name == "Production Package E2E Second"
+        })
+        await platform.launch(second.record.installedPackageID)
+        #expect(platform.activeApplicationModel?.root.properties["text"] == .string("Second Production Package Passed"))
+        platform.dismissActiveApplication()
+
+        let restored = HanlinScriptingPlatform(rootOverride: platformRoot)
+        await restored.restore()
+        #expect(restored.installedPackages.count == 2)
+        await restored.launch(second.record.installedPackageID)
+        #expect(restored.activeApplicationModel?.root.properties["text"] == .string("Second Production Package Passed"))
+        restored.dismissActiveApplication()
+    }
+}
+
+@Suite("Physical iPad Script App restart regression", .serialized)
+struct HanlinScriptPackagePhysicalIPadRegressionTests {
+    private static let fixtureSHA256 = "c8ee66e4e5e6a06a884b2a1d7b552d51691cb824f245e4cca238bc44d1509d57"
+
+    @MainActor
+    @Test("Exact external ZIP keeps its active artifact across a cold platform restoration")
+    func exactExternalArchiveColdRestoration() async throws {
+        let applicationSupport = try #require(
+            FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first
+        )
+        let evidenceRoot = applicationSupport.appending(
+            path: "HanlinScriptRestartRegression",
+            directoryHint: .isDirectory
+        )
+        let platformRoot = evidenceRoot.appending(path: "Platform", directoryHint: .isDirectory)
+        if FileManager.default.fileExists(atPath: evidenceRoot.path(percentEncoded: false)) {
+            try FileManager.default.removeItem(at: evidenceRoot)
+        }
+        try FileManager.default.createDirectory(at: evidenceRoot, withIntermediateDirectories: true)
+
+        let fixture = try physicalIPadArchiveFixture()
+        let fixtureData = try Data(contentsOf: fixture)
+        let fixtureDigest = SHA256.hash(data: fixtureData)
+            .map { String(format: "%02x", $0) }.joined()
+        #expect(fixtureDigest == Self.fixtureSHA256)
+        let providerCopy = evidenceRoot.appending(path: "provider-source.zip", directoryHint: .notDirectory)
+        try fixtureData.write(to: providerCopy, options: .atomic)
+
+        let installed = try await installPhysicalIPadFixture(
+            providerCopy: providerCopy,
+            platformRoot: platformRoot,
+            evidenceRoot: evidenceRoot
+        )
+        #expect(!FileManager.default.fileExists(atPath: providerCopy.path(percentEncoded: false)))
+
+        let generationRoot = platformRoot.appending(
+            path: "Installed/packages/\(installed.record.installedPackageID.rawValue)/generations/\(installed.record.activeGeneration)",
+            directoryHint: .isDirectory
+        )
+        let manifestURL = generationRoot.appending(path: "artifact-manifest.json", directoryHint: .notDirectory)
+        #expect(FileManager.default.fileExists(atPath: manifestURL.path(percentEncoded: false)))
+        try writePhysicalIPadEvidence(
+            checkpoint: "before-cold-restoration",
+            evidenceRoot: evidenceRoot,
+            platformRoot: platformRoot,
+            package: installed
+        )
+
+        let restored = HanlinScriptingPlatform(rootOverride: platformRoot)
+        await restored.restore()
+        let restoredPackage = try #require(restored.installedPackages.first {
+            $0.record.installedPackageID == installed.record.installedPackageID
+        })
+        #expect(restoredPackage.record.activeGeneration == installed.record.activeGeneration)
+        #expect(restoredPackage.availableGenerations.contains(installed.record.activeGeneration))
+        #expect(FileManager.default.fileExists(atPath: manifestURL.path(percentEncoded: false)))
+        await restored.launch(restoredPackage.record.installedPackageID)
+        if case let .failed(message) = restored.activity {
+            Issue.record("Cold launch failed: \(message)")
+        }
+        #expect(restored.activeApplicationModel != nil)
+        try writePhysicalIPadEvidence(
+            checkpoint: "after-cold-restoration",
+            evidenceRoot: evidenceRoot,
+            platformRoot: platformRoot,
+            package: restoredPackage
+        )
+        restored.dismissActiveApplication()
+    }
+
+    @MainActor
+    private func installPhysicalIPadFixture(
+        providerCopy: URL,
+        platformRoot: URL,
+        evidenceRoot: URL
+    ) async throws -> HanlinStoredPackageSnapshot {
+        let platform = HanlinScriptingPlatform(rootOverride: platformRoot)
+        await platform.importPackage(from: providerCopy)
+        let preview = try #require(platform.preview)
+        #expect(preview.source.contentSHA256 == Self.fixtureSHA256)
+        #expect(preview.entrypoints.map(\.runtimeProfile).allSatisfy { $0 == .scriptingJSC })
+
+        // The installed app must no longer depend on the Files/File Provider URL.
+        try FileManager.default.removeItem(at: providerCopy)
+        for capability in preview.requestedCapabilities.map(\.capabilityID) {
+            platform.setCapabilityApproved(true, capability: capability)
+        }
+        await platform.installPreview()
+        if case let .failed(message) = platform.activity {
+            let filesystem = physicalIPadFilesystemSnapshot(at: platformRoot)
+            try Data(message.utf8).write(
+                to: evidenceRoot.appending(path: "install-error.txt"),
+                options: .atomic
+            )
+            try Data(filesystem.utf8).write(
+                to: evidenceRoot.appending(path: "install-filesystem.txt"),
+                options: .atomic
+            )
+            Issue.record("Exact physical-iPad fixture failed installation: \(message); filesystem=\(filesystem)")
+        }
+        #expect(platform.activity == .idle)
+        let installed = try #require(platform.installedPackages.first)
+        await platform.launch(installed.record.installedPackageID)
+        if case let .failed(message) = platform.activity {
+            try Data(message.utf8).write(
+                to: evidenceRoot.appending(path: "first-launch-error.txt"),
+                options: .atomic
+            )
+            Issue.record("Exact physical-iPad fixture failed first launch: \(message)")
+        }
+        try writePhysicalIPadEvidence(
+            checkpoint: "after-install-and-first-launch",
+            evidenceRoot: evidenceRoot,
+            platformRoot: platformRoot,
+            package: installed
+        )
+        platform.dismissActiveApplication()
+        return installed
     }
 }
 
@@ -920,12 +1124,12 @@ private func bundledFixtureDirectory(_ name: String) throws -> URL {
         bundle.url(forResource: "ScriptingFixtures", withExtension: "bundle")
     ].compactMap { $0 }
     guard let root = roots.first(where: {
-        FileManager.default.fileExists(atPath: $0.path())
+        FileManager.default.fileExists(atPath: $0.path(percentEncoded: false))
     }) else {
         throw HanlinScriptingError.unavailableProvider("fixture_bundle_missing")
     }
     let directory = root.appending(path: name, directoryHint: .isDirectory)
-    guard FileManager.default.fileExists(atPath: directory.path()) else {
+    guard FileManager.default.fileExists(atPath: directory.path(percentEncoded: false)) else {
         throw HanlinScriptingError.unavailableProvider("fixture_missing_\(name)")
     }
     return directory
@@ -1049,7 +1253,7 @@ private func productionCompilerFixture(named name: String) throws -> URL {
         path: name,
         directoryHint: .isDirectory
     )
-    guard FileManager.default.fileExists(atPath: fixture.path()) else {
+    guard FileManager.default.fileExists(atPath: fixture.path(percentEncoded: false)) else {
         throw HanlinScriptingError.unavailableProvider("production_fixture_missing_\(name)")
     }
     return fixture
@@ -1102,4 +1306,135 @@ private func stagedProductionCompilerFixture(_ source: URL) throws -> HanlinStag
         try? FileManager.default.removeItem(at: stagingRoot)
         throw error
     }
+}
+
+private func physicalIPadArchiveFixture() throws -> URL {
+    let fixture = try bundledFixtureDirectory("PhysicalIPad").appending(
+        path: "smart-eating-normalized.zip",
+        directoryHint: .notDirectory
+    )
+    guard FileManager.default.fileExists(atPath: fixture.path(percentEncoded: false)) else {
+        throw HanlinScriptingError.unavailableProvider("physical_ipad_archive_missing")
+    }
+    return fixture
+}
+
+private func physicalIPadFilesystemSnapshot(at root: URL) -> String {
+    guard let enumerator = FileManager.default.enumerator(
+        at: root,
+        includingPropertiesForKeys: nil,
+        options: [.skipsHiddenFiles]
+    ) else { return "<unreadable>" }
+    let prefix = root.path(percentEncoded: false) + "/"
+    let entries = enumerator.compactMap { $0 as? URL }.prefix(256).map {
+        $0.path(percentEncoded: false).replacingOccurrences(of: prefix, with: "")
+    }
+    return entries.sorted().joined(separator: ",")
+}
+
+private struct PhysicalIPadArtifactPaths: Codable {
+    let checkpoint: String
+    let packageID: String
+    let runtimeKinds: [String]
+    let activeGeneration: UInt64
+    let availableGenerations: [UInt64]
+    let platformRoot: String
+    let standardizedPlatformRoot: String
+    let symlinkResolvedPlatformRoot: String
+    let installRoot: String
+    let packageRoot: String
+    let artifactRoot: String
+    let artifactManifestURL: String
+    let artifactManifestExists: Bool
+    let artifactManifestParentExists: Bool
+    let entrypoints: [String]
+    let importStagingEntries: [String]
+    let storeStagingEntries: [String]
+}
+
+private func writePhysicalIPadEvidence(
+    checkpoint: String,
+    evidenceRoot: URL,
+    platformRoot: URL,
+    package: HanlinStoredPackageSnapshot
+) throws {
+    let manager = FileManager.default
+    let installRoot = platformRoot.appending(path: "Installed", directoryHint: .isDirectory)
+    let packageRoot = installRoot.appending(
+        path: "packages/\(package.record.installedPackageID.rawValue)",
+        directoryHint: .isDirectory
+    )
+    let artifactRoot = packageRoot.appending(
+        path: "generations/\(package.record.activeGeneration)",
+        directoryHint: .isDirectory
+    )
+    let manifest = artifactRoot.appending(path: "artifact-manifest.json", directoryHint: .notDirectory)
+    let payload = PhysicalIPadArtifactPaths(
+        checkpoint: checkpoint,
+        packageID: package.record.installedPackageID.rawValue,
+        runtimeKinds: package.entrypoints.map(\.runtimeProfile.rawValue).sorted(),
+        activeGeneration: package.record.activeGeneration,
+        availableGenerations: package.availableGenerations,
+        platformRoot: platformRoot.path(percentEncoded: false),
+        standardizedPlatformRoot: platformRoot.standardizedFileURL.path(percentEncoded: false),
+        symlinkResolvedPlatformRoot: platformRoot.resolvingSymlinksInPath().path(percentEncoded: false),
+        installRoot: installRoot.path(percentEncoded: false),
+        packageRoot: packageRoot.path(percentEncoded: false),
+        artifactRoot: artifactRoot.path(percentEncoded: false),
+        artifactManifestURL: manifest.path(percentEncoded: false),
+        artifactManifestExists: manager.fileExists(atPath: manifest.path(percentEncoded: false)),
+        artifactManifestParentExists: manager.fileExists(atPath: artifactRoot.path(percentEncoded: false)),
+        entrypoints: package.entrypoints.map(\.sourcePath).sorted(),
+        importStagingEntries: try directoryNames(
+            at: platformRoot.appending(path: "ImportStaging", directoryHint: .isDirectory)
+        ),
+        storeStagingEntries: try directoryNames(
+            at: installRoot.appending(path: "staging", directoryHint: .isDirectory)
+        )
+    )
+    let encoder = JSONEncoder()
+    encoder.outputFormatting = [.prettyPrinted, .sortedKeys, .withoutEscapingSlashes]
+    try encoder.encode(payload).write(
+        to: evidenceRoot.appending(path: "artifact-paths-\(checkpoint).json"),
+        options: .atomic
+    )
+
+    let registry = installRoot.appending(path: "registry/catalog.json", directoryHint: .notDirectory)
+    if manager.fileExists(atPath: registry.path(percentEncoded: false)) {
+        try manager.copyItem(
+            at: registry,
+            to: evidenceRoot.appending(path: "registry-\(checkpoint).json")
+        )
+    }
+    let tree = try filesystemTree(root: platformRoot)
+    try Data(tree.utf8).write(
+        to: evidenceRoot.appending(path: "filesystem-\(checkpoint).txt"),
+        options: .atomic
+    )
+}
+
+private func directoryNames(at directory: URL) throws -> [String] {
+    guard FileManager.default.fileExists(atPath: directory.path(percentEncoded: false)) else { return [] }
+    return try FileManager.default.contentsOfDirectory(
+        at: directory,
+        includingPropertiesForKeys: nil,
+        options: [.skipsHiddenFiles]
+    ).map(\.lastPathComponent).sorted()
+}
+
+private func filesystemTree(root: URL) throws -> String {
+    guard let enumerator = FileManager.default.enumerator(
+        at: root,
+        includingPropertiesForKeys: [.isDirectoryKey, .fileSizeKey, .isSymbolicLinkKey],
+        options: [.skipsHiddenFiles]
+    ) else { return "<unreadable>\n" }
+    let rootPath = root.path(percentEncoded: false)
+    let records = try enumerator.compactMap { item -> String? in
+        guard let url = item as? URL else { return nil }
+        let values = try url.resourceValues(forKeys: [.isDirectoryKey, .fileSizeKey, .isSymbolicLinkKey])
+        let relative = String(url.path(percentEncoded: false).dropFirst(rootPath.count + 1))
+        let kind = values.isSymbolicLink == true ? "symlink" : (values.isDirectory == true ? "directory" : "file")
+        return "\(kind)\t\(values.fileSize ?? 0)\t\(relative)"
+    }
+    return records.sorted().joined(separator: "\n") + "\n"
 }

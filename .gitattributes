@@ -6,3 +6,6 @@ Reference/ScriptingCompatibility/** -text -whitespace
 # across platforms so checkout cannot diverge from SHA256SUMS.json.
 Packages/HanlinQuickJS/LICENSE -text
 Packages/HanlinQuickJS/Sources/CQuickJS/** -text
+
+# Preserve the exact physical-iPad regression archive byte-for-byte.
+AI_HLYTests/Fixtures/ScriptingFixtures.bundle/PhysicalIPad/smart-eating-normalized.zip binary
