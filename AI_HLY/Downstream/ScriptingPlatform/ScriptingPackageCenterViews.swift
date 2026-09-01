@@ -33,7 +33,11 @@ struct ScriptingPackageImportView: View {
                 Section {
                     Button("Install") { Task { await platform.installPreview() } }
                         .accessibilityIdentifier("hanlin-package-install")
-                        .disabled(!preview.canInstall || platform.activity == .installing)
+                        .disabled(
+                            !preview.canInstall
+                                || !platform.capabilityApprovals.hasApprovedEveryRequiredCapability
+                                || platform.activity == .installing
+                        )
                     Button("Discard", role: .destructive) { platform.discardPreview() }
                 }
             }
@@ -110,6 +114,12 @@ private struct ScriptingImportPreviewSections: View {
                 Text("Required capabilities must be approved explicitly. They remain package-scoped and can be revoked from package details.")
                     .font(.caption)
                     .foregroundStyle(.secondary)
+                if !platform.capabilityApprovals.missingRequiredCapabilities.isEmpty {
+                    Text("Still required: " + platform.capabilityApprovals.missingRequiredCapabilities
+                        .map(\.rawValue).joined(separator: ", "))
+                        .font(.caption)
+                        .foregroundStyle(.orange)
+                }
             }
         }
         if !preview.findings.isEmpty {
