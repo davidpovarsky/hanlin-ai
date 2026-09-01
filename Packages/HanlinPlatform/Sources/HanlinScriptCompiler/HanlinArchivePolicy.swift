@@ -280,7 +280,7 @@ public struct HanlinArchivePolicy: Sendable {
 
     private static func isAllowedFile(_ path: String) -> Bool {
         let allowed: Set<String> = [
-            "ts", "tsx", "js", "jsx", "json", "md", "txt", "strings",
+            "ts", "tsx", "js", "jsx", "mjs", "json", "md", "txt", "strings",
             "css", "html", "svg", "png", "jpg", "jpeg", "gif", "webp",
             "heic", "pdf", "plist", "m4a", "mp3", "wav", "mp4", "mov"
         ]
