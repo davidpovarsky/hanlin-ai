@@ -10,6 +10,7 @@ final class HanlinNativeScriptProductionE2ETests: XCTestCase {
         continueAfterFailure = false
         app.launchArguments += ["-AppleLanguages", "(en)", "-AppleLocale", "en_US"]
         app.launchEnvironment["HANLIN_UNIT_TEST_HOST"] = "0"
+        app.launchEnvironment["HANLIN_NATIVESCRIPT_E2E"] = "1"
         app.launch()
     }
 
@@ -44,6 +45,9 @@ final class HanlinNativeScriptProductionE2ETests: XCTestCase {
     }
 
     private func openApps() {
+        if app.buttons["hanlin-apps-add"].waitForExistence(timeout: 5) {
+            return
+        }
         let identifiedTab = app.tabBars.buttons["hanlin-apps-tab"]
         if identifiedTab.waitForExistence(timeout: 5) {
             identifiedTab.tap()
