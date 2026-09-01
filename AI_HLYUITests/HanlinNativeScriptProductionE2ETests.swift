@@ -45,7 +45,7 @@ final class HanlinNativeScriptProductionE2ETests: XCTestCase {
     }
 
     private func openApps() {
-        if app.buttons["hanlin-apps-add"].waitForExistence(timeout: 5) {
+        if app.buttons["hanlin-apps-add"].waitForExistence(timeout: 20) {
             return
         }
         let identifiedTab = app.tabBars.buttons["hanlin-apps-tab"]
