@@ -23,6 +23,24 @@ struct HanlinArchivePolicyTests {
         #expect(result.manifestPath == "Fixture/script.json")
     }
 
+    @Test("Accepts prepared NativeScript ESM bundle artifacts")
+    func nativeScriptMJSBundle() {
+        let entries = [
+            entry("script.json"),
+            entry("nativescript/app/package.json"),
+            entry("nativescript/app/bundle.mjs"),
+            entry("nativescript/app/vendor.mjs"),
+            entry("nativescript/app/rolldown-runtime.mjs")
+        ]
+        let result = HanlinArchivePolicy().inspect(
+            entries: entries,
+            centralDirectoryEntryCount: entries.count,
+            archiveBytes: 500
+        )
+        #expect(result.isInstallable)
+        #expect(!result.findings.contains { $0.code == .unsupportedFileType })
+    }
+
     @Test(arguments: [
         "../script.json",
         "/script.json",
