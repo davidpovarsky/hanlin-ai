@@ -58,6 +58,33 @@ struct HanlinPackageCenterTests {
         #expect(!FileManager.default.fileExists(atPath: package.stagingRoot.path(percentEncoded: false)))
     }
 
+    @Test("Imports prepared NativeScript packages containing ESM bundles")
+    func nativeScriptPackageWithMJS() throws {
+        let root = try temporaryDirectory()
+        defer { try? FileManager.default.removeItem(at: root) }
+        let archiveURL = root.appending(path: "nativescript.scripting", directoryHint: .notDirectory)
+        try makeArchive(
+            at: archiveURL,
+            files: [
+                "script.json": Data(#"{"name":"NativeScript Fixture","version":"1.0.0","entry":"nativescript/app/bundle.mjs","hanlinRuntime":"hanlin-nativescript"}"#.utf8),
+                "nativescript/app/package.json": Data(#"{"name":"fixture","version":"1.0.0","main":"bundle.mjs","hanlinRuntime":"hanlin-nativescript"}"#.utf8),
+                "nativescript/app/bundle.mjs": Data("console.log('native')".utf8),
+                "nativescript/app/vendor.mjs": Data("export const value = 1".utf8),
+                "nativescript/app/rolldown-runtime.mjs": Data("export const runtime = true".utf8)
+            ]
+        )
+
+        let package = try HanlinPackageCenter().stageAndInspect(
+            sourceURL: archiveURL,
+            stagingParent: root
+        )
+        #expect(package.inspection.isInstallable)
+        #expect(package.manifest.entry == "nativescript/app/bundle.mjs")
+        #expect(FileManager.default.fileExists(
+            atPath: package.packageRoot.appending(path: "nativescript/app/bundle.mjs").path(percentEncoded: false)
+        ))
+    }
+
     @Test("Imports archives from File Provider paths containing spaces")
     func fileProviderPathWithSpaces() throws {
         let root = try temporaryDirectory()
