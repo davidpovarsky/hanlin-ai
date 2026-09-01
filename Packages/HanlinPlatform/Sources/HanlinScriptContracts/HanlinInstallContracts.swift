@@ -64,6 +64,52 @@ public struct HanlinCapabilityRequest: Codable, Hashable, Sendable {
     }
 }
 
+public struct HanlinCapabilityApprovalState: Codable, Hashable, Sendable {
+    public let requests: [HanlinCapabilityRequest]
+    public private(set) var approvedCapabilities: Set<HanlinCapabilityID>
+
+    public init(
+        requests: [HanlinCapabilityRequest],
+        approvedCapabilities: Set<HanlinCapabilityID> = []
+    ) {
+        var normalized: [HanlinCapabilityID: HanlinCapabilityRequest] = [:]
+        for request in requests {
+            if let current = normalized[request.capabilityID], current.required, !request.required {
+                continue
+            }
+            normalized[request.capabilityID] = request
+        }
+        self.requests = normalized.values.sorted {
+            $0.capabilityID.rawValue < $1.capabilityID.rawValue
+        }
+        let requested = Set(normalized.keys)
+        self.approvedCapabilities = approvedCapabilities.intersection(requested)
+    }
+
+    public var requiredCapabilities: Set<HanlinCapabilityID> {
+        Set(requests.filter(\.required).map(\.capabilityID))
+    }
+
+    public var missingRequiredCapabilities: [HanlinCapabilityID] {
+        requiredCapabilities.subtracting(approvedCapabilities).sorted {
+            $0.rawValue < $1.rawValue
+        }
+    }
+
+    public var hasApprovedEveryRequiredCapability: Bool {
+        missingRequiredCapabilities.isEmpty
+    }
+
+    public mutating func setApproved(_ approved: Bool, capability: HanlinCapabilityID) {
+        guard requests.contains(where: { $0.capabilityID == capability }) else { return }
+        if approved {
+            approvedCapabilities.insert(capability)
+        } else {
+            approvedCapabilities.remove(capability)
+        }
+    }
+}
+
 public struct HanlinPackageEntrypointDescriptor: Codable, Hashable, Sendable {
     public let id: String
     public let kind: HanlinPackageEntrypointKind

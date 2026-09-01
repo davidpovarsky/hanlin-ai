@@ -5,6 +5,32 @@ import ZIPFoundation
 
 @Suite("Scripting Package Center")
 struct HanlinPackageCenterTests {
+    @Test("Production exporter round trips through production archive import")
+    func exporterImporterContract() throws {
+        let root = try temporaryDirectory()
+        defer { try? FileManager.default.removeItem(at: root) }
+        let source = root.appending(path: "Export Fixture", directoryHint: .isDirectory)
+        try FileManager.default.createDirectory(at: source, withIntermediateDirectories: false)
+        try Data(#"{"name":"Export Fixture","version":"1.0.0","entry":"index.tsx"}"#.utf8)
+            .write(to: source.appending(path: "script.json"), options: .atomic)
+        try Data("export default null".utf8)
+            .write(to: source.appending(path: "index.tsx"), options: .atomic)
+        let archive = root.appending(path: "export-fixture.scripting", directoryHint: .notDirectory)
+
+        try HanlinScriptingPackageExporter().exportPackage(at: source, to: archive)
+        let imported = try HanlinPackageCenter().stageAndInspect(
+            sourceURL: archive,
+            stagingParent: root
+        )
+
+        #expect(imported.inspection.wrapperDirectory == "Export Fixture")
+        #expect(imported.manifest.name == "Export Fixture")
+        #expect(try String(
+            contentsOf: imported.packageRoot.appending(path: "index.tsx"),
+            encoding: .utf8
+        ) == "export default null")
+    }
+
     @Test("Stages, validates, extracts, and decodes without executing source")
     func validPackage() throws {
         let root = try temporaryDirectory()

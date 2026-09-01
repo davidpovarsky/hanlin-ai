@@ -149,6 +149,96 @@ struct HanlinAtomicScriptStoreTests {
         #expect(try await store.snapshots().isEmpty)
     }
 
+    @Test("Missing artifact manifest fails deterministically before catalog mutation")
+    func missingArtifactManifest() async throws {
+        let fixture = try Fixture()
+        defer { fixture.remove() }
+        try FileManager.default.removeItem(
+            at: fixture.first.url.appending(path: "artifact-manifest.json")
+        )
+        let store = try HanlinAtomicScriptStore(root: fixture.storeRoot)
+        await #expect(throws: HanlinAtomicScriptStoreError.artifactManifestMissing) {
+            try await store.install(
+                plan: fixture.plan(version: "1.0.0", sourceDigest: fixture.first.manifest.packageContentDigest),
+                artifactDirectory: fixture.first.url,
+                artifactManifest: fixture.first.manifest
+            )
+        }
+        #expect(try await store.snapshots().isEmpty)
+    }
+
+    @Test("Cold restoration through a symlinked root preserves the active manifest while pruning staging")
+    func activeGenerationSurvivesCanonicalRootAndStagingCleanup() async throws {
+        let fixture = try Fixture()
+        defer { fixture.remove() }
+        let store = try HanlinAtomicScriptStore(root: fixture.storeRoot)
+        _ = try await store.install(
+            plan: fixture.plan(version: "1.0.0", sourceDigest: fixture.first.manifest.packageContentDigest),
+            artifactDirectory: fixture.first.url,
+            artifactManifest: fixture.first.manifest
+        )
+        let activeManifest = fixture.storeRoot.appending(
+            path: "packages/\(fixture.installedID.rawValue)/generations/1/artifact-manifest.json",
+            directoryHint: .notDirectory
+        )
+        #expect(FileManager.default.fileExists(atPath: activeManifest.path(percentEncoded: false)))
+
+        let abandonedStaging = fixture.storeRoot.appending(
+            path: "staging/abandoned-unreferenced-artifact",
+            directoryHint: .isDirectory
+        )
+        try FileManager.default.createDirectory(at: abandonedStaging, withIntermediateDirectories: true)
+        let rootAlias = fixture.root.appending(path: "store-alias", directoryHint: .isDirectory)
+        try FileManager.default.createSymbolicLink(at: rootAlias, withDestinationURL: fixture.storeRoot)
+
+        let coldStore = try HanlinAtomicScriptStore(root: rootAlias)
+        let restored = try await coldStore.restore()
+        let resolvedActive = try await coldStore.activeArtifactURL(for: fixture.installedID)
+        #expect(restored.map(\.record.activeGeneration) == [1])
+        #expect(restored[0].availableGenerations == [1])
+        #expect(resolvedActive.resolvingSymlinksInPath() == activeManifest.deletingLastPathComponent().resolvingSymlinksInPath())
+        #expect(FileManager.default.fileExists(
+            atPath: resolvedActive.appending(path: "artifact-manifest.json").path(percentEncoded: false)
+        ))
+        #expect(!FileManager.default.fileExists(atPath: abandonedStaging.path(percentEncoded: false)))
+    }
+
+    @Test("Required capabilities are rejected until the production grant representation approves them")
+    func requiredCapabilityGate() async throws {
+        let fixture = try Fixture()
+        defer { fixture.remove() }
+        let capability = try HanlinCapabilityID(validating: "network")
+        let request = HanlinCapabilityRequest(
+            capabilityID: capability,
+            required: true,
+            purpose: "Network fixture"
+        )
+        let store = try HanlinAtomicScriptStore(root: fixture.storeRoot)
+        await #expect(throws: HanlinAtomicScriptStoreError.requiredCapabilitiesNotGranted([capability])) {
+            try await store.install(
+                plan: fixture.plan(
+                    version: "1.0.0",
+                    sourceDigest: fixture.first.manifest.packageContentDigest,
+                    requestedCapabilities: [request]
+                ),
+                artifactDirectory: fixture.first.url,
+                artifactManifest: fixture.first.manifest
+            )
+        }
+
+        _ = try await store.install(
+            plan: fixture.plan(
+                version: "1.0.0",
+                sourceDigest: fixture.first.manifest.packageContentDigest,
+                requestedCapabilities: [request],
+                grantedCapabilities: [capability]
+            ),
+            artifactDirectory: fixture.first.url,
+            artifactManifest: fixture.first.manifest
+        )
+        #expect(try await store.snapshots()[0].grantedCapabilities == [capability])
+    }
+
     @Test("Capability grants persist and revocation is package scoped")
     func capabilityGrantLifecycle() async throws {
         let fixture = try Fixture()
@@ -220,7 +310,7 @@ private struct Fixture {
 
     init() throws {
         root = FileManager.default.temporaryDirectory.appending(
-            path: "hanlin-store-tests-\(UUID().uuidString.lowercased())",
+            path: "hanlin store tests \(UUID().uuidString.lowercased())",
             directoryHint: .isDirectory
         )
         storeRoot = root.appending(path: "store", directoryHint: .isDirectory)
@@ -239,14 +329,20 @@ private struct Fixture {
         second = try Self.artifact(root: root, name: "second", source: "export default 2", packageDigest: String(repeating: "2", count: 64))
     }
 
-    func plan(version: String, sourceDigest: String) throws -> HanlinInstallPlan {
+    func plan(
+        version: String,
+        sourceDigest: String,
+        requestedCapabilities: [HanlinCapabilityRequest] = [],
+        grantedCapabilities: [HanlinCapabilityID] = []
+    ) throws -> HanlinInstallPlan {
         HanlinInstallPlan(
             installedPackageID: installedID,
             packageID: packageID,
             version: try #require(HanlinPackageVersion(rawValue: version)),
             sourceDigest: sourceDigest,
             entrypoints: [entrypoint],
-            requestedCapabilities: []
+            requestedCapabilities: requestedCapabilities,
+            grantedCapabilities: grantedCapabilities
         )
     }
 

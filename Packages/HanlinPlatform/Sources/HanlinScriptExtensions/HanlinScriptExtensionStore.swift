@@ -36,7 +36,7 @@ public struct HanlinScriptExtensionStore: Sendable {
 
     public func load() throws -> HanlinScriptExtensionSnapshot? {
         let url = snapshotURL
-        guard FileManager.default.fileExists(atPath: url.path()) else { return nil }
+        guard FileManager.default.fileExists(atPath: url.path(percentEncoded: false)) else { return nil }
         let data = try Data(contentsOf: url, options: .mappedIfSafe)
         guard data.count <= Self.maximumSnapshotBytes else {
             throw HanlinScriptExtensionStoreError.snapshotTooLarge
@@ -91,7 +91,7 @@ public struct HanlinScriptExtensionStore: Sendable {
     }
 
     public func pendingCommands(limit: Int = 64) throws -> [HanlinScriptResumeCommand] {
-        guard FileManager.default.fileExists(atPath: commandRoot.path()) else { return [] }
+        guard FileManager.default.fileExists(atPath: commandRoot.path(percentEncoded: false)) else { return [] }
         let urls = try FileManager.default.contentsOfDirectory(
             at: commandRoot,
             includingPropertiesForKeys: nil,
@@ -104,7 +104,7 @@ public struct HanlinScriptExtensionStore: Sendable {
 
     public func acknowledge(_ commandID: UUID) throws {
         let url = commandRoot.appending(path: "\(commandID.uuidString.lowercased()).json")
-        if FileManager.default.fileExists(atPath: url.path()) {
+        if FileManager.default.fileExists(atPath: url.path(percentEncoded: false)) {
             try FileManager.default.removeItem(at: url)
         }
     }

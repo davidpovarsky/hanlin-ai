@@ -1,6 +1,7 @@
 import CryptoKit
 import Foundation
 import HanlinScriptContracts
+import OSLog
 import ZIPFoundation
 
 public enum HanlinPackageCenterError: Error, Hashable, Sendable {
@@ -39,6 +40,7 @@ public struct HanlinStagedPackage: Sendable {
 }
 
 public struct HanlinPackageCenter: Sendable {
+    private static let logger = Logger(subsystem: "com.hanlin.ai", category: "ScriptPackageImport")
     public let archivePolicy: HanlinArchivePolicy
     private var fileManager: FileManager { .default }
 
@@ -137,6 +139,9 @@ public struct HanlinPackageCenter: Sendable {
             } catch {
                 throw HanlinPackageCenterError.malformedManifest
             }
+            Self.logger.info(
+                "phase=manifest-resolution root=\(packageRoot.lastPathComponent, privacy: .public) manifest=script.json format=\(format.rawValue, privacy: .public) version=\(manifest.version, privacy: .public)"
+            )
             return HanlinStagedPackage(
                 source: .init(
                     originalFileName: sourceURL.lastPathComponent,

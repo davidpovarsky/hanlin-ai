@@ -2,6 +2,7 @@ import CryptoKit
 import Foundation
 import HanlinPlatformContracts
 import HanlinScriptContracts
+import OSLog
 
 public enum HanlinInstallFaultPoint: String, Codable, CaseIterable, Sendable {
     case journalPersisted
@@ -27,6 +28,7 @@ public enum HanlinAtomicScriptStoreError: Error, Equatable, Sendable {
     case sourceAndArtifactDigestMatchRequired
     case artifactManifestMissing
     case artifactManifestMismatch(String)
+    case requiredCapabilitiesNotGranted([HanlinCapabilityID])
     case unsupportedRegistryVersion(UInt32)
     case corruptRegistry
     case invalidGeneration(UInt64)
@@ -96,6 +98,7 @@ public struct HanlinStoredPackageSnapshot: Codable, Hashable, Sendable {
 }
 
 public actor HanlinAtomicScriptStore {
+    private static let logger = Logger(subsystem: "com.hanlin.ai", category: "ScriptArtifactStore")
     private struct Registry: Codable, Sendable {
         let schemaVersion: UInt32
         var revision: UInt64
@@ -300,7 +303,7 @@ public actor HanlinAtomicScriptStore {
         try faults.check(.journalPersisted)
         let installed = packageURL(id)
         let tombstone = tombstoneURL(transactionID)
-        if fileManager.fileExists(atPath: installed.path()) {
+        if fileManager.fileExists(atPath: installed.path(percentEncoded: false)) {
             try fileManager.moveItem(at: installed, to: tombstone)
         }
         journal.phase = .uninstallMoved
@@ -332,6 +335,15 @@ public actor HanlinAtomicScriptStore {
         artifactManifest: HanlinPackageArtifactManifest,
         installedAt: Date
     ) throws -> HanlinInstalledPackageRecord {
+        let approvalState = HanlinCapabilityApprovalState(
+            requests: plan.requestedCapabilities + plan.entrypoints.flatMap(\.requiredCapabilities),
+            approvedCapabilities: Set(plan.grantedCapabilities)
+        )
+        guard approvalState.hasApprovedEveryRequiredCapability else {
+            throw HanlinAtomicScriptStoreError.requiredCapabilitiesNotGranted(
+                approvalState.missingRequiredCapabilities
+            )
+        }
         guard plan.sourceDigest == artifactManifest.packageContentDigest else {
             throw HanlinAtomicScriptStoreError.sourceAndArtifactDigestMatchRequired
         }
@@ -414,7 +426,7 @@ public actor HanlinAtomicScriptStore {
             case .uninstall:
                 let tombstone = tombstoneURL(journal.transactionID)
                 if journal.phase == .uninstallMoved, registry.packages[id.rawValue] != nil {
-                    if fileManager.fileExists(atPath: tombstone.path()) {
+                    if fileManager.fileExists(atPath: tombstone.path(percentEncoded: false)) {
                         try fileManager.moveItem(at: tombstone, to: packageURL(id))
                     }
                 } else {
@@ -433,7 +445,7 @@ public actor HanlinAtomicScriptStore {
 
     private func generations(for id: HanlinInstalledPackageID) throws -> [UInt64] {
         let directory = packageURL(id).appending(path: "generations", directoryHint: .isDirectory)
-        guard fileManager.fileExists(atPath: directory.path()) else { return [] }
+        guard fileManager.fileExists(atPath: directory.path(percentEncoded: false)) else { return [] }
         return try fileManager.contentsOfDirectory(at: directory, includingPropertiesForKeys: nil)
             .compactMap { UInt64($0.lastPathComponent) }.sorted()
     }
@@ -443,7 +455,18 @@ public actor HanlinAtomicScriptStore {
         expected: HanlinPackageArtifactManifest? = nil
     ) throws -> HanlinPackageArtifactManifest {
         let url = directory.appending(path: "artifact-manifest.json", directoryHint: .notDirectory)
-        guard fileManager.fileExists(atPath: url.path()) else {
+        guard fileManager.fileExists(atPath: url.path(percentEncoded: false)) else {
+            let discovered = (try? fileManager.contentsOfDirectory(
+                at: directory,
+                includingPropertiesForKeys: nil
+            ).map(\.lastPathComponent).sorted().prefix(32).joined(separator: ",")) ?? "unreadable"
+            let expectedPath = url.path(percentEncoded: false)
+            let parentExists = fileManager.fileExists(atPath: directory.path(percentEncoded: false))
+            let standardizedPath = url.standardizedFileURL.path(percentEncoded: false)
+            let symlinkResolvedPath = url.resolvingSymlinksInPath().path(percentEncoded: false)
+            Self.logger.error(
+                "phase=artifact-manifest-resolution expected=\(expectedPath, privacy: .public) parentExists=\(parentExists, privacy: .public) standardized=\(standardizedPath, privacy: .public) symlinkResolved=\(symlinkResolvedPath, privacy: .public) discovered=\(discovered, privacy: .public)"
+            )
             throw HanlinAtomicScriptStoreError.artifactManifestMissing
         }
         let manifest = try decoder.decode(HanlinPackageArtifactManifest.self, from: Data(contentsOf: url))
@@ -462,7 +485,7 @@ public actor HanlinAtomicScriptStore {
 
     private func persistRegistry() throws {
         let data = try encoder.encode(registry)
-        if fileManager.fileExists(atPath: registryURL.path()) {
+        if fileManager.fileExists(atPath: registryURL.path(percentEncoded: false)) {
             try? fileManager.removeItem(at: backupRegistryURL)
             try fileManager.copyItem(at: registryURL, to: backupRegistryURL)
         }
@@ -517,7 +540,7 @@ public actor HanlinAtomicScriptStore {
             )
         }
         let registryURL = root.appending(path: "registry/catalog.json")
-        if !fileManager.fileExists(atPath: registryURL.path()) {
+        if !fileManager.fileExists(atPath: registryURL.path(percentEncoded: false)) {
             let encoder = JSONEncoder()
             encoder.outputFormatting = [.sortedKeys]
             encoder.dateEncodingStrategy = .millisecondsSince1970
