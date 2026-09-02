@@ -1,5 +1,5 @@
 import { createHash } from 'node:crypto';
-import { cp, mkdir, readFile, readdir, rename, rm, writeFile } from 'node:fs/promises';
+import { chmod, cp, mkdir, readFile, readdir, rename, rm, writeFile } from 'node:fs/promises';
 import { basename, resolve } from 'node:path';
 
 const scriptRoot = resolve(import.meta.dirname);
@@ -39,6 +39,39 @@ const upstreamNativeContractBytes = await readFile(
 );
 if (sha256(upstreamNativeContractBytes) !== dependencyLock.swiftUI.upstreamNativeContract.sha256) {
   throw new Error('@nativescript/swift-ui SwiftUIProvider.swift does not match dependency-lock.json');
+}
+
+// The app's existing Xcode metadata phase runs after SwiftPM has emitted the
+// generated Objective-C interface for HanlinNativeScriptRuntime. Install a
+// downstream wrapper at the pinned NativeScript generator entry point so that
+// phase can expose the Swift interface to the upstream metadata generator while
+// retaining the full Xcode build-phase environment it requires.
+const metadataInternalRoot = resolve(iosRuntimeRoot, 'framework', 'internal');
+const metadataWrapper = await readFile(resolve(scriptRoot, 'build-step-metadata-generator-wrapper.py'), 'utf8');
+const metadataGeneratorDirectories = (await readdir(metadataInternalRoot, { withFileTypes: true }))
+  .filter((entry) => entry.isDirectory() && entry.name.startsWith('metadata-generator-'))
+  .map((entry) => entry.name)
+  .sort();
+if (metadataGeneratorDirectories.length === 0) {
+  throw new Error('No NativeScript metadata generator directory was found');
+}
+for (const directory of metadataGeneratorDirectories) {
+  const generatorRoot = resolve(metadataInternalRoot, directory, 'bin');
+  const generatorPath = resolve(generatorRoot, 'build-step-metadata-generator.py');
+  const upstreamPath = resolve(generatorRoot, 'build-step-metadata-generator-upstream.py');
+  const currentGenerator = await readFile(generatorPath, 'utf8');
+  if (currentGenerator.includes('HANLIN_METADATA_WRAPPER_V1')) {
+    try {
+      await readFile(upstreamPath, 'utf8');
+    } catch {
+      throw new Error(`Hanlin NativeScript metadata wrapper is installed without its upstream backup: ${upstreamPath}`);
+    }
+  } else {
+    await writeFile(upstreamPath, currentGenerator, 'utf8');
+    await chmod(upstreamPath, 0o755);
+  }
+  await writeFile(generatorPath, metadataWrapper, 'utf8');
+  await chmod(generatorPath, 0o755);
 }
 
 const frameworks = (await readdir(platformRoot, { withFileTypes: true }))
@@ -110,4 +143,7 @@ await writeFile(resolve(stagingRoot, 'dependency-closure.json'), `${JSON.stringi
 
 await rm(artifactsRoot, { recursive: true, force: true });
 await rename(stagingRoot, artifactsRoot);
-console.log(`Prepared NativeScript ${pinnedVersion} iOS dependency closure: ${frameworks.join(', ')}`);
+console.log(
+  `Prepared NativeScript ${pinnedVersion} iOS dependency closure: ${frameworks.join(', ')}; `
+  + `installed Swift metadata wrapper for ${metadataGeneratorDirectories.join(', ')}`
+);
