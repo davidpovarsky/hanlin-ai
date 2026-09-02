@@ -12,7 +12,8 @@
     "preflight:ios-dependencies": "node preflight-ios-dependencies.mjs"
   },
   "dependencies": {
-    "@nativescript/core": "9.1.0"
+    "@nativescript/core": "9.1.0",
+    "@nativescript/swift-ui": "4.0.2"
   },
   "devDependencies": {
     "@nativescript/ios": "9.1.0",

@@ -125,6 +125,8 @@ AI_HLY/Downstream/RuntimeCore/Node/Host/node_modules/
 Scripts/ScriptingCompiler/node_modules/
 Scripts/NativeScript/node_modules/
 Scripts/NativeScript/.ns-vite-build/
+Scripts/NativeScript/Prepared/core-fixture/
+Scripts/NativeScript/Prepared/swiftui-fixture/
 Packages/HanlinNativeScriptRuntime/Artifacts/
 AI_HLY/RuntimeHostResources.zip
 

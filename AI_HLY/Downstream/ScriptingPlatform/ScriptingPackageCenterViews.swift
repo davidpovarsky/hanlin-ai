@@ -23,7 +23,7 @@ struct ScriptingPackageImportView: View {
                     Label("Import Script Package", systemImage: "doc.badge.plus")
                 }
                 .accessibilityIdentifier("hanlin-file-importer")
-                Text("Choose a .scripting or .zip package. Hanlin copies it into private staging and performs Import Preview without executing package code.")
+                Text("Choose a .scripting, .hanlinNativeScript, or .zip package. Hanlin copies it into private staging and performs Import Preview without executing package code.")
                     .font(.footnote)
                     .foregroundStyle(.secondary)
             }

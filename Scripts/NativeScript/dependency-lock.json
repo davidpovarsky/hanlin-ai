@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "nativeScript": {
+    "coreVersion": "9.1.0",
+    "iosRuntimeVersion": "9.1.0",
+    "iosSPMRepository": "https://github.com/NativeScript/ios-spm.git",
+    "iosSPMTagRevision": "a8e26efad02d792a62d2d015f0f7a632e336b2d1"
+  },
+  "swiftUI": {
+    "package": "@nativescript/swift-ui",
+    "version": "4.0.2",
+    "registryTarball": "https://registry.npmjs.org/@nativescript/swift-ui/-/swift-ui-4.0.2.tgz",
+    "integrity": "sha512-tPmOnjCmslUpDPe6+ye2gPG+MxamuzvEwL656RFmg+HQFOcnxymmFIrp/X0vpY8nHTKi/rX9+srCN06KGZBLbw==",
+    "shasum": "68e2887fd34efd885b13ee60872a6a0e5d24dd09",
+    "tarballSHA256": "c4eabcd37bba66db5d272b7f5ee6b3d900ea49b8dc8b829deeff8dbf4060e85a",
+    "license": "Apache-2.0",
+    "runtimeFiles": {
+      "index.ios.js": "dd1c048833b06a28b53a2ea73158cd3d64823e032885f0d482e0a37922ad6b94",
+      "index.d.ts": "8f9469bfe25e2defe005af66ccdc063292ecdf24d464f296a829f33371a3d3fc",
+      "index.ios.d.ts": "074922e5419aabae15af9e48ee7f4939bb7fade6c07263d3af29f1a1b85900ed"
+    },
+    "upstreamNativeContract": {
+      "path": "platforms/ios/src/SwiftUIProvider.swift",
+      "sha256": "f6139dd1277b38abcc3b359f3ef7f49688ee492741417b9709d7bc14638e7ee2"
+    },
+    "embeddedProviderClass": "HanlinNativeScriptSwiftUIFixtureProvider"
+  }
+}

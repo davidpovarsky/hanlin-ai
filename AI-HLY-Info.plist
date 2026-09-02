@@ -71,6 +71,7 @@
 				<key>public.filename-extension</key>
 				<array>
 					<string>scripting</string>
+					<string>hanlinNativeScript</string>
 				</array>
 			</dict>
 		</dict>

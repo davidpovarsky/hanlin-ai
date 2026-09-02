@@ -4,6 +4,8 @@ import UIKit
 
 @MainActor
 public final class HanlinNativeScriptSession {
+    private static let supportedRuntimeVersion = "9.1.0"
+    private static let supportedSwiftUIVersion = "4.0.2"
     private static weak var activeSession: HanlinNativeScriptSession?
 
     public let applicationRoot: URL
@@ -29,6 +31,9 @@ public final class HanlinNativeScriptSession {
                 throw HanlinNativeScriptError.missingPreparedFile(required)
             }
         }
+        try Self.validateNativePluginRequirements(
+            packageJSONURL: root.appending(path: "package.json", directoryHint: .notDirectory)
+        )
         self.applicationRoot = root
         presenter = HanlinNativeScriptPresenter()
         containerController = presenter.containerController
@@ -51,6 +56,7 @@ public final class HanlinNativeScriptSession {
             isActive = true
 
             try host.runMainApplication()
+            print("HANLIN_NS_INITIALIZED_EXTERNAL_ROOT path=\(applicationRoot.path(percentEncoded: false))")
         } catch {
             shutdown()
             throw HanlinNativeScriptError.bootstrapFailed(error.localizedDescription)
@@ -72,6 +78,41 @@ public final class HanlinNativeScriptSession {
     deinit {
         MainActor.assumeIsolated {
             shutdown()
+        }
+    }
+
+    private static func validateNativePluginRequirements(packageJSONURL: URL) throws {
+        let data = try Data(contentsOf: packageJSONURL)
+        guard let root = try JSONSerialization.jsonObject(with: data) as? [String: Any] else {
+            throw HanlinNativeScriptError.invalidApplicationRoot("package.json is not an object")
+        }
+        guard let contractValue = root["hanlinNativeScript"] else { return }
+        guard let contract = contractValue as? [String: Any] else {
+            throw HanlinNativeScriptError.unsupportedNativePlugin("hanlinNativeScript must be an object.")
+        }
+        guard contract["runtimeVersion"] as? String == supportedRuntimeVersion else {
+            throw HanlinNativeScriptError.unsupportedNativePlugin(
+                "this build requires runtimeVersion \(supportedRuntimeVersion)."
+            )
+        }
+        guard let plugins = contract["plugins"] as? [String: Any] else {
+            throw HanlinNativeScriptError.unsupportedNativePlugin("plugins must be an object.")
+        }
+        for (name, value) in plugins.sorted(by: { $0.key < $1.key }) {
+            guard name == "@nativescript/swift-ui", value as? String == supportedSwiftUIVersion else {
+                throw HanlinNativeScriptError.unsupportedNativePlugin(
+                    "\(name) \(value as? String ?? "<invalid>") is not embedded in this Hanlin build."
+                )
+            }
+        }
+        if plugins["@nativescript/swift-ui"] != nil {
+            let providerClass: AnyClass = HanlinNativeScriptSwiftUIFixtureProvider.self
+            guard NSStringFromClass(providerClass) == "HanlinNativeScriptSwiftUIFixtureProvider",
+                  NSClassFromString("HanlinNativeScriptSwiftUIFixtureProvider") === providerClass else {
+                throw HanlinNativeScriptError.unsupportedNativePlugin(
+                    "the embedded SwiftUI provider is unavailable."
+                )
+            }
         }
     }
 }

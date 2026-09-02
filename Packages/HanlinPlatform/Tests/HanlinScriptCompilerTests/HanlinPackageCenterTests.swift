@@ -62,7 +62,7 @@ struct HanlinPackageCenterTests {
     func nativeScriptPackageWithMJS() throws {
         let root = try temporaryDirectory()
         defer { try? FileManager.default.removeItem(at: root) }
-        let archiveURL = root.appending(path: "nativescript.scripting", directoryHint: .notDirectory)
+        let archiveURL = root.appending(path: "nativescript.hanlinNativeScript", directoryHint: .notDirectory)
         try makeArchive(
             at: archiveURL,
             files: [
@@ -79,6 +79,7 @@ struct HanlinPackageCenterTests {
             stagingParent: root
         )
         #expect(package.inspection.isInstallable)
+        #expect(package.source.format == .scripting)
         #expect(package.manifest.entry == "nativescript/app/bundle.mjs")
         #expect(FileManager.default.fileExists(
             atPath: package.packageRoot.appending(path: "nativescript/app/bundle.mjs").path(percentEncoded: false)

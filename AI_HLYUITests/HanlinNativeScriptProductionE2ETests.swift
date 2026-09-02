@@ -4,7 +4,8 @@ import XCTest
 final class HanlinNativeScriptProductionE2ETests: XCTestCase {
     private let app = XCUIApplication()
     private let documents = XCUIApplication(bundleIdentifier: "com.apple.DocumentsApp")
-    private let packageName = "Hanlin NativeScript Production E2E"
+    private let swiftUIPackageName = "Hanlin NativeScript SwiftUI E2E"
+    private let corePackageName = "Hanlin NativeScript Core E2E"
 
     override func setUpWithError() throws {
         continueAfterFailure = false
@@ -14,46 +15,71 @@ final class HanlinNativeScriptProductionE2ETests: XCTestCase {
         app.launch()
     }
 
-    func testProductionImportInstallRunPersistenceAndMalformedRejection() throws {
+    func testProductionSwiftUIInteractionCoreRegressionLifecycleAndRejection() throws {
         openApps()
-        importArchive(named: "HanlinNativeScriptProduction")
+        importAndInstall(archive: "HanlinNativeScriptSwiftUI")
+        importAndInstall(archive: "HanlinNativeScriptCore")
 
-        let install = app.buttons["hanlin-package-install"]
-        XCTAssertTrue(install.waitForExistence(timeout: 30), "Import Preview did not expose Install")
-        XCTAssertTrue(waitUntil(timeout: 15) { install.isEnabled }, "NativeScript package was not installable")
-        install.tap()
-        XCTAssertTrue(waitUntil(timeout: 30) { !install.exists }, "NativeScript package installation did not finish")
-        closeImportSurfaces()
-
-        launchInstalledPackage()
+        launchInstalledPackage(named: swiftUIPackageName)
         assertNativeScriptCoreUI()
-        capture(name: "NativeScript-Core-UI")
+        assertSwiftUIAndRoundTrip()
+        capture(name: "NativeScript-SwiftUI-Interaction")
+        closeNativeScriptApp()
+
+        launchInstalledPackage(named: corePackageName)
+        assertNativeScriptCoreUI()
+        XCTAssertFalse(app.buttons["hanlin-swiftui-increment"].exists, "Plugin-free Core fixture unexpectedly rendered SwiftUI")
+        closeNativeScriptApp()
+
+        // A -> B -> A proves teardown and recreation across distinct installed roots.
+        launchInstalledPackage(named: swiftUIPackageName)
+        assertSwiftUIAndRoundTrip()
         closeNativeScriptApp()
 
         app.terminate()
         app.launch()
         openApps()
-        XCTAssertTrue(app.staticTexts[packageName].waitForExistence(timeout: 20), "Installed package did not persist after relaunch")
-        launchInstalledPackage()
-        assertNativeScriptCoreUI()
+        XCTAssertTrue(app.staticTexts[swiftUIPackageName].waitForExistence(timeout: 20))
+        XCTAssertTrue(app.staticTexts[corePackageName].waitForExistence(timeout: 20))
+        launchInstalledPackage(named: swiftUIPackageName)
+        XCTAssertTrue(app.buttons["hanlin-swiftui-increment"].waitForExistence(timeout: 30))
         closeNativeScriptApp()
 
+        importArchive(named: "HanlinNativeScriptUnsupported")
+        let unsupportedMessage = app.staticTexts[
+            "This Hanlin build supports @nativescript/swift-ui 4.0.2, but the package requires @nativescript/swift-ui 99.0.0."
+        ]
+        XCTAssertTrue(unsupportedMessage.waitForExistence(timeout: 20), "Unsupported plugin reason was not visible")
+        let disabledInstall = app.buttons["hanlin-package-install"]
+        XCTAssertTrue(disabledInstall.exists)
+        XCTAssertFalse(disabledInstall.isEnabled, "Unsupported native plugin package was installable")
+        capture(name: "Unsupported-NativeScript-Plugin-Rejected")
+        closeImportSurfaces()
+
         importArchive(named: "HanlinNativeScriptMalformed")
-        XCTAssertTrue(app.staticTexts["Import Error"].waitForExistence(timeout: 20), "Malformed package did not produce a visible import error")
-        XCTAssertFalse(app.buttons["hanlin-package-install"].exists, "Malformed package unexpectedly offered installation")
+        XCTAssertTrue(app.staticTexts["Import Error"].waitForExistence(timeout: 20))
+        XCTAssertFalse(app.buttons["hanlin-package-install"].exists)
         capture(name: "Malformed-Package-Rejected")
     }
 
+    private func importAndInstall(archive: String) {
+        importArchive(named: archive)
+        let install = app.buttons["hanlin-package-install"]
+        XCTAssertTrue(install.waitForExistence(timeout: 30), "Import Preview did not expose Install")
+        XCTAssertTrue(waitUntil(timeout: 15) { install.isEnabled }, "\(archive) was not installable")
+        install.tap()
+        XCTAssertTrue(waitUntil(timeout: 30) { !install.exists }, "\(archive) installation did not finish")
+        closeImportSurfaces()
+    }
+
     private func openApps() {
-        if app.buttons["hanlin-apps-add"].waitForExistence(timeout: 20) {
-            return
-        }
+        if app.buttons["hanlin-apps-add"].waitForExistence(timeout: 20) { return }
         let identifiedTab = app.tabBars.buttons["hanlin-apps-tab"]
         if identifiedTab.waitForExistence(timeout: 5) {
             identifiedTab.tap()
         } else {
             let appsTab = app.tabBars.buttons["Apps"]
-            XCTAssertTrue(appsTab.waitForExistence(timeout: 10), "Apps tab was unavailable")
+            XCTAssertTrue(appsTab.waitForExistence(timeout: 10))
             appsTab.tap()
         }
         XCTAssertTrue(app.buttons["hanlin-apps-add"].waitForExistence(timeout: 15))
@@ -69,7 +95,12 @@ final class HanlinNativeScriptProductionE2ETests: XCTestCase {
         importer.tap()
 
         let archive = documents.descendants(matching: .any).matching(
-            NSPredicate(format: "label == %@ OR label == %@", archiveName, "\(archiveName).scripting")
+            NSPredicate(
+                format: "label == %@ OR label == %@ OR label == %@",
+                archiveName,
+                "\(archiveName).hanlinNativeScript",
+                "\(archiveName).scripting"
+            )
         ).firstMatch
         if !archive.waitForExistence(timeout: 10) {
             let browse = documents.buttons["Browse"]
@@ -87,15 +118,29 @@ final class HanlinNativeScriptProductionE2ETests: XCTestCase {
         XCTAssertTrue(app.buttons["hanlin-apps-add"].waitForExistence(timeout: 10))
     }
 
-    private func launchInstalledPackage() {
+    private func launchInstalledPackage(named packageName: String) {
         let package = app.staticTexts[packageName]
-        XCTAssertTrue(package.waitForExistence(timeout: 15), "Installed NativeScript package card was unavailable")
+        XCTAssertTrue(package.waitForExistence(timeout: 15), "Installed package \(packageName) was unavailable")
         package.tap()
     }
 
     private func assertNativeScriptCoreUI() {
-        XCTAssertTrue(app.buttons["hanlin-nativescript-core-button"].waitForExistence(timeout: 30), "NativeScript Core Button was not rendered")
-        XCTAssertTrue(app.staticTexts["hanlin-nativescript-device-proof"].waitForExistence(timeout: 10), "Native iOS API proof label was not rendered")
+        XCTAssertTrue(app.buttons["hanlin-nativescript-core-button"].waitForExistence(timeout: 30))
+        XCTAssertTrue(app.staticTexts["hanlin-nativescript-device-proof"].waitForExistence(timeout: 10))
+    }
+
+    private func assertSwiftUIAndRoundTrip() {
+        let increment = app.buttons["hanlin-swiftui-increment"]
+        XCTAssertTrue(increment.waitForExistence(timeout: 30), "SwiftUI provider button was not rendered")
+        XCTAssertTrue(app.staticTexts["hanlin-swiftui-title"].waitForExistence(timeout: 10))
+        let count = app.staticTexts["hanlin-swiftui-count"]
+        XCTAssertTrue(count.waitForExistence(timeout: 10))
+        XCTAssertEqual(count.label, "SwiftUI count: 0")
+        increment.tap()
+        XCTAssertTrue(waitUntil(timeout: 10) { count.label == "SwiftUI count: 1" }, "SwiftUI state did not update")
+        let event = app.staticTexts["hanlin-swiftui-event-proof"]
+        XCTAssertTrue(event.waitForExistence(timeout: 10))
+        XCTAssertTrue(waitUntil(timeout: 10) { event.label == "NativeScript event count: 1" }, "SwiftUI event did not reach NativeScript")
     }
 
     private func closeNativeScriptApp() {

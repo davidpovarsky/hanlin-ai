@@ -1233,15 +1233,25 @@ jobs:
           node Scripts/NativeScript/prepare-fixture.mjs
           npm run prepare:production-package --prefix Scripts/NativeScript
           (
-            cd build/NativeScriptE2E/package
-            zip -qry ../HanlinNativeScriptProduction.scripting .
+            cd build/NativeScriptE2E/swiftui-package
+            zip -qry ../HanlinNativeScriptSwiftUI.hanlinNativeScript .
+          )
+          (
+            cd build/NativeScriptE2E/core-package
+            zip -qry ../HanlinNativeScriptCore.hanlinNativeScript .
+          )
+          (
+            cd build/NativeScriptE2E/unsupported-package
+            zip -qry ../HanlinNativeScriptUnsupported.hanlinNativeScript .
           )
           (
             cd build/NativeScriptE2E/malformed
-            zip -qry ../HanlinNativeScriptMalformed.scripting .
+            zip -qry ../HanlinNativeScriptMalformed.hanlinNativeScript .
           )
-          test -s build/NativeScriptE2E/HanlinNativeScriptProduction.scripting
-          test -s build/NativeScriptE2E/HanlinNativeScriptMalformed.scripting
+          test -s build/NativeScriptE2E/HanlinNativeScriptSwiftUI.hanlinNativeScript
+          test -s build/NativeScriptE2E/HanlinNativeScriptCore.hanlinNativeScript
+          test -s build/NativeScriptE2E/HanlinNativeScriptUnsupported.hanlinNativeScript
+          test -s build/NativeScriptE2E/HanlinNativeScriptMalformed.hanlinNativeScript
           npm run preflight:ios-dependencies --prefix Scripts/NativeScript
 
       - name: Prepare simulator logs and select stable Xcode 26
@@ -1580,12 +1590,16 @@ jobs:
             FILES_CONTAINER="$(xcrun simctl get_app_container "$SIMULATOR_UDID" com.apple.DocumentsApp data)"
             test -n "$FILES_CONTAINER"
             mkdir -p "$FILES_CONTAINER/Documents"
-            cp build/NativeScriptE2E/HanlinNativeScriptProduction.scripting "$FILES_CONTAINER/Documents/"
-            cp build/NativeScriptE2E/HanlinNativeScriptMalformed.scripting "$FILES_CONTAINER/Documents/"
+            cp build/NativeScriptE2E/HanlinNativeScriptSwiftUI.hanlinNativeScript "$FILES_CONTAINER/Documents/"
+            cp build/NativeScriptE2E/HanlinNativeScriptCore.hanlinNativeScript "$FILES_CONTAINER/Documents/"
+            cp build/NativeScriptE2E/HanlinNativeScriptUnsupported.hanlinNativeScript "$FILES_CONTAINER/Documents/"
+            cp build/NativeScriptE2E/HanlinNativeScriptMalformed.hanlinNativeScript "$FILES_CONTAINER/Documents/"
             {
               echo "files_container=$FILES_CONTAINER"
-              shasum -a 256 "$FILES_CONTAINER/Documents/HanlinNativeScriptProduction.scripting"
-              shasum -a 256 "$FILES_CONTAINER/Documents/HanlinNativeScriptMalformed.scripting"
+              shasum -a 256 "$FILES_CONTAINER/Documents/HanlinNativeScriptSwiftUI.hanlinNativeScript"
+              shasum -a 256 "$FILES_CONTAINER/Documents/HanlinNativeScriptCore.hanlinNativeScript"
+              shasum -a 256 "$FILES_CONTAINER/Documents/HanlinNativeScriptUnsupported.hanlinNativeScript"
+              shasum -a 256 "$FILES_CONTAINER/Documents/HanlinNativeScriptMalformed.hanlinNativeScript"
             } | tee "$LOG_DIR/08-nativescript-files-staging.log"
           fi
           if [ "${{ inputs.nativescript_poc_only }}" != "true" ]; then
@@ -1660,11 +1674,16 @@ jobs:
                 exit "$nativescript_e2e_status"
               fi
               grep -Fq 'HANLIN_NS_INITIALIZED_EXTERNAL_ROOT' "$LOG_DIR/08-nativescript-production.log"
+              grep -Eq 'HANLIN_NS_INITIALIZED_EXTERNAL_ROOT path=.*/Library/Application Support/' "$LOG_DIR/08-nativescript-production.log"
               grep -Fq 'HANLIN_NS_FIXTURE_STARTED' "$LOG_DIR/08-nativescript-production.log"
               grep -Fq 'HANLIN_NS_NATIVE_API_OK' "$LOG_DIR/08-nativescript-production.log"
               grep -Fq 'HANLIN_NS_SCRIPTING_ADAPTER_OK' "$LOG_DIR/08-nativescript-production.log"
               grep -Fq 'HANLIN_NS_MODULE_RESOURCE_OK' "$LOG_DIR/08-nativescript-production.log"
               grep -Fq 'HANLIN_NS_CORE_UI_READY controls=Label,Button' "$LOG_DIR/08-nativescript-production.log"
+              grep -Fq 'HANLIN_NS_SWIFTUI_MODULE_OK package=@nativescript/swift-ui version=4.0.2' "$LOG_DIR/08-nativescript-production.log"
+              grep -Fq 'HANLIN_NS_SWIFTUI_PROVIDER_READY' "$LOG_DIR/08-nativescript-production.log"
+              grep -Fq 'HANLIN_NS_SWIFTUI_DATA_OK' "$LOG_DIR/08-nativescript-production.log"
+              grep -Fq 'HANLIN_NS_SWIFTUI_EVENT_OK count=1 source=swiftui' "$LOG_DIR/08-nativescript-production.log"
               grep -Fq 'HANLIN_NS_PRODUCTION_SHUTDOWN_OK' "$LOG_DIR/08-nativescript-production.log"
             fi
           fi

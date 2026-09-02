@@ -88,6 +88,36 @@ struct HanlinScriptAnalyzerTests {
         #expect(ordinaryPreview.entrypoints.first?.runtimeProfile == .scriptingJSC)
     }
 
+    @Test("Validates the embedded NativeScript SwiftUI plugin contract without changing ordinary Scripting")
+    func nativeScriptSwiftUIContract() throws {
+        let supported = try package(files: [
+            "script.json": #"{"name":"SwiftUI Fixture","version":"1.0.0","entry":"nativescript/app/bundle.mjs","hanlinRuntime":"hanlin-nativescript"}"#,
+            "nativescript/app/bundle.mjs": "console.log('swiftui')",
+            "nativescript/app/package.json": #"{"name":"fixture","main":"bundle.mjs","hanlinRuntime":"hanlin-nativescript","hanlinNativeScript":{"runtimeVersion":"9.1.0","plugins":{"@nativescript/swift-ui":"4.0.2"}}}"#
+        ])
+        defer { try? FileManager.default.removeItem(at: supported.stagingRoot) }
+        let analyzer = HanlinScriptAnalyzer(inventory: .init(
+            baselineID: "fixture",
+            baselineDigest: String(repeating: "a", count: 64),
+            symbols: []
+        ))
+        let supportedPreview = try analyzer.analyze(supported)
+        #expect(supportedPreview.canInstall)
+        #expect(supportedPreview.findings.contains { $0.message.contains("embedded native provider support") })
+
+        let unsupported = try package(files: [
+            "script.json": #"{"name":"Unsupported Fixture","version":"1.0.0","entry":"nativescript/app/bundle.mjs","hanlinRuntime":"hanlin-nativescript"}"#,
+            "nativescript/app/bundle.mjs": "console.log('unsupported')",
+            "nativescript/app/package.json": #"{"name":"fixture","main":"bundle.mjs","hanlinRuntime":"hanlin-nativescript","hanlinNativeScript":{"runtimeVersion":"9.1.0","plugins":{"@nativescript/swift-ui":"99.0.0"}}}"#
+        ])
+        defer { try? FileManager.default.removeItem(at: unsupported.stagingRoot) }
+        let unsupportedPreview = try analyzer.analyze(unsupported)
+        #expect(!unsupportedPreview.canInstall)
+        #expect(unsupportedPreview.findings.contains {
+            $0.message == "This Hanlin build supports @nativescript/swift-ui 4.0.2, but the package requires @nativescript/swift-ui 99.0.0."
+        })
+    }
+
     @Test("Detects capability-bearing ambient Scripting globals")
     func ambientGlobals() throws {
         let fixture = try package(files: [

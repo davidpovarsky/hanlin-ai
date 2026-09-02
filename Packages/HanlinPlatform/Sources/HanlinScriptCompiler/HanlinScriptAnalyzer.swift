@@ -45,6 +45,8 @@ public struct HanlinCompatibilityInventory: Codable, Hashable, Sendable {
 }
 
 public struct HanlinScriptAnalyzer: Sendable {
+    private static let nativeScriptRuntimeVersion = "9.1.0"
+    private static let nativeScriptSwiftUIVersion = "4.0.2"
     private let inventory: HanlinCompatibilityInventory
     private let symbols: [String: HanlinAPISymbolRecord]
     private var fileManager: FileManager { .default }
@@ -250,6 +252,57 @@ public struct HanlinScriptAnalyzer: Sendable {
                 message: "NativeScript requires a prepared app package.json with matching main and hanlinRuntime fields."
             ))
             return
+        }
+        if let contractValue = packageJSON["hanlinNativeScript"] {
+            guard let contract = contractValue as? [String: Any],
+                  let runtimeVersion = contract["runtimeVersion"] as? String,
+                  let plugins = contract["plugins"] as? [String: Any] else {
+                findings.append(.init(
+                    state: .unsupported,
+                    severity: .error,
+                    sourcePath: packageJSONPath,
+                    message: "NativeScript hanlinNativeScript must declare string runtimeVersion and object plugins fields."
+                ))
+                return
+            }
+            guard runtimeVersion == nativeScriptRuntimeVersion else {
+                findings.append(.init(
+                    state: .unsupported,
+                    severity: .error,
+                    sourcePath: packageJSONPath,
+                    message: "This Hanlin build supports NativeScript \(nativeScriptRuntimeVersion), but the package requires \(runtimeVersion)."
+                ))
+                return
+            }
+            for (name, value) in plugins.sorted(by: { $0.key < $1.key }) {
+                guard let version = value as? String else {
+                    findings.append(.init(
+                        state: .unsupported,
+                        severity: .error,
+                        sourcePath: packageJSONPath,
+                        message: "NativeScript plugin \(name) must declare a string version."
+                    ))
+                    continue
+                }
+                if name != "@nativescript/swift-ui" || version != nativeScriptSwiftUIVersion {
+                    let supported = name == "@nativescript/swift-ui"
+                        ? "\(name) \(nativeScriptSwiftUIVersion)"
+                        : "only @nativescript/swift-ui \(nativeScriptSwiftUIVersion)"
+                    findings.append(.init(
+                        state: .unsupported,
+                        severity: .error,
+                        sourcePath: packageJSONPath,
+                        message: "This Hanlin build supports \(supported), but the package requires \(name) \(version)."
+                    ))
+                } else {
+                    findings.append(.init(
+                        state: .supported,
+                        severity: .information,
+                        sourcePath: packageJSONPath,
+                        message: "NativeScript plugin @nativescript/swift-ui \(nativeScriptSwiftUIVersion) has embedded native provider support."
+                    ))
+                }
+            }
         }
         findings.append(.init(
             state: .supported,
