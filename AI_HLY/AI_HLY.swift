@@ -94,6 +94,7 @@ struct MyApp: App {
             MainTabView(deepLinkTarget: $deepLinkTarget)
                 .modelContainer(appDataManager.modelContainer)
                 .task {
+                    HanlinNativeScriptProductionBootstrap.prepareEmbeddedProviders()
                     appDataManager.preloadDataIfNeeded()
                     await RuntimeLifecycleBridge.prepareApplication()
                     await RuntimeLifecycleBridge.handleScenePhase(scenePhase)
@@ -124,4 +125,3 @@ struct MyApp: App {
     }
 }
 #endif
-
