@@ -96,10 +96,13 @@ if (appIndex >= 0) {
       throw new Error('Unable to resolve the built application executable');
     }
     const executable = resolve(appRoot, plist.stdout.trim());
-    const appSymbols = spawnSync('/usr/bin/nm', ['-gU', executable], { encoding: 'utf8' });
-    if (appSymbols.status !== 0
-        || !appSymbols.stdout.includes('_OBJC_CLASS_$_HanlinNativeScriptSwiftUIFixtureProvider')) {
-      throw new Error('The built app does not export the embedded NativeScript SwiftUI provider');
+    // Release app binaries are stripped. Inspect the Objective-C runtime class
+    // metadata instead of requiring a class symbol to survive in the exported
+    // symbol table; this matches the NSClassFromString contract used at runtime.
+    const objcRuntime = spawnSync('/usr/bin/otool', ['-ov', executable], { encoding: 'utf8' });
+    if (objcRuntime.status !== 0
+        || !objcRuntime.stdout.includes('HanlinNativeScriptSwiftUIFixtureProvider')) {
+      throw new Error('The built app does not register the embedded NativeScript SwiftUI provider class');
     }
     const loadCommands = spawnSync('/usr/bin/otool', ['-l', executable], { encoding: 'utf8' });
     if (loadCommands.status !== 0 || !loadCommands.stdout.includes('__TNSMetadata')) {
