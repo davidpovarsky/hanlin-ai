@@ -161,6 +161,50 @@ class XcodeCacheInputsTests(unittest.TestCase):
 
             self.assertEqual(xcode_cache_inputs.restore(repository, manifest), 0)
 
+    def test_package_source_addition_invalidates_directory_digest(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            repository = Path(directory)
+            package_dir = (
+                repository
+                / "Packages"
+                / "HanlinNativeScriptRuntime"
+                / "Sources"
+                / "HanlinNativeScriptRuntime"
+            )
+            package_dir.mkdir(parents=True)
+            existing_source = package_dir / "Existing.swift"
+            existing_source.write_text("let existing = true\n", encoding="utf-8")
+            manifest = repository / "manifest.json"
+
+            xcode_cache_inputs.capture(
+                repository,
+                manifest,
+                ["Packages"],
+                set(),
+                "base_commit",
+                ["."],
+            )
+            payload = json.loads(manifest.read_text(encoding="utf-8"))
+            dir_record = next(
+                r
+                for r in payload["directories"]
+                if r["path"]
+                == "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime"
+            )
+            initial_digest = dir_record["entriesSha256"]
+
+            # Adding a new Swift file changes the directory entries digest
+            new_source = package_dir / "HanlinNativeScriptSwiftUIFixtureProvider.swift"
+            new_source.write_text("let fixture = true\n", encoding="utf-8")
+
+            new_digest = xcode_cache_inputs.directory_digest(package_dir)
+            self.assertNotEqual(initial_digest, new_digest)
+
+            # restore will detect that the directory changed and will NOT restore its mtime
+            original_dir_mtime = package_dir.stat().st_mtime_ns
+            xcode_cache_inputs.restore(repository, manifest)
+            self.assertEqual(package_dir.stat().st_mtime_ns, original_dir_mtime)
+
 
 if __name__ == "__main__":
     unittest.main()

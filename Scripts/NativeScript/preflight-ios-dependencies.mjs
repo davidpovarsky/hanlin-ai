@@ -96,16 +96,30 @@ if (appIndex >= 0) {
       throw new Error('Unable to resolve the built application executable');
     }
     const executable = resolve(appRoot, plist.stdout.trim());
-    const appSymbols = spawnSync('/usr/bin/nm', ['-gU', executable], { encoding: 'utf8' });
-    if (appSymbols.status !== 0
-        || !appSymbols.stdout.includes('_OBJC_CLASS_$_HanlinNativeScriptSwiftUIFixtureProvider')) {
-      throw new Error('The built app does not export the embedded NativeScript SwiftUI provider');
+    // Release app binaries are stripped. Validate that the provider class is
+    // registered in the Mach-O Objective-C runtime class metadata rather than
+    // requiring an exported symbol table entry; this directly matches the
+    // NSClassFromString / objc_lookUpClass contract used by NativeScript at runtime.
+    const objcRuntime = spawnSync('/usr/bin/otool', ['-ov', executable], {
+      encoding: 'utf8',
+      maxBuffer: 64 * 1024 * 1024
+    });
+    if (objcRuntime.status !== 0
+        || !objcRuntime.stdout.includes('HanlinNativeScriptSwiftUIFixtureProvider')) {
+      const detail = objcRuntime.error ? ` (${objcRuntime.error.message})` : '';
+      throw new Error(`The built app does not register the embedded NativeScript SwiftUI provider class${detail}`);
     }
-    const loadCommands = spawnSync('/usr/bin/otool', ['-l', executable], { encoding: 'utf8' });
+    const loadCommands = spawnSync('/usr/bin/otool', ['-l', executable], {
+      encoding: 'utf8',
+      maxBuffer: 64 * 1024 * 1024
+    });
     if (loadCommands.status !== 0 || !loadCommands.stdout.includes('__TNSMetadata')) {
       throw new Error('The built app does not contain the NativeScript metadata section');
     }
-    const strings = spawnSync('/usr/bin/strings', [executable], { encoding: 'utf8' });
+    const strings = spawnSync('/usr/bin/strings', [executable], {
+      encoding: 'utf8',
+      maxBuffer: 64 * 1024 * 1024
+    });
     if (strings.status !== 0
         || !strings.stdout.includes('HanlinNativeScriptSwiftUIFixtureProvider')) {
       throw new Error('NativeScript SwiftUI provider metadata name is absent from the app closure');
