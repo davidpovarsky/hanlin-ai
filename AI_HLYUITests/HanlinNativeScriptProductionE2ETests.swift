@@ -74,15 +74,31 @@ final class HanlinNativeScriptProductionE2ETests: XCTestCase {
 
     private func openApps() {
         if app.buttons["hanlin-apps-add"].waitForExistence(timeout: 20) { return }
-        let identifiedTab = app.tabBars.buttons["hanlin-apps-tab"]
-        if identifiedTab.waitForExistence(timeout: 5) {
-            identifiedTab.tap()
-        } else {
-            let appsTab = app.tabBars.buttons["Apps"]
-            XCTAssertTrue(appsTab.waitForExistence(timeout: 10))
-            appsTab.tap()
+        let candidates = [
+            app.buttons["hanlin-apps-tab"],
+            app.tabBars.buttons["hanlin-apps-tab"],
+            app.tabs["hanlin-apps-tab"],
+            app.buttons["Apps"],
+            app.tabBars.buttons["Apps"],
+            app.tabs["Apps"]
+        ]
+        var tapped = false
+        for candidate in candidates {
+            if candidate.waitForExistence(timeout: 2) {
+                candidate.tap()
+                tapped = true
+                break
+            }
         }
-        XCTAssertTrue(app.buttons["hanlin-apps-add"].waitForExistence(timeout: 15))
+        if !tapped {
+            let fallback = app.descendants(matching: .any).matching(
+                NSPredicate(format: "identifier == 'hanlin-apps-tab' OR label == 'Apps'")
+            ).firstMatch
+            if fallback.waitForExistence(timeout: 10) {
+                fallback.tap()
+            }
+        }
+        XCTAssertTrue(app.buttons["hanlin-apps-add"].waitForExistence(timeout: 20))
     }
 
     private func importArchive(named archiveName: String) {

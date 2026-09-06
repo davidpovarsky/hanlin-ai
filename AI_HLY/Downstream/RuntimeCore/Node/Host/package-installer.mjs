@@ -117,8 +117,14 @@ export async function installPackage({
       ignoreScripts: true,
       audit: false,
       fund: false,
+      legacyPeerDeps: true,
     });
-    const actualTree = await arborist.reify({ omit: ['dev', 'optional'], ignoreScripts: true, signal });
+    const actualTree = await arborist.reify({
+      omit: ['dev', 'optional'],
+      ignoreScripts: true,
+      signal,
+      legacyPeerDeps: true,
+    });
     verifyRuntimeDependencyOverrides(actualTree);
 
     checkCancelled(signal);
