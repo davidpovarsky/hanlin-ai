@@ -1212,6 +1212,8 @@ jobs:
       CLONED_PACKAGES_PATH: build/SourcePackages
       LOG_DIR: simulator-logs
       IOS_DEPLOYMENT_TARGET: "26.0"
+      FAST_VALIDATION_ONLY: ${{ inputs.fast_validation_only }}
+      NATIVESCRIPT_POC_ONLY: ${{ inputs.nativescript_poc_only }}
 
     steps:
       - name: Checkout repository
@@ -1549,7 +1551,7 @@ jobs:
             build/SimulatorDerivedData/CacheMetadata/xcode-build-inputs.json
           key: ${{ steps.simulator-deriveddata-cache.outputs.cache-primary-key }}
 
-      - name: Boot iPad Simulator and launch full app
+      - name: Boot iPad Simulator and stage fixtures
         run: |
           set -euxo pipefail
           APP_PATH="$(cat "$LOG_DIR/app-path.txt")"
@@ -1586,7 +1588,7 @@ jobs:
 
           xcrun simctl boot "$SIMULATOR_UDID" 2>/dev/null || true
           xcrun simctl bootstatus "$SIMULATOR_UDID" -b 2>&1 | tee "$LOG_DIR/08-bootstatus.log"
-          if [ "${{ inputs.fast_validation_only }}" != "true" ] && [ "${{ inputs.nativescript_poc_only }}" != "true" ]; then
+          if [ "$FAST_VALIDATION_ONLY" != "true" ] && [ "$NATIVESCRIPT_POC_ONLY" != "true" ]; then
             FILES_CONTAINER="$(xcrun simctl get_app_container "$SIMULATOR_UDID" com.apple.DocumentsApp data)"
             test -n "$FILES_CONTAINER"
             mkdir -p "$FILES_CONTAINER/Documents"
@@ -1613,7 +1615,14 @@ jobs:
               shasum -a 256 "$FILES_CONTAINER/Documents/HanlinNativeScriptMalformed.hanlinNativeScript"
             } | tee "$LOG_DIR/08-nativescript-files-staging.log"
           fi
-          if [ "${{ inputs.nativescript_poc_only }}" != "true" ]; then
+
+      - name: Run simulator test suite
+        run: |
+          set -euxo pipefail
+          SIMULATOR_UDID="$(cat "$LOG_DIR/simulator-udid.txt")"
+          APP_EXECUTABLE="$(cat "$LOG_DIR/app-executable.txt")"
+
+          if [ "$NATIVESCRIPT_POC_ONLY" != "true" ]; then
             rm -rf "$LOG_DIR/DownstreamTestsResult.xcresult"
             started_at="$(date +%s)"
             set +e
@@ -1654,7 +1663,7 @@ jobs:
             -only-testing:AI_HLYTests/HanlinScriptingAcceptanceTests \
             2>&1 | tee "$LOG_DIR/08-scripting-acceptance.log"
             echo "$(( $(date +%s) - scripting_started_at ))" > "$LOG_DIR/08-scripting-acceptance-duration-seconds.txt"
-            if [ "${{ inputs.fast_validation_only }}" != "true" ]; then
+            if [ "$FAST_VALIDATION_ONLY" != "true" ]; then
               rm -rf "$LOG_DIR/NativeScriptProductionE2EResult.xcresult"
               nativescript_e2e_started_at="$(date +%s)"
               set +e
@@ -1698,13 +1707,22 @@ jobs:
               grep -Fq 'HANLIN_NS_PRODUCTION_SHUTDOWN_OK' "$LOG_DIR/08-nativescript-production.log"
             fi
           fi
+
+      - name: Launch full app and verify runtime acceptance
+        run: |
+          set -euxo pipefail
+          SIMULATOR_UDID="$(cat "$LOG_DIR/simulator-udid.txt")"
+          BUNDLE_ID="$(cat "$LOG_DIR/bundle-id.txt")"
+          APP_EXECUTABLE="$(cat "$LOG_DIR/app-executable.txt")"
+          APP_PATH="$(cat "$LOG_DIR/app-path.txt")"
+
           xcrun simctl boot "$SIMULATOR_UDID" 2>/dev/null || true
           xcrun simctl bootstatus "$SIMULATOR_UDID" -b 2>&1 \
             | tee "$LOG_DIR/08-post-tests-bootstatus.log"
           xcrun simctl uninstall "$SIMULATOR_UDID" "$BUNDLE_ID" 2>/dev/null || true
           xcrun simctl install "$SIMULATOR_UDID" "$APP_PATH"
 
-          if [ "${{ inputs.nativescript_poc_only }}" = "true" ]; then
+          if [ "$NATIVESCRIPT_POC_ONLY" = "true" ]; then
             test -z "$(find "$APP_PATH" -path '*fixture-a*' -print -quit)"
             DATA_CONTAINER="$(xcrun simctl get_app_container "$SIMULATOR_UDID" "$BUNDLE_ID" data)"
             FIXTURE_SOURCE="$GITHUB_WORKSPACE/Scripts/NativeScript/Prepared/fixture-a/nativescript/app"
@@ -1731,7 +1749,7 @@ jobs:
           }
           trap cleanup EXIT
 
-          if [ "${{ inputs.nativescript_poc_only }}" = "true" ]; then
+          if [ "$NATIVESCRIPT_POC_ONLY" = "true" ]; then
             set +e
             SIMCTL_CHILD_HANLIN_NATIVESCRIPT_POC=1 \
               xcrun simctl launch "$SIMULATOR_UDID" "$BUNDLE_ID" --hanlin-nativescript-poc 2>&1 \
@@ -1814,7 +1832,7 @@ jobs:
             exit 0
           fi
 
-          if [ "${{ inputs.fast_validation_only }}" = "true" ]; then
+          if [ "$FAST_VALIDATION_ONLY" = "true" ]; then
             set +e
             xcrun simctl launch "$SIMULATOR_UDID" "$BUNDLE_ID" 2>&1 \
               | tee "$LOG_DIR/08-fast-launch-output.txt"
