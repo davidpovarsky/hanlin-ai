@@ -64,7 +64,7 @@ final class HanlinNativeScriptProductionE2ETests: XCTestCase {
 
     private func importAndInstall(archive: String) {
         importArchive(named: archive)
-        let install = app.buttons["hanlin-package-install"]
+        let install = app.buttons["hanlin-package-install"].firstMatch
         XCTAssertTrue(install.waitForExistence(timeout: 30), "Import Preview did not expose Install")
         XCTAssertTrue(waitUntil(timeout: 15) { install.isEnabled }, "\(archive) was not installable")
         install.tap()
@@ -73,18 +73,18 @@ final class HanlinNativeScriptProductionE2ETests: XCTestCase {
     }
 
     private func openApps() {
-        if app.buttons["hanlin-apps-add"].waitForExistence(timeout: 20) { return }
+        if app.buttons["hanlin-apps-add"].firstMatch.waitForExistence(timeout: 15) { return }
         let candidates = [
-            app.buttons["hanlin-apps-tab"],
-            app.tabBars.buttons["hanlin-apps-tab"],
-            app.tabs["hanlin-apps-tab"],
-            app.buttons["Apps"],
-            app.tabBars.buttons["Apps"],
-            app.tabs["Apps"]
+            app.buttons["hanlin-apps-tab"].firstMatch,
+            app.tabBars.buttons["hanlin-apps-tab"].firstMatch,
+            app.tabs["hanlin-apps-tab"].firstMatch,
+            app.buttons["Apps"].firstMatch,
+            app.tabBars.buttons["Apps"].firstMatch,
+            app.tabs["Apps"].firstMatch
         ]
         var tapped = false
         for candidate in candidates {
-            if candidate.waitForExistence(timeout: 2) {
+            if candidate.waitForExistence(timeout: 3) {
                 candidate.tap()
                 tapped = true
                 break
@@ -98,15 +98,15 @@ final class HanlinNativeScriptProductionE2ETests: XCTestCase {
                 fallback.tap()
             }
         }
-        XCTAssertTrue(app.buttons["hanlin-apps-add"].waitForExistence(timeout: 20))
+        XCTAssertTrue(app.buttons["hanlin-apps-add"].firstMatch.waitForExistence(timeout: 20))
     }
 
     private func importArchive(named archiveName: String) {
-        app.buttons["hanlin-apps-add"].tap()
-        let importLink = app.buttons["hanlin-import-script-package"]
+        app.buttons["hanlin-apps-add"].firstMatch.tap()
+        let importLink = app.buttons["hanlin-import-script-package"].firstMatch
         XCTAssertTrue(importLink.waitForExistence(timeout: 10))
         importLink.tap()
-        let importer = app.buttons["hanlin-file-importer"]
+        let importer = app.buttons["hanlin-file-importer"].firstMatch
         XCTAssertTrue(importer.waitForExistence(timeout: 10))
         importer.tap()
 
@@ -119,7 +119,7 @@ final class HanlinNativeScriptProductionE2ETests: XCTestCase {
             )
         ).firstMatch
         if !archive.waitForExistence(timeout: 10) {
-            let browse = documents.buttons["Browse"]
+            let browse = documents.buttons["Browse"].firstMatch
             if browse.exists { browse.tap() }
         }
         XCTAssertTrue(archive.waitForExistence(timeout: 20), "Staged archive \(archiveName) was absent from Files")
@@ -131,39 +131,39 @@ final class HanlinNativeScriptProductionE2ETests: XCTestCase {
             let done = app.buttons["Done"].firstMatch
             if done.waitForExistence(timeout: 5) { done.tap() }
         }
-        XCTAssertTrue(app.buttons["hanlin-apps-add"].waitForExistence(timeout: 10))
+        XCTAssertTrue(app.buttons["hanlin-apps-add"].firstMatch.waitForExistence(timeout: 10))
     }
 
     private func launchInstalledPackage(named packageName: String) {
-        let package = app.staticTexts[packageName]
+        let package = app.staticTexts[packageName].firstMatch
         XCTAssertTrue(package.waitForExistence(timeout: 15), "Installed package \(packageName) was unavailable")
         package.tap()
     }
 
     private func assertNativeScriptCoreUI() {
-        XCTAssertTrue(app.buttons["hanlin-nativescript-core-button"].waitForExistence(timeout: 30))
-        XCTAssertTrue(app.staticTexts["hanlin-nativescript-device-proof"].waitForExistence(timeout: 10))
+        XCTAssertTrue(app.buttons["hanlin-nativescript-core-button"].firstMatch.waitForExistence(timeout: 30))
+        XCTAssertTrue(app.staticTexts["hanlin-nativescript-device-proof"].firstMatch.waitForExistence(timeout: 10))
     }
 
     private func assertSwiftUIAndRoundTrip() {
-        let increment = app.buttons["hanlin-swiftui-increment"]
+        let increment = app.buttons["hanlin-swiftui-increment"].firstMatch
         XCTAssertTrue(increment.waitForExistence(timeout: 30), "SwiftUI provider button was not rendered")
-        XCTAssertTrue(app.staticTexts["hanlin-swiftui-title"].waitForExistence(timeout: 10))
-        let count = app.staticTexts["hanlin-swiftui-count"]
+        XCTAssertTrue(app.staticTexts["hanlin-swiftui-title"].firstMatch.waitForExistence(timeout: 10))
+        let count = app.staticTexts["hanlin-swiftui-count"].firstMatch
         XCTAssertTrue(count.waitForExistence(timeout: 10))
         XCTAssertEqual(count.label, "SwiftUI count: 0")
         increment.tap()
         XCTAssertTrue(waitUntil(timeout: 10) { count.label == "SwiftUI count: 1" }, "SwiftUI state did not update")
-        let event = app.staticTexts["hanlin-swiftui-event-proof"]
+        let event = app.staticTexts["hanlin-swiftui-event-proof"].firstMatch
         XCTAssertTrue(event.waitForExistence(timeout: 10))
         XCTAssertTrue(waitUntil(timeout: 10) { event.label == "NativeScript event count: 1" }, "SwiftUI event did not reach NativeScript")
     }
 
     private func closeNativeScriptApp() {
-        let close = app.buttons["hanlin-script-app-close"]
+        let close = app.buttons["hanlin-script-app-close"].firstMatch
         XCTAssertTrue(close.waitForExistence(timeout: 10))
         close.tap()
-        XCTAssertTrue(app.buttons["hanlin-apps-add"].waitForExistence(timeout: 15))
+        XCTAssertTrue(app.buttons["hanlin-apps-add"].firstMatch.waitForExistence(timeout: 15))
     }
 
     @discardableResult
