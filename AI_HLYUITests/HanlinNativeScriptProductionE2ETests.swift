@@ -50,15 +50,15 @@ final class HanlinNativeScriptProductionE2ETests: XCTestCase {
             "This Hanlin build supports @nativescript/swift-ui 4.0.2, but the package requires @nativescript/swift-ui 99.0.0."
         ]
         XCTAssertTrue(unsupportedMessage.waitForExistence(timeout: 20), "Unsupported plugin reason was not visible")
-        let disabledInstall = app.buttons["hanlin-package-install"]
+        let disabledInstall = app.buttons["hanlin-package-install"].firstMatch
         XCTAssertTrue(disabledInstall.exists)
         XCTAssertFalse(disabledInstall.isEnabled, "Unsupported native plugin package was installable")
         capture(name: "Unsupported-NativeScript-Plugin-Rejected")
         closeImportSurfaces()
 
         importArchive(named: "HanlinNativeScriptMalformed")
-        XCTAssertTrue(app.staticTexts["Import Error"].waitForExistence(timeout: 20))
-        XCTAssertFalse(app.buttons["hanlin-package-install"].exists)
+        XCTAssertTrue(app.staticTexts["Import Error"].firstMatch.waitForExistence(timeout: 20))
+        XCTAssertFalse(app.buttons["hanlin-package-install"].firstMatch.exists)
         capture(name: "Malformed-Package-Rejected")
     }
 
@@ -72,8 +72,52 @@ final class HanlinNativeScriptProductionE2ETests: XCTestCase {
         closeImportSurfaces()
     }
 
+    private var appsAddButton: XCUIElement {
+        let direct = app.buttons["hanlin-apps-add"].firstMatch
+        if direct.exists { return direct }
+        let navDirect = app.navigationBars.buttons["hanlin-apps-add"].firstMatch
+        if navDirect.exists { return navDirect }
+        let byId = app.descendants(matching: .any).matching(identifier: "hanlin-apps-add").firstMatch
+        if byId.exists { return byId }
+        let byLabel = app.buttons["Add App"].firstMatch
+        if byLabel.exists { return byLabel }
+        let navByLabel = app.navigationBars.buttons["Add App"].firstMatch
+        if navByLabel.exists { return navByLabel }
+        return direct
+    }
+
+    private func revealAppsAddButtonIfNeeded() {
+        if appsAddButton.exists { return }
+        let overflowCandidates = [
+            app.navigationBars.buttons["OverflowBarButtonItem"].firstMatch,
+            app.buttons["OverflowBarButtonItem"].firstMatch,
+            app.navigationBars.buttons["More"].firstMatch,
+            app.buttons["More"].firstMatch
+        ]
+        for overflow in overflowCandidates {
+            if overflow.exists {
+                overflow.tap()
+                _ = appsAddButton.waitForExistence(timeout: 3)
+                return
+            }
+        }
+    }
+
+    @discardableResult
+    private func ensureAppsAddButton(timeout: TimeInterval = 20) -> XCUIElement {
+        if appsAddButton.waitForExistence(timeout: min(timeout, 5)) {
+            return appsAddButton
+        }
+        revealAppsAddButtonIfNeeded()
+        XCTAssertTrue(appsAddButton.waitForExistence(timeout: timeout), "hanlin-apps-add button did not exist")
+        return appsAddButton
+    }
+
     private func openApps() {
-        if app.buttons["hanlin-apps-add"].firstMatch.waitForExistence(timeout: 15) { return }
+        if appsAddButton.waitForExistence(timeout: 5) { return }
+        revealAppsAddButtonIfNeeded()
+        if appsAddButton.waitForExistence(timeout: 3) { return }
+
         let candidates = [
             app.buttons["hanlin-apps-tab"].firstMatch,
             app.tabBars.buttons["hanlin-apps-tab"].firstMatch,
@@ -98,11 +142,11 @@ final class HanlinNativeScriptProductionE2ETests: XCTestCase {
                 fallback.tap()
             }
         }
-        XCTAssertTrue(app.buttons["hanlin-apps-add"].firstMatch.waitForExistence(timeout: 20))
+        ensureAppsAddButton(timeout: 20)
     }
 
     private func importArchive(named archiveName: String) {
-        app.buttons["hanlin-apps-add"].firstMatch.tap()
+        ensureAppsAddButton(timeout: 15).tap()
         let importLink = app.buttons["hanlin-import-script-package"].firstMatch
         XCTAssertTrue(importLink.waitForExistence(timeout: 10))
         importLink.tap()
@@ -131,7 +175,7 @@ final class HanlinNativeScriptProductionE2ETests: XCTestCase {
             let done = app.buttons["Done"].firstMatch
             if done.waitForExistence(timeout: 5) { done.tap() }
         }
-        XCTAssertTrue(app.buttons["hanlin-apps-add"].firstMatch.waitForExistence(timeout: 10))
+        ensureAppsAddButton(timeout: 10)
     }
 
     private func launchInstalledPackage(named packageName: String) {
@@ -163,7 +207,7 @@ final class HanlinNativeScriptProductionE2ETests: XCTestCase {
         let close = app.buttons["hanlin-script-app-close"].firstMatch
         XCTAssertTrue(close.waitForExistence(timeout: 10))
         close.tap()
-        XCTAssertTrue(app.buttons["hanlin-apps-add"].firstMatch.waitForExistence(timeout: 15))
+        ensureAppsAddButton(timeout: 15)
     }
 
     @discardableResult

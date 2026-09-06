@@ -72,16 +72,19 @@ struct NativeAppsHubView: View {
             .navigationTitle(String(localized: "Apps"))
             .searchable(text: $searchText, prompt: "Search Apps")
             .toolbar {
-                ToolbarItemGroup(placement: .topBarTrailing) {
-                    Button(isEditingApps ? "Done" : "Edit") {
-                        isEditingApps.toggle()
-                    }
+                ToolbarItem(placement: .primaryAction) {
                     Button {
                         showsAddSheet = true
                     } label: {
-                        Image(systemName: "plus")
+                        Label("Add App", systemImage: "plus")
                     }
                     .accessibilityIdentifier("hanlin-apps-add")
+                    .accessibilityLabel("hanlin-apps-add")
+                }
+                ToolbarItem(placement: .secondaryAction) {
+                    Button(isEditingApps ? "Done" : "Edit") {
+                        isEditingApps.toggle()
+                    }
                 }
             }
             .overlay {
