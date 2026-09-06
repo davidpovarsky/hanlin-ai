@@ -1,13 +1,20 @@
 {
   "schemaVersion": 1,
   "overrides": {
-    "fast-uri": "3.1.5"
+    "fast-uri": "3.1.5",
+    "zod": "4.5.0"
   },
   "packages": {
     "fast-uri": {
       "version": "3.1.5",
       "integrity": "sha512-gHwA1O9LDIcKunMKhObS/HimwtehO1nPUECKAu5TpKgaO19fcWEl4bliWe1jWxVFvIXztJjjQ4L8XQ1EU9f7Jw==",
       "reason": "3.1.6 requires Unicode property escapes unavailable in the pinned iOS Node runtime"
+    },
+    "zod": {
+      "version": "4.5.0",
+      "integrity": "sha512-FSVkRSv3SBc0aefry5kxuD46ExRwtWWyUPjyXHZt00YRF81+MX8rdQm8aJwlL4NLMqcJABseHr66OJuc+0LkDw==",
+      "reason": "@npmcli/arborist 8.0.5 crashes with null edgesOut in #loadPeerSet when @modelcontextprotocol/sdk 1.30.0 declares zod as both a dependency and peerDependency and zod >=4.5.1 is resolved; pinning to 4.5.0 keeps the resolved version stable"
     }
   }
 }
+
