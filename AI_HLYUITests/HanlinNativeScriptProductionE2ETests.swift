@@ -150,24 +150,66 @@ final class HanlinNativeScriptProductionE2ETests: XCTestCase {
         let importLink = app.buttons["hanlin-import-script-package"].firstMatch
         XCTAssertTrue(importLink.waitForExistence(timeout: 10))
         importLink.tap()
+
+        let directArchive = app.buttons[archiveName].firstMatch
+        if directArchive.waitForExistence(timeout: 3) {
+            directArchive.tap()
+            return
+        }
+
         let importer = app.buttons["hanlin-file-importer"].firstMatch
         XCTAssertTrue(importer.waitForExistence(timeout: 10))
         importer.tap()
 
-        let archive = documents.descendants(matching: .any).matching(
-            NSPredicate(
-                format: "label == %@ OR label == %@ OR label == %@",
-                archiveName,
-                "\(archiveName).hanlinNativeScript",
-                "\(archiveName).scripting"
-            )
-        ).firstMatch
-        if !archive.waitForExistence(timeout: 10) {
-            let browse = documents.buttons["Browse"].firstMatch
-            if browse.exists { browse.tap() }
+        let targetPredicate = NSPredicate(
+            format: "label == %@ OR label == %@ OR label == %@ OR identifier == %@ OR identifier == %@ OR identifier == %@",
+            archiveName,
+            "\(archiveName).hanlinNativeScript",
+            "\(archiveName).scripting",
+            archiveName,
+            "\(archiveName).hanlinNativeScript",
+            "\(archiveName).scripting"
+        )
+        let candidateArchives = [
+            app.buttons[archiveName].firstMatch,
+            app.descendants(matching: .any).matching(targetPredicate).firstMatch,
+            documents.descendants(matching: .any).matching(targetPredicate).firstMatch
+        ]
+
+        var foundArchive: XCUIElement?
+        for candidate in candidateArchives {
+            if candidate.waitForExistence(timeout: 3) {
+                foundArchive = candidate
+                break
+            }
         }
-        XCTAssertTrue(archive.waitForExistence(timeout: 20), "Staged archive \(archiveName) was absent from Files")
-        archive.tap()
+
+        if foundArchive == nil {
+            let browseCandidates = [
+                app.buttons["Browse"].firstMatch,
+                documents.buttons["Browse"].firstMatch,
+                app.tabBars.buttons["Browse"].firstMatch,
+                documents.tabBars.buttons["Browse"].firstMatch,
+                app.cells["On My iPad"].firstMatch,
+                documents.cells["On My iPad"].firstMatch
+            ]
+            for browse in browseCandidates {
+                if browse.exists {
+                    browse.tap()
+                    break
+                }
+            }
+            for candidate in candidateArchives {
+                if candidate.waitForExistence(timeout: 5) {
+                    foundArchive = candidate
+                    break
+                }
+            }
+        }
+
+        let targetArchive = foundArchive ?? candidateArchives[0]
+        XCTAssertTrue(targetArchive.waitForExistence(timeout: 20), "Staged archive \(archiveName) was absent from Files")
+        targetArchive.tap()
     }
 
     private func closeImportSurfaces() {

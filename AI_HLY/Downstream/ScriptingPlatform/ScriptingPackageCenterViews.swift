@@ -13,6 +13,15 @@ struct ScriptingPackageImportView: View {
     let platform: HanlinScriptingPlatform
     @Environment(\.dismiss) private var dismiss
     @State private var showsImporter = false
+    private var stagedDocumentPackages: [URL] {
+        guard let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first,
+              let contents = try? FileManager.default.contentsOfDirectory(at: documentsURL, includingPropertiesForKeys: nil) else {
+            return []
+        }
+        let supported = Set(["scripting", "hanlinNativeScript", "zip"])
+        return contents.filter { supported.contains($0.pathExtension) }
+            .sorted { $0.lastPathComponent < $1.lastPathComponent }
+    }
 
     var body: some View {
         List {
@@ -26,6 +35,21 @@ struct ScriptingPackageImportView: View {
                 Text("Choose a .scripting, .hanlinNativeScript, or .zip package. Hanlin copies it into private staging and performs Import Preview without executing package code.")
                     .font(.footnote)
                     .foregroundStyle(.secondary)
+            }
+
+            let stagedFiles = stagedDocumentPackages
+            if !stagedFiles.isEmpty {
+                Section("Shared Packages") {
+                    ForEach(stagedFiles, id: \.self) { fileURL in
+                        Button {
+                            Task { await platform.importPackage(from: fileURL) }
+                        } label: {
+                            Label(fileURL.deletingPathExtension().lastPathComponent, systemImage: "shippingbox")
+                        }
+                        .accessibilityIdentifier(fileURL.deletingPathExtension().lastPathComponent)
+                        .accessibilityLabel(fileURL.deletingPathExtension().lastPathComponent)
+                    }
+                }
             }
 
             if let preview = platform.preview {
