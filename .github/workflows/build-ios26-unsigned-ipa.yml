@@ -43,6 +43,21 @@ on:
         required: true
         default: false
         type: boolean
+      full_validation:
+        description: Explicit operator request to execute the complete validation suite across all components (NEVER enabled automatically)
+        required: false
+        default: false
+        type: boolean
+      compare_base_sha:
+        description: Explicit base commit SHA to compare changed files against (optional, derived automatically if omitted)
+        required: false
+        default: ''
+        type: string
+      target_validation_group:
+        description: Explicitly run a targeted validation group (e.g. ci_router, nativescript_runtime, simulator_targeted_ui, app_unit_tests)
+        required: false
+        default: ''
+        type: string
   push:
     branches:
       - main
@@ -51,8 +66,90 @@ permissions:
   contents: read
 
 jobs:
+  plan-affected-validation:
+    name: Plan affected validation and tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    outputs:
+      run_full_validation: ${{ steps.plan.outputs.run_full_validation }}
+      run_phase1: ${{ steps.plan.outputs.run_phase1 }}
+      run_ci_router: ${{ steps.plan.outputs.run_ci_router }}
+      run_scripting_reference: ${{ steps.plan.outputs.run_scripting_reference }}
+      run_scripting_compiler: ${{ steps.plan.outputs.run_scripting_compiler }}
+      run_platform_contracts: ${{ steps.plan.outputs.run_platform_contracts }}
+      run_nativescript_dependencies: ${{ steps.plan.outputs.run_nativescript_dependencies }}
+      run_nativescript_runtime: ${{ steps.plan.outputs.run_nativescript_runtime }}
+      run_runtimecore_bundle: ${{ steps.plan.outputs.run_runtimecore_bundle }}
+      run_runtimecore_host: ${{ steps.plan.outputs.run_runtimecore_host }}
+      run_device_build: ${{ steps.plan.outputs.run_device_build }}
+      run_ipa_packaging: ${{ steps.plan.outputs.run_ipa_packaging }}
+      run_simulator_job: ${{ steps.plan.outputs.run_simulator_job }}
+      run_simulator_unit: ${{ steps.plan.outputs.run_simulator_unit }}
+      simulator_unit_filter: ${{ steps.plan.outputs.simulator_unit_filter }}
+      run_simulator_scripting_acceptance: ${{ steps.plan.outputs.run_simulator_scripting_acceptance }}
+      run_simulator_targeted_ui: ${{ steps.plan.outputs.run_simulator_targeted_ui }}
+      run_simulator_shell_acceptance: ${{ steps.plan.outputs.run_simulator_shell_acceptance }}
+      run_simulator_mcp_acceptance: ${{ steps.plan.outputs.run_simulator_mcp_acceptance }}
+      run_simulator_smoke_launch: ${{ steps.plan.outputs.run_simulator_smoke_launch }}
+      run_simulator_nativescript_poc: ${{ steps.plan.outputs.run_simulator_nativescript_poc }}
+      selected_groups: ${{ steps.plan.outputs.selected_groups }}
+      base_sha: ${{ steps.plan.outputs.base_sha }}
+      head_sha: ${{ steps.plan.outputs.head_sha }}
+      changed_files_count: ${{ steps.plan.outputs.changed_files_count }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Run affected validation planner
+        id: plan
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          args=(
+            --event-name "${{ github.event_name }}"
+          )
+          if [ -n "${{ github.event_path }}" ] && [ -f "${{ github.event_path }}" ]; then
+            args+=(--event-path "${{ github.event_path }}")
+          fi
+          if [ -n "${{ inputs.compare_base_sha }}" ]; then
+            args+=(--base-sha "${{ inputs.compare_base_sha }}")
+          fi
+          if [ "${{ inputs.full_validation }}" = "true" ]; then
+            args+=(--full-validation)
+          fi
+          if [ -n "${{ inputs.target_validation_group }}" ]; then
+            args+=(--target-group "${{ inputs.target_validation_group }}")
+          fi
+          if [ "${{ inputs.runtime_bundle_only }}" = "true" ]; then
+            args+=(--runtime-bundle-only)
+          fi
+          if [ "${{ inputs.phase1_validation_only }}" = "true" ]; then
+            args+=(--phase1-validation-only)
+          fi
+          if [ "${{ inputs.fast_validation_only }}" = "true" ]; then
+            args+=(--fast-validation-only)
+          fi
+          if [ "${{ inputs.nativescript_poc_only }}" = "true" ]; then
+            args+=(--nativescript-poc-only)
+          fi
+          if [ "${{ inputs.simulator_e2e_only }}" = "true" ]; then
+            args+=(--simulator-e2e-only)
+          fi
+
+          python3 Scripts/CI/plan_affected_validation.py "${args[@]}"
+
   validate-hanlin-platform-phase1:
-    if: ${{ github.event_name == 'workflow_dispatch' && !inputs.runtime_bundle_only && !inputs.nativescript_poc_only && !inputs.simulator_e2e_only }}
+    needs: plan-affected-validation
+    if: ${{ needs.plan-affected-validation.outputs.run_phase1 == 'true' }}
     name: Validate baseline, contracts, tests, and iOS compilation
     runs-on: macos-26
     timeout-minutes: 60
@@ -134,6 +231,7 @@ jobs:
           echo "LOG_DIR=$absolute_log_dir" >> "$GITHUB_ENV"
 
       - name: Test Xcode cache input normalization
+        if: ${{ needs.plan-affected-validation.outputs.run_ci_router == 'true' || needs.plan-affected-validation.outputs.run_full_validation == 'true' }}
         run: |
           set -euxo pipefail
           python3 -m unittest discover \
@@ -142,7 +240,7 @@ jobs:
             -v 2>&1 | tee "$LOG_DIR/00-xcode-cache-input-tests.log"
 
       - name: Restore Phase 1 SwiftPM build cache
-        if: ${{ !inputs.force_clean_build }}
+        if: ${{ !inputs.force_clean_build && (needs.plan-affected-validation.outputs.run_platform_contracts == 'true' || needs.plan-affected-validation.outputs.run_full_validation == 'true') }}
         id: phase1-spm-cache
         uses: actions/cache/restore@v6
         with:
@@ -152,7 +250,7 @@ jobs:
             phase1-spm-v1-${{ runner.os }}-${{ steps.phase1-toolchain.outputs.runner-arch }}-${{ steps.phase1-toolchain.outputs.xcode-build }}-${{ hashFiles('Packages/HanlinPlatform/Package.swift') }}-
 
       - name: Restore Phase 1 simulator compiler cache
-        if: ${{ !inputs.force_clean_build }}
+        if: ${{ !inputs.force_clean_build && (needs.plan-affected-validation.outputs.run_platform_contracts == 'true' || needs.plan-affected-validation.outputs.run_full_validation == 'true') }}
         id: phase1-simulator-cache
         uses: actions/cache/restore@v6
         with:
@@ -165,7 +263,7 @@ jobs:
             phase1-derived-v1-${{ runner.os }}-${{ steps.phase1-toolchain.outputs.runner-arch }}-${{ steps.phase1-toolchain.outputs.xcode-build }}-iphonesimulator-${{ steps.phase1-toolchain.outputs.simulator-sdk }}-debug-${{ hashFiles('Packages/HanlinPlatform/Package.swift') }}-
 
       - name: Restore Phase 1 device compiler cache
-        if: ${{ !inputs.force_clean_build }}
+        if: ${{ !inputs.force_clean_build && (needs.plan-affected-validation.outputs.run_platform_contracts == 'true' || needs.plan-affected-validation.outputs.run_full_validation == 'true') }}
         id: phase1-device-cache
         uses: actions/cache/restore@v6
         with:
@@ -204,6 +302,7 @@ jobs:
             build/Phase1DeviceDerivedData
 
       - name: Verify Scripting baseline integrity and reproducibility
+        if: ${{ needs.plan-affected-validation.outputs.run_scripting_reference == 'true' || needs.plan-affected-validation.outputs.run_full_validation == 'true' }}
         run: |
           set -euxo pipefail
           {
@@ -256,12 +355,14 @@ jobs:
           } 2>&1 | tee "$LOG_DIR/01-scripting-baseline.log"
 
       - name: Validate JSON and internal JSON Schema references
+        if: ${{ needs.plan-affected-validation.outputs.run_scripting_reference == 'true' || needs.plan-affected-validation.outputs.run_full_validation == 'true' }}
         run: |
           set -euxo pipefail
           node Scripts/ScriptingReference/validate-json-and-schema.mjs \
             2>&1 | tee "$LOG_DIR/02-json-schema.log"
 
       - name: Verify exact TypeScript 7.0.2 Scripting artifacts
+        if: ${{ needs.plan-affected-validation.outputs.run_scripting_compiler == 'true' || needs.plan-affected-validation.outputs.run_full_validation == 'true' }}
         run: |
           set -euxo pipefail
           npm ci --ignore-scripts --prefix Scripts/ScriptingCompiler
@@ -269,6 +370,7 @@ jobs:
             2>&1 | tee "$LOG_DIR/02-scripting-compiler.log"
 
       - name: Scripting Production Compiler Acceptance
+        if: ${{ needs.plan-affected-validation.outputs.run_scripting_compiler == 'true' || needs.plan-affected-validation.outputs.run_full_validation == 'true' }}
         run: |
           set -euxo pipefail
           npm ci --ignore-scripts --no-audit --no-fund \
@@ -277,31 +379,35 @@ jobs:
             2>&1 | tee "$LOG_DIR/02-production-compiler-acceptance.log"
 
       - name: Resolve the Phase 1 Swift package
+        if: ${{ needs.plan-affected-validation.outputs.run_platform_contracts == 'true' || needs.plan-affected-validation.outputs.run_full_validation == 'true' }}
         run: |
           set -euxo pipefail
           swift package --package-path "$PACKAGE_PATH" resolve \
             2>&1 | tee "$LOG_DIR/03-swift-package-resolve.log"
 
       - name: Compile the Phase 1 Swift package
+        if: ${{ needs.plan-affected-validation.outputs.run_platform_contracts == 'true' || needs.plan-affected-validation.outputs.run_full_validation == 'true' }}
         run: |
           set -euxo pipefail
           swift build --package-path "$PACKAGE_PATH" \
             2>&1 | tee "$LOG_DIR/04-swift-build.log"
 
       - name: Compile and execute all Phase 1 contract tests
+        if: ${{ needs.plan-affected-validation.outputs.run_platform_contracts == 'true' || needs.plan-affected-validation.outputs.run_full_validation == 'true' }}
         run: |
           set -euxo pipefail
           swift test --package-path "$PACKAGE_PATH" --parallel \
             2>&1 | tee "$LOG_DIR/05-swift-test.log"
 
       - name: Save successful Phase 1 SwiftPM build cache
-        if: ${{ success() && !inputs.force_clean_build }}
+        if: ${{ success() && !inputs.force_clean_build && (needs.plan-affected-validation.outputs.run_platform_contracts == 'true' || needs.plan-affected-validation.outputs.run_full_validation == 'true') }}
         uses: actions/cache/save@v6
         with:
           path: Packages/HanlinPlatform/.build
           key: ${{ steps.phase1-spm-cache.outputs.cache-primary-key }}
 
       - name: Discover the generated Xcode package scheme
+        if: ${{ needs.plan-affected-validation.outputs.run_platform_contracts == 'true' || needs.plan-affected-validation.outputs.run_full_validation == 'true' }}
         working-directory: Packages/HanlinPlatform
         run: |
           set -euxo pipefail
@@ -330,6 +436,7 @@ jobs:
           echo "Selected generated package scheme: $package_scheme"
 
       - name: Compile contracts for generic iOS Simulator
+        if: ${{ needs.plan-affected-validation.outputs.run_platform_contracts == 'true' || needs.plan-affected-validation.outputs.run_full_validation == 'true' }}
         working-directory: Packages/HanlinPlatform
         run: |
           set -euxo pipefail
@@ -353,7 +460,7 @@ jobs:
           echo "$(( $(date +%s) - started_at ))" > "$LOG_DIR/07-ios-simulator-duration-seconds.txt"
 
       - name: Save successful Phase 1 simulator compiler cache
-        if: ${{ success() && !inputs.force_clean_build }}
+        if: ${{ success() && !inputs.force_clean_build && (needs.plan-affected-validation.outputs.run_platform_contracts == 'true' || needs.plan-affected-validation.outputs.run_full_validation == 'true') }}
         uses: actions/cache/save@v6
         with:
           path: |
@@ -363,6 +470,7 @@ jobs:
           key: ${{ steps.phase1-simulator-cache.outputs.cache-primary-key }}
 
       - name: Compile contracts for generic iOS device
+        if: ${{ needs.plan-affected-validation.outputs.run_platform_contracts == 'true' || needs.plan-affected-validation.outputs.run_full_validation == 'true' }}
         working-directory: Packages/HanlinPlatform
         run: |
           set -euxo pipefail
@@ -386,6 +494,7 @@ jobs:
           echo "$(( $(date +%s) - started_at ))" > "$LOG_DIR/08-ios-device-duration-seconds.txt"
 
       - name: Compile the NativeScript runtime package for simulator and device
+        if: ${{ needs.plan-affected-validation.outputs.run_nativescript_runtime == 'true' || needs.plan-affected-validation.outputs.run_full_validation == 'true' }}
         working-directory: Packages/HanlinNativeScriptRuntime
         run: |
           set -euxo pipefail
@@ -410,7 +519,7 @@ jobs:
           done 2>&1 | tee "$LOG_DIR/08-nativescript-package.log"
 
       - name: Save successful Phase 1 device compiler cache
-        if: ${{ success() && !inputs.force_clean_build }}
+        if: ${{ success() && !inputs.force_clean_build && (needs.plan-affected-validation.outputs.run_platform_contracts == 'true' || needs.plan-affected-validation.outputs.run_full_validation == 'true') }}
         uses: actions/cache/save@v6
         with:
           path: |
@@ -438,7 +547,8 @@ jobs:
           retention-days: 30
 
   validate-runtime-bundle:
-    if: ${{ inputs.runtime_bundle_only && !inputs.phase1_validation_only }}
+    needs: plan-affected-validation
+    if: ${{ needs.plan-affected-validation.outputs.run_runtimecore_bundle == 'true' }}
     name: Run split RuntimeCore bundle pipeline
     uses: ./.github/workflows/build-runtime-bundle.yml
     with:
@@ -450,7 +560,8 @@ jobs:
       contents: write
 
   build-ios26-unsigned-ipa:
-    if: ${{ !inputs.runtime_bundle_only && !inputs.phase1_validation_only && !inputs.fast_validation_only && !inputs.nativescript_poc_only && !inputs.simulator_e2e_only }}
+    needs: plan-affected-validation
+    if: ${{ needs.plan-affected-validation.outputs.run_device_build == 'true' }}
     name: Build unsigned IPA with Xcode 26
     runs-on: macos-26
     timeout-minutes: 60
@@ -1205,7 +1316,8 @@ jobs:
           retention-days: 14
 
   full-app-simulator-smoke:
-    if: ${{ github.event_name == 'workflow_dispatch' && !inputs.runtime_bundle_only && !inputs.phase1_validation_only }}
+    needs: plan-affected-validation
+    if: ${{ needs.plan-affected-validation.outputs.run_simulator_job == 'true' }}
     name: Launch full app on iPad Simulator
     runs-on: macos-26
     timeout-minutes: 90
@@ -1213,7 +1325,7 @@ jobs:
     env:
       PROJECT_PATH: AI_HLY.xcodeproj
       SCHEME_NAME: AI_HLY
-      CONFIGURATION: ${{ (inputs.fast_validation_only || inputs.nativescript_poc_only) && 'Debug' || 'Release' }}
+      CONFIGURATION: ${{ (inputs.fast_validation_only || inputs.nativescript_poc_only || needs.plan-affected-validation.outputs.run_device_build != 'true') && 'Debug' || 'Release' }}
       DERIVED_DATA_PATH: build/SimulatorDerivedData
       CLONED_PACKAGES_PATH: build/SourcePackages
       LOG_DIR: simulator-logs
@@ -1221,6 +1333,15 @@ jobs:
       FAST_VALIDATION_ONLY: ${{ inputs.fast_validation_only }}
       NATIVESCRIPT_POC_ONLY: ${{ inputs.nativescript_poc_only }}
       SIMULATOR_E2E_ONLY: ${{ inputs.simulator_e2e_only }}
+      RUN_FULL_VALIDATION: ${{ needs.plan-affected-validation.outputs.run_full_validation }}
+      RUN_SIMULATOR_UNIT: ${{ needs.plan-affected-validation.outputs.run_simulator_unit }}
+      SIMULATOR_UNIT_FILTER: ${{ needs.plan-affected-validation.outputs.simulator_unit_filter }}
+      RUN_SIMULATOR_SCRIPTING_ACCEPTANCE: ${{ needs.plan-affected-validation.outputs.run_simulator_scripting_acceptance }}
+      RUN_SIMULATOR_TARGETED_UI: ${{ needs.plan-affected-validation.outputs.run_simulator_targeted_ui }}
+      RUN_SIMULATOR_SHELL_ACCEPTANCE: ${{ needs.plan-affected-validation.outputs.run_simulator_shell_acceptance }}
+      RUN_SIMULATOR_MCP_ACCEPTANCE: ${{ needs.plan-affected-validation.outputs.run_simulator_mcp_acceptance }}
+      RUN_SIMULATOR_SMOKE_LAUNCH: ${{ needs.plan-affected-validation.outputs.run_simulator_smoke_launch }}
+      RUN_SIMULATOR_NATIVESCRIPT_POC: ${{ needs.plan-affected-validation.outputs.run_simulator_nativescript_poc }}
 
     steps:
       - name: Checkout repository
@@ -1488,7 +1609,7 @@ jobs:
           echo "Same-run simulator no-op rebuild duration: ${duration_seconds}s"
 
       - name: Build downstream unit and production UI tests
-        if: ${{ !inputs.nativescript_poc_only }}
+        if: ${{ !inputs.nativescript_poc_only && (needs.plan-affected-validation.outputs.run_simulator_unit == 'true' || needs.plan-affected-validation.outputs.run_simulator_scripting_acceptance == 'true' || needs.plan-affected-validation.outputs.run_simulator_targeted_ui == 'true' || needs.plan-affected-validation.outputs.run_full_validation == 'true') }}
         run: |
           set -euxo pipefail
           rm -rf "$LOG_DIR/DownstreamTestsBuildResult.xcresult"
@@ -1622,7 +1743,7 @@ jobs:
           nativescript_e2e_status=0
 
           if [ "$NATIVESCRIPT_POC_ONLY" != "true" ]; then
-            if [ "$SIMULATOR_E2E_ONLY" != "true" ]; then
+            if [ "$SIMULATOR_E2E_ONLY" != "true" ] && { [ "$RUN_SIMULATOR_UNIT" = "true" ] || [ "$RUN_FULL_VALIDATION" = "true" ]; }; then
               rm -rf "$LOG_DIR/DownstreamTestsResult.xcresult"
               started_at="$(date +%s)"
               set +e
@@ -1637,7 +1758,7 @@ jobs:
               -skipPackagePluginValidation \
               -skipMacroValidation \
               -parallel-testing-enabled NO \
-              -only-testing:AI_HLYTests \
+              -only-testing:"${SIMULATOR_UNIT_FILTER:-AI_HLYTests}" \
               2>&1 | tee "$LOG_DIR/08-downstream-unit-tests.log"
               downstream_test_status="${PIPESTATUS[0]}"
               set -e
@@ -1647,7 +1768,11 @@ jobs:
                 --path "$LOG_DIR/DownstreamTestsResult.xcresult" \
                 --format json 2>&1 | tee "$LOG_DIR/08-downstream-unit-test-results.json" || true
               fi
+            else
+              printf '%s\n' "Downstream unit tests skipped by affected-validation router." > "$LOG_DIR/08-downstream-unit-tests-skipped.txt"
+            fi
 
+            if [ "$SIMULATOR_E2E_ONLY" != "true" ] && { [ "$RUN_SIMULATOR_SCRIPTING_ACCEPTANCE" = "true" ] || [ "$RUN_FULL_VALIDATION" = "true" ]; }; then
               rm -rf "$LOG_DIR/ScriptingAcceptanceResult.xcresult"
               scripting_started_at="$(date +%s)"
               set +e
@@ -1666,9 +1791,11 @@ jobs:
               scripting_acceptance_status="${PIPESTATUS[0]}"
               set -e
               echo "$(( $(date +%s) - scripting_started_at ))" > "$LOG_DIR/08-scripting-acceptance-duration-seconds.txt"
+            else
+              printf '%s\n' "Scripting acceptance skipped by affected-validation router." > "$LOG_DIR/08-scripting-acceptance-skipped.txt"
             fi
 
-            if [ "$FAST_VALIDATION_ONLY" != "true" ]; then
+            if [ "$FAST_VALIDATION_ONLY" != "true" ] && { [ "$RUN_SIMULATOR_TARGETED_UI" = "true" ] || [ "$RUN_FULL_VALIDATION" = "true" ]; }; then
               rm -rf "$LOG_DIR/NativeScriptProductionE2EResult.xcresult"
               nativescript_e2e_started_at="$(date +%s)"
               set +e
@@ -1710,6 +1837,8 @@ jobs:
                 grep -Fq 'HANLIN_NS_SWIFTUI_EVENT_OK count=1 source=swiftui' "$LOG_DIR/08-nativescript-production.log"
                 grep -Fq 'HANLIN_NS_PRODUCTION_SHUTDOWN_OK' "$LOG_DIR/08-nativescript-production.log"
               fi
+            else
+              printf '%s\n' "NativeScript production UI tests skipped by affected-validation router." > "$LOG_DIR/08-nativescript-production-ui-tests-skipped.txt"
             fi
 
             failed_suites=""
@@ -1736,13 +1865,20 @@ jobs:
             exit 0
           fi
 
+          if [ "$RUN_SIMULATOR_SHELL_ACCEPTANCE" != "true" ] && [ "$RUN_SIMULATOR_MCP_ACCEPTANCE" != "true" ] && [ "$RUN_SIMULATOR_SMOKE_LAUNCH" != "true" ] && [ "$RUN_SIMULATOR_NATIVESCRIPT_POC" != "true" ] && [ "$RUN_FULL_VALIDATION" != "true" ]; then
+            printf '%s\n' "targeted-tests-only" > "$LOG_DIR/validation-profile.txt"
+            printf '%s\n' "1" > "$LOG_DIR/alive-duration-seconds.txt"
+            printf '%s\n' "Full app launch skipped because no launch acceptance groups were affected." > "$LOG_DIR/08-app-launch-skipped.txt"
+            exit 0
+          fi
+
           xcrun simctl boot "$SIMULATOR_UDID" 2>/dev/null || true
           xcrun simctl bootstatus "$SIMULATOR_UDID" -b 2>&1 \
             | tee "$LOG_DIR/08-post-tests-bootstatus.log"
           xcrun simctl uninstall "$SIMULATOR_UDID" "$BUNDLE_ID" 2>/dev/null || true
           xcrun simctl install "$SIMULATOR_UDID" "$APP_PATH"
 
-          if [ "$NATIVESCRIPT_POC_ONLY" = "true" ]; then
+          if [ "$NATIVESCRIPT_POC_ONLY" = "true" ] || [ "$RUN_SIMULATOR_NATIVESCRIPT_POC" = "true" ]; then
             test -z "$(find "$APP_PATH" -path '*fixture-a*' -print -quit)"
             DATA_CONTAINER="$(xcrun simctl get_app_container "$SIMULATOR_UDID" "$BUNDLE_ID" data)"
             FIXTURE_SOURCE="$GITHUB_WORKSPACE/Scripts/NativeScript/Prepared/fixture-a/nativescript/app"
@@ -1769,7 +1905,7 @@ jobs:
           }
           trap cleanup EXIT
 
-          if [ "$NATIVESCRIPT_POC_ONLY" = "true" ]; then
+          if [ "$NATIVESCRIPT_POC_ONLY" = "true" ] || [ "$RUN_SIMULATOR_NATIVESCRIPT_POC" = "true" ]; then
             set +e
             SIMCTL_CHILD_HANLIN_NATIVESCRIPT_POC=1 \
               xcrun simctl launch "$SIMULATOR_UDID" "$BUNDLE_ID" --hanlin-nativescript-poc 2>&1 \
@@ -1852,7 +1988,7 @@ jobs:
             exit 0
           fi
 
-          if [ "$FAST_VALIDATION_ONLY" = "true" ]; then
+          if [ "$FAST_VALIDATION_ONLY" = "true" ] || { [ "$RUN_SIMULATOR_SMOKE_LAUNCH" = "true" ] && [ "$RUN_SIMULATOR_SHELL_ACCEPTANCE" != "true" ] && [ "$RUN_SIMULATOR_MCP_ACCEPTANCE" != "true" ] && [ "$RUN_FULL_VALIDATION" != "true" ]; }; then
             set +e
             xcrun simctl launch "$SIMULATOR_UDID" "$BUNDLE_ID" 2>&1 \
               | tee "$LOG_DIR/08-fast-launch-output.txt"
@@ -1878,176 +2014,184 @@ jobs:
             exit 0
           fi
 
-          set +e
-          SIMCTL_CHILD_HANLIN_CANONICAL_SHADOW_CHECKS=1 \
-          SIMCTL_CHILD_HANLIN_RUNTIME_ACCEPTANCE=shell \
-            xcrun simctl launch "$SIMULATOR_UDID" "$BUNDLE_ID" 2>&1 | tee "$LOG_DIR/08-launch-output.txt"
-          launch_status=${PIPESTATUS[0]}
-          set -e
-          test "$launch_status" -eq 0
-          APP_PID="$(awk -F ': ' -v bundle="$BUNDLE_ID" '$1 == bundle { print $2 }' "$LOG_DIR/08-launch-output.txt" | tail -1)"
-          test -n "$APP_PID"
-          printf '%s\n' "$APP_PID" > "$LOG_DIR/launch-pid.txt"
-          LAUNCH_EPOCH="$(date +%s)"
-          DATA_CONTAINER="$(xcrun simctl get_app_container "$SIMULATOR_UDID" "$BUNDLE_ID" data)"
-          ACCEPTANCE_PATH="$DATA_CONTAINER/Library/Application Support/HanlinRuntime/v1/logs/shell-acceptance.json"
-          SHELL_LOG_PATH="$DATA_CONTAINER/Library/Application Support/HanlinRuntime/v1/logs/shell-runtime.log"
-          for elapsed in $(seq 1 120); do
-            if [ -f "$ACCEPTANCE_PATH" ]; then
-              break
-            fi
-            if ! xcrun simctl spawn "$SIMULATOR_UDID" launchctl print "pid/$APP_PID" >/dev/null 2>&1; then
-              echo "Full app exited before writing shell acceptance JSON after ${elapsed} seconds." >&2
-              exit 1
-            fi
-            sleep 1
-          done
-          test -f "$ACCEPTANCE_PATH"
-          cp "$ACCEPTANCE_PATH" "$LOG_DIR/shell-acceptance.json"
-          test -f "$SHELL_LOG_PATH"
-          cp "$SHELL_LOG_PATH" "$LOG_DIR/shell-runtime.log"
-          python3 Scripts/Runtime/validate_shell_acceptance.py \
-            "$LOG_DIR/shell-acceptance.json" \
-            --summary-output "$LOG_DIR/08-shell-acceptance-summary.json" \
-            | tee "$LOG_DIR/08-shell-acceptance.log"
-          python3 - "$LOG_DIR/shell-acceptance.json" <<'PY' | tee "$LOG_DIR/08-shell-canonical-shadow.log"
-          import json
-          import sys
+          if [ "$RUN_SIMULATOR_SHELL_ACCEPTANCE" = "true" ] || [ "$RUN_FULL_VALIDATION" = "true" ]; then
+            set +e
+            SIMCTL_CHILD_HANLIN_CANONICAL_SHADOW_CHECKS=1 \
+            SIMCTL_CHILD_HANLIN_RUNTIME_ACCEPTANCE=shell \
+              xcrun simctl launch "$SIMULATOR_UDID" "$BUNDLE_ID" 2>&1 | tee "$LOG_DIR/08-launch-output.txt"
+            launch_status=${PIPESTATUS[0]}
+            set -e
+            test "$launch_status" -eq 0
+            APP_PID="$(awk -F ': ' -v bundle="$BUNDLE_ID" '$1 == bundle { print $2 }' "$LOG_DIR/08-launch-output.txt" | tail -1)"
+            test -n "$APP_PID"
+            printf '%s\n' "$APP_PID" > "$LOG_DIR/launch-pid.txt"
+            LAUNCH_EPOCH="$(date +%s)"
+            DATA_CONTAINER="$(xcrun simctl get_app_container "$SIMULATOR_UDID" "$BUNDLE_ID" data)"
+            ACCEPTANCE_PATH="$DATA_CONTAINER/Library/Application Support/HanlinRuntime/v1/logs/shell-acceptance.json"
+            SHELL_LOG_PATH="$DATA_CONTAINER/Library/Application Support/HanlinRuntime/v1/logs/shell-runtime.log"
+            for elapsed in $(seq 1 120); do
+              if [ -f "$ACCEPTANCE_PATH" ]; then
+                break
+              fi
+              if ! xcrun simctl spawn "$SIMULATOR_UDID" launchctl print "pid/$APP_PID" >/dev/null 2>&1; then
+                echo "Full app exited before writing shell acceptance JSON after ${elapsed} seconds." >&2
+                exit 1
+              fi
+              sleep 1
+            done
+            test -f "$ACCEPTANCE_PATH"
+            cp "$ACCEPTANCE_PATH" "$LOG_DIR/shell-acceptance.json"
+            test -f "$SHELL_LOG_PATH"
+            cp "$SHELL_LOG_PATH" "$LOG_DIR/shell-runtime.log"
+            python3 Scripts/Runtime/validate_shell_acceptance.py \
+              "$LOG_DIR/shell-acceptance.json" \
+              --summary-output "$LOG_DIR/08-shell-acceptance-summary.json" \
+              | tee "$LOG_DIR/08-shell-acceptance.log"
+            python3 - "$LOG_DIR/shell-acceptance.json" <<'PY' | tee "$LOG_DIR/08-shell-canonical-shadow.log"
+            import json
+            import sys
 
-          payload = json.load(open(sys.argv[1], encoding="utf-8"))
-          report = payload.get("canonicalShadow")
-          if report is None:
-              raise SystemExit("Shell acceptance did not emit canonical shadow evidence")
-          domains = {item["domain"]: item for item in report["domains"]}
-          if report["summary"]["mismatchCount"] != 0:
-              raise SystemExit("Shell canonical shadow reported a mismatch")
-          if domains.get("runtime.core", {}).get("status") != "passed":
-              raise SystemExit("Shell RuntimeCore canonical shadow did not pass")
-          print(
-              "HANLIN_CANONICAL_SHADOW_CI acceptance=shell "
-              f"passed={report['summary']['passedCount']} "
-              f"warnings={report['summary']['warningCount']} "
-              f"mismatches={report['summary']['mismatchCount']} "
-              f"skipped={report['summary']['skippedCount']}"
-          )
+            payload = json.load(open(sys.argv[1], encoding="utf-8"))
+            report = payload.get("canonicalShadow")
+            if report is None:
+                raise SystemExit("Shell acceptance did not emit canonical shadow evidence")
+            domains = {item["domain"]: item for item in report["domains"]}
+            if report["summary"]["mismatchCount"] != 0:
+                raise SystemExit("Shell canonical shadow reported a mismatch")
+            if domains.get("runtime.core", {}).get("status") != "passed":
+                raise SystemExit("Shell RuntimeCore canonical shadow did not pass")
+            print(
+                "HANLIN_CANONICAL_SHADOW_CI acceptance=shell "
+                f"passed={report['summary']['passedCount']} "
+                f"warnings={report['summary']['warningCount']} "
+                f"mismatches={report['summary']['mismatchCount']} "
+                f"skipped={report['summary']['skippedCount']}"
+            )
           PY
 
-          ALIVE_SECONDS="$(( $(date +%s) - LAUNCH_EPOCH ))"
-          while [ "$ALIVE_SECONDS" -lt 15 ]; do
-            xcrun simctl spawn "$SIMULATOR_UDID" launchctl print "pid/$APP_PID" >/dev/null
-            sleep 1
             ALIVE_SECONDS="$(( $(date +%s) - LAUNCH_EPOCH ))"
-          done
-          xcrun simctl spawn "$SIMULATOR_UDID" launchctl print "pid/$APP_PID" >/dev/null
-          printf '%s\n' "$ALIVE_SECONDS" > "$LOG_DIR/alive-duration-seconds.txt"
+            while [ "$ALIVE_SECONDS" -lt 15 ]; do
+              xcrun simctl spawn "$SIMULATOR_UDID" launchctl print "pid/$APP_PID" >/dev/null
+              sleep 1
+              ALIVE_SECONDS="$(( $(date +%s) - LAUNCH_EPOCH ))"
+            done
+            xcrun simctl spawn "$SIMULATOR_UDID" launchctl print "pid/$APP_PID" >/dev/null
+            printf '%s\n' "$ALIVE_SECONDS" > "$LOG_DIR/alive-duration-seconds.txt"
 
-          xcrun simctl spawn "$SIMULATOR_UDID" log show \
-            --style compact \
-            --last 5m \
-            --predicate "processID == $APP_PID" \
-            > "$LOG_DIR/08-application.log" 2>&1 || true
+            xcrun simctl spawn "$SIMULATOR_UDID" log show \
+              --style compact \
+              --last 5m \
+              --predicate "processID == $APP_PID" \
+              > "$LOG_DIR/08-application.log" 2>&1 || true
 
-          : > "$LOG_DIR/08-new-diagnostic-reports.txt"
-          for diagnostic_root in \
-            "$HOME/Library/Logs/DiagnosticReports" \
-            "$HOME/Library/Developer/CoreSimulator/Devices/$SIMULATOR_UDID/data/Library/Logs/CrashReporter" \
-            "$HOME/Library/Developer/CoreSimulator/Devices/$SIMULATOR_UDID/data/Library/Logs/DiagnosticReports"; do
-            if [ -d "$diagnostic_root" ]; then
-              find "$diagnostic_root" -type f -newer "$LOG_DIR/launch-marker" -print \
-                >> "$LOG_DIR/08-new-diagnostic-reports.txt"
-            fi
-          done
-          while IFS= read -r diagnostic_report; do
-            report_name="$(basename "$diagnostic_report")"
-            case "$report_name" in
-              "$APP_EXECUTABLE"*|"$BUNDLE_ID"*)
-                echo "Full app generated crash report: $diagnostic_report" >&2
+            : > "$LOG_DIR/08-new-diagnostic-reports.txt"
+            for diagnostic_root in \
+              "$HOME/Library/Logs/DiagnosticReports" \
+              "$HOME/Library/Developer/CoreSimulator/Devices/$SIMULATOR_UDID/data/Library/Logs/CrashReporter" \
+              "$HOME/Library/Developer/CoreSimulator/Devices/$SIMULATOR_UDID/data/Library/Logs/DiagnosticReports"; do
+              if [ -d "$diagnostic_root" ]; then
+                find "$diagnostic_root" -type f -newer "$LOG_DIR/launch-marker" -print \
+                  >> "$LOG_DIR/08-new-diagnostic-reports.txt"
+              fi
+            done
+            while IFS= read -r diagnostic_report; do
+              report_name="$(basename "$diagnostic_report")"
+              case "$report_name" in
+                "$APP_EXECUTABLE"*|"$BUNDLE_ID"*)
+                  echo "Full app generated crash report: $diagnostic_report" >&2
+                  exit 1
+                  ;;
+              esac
+            done < "$LOG_DIR/08-new-diagnostic-reports.txt"
+
+            xcrun simctl terminate "$SIMULATOR_UDID" "$BUNDLE_ID" 2>/dev/null || true
+          else
+            printf '%s\n' "Shell runtime acceptance skipped by affected-validation router." > "$LOG_DIR/08-shell-acceptance-skipped.txt"
+          fi
+
+          if [ "$RUN_SIMULATOR_MCP_ACCEPTANCE" = "true" ] || [ "$RUN_FULL_VALIDATION" = "true" ]; then
+            MCP_ACCEPTANCE_PATH="$DATA_CONTAINER/Library/Application Support/HanlinRuntime/v1/logs/mcp-acceptance.json"
+            MCP_RUNTIME_LOG_PATH="$DATA_CONTAINER/Library/Application Support/HanlinRuntime/v1/logs/node-runtime.log"
+            rm -f "$MCP_ACCEPTANCE_PATH"
+            touch "$LOG_DIR/mcp-launch-marker"
+            set +e
+            SIMCTL_CHILD_HANLIN_CANONICAL_SHADOW_CHECKS=1 \
+            SIMCTL_CHILD_HANLIN_RUNTIME_ACCEPTANCE=mcp \
+              xcrun simctl launch "$SIMULATOR_UDID" "$BUNDLE_ID" 2>&1 | tee "$LOG_DIR/08-mcp-launch-output.txt"
+            mcp_launch_status=${PIPESTATUS[0]}
+            set -e
+            test "$mcp_launch_status" -eq 0
+            MCP_APP_PID="$(awk -F ': ' -v bundle="$BUNDLE_ID" '$1 == bundle { print $2 }' "$LOG_DIR/08-mcp-launch-output.txt" | tail -1)"
+            test -n "$MCP_APP_PID"
+            printf '%s\n' "$MCP_APP_PID" > "$LOG_DIR/mcp-launch-pid.txt"
+            for elapsed in $(seq 1 360); do
+              if [ -f "$MCP_ACCEPTANCE_PATH" ]; then
+                break
+              fi
+              if ! xcrun simctl spawn "$SIMULATOR_UDID" launchctl print "pid/$MCP_APP_PID" >/dev/null 2>&1; then
+                echo "Full app exited before writing MCP acceptance JSON after ${elapsed} seconds." >&2
                 exit 1
-                ;;
-            esac
-          done < "$LOG_DIR/08-new-diagnostic-reports.txt"
+              fi
+              sleep 1
+            done
+            test -f "$MCP_ACCEPTANCE_PATH"
+            cp "$MCP_ACCEPTANCE_PATH" "$LOG_DIR/mcp-acceptance.json"
+            test -f "$MCP_RUNTIME_LOG_PATH"
+            cp "$MCP_RUNTIME_LOG_PATH" "$LOG_DIR/node-runtime.log"
+            python3 Scripts/Runtime/validate_mcp_acceptance.py \
+              "$LOG_DIR/mcp-acceptance.json" \
+              --summary-output "$LOG_DIR/08-mcp-acceptance-summary.json" \
+              | tee "$LOG_DIR/08-mcp-acceptance.log"
+            COMPATIBILITY_REPORT="$(find "$DATA_CONTAINER/Library/Application Support/HanlinRuntime/v1/packages/mcp" -name compatibility-report.json -type f -print -quit)"
+            test -n "$COMPATIBILITY_REPORT"
+            cp "$COMPATIBILITY_REPORT" "$LOG_DIR/server-everything-compatibility-report.json"
+            python3 - "$LOG_DIR/mcp-acceptance.json" <<'PY' | tee "$LOG_DIR/08-mcp-canonical-shadow.log"
+            import json
+            import sys
 
-          xcrun simctl terminate "$SIMULATOR_UDID" "$BUNDLE_ID" 2>/dev/null || true
-
-          MCP_ACCEPTANCE_PATH="$DATA_CONTAINER/Library/Application Support/HanlinRuntime/v1/logs/mcp-acceptance.json"
-          MCP_RUNTIME_LOG_PATH="$DATA_CONTAINER/Library/Application Support/HanlinRuntime/v1/logs/node-runtime.log"
-          rm -f "$MCP_ACCEPTANCE_PATH"
-          touch "$LOG_DIR/mcp-launch-marker"
-          set +e
-          SIMCTL_CHILD_HANLIN_CANONICAL_SHADOW_CHECKS=1 \
-          SIMCTL_CHILD_HANLIN_RUNTIME_ACCEPTANCE=mcp \
-            xcrun simctl launch "$SIMULATOR_UDID" "$BUNDLE_ID" 2>&1 | tee "$LOG_DIR/08-mcp-launch-output.txt"
-          mcp_launch_status=${PIPESTATUS[0]}
-          set -e
-          test "$mcp_launch_status" -eq 0
-          MCP_APP_PID="$(awk -F ': ' -v bundle="$BUNDLE_ID" '$1 == bundle { print $2 }' "$LOG_DIR/08-mcp-launch-output.txt" | tail -1)"
-          test -n "$MCP_APP_PID"
-          printf '%s\n' "$MCP_APP_PID" > "$LOG_DIR/mcp-launch-pid.txt"
-          for elapsed in $(seq 1 360); do
-            if [ -f "$MCP_ACCEPTANCE_PATH" ]; then
-              break
-            fi
-            if ! xcrun simctl spawn "$SIMULATOR_UDID" launchctl print "pid/$MCP_APP_PID" >/dev/null 2>&1; then
-              echo "Full app exited before writing MCP acceptance JSON after ${elapsed} seconds." >&2
-              exit 1
-            fi
-            sleep 1
-          done
-          test -f "$MCP_ACCEPTANCE_PATH"
-          cp "$MCP_ACCEPTANCE_PATH" "$LOG_DIR/mcp-acceptance.json"
-          test -f "$MCP_RUNTIME_LOG_PATH"
-          cp "$MCP_RUNTIME_LOG_PATH" "$LOG_DIR/node-runtime.log"
-          python3 Scripts/Runtime/validate_mcp_acceptance.py \
-            "$LOG_DIR/mcp-acceptance.json" \
-            --summary-output "$LOG_DIR/08-mcp-acceptance-summary.json" \
-            | tee "$LOG_DIR/08-mcp-acceptance.log"
-          COMPATIBILITY_REPORT="$(find "$DATA_CONTAINER/Library/Application Support/HanlinRuntime/v1/packages/mcp" -name compatibility-report.json -type f -print -quit)"
-          test -n "$COMPATIBILITY_REPORT"
-          cp "$COMPATIBILITY_REPORT" "$LOG_DIR/server-everything-compatibility-report.json"
-          python3 - "$LOG_DIR/mcp-acceptance.json" <<'PY' | tee "$LOG_DIR/08-mcp-canonical-shadow.log"
-          import json
-          import sys
-
-          payload = json.load(open(sys.argv[1], encoding="utf-8"))
-          report = payload.get("canonicalShadow")
-          if report is None:
-              raise SystemExit("MCP acceptance did not emit canonical shadow evidence")
-          domains = {item["domain"]: item for item in report["domains"]}
-          if report["summary"]["mismatchCount"] != 0:
-              raise SystemExit("MCP canonical shadow reported a mismatch")
-          for domain in ("native.tools", "mcp", "runtime.core", "cross-domain.tools"):
-              if domains.get(domain, {}).get("status") != "passed":
-                  raise SystemExit(f"{domain} canonical shadow did not pass")
-          print(
-              "HANLIN_CANONICAL_SHADOW_CI acceptance=mcp "
-              f"passed={report['summary']['passedCount']} "
-              f"warnings={report['summary']['warningCount']} "
-              f"mismatches={report['summary']['mismatchCount']} "
-              f"skipped={report['summary']['skippedCount']}"
-          )
+            payload = json.load(open(sys.argv[1], encoding="utf-8"))
+            report = payload.get("canonicalShadow")
+            if report is None:
+                raise SystemExit("MCP acceptance did not emit canonical shadow evidence")
+            domains = {item["domain"]: item for item in report["domains"]}
+            if report["summary"]["mismatchCount"] != 0:
+                raise SystemExit("MCP canonical shadow reported a mismatch")
+            for domain in ("native.tools", "mcp", "runtime.core", "cross-domain.tools"):
+                if domains.get(domain, {}).get("status") != "passed":
+                    raise SystemExit(f"{domain} canonical shadow did not pass")
+            print(
+                "HANLIN_CANONICAL_SHADOW_CI acceptance=mcp "
+                f"passed={report['summary']['passedCount']} "
+                f"warnings={report['summary']['warningCount']} "
+                f"mismatches={report['summary']['mismatchCount']} "
+                f"skipped={report['summary']['skippedCount']}"
+            )
           PY
-          xcrun simctl spawn "$SIMULATOR_UDID" launchctl print "pid/$MCP_APP_PID" >/dev/null
-          xcrun simctl terminate "$SIMULATOR_UDID" "$BUNDLE_ID" 2>/dev/null || true
+            xcrun simctl spawn "$SIMULATOR_UDID" launchctl print "pid/$MCP_APP_PID" >/dev/null
+            xcrun simctl terminate "$SIMULATOR_UDID" "$BUNDLE_ID" 2>/dev/null || true
 
-          : > "$LOG_DIR/08-mcp-new-diagnostic-reports.txt"
-          for diagnostic_root in \
-            "$HOME/Library/Logs/DiagnosticReports" \
-            "$HOME/Library/Developer/CoreSimulator/Devices/$SIMULATOR_UDID/data/Library/Logs/CrashReporter" \
-            "$HOME/Library/Developer/CoreSimulator/Devices/$SIMULATOR_UDID/data/Library/Logs/DiagnosticReports"; do
-            if [ -d "$diagnostic_root" ]; then
-              find "$diagnostic_root" -type f -newer "$LOG_DIR/mcp-launch-marker" -print \
-                >> "$LOG_DIR/08-mcp-new-diagnostic-reports.txt"
-            fi
-          done
-          while IFS= read -r diagnostic_report; do
-            report_name="$(basename "$diagnostic_report")"
-            case "$report_name" in
-              "$APP_EXECUTABLE"*|"$BUNDLE_ID"*)
-                echo "MCP acceptance generated crash report: $diagnostic_report" >&2
-                exit 1
-                ;;
-            esac
-          done < "$LOG_DIR/08-mcp-new-diagnostic-reports.txt"
+            : > "$LOG_DIR/08-mcp-new-diagnostic-reports.txt"
+            for diagnostic_root in \
+              "$HOME/Library/Logs/DiagnosticReports" \
+              "$HOME/Library/Developer/CoreSimulator/Devices/$SIMULATOR_UDID/data/Library/Logs/CrashReporter" \
+              "$HOME/Library/Developer/CoreSimulator/Devices/$SIMULATOR_UDID/data/Library/Logs/DiagnosticReports"; do
+              if [ -d "$diagnostic_root" ]; then
+                find "$diagnostic_root" -type f -newer "$LOG_DIR/mcp-launch-marker" -print \
+                  >> "$LOG_DIR/08-mcp-new-diagnostic-reports.txt"
+              fi
+            done
+            while IFS= read -r diagnostic_report; do
+              report_name="$(basename "$diagnostic_report")"
+              case "$report_name" in
+                "$APP_EXECUTABLE"*|"$BUNDLE_ID"*)
+                  echo "MCP acceptance generated crash report: $diagnostic_report" >&2
+                  exit 1
+                  ;;
+              esac
+            done < "$LOG_DIR/08-mcp-new-diagnostic-reports.txt"
+          else
+            printf '%s\n' "MCP runtime acceptance skipped by affected-validation router." > "$LOG_DIR/08-mcp-acceptance-skipped.txt"
+          fi
           trap - EXIT
 
       - name: Save successful simulator compiler state

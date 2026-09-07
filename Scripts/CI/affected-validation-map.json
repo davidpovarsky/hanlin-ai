@@ -1,0 +1,596 @@
+{
+  "version": 1,
+  "description": "Declarative component and validation mapping for affected-test CI routing",
+  "no_impact_patterns": [
+    "*.md",
+    "**/*.md",
+    "docs/**",
+    ".gitignore",
+    ".gitattributes",
+    "LICENSE*",
+    "**/LICENSE*",
+    "NOTICE*",
+    "**/NOTICE*",
+    "recovery-state-before.txt",
+    "cherry_icon.png",
+    "logo_3_0.png",
+    "package-lock.json",
+    "Scripts/Audit/**",
+    "Vendor/**"
+  ],
+  "components": {
+    "ci_router": {
+      "description": "CI workflows, actions, and planning scripts",
+      "patterns": [
+        ".github/**",
+        "Scripts/CI/**"
+      ],
+      "direct_validation_groups": [
+        "ci_router"
+      ],
+      "consumers": []
+    },
+    "scripting_reference": {
+      "description": "Scripting compatibility reference data, schemas, and generators",
+      "patterns": [
+        "Reference/**",
+        "Scripts/ScriptingReference/**"
+      ],
+      "direct_validation_groups": [
+        "scripting_reference"
+      ],
+      "consumers": [
+        "scripting_compiler",
+        "platform_contracts",
+        "app_scripting_acceptance_test_files"
+      ]
+    },
+    "scripting_compiler": {
+      "description": "TypeScript/QuickJS scripting compiler and production compiler fixtures",
+      "patterns": [
+        "Scripts/ScriptingCompiler/**",
+        "AI_HLY/Downstream/ScriptingPlatform/HanlinNodeMobileScriptingCompiler.swift"
+      ],
+      "direct_validation_groups": [
+        "scripting_compiler",
+        "simulator_scripting_acceptance"
+      ],
+      "consumers": [
+        "platform_contracts"
+      ]
+    },
+    "platform_contracts": {
+      "description": "Phase 1 HanlinPlatform package: contracts, runtime, compiler, and store targets",
+      "patterns": [
+        "Packages/HanlinPlatform/**"
+      ],
+      "direct_validation_groups": [
+        "platform_contracts"
+      ],
+      "consumers": [
+        "app_core"
+      ]
+    },
+    "quickjs": {
+      "description": "QuickJS embedded C engine package and downstream session bridge",
+      "patterns": [
+        "Packages/HanlinQuickJS/**",
+        "AI_HLY/Downstream/Scripting/HanlinQuickJSSession.swift"
+      ],
+      "direct_validation_groups": [
+        "quickjs"
+      ],
+      "consumers": [
+        "platform_contracts",
+        "app_core"
+      ]
+    },
+    "nativescript_dependencies": {
+      "description": "NativeScript iOS dependency manifests, locks, scripts, and preflight tools",
+      "patterns": [
+        "Scripts/NativeScript/package.json",
+        "Scripts/NativeScript/package-lock.json",
+        "Scripts/NativeScript/dependency-lock.json",
+        "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "Scripts/NativeScript/preflight-ios-dependencies.mjs",
+        "Scripts/NativeScript/hanlin-nsld.sh",
+        "Scripts/NativeScript/build-step-metadata-generator-wrapper.py"
+      ],
+      "direct_validation_groups": [
+        "nativescript_dependencies"
+      ],
+      "consumers": [
+        "nativescript_runtime",
+        "nativescript_fixtures"
+      ]
+    },
+    "nativescript_fixtures": {
+      "description": "NativeScript fixture TypeScript sources, prepared bundles, and build configs",
+      "patterns": [
+        "Scripts/NativeScript/Fixtures/**",
+        "Scripts/NativeScript/Prepared/**",
+        "Scripts/NativeScript/prepare-fixture.mjs",
+        "Scripts/NativeScript/prepare-production-package.mjs",
+        "Scripts/NativeScript/nativescript.config.ts",
+        "Scripts/NativeScript/tsconfig.json",
+        "Scripts/NativeScript/vite.config.mts"
+      ],
+      "direct_validation_groups": [
+        "nativescript_dependencies",
+        "simulator_targeted_ui"
+      ],
+      "consumers": []
+    },
+    "nativescript_runtime": {
+      "description": "NativeScript SPM package, CoreSupport bridge, and downstream host bootstrap",
+      "patterns": [
+        "Packages/HanlinNativeScriptRuntime/**",
+        "AI_HLY/Downstream/NativeScript/**"
+      ],
+      "direct_validation_groups": [
+        "nativescript_runtime",
+        "simulator_targeted_ui"
+      ],
+      "consumers": [
+        "device_build"
+      ]
+    },
+    "runtimecore_bundle": {
+      "description": "RuntimeCore lock file, bundle build/assemble workflows, and manifest scripts",
+      "patterns": [
+        "RuntimeDependencies.lock.json",
+        "Scripts/Runtime/validate-runtime-lock.mjs",
+        "Scripts/Runtime/compute-runtime-dependency-hash.mjs",
+        "Scripts/Runtime/build-runtime-bundle.sh",
+        "Scripts/Runtime/assemble-runtime-bundle.sh",
+        "Scripts/Runtime/generate-runtime-manifest.mjs",
+        "Scripts/Runtime/update-runtime-dependencies.mjs",
+        "Scripts/Runtime/validate-runtime-localization.mjs",
+        ".github/workflows/build-runtime-bundle.yml"
+      ],
+      "direct_validation_groups": [
+        "runtimecore_bundle"
+      ],
+      "consumers": [
+        "runtimecore_host",
+        "project_packaging"
+      ]
+    },
+    "runtimecore_host": {
+      "description": "RuntimeCore host packaging, preflight, and bundled Node host resources",
+      "patterns": [
+        "AI_HLY/Downstream/RuntimeCore/Node/Host/**",
+        "AI_HLY/Downstream/RuntimeCore/Resources/**",
+        "Scripts/Runtime/prepare-runtime-host.sh",
+        "Scripts/Runtime/prepare-runtime-core.sh",
+        "Scripts/Runtime/preflight-runtime-core.sh",
+        "Scripts/Runtime/run-with-heartbeat.py"
+      ],
+      "direct_validation_groups": [
+        "runtimecore_host"
+      ],
+      "consumers": [
+        "python_runtime",
+        "node_runtime",
+        "ios_system"
+      ]
+    },
+    "python_runtime": {
+      "description": "Python iOS runtime slice scripts and downstream Python environment",
+      "patterns": [
+        "AI_HLY/Downstream/RuntimeCore/Python/**",
+        "Scripts/Runtime/prepare-python-runtime.sh"
+      ],
+      "direct_validation_groups": [
+        "python_runtime",
+        "simulator_shell_acceptance"
+      ],
+      "consumers": []
+    },
+    "node_runtime": {
+      "description": "Node mobile runtime scripts, Node/V8 bridge, and MCP downstream runtime",
+      "patterns": [
+        "AI_HLY/Downstream/RuntimeCore/Node/**",
+        "AI_HLY/Downstream/MCP/**",
+        "Scripts/Runtime/prepare-node-source.sh",
+        "Scripts/Runtime/build-node-slice.sh",
+        "Scripts/Runtime/NodeMobile.exports",
+        "Scripts/Runtime/validate_mcp_acceptance.py",
+        "Scripts/Runtime/validate-mcp-install-dedup.mjs"
+      ],
+      "direct_validation_groups": [
+        "node_runtime",
+        "simulator_mcp_acceptance"
+      ],
+      "consumers": []
+    },
+    "ios_system": {
+      "description": "IOSSystemLite Swift package, bridge, and shell commands integration",
+      "patterns": [
+        "Packages/IOSSystemLite/**",
+        "AI_HLY/Downstream/RuntimeCore/Shell/**",
+        "Scripts/Runtime/validate_ios_system_resources.py",
+        "Scripts/Runtime/validate_shell_acceptance.py",
+        "Scripts/Runtime/validate-ios-system-package.mjs"
+      ],
+      "direct_validation_groups": [
+        "ios_system",
+        "simulator_shell_acceptance"
+      ],
+      "consumers": []
+    },
+    "runtime_tools": {
+      "description": "Runtime validation scripts, link dependency tests, and dyld closure scanner",
+      "patterns": [
+        "Scripts/Runtime/validate-app-dyld-closure.py",
+        "Scripts/Runtime/Tests/**"
+      ],
+      "direct_validation_groups": [
+        "runtimecore_host"
+      ],
+      "consumers": [
+        "project_packaging"
+      ]
+    },
+    "app_ui": {
+      "description": "SwiftUI views, screens, assets, localization, and UI components",
+      "patterns": [
+        "AI_HLY/Views/**",
+        "AI_HLY/ChatView.swift",
+        "AI_HLY/KnowledgeListView.swift",
+        "AI_HLY/ListView.swift",
+        "AI_HLY/MainTabView.swift",
+        "AI_HLY/ModelsView.swift",
+        "AI_HLY/SettingsView.swift",
+        "AI_HLY/VisionIntent.swift",
+        "AI_HLY/VisionView.swift",
+        "AI_HLY/AI_HLY.swift",
+        "AI_HLY/Assets.xcassets/**",
+        "AI_HLY/*.lproj/**",
+        "AI_HLY/Resource/**",
+        "AI_HLY/Base.lproj/**"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests",
+        "simulator_smoke_launch"
+      ],
+      "consumers": []
+    },
+    "app_core": {
+      "description": "Core data models, services, native app hub, canonical coordinator, and agents",
+      "patterns": [
+        "AI_HLY/Model/**",
+        "AI_HLY/Services/**",
+        "AI_HLY/NativeAppPlatform/**",
+        "AI_HLY/NativeAgentExtensions/**",
+        "AI_HLY/Downstream/CanonicalAdapters/**",
+        "AI_HLY/Downstream/CanonicalShadow/**",
+        "AI_HLY/Downstream/CanonicalTools/**",
+        "AI_HLY/Downstream/AgentActivity/**",
+        "AI_HLY/Downstream/AgentDiagnostics/**",
+        "AI_HLY/Downstream/Compatibility/**",
+        "AI_HLY/Downstream/RuntimeCore/Core/**",
+        "AI_HLY/Downstream/RuntimeCore/Environment/**",
+        "AI_HLY/Downstream/RuntimeCore/Lifecycle/**",
+        "AI_HLY/Downstream/RuntimeCore/Tools/**",
+        "AI_HLY/Downstream/RuntimeCore/UI/**",
+        "AI_HLY/Downstream/RuntimeCore/JavaScriptCore/**",
+        "AI_HLY/Downstream/Scripting/**",
+        "AI_HLY/Downstream/ScriptingPlatform/**"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "consumers": [
+        "app_ui"
+      ]
+    },
+    "scripting_widgets": {
+      "description": "HanlinScriptingWidgets app extension target",
+      "patterns": [
+        "HanlinScriptingWidgets/**"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "consumers": [
+        "project_packaging"
+      ]
+    },
+    "app_unit_test_files": {
+      "description": "Downstream unit tests and canonical shadow tests",
+      "patterns": [
+        "AI_HLYTests/CanonicalAdapterTests.swift",
+        "AI_HLYTests/CanonicalShadowCoordinatorTests.swift",
+        "AI_HLYTests/CanonicalToolAuthorityTests.swift",
+        "AI_HLYTests/FoundationJSONShadowAdapterTests.swift",
+        "AI_HLYTests/HanlinScriptingAssistantProviderAdapterTests.swift",
+        "AI_HLYTests/ScriptingCanonicalAuthorityTests.swift"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "consumers": []
+    },
+    "app_scripting_acceptance_test_files": {
+      "description": "Downstream Scripting acceptance test suites and fixtures",
+      "patterns": [
+        "AI_HLYTests/HanlinScriptingRuntimeTests.swift",
+        "AI_HLYTests/Fixtures/**"
+      ],
+      "direct_validation_groups": [
+        "simulator_scripting_acceptance"
+      ],
+      "consumers": []
+    },
+    "app_ui_test_files": {
+      "description": "Downstream UI tests (NativeScript production E2E)",
+      "patterns": [
+        "AI_HLYUITests/**"
+      ],
+      "direct_validation_groups": [
+        "simulator_targeted_ui"
+      ],
+      "consumers": []
+    },
+    "project_packaging": {
+      "description": "Xcode project structure, build settings, entitlements, and configs",
+      "patterns": [
+        "AI_HLY.xcodeproj/**",
+        "AI-HLY-Info.plist",
+        "AI_HLY/AI_HLY.entitlements",
+        "Config.xcconfig.template"
+      ],
+      "direct_validation_groups": [
+        "device_build",
+        "ipa_packaging"
+      ],
+      "consumers": []
+    }
+  },
+  "validation_groups": {
+    "ci_router": {
+      "description": "Execute CI router and cache input normalization unit tests",
+      "job": "phase1",
+      "prerequisites": [],
+      "workflow_outputs": {
+        "run_ci_router": true,
+        "run_phase1": true
+      }
+    },
+    "scripting_reference": {
+      "description": "Verify Scripting baseline integrity, inventory, schemas, and JS tests",
+      "job": "phase1",
+      "prerequisites": [],
+      "workflow_outputs": {
+        "run_scripting_reference": true,
+        "run_phase1": true
+      }
+    },
+    "scripting_compiler": {
+      "description": "Verify TypeScript 7.0.2 Scripting compiler and production acceptance",
+      "job": "phase1",
+      "prerequisites": [],
+      "workflow_outputs": {
+        "run_scripting_compiler": true,
+        "run_phase1": true
+      }
+    },
+    "platform_contracts": {
+      "description": "Resolve, build, and test HanlinPlatform Swift package contracts",
+      "job": "phase1",
+      "prerequisites": [],
+      "workflow_outputs": {
+        "run_platform_contracts": true,
+        "run_phase1": true
+      }
+    },
+    "quickjs": {
+      "description": "QuickJS engine validation and downstream session tests",
+      "job": "simulator",
+      "prerequisites": [],
+      "workflow_outputs": {
+        "run_simulator_job": true,
+        "run_simulator_unit": true,
+        "simulator_unit_filter": "AI_HLYTests/HanlinScriptingRuntimeTests"
+      }
+    },
+    "nativescript_dependencies": {
+      "description": "Prepare, preflight, and lock NativeScript iOS dependencies",
+      "job": "phase1",
+      "prerequisites": [],
+      "workflow_outputs": {
+        "run_nativescript_dependencies": true
+      }
+    },
+    "nativescript_runtime": {
+      "description": "Compile HanlinNativeScriptRuntime package for simulator and device",
+      "job": "phase1",
+      "prerequisites": [
+        "nativescript_dependencies"
+      ],
+      "workflow_outputs": {
+        "run_nativescript_runtime": true,
+        "run_phase1": true
+      }
+    },
+    "runtimecore_bundle": {
+      "description": "Run split RuntimeCore bundle verification and assembly workflow",
+      "job": "runtime_bundle",
+      "prerequisites": [],
+      "workflow_outputs": {
+        "run_runtimecore_bundle": true
+      }
+    },
+    "runtimecore_host": {
+      "description": "Package RuntimeCore host resources, preflight, and link-closure regression",
+      "job": "phase1",
+      "prerequisites": [],
+      "workflow_outputs": {
+        "run_runtimecore_host": true
+      }
+    },
+    "python_runtime": {
+      "description": "Verify Python runtime slices and Shell acceptance",
+      "job": "simulator",
+      "prerequisites": [],
+      "workflow_outputs": {
+        "run_simulator_job": true,
+        "run_simulator_shell_acceptance": true
+      }
+    },
+    "node_runtime": {
+      "description": "Verify Node/V8 slices and MCP acceptance",
+      "job": "simulator",
+      "prerequisites": [],
+      "workflow_outputs": {
+        "run_simulator_job": true,
+        "run_simulator_mcp_acceptance": true
+      }
+    },
+    "ios_system": {
+      "description": "Verify IOSSystemLite commands and Shell acceptance",
+      "job": "simulator",
+      "prerequisites": [],
+      "workflow_outputs": {
+        "run_simulator_job": true,
+        "run_simulator_shell_acceptance": true
+      }
+    },
+    "app_unit_tests": {
+      "description": "Run downstream unit tests on iPad Simulator",
+      "job": "simulator",
+      "prerequisites": [],
+      "workflow_outputs": {
+        "run_simulator_job": true,
+        "run_simulator_unit": true,
+        "simulator_unit_filter": "AI_HLYTests"
+      }
+    },
+    "simulator_targeted_ui": {
+      "description": "Run NativeScript production UI E2E test suite on iPad Simulator",
+      "job": "simulator",
+      "prerequisites": [
+        "nativescript_dependencies"
+      ],
+      "workflow_outputs": {
+        "run_simulator_job": true,
+        "run_simulator_targeted_ui": true
+      }
+    },
+    "simulator_scripting_acceptance": {
+      "description": "Run Hanlin Scripting acceptance tests on iPad Simulator",
+      "job": "simulator",
+      "prerequisites": [],
+      "workflow_outputs": {
+        "run_simulator_job": true,
+        "run_simulator_scripting_acceptance": true
+      }
+    },
+    "simulator_shell_acceptance": {
+      "description": "Launch app and verify Shell runtime acceptance & canonical shadow",
+      "job": "simulator",
+      "prerequisites": [],
+      "workflow_outputs": {
+        "run_simulator_job": true,
+        "run_simulator_shell_acceptance": true
+      }
+    },
+    "simulator_mcp_acceptance": {
+      "description": "Launch app and verify MCP runtime acceptance & canonical shadow",
+      "job": "simulator",
+      "prerequisites": [],
+      "workflow_outputs": {
+        "run_simulator_job": true,
+        "run_simulator_mcp_acceptance": true
+      }
+    },
+    "simulator_smoke_launch": {
+      "description": "Perform basic fast app launch smoke check on iPad Simulator",
+      "job": "simulator",
+      "prerequisites": [],
+      "workflow_outputs": {
+        "run_simulator_job": true,
+        "run_simulator_smoke_launch": true
+      }
+    },
+    "simulator_nativescript_poc": {
+      "description": "Launch and verify post-install NativeScript POC on iPad Simulator",
+      "job": "simulator",
+      "prerequisites": [
+        "nativescript_dependencies"
+      ],
+      "workflow_outputs": {
+        "run_simulator_job": true,
+        "run_simulator_nativescript_poc": true
+      }
+    },
+    "device_build": {
+      "description": "Build arm64 release application archive for iOS device",
+      "job": "device_build",
+      "prerequisites": [
+        "nativescript_dependencies"
+      ],
+      "workflow_outputs": {
+        "run_device_build": true
+      }
+    },
+    "ipa_packaging": {
+      "description": "Package unsigned IPA, validate dyld closure and system resources",
+      "job": "device_build",
+      "prerequisites": [
+        "device_build"
+      ],
+      "workflow_outputs": {
+        "run_device_build": true,
+        "run_ipa_packaging": true
+      }
+    }
+  },
+  "expensive_groups_for_summary": [
+    {
+      "name": "Phase 1 platform contracts compilation",
+      "validation_group": "platform_contracts"
+    },
+    {
+      "name": "Phase 1 Scripting baseline verification",
+      "validation_group": "scripting_reference"
+    },
+    {
+      "name": "Phase 1 Scripting compiler acceptance",
+      "validation_group": "scripting_compiler"
+    },
+    {
+      "name": "Phase 1 NativeScript runtime package",
+      "validation_group": "nativescript_runtime"
+    },
+    {
+      "name": "RuntimeCore bundle pipeline",
+      "validation_group": "runtimecore_bundle"
+    },
+    {
+      "name": "iPad Simulator downstream unit tests",
+      "validation_group": "app_unit_tests"
+    },
+    {
+      "name": "iPad Simulator Scripting acceptance",
+      "validation_group": "simulator_scripting_acceptance"
+    },
+    {
+      "name": "iPad Simulator NativeScript UI E2E",
+      "validation_group": "simulator_targeted_ui"
+    },
+    {
+      "name": "iPad Simulator Shell runtime acceptance",
+      "validation_group": "simulator_shell_acceptance"
+    },
+    {
+      "name": "iPad Simulator MCP runtime acceptance",
+      "validation_group": "simulator_mcp_acceptance"
+    },
+    {
+      "name": "Device Release IPA build & packaging",
+      "validation_group": "device_build"
+    }
+  ]
+}
