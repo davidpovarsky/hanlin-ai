@@ -26,41 +26,14 @@ struct ScriptingPackageImportView: View {
     var body: some View {
         @Bindable var platform = platform
         List {
-            Section {
-                Button {
-                    showsImporter = true
-                } label: {
-                    Label("Import Script Package", systemImage: "doc.badge.plus")
-                }
-                .accessibilityIdentifier("hanlin-file-importer")
-                Text("Choose a .scripting, .hanlinNativeScript, or .zip package. Hanlin copies it into private staging and performs Import Preview without executing package code.")
-                    .font(.footnote)
-                    .foregroundStyle(.secondary)
-            }
-
-            let stagedFiles = stagedDocumentPackages
-            if !stagedFiles.isEmpty {
-                Section("Shared Packages") {
-                    ForEach(stagedFiles, id: \.self) { fileURL in
-                        Button {
-                            print("HANLIN_IMPORT_PACKAGE_TAPPED url=\(fileURL.lastPathComponent)")
-                            Task { await platform.importPackage(from: fileURL) }
-                        } label: {
-                            HStack {
-                                Label(fileURL.deletingPathExtension().lastPathComponent, systemImage: "shippingbox")
-                                Spacer()
-                            }
-                            .contentShape(Rectangle())
-                        }
-                        .buttonStyle(.borderless)
-                        .accessibilityIdentifier(fileURL.deletingPathExtension().lastPathComponent)
-                        .accessibilityLabel(fileURL.deletingPathExtension().lastPathComponent)
-                    }
+            if case let .failed(message) = platform.activity {
+                Section("Import Error") {
+                    Label(message, systemImage: "exclamationmark.triangle")
+                        .foregroundStyle(.red)
                 }
             }
 
             if let preview = platform.preview {
-                ScriptingImportPreviewSections(preview: preview, platform: platform)
                 Section {
                     Button("Install") { Task { await platform.installPreview() } }
                         .accessibilityIdentifier("hanlin-package-install")
@@ -71,12 +44,39 @@ struct ScriptingPackageImportView: View {
                         )
                     Button("Discard", role: .destructive) { platform.discardPreview() }
                 }
-            }
+                ScriptingImportPreviewSections(preview: preview, platform: platform)
+            } else {
+                Section {
+                    Button {
+                        showsImporter = true
+                    } label: {
+                        Label("Import Script Package", systemImage: "doc.badge.plus")
+                    }
+                    .accessibilityIdentifier("hanlin-file-importer")
+                    Text("Choose a .scripting, .hanlinNativeScript, or .zip package. Hanlin copies it into private staging and performs Import Preview without executing package code.")
+                        .font(.footnote)
+                        .foregroundStyle(.secondary)
+                }
 
-            if case let .failed(message) = platform.activity {
-                Section("Import Error") {
-                    Label(message, systemImage: "exclamationmark.triangle")
-                        .foregroundStyle(.red)
+                let stagedFiles = stagedDocumentPackages
+                if !stagedFiles.isEmpty {
+                    Section("Shared Packages") {
+                        ForEach(stagedFiles, id: \.self) { fileURL in
+                            Button {
+                                print("HANLIN_IMPORT_PACKAGE_TAPPED url=\(fileURL.lastPathComponent)")
+                                Task { await platform.importPackage(from: fileURL) }
+                            } label: {
+                                HStack {
+                                    Label(fileURL.deletingPathExtension().lastPathComponent, systemImage: "shippingbox")
+                                    Spacer()
+                                }
+                                .contentShape(Rectangle())
+                            }
+                            .buttonStyle(.borderless)
+                            .accessibilityIdentifier(fileURL.deletingPathExtension().lastPathComponent)
+                            .accessibilityLabel(fileURL.deletingPathExtension().lastPathComponent)
+                        }
+                    }
                 }
             }
         }

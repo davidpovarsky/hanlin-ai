@@ -57,13 +57,16 @@ final class HanlinNativeScriptProductionE2ETests: XCTestCase {
     func testUnsupportedPluginRejection() throws {
         openApps()
         importArchive(named: "HanlinNativeScriptUnsupported")
+        let disabledInstall = app.buttons["hanlin-package-install"].firstMatch
+        XCTAssertTrue(disabledInstall.waitForExistence(timeout: 20), "Install button did not exist in preview")
+        XCTAssertFalse(disabledInstall.isEnabled, "Unsupported native plugin package was installable")
         let unsupportedMessage = app.staticTexts[
             "This Hanlin build supports @nativescript/swift-ui 4.0.2, but the package requires @nativescript/swift-ui 99.0.0."
         ]
+        if !unsupportedMessage.waitForExistence(timeout: 5) {
+            app.swipeUp()
+        }
         XCTAssertTrue(unsupportedMessage.waitForExistence(timeout: 20), "Unsupported plugin reason was not visible")
-        let disabledInstall = app.buttons["hanlin-package-install"].firstMatch
-        XCTAssertTrue(disabledInstall.exists)
-        XCTAssertFalse(disabledInstall.isEnabled, "Unsupported native plugin package was installable")
         capture(name: "Unsupported-NativeScript-Plugin-Rejected")
         closeImportSurfaces()
     }
@@ -71,7 +74,11 @@ final class HanlinNativeScriptProductionE2ETests: XCTestCase {
     func testMalformedPackageRejection() throws {
         openApps()
         importArchive(named: "HanlinNativeScriptMalformed")
-        XCTAssertTrue(app.staticTexts["Import Error"].firstMatch.waitForExistence(timeout: 20))
+        let errorHeader = app.staticTexts["Import Error"].firstMatch
+        if !errorHeader.waitForExistence(timeout: 5) {
+            app.swipeUp()
+        }
+        XCTAssertTrue(errorHeader.waitForExistence(timeout: 20))
         XCTAssertFalse(app.buttons["hanlin-package-install"].firstMatch.exists)
         capture(name: "Malformed-Package-Rejected")
     }
@@ -79,7 +86,10 @@ final class HanlinNativeScriptProductionE2ETests: XCTestCase {
     private func importAndInstall(archive: String) {
         importArchive(named: archive)
         let install = app.buttons["hanlin-package-install"].firstMatch
-        if !install.waitForExistence(timeout: 30) {
+        if !install.waitForExistence(timeout: 10) {
+            app.swipeUp()
+        }
+        if !install.waitForExistence(timeout: 20) {
             capture(name: "\(archive)-Import-Timeout")
             var detail = "Import Preview did not expose Install for \(archive)."
             if app.staticTexts["Import Error"].firstMatch.exists {
