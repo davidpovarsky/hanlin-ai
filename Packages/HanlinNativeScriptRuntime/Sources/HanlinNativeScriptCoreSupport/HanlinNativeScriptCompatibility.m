@@ -9,4 +9,22 @@
     return [defaults stringForKey:scopedKey] ?: @"";
 }
 
++ (nullable id)createSwiftUIFixtureProvider {
+    Class klass = NSClassFromString(@"HanlinNativeScriptSwiftUIFixtureProvider");
+    if (!klass) {
+        NSLog(@"[HanlinNativeScriptCompatibility] Fatal: HanlinNativeScriptSwiftUIFixtureProvider class not found in Objective-C runtime.");
+        return nil;
+    }
+
+    if ([NSThread isMainThread]) {
+        return [[klass alloc] init];
+    } else {
+        __block id provider = nil;
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            provider = [[klass alloc] init];
+        });
+        return provider;
+    }
+}
+
 @end

@@ -17,8 +17,8 @@ declare const UIDevice: {
   currentDevice: { systemName: string; systemVersion: string };
 };
 
-declare const HanlinNativeScriptSwiftUIFixtureProvider: {
-  alloc(): { init(): any };
+declare const HanlinNativeScriptCompatibility: {
+  createSwiftUIFixtureProvider(): any;
 };
 
 declare global {
@@ -33,8 +33,16 @@ console.log(`HANLIN_NS_FIXTURE_STARTED package=${packageName}`);
 console.log(`HANLIN_NS_NATIVE_API_OK system=${systemName} version=${systemVersion}`);
 console.log('HANLIN_NS_SWIFTUI_MODULE_OK package=@nativescript/swift-ui version=4.0.2');
 
+function createFixtureProvider(): any {
+  const provider = HanlinNativeScriptCompatibility.createSwiftUIFixtureProvider();
+  if (!provider) {
+    throw new Error('HanlinNativeScriptSwiftUIFixtureProvider could not be instantiated by HanlinNativeScriptCompatibility');
+  }
+  return provider;
+}
+
 registerSwiftUI('hanlinFixture', (view) => new UIDataDriver(
-  HanlinNativeScriptSwiftUIFixtureProvider.alloc().init(),
+  createFixtureProvider(),
   view
 ));
 

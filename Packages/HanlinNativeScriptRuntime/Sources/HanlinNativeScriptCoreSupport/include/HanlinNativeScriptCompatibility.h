@@ -6,6 +6,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// Ordinary Apple API access remains NativeScript's responsibility.
 @interface HanlinNativeScriptCompatibility : NSObject
 + (NSString *)roundTripValue:(NSString *)value key:(NSString *)key;
++ (nullable id)createSwiftUIFixtureProvider;
 @end
 
 NS_ASSUME_NONNULL_END
