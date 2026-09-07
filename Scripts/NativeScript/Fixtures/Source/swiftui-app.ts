@@ -39,21 +39,54 @@ console.log('HANLIN_NS_SWIFTUI_MODULE_OK package=@nativescript/swift-ui version=
 
 function createFixtureProvider(): any {
   const g = globalThis as any;
-  if (typeof g.HanlinNativeScriptCompatibility?.createSwiftUIFixtureProvider === 'function') {
-    const provider = g.HanlinNativeScriptCompatibility.createSwiftUIFixtureProvider();
-    if (provider) {
-      return provider;
-    }
+  const getClass = (name: string): any => {
+    try {
+      if (typeof g.NSClassFromString === 'function') {
+        const cls = g.NSClassFromString(name);
+        if (cls) return cls;
+      }
+    } catch {}
+    try {
+      if (typeof g.objc_getClass === 'function') {
+        const cls = g.objc_getClass(name);
+        if (cls) return cls;
+      }
+    } catch {}
+    return g[name] ?? null;
+  };
+
+  const instantiate = (cls: any): any => {
+    if (!cls) return null;
+    try {
+      if (typeof cls.alloc === 'function') {
+        return cls.alloc().init();
+      }
+    } catch {}
+    try {
+      if (typeof cls.new === 'function') {
+        return cls.new();
+      }
+    } catch {}
+    try {
+      if (typeof cls === 'function') {
+        return new cls();
+      }
+    } catch {}
+    return null;
+  };
+
+  // First priority: HanlinNativeScriptCompatibility bridge helper
+  const compatCls = getClass('HanlinNativeScriptCompatibility');
+  if (compatCls && typeof compatCls.createSwiftUIFixtureProvider === 'function') {
+    const provider = compatCls.createSwiftUIFixtureProvider();
+    if (provider) return provider;
   }
-  if (typeof g.HanlinNativeScriptSwiftUIFixtureProvider?.alloc === 'function') {
-    return g.HanlinNativeScriptSwiftUIFixtureProvider.alloc().init();
-  }
-  if (typeof g.NSClassFromString === 'function') {
-    const cls = g.NSClassFromString('HanlinNativeScriptSwiftUIFixtureProvider');
-    if (cls && typeof cls.alloc === 'function') {
-      return cls.alloc().init();
-    }
-  }
+
+  // Second priority: direct HanlinNativeScriptSwiftUIFixtureProvider class
+  const providerCls = getClass('HanlinNativeScriptSwiftUIFixtureProvider');
+  const directProvider = instantiate(providerCls);
+  if (directProvider) return directProvider;
+
   throw new Error('HanlinNativeScriptSwiftUIFixtureProvider could not be instantiated');
 }
 

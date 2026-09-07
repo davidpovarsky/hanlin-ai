@@ -55,7 +55,8 @@ public final class HanlinNativeScriptSwiftUIFixtureProvider: UIViewController, S
         print("HANLIN_NS_SWIFTUI_PROVIDER_READY provider=HanlinNativeScriptSwiftUIFixtureProvider")
     }
 
-    @objc public func updateData(data: NSDictionary) {
+    @objc(updateDataWithData:)
+    public func updateData(data: NSDictionary) {
         if let title = data["title"] as? String, !title.isEmpty {
             model.title = title
         }
@@ -63,5 +64,14 @@ public final class HanlinNativeScriptSwiftUIFixtureProvider: UIViewController, S
             model.count = count.intValue
         }
         print("HANLIN_NS_SWIFTUI_DATA_OK title=\(model.title) count=\(model.count)")
+    }
+
+    @objc(updateData:)
+    public func updateDataDirect(_ data: NSDictionary) {
+        updateData(data: data)
+    }
+
+    @objc public func registerEventHandler(_ handler: @escaping (NSDictionary) -> Void) {
+        self.onEvent = handler
     }
 }
