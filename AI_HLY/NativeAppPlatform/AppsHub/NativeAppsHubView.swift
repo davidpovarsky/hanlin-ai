@@ -72,7 +72,7 @@ struct NativeAppsHubView: View {
             .navigationTitle(String(localized: "Apps"))
             .searchable(text: $searchText, prompt: "Search Apps")
             .toolbar {
-                ToolbarItem(placement: .primaryAction) {
+                ToolbarItem(placement: .topBarTrailing) {
                     Button {
                         showsAddSheet = true
                     } label: {
@@ -81,7 +81,7 @@ struct NativeAppsHubView: View {
                     .accessibilityIdentifier("hanlin-apps-add")
                     .accessibilityLabel("hanlin-apps-add")
                 }
-                ToolbarItem(placement: .secondaryAction) {
+                ToolbarItem(placement: .topBarLeading) {
                     Button(isEditingApps ? "Done" : "Edit") {
                         isEditingApps.toggle()
                     }
@@ -188,6 +188,7 @@ struct NativeAppsHubView: View {
         }
         .buttonStyle(.plain)
         .accessibilityIdentifier("hanlin-package-\(package.record.installedPackageID.rawValue)")
+        .accessibilityLabel(package.manifest?.name ?? package.record.packageID.rawValue)
         .disabled(isEditingApps)
         .contextMenu {
             Button {

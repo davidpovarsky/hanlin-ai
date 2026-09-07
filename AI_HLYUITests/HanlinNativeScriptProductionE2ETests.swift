@@ -124,37 +124,14 @@ final class HanlinNativeScriptProductionE2ETests: XCTestCase {
         return direct
     }
 
-    private func revealAppsAddButtonIfNeeded() {
-        if appsAddButton.exists { return }
-        let overflowCandidates = [
-            app.navigationBars.buttons["OverflowBarButtonItem"].firstMatch,
-            app.buttons["OverflowBarButtonItem"].firstMatch,
-            app.navigationBars.buttons["More"].firstMatch,
-            app.buttons["More"].firstMatch
-        ]
-        for overflow in overflowCandidates {
-            if overflow.exists {
-                overflow.tap()
-                _ = appsAddButton.waitForExistence(timeout: 3)
-                return
-            }
-        }
-    }
-
     @discardableResult
     private func ensureAppsAddButton(timeout: TimeInterval = 20) -> XCUIElement {
-        if appsAddButton.waitForExistence(timeout: min(timeout, 5)) {
-            return appsAddButton
-        }
-        revealAppsAddButtonIfNeeded()
         XCTAssertTrue(appsAddButton.waitForExistence(timeout: timeout), "hanlin-apps-add button did not exist")
         return appsAddButton
     }
 
     private func openApps() {
         if appsAddButton.waitForExistence(timeout: 5) { return }
-        revealAppsAddButtonIfNeeded()
-        if appsAddButton.waitForExistence(timeout: 3) { return }
 
         let candidates = [
             app.buttons["hanlin-apps-tab"].firstMatch,
@@ -284,15 +261,14 @@ final class HanlinNativeScriptProductionE2ETests: XCTestCase {
         _ = waitUntil(timeout: 5) {
             !app.navigationBars["Script Package"].exists && !app.navigationBars["Add Apps"].exists
         }
-        ensureAppsAddButton(timeout: 10)
     }
 
     private func launchInstalledPackage(named packageName: String) {
         let predicate = NSPredicate(format: "label CONTAINS %@ OR identifier CONTAINS %@", packageName, packageName)
         let packageCandidates = [
             app.buttons.matching(predicate).firstMatch,
-            app.staticTexts[packageName].firstMatch,
-            app.descendants(matching: .any).matching(predicate).firstMatch
+            app.descendants(matching: .any).matching(predicate).firstMatch,
+            app.staticTexts[packageName].firstMatch
         ]
         var target: XCUIElement?
         for candidate in packageCandidates {
@@ -303,14 +279,25 @@ final class HanlinNativeScriptProductionE2ETests: XCTestCase {
         }
         let package = target ?? app.staticTexts[packageName].firstMatch
         XCTAssertTrue(package.waitForExistence(timeout: 15), "Installed package \(packageName) was unavailable")
-        if package.isHittable {
-            package.tap()
-        } else {
-            _ = waitUntil(timeout: 3) { package.isHittable }
+
+        let closeButton = app.buttons["hanlin-script-app-close"].firstMatch
+        let coreButton = app.buttons["hanlin-nativescript-core-button"].firstMatch
+        let swiftUIButton = app.buttons["hanlin-swiftui-increment"].firstMatch
+
+        for _ in 1...3 {
+            if closeButton.exists || coreButton.exists || swiftUIButton.exists {
+                return
+            }
+            if !package.isHittable {
+                _ = waitUntil(timeout: 2) { package.isHittable }
+            }
             if package.isHittable {
                 package.tap()
             } else {
                 package.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
+            }
+            if waitUntil(timeout: 4, condition: { closeButton.exists || coreButton.exists || swiftUIButton.exists }) {
+                return
             }
         }
     }
@@ -338,6 +325,7 @@ final class HanlinNativeScriptProductionE2ETests: XCTestCase {
         let close = app.buttons["hanlin-script-app-close"].firstMatch
         XCTAssertTrue(close.waitForExistence(timeout: 10))
         close.tap()
+        _ = waitUntil(timeout: 10) { !close.exists }
         ensureAppsAddButton(timeout: 15)
     }
 
