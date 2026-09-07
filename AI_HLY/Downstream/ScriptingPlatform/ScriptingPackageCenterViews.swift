@@ -27,9 +27,13 @@ struct ScriptingPackageImportView: View {
         @Bindable var platform = platform
         List {
             if case let .failed(message) = platform.activity {
-                Section("Import Error") {
+                Section {
                     Label(message, systemImage: "exclamationmark.triangle")
                         .foregroundStyle(.red)
+                        .accessibilityIdentifier("hanlin-import-error-message")
+                } header: {
+                    Text("Import Error")
+                        .accessibilityIdentifier("hanlin-import-error")
                 }
             }
 

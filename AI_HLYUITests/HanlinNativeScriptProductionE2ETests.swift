@@ -74,13 +74,18 @@ final class HanlinNativeScriptProductionE2ETests: XCTestCase {
     func testMalformedPackageRejection() throws {
         openApps()
         importArchive(named: "HanlinNativeScriptMalformed")
-        let errorHeader = app.staticTexts["Import Error"].firstMatch
-        if !errorHeader.waitForExistence(timeout: 5) {
+        let errorIndicator = app.descendants(matching: .any).matching(
+            NSPredicate(
+                format: "identifier == 'hanlin-import-error' OR identifier == 'hanlin-import-error-message' OR label CONTAINS 'Import Error' OR label CONTAINS 'malformed'"
+            )
+        ).firstMatch
+        if !errorIndicator.waitForExistence(timeout: 5) {
             app.swipeUp()
         }
-        XCTAssertTrue(errorHeader.waitForExistence(timeout: 20))
+        XCTAssertTrue(errorIndicator.waitForExistence(timeout: 20), "Malformed package import error was not displayed")
         XCTAssertFalse(app.buttons["hanlin-package-install"].firstMatch.exists)
         capture(name: "Malformed-Package-Rejected")
+        closeImportSurfaces()
     }
 
     private func importAndInstall(archive: String) {
@@ -260,9 +265,24 @@ final class HanlinNativeScriptProductionE2ETests: XCTestCase {
     }
 
     private func closeImportSurfaces() {
-        for _ in 0..<2 {
+        let scriptPackageNav = app.navigationBars["Script Package"].firstMatch
+        if scriptPackageNav.exists {
             let done = app.buttons["Done"].firstMatch
-            if done.waitForExistence(timeout: 5) { done.tap() }
+            if done.exists && done.isHittable {
+                done.tap()
+            }
+            _ = waitUntil(timeout: 5) { !scriptPackageNav.exists }
+        }
+        let addAppsNav = app.navigationBars["Add Apps"].firstMatch
+        if addAppsNav.waitForExistence(timeout: 3) || addAppsNav.exists {
+            let done = app.buttons["Done"].firstMatch
+            if done.waitForExistence(timeout: 3) && done.isHittable {
+                done.tap()
+            }
+            _ = waitUntil(timeout: 5) { !addAppsNav.exists }
+        }
+        _ = waitUntil(timeout: 5) {
+            !app.navigationBars["Script Package"].exists && !app.navigationBars["Add Apps"].exists
         }
         ensureAppsAddButton(timeout: 10)
     }
@@ -283,7 +303,16 @@ final class HanlinNativeScriptProductionE2ETests: XCTestCase {
         }
         let package = target ?? app.staticTexts[packageName].firstMatch
         XCTAssertTrue(package.waitForExistence(timeout: 15), "Installed package \(packageName) was unavailable")
-        package.tap()
+        if package.isHittable {
+            package.tap()
+        } else {
+            _ = waitUntil(timeout: 3) { package.isHittable }
+            if package.isHittable {
+                package.tap()
+            } else {
+                package.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
+            }
+        }
     }
 
     private func assertNativeScriptCoreUI() {
