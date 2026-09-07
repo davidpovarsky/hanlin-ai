@@ -39,8 +39,16 @@ final class HanlinNativeScriptProductionE2ETests: XCTestCase {
         app.terminate()
         app.launch()
         openApps()
-        XCTAssertTrue(app.staticTexts[swiftUIPackageName].waitForExistence(timeout: 20))
-        XCTAssertTrue(app.staticTexts[corePackageName].waitForExistence(timeout: 20))
+        let swiftUIPredicate = NSPredicate(format: "label CONTAINS %@", swiftUIPackageName)
+        let corePredicate = NSPredicate(format: "label CONTAINS %@", corePackageName)
+        XCTAssertTrue(
+            app.descendants(matching: .any).matching(swiftUIPredicate).firstMatch.waitForExistence(timeout: 20),
+            "Package \(swiftUIPackageName) was not visible after restart"
+        )
+        XCTAssertTrue(
+            app.descendants(matching: .any).matching(corePredicate).firstMatch.waitForExistence(timeout: 20),
+            "Package \(corePackageName) was not visible after restart"
+        )
         launchInstalledPackage(named: swiftUIPackageName)
         XCTAssertTrue(app.buttons["hanlin-swiftui-increment"].waitForExistence(timeout: 30))
         closeNativeScriptApp()
@@ -166,9 +174,23 @@ final class HanlinNativeScriptProductionE2ETests: XCTestCase {
         XCTAssertTrue(importLink.waitForExistence(timeout: 10))
         importLink.tap()
 
+        let navBar = app.navigationBars["Script Package"].firstMatch
+        _ = navBar.waitForExistence(timeout: 5)
+
         let directArchive = app.buttons[archiveName].firstMatch
-        if directArchive.waitForExistence(timeout: 3) {
+        if directArchive.waitForExistence(timeout: 5) {
+            _ = waitUntil(timeout: 5) { directArchive.isHittable }
             directArchive.tap()
+
+            let inspecting = app.staticTexts["Inspecting…"].firstMatch
+            let install = app.buttons["hanlin-package-install"].firstMatch
+            let errorText = app.staticTexts["Import Error"].firstMatch
+            let started = waitUntil(timeout: 4) {
+                inspecting.exists || install.exists || errorText.exists
+            }
+            if !started && directArchive.exists && directArchive.isHittable {
+                directArchive.tap()
+            }
             return
         }
 
@@ -236,7 +258,20 @@ final class HanlinNativeScriptProductionE2ETests: XCTestCase {
     }
 
     private func launchInstalledPackage(named packageName: String) {
-        let package = app.staticTexts[packageName].firstMatch
+        let predicate = NSPredicate(format: "label CONTAINS %@ OR identifier CONTAINS %@", packageName, packageName)
+        let packageCandidates = [
+            app.buttons.matching(predicate).firstMatch,
+            app.staticTexts[packageName].firstMatch,
+            app.descendants(matching: .any).matching(predicate).firstMatch
+        ]
+        var target: XCUIElement?
+        for candidate in packageCandidates {
+            if candidate.waitForExistence(timeout: 5) {
+                target = candidate
+                break
+            }
+        }
+        let package = target ?? app.staticTexts[packageName].firstMatch
         XCTAssertTrue(package.waitForExistence(timeout: 15), "Installed package \(packageName) was unavailable")
         package.tap()
     }

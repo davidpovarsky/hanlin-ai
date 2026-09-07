@@ -144,9 +144,12 @@ final class HanlinScriptingPlatform {
     }
 
     func importPackage(from sourceURL: URL) async {
+        print("HANLIN_IMPORT_PACKAGE_STARTED: url=\(sourceURL.path(percentEncoded: false))")
         discardPreview()
         guard let analyzer, let stagingRoot else {
-            activity = .failed(bootstrapError ?? "Scripting platform is unavailable.")
+            let message = bootstrapError ?? "Scripting platform is unavailable."
+            print("HANLIN_IMPORT_PACKAGE_BOOTSTRAP_GUARD_FAILED: \(message)")
+            activity = .failed(message)
             return
         }
         activity = .importing
@@ -168,12 +171,16 @@ final class HanlinScriptingPlatform {
             preview = result.1
             capabilityApprovals = .init(requests: result.1.requestedCapabilities)
             activity = .previewReady
+            print("HANLIN_IMPORT_PACKAGE_SUCCESS: canInstall=\(result.1.canInstall) entrypoints=\(result.1.entrypoints.count)")
         } catch {
-            activity = .failed(Self.safeMessage(error))
+            let message = Self.safeMessage(error)
+            print("HANLIN_IMPORT_PACKAGE_CATCH_ERROR: \(message)")
+            activity = .failed(message)
         }
     }
 
     func installPreview() async {
+        print("HANLIN_INSTALL_PREVIEW_STARTED: canInstall=\(preview?.canInstall ?? false)")
         guard let preview, preview.canInstall, let stagedPackage,
               let store, let bundler, let stagingRoot else {
             activity = .failed("This package did not pass Import Preview.")

@@ -18,12 +18,13 @@ struct ScriptingPackageImportView: View {
               let contents = try? FileManager.default.contentsOfDirectory(at: documentsURL, includingPropertiesForKeys: nil) else {
             return []
         }
-        let supported = Set(["scripting", "hanlinNativeScript", "zip"])
-        return contents.filter { supported.contains($0.pathExtension) }
+        let supported = Set(["scripting", "hanlinnativescript", "zip"])
+        return contents.filter { supported.contains($0.pathExtension.lowercased()) }
             .sorted { $0.lastPathComponent < $1.lastPathComponent }
     }
 
     var body: some View {
+        @Bindable var platform = platform
         List {
             Section {
                 Button {
@@ -42,10 +43,16 @@ struct ScriptingPackageImportView: View {
                 Section("Shared Packages") {
                     ForEach(stagedFiles, id: \.self) { fileURL in
                         Button {
+                            print("HANLIN_IMPORT_PACKAGE_TAPPED url=\(fileURL.lastPathComponent)")
                             Task { await platform.importPackage(from: fileURL) }
                         } label: {
-                            Label(fileURL.deletingPathExtension().lastPathComponent, systemImage: "shippingbox")
+                            HStack {
+                                Label(fileURL.deletingPathExtension().lastPathComponent, systemImage: "shippingbox")
+                                Spacer()
+                            }
+                            .contentShape(Rectangle())
                         }
+                        .buttonStyle(.borderless)
                         .accessibilityIdentifier(fileURL.deletingPathExtension().lastPathComponent)
                         .accessibilityLabel(fileURL.deletingPathExtension().lastPathComponent)
                     }
