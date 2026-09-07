@@ -618,9 +618,9 @@ jobs:
             build/DerivedData/ModuleCache.noindex
             build/DerivedData/SDKStatCaches.noindex
             build/DerivedData/CacheMetadata/xcode-build-inputs.json
-          key: ios-derived-v3-${{ runner.os }}-${{ steps.app-toolchain.outputs.runner-arch }}-${{ steps.app-toolchain.outputs.xcode-build }}-iphoneos-${{ steps.app-toolchain.outputs.iphoneos-sdk }}-${{ env.CONFIGURATION }}-${{ hashFiles('AI_HLY.xcodeproj/project.pbxproj', 'AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved', 'Packages/HanlinPlatform/Package.swift', 'Packages/HanlinQuickJS/Package.swift', 'Packages/IOSSystemLite/Package.swift', 'Packages/HanlinNativeScriptRuntime/Package.swift', 'Packages/HanlinNativeScriptRuntime/Sources/**', 'Scripts/NativeScript/dependency-lock.json') }}-${{ github.sha }}
+          key: ios-derived-v4-${{ runner.os }}-${{ steps.app-toolchain.outputs.runner-arch }}-${{ steps.app-toolchain.outputs.xcode-build }}-iphoneos-${{ steps.app-toolchain.outputs.iphoneos-sdk }}-${{ env.CONFIGURATION }}-${{ hashFiles('AI_HLY.xcodeproj/project.pbxproj', 'AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved', 'Packages/HanlinPlatform/Package.swift', 'Packages/HanlinQuickJS/Package.swift', 'Packages/IOSSystemLite/Package.swift', 'Packages/HanlinNativeScriptRuntime/Package.swift', 'Packages/HanlinNativeScriptRuntime/Sources/**', 'Scripts/NativeScript/dependency-lock.json', 'Scripts/NativeScript/Fixtures/Source/**') }}-${{ github.sha }}
           restore-keys: |
-            ios-derived-v3-${{ runner.os }}-${{ steps.app-toolchain.outputs.runner-arch }}-${{ steps.app-toolchain.outputs.xcode-build }}-iphoneos-${{ steps.app-toolchain.outputs.iphoneos-sdk }}-${{ env.CONFIGURATION }}-${{ hashFiles('AI_HLY.xcodeproj/project.pbxproj', 'AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved', 'Packages/HanlinPlatform/Package.swift', 'Packages/HanlinQuickJS/Package.swift', 'Packages/IOSSystemLite/Package.swift', 'Packages/HanlinNativeScriptRuntime/Package.swift', 'Packages/HanlinNativeScriptRuntime/Sources/**', 'Scripts/NativeScript/dependency-lock.json') }}-
+            ios-derived-v4-${{ runner.os }}-${{ steps.app-toolchain.outputs.runner-arch }}-${{ steps.app-toolchain.outputs.xcode-build }}-iphoneos-${{ steps.app-toolchain.outputs.iphoneos-sdk }}-${{ env.CONFIGURATION }}-${{ hashFiles('AI_HLY.xcodeproj/project.pbxproj', 'AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved', 'Packages/HanlinPlatform/Package.swift', 'Packages/HanlinQuickJS/Package.swift', 'Packages/IOSSystemLite/Package.swift', 'Packages/HanlinNativeScriptRuntime/Package.swift', 'Packages/HanlinNativeScriptRuntime/Sources/**', 'Scripts/NativeScript/dependency-lock.json', 'Scripts/NativeScript/Fixtures/Source/**') }}-
 
       - name: Report application build cache mode
         run: |
@@ -1106,6 +1106,7 @@ jobs:
             --repository-root . \
             --app "$PACKAGED_APP_PATH" \
             --json-output "$LOG_DIR/09-packaged-ios-system-resources.json"
+          npm run preflight:ios-dependencies --prefix Scripts/NativeScript -- --app "$PACKAGED_APP_PATH"
           SOURCE_APP_PATH="$(cat "$LOG_DIR/app-path.txt")"
           test "$(shasum -a 256 "$SOURCE_APP_PATH/commandDictionary.plist" | awk '{print $1}')" \
             = "$(shasum -a 256 "$PACKAGED_APP_PATH/commandDictionary.plist" | awk '{print $1}')"
@@ -1304,9 +1305,9 @@ jobs:
             build/SimulatorDerivedData/ModuleCache.noindex
             build/SimulatorDerivedData/SDKStatCaches.noindex
             build/SimulatorDerivedData/CacheMetadata/xcode-build-inputs.json
-          key: ios-derived-v3-${{ runner.os }}-${{ steps.simulator-toolchain.outputs.runner-arch }}-${{ steps.simulator-toolchain.outputs.xcode-build }}-iphonesimulator-${{ steps.simulator-toolchain.outputs.simulator-sdk }}-${{ env.CONFIGURATION }}-${{ hashFiles('AI_HLY.xcodeproj/project.pbxproj', 'AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved', 'Packages/HanlinPlatform/Package.swift', 'Packages/HanlinQuickJS/Package.swift', 'Packages/IOSSystemLite/Package.swift', 'Packages/HanlinNativeScriptRuntime/Package.swift', 'Packages/HanlinNativeScriptRuntime/Sources/**', 'Scripts/NativeScript/dependency-lock.json') }}-${{ github.sha }}
+          key: ios-derived-v4-${{ runner.os }}-${{ steps.simulator-toolchain.outputs.runner-arch }}-${{ steps.simulator-toolchain.outputs.xcode-build }}-iphonesimulator-${{ steps.simulator-toolchain.outputs.simulator-sdk }}-${{ env.CONFIGURATION }}-${{ hashFiles('AI_HLY.xcodeproj/project.pbxproj', 'AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved', 'Packages/HanlinPlatform/Package.swift', 'Packages/HanlinQuickJS/Package.swift', 'Packages/IOSSystemLite/Package.swift', 'Packages/HanlinNativeScriptRuntime/Package.swift', 'Packages/HanlinNativeScriptRuntime/Sources/**', 'Scripts/NativeScript/dependency-lock.json', 'Scripts/NativeScript/Fixtures/Source/**') }}-${{ github.sha }}
           restore-keys: |
-            ios-derived-v3-${{ runner.os }}-${{ steps.simulator-toolchain.outputs.runner-arch }}-${{ steps.simulator-toolchain.outputs.xcode-build }}-iphonesimulator-${{ steps.simulator-toolchain.outputs.simulator-sdk }}-${{ env.CONFIGURATION }}-${{ hashFiles('AI_HLY.xcodeproj/project.pbxproj', 'AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved', 'Packages/HanlinPlatform/Package.swift', 'Packages/HanlinQuickJS/Package.swift', 'Packages/IOSSystemLite/Package.swift', 'Packages/HanlinNativeScriptRuntime/Package.swift', 'Packages/HanlinNativeScriptRuntime/Sources/**', 'Scripts/NativeScript/dependency-lock.json') }}-
+            ios-derived-v4-${{ runner.os }}-${{ steps.simulator-toolchain.outputs.runner-arch }}-${{ steps.simulator-toolchain.outputs.xcode-build }}-iphonesimulator-${{ steps.simulator-toolchain.outputs.simulator-sdk }}-${{ env.CONFIGURATION }}-${{ hashFiles('AI_HLY.xcodeproj/project.pbxproj', 'AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved', 'Packages/HanlinPlatform/Package.swift', 'Packages/HanlinQuickJS/Package.swift', 'Packages/IOSSystemLite/Package.swift', 'Packages/HanlinNativeScriptRuntime/Package.swift', 'Packages/HanlinNativeScriptRuntime/Sources/**', 'Scripts/NativeScript/dependency-lock.json', 'Scripts/NativeScript/Fixtures/Source/**') }}-
 
       - name: Report simulator cache mode
         run: |
@@ -1545,17 +1546,6 @@ jobs:
               "Skipped production dyld-closure validation for the Debug validation app." \
               > "$LOG_DIR/07-simulator-dyld-closure-skipped.txt"
           fi
-
-      - name: Save successful simulator compiler state
-        if: ${{ success() }}
-        uses: actions/cache/save@v6
-        with:
-          path: |
-            build/SimulatorDerivedData/Build
-            build/SimulatorDerivedData/ModuleCache.noindex
-            build/SimulatorDerivedData/SDKStatCaches.noindex
-            build/SimulatorDerivedData/CacheMetadata/xcode-build-inputs.json
-          key: ${{ steps.simulator-deriveddata-cache.outputs.cache-primary-key }}
 
       - name: Boot iPad Simulator and stage fixtures
         run: |
@@ -2058,6 +2048,17 @@ jobs:
             esac
           done < "$LOG_DIR/08-mcp-new-diagnostic-reports.txt"
           trap - EXIT
+
+      - name: Save successful simulator compiler state
+        if: ${{ success() }}
+        uses: actions/cache/save@v6
+        with:
+          path: |
+            build/SimulatorDerivedData/Build
+            build/SimulatorDerivedData/ModuleCache.noindex
+            build/SimulatorDerivedData/SDKStatCaches.noindex
+            build/SimulatorDerivedData/CacheMetadata/xcode-build-inputs.json
+          key: ${{ steps.simulator-deriveddata-cache.outputs.cache-primary-key }}
 
       - name: Collect simulator diagnostics
         if: always()

@@ -90,10 +90,14 @@ function createFixtureProvider(): any {
   throw new Error('HanlinNativeScriptSwiftUIFixtureProvider could not be instantiated');
 }
 
-registerSwiftUI('hanlinFixture', (view) => new UIDataDriver(
-  createFixtureProvider(),
-  view
-));
+registerSwiftUI('hanlinFixture', (view) => {
+  const provider = createFixtureProvider();
+  const driver = new UIDataDriver(provider, view);
+  if (view.data) {
+    driver.updateData(view.data);
+  }
+  return driver;
+});
 
 Application.run({
   create: () => {
@@ -120,6 +124,11 @@ Application.run({
     swiftView.swiftId = 'hanlinFixture';
     swiftView.height = 300;
     swiftView.data = { title: 'SwiftUI in Hanlin', initialCount: 0 };
+    swiftView.on('loaded', () => {
+      if (swiftView.data) {
+        swiftView.updateData(swiftView.data);
+      }
+    });
 
     const eventProof = new Label();
     eventProof.text = 'NativeScript event count: 0';

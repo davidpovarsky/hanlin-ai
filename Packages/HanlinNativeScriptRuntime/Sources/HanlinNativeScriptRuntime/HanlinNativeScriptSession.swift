@@ -56,7 +56,7 @@ public final class HanlinNativeScriptSession {
             isActive = true
 
             try host.runMainApplication()
-            print("HANLIN_NS_INITIALIZED_EXTERNAL_ROOT path=\(applicationRoot.path(percentEncoded: false))")
+            NSLog("%@", "HANLIN_NS_INITIALIZED_EXTERNAL_ROOT path=\(applicationRoot.path(percentEncoded: false))")
         } catch {
             shutdown()
             throw HanlinNativeScriptError.bootstrapFailed(error.localizedDescription)

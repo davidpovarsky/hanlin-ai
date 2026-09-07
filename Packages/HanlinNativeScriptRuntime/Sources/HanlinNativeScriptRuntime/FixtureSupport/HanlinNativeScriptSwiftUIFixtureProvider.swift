@@ -33,6 +33,42 @@ private struct HanlinSwiftUIFixtureView: View {
     }
 }
 
+@MainActor
+private final class HanlinHostingContainerView: UIView {
+    weak var provider: HanlinNativeScriptSwiftUIFixtureProvider?
+
+    init(provider: HanlinNativeScriptSwiftUIFixtureProvider) {
+        self.provider = provider
+        super.init(frame: .zero)
+        autoresizingMask = [.flexibleWidth, .flexibleHeight]
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    override func didMoveToWindow() {
+        super.didMoveToWindow()
+        if window != nil {
+            provider?.attachToParentViewControllerIfNeeded()
+        } else {
+            provider?.detachFromParentViewControllerIfNeeded()
+        }
+    }
+
+    override func didMoveToSuperview() {
+        super.didMoveToSuperview()
+        if superview != nil {
+            provider?.attachToParentViewControllerIfNeeded()
+        }
+    }
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        provider?.layoutHostingViews()
+    }
+}
+
 /// A build-time provider used by the production acceptance package. NativeScript
 /// packages can select pre-embedded providers, but cannot compile arbitrary Swift.
 @MainActor
@@ -42,17 +78,76 @@ public final class HanlinNativeScriptSwiftUIFixtureProvider: UIViewController, S
 
     private let model = HanlinSwiftUIFixtureModel()
 
+    public override func loadView() {
+        view = HanlinHostingContainerView(provider: self)
+    }
+
     public override func viewDidLoad() {
         super.viewDidLoad()
         setupSwiftUIView(content: HanlinSwiftUIFixtureView(model: model) { [weak self] in
             guard let self else { return }
-            model.count += 1
-            onEvent?([
-                "count": NSNumber(value: model.count),
+            self.model.count += 1
+            self.onEvent?([
+                "count": NSNumber(value: self.model.count),
                 "source": "swiftui"
             ] as NSDictionary)
         })
-        print("HANLIN_NS_SWIFTUI_PROVIDER_READY provider=HanlinNativeScriptSwiftUIFixtureProvider")
+        if let hostingView = children.first?.view {
+            hostingView.translatesAutoresizingMaskIntoConstraints = false
+            NSLayoutConstraint.activate([
+                hostingView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+                hostingView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+                hostingView.topAnchor.constraint(equalTo: view.topAnchor),
+                hostingView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            ])
+        }
+        NSLog("%@", "HANLIN_NS_SWIFTUI_PROVIDER_READY provider=HanlinNativeScriptSwiftUIFixtureProvider")
+    }
+
+    public override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        layoutHostingViews()
+    }
+
+    fileprivate func attachToParentViewControllerIfNeeded() {
+        guard parent == nil else { return }
+        var parentVC: UIViewController?
+        var responder: UIResponder? = view.superview
+        while let current = responder {
+            if let vc = current as? UIViewController, vc !== self {
+                parentVC = vc
+                break
+            }
+            responder = current.next
+        }
+        if parentVC == nil, let window = view.window {
+            parentVC = window.rootViewController
+        }
+        guard let host = parentVC else { return }
+        host.addChild(self)
+        beginAppearanceTransition(true, animated: false)
+        didMove(toParent: host)
+        endAppearanceTransition()
+        layoutHostingViews()
+    }
+
+    fileprivate func detachFromParentViewControllerIfNeeded() {
+        guard parent != nil else { return }
+        willMove(toParent: nil)
+        beginAppearanceTransition(false, animated: false)
+        removeFromParent()
+        endAppearanceTransition()
+    }
+
+    fileprivate func layoutHostingViews() {
+        let bounds = view.bounds
+        guard bounds.width > 0, bounds.height > 0 else { return }
+        for child in children {
+            if child.view.frame != bounds {
+                child.view.frame = bounds
+            }
+            child.view.layoutIfNeeded()
+        }
     }
 
     @objc(updateDataWithData:)
@@ -63,7 +158,7 @@ public final class HanlinNativeScriptSwiftUIFixtureProvider: UIViewController, S
         if let count = data["initialCount"] as? NSNumber {
             model.count = count.intValue
         }
-        print("HANLIN_NS_SWIFTUI_DATA_OK title=\(model.title) count=\(model.count)")
+        NSLog("%@", "HANLIN_NS_SWIFTUI_DATA_OK title=\(model.title) count=\(model.count)")
     }
 
     @objc(updateData:)
