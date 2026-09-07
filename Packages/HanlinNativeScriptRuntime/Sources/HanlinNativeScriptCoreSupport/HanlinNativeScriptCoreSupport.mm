@@ -1,6 +1,17 @@
 #import "HanlinNativeScriptCoreSupport.h"
 #import "NativeScriptEmbedder.h"
 #import <NativeScript/NativeScript.h>
+#import <mach-o/ldsyms.h>
+#import <mach-o/getsect.h>
+
+static void *HanlinGetTNSMetadataPtr(void) {
+    unsigned long size = 0;
+    uint8_t *data = getsectiondata(&_mh_execute_header, "__DATA", "__TNSMetadata", &size);
+    if (data && size > 0) {
+        return (void *)data;
+    }
+    return NULL;
+}
 
 NSErrorDomain const HanlinNativeScriptRuntimeErrorDomain = @"com.hanlin.nativescript-runtime";
 
@@ -39,6 +50,10 @@ static NSError *HanlinNativeScriptError(HanlinNativeScriptRuntimeErrorCode code,
             config.ApplicationPath = applicationPath;
             config.IsDebug = NO;
             config.LogToSystemConsole = YES;
+            void *metadataPtr = HanlinGetTNSMetadataPtr();
+            if (metadataPtr != NULL) {
+                config.MetadataPtr = metadataPtr;
+            }
             self.runtime = [[NativeScript alloc] initWithConfig:config];
         } @catch (NSException *exception) {
             if (error) {

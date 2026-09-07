@@ -19,7 +19,11 @@ declare const UIDevice: {
 
 declare const HanlinNativeScriptCompatibility: {
   createSwiftUIFixtureProvider(): any;
-};
+} | undefined;
+
+declare const HanlinNativeScriptSwiftUIFixtureProvider: {
+  alloc(): { init(): any };
+} | undefined;
 
 declare global {
   var __HANLIN_NATIVESCRIPT_PACKAGE_NAME__: string | undefined;
@@ -34,11 +38,23 @@ console.log(`HANLIN_NS_NATIVE_API_OK system=${systemName} version=${systemVersio
 console.log('HANLIN_NS_SWIFTUI_MODULE_OK package=@nativescript/swift-ui version=4.0.2');
 
 function createFixtureProvider(): any {
-  const provider = HanlinNativeScriptCompatibility.createSwiftUIFixtureProvider();
-  if (!provider) {
-    throw new Error('HanlinNativeScriptSwiftUIFixtureProvider could not be instantiated by HanlinNativeScriptCompatibility');
+  const g = globalThis as any;
+  if (typeof g.HanlinNativeScriptCompatibility?.createSwiftUIFixtureProvider === 'function') {
+    const provider = g.HanlinNativeScriptCompatibility.createSwiftUIFixtureProvider();
+    if (provider) {
+      return provider;
+    }
   }
-  return provider;
+  if (typeof g.HanlinNativeScriptSwiftUIFixtureProvider?.alloc === 'function') {
+    return g.HanlinNativeScriptSwiftUIFixtureProvider.alloc().init();
+  }
+  if (typeof g.NSClassFromString === 'function') {
+    const cls = g.NSClassFromString('HanlinNativeScriptSwiftUIFixtureProvider');
+    if (cls && typeof cls.alloc === 'function') {
+      return cls.alloc().init();
+    }
+  }
+  throw new Error('HanlinNativeScriptSwiftUIFixtureProvider could not be instantiated');
 }
 
 registerSwiftUI('hanlinFixture', (view) => new UIDataDriver(

@@ -26,13 +26,26 @@ def build_intermediates_root() -> Path:
     return Path(build_dir[:marker_index]) / "Intermediates.noindex"
 
 
-def write_swift_module_map(module_map: Path, runtime_header: Path, arch: str) -> None:
+def write_swift_module_map(module_map: Path, runtime_header: Path, arch: str) -> list:
     headers = [runtime_header]
     object_root = os.environ.get("PER_VARIANT_OBJECT_FILE_DIR")
     if object_root:
         swift_header_root = Path(object_root) / arch
         if swift_header_root.is_dir():
             headers.extend(sorted(swift_header_root.rglob("*-Swift.h")))
+
+    src_root = Path(required_env("SRCROOT"))
+    core_support_header = (
+        src_root
+        / "Packages"
+        / "HanlinNativeScriptRuntime"
+        / "Sources"
+        / "HanlinNativeScriptCoreSupport"
+        / "include"
+        / "HanlinNativeScriptCompatibility.h"
+    )
+    if core_support_header.is_file():
+        headers.append(core_support_header)
 
     unique_headers = []
     seen = set()
@@ -46,6 +59,7 @@ def write_swift_module_map(module_map: Path, runtime_header: Path, arch: str) ->
     lines.extend(f'  header "{header}"' for header in unique_headers)
     lines.extend(["  export *", "}", ""])
     module_map.write_text("\n".join(lines), encoding="utf-8")
+    return unique_headers
 
 
 def main() -> int:
@@ -77,10 +91,12 @@ def main() -> int:
     module_root.mkdir(parents=True)
 
     try:
-        write_swift_module_map(module_map, runtime_header, arch)
+        unique_headers = write_swift_module_map(module_map, runtime_header, arch)
         environment = os.environ.copy()
         module_flag = f'-fmodule-map-file="{module_map}"'
-        environment["OTHER_CFLAGS"] = f'{environment.get("OTHER_CFLAGS", "")} {module_flag}'.strip()
+        include_flags = " ".join(f'-include "{h}"' for h in unique_headers)
+        extra_flags = f"{module_flag} {include_flags}".strip()
+        environment["OTHER_CFLAGS"] = f'{environment.get("OTHER_CFLAGS", "")} {extra_flags}'.strip()
         completed = subprocess.run(
             [sys.executable, str(upstream_generator), *sys.argv[1:]],
             cwd=generator_root,
