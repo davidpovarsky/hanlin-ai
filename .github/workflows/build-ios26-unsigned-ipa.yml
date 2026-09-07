@@ -38,6 +38,11 @@ on:
         required: true
         default: false
         type: boolean
+      simulator_e2e_only:
+        description: Skip device IPA build and run only the simulator build and E2E test suite (fast XCTest iteration)
+        required: true
+        default: false
+        type: boolean
   push:
     branches:
       - main
@@ -47,7 +52,7 @@ permissions:
 
 jobs:
   validate-hanlin-platform-phase1:
-    if: ${{ github.event_name == 'workflow_dispatch' && !inputs.runtime_bundle_only && !inputs.nativescript_poc_only }}
+    if: ${{ github.event_name == 'workflow_dispatch' && !inputs.runtime_bundle_only && !inputs.nativescript_poc_only && !inputs.simulator_e2e_only }}
     name: Validate baseline, contracts, tests, and iOS compilation
     runs-on: macos-26
     timeout-minutes: 60
@@ -445,7 +450,7 @@ jobs:
       contents: write
 
   build-ios26-unsigned-ipa:
-    if: ${{ !inputs.runtime_bundle_only && !inputs.phase1_validation_only && !inputs.fast_validation_only && !inputs.nativescript_poc_only }}
+    if: ${{ !inputs.runtime_bundle_only && !inputs.phase1_validation_only && !inputs.fast_validation_only && !inputs.nativescript_poc_only && !inputs.simulator_e2e_only }}
     name: Build unsigned IPA with Xcode 26
     runs-on: macos-26
     timeout-minutes: 60
@@ -1214,6 +1219,7 @@ jobs:
       IOS_DEPLOYMENT_TARGET: "26.0"
       FAST_VALIDATION_ONLY: ${{ inputs.fast_validation_only }}
       NATIVESCRIPT_POC_ONLY: ${{ inputs.nativescript_poc_only }}
+      SIMULATOR_E2E_ONLY: ${{ inputs.simulator_e2e_only }}
 
     steps:
       - name: Checkout repository
@@ -1236,19 +1242,19 @@ jobs:
           npm run prepare:production-package --prefix Scripts/NativeScript
           (
             cd build/NativeScriptE2E/swiftui-package
-            zip -qry ../HanlinNativeScriptSwiftUI.hanlinNativeScript .
+            zip -qry ../HanlinNativeScriptSwiftUI.hanlinNativeScript *
           )
           (
             cd build/NativeScriptE2E/core-package
-            zip -qry ../HanlinNativeScriptCore.hanlinNativeScript .
+            zip -qry ../HanlinNativeScriptCore.hanlinNativeScript *
           )
           (
             cd build/NativeScriptE2E/unsupported-package
-            zip -qry ../HanlinNativeScriptUnsupported.hanlinNativeScript .
+            zip -qry ../HanlinNativeScriptUnsupported.hanlinNativeScript *
           )
           (
             cd build/NativeScriptE2E/malformed
-            zip -qry ../HanlinNativeScriptMalformed.hanlinNativeScript .
+            zip -qry ../HanlinNativeScriptMalformed.hanlinNativeScript *
           )
           test -s build/NativeScriptE2E/HanlinNativeScriptSwiftUI.hanlinNativeScript
           test -s build/NativeScriptE2E/HanlinNativeScriptCore.hanlinNativeScript
@@ -1621,48 +1627,57 @@ jobs:
           set -euxo pipefail
           SIMULATOR_UDID="$(cat "$LOG_DIR/simulator-udid.txt")"
           APP_EXECUTABLE="$(cat "$LOG_DIR/app-executable.txt")"
+          downstream_test_status=0
+          scripting_acceptance_status=0
+          nativescript_e2e_status=0
 
           if [ "$NATIVESCRIPT_POC_ONLY" != "true" ]; then
-            rm -rf "$LOG_DIR/DownstreamTestsResult.xcresult"
-            started_at="$(date +%s)"
-            set +e
-            xcodebuild test-without-building \
-            -project "$PROJECT_PATH" \
-            -scheme "$SCHEME_NAME" \
-            -configuration "$CONFIGURATION" \
-            -destination "platform=iOS Simulator,id=$SIMULATOR_UDID" \
-            -derivedDataPath "$DERIVED_DATA_PATH" \
-            -clonedSourcePackagesDirPath "$CLONED_PACKAGES_PATH" \
-            -resultBundlePath "$LOG_DIR/DownstreamTestsResult.xcresult" \
-            -skipPackagePluginValidation \
-            -skipMacroValidation \
-            -parallel-testing-enabled NO \
-            -only-testing:AI_HLYTests \
-            2>&1 | tee "$LOG_DIR/08-downstream-unit-tests.log"
-            downstream_test_status="${PIPESTATUS[0]}"
-            set -e
-            echo "$(( $(date +%s) - started_at ))" > "$LOG_DIR/08-downstream-unit-tests-duration-seconds.txt"
-            if [ "$downstream_test_status" -ne 0 ]; then
-              xcrun xcresulttool get test-results tests \
-              --path "$LOG_DIR/DownstreamTestsResult.xcresult" \
-              --format json 2>&1 | tee "$LOG_DIR/08-downstream-unit-test-results.json" || true
-              exit "$downstream_test_status"
+            if [ "$SIMULATOR_E2E_ONLY" != "true" ]; then
+              rm -rf "$LOG_DIR/DownstreamTestsResult.xcresult"
+              started_at="$(date +%s)"
+              set +e
+              xcodebuild test-without-building \
+              -project "$PROJECT_PATH" \
+              -scheme "$SCHEME_NAME" \
+              -configuration "$CONFIGURATION" \
+              -destination "platform=iOS Simulator,id=$SIMULATOR_UDID" \
+              -derivedDataPath "$DERIVED_DATA_PATH" \
+              -clonedSourcePackagesDirPath "$CLONED_PACKAGES_PATH" \
+              -resultBundlePath "$LOG_DIR/DownstreamTestsResult.xcresult" \
+              -skipPackagePluginValidation \
+              -skipMacroValidation \
+              -parallel-testing-enabled NO \
+              -only-testing:AI_HLYTests \
+              2>&1 | tee "$LOG_DIR/08-downstream-unit-tests.log"
+              downstream_test_status="${PIPESTATUS[0]}"
+              set -e
+              echo "$(( $(date +%s) - started_at ))" > "$LOG_DIR/08-downstream-unit-tests-duration-seconds.txt"
+              if [ "$downstream_test_status" -ne 0 ]; then
+                xcrun xcresulttool get test-results tests \
+                --path "$LOG_DIR/DownstreamTestsResult.xcresult" \
+                --format json 2>&1 | tee "$LOG_DIR/08-downstream-unit-test-results.json" || true
+              fi
+
+              rm -rf "$LOG_DIR/ScriptingAcceptanceResult.xcresult"
+              scripting_started_at="$(date +%s)"
+              set +e
+              xcodebuild test-without-building \
+              -project "$PROJECT_PATH" \
+              -scheme "$SCHEME_NAME" \
+              -configuration "$CONFIGURATION" \
+              -destination "platform=iOS Simulator,id=$SIMULATOR_UDID" \
+              -derivedDataPath "$DERIVED_DATA_PATH" \
+              -clonedSourcePackagesDirPath "$CLONED_PACKAGES_PATH" \
+              -resultBundlePath "$LOG_DIR/ScriptingAcceptanceResult.xcresult" \
+              -skipPackagePluginValidation \
+              -skipMacroValidation \
+              -only-testing:AI_HLYTests/HanlinScriptingAcceptanceTests \
+              2>&1 | tee "$LOG_DIR/08-scripting-acceptance.log"
+              scripting_acceptance_status="${PIPESTATUS[0]}"
+              set -e
+              echo "$(( $(date +%s) - scripting_started_at ))" > "$LOG_DIR/08-scripting-acceptance-duration-seconds.txt"
             fi
-            rm -rf "$LOG_DIR/ScriptingAcceptanceResult.xcresult"
-            scripting_started_at="$(date +%s)"
-            xcodebuild test-without-building \
-            -project "$PROJECT_PATH" \
-            -scheme "$SCHEME_NAME" \
-            -configuration "$CONFIGURATION" \
-            -destination "platform=iOS Simulator,id=$SIMULATOR_UDID" \
-            -derivedDataPath "$DERIVED_DATA_PATH" \
-            -clonedSourcePackagesDirPath "$CLONED_PACKAGES_PATH" \
-            -resultBundlePath "$LOG_DIR/ScriptingAcceptanceResult.xcresult" \
-            -skipPackagePluginValidation \
-            -skipMacroValidation \
-            -only-testing:AI_HLYTests/HanlinScriptingAcceptanceTests \
-            2>&1 | tee "$LOG_DIR/08-scripting-acceptance.log"
-            echo "$(( $(date +%s) - scripting_started_at ))" > "$LOG_DIR/08-scripting-acceptance-duration-seconds.txt"
+
             if [ "$FAST_VALIDATION_ONLY" != "true" ]; then
               rm -rf "$LOG_DIR/NativeScriptProductionE2EResult.xcresult"
               nativescript_e2e_started_at="$(date +%s)"
@@ -1687,24 +1702,32 @@ jobs:
                 --last 15m \
                 --predicate "process == '$APP_EXECUTABLE'" \
                 > "$LOG_DIR/08-nativescript-production.log" 2>&1 || true
-              if [ "$nativescript_e2e_status" -ne 0 ]; then
-                xcrun xcresulttool get test-results tests \
-                  --path "$LOG_DIR/NativeScriptProductionE2EResult.xcresult" \
-                  --format json 2>&1 | tee "$LOG_DIR/08-nativescript-production-ui-test-results.json" || true
-                exit "$nativescript_e2e_status"
+              xcrun xcresulttool get test-results tests \
+                --path "$LOG_DIR/NativeScriptProductionE2EResult.xcresult" \
+                --format json 2>&1 | tee "$LOG_DIR/08-nativescript-production-ui-test-results.json" || true
+              if [ "$nativescript_e2e_status" -eq 0 ]; then
+                grep -Fq 'HANLIN_NS_INITIALIZED_EXTERNAL_ROOT' "$LOG_DIR/08-nativescript-production.log"
+                grep -Eq 'HANLIN_NS_INITIALIZED_EXTERNAL_ROOT path=.*/Library/Application Support/' "$LOG_DIR/08-nativescript-production.log"
+                grep -Fq 'HANLIN_NS_FIXTURE_STARTED' "$LOG_DIR/08-nativescript-production.log"
+                grep -Fq 'HANLIN_NS_NATIVE_API_OK' "$LOG_DIR/08-nativescript-production.log"
+                grep -Fq 'HANLIN_NS_SCRIPTING_ADAPTER_OK' "$LOG_DIR/08-nativescript-production.log"
+                grep -Fq 'HANLIN_NS_MODULE_RESOURCE_OK' "$LOG_DIR/08-nativescript-production.log"
+                grep -Fq 'HANLIN_NS_CORE_UI_READY controls=Label,Button' "$LOG_DIR/08-nativescript-production.log"
+                grep -Fq 'HANLIN_NS_SWIFTUI_MODULE_OK package=@nativescript/swift-ui version=4.0.2' "$LOG_DIR/08-nativescript-production.log"
+                grep -Fq 'HANLIN_NS_SWIFTUI_PROVIDER_READY' "$LOG_DIR/08-nativescript-production.log"
+                grep -Fq 'HANLIN_NS_SWIFTUI_DATA_OK' "$LOG_DIR/08-nativescript-production.log"
+                grep -Fq 'HANLIN_NS_SWIFTUI_EVENT_OK count=1 source=swiftui' "$LOG_DIR/08-nativescript-production.log"
+                grep -Fq 'HANLIN_NS_PRODUCTION_SHUTDOWN_OK' "$LOG_DIR/08-nativescript-production.log"
               fi
-              grep -Fq 'HANLIN_NS_INITIALIZED_EXTERNAL_ROOT' "$LOG_DIR/08-nativescript-production.log"
-              grep -Eq 'HANLIN_NS_INITIALIZED_EXTERNAL_ROOT path=.*/Library/Application Support/' "$LOG_DIR/08-nativescript-production.log"
-              grep -Fq 'HANLIN_NS_FIXTURE_STARTED' "$LOG_DIR/08-nativescript-production.log"
-              grep -Fq 'HANLIN_NS_NATIVE_API_OK' "$LOG_DIR/08-nativescript-production.log"
-              grep -Fq 'HANLIN_NS_SCRIPTING_ADAPTER_OK' "$LOG_DIR/08-nativescript-production.log"
-              grep -Fq 'HANLIN_NS_MODULE_RESOURCE_OK' "$LOG_DIR/08-nativescript-production.log"
-              grep -Fq 'HANLIN_NS_CORE_UI_READY controls=Label,Button' "$LOG_DIR/08-nativescript-production.log"
-              grep -Fq 'HANLIN_NS_SWIFTUI_MODULE_OK package=@nativescript/swift-ui version=4.0.2' "$LOG_DIR/08-nativescript-production.log"
-              grep -Fq 'HANLIN_NS_SWIFTUI_PROVIDER_READY' "$LOG_DIR/08-nativescript-production.log"
-              grep -Fq 'HANLIN_NS_SWIFTUI_DATA_OK' "$LOG_DIR/08-nativescript-production.log"
-              grep -Fq 'HANLIN_NS_SWIFTUI_EVENT_OK count=1 source=swiftui' "$LOG_DIR/08-nativescript-production.log"
-              grep -Fq 'HANLIN_NS_PRODUCTION_SHUTDOWN_OK' "$LOG_DIR/08-nativescript-production.log"
+            fi
+
+            failed_suites=""
+            [ "$downstream_test_status" -ne 0 ] && failed_suites="${failed_suites} downstream-unit-tests($downstream_test_status)"
+            [ "$scripting_acceptance_status" -ne 0 ] && failed_suites="${failed_suites} scripting-acceptance($scripting_acceptance_status)"
+            [ "$nativescript_e2e_status" -ne 0 ] && failed_suites="${failed_suites} nativescript-e2e($nativescript_e2e_status)"
+            if [ -n "$failed_suites" ]; then
+              echo "::error::FAILED test suites:$failed_suites" >&2
+              exit 1
             fi
           fi
 
@@ -1715,6 +1738,12 @@ jobs:
           BUNDLE_ID="$(cat "$LOG_DIR/bundle-id.txt")"
           APP_EXECUTABLE="$(cat "$LOG_DIR/app-executable.txt")"
           APP_PATH="$(cat "$LOG_DIR/app-path.txt")"
+
+          if [ "$SIMULATOR_E2E_ONLY" = "true" ]; then
+            printf '%s\n' "simulator-e2e-only" > "$LOG_DIR/validation-profile.txt"
+            printf '%s\n' "1" > "$LOG_DIR/alive-duration-seconds.txt"
+            exit 0
+          fi
 
           xcrun simctl boot "$SIMULATOR_UDID" 2>/dev/null || true
           xcrun simctl bootstatus "$SIMULATOR_UDID" -b 2>&1 \

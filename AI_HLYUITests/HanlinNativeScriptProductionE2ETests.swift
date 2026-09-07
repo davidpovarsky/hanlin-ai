@@ -15,7 +15,7 @@ final class HanlinNativeScriptProductionE2ETests: XCTestCase {
         app.launch()
     }
 
-    func testProductionSwiftUIInteractionCoreRegressionLifecycleAndRejection() throws {
+    func testProductionSwiftUIInteractionCoreRegressionAndLifecycle() throws {
         openApps()
         importAndInstall(archive: "HanlinNativeScriptSwiftUI")
         importAndInstall(archive: "HanlinNativeScriptCore")
@@ -44,7 +44,10 @@ final class HanlinNativeScriptProductionE2ETests: XCTestCase {
         launchInstalledPackage(named: swiftUIPackageName)
         XCTAssertTrue(app.buttons["hanlin-swiftui-increment"].waitForExistence(timeout: 30))
         closeNativeScriptApp()
+    }
 
+    func testUnsupportedPluginRejection() throws {
+        openApps()
         importArchive(named: "HanlinNativeScriptUnsupported")
         let unsupportedMessage = app.staticTexts[
             "This Hanlin build supports @nativescript/swift-ui 4.0.2, but the package requires @nativescript/swift-ui 99.0.0."
@@ -55,7 +58,10 @@ final class HanlinNativeScriptProductionE2ETests: XCTestCase {
         XCTAssertFalse(disabledInstall.isEnabled, "Unsupported native plugin package was installable")
         capture(name: "Unsupported-NativeScript-Plugin-Rejected")
         closeImportSurfaces()
+    }
 
+    func testMalformedPackageRejection() throws {
+        openApps()
         importArchive(named: "HanlinNativeScriptMalformed")
         XCTAssertTrue(app.staticTexts["Import Error"].firstMatch.waitForExistence(timeout: 20))
         XCTAssertFalse(app.buttons["hanlin-package-install"].firstMatch.exists)
@@ -65,7 +71,16 @@ final class HanlinNativeScriptProductionE2ETests: XCTestCase {
     private func importAndInstall(archive: String) {
         importArchive(named: archive)
         let install = app.buttons["hanlin-package-install"].firstMatch
-        XCTAssertTrue(install.waitForExistence(timeout: 30), "Import Preview did not expose Install")
+        if !install.waitForExistence(timeout: 30) {
+            capture(name: "\(archive)-Import-Timeout")
+            var detail = "Import Preview did not expose Install for \(archive)."
+            if app.staticTexts["Import Error"].firstMatch.exists {
+                let errorLabels = app.staticTexts.allElementsBoundByIndex.map(\.label).filter { !$0.isEmpty }
+                detail += " Detected on-screen error: " + errorLabels.joined(separator: " | ")
+            }
+            XCTFail(detail)
+            return
+        }
         XCTAssertTrue(waitUntil(timeout: 15) { install.isEnabled }, "\(archive) was not installable")
         install.tap()
         XCTAssertTrue(waitUntil(timeout: 30) { !install.exists }, "\(archive) installation did not finish")

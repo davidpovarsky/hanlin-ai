@@ -85,47 +85,47 @@ public struct HanlinScriptAnalyzer: Sendable {
                 ))
                 continue
             }
-            if !nativeScriptDeclared, Self.matches(#"\bimport\s*\("#, source) {
-                findings.append(.init(
-                    state: .unsupported,
-                    severity: .error,
-                    sourcePath: path,
-                    message: "Dynamic import is not supported in installed packages."
-                ))
-            }
-            if !nativeScriptDeclared, Self.matches(#"\beval\s*\("#, source) {
-                findings.append(.init(
-                    state: .unsupported,
-                    severity: .error,
-                    sourcePath: path,
-                    message: "eval is forbidden by the package module policy."
-                ))
-            }
             if !nativeScriptDeclared {
-                importedSymbols.formUnion(Self.scriptingImports(in: source))
-                importedSymbols.formUnion(Self.ambientScriptingSymbols(in: source))
-            }
-            for specifier in Self.moduleSpecifiers(in: source) {
-                let resolved = resolve(
-                    specifier: specifier,
-                    importer: path,
-                    modulePaths: Set(sourcePaths)
-                )
-                edges.append(.init(
-                    importer: path,
-                    specifier: specifier,
-                    resolvedPath: resolved
-                ))
-                if resolved == nil && specifier != "scripting" {
-                    unresolved.insert(specifier)
+                if Self.matches(#"\bimport\s*\("#, source) {
                     findings.append(.init(
                         state: .unsupported,
                         severity: .error,
                         sourcePath: path,
-                        message: specifier.hasPrefix(".")
-                            ? "Package-local module '\(specifier)' cannot be resolved."
-                            : "Bare module '\(specifier)' is not allowed."
+                        message: "Dynamic import is not supported in installed packages."
                     ))
+                }
+                if Self.matches(#"\beval\s*\("#, source) {
+                    findings.append(.init(
+                        state: .unsupported,
+                        severity: .error,
+                        sourcePath: path,
+                        message: "eval is forbidden by the package module policy."
+                    ))
+                }
+                importedSymbols.formUnion(Self.scriptingImports(in: source))
+                importedSymbols.formUnion(Self.ambientScriptingSymbols(in: source))
+                for specifier in Self.moduleSpecifiers(in: source) {
+                    let resolved = resolve(
+                        specifier: specifier,
+                        importer: path,
+                        modulePaths: Set(sourcePaths)
+                    )
+                    edges.append(.init(
+                        importer: path,
+                        specifier: specifier,
+                        resolvedPath: resolved
+                    ))
+                    if resolved == nil && specifier != "scripting" {
+                        unresolved.insert(specifier)
+                        findings.append(.init(
+                            state: .unsupported,
+                            severity: .error,
+                            sourcePath: path,
+                            message: specifier.hasPrefix(".")
+                                ? "Package-local module '\(specifier)' cannot be resolved."
+                                : "Bare module '\(specifier)' is not allowed."
+                        ))
+                    }
                 }
             }
         }
