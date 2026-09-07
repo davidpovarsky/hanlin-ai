@@ -1,6 +1,7 @@
 #import "HanlinNativeScriptCoreSupport.h"
 #import "NativeScriptEmbedder.h"
 #import <NativeScript/NativeScript.h>
+#import <exception>
 
 NSErrorDomain const HanlinNativeScriptRuntimeErrorDomain = @"com.hanlin.nativescript-runtime";
 
@@ -41,19 +42,35 @@ static NSError *HanlinNativeScriptError(HanlinNativeScriptRuntimeErrorCode code,
             config.LogToSystemConsole = YES;
             self.runtime = [[NativeScript alloc] initWithConfig:config];
         } @catch (NSException *exception) {
+            NSString *detail = [NSString stringWithFormat:@"NativeScript runtime initialization NSException: %@ (reason: %@)",
+                                exception.name ?: @"Unknown",
+                                exception.reason ?: @"No reason provided"];
+            NSLog(@"[HanlinNativeScript] %@", detail);
             if (error) {
                 *error = HanlinNativeScriptError(
                     HanlinNativeScriptRuntimeErrorInitializationFailed,
-                    exception.reason ?: @"NativeScript runtime initialization failed."
+                    detail
                 );
             }
             return nil;
         }
-    } catch (...) {
+    } catch (const std::exception &e) {
+        NSString *detail = [NSString stringWithFormat:@"NativeScript runtime initialization C++ exception: %s", e.what()];
+        NSLog(@"[HanlinNativeScript] %@", detail);
         if (error) {
             *error = HanlinNativeScriptError(
                 HanlinNativeScriptRuntimeErrorInitializationFailed,
-                @"NativeScript runtime initialization raised a native exception."
+                detail
+            );
+        }
+        return nil;
+    } catch (...) {
+        NSString *detail = @"NativeScript runtime initialization raised an unknown native exception.";
+        NSLog(@"[HanlinNativeScript] %@", detail);
+        if (error) {
+            *error = HanlinNativeScriptError(
+                HanlinNativeScriptRuntimeErrorInitializationFailed,
+                detail
             );
         }
         return nil;
@@ -78,19 +95,35 @@ static NSError *HanlinNativeScriptError(HanlinNativeScriptRuntimeErrorCode code,
             // controller without starting a second UIApplicationMain.
             [self.runtime runMainApplication];
         } @catch (NSException *exception) {
+            NSString *detail = [NSString stringWithFormat:@"NativeScript script execution NSException: %@ (reason: %@)",
+                                exception.name ?: @"Unknown",
+                                exception.reason ?: @"No reason provided"];
+            NSLog(@"[HanlinNativeScript] %@", detail);
             if (error) {
                 *error = HanlinNativeScriptError(
                     HanlinNativeScriptRuntimeErrorExecutionFailed,
-                    exception.reason ?: @"NativeScript script execution failed."
+                    detail
                 );
             }
             return NO;
         }
-    } catch (...) {
+    } catch (const std::exception &e) {
+        NSString *detail = [NSString stringWithFormat:@"NativeScript script execution C++ exception: %s", e.what()];
+        NSLog(@"[HanlinNativeScript] %@", detail);
         if (error) {
             *error = HanlinNativeScriptError(
                 HanlinNativeScriptRuntimeErrorExecutionFailed,
-                @"NativeScript script execution raised a native exception."
+                detail
+            );
+        }
+        return NO;
+    } catch (...) {
+        NSString *detail = @"NativeScript script execution raised an unknown native exception.";
+        NSLog(@"[HanlinNativeScript] %@", detail);
+        if (error) {
+            *error = HanlinNativeScriptError(
+                HanlinNativeScriptRuntimeErrorExecutionFailed,
+                detail
             );
         }
         return NO;
@@ -100,7 +133,17 @@ static NSError *HanlinNativeScriptError(HanlinNativeScriptRuntimeErrorCode code,
 
 - (void)shutdown {
     if (self.runtime) {
-        [self.runtime shutdownRuntime];
+        try {
+            @try {
+                [self.runtime shutdownRuntime];
+            } @catch (NSException *exception) {
+                NSLog(@"[HanlinNativeScript] Exception during shutdownRuntime: %@", exception);
+            }
+        } catch (const std::exception &e) {
+            NSLog(@"[HanlinNativeScript] C++ exception during shutdownRuntime: %s", e.what());
+        } catch (...) {
+            NSLog(@"[HanlinNativeScript] Unknown exception during shutdownRuntime");
+        }
         self.runtime = nil;
     }
 }

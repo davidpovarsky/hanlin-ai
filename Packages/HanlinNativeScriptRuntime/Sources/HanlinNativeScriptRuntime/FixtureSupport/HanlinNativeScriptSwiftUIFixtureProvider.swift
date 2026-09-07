@@ -56,13 +56,6 @@ private final class HanlinHostingContainerView: UIView {
         }
     }
 
-    override func didMoveToSuperview() {
-        super.didMoveToSuperview()
-        if superview != nil {
-            provider?.attachToParentViewControllerIfNeeded()
-        }
-    }
-
     override func layoutSubviews() {
         super.layoutSubviews()
         provider?.layoutHostingViews()
@@ -92,15 +85,6 @@ public final class HanlinNativeScriptSwiftUIFixtureProvider: UIViewController, S
                 "source": "swiftui"
             ] as NSDictionary)
         })
-        if let hostingView = children.first?.view {
-            hostingView.translatesAutoresizingMaskIntoConstraints = false
-            NSLayoutConstraint.activate([
-                hostingView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-                hostingView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-                hostingView.topAnchor.constraint(equalTo: view.topAnchor),
-                hostingView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
-            ])
-        }
         NSLog("%@", "HANLIN_NS_SWIFTUI_PROVIDER_READY provider=HanlinNativeScriptSwiftUIFixtureProvider")
     }
 
@@ -125,18 +109,14 @@ public final class HanlinNativeScriptSwiftUIFixtureProvider: UIViewController, S
         }
         guard let host = parentVC else { return }
         host.addChild(self)
-        beginAppearanceTransition(true, animated: false)
         didMove(toParent: host)
-        endAppearanceTransition()
         layoutHostingViews()
     }
 
     fileprivate func detachFromParentViewControllerIfNeeded() {
         guard parent != nil else { return }
         willMove(toParent: nil)
-        beginAppearanceTransition(false, animated: false)
         removeFromParent()
-        endAppearanceTransition()
     }
 
     fileprivate func layoutHostingViews() {
@@ -146,23 +126,25 @@ public final class HanlinNativeScriptSwiftUIFixtureProvider: UIViewController, S
             if child.view.frame != bounds {
                 child.view.frame = bounds
             }
-            child.view.layoutIfNeeded()
         }
     }
 
     @objc(updateDataWithData:)
-    public func updateData(data: NSDictionary) {
+    public func updateData(data: NSDictionary?) {
+        guard let data else { return }
         if let title = data["title"] as? String, !title.isEmpty {
             model.title = title
         }
         if let count = data["initialCount"] as? NSNumber {
             model.count = count.intValue
+        } else if let countInt = data["initialCount"] as? Int {
+            model.count = countInt
         }
         NSLog("%@", "HANLIN_NS_SWIFTUI_DATA_OK title=\(model.title) count=\(model.count)")
     }
 
     @objc(updateData:)
-    public func updateDataDirect(_ data: NSDictionary) {
+    public func updateDataDirect(_ data: NSDictionary?) {
         updateData(data: data)
     }
 

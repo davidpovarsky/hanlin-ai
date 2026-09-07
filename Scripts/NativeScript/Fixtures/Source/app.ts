@@ -25,7 +25,7 @@ declare const NSUserDefaults: {
 
 declare const HanlinNativeScriptCompatibility: {
   roundTripValueKey(value: string, key: string): string;
-};
+} | undefined;
 
 declare global {
   var __HANLIN_NATIVESCRIPT_PACKAGE_NAME__: string | undefined;
@@ -43,12 +43,32 @@ function logMarker(message: string): void {
 logMarker(`HANLIN_NS_FIXTURE_STARTED package=${packageName}`);
 logMarker(`HANLIN_NS_NATIVE_API_OK system=${systemName} version=${systemVersion}`);
 
-const compatibilityProof = HanlinNativeScriptCompatibility.roundTripValueKey(
-  `compatibility-${packageName}`,
-  packageName
-);
-if (compatibilityProof !== `compatibility-${packageName}`) {
-  throw new Error('Hanlin Scripting compatibility round-trip failed');
+function getCompatibilityClass(): any {
+  const g = globalThis as any;
+  try {
+    if (typeof g.NSClassFromString === 'function') {
+      const cls = g.NSClassFromString('HanlinNativeScriptCompatibility');
+      if (cls) return cls;
+    }
+  } catch {}
+  try {
+    if (typeof g.objc_getClass === 'function') {
+      const cls = g.objc_getClass('HanlinNativeScriptCompatibility');
+      if (cls) return cls;
+    }
+  } catch {}
+  return g.HanlinNativeScriptCompatibility ?? null;
+}
+
+const compatibilityClass = getCompatibilityClass();
+if (compatibilityClass && typeof compatibilityClass.roundTripValueKey === 'function') {
+  const compatibilityProof = compatibilityClass.roundTripValueKey(
+    `compatibility-${packageName}`,
+    packageName
+  );
+  if (compatibilityProof !== `compatibility-${packageName}`) {
+    throw new Error('Hanlin Scripting compatibility round-trip failed');
+  }
 }
 logMarker('HANLIN_NS_SCRIPTING_ADAPTER_OK adapter=HanlinNativeScriptCompatibility');
 

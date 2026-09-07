@@ -1687,6 +1687,7 @@ jobs:
               nativescript_e2e_status="${PIPESTATUS[0]}"
               set -e
               echo "$(( $(date +%s) - nativescript_e2e_started_at ))" > "$LOG_DIR/08-nativescript-production-ui-tests-duration-seconds.txt"
+              xcrun simctl boot "$SIMULATOR_UDID" 2>/dev/null || true
               xcrun simctl spawn "$SIMULATOR_UDID" log show \
                 --style compact \
                 --last 15m \

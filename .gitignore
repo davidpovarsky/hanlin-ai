@@ -147,5 +147,10 @@ AI_HLY/RuntimeHostResources.zip
 *.tar
 *.gz
 
+# Python
+__pycache__/
+*.py[cod]
+
 # Local development
 local.properties
+scratch/
