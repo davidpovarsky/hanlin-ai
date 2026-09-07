@@ -16,9 +16,11 @@ struct MCPServerInstallView: View {
                 TextField(MCPL10n.string("Package name or .tgz URL"), text: $packageInput)
                     .textInputAutocapitalization(.never)
                     .autocorrectionDisabled()
+                    .accessibilityIdentifier("hanlin-mcp-package-input")
                 HStack {
                     Button(MCPL10n.string("Preview")) { Task { await loadPreview() } }
                         .disabled(packageInput.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || working)
+                        .accessibilityIdentifier("hanlin-mcp-preview-button")
                     Button(MCPL10n.string("Import .tgz file")) { importing = true }
                         .disabled(working)
                 }
@@ -55,6 +57,7 @@ struct MCPServerInstallView: View {
                     Button(MCPL10n.string("Install")) { Task { await install() } }
                         .buttonStyle(.borderedProminent)
                         .disabled(preview.compatibility.verdict == .unsupported || working || spec == nil)
+                        .accessibilityIdentifier("hanlin-mcp-install-button")
                 }
             }
 
@@ -66,7 +69,13 @@ struct MCPServerInstallView: View {
                     }
                 }
             }
-            if let errorMessage { Section { Text(errorMessage).foregroundStyle(.red) } }
+            if let errorMessage {
+                Section {
+                    Text(errorMessage)
+                        .foregroundStyle(.red)
+                        .accessibilityIdentifier("hanlin-mcp-error-message")
+                }
+            }
         }
         .navigationTitle(MCPL10n.string("Add MCP Server"))
         .fileImporter(isPresented: $importing, allowedContentTypes: [.mcpTGZ, .gzip]) { result in

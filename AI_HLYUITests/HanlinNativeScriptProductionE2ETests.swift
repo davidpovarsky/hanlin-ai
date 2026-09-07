@@ -284,11 +284,12 @@ final class HanlinNativeScriptProductionE2ETests: XCTestCase {
         let coreButton = app.buttons["hanlin-nativescript-core-button"].firstMatch
         let swiftUIButton = app.buttons["hanlin-swiftui-increment"].firstMatch
 
-        for _ in 1...3 {
+        for attempt in 1...3 {
             if closeButton.exists || coreButton.exists || swiftUIButton.exists {
                 return
             }
             if !package.isHittable {
+                app.swipeUp()
                 _ = waitUntil(timeout: 2) { package.isHittable }
             }
             if package.isHittable {
@@ -296,7 +297,7 @@ final class HanlinNativeScriptProductionE2ETests: XCTestCase {
             } else {
                 package.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
             }
-            if waitUntil(timeout: 4, condition: { closeButton.exists || coreButton.exists || swiftUIButton.exists }) {
+            if waitUntil(timeout: attempt == 1 ? 15 : 8, condition: { closeButton.exists || coreButton.exists || swiftUIButton.exists }) {
                 return
             }
         }

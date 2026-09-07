@@ -13,6 +13,7 @@ struct MainTabView: View {
     @Binding var deepLinkTarget: String?
     @State private var selectedTab: Int = {
         let environment = ProcessInfo.processInfo.environment
+        if environment["HANLIN_RUNTIME_INSTALL_ACCEPTANCE"] != nil { return 5 }
         return environment["HANLIN_SCRIPT_RESTART_REPRO_PHASE"] != nil
             || environment["HANLIN_NATIVESCRIPT_E2E"] != nil ? 4 : 0
     }()
@@ -61,6 +62,7 @@ struct MainTabView: View {
             SettingsView()
                 .tabItem {
                     Label(String(localized: "设置"), systemImage: "gearshape")
+                        .accessibilityIdentifier("hanlin-settings-tab")
                 }
                 .tag(5)
         }

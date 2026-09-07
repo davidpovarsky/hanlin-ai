@@ -73,22 +73,37 @@ struct NodePackagesView: View {
             Section(RuntimeL10n.string("npm package")) {
                 TextField(RuntimeL10n.string("Package name"), text: $model.packageName)
                     .textInputAutocapitalization(.never).autocorrectionDisabled()
+                    .accessibilityIdentifier("hanlin-npm-package-name-field")
                 TextField(RuntimeL10n.string("Version or tag (optional)"), text: $model.version)
                     .textInputAutocapitalization(.never).autocorrectionDisabled()
+                    .accessibilityIdentifier("hanlin-npm-version-field")
                 HStack {
                     Button(RuntimeL10n.string("Preview")) { model.inspect() }
+                        .accessibilityIdentifier("hanlin-npm-preview-button")
                     Button(RuntimeL10n.string("Install")) { model.install() }
+                        .accessibilityIdentifier("hanlin-npm-install-button")
                     if model.isBusy { Button(RuntimeL10n.string("Cancel"), role: .cancel) { model.cancel() } }
                 }
                 .disabled(model.packageName.isEmpty && !model.isBusy)
-                if model.isBusy { ProgressView(RuntimeL10n.string("Resolving and verifying package")) }
-                if let message = model.message { Text(message).font(.caption).textSelection(.enabled) }
+                if model.isBusy {
+                    ProgressView(RuntimeL10n.string("Resolving and verifying package"))
+                        .accessibilityIdentifier("hanlin-npm-progress")
+                }
+                if let message = model.message {
+                    Text(message)
+                        .font(.caption)
+                        .textSelection(.enabled)
+                        .accessibilityIdentifier("hanlin-npm-message")
+                }
             }
 
             if let item = model.preview { NodePackageDetailsView(item: item) }
 
             Section(RuntimeL10n.string("Installed global packages")) {
-                if model.installed.isEmpty { ContentUnavailableView(RuntimeL10n.string("No global Node packages"), systemImage: "shippingbox") }
+                if model.installed.isEmpty {
+                    ContentUnavailableView(RuntimeL10n.string("No global Node packages"), systemImage: "shippingbox")
+                        .accessibilityIdentifier("hanlin-npm-empty-state")
+                }
                 ForEach(model.installed) { item in
                     NavigationLink { List { NodePackageDetailsView(item: item) }.navigationTitle(item.name) } label: {
                         VStack(alignment: .leading) {

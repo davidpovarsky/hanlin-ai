@@ -91,12 +91,18 @@ struct RuntimeCenterView: View {
     var body: some View {
         List {
             if let message = model.lastMessage {
-                Section { Text(message).font(.callout).textSelection(.enabled) }
+                Section {
+                    Text(message)
+                        .font(.callout)
+                        .textSelection(.enabled)
+                        .accessibilityIdentifier("hanlin-runtime-last-message")
+                }
             }
 
             Section(RuntimeL10n.string("On-device runtimes")) {
                 ForEach(localRuntimes, id: \.0) { kind, title, image in
                     RuntimeCard(
+                        kind: kind,
                         title: RuntimeL10n.string(title),
                         image: image,
                         snapshot: snapshot(for: kind),
@@ -148,6 +154,7 @@ struct RuntimeCenterView: View {
 }
 
 private struct RuntimeCard<Destination: View>: View {
+    let kind: RuntimeKind
     let title: String
     let image: String
     let snapshot: RuntimeSnapshot
@@ -175,12 +182,16 @@ private struct RuntimeCard<Destination: View>: View {
             }
             HStack {
                 Button(RuntimeL10n.string(snapshot.state == .stopped ? "Prepare" : "Health Check"), action: prepare)
+                    .accessibilityIdentifier("hanlin-runtime-prepare-\(kind.rawValue)")
                 Button(RuntimeL10n.string("Smoke Test"), action: smoke)
+                    .accessibilityIdentifier("hanlin-runtime-smoke-\(kind.rawValue)")
                 NavigationLink(RuntimeL10n.string("Open Details")) { destination() }
+                    .accessibilityIdentifier("hanlin-runtime-details-\(kind.rawValue)")
             }
             .buttonStyle(.borderless)
             .disabled(isBusy)
         }
+        .accessibilityIdentifier("hanlin-runtime-card-\(kind.rawValue)")
         .padding(.vertical, 4)
     }
 }

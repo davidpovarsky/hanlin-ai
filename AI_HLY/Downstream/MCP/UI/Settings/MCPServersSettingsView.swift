@@ -17,6 +17,7 @@ struct MCPServersSettingsView: View {
                 } label: {
                     Label(MCPL10n.string("Add MCP Server"), systemImage: "plus.circle")
                 }
+                .accessibilityIdentifier("hanlin-mcp-add-server-link")
             }
             Section(MCPL10n.string("Installed servers")) {
                 if provider.servers.isEmpty {
@@ -25,6 +26,7 @@ struct MCPServersSettingsView: View {
                         systemImage: "server.rack",
                         description: Text(MCPL10n.string("Install a trusted JavaScript MCP package to begin."))
                     )
+                    .accessibilityIdentifier("hanlin-mcp-empty-state")
                 }
                 ForEach(provider.servers) { server in
                     NavigationLink {

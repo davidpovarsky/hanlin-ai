@@ -1809,7 +1809,7 @@ jobs:
               -resultBundlePath "$LOG_DIR/NativeScriptProductionE2EResult.xcresult" \
               -skipPackagePluginValidation \
               -skipMacroValidation \
-              -only-testing:AI_HLYUITests/HanlinNativeScriptProductionE2ETests \
+              -only-testing:"${SIMULATOR_UI_FILTER:-AI_HLYUITests}" \
               2>&1 | tee "$LOG_DIR/08-nativescript-production-ui-tests.log"
               nativescript_e2e_status="${PIPESTATUS[0]}"
               set -e

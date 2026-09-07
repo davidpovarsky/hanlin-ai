@@ -294,6 +294,16 @@ class AffectedValidationPlannerTests(unittest.TestCase):
         self.assertTrue(plan.step_outputs["run_simulator_unit"])
         self.assertTrue(plan.step_outputs["run_simulator_smoke_launch"])
         self.assertFalse(plan.step_outputs["run_device_build"])
+    def test_glob_pattern_with_wildcard_prefix_and_double_star(self) -> None:
+        self.assertTrue(
+            planner.match_pattern("AI_HLY/en.lproj/InfoPlist.strings", "AI_HLY/*.lproj/**")
+        )
+        self.assertTrue(
+            planner.match_pattern("AI_HLY/he.lproj/InfoPlist.strings", "AI_HLY/*.lproj/**")
+        )
+        self.assertFalse(
+            planner.match_pattern("Other/en.lproj/InfoPlist.strings", "AI_HLY/*.lproj/**")
+        )
 
 
 if __name__ == "__main__":

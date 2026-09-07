@@ -100,9 +100,11 @@ struct SettingsView: View {
                     NavigationLink(destination: MCPServersSettingsView().onAppear { isPushed = true }.onDisappear { isPushed = false }.toolbar(.hidden, for: .tabBar)) {
                         Label(MCPL10n.string("MCP Servers"), systemImage: "server.rack")
                     }
+                    .accessibilityIdentifier("hanlin-mcp-servers-link")
                     NavigationLink(destination: RuntimeCenterView().onAppear { isPushed = true }.onDisappear { isPushed = false }.toolbar(.hidden, for: .tabBar)) {
                         Label(RuntimeL10n.string("Runtimes & Packages"), systemImage: "shippingbox.and.arrow.backward")
                     }
+                    .accessibilityIdentifier("hanlin-runtimes-packages-link")
                     NavigationLink(destination: SearchSettingView().onAppear { isPushed = true }.onDisappear { isPushed = false }.toolbar(.hidden, for: .tabBar)) {
                         Label(String(localized: "联网搜索"), systemImage: "magnifyingglass")
                     }

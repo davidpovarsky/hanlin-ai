@@ -50,6 +50,7 @@ final class HanlinScriptingPlatform {
     private var extensionStore: HanlinScriptExtensionStore?
     private var applicationSession: HanlinScriptingApplicationSession?
     private var nativeScriptSession: HanlinNativeScriptSession?
+    private var isLaunching = false
     private var systemUIContinuation: CheckedContinuation<HanlinScriptingSystemUIResult, any Error>?
     private var modelContext: ModelContext?
     private let locationService = HanlinAppleLocationService()
@@ -352,6 +353,11 @@ final class HanlinScriptingPlatform {
     }
 
     func launch(_ id: HanlinInstalledPackageID) async {
+        guard !isLaunching else { return }
+        if activeApplicationID == id { return }
+        isLaunching = true
+        defer { isLaunching = false }
+
         guard let store,
               let package = installedPackages.first(where: { $0.record.installedPackageID == id }) else {
             activity = .failed("The installed package could not be found.")

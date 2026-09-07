@@ -69,7 +69,8 @@ def match_pattern(path_str: str, pattern: str) -> bool:
 
     if normalized_pattern.endswith("/**"):
         prefix = normalized_pattern[:-3]
-        return normalized_path == prefix or normalized_path.startswith(prefix + "/")
+        if not any(c in prefix for c in "*?["):
+            return normalized_path == prefix or normalized_path.startswith(prefix + "/")
 
     pure_path = pathlib.PurePosixPath(normalized_path)
     if pure_path.match(normalized_pattern):

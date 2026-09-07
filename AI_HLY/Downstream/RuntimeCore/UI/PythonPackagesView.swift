@@ -56,11 +56,19 @@ struct PythonPackagesView: View {
     var body: some View {
         List {
             Section(RuntimeL10n.string("PyPI package")) {
-                TextField(RuntimeL10n.string("Package name"), text: $model.packageName).textInputAutocapitalization(.never).autocorrectionDisabled()
-                TextField(RuntimeL10n.string("Version (optional)"), text: $model.version).textInputAutocapitalization(.never).autocorrectionDisabled()
+                TextField(RuntimeL10n.string("Package name"), text: $model.packageName)
+                    .textInputAutocapitalization(.never)
+                    .autocorrectionDisabled()
+                    .accessibilityIdentifier("hanlin-python-package-name-field")
+                TextField(RuntimeL10n.string("Version (optional)"), text: $model.version)
+                    .textInputAutocapitalization(.never)
+                    .autocorrectionDisabled()
+                    .accessibilityIdentifier("hanlin-python-version-field")
                 HStack {
                     Button(RuntimeL10n.string("Preview")) { model.inspect() }
+                        .accessibilityIdentifier("hanlin-python-preview-button")
                     Button(RuntimeL10n.string("Install")) { model.install() }
+                        .accessibilityIdentifier("hanlin-python-install-button")
                     if model.isBusy { Button(RuntimeL10n.string("Cancel"), role: .cancel) { model.cancel() } }
                 }
                 if model.isBusy {
@@ -77,7 +85,12 @@ struct PythonPackagesView: View {
                         ProgressView(RuntimeL10n.string("Downloading and verifying wheel"))
                     }
                 }
-                if let message = model.message { Text(message).font(.caption).textSelection(.enabled) }
+                if let message = model.message {
+                    Text(message)
+                        .font(.caption)
+                        .textSelection(.enabled)
+                        .accessibilityIdentifier("hanlin-python-message")
+                }
             }
 
             if let preview = model.preview {
@@ -91,7 +104,10 @@ struct PythonPackagesView: View {
             }
 
             Section(RuntimeL10n.string("Installed Python packages")) {
-                if model.installed.isEmpty { ContentUnavailableView(RuntimeL10n.string("No local Python packages"), systemImage: "shippingbox") }
+                if model.installed.isEmpty {
+                    ContentUnavailableView(RuntimeL10n.string("No local Python packages"), systemImage: "shippingbox")
+                        .accessibilityIdentifier("hanlin-python-empty-state")
+                }
                 ForEach(model.installed) { item in
                     VStack(alignment: .leading, spacing: 6) {
                         HStack { Text(item.name); Spacer(); Text(item.version).foregroundStyle(.secondary) }
