@@ -119,6 +119,9 @@
         "nativescript_dependencies",
         "simulator_targeted_ui"
       ],
+      "ui_suites": [
+        "AI_HLYUITests/HanlinNativeScriptProductionE2ETests"
+      ],
       "consumers": []
     },
     "nativescript_runtime": {
@@ -130,6 +133,9 @@
       "direct_validation_groups": [
         "nativescript_runtime",
         "simulator_targeted_ui"
+      ],
+      "ui_suites": [
+        "AI_HLYUITests/HanlinNativeScriptProductionE2ETests"
       ],
       "consumers": [
         "device_build"
@@ -219,17 +225,45 @@
       ],
       "consumers": []
     },
+    "runtime_tests": {
+      "description": "Runtime validation unit tests and link dependency specs",
+      "patterns": [
+        "Scripts/Runtime/Tests/**"
+      ],
+      "direct_validation_groups": [
+        "runtimecore_host"
+      ],
+      "consumers": []
+    },
     "runtime_tools": {
       "description": "Runtime validation scripts, link dependency tests, and dyld closure scanner",
       "patterns": [
-        "Scripts/Runtime/validate-app-dyld-closure.py",
-        "Scripts/Runtime/Tests/**"
+        "Scripts/Runtime/validate-app-dyld-closure.py"
       ],
       "direct_validation_groups": [
         "runtimecore_host"
       ],
       "consumers": [
         "project_packaging"
+      ]
+    },
+    "runtime_installation_ui": {
+      "description": "Downstream Runtime Center, package manager, and MCP install views",
+      "patterns": [
+        "AI_HLY/Downstream/RuntimeCore/UI/**",
+        "AI_HLY/Downstream/MCP/UI/**",
+        "AI_HLY/Downstream/RuntimeCore/Node/NodePackageManager.swift",
+        "AI_HLY/Downstream/RuntimeCore/Python/PythonPackageManager.swift",
+        "AI_HLY/Downstream/MCP/Installer/**"
+      ],
+      "direct_validation_groups": [
+        "simulator_targeted_ui"
+      ],
+      "ui_suites": [
+        "AI_HLYUITests/HanlinRuntimeInstallationUITests"
+      ],
+      "consumers": [
+        "app_core"
       ]
     },
     "app_ui": {
@@ -273,7 +307,6 @@
         "AI_HLY/Downstream/RuntimeCore/Environment/**",
         "AI_HLY/Downstream/RuntimeCore/Lifecycle/**",
         "AI_HLY/Downstream/RuntimeCore/Tools/**",
-        "AI_HLY/Downstream/RuntimeCore/UI/**",
         "AI_HLY/Downstream/RuntimeCore/JavaScriptCore/**",
         "AI_HLY/Downstream/Scripting/**",
         "AI_HLY/Downstream/ScriptingPlatform/**"
@@ -323,13 +356,29 @@
       ],
       "consumers": []
     },
-    "app_ui_test_files": {
-      "description": "Downstream UI tests (NativeScript production E2E)",
+    "nativescript_ui_test_files": {
+      "description": "Downstream NativeScript production E2E UI test suite",
       "patterns": [
-        "AI_HLYUITests/**"
+        "AI_HLYUITests/HanlinNativeScriptProductionE2ETests.swift"
       ],
       "direct_validation_groups": [
         "simulator_targeted_ui"
+      ],
+      "ui_suites": [
+        "AI_HLYUITests/HanlinNativeScriptProductionE2ETests"
+      ],
+      "consumers": []
+    },
+    "runtime_install_ui_test_files": {
+      "description": "Downstream Runtime installation & package management UI test suite",
+      "patterns": [
+        "AI_HLYUITests/HanlinRuntimeInstallationUITests.swift"
+      ],
+      "direct_validation_groups": [
+        "simulator_targeted_ui"
+      ],
+      "ui_suites": [
+        "AI_HLYUITests/HanlinRuntimeInstallationUITests"
       ],
       "consumers": []
     },

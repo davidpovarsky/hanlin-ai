@@ -88,6 +88,7 @@ jobs:
       simulator_unit_filter: ${{ steps.plan.outputs.simulator_unit_filter }}
       run_simulator_scripting_acceptance: ${{ steps.plan.outputs.run_simulator_scripting_acceptance }}
       run_simulator_targeted_ui: ${{ steps.plan.outputs.run_simulator_targeted_ui }}
+      simulator_ui_filter: ${{ steps.plan.outputs.simulator_ui_filter }}
       run_simulator_shell_acceptance: ${{ steps.plan.outputs.run_simulator_shell_acceptance }}
       run_simulator_mcp_acceptance: ${{ steps.plan.outputs.run_simulator_mcp_acceptance }}
       run_simulator_smoke_launch: ${{ steps.plan.outputs.run_simulator_smoke_launch }}
@@ -1338,6 +1339,7 @@ jobs:
       SIMULATOR_UNIT_FILTER: ${{ needs.plan-affected-validation.outputs.simulator_unit_filter }}
       RUN_SIMULATOR_SCRIPTING_ACCEPTANCE: ${{ needs.plan-affected-validation.outputs.run_simulator_scripting_acceptance }}
       RUN_SIMULATOR_TARGETED_UI: ${{ needs.plan-affected-validation.outputs.run_simulator_targeted_ui }}
+      SIMULATOR_UI_FILTER: ${{ needs.plan-affected-validation.outputs.simulator_ui_filter }}
       RUN_SIMULATOR_SHELL_ACCEPTANCE: ${{ needs.plan-affected-validation.outputs.run_simulator_shell_acceptance }}
       RUN_SIMULATOR_MCP_ACCEPTANCE: ${{ needs.plan-affected-validation.outputs.run_simulator_mcp_acceptance }}
       RUN_SIMULATOR_SMOKE_LAUNCH: ${{ needs.plan-affected-validation.outputs.run_simulator_smoke_launch }}
@@ -1799,6 +1801,14 @@ jobs:
               rm -rf "$LOG_DIR/NativeScriptProductionE2EResult.xcresult"
               nativescript_e2e_started_at="$(date +%s)"
               set +e
+              ui_test_args=()
+              IFS=',' read -ra UI_SUITES <<< "${SIMULATOR_UI_FILTER:-AI_HLYUITests}"
+              for suite in "${UI_SUITES[@]}"; do
+                suite="$(echo "$suite" | xargs)"
+                if [ -n "$suite" ]; then
+                  ui_test_args+=("-only-testing:$suite")
+                fi
+              done
               xcodebuild test-without-building \
               -project "$PROJECT_PATH" \
               -scheme "$SCHEME_NAME" \
@@ -1809,7 +1819,7 @@ jobs:
               -resultBundlePath "$LOG_DIR/NativeScriptProductionE2EResult.xcresult" \
               -skipPackagePluginValidation \
               -skipMacroValidation \
-              -only-testing:"${SIMULATOR_UI_FILTER:-AI_HLYUITests}" \
+              "${ui_test_args[@]}" \
               2>&1 | tee "$LOG_DIR/08-nativescript-production-ui-tests.log"
               nativescript_e2e_status="${PIPESTATUS[0]}"
               set -e
@@ -1824,18 +1834,20 @@ jobs:
                 --path "$LOG_DIR/NativeScriptProductionE2EResult.xcresult" \
                 --format json 2>&1 | tee "$LOG_DIR/08-nativescript-production-ui-test-results.json" || true
               if [ "$nativescript_e2e_status" -eq 0 ]; then
-                grep -Fq 'HANLIN_NS_INITIALIZED_EXTERNAL_ROOT' "$LOG_DIR/08-nativescript-production.log"
-                grep -Eq 'HANLIN_NS_INITIALIZED_EXTERNAL_ROOT path=.*/Library/Application Support/' "$LOG_DIR/08-nativescript-production.log"
-                grep -Fq 'HANLIN_NS_FIXTURE_STARTED' "$LOG_DIR/08-nativescript-production.log"
-                grep -Fq 'HANLIN_NS_NATIVE_API_OK' "$LOG_DIR/08-nativescript-production.log"
-                grep -Fq 'HANLIN_NS_SCRIPTING_ADAPTER_OK' "$LOG_DIR/08-nativescript-production.log"
-                grep -Fq 'HANLIN_NS_MODULE_RESOURCE_OK' "$LOG_DIR/08-nativescript-production.log"
-                grep -Fq 'HANLIN_NS_CORE_UI_READY controls=Label,Button' "$LOG_DIR/08-nativescript-production.log"
-                grep -Fq 'HANLIN_NS_SWIFTUI_MODULE_OK package=@nativescript/swift-ui version=4.0.2' "$LOG_DIR/08-nativescript-production.log"
-                grep -Fq 'HANLIN_NS_SWIFTUI_PROVIDER_READY' "$LOG_DIR/08-nativescript-production.log"
-                grep -Fq 'HANLIN_NS_SWIFTUI_DATA_OK' "$LOG_DIR/08-nativescript-production.log"
-                grep -Fq 'HANLIN_NS_SWIFTUI_EVENT_OK count=1 source=swiftui' "$LOG_DIR/08-nativescript-production.log"
-                grep -Fq 'HANLIN_NS_PRODUCTION_SHUTDOWN_OK' "$LOG_DIR/08-nativescript-production.log"
+                if [[ "$SIMULATOR_UI_FILTER" == *"HanlinNativeScriptProductionE2ETests"* ]] || [ -z "$SIMULATOR_UI_FILTER" ] || [ "$RUN_FULL_VALIDATION" = "true" ]; then
+                  grep -Fq 'HANLIN_NS_INITIALIZED_EXTERNAL_ROOT' "$LOG_DIR/08-nativescript-production.log"
+                  grep -Eq 'HANLIN_NS_INITIALIZED_EXTERNAL_ROOT path=.*/Library/Application Support/' "$LOG_DIR/08-nativescript-production.log"
+                  grep -Fq 'HANLIN_NS_FIXTURE_STARTED' "$LOG_DIR/08-nativescript-production.log"
+                  grep -Fq 'HANLIN_NS_NATIVE_API_OK' "$LOG_DIR/08-nativescript-production.log"
+                  grep -Fq 'HANLIN_NS_SCRIPTING_ADAPTER_OK' "$LOG_DIR/08-nativescript-production.log"
+                  grep -Fq 'HANLIN_NS_MODULE_RESOURCE_OK' "$LOG_DIR/08-nativescript-production.log"
+                  grep -Fq 'HANLIN_NS_CORE_UI_READY controls=Label,Button' "$LOG_DIR/08-nativescript-production.log"
+                  grep -Fq 'HANLIN_NS_SWIFTUI_MODULE_OK package=@nativescript/swift-ui version=4.0.2' "$LOG_DIR/08-nativescript-production.log"
+                  grep -Fq 'HANLIN_NS_SWIFTUI_PROVIDER_READY' "$LOG_DIR/08-nativescript-production.log"
+                  grep -Fq 'HANLIN_NS_SWIFTUI_DATA_OK' "$LOG_DIR/08-nativescript-production.log"
+                  grep -Fq 'HANLIN_NS_SWIFTUI_EVENT_OK count=1 source=swiftui' "$LOG_DIR/08-nativescript-production.log"
+                  grep -Fq 'HANLIN_NS_PRODUCTION_SHUTDOWN_OK' "$LOG_DIR/08-nativescript-production.log"
+                fi
               fi
             else
               printf '%s\n' "NativeScript production UI tests skipped by affected-validation router." > "$LOG_DIR/08-nativescript-production-ui-tests-skipped.txt"

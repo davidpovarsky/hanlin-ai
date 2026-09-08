@@ -153,6 +153,88 @@ final class HanlinRuntimeInstallationUITests: XCTestCase {
         navigateBack()
     }
 
+    // MARK: - Node Package Manager UI Workflow & Real Installation Acceptance
+
+    func testNodePackageManagerUIWorkflowAndSuccess() throws {
+        openSettings()
+        openRuntimeCenter()
+
+        tapButton(withId: "hanlin-runtime-details-node")
+
+        let nodePackagesNav = app.navigationBars["Node Packages"].firstMatch
+        let nodePackagesNavFallback = app.navigationBars["Node.js"].firstMatch
+        XCTAssertTrue(
+            nodePackagesNav.waitForExistence(timeout: 10) || nodePackagesNavFallback.waitForExistence(timeout: 3),
+            "Node packages view did not open"
+        )
+
+        let nameField = app.textFields["hanlin-npm-package-name-field"].firstMatch
+        let versionField = app.textFields["hanlin-npm-version-field"].firstMatch
+        let previewButton = app.buttons["hanlin-npm-preview-button"].firstMatch
+        let installButton = app.buttons["hanlin-npm-install-button"].firstMatch
+
+        typeIntoField(nameField, text: "is-number")
+        typeIntoField(versionField, text: "7.0.0")
+
+        // 1. Preview
+        XCTAssertTrue(previewButton.isEnabled, "Preview button should be enabled")
+        previewButton.tap()
+
+        let packageNameText = app.staticTexts["is-number"].firstMatch
+        XCTAssertTrue(packageNameText.waitForExistence(timeout: 30), "Package name did not appear in preview")
+        let packageVersionText = app.staticTexts["7.0.0"].firstMatch
+        XCTAssertTrue(packageVersionText.waitForExistence(timeout: 10), "Version 7.0.0 did not appear in preview")
+        capture(name: "NodePackages-PreviewSuccess")
+
+        // 2. Install
+        XCTAssertTrue(installButton.isEnabled, "Install button should be enabled")
+        installButton.tap()
+
+        let messageText = app.descendants(matching: .any)["hanlin-npm-message"].firstMatch
+        let completedPredicate = NSPredicate(format: "label CONTAINS[c] 'Completed'")
+        let completedExpectation = expectation(for: completedPredicate, evaluatedWith: messageText)
+        wait(for: [completedExpectation], timeout: 60)
+
+        // 3. Verify in installed list
+        let installedPackage = app.staticTexts["is-number"].firstMatch
+        XCTAssertTrue(installedPackage.waitForExistence(timeout: 10), "Installed package 'is-number' was not listed")
+        capture(name: "NodePackages-InstallSuccess")
+
+        // 4. Import probe execution via real Node runtime
+        let probeButton = app.buttons["Import Probe"].firstMatch
+        XCTAssertTrue(probeButton.waitForExistence(timeout: 10), "Import Probe button was missing")
+        probeButton.tap()
+
+        let probePredicate = NSPredicate(format: "label CONTAINS[c] 'import-ok' OR label CONTAINS[c] '7.0.0' OR label CONTAINS[c] 'true'")
+        let probeOutput = app.staticTexts.containing(probePredicate).firstMatch
+        XCTAssertTrue(probeOutput.waitForExistence(timeout: 30), "Import probe did not produce expected output")
+        capture(name: "NodePackages-ProbeSuccess")
+
+        // 5. Restart persistence
+        app.terminate()
+        app.launch()
+        openSettings()
+        openRuntimeCenter()
+        tapButton(withId: "hanlin-runtime-details-node")
+
+        XCTAssertTrue(
+            nodePackagesNav.waitForExistence(timeout: 10) || nodePackagesNavFallback.waitForExistence(timeout: 3),
+            "Node packages view did not open after restart"
+        )
+        XCTAssertTrue(installedPackage.waitForExistence(timeout: 15), "Package 'is-number' was not persisted after restart")
+
+        // 6. Re-probe after restart
+        let probeButtonAfterRestart = app.buttons["Import Probe"].firstMatch
+        XCTAssertTrue(probeButtonAfterRestart.waitForExistence(timeout: 10), "Import Probe button missing after restart")
+        probeButtonAfterRestart.tap()
+
+        let probeOutputAfterRestart = app.staticTexts.containing(probePredicate).firstMatch
+        XCTAssertTrue(probeOutputAfterRestart.waitForExistence(timeout: 30), "Import probe after restart did not produce expected output")
+        capture(name: "NodePackages-PostRestartProbeSuccess")
+
+        navigateBack()
+    }
+
     // MARK: - Python Package Manager UI Workflow & Failure Handling
 
     func testPythonPackageManagerUIWorkflowAndFailure() throws {
@@ -196,6 +278,88 @@ final class HanlinRuntimeInstallationUITests: XCTestCase {
         XCTAssertFalse(installedPackage.exists, "Non-existent package was unexpectedly listed as installed")
 
         capture(name: "PythonPackages-FailureHandled")
+        navigateBack()
+    }
+
+    // MARK: - Python Package Manager UI Workflow & Real Installation Acceptance
+
+    func testPythonPackageManagerUIWorkflowAndSuccess() throws {
+        openSettings()
+        openRuntimeCenter()
+
+        tapButton(withId: "hanlin-runtime-details-localPython")
+
+        let pythonPackagesNav = app.navigationBars["Python Packages"].firstMatch
+        let pythonPackagesNavFallback = app.navigationBars["Local Python"].firstMatch
+        XCTAssertTrue(
+            pythonPackagesNav.waitForExistence(timeout: 10) || pythonPackagesNavFallback.waitForExistence(timeout: 3),
+            "Python packages view did not open"
+        )
+
+        let nameField = app.textFields["hanlin-python-package-name-field"].firstMatch
+        let versionField = app.textFields["hanlin-python-version-field"].firstMatch
+        let previewButton = app.buttons["hanlin-python-preview-button"].firstMatch
+        let installButton = app.buttons["hanlin-python-install-button"].firstMatch
+
+        typeIntoField(nameField, text: "six")
+        typeIntoField(versionField, text: "1.17.0")
+
+        // 1. Preview
+        XCTAssertTrue(previewButton.isEnabled, "Preview button should be enabled")
+        previewButton.tap()
+
+        let packageNameText = app.staticTexts["six"].firstMatch
+        XCTAssertTrue(packageNameText.waitForExistence(timeout: 30), "Package name 'six' did not appear in preview")
+        let packageVersionText = app.staticTexts["1.17.0"].firstMatch
+        XCTAssertTrue(packageVersionText.waitForExistence(timeout: 10), "Version '1.17.0' did not appear in preview")
+        capture(name: "PythonPackages-PreviewSuccess")
+
+        // 2. Install
+        XCTAssertTrue(installButton.isEnabled, "Install button should be enabled")
+        installButton.tap()
+
+        let messageText = app.descendants(matching: .any)["hanlin-python-message"].firstMatch
+        let completedPredicate = NSPredicate(format: "label CONTAINS[c] 'Completed'")
+        let completedExpectation = expectation(for: completedPredicate, evaluatedWith: messageText)
+        wait(for: [completedExpectation], timeout: 60)
+
+        // 3. Verify in installed list
+        let installedPackage = app.staticTexts["six"].firstMatch
+        XCTAssertTrue(installedPackage.waitForExistence(timeout: 10), "Installed package 'six' was not listed")
+        capture(name: "PythonPackages-InstallSuccess")
+
+        // 4. Import probe execution via real Python runtime
+        let probeButton = app.buttons["Import Probe"].firstMatch
+        XCTAssertTrue(probeButton.waitForExistence(timeout: 10), "Import Probe button was missing")
+        probeButton.tap()
+
+        let probePredicate = NSPredicate(format: "label CONTAINS[c] '1.17.0' OR label CONTAINS[c] 'import-ok'")
+        let probeOutput = app.staticTexts.containing(probePredicate).firstMatch
+        XCTAssertTrue(probeOutput.waitForExistence(timeout: 30), "Import probe did not produce expected output for six")
+        capture(name: "PythonPackages-ProbeSuccess")
+
+        // 5. Restart persistence
+        app.terminate()
+        app.launch()
+        openSettings()
+        openRuntimeCenter()
+        tapButton(withId: "hanlin-runtime-details-localPython")
+
+        XCTAssertTrue(
+            pythonPackagesNav.waitForExistence(timeout: 10) || pythonPackagesNavFallback.waitForExistence(timeout: 3),
+            "Python packages view did not open after restart"
+        )
+        XCTAssertTrue(installedPackage.waitForExistence(timeout: 15), "Package 'six' was not persisted after restart")
+
+        // 6. Re-probe after restart
+        let probeButtonAfterRestart = app.buttons["Import Probe"].firstMatch
+        XCTAssertTrue(probeButtonAfterRestart.waitForExistence(timeout: 10), "Import Probe button missing after restart")
+        probeButtonAfterRestart.tap()
+
+        let probeOutputAfterRestart = app.staticTexts.containing(probePredicate).firstMatch
+        XCTAssertTrue(probeOutputAfterRestart.waitForExistence(timeout: 30), "Import probe after restart did not produce expected output for six")
+        capture(name: "PythonPackages-PostRestartProbeSuccess")
+
         navigateBack()
     }
 
@@ -349,6 +513,16 @@ final class HanlinRuntimeInstallationUITests: XCTestCase {
         attachment.name = name
         attachment.lifetime = .keepAlways
         add(attachment)
+    }
+
+    private func typeIntoField(_ field: XCUIElement, text: String) {
+        XCTAssertTrue(field.waitForExistence(timeout: 5), "Text field was missing")
+        field.tap()
+        if let existing = field.value as? String, !existing.isEmpty, existing != field.placeholderValue {
+            let deleteString = String(repeating: XCUIKeyboardKey.delete.rawValue, count: existing.count)
+            field.typeText(deleteString)
+        }
+        field.typeText(text)
     }
 
     private func waitUntil(timeout: TimeInterval, condition: () -> Bool) -> Bool {

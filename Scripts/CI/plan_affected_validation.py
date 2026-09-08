@@ -383,6 +383,7 @@ class ValidationPlan:
             f"| **Head SHA** | `{self.head_sha[:10]}` (`{self.head_sha}`) |",
             f"| **Changed Files** | `{len(self.changed_files)}` |",
             f"| **Full Validation Override** | `{str(self.is_full_validation).lower()}` |",
+            f"| **Simulator UI Filter** | `{self.step_outputs.get('simulator_ui_filter') or 'None'}` |",
         ]
 
         if self.explicit_overrides:
@@ -616,6 +617,44 @@ def plan_affected_validation(
                 selected_groups[p].append(f"prerequisite for '{curr_g}'")
                 prereq_queue.append(p)
 
+    # Apply operator overrides that suppress specific validation stages
+    if manual_modes.get("simulator_e2e_only") and not full_validation:
+        if target_group not in ("device_build", "ipa_packaging"):
+            selected_groups.pop("device_build", None)
+            selected_groups.pop("ipa_packaging", None)
+
+    # Derive targeted UI suites
+    affected_ui_suites: Set[str] = set()
+    for comp_name in affected_components:
+        comp_info = components.get(comp_name, {})
+        for suite in comp_info.get("ui_suites", []):
+            affected_ui_suites.add(suite)
+
+    if full_validation:
+        for comp_info in components.values():
+            for suite in comp_info.get("ui_suites", []):
+                affected_ui_suites.add(suite)
+    elif target_group == "simulator_targeted_ui" and not affected_ui_suites:
+        for comp_info in components.values():
+            for suite in comp_info.get("ui_suites", []):
+                affected_ui_suites.add(suite)
+    elif manual_modes.get("simulator_e2e_only") and not affected_ui_suites and not file_to_components:
+        for comp_info in components.values():
+            for suite in comp_info.get("ui_suites", []):
+                affected_ui_suites.add(suite)
+
+    if "simulator_targeted_ui" in selected_groups and not full_validation:
+        if not affected_ui_suites:
+            raise RoutingError(
+                "Targeted UI validation ('simulator_targeted_ui') was selected, "
+                "but no specific UI test suite mapping was found for the affected components: "
+                f"{sorted(affected_components.keys())}. "
+                "Define 'ui_suites' for the affected component in Scripts/CI/affected-validation-map.json "
+                "or run with explicit full_validation."
+            )
+
+    simulator_ui_filter_value = ",".join(sorted(affected_ui_suites))
+
     # 5. Formulate step outputs
     step_outputs: Dict[str, Any] = {
         "run_full_validation": full_validation,
@@ -635,6 +674,7 @@ def plan_affected_validation(
         "simulator_unit_filter": "AI_HLYTests",
         "run_simulator_scripting_acceptance": False,
         "run_simulator_targeted_ui": False,
+        "simulator_ui_filter": simulator_ui_filter_value,
         "run_simulator_shell_acceptance": False,
         "run_simulator_mcp_acceptance": False,
         "run_simulator_smoke_launch": False,
@@ -651,6 +691,12 @@ def plan_affected_validation(
         g_outputs = g_info.get("workflow_outputs", {})
         for out_k, out_v in g_outputs.items():
             step_outputs[out_k] = out_v
+
+    # Enforce simulator_e2e_only strict suppression on step outputs
+    if manual_modes.get("simulator_e2e_only") and not full_validation:
+        if target_group not in ("device_build", "ipa_packaging"):
+            step_outputs["run_device_build"] = False
+            step_outputs["run_ipa_packaging"] = False
 
     # Ensure composite job flags are set correctly
     if any(
@@ -685,7 +731,10 @@ def plan_affected_validation(
         exp_name = item["name"]
         exp_group = item["validation_group"]
         if exp_group not in selected_groups:
-            skipped_expensive[exp_name] = "not affected by changed files"
+            if manual_modes.get("simulator_e2e_only") and exp_group in ("device_build", "ipa_packaging"):
+                skipped_expensive[exp_name] = "suppressed by simulator_e2e_only operator override"
+            else:
+                skipped_expensive[exp_name] = "not affected by changed files"
 
     return ValidationPlan(
         base_sha=base_sha,

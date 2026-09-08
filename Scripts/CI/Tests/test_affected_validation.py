@@ -305,6 +305,109 @@ class AffectedValidationPlannerTests(unittest.TestCase):
             planner.match_pattern("Other/en.lproj/InfoPlist.strings", "AI_HLY/*.lproj/**")
         )
 
+    # MARK: - Prompt Section 9 Regression Test Cases (A through F)
+
+    # Case A: simulator_e2e_only=true strictly suppresses device_build and ipa_packaging
+    def test_case_a_simulator_e2e_only_suppresses_device_build(self) -> None:
+        changed = [
+            "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptCoreSupport/HanlinNativeScriptCoreSupport.mm",
+        ]
+        plan = self.plan_files(
+            changed,
+            manual_modes={"simulator_e2e_only": True},
+        )
+        self.assertFalse(plan.is_full_validation)
+        self.assertFalse(plan.step_outputs["run_full_validation"])
+        self.assertTrue(plan.step_outputs["run_simulator_job"])
+        self.assertFalse(plan.step_outputs["run_device_build"])
+        self.assertFalse(plan.step_outputs["run_ipa_packaging"])
+        self.assertNotIn("device_build", plan.selected_groups)
+        self.assertNotIn("ipa_packaging", plan.selected_groups)
+
+    # Case B: NativeScript runtime/fixture source only -> NativeScript UI suite only
+    def test_case_b_nativescript_only_selects_nativescript_ui_filter(self) -> None:
+        changed = [
+            "Scripts/NativeScript/Fixtures/Source/app.ts",
+        ]
+        plan = self.plan_files(changed)
+        self.assertTrue(plan.step_outputs["run_simulator_targeted_ui"])
+        self.assertEqual(
+            plan.step_outputs["simulator_ui_filter"],
+            "AI_HLYUITests/HanlinNativeScriptProductionE2ETests",
+        )
+        self.assertNotIn(
+            "AI_HLYUITests/HanlinRuntimeInstallationUITests",
+            plan.step_outputs["simulator_ui_filter"],
+        )
+
+    # Case C: Runtime Installation UI/package-manager source only -> Runtime UI suite only
+    def test_case_c_runtime_install_only_selects_runtime_ui_filter(self) -> None:
+        changed = [
+            "AI_HLY/Downstream/RuntimeCore/UI/NodePackagesView.swift",
+        ]
+        plan = self.plan_files(changed)
+        self.assertTrue(plan.step_outputs["run_simulator_targeted_ui"])
+        self.assertEqual(
+            plan.step_outputs["simulator_ui_filter"],
+            "AI_HLYUITests/HanlinRuntimeInstallationUITests",
+        )
+        self.assertNotIn(
+            "AI_HLYUITests/HanlinNativeScriptProductionE2ETests",
+            plan.step_outputs["simulator_ui_filter"],
+        )
+        self.assertFalse(plan.step_outputs["run_device_build"])
+
+    # Case D: Both affected -> exact union of the two suites
+    def test_case_d_both_affected_selects_union_ui_filter(self) -> None:
+        changed = [
+            "Scripts/NativeScript/Fixtures/Source/app.ts",
+            "AI_HLY/Downstream/RuntimeCore/UI/NodePackagesView.swift",
+        ]
+        plan = self.plan_files(changed)
+        self.assertTrue(plan.step_outputs["run_simulator_targeted_ui"])
+        expected_filter = "AI_HLYUITests/HanlinNativeScriptProductionE2ETests,AI_HLYUITests/HanlinRuntimeInstallationUITests"
+        self.assertEqual(plan.step_outputs["simulator_ui_filter"], expected_filter)
+
+    # Case E: Test-only Runtime path -> owning tests only, no device/IPA build
+    def test_case_e_runtime_test_only_never_selects_device_or_ipa(self) -> None:
+        changed = [
+            "Scripts/Runtime/Tests/test_validate_shell_acceptance.py",
+        ]
+        plan = self.plan_files(changed)
+        self.assertIn("runtimecore_host", plan.selected_groups)
+        self.assertFalse(plan.step_outputs["run_device_build"])
+        self.assertFalse(plan.step_outputs["run_ipa_packaging"])
+        self.assertNotIn("device_build", plan.selected_groups)
+        self.assertNotIn("ipa_packaging", plan.selected_groups)
+
+    # Case F: Unknown UI component requiring targeted UI -> fails planner without fallback
+    def test_case_f_unmapped_ui_file_fails_planner_without_fallback(self) -> None:
+        changed = [
+            "AI_HLYUITests/SomeUnknownFutureUITest.swift",
+        ]
+        with self.assertRaises(planner.UnmappedPathsError) as ctx:
+            self.plan_files(changed)
+        self.assertIn("AI_HLYUITests/SomeUnknownFutureUITest.swift", ctx.exception.unmapped_paths)
+
+    def test_case_f_unmapped_targeted_ui_suite_raises_routing_error(self) -> None:
+        custom_mapping = json.loads(json.dumps(self.mapping_config))
+        custom_mapping["components"]["hypothetical_ui"] = {
+            "description": "Component selecting targeted UI without ui_suites",
+            "patterns": ["AI_HLY/HypotheticalUI/**"],
+            "direct_validation_groups": ["simulator_targeted_ui"],
+            "consumers": [],
+        }
+        with self.assertRaises(planner.RoutingError) as ctx:
+            planner.plan_affected_validation(
+                mapping_config=custom_mapping,
+                changed_files=["AI_HLY/HypotheticalUI/Test.swift"],
+                base_sha="abc1234567890",
+                head_sha="def9876543210",
+                event_name="workflow_dispatch",
+            )
+        self.assertIn("no specific UI test suite mapping was found", str(ctx.exception))
+
 
 if __name__ == "__main__":
     unittest.main()
+
