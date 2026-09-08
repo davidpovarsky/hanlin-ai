@@ -65,12 +65,12 @@ actor PythonPackageManager {
         }
 
         struct Distribution: Decodable, Sendable {
-            struct Digests: Decodable, Sendable { let sha256: String }
+            struct Digests: Decodable, Sendable { let sha256: String? }
             let filename: String
             let url: URL
-            let packagetype: String
-            let digests: Digests
-            let size: Int64
+            let packagetype: String?
+            let digests: Digests?
+            let size: Int64?
         }
 
         let info: Info
@@ -117,13 +117,17 @@ actor PythonPackageManager {
     }
 
     func preview(name: String, version: String? = nil) async throws -> PythonPackagePreview {
-        let projectIndex = try await project(name: name)
-        let selected = version ?? projectIndex.info.version
+        let cleanedName = name.trimmingCharacters(in: .whitespacesAndNewlines)
+        let cleanedVersion = version?.nilIfEmpty
+        let projectIndex = try await project(name: cleanedName)
+        let selected = cleanedVersion ?? projectIndex.info.version
         let distributions: [PyPIProject.Distribution]
-        if version == nil {
+        if let direct = (projectIndex.releases ?? [:])[selected], !direct.isEmpty {
+            distributions = direct
+        } else if cleanedVersion == nil {
             distributions = (projectIndex.releases ?? [:])[selected] ?? []
         } else {
-            let release = try await project(name: name, version: selected)
+            let release = try await project(name: cleanedName, version: selected)
             distributions = release.urls ?? (release.releases ?? [:])[selected] ?? []
         }
         let wheel = distributions.first(where: isUniversalWheel)
@@ -145,8 +149,10 @@ actor PythonPackageManager {
         importName: String? = nil,
         progress: @escaping @MainActor @Sendable (PythonPackageInstallProgress) -> Void = { _ in }
     ) async throws -> PythonPackageRecord {
-        await progress(.init(phase: .resolving, completedUnits: 0, totalUnits: 1, packageName: name))
-        let graph = try await resolveGraph(rootName: name, version: version) { update in
+        let cleanedName = name.trimmingCharacters(in: .whitespacesAndNewlines)
+        let cleanedVersion = version?.nilIfEmpty
+        await progress(.init(phase: .resolving, completedUnits: 0, totalUnits: 1, packageName: cleanedName))
+        let graph = try await resolveGraph(rootName: cleanedName, version: cleanedVersion) { update in
             await progress(update)
         }
         try Task.checkCancellation()
@@ -211,7 +217,7 @@ actor PythonPackageManager {
                 normalizedName: root.normalizedName,
                 version: root.version,
                 wheelFileName: root.distribution.filename,
-                sha256: root.distribution.digests.sha256.lowercased(),
+                sha256: root.distribution.digests?.sha256?.lowercased() ?? "",
                 installedAt: .now,
                 storageBytes: size,
                 importName: rootImportName,
@@ -283,7 +289,7 @@ actor PythonPackageManager {
                 }
                 throw RuntimeCoreError.runtimeFailure("This package depends on a native extension that cannot be installed dynamically on iOS.")
             }
-            guard wheel.size <= 100 * 1_024 * 1_024 else {
+            guard (wheel.size ?? 0) <= 100 * 1_024 * 1_024 else {
                 throw RuntimeCoreError.runtimeFailure("The wheel for \(release.info.name) exceeds the 100 MB package limit.")
             }
             let requirements = release.info.requiresDist ?? []
@@ -345,8 +351,10 @@ actor PythonPackageManager {
         try validatePyPIURL(finalURL)
         let data = try Data(contentsOf: temporaryURL, options: .mappedIfSafe)
         let digest = SHA256.hash(data: data).map { String(format: "%02x", $0) }.joined()
-        guard digest == distribution.digests.sha256.lowercased() else {
-            throw RuntimeCoreError.runtimeFailure("The downloaded wheel failed SHA-256 verification.")
+        if let expected = distribution.digests?.sha256?.lowercased(), !expected.isEmpty {
+            guard digest == expected else {
+                throw RuntimeCoreError.runtimeFailure("The downloaded wheel failed SHA-256 verification.")
+            }
         }
         try data.write(to: destination, options: [.atomic, .completeFileProtection])
         return digest
@@ -533,7 +541,9 @@ actor PythonPackageManager {
     }
 
     private func normalize(_ name: String) -> String {
-        name.lowercased().replacingOccurrences(of: "[-_.]+", with: "-", options: .regularExpression)
+        name.trimmingCharacters(in: .whitespacesAndNewlines)
+            .lowercased()
+            .replacingOccurrences(of: "[-_.]+", with: "-", options: .regularExpression)
     }
 
     private func directorySize(_ root: URL) throws -> Int64 {
@@ -555,3 +565,8 @@ actor PythonPackageManager {
         records = value
     }
 }
+
+private extension String {
+    var nilIfEmpty: String? { isEmpty ? nil : self }
+}
+

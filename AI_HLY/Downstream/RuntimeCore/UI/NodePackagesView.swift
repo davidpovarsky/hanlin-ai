@@ -77,13 +77,19 @@ struct NodePackagesView: View {
                 TextField(RuntimeL10n.string("Version or tag (optional)"), text: $model.version)
                     .textInputAutocapitalization(.never).autocorrectionDisabled()
                     .accessibilityIdentifier("hanlin-npm-version-field")
-                HStack {
+                HStack(spacing: 16) {
                     Button(RuntimeL10n.string("Preview")) { model.inspect() }
+                        .buttonStyle(.borderless)
                         .accessibilityIdentifier("hanlin-npm-preview-button")
                     Button(RuntimeL10n.string("Install")) { model.install() }
+                        .buttonStyle(.borderless)
                         .accessibilityIdentifier("hanlin-npm-install-button")
-                    if model.isBusy { Button(RuntimeL10n.string("Cancel"), role: .cancel) { model.cancel() } }
+                    if model.isBusy {
+                        Button(RuntimeL10n.string("Cancel"), role: .cancel) { model.cancel() }
+                            .buttonStyle(.borderless)
+                    }
                 }
+                .buttonStyle(.borderless)
                 .disabled(model.packageName.isEmpty && !model.isBusy)
                 if model.isBusy {
                     ProgressView(RuntimeL10n.string("Resolving and verifying package"))

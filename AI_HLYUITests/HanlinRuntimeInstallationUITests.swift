@@ -168,6 +168,16 @@ final class HanlinRuntimeInstallationUITests: XCTestCase {
             "Node packages view did not open"
         )
 
+        let existingNodePkg = app.descendants(matching: .any)["hanlin-npm-installed-item-is-number"].firstMatch
+        if existingNodePkg.waitForExistence(timeout: 2) {
+            existingNodePkg.swipeLeft()
+            let uninstallButton = app.buttons["Uninstall"].firstMatch
+            if uninstallButton.waitForExistence(timeout: 3) {
+                uninstallButton.tap()
+                _ = existingNodePkg.waitForNonExistence(timeout: 5)
+            }
+        }
+
         let nameField = app.textFields["hanlin-npm-package-name-field"].firstMatch
         let versionField = app.textFields["hanlin-npm-version-field"].firstMatch
         let previewButton = app.buttons["hanlin-npm-preview-button"].firstMatch
@@ -182,10 +192,12 @@ final class HanlinRuntimeInstallationUITests: XCTestCase {
 
         let previewSection = app.descendants(matching: .any)["hanlin-npm-preview-section"].firstMatch
         let previewFallback = app.staticTexts["Package details"].firstMatch
-        XCTAssertTrue(
-            previewSection.waitForExistence(timeout: 30) || previewFallback.waitForExistence(timeout: 2),
-            "Package preview did not appear"
-        )
+        let previewAppeared = previewSection.waitForExistence(timeout: 30) || previewFallback.waitForExistence(timeout: 2)
+        if !previewAppeared {
+            let messageText = app.descendants(matching: .any)["hanlin-npm-message"].firstMatch
+            let status = messageText.exists ? messageText.label : "none"
+            XCTFail("Package preview did not appear. Status message: '\(status)'")
+        }
         capture(name: "NodePackages-PreviewSuccess")
 
         // 2. Install
@@ -307,6 +319,16 @@ final class HanlinRuntimeInstallationUITests: XCTestCase {
             "Python packages view did not open"
         )
 
+        let existingPythonPkg = app.descendants(matching: .any)["hanlin-python-installed-item-six"].firstMatch
+        if existingPythonPkg.waitForExistence(timeout: 2) {
+            existingPythonPkg.swipeLeft()
+            let uninstallButton = app.buttons["Uninstall"].firstMatch
+            if uninstallButton.waitForExistence(timeout: 3) {
+                uninstallButton.tap()
+                _ = existingPythonPkg.waitForNonExistence(timeout: 5)
+            }
+        }
+
         let nameField = app.textFields["hanlin-python-package-name-field"].firstMatch
         let versionField = app.textFields["hanlin-python-version-field"].firstMatch
         let previewButton = app.buttons["hanlin-python-preview-button"].firstMatch
@@ -321,10 +343,12 @@ final class HanlinRuntimeInstallationUITests: XCTestCase {
 
         let previewSection = app.descendants(matching: .any)["hanlin-python-preview-section"].firstMatch
         let previewFallback = app.staticTexts["Package details"].firstMatch
-        XCTAssertTrue(
-            previewSection.waitForExistence(timeout: 30) || previewFallback.waitForExistence(timeout: 2),
-            "Package preview did not appear"
-        )
+        let previewAppeared = previewSection.waitForExistence(timeout: 30) || previewFallback.waitForExistence(timeout: 2)
+        if !previewAppeared {
+            let messageText = app.descendants(matching: .any)["hanlin-python-message"].firstMatch
+            let status = messageText.exists ? messageText.label : "none"
+            XCTFail("Package preview did not appear. Status message: '\(status)'")
+        }
         capture(name: "PythonPackages-PreviewSuccess")
 
         // 2. Install

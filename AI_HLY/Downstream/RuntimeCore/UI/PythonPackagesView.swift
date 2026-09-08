@@ -28,6 +28,12 @@ private final class PythonPackagesModel {
             ) { update in
                 self.installProgress = update
             }
+            if self.preview == nil {
+                self.preview = try? await AppRuntimeCore.shared.pythonPackages.preview(
+                    name: self.packageName,
+                    version: self.version.isEmpty ? nil : self.version
+                )
+            }
             await self.reload()
         }
     }
@@ -64,13 +70,19 @@ struct PythonPackagesView: View {
                     .textInputAutocapitalization(.never)
                     .autocorrectionDisabled()
                     .accessibilityIdentifier("hanlin-python-version-field")
-                HStack {
+                HStack(spacing: 16) {
                     Button(RuntimeL10n.string("Preview")) { model.inspect() }
+                        .buttonStyle(.borderless)
                         .accessibilityIdentifier("hanlin-python-preview-button")
                     Button(RuntimeL10n.string("Install")) { model.install() }
+                        .buttonStyle(.borderless)
                         .accessibilityIdentifier("hanlin-python-install-button")
-                    if model.isBusy { Button(RuntimeL10n.string("Cancel"), role: .cancel) { model.cancel() } }
+                    if model.isBusy {
+                        Button(RuntimeL10n.string("Cancel"), role: .cancel) { model.cancel() }
+                            .buttonStyle(.borderless)
+                    }
                 }
+                .buttonStyle(.borderless)
                 if model.isBusy {
                     if let progress = model.installProgress {
                         ProgressView(
