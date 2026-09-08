@@ -1,4 +1,5 @@
 #import "HanlinNativeScriptCompatibility.h"
+#import <UIKit/UIKit.h>
 
 @implementation HanlinNativeScriptCompatibility
 
@@ -23,11 +24,10 @@
     void (^instantiateBlock)(void) = ^{
         provider = [[klass alloc] init];
         if (provider) {
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
-            UIView *v = [provider performSelector:@selector(view)];
-            (void)v;
-#pragma clang diagnostic pop
+            if ([provider isKindOfClass:[UIViewController class]]) {
+                UIView *v = [(UIViewController *)provider view];
+                (void)v;
+            }
         }
     };
 
@@ -36,7 +36,8 @@
     } else {
         dispatch_sync(dispatch_get_main_queue(), instantiateBlock);
     }
-    NSLog(@"[HanlinNativeScriptCompatibility] Created provider=%@ isViewLoaded=%d", provider, provider ? (int)[provider isViewLoaded] : 0);
+    int viewLoaded = [provider respondsToSelector:@selector(isViewLoaded)] ? (int)[(UIViewController *)provider isViewLoaded] : 0;
+    NSLog(@"[HanlinNativeScriptCompatibility] Created provider=%@ isViewLoaded=%d", provider, viewLoaded);
     return provider;
 }
 
