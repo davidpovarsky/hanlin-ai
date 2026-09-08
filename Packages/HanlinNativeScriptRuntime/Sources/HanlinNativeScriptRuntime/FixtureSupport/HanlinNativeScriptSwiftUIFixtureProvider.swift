@@ -71,6 +71,18 @@ public final class HanlinNativeScriptSwiftUIFixtureProvider: UIViewController, S
 
     private let model = HanlinSwiftUIFixtureModel()
 
+    public override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+    }
+
+    public convenience init() {
+        self.init(nibName: nil, bundle: nil)
+    }
+
+    public required init?(coder: NSCoder) {
+        super.init(coder: coder)
+    }
+
     public override func loadView() {
         view = HanlinHostingContainerView(provider: self)
     }

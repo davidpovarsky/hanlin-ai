@@ -1325,7 +1325,7 @@ jobs:
     env:
       PROJECT_PATH: AI_HLY.xcodeproj
       SCHEME_NAME: AI_HLY
-      CONFIGURATION: ${{ (inputs.fast_validation_only || inputs.nativescript_poc_only || needs.plan-affected-validation.outputs.run_device_build != 'true') && 'Debug' || 'Release' }}
+      CONFIGURATION: ${{ (inputs.fast_validation_only || inputs.nativescript_poc_only) && 'Debug' || 'Release' }}
       DERIVED_DATA_PATH: build/SimulatorDerivedData
       CLONED_PACKAGES_PATH: build/SourcePackages
       LOG_DIR: simulator-logs
