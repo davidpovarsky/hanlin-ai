@@ -243,14 +243,15 @@ class AffectedValidationPlannerTests(unittest.TestCase):
         changed = []  # No changed files
         plan = self.plan_files(
             changed,
-            target_group="simulator_targeted_ui",
+            target_group="nativescript_runtime",
         )
 
         self.assertFalse(plan.is_full_validation)
-        self.assertIn("simulator_targeted_ui", plan.selected_groups)
+        self.assertIn("nativescript_runtime", plan.selected_groups)
         self.assertIn("nativescript_dependencies", plan.selected_groups)
-        self.assertTrue(plan.step_outputs["run_simulator_targeted_ui"])
-        self.assertTrue(plan.step_outputs["run_simulator_job"])
+        self.assertTrue(plan.step_outputs["run_nativescript_runtime"])
+        self.assertTrue(plan.step_outputs["run_nativescript_dependencies"])
+        self.assertTrue(plan.step_outputs["run_phase1"])
 
         # Unrelated groups remain skipped
         self.assertNotIn("scripting_compiler", plan.selected_groups)
@@ -347,10 +348,16 @@ class AffectedValidationPlannerTests(unittest.TestCase):
         ]
         plan = self.plan_files(changed)
         self.assertTrue(plan.step_outputs["run_simulator_targeted_ui"])
+        expected_filter = (
+            "AI_HLYUITests/HanlinRuntimeInstallationUITests/testNodePackageManagerUIWorkflowAndFailure,"
+            "AI_HLYUITests/HanlinRuntimeInstallationUITests/testNodePackageManagerUIWorkflowAndSuccess"
+        )
         self.assertEqual(
             plan.step_outputs["simulator_ui_filter"],
-            "AI_HLYUITests/HanlinRuntimeInstallationUITests",
+            expected_filter,
         )
+        self.assertEqual(plan.step_outputs["simulator_configuration"], "Debug")
+        self.assertFalse(plan.step_outputs["run_nativescript_dependencies"])
         self.assertNotIn(
             "AI_HLYUITests/HanlinNativeScriptProductionE2ETests",
             plan.step_outputs["simulator_ui_filter"],
@@ -365,8 +372,47 @@ class AffectedValidationPlannerTests(unittest.TestCase):
         ]
         plan = self.plan_files(changed)
         self.assertTrue(plan.step_outputs["run_simulator_targeted_ui"])
-        expected_filter = "AI_HLYUITests/HanlinNativeScriptProductionE2ETests,AI_HLYUITests/HanlinRuntimeInstallationUITests"
+        expected_filter = (
+            "AI_HLYUITests/HanlinNativeScriptProductionE2ETests,"
+            "AI_HLYUITests/HanlinRuntimeInstallationUITests/testNodePackageManagerUIWorkflowAndFailure,"
+            "AI_HLYUITests/HanlinRuntimeInstallationUITests/testNodePackageManagerUIWorkflowAndSuccess"
+        )
         self.assertEqual(plan.step_outputs["simulator_ui_filter"], expected_filter)
+        self.assertEqual(plan.step_outputs["simulator_configuration"], "Release")
+        self.assertTrue(plan.step_outputs["run_nativescript_dependencies"])
+
+    def test_python_package_manager_isolated_fast_path(self) -> None:
+        changed = [
+            "AI_HLY/Downstream/RuntimeCore/Python/PythonPackageManager.swift",
+        ]
+        plan = self.plan_files(changed)
+        self.assertTrue(plan.step_outputs["run_simulator_targeted_ui"])
+        expected_filter = (
+            "AI_HLYUITests/HanlinRuntimeInstallationUITests/testPythonPackageManagerUIWorkflowAndFailure,"
+            "AI_HLYUITests/HanlinRuntimeInstallationUITests/testPythonPackageManagerUIWorkflowAndSuccess"
+        )
+        self.assertEqual(plan.step_outputs["simulator_ui_filter"], expected_filter)
+        self.assertEqual(plan.step_outputs["simulator_configuration"], "Debug")
+        self.assertFalse(plan.step_outputs["run_nativescript_dependencies"])
+        self.assertFalse(plan.step_outputs["run_runtimecore_host"])
+        self.assertNotIn("AI_HLYUITests/HanlinNativeScriptProductionE2ETests", plan.step_outputs["simulator_ui_filter"])
+        self.assertNotIn("testNodePackageManager", plan.step_outputs["simulator_ui_filter"])
+        self.assertNotIn("testMCPServerInstallation", plan.step_outputs["simulator_ui_filter"])
+        expected_build_args = (
+            "-only-testing:AI_HLYUITests/HanlinRuntimeInstallationUITests/testPythonPackageManagerUIWorkflowAndFailure "
+            "-only-testing:AI_HLYUITests/HanlinRuntimeInstallationUITests/testPythonPackageManagerUIWorkflowAndSuccess"
+        )
+        self.assertEqual(plan.step_outputs["simulator_build_for_testing_args"], expected_build_args)
+
+    def test_runtime_install_ui_test_file_direct_change_runs_class_level(self) -> None:
+        changed = [
+            "AI_HLYUITests/HanlinRuntimeInstallationUITests.swift",
+        ]
+        plan = self.plan_files(changed)
+        self.assertTrue(plan.step_outputs["run_simulator_targeted_ui"])
+        self.assertEqual(plan.step_outputs["simulator_ui_filter"], "AI_HLYUITests/HanlinRuntimeInstallationUITests")
+        self.assertEqual(plan.step_outputs["simulator_configuration"], "Debug")
+        self.assertFalse(plan.step_outputs["run_nativescript_dependencies"])
 
     # Case E: Test-only Runtime path -> owning tests only, no device/IPA build
     def test_case_e_runtime_test_only_never_selects_device_or_ipa(self) -> None:

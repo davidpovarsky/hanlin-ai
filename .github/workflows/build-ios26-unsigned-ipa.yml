@@ -89,6 +89,8 @@ jobs:
       run_simulator_scripting_acceptance: ${{ steps.plan.outputs.run_simulator_scripting_acceptance }}
       run_simulator_targeted_ui: ${{ steps.plan.outputs.run_simulator_targeted_ui }}
       simulator_ui_filter: ${{ steps.plan.outputs.simulator_ui_filter }}
+      simulator_configuration: ${{ steps.plan.outputs.simulator_configuration }}
+      simulator_build_for_testing_args: ${{ steps.plan.outputs.simulator_build_for_testing_args }}
       run_simulator_shell_acceptance: ${{ steps.plan.outputs.run_simulator_shell_acceptance }}
       run_simulator_mcp_acceptance: ${{ steps.plan.outputs.run_simulator_mcp_acceptance }}
       run_simulator_smoke_launch: ${{ steps.plan.outputs.run_simulator_smoke_launch }}
@@ -1326,7 +1328,7 @@ jobs:
     env:
       PROJECT_PATH: AI_HLY.xcodeproj
       SCHEME_NAME: AI_HLY
-      CONFIGURATION: ${{ (inputs.fast_validation_only || inputs.nativescript_poc_only) && 'Debug' || 'Release' }}
+      CONFIGURATION: ${{ needs.plan-affected-validation.outputs.simulator_configuration || ((inputs.fast_validation_only || inputs.nativescript_poc_only) && 'Debug' || 'Release') }}
       DERIVED_DATA_PATH: build/SimulatorDerivedData
       CLONED_PACKAGES_PATH: build/SourcePackages
       LOG_DIR: simulator-logs
@@ -1335,11 +1337,14 @@ jobs:
       NATIVESCRIPT_POC_ONLY: ${{ inputs.nativescript_poc_only }}
       SIMULATOR_E2E_ONLY: ${{ inputs.simulator_e2e_only }}
       RUN_FULL_VALIDATION: ${{ needs.plan-affected-validation.outputs.run_full_validation }}
+      RUN_NATIVESCRIPT_DEPENDENCIES: ${{ needs.plan-affected-validation.outputs.run_nativescript_dependencies }}
+      RUN_RUNTIME_HOST: ${{ needs.plan-affected-validation.outputs.run_runtimecore_host }}
       RUN_SIMULATOR_UNIT: ${{ needs.plan-affected-validation.outputs.run_simulator_unit }}
       SIMULATOR_UNIT_FILTER: ${{ needs.plan-affected-validation.outputs.simulator_unit_filter }}
       RUN_SIMULATOR_SCRIPTING_ACCEPTANCE: ${{ needs.plan-affected-validation.outputs.run_simulator_scripting_acceptance }}
       RUN_SIMULATOR_TARGETED_UI: ${{ needs.plan-affected-validation.outputs.run_simulator_targeted_ui }}
       SIMULATOR_UI_FILTER: ${{ needs.plan-affected-validation.outputs.simulator_ui_filter }}
+      SIMULATOR_BUILD_FOR_TESTING_ARGS: ${{ needs.plan-affected-validation.outputs.simulator_build_for_testing_args }}
       RUN_SIMULATOR_SHELL_ACCEPTANCE: ${{ needs.plan-affected-validation.outputs.run_simulator_shell_acceptance }}
       RUN_SIMULATOR_MCP_ACCEPTANCE: ${{ needs.plan-affected-validation.outputs.run_simulator_mcp_acceptance }}
       RUN_SIMULATOR_SMOKE_LAUNCH: ${{ needs.plan-affected-validation.outputs.run_simulator_smoke_launch }}
@@ -1357,6 +1362,7 @@ jobs:
           cache-dependency-path: AI_HLY/Downstream/RuntimeCore/Node/Host/package-lock.json
 
       - name: Prepare pinned NativeScript iOS dependency closure
+        if: ${{ needs.plan-affected-validation.outputs.run_nativescript_dependencies == 'true' || needs.plan-affected-validation.outputs.run_full_validation == 'true' || needs.plan-affected-validation.outputs.run_simulator_nativescript_poc == 'true' || inputs.nativescript_poc_only }}
         run: |
           set -euxo pipefail
           mkdir -p "$LOG_DIR"
@@ -1486,12 +1492,14 @@ jobs:
           grep -Fq "Prepared verified RuntimeCore 93417cff5ce62098919711e7f6d239a6501fd7a5de1621e38eb2fb5cc8c79269" "$LOG_DIR/02-prepare-runtime-core.log"
 
       - name: Package current RuntimeCore host resources
+        if: ${{ needs.plan-affected-validation.outputs.run_runtimecore_host == 'true' || needs.plan-affected-validation.outputs.run_full_validation == 'true' }}
         run: |
           set -euxo pipefail
           bash Scripts/Runtime/prepare-runtime-host.sh 2>&1 | tee "$LOG_DIR/03-package-runtime-host.log"
           cp build/runtime-host/RuntimeHostResources.zip AI_HLY/RuntimeHostResources.zip
 
       - name: Run RuntimeCore preflight
+        if: ${{ needs.plan-affected-validation.outputs.run_runtimecore_host == 'true' || needs.plan-affected-validation.outputs.run_full_validation == 'true' }}
         run: |
           set -euxo pipefail
           bash Scripts/Runtime/preflight-runtime-core.sh 2>&1 | tee "$LOG_DIR/04-runtime-preflight.log"
@@ -1544,14 +1552,47 @@ jobs:
         run: |
           set -euxo pipefail
           rm -rf "$LOG_DIR/SimulatorBuildResult.xcresult"
-          build_actions=(build)
-          if [ "${{ inputs.force_clean_build }}" = "true" ]; then
-            build_actions=(clean build)
-          fi
           poc_build_settings=()
           if [ "${{ inputs.nativescript_poc_only }}" = "true" ]; then
             poc_build_settings=('OTHER_SWIFT_FLAGS=$(inherited) -DHANLIN_NATIVESCRIPT_POC')
           fi
+
+          # Determine whether this run executes tests (requires build-for-testing) or only app launch
+          has_tests=false
+          if [ -n "$SIMULATOR_BUILD_FOR_TESTING_ARGS" ] || [ "$RUN_FULL_VALIDATION" = "true" ] || [ "$RUN_SIMULATOR_UNIT" = "true" ] || [ "$RUN_SIMULATOR_SCRIPTING_ACCEPTANCE" = "true" ] || [ "$RUN_SIMULATOR_TARGETED_UI" = "true" ]; then
+            has_tests=true
+          fi
+
+          build_actions=(build)
+          if [ "$has_tests" = "true" ] && [ "${{ inputs.nativescript_poc_only }}" != "true" ]; then
+            build_actions=(build-for-testing)
+          fi
+          if [ "${{ inputs.force_clean_build }}" = "true" ]; then
+            build_actions=(clean "${build_actions[@]}")
+          fi
+
+          testing_scope_flags=()
+          if [ "$has_tests" = "true" ] && [ "${{ inputs.nativescript_poc_only }}" != "true" ]; then
+            if [ -n "$SIMULATOR_BUILD_FOR_TESTING_ARGS" ]; then
+              # shellcheck disable=SC2086
+              for arg in $SIMULATOR_BUILD_FOR_TESTING_ARGS; do
+                testing_scope_flags+=("$arg")
+              done
+            elif [ "$RUN_FULL_VALIDATION" = "true" ]; then
+              testing_scope_flags+=("-only-testing:AI_HLYTests" "-only-testing:AI_HLYUITests")
+            else
+              if [ "$RUN_SIMULATOR_UNIT" = "true" ]; then
+                testing_scope_flags+=("-only-testing:${SIMULATOR_UNIT_FILTER:-AI_HLYTests}")
+              fi
+              if [ "$RUN_SIMULATOR_SCRIPTING_ACCEPTANCE" = "true" ]; then
+                testing_scope_flags+=("-only-testing:AI_HLYTests/HanlinScriptingAcceptanceTests")
+              fi
+              if [ "$RUN_SIMULATOR_TARGETED_UI" = "true" ]; then
+                testing_scope_flags+=("-only-testing:${SIMULATOR_UI_FILTER:-AI_HLYUITests}")
+              fi
+            fi
+          fi
+
           started_at="$(date +%s)"
           xcodebuild \
             -project "$PROJECT_PATH" \
@@ -1570,6 +1611,7 @@ jobs:
             ARCHS=arm64 \
             ONLY_ACTIVE_ARCH=YES \
             "${poc_build_settings[@]+"${poc_build_settings[@]}"}" \
+            "${testing_scope_flags[@]+"${testing_scope_flags[@]}"}" \
             "${build_actions[@]}" 2>&1 | tee "$LOG_DIR/06-xcodebuild-simulator.log"
           echo "$(( $(date +%s) - started_at ))" > "$LOG_DIR/06-app-compilation-duration-seconds.txt"
           APP_PATH="$DERIVED_DATA_PATH/Build/Products/${CONFIGURATION}-iphonesimulator/AI_Hanlin.app"
@@ -1581,6 +1623,7 @@ jobs:
           # the product app. Keep the runtime copy representative of the shipped
           # application before validating its dyld closure and launching it.
           rm -rf build/SimulatorRuntimeApp/AI_Hanlin.app/PlugIns/AI_HLYTests.xctest
+          rm -rf build/SimulatorRuntimeApp/AI_Hanlin.app/PlugIns/AI_HLYUITests.xctest
           test ! -e build/SimulatorRuntimeApp/AI_Hanlin.app/PlugIns/AI_HLYTests.xctest
 
       - name: Measure same-run simulator no-op rebuild
@@ -1588,8 +1631,22 @@ jobs:
         run: |
           set -euxo pipefail
           rm -rf "$LOG_DIR/SimulatorWarmBuildResult.xcresult"
+          has_tests=false
+          if [ -n "$SIMULATOR_BUILD_FOR_TESTING_ARGS" ] || [ "$RUN_FULL_VALIDATION" = "true" ] || [ "$RUN_SIMULATOR_UNIT" = "true" ] || [ "$RUN_SIMULATOR_SCRIPTING_ACCEPTANCE" = "true" ] || [ "$RUN_SIMULATOR_TARGETED_UI" = "true" ]; then
+            has_tests=true
+          fi
+          build_actions=(build)
+          testing_scope_flags=()
+          if [ "$has_tests" = "true" ] && [ "${{ inputs.nativescript_poc_only }}" != "true" ]; then
+            build_actions=(build-for-testing)
+            if [ -n "$SIMULATOR_BUILD_FOR_TESTING_ARGS" ]; then
+              for arg in $SIMULATOR_BUILD_FOR_TESTING_ARGS; do
+                testing_scope_flags+=("$arg")
+              done
+            fi
+          fi
           started_at="$(date +%s)"
-          xcodebuild build \
+          xcodebuild \
             -project "$PROJECT_PATH" \
             -scheme "$SCHEME_NAME" \
             -configuration "$CONFIGURATION" \
@@ -1605,37 +1662,23 @@ jobs:
             IPHONEOS_DEPLOYMENT_TARGET="$IOS_DEPLOYMENT_TARGET" \
             ARCHS=arm64 \
             ONLY_ACTIVE_ARCH=YES \
+            "${testing_scope_flags[@]+"${testing_scope_flags[@]}"}" \
+            "${build_actions[@]}" \
             2>&1 | tee "$LOG_DIR/06-warm-rebuild.log"
           duration_seconds="$(( $(date +%s) - started_at ))"
           echo "$duration_seconds" > "$LOG_DIR/06-warm-rebuild-duration-seconds.txt"
           echo "Same-run simulator no-op rebuild duration: ${duration_seconds}s"
 
-      - name: Build downstream unit and production UI tests
-        if: ${{ !inputs.nativescript_poc_only && (needs.plan-affected-validation.outputs.run_simulator_unit == 'true' || needs.plan-affected-validation.outputs.run_simulator_scripting_acceptance == 'true' || needs.plan-affected-validation.outputs.run_simulator_targeted_ui == 'true' || needs.plan-affected-validation.outputs.run_full_validation == 'true') }}
-        run: |
-          set -euxo pipefail
-          rm -rf "$LOG_DIR/DownstreamTestsBuildResult.xcresult"
-          started_at="$(date +%s)"
-          xcodebuild build-for-testing \
-            -project "$PROJECT_PATH" \
-            -scheme "$SCHEME_NAME" \
-            -configuration "$CONFIGURATION" \
-            -sdk iphonesimulator \
-            -destination "generic/platform=iOS Simulator" \
-            -derivedDataPath "$DERIVED_DATA_PATH" \
-            -clonedSourcePackagesDirPath "$CLONED_PACKAGES_PATH" \
-            -resultBundlePath "$LOG_DIR/DownstreamTestsBuildResult.xcresult" \
-            -showBuildTimingSummary \
-            -skipPackagePluginValidation \
-            -skipMacroValidation \
-            -only-testing:AI_HLYTests \
-            -only-testing:AI_HLYUITests \
-            ENABLE_TESTABILITY=YES \
-            IPHONEOS_DEPLOYMENT_TARGET="$IOS_DEPLOYMENT_TARGET" \
-            ARCHS=arm64 \
-            ONLY_ACTIVE_ARCH=YES \
-            2>&1 | tee "$LOG_DIR/06-downstream-test-build.log"
-          echo "$(( $(date +%s) - started_at ))" > "$LOG_DIR/06-downstream-test-build-duration-seconds.txt"
+      - name: Save successful simulator compiler state
+        if: ${{ success() && !inputs.force_clean_build }}
+        uses: actions/cache/save@v6
+        with:
+          path: |
+            build/SimulatorDerivedData/Build
+            build/SimulatorDerivedData/ModuleCache.noindex
+            build/SimulatorDerivedData/SDKStatCaches.noindex
+            build/SimulatorDerivedData/CacheMetadata/xcode-build-inputs.json
+          key: ${{ steps.simulator-deriveddata-cache.outputs.cache-primary-key }}
 
       - name: Locate and scan simulator app
         run: |
@@ -1650,15 +1693,23 @@ jobs:
           test -f "$APP_PATH/extraCommandsDictionary.plist"
           plutil -lint "$APP_PATH/commandDictionary.plist"
           plutil -lint "$APP_PATH/extraCommandsDictionary.plist"
-          python3 Scripts/Runtime/validate_ios_system_resources.py \
-            --repository-root . \
-            --app "$APP_PATH" \
-            --json-output "$LOG_DIR/07-simulator-ios-system-resources.json"
-          npm run preflight:ios-dependencies --prefix Scripts/NativeScript -- --app "$APP_PATH"
+          if [ "$CONFIGURATION" = "Release" ] || [ "$RUN_FULL_VALIDATION" = "true" ]; then
+            python3 Scripts/Runtime/validate_ios_system_resources.py \
+              --repository-root . \
+              --app "$APP_PATH" \
+              --json-output "$LOG_DIR/07-simulator-ios-system-resources.json"
+          else
+            printf '%s\n' "Skipped iOS system resources scan in fast Debug targeted validation." > "$LOG_DIR/07-simulator-ios-system-resources-skipped.txt"
+          fi
+          if [ "$RUN_NATIVESCRIPT_DEPENDENCIES" = "true" ] || [ "$RUN_FULL_VALIDATION" = "true" ]; then
+            npm run preflight:ios-dependencies --prefix Scripts/NativeScript -- --app "$APP_PATH"
+          else
+            printf '%s\n' "Skipped NativeScript dependency preflight scan (NativeScript not affected)." > "$LOG_DIR/07-nativescript-preflight-skipped.txt"
+          fi
           cp "$APP_PATH/commandDictionary.plist" "$LOG_DIR/commandDictionary.plist"
           cp "$APP_PATH/extraCommandsDictionary.plist" "$LOG_DIR/extraCommandsDictionary.plist"
           find "$APP_PATH" -maxdepth 4 -print | sort > "$LOG_DIR/07-built-app-resources.txt"
-          if [ "${{ inputs.fast_validation_only }}" != "true" ] && [ "${{ inputs.nativescript_poc_only }}" != "true" ]; then
+          if [ "$CONFIGURATION" = "Release" ] && [ "${{ inputs.fast_validation_only }}" != "true" ] && [ "${{ inputs.nativescript_poc_only }}" != "true" ]; then
             python3 Scripts/Runtime/validate-app-dyld-closure.py \
               --app "$APP_PATH" \
               --platform iphonesimulator \
@@ -1666,7 +1717,7 @@ jobs:
               --text-output "$LOG_DIR/07-simulator-dyld-closure.txt"
           else
             printf '%s\n' \
-              "Skipped production dyld-closure validation for the Debug validation app." \
+              "Skipped production dyld-closure validation for Debug / fast-path targeted validation." \
               > "$LOG_DIR/07-simulator-dyld-closure-skipped.txt"
           fi
 
@@ -1707,7 +1758,7 @@ jobs:
 
           xcrun simctl boot "$SIMULATOR_UDID" 2>/dev/null || true
           xcrun simctl bootstatus "$SIMULATOR_UDID" -b 2>&1 | tee "$LOG_DIR/08-bootstatus.log"
-          if [ "$FAST_VALIDATION_ONLY" != "true" ] && [ "$NATIVESCRIPT_POC_ONLY" != "true" ]; then
+          if { [ "$RUN_NATIVESCRIPT_DEPENDENCIES" = "true" ] || [ "$RUN_FULL_VALIDATION" = "true" ]; } && [ "$FAST_VALIDATION_ONLY" != "true" ] && [ "$NATIVESCRIPT_POC_ONLY" != "true" ]; then
             FILES_CONTAINER="$(xcrun simctl get_app_container "$SIMULATOR_UDID" com.apple.DocumentsApp data)"
             test -n "$FILES_CONTAINER"
             mkdir -p "$FILES_CONTAINER/Documents"
@@ -1733,6 +1784,8 @@ jobs:
               shasum -a 256 "$FILES_CONTAINER/Documents/HanlinNativeScriptUnsupported.hanlinNativeScript"
               shasum -a 256 "$FILES_CONTAINER/Documents/HanlinNativeScriptMalformed.hanlinNativeScript"
             } | tee "$LOG_DIR/08-nativescript-files-staging.log"
+          else
+            printf '%s\n' "NativeScript fixture staging skipped (NativeScript not affected)." > "$LOG_DIR/08-nativescript-files-staging-skipped.txt"
           fi
 
       - name: Run simulator test suite
@@ -1749,6 +1802,14 @@ jobs:
               rm -rf "$LOG_DIR/DownstreamTestsResult.xcresult"
               started_at="$(date +%s)"
               set +e
+              unit_test_args=()
+              IFS=',' read -ra UNIT_SUITES <<< "${SIMULATOR_UNIT_FILTER:-AI_HLYTests}"
+              for suite in "${UNIT_SUITES[@]}"; do
+                suite="$(echo "$suite" | xargs)"
+                if [ -n "$suite" ]; then
+                  unit_test_args+=("-only-testing:$suite")
+                fi
+              done
               xcodebuild test-without-building \
               -project "$PROJECT_PATH" \
               -scheme "$SCHEME_NAME" \
@@ -1760,7 +1821,7 @@ jobs:
               -skipPackagePluginValidation \
               -skipMacroValidation \
               -parallel-testing-enabled NO \
-              -only-testing:"${SIMULATOR_UNIT_FILTER:-AI_HLYTests}" \
+              "${unit_test_args[@]}" \
               2>&1 | tee "$LOG_DIR/08-downstream-unit-tests.log"
               downstream_test_status="${PIPESTATUS[0]}"
               set -e
@@ -2205,17 +2266,6 @@ jobs:
             printf '%s\n' "MCP runtime acceptance skipped by affected-validation router." > "$LOG_DIR/08-mcp-acceptance-skipped.txt"
           fi
           trap - EXIT
-
-      - name: Save successful simulator compiler state
-        if: ${{ success() }}
-        uses: actions/cache/save@v6
-        with:
-          path: |
-            build/SimulatorDerivedData/Build
-            build/SimulatorDerivedData/ModuleCache.noindex
-            build/SimulatorDerivedData/SDKStatCaches.noindex
-            build/SimulatorDerivedData/CacheMetadata/xcode-build-inputs.json
-          key: ${{ steps.simulator-deriveddata-cache.outputs.cache-primary-key }}
 
       - name: Collect simulator diagnostics
         if: always()

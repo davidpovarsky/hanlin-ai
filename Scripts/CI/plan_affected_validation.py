@@ -384,6 +384,8 @@ class ValidationPlan:
             f"| **Changed Files** | `{len(self.changed_files)}` |",
             f"| **Full Validation Override** | `{str(self.is_full_validation).lower()}` |",
             f"| **Simulator UI Filter** | `{self.step_outputs.get('simulator_ui_filter') or 'None'}` |",
+            f"| **Simulator Configuration** | `{self.step_outputs.get('simulator_configuration', 'Debug')}` |",
+            f"| **Simulator Build Args** | `{self.step_outputs.get('simulator_build_for_testing_args') or 'None'}` |",
         ]
 
         if self.explicit_overrides:
@@ -725,7 +727,63 @@ def plan_affected_validation(
     ):
         step_outputs["run_simulator_job"] = True
 
-    # 6. Determine skipped expensive groups for clear reporting
+    # 6. Determine simulator configuration (Debug vs Release)
+    # Routine targeted functional UI acceptance and unit tests use Debug.
+    # Release is used when full validation is enabled, or when the affected
+    # components/groups specifically require linker/runtime/native/production validation.
+    release_triggers = {
+        "nativescript_runtime",
+        "nativescript_dependencies",
+        "nativescript_fixtures",
+        "nativescript_ui_test_files",
+        "simulator_nativescript_poc",
+        "runtimecore_bundle",
+        "runtimecore_host",
+        "runtime_tools",
+        "project_packaging",
+        "python_runtime",
+        "node_runtime",
+        "ios_system",
+        "simulator_shell_acceptance",
+        "simulator_mcp_acceptance",
+        "device_build",
+        "ipa_packaging",
+    }
+    if full_validation:
+        simulator_configuration = "Release"
+    elif any(g in selected_groups for g in release_triggers):
+        simulator_configuration = "Release"
+    elif any(c in affected_components for c in release_triggers):
+        simulator_configuration = "Release"
+    else:
+        simulator_configuration = "Debug"
+
+    # 7. Formulate scoped build-for-testing arguments
+    build_for_testing_args: List[str] = []
+    if full_validation:
+        build_for_testing_args = ["-only-testing:AI_HLYTests", "-only-testing:AI_HLYUITests"]
+    else:
+        if step_outputs.get("run_simulator_unit"):
+            unit_filter = step_outputs.get("simulator_unit_filter", "AI_HLYTests")
+            for u in unit_filter.split(","):
+                u = u.strip()
+                if u:
+                    build_for_testing_args.append(f"-only-testing:{u}")
+        if step_outputs.get("run_simulator_scripting_acceptance"):
+            build_for_testing_args.append("-only-testing:AI_HLYTests/HanlinScriptingAcceptanceTests")
+        if step_outputs.get("run_simulator_targeted_ui"):
+            ui_filter = step_outputs.get("simulator_ui_filter", "")
+            for s in ui_filter.split(","):
+                s = s.strip()
+                if s:
+                    build_for_testing_args.append(f"-only-testing:{s}")
+
+    simulator_build_for_testing_args_value = " ".join(build_for_testing_args)
+
+    step_outputs["simulator_configuration"] = simulator_configuration
+    step_outputs["simulator_build_for_testing_args"] = simulator_build_for_testing_args_value
+
+    # 8. Determine skipped expensive groups for clear reporting
     skipped_expensive: Dict[str, str] = {}
     for item in expensive_items:
         exp_name = item["name"]

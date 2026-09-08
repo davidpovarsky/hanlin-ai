@@ -101,6 +101,7 @@ struct PythonPackagesView: View {
                     LabeledContent(RuntimeL10n.string("Classification"), value: preview.isPurePython ? RuntimeL10n.string("Universal pure-Python wheel") : RuntimeL10n.string("Native or source distribution"))
                     Text(preview.compatibilityExplanation).font(.caption)
                 }
+                .accessibilityIdentifier("hanlin-python-preview-section")
             }
 
             Section(RuntimeL10n.string("Installed Python packages")) {
@@ -120,6 +121,7 @@ struct PythonPackagesView: View {
                         }
                         Button(RuntimeL10n.string("Import Probe")) { model.probe(item) }.buttonStyle(.borderless)
                     }
+                    .accessibilityIdentifier("hanlin-python-installed-item-\(item.name)")
                     .swipeActions {
                         Button(RuntimeL10n.string("Uninstall"), role: .destructive) { model.uninstall(item) }
                         Button(RuntimeL10n.string("Update")) { model.update(item) }.tint(.blue)

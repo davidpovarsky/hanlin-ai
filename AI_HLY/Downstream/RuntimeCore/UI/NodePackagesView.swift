@@ -111,6 +111,7 @@ struct NodePackagesView: View {
                             Text(item.version).font(.caption).foregroundStyle(.secondary)
                         }
                     }
+                    .accessibilityIdentifier("hanlin-npm-installed-item-\(item.name)")
                     Button(RuntimeL10n.string("Import Probe")) { model.probe(item) }.buttonStyle(.borderless)
                     .swipeActions {
                         Button(RuntimeL10n.string("Uninstall"), role: .destructive) { model.uninstall(item) }
@@ -162,6 +163,7 @@ private struct NodePackageDetailsView: View {
                     .font(.caption)
             }
         }
+        .accessibilityIdentifier("hanlin-npm-preview-section")
     }
 }
 

@@ -184,7 +184,9 @@
     "python_runtime": {
       "description": "Python iOS runtime slice scripts and downstream Python environment",
       "patterns": [
-        "AI_HLY/Downstream/RuntimeCore/Python/**",
+        "AI_HLY/Downstream/RuntimeCore/Python/PythonRuntimeBridge.swift",
+        "AI_HLY/Downstream/RuntimeCore/Python/PythonRuntimeService.swift",
+        "AI_HLY/Downstream/RuntimeCore/Python/Native/**",
         "Scripts/Runtime/prepare-python-runtime.sh"
       ],
       "direct_validation_groups": [
@@ -196,8 +198,17 @@
     "node_runtime": {
       "description": "Node mobile runtime scripts, Node/V8 bridge, and MCP downstream runtime",
       "patterns": [
-        "AI_HLY/Downstream/RuntimeCore/Node/**",
-        "AI_HLY/Downstream/MCP/**",
+        "AI_HLY/Downstream/RuntimeCore/Node/Host/**",
+        "AI_HLY/Downstream/RuntimeCore/Node/Native/**",
+        "AI_HLY/Downstream/RuntimeCore/Node/NodeRuntimeService.swift",
+        "AI_HLY/Downstream/RuntimeCore/Node/TypeScriptRuntimeService.swift",
+        "AI_HLY/Downstream/MCP/Core/**",
+        "AI_HLY/Downstream/MCP/Diagnostics/**",
+        "AI_HLY/Downstream/MCP/Persistence/**",
+        "AI_HLY/Downstream/MCP/Resources/**",
+        "AI_HLY/Downstream/MCP/Runtime/**",
+        "AI_HLY/Downstream/MCP/ToolIntegration/**",
+        "AI_HLY/Downstream/MCP/README.md",
         "Scripts/Runtime/prepare-node-source.sh",
         "Scripts/Runtime/build-node-slice.sh",
         "Scripts/Runtime/NodeMobile.exports",
@@ -247,24 +258,66 @@
         "project_packaging"
       ]
     },
-    "runtime_installation_ui": {
-      "description": "Downstream Runtime Center, package manager, and MCP install views",
+    "python_package_manager_ui": {
+      "description": "Downstream Python package manager and packages view",
       "patterns": [
-        "AI_HLY/Downstream/RuntimeCore/UI/**",
-        "AI_HLY/Downstream/MCP/UI/**",
-        "AI_HLY/Downstream/RuntimeCore/Node/NodePackageManager.swift",
         "AI_HLY/Downstream/RuntimeCore/Python/PythonPackageManager.swift",
+        "AI_HLY/Downstream/RuntimeCore/UI/PythonPackagesView.swift"
+      ],
+      "direct_validation_groups": [
+        "simulator_targeted_ui"
+      ],
+      "ui_suites": [
+        "AI_HLYUITests/HanlinRuntimeInstallationUITests/testPythonPackageManagerUIWorkflowAndSuccess",
+        "AI_HLYUITests/HanlinRuntimeInstallationUITests/testPythonPackageManagerUIWorkflowAndFailure"
+      ],
+      "consumers": []
+    },
+    "node_package_manager_ui": {
+      "description": "Downstream Node package manager and packages view",
+      "patterns": [
+        "AI_HLY/Downstream/RuntimeCore/Node/NodePackageManager.swift",
+        "AI_HLY/Downstream/RuntimeCore/UI/NodePackagesView.swift"
+      ],
+      "direct_validation_groups": [
+        "simulator_targeted_ui"
+      ],
+      "ui_suites": [
+        "AI_HLYUITests/HanlinRuntimeInstallationUITests/testNodePackageManagerUIWorkflowAndSuccess",
+        "AI_HLYUITests/HanlinRuntimeInstallationUITests/testNodePackageManagerUIWorkflowAndFailure"
+      ],
+      "consumers": []
+    },
+    "mcp_installation_ui": {
+      "description": "Downstream MCP server installer views and flow",
+      "patterns": [
+        "AI_HLY/Downstream/MCP/UI/**",
         "AI_HLY/Downstream/MCP/Installer/**"
       ],
       "direct_validation_groups": [
         "simulator_targeted_ui"
       ],
       "ui_suites": [
-        "AI_HLYUITests/HanlinRuntimeInstallationUITests"
+        "AI_HLYUITests/HanlinRuntimeInstallationUITests/testMCPServerInstallationUIWorkflowAndFailure"
       ],
-      "consumers": [
-        "app_core"
-      ]
+      "consumers": []
+    },
+    "runtime_center_ui": {
+      "description": "Downstream Runtime Center hub and embedded runtime status views",
+      "patterns": [
+        "AI_HLY/Downstream/RuntimeCore/UI/RuntimeCenterView.swift",
+        "AI_HLY/Downstream/RuntimeCore/UI/RuntimeEnvironmentView.swift",
+        "AI_HLY/Downstream/RuntimeCore/UI/RuntimeL10n.swift",
+        "AI_HLY/Downstream/RuntimeCore/UI/RuntimeLogsView.swift",
+        "AI_HLY/Downstream/RuntimeCore/UI/ShellCapabilitiesView.swift"
+      ],
+      "direct_validation_groups": [
+        "simulator_targeted_ui"
+      ],
+      "ui_suites": [
+        "AI_HLYUITests/HanlinRuntimeInstallationUITests/testRuntimeCenterEmbeddedRuntimesSmokeAndReadiness"
+      ],
+      "consumers": []
     },
     "app_ui": {
       "description": "SwiftUI views, screens, assets, localization, and UI components",
@@ -362,6 +415,7 @@
         "AI_HLYUITests/HanlinNativeScriptProductionE2ETests.swift"
       ],
       "direct_validation_groups": [
+        "nativescript_dependencies",
         "simulator_targeted_ui"
       ],
       "ui_suites": [
@@ -519,9 +573,7 @@
     "simulator_targeted_ui": {
       "description": "Run NativeScript production UI E2E test suite on iPad Simulator",
       "job": "simulator",
-      "prerequisites": [
-        "nativescript_dependencies"
-      ],
+      "prerequisites": [],
       "workflow_outputs": {
         "run_simulator_job": true,
         "run_simulator_targeted_ui": true
