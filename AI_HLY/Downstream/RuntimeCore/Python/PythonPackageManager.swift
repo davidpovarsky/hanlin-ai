@@ -430,7 +430,10 @@ actor PythonPackageManager {
         guard distribution.packagetype == "bdist_wheel" else { return false }
         let stem = distribution.filename.lowercased().dropLast(distribution.filename.lowercased().hasSuffix(".whl") ? 4 : 0)
         let tags = stem.split(separator: "-").suffix(3)
-        return tags.count == 3 && tags[tags.startIndex] == "py3" && tags[tags.index(after: tags.startIndex)] == "none" && tags.last == "any"
+        guard tags.count == 3 else { return false }
+        let pythonTags = tags[tags.startIndex].split(separator: ".")
+        let isPython3Compatible = pythonTags.contains { $0 == "py3" || $0.hasPrefix("py3") }
+        return isPython3Compatible && tags[tags.index(after: tags.startIndex)] == "none" && tags.last == "any"
     }
 
     private func parseRequirement(_ raw: String) -> Requirement? {
