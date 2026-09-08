@@ -13,6 +13,9 @@ NS_ASSUME_NONNULL_BEGIN
 + (void)setSharedSwiftUIFixtureProvider:(id)provider;
 + (nullable id)sharedSwiftUIFixtureProvider;
 + (void)sendEventToRegisteredHandler:(NSDictionary *)eventData;
++ (void)recordEvent:(NSDictionary *)payload;
++ (nullable NSNumber *)latestEventCount;
++ (nullable NSDictionary *)latestEvent;
 @end
 
 NS_ASSUME_NONNULL_END

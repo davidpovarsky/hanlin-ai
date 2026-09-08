@@ -110,11 +110,17 @@ public final class HanlinNativeScriptSwiftUIFixtureProvider: UIViewController, S
                 "count": NSNumber(value: self.model.count),
                 "source": "swiftui"
             ]
+            NSLog("%@", "HANLIN_NS_SWIFTUI_EVENT_TRIGGER count=\(self.model.count)")
+            HanlinNativeScriptCompatibility.recordEvent(payload)
+            NotificationCenter.default.post(
+                name: NSNotification.Name("HanlinSwiftUIEventNotification"),
+                object: self,
+                userInfo: payload
+            )
             if let onEvent = self.onEvent {
                 onEvent(payload as NSDictionary)
-            } else {
-                HanlinNativeScriptCompatibility.sendEvent(toRegisteredHandler: payload)
             }
+            HanlinNativeScriptCompatibility.sendEvent(toRegisteredHandler: payload)
         })
         self.hostingController = hosting
         addChild(hosting)
@@ -200,11 +206,19 @@ public final class HanlinNativeScriptSwiftUIFixtureProvider: UIViewController, S
             model.count = countInt
         }
         NSLog("%@", "HANLIN_NS_SWIFTUI_DATA_OK title=\(model.title) count=\(model.count)")
+        HanlinNativeScriptCompatibility.recordEvent([
+            "count": NSNumber(value: model.count),
+            "source": "data"
+        ])
     }
 
     @objc(updateData:)
     public func updateDataDirect(_ data: NSDictionary?) {
         updateData(data: data)
+    }
+
+    @objc public func currentCount() -> NSNumber {
+        NSNumber(value: model.count)
     }
 
     @objc public func registerEventHandler(_ handler: @escaping (NSDictionary) -> Void) {

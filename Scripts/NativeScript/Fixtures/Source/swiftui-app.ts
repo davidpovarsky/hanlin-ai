@@ -151,6 +151,9 @@ function createFixtureProvider(): any {
     };
   }
 
+  globalActiveProvider = provider;
+  globalActiveCompat = activeCompat;
+
   // Bridge onEvent so NativeScript UIDataDriver event registration reaches the Swift fixture model
   let registeredEventCallback: any = provider.onEvent ?? null;
   try {
@@ -162,29 +165,6 @@ function createFixtureProvider(): any {
       },
       set(callback: any) {
         registeredEventCallback = callback;
-        const wrapped = (dict: any) => {
-          try {
-            if (typeof callback === 'function') {
-              callback(dict);
-            }
-          } catch (err) {
-            console.log(`[HanlinNativeScript] callback error: ${err}`);
-          }
-        };
-        try {
-          if (activeCompat && typeof activeCompat.registerSwiftUIProviderEventHandler === 'function') {
-            activeCompat.registerSwiftUIProviderEventHandler(provider, wrapped);
-          }
-        } catch (e) {
-          console.log(`[HanlinNativeScript] registerSwiftUIProviderEventHandler note: ${e}`);
-        }
-        try {
-          if (typeof (provider as any).registerEventHandler === 'function') {
-            (provider as any).registerEventHandler(wrapped);
-          }
-        } catch (e) {
-          console.log(`[HanlinNativeScript] provider.registerEventHandler note: ${e}`);
-        }
       }
     });
   } catch (e) {
@@ -194,10 +174,130 @@ function createFixtureProvider(): any {
   return provider;
 }
 
+let globalDriver: any = null;
+let globalEventProof: any = null;
+let globalSwiftView: any = null;
+let globalActiveProvider: any = null;
+let globalActiveCompat: any = null;
+let lastProcessedCount = 0;
+
+function handleSwiftUIEvent(count: number, source: string = 'swiftui') {
+  if (count <= lastProcessedCount) {
+    return;
+  }
+  lastProcessedCount = count;
+  console.log(`[HanlinSwiftUI] Handling incoming SwiftUI event: count=${count}, source=${source}`);
+
+  if (globalEventProof) {
+    globalEventProof.text = `NativeScript event count: ${count}`;
+  }
+
+  if (globalDriver && typeof globalDriver.onEvent === 'function') {
+    try {
+      globalDriver.onEvent({ count, source });
+    } catch (e) {
+      console.log(`[HanlinSwiftUI] driver.onEvent note: ${e}`);
+    }
+  }
+
+  if (globalSwiftView && typeof globalSwiftView.notify === 'function') {
+    try {
+      globalSwiftView.notify({
+        eventName: SwiftUI.swiftUIEventEvent,
+        data: { count, source }
+      });
+    } catch (e) {
+      console.log(`[HanlinSwiftUI] swiftView.notify note: ${e}`);
+    }
+  }
+
+  console.log(`HANLIN_NS_SWIFTUI_EVENT_OK count=${count} source=${source}`);
+}
+
+const g = globalThis as any;
+
+// 1. NSNotificationCenter observer
+try {
+  if (typeof g.NSNotificationCenter !== 'undefined' && g.NSNotificationCenter.defaultCenter) {
+    const center = g.NSNotificationCenter.defaultCenter;
+    const queue = typeof g.NSOperationQueue !== 'undefined' ? g.NSOperationQueue.mainQueue : null;
+    center.addObserverForNameObjectQueueUsingBlock(
+      'HanlinSwiftUIEventNotification',
+      null,
+      queue,
+      (notif: any) => {
+        try {
+          let count = 1;
+          let source = 'swiftui';
+          if (notif && notif.userInfo) {
+            const ui = notif.userInfo;
+            if (typeof ui.objectForKey === 'function') {
+              const c = ui.objectForKey('count');
+              if (c != null) count = Number(typeof c.integerValue === 'function' ? c.integerValue() : c) || 1;
+              const s = ui.objectForKey('source');
+              if (s != null) source = String(s);
+            }
+          }
+          handleSwiftUIEvent(count, source);
+        } catch (err) {
+          console.log(`[HanlinSwiftUI] notification error: ${err}`);
+        }
+      }
+    );
+    console.log('[HanlinSwiftUI] Registered NSNotificationCenter observer');
+  }
+} catch (e) {
+  console.log(`[HanlinSwiftUI] addObserver note: ${e}`);
+}
+
+// 2. High-frequency polling timer (100ms)
+setInterval(() => {
+  try {
+    // Check provider.currentCount()
+    if (globalActiveProvider) {
+      let countVal: any = null;
+      if (typeof globalActiveProvider.currentCount === 'function') {
+        countVal = globalActiveProvider.currentCount();
+      } else if (typeof globalActiveProvider.performSelector === 'function' && typeof g.NSSelectorFromString === 'function') {
+        countVal = globalActiveProvider.performSelector(g.NSSelectorFromString('currentCount'));
+      }
+      if (countVal != null) {
+        const c = Number(typeof countVal.integerValue === 'function' ? countVal.integerValue() : countVal);
+        if (c > 0) {
+          handleSwiftUIEvent(c, 'swiftui');
+          return;
+        }
+      }
+    }
+
+    // Check compat.latestEventCount()
+    let compat = globalActiveCompat ?? g.HanlinNativeScriptCompatibility;
+    if (!compat && typeof g.NSClassFromString === 'function') {
+      compat = g.NSClassFromString('HanlinNativeScriptCompatibility');
+    }
+    if (compat) {
+      let countVal: any = null;
+      if (typeof compat.latestEventCount === 'function') {
+        countVal = compat.latestEventCount();
+      } else if (typeof compat.performSelector === 'function' && typeof g.NSSelectorFromString === 'function') {
+        countVal = compat.performSelector(g.NSSelectorFromString('latestEventCount'));
+      }
+      if (countVal != null) {
+        const c = Number(typeof countVal.integerValue === 'function' ? countVal.integerValue() : countVal);
+        if (c > 0) {
+          handleSwiftUIEvent(c, 'swiftui');
+          return;
+        }
+      }
+    }
+  } catch (e) {}
+}, 100);
+
 registerSwiftUI('hanlinFixture', (view) => {
   console.log('[HanlinSwiftUI] registerSwiftUI generator invoked');
   const provider = createFixtureProvider();
   const driver = new UIDataDriver(provider, view);
+  globalDriver = driver;
   if (view.data) {
     driver.updateData(view.data);
   }
@@ -243,9 +343,11 @@ Application.run({
     eventProof.textWrap = true;
     eventProof.accessibilityIdentifier = 'hanlin-swiftui-event-proof';
     swiftView.on(SwiftUI.swiftUIEventEvent, (event: SwiftUIEventData<{ count: number; source: string }>) => {
-      eventProof.text = `NativeScript event count: ${event.data.count}`;
-      console.log(`HANLIN_NS_SWIFTUI_EVENT_OK count=${event.data.count} source=${event.data.source}`);
+      handleSwiftUIEvent(event.data.count, event.data.source);
     });
+
+    globalSwiftView = swiftView;
+    globalEventProof = eventProof;
 
     layout.addChild(title as unknown as View);
     layout.addChild(device as unknown as View);

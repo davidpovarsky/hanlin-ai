@@ -4,6 +4,8 @@
 static Class _registeredProviderClass = nil;
 static id _sharedProvider = nil;
 static void (^_currentEventHandler)(NSDictionary *) = nil;
+static NSDictionary *_latestEvent = nil;
+static NSInteger _latestEventCount = 0;
 
 @implementation HanlinNativeScriptCompatibility
 
@@ -110,6 +112,25 @@ static void (^_currentEventHandler)(NSDictionary *) = nil;
             });
         }
     }
+}
+
++ (void)recordEvent:(NSDictionary *)payload {
+    if (!payload) return;
+    _latestEvent = [payload copy];
+    id countVal = payload[@"count"];
+    if ([countVal respondsToSelector:@selector(integerValue)]) {
+        _latestEventCount = [countVal integerValue];
+    }
+    NSLog(@"[HanlinNativeScriptCompatibility] Recorded event count=%ld payload=%@", (long)_latestEventCount, payload);
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"HanlinSwiftUIEventNotification" object:self userInfo:payload];
+}
+
++ (nullable NSNumber *)latestEventCount {
+    return @(_latestEventCount);
+}
+
++ (nullable NSDictionary *)latestEvent {
+    return _latestEvent;
 }
 
 @end
