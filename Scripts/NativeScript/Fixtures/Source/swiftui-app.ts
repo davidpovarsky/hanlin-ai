@@ -77,17 +77,65 @@ function createFixtureProvider(): any {
 
   // First priority: HanlinNativeScriptCompatibility bridge helper
   const compatCls = getClass('HanlinNativeScriptCompatibility');
+  let provider: any = null;
   if (compatCls && typeof compatCls.createSwiftUIFixtureProvider === 'function') {
-    const provider = compatCls.createSwiftUIFixtureProvider();
-    if (provider) return provider;
+    provider = compatCls.createSwiftUIFixtureProvider();
   }
 
   // Second priority: direct HanlinNativeScriptSwiftUIFixtureProvider class
-  const providerCls = getClass('HanlinNativeScriptSwiftUIFixtureProvider');
-  const directProvider = instantiate(providerCls);
-  if (directProvider) return directProvider;
+  if (!provider) {
+    const providerCls = getClass('HanlinNativeScriptSwiftUIFixtureProvider');
+    provider = instantiate(providerCls);
+  }
 
-  throw new Error('HanlinNativeScriptSwiftUIFixtureProvider could not be instantiated');
+  if (!provider) {
+    throw new Error('HanlinNativeScriptSwiftUIFixtureProvider could not be instantiated');
+  }
+
+  // Ensure updateDataWithData is callable by @nativescript/swift-ui UIDataDriver
+  if (typeof provider.updateDataWithData !== 'function') {
+    provider.updateDataWithData = function (data: any) {
+      if (typeof provider.updateData === 'function') {
+        provider.updateData(data);
+      } else if (typeof provider.updateDataDirect === 'function') {
+        provider.updateDataDirect(data);
+      } else if (compatCls && typeof compatCls.updateSwiftUIProviderData === 'function') {
+        compatCls.updateSwiftUIProviderData(provider, data);
+      }
+    };
+  }
+
+  // Bridge onEvent so NativeScript UIDataDriver event registration reaches the Swift fixture model
+  let registeredEventCallback: any = provider.onEvent ?? null;
+  try {
+    Object.defineProperty(provider, 'onEvent', {
+      configurable: true,
+      enumerable: true,
+      get() {
+        return registeredEventCallback;
+      },
+      set(callback: any) {
+        registeredEventCallback = callback;
+        if (compatCls && typeof compatCls.registerSwiftUIProviderEventHandler === 'function') {
+          compatCls.registerSwiftUIProviderEventHandler(provider, (dict: any) => {
+            if (typeof callback === 'function') {
+              callback(dict);
+            }
+          });
+        } else if (typeof provider.registerEventHandler === 'function') {
+          provider.registerEventHandler((dict: any) => {
+            if (typeof callback === 'function') {
+              callback(dict);
+            }
+          });
+        }
+      }
+    });
+  } catch (e) {
+    console.log(`[HanlinNativeScript] defineProperty onEvent note: ${e}`);
+  }
+
+  return provider;
 }
 
 registerSwiftUI('hanlinFixture', (view) => {

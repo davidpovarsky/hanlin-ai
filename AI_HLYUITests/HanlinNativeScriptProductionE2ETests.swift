@@ -300,6 +300,11 @@ final class HanlinNativeScriptProductionE2ETests: XCTestCase {
             if waitUntil(timeout: attempt == 1 ? 15 : 8, condition: { closeButton.exists || coreButton.exists || swiftUIButton.exists }) {
                 return
             }
+            if app.alerts["Script App Error"].exists {
+                let errorLabels = app.alerts["Script App Error"].staticTexts.allElementsBoundByIndex.map(\.label).filter { !$0.isEmpty }
+                XCTFail("Script App Error alert appeared when launching \(packageName): " + errorLabels.joined(separator: " | "))
+                return
+            }
         }
     }
 

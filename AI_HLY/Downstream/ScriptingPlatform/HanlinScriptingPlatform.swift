@@ -390,6 +390,7 @@ final class HanlinScriptingPlatform {
                 activeNativeScriptController = session.containerController
                 activity = .idle
             } catch {
+                NSLog("[HanlinScriptingPlatform] NativeScript launch failed for %@: %@", id.rawValue, String(describing: error))
                 dismissActiveApplication()
                 activity = .failed(Self.safeMessage(error))
             }

@@ -7,6 +7,8 @@ NS_ASSUME_NONNULL_BEGIN
 @interface HanlinNativeScriptCompatibility : NSObject
 + (NSString *)roundTripValue:(NSString *)value key:(NSString *)key;
 + (nullable id)createSwiftUIFixtureProvider;
++ (void)updateSwiftUIProvider:(id)provider data:(nullable NSDictionary *)data;
++ (void)registerSwiftUIProvider:(id)provider eventHandler:(void (^)(NSDictionary *))handler;
 @end
 
 NS_ASSUME_NONNULL_END
