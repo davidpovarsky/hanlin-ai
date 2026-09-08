@@ -1362,35 +1362,38 @@ jobs:
           cache-dependency-path: AI_HLY/Downstream/RuntimeCore/Node/Host/package-lock.json
 
       - name: Prepare pinned NativeScript iOS dependency closure
-        if: ${{ needs.plan-affected-validation.outputs.run_nativescript_dependencies == 'true' || needs.plan-affected-validation.outputs.run_full_validation == 'true' || needs.plan-affected-validation.outputs.run_simulator_nativescript_poc == 'true' || inputs.nativescript_poc_only }}
         run: |
           set -euxo pipefail
           mkdir -p "$LOG_DIR"
           npm ci --ignore-scripts --no-audit --no-fund --prefix Scripts/NativeScript
           npm run prepare:ios-dependencies --prefix Scripts/NativeScript
-          node Scripts/NativeScript/prepare-fixture.mjs
-          npm run prepare:production-package --prefix Scripts/NativeScript
-          (
-            cd build/NativeScriptE2E/swiftui-package
-            zip -qry ../HanlinNativeScriptSwiftUI.hanlinNativeScript *
-          )
-          (
-            cd build/NativeScriptE2E/core-package
-            zip -qry ../HanlinNativeScriptCore.hanlinNativeScript *
-          )
-          (
-            cd build/NativeScriptE2E/unsupported-package
-            zip -qry ../HanlinNativeScriptUnsupported.hanlinNativeScript *
-          )
-          (
-            cd build/NativeScriptE2E/malformed
-            zip -qry ../HanlinNativeScriptMalformed.hanlinNativeScript *
-          )
-          test -s build/NativeScriptE2E/HanlinNativeScriptSwiftUI.hanlinNativeScript
-          test -s build/NativeScriptE2E/HanlinNativeScriptCore.hanlinNativeScript
-          test -s build/NativeScriptE2E/HanlinNativeScriptUnsupported.hanlinNativeScript
-          test -s build/NativeScriptE2E/HanlinNativeScriptMalformed.hanlinNativeScript
-          npm run preflight:ios-dependencies --prefix Scripts/NativeScript
+          if [ "$RUN_NATIVESCRIPT_DEPENDENCIES" = "true" ] || [ "$RUN_FULL_VALIDATION" = "true" ] || [ "$RUN_SIMULATOR_NATIVESCRIPT_POC" = "true" ] || [ "${{ inputs.nativescript_poc_only }}" = "true" ]; then
+            node Scripts/NativeScript/prepare-fixture.mjs
+            npm run prepare:production-package --prefix Scripts/NativeScript
+            (
+              cd build/NativeScriptE2E/swiftui-package
+              zip -qry ../HanlinNativeScriptSwiftUI.hanlinNativeScript *
+            )
+            (
+              cd build/NativeScriptE2E/core-package
+              zip -qry ../HanlinNativeScriptCore.hanlinNativeScript *
+            )
+            (
+              cd build/NativeScriptE2E/unsupported-package
+              zip -qry ../HanlinNativeScriptUnsupported.hanlinNativeScript *
+            )
+            (
+              cd build/NativeScriptE2E/malformed
+              zip -qry ../HanlinNativeScriptMalformed.hanlinNativeScript *
+            )
+            test -s build/NativeScriptE2E/HanlinNativeScriptSwiftUI.hanlinNativeScript
+            test -s build/NativeScriptE2E/HanlinNativeScriptCore.hanlinNativeScript
+            test -s build/NativeScriptE2E/HanlinNativeScriptUnsupported.hanlinNativeScript
+            test -s build/NativeScriptE2E/HanlinNativeScriptMalformed.hanlinNativeScript
+            npm run preflight:ios-dependencies --prefix Scripts/NativeScript
+          else
+            echo "Skipping heavy NativeScript E2E fixture generation and preflight for non-NativeScript run."
+          fi
 
       - name: Prepare simulator logs and select stable Xcode 26
         id: simulator-toolchain
