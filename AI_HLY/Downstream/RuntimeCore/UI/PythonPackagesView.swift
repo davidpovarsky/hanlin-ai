@@ -119,7 +119,9 @@ struct PythonPackagesView: View {
                                 .font(.caption2)
                                 .foregroundStyle(.secondary)
                         }
-                        Button(RuntimeL10n.string("Import Probe")) { model.probe(item) }.buttonStyle(.borderless)
+                        Button(RuntimeL10n.string("Import Probe")) { model.probe(item) }
+                            .buttonStyle(.borderless)
+                            .accessibilityIdentifier("hanlin-python-probe-button-\(item.name)")
                     }
                     .accessibilityIdentifier("hanlin-python-installed-item-\(item.name)")
                     .swipeActions {

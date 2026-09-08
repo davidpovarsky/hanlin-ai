@@ -422,6 +422,16 @@ class AffectedValidationPlannerTests(unittest.TestCase):
         self.assertEqual(plan.step_outputs["simulator_configuration"], "Debug")
         self.assertFalse(plan.step_outputs["run_nativescript_dependencies"])
 
+    def test_combined_parent_and_child_ui_suites_prune_duplicates(self) -> None:
+        changed = [
+            "AI_HLYUITests/HanlinRuntimeInstallationUITests.swift",
+            "AI_HLY/Downstream/RuntimeCore/UI/PythonPackagesView.swift",
+        ]
+        plan = self.plan_files(changed)
+        self.assertTrue(plan.step_outputs["run_simulator_targeted_ui"])
+        self.assertEqual(plan.step_outputs["simulator_ui_filter"], "AI_HLYUITests/HanlinRuntimeInstallationUITests")
+        self.assertEqual(plan.step_outputs["simulator_build_for_testing_args"], "-only-testing:AI_HLYUITests/HanlinRuntimeInstallationUITests")
+
     # Case E: Test-only Runtime path -> owning tests only, no device/IPA build
     def test_case_e_runtime_test_only_never_selects_device_or_ipa(self) -> None:
         changed = [

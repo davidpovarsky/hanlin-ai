@@ -55,6 +55,13 @@ actor PythonPackageManager {
             let version: String
             let summary: String?
             let requiresDist: [String]?
+
+            enum CodingKeys: String, CodingKey {
+                case name
+                case version
+                case summary
+                case requiresDist = "requires_dist"
+            }
         }
 
         struct Distribution: Decodable, Sendable {
@@ -67,7 +74,7 @@ actor PythonPackageManager {
         }
 
         let info: Info
-        let releases: [String: [Distribution]]
+        let releases: [String: [Distribution]]?
         let urls: [Distribution]?
     }
 
@@ -114,9 +121,10 @@ actor PythonPackageManager {
         let selected = version ?? projectIndex.info.version
         let distributions: [PyPIProject.Distribution]
         if version == nil {
-            distributions = projectIndex.releases[selected] ?? []
+            distributions = (projectIndex.releases ?? [:])[selected] ?? []
         } else {
-            distributions = try await project(name: name, version: selected).urls ?? []
+            let release = try await project(name: name, version: selected)
+            distributions = release.urls ?? (release.releases ?? [:])[selected] ?? []
         }
         let wheel = distributions.first(where: isUniversalWheel)
         return PythonPackagePreview(
@@ -268,7 +276,7 @@ actor PythonPackageManager {
             let index = try await project(name: requirement.name)
             let selectedVersion = try selectVersion(from: index, constraints: requirement.constraints)
             let release = try await project(name: requirement.name, version: selectedVersion)
-            let distributions = release.urls ?? release.releases[selectedVersion] ?? []
+            let distributions = release.urls ?? (release.releases ?? [:])[selectedVersion] ?? []
             guard let wheel = distributions.first(where: isUniversalWheel) else {
                 if order.isEmpty {
                     throw RuntimeCoreError.runtimeFailure("This release has no py3-none-any wheel. Source builds and native wheels cannot be installed dynamically on iOS.")
@@ -316,9 +324,10 @@ actor PythonPackageManager {
     }
 
     private func selectVersion(from project: PyPIProject, constraints: String) throws -> String {
-        let versions = project.releases.keys
+        let releases = project.releases ?? [:]
+        let versions = releases.keys
             .filter { versionSatisfies($0, constraints: constraints) }
-            .filter { candidate in project.releases[candidate]?.contains(where: isUniversalWheel) == true }
+            .filter { candidate in releases[candidate]?.contains(where: isUniversalWheel) == true }
             .sorted { compareVersions($0, $1) == .orderedDescending }
         guard let selected = versions.first else {
             throw RuntimeCoreError.runtimeFailure("This package depends on a native extension that cannot be installed dynamically on iOS.")

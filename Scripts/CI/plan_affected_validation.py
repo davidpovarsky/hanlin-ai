@@ -653,6 +653,15 @@ def plan_affected_validation(
                 "or run with explicit full_validation."
             )
 
+    # If a parent suite is selected (e.g. AI_HLYUITests/HanlinRuntimeInstallationUITests),
+    # prune child method-level selectors (e.g. .../testMethod) to prevent xcodebuild from running them twice.
+    pruned_ui_suites: Set[str] = set()
+    for suite in affected_ui_suites:
+        if any(other != suite and suite.startswith(other + "/") for other in affected_ui_suites):
+            continue
+        pruned_ui_suites.add(suite)
+    affected_ui_suites = pruned_ui_suites
+
     simulator_ui_filter_value = ",".join(sorted(affected_ui_suites))
 
     # 5. Formulate step outputs

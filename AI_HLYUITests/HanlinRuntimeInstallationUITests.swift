@@ -346,9 +346,10 @@ final class HanlinRuntimeInstallationUITests: XCTestCase {
         capture(name: "PythonPackages-InstallSuccess")
 
         // 4. Import probe execution via real Python runtime
-        let probeButton = app.buttons["Import Probe"].firstMatch
-        XCTAssertTrue(probeButton.waitForExistence(timeout: 10), "Import Probe button was missing")
-        probeButton.tap()
+        let probeButton = app.buttons["hanlin-python-probe-button-six"].firstMatch
+        let probeFallback = app.buttons["Import Probe"].firstMatch
+        XCTAssertTrue(probeButton.waitForExistence(timeout: 10) || probeFallback.waitForExistence(timeout: 2), "Import Probe button was missing")
+        (probeButton.exists ? probeButton : probeFallback).tap()
 
         let probePredicate = NSPredicate(format: "label CONTAINS[c] '1.17.0' OR label CONTAINS[c] 'import-ok'")
         let probeOutput = app.staticTexts.containing(probePredicate).firstMatch
@@ -374,9 +375,10 @@ final class HanlinRuntimeInstallationUITests: XCTestCase {
         )
 
         // 6. Re-probe after restart
-        let probeButtonAfterRestart = app.buttons["Import Probe"].firstMatch
-        XCTAssertTrue(probeButtonAfterRestart.waitForExistence(timeout: 10), "Import Probe button missing after restart")
-        probeButtonAfterRestart.tap()
+        let probeButtonAfterRestart = app.buttons["hanlin-python-probe-button-six"].firstMatch
+        let probeFallbackAfterRestart = app.buttons["Import Probe"].firstMatch
+        XCTAssertTrue(probeButtonAfterRestart.waitForExistence(timeout: 10) || probeFallbackAfterRestart.waitForExistence(timeout: 2), "Import Probe button missing after restart")
+        (probeButtonAfterRestart.exists ? probeButtonAfterRestart : probeFallbackAfterRestart).tap()
 
         let probeOutputAfterRestart = app.staticTexts.containing(probePredicate).firstMatch
         XCTAssertTrue(probeOutputAfterRestart.waitForExistence(timeout: 30), "Import probe after restart did not produce expected output for six")
