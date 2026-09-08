@@ -54,7 +54,8 @@ final class RuntimeCenterModel {
                 self.lastMessage = result.value.map(String.init(describing:))
             case .shell:
                 let result = try await self.core.shell.execute(command: "ls", workspace: workspace, environment: [:], allowNetwork: false)
-                self.lastMessage = result.stdout.trimmingCharacters(in: .whitespacesAndNewlines)
+                let output = result.stdout.trimmingCharacters(in: .whitespacesAndNewlines)
+                self.lastMessage = output.isEmpty ? "Completed (exit \(result.exitCode))" : output
             }
         }
     }

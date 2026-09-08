@@ -39,12 +39,20 @@ private final class HanlinHostingContainerView: UIView {
 
     init(provider: HanlinNativeScriptSwiftUIFixtureProvider) {
         self.provider = provider
-        super.init(frame: .zero)
+        super.init(frame: CGRect(x: 0, y: 0, width: 400, height: 300))
         autoresizingMask = [.flexibleWidth, .flexibleHeight]
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    override var intrinsicContentSize: CGSize {
+        CGSize(width: UIView.noIntrinsicMetric, height: 300)
+    }
+
+    override func sizeThatFits(_ size: CGSize) -> CGSize {
+        CGSize(width: size.width > 0 ? size.width : 400, height: size.height > 0 ? size.height : 300)
     }
 
     override func didMoveToWindow() {
@@ -70,6 +78,7 @@ public final class HanlinNativeScriptSwiftUIFixtureProvider: UIViewController, S
     @objc public var onEvent: ((NSDictionary) -> Void)?
 
     private let model = HanlinSwiftUIFixtureModel()
+    private var hostingController: UIHostingController<HanlinSwiftUIFixtureView>?
 
     public override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
@@ -89,7 +98,7 @@ public final class HanlinNativeScriptSwiftUIFixtureProvider: UIViewController, S
 
     public override func viewDidLoad() {
         super.viewDidLoad()
-        setupSwiftUIView(content: HanlinSwiftUIFixtureView(model: model) { [weak self] in
+        let hosting = UIHostingController(rootView: HanlinSwiftUIFixtureView(model: model) { [weak self] in
             guard let self else { return }
             self.model.count += 1
             self.onEvent?([
@@ -97,7 +106,29 @@ public final class HanlinNativeScriptSwiftUIFixtureProvider: UIViewController, S
                 "source": "swiftui"
             ] as NSDictionary)
         })
+        self.hostingController = hosting
+        addChild(hosting)
+        hosting.view.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(hosting.view)
+        NSLayoutConstraint.activate([
+            hosting.view.topAnchor.constraint(equalTo: view.topAnchor),
+            hosting.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            hosting.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            hosting.view.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
+        hosting.didMove(toParent: self)
         NSLog("%@", "HANLIN_NS_SWIFTUI_PROVIDER_READY provider=HanlinNativeScriptSwiftUIFixtureProvider")
+    }
+
+    public override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        hostingController?.beginAppearanceTransition(true, animated: animated)
+    }
+
+    public override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        hostingController?.endAppearanceTransition()
+        layoutHostingViews()
     }
 
     public override func viewDidLayoutSubviews() {
@@ -121,7 +152,11 @@ public final class HanlinNativeScriptSwiftUIFixtureProvider: UIViewController, S
         }
         guard let host = parentVC else { return }
         host.addChild(self)
+        beginAppearanceTransition(true, animated: false)
         didMove(toParent: host)
+        endAppearanceTransition()
+        hostingController?.view.setNeedsLayout()
+        hostingController?.view.layoutIfNeeded()
         layoutHostingViews()
     }
 
@@ -138,6 +173,8 @@ public final class HanlinNativeScriptSwiftUIFixtureProvider: UIViewController, S
             if child.view.frame != bounds {
                 child.view.frame = bounds
             }
+            child.view.setNeedsLayout()
+            child.view.layoutIfNeeded()
         }
     }
 

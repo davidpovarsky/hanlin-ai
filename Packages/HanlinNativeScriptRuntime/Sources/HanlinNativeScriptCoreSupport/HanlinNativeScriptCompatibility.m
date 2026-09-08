@@ -12,19 +12,32 @@
 + (nullable id)createSwiftUIFixtureProvider {
     Class klass = NSClassFromString(@"HanlinNativeScriptSwiftUIFixtureProvider");
     if (!klass) {
+        klass = NSClassFromString(@"HanlinNativeScriptRuntime.HanlinNativeScriptSwiftUIFixtureProvider");
+    }
+    if (!klass) {
         NSLog(@"[HanlinNativeScriptCompatibility] Fatal: HanlinNativeScriptSwiftUIFixtureProvider class not found in Objective-C runtime.");
         return nil;
     }
 
+    __block id provider = nil;
+    void (^instantiateBlock)(void) = ^{
+        provider = [[klass alloc] init];
+        if (provider) {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+            UIView *v = [provider performSelector:@selector(view)];
+            (void)v;
+#pragma clang diagnostic pop
+        }
+    };
+
     if ([NSThread isMainThread]) {
-        return [[klass alloc] init];
+        instantiateBlock();
     } else {
-        __block id provider = nil;
-        dispatch_sync(dispatch_get_main_queue(), ^{
-            provider = [[klass alloc] init];
-        });
-        return provider;
+        dispatch_sync(dispatch_get_main_queue(), instantiateBlock);
     }
+    NSLog(@"[HanlinNativeScriptCompatibility] Created provider=%@ isViewLoaded=%d", provider, provider ? (int)[provider isViewLoaded] : 0);
+    return provider;
 }
 
 + (void)updateSwiftUIProvider:(id)provider data:(nullable NSDictionary *)data {

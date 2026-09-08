@@ -84,12 +84,21 @@ function createFixtureProvider(): any {
 
   // Second priority: direct HanlinNativeScriptSwiftUIFixtureProvider class
   if (!provider) {
-    const providerCls = getClass('HanlinNativeScriptSwiftUIFixtureProvider');
+    const providerCls = getClass('HanlinNativeScriptSwiftUIFixtureProvider')
+      ?? getClass('HanlinNativeScriptRuntime.HanlinNativeScriptSwiftUIFixtureProvider');
     provider = instantiate(providerCls);
   }
 
   if (!provider) {
     throw new Error('HanlinNativeScriptSwiftUIFixtureProvider could not be instantiated');
+  }
+
+  console.log(`[HanlinSwiftUI] Provider created: ${provider}`);
+  try {
+    const v = provider.view;
+    console.log(`[HanlinSwiftUI] Provider view loaded: ${v}`);
+  } catch (e) {
+    console.log(`[HanlinSwiftUI] Provider view access note: ${e}`);
   }
 
   // Ensure updateDataWithData is callable by @nativescript/swift-ui UIDataDriver
@@ -139,6 +148,7 @@ function createFixtureProvider(): any {
 }
 
 registerSwiftUI('hanlinFixture', (view) => {
+  console.log('[HanlinSwiftUI] registerSwiftUI generator invoked');
   const provider = createFixtureProvider();
   const driver = new UIDataDriver(provider, view);
   if (view.data) {
@@ -171,6 +181,8 @@ Application.run({
     const swiftView = new SwiftUI<{ count: number; source: string }>();
     swiftView.swiftId = 'hanlinFixture';
     swiftView.height = 300;
+    swiftView.width = 400;
+    swiftView.horizontalAlignment = 'stretch';
     swiftView.data = { title: 'SwiftUI in Hanlin', initialCount: 0 };
     swiftView.on('loaded', () => {
       if (swiftView.data) {
