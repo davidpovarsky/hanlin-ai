@@ -80,6 +80,10 @@ public final class HanlinNativeScriptSwiftUIFixtureProvider: UIViewController, S
     private let model = HanlinSwiftUIFixtureModel()
     private var hostingController: UIHostingController<HanlinSwiftUIFixtureView>?
 
+    public override var description: String {
+        "HanlinNativeScriptSwiftUIFixtureProvider(count: \(model.count))"
+    }
+
     public override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     }

@@ -1,4 +1,5 @@
 import Foundation
+import HanlinNativeScriptCoreSupport
 import HanlinNativeScriptRuntime
 
 /// Keeps Hanlin's pre-embedded NativeScript providers reachable from the
@@ -21,5 +22,8 @@ enum HanlinNativeScriptProductionBootstrap {
         if NSClassFromString("HanlinNativeScriptSwiftUIFixtureProvider") !== providerClass {
             print("HANLIN_NS_SWIFTUI_PROVIDER_LINK_MISMATCH")
         }
+
+        HanlinNativeScriptCompatibility.registerFixtureProviderClass(providerClass)
+        HanlinNativeScriptCompatibility.setSharedSwiftUIFixtureProvider(provider)
     }
 }

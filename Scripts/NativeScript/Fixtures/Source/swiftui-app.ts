@@ -39,54 +39,85 @@ console.log('HANLIN_NS_SWIFTUI_MODULE_OK package=@nativescript/swift-ui version=
 
 function createFixtureProvider(): any {
   const g = globalThis as any;
-  const getClass = (name: string): any => {
-    try {
-      if (typeof g.NSClassFromString === 'function') {
-        const cls = g.NSClassFromString(name);
-        if (cls) return cls;
-      }
-    } catch {}
-    try {
-      if (typeof g.objc_getClass === 'function') {
-        const cls = g.objc_getClass(name);
-        if (cls) return cls;
-      }
-    } catch {}
-    return g[name] ?? null;
-  };
+  console.log('[HanlinSwiftUI] createFixtureProvider starting lookup');
 
-  const instantiate = (cls: any): any => {
-    if (!cls) return null;
-    try {
-      if (typeof cls.alloc === 'function') {
-        return cls.alloc().init();
-      }
-    } catch {}
-    try {
-      if (typeof cls.new === 'function') {
-        return cls.new();
-      }
-    } catch {}
-    try {
-      if (typeof cls === 'function') {
-        return new cls();
-      }
-    } catch {}
-    return null;
-  };
+  const compatCandidates = [
+    g.HanlinNativeScriptCompatibility,
+    typeof g.NSClassFromString === 'function' ? g.NSClassFromString('HanlinNativeScriptCompatibility') : null,
+    typeof g.objc_getClass === 'function' ? g.objc_getClass('HanlinNativeScriptCompatibility') : null,
+  ].filter(Boolean);
 
-  // First priority: HanlinNativeScriptCompatibility bridge helper
-  const compatCls = getClass('HanlinNativeScriptCompatibility');
   let provider: any = null;
-  if (compatCls && typeof compatCls.createSwiftUIFixtureProvider === 'function') {
-    provider = compatCls.createSwiftUIFixtureProvider();
+  let activeCompat: any = null;
+
+  // 1. Try createSwiftUIFixtureProvider on compatibility bridge
+  for (const compat of compatCandidates) {
+    if (provider) break;
+    try {
+      if (typeof compat.createSwiftUIFixtureProvider === 'function') {
+        console.log('[HanlinSwiftUI] Invoking compat.createSwiftUIFixtureProvider()');
+        provider = compat.createSwiftUIFixtureProvider();
+        if (provider) {
+          activeCompat = compat;
+        }
+      } else if (typeof compat.performSelector === 'function' && typeof g.NSSelectorFromString === 'function') {
+        console.log('[HanlinSwiftUI] Invoking compat.performSelector(createSwiftUIFixtureProvider)');
+        provider = compat.performSelector(g.NSSelectorFromString('createSwiftUIFixtureProvider'));
+        if (provider) {
+          activeCompat = compat;
+        }
+      }
+    } catch (e) {
+      console.log(`[HanlinSwiftUI] compat.createSwiftUIFixtureProvider candidate note: ${e}`);
+    }
   }
 
-  // Second priority: direct HanlinNativeScriptSwiftUIFixtureProvider class
+  // 2. Try direct HanlinNativeScriptSwiftUIFixtureProvider
   if (!provider) {
-    const providerCls = getClass('HanlinNativeScriptSwiftUIFixtureProvider')
-      ?? getClass('HanlinNativeScriptRuntime.HanlinNativeScriptSwiftUIFixtureProvider');
-    provider = instantiate(providerCls);
+    const directCandidates = [
+      g.HanlinNativeScriptSwiftUIFixtureProvider,
+      g['HanlinNativeScriptRuntime.HanlinNativeScriptSwiftUIFixtureProvider'],
+    ].filter(Boolean);
+
+    for (const Cls of directCandidates) {
+      if (provider) break;
+      try {
+        if (typeof Cls.alloc === 'function') {
+          console.log('[HanlinSwiftUI] Instantiating direct Cls via alloc().init()');
+          provider = Cls.alloc().init();
+        } else if (typeof Cls.new === 'function') {
+          provider = Cls.new();
+        } else if (typeof Cls === 'function') {
+          provider = new Cls();
+        }
+      } catch (e) {
+        console.log(`[HanlinSwiftUI] direct candidate note: ${e}`);
+      }
+    }
+  }
+
+  // 3. Try shared provider on compatibility bridge
+  if (!provider) {
+    for (const compat of compatCandidates) {
+      if (provider) break;
+      try {
+        if (typeof compat.sharedSwiftUIFixtureProvider === 'function') {
+          console.log('[HanlinSwiftUI] Invoking compat.sharedSwiftUIFixtureProvider()');
+          provider = compat.sharedSwiftUIFixtureProvider();
+          if (provider) {
+            activeCompat = compat;
+          }
+        } else if (typeof compat.performSelector === 'function' && typeof g.NSSelectorFromString === 'function') {
+          console.log('[HanlinSwiftUI] Invoking compat.performSelector(sharedSwiftUIFixtureProvider)');
+          provider = compat.performSelector(g.NSSelectorFromString('sharedSwiftUIFixtureProvider'));
+          if (provider) {
+            activeCompat = compat;
+          }
+        }
+      } catch (e) {
+        console.log(`[HanlinSwiftUI] compat.sharedSwiftUIFixtureProvider candidate note: ${e}`);
+      }
+    }
   }
 
   if (!provider) {
@@ -108,8 +139,10 @@ function createFixtureProvider(): any {
         provider.updateData(data);
       } else if (typeof provider.updateDataDirect === 'function') {
         provider.updateDataDirect(data);
-      } else if (compatCls && typeof compatCls.updateSwiftUIProviderData === 'function') {
-        compatCls.updateSwiftUIProviderData(provider, data);
+      } else if (activeCompat && typeof activeCompat.updateSwiftUIProviderData === 'function') {
+        activeCompat.updateSwiftUIProviderData(provider, data);
+      } else if (activeCompat && typeof activeCompat.performSelectorWithObjectWithObject === 'function' && typeof g.NSSelectorFromString === 'function') {
+        activeCompat.performSelectorWithObjectWithObject(g.NSSelectorFromString('updateSwiftUIProvider:data:'), provider, data);
       }
     };
   }
@@ -125,12 +158,22 @@ function createFixtureProvider(): any {
       },
       set(callback: any) {
         registeredEventCallback = callback;
-        if (compatCls && typeof compatCls.registerSwiftUIProviderEventHandler === 'function') {
-          compatCls.registerSwiftUIProviderEventHandler(provider, (dict: any) => {
+        if (activeCompat && typeof activeCompat.registerSwiftUIProviderEventHandler === 'function') {
+          activeCompat.registerSwiftUIProviderEventHandler(provider, (dict: any) => {
             if (typeof callback === 'function') {
               callback(dict);
             }
           });
+        } else if (activeCompat && typeof activeCompat.performSelectorWithObjectWithObject === 'function' && typeof g.NSSelectorFromString === 'function') {
+          activeCompat.performSelectorWithObjectWithObject(
+            g.NSSelectorFromString('registerSwiftUIProvider:eventHandler:'),
+            provider,
+            (dict: any) => {
+              if (typeof callback === 'function') {
+                callback(dict);
+              }
+            }
+          );
         } else if (typeof provider.registerEventHandler === 'function') {
           provider.registerEventHandler((dict: any) => {
             if (typeof callback === 'function') {

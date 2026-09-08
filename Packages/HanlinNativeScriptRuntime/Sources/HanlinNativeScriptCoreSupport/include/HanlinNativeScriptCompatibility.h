@@ -9,6 +9,9 @@ NS_ASSUME_NONNULL_BEGIN
 + (nullable id)createSwiftUIFixtureProvider;
 + (void)updateSwiftUIProvider:(id)provider data:(nullable NSDictionary *)data;
 + (void)registerSwiftUIProvider:(id)provider eventHandler:(void (^)(NSDictionary *))handler;
++ (void)registerFixtureProviderClass:(Class)cls;
++ (void)setSharedSwiftUIFixtureProvider:(id)provider;
++ (nullable id)sharedSwiftUIFixtureProvider;
 @end
 
 NS_ASSUME_NONNULL_END

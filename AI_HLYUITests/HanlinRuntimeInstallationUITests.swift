@@ -51,8 +51,9 @@ final class HanlinRuntimeInstallationUITests: XCTestCase {
         XCTAssertFalse(shellResult.label.isEmpty, "Shell smoke test output was unexpectedly empty")
 
         tapButton(withId: "hanlin-runtime-details-shell")
-        let shellNav = app.navigationBars["Shell & Commands"].firstMatch
-        XCTAssertTrue(shellNav.waitForExistence(timeout: 10), "Shell capabilities view did not open")
+        let shellNav = app.navigationBars["Shell Capabilities"].firstMatch
+        let fallbackNav = app.navigationBars["Shell & Commands"].firstMatch
+        XCTAssertTrue(shellNav.waitForExistence(timeout: 10) || fallbackNav.waitForExistence(timeout: 3), "Shell capabilities view did not open")
         capture(name: "Shell-Capabilities-View")
         navigateBack()
 

@@ -1,6 +1,9 @@
 #import "HanlinNativeScriptCompatibility.h"
 #import <UIKit/UIKit.h>
 
+static Class _registeredProviderClass = nil;
+static id _sharedProvider = nil;
+
 @implementation HanlinNativeScriptCompatibility
 
 + (NSString *)roundTripValue:(NSString *)value key:(NSString *)key {
@@ -10,10 +13,29 @@
     return [defaults stringForKey:scopedKey] ?: @"";
 }
 
++ (void)registerFixtureProviderClass:(Class)cls {
+    _registeredProviderClass = cls;
+}
+
++ (void)setSharedSwiftUIFixtureProvider:(id)provider {
+    _sharedProvider = provider;
+}
+
++ (nullable id)sharedSwiftUIFixtureProvider {
+    return _sharedProvider;
+}
+
 + (nullable id)createSwiftUIFixtureProvider {
-    Class klass = NSClassFromString(@"HanlinNativeScriptSwiftUIFixtureProvider");
+    Class klass = _registeredProviderClass;
+    if (!klass) {
+        klass = NSClassFromString(@"HanlinNativeScriptSwiftUIFixtureProvider");
+    }
     if (!klass) {
         klass = NSClassFromString(@"HanlinNativeScriptRuntime.HanlinNativeScriptSwiftUIFixtureProvider");
+    }
+    if (!klass && _sharedProvider) {
+        NSLog(@"[HanlinNativeScriptCompatibility] Using shared provider=%@", _sharedProvider);
+        return _sharedProvider;
     }
     if (!klass) {
         NSLog(@"[HanlinNativeScriptCompatibility] Fatal: HanlinNativeScriptSwiftUIFixtureProvider class not found in Objective-C runtime.");
