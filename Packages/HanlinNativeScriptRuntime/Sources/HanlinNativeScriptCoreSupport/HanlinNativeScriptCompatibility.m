@@ -63,6 +63,8 @@ static NSInteger _latestEventCount = 0;
     }
     int viewLoaded = [provider respondsToSelector:@selector(isViewLoaded)] ? (int)[(UIViewController *)provider isViewLoaded] : 0;
     NSLog(@"[HanlinNativeScriptCompatibility] Created provider=%@ isViewLoaded=%d", provider, viewLoaded);
+    _latestEvent = nil;
+    _latestEventCount = 0;
     return provider;
 }
 

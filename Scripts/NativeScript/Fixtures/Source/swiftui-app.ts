@@ -153,6 +153,7 @@ function createFixtureProvider(): any {
 
   globalActiveProvider = provider;
   globalActiveCompat = activeCompat;
+  lastProcessedCount = 0;
 
   // Bridge onEvent so NativeScript UIDataDriver event registration reaches the Swift fixture model
   let registeredEventCallback: any = provider.onEvent ?? null;
@@ -182,6 +183,9 @@ let globalActiveCompat: any = null;
 let lastProcessedCount = 0;
 
 function handleSwiftUIEvent(count: number, source: string = 'swiftui') {
+  if (count <= 0) {
+    return;
+  }
   if (count <= lastProcessedCount) {
     return;
   }
@@ -227,18 +231,24 @@ try {
       queue,
       (notif: any) => {
         try {
-          let count = 1;
+          let count = 0;
           let source = 'swiftui';
           if (notif && notif.userInfo) {
             const ui = notif.userInfo;
             if (typeof ui.objectForKey === 'function') {
               const c = ui.objectForKey('count');
-              if (c != null) count = Number(typeof c.integerValue === 'function' ? c.integerValue() : c) || 1;
+              if (c != null) {
+                count = Number(typeof c.integerValue === 'function' ? c.integerValue() : c);
+              }
               const s = ui.objectForKey('source');
-              if (s != null) source = String(s);
+              if (s != null) {
+                source = String(s);
+              }
             }
           }
-          handleSwiftUIEvent(count, source);
+          if (count > 0) {
+            handleSwiftUIEvent(count, source);
+          }
         } catch (err) {
           console.log(`[HanlinSwiftUI] notification error: ${err}`);
         }

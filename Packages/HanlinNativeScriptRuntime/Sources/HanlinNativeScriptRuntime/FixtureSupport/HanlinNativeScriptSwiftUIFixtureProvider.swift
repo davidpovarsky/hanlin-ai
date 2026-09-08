@@ -206,10 +206,6 @@ public final class HanlinNativeScriptSwiftUIFixtureProvider: UIViewController, S
             model.count = countInt
         }
         NSLog("%@", "HANLIN_NS_SWIFTUI_DATA_OK title=\(model.title) count=\(model.count)")
-        HanlinNativeScriptCompatibility.recordEvent([
-            "count": NSNumber(value: model.count),
-            "source": "data"
-        ])
     }
 
     @objc(updateData:)
