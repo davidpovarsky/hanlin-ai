@@ -322,8 +322,16 @@ class AffectedValidationPlannerTests(unittest.TestCase):
         self.assertTrue(plan.step_outputs["run_simulator_job"])
         self.assertFalse(plan.step_outputs["run_device_build"])
         self.assertFalse(plan.step_outputs["run_ipa_packaging"])
+        self.assertFalse(plan.step_outputs["run_simulator_unit"])
+        self.assertFalse(plan.step_outputs["run_simulator_scripting_acceptance"])
         self.assertNotIn("device_build", plan.selected_groups)
         self.assertNotIn("ipa_packaging", plan.selected_groups)
+        self.assertNotIn("app_unit_tests", plan.selected_groups)
+        self.assertNotIn("simulator_scripting_acceptance", plan.selected_groups)
+        self.assertEqual(
+            plan.step_outputs["simulator_build_for_testing_args"],
+            "-only-testing:AI_HLYUITests/HanlinNativeScriptProductionE2ETests",
+        )
 
     # Case B: NativeScript runtime/fixture source only -> NativeScript UI suite only
     def test_case_b_nativescript_only_selects_nativescript_ui_filter(self) -> None:

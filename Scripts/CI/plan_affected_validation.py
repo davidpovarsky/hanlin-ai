@@ -553,12 +553,6 @@ def plan_affected_validation(
 
     if manual_modes.get("simulator_e2e_only"):
         explicit_overrides.append("simulator_e2e_only=true")
-        selected_groups["app_unit_tests"].append(
-            "operator override: simulator_e2e_only=true"
-        )
-        selected_groups["simulator_scripting_acceptance"].append(
-            "operator override: simulator_e2e_only=true"
-        )
         selected_groups["simulator_targeted_ui"].append(
             "operator override: simulator_e2e_only=true"
         )
@@ -624,6 +618,10 @@ def plan_affected_validation(
         if target_group not in ("device_build", "ipa_packaging"):
             selected_groups.pop("device_build", None)
             selected_groups.pop("ipa_packaging", None)
+        if target_group != "app_unit_tests":
+            selected_groups.pop("app_unit_tests", None)
+        if target_group != "simulator_scripting_acceptance":
+            selected_groups.pop("simulator_scripting_acceptance", None)
 
     # Derive targeted UI suites
     affected_ui_suites: Set[str] = set()
@@ -699,6 +697,10 @@ def plan_affected_validation(
         if target_group not in ("device_build", "ipa_packaging"):
             step_outputs["run_device_build"] = False
             step_outputs["run_ipa_packaging"] = False
+        if target_group != "app_unit_tests":
+            step_outputs["run_simulator_unit"] = False
+        if target_group != "simulator_scripting_acceptance":
+            step_outputs["run_simulator_scripting_acceptance"] = False
 
     # Ensure composite job flags are set correctly
     if any(
@@ -789,7 +791,12 @@ def plan_affected_validation(
         exp_name = item["name"]
         exp_group = item["validation_group"]
         if exp_group not in selected_groups:
-            if manual_modes.get("simulator_e2e_only") and exp_group in ("device_build", "ipa_packaging"):
+            if manual_modes.get("simulator_e2e_only") and exp_group in (
+                "device_build",
+                "ipa_packaging",
+                "app_unit_tests",
+                "simulator_scripting_acceptance",
+            ):
                 skipped_expensive[exp_name] = "suppressed by simulator_e2e_only operator override"
             else:
                 skipped_expensive[exp_name] = "not affected by changed files"
