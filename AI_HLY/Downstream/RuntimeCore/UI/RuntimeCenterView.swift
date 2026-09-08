@@ -166,7 +166,9 @@ private struct RuntimeCard<Destination: View>: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             HStack {
-                Label(title, systemImage: image).font(.headline)
+                Label(title, systemImage: image)
+                    .font(.headline)
+                    .accessibilityIdentifier("hanlin-runtime-card-\(kind.rawValue)")
                 Spacer()
                 Text(RuntimeL10n.string(snapshot.state.localizationKey)).font(.caption).foregroundStyle(snapshot.state.tint)
             }
@@ -191,7 +193,6 @@ private struct RuntimeCard<Destination: View>: View {
             .buttonStyle(.borderless)
             .disabled(isBusy)
         }
-        .accessibilityIdentifier("hanlin-runtime-card-\(kind.rawValue)")
         .padding(.vertical, 4)
     }
 }

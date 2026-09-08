@@ -18,52 +18,43 @@ final class HanlinRuntimeInstallationUITests: XCTestCase {
         openSettings()
         openRuntimeCenter()
 
-        // 1. Verify all 5 runtime cards exist
-        let jscCard = app.descendants(matching: .any)["hanlin-runtime-card-javaScriptCore"].firstMatch
-        let shellCard = app.descendants(matching: .any)["hanlin-runtime-card-shell"].firstMatch
-        let pythonCard = app.descendants(matching: .any)["hanlin-runtime-card-localPython"].firstMatch
+        // 1. Verify all 5 runtime cards exist (handling virtualized scroll in List)
         let nodeCard = app.descendants(matching: .any)["hanlin-runtime-card-node"].firstMatch
         let tsCard = app.descendants(matching: .any)["hanlin-runtime-card-typeScript"].firstMatch
+        let pythonCard = app.descendants(matching: .any)["hanlin-runtime-card-localPython"].firstMatch
+        let jscCard = app.descendants(matching: .any)["hanlin-runtime-card-javaScriptCore"].firstMatch
+        let shellCard = app.descendants(matching: .any)["hanlin-runtime-card-shell"].firstMatch
 
-        XCTAssertTrue(jscCard.waitForExistence(timeout: 10), "JavaScriptCore card was missing")
-        XCTAssertTrue(shellCard.waitForExistence(timeout: 10), "Shell card was missing")
-        XCTAssertTrue(pythonCard.waitForExistence(timeout: 10), "Local Python card was missing")
         XCTAssertTrue(nodeCard.waitForExistence(timeout: 10), "Node.js card was missing")
         XCTAssertTrue(tsCard.waitForExistence(timeout: 10), "TypeScript card was missing")
+        XCTAssertTrue(pythonCard.waitForExistence(timeout: 10), "Local Python card was missing")
+        if !jscCard.exists { app.swipeUp() }
+        XCTAssertTrue(jscCard.waitForExistence(timeout: 10), "JavaScriptCore card was missing")
+        if !shellCard.exists { app.swipeUp() }
+        XCTAssertTrue(shellCard.waitForExistence(timeout: 10), "Shell card was missing")
 
         capture(name: "RuntimeCenter-Initial")
 
         // 2. JavaScriptCore Smoke Test (1 + 2 = 3)
-        let jscSmoke = app.buttons["hanlin-runtime-smoke-javaScriptCore"].firstMatch
-        XCTAssertTrue(jscSmoke.waitForExistence(timeout: 5))
-        jscSmoke.tap()
+        tapButton(withId: "hanlin-runtime-smoke-javaScriptCore")
         let jscResult = app.descendants(matching: .any)["hanlin-runtime-last-message"].firstMatch
         XCTAssertTrue(jscResult.waitForExistence(timeout: 15), "JSC smoke test result was missing")
         XCTAssertEqual(jscResult.label.trimmingCharacters(in: .whitespacesAndNewlines), "3", "JSC smoke test did not produce expected value '3'")
 
         // 3. Shell / ios_system Smoke Test & Capabilities View
-        let shellSmoke = app.buttons["hanlin-runtime-smoke-shell"].firstMatch
-        XCTAssertTrue(shellSmoke.waitForExistence(timeout: 5))
-        shellSmoke.tap()
+        tapButton(withId: "hanlin-runtime-smoke-shell")
         let shellResult = app.descendants(matching: .any)["hanlin-runtime-last-message"].firstMatch
         XCTAssertTrue(shellResult.waitForExistence(timeout: 15), "Shell smoke test result was missing")
         XCTAssertFalse(shellResult.label.isEmpty, "Shell smoke test output was unexpectedly empty")
 
-        let shellDetails = app.buttons["hanlin-runtime-details-shell"].firstMatch
-        XCTAssertTrue(shellDetails.waitForExistence(timeout: 5))
-        shellDetails.tap()
+        tapButton(withId: "hanlin-runtime-details-shell")
         let shellNav = app.navigationBars["Shell & Commands"].firstMatch
         XCTAssertTrue(shellNav.waitForExistence(timeout: 10), "Shell capabilities view did not open")
         capture(name: "Shell-Capabilities-View")
         navigateBack()
 
         // 4. Local Python Smoke Test (print('שלום'))
-        let pythonSmoke = app.buttons["hanlin-runtime-smoke-localPython"].firstMatch
-        if !pythonSmoke.isHittable {
-            app.swipeUp()
-        }
-        XCTAssertTrue(pythonSmoke.waitForExistence(timeout: 10))
-        pythonSmoke.tap()
+        tapButton(withId: "hanlin-runtime-smoke-localPython")
         let pythonResult = app.descendants(matching: .any)["hanlin-runtime-last-message"].firstMatch
         XCTAssertTrue(pythonResult.waitForExistence(timeout: 25), "Python smoke test result was missing")
         XCTAssertTrue(
@@ -72,12 +63,7 @@ final class HanlinRuntimeInstallationUITests: XCTestCase {
         )
 
         // 5. Node.js Smoke Test (console.log(process.version))
-        let nodeSmoke = app.buttons["hanlin-runtime-smoke-node"].firstMatch
-        if !nodeSmoke.isHittable {
-            app.swipeDown()
-        }
-        XCTAssertTrue(nodeSmoke.waitForExistence(timeout: 10))
-        nodeSmoke.tap()
+        tapButton(withId: "hanlin-runtime-smoke-node")
         let nodeResult = app.descendants(matching: .any)["hanlin-runtime-last-message"].firstMatch
         XCTAssertTrue(nodeResult.waitForExistence(timeout: 30), "Node smoke test result was missing")
         XCTAssertTrue(
@@ -86,12 +72,7 @@ final class HanlinRuntimeInstallationUITests: XCTestCase {
         )
 
         // 6. TypeScript Smoke Test (compile and execute greeting)
-        let tsSmoke = app.buttons["hanlin-runtime-smoke-typeScript"].firstMatch
-        if !tsSmoke.isHittable {
-            app.swipeUp()
-        }
-        XCTAssertTrue(tsSmoke.waitForExistence(timeout: 10))
-        tsSmoke.tap()
+        tapButton(withId: "hanlin-runtime-smoke-typeScript")
         let tsResult = app.descendants(matching: .any)["hanlin-runtime-last-message"].firstMatch
         XCTAssertTrue(tsResult.waitForExistence(timeout: 35), "TypeScript smoke test result was missing")
         XCTAssertTrue(
@@ -107,9 +88,7 @@ final class HanlinRuntimeInstallationUITests: XCTestCase {
         openSettings()
         openRuntimeCenter()
 
-        let jscSmokeAfterRestart = app.buttons["hanlin-runtime-smoke-javaScriptCore"].firstMatch
-        XCTAssertTrue(jscSmokeAfterRestart.waitForExistence(timeout: 10))
-        jscSmokeAfterRestart.tap()
+        tapButton(withId: "hanlin-runtime-smoke-javaScriptCore")
         let jscResultAfterRestart = app.descendants(matching: .any)["hanlin-runtime-last-message"].firstMatch
         XCTAssertTrue(jscResultAfterRestart.waitForExistence(timeout: 15))
         XCTAssertEqual(jscResultAfterRestart.label.trimmingCharacters(in: .whitespacesAndNewlines), "3")
@@ -123,12 +102,7 @@ final class HanlinRuntimeInstallationUITests: XCTestCase {
         openSettings()
         openRuntimeCenter()
 
-        let nodeDetails = app.buttons["hanlin-runtime-details-node"].firstMatch
-        if !nodeDetails.isHittable {
-            app.swipeDown()
-        }
-        XCTAssertTrue(nodeDetails.waitForExistence(timeout: 10), "Node details link was missing")
-        nodeDetails.tap()
+        tapButton(withId: "hanlin-runtime-details-node")
 
         let nodePackagesNav = app.navigationBars["Node.js"].firstMatch
         XCTAssertTrue(nodePackagesNav.waitForExistence(timeout: 10), "Node packages view did not open")
@@ -174,12 +148,7 @@ final class HanlinRuntimeInstallationUITests: XCTestCase {
         openSettings()
         openRuntimeCenter()
 
-        let pythonDetails = app.buttons["hanlin-runtime-details-localPython"].firstMatch
-        if !pythonDetails.isHittable {
-            app.swipeUp()
-        }
-        XCTAssertTrue(pythonDetails.waitForExistence(timeout: 10), "Python details link was missing")
-        pythonDetails.tap()
+        tapButton(withId: "hanlin-runtime-details-localPython")
 
         let pythonPackagesNav = app.navigationBars["Local Python"].firstMatch
         XCTAssertTrue(pythonPackagesNav.waitForExistence(timeout: 10), "Python packages view did not open")
@@ -257,6 +226,48 @@ final class HanlinRuntimeInstallationUITests: XCTestCase {
     }
 
     // MARK: - Navigation & Utility Helpers
+
+    private func tapButton(withId id: String, timeout: TimeInterval = 10) {
+        let candidates = [
+            app.buttons[id].firstMatch,
+            app.descendants(matching: .any)[id].firstMatch
+        ]
+        var target: XCUIElement?
+        for candidate in candidates {
+            if candidate.waitForExistence(timeout: 2) {
+                target = candidate
+                break
+            }
+        }
+        if target == nil {
+            app.swipeUp()
+            for candidate in candidates {
+                if candidate.waitForExistence(timeout: 2) {
+                    target = candidate
+                    break
+                }
+            }
+        }
+        if target == nil {
+            app.swipeDown()
+            for candidate in candidates {
+                if candidate.waitForExistence(timeout: 2) {
+                    target = candidate
+                    break
+                }
+            }
+        }
+        let button = target ?? candidates[0]
+        XCTAssertTrue(button.waitForExistence(timeout: timeout), "Button \(id) was missing")
+        if !button.isHittable {
+            app.swipeUp()
+        }
+        if button.isHittable {
+            button.tap()
+        } else {
+            button.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
+        }
+    }
 
     private func openSettings() {
         let settingsNav = app.navigationBars["设置"].firstMatch
