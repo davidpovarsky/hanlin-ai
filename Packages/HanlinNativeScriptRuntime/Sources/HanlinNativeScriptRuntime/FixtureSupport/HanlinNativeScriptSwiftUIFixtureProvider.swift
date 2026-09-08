@@ -110,8 +110,11 @@ public final class HanlinNativeScriptSwiftUIFixtureProvider: UIViewController, S
                 "count": NSNumber(value: self.model.count),
                 "source": "swiftui"
             ]
-            self.onEvent?(payload as NSDictionary)
-            HanlinNativeScriptCompatibility.sendEvent(toRegisteredHandler: payload)
+            if let onEvent = self.onEvent {
+                onEvent(payload as NSDictionary)
+            } else {
+                HanlinNativeScriptCompatibility.sendEvent(toRegisteredHandler: payload)
+            }
         })
         self.hostingController = hosting
         addChild(hosting)

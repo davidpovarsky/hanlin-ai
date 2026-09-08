@@ -106,6 +106,16 @@ static NSError *HanlinNativeScriptError(HanlinNativeScriptRuntimeErrorCode code,
                 );
             }
             return NO;
+        } @catch (id unknownObjc) {
+            NSString *detail = [NSString stringWithFormat:@"NativeScript script execution ObjC exception: %@", unknownObjc];
+            NSLog(@"[HanlinNativeScript] %@", detail);
+            if (error) {
+                *error = HanlinNativeScriptError(
+                    HanlinNativeScriptRuntimeErrorExecutionFailed,
+                    detail
+                );
+            }
+            return NO;
         }
     } catch (const std::exception &e) {
         NSString *detail = [NSString stringWithFormat:@"NativeScript script execution C++ exception: %s", e.what()];
@@ -118,7 +128,17 @@ static NSError *HanlinNativeScriptError(HanlinNativeScriptRuntimeErrorCode code,
         }
         return NO;
     } catch (...) {
-        NSString *detail = @"NativeScript script execution raised an unknown native exception.";
+        NSString *detail = nil;
+        std::exception_ptr p = std::current_exception();
+        try {
+            if (p) std::rethrow_exception(p);
+        } catch (const std::exception &e) {
+            detail = [NSString stringWithFormat:@"NativeScript C++ exception: %s", e.what()];
+        } catch (id objcEx) {
+            detail = [NSString stringWithFormat:@"NativeScript ObjC exception: %@", objcEx];
+        } catch (...) {
+            detail = @"NativeScript script execution raised an unknown native exception.";
+        }
         NSLog(@"[HanlinNativeScript] %@", detail);
         if (error) {
             *error = HanlinNativeScriptError(

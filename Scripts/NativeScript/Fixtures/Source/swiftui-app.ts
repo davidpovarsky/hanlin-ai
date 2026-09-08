@@ -135,14 +135,18 @@ function createFixtureProvider(): any {
   // Ensure updateDataWithData is callable by @nativescript/swift-ui UIDataDriver
   if (typeof provider.updateDataWithData !== 'function') {
     provider.updateDataWithData = function (data: any) {
-      if (typeof provider.updateData === 'function') {
-        provider.updateData(data);
-      } else if (typeof provider.updateDataDirect === 'function') {
-        provider.updateDataDirect(data);
-      } else if (activeCompat && typeof activeCompat.updateSwiftUIProviderData === 'function') {
-        activeCompat.updateSwiftUIProviderData(provider, data);
-      } else if (activeCompat && typeof activeCompat.performSelectorWithObjectWithObject === 'function' && typeof g.NSSelectorFromString === 'function') {
-        activeCompat.performSelectorWithObjectWithObject(g.NSSelectorFromString('updateSwiftUIProvider:data:'), provider, data);
+      try {
+        if (typeof provider.updateData === 'function') {
+          provider.updateData(data);
+        } else if (typeof provider.updateDataDirect === 'function') {
+          provider.updateDataDirect(data);
+        } else if (activeCompat && typeof activeCompat.updateSwiftUIProviderData === 'function') {
+          activeCompat.updateSwiftUIProviderData(provider, data);
+        } else if (activeCompat && typeof activeCompat.performSelectorWithObjectWithObject === 'function' && typeof g.NSSelectorFromString === 'function') {
+          activeCompat.performSelectorWithObjectWithObject(g.NSSelectorFromString('updateSwiftUIProvider:data:'), provider, data);
+        }
+      } catch (e) {
+        console.log(`[HanlinNativeScript] updateDataWithData note: ${e}`);
       }
     };
   }
@@ -159,23 +163,27 @@ function createFixtureProvider(): any {
       set(callback: any) {
         registeredEventCallback = callback;
         const wrapped = (dict: any) => {
-          if (typeof callback === 'function') {
-            callback(dict);
+          try {
+            if (typeof callback === 'function') {
+              callback(dict);
+            }
+          } catch (err) {
+            console.log(`[HanlinNativeScript] callback error: ${err}`);
           }
         };
-        if (activeCompat && typeof activeCompat.registerSwiftUIProviderEventHandler === 'function') {
-          activeCompat.registerSwiftUIProviderEventHandler(provider, wrapped);
-        } else if (activeCompat && typeof activeCompat['registerSwiftUIProvider:eventHandler:'] === 'function') {
-          activeCompat['registerSwiftUIProvider:eventHandler:'](provider, wrapped);
-        } else if (activeCompat && typeof activeCompat.performSelectorWithObjectWithObject === 'function' && typeof g.NSSelectorFromString === 'function') {
-          activeCompat.performSelectorWithObjectWithObject(
-            g.NSSelectorFromString('registerSwiftUIProvider:eventHandler:'),
-            provider,
-            wrapped
-          );
+        try {
+          if (activeCompat && typeof activeCompat.registerSwiftUIProviderEventHandler === 'function') {
+            activeCompat.registerSwiftUIProviderEventHandler(provider, wrapped);
+          }
+        } catch (e) {
+          console.log(`[HanlinNativeScript] registerSwiftUIProviderEventHandler note: ${e}`);
         }
-        if (typeof (provider as any).registerEventHandler === 'function') {
-          (provider as any).registerEventHandler(wrapped);
+        try {
+          if (typeof (provider as any).registerEventHandler === 'function') {
+            (provider as any).registerEventHandler(wrapped);
+          }
+        } catch (e) {
+          console.log(`[HanlinNativeScript] provider.registerEventHandler note: ${e}`);
         }
       }
     });

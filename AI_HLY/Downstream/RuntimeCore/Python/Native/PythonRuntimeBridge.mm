@@ -23,9 +23,14 @@ static void InitializePython(void) {
     std::call_once(initializationFlag, [] {
         NSString *resources = NSBundle.mainBundle.resourcePath;
         NSString *pythonHome = [resources stringByAppendingPathComponent:@"python"];
+        NSString *frameworksPath = NSBundle.mainBundle.privateFrameworksPath;
         setenv("PYTHONHOME", pythonHome.UTF8String, 1);
         setenv("PYTHONDONTWRITEBYTECODE", "1", 1);
         setenv("PYTHONUTF8", "1", 1);
+        if (frameworksPath) {
+            setenv("DYLD_FRAMEWORK_PATH", frameworksPath.UTF8String, 1);
+            setenv("DYLD_LIBRARY_PATH", frameworksPath.UTF8String, 1);
+        }
 
         PyPreConfig preconfig;
         PyPreConfig_InitIsolatedConfig(&preconfig);
