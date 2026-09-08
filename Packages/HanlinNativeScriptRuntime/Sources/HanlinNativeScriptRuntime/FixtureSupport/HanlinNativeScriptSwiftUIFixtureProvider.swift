@@ -106,11 +106,11 @@ public final class HanlinNativeScriptSwiftUIFixtureProvider: UIViewController, S
         let hosting = UIHostingController(rootView: HanlinSwiftUIFixtureView(model: model) { [weak self] in
             guard let self else { return }
             self.model.count += 1
-            let payload: NSDictionary = [
+            let payload: [AnyHashable: Any] = [
                 "count": NSNumber(value: self.model.count),
                 "source": "swiftui"
             ]
-            self.onEvent?(payload)
+            self.onEvent?(payload as NSDictionary)
             HanlinNativeScriptCompatibility.sendEvent(toRegisteredHandler: payload)
         })
         self.hostingController = hosting
