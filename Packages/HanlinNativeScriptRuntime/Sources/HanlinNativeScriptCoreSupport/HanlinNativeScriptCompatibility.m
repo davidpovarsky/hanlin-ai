@@ -25,6 +25,8 @@
         });
         return provider;
     }
+}
+
 + (void)updateSwiftUIProvider:(id)provider data:(nullable NSDictionary *)data {
     if (!provider) return;
     SEL updateSelector = NSSelectorFromString(@"updateDataWithData:");
