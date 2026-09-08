@@ -84,50 +84,76 @@ char *HanlinPythonExecute(const char *requestJSON) {
     NSString *environment64 = [environmentData base64EncodedStringWithOptions:0];
 
     NSString *bootstrapFormat = [NSString stringWithUTF8String:R"PY(
-import base64, contextlib, io, json, os, site, sys, time, traceback
-_source = base64.b64decode('%@').decode('utf-8')
-_workspace = base64.b64decode('%@').decode('utf-8')
-_packages = base64.b64decode('%@').decode('utf-8')
-_arguments = json.loads(base64.b64decode('%@'))
-_environment = json.loads(base64.b64decode('%@'))
-_deadline = time.monotonic() + %.6f
-_stdout, _stderr = io.StringIO(), io.StringIO()
-_old_cwd, _old_argv, _old_env, _old_path = os.getcwd(), list(sys.argv), dict(os.environ), list(sys.path)
-def _hanlin_trace(frame, event, arg):
-    if time.monotonic() > _deadline:
-        raise TimeoutError('Python execution timed out.')
-    return _hanlin_trace
+import base64, contextlib, io, json, os, sys, time, traceback
+_hanlin_response = {}
 try:
-    os.chdir(_workspace)
-    os.environ.update({str(k): str(v) for k, v in _environment.items()})
-    sys.argv = ['<hanlin>', *[str(value) for value in _arguments]]
-    if os.path.isdir(_packages):
-        for _entry in sorted(os.listdir(_packages)):
-            _candidate = os.path.join(_packages, _entry)
-            if os.path.isdir(_candidate): site.addsitedir(_candidate)
-    _globals = {'__name__': '__main__', '__file__': '<hanlin>'}
-    sys.settrace(_hanlin_trace)
-    with contextlib.redirect_stdout(_stdout), contextlib.redirect_stderr(_stderr):
-        exec(compile(_source, '<hanlin>', 'exec'), _globals, _globals)
-    _value = _globals.get('__hanlin_result__')
-    try: json.dumps(_value)
-    except (TypeError, ValueError): _value = str(_value)
-    _hanlin_response = {'stdout': _stdout.getvalue(), 'stderr': _stderr.getvalue(), 'value': _value, 'exitCode': 0, 'didTimeOut': False}
-except BaseException as _error:
-    _hanlin_response = {'stdout': _stdout.getvalue(), 'stderr': _stderr.getvalue() + traceback.format_exc(), 'value': None, 'exitCode': 1, 'didTimeOut': isinstance(_error, TimeoutError)}
-finally:
-    sys.settrace(None)
-    os.chdir(_old_cwd)
-    sys.argv[:] = _old_argv
-    os.environ.clear(); os.environ.update(_old_env)
-    sys.path[:] = _old_path
+    _source = base64.b64decode('%@').decode('utf-8')
+    _workspace = base64.b64decode('%@').decode('utf-8')
+    _packages = base64.b64decode('%@').decode('utf-8')
+    _arguments = json.loads(base64.b64decode('%@'))
+    _environment = json.loads(base64.b64decode('%@'))
+    _deadline = time.monotonic() + %.6f
+    _stdout, _stderr = io.StringIO(), io.StringIO()
+    _old_cwd = os.getcwd()
+    _old_argv = list(sys.argv)
+    _modified_env_keys = []
+    def _hanlin_trace(frame, event, arg):
+        if time.monotonic() > _deadline:
+            raise TimeoutError('Python execution timed out.')
+        return _hanlin_trace
+    try:
+        if _workspace and os.path.isdir(_workspace):
+            os.chdir(_workspace)
+        for _k, _v in _environment.items():
+            _k_str = str(_k)
+            _modified_env_keys.append((_k_str, os.environ.get(_k_str)))
+            os.environ[_k_str] = str(_v)
+        sys.argv = ['<hanlin>', *[str(value) for value in _arguments]]
+        if os.path.isdir(_packages):
+            for _entry in sorted(os.listdir(_packages)):
+                _candidate = os.path.join(_packages, _entry)
+                if os.path.isdir(_candidate) and _candidate not in sys.path:
+                    sys.path.insert(0, _candidate)
+        _globals = {'__name__': '__main__', '__file__': '<hanlin>'}
+        sys.settrace(_hanlin_trace)
+        with contextlib.redirect_stdout(_stdout), contextlib.redirect_stderr(_stderr):
+            exec(compile(_source, '<hanlin>', 'exec'), _globals, _globals)
+        _value = _globals.get('__hanlin_result__')
+        try: json.dumps(_value)
+        except (TypeError, ValueError): _value = str(_value)
+        _hanlin_response = {'stdout': _stdout.getvalue(), 'stderr': _stderr.getvalue(), 'value': _value, 'exitCode': 0, 'didTimeOut': False}
+    except BaseException as _error:
+        _hanlin_response = {'stdout': _stdout.getvalue(), 'stderr': _stderr.getvalue() + traceback.format_exc(), 'value': None, 'exitCode': 1, 'didTimeOut': isinstance(_error, TimeoutError)}
+    finally:
+        sys.settrace(None)
+        try:
+            os.chdir(_old_cwd)
+        except Exception:
+            pass
+        sys.argv[:] = _old_argv
+        for _k_str, _orig_val in _modified_env_keys:
+            if _orig_val is None:
+                os.environ.pop(_k_str, None)
+            else:
+                os.environ[_k_str] = _orig_val
+except BaseException as _outer_error:
+    _hanlin_response = {'stdout': '', 'stderr': traceback.format_exc(), 'value': None, 'exitCode': 1, 'didTimeOut': False}
 _hanlin_response_json = json.dumps(_hanlin_response, ensure_ascii=False)
 )PY"];
     NSString *bootstrap = [NSString stringWithFormat:bootstrapFormat, source64, workspace64, packages64, arguments64, environment64, MAX(1.0, timeout)];
 
     PyGILState_STATE gil = PyGILState_Ensure();
     PyObject *globals = PyDict_New();
-    PyDict_SetItemString(globals, "__builtins__", PyEval_GetBuiltins());
+    PyObject *builtins = PyEval_GetBuiltins();
+    if (builtins) {
+        PyDict_SetItemString(globals, "__builtins__", builtins);
+    } else {
+        PyObject *builtinsModule = PyImport_ImportModule("builtins");
+        if (builtinsModule) {
+            PyDict_SetItemString(globals, "__builtins__", PyModule_GetDict(builtinsModule));
+            Py_DECREF(builtinsModule);
+        }
+    }
     PyObject *executed = PyRun_StringFlags(bootstrap.UTF8String, Py_file_input, globals, globals, nullptr);
     NSString *result = nil;
     if (executed) {
@@ -135,7 +161,25 @@ _hanlin_response_json = json.dumps(_hanlin_response, ensure_ascii=False)
         PyObject *value = PyDict_GetItemString(globals, "_hanlin_response_json");
         if (value && PyUnicode_Check(value)) result = [NSString stringWithUTF8String:PyUnicode_AsUTF8(value)];
     } else {
-        PyErr_Clear();
+        PyObject *ptype = nullptr, *pvalue = nullptr, *ptraceback = nullptr;
+        PyErr_Fetch(&ptype, &pvalue, &ptraceback);
+        PyErr_NormalizeException(&ptype, &pvalue, &ptraceback);
+        NSString *errDesc = @"Unknown Python error";
+        if (pvalue) {
+            PyObject *strObj = PyObject_Str(pvalue);
+            if (strObj) {
+                const char *utf8 = PyUnicode_AsUTF8(strObj);
+                if (utf8) errDesc = [NSString stringWithUTF8String:utf8];
+                Py_DECREF(strObj);
+            }
+        }
+        NSLog(@"[HanlinPythonExecute] PyRun_StringFlags failed: %@", errDesc);
+        NSDictionary *errDict = @{ @"error": [NSString stringWithFormat:@"Embedded Python execution failed: %@", errDesc] };
+        NSData *errData = [NSJSONSerialization dataWithJSONObject:errDict options:0 error:nil];
+        if (errData) result = [[NSString alloc] initWithData:errData encoding:NSUTF8StringEncoding];
+        Py_XDECREF(ptype);
+        Py_XDECREF(pvalue);
+        Py_XDECREF(ptraceback);
     }
     Py_DECREF(globals);
     PyGILState_Release(gil);

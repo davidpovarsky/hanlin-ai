@@ -3,6 +3,7 @@
 
 static Class _registeredProviderClass = nil;
 static id _sharedProvider = nil;
+static void (^_currentEventHandler)(NSDictionary *) = nil;
 
 @implementation HanlinNativeScriptCompatibility
 
@@ -83,12 +84,30 @@ static id _sharedProvider = nil;
 }
 
 + (void)registerSwiftUIProvider:(id)provider eventHandler:(void (^)(NSDictionary *))handler {
+    if (handler) {
+        _currentEventHandler = [handler copy];
+    } else {
+        _currentEventHandler = nil;
+    }
     if (!provider) return;
     SEL registerSelector = NSSelectorFromString(@"registerEventHandler:");
-    if ([provider respondsToSelector:registerSelector]) {
-        void (*func)(id, SEL, id) = (void (*)(id, SEL, id))[provider methodForSelector:registerSelector];
+    if ([provider respondsToSelector:registerSelector] && _currentEventHandler) {
+        void (*func)(id, SEL, void (^)(NSDictionary *)) = (void (*)(id, SEL, void (^)(NSDictionary *)))[provider methodForSelector:registerSelector];
         if (func) {
-            func(provider, registerSelector, handler);
+            func(provider, registerSelector, _currentEventHandler);
+        }
+    }
+}
+
++ (void)sendEventToRegisteredHandler:(NSDictionary *)eventData {
+    void (^handlerCopy)(NSDictionary *) = _currentEventHandler;
+    if (handlerCopy && eventData) {
+        if ([NSThread isMainThread]) {
+            handlerCopy(eventData);
+        } else {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                handlerCopy(eventData);
+            });
         }
     }
 }

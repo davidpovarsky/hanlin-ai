@@ -158,28 +158,24 @@ function createFixtureProvider(): any {
       },
       set(callback: any) {
         registeredEventCallback = callback;
+        const wrapped = (dict: any) => {
+          if (typeof callback === 'function') {
+            callback(dict);
+          }
+        };
         if (activeCompat && typeof activeCompat.registerSwiftUIProviderEventHandler === 'function') {
-          activeCompat.registerSwiftUIProviderEventHandler(provider, (dict: any) => {
-            if (typeof callback === 'function') {
-              callback(dict);
-            }
-          });
+          activeCompat.registerSwiftUIProviderEventHandler(provider, wrapped);
+        } else if (activeCompat && typeof activeCompat['registerSwiftUIProvider:eventHandler:'] === 'function') {
+          activeCompat['registerSwiftUIProvider:eventHandler:'](provider, wrapped);
         } else if (activeCompat && typeof activeCompat.performSelectorWithObjectWithObject === 'function' && typeof g.NSSelectorFromString === 'function') {
           activeCompat.performSelectorWithObjectWithObject(
             g.NSSelectorFromString('registerSwiftUIProvider:eventHandler:'),
             provider,
-            (dict: any) => {
-              if (typeof callback === 'function') {
-                callback(dict);
-              }
-            }
+            wrapped
           );
-        } else if (typeof provider.registerEventHandler === 'function') {
-          provider.registerEventHandler((dict: any) => {
-            if (typeof callback === 'function') {
-              callback(dict);
-            }
-          });
+        }
+        if (typeof (provider as any).registerEventHandler === 'function') {
+          (provider as any).registerEventHandler(wrapped);
         }
       }
     });

@@ -1,4 +1,5 @@
 import Foundation
+import HanlinNativeScriptCoreSupport
 import Observation
 import SwiftUI
 import UIKit
@@ -105,10 +106,12 @@ public final class HanlinNativeScriptSwiftUIFixtureProvider: UIViewController, S
         let hosting = UIHostingController(rootView: HanlinSwiftUIFixtureView(model: model) { [weak self] in
             guard let self else { return }
             self.model.count += 1
-            self.onEvent?([
+            let payload: NSDictionary = [
                 "count": NSNumber(value: self.model.count),
                 "source": "swiftui"
-            ] as NSDictionary)
+            ]
+            self.onEvent?(payload)
+            HanlinNativeScriptCompatibility.sendEvent(toRegisteredHandler: payload)
         })
         self.hostingController = hosting
         addChild(hosting)
