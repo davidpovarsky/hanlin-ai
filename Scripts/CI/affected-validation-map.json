@@ -341,6 +341,9 @@
         "app_unit_tests",
         "simulator_smoke_launch"
       ],
+      "unit_suites": [
+        "AI_HLYTests/CanonicalAdapterTests"
+      ],
       "consumers": []
     },
     "app_core": {
@@ -361,11 +364,40 @@
         "AI_HLY/Downstream/RuntimeCore/Lifecycle/**",
         "AI_HLY/Downstream/RuntimeCore/Tools/**",
         "AI_HLY/Downstream/RuntimeCore/JavaScriptCore/**",
-        "AI_HLY/Downstream/Scripting/**",
-        "AI_HLY/Downstream/ScriptingPlatform/**"
+        "AI_HLY/Downstream/Scripting/**"
       ],
       "direct_validation_groups": [
         "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/CanonicalAdapterTests",
+        "AI_HLYTests/CanonicalShadowCoordinatorTests",
+        "AI_HLYTests/CanonicalToolAuthorityTests",
+        "AI_HLYTests/FoundationJSONShadowAdapterTests",
+        "AI_HLYTests/HanlinScriptingAssistantProviderAdapterTests",
+        "AI_HLYTests/ScriptingCanonicalAuthorityTests"
+      ],
+      "consumers": [
+        "app_ui"
+      ]
+    },
+    "scripting_platform": {
+      "description": "Downstream Scripting platform coordinator, views, and package lifecycle",
+      "patterns": [
+        "AI_HLY/Downstream/ScriptingPlatform/**"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests",
+        "simulator_targeted_ui"
+      ],
+      "prerequisites": [
+        "runtimecore_host"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/HanlinScriptPackageProductionE2ETests"
+      ],
+      "ui_suites": [
+        "AI_HLYUITests/HanlinScriptUIProductionE2ETests"
       ],
       "consumers": [
         "app_ui"
@@ -379,22 +411,88 @@
       "direct_validation_groups": [
         "app_unit_tests"
       ],
+      "unit_suites": [
+        "AI_HLYTests/CanonicalAdapterTests"
+      ],
       "consumers": [
         "project_packaging"
       ]
     },
-    "app_unit_test_files": {
-      "description": "Downstream unit tests and canonical shadow tests",
+    "canonical_adapter_unit_tests": {
+      "description": "Canonical adapter unit tests",
       "patterns": [
-        "AI_HLYTests/CanonicalAdapterTests.swift",
-        "AI_HLYTests/CanonicalShadowCoordinatorTests.swift",
-        "AI_HLYTests/CanonicalToolAuthorityTests.swift",
-        "AI_HLYTests/FoundationJSONShadowAdapterTests.swift",
-        "AI_HLYTests/HanlinScriptingAssistantProviderAdapterTests.swift",
+        "AI_HLYTests/CanonicalAdapterTests.swift"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/CanonicalAdapterTests"
+      ],
+      "consumers": []
+    },
+    "canonical_shadow_coordinator_unit_tests": {
+      "description": "Canonical shadow coordinator unit tests",
+      "patterns": [
+        "AI_HLYTests/CanonicalShadowCoordinatorTests.swift"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/CanonicalShadowCoordinatorTests"
+      ],
+      "consumers": []
+    },
+    "canonical_tool_authority_unit_tests": {
+      "description": "Canonical tool authority unit tests",
+      "patterns": [
+        "AI_HLYTests/CanonicalToolAuthorityTests.swift"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/CanonicalToolAuthorityTests"
+      ],
+      "consumers": []
+    },
+    "foundation_json_shadow_adapter_unit_tests": {
+      "description": "Foundation JSON shadow adapter unit tests",
+      "patterns": [
+        "AI_HLYTests/FoundationJSONShadowAdapterTests.swift"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/FoundationJSONShadowAdapterTests"
+      ],
+      "consumers": []
+    },
+    "scripting_assistant_provider_adapter_unit_tests": {
+      "description": "Scripting assistant provider adapter unit tests",
+      "patterns": [
+        "AI_HLYTests/HanlinScriptingAssistantProviderAdapterTests.swift"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/HanlinScriptingAssistantProviderAdapterTests"
+      ],
+      "consumers": []
+    },
+    "scripting_canonical_authority_unit_tests": {
+      "description": "Scripting canonical authority unit tests",
+      "patterns": [
         "AI_HLYTests/ScriptingCanonicalAuthorityTests.swift"
       ],
       "direct_validation_groups": [
         "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/ScriptingCanonicalAuthorityTests"
       ],
       "consumers": []
     },
@@ -405,7 +503,14 @@
         "AI_HLYTests/Fixtures/**"
       ],
       "direct_validation_groups": [
-        "simulator_scripting_acceptance"
+        "simulator_scripting_acceptance",
+        "app_unit_tests"
+      ],
+      "prerequisites": [
+        "runtimecore_host"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/HanlinScriptPackageProductionE2ETests"
       ],
       "consumers": []
     },
@@ -535,7 +640,7 @@
       "workflow_outputs": {
         "run_simulator_job": true,
         "run_simulator_unit": true,
-        "simulator_unit_filter": "AI_HLYTests/HanlinScriptingRuntimeTests"
+        "simulator_unit_filter": "AI_HLYTests/HanlinQuickJSEngineTests"
       }
     },
     "nativescript_dependencies": {
@@ -585,7 +690,9 @@
     "node_runtime": {
       "description": "Verify Node/V8 slices and MCP acceptance",
       "job": "simulator",
-      "prerequisites": [],
+      "prerequisites": [
+        "runtimecore_host"
+      ],
       "workflow_outputs": {
         "run_simulator_job": true,
         "run_simulator_mcp_acceptance": true
@@ -606,8 +713,7 @@
       "prerequisites": [],
       "workflow_outputs": {
         "run_simulator_job": true,
-        "run_simulator_unit": true,
-        "simulator_unit_filter": "AI_HLYTests"
+        "run_simulator_unit": true
       }
     },
     "simulator_targeted_ui": {
@@ -640,7 +746,9 @@
     "simulator_mcp_acceptance": {
       "description": "Launch app and verify MCP runtime acceptance & canonical shadow",
       "job": "simulator",
-      "prerequisites": [],
+      "prerequisites": [
+        "runtimecore_host"
+      ],
       "workflow_outputs": {
         "run_simulator_job": true,
         "run_simulator_mcp_acceptance": true

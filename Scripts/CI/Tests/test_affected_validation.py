@@ -498,6 +498,48 @@ class AffectedValidationPlannerTests(unittest.TestCase):
         plan = self.plan_files(["README.md"], full_validation=True)
         self.assertTrue(plan.step_outputs["stage_scriptui_fixtures"])
 
+    # Narrowed Unit Suites & RuntimeCore Host Dependency Selection Tests
+    def test_scripting_platform_routes_narrowed_unit_and_ui_suites(self) -> None:
+        changed = ["AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift"]
+        plan = self.plan_files(changed)
+        self.assertTrue(plan.step_outputs["run_simulator_unit"])
+        self.assertEqual(
+            plan.step_outputs["simulator_unit_filter"],
+            "AI_HLYTests/CanonicalAdapterTests,AI_HLYTests/HanlinScriptPackageProductionE2ETests",
+        )
+        self.assertNotIn("HanlinScriptingProductionCompilerAcceptanceTests", plan.step_outputs["simulator_unit_filter"])
+        self.assertNotIn("HanlinScriptPackagePhysicalIPadRegressionTests", plan.step_outputs["simulator_unit_filter"])
+        self.assertTrue(plan.step_outputs["run_runtimecore_host"])
+        self.assertEqual(plan.step_outputs["simulator_configuration"], "Debug")
+        self.assertFalse(plan.step_outputs["run_device_build"])
+        self.assertFalse(plan.step_outputs["run_ipa_packaging"])
+
+    def test_canonical_adapter_unit_test_file_routes_narrow_suite_without_host(self) -> None:
+        changed = ["AI_HLYTests/CanonicalAdapterTests.swift"]
+        plan = self.plan_files(changed)
+        self.assertTrue(plan.step_outputs["run_simulator_unit"])
+        self.assertEqual(plan.step_outputs["simulator_unit_filter"], "AI_HLYTests/CanonicalAdapterTests")
+        self.assertFalse(plan.step_outputs["run_runtimecore_host"])
+        self.assertEqual(plan.step_outputs["simulator_configuration"], "Debug")
+
+    def test_unmapped_unit_suite_raises_routing_error(self) -> None:
+        custom_mapping = json.loads(json.dumps(self.mapping_config))
+        custom_mapping["components"]["hypothetical_app_core"] = {
+            "description": "Component selecting app_unit_tests without unit_suites",
+            "patterns": ["AI_HLY/HypotheticalCore/**"],
+            "direct_validation_groups": ["app_unit_tests"],
+            "consumers": [],
+        }
+        with self.assertRaises(planner.RoutingError) as ctx:
+            planner.plan_affected_validation(
+                mapping_config=custom_mapping,
+                changed_files=["AI_HLY/HypotheticalCore/Core.swift"],
+                base_sha="abc1234567890",
+                head_sha="def9876543210",
+                event_name="workflow_dispatch",
+            )
+        self.assertIn("no specific unit test suite mapping was found", str(ctx.exception))
+
 
 if __name__ == "__main__":
     unittest.main()

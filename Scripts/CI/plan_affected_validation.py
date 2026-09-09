@@ -384,6 +384,7 @@ class ValidationPlan:
             f"| **Changed Files** | `{len(self.changed_files)}` |",
             f"| **Full Validation Override** | `{str(self.is_full_validation).lower()}` |",
             f"| **Simulator UI Filter** | `{self.step_outputs.get('simulator_ui_filter') or 'None'}` |",
+            f"| **Simulator Unit Filter** | `{self.step_outputs.get('simulator_unit_filter') or 'None'}` |",
             f"| **Simulator Configuration** | `{self.step_outputs.get('simulator_configuration', 'Debug')}` |",
             f"| **Simulator Build Args** | `{self.step_outputs.get('simulator_build_for_testing_args') or 'None'}` |",
             f"| **ScriptUI Fixture Staging** | `{str(self.step_outputs.get('stage_scriptui_fixtures', False)).lower()}` |",
@@ -604,6 +605,13 @@ def plan_affected_validation(
                     f"component '{comp_name}' was affected ({reasons[0]})"
                 )
 
+    # 3b. Resolve component-level prerequisites
+    for comp_name in list(affected_components.keys()):
+        c_prereqs = components.get(comp_name, {}).get("prerequisites", [])
+        for p in c_prereqs:
+            if p in val_groups_config and p not in selected_groups:
+                selected_groups[p].append(f"prerequisite for component '{comp_name}'")
+
     # 4. Resolve prerequisites of selected validation groups
     prereq_queue = list(selected_groups.keys())
     while prereq_queue:
@@ -670,6 +678,62 @@ def plan_affected_validation(
         or ("HanlinScriptUIProductionE2ETests" in simulator_ui_filter_value)
     )
 
+    # Derive targeted unit suites
+    affected_unit_suites: Set[str] = set()
+    if not full_validation:
+        for comp_name in affected_components:
+            comp_info = components.get(comp_name, {})
+            for suite in comp_info.get("unit_suites", []):
+                affected_unit_suites.add(suite)
+    else:
+        affected_unit_suites = {"AI_HLYTests"}
+
+    if (target_group == "app_unit_tests" or manual_modes.get("fast_validation_only")) and not affected_unit_suites and not full_validation:
+        for comp_info in components.values():
+            for suite in comp_info.get("unit_suites", []):
+                affected_unit_suites.add(suite)
+
+    if "app_unit_tests" in selected_groups and not full_validation:
+        if not affected_unit_suites:
+            raise RoutingError(
+                "Targeted unit test validation ('app_unit_tests') was selected, "
+                "but no specific unit test suite mapping was found for the affected components: "
+                f"{sorted(affected_components.keys())}. "
+                "Define 'unit_suites' for the affected component in Scripts/CI/affected-validation-map.json "
+                "or run with explicit full_validation."
+            )
+
+    # If a parent suite is selected (e.g. AI_HLYTests), prune child selectors
+    pruned_unit_suites: Set[str] = set()
+    for suite in affected_unit_suites:
+        if any(other != suite and suite.startswith(other + "/") for other in affected_unit_suites):
+            continue
+        pruned_unit_suites.add(suite)
+    affected_unit_suites = pruned_unit_suites
+
+    NODE_DEPENDENT_UNIT_SUITES = {
+        "AI_HLYTests/HanlinScriptPackageProductionE2ETests",
+        "AI_HLYTests/HanlinScriptingProductionCompilerAcceptanceTests",
+        "AI_HLYTests/HanlinScriptPackagePhysicalIPadRegressionTests",
+        "AI_HLYTests/HanlinTrustedWorkerRouteTests",
+    }
+    if any(
+        s in NODE_DEPENDENT_UNIT_SUITES
+        or any(s.startswith(nd + "/") for nd in NODE_DEPENDENT_UNIT_SUITES)
+        for s in affected_unit_suites
+    ):
+        if "runtimecore_host" not in selected_groups:
+            selected_groups["runtimecore_host"].append(
+                "selected unit suite requires Node runtime host"
+            )
+
+    if full_validation:
+        simulator_unit_filter_value = "AI_HLYTests"
+    elif affected_unit_suites:
+        simulator_unit_filter_value = ",".join(sorted(affected_unit_suites))
+    else:
+        simulator_unit_filter_value = ""
+
     # 5. Formulate step outputs
     step_outputs: Dict[str, Any] = {
         "run_full_validation": full_validation,
@@ -686,7 +750,7 @@ def plan_affected_validation(
         "run_ipa_packaging": False,
         "run_simulator_job": False,
         "run_simulator_unit": False,
-        "simulator_unit_filter": "AI_HLYTests",
+        "simulator_unit_filter": simulator_unit_filter_value,
         "run_simulator_scripting_acceptance": False,
         "run_simulator_targeted_ui": False,
         "simulator_ui_filter": simulator_ui_filter_value,
@@ -706,6 +770,8 @@ def plan_affected_validation(
         g_info = val_groups_config.get(g_name, {})
         g_outputs = g_info.get("workflow_outputs", {})
         for out_k, out_v in g_outputs.items():
+            if out_k == "simulator_unit_filter" and not full_validation and affected_unit_suites:
+                continue
             step_outputs[out_k] = out_v
 
     # Enforce simulator_e2e_only strict suppression on step outputs
@@ -756,7 +822,6 @@ def plan_affected_validation(
         "nativescript_ui_test_files",
         "simulator_nativescript_poc",
         "runtimecore_bundle",
-        "runtimecore_host",
         "runtime_tools",
         "project_packaging",
         "python_runtime",
@@ -782,7 +847,7 @@ def plan_affected_validation(
         build_for_testing_args = ["-only-testing:AI_HLYTests", "-only-testing:AI_HLYUITests"]
     else:
         if step_outputs.get("run_simulator_unit"):
-            unit_filter = step_outputs.get("simulator_unit_filter", "AI_HLYTests")
+            unit_filter = step_outputs.get("simulator_unit_filter", "")
             for u in unit_filter.split(","):
                 u = u.strip()
                 if u:

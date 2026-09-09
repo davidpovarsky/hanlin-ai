@@ -59,6 +59,14 @@ def repository_path(repository: Path, raw_path: str) -> Path:
     return candidate
 
 
+IGNORED_FILE_NAMES = {"RuntimeHostResources.zip"}
+IGNORED_FILE_SUFFIXES = {".zip"}
+
+
+def is_ignored_file(path: Path) -> bool:
+    return path.name in IGNORED_FILE_NAMES or path.suffix in IGNORED_FILE_SUFFIXES
+
+
 def input_files(
     repository: Path,
     raw_paths: Iterable[str],
@@ -68,7 +76,8 @@ def input_files(
     for raw_path in raw_paths:
         path = repository_path(repository, raw_path)
         if path.is_file():
-            files.add(path)
+            if not is_ignored_file(path):
+                files.add(path)
         elif path.is_dir():
             for current, child_names, file_names in os.walk(path):
                 child_names[:] = [
@@ -77,7 +86,8 @@ def input_files(
                 files.update(
                     Path(current) / name
                     for name in file_names
-                    if not suffixes or Path(name).suffix in suffixes
+                    if (not suffixes or Path(name).suffix in suffixes)
+                    and not is_ignored_file(Path(name))
                 )
     return sorted(files, key=lambda path: path.relative_to(repository).as_posix())
 

@@ -205,6 +205,30 @@ class XcodeCacheInputsTests(unittest.TestCase):
             xcode_cache_inputs.restore(repository, manifest)
             self.assertEqual(package_dir.stat().st_mtime_ns, original_dir_mtime)
 
+    def test_excludes_ephemeral_zip_and_runtime_host_resources(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            repository = Path(directory)
+            ai_hly = repository / "AI_HLY"
+            ai_hly.mkdir(parents=True)
+            (ai_hly / "MainView.swift").write_text("let v = 1\n", encoding="utf-8")
+            (ai_hly / "RuntimeHostResources.zip").write_text("fake-zip-data\n", encoding="utf-8")
+            (ai_hly / "other_archive.zip").write_text("other-zip\n", encoding="utf-8")
+
+            manifest = repository / "manifest.json"
+            xcode_cache_inputs.capture(
+                repository,
+                manifest,
+                ["AI_HLY"],
+                set(),
+                "head123",
+            )
+            payload = json.loads(manifest.read_text(encoding="utf-8"))
+            recorded_files = [record["path"] for record in payload["files"]]
+
+            self.assertEqual(recorded_files, ["AI_HLY/MainView.swift"])
+            self.assertNotIn("AI_HLY/RuntimeHostResources.zip", recorded_files)
+            self.assertNotIn("AI_HLY/other_archive.zip", recorded_files)
+
 
 if __name__ == "__main__":
     unittest.main()

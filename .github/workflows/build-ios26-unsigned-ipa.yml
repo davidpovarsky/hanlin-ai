@@ -1502,6 +1502,7 @@ jobs:
           set -euxo pipefail
           bash Scripts/Runtime/prepare-runtime-host.sh 2>&1 | tee "$LOG_DIR/03-package-runtime-host.log"
           cp build/runtime-host/RuntimeHostResources.zip AI_HLY/RuntimeHostResources.zip
+          find build/SimulatorDerivedData -name "RuntimeHostResources.zip" -path "*/AI_Hanlin.app/*" -delete || true
 
       - name: Run RuntimeCore preflight
         if: ${{ needs.plan-affected-validation.outputs.run_runtimecore_host == 'true' || needs.plan-affected-validation.outputs.run_full_validation == 'true' }}
