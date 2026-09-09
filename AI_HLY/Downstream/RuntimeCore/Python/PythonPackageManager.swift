@@ -92,6 +92,8 @@ actor PythonPackageManager {
         let requirements: [String]
     }
 
+    static let maximumWheelSizeBytes: Int64 = 100 * 1_024 * 1_024
+
     private let fileLayout: RuntimeFileLayout
     private let python: PythonRuntimeService
     private var records: [PythonPackageRecord]?
@@ -172,6 +174,7 @@ actor PythonPackageManager {
             try? FileManager.default.removeItem(at: backup)
         }
 
+        var verifiedRootSha256: String?
         var resolvedDependencies: [PythonPackageDependency] = []
         for (index, wheel) in graph.enumerated() {
             try Task.checkCancellation()
@@ -181,7 +184,9 @@ actor PythonPackageManager {
             defer { try? FileManager.default.removeItem(at: wheelURL) }
             await progress(.init(phase: .validating, completedUnits: index, totalUnits: graph.count, packageName: wheel.name))
             try inspectAndExtract(wheelURL: wheelURL, to: staging)
-            if index > 0 {
+            if index == 0 {
+                verifiedRootSha256 = digest
+            } else {
                 resolvedDependencies.append(.init(
                     name: wheel.name,
                     version: wheel.version,
@@ -189,6 +194,10 @@ actor PythonPackageManager {
                     sha256: digest
                 ))
             }
+        }
+
+        guard let rootSha256 = verifiedRootSha256, !rootSha256.isEmpty else {
+            throw RuntimeCoreError.runtimeFailure("The root package wheel digest was not verified.")
         }
 
         try Task.checkCancellation()
@@ -217,7 +226,7 @@ actor PythonPackageManager {
                 normalizedName: root.normalizedName,
                 version: root.version,
                 wheelFileName: root.distribution.filename,
-                sha256: root.distribution.digests?.sha256?.lowercased() ?? "",
+                sha256: rootSha256,
                 installedAt: .now,
                 storageBytes: size,
                 importName: rootImportName,
@@ -289,8 +298,11 @@ actor PythonPackageManager {
                 }
                 throw RuntimeCoreError.runtimeFailure("This package depends on a native extension that cannot be installed dynamically on iOS.")
             }
-            guard (wheel.size ?? 0) <= 100 * 1_024 * 1_024 else {
+            if let size = wheel.size, size > Self.maximumWheelSizeBytes {
                 throw RuntimeCoreError.runtimeFailure("The wheel for \(release.info.name) exceeds the 100 MB package limit.")
+            }
+            guard let expectedSha = wheel.digests?.sha256?.trimmingCharacters(in: .whitespacesAndNewlines).lowercased(), !expectedSha.isEmpty else {
+                throw RuntimeCoreError.runtimeFailure("The PyPI distribution for \(release.info.name) is missing required SHA-256 integrity metadata.")
             }
             let requirements = release.info.requiresDist ?? []
             let resolvedWheel = ResolvedWheel(
@@ -349,15 +361,38 @@ actor PythonPackageManager {
             throw RuntimeCoreError.runtimeFailure("PyPI wheel download failed.")
         }
         try validatePyPIURL(finalURL)
+
         let data = try Data(contentsOf: temporaryURL, options: .mappedIfSafe)
-        let digest = SHA256.hash(data: data).map { String(format: "%02x", $0) }.joined()
-        if let expected = distribution.digests?.sha256?.lowercased(), !expected.isEmpty {
-            guard digest == expected else {
-                throw RuntimeCoreError.runtimeFailure("The downloaded wheel failed SHA-256 verification.")
+        let actualByteCount = Int64(data.count)
+
+        guard actualByteCount <= Self.maximumWheelSizeBytes else {
+            throw RuntimeCoreError.runtimeFailure("The downloaded wheel exceeds the 100 MB package limit (\(actualByteCount) bytes).")
+        }
+
+        if let expectedSize = distribution.size {
+            guard expectedSize >= 0 else {
+                throw RuntimeCoreError.runtimeFailure("PyPI distribution has invalid negative size metadata.")
+            }
+            guard actualByteCount == expectedSize else {
+                throw RuntimeCoreError.runtimeFailure("The downloaded wheel size (\(actualByteCount) bytes) does not match PyPI metadata size (\(expectedSize) bytes).")
             }
         }
+
+        guard let expectedDigest = distribution.digests?.sha256?.trimmingCharacters(in: .whitespacesAndNewlines).lowercased(),
+              !expectedDigest.isEmpty else {
+            throw RuntimeCoreError.runtimeFailure("The PyPI distribution for '\(distribution.filename)' is missing required SHA-256 integrity metadata.")
+        }
+        guard expectedDigest.count == 64, expectedDigest.allSatisfy({ $0.isHexDigit }) else {
+            throw RuntimeCoreError.runtimeFailure("The PyPI distribution for '\(distribution.filename)' has an invalid SHA-256 digest format: '\(expectedDigest)'.")
+        }
+
+        let computedDigest = SHA256.hash(data: data).map { String(format: "%02x", $0) }.joined()
+        guard computedDigest == expectedDigest else {
+            throw RuntimeCoreError.runtimeFailure("The downloaded wheel failed SHA-256 verification. Expected: \(expectedDigest), got: \(computedDigest).")
+        }
+
         try data.write(to: destination, options: [.atomic, .completeFileProtection])
-        return digest
+        return computedDigest
     }
 
     private func validatePyPIURL(_ url: URL) throws {
@@ -443,14 +478,18 @@ actor PythonPackageManager {
         return try await python.execute(RuntimeExecutionRequest(source: source, workspace: workspace))
     }
 
-    private func isUniversalWheel(_ distribution: PyPIProject.Distribution) -> Bool {
-        guard distribution.packagetype == "bdist_wheel" else { return false }
-        let stem = distribution.filename.lowercased().dropLast(distribution.filename.lowercased().hasSuffix(".whl") ? 4 : 0)
+    static func isUniversalWheel(filename: String, packagetype: String? = "bdist_wheel") -> Bool {
+        guard packagetype == "bdist_wheel" else { return false }
+        let stem = filename.lowercased().dropLast(filename.lowercased().hasSuffix(".whl") ? 4 : 0)
         let tags = stem.split(separator: "-").suffix(3)
         guard tags.count == 3 else { return false }
         let pythonTags = tags[tags.startIndex].split(separator: ".")
         let isPython3Compatible = pythonTags.contains { $0 == "py3" || $0.hasPrefix("py3") }
         return isPython3Compatible && tags[tags.index(after: tags.startIndex)] == "none" && tags.last == "any"
+    }
+
+    private func isUniversalWheel(_ distribution: PyPIProject.Distribution) -> Bool {
+        Self.isUniversalWheel(filename: distribution.filename, packagetype: distribution.packagetype)
     }
 
     private func parseRequirement(_ raw: String) -> Requirement? {
