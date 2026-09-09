@@ -31,6 +31,7 @@ final class HanlinScriptUIProductionE2ETests: XCTestCase {
         // Assert exact preview metadata from production UI
         let installButton = app.buttons["hanlin-package-install"].firstMatch
         XCTAssertTrue(installButton.waitForExistence(timeout: 20), "Install button did not appear in preview")
+        XCTAssertFalse(installButton.isEnabled, "Install button was prematurely enabled before capability approval")
 
         let titlePredicate = NSPredicate(format: "label CONTAINS 'Hanlin ScriptUI Valid' OR value CONTAINS 'Hanlin ScriptUI Valid'")
         XCTAssertTrue(app.descendants(matching: .any).matching(titlePredicate).firstMatch.waitForExistence(timeout: 10), "Preview title missing")
@@ -47,7 +48,6 @@ final class HanlinScriptUIProductionE2ETests: XCTestCase {
             networkToggle = app.switches["network"].firstMatch
         }
         XCTAssertTrue(networkToggle.waitForExistence(timeout: 10), "Network capability approval toggle was not rendered in preview")
-        XCTAssertFalse(installButton.isEnabled, "Install button was prematurely enabled before capability approval")
 
         let approveAllButton = app.buttons["hanlin-approve-all-capabilities"].firstMatch
         if approveAllButton.waitForExistence(timeout: 3) && approveAllButton.isHittable {
@@ -59,13 +59,14 @@ final class HanlinScriptUIProductionE2ETests: XCTestCase {
             }
         }
         _ = waitUntil(timeout: 5) { (networkToggle.value as? String) == "1" }
-        if !installButton.isHittable {
+        if !installButton.exists || !installButton.isHittable {
             app.swipeDown()
         }
+        XCTAssertTrue(installButton.waitForExistence(timeout: 5), "Install button did not reappear after scrolling")
         XCTAssertTrue(waitUntil(timeout: 8) { installButton.isEnabled }, "Install button remained disabled after approving capability")
 
         // 2. Install
-        if !installButton.isHittable {
+        if !installButton.exists || !installButton.isHittable {
             app.swipeDown()
         }
         installButton.tap()
@@ -398,16 +399,17 @@ final class HanlinScriptUIProductionE2ETests: XCTestCase {
         let approveAllButton = app.buttons["hanlin-approve-all-capabilities"].firstMatch
         if approveAllButton.waitForExistence(timeout: 2) && approveAllButton.isHittable {
             approveAllButton.tap()
-        } else if networkToggle.waitForExistence(timeout: 5) && !installButton.isEnabled {
+        } else if networkToggle.waitForExistence(timeout: 5) {
             networkToggle.tap()
             if (networkToggle.value as? String) != "1" {
                 networkToggle.coordinate(withNormalizedOffset: CGVector(dx: 0.9, dy: 0.5)).tap()
             }
             _ = waitUntil(timeout: 5) { (networkToggle.value as? String) == "1" }
         }
-        if !installButton.isHittable {
+        if !installButton.exists || !installButton.isHittable {
             app.swipeDown()
         }
+        XCTAssertTrue(installButton.waitForExistence(timeout: 5))
         XCTAssertTrue(waitUntil(timeout: 8) { installButton.isEnabled })
         installButton.tap()
         _ = waitUntil(timeout: 30) { !installButton.exists }
