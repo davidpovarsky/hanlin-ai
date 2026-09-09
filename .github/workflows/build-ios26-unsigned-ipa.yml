@@ -89,6 +89,7 @@ jobs:
       run_simulator_scripting_acceptance: ${{ steps.plan.outputs.run_simulator_scripting_acceptance }}
       run_simulator_targeted_ui: ${{ steps.plan.outputs.run_simulator_targeted_ui }}
       simulator_ui_filter: ${{ steps.plan.outputs.simulator_ui_filter }}
+      stage_scriptui_fixtures: ${{ steps.plan.outputs.stage_scriptui_fixtures }}
       simulator_configuration: ${{ steps.plan.outputs.simulator_configuration }}
       simulator_build_for_testing_args: ${{ steps.plan.outputs.simulator_build_for_testing_args }}
       run_simulator_shell_acceptance: ${{ steps.plan.outputs.run_simulator_shell_acceptance }}
@@ -1344,6 +1345,7 @@ jobs:
       RUN_SIMULATOR_SCRIPTING_ACCEPTANCE: ${{ needs.plan-affected-validation.outputs.run_simulator_scripting_acceptance }}
       RUN_SIMULATOR_TARGETED_UI: ${{ needs.plan-affected-validation.outputs.run_simulator_targeted_ui }}
       SIMULATOR_UI_FILTER: ${{ needs.plan-affected-validation.outputs.simulator_ui_filter }}
+      STAGE_SCRIPTUI_FIXTURES: ${{ needs.plan-affected-validation.outputs.stage_scriptui_fixtures }}
       SIMULATOR_BUILD_FOR_TESTING_ARGS: ${{ needs.plan-affected-validation.outputs.simulator_build_for_testing_args }}
       RUN_SIMULATOR_SHELL_ACCEPTANCE: ${{ needs.plan-affected-validation.outputs.run_simulator_shell_acceptance }}
       RUN_SIMULATOR_MCP_ACCEPTANCE: ${{ needs.plan-affected-validation.outputs.run_simulator_mcp_acceptance }}
@@ -1789,6 +1791,16 @@ jobs:
             } | tee "$LOG_DIR/08-nativescript-files-staging.log"
           else
             printf '%s\n' "NativeScript fixture staging skipped (NativeScript not affected)." > "$LOG_DIR/08-nativescript-files-staging-skipped.txt"
+          fi
+
+          if [ "$STAGE_SCRIPTUI_FIXTURES" = "true" ] || [ "$RUN_FULL_VALIDATION" = "true" ] || [[ "$SIMULATOR_UI_FILTER" == *"HanlinScriptUIProductionE2ETests"* ]]; then
+            python3 Scripts/CI/stage_scriptui_fixtures.py \
+              --simulator-udid "$SIMULATOR_UDID" \
+              --app-path "$APP_PATH" \
+              --bundle-id "$BUNDLE_ID" \
+              --log-file "$LOG_DIR/08-scriptui-files-staging.log"
+          else
+            printf '%s\n' "ScriptUI fixture staging skipped (ScriptUI not affected)." > "$LOG_DIR/08-scriptui-files-staging-skipped.txt"
           fi
 
       - name: Run simulator test suite

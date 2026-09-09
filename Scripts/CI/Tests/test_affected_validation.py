@@ -471,7 +471,35 @@ class AffectedValidationPlannerTests(unittest.TestCase):
             )
         self.assertIn("no specific UI test suite mapping was found", str(ctx.exception))
 
+    # ScriptUI Fixture Staging Dependency Selection Tests
+    def test_scriptui_test_file_change_selects_fixture_staging(self) -> None:
+        changed = ["AI_HLYUITests/HanlinScriptUIProductionE2ETests.swift"]
+        plan = self.plan_files(changed)
+        self.assertTrue(plan.step_outputs["run_simulator_targeted_ui"])
+        self.assertIn("AI_HLYUITests/HanlinScriptUIProductionE2ETests", plan.step_outputs["simulator_ui_filter"])
+        self.assertTrue(plan.step_outputs["stage_scriptui_fixtures"])
+        self.assertFalse(plan.step_outputs["run_nativescript_dependencies"])
+        self.assertIn("| **ScriptUI Fixture Staging** | `true` |", plan.render_markdown_summary())
+
+    def test_scriptui_fixture_archive_change_selects_fixture_staging(self) -> None:
+        changed = ["AI_HLYUITests/Fixtures/HanlinScriptUIValid.scripting"]
+        plan = self.plan_files(changed)
+        self.assertTrue(plan.step_outputs["stage_scriptui_fixtures"])
+        self.assertIn("AI_HLYUITests/HanlinScriptUIProductionE2ETests", plan.step_outputs["simulator_ui_filter"])
+
+    def test_unrelated_ui_change_skips_scriptui_fixture_staging(self) -> None:
+        changed = ["AI_HLY/Downstream/RuntimeCore/UI/NodePackagesView.swift"]
+        plan = self.plan_files(changed)
+        self.assertTrue(plan.step_outputs["run_simulator_targeted_ui"])
+        self.assertFalse(plan.step_outputs["stage_scriptui_fixtures"])
+        self.assertIn("| **ScriptUI Fixture Staging** | `false` |", plan.render_markdown_summary())
+
+    def test_full_validation_enables_scriptui_fixture_staging(self) -> None:
+        plan = self.plan_files(["README.md"], full_validation=True)
+        self.assertTrue(plan.step_outputs["stage_scriptui_fixtures"])
+
 
 if __name__ == "__main__":
     unittest.main()
+
 

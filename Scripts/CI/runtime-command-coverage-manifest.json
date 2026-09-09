@@ -839,7 +839,7 @@
       "capability_requirement": null,
       "async_behavior": true,
       "cancellation_support": false,
-      "existing_acceptance_test": "AI_HLYTests/HanlinScriptingRuntimeTests.swift#testProductionPackageInstallAndExecutionLifecycle",
+      "existing_acceptance_test": "AI_HLYTests/HanlinScriptingRuntimeTests.swift#launchActiveApplicationIDIsNoOp",
       "new_acceptance_test": "AI_HLYUITests/HanlinScriptUIProductionE2ETests.swift#testScriptUILaunchReEntrancyAndIsolation",
       "justified_exclusion": null
     },

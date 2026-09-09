@@ -1,15 +1,21 @@
 #!/usr/bin/env python3
 """Generate deterministic .scripting fixture archives for ScriptUI acceptance tests."""
 
-import base64
 import io
 import json
 from pathlib import Path
+from typing import List, Optional
 import zipfile
 
 ROOT = Path(__file__).resolve().parents[2]
-FIXTURES_DIR = ROOT / "AI_HLYUITests" / "Fixtures"
-FIXTURES_DIR.mkdir(parents=True, exist_ok=True)
+DEFAULT_FIXTURES_DIR = ROOT / "AI_HLYUITests" / "Fixtures"
+
+FIXTURE_NAMES = [
+    "HanlinScriptUIValid.scripting",
+    "HanlinScriptUIMalformed.scripting",
+    "HanlinScriptUIAppB.scripting",
+]
+
 
 def make_zip(files: dict[str, str]) -> bytes:
     buf = io.BytesIO()
@@ -20,6 +26,7 @@ def make_zip(files: dict[str, str]) -> bytes:
             info.external_attr = 0o644 << 16
             zf.writestr(info, content.encode("utf-8"))
     return buf.getvalue()
+
 
 # Valid ScriptUI App with network capability (fetch) and interactive state
 VALID_MANIFEST = json.dumps({
@@ -70,14 +77,24 @@ function AppB() {
 Navigation.present({ element: <AppB /> })
 """
 
-valid_zip = make_zip({"script.json": VALID_MANIFEST, "index.tsx": VALID_CODE})
-malformed_zip = make_zip({"script.json": MALFORMED_MANIFEST})
-app_b_zip = make_zip({"script.json": APP_B_MANIFEST, "index.tsx": APP_B_CODE})
 
-(FIXTURES_DIR / "HanlinScriptUIValid.scripting").write_bytes(valid_zip)
-(FIXTURES_DIR / "HanlinScriptUIMalformed.scripting").write_bytes(malformed_zip)
-(FIXTURES_DIR / "HanlinScriptUIAppB.scripting").write_bytes(app_b_zip)
+def create_fixtures(fixtures_dir: Optional[Path] = None) -> List[str]:
+    out_dir = fixtures_dir or DEFAULT_FIXTURES_DIR
+    out_dir.mkdir(parents=True, exist_ok=True)
 
-print("Wrote HanlinScriptUIValid.scripting:", len(valid_zip), "bytes")
-print("Wrote HanlinScriptUIMalformed.scripting:", len(malformed_zip), "bytes")
-print("Wrote HanlinScriptUIAppB.scripting:", len(app_b_zip), "bytes")
+    valid_zip = make_zip({"script.json": VALID_MANIFEST, "index.tsx": VALID_CODE})
+    malformed_zip = make_zip({"script.json": MALFORMED_MANIFEST})
+    app_b_zip = make_zip({"script.json": APP_B_MANIFEST, "index.tsx": APP_B_CODE})
+
+    (out_dir / "HanlinScriptUIValid.scripting").write_bytes(valid_zip)
+    (out_dir / "HanlinScriptUIMalformed.scripting").write_bytes(malformed_zip)
+    (out_dir / "HanlinScriptUIAppB.scripting").write_bytes(app_b_zip)
+
+    return FIXTURE_NAMES
+
+
+if __name__ == "__main__":
+    generated = create_fixtures()
+    for name in generated:
+        p = DEFAULT_FIXTURES_DIR / name
+        print(f"Wrote {name}: {p.stat().st_size} bytes")

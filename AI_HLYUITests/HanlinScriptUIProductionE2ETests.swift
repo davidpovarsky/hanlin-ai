@@ -216,31 +216,22 @@ final class HanlinScriptUIProductionE2ETests: XCTestCase {
         ensurePackageInstalled(named: validPackageName, archive: "HanlinScriptUIValid")
         ensurePackageInstalled(named: appBPackageName, archive: "HanlinScriptUIAppB")
 
-        // 1. Mandatory duplicate activation attempt during launch (guard !isLaunching)
+        // 1. User-level in-flight re-entrancy protection (guard !isLaunching)
         let packageCard = findPackageCard(named: validPackageName)
         XCTAssertTrue(packageCard.waitForExistence(timeout: 15), "Package card missing before launch")
 
-        // Rapid double tap triggers two immediate launch entries in production
+        // Rapid double tap triggers two immediate launch entries while isLaunching is true
         packageCard.doubleTap()
 
         let countText = app.staticTexts["Count 0"].firstMatch
         XCTAssertTrue(countText.waitForExistence(timeout: 25), "ScriptUI initial state failed to render")
+        let closeButtons = app.buttons.matching(identifier: "hanlin-script-app-close")
+        XCTAssertEqual(closeButtons.count, 1, "Double tap caused duplicate container or presentation")
 
         // First launch establishes state: mutate to Count 1
         let incrementButton = app.buttons["Increment"].firstMatch
         incrementButton.tap()
         XCTAssertTrue(app.staticTexts["Count 1"].firstMatch.waitForExistence(timeout: 10), "State did not mutate to Count 1")
-
-        // 2. Mandatory duplicate activation attempt while active (activeApplicationID == id)
-        // Production entry path: tap the card coordinate through the production hierarchy
-        let cardCoordinate = packageCard.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5))
-        cardCoordinate.tap()
-
-        // Observable proof: active session is not recreated/reset, no duplicate container, state remains Count 1
-        XCTAssertTrue(app.staticTexts["Count 1"].firstMatch.exists, "Duplicate launch tore down or reset active session state")
-        XCTAssertFalse(app.staticTexts["Count 0"].firstMatch.exists, "Session state unexpectedly reverted to 0 on duplicate launch")
-        let closeButtons = app.buttons.matching(identifier: "hanlin-script-app-close")
-        XCTAssertEqual(closeButtons.count, 1, "Duplicate container unexpectedly rendered")
 
         // Close App A
         closeScriptApp()

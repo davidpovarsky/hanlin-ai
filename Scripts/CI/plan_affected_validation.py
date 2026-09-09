@@ -386,6 +386,7 @@ class ValidationPlan:
             f"| **Simulator UI Filter** | `{self.step_outputs.get('simulator_ui_filter') or 'None'}` |",
             f"| **Simulator Configuration** | `{self.step_outputs.get('simulator_configuration', 'Debug')}` |",
             f"| **Simulator Build Args** | `{self.step_outputs.get('simulator_build_for_testing_args') or 'None'}` |",
+            f"| **ScriptUI Fixture Staging** | `{str(self.step_outputs.get('stage_scriptui_fixtures', False)).lower()}` |",
         ]
 
         if self.explicit_overrides:
@@ -663,6 +664,11 @@ def plan_affected_validation(
     affected_ui_suites = pruned_ui_suites
 
     simulator_ui_filter_value = ",".join(sorted(affected_ui_suites))
+    requires_scriptui_fixtures = (
+        full_validation
+        or ("AI_HLYUITests/HanlinScriptUIProductionE2ETests" in affected_ui_suites)
+        or ("HanlinScriptUIProductionE2ETests" in simulator_ui_filter_value)
+    )
 
     # 5. Formulate step outputs
     step_outputs: Dict[str, Any] = {
@@ -684,6 +690,7 @@ def plan_affected_validation(
         "run_simulator_scripting_acceptance": False,
         "run_simulator_targeted_ui": False,
         "simulator_ui_filter": simulator_ui_filter_value,
+        "stage_scriptui_fixtures": bool(requires_scriptui_fixtures),
         "run_simulator_shell_acceptance": False,
         "run_simulator_mcp_acceptance": False,
         "run_simulator_smoke_launch": False,

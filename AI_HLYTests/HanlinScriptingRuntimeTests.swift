@@ -313,6 +313,58 @@ struct HanlinScriptPackageProductionE2ETests {
         #expect(restored.activeApplicationModel?.root.properties["text"] == .string("Second Production Package Passed"))
         restored.dismissActiveApplication()
     }
+
+    @MainActor
+    @Test("Re-entrant launch on active application ID is a no-op preserving session and model identity")
+    func launchActiveApplicationIDIsNoOp() async throws {
+        let tempDir = FileManager.default.temporaryDirectory
+            .appending(path: "HanlinReEntrancyTest-\(UUID().uuidString)", directoryHint: .isDirectory)
+        try FileManager.default.createDirectory(at: tempDir, withIntermediateDirectories: true)
+        defer { try? FileManager.default.removeItem(at: tempDir) }
+
+        let source = tempDir.appending(path: "Source", directoryHint: .isDirectory)
+        try FileManager.default.createDirectory(at: source, withIntermediateDirectories: true)
+        try Data(#"{"name":"ReEntrancy Test App","version":"1.0.0","entry":"index.tsx","runInApp":true}"#.utf8)
+            .write(to: source.appending(path: "script.json"), options: .atomic)
+        try Data(#"""
+        import { Navigation, Text } from "scripting"
+        Navigation.present({ element: <Text>Active Session Model</Text> })
+        """#.utf8).write(to: source.appending(path: "index.tsx"), options: .atomic)
+        let archive = tempDir.appending(path: "reentrancy.scripting", directoryHint: .notDirectory)
+        try HanlinScriptingPackageExporter().exportPackage(at: source, to: archive)
+
+        let platformRoot = tempDir.appending(path: "Platform", directoryHint: .isDirectory)
+        let platform = HanlinScriptingPlatform(rootOverride: platformRoot)
+
+        await platform.importPackage(from: archive)
+        _ = try #require(platform.preview)
+        await platform.installPreview()
+        let installed = try #require(platform.installedPackages.first)
+        let id = installed.record.installedPackageID
+
+        // 1. Initial Launch: establishes activeApplicationID, applicationSession, and activeApplicationModel
+        await platform.launch(id)
+        #expect(platform.activeApplicationID == id)
+        let initialSession = try #require(platform.applicationSession)
+        let initialModel = try #require(platform.activeApplicationModel)
+        #expect(initialModel.root.properties["text"] == .string("Active Session Model"))
+
+        // 2. Call launch(id) again while the package is already active
+        // This exercises: if activeApplicationID == id { return }
+        await platform.launch(id)
+
+        // 3. Verify identical session and model object identity (no recreation or reset)
+        #expect(platform.activeApplicationID == id)
+        #expect(platform.applicationSession === initialSession)
+        #expect(platform.activeApplicationModel === initialModel)
+        #expect(platform.activity == .idle)
+
+        // 4. Dismiss cleanly
+        platform.dismissActiveApplication()
+        #expect(platform.activeApplicationID == nil)
+        #expect(platform.applicationSession == nil)
+        #expect(platform.activeApplicationModel == nil)
+    }
 }
 
 @Suite("Physical iPad Script App restart regression", .serialized)

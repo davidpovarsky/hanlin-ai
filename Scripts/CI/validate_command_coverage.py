@@ -6,6 +6,19 @@ capability, lifecycle operation, and tool authority operation in the authoritati
 source code has a registered entry in the versioned coverage manifest
 (runtime-command-coverage-manifest.json).
 
+Verification Methodology:
+1. Exhaustively Source-Derived Domains:
+   - Shell Commands (23 ops): mechanically extracted from `linkedCommands` in `IOSSystemRunner.swift`.
+   - ScriptUI Commands (14 ops): mechanically extracted from `HanlinScriptUICommand` in `HanlinScriptUIContracts.swift`.
+   - Inferred Capabilities (11 ops): mechanically extracted from `inferredCapability` in `HanlinScriptAnalyzer.swift`.
+   Adding any new case/command in these sources without a corresponding manifest entry fails CI.
+
+2. Maintained Fixed Source-Contract Domains:
+   - App Lifecycle (8 ops): verified against authoritative method declarations in `HanlinScriptingPlatform.swift`.
+   - Tool Authority (2 ops): verified against authoritative resolve/invoke declarations in `HanlinCanonicalToolAuthority.swift` and `AssistantToolBridge.swift`.
+   *Lifecycle and tool authority verification is a maintained fixed contract check validating that production
+    methods exist and adhere to expected signatures, not automatic discovery of arbitrary future methods.*
+
 Fails with a nonzero exit code if any canonical command is unmapped or missing tests.
 """
 
@@ -28,6 +41,7 @@ SCRIPTING_PLATFORM_PATH = ROOT / "AI_HLY" / "Downstream" / "ScriptingPlatform" /
 TOOL_AUTHORITY_PATH = ROOT / "AI_HLY" / "Downstream" / "CanonicalTools" / "HanlinCanonicalToolAuthority.swift"
 ASSISTANT_TOOL_BRIDGE_PATH = ROOT / "AI_HLY" / "Downstream" / "MCP" / "ToolIntegration" / "AssistantToolBridge.swift"
 
+# Maintained fixed source contracts for application lifecycle operations
 LIFECYCLE_OPERATION_METHODS: dict[str, str] = {
     "app.import_package": r"func\s+importPackage\(",
     "app.install_preview": r"func\s+installPreview\(",
@@ -39,6 +53,7 @@ LIFECYCLE_OPERATION_METHODS: dict[str, str] = {
     "app.uninstall": r"func\s+uninstall\(",
 }
 
+# Maintained fixed source contracts for tool authority operations
 TOOL_AUTHORITY_OPERATION_METHODS: dict[str, tuple[Path, str]] = {
     "tool_authority.resolve": (TOOL_AUTHORITY_PATH, r"func\s+resolution\(\s*alias:"),
     "tool_authority.invoke": (ASSISTANT_TOOL_BRIDGE_PATH, r"func\s+execute\(\s*alias:"),
@@ -194,6 +209,19 @@ def generate_markdown_report(manifest: dict[str, Any]) -> str:
         f"**Schema Version:** {manifest.get('schema_version', 1)}  ",
         f"**Last Audited:** {manifest.get('last_audited', '2026-09-09')}  ",
         f"**Total Registered Operations:** {len(manifest.get('operations', []))} (23 Shell, 14 ScriptUI, 11 Capabilities, 8 Lifecycle, 2 Tool Authority)  ",
+        "",
+        "### Verification Methodology & Truthfulness Guard",
+        "",
+        "- **Exhaustively Source-Derived Domains (48 operations):**",
+        "  - **Shell Commands (23 ops):** Automatically enumerated from `IOSSystemRunner.linkedCommands` set.",
+        "  - **ScriptUI Commands (14 ops):** Automatically enumerated from `HanlinScriptUICommand` enum cases in `HanlinScriptUIContracts.swift`.",
+        "  - **Inferred Capabilities (11 ops):** Automatically enumerated from `inferredCapability(for:)` mapping in `HanlinScriptAnalyzer.swift`.",
+        "  *Adding any new command or enum case in these domains without a corresponding manifest entry fails CI.*",
+        "",
+        "- **Maintained Fixed Source-Contract Domains (10 operations):**",
+        "  - **Application Lifecycle (8 ops):** Verified against public method signatures in `HanlinScriptingPlatform.swift` (`importPackage`, `installPreview`, `discardPreview`, `launch`, `dismissActiveApplication`, `setEnabled`, `setCapabilityGranted`, `uninstall`).",
+        "  - **Canonical Tool Authority (2 ops):** Verified against resolve/execute method signatures in `HanlinCanonicalToolAuthority.swift` and `AssistantToolBridge.swift`.",
+        "  *Note on truthfulness: Lifecycle and Tool Authority completeness is verified via a maintained fixed source-contract check that guarantees production method existence, rather than runtime automatic discovery of arbitrary future public methods.*",
         "",
         "| Canonical ID | Public Name | Owner / Runtime | Capability | State Mutation | Existing Acceptance | New Acceptance |",
         "|---|---|---|---|---|---|---|"

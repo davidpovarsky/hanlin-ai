@@ -117,7 +117,7 @@ APP_LIFECYCLE_OPS = [
      "AI_HLYUITests/HanlinScriptUIProductionE2ETests.swift#testScriptUIDiscardPreviewLifecycle", None),
     ("app.launch", "Launch Installed Application", "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
      "id: HanlinInstalledPackageID", "Void", True, None, True, False,
-     "AI_HLYTests/HanlinScriptingRuntimeTests.swift#testProductionPackageInstallAndExecutionLifecycle",
+     "AI_HLYTests/HanlinScriptingRuntimeTests.swift#launchActiveApplicationIDIsNoOp",
      "AI_HLYUITests/HanlinScriptUIProductionE2ETests.swift#testScriptUILaunchReEntrancyAndIsolation", None),
     ("app.dismiss_active", "Dismiss Active Application", "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
      "Void", "Void", True, None, False, False,

@@ -4,13 +4,26 @@
 **Last Audited:** 2026-09-09  
 **Total Registered Operations:** 58 (23 Shell, 14 ScriptUI, 11 Capabilities, 8 Lifecycle, 2 Tool Authority)  
 
+### Verification Methodology & Truthfulness Guard
+
+- **Exhaustively Source-Derived Domains (48 operations):**
+  - **Shell Commands (23 ops):** Automatically enumerated from `IOSSystemRunner.linkedCommands` set.
+  - **ScriptUI Commands (14 ops):** Automatically enumerated from `HanlinScriptUICommand` enum cases in `HanlinScriptUIContracts.swift`.
+  - **Inferred Capabilities (11 ops):** Automatically enumerated from `inferredCapability(for:)` mapping in `HanlinScriptAnalyzer.swift`.
+  *Adding any new command or enum case in these domains without a corresponding manifest entry fails CI.*
+
+- **Maintained Fixed Source-Contract Domains (10 operations):**
+  - **Application Lifecycle (8 ops):** Verified against public method signatures in `HanlinScriptingPlatform.swift` (`importPackage`, `installPreview`, `discardPreview`, `launch`, `dismissActiveApplication`, `setEnabled`, `setCapabilityGranted`, `uninstall`).
+  - **Canonical Tool Authority (2 ops):** Verified against resolve/execute method signatures in `HanlinCanonicalToolAuthority.swift` and `AssistantToolBridge.swift`.
+  *Note on truthfulness: Lifecycle and Tool Authority completeness is verified via a maintained fixed source-contract check that guarantees production method existence, rather than runtime automatic discovery of arbitrary future public methods.*
+
 | Canonical ID | Public Name | Owner / Runtime | Capability | State Mutation | Existing Acceptance | New Acceptance |
 |---|---|---|---|---|---|---|
 | `app.discard_preview` | Discard Preview | HanlinScriptingPlatform | None | No | `Packages/HanlinPlatform/Tests/HanlinScriptCompilerTests/HanlinPackageCenterTests.swift` | `AI_HLYUITests/HanlinScriptUIProductionE2ETests.swift#testScriptUIDiscardPreviewLifecycle` |
 | `app.dismiss_active` | Dismiss Active Application | HanlinScriptingPlatform | None | Yes | `AI_HLYTests/HanlinScriptingRuntimeTests.swift#testProductionPackageInstallAndExecutionLifecycle` | `AI_HLYUITests/HanlinScriptUIProductionE2ETests.swift#testProductionScriptUIUserJourneyAndLifecycle` |
 | `app.import_package` | Import Package | HanlinScriptingPlatform | None | Yes | `Packages/HanlinPlatform/Tests/HanlinScriptCompilerTests/HanlinPackageCenterTests.swift` | `AI_HLYUITests/HanlinScriptUIProductionE2ETests.swift#testProductionScriptUIUserJourneyAndLifecycle` |
 | `app.install_preview` | Install Preview | HanlinScriptingPlatform | None | Yes | `AI_HLYTests/HanlinScriptingRuntimeTests.swift#testProductionPackageInstallAndExecutionLifecycle` | `AI_HLYUITests/HanlinScriptUIProductionE2ETests.swift#testProductionScriptUIUserJourneyAndLifecycle` |
-| `app.launch` | Launch Installed Application | HanlinScriptingPlatform | None | Yes | `AI_HLYTests/HanlinScriptingRuntimeTests.swift#testProductionPackageInstallAndExecutionLifecycle` | `AI_HLYUITests/HanlinScriptUIProductionE2ETests.swift#testScriptUILaunchReEntrancyAndIsolation` |
+| `app.launch` | Launch Installed Application | HanlinScriptingPlatform | None | Yes | `AI_HLYTests/HanlinScriptingRuntimeTests.swift#launchActiveApplicationIDIsNoOp` | `AI_HLYUITests/HanlinScriptUIProductionE2ETests.swift#testScriptUILaunchReEntrancyAndIsolation` |
 | `app.set_capability_granted` | Grant / Revoke Capability | HanlinScriptingPlatform | None | Yes | `Packages/HanlinPlatform/Tests/HanlinScriptStoreTests/HanlinAtomicScriptStoreTests.swift` | `AI_HLYUITests/HanlinScriptUIProductionE2ETests.swift#testProductionScriptUIUserJourneyAndLifecycle` |
 | `app.set_enabled` | Enable / Disable Package | HanlinScriptingPlatform | None | Yes | `Packages/HanlinPlatform/Tests/HanlinScriptStoreTests/HanlinAtomicScriptStoreTests.swift` | `AI_HLYUITests/HanlinScriptUIProductionE2ETests.swift#testProductionScriptUIUserJourneyAndLifecycle` |
 | `app.uninstall` | Uninstall Package | HanlinScriptingPlatform | None | Yes | `Packages/HanlinPlatform/Tests/HanlinScriptStoreTests/HanlinAtomicScriptStoreTests.swift` | `AI_HLYUITests/HanlinScriptUIProductionE2ETests.swift#testProductionScriptUIUserJourneyAndLifecycle` |
