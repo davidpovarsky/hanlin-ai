@@ -15,7 +15,8 @@ struct MainTabView: View {
         let environment = ProcessInfo.processInfo.environment
         if environment["HANLIN_RUNTIME_INSTALL_ACCEPTANCE"] != nil { return 5 }
         return environment["HANLIN_SCRIPT_RESTART_REPRO_PHASE"] != nil
-            || environment["HANLIN_NATIVESCRIPT_E2E"] != nil ? 4 : 0
+            || environment["HANLIN_NATIVESCRIPT_E2E"] != nil
+            || environment["HANLIN_SCRIPTUI_E2E"] != nil ? 4 : 0
     }()
     @State private var hideTabBar: Bool = false
     
@@ -26,6 +27,7 @@ struct MainTabView: View {
             ListView()
                 .tabItem {
                     Label(String(localized: "列表"), systemImage: "list.bullet")
+                        .accessibilityIdentifier("hanlin-home-tab")
                 }
                 .tag(0)
             
@@ -34,6 +36,7 @@ struct MainTabView: View {
                 .toolbar(.hidden, for: .tabBar)
                 .tabItem {
                     Label(String(localized: "视觉"), systemImage: "eye")
+                        .accessibilityIdentifier("hanlin-vision-tab")
                 }
                 .tag(1)
             
@@ -41,6 +44,7 @@ struct MainTabView: View {
             KnowledgeListView()
                 .tabItem {
                     Label(String(localized: "知识库"), systemImage: "books.vertical")
+                        .accessibilityIdentifier("hanlin-knowledge-tab")
                 }
                 .tag(2)
             
@@ -48,6 +52,7 @@ struct MainTabView: View {
             ModelsView()
                 .tabItem {
                     Label(String(localized: "模型"), systemImage: "square.stack.3d.up")
+                        .accessibilityIdentifier("hanlin-models-tab")
                 }
                 .tag(3)
             

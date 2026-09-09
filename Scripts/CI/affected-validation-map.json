@@ -436,6 +436,46 @@
       ],
       "consumers": []
     },
+    "scripting_ui_test_files": {
+      "description": "Downstream ScriptUI and JavaScriptCore production E2E UI test suite",
+      "patterns": [
+        "AI_HLYUITests/HanlinScriptUIProductionE2ETests.swift",
+        "AI_HLYUITests/Fixtures/**"
+      ],
+      "direct_validation_groups": [
+        "simulator_targeted_ui"
+      ],
+      "ui_suites": [
+        "AI_HLYUITests/HanlinScriptUIProductionE2ETests"
+      ],
+      "consumers": []
+    },
+    "navigation_smoke_ui_test_files": {
+      "description": "Primary whole-app navigation smoke UI test suite",
+      "patterns": [
+        "AI_HLYUITests/HanlinPrimaryNavigationSmokeUITests.swift"
+      ],
+      "direct_validation_groups": [
+        "simulator_targeted_ui"
+      ],
+      "ui_suites": [
+        "AI_HLYUITests/HanlinPrimaryNavigationSmokeUITests"
+      ],
+      "consumers": []
+    },
+    "command_acceptance_ui_test_files": {
+      "description": "Runtime command and operations acceptance UI test suite",
+      "patterns": [
+        "AI_HLYUITests/HanlinRuntimeCommandAcceptanceUITests.swift"
+      ],
+      "direct_validation_groups": [
+        "simulator_targeted_ui"
+      ],
+      "ui_suites": [
+        "AI_HLYUITests/HanlinRuntimeCommandAcceptanceUITests"
+      ],
+      "consumers": []
+    },
     "project_packaging": {
       "description": "Xcode project structure, build settings, entitlements, and configs",
       "patterns": [
