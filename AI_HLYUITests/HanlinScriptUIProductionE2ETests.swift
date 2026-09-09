@@ -53,10 +53,7 @@ final class HanlinScriptUIProductionE2ETests: XCTestCase {
         if approveAllButton.waitForExistence(timeout: 3) && approveAllButton.isHittable {
             approveAllButton.tap()
         } else {
-            networkToggle.tap()
-            if (networkToggle.value as? String) != "1" {
-                networkToggle.coordinate(withNormalizedOffset: CGVector(dx: 0.9, dy: 0.5)).tap()
-            }
+            toggleSwitch(networkToggle, targetValue: "1")
         }
         _ = waitUntil(timeout: 5) { (networkToggle.value as? String) == "1" }
         if !installButton.exists || !installButton.isHittable {
@@ -110,7 +107,7 @@ final class HanlinScriptUIProductionE2ETests: XCTestCase {
         XCTAssertEqual(networkPermission.value as? String, "1", "Network capability was not granted")
 
         // Revoke network capability
-        networkPermission.tap()
+        toggleSwitch(networkPermission, targetValue: "0")
         XCTAssertTrue(waitUntil(timeout: 5) { (networkPermission.value as? String) == "0" }, "Failed to revoke network capability")
         closeDetails()
 
@@ -124,7 +121,7 @@ final class HanlinScriptUIProductionE2ETests: XCTestCase {
         openPackageDetails(named: validPackageName)
         let regrantToggle = app.switches["network"].firstMatch
         XCTAssertTrue(regrantToggle.waitForExistence(timeout: 10))
-        regrantToggle.tap()
+        toggleSwitch(regrantToggle, targetValue: "1")
         XCTAssertTrue(waitUntil(timeout: 5) { (regrantToggle.value as? String) == "1" }, "Failed to re-grant network capability")
         closeDetails()
 
@@ -135,7 +132,7 @@ final class HanlinScriptUIProductionE2ETests: XCTestCase {
         XCTAssertEqual(enabledToggle.value as? String, "1", "Package was not initially enabled")
 
         // Disable package
-        enabledToggle.tap()
+        toggleSwitch(enabledToggle, targetValue: "0")
         XCTAssertTrue(waitUntil(timeout: 5) { (enabledToggle.value as? String) == "0" }, "Package failed to disable")
         closeDetails()
 
@@ -149,7 +146,7 @@ final class HanlinScriptUIProductionE2ETests: XCTestCase {
         openPackageDetails(named: validPackageName)
         let reenableToggle = app.switches["Enabled"].firstMatch
         XCTAssertTrue(reenableToggle.waitForExistence(timeout: 10))
-        reenableToggle.tap()
+        toggleSwitch(reenableToggle, targetValue: "1")
         XCTAssertTrue(waitUntil(timeout: 5) { (reenableToggle.value as? String) == "1" }, "Package failed to re-enable")
         closeDetails()
 
@@ -176,6 +173,7 @@ final class HanlinScriptUIProductionE2ETests: XCTestCase {
 
     func testScriptUIDiscardPreviewLifecycle() throws {
         openApps()
+        ensurePackageUninstalled(named: validPackageName)
         ensureAppsAddButton(timeout: 15).tap()
         let importLink = app.buttons["hanlin-import-script-package"].firstMatch
         XCTAssertTrue(importLink.waitForExistence(timeout: 10))
@@ -400,11 +398,7 @@ final class HanlinScriptUIProductionE2ETests: XCTestCase {
         if approveAllButton.waitForExistence(timeout: 2) && approveAllButton.isHittable {
             approveAllButton.tap()
         } else if networkToggle.waitForExistence(timeout: 5) {
-            networkToggle.tap()
-            if (networkToggle.value as? String) != "1" {
-                networkToggle.coordinate(withNormalizedOffset: CGVector(dx: 0.9, dy: 0.5)).tap()
-            }
-            _ = waitUntil(timeout: 5) { (networkToggle.value as? String) == "1" }
+            toggleSwitch(networkToggle, targetValue: "1")
         }
         if !installButton.exists || !installButton.isHittable {
             app.swipeDown()
@@ -449,9 +443,35 @@ final class HanlinScriptUIProductionE2ETests: XCTestCase {
         let done = app.buttons["Done"].firstMatch
         if done.waitForExistence(timeout: 3) && done.isHittable {
             done.tap()
+            _ = waitUntil(timeout: 5) { !done.exists }
         } else {
             app.swipeDown()
+            _ = waitUntil(timeout: 5) { !done.exists }
         }
+    }
+
+    private func ensurePackageUninstalled(named packageName: String) {
+        let card = findPackageCard(named: packageName)
+        if card.waitForExistence(timeout: 2) {
+            openPackageDetails(named: packageName)
+            let uninstallButton = app.buttons["Uninstall"].firstMatch
+            if uninstallButton.waitForExistence(timeout: 5) {
+                uninstallButton.tap()
+                _ = waitUntil(timeout: 10) { !findPackageCard(named: packageName).exists }
+            } else {
+                closeDetails()
+            }
+        }
+    }
+
+    private func toggleSwitch(_ element: XCUIElement, targetValue: String) {
+        if (element.value as? String) == targetValue { return }
+        element.tap()
+        if waitUntil(timeout: 1, condition: { (element.value as? String) == targetValue }) {
+            return
+        }
+        element.coordinate(withNormalizedOffset: CGVector(dx: 0.9, dy: 0.5)).tap()
+        _ = waitUntil(timeout: 5) { (element.value as? String) == targetValue }
     }
 
     private func closeImportSurfaces() {
