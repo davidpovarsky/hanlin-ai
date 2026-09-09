@@ -14,13 +14,23 @@ final class HanlinPrimaryNavigationSmokeUITests: XCTestCase {
     func testWholeAppPrimaryNavigationSmoke() throws {
         // 1. Root: Home / Chat List (Tab 0)
         let homeTab = app.tabBars.buttons["hanlin-home-tab"].firstMatch
-        if homeTab.waitForExistence(timeout: 10) {
-            homeTab.tap()
-        }
+        XCTAssertTrue(homeTab.waitForExistence(timeout: 10), "Home tab button 'hanlin-home-tab' was absent")
+        homeTab.tap()
         let homeRoot = app.navigationBars["Hylic.AI"].firstMatch
         XCTAssertTrue(homeRoot.waitForExistence(timeout: 15), "Primary navigation to Home/ChatList failed: root navigation bar 'Hylic.AI' was absent")
 
-        // 2. Knowledge Base / Backpack (Tab 2)
+        // 2. Vision View (Tab 1)
+        let visionTab = app.tabBars.buttons["hanlin-vision-tab"].firstMatch
+        XCTAssertTrue(visionTab.waitForExistence(timeout: 10), "Vision tab button 'hanlin-vision-tab' was absent")
+        visionTab.tap()
+
+        let visionReturnPredicate = NSPredicate(format: "label CONTAINS 'chevron.down.circle.fill' OR identifier CONTAINS 'chevron.down.circle.fill'")
+        let visionReturnButton = app.descendants(matching: .any).matching(visionReturnPredicate).firstMatch
+        XCTAssertTrue(visionReturnButton.waitForExistence(timeout: 15), "Primary navigation to Vision failed: destination root button was absent")
+        visionReturnButton.tap()
+        XCTAssertTrue(homeRoot.waitForExistence(timeout: 15), "Return navigation from Vision to Home failed")
+
+        // 3. Knowledge Base / Backpack (Tab 2)
         let knowledgeTab = app.tabBars.buttons["hanlin-knowledge-tab"].firstMatch
         XCTAssertTrue(knowledgeTab.waitForExistence(timeout: 10), "Knowledge tab button 'hanlin-knowledge-tab' was absent")
         knowledgeTab.tap()

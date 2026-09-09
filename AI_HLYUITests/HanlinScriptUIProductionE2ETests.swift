@@ -7,6 +7,8 @@ final class HanlinScriptUIProductionE2ETests: XCTestCase {
     private let validPackageName = "Hanlin ScriptUI Valid"
     private let malformedPackageName = "Hanlin ScriptUI Malformed"
 
+    private let appBPackageName = "Hanlin ScriptUI App B"
+
     override func setUpWithError() throws {
         continueAfterFailure = false
         app.launchArguments += ["-AppleLanguages", "(en)", "-AppleLocale", "en_US"]
@@ -26,17 +28,21 @@ final class HanlinScriptUIProductionE2ETests: XCTestCase {
 
         selectArchive(named: "HanlinScriptUIValid")
 
+        // Assert exact preview metadata from production UI
+        XCTAssertTrue(app.staticTexts["Hanlin ScriptUI Valid"].firstMatch.waitForExistence(timeout: 15), "Preview title missing")
+        XCTAssertTrue(app.staticTexts["1.0.0"].firstMatch.waitForExistence(timeout: 5), "Preview version missing")
+        XCTAssertTrue(app.staticTexts["index.tsx"].firstMatch.waitForExistence(timeout: 5), "Preview entrypoint missing")
+
         let installButton = app.buttons["hanlin-package-install"].firstMatch
         XCTAssertTrue(installButton.waitForExistence(timeout: 20), "Install button did not appear in preview")
 
-        // Inferred capability check: 'fetch' in index.tsx requests 'network'
+        // Mandatory network capability check: 'fetch' in index.tsx requests 'network'
+        // Test MUST fail if approval UI is absent.
         let networkToggle = app.switches["network"].firstMatch
-        if networkToggle.waitForExistence(timeout: 5) {
-            // Install must be disabled before mandatory capability approval
-            XCTAssertFalse(installButton.isEnabled, "Install button was prematurely enabled before capability approval")
-            networkToggle.tap()
-            XCTAssertTrue(waitUntil(timeout: 5) { installButton.isEnabled }, "Install button remained disabled after approving capability")
-        }
+        XCTAssertTrue(networkToggle.waitForExistence(timeout: 10), "Network capability approval toggle was not rendered in preview")
+        XCTAssertFalse(installButton.isEnabled, "Install button was prematurely enabled before capability approval")
+        networkToggle.tap()
+        XCTAssertTrue(waitUntil(timeout: 5) { installButton.isEnabled }, "Install button remained disabled after approving capability")
 
         // 2. Install
         installButton.tap()
@@ -73,7 +79,32 @@ final class HanlinScriptUIProductionE2ETests: XCTestCase {
         XCTAssertTrue(app.staticTexts["Count 0"].firstMatch.waitForExistence(timeout: 25), "ScriptUI did not initialize cleanly on reopen after restart")
         closeScriptApp()
 
-        // 7. Enable / Disable Lifecycle
+        // 7. Capability Grant / Revoke Lifecycle (app.set_capability_granted)
+        openPackageDetails(named: validPackageName)
+        let networkPermission = app.switches["network"].firstMatch
+        XCTAssertTrue(networkPermission.waitForExistence(timeout: 10), "Network capability toggle missing in Package Details")
+        XCTAssertEqual(networkPermission.value as? String, "1", "Network capability was not granted")
+
+        // Revoke network capability
+        networkPermission.tap()
+        XCTAssertTrue(waitUntil(timeout: 5) { (networkPermission.value as? String) == "0" }, "Failed to revoke network capability")
+        closeDetails()
+
+        // Launch must be guarded when required capability is missing
+        let packageCardWithoutCap = findPackageCard(named: validPackageName)
+        packageCardWithoutCap.tap()
+        let closeBtnAfterDenied = app.buttons["hanlin-script-app-close"].firstMatch
+        XCTAssertFalse(closeBtnAfterDenied.waitForExistence(timeout: 3), "Package unexpectedly launched with revoked required capability")
+
+        // Re-grant network capability
+        openPackageDetails(named: validPackageName)
+        let regrantToggle = app.switches["network"].firstMatch
+        XCTAssertTrue(regrantToggle.waitForExistence(timeout: 10))
+        regrantToggle.tap()
+        XCTAssertTrue(waitUntil(timeout: 5) { (regrantToggle.value as? String) == "1" }, "Failed to re-grant network capability")
+        closeDetails()
+
+        // 8. Enable / Disable Lifecycle (app.set_enabled)
         openPackageDetails(named: validPackageName)
         let enabledToggle = app.switches["Enabled"].firstMatch
         XCTAssertTrue(enabledToggle.waitForExistence(timeout: 10), "Enabled toggle missing in Package Details")
@@ -103,7 +134,7 @@ final class HanlinScriptUIProductionE2ETests: XCTestCase {
         XCTAssertTrue(app.staticTexts["Count 0"].firstMatch.waitForExistence(timeout: 25), "Re-enabled package failed to open")
         closeScriptApp()
 
-        // 8. Uninstall & Post-Restart Absence
+        // 9. Uninstall & Post-Restart Absence (app.uninstall)
         openPackageDetails(named: validPackageName)
         let uninstallButton = app.buttons["Uninstall"].firstMatch
         XCTAssertTrue(uninstallButton.waitForExistence(timeout: 10), "Uninstall button missing")
@@ -117,6 +148,38 @@ final class HanlinScriptUIProductionE2ETests: XCTestCase {
         openApps()
 
         XCTAssertFalse(findPackageCard(named: validPackageName).waitForExistence(timeout: 5), "Uninstalled package reappeared after app relaunch")
+    }
+
+    func testScriptUIDiscardPreviewLifecycle() throws {
+        openApps()
+        ensureAppsAddButton(timeout: 15).tap()
+        let importLink = app.buttons["hanlin-import-script-package"].firstMatch
+        XCTAssertTrue(importLink.waitForExistence(timeout: 10))
+        importLink.tap()
+
+        selectArchive(named: "HanlinScriptUIValid")
+
+        // Reach valid Preview
+        XCTAssertTrue(app.staticTexts["Hanlin ScriptUI Valid"].firstMatch.waitForExistence(timeout: 15))
+        let discardButton = app.buttons["Discard"].firstMatch
+        XCTAssertTrue(discardButton.waitForExistence(timeout: 10), "Discard button missing in preview")
+
+        // Explicitly Discard preview (app.discard_preview)
+        discardButton.tap()
+        _ = waitUntil(timeout: 5) { !discardButton.exists }
+
+        // Return to Apps
+        closeImportSurfaces()
+
+        // Verify no installed record
+        let card = findPackageCard(named: validPackageName)
+        XCTAssertFalse(card.exists, "Discarded package was unexpectedly installed")
+
+        // Relaunch and verify it remains absent
+        app.terminate()
+        app.launch()
+        openApps()
+        XCTAssertFalse(findPackageCard(named: validPackageName).waitForExistence(timeout: 5), "Discarded package appeared after relaunch")
     }
 
     func testScriptUIMalformedPackageRejection() throws {
@@ -138,49 +201,77 @@ final class HanlinScriptUIProductionE2ETests: XCTestCase {
 
         let malformedCard = findPackageCard(named: malformedPackageName)
         XCTAssertFalse(malformedCard.exists, "Partially committed malformed package found in Apps grid")
+
+        // Prove malformed-install rejection cleanup persists after relaunch
+        app.terminate()
+        app.launch()
+        openApps()
+        XCTAssertFalse(findPackageCard(named: malformedPackageName).waitForExistence(timeout: 5), "Malformed package unexpectedly present after restart")
     }
 
     func testScriptUILaunchReEntrancyAndIsolation() throws {
         openApps()
 
-        // Ensure valid package is installed
+        // Ensure both packages are installed
         ensurePackageInstalled(named: validPackageName, archive: "HanlinScriptUIValid")
+        ensurePackageInstalled(named: appBPackageName, archive: "HanlinScriptUIAppB")
 
-        // A. Duplicate launch while session is active
-        launchPackage(named: validPackageName)
+        // 1. Mandatory duplicate activation attempt during launch (guard !isLaunching)
+        let packageCard = findPackageCard(named: validPackageName)
+        XCTAssertTrue(packageCard.waitForExistence(timeout: 15), "Package card missing before launch")
+
+        // Rapid double tap triggers two immediate launch entries in production
+        packageCard.doubleTap()
+
         let countText = app.staticTexts["Count 0"].firstMatch
-        XCTAssertTrue(countText.waitForExistence(timeout: 25))
+        XCTAssertTrue(countText.waitForExistence(timeout: 25), "ScriptUI initial state failed to render")
 
+        // First launch establishes state: mutate to Count 1
         let incrementButton = app.buttons["Increment"].firstMatch
         incrementButton.tap()
-        XCTAssertTrue(app.staticTexts["Count 1"].firstMatch.waitForExistence(timeout: 10))
+        XCTAssertTrue(app.staticTexts["Count 1"].firstMatch.waitForExistence(timeout: 10), "State did not mutate to Count 1")
 
-        // Trigger duplicate launch attempt while active: state must NOT reset to 0
-        let packageCard = findPackageCard(named: validPackageName)
-        if packageCard.exists && packageCard.isHittable {
-            packageCard.tap()
-        }
-        // State remains Count 1; session is NOT destroyed or re-created
+        // 2. Mandatory duplicate activation attempt while active (activeApplicationID == id)
+        // Production entry path: tap the card coordinate through the production hierarchy
+        let cardCoordinate = packageCard.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5))
+        cardCoordinate.tap()
+
+        // Observable proof: active session is not recreated/reset, no duplicate container, state remains Count 1
         XCTAssertTrue(app.staticTexts["Count 1"].firstMatch.exists, "Duplicate launch tore down or reset active session state")
         XCTAssertFalse(app.staticTexts["Count 0"].firstMatch.exists, "Session state unexpectedly reverted to 0 on duplicate launch")
+        let closeButtons = app.buttons.matching(identifier: "hanlin-script-app-close")
+        XCTAssertEqual(closeButtons.count, 1, "Duplicate container unexpectedly rendered")
 
-        // B. Close -> reopen: same package opens cleanly
+        // Close App A
         closeScriptApp()
+
+        // 3. Reopen App A: proves clean close -> reopen without stale dirty state
         launchPackage(named: validPackageName)
         XCTAssertTrue(app.staticTexts["Count 0"].firstMatch.waitForExistence(timeout: 25), "Clean session failed on reopen")
         closeScriptApp()
 
-        // C. A -> B -> A isolation
-        // App A state isolation verification
+        // 4. Real A -> B -> A isolation
+        // A -> mutate observable state -> close
         launchPackage(named: validPackageName)
         XCTAssertTrue(app.staticTexts["Count 0"].firstMatch.waitForExistence(timeout: 25))
-        incrementButton.tap()
+        app.buttons["Increment"].firstMatch.tap()
         XCTAssertTrue(app.staticTexts["Count 1"].firstMatch.waitForExistence(timeout: 10))
         closeScriptApp()
 
-        // Reopen A again: brand new session initialized without stale dirty state
+        // B -> open and verify its own independent state -> mutate -> close
+        launchPackage(named: appBPackageName)
+        XCTAssertTrue(app.staticTexts["App B Ready"].firstMatch.waitForExistence(timeout: 25), "App B initial state missing")
+        let mutateB = app.buttons["Mutate B"].firstMatch
+        XCTAssertTrue(mutateB.waitForExistence(timeout: 10))
+        mutateB.tap()
+        XCTAssertTrue(app.staticTexts["App B Mutated"].firstMatch.waitForExistence(timeout: 10), "App B state mutation failed")
+        closeScriptApp()
+
+        // A -> reopen -> verify clean correct A state and NO B leakage
         launchPackage(named: validPackageName)
-        XCTAssertTrue(app.staticTexts["Count 0"].firstMatch.waitForExistence(timeout: 25))
+        XCTAssertTrue(app.staticTexts["Count 0"].firstMatch.waitForExistence(timeout: 25), "App A did not reopen cleanly")
+        XCTAssertFalse(app.staticTexts["App B Ready"].firstMatch.exists, "Leakage from App B state detected in App A")
+        XCTAssertFalse(app.staticTexts["App B Mutated"].firstMatch.exists, "Leakage from App B mutated state detected in App A")
         closeScriptApp()
     }
 

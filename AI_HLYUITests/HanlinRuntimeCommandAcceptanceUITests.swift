@@ -12,7 +12,7 @@ final class HanlinRuntimeCommandAcceptanceUITests: XCTestCase {
         app.launch()
     }
 
-    func testShellCommandExecutionExactOutputAndRecovery() throws {
+    func testRuntimeCenterCommandSmokeAndCoherence() throws {
         openSettings()
         openRuntimeCenter()
 

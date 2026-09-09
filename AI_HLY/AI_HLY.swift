@@ -95,7 +95,6 @@ struct MyApp: App {
                 .modelContainer(appDataManager.modelContainer)
                 .task {
                     HanlinNativeScriptProductionBootstrap.prepareEmbeddedProviders()
-                    HanlinScriptingProductionBootstrap.prepareTestFixturesIfNeeded()
                     appDataManager.preloadDataIfNeeded()
                     await RuntimeLifecycleBridge.prepareApplication()
                     await RuntimeLifecycleBridge.handleScenePhase(scenePhase)

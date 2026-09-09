@@ -6,7 +6,8 @@
     "Packages/HanlinPlatform/Sources/HanlinScriptUI/HanlinScriptUIContracts.swift",
     "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
     "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
-    "AI_HLY/Downstream/CanonicalAdapters/"
+    "AI_HLY/Downstream/CanonicalTools/HanlinCanonicalToolAuthority.swift",
+    "AI_HLY/Downstream/MCP/ToolIntegration/AssistantToolBridge.swift"
   ],
   "operation_count": 58,
   "operations": [
@@ -22,8 +23,8 @@
       "capability_requirement": null,
       "async_behavior": false,
       "cancellation_support": false,
-      "existing_acceptance_test": "HanlinRuntimeInstallationUITests.testRuntimeCenterEmbeddedRuntimesSmokeAndReadiness",
-      "new_acceptance_test": "HanlinRuntimeCommandAcceptanceUITests.testShellCommandExecutionExactOutputAndRecovery",
+      "existing_acceptance_test": "Scripts/Runtime/validate_shell_acceptance.py",
+      "new_acceptance_test": "AI_HLYUITests/HanlinRuntimeCommandAcceptanceUITests.swift#testRuntimeCenterCommandSmokeAndCoherence",
       "justified_exclusion": null
     },
     {
@@ -38,8 +39,8 @@
       "capability_requirement": null,
       "async_behavior": false,
       "cancellation_support": false,
-      "existing_acceptance_test": "HanlinRuntimeInstallationUITests.testRuntimeCenterEmbeddedRuntimesSmokeAndReadiness",
-      "new_acceptance_test": "HanlinRuntimeCommandAcceptanceUITests.testShellCommandExecutionExactOutputAndRecovery",
+      "existing_acceptance_test": "Scripts/Runtime/validate_shell_acceptance.py",
+      "new_acceptance_test": "AI_HLYUITests/HanlinRuntimeCommandAcceptanceUITests.swift#testRuntimeCenterCommandSmokeAndCoherence",
       "justified_exclusion": null
     },
     {
@@ -54,8 +55,8 @@
       "capability_requirement": null,
       "async_behavior": false,
       "cancellation_support": false,
-      "existing_acceptance_test": "HanlinRuntimeInstallationUITests.testRuntimeCenterEmbeddedRuntimesSmokeAndReadiness",
-      "new_acceptance_test": "HanlinRuntimeCommandAcceptanceUITests.testShellCommandExecutionExactOutputAndRecovery",
+      "existing_acceptance_test": "Scripts/Runtime/validate_shell_acceptance.py",
+      "new_acceptance_test": "AI_HLYUITests/HanlinRuntimeCommandAcceptanceUITests.swift#testRuntimeCenterCommandSmokeAndCoherence",
       "justified_exclusion": null
     },
     {
@@ -70,8 +71,8 @@
       "capability_requirement": "network",
       "async_behavior": false,
       "cancellation_support": false,
-      "existing_acceptance_test": "HanlinRuntimeInstallationUITests.testRuntimeCenterEmbeddedRuntimesSmokeAndReadiness",
-      "new_acceptance_test": "HanlinRuntimeCommandAcceptanceUITests.testShellCommandExecutionExactOutputAndRecovery",
+      "existing_acceptance_test": "Scripts/Runtime/validate_shell_acceptance.py",
+      "new_acceptance_test": "AI_HLYUITests/HanlinRuntimeCommandAcceptanceUITests.swift#testRuntimeCenterCommandSmokeAndCoherence",
       "justified_exclusion": null
     },
     {
@@ -86,8 +87,8 @@
       "capability_requirement": null,
       "async_behavior": false,
       "cancellation_support": false,
-      "existing_acceptance_test": "HanlinRuntimeInstallationUITests.testRuntimeCenterEmbeddedRuntimesSmokeAndReadiness",
-      "new_acceptance_test": "HanlinRuntimeCommandAcceptanceUITests.testShellCommandExecutionExactOutputAndRecovery",
+      "existing_acceptance_test": "Scripts/Runtime/validate_shell_acceptance.py",
+      "new_acceptance_test": "AI_HLYUITests/HanlinRuntimeCommandAcceptanceUITests.swift#testRuntimeCenterCommandSmokeAndCoherence",
       "justified_exclusion": null
     },
     {
@@ -102,8 +103,8 @@
       "capability_requirement": null,
       "async_behavior": false,
       "cancellation_support": false,
-      "existing_acceptance_test": "HanlinRuntimeInstallationUITests.testRuntimeCenterEmbeddedRuntimesSmokeAndReadiness",
-      "new_acceptance_test": "HanlinRuntimeCommandAcceptanceUITests.testShellCommandExecutionExactOutputAndRecovery",
+      "existing_acceptance_test": "Scripts/Runtime/validate_shell_acceptance.py",
+      "new_acceptance_test": "AI_HLYUITests/HanlinRuntimeCommandAcceptanceUITests.swift#testRuntimeCenterCommandSmokeAndCoherence",
       "justified_exclusion": null
     },
     {
@@ -118,8 +119,8 @@
       "capability_requirement": null,
       "async_behavior": false,
       "cancellation_support": false,
-      "existing_acceptance_test": "HanlinRuntimeInstallationUITests.testRuntimeCenterEmbeddedRuntimesSmokeAndReadiness",
-      "new_acceptance_test": "HanlinRuntimeCommandAcceptanceUITests.testShellCommandExecutionExactOutputAndRecovery",
+      "existing_acceptance_test": "Scripts/Runtime/validate_shell_acceptance.py",
+      "new_acceptance_test": "AI_HLYUITests/HanlinRuntimeCommandAcceptanceUITests.swift#testRuntimeCenterCommandSmokeAndCoherence",
       "justified_exclusion": null
     },
     {
@@ -134,8 +135,8 @@
       "capability_requirement": null,
       "async_behavior": false,
       "cancellation_support": false,
-      "existing_acceptance_test": "HanlinRuntimeInstallationUITests.testRuntimeCenterEmbeddedRuntimesSmokeAndReadiness",
-      "new_acceptance_test": "HanlinRuntimeCommandAcceptanceUITests.testShellCommandExecutionExactOutputAndRecovery",
+      "existing_acceptance_test": "Scripts/Runtime/validate_shell_acceptance.py",
+      "new_acceptance_test": "AI_HLYUITests/HanlinRuntimeCommandAcceptanceUITests.swift#testRuntimeCenterCommandSmokeAndCoherence",
       "justified_exclusion": null
     },
     {
@@ -150,8 +151,8 @@
       "capability_requirement": null,
       "async_behavior": false,
       "cancellation_support": false,
-      "existing_acceptance_test": "HanlinRuntimeInstallationUITests.testRuntimeCenterEmbeddedRuntimesSmokeAndReadiness",
-      "new_acceptance_test": "HanlinRuntimeCommandAcceptanceUITests.testShellCommandExecutionExactOutputAndRecovery",
+      "existing_acceptance_test": "Scripts/Runtime/validate_shell_acceptance.py",
+      "new_acceptance_test": "AI_HLYUITests/HanlinRuntimeCommandAcceptanceUITests.swift#testRuntimeCenterCommandSmokeAndCoherence",
       "justified_exclusion": null
     },
     {
@@ -166,8 +167,8 @@
       "capability_requirement": null,
       "async_behavior": false,
       "cancellation_support": false,
-      "existing_acceptance_test": "HanlinRuntimeInstallationUITests.testRuntimeCenterEmbeddedRuntimesSmokeAndReadiness",
-      "new_acceptance_test": "HanlinRuntimeCommandAcceptanceUITests.testShellCommandExecutionExactOutputAndRecovery",
+      "existing_acceptance_test": "Scripts/Runtime/validate_shell_acceptance.py",
+      "new_acceptance_test": "AI_HLYUITests/HanlinRuntimeCommandAcceptanceUITests.swift#testRuntimeCenterCommandSmokeAndCoherence",
       "justified_exclusion": null
     },
     {
@@ -182,8 +183,8 @@
       "capability_requirement": null,
       "async_behavior": false,
       "cancellation_support": false,
-      "existing_acceptance_test": "HanlinRuntimeInstallationUITests.testRuntimeCenterEmbeddedRuntimesSmokeAndReadiness",
-      "new_acceptance_test": "HanlinRuntimeCommandAcceptanceUITests.testShellCommandExecutionExactOutputAndRecovery",
+      "existing_acceptance_test": "Scripts/Runtime/validate_shell_acceptance.py",
+      "new_acceptance_test": "AI_HLYUITests/HanlinRuntimeCommandAcceptanceUITests.swift#testRuntimeCenterCommandSmokeAndCoherence",
       "justified_exclusion": null
     },
     {
@@ -198,8 +199,8 @@
       "capability_requirement": null,
       "async_behavior": false,
       "cancellation_support": false,
-      "existing_acceptance_test": "HanlinRuntimeInstallationUITests.testRuntimeCenterEmbeddedRuntimesSmokeAndReadiness",
-      "new_acceptance_test": "HanlinRuntimeCommandAcceptanceUITests.testShellCommandExecutionExactOutputAndRecovery",
+      "existing_acceptance_test": "Scripts/Runtime/validate_shell_acceptance.py",
+      "new_acceptance_test": "AI_HLYUITests/HanlinRuntimeCommandAcceptanceUITests.swift#testRuntimeCenterCommandSmokeAndCoherence",
       "justified_exclusion": null
     },
     {
@@ -214,8 +215,8 @@
       "capability_requirement": null,
       "async_behavior": false,
       "cancellation_support": false,
-      "existing_acceptance_test": "HanlinRuntimeInstallationUITests.testRuntimeCenterEmbeddedRuntimesSmokeAndReadiness",
-      "new_acceptance_test": "HanlinRuntimeCommandAcceptanceUITests.testShellCommandExecutionExactOutputAndRecovery",
+      "existing_acceptance_test": "Scripts/Runtime/validate_shell_acceptance.py",
+      "new_acceptance_test": "AI_HLYUITests/HanlinRuntimeCommandAcceptanceUITests.swift#testRuntimeCenterCommandSmokeAndCoherence",
       "justified_exclusion": null
     },
     {
@@ -230,8 +231,8 @@
       "capability_requirement": null,
       "async_behavior": false,
       "cancellation_support": false,
-      "existing_acceptance_test": "HanlinRuntimeInstallationUITests.testRuntimeCenterEmbeddedRuntimesSmokeAndReadiness",
-      "new_acceptance_test": "HanlinRuntimeCommandAcceptanceUITests.testShellCommandExecutionExactOutputAndRecovery",
+      "existing_acceptance_test": "Scripts/Runtime/validate_shell_acceptance.py",
+      "new_acceptance_test": "AI_HLYUITests/HanlinRuntimeCommandAcceptanceUITests.swift#testRuntimeCenterCommandSmokeAndCoherence",
       "justified_exclusion": null
     },
     {
@@ -246,8 +247,8 @@
       "capability_requirement": null,
       "async_behavior": false,
       "cancellation_support": false,
-      "existing_acceptance_test": "HanlinRuntimeInstallationUITests.testRuntimeCenterEmbeddedRuntimesSmokeAndReadiness",
-      "new_acceptance_test": "HanlinRuntimeCommandAcceptanceUITests.testShellCommandExecutionExactOutputAndRecovery",
+      "existing_acceptance_test": "Scripts/Runtime/validate_shell_acceptance.py",
+      "new_acceptance_test": "AI_HLYUITests/HanlinRuntimeCommandAcceptanceUITests.swift#testRuntimeCenterCommandSmokeAndCoherence",
       "justified_exclusion": null
     },
     {
@@ -262,8 +263,8 @@
       "capability_requirement": null,
       "async_behavior": false,
       "cancellation_support": false,
-      "existing_acceptance_test": "HanlinRuntimeInstallationUITests.testRuntimeCenterEmbeddedRuntimesSmokeAndReadiness",
-      "new_acceptance_test": "HanlinRuntimeCommandAcceptanceUITests.testShellCommandExecutionExactOutputAndRecovery",
+      "existing_acceptance_test": "Scripts/Runtime/validate_shell_acceptance.py",
+      "new_acceptance_test": "AI_HLYUITests/HanlinRuntimeCommandAcceptanceUITests.swift#testRuntimeCenterCommandSmokeAndCoherence",
       "justified_exclusion": null
     },
     {
@@ -278,8 +279,8 @@
       "capability_requirement": null,
       "async_behavior": false,
       "cancellation_support": false,
-      "existing_acceptance_test": "HanlinRuntimeInstallationUITests.testRuntimeCenterEmbeddedRuntimesSmokeAndReadiness",
-      "new_acceptance_test": "HanlinRuntimeCommandAcceptanceUITests.testShellCommandExecutionExactOutputAndRecovery",
+      "existing_acceptance_test": "Scripts/Runtime/validate_shell_acceptance.py",
+      "new_acceptance_test": "AI_HLYUITests/HanlinRuntimeCommandAcceptanceUITests.swift#testRuntimeCenterCommandSmokeAndCoherence",
       "justified_exclusion": null
     },
     {
@@ -294,8 +295,8 @@
       "capability_requirement": null,
       "async_behavior": false,
       "cancellation_support": false,
-      "existing_acceptance_test": "HanlinRuntimeInstallationUITests.testRuntimeCenterEmbeddedRuntimesSmokeAndReadiness",
-      "new_acceptance_test": "HanlinRuntimeCommandAcceptanceUITests.testShellCommandExecutionExactOutputAndRecovery",
+      "existing_acceptance_test": "Scripts/Runtime/validate_shell_acceptance.py",
+      "new_acceptance_test": "AI_HLYUITests/HanlinRuntimeCommandAcceptanceUITests.swift#testRuntimeCenterCommandSmokeAndCoherence",
       "justified_exclusion": null
     },
     {
@@ -310,8 +311,8 @@
       "capability_requirement": null,
       "async_behavior": false,
       "cancellation_support": false,
-      "existing_acceptance_test": "HanlinRuntimeInstallationUITests.testRuntimeCenterEmbeddedRuntimesSmokeAndReadiness",
-      "new_acceptance_test": "HanlinRuntimeCommandAcceptanceUITests.testShellCommandExecutionExactOutputAndRecovery",
+      "existing_acceptance_test": "Scripts/Runtime/validate_shell_acceptance.py",
+      "new_acceptance_test": "AI_HLYUITests/HanlinRuntimeCommandAcceptanceUITests.swift#testRuntimeCenterCommandSmokeAndCoherence",
       "justified_exclusion": null
     },
     {
@@ -326,8 +327,8 @@
       "capability_requirement": null,
       "async_behavior": false,
       "cancellation_support": false,
-      "existing_acceptance_test": "HanlinRuntimeInstallationUITests.testRuntimeCenterEmbeddedRuntimesSmokeAndReadiness",
-      "new_acceptance_test": "HanlinRuntimeCommandAcceptanceUITests.testShellCommandExecutionExactOutputAndRecovery",
+      "existing_acceptance_test": "Scripts/Runtime/validate_shell_acceptance.py",
+      "new_acceptance_test": "AI_HLYUITests/HanlinRuntimeCommandAcceptanceUITests.swift#testRuntimeCenterCommandSmokeAndCoherence",
       "justified_exclusion": null
     },
     {
@@ -342,8 +343,8 @@
       "capability_requirement": null,
       "async_behavior": false,
       "cancellation_support": false,
-      "existing_acceptance_test": "HanlinRuntimeInstallationUITests.testRuntimeCenterEmbeddedRuntimesSmokeAndReadiness",
-      "new_acceptance_test": "HanlinRuntimeCommandAcceptanceUITests.testShellCommandExecutionExactOutputAndRecovery",
+      "existing_acceptance_test": "Scripts/Runtime/validate_shell_acceptance.py",
+      "new_acceptance_test": "AI_HLYUITests/HanlinRuntimeCommandAcceptanceUITests.swift#testRuntimeCenterCommandSmokeAndCoherence",
       "justified_exclusion": null
     },
     {
@@ -358,8 +359,8 @@
       "capability_requirement": null,
       "async_behavior": false,
       "cancellation_support": false,
-      "existing_acceptance_test": "HanlinRuntimeInstallationUITests.testRuntimeCenterEmbeddedRuntimesSmokeAndReadiness",
-      "new_acceptance_test": "HanlinRuntimeCommandAcceptanceUITests.testShellCommandExecutionExactOutputAndRecovery",
+      "existing_acceptance_test": "Scripts/Runtime/validate_shell_acceptance.py",
+      "new_acceptance_test": "AI_HLYUITests/HanlinRuntimeCommandAcceptanceUITests.swift#testRuntimeCenterCommandSmokeAndCoherence",
       "justified_exclusion": null
     },
     {
@@ -374,8 +375,8 @@
       "capability_requirement": null,
       "async_behavior": false,
       "cancellation_support": false,
-      "existing_acceptance_test": "HanlinRuntimeInstallationUITests.testRuntimeCenterEmbeddedRuntimesSmokeAndReadiness",
-      "new_acceptance_test": "HanlinRuntimeCommandAcceptanceUITests.testShellCommandExecutionExactOutputAndRecovery",
+      "existing_acceptance_test": "Scripts/Runtime/validate_shell_acceptance.py",
+      "new_acceptance_test": "AI_HLYUITests/HanlinRuntimeCommandAcceptanceUITests.swift#testRuntimeCenterCommandSmokeAndCoherence",
       "justified_exclusion": null
     },
     {
@@ -390,8 +391,8 @@
       "capability_requirement": null,
       "async_behavior": false,
       "cancellation_support": false,
-      "existing_acceptance_test": "HanlinScriptUITests.HanlinScriptUIReconcilerTests",
-      "new_acceptance_test": "HanlinScriptUIProductionE2ETests.testProductionScriptUIUserJourneyAndLifecycle",
+      "existing_acceptance_test": "Packages/HanlinPlatform/Tests/HanlinScriptUITests/HanlinScriptUIReconcilerTests.swift#renderedPresentation",
+      "new_acceptance_test": "AI_HLYUITests/HanlinScriptUIProductionE2ETests.swift#testProductionScriptUIUserJourneyAndLifecycle",
       "justified_exclusion": null
     },
     {
@@ -406,8 +407,8 @@
       "capability_requirement": null,
       "async_behavior": false,
       "cancellation_support": false,
-      "existing_acceptance_test": "HanlinScriptUITests.HanlinScriptUIReconcilerTests",
-      "new_acceptance_test": "HanlinScriptUIProductionE2ETests.testProductionScriptUIUserJourneyAndLifecycle",
+      "existing_acceptance_test": "Packages/HanlinPlatform/Tests/HanlinScriptUITests/HanlinScriptUIReconcilerTests.swift#keyedDiff",
+      "new_acceptance_test": null,
       "justified_exclusion": null
     },
     {
@@ -422,8 +423,8 @@
       "capability_requirement": null,
       "async_behavior": false,
       "cancellation_support": false,
-      "existing_acceptance_test": "HanlinScriptUITests.HanlinScriptUIReconcilerTests",
-      "new_acceptance_test": "HanlinScriptUIProductionE2ETests.testProductionScriptUIUserJourneyAndLifecycle",
+      "existing_acceptance_test": "Packages/HanlinPlatform/Tests/HanlinScriptUITests/HanlinScriptUIReconcilerTests.swift#model",
+      "new_acceptance_test": "AI_HLYUITests/HanlinScriptUIProductionE2ETests.swift#testProductionScriptUIUserJourneyAndLifecycle",
       "justified_exclusion": null
     },
     {
@@ -438,8 +439,8 @@
       "capability_requirement": null,
       "async_behavior": false,
       "cancellation_support": false,
-      "existing_acceptance_test": "HanlinScriptUITests.HanlinScriptUIReconcilerTests",
-      "new_acceptance_test": "HanlinScriptUIProductionE2ETests.testProductionScriptUIUserJourneyAndLifecycle",
+      "existing_acceptance_test": "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift#rendersIndependently",
+      "new_acceptance_test": "AI_HLYUITests/HanlinScriptUIProductionE2ETests.swift#testProductionScriptUIUserJourneyAndLifecycle",
       "justified_exclusion": null
     },
     {
@@ -454,8 +455,8 @@
       "capability_requirement": null,
       "async_behavior": false,
       "cancellation_support": false,
-      "existing_acceptance_test": "HanlinScriptUITests.HanlinScriptUIReconcilerTests",
-      "new_acceptance_test": "HanlinScriptUIProductionE2ETests.testProductionScriptUIUserJourneyAndLifecycle",
+      "existing_acceptance_test": "Packages/HanlinPlatform/Tests/HanlinScriptUITests/HanlinScriptUIReconcilerTests.swift#model",
+      "new_acceptance_test": null,
       "justified_exclusion": null
     },
     {
@@ -470,8 +471,8 @@
       "capability_requirement": null,
       "async_behavior": false,
       "cancellation_support": false,
-      "existing_acceptance_test": "HanlinScriptUITests.HanlinScriptUIReconcilerTests",
-      "new_acceptance_test": "HanlinScriptUIProductionE2ETests.testProductionScriptUIUserJourneyAndLifecycle",
+      "existing_acceptance_test": "Packages/HanlinPlatform/Tests/HanlinScriptUITests/HanlinScriptUIReconcilerTests.swift#model",
+      "new_acceptance_test": null,
       "justified_exclusion": null
     },
     {
@@ -486,8 +487,8 @@
       "capability_requirement": null,
       "async_behavior": false,
       "cancellation_support": false,
-      "existing_acceptance_test": "HanlinScriptUITests.HanlinScriptUIReconcilerTests",
-      "new_acceptance_test": "HanlinScriptUIProductionE2ETests.testProductionScriptUIUserJourneyAndLifecycle",
+      "existing_acceptance_test": "Packages/HanlinPlatform/Tests/HanlinScriptUITests/HanlinScriptUIReconcilerTests.swift#navigationAndResume",
+      "new_acceptance_test": null,
       "justified_exclusion": null
     },
     {
@@ -502,8 +503,8 @@
       "capability_requirement": null,
       "async_behavior": false,
       "cancellation_support": false,
-      "existing_acceptance_test": "HanlinScriptUITests.HanlinScriptUIReconcilerTests",
-      "new_acceptance_test": "HanlinScriptUIProductionE2ETests.testProductionScriptUIUserJourneyAndLifecycle",
+      "existing_acceptance_test": "Packages/HanlinPlatform/Tests/HanlinScriptUITests/HanlinScriptUIReconcilerTests.swift#navigationAndResume",
+      "new_acceptance_test": null,
       "justified_exclusion": null
     },
     {
@@ -518,8 +519,8 @@
       "capability_requirement": null,
       "async_behavior": false,
       "cancellation_support": false,
-      "existing_acceptance_test": "HanlinScriptUITests.HanlinScriptUIReconcilerTests",
-      "new_acceptance_test": "HanlinScriptUIProductionE2ETests.testProductionScriptUIUserJourneyAndLifecycle",
+      "existing_acceptance_test": "Packages/HanlinPlatform/Tests/HanlinScriptUITests/HanlinScriptUIReconcilerTests.swift#navigationAndResume",
+      "new_acceptance_test": null,
       "justified_exclusion": null
     },
     {
@@ -534,8 +535,8 @@
       "capability_requirement": null,
       "async_behavior": false,
       "cancellation_support": false,
-      "existing_acceptance_test": "HanlinScriptUITests.HanlinScriptUIReconcilerTests",
-      "new_acceptance_test": "HanlinScriptUIProductionE2ETests.testProductionScriptUIUserJourneyAndLifecycle",
+      "existing_acceptance_test": "Packages/HanlinPlatform/Tests/HanlinScriptUITests/HanlinScriptUIReconcilerTests.swift#navigationAndResume",
+      "new_acceptance_test": null,
       "justified_exclusion": null
     },
     {
@@ -550,8 +551,8 @@
       "capability_requirement": null,
       "async_behavior": false,
       "cancellation_support": false,
-      "existing_acceptance_test": "HanlinScriptUITests.HanlinScriptUIReconcilerTests",
-      "new_acceptance_test": "HanlinScriptUIProductionE2ETests.testProductionScriptUIUserJourneyAndLifecycle",
+      "existing_acceptance_test": "Packages/HanlinPlatform/Tests/HanlinScriptUITests/HanlinScriptUIReconcilerTests.swift#navigationAndResume",
+      "new_acceptance_test": null,
       "justified_exclusion": null
     },
     {
@@ -566,8 +567,8 @@
       "capability_requirement": null,
       "async_behavior": false,
       "cancellation_support": false,
-      "existing_acceptance_test": "HanlinScriptUITests.HanlinScriptUIReconcilerTests",
-      "new_acceptance_test": "HanlinScriptUIProductionE2ETests.testProductionScriptUIUserJourneyAndLifecycle",
+      "existing_acceptance_test": "Packages/HanlinPlatform/Tests/HanlinScriptUITests/HanlinScriptUIReconcilerTests.swift#navigationAndResume",
+      "new_acceptance_test": null,
       "justified_exclusion": null
     },
     {
@@ -582,8 +583,8 @@
       "capability_requirement": null,
       "async_behavior": false,
       "cancellation_support": false,
-      "existing_acceptance_test": "HanlinScriptUITests.HanlinScriptUIReconcilerTests",
-      "new_acceptance_test": "HanlinScriptUIProductionE2ETests.testProductionScriptUIUserJourneyAndLifecycle",
+      "existing_acceptance_test": "Packages/HanlinPlatform/Tests/HanlinScriptUITests/HanlinScriptUIReconcilerTests.swift#navigationAndResume",
+      "new_acceptance_test": null,
       "justified_exclusion": null
     },
     {
@@ -598,40 +599,8 @@
       "capability_requirement": null,
       "async_behavior": false,
       "cancellation_support": false,
-      "existing_acceptance_test": "HanlinScriptUITests.HanlinScriptUIReconcilerTests",
-      "new_acceptance_test": "HanlinScriptUIProductionE2ETests.testProductionScriptUIUserJourneyAndLifecycle",
-      "justified_exclusion": null
-    },
-    {
-      "canonical_id": "capability.storage",
-      "public_name": "Capability 'storage' (Local key-value and cache storage)",
-      "authoritative_source": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
-      "runtime_bridge_owner": "HanlinPlatform (HanlinScriptStore)",
-      "app_exposed": true,
-      "inputs": "Requested by symbols: Storage.*",
-      "outputs": "HanlinPermissionDecision (granted / denied)",
-      "state_mutation": true,
-      "capability_requirement": "storage",
-      "async_behavior": false,
-      "cancellation_support": false,
-      "existing_acceptance_test": "HanlinScriptCompilerTests.HanlinScriptAnalyzerTests",
-      "new_acceptance_test": "HanlinScriptUIProductionE2ETests.testProductionScriptUIUserJourneyAndLifecycle",
-      "justified_exclusion": null
-    },
-    {
-      "canonical_id": "capability.files",
-      "public_name": "Capability 'files' (Document sandbox file system access)",
-      "authoritative_source": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
-      "runtime_bridge_owner": "HanlinPlatform (HanlinScriptDeviceServices)",
-      "app_exposed": true,
-      "inputs": "Requested by symbols: FileManager.*, DocumentPicker.*",
-      "outputs": "HanlinPermissionDecision (granted / denied)",
-      "state_mutation": true,
-      "capability_requirement": "files",
-      "async_behavior": false,
-      "cancellation_support": false,
-      "existing_acceptance_test": "HanlinScriptCompilerTests.HanlinScriptAnalyzerTests",
-      "new_acceptance_test": "HanlinScriptUIProductionE2ETests.testProductionScriptUIUserJourneyAndLifecycle",
+      "existing_acceptance_test": "Packages/HanlinPlatform/Tests/HanlinScriptUITests/HanlinScriptUIReconcilerTests.swift#navigationAndResume",
+      "new_acceptance_test": null,
       "justified_exclusion": null
     },
     {
@@ -646,8 +615,40 @@
       "capability_requirement": "network",
       "async_behavior": false,
       "cancellation_support": false,
-      "existing_acceptance_test": "HanlinScriptCompilerTests.HanlinScriptAnalyzerTests",
-      "new_acceptance_test": "HanlinScriptUIProductionE2ETests.testProductionScriptUIUserJourneyAndLifecycle",
+      "existing_acceptance_test": "Packages/HanlinPlatform/Tests/HanlinScriptServicesTests/HanlinScriptServiceBrokerTests.swift#network",
+      "new_acceptance_test": "AI_HLYUITests/HanlinScriptUIProductionE2ETests.swift#testProductionScriptUIUserJourneyAndLifecycle",
+      "justified_exclusion": null
+    },
+    {
+      "canonical_id": "capability.storage",
+      "public_name": "Capability 'storage' (Local key-value and cache storage)",
+      "authoritative_source": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
+      "runtime_bridge_owner": "HanlinPlatform (HanlinScriptStore)",
+      "app_exposed": true,
+      "inputs": "Requested by symbols: Storage.*",
+      "outputs": "HanlinPermissionDecision (granted / denied)",
+      "state_mutation": true,
+      "capability_requirement": "storage",
+      "async_behavior": false,
+      "cancellation_support": false,
+      "existing_acceptance_test": "Packages/HanlinPlatform/Tests/HanlinScriptServicesTests/HanlinScriptServiceBrokerTests.swift#storageAndFiles",
+      "new_acceptance_test": null,
+      "justified_exclusion": null
+    },
+    {
+      "canonical_id": "capability.files",
+      "public_name": "Capability 'files' (Document sandbox file system access)",
+      "authoritative_source": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
+      "runtime_bridge_owner": "HanlinPlatform (HanlinScriptDeviceServices)",
+      "app_exposed": true,
+      "inputs": "Requested by symbols: FileManager.*, DocumentPicker.*",
+      "outputs": "HanlinPermissionDecision (granted / denied)",
+      "state_mutation": true,
+      "capability_requirement": "files",
+      "async_behavior": false,
+      "cancellation_support": false,
+      "existing_acceptance_test": "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift#documentPickerAndQuickLookRuntime",
+      "new_acceptance_test": null,
       "justified_exclusion": null
     },
     {
@@ -662,8 +663,8 @@
       "capability_requirement": "assistant",
       "async_behavior": false,
       "cancellation_support": false,
-      "existing_acceptance_test": "HanlinScriptCompilerTests.HanlinScriptAnalyzerTests",
-      "new_acceptance_test": "HanlinScriptUIProductionE2ETests.testProductionScriptUIUserJourneyAndLifecycle",
+      "existing_acceptance_test": "Packages/HanlinPlatform/Tests/HanlinScriptServicesTests/HanlinScriptServiceBrokerTests.swift#brokeredServices",
+      "new_acceptance_test": null,
       "justified_exclusion": null
     },
     {
@@ -678,8 +679,8 @@
       "capability_requirement": "location",
       "async_behavior": false,
       "cancellation_support": false,
-      "existing_acceptance_test": "HanlinScriptCompilerTests.HanlinScriptAnalyzerTests",
-      "new_acceptance_test": "HanlinScriptUIProductionE2ETests.testProductionScriptUIUserJourneyAndLifecycle",
+      "existing_acceptance_test": "Packages/HanlinPlatform/Tests/HanlinScriptDeviceServicesTests/HanlinAppleServiceContractsTests.swift#requirements",
+      "new_acceptance_test": null,
       "justified_exclusion": null
     },
     {
@@ -694,8 +695,8 @@
       "capability_requirement": "notifications",
       "async_behavior": false,
       "cancellation_support": false,
-      "existing_acceptance_test": "HanlinScriptCompilerTests.HanlinScriptAnalyzerTests",
-      "new_acceptance_test": "HanlinScriptUIProductionE2ETests.testProductionScriptUIUserJourneyAndLifecycle",
+      "existing_acceptance_test": "Packages/HanlinPlatform/Tests/HanlinScriptDeviceServicesTests/HanlinAppleServiceContractsTests.swift#requirements",
+      "new_acceptance_test": null,
       "justified_exclusion": null
     },
     {
@@ -710,8 +711,8 @@
       "capability_requirement": "reminders",
       "async_behavior": false,
       "cancellation_support": false,
-      "existing_acceptance_test": "HanlinScriptCompilerTests.HanlinScriptAnalyzerTests",
-      "new_acceptance_test": "HanlinScriptUIProductionE2ETests.testProductionScriptUIUserJourneyAndLifecycle",
+      "existing_acceptance_test": "Packages/HanlinPlatform/Tests/HanlinScriptDeviceServicesTests/HanlinAppleServiceContractsTests.swift#requirements",
+      "new_acceptance_test": null,
       "justified_exclusion": null
     },
     {
@@ -726,8 +727,8 @@
       "capability_requirement": "health",
       "async_behavior": false,
       "cancellation_support": false,
-      "existing_acceptance_test": "HanlinScriptCompilerTests.HanlinScriptAnalyzerTests",
-      "new_acceptance_test": "HanlinScriptUIProductionE2ETests.testProductionScriptUIUserJourneyAndLifecycle",
+      "existing_acceptance_test": "Packages/HanlinPlatform/Tests/HanlinScriptDeviceServicesTests/HanlinAppleServiceContractsTests.swift#requirements",
+      "new_acceptance_test": null,
       "justified_exclusion": null
     },
     {
@@ -742,8 +743,8 @@
       "capability_requirement": "photos",
       "async_behavior": false,
       "cancellation_support": false,
-      "existing_acceptance_test": "HanlinScriptCompilerTests.HanlinScriptAnalyzerTests",
-      "new_acceptance_test": "HanlinScriptUIProductionE2ETests.testProductionScriptUIUserJourneyAndLifecycle",
+      "existing_acceptance_test": "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift#photosRuntime",
+      "new_acceptance_test": null,
       "justified_exclusion": null
     },
     {
@@ -758,8 +759,8 @@
       "capability_requirement": "pasteboard",
       "async_behavior": false,
       "cancellation_support": false,
-      "existing_acceptance_test": "HanlinScriptCompilerTests.HanlinScriptAnalyzerTests",
-      "new_acceptance_test": "HanlinScriptUIProductionE2ETests.testProductionScriptUIUserJourneyAndLifecycle",
+      "existing_acceptance_test": "Packages/HanlinPlatform/Tests/HanlinScriptServicesTests/HanlinScriptServiceBrokerTests.swift#brokeredServices",
+      "new_acceptance_test": null,
       "justified_exclusion": null
     },
     {
@@ -774,8 +775,8 @@
       "capability_requirement": "open-url",
       "async_behavior": false,
       "cancellation_support": false,
-      "existing_acceptance_test": "HanlinScriptCompilerTests.HanlinScriptAnalyzerTests",
-      "new_acceptance_test": "HanlinScriptUIProductionE2ETests.testProductionScriptUIUserJourneyAndLifecycle",
+      "existing_acceptance_test": "Packages/HanlinPlatform/Tests/HanlinScriptServicesTests/HanlinScriptServiceBrokerTests.swift#brokeredServices",
+      "new_acceptance_test": null,
       "justified_exclusion": null
     },
     {
@@ -784,14 +785,14 @@
       "authoritative_source": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
       "runtime_bridge_owner": "HanlinScriptingPlatform",
       "app_exposed": true,
-      "inputs": "URL",
+      "inputs": "sourceURL: URL",
       "outputs": "HanlinImportPreview",
       "state_mutation": true,
       "capability_requirement": null,
       "async_behavior": true,
       "cancellation_support": false,
-      "existing_acceptance_test": "HanlinNativeScriptProductionE2ETests",
-      "new_acceptance_test": "HanlinScriptUIProductionE2ETests.testProductionScriptUIUserJourneyAndLifecycle",
+      "existing_acceptance_test": "Packages/HanlinPlatform/Tests/HanlinScriptCompilerTests/HanlinPackageCenterTests.swift",
+      "new_acceptance_test": "AI_HLYUITests/HanlinScriptUIProductionE2ETests.swift#testProductionScriptUIUserJourneyAndLifecycle",
       "justified_exclusion": null
     },
     {
@@ -806,8 +807,8 @@
       "capability_requirement": null,
       "async_behavior": true,
       "cancellation_support": false,
-      "existing_acceptance_test": "HanlinNativeScriptProductionE2ETests",
-      "new_acceptance_test": "HanlinScriptUIProductionE2ETests.testProductionScriptUIUserJourneyAndLifecycle",
+      "existing_acceptance_test": "AI_HLYTests/HanlinScriptingRuntimeTests.swift#testProductionPackageInstallAndExecutionLifecycle",
+      "new_acceptance_test": "AI_HLYUITests/HanlinScriptUIProductionE2ETests.swift#testProductionScriptUIUserJourneyAndLifecycle",
       "justified_exclusion": null
     },
     {
@@ -822,8 +823,8 @@
       "capability_requirement": null,
       "async_behavior": false,
       "cancellation_support": false,
-      "existing_acceptance_test": "HanlinNativeScriptProductionE2ETests",
-      "new_acceptance_test": "HanlinScriptUIProductionE2ETests.testScriptUIMalformedPackageRejection",
+      "existing_acceptance_test": "Packages/HanlinPlatform/Tests/HanlinScriptCompilerTests/HanlinPackageCenterTests.swift",
+      "new_acceptance_test": "AI_HLYUITests/HanlinScriptUIProductionE2ETests.swift#testScriptUIDiscardPreviewLifecycle",
       "justified_exclusion": null
     },
     {
@@ -832,14 +833,14 @@
       "authoritative_source": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
       "runtime_bridge_owner": "HanlinScriptingPlatform",
       "app_exposed": true,
-      "inputs": "HanlinInstalledPackageID",
+      "inputs": "id: HanlinInstalledPackageID",
       "outputs": "Void",
       "state_mutation": true,
       "capability_requirement": null,
       "async_behavior": true,
       "cancellation_support": false,
-      "existing_acceptance_test": "HanlinNativeScriptProductionE2ETests",
-      "new_acceptance_test": "HanlinScriptUIProductionE2ETests.testScriptUILaunchReEntrancyAndIsolation",
+      "existing_acceptance_test": "AI_HLYTests/HanlinScriptingRuntimeTests.swift#testProductionPackageInstallAndExecutionLifecycle",
+      "new_acceptance_test": "AI_HLYUITests/HanlinScriptUIProductionE2ETests.swift#testScriptUILaunchReEntrancyAndIsolation",
       "justified_exclusion": null
     },
     {
@@ -854,8 +855,8 @@
       "capability_requirement": null,
       "async_behavior": false,
       "cancellation_support": false,
-      "existing_acceptance_test": "HanlinNativeScriptProductionE2ETests",
-      "new_acceptance_test": "HanlinScriptUIProductionE2ETests.testProductionScriptUIUserJourneyAndLifecycle",
+      "existing_acceptance_test": "AI_HLYTests/HanlinScriptingRuntimeTests.swift#testProductionPackageInstallAndExecutionLifecycle",
+      "new_acceptance_test": "AI_HLYUITests/HanlinScriptUIProductionE2ETests.swift#testProductionScriptUIUserJourneyAndLifecycle",
       "justified_exclusion": null
     },
     {
@@ -864,14 +865,14 @@
       "authoritative_source": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
       "runtime_bridge_owner": "HanlinScriptingPlatform",
       "app_exposed": true,
-      "inputs": "Bool, HanlinInstalledPackageID",
+      "inputs": "enabled: Bool, id: HanlinInstalledPackageID",
       "outputs": "Void",
       "state_mutation": true,
       "capability_requirement": null,
       "async_behavior": true,
       "cancellation_support": false,
-      "existing_acceptance_test": "HanlinScriptStoreTests",
-      "new_acceptance_test": "HanlinScriptUIProductionE2ETests.testProductionScriptUIUserJourneyAndLifecycle",
+      "existing_acceptance_test": "Packages/HanlinPlatform/Tests/HanlinScriptStoreTests/HanlinAtomicScriptStoreTests.swift",
+      "new_acceptance_test": "AI_HLYUITests/HanlinScriptUIProductionE2ETests.swift#testProductionScriptUIUserJourneyAndLifecycle",
       "justified_exclusion": null
     },
     {
@@ -880,14 +881,14 @@
       "authoritative_source": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
       "runtime_bridge_owner": "HanlinScriptingPlatform",
       "app_exposed": true,
-      "inputs": "Bool, HanlinCapabilityID, HanlinInstalledPackageID",
+      "inputs": "granted: Bool, capability: HanlinCapabilityID, id: HanlinInstalledPackageID",
       "outputs": "Void",
       "state_mutation": true,
       "capability_requirement": null,
       "async_behavior": true,
       "cancellation_support": false,
-      "existing_acceptance_test": "HanlinScriptStoreTests",
-      "new_acceptance_test": "HanlinScriptUIProductionE2ETests.testProductionScriptUIUserJourneyAndLifecycle",
+      "existing_acceptance_test": "Packages/HanlinPlatform/Tests/HanlinScriptStoreTests/HanlinAtomicScriptStoreTests.swift",
+      "new_acceptance_test": "AI_HLYUITests/HanlinScriptUIProductionE2ETests.swift#testProductionScriptUIUserJourneyAndLifecycle",
       "justified_exclusion": null
     },
     {
@@ -896,46 +897,46 @@
       "authoritative_source": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
       "runtime_bridge_owner": "HanlinScriptingPlatform",
       "app_exposed": true,
-      "inputs": "HanlinInstalledPackageID",
+      "inputs": "id: HanlinInstalledPackageID",
       "outputs": "Void",
       "state_mutation": true,
       "capability_requirement": null,
       "async_behavior": true,
       "cancellation_support": false,
-      "existing_acceptance_test": "HanlinScriptStoreTests",
-      "new_acceptance_test": "HanlinScriptUIProductionE2ETests.testProductionScriptUIUserJourneyAndLifecycle",
+      "existing_acceptance_test": "Packages/HanlinPlatform/Tests/HanlinScriptStoreTests/HanlinAtomicScriptStoreTests.swift",
+      "new_acceptance_test": "AI_HLYUITests/HanlinScriptUIProductionE2ETests.swift#testProductionScriptUIUserJourneyAndLifecycle",
       "justified_exclusion": null
     },
     {
       "canonical_id": "tool_authority.resolve",
       "public_name": "Resolve Tool Alias",
-      "authoritative_source": "AI_HLY/Downstream/CanonicalAdapters/",
+      "authoritative_source": "AI_HLY/Downstream/CanonicalTools/HanlinCanonicalToolAuthority.swift",
       "runtime_bridge_owner": "HanlinCanonicalToolAuthority",
       "app_exposed": true,
       "inputs": "alias: String",
-      "outputs": "HanlinToolResolution",
+      "outputs": "HanlinCanonicalToolAuthority.Resolution?",
       "state_mutation": false,
       "capability_requirement": null,
       "async_behavior": false,
       "cancellation_support": false,
-      "existing_acceptance_test": "AI_HLYTests/CanonicalToolAuthorityTests.swift",
-      "new_acceptance_test": "AI_HLYTests/ScriptingCanonicalAuthorityTests.swift",
+      "existing_acceptance_test": "AI_HLYTests/CanonicalToolAuthorityTests.swift#testCanonicalCatalogAliasResolution",
+      "new_acceptance_test": null,
       "justified_exclusion": null
     },
     {
       "canonical_id": "tool_authority.invoke",
       "public_name": "Invoke Canonical Tool",
-      "authoritative_source": "AI_HLY/Downstream/CanonicalAdapters/",
+      "authoritative_source": "AI_HLY/Downstream/MCP/ToolIntegration/AssistantToolBridge.swift",
       "runtime_bridge_owner": "HanlinCanonicalToolAuthority",
       "app_exposed": true,
-      "inputs": "alias: String, params: HanlinValue",
-      "outputs": "HanlinToolExecutionResult",
+      "inputs": "alias: String, argumentsJSON: String, context: NativeToolExecutionContext",
+      "outputs": "NativeToolResult?",
       "state_mutation": true,
       "capability_requirement": null,
       "async_behavior": true,
       "cancellation_support": true,
-      "existing_acceptance_test": "AI_HLYTests/CanonicalAdapterTests.swift",
-      "new_acceptance_test": "AI_HLYUITests/HanlinRuntimeCommandAcceptanceUITests.swift",
+      "existing_acceptance_test": "AI_HLYTests/CanonicalToolAuthorityTests.swift#executionRoutesByBackend",
+      "new_acceptance_test": null,
       "justified_exclusion": null
     }
   ]

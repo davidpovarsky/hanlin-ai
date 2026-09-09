@@ -49,13 +49,35 @@ MALFORMED_MANIFEST = json.dumps({
     "runInApp": True
 }, indent=2) + "\n"
 
+# Distinct second ScriptUI package (App B) for A -> B -> A state isolation tests
+APP_B_MANIFEST = json.dumps({
+    "name": "Hanlin ScriptUI App B",
+    "version": "1.0.0",
+    "entry": "index.tsx",
+    "runInApp": True
+}, indent=2) + "\n"
+
+APP_B_CODE = """import { Button, Navigation, Text, VStack, useState } from "scripting"
+
+function AppB() {
+  const [value, setValue] = useState("App B Ready")
+  return <VStack spacing={8}>
+    <Text>{value}</Text>
+    <Button title="Mutate B" action={() => setValue("App B Mutated")} />
+  </VStack>
+}
+
+Navigation.present({ element: <AppB /> })
+"""
+
 valid_zip = make_zip({"script.json": VALID_MANIFEST, "index.tsx": VALID_CODE})
 malformed_zip = make_zip({"script.json": MALFORMED_MANIFEST})
+app_b_zip = make_zip({"script.json": APP_B_MANIFEST, "index.tsx": APP_B_CODE})
 
 (FIXTURES_DIR / "HanlinScriptUIValid.scripting").write_bytes(valid_zip)
 (FIXTURES_DIR / "HanlinScriptUIMalformed.scripting").write_bytes(malformed_zip)
+(FIXTURES_DIR / "HanlinScriptUIAppB.scripting").write_bytes(app_b_zip)
 
 print("Wrote HanlinScriptUIValid.scripting:", len(valid_zip), "bytes")
 print("Wrote HanlinScriptUIMalformed.scripting:", len(malformed_zip), "bytes")
-print("VALID_BASE64:", base64.b64encode(valid_zip).decode("ascii"))
-print("MALFORMED_BASE64:", base64.b64encode(malformed_zip).decode("ascii"))
+print("Wrote HanlinScriptUIAppB.scripting:", len(app_b_zip), "bytes")

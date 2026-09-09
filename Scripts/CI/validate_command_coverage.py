@@ -2,10 +2,11 @@
 """Deterministic completeness check for Hanlin runtime commands and operations.
 
 Validates that every public/app-exposed canonical command, operation, primitive,
-and capability in the authoritative source code has a registered entry in the
-versioned coverage manifest (runtime-command-coverage-manifest.json).
+capability, lifecycle operation, and tool authority operation in the authoritative
+source code has a registered entry in the versioned coverage manifest
+(runtime-command-coverage-manifest.json).
 
-Fails with a nonzero exit code if any canonical command is unmapped.
+Fails with a nonzero exit code if any canonical command is unmapped or missing tests.
 """
 
 from __future__ import annotations
@@ -23,43 +24,109 @@ REPORT_PATH = ROOT / "docs" / "runtime-command-coverage-map.md"
 IOS_SYSTEM_RUNNER_PATH = ROOT / "Packages" / "IOSSystemLite" / "Sources" / "IOSSystemLite" / "IOSSystemRunner.swift"
 SCRIPT_UI_CONTRACTS_PATH = ROOT / "Packages" / "HanlinPlatform" / "Sources" / "HanlinScriptUI" / "HanlinScriptUIContracts.swift"
 SCRIPT_ANALYZER_PATH = ROOT / "Packages" / "HanlinPlatform" / "Sources" / "HanlinScriptCompiler" / "HanlinScriptAnalyzer.swift"
+SCRIPTING_PLATFORM_PATH = ROOT / "AI_HLY" / "Downstream" / "ScriptingPlatform" / "HanlinScriptingPlatform.swift"
+TOOL_AUTHORITY_PATH = ROOT / "AI_HLY" / "Downstream" / "CanonicalTools" / "HanlinCanonicalToolAuthority.swift"
+ASSISTANT_TOOL_BRIDGE_PATH = ROOT / "AI_HLY" / "Downstream" / "MCP" / "ToolIntegration" / "AssistantToolBridge.swift"
+
+LIFECYCLE_OPERATION_METHODS: dict[str, str] = {
+    "app.import_package": r"func\s+importPackage\(",
+    "app.install_preview": r"func\s+installPreview\(",
+    "app.discard_preview": r"func\s+discardPreview\(",
+    "app.launch": r"func\s+launch\(",
+    "app.dismiss_active": r"func\s+dismissActiveApplication\(",
+    "app.set_enabled": r"func\s+setEnabled\(",
+    "app.set_capability_granted": r"func\s+setCapabilityGranted\(",
+    "app.uninstall": r"func\s+uninstall\(",
+}
+
+TOOL_AUTHORITY_OPERATION_METHODS: dict[str, tuple[Path, str]] = {
+    "tool_authority.resolve": (TOOL_AUTHORITY_PATH, r"func\s+resolution\(\s*alias:"),
+    "tool_authority.invoke": (ASSISTANT_TOOL_BRIDGE_PATH, r"func\s+execute\(\s*alias:"),
+}
 
 
-def extract_shell_commands() -> set[str]:
-    content = IOS_SYSTEM_RUNNER_PATH.read_text(encoding="utf-8")
+def extract_shell_commands(source_path: Path | None = None) -> set[str]:
+    path = source_path or IOS_SYSTEM_RUNNER_PATH
+    content = path.read_text(encoding="utf-8")
     match = re.search(r"public static let linkedCommands: Set<String> = \[\s*([\s\S]*?)\s*\]", content)
     if not match:
-        raise ValueError(f"Could not find linkedCommands in {IOS_SYSTEM_RUNNER_PATH}")
+        raise ValueError(f"Could not find linkedCommands in {path}")
     commands = re.findall(r'"([a-z0-9_]+)"', match.group(1))
     return set(commands)
 
 
-def extract_script_ui_commands() -> set[str]:
-    content = SCRIPT_UI_CONTRACTS_PATH.read_text(encoding="utf-8")
+def extract_script_ui_commands(source_path: Path | None = None) -> set[str]:
+    path = source_path or SCRIPT_UI_CONTRACTS_PATH
+    content = path.read_text(encoding="utf-8")
     match = re.search(r"public enum HanlinScriptUICommand:[\s\S]*?\{([\s\S]*?)\n\}", content)
     if not match:
-        raise ValueError(f"Could not find HanlinScriptUICommand in {SCRIPT_UI_CONTRACTS_PATH}")
+        raise ValueError(f"Could not find HanlinScriptUICommand in {path}")
     cases = re.findall(r"case\s+([a-zA-Z0-9_]+)", match.group(1))
     return set(cases)
 
 
-def extract_capabilities() -> set[str]:
-    content = SCRIPT_ANALYZER_PATH.read_text(encoding="utf-8")
+def extract_capabilities(source_path: Path | None = None) -> set[str]:
+    path = source_path or SCRIPT_ANALYZER_PATH
+    content = path.read_text(encoding="utf-8")
     match = re.search(r"private static func inferredCapability\(for symbol: String\) -> HanlinCapabilityID\? \{([\s\S]*?)\n\s*\}", content)
     if not match:
-        raise ValueError(f"Could not find inferredCapability in {SCRIPT_ANALYZER_PATH}")
+        raise ValueError(f"Could not find inferredCapability in {path}")
     caps = re.findall(r',\s*"([a-z0-9_-]+)"\)', match.group(1))
     return set(caps)
 
 
-def load_manifest() -> dict[str, Any]:
-    if not MANIFEST_PATH.exists():
-        raise FileNotFoundError(f"Manifest missing at {MANIFEST_PATH}")
-    with open(MANIFEST_PATH, "r", encoding="utf-8") as f:
+def extract_lifecycle_operations(source_path: Path | None = None) -> set[str]:
+    path = source_path or SCRIPTING_PLATFORM_PATH
+    content = path.read_text(encoding="utf-8")
+    found_ops: set[str] = set()
+    for op_id, pattern in LIFECYCLE_OPERATION_METHODS.items():
+        if re.search(pattern, content):
+            found_ops.add(op_id)
+        else:
+            raise ValueError(f"Authoritative lifecycle method matching '{pattern}' not found in {path}")
+    return found_ops
+
+
+def extract_tool_authority_operations(
+    authority_path: Path | None = None,
+    bridge_path: Path | None = None
+) -> set[str]:
+    auth_p = authority_path or TOOL_AUTHORITY_PATH
+    bridge_p = bridge_path or ASSISTANT_TOOL_BRIDGE_PATH
+    found_ops: set[str] = set()
+
+    auth_content = auth_p.read_text(encoding="utf-8")
+    if re.search(r"func\s+resolution\(\s*alias:", auth_content):
+        found_ops.add("tool_authority.resolve")
+    else:
+        raise ValueError(f"Authoritative resolve method not found in {auth_p}")
+
+    bridge_content = bridge_p.read_text(encoding="utf-8")
+    if re.search(r"func\s+execute\(\s*alias:", bridge_content):
+        found_ops.add("tool_authority.invoke")
+    else:
+        raise ValueError(f"Authoritative execute method not found in {bridge_p}")
+
+    return found_ops
+
+
+def load_manifest(manifest_path: Path | None = None) -> dict[str, Any]:
+    path = manifest_path or MANIFEST_PATH
+    if not path.exists():
+        raise FileNotFoundError(f"Manifest missing at {path}")
+    with open(path, "r", encoding="utf-8") as f:
         return json.load(f)
 
 
-def validate_coverage(manifest: dict[str, Any] | None = None) -> list[str]:
+def validate_coverage(
+    manifest: dict[str, Any] | None = None,
+    shell_source: Path | None = None,
+    script_ui_source: Path | None = None,
+    capability_source: Path | None = None,
+    lifecycle_source: Path | None = None,
+    tool_authority_source: Path | None = None,
+    tool_bridge_source: Path | None = None,
+) -> list[str]:
     if manifest is None:
         manifest = load_manifest()
 
@@ -85,25 +152,37 @@ def validate_coverage(manifest: dict[str, Any] | None = None) -> list[str]:
             errors.append(f"Operation {cid} has neither test coverage nor justified exclusion")
 
     # 1. Check all shell commands
-    shell_cmds = extract_shell_commands()
+    shell_cmds = extract_shell_commands(shell_source)
     for cmd in sorted(shell_cmds):
         expected_id = f"shell.{cmd}"
         if expected_id not in ops_by_id:
             errors.append(f"Missing shell command coverage entry: {expected_id}")
 
     # 2. Check all ScriptUI commands
-    ui_cmds = extract_script_ui_commands()
+    ui_cmds = extract_script_ui_commands(script_ui_source)
     for cmd in sorted(ui_cmds):
         expected_id = f"script_ui.command.{cmd}"
         if expected_id not in ops_by_id:
             errors.append(f"Missing ScriptUI command coverage entry: {expected_id}")
 
     # 3. Check all capabilities
-    capabilities = extract_capabilities()
+    capabilities = extract_capabilities(capability_source)
     for cap in sorted(capabilities):
         expected_id = f"capability.{cap}"
         if expected_id not in ops_by_id:
             errors.append(f"Missing capability coverage entry: {expected_id}")
+
+    # 4. Check all app lifecycle operations
+    lifecycle_ops = extract_lifecycle_operations(lifecycle_source)
+    for op in sorted(lifecycle_ops):
+        if op not in ops_by_id:
+            errors.append(f"Missing app lifecycle coverage entry: {op}")
+
+    # 5. Check all canonical tool authority operations
+    tool_ops = extract_tool_authority_operations(tool_authority_source, tool_bridge_source)
+    for op in sorted(tool_ops):
+        if op not in ops_by_id:
+            errors.append(f"Missing tool authority coverage entry: {op}")
 
     return errors
 
@@ -114,7 +193,7 @@ def generate_markdown_report(manifest: dict[str, Any]) -> str:
         "",
         f"**Schema Version:** {manifest.get('schema_version', 1)}  ",
         f"**Last Audited:** {manifest.get('last_audited', '2026-09-09')}  ",
-        f"**Total Registered Operations:** {len(manifest.get('operations', []))}  ",
+        f"**Total Registered Operations:** {len(manifest.get('operations', []))} (23 Shell, 14 ScriptUI, 11 Capabilities, 8 Lifecycle, 2 Tool Authority)  ",
         "",
         "| Canonical ID | Public Name | Owner / Runtime | Capability | State Mutation | Existing Acceptance | New Acceptance |",
         "|---|---|---|---|---|---|---|"
@@ -128,7 +207,7 @@ def generate_markdown_report(manifest: dict[str, Any]) -> str:
         mut = "Yes" if op["state_mutation"] else "No"
         exist = op.get("existing_acceptance_test") or "-"
         new = op.get("new_acceptance_test") or "-"
-        lines.append(f"| `{cid}` | {name} | {owner} | {cap} | {mut} | {exist} | {new} |")
+        lines.append(f"| `{cid}` | {name} | {owner} | {cap} | {mut} | `{exist}` | `{new}` |")
 
     lines.append("")
     return "\n".join(lines)
