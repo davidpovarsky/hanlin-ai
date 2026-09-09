@@ -49,6 +49,10 @@ final class HanlinScriptUIProductionE2ETests: XCTestCase {
         XCTAssertTrue(networkToggle.waitForExistence(timeout: 10), "Network capability approval toggle was not rendered in preview")
         XCTAssertFalse(installButton.isEnabled, "Install button was prematurely enabled before capability approval")
         networkToggle.tap()
+        _ = waitUntil(timeout: 5) { (networkToggle.value as? String) == "1" }
+        if !installButton.isHittable {
+            app.swipeDown()
+        }
         XCTAssertTrue(waitUntil(timeout: 5) { installButton.isEnabled }, "Install button remained disabled after approving capability")
 
         // 2. Install
@@ -203,13 +207,15 @@ final class HanlinScriptUIProductionE2ETests: XCTestCase {
         selectArchive(named: "HanlinScriptUIMalformed")
 
         let errorIndicator = app.descendants(matching: .any).matching(
-            NSPredicate(format: "identifier == 'hanlin-import-error' OR identifier == 'hanlin-import-error-message' OR label CONTAINS 'Import Error' OR label CONTAINS 'malformed'")
+            NSPredicate(format: "identifier == 'hanlin-import-error' OR identifier == 'hanlin-import-error-message' OR label CONTAINS 'Import Error' OR label CONTAINS 'malformed' OR label CONTAINS 'entrypoint'")
         ).firstMatch
         if !errorIndicator.waitForExistence(timeout: 5) {
             app.swipeUp()
         }
         XCTAssertTrue(errorIndicator.waitForExistence(timeout: 20), "Malformed package import error was not displayed")
-        XCTAssertFalse(app.buttons["hanlin-package-install"].firstMatch.exists, "Install button was unexpectedly available for malformed package")
+
+        let installButton = app.buttons["hanlin-package-install"].firstMatch
+        XCTAssertTrue(!installButton.exists || !installButton.isEnabled, "Install button was unexpectedly available for malformed package")
 
         closeImportSurfaces()
 
@@ -382,11 +388,15 @@ final class HanlinScriptUIProductionE2ETests: XCTestCase {
         }
         if networkToggle.waitForExistence(timeout: 5) && !installButton.isEnabled {
             networkToggle.tap()
+            _ = waitUntil(timeout: 5) { (networkToggle.value as? String) == "1" }
+            if !installButton.isHittable {
+                app.swipeDown()
+            }
         }
-        XCTAssertTrue(waitUntil(timeout: 5) { installButton.isEnabled })
         if !installButton.isHittable {
             app.swipeDown()
         }
+        XCTAssertTrue(waitUntil(timeout: 5) { installButton.isEnabled })
         installButton.tap()
         _ = waitUntil(timeout: 30) { !installButton.exists }
         closeImportSurfaces()

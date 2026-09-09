@@ -280,7 +280,9 @@ final class HanlinScriptingPlatform {
     }
 
     func setCapabilityApproved(_ approved: Bool, capability: HanlinCapabilityID) {
-        capabilityApprovals.setApproved(approved, capability: capability)
+        var updated = capabilityApprovals
+        updated.setApproved(approved, capability: capability)
+        capabilityApprovals = updated
     }
 
     func discardPreview() {
