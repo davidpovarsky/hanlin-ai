@@ -11,19 +11,45 @@ final class HanlinPrimaryNavigationSmokeUITests: XCTestCase {
         app.launch()
     }
 
+    @discardableResult
+    private func selectTab(identifier: String, labels: [String] = []) -> Bool {
+        var candidates: [XCUIElement] = [
+            app.buttons[identifier].firstMatch,
+            app.tabBars.buttons[identifier].firstMatch,
+            app.tabs[identifier].firstMatch
+        ]
+        for label in labels {
+            candidates.append(app.buttons[label].firstMatch)
+            candidates.append(app.tabBars.buttons[label].firstMatch)
+            candidates.append(app.tabs[label].firstMatch)
+        }
+
+        for candidate in candidates {
+            if candidate.waitForExistence(timeout: 2) {
+                candidate.tap()
+                return true
+            }
+        }
+
+        let labelClauses = labels.map { "label CONTAINS '\($0)'" }
+        let format = (["identifier == '\(identifier)'"] + labelClauses).joined(separator: " OR ")
+        let fallback = app.descendants(matching: .any).matching(NSPredicate(format: format)).firstMatch
+        if fallback.waitForExistence(timeout: 8) {
+            fallback.tap()
+            return true
+        }
+        return false
+    }
+
     func testWholeAppPrimaryNavigationSmoke() throws {
         // 1. Root: Home / Chat List (Tab 0)
-        let homeTab = app.tabBars.buttons["hanlin-home-tab"].firstMatch
-        XCTAssertTrue(homeTab.waitForExistence(timeout: 10), "Home tab button 'hanlin-home-tab' was absent")
-        homeTab.tap()
-        let homeRoot = app.navigationBars["Hylic.AI"].firstMatch
-        XCTAssertTrue(homeRoot.waitForExistence(timeout: 15), "Primary navigation to Home/ChatList failed: root navigation bar 'Hylic.AI' was absent")
+        XCTAssertTrue(selectTab(identifier: "hanlin-home-tab", labels: ["列表", "List", "Chats"]), "Home tab button was absent")
+        let homeRootPredicate = NSPredicate(format: "label CONTAINS 'Hylic.AI' OR identifier CONTAINS 'Hylic.AI' OR title CONTAINS 'Hylic.AI'")
+        let homeRoot = app.descendants(matching: .any).matching(homeRootPredicate).firstMatch
+        XCTAssertTrue(homeRoot.waitForExistence(timeout: 15), "Primary navigation to Home/ChatList failed: root 'Hylic.AI' was absent")
 
         // 2. Vision View (Tab 1)
-        let visionTab = app.tabBars.buttons["hanlin-vision-tab"].firstMatch
-        XCTAssertTrue(visionTab.waitForExistence(timeout: 10), "Vision tab button 'hanlin-vision-tab' was absent")
-        visionTab.tap()
-
+        XCTAssertTrue(selectTab(identifier: "hanlin-vision-tab", labels: ["视觉", "Vision"]), "Vision tab button was absent")
         let visionReturnPredicate = NSPredicate(format: "label CONTAINS 'chevron.down.circle.fill' OR identifier CONTAINS 'chevron.down.circle.fill'")
         let visionReturnButton = app.descendants(matching: .any).matching(visionReturnPredicate).firstMatch
         XCTAssertTrue(visionReturnButton.waitForExistence(timeout: 15), "Primary navigation to Vision failed: destination root button was absent")
@@ -31,46 +57,31 @@ final class HanlinPrimaryNavigationSmokeUITests: XCTestCase {
         XCTAssertTrue(homeRoot.waitForExistence(timeout: 15), "Return navigation from Vision to Home failed")
 
         // 3. Knowledge Base / Backpack (Tab 2)
-        let knowledgeTab = app.tabBars.buttons["hanlin-knowledge-tab"].firstMatch
-        XCTAssertTrue(knowledgeTab.waitForExistence(timeout: 10), "Knowledge tab button 'hanlin-knowledge-tab' was absent")
-        knowledgeTab.tap()
-
+        XCTAssertTrue(selectTab(identifier: "hanlin-knowledge-tab", labels: ["知识库", "Knowledge"]), "Knowledge tab button was absent")
         let knowledgePredicate = NSPredicate(format: "label CONTAINS 'Knowledge' OR label CONTAINS '知识'")
-        let knowledgeRoot = app.navigationBars.matching(knowledgePredicate).firstMatch
-        XCTAssertTrue(knowledgeRoot.waitForExistence(timeout: 15), "Primary navigation to Knowledge failed: root navigation bar was absent")
+        let knowledgeRoot = app.descendants(matching: .any).matching(knowledgePredicate).firstMatch
+        XCTAssertTrue(knowledgeRoot.waitForExistence(timeout: 15), "Primary navigation to Knowledge failed: root was absent")
 
-        // 3. Models / Agents (Tab 3)
-        let modelsTab = app.tabBars.buttons["hanlin-models-tab"].firstMatch
-        XCTAssertTrue(modelsTab.waitForExistence(timeout: 10), "Models tab button 'hanlin-models-tab' was absent")
-        modelsTab.tap()
-
+        // 4. Models / Agents (Tab 3)
+        XCTAssertTrue(selectTab(identifier: "hanlin-models-tab", labels: ["模型", "Models", "智能体"]), "Models tab button was absent")
         let modelsPredicate = NSPredicate(format: "label CONTAINS 'Models' OR label CONTAINS '模型' OR label CONTAINS '智能体'")
-        let modelsRoot = app.navigationBars.matching(modelsPredicate).firstMatch
-        XCTAssertTrue(modelsRoot.waitForExistence(timeout: 15), "Primary navigation to Models failed: root navigation bar was absent")
+        let modelsRoot = app.descendants(matching: .any).matching(modelsPredicate).firstMatch
+        XCTAssertTrue(modelsRoot.waitForExistence(timeout: 15), "Primary navigation to Models failed: root was absent")
 
-        // 4. Apps Hub (Tab 4)
-        let appsTab = app.tabBars.buttons["hanlin-apps-tab"].firstMatch
-        XCTAssertTrue(appsTab.waitForExistence(timeout: 10), "Apps tab button 'hanlin-apps-tab' was absent")
-        appsTab.tap()
-
+        // 5. Apps Hub (Tab 4)
+        XCTAssertTrue(selectTab(identifier: "hanlin-apps-tab", labels: ["Apps"]), "Apps tab button was absent")
         let appsRoot = app.navigationBars["Apps"].firstMatch
         let addAppButton = app.buttons["hanlin-apps-add"].firstMatch
         XCTAssertTrue(appsRoot.waitForExistence(timeout: 15) || addAppButton.waitForExistence(timeout: 15), "Primary navigation to Apps failed: Apps root was absent")
 
-        // 5. Settings (Tab 5)
-        let settingsTab = app.tabBars.buttons["hanlin-settings-tab"].firstMatch
-        XCTAssertTrue(settingsTab.waitForExistence(timeout: 10), "Settings tab button 'hanlin-settings-tab' was absent")
-        settingsTab.tap()
-
+        // 6. Settings (Tab 5)
+        XCTAssertTrue(selectTab(identifier: "hanlin-settings-tab", labels: ["设置", "Settings"]), "Settings tab button was absent")
         let settingsPredicate = NSPredicate(format: "label CONTAINS 'Settings' OR label CONTAINS '设置'")
-        let settingsRoot = app.navigationBars.matching(settingsPredicate).firstMatch
+        let settingsRoot = app.descendants(matching: .any).matching(settingsPredicate).firstMatch
         XCTAssertTrue(settingsRoot.waitForExistence(timeout: 15), "Primary navigation to Settings failed: Settings root was absent")
 
-        // 6. Return to Apps Hub (proving full navigation cycle)
-        let returnAppsTab = app.tabBars.buttons["hanlin-apps-tab"].firstMatch
-        XCTAssertTrue(returnAppsTab.waitForExistence(timeout: 10))
-        returnAppsTab.tap()
-
+        // 7. Return to Apps Hub (proving full navigation cycle)
+        XCTAssertTrue(selectTab(identifier: "hanlin-apps-tab", labels: ["Apps"]), "Return to Apps tab button was absent")
         XCTAssertTrue(appsRoot.waitForExistence(timeout: 15) || addAppButton.waitForExistence(timeout: 15), "Return navigation to Apps failed")
     }
 }

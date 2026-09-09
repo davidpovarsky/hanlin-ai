@@ -195,6 +195,13 @@ struct ScriptingInstalledPackageDetailView: View {
             }
         }
         .navigationTitle(package?.manifest?.name ?? "Script Package")
+        .toolbar {
+            ToolbarItem(placement: .confirmationAction) {
+                Button("Done") {
+                    dismiss()
+                }
+            }
+        }
     }
 
     private var package: HanlinStoredPackageSnapshot? {

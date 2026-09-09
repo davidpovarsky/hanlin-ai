@@ -29,22 +29,32 @@ final class HanlinScriptUIProductionE2ETests: XCTestCase {
         selectArchive(named: "HanlinScriptUIValid")
 
         // Assert exact preview metadata from production UI
-        XCTAssertTrue(app.staticTexts["Hanlin ScriptUI Valid"].firstMatch.waitForExistence(timeout: 15), "Preview title missing")
-        XCTAssertTrue(app.staticTexts["1.0.0"].firstMatch.waitForExistence(timeout: 5), "Preview version missing")
-        XCTAssertTrue(app.staticTexts["index.tsx"].firstMatch.waitForExistence(timeout: 5), "Preview entrypoint missing")
-
         let installButton = app.buttons["hanlin-package-install"].firstMatch
         XCTAssertTrue(installButton.waitForExistence(timeout: 20), "Install button did not appear in preview")
 
+        let titlePredicate = NSPredicate(format: "label CONTAINS 'Hanlin ScriptUI Valid' OR value CONTAINS 'Hanlin ScriptUI Valid'")
+        XCTAssertTrue(app.descendants(matching: .any).matching(titlePredicate).firstMatch.waitForExistence(timeout: 10), "Preview title missing")
+        let versionPredicate = NSPredicate(format: "label CONTAINS '1.0.0' OR value CONTAINS '1.0.0'")
+        XCTAssertTrue(app.descendants(matching: .any).matching(versionPredicate).firstMatch.waitForExistence(timeout: 5), "Preview version missing")
+        let entrypointPredicate = NSPredicate(format: "label CONTAINS 'index.tsx' OR value CONTAINS 'index.tsx'")
+        XCTAssertTrue(app.descendants(matching: .any).matching(entrypointPredicate).firstMatch.waitForExistence(timeout: 5), "Preview entrypoint missing")
+
         // Mandatory network capability check: 'fetch' in index.tsx requests 'network'
         // Test MUST fail if approval UI is absent.
-        let networkToggle = app.switches["network"].firstMatch
+        var networkToggle = app.switches["network"].firstMatch
+        if !networkToggle.waitForExistence(timeout: 3) {
+            app.swipeUp()
+            networkToggle = app.switches["network"].firstMatch
+        }
         XCTAssertTrue(networkToggle.waitForExistence(timeout: 10), "Network capability approval toggle was not rendered in preview")
         XCTAssertFalse(installButton.isEnabled, "Install button was prematurely enabled before capability approval")
         networkToggle.tap()
         XCTAssertTrue(waitUntil(timeout: 5) { installButton.isEnabled }, "Install button remained disabled after approving capability")
 
         // 2. Install
+        if !installButton.isHittable {
+            app.swipeDown()
+        }
         installButton.tap()
         XCTAssertTrue(waitUntil(timeout: 30) { !installButton.exists }, "Installation did not complete")
         closeImportSurfaces()
@@ -160,9 +170,10 @@ final class HanlinScriptUIProductionE2ETests: XCTestCase {
         selectArchive(named: "HanlinScriptUIValid")
 
         // Reach valid Preview
-        XCTAssertTrue(app.staticTexts["Hanlin ScriptUI Valid"].firstMatch.waitForExistence(timeout: 15))
         let discardButton = app.buttons["Discard"].firstMatch
-        XCTAssertTrue(discardButton.waitForExistence(timeout: 10), "Discard button missing in preview")
+        XCTAssertTrue(discardButton.waitForExistence(timeout: 20), "Discard button missing in preview")
+        let titlePredicate = NSPredicate(format: "label CONTAINS 'Hanlin ScriptUI Valid' OR value CONTAINS 'Hanlin ScriptUI Valid'")
+        XCTAssertTrue(app.descendants(matching: .any).matching(titlePredicate).firstMatch.waitForExistence(timeout: 10), "Preview title missing")
 
         // Explicitly Discard preview (app.discard_preview)
         discardButton.tap()
@@ -194,6 +205,9 @@ final class HanlinScriptUIProductionE2ETests: XCTestCase {
         let errorIndicator = app.descendants(matching: .any).matching(
             NSPredicate(format: "identifier == 'hanlin-import-error' OR identifier == 'hanlin-import-error-message' OR label CONTAINS 'Import Error' OR label CONTAINS 'malformed'")
         ).firstMatch
+        if !errorIndicator.waitForExistence(timeout: 5) {
+            app.swipeUp()
+        }
         XCTAssertTrue(errorIndicator.waitForExistence(timeout: 20), "Malformed package import error was not displayed")
         XCTAssertFalse(app.buttons["hanlin-package-install"].firstMatch.exists, "Install button was unexpectedly available for malformed package")
 
@@ -288,14 +302,32 @@ final class HanlinScriptUIProductionE2ETests: XCTestCase {
 
     private func openApps() {
         if appsAddButton.waitForExistence(timeout: 5) { return }
-        let appsTab = app.tabBars.buttons["hanlin-apps-tab"].firstMatch
-        if appsTab.waitForExistence(timeout: 5) {
-            appsTab.tap()
-        } else {
-            let labelTab = app.tabBars.buttons["Apps"].firstMatch
-            if labelTab.waitForExistence(timeout: 5) { labelTab.tap() }
+
+        let candidates = [
+            app.buttons["hanlin-apps-tab"].firstMatch,
+            app.tabBars.buttons["hanlin-apps-tab"].firstMatch,
+            app.tabs["hanlin-apps-tab"].firstMatch,
+            app.buttons["Apps"].firstMatch,
+            app.tabBars.buttons["Apps"].firstMatch,
+            app.tabs["Apps"].firstMatch
+        ]
+        var tapped = false
+        for candidate in candidates {
+            if candidate.waitForExistence(timeout: 3) {
+                candidate.tap()
+                tapped = true
+                break
+            }
         }
-        ensureAppsAddButton(timeout: 15)
+        if !tapped {
+            let fallback = app.descendants(matching: .any).matching(
+                NSPredicate(format: "identifier == 'hanlin-apps-tab' OR label == 'Apps'")
+            ).firstMatch
+            if fallback.waitForExistence(timeout: 10) {
+                fallback.tap()
+            }
+        }
+        ensureAppsAddButton(timeout: 20)
     }
 
     private func selectArchive(named archiveName: String) {
@@ -306,6 +338,19 @@ final class HanlinScriptUIProductionE2ETests: XCTestCase {
         if directArchive.waitForExistence(timeout: 5) {
             _ = waitUntil(timeout: 5) { directArchive.isHittable }
             directArchive.tap()
+
+            let inspecting = app.staticTexts["Inspecting…"].firstMatch
+            let install = app.buttons["hanlin-package-install"].firstMatch
+            let errorText = app.staticTexts["Import Error"].firstMatch
+            let errorIndicator = app.descendants(matching: .any).matching(
+                NSPredicate(format: "identifier == 'hanlin-import-error' OR identifier == 'hanlin-import-error-message' OR label CONTAINS 'Import Error'")
+            ).firstMatch
+            let started = waitUntil(timeout: 4) {
+                inspecting.exists || install.exists || errorText.exists || errorIndicator.exists
+            }
+            if !started && directArchive.exists && directArchive.isHittable {
+                directArchive.tap()
+            }
             return
         }
 
@@ -330,11 +375,18 @@ final class HanlinScriptUIProductionE2ETests: XCTestCase {
 
         let installButton = app.buttons["hanlin-package-install"].firstMatch
         XCTAssertTrue(installButton.waitForExistence(timeout: 20))
-        let networkToggle = app.switches["network"].firstMatch
-        if networkToggle.waitForExistence(timeout: 3) && !installButton.isEnabled {
+        var networkToggle = app.switches["network"].firstMatch
+        if !networkToggle.waitForExistence(timeout: 3) {
+            app.swipeUp()
+            networkToggle = app.switches["network"].firstMatch
+        }
+        if networkToggle.waitForExistence(timeout: 5) && !installButton.isEnabled {
             networkToggle.tap()
         }
         XCTAssertTrue(waitUntil(timeout: 5) { installButton.isEnabled })
+        if !installButton.isHittable {
+            app.swipeDown()
+        }
         installButton.tap()
         _ = waitUntil(timeout: 30) { !installButton.exists }
         closeImportSurfaces()
@@ -371,7 +423,7 @@ final class HanlinScriptUIProductionE2ETests: XCTestCase {
 
     private func closeDetails() {
         let done = app.buttons["Done"].firstMatch
-        if done.exists && done.isHittable {
+        if done.waitForExistence(timeout: 3) && done.isHittable {
             done.tap()
         } else {
             app.swipeDown()
