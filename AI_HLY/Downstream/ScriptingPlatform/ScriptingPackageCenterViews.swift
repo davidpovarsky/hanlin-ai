@@ -145,6 +145,15 @@ private struct ScriptingImportPreviewSections: View {
                             set: { platform.setCapabilityApproved($0, capability: request.capabilityID) }
                         )
                     )
+                    .accessibilityIdentifier("hanlin-capability-toggle-\(request.capabilityID.rawValue)")
+                }
+                if !platform.capabilityApprovals.missingRequiredCapabilities.isEmpty {
+                    Button("Approve All Required Capabilities") {
+                        for request in preview.requestedCapabilities where request.required {
+                            platform.setCapabilityApproved(true, capability: request.capabilityID)
+                        }
+                    }
+                    .accessibilityIdentifier("hanlin-approve-all-capabilities")
                 }
                 Text("Required capabilities must be approved explicitly. They remain package-scoped and can be revoked from package details.")
                     .font(.caption)

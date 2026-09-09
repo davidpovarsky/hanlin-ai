@@ -14,27 +14,52 @@ final class HanlinPrimaryNavigationSmokeUITests: XCTestCase {
     @discardableResult
     private func selectTab(identifier: String, labels: [String] = []) -> Bool {
         var candidates: [XCUIElement] = [
-            app.buttons[identifier].firstMatch,
             app.tabBars.buttons[identifier].firstMatch,
+            app.buttons[identifier].firstMatch,
             app.tabs[identifier].firstMatch
         ]
         for label in labels {
-            candidates.append(app.buttons[label].firstMatch)
             candidates.append(app.tabBars.buttons[label].firstMatch)
+            candidates.append(app.buttons[label].firstMatch)
             candidates.append(app.tabs[label].firstMatch)
         }
 
+        // 1. Try directly on current tab page
         for candidate in candidates {
-            if candidate.waitForExistence(timeout: 2) {
+            if candidate.waitForExistence(timeout: 2) && candidate.isHittable {
                 candidate.tap()
                 return true
             }
         }
 
+        // 2. If tab bar is paged (e.g. iPad mini floating tab bar with Next Page / Previous Page)
+        let nextPage = app.buttons["Next Page"].firstMatch
+        if nextPage.waitForExistence(timeout: 2) && nextPage.isHittable {
+            nextPage.tap()
+            for candidate in candidates {
+                if candidate.waitForExistence(timeout: 3) && candidate.isHittable {
+                    candidate.tap()
+                    return true
+                }
+            }
+        }
+
+        let prevPage = app.buttons["Previous Page"].firstMatch
+        if prevPage.waitForExistence(timeout: 2) && prevPage.isHittable {
+            prevPage.tap()
+            for candidate in candidates {
+                if candidate.waitForExistence(timeout: 3) && candidate.isHittable {
+                    candidate.tap()
+                    return true
+                }
+            }
+        }
+
+        // 3. Fallback to broad hierarchy predicate
         let labelClauses = labels.map { "label CONTAINS '\($0)'" }
         let format = (["identifier == '\(identifier)'"] + labelClauses).joined(separator: " OR ")
         let fallback = app.descendants(matching: .any).matching(NSPredicate(format: format)).firstMatch
-        if fallback.waitForExistence(timeout: 8) {
+        if fallback.waitForExistence(timeout: 5) && fallback.isHittable {
             fallback.tap()
             return true
         }

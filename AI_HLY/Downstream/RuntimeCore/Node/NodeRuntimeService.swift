@@ -277,7 +277,7 @@ actor NodeRuntimeService {
                     )
                 }
                 let host = RuntimeHostConnection(baseURL: url, token: token)
-                _ = try await host.data(path: "/health", timeout: 3)
+                _ = try await host.data(path: "/health", timeout: 15)
                 connection = host
                 snapshotValue.state = .ready
                 snapshotValue.version = ready.nodeVersion
@@ -302,7 +302,7 @@ actor NodeRuntimeService {
         var category = NodeHostHealthFailure.transient
         for attempt in 1...3 {
             do {
-                _ = try await existing.data(path: "/health", timeout: 3)
+                _ = try await existing.data(path: "/health", timeout: 15)
                 connection = existing
                 snapshotValue.state = .ready
                 snapshotValue.lastHealthCheck = .now

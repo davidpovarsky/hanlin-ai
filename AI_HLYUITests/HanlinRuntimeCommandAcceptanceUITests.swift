@@ -94,13 +94,23 @@ final class HanlinRuntimeCommandAcceptanceUITests: XCTestCase {
     // MARK: - Helpers
 
     private func openSettings() {
+        let runtimeLink = app.buttons["hanlin-runtimes-packages-link"].firstMatch
+        if runtimeLink.exists { return }
         let settingsTab = app.tabBars.buttons["hanlin-settings-tab"].firstMatch
-        if settingsTab.waitForExistence(timeout: 5) {
+        if settingsTab.waitForExistence(timeout: 3) && settingsTab.isHittable {
             settingsTab.tap()
-        } else {
-            let labelTab = app.tabBars.buttons["Settings"].firstMatch
-            if labelTab.waitForExistence(timeout: 5) { labelTab.tap() }
+            return
         }
+        let nextPage = app.buttons["Next Page"].firstMatch
+        if nextPage.waitForExistence(timeout: 2) && nextPage.isHittable {
+            nextPage.tap()
+            if settingsTab.waitForExistence(timeout: 3) && settingsTab.isHittable {
+                settingsTab.tap()
+                return
+            }
+        }
+        let labelTab = app.tabBars.buttons["Settings"].firstMatch
+        if labelTab.waitForExistence(timeout: 2) && labelTab.isHittable { labelTab.tap() }
     }
 
     private func openRuntimeCenter() {

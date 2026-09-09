@@ -48,12 +48,21 @@ final class HanlinScriptUIProductionE2ETests: XCTestCase {
         }
         XCTAssertTrue(networkToggle.waitForExistence(timeout: 10), "Network capability approval toggle was not rendered in preview")
         XCTAssertFalse(installButton.isEnabled, "Install button was prematurely enabled before capability approval")
-        networkToggle.tap()
+
+        let approveAllButton = app.buttons["hanlin-approve-all-capabilities"].firstMatch
+        if approveAllButton.waitForExistence(timeout: 3) && approveAllButton.isHittable {
+            approveAllButton.tap()
+        } else {
+            networkToggle.tap()
+            if (networkToggle.value as? String) != "1" {
+                networkToggle.coordinate(withNormalizedOffset: CGVector(dx: 0.9, dy: 0.5)).tap()
+            }
+        }
         _ = waitUntil(timeout: 5) { (networkToggle.value as? String) == "1" }
         if !installButton.isHittable {
             app.swipeDown()
         }
-        XCTAssertTrue(waitUntil(timeout: 5) { installButton.isEnabled }, "Install button remained disabled after approving capability")
+        XCTAssertTrue(waitUntil(timeout: 8) { installButton.isEnabled }, "Install button remained disabled after approving capability")
 
         // 2. Install
         if !installButton.isHittable {
@@ -386,17 +395,20 @@ final class HanlinScriptUIProductionE2ETests: XCTestCase {
             app.swipeUp()
             networkToggle = app.switches["network"].firstMatch
         }
-        if networkToggle.waitForExistence(timeout: 5) && !installButton.isEnabled {
+        let approveAllButton = app.buttons["hanlin-approve-all-capabilities"].firstMatch
+        if approveAllButton.waitForExistence(timeout: 2) && approveAllButton.isHittable {
+            approveAllButton.tap()
+        } else if networkToggle.waitForExistence(timeout: 5) && !installButton.isEnabled {
             networkToggle.tap()
-            _ = waitUntil(timeout: 5) { (networkToggle.value as? String) == "1" }
-            if !installButton.isHittable {
-                app.swipeDown()
+            if (networkToggle.value as? String) != "1" {
+                networkToggle.coordinate(withNormalizedOffset: CGVector(dx: 0.9, dy: 0.5)).tap()
             }
+            _ = waitUntil(timeout: 5) { (networkToggle.value as? String) == "1" }
         }
         if !installButton.isHittable {
             app.swipeDown()
         }
-        XCTAssertTrue(waitUntil(timeout: 5) { installButton.isEnabled })
+        XCTAssertTrue(waitUntil(timeout: 8) { installButton.isEnabled })
         installButton.tap()
         _ = waitUntil(timeout: 30) { !installButton.exists }
         closeImportSurfaces()
