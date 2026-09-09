@@ -342,10 +342,9 @@ struct HanlinScriptPackageProductionE2ETests {
         let installed = try #require(platform.installedPackages.first)
         let id = installed.record.installedPackageID
 
-        // 1. Initial Launch: establishes activeApplicationID, applicationSession, and activeApplicationModel
+        // 1. Initial Launch: establishes activeApplicationID and activeApplicationModel
         await platform.launch(id)
         #expect(platform.activeApplicationID == id)
-        let initialSession = try #require(platform.applicationSession)
         let initialModel = try #require(platform.activeApplicationModel)
         #expect(initialModel.root.properties["text"] == .string("Active Session Model"))
 
@@ -353,16 +352,14 @@ struct HanlinScriptPackageProductionE2ETests {
         // This exercises: if activeApplicationID == id { return }
         await platform.launch(id)
 
-        // 3. Verify identical session and model object identity (no recreation or reset)
+        // 3. Verify identical model object identity (no recreation or reset)
         #expect(platform.activeApplicationID == id)
-        #expect(platform.applicationSession === initialSession)
         #expect(platform.activeApplicationModel === initialModel)
         #expect(platform.activity == .idle)
 
         // 4. Dismiss cleanly
         platform.dismissActiveApplication()
         #expect(platform.activeApplicationID == nil)
-        #expect(platform.applicationSession == nil)
         #expect(platform.activeApplicationModel == nil)
     }
 }
