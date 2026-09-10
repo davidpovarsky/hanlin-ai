@@ -540,6 +540,20 @@ class AffectedValidationPlannerTests(unittest.TestCase):
             )
         self.assertIn("no specific unit test suite mapping was found", str(ctx.exception))
 
+    def test_parent_suite_ai_hlytests_requires_runtimecore_host(self) -> None:
+        # When full_validation selects AI_HLYTests (parent), it contains Node-dependent suites,
+        # so runtimecore_host must be activated.
+        plan = self.plan_files(["README.md"], full_validation=True)
+        self.assertTrue(plan.step_outputs["run_runtimecore_host"])
+
+    def test_narrow_non_node_suite_does_not_require_runtimecore_host(self) -> None:
+        # A file that maps only to a non-Node adapter suite must NOT activate runtimecore_host.
+        changed = ["AI_HLYTests/CanonicalShadowCoordinatorTests.swift"]
+        plan = self.plan_files(changed)
+        self.assertTrue(plan.step_outputs["run_simulator_unit"])
+        self.assertEqual(plan.step_outputs["simulator_unit_filter"], "AI_HLYTests/CanonicalShadowCoordinatorTests")
+        self.assertFalse(plan.step_outputs["run_runtimecore_host"])
+
 
 if __name__ == "__main__":
     unittest.main()

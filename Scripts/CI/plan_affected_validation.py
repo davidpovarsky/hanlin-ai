@@ -718,8 +718,9 @@ def plan_affected_validation(
         "AI_HLYTests/HanlinTrustedWorkerRouteTests",
     }
     if any(
-        s in NODE_DEPENDENT_UNIT_SUITES
-        or any(s.startswith(nd + "/") for nd in NODE_DEPENDENT_UNIT_SUITES)
+        s == "AI_HLYTests"
+        or s in NODE_DEPENDENT_UNIT_SUITES
+        or any(s.startswith(nd + "/") or nd.startswith(s + "/") for nd in NODE_DEPENDENT_UNIT_SUITES)
         for s in affected_unit_suites
     ):
         if "runtimecore_host" not in selected_groups:
