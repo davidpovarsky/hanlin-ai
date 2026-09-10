@@ -41,13 +41,27 @@ public enum ChatHostExpansionMode: String, Codable, Hashable, Sendable {
   case window
 }
 
+public enum ChatHostContainerStyle: String, Codable, Hashable, Sendable {
+  /// The hosted content already owns its visual card styling (e.g. ModernCards).
+  /// The host behaves as a neutral layout host and avoids duplicate borders, backgrounds, or nested scroll views.
+  case neutral
+  /// Plain or unstyled content that requires a bounded card frame, background, and internal scroll management.
+  case borderedCard
+}
+
 public struct ChatHostExpansionDescriptor: Hashable, Sendable {
   public var mode: ChatHostExpansionMode
   public var title: String?
+  public var launchRequest: NativeAppLaunchRequest?
 
-  public init(mode: ChatHostExpansionMode = .sheet, title: String? = nil) {
+  public init(
+    mode: ChatHostExpansionMode = .sheet,
+    title: String? = nil,
+    launchRequest: NativeAppLaunchRequest? = nil
+  ) {
     self.mode = mode
     self.title = title
+    self.launchRequest = launchRequest
   }
 }
 
@@ -116,22 +130,66 @@ public struct ChatHostExecutionPresentationDescriptor: Hashable, Sendable {
 // MARK: - Bridge Helpers & Adapters
 
 enum ChatPresentationBridge {
-  /// Maps existing tool activity to a standardized execution family.
-  static func executionFamily(for activityKind: AgentDisplayActivityKind)
-    -> ChatHostExecutionFamilyID
-  {
-    switch activityKind {
-    case .search:
-      return .webSearch
-    case .source, .document:
-      return .sourceSearch
-    case .code:
-      return .codeExecution
-    case .map:
-      return .mapLocation
-    case .reasoning, .narrative, .tool, .result, .health, .calendar, .error:
-      return .generic
+  /// Maps existing tool activity and toolName metadata to a standardized execution family.
+  static func executionFamily(
+    for activityKind: AgentDisplayActivityKind?,
+    toolName: String? = nil
+  ) -> ChatHostExecutionFamilyID {
+    if let toolName = toolName?.lowercased(), !toolName.isEmpty {
+      if toolName == "write_system_event" || toolName == "run_command"
+        || toolName.contains("command") || toolName.contains("terminal")
+      {
+        return .commandExecution
+      }
+      if toolName == "extract_remote_file_content" || toolName == "fileutility"
+        || toolName == "create_knowledge_document" || toolName.contains("file")
+      {
+        return .fileOperation
+      }
+      if toolName == "create_canvas" || toolName == "edit_canvas"
+        || toolName.contains("image") || toolName.contains("canvas")
+      {
+        return .imageGeneration
+      }
+      if toolName == "execute_python_code" || toolName == "python"
+        || toolName.contains("code")
+      {
+        return .codeExecution
+      }
+      if toolName == "query_location" || toolName == "get_current_location"
+        || toolName == "search_nearby_locations" || toolName == "get_route"
+        || toolName.contains("map") || toolName.contains("location")
+      {
+        return .mapLocation
+      }
+      if toolName == "search_knowledge_bag" || toolName == "retrieve_memory"
+        || toolName == "save_memory" || toolName == "update_memory"
+      {
+        return .sourceSearch
+      }
+      if toolName == "search_online" || toolName == "search_arxiv_papers"
+        || toolName == "read_web_page" || toolName.contains("search")
+      {
+        return .webSearch
+      }
     }
+
+    if let activityKind {
+      switch activityKind {
+      case .search:
+        return .webSearch
+      case .source, .document:
+        return .sourceSearch
+      case .code:
+        return .codeExecution
+      case .map:
+        return .mapLocation
+      case .reasoning, .narrative, .tool, .result, .health, .calendar, .error:
+        return .generic
+      }
+    }
+
+    return .generic
   }
 
   private static func hasExpandableContent(_ block: NativeUIBlock) -> Bool {
@@ -152,12 +210,35 @@ enum ChatPresentationBridge {
       return nil
     }
     let mode: ChatHostExpansionMode = {
+      if block.actions.contains(where: { $0.presentationStyle == .newWindow }) {
+        return .window
+      }
       switch block.preferredExpandedPresentation {
       case .fullScreen: return .fullScreen
       case .sheet, .none: return .sheet
       }
     }()
-    return ChatHostExpansionDescriptor(mode: mode, title: block.title)
+
+    guard ChatHostPresentationPolicy.isExpansionModeAvailable(mode) else {
+      return nil
+    }
+
+    var launchRequest: NativeAppLaunchRequest? = nil
+    for action in block.actions {
+      if let route = action.route {
+        let style: NativeAppPresentationStyle =
+          action.presentationStyle
+          ?? (mode == .window ? .newWindow : (mode == .fullScreen ? .fullScreen : .largeSheet))
+        launchRequest = NativeAppLaunchRequest(
+          appID: route.appID,
+          presentationStyle: style,
+          initialRoute: route
+        )
+        break
+      }
+    }
+
+    return ChatHostExpansionDescriptor(mode: mode, title: block.title, launchRequest: launchRequest)
   }
 
   /// Adapts existing NativeUIBlock compact preferences to ChatHostSizingPreference.

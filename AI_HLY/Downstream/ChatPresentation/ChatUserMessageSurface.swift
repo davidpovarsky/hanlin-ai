@@ -25,6 +25,7 @@ struct ChatUserMessageSurface: View {
   @State private var isImageViewerPresented = false
   @State private var showDocumentContent = false
   @State private var isCopied = false
+  @State private var availableContainerWidth: CGFloat = 0
 
   @Environment(\.horizontalSizeClass) private var horizontalSizeClass
 
@@ -50,6 +51,15 @@ struct ChatUserMessageSurface: View {
 
   private var isRegularWidth: Bool {
     horizontalSizeClass == .regular
+  }
+
+  private var resolvedMaxWidth: CGFloat {
+    let effectiveWidth =
+      availableContainerWidth > 0 ? availableContainerWidth : (isRegularWidth ? 768 : 390)
+    return ChatHostPresentationPolicy.maxUserMessageWidth(
+      containerWidth: effectiveWidth,
+      isRegularWidth: isRegularWidth
+    )
   }
 
   var body: some View {
@@ -78,6 +88,17 @@ struct ChatUserMessageSurface: View {
       }
     }
     .frame(maxWidth: .infinity, alignment: .trailing)
+    .background(
+      GeometryReader { proxy in
+        Color.clear
+          .preference(key: ChatContainerWidthPreferenceKey.self, value: proxy.size.width)
+      }
+    )
+    .onPreferenceChange(ChatContainerWidthPreferenceKey.self) { width in
+      if width > 0 && width != availableContainerWidth {
+        availableContainerWidth = width
+      }
+    }
     .sheet(isPresented: $isTextSelectionSheetPresented) {
       TextSelectionView(text: text)
     }
@@ -113,10 +134,7 @@ struct ChatUserMessageSurface: View {
         .stroke(Color.primary.opacity(0.06), lineWidth: 0.5)
       )
       .frame(
-        maxWidth: ChatHostPresentationPolicy.maxUserMessageWidth(
-          containerWidth: UIScreen.main.bounds.width,
-          isRegularWidth: isRegularWidth
-        ),
+        maxWidth: resolvedMaxWidth,
         alignment: .trailing
       )
       .contextMenu {
@@ -197,11 +215,7 @@ struct ChatUserMessageSurface: View {
       }
       .padding(4)
     }
-    .frame(
-      maxWidth: ChatHostPresentationPolicy.maxUserMessageWidth(
-        containerWidth: UIScreen.main.bounds.width,
-        isRegularWidth: isRegularWidth
-      ), alignment: .trailing)
+    .frame(maxWidth: resolvedMaxWidth, alignment: .trailing)
   }
 
   // MARK: - Documents
@@ -243,11 +257,7 @@ struct ChatUserMessageSurface: View {
         }
       }
     }
-    .frame(
-      maxWidth: ChatHostPresentationPolicy.maxUserMessageWidth(
-        containerWidth: UIScreen.main.bounds.width,
-        isRegularWidth: isRegularWidth
-      ), alignment: .trailing)
+    .frame(maxWidth: resolvedMaxWidth, alignment: .trailing)
   }
 
   // MARK: - Prompts
@@ -278,11 +288,7 @@ struct ChatUserMessageSurface: View {
       }
       .padding(2)
     }
-    .frame(
-      maxWidth: ChatHostPresentationPolicy.maxUserMessageWidth(
-        containerWidth: UIScreen.main.bounds.width,
-        isRegularWidth: isRegularWidth
-      ), alignment: .trailing)
+    .frame(maxWidth: resolvedMaxWidth, alignment: .trailing)
   }
 
   // MARK: - File Helpers
@@ -318,6 +324,16 @@ struct ChatUserMessageSurface: View {
       return "text.page"
     default:
       return "doc"
+    }
+  }
+}
+
+private struct ChatContainerWidthPreferenceKey: PreferenceKey {
+  static let defaultValue: CGFloat = 0
+  static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
+    let next = nextValue()
+    if next > 0 {
+      value = next
     }
   }
 }

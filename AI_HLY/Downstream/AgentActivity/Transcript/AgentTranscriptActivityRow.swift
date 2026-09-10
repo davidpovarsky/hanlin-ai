@@ -6,7 +6,10 @@ struct AgentTranscriptActivityRow: View {
     let onSelectActivity: (String) -> Void
 
     var body: some View {
-        let family = ChatPresentationBridge.executionFamily(for: activity?.kind ?? .tool)
+        let family = ChatPresentationBridge.executionFamily(
+            for: activity?.kind,
+            toolName: item.toolName
+        )
         let title = activity?.narrativeText ?? activity?.title ?? item.text ?? String(localized: "Thinking")
         let queries = activity?.queries ?? []
 

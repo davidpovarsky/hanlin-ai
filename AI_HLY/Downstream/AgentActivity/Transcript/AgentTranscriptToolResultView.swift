@@ -17,6 +17,7 @@ struct AgentTranscriptToolResultView: View {
                     title: title,
                     sizingPreference: sizing,
                     expansionDescriptor: expansion,
+                    containerStyle: .neutral,
                     onLaunchRequest: onLaunchRequest
                 ) {
                     ModernNativeToolResultRenderer(

@@ -2564,7 +2564,7 @@ private struct CodeBlockRow: View {
             RoundedRectangle(cornerRadius: 14, style: .continuous)
                 .stroke(Color.primary.opacity(0.08), lineWidth: 0.5)
         )
-        .frame(maxWidth: min(UIScreen.main.bounds.width * 0.95, 720), alignment: .leading)
+        .frame(maxWidth: 720, alignment: .leading)
     }
 }
 

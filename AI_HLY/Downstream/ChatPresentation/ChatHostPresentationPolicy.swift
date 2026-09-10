@@ -34,6 +34,10 @@ enum ChatHostPresentationPolicy {
 
   // MARK: - Embedded Result Sizing
 
+  static func maxEmbeddedResultWidth(isRegularWidth: Bool) -> CGFloat {
+    isRegularWidth ? 720 : .infinity
+  }
+
   static func maxEmbeddedResultWidth(containerWidth: CGFloat, isRegularWidth: Bool) -> CGFloat {
     if isRegularWidth {
       return min(containerWidth, 720)
@@ -62,12 +66,36 @@ enum ChatHostPresentationPolicy {
     }
   }
 
+  // MARK: - Expansion Mode Capabilities
+
+  /// Determines whether the current platform and device environment supports opening separate windows.
+  static var supportsWindowExpansion: Bool {
+    #if targetEnvironment(macCatalyst) || os(visionOS)
+      return true
+    #elseif os(iOS)
+      return UIApplication.shared.supportsMultipleScenes
+    #else
+      return false
+    #endif
+  }
+
+  /// Validates if an expansion mode is legitimately available in the current environment.
+  static func isExpansionModeAvailable(_ mode: ChatHostExpansionMode) -> Bool {
+    switch mode {
+    case .sheet, .fullScreen:
+      return true
+    case .window:
+      return supportsWindowExpansion
+    }
+  }
+
   // MARK: - Execution UI Sizing
 
   /// Maximum vertical height for tool execution timeline items.
   /// Execution UI must remain compact and subordinate to content.
   static let maxExecutionHeight: CGFloat = 160
   static let standardExecutionRowHeight: CGFloat = 36
+  static let maxExecutionDetailsHeight: CGFloat = 112
 
   // MARK: - Spacing & Visual Geometry
 

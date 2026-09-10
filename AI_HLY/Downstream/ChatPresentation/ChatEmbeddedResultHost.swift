@@ -13,6 +13,7 @@ struct ChatEmbeddedResultHost<Content: View, ExpandedContent: View>: View {
   let title: String?
   let sizingPreference: ChatHostSizingPreference
   let expansionDescriptor: ChatHostExpansionDescriptor?
+  let containerStyle: ChatHostContainerStyle
   let onLaunchRequest: ((NativeAppLaunchRequest) -> Void)?
   @ViewBuilder let content: () -> Content
   @ViewBuilder let expandedContent: () -> ExpandedContent
@@ -21,6 +22,24 @@ struct ChatEmbeddedResultHost<Content: View, ExpandedContent: View>: View {
   @State private var isFullScreenPresented = false
   @Environment(\.horizontalSizeClass) private var horizontalSizeClass
   @Environment(\.openWindow) private var openWindow
+
+  init(
+    title: String? = nil,
+    sizingPreference: ChatHostSizingPreference = ChatHostSizingPreference(),
+    expansionDescriptor: ChatHostExpansionDescriptor? = nil,
+    containerStyle: ChatHostContainerStyle = .borderedCard,
+    onLaunchRequest: ((NativeAppLaunchRequest) -> Void)? = nil,
+    @ViewBuilder content: @escaping () -> Content,
+    @ViewBuilder expandedContent: @escaping () -> ExpandedContent
+  ) {
+    self.title = title
+    self.sizingPreference = sizingPreference
+    self.expansionDescriptor = expansionDescriptor
+    self.containerStyle = containerStyle
+    self.onLaunchRequest = onLaunchRequest
+    self.content = content
+    self.expandedContent = expandedContent
+  }
 
   private var isRegularWidth: Bool {
     horizontalSizeClass == .regular
@@ -38,66 +57,17 @@ struct ChatEmbeddedResultHost<Content: View, ExpandedContent: View>: View {
   }
 
   var body: some View {
-    VStack(alignment: .leading, spacing: 6) {
-      // Optional Host Header (if title or expansion affordance present)
-      if title != nil || expansionDescriptor != nil {
-        HStack(alignment: .center) {
-          if let title, !title.isEmpty {
-            Text(title)
-              .font(.caption.weight(.medium))
-              .foregroundStyle(.secondary)
-              .lineLimit(1)
-          }
-
-          Spacer(minLength: 8)
-
-          if let expansion = expansionDescriptor {
-            Button {
-              handleExpansion(expansion)
-            } label: {
-              Image(systemName: "arrow.down.backward.and.arrow.up.forward")
-                .font(.caption2.weight(.semibold))
-                .foregroundStyle(.secondary)
-                .frame(width: 26, height: 26)
-                .background(Color(uiColor: .tertiarySystemFill))
-                .clipShape(Circle())
-            }
-            .buttonStyle(.plain)
-            .accessibilityLabel(String(localized: "Expand result"))
-          }
-        }
-        .padding(.horizontal, 12)
-        .padding(.top, 8)
+    Group {
+      switch containerStyle {
+      case .neutral:
+        neutralHostedContent
+      case .borderedCard:
+        borderedCardHostedContent
       }
-
-      // Hosted Content Slot
-      ScrollView(.vertical, showsIndicators: false) {
-        content()
-          .frame(maxWidth: .infinity, alignment: .leading)
-      }
-      .scrollBounceBehavior(.basedOnSize)
-      .frame(maxHeight: clampedHeight)
-      .padding(.horizontal, 10)
-      .padding(.bottom, 10)
     }
     .frame(
-      maxWidth: ChatHostPresentationPolicy.maxEmbeddedResultWidth(
-        containerWidth: UIScreen.main.bounds.width,
-        isRegularWidth: isRegularWidth
-      ),
+      maxWidth: ChatHostPresentationPolicy.maxEmbeddedResultWidth(isRegularWidth: isRegularWidth),
       alignment: .leading
-    )
-    .background(
-      RoundedRectangle(
-        cornerRadius: ChatHostPresentationPolicy.resultContainerCornerRadius, style: .continuous
-      )
-      .fill(Color(uiColor: .secondarySystemGroupedBackground))
-    )
-    .overlay(
-      RoundedRectangle(
-        cornerRadius: ChatHostPresentationPolicy.resultContainerCornerRadius, style: .continuous
-      )
-      .stroke(Color.primary.opacity(0.08), lineWidth: 0.5)
     )
     .sheet(isPresented: $isSheetPresented) {
       NavigationStack {
@@ -137,6 +107,93 @@ struct ChatEmbeddedResultHost<Content: View, ExpandedContent: View>: View {
     }
   }
 
+  // MARK: - Neutral Style (for results that already own card chrome like ModernCards)
+
+  @ViewBuilder
+  private var neutralHostedContent: some View {
+    VStack(alignment: .leading, spacing: 4) {
+      if let expansion = expansionDescriptor,
+        ChatHostPresentationPolicy.isExpansionModeAvailable(expansion.mode)
+      {
+        HStack {
+          Spacer()
+          expansionButton(expansion)
+        }
+        .padding(.horizontal, 4)
+      }
+
+      content()
+        .frame(maxWidth: .infinity, alignment: .leading)
+    }
+  }
+
+  // MARK: - Bordered Card Style (for raw unstyled content)
+
+  @ViewBuilder
+  private var borderedCardHostedContent: some View {
+    VStack(alignment: .leading, spacing: 6) {
+      if title != nil
+        || (expansionDescriptor != nil
+          && ChatHostPresentationPolicy.isExpansionModeAvailable(expansionDescriptor!.mode))
+      {
+        HStack(alignment: .center) {
+          if let title, !title.isEmpty {
+            Text(title)
+              .font(.caption.weight(.medium))
+              .foregroundStyle(.secondary)
+              .lineLimit(1)
+          }
+
+          Spacer(minLength: 8)
+
+          if let expansion = expansionDescriptor,
+            ChatHostPresentationPolicy.isExpansionModeAvailable(expansion.mode)
+          {
+            expansionButton(expansion)
+          }
+        }
+        .padding(.horizontal, 12)
+        .padding(.top, 8)
+      }
+
+      ScrollView(.vertical, showsIndicators: false) {
+        content()
+          .frame(maxWidth: .infinity, alignment: .leading)
+      }
+      .scrollBounceBehavior(.basedOnSize)
+      .frame(maxHeight: clampedHeight)
+      .padding(.horizontal, 10)
+      .padding(.bottom, 10)
+    }
+    .background(
+      RoundedRectangle(
+        cornerRadius: ChatHostPresentationPolicy.resultContainerCornerRadius, style: .continuous
+      )
+      .fill(Color(uiColor: .secondarySystemGroupedBackground))
+    )
+    .overlay(
+      RoundedRectangle(
+        cornerRadius: ChatHostPresentationPolicy.resultContainerCornerRadius, style: .continuous
+      )
+      .stroke(Color.primary.opacity(0.08), lineWidth: 0.5)
+    )
+  }
+
+  private func expansionButton(_ expansion: ChatHostExpansionDescriptor) -> some View {
+    Button {
+      handleExpansion(expansion)
+    } label: {
+      Image(systemName: "arrow.down.backward.and.arrow.up.forward")
+        .font(.caption2.weight(.semibold))
+        .foregroundStyle(.secondary)
+        .frame(width: 26, height: 26)
+        .background(Color(uiColor: .tertiarySystemFill))
+        .clipShape(Circle())
+    }
+    .buttonStyle(.plain)
+    .accessibilityLabel(String(localized: "Expand result"))
+  }
+
   private func handleExpansion(_ expansion: ChatHostExpansionDescriptor) {
     switch expansion.mode {
     case .sheet:
@@ -144,12 +201,21 @@ struct ChatEmbeddedResultHost<Content: View, ExpandedContent: View>: View {
     case .fullScreen:
       isFullScreenPresented = true
     case .window:
-      // If native window expansion is supported, trigger window; fallback to sheet
-      #if targetEnvironment(macCatalyst) || os(visionOS)
-        // Window trigger supported on window environments
-      #else
-        isSheetPresented = true
-      #endif
+      if ChatHostPresentationPolicy.supportsWindowExpansion,
+        let launchRequest = expansion.launchRequest
+      {
+        if let onLaunchRequest {
+          onLaunchRequest(launchRequest)
+        } else {
+          #if targetEnvironment(macCatalyst) || os(visionOS)
+            openWindow(value: launchRequest)
+          #elseif os(iOS)
+            if UIApplication.shared.supportsMultipleScenes {
+              openWindow(value: launchRequest)
+            }
+          #endif
+        }
+      }
     }
   }
 }
@@ -159,6 +225,7 @@ extension ChatEmbeddedResultHost where ExpandedContent == Content {
     title: String? = nil,
     sizingPreference: ChatHostSizingPreference = ChatHostSizingPreference(),
     expansionDescriptor: ChatHostExpansionDescriptor? = nil,
+    containerStyle: ChatHostContainerStyle = .borderedCard,
     onLaunchRequest: ((NativeAppLaunchRequest) -> Void)? = nil,
     @ViewBuilder content: @escaping () -> Content
   ) {
@@ -166,6 +233,7 @@ extension ChatEmbeddedResultHost where ExpandedContent == Content {
       title: title,
       sizingPreference: sizingPreference,
       expansionDescriptor: expansionDescriptor,
+      containerStyle: containerStyle,
       onLaunchRequest: onLaunchRequest,
       content: content,
       expandedContent: content

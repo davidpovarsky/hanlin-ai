@@ -38,6 +38,12 @@ struct ChatExecutionTimelineItemView: View {
       RoundedRectangle(cornerRadius: 10, style: .continuous)
         .fill(isInlineExpanded ? Color(uiColor: .secondarySystemFill) : Color.clear)
     )
+    .frame(
+      maxHeight: isInlineExpanded
+        ? ChatHostPresentationPolicy.maxExecutionHeight
+        : ChatHostPresentationPolicy.standardExecutionRowHeight,
+      alignment: .topLeading
+    )
     .contentShape(Rectangle())
   }
 
@@ -202,61 +208,66 @@ struct ChatExecutionTimelineItemView: View {
   // MARK: - Inline Details View
 
   private var inlineDetailsView: some View {
-    VStack(alignment: .leading, spacing: 6) {
-      // Queries
-      if !queries.isEmpty {
-        ForEach(queries, id: \.self) { q in
-          HStack(spacing: 4) {
-            Image(systemName: "magnifyingglass")
-              .font(.caption2)
-              .foregroundStyle(.tertiary)
-            Text(q)
-              .font(.caption)
-              .foregroundStyle(.secondary)
-              .lineLimit(2)
+    ScrollView(.vertical, showsIndicators: false) {
+      VStack(alignment: .leading, spacing: 6) {
+        // Queries
+        if !queries.isEmpty {
+          ForEach(queries, id: \.self) { q in
+            HStack(spacing: 4) {
+              Image(systemName: "magnifyingglass")
+                .font(.caption2)
+                .foregroundStyle(.tertiary)
+              Text(q)
+                .font(.caption)
+                .foregroundStyle(.secondary)
+                .lineLimit(2)
+            }
           }
         }
-      }
 
-      // Input / Arguments preview
-      if let input = inputPreview, !input.isEmpty {
-        Text(input)
-          .font(.caption.monospaced())
-          .foregroundStyle(.secondary)
-          .lineLimit(3)
-          .padding(6)
-          .background(Color(uiColor: .tertiarySystemFill))
-          .clipShape(RoundedRectangle(cornerRadius: 6))
-      }
-
-      // Output / Result preview
-      if let output = outputPreview, !output.isEmpty {
-        Text(output)
-          .font(.caption)
-          .foregroundStyle(.secondary)
-          .lineLimit(4)
-      }
-
-      // Error
-      if let error = errorDescription, !error.isEmpty {
-        Text(error)
-          .font(.caption)
-          .foregroundStyle(.red)
-          .lineLimit(3)
-      }
-
-      // More details button if inspector callback provided
-      if let onOpenDetails {
-        Button {
-          onOpenDetails()
-        } label: {
-          Text(String(localized: "View full activity"))
-            .font(.caption2.weight(.medium))
-            .foregroundStyle(Color.accentColor)
+        // Input / Arguments preview
+        if let input = inputPreview, !input.isEmpty {
+          Text(input)
+            .font(.caption.monospaced())
+            .foregroundStyle(.secondary)
+            .lineLimit(3)
+            .padding(6)
+            .background(Color(uiColor: .tertiarySystemFill))
+            .clipShape(RoundedRectangle(cornerRadius: 6, style: .continuous))
         }
-        .padding(.top, 2)
+
+        // Output / Result preview
+        if let output = outputPreview, !output.isEmpty {
+          Text(output)
+            .font(.caption)
+            .foregroundStyle(.secondary)
+            .lineLimit(4)
+        }
+
+        // Error
+        if let error = errorDescription, !error.isEmpty {
+          Text(error)
+            .font(.caption)
+            .foregroundStyle(.red)
+            .lineLimit(3)
+        }
+
+        // More details button if inspector callback provided
+        if let onOpenDetails {
+          Button {
+            onOpenDetails()
+          } label: {
+            Text(String(localized: "View full activity"))
+              .font(.caption2.weight(.medium))
+              .foregroundStyle(Color.accentColor)
+          }
+          .padding(.top, 2)
+        }
       }
+      .frame(maxWidth: .infinity, alignment: .leading)
     }
+    .scrollBounceBehavior(.basedOnSize)
+    .frame(maxHeight: ChatHostPresentationPolicy.maxExecutionDetailsHeight)
     .padding(.leading, 26)
     .padding(.top, 2)
     .padding(.bottom, 6)
