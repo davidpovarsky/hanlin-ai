@@ -5,45 +5,28 @@ struct AgentTranscriptActivityRow: View {
     let activity: AgentDisplayActivity?
     let onSelectActivity: (String) -> Void
 
-    @ViewBuilder
     var body: some View {
-        if let activity {
-            AgentActivityStepView(activity: activity, isLast: true) { _ in
+        let family = ChatPresentationBridge.executionFamily(for: activity?.kind ?? .tool)
+        let title = activity?.narrativeText ?? activity?.title ?? item.text ?? String(localized: "Thinking")
+        let queries = activity?.queries ?? []
+
+        ChatExecutionTimelineItemView(
+            familyID: family,
+            title: title,
+            subtitle: activity?.subtitle,
+            status: activity?.status ?? item.status,
+            queries: queries,
+            inputPreview: activity?.inputPreview,
+            outputPreview: activity?.outputPreview,
+            errorDescription: activity?.errorDescription,
+            onOpenDetails: {
                 AgentActivityTrace.selected(item: item)
                 onSelectActivity(selectionID)
             }
-        } else {
-            Button {
-                AgentActivityTrace.selected(item: item)
-                onSelectActivity(selectionID)
-            } label: {
-                HStack(spacing: 8) {
-                    if item.status == .running || item.status == .pending {
-                        ProgressView()
-                            .controlSize(.mini)
-                    } else {
-                        Image(systemName: iconName)
-                            .font(.caption)
-                            .foregroundStyle(item.status == .failed ? .red : .secondary)
-                    }
-                    Text(item.text ?? String(localized: "Thinking"))
-                        .font(.subheadline)
-                        .foregroundStyle(item.status == .failed ? .red : .secondary)
-                        .lineLimit(3)
-                        .multilineTextAlignment(.leading)
-                    Spacer(minLength: 4)
-                    Image(systemName: "chevron.right")
-                        .font(.caption2.weight(.semibold))
-                        .foregroundStyle(.tertiary)
-                }
-                .frame(maxWidth: .infinity, minHeight: 44, alignment: .leading)
-                .contentShape(Rectangle())
-            }
-            .buttonStyle(.plain)
-            .accessibilityLabel(item.text ?? String(localized: "Thinking"))
-            .accessibilityValue(statusLabel)
-            .accessibilityHint(String(localized: "Open activity"))
-        }
+        )
+        .accessibilityLabel(title)
+        .accessibilityValue(statusLabel)
+        .accessibilityHint(String(localized: "Open activity"))
     }
 
     var selectionID: String {

@@ -9,10 +9,21 @@ struct AgentTranscriptToolResultView: View {
         if !item.nativeUIBlocks.isEmpty {
             switch item.resultRendererKind {
             case .modernNative:
-                ModernNativeToolResultRenderer(
-                    blocks: item.nativeUIBlocks,
+                let sizing = ChatPresentationBridge.sizingPreference(for: item.nativeUIBlocks)
+                let expansion = ChatPresentationBridge.expansionDescriptor(for: item.nativeUIBlocks)
+                let title = item.nativeUIBlocks.compactMap(\.title).first ?? item.toolName
+
+                ChatEmbeddedResultHost(
+                    title: title,
+                    sizingPreference: sizing,
+                    expansionDescriptor: expansion,
                     onLaunchRequest: onLaunchRequest
-                )
+                ) {
+                    ModernNativeToolResultRenderer(
+                        blocks: item.nativeUIBlocks,
+                        onLaunchRequest: onLaunchRequest
+                    )
+                }
             case .legacyExisting, .none:
                 NativeUIToolResultContainer(
                     blocks: item.nativeUIBlocks,
