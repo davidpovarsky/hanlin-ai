@@ -705,6 +705,7 @@ public struct HanlinAppDescriptor: Codable, Identifiable, Hashable, Sendable {
     public let category: HanlinAppCategory
     public let implementation: HanlinAppImplementation
     public let entryPoints: [HanlinEntryPointDescriptor]
+    public let supportedExposures: [HanlinExposureKind]
     public let routes: [HanlinRouteDescriptor]
     public let actions: [HanlinActionDescriptor]
     public let tools: [HanlinToolDescriptor]
@@ -714,6 +715,32 @@ public struct HanlinAppDescriptor: Codable, Identifiable, Hashable, Sendable {
     public let authors: [HanlinAuthor]
     public let distribution: HanlinDistributionDeclaration
     public let integrity: HanlinIntegrityDeclaration?
+
+    public static func defaultExposures(for entryPoints: [HanlinEntryPointDescriptor]) -> [HanlinExposureKind] {
+        var seen = Set<HanlinExposureKind>()
+        var result: [HanlinExposureKind] = []
+        for ep in entryPoints {
+            let exposure: HanlinExposureKind = switch ep.kind {
+            case .app: .foregroundApp
+            case .assistantTool: .assistantTool
+            case .embeddedResult: .embeddedResult
+            case .widget: .widget
+            case .liveActivity: .liveActivity
+            case .controlWidget: .controlWidget
+            case .appIntentBridge: .appIntent
+            case .notificationUI: .notificationUI
+            case .keyboard: .keyboard
+            case .translationUI: .translationUI
+            case .backgroundTask: .backgroundTask
+            case .spotlight: .spotlight
+            case .shareExtension: .shareExtension
+            }
+            if seen.insert(exposure).inserted {
+                result.append(exposure)
+            }
+        }
+        return result
+    }
 
     public init(
         schemaVersion: HanlinManifestVersion,
@@ -730,6 +757,7 @@ public struct HanlinAppDescriptor: Codable, Identifiable, Hashable, Sendable {
         category: HanlinAppCategory,
         implementation: HanlinAppImplementation,
         entryPoints: [HanlinEntryPointDescriptor],
+        supportedExposures: [HanlinExposureKind] = [],
         routes: [HanlinRouteDescriptor] = [],
         actions: [HanlinActionDescriptor] = [],
         tools: [HanlinToolDescriptor] = [],
@@ -754,6 +782,9 @@ public struct HanlinAppDescriptor: Codable, Identifiable, Hashable, Sendable {
         self.category = category
         self.implementation = implementation
         self.entryPoints = entryPoints
+        self.supportedExposures = supportedExposures.isEmpty
+            ? Self.defaultExposures(for: entryPoints)
+            : supportedExposures
         self.routes = routes
         self.actions = actions
         self.tools = tools
@@ -763,6 +794,70 @@ public struct HanlinAppDescriptor: Codable, Identifiable, Hashable, Sendable {
         self.authors = authors
         self.distribution = distribution
         self.integrity = integrity
+    }
+
+    private enum CodingKeys: String, CodingKey {
+        case schemaVersion, descriptorRevision, id, name, summary, description
+        case version, minimumHostVersion, apiVersion, icon, appearance, category
+        case implementation, entryPoints, supportedExposures, routes, actions
+        case tools, capabilities, dependencies, extensions, authors, distribution, integrity
+    }
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        schemaVersion = try container.decode(HanlinManifestVersion.self, forKey: .schemaVersion)
+        descriptorRevision = try container.decode(HanlinDescriptorRevision.self, forKey: .descriptorRevision)
+        id = try container.decode(HanlinAppID.self, forKey: .id)
+        name = try container.decode(LocalizedValue.self, forKey: .name)
+        summary = try container.decode(LocalizedValue.self, forKey: .summary)
+        description = try container.decode(LocalizedValue.self, forKey: .description)
+        version = try container.decode(HanlinPackageVersion.self, forKey: .version)
+        minimumHostVersion = try container.decodeIfPresent(HanlinPackageVersion.self, forKey: .minimumHostVersion)
+        apiVersion = try container.decode(HanlinAPIVersion.self, forKey: .apiVersion)
+        icon = try container.decode(HanlinIconDescriptor.self, forKey: .icon)
+        appearance = try container.decodeIfPresent(HanlinAppearanceDescriptor.self, forKey: .appearance) ?? .init()
+        category = try container.decode(HanlinAppCategory.self, forKey: .category)
+        implementation = try container.decode(HanlinAppImplementation.self, forKey: .implementation)
+        entryPoints = try container.decode([HanlinEntryPointDescriptor].self, forKey: .entryPoints)
+        let decodedExposures = try container.decodeIfPresent([HanlinExposureKind].self, forKey: .supportedExposures)
+        supportedExposures = decodedExposures ?? Self.defaultExposures(for: entryPoints)
+        routes = try container.decodeIfPresent([HanlinRouteDescriptor].self, forKey: .routes) ?? []
+        actions = try container.decodeIfPresent([HanlinActionDescriptor].self, forKey: .actions) ?? []
+        tools = try container.decodeIfPresent([HanlinToolDescriptor].self, forKey: .tools) ?? []
+        capabilities = try container.decodeIfPresent([HanlinCapabilityDeclaration].self, forKey: .capabilities) ?? []
+        dependencies = try container.decodeIfPresent([HanlinDependencyDeclaration].self, forKey: .dependencies) ?? []
+        extensions = try container.decodeIfPresent([HanlinExtensionDeclaration].self, forKey: .extensions) ?? []
+        authors = try container.decode([HanlinAuthor].self, forKey: .authors)
+        distribution = try container.decode(HanlinDistributionDeclaration.self, forKey: .distribution)
+        integrity = try container.decodeIfPresent(HanlinIntegrityDeclaration.self, forKey: .integrity)
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(schemaVersion, forKey: .schemaVersion)
+        try container.encode(descriptorRevision, forKey: .descriptorRevision)
+        try container.encode(id, forKey: .id)
+        try container.encode(name, forKey: .name)
+        try container.encode(summary, forKey: .summary)
+        try container.encode(description, forKey: .description)
+        try container.encode(version, forKey: .version)
+        try container.encodeIfPresent(minimumHostVersion, forKey: .minimumHostVersion)
+        try container.encode(apiVersion, forKey: .apiVersion)
+        try container.encode(icon, forKey: .icon)
+        try container.encode(appearance, forKey: .appearance)
+        try container.encode(category, forKey: .category)
+        try container.encode(implementation, forKey: .implementation)
+        try container.encode(entryPoints, forKey: .entryPoints)
+        try container.encode(supportedExposures, forKey: .supportedExposures)
+        try container.encode(routes, forKey: .routes)
+        try container.encode(actions, forKey: .actions)
+        try container.encode(tools, forKey: .tools)
+        try container.encode(capabilities, forKey: .capabilities)
+        try container.encode(dependencies, forKey: .dependencies)
+        try container.encode(extensions, forKey: .extensions)
+        try container.encode(authors, forKey: .authors)
+        try container.encode(distribution, forKey: .distribution)
+        try container.encodeIfPresent(integrity, forKey: .integrity)
     }
 
     public func canonicalJSONData() throws -> Data {
@@ -802,11 +897,11 @@ public struct HanlinAppDescriptor: Codable, Identifiable, Hashable, Sendable {
                 message: error.localizedDescription
             ))
         }
-        if entryPoints.isEmpty {
+        if entryPoints.isEmpty && supportedExposures.isEmpty {
             issues.append(.init(
                 code: .missingEntryPoint,
                 path: "entryPoints",
-                message: "At least one entry point is required."
+                message: "At least one entry point or supported exposure is required."
             ))
         }
         for (index, entryPoint) in entryPoints.enumerated() {

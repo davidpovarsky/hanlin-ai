@@ -29,7 +29,11 @@ struct NativeAppSefariaAppModule: NativeAppModule {
         [NativeAppSefariaChatCardProvider()]
     }
 
+    var capabilityProjection: NativeCapabilityProjection {
+        NativeCapabilityProjection(declarations: registration.descriptor.capabilities)
+    }
+
     func capabilities(context: NativeAppContext) -> [NativeCapabilityRequest] {
-        registration.descriptor.capabilities.compactMap(NativeCapabilityRequest.init)
+        capabilityProjection.supportedRequests
     }
 }

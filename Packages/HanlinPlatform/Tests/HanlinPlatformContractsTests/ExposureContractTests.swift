@@ -38,7 +38,7 @@ struct ExposureContractTests {
         #expect(widget != nil)
         #expect(widget?.requiresDedicatedExtensionTarget == true)
         #expect(widget?.eligibility == .hybrid)
-        #expect(widget?.implementationState == .genericHosted)
+        #expect(widget?.implementationState == .reserved)
 
         // 5. Live Activity
         let liveActivity = HanlinExposureCatalog.classification(for: .liveActivity)
@@ -46,6 +46,7 @@ struct ExposureContractTests {
         #expect(liveActivity?.requiresDedicatedExtensionTarget == true)
         #expect(liveActivity?.eligibility == .hybrid)
         #expect(liveActivity?.requiredInfoPlistKeys.contains("NSSupportsLiveActivities") == true)
+        #expect(liveActivity?.implementationState == .reserved)
 
         // 6. Controls
         let control = HanlinExposureCatalog.classification(for: .controlWidget)
@@ -58,9 +59,24 @@ struct ExposureContractTests {
         let appIntent = HanlinExposureCatalog.classification(for: .appIntent)
         #expect(appIntent != nil)
         #expect(appIntent?.isUserInterface == false)
-        #expect(appIntent?.implementationState == .implemented)
+        #expect(appIntent?.implementationState == .reserved)
 
-        // 8. Translation UI Provider
+        // 8. Spotlight
+        let spotlight = HanlinExposureCatalog.classification(for: .spotlight)
+        #expect(spotlight != nil)
+        #expect(spotlight?.implementationState == .reserved)
+
+        // 9. Share Extension
+        let share = HanlinExposureCatalog.classification(for: .shareExtension)
+        #expect(share != nil)
+        #expect(share?.implementationState == .reserved)
+
+        // 10. Background Task
+        let bgTask = HanlinExposureCatalog.classification(for: .backgroundTask)
+        #expect(bgTask != nil)
+        #expect(bgTask?.implementationState == .reserved)
+
+        // 11. Translation UI Provider
         let translation = HanlinExposureCatalog.classification(for: .translationUI)
         #expect(translation != nil)
         #expect(translation?.requiresDedicatedExtensionTarget == true)
@@ -68,7 +84,7 @@ struct ExposureContractTests {
         #expect(translation?.requiredInfoPlistKeys == ["com.apple.developer.translation-ui-provider.network-access"])
         #expect(translation?.implementationState == .reserved)
 
-        // 9. Unsupported surfaces
+        // 12. Unsupported surfaces
         let netExt = HanlinExposureCatalog.classification(for: .networkExtension)
         #expect(netExt?.implementationState == .unsupported)
         let audioUnit = HanlinExposureCatalog.classification(for: .audioUnit)

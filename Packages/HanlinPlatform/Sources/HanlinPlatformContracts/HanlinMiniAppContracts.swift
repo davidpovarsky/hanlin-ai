@@ -37,30 +37,7 @@ public protocol HanlinMiniAppRegistration: Sendable {
 
 extension HanlinMiniAppRegistration {
     public var supportedExposures: [HanlinExposureKind] {
-        guard let descriptor = try? appDescriptor() else { return [] }
-        var seen = Set<HanlinExposureKind>()
-        var result: [HanlinExposureKind] = []
-        for ep in descriptor.entryPoints {
-            let exposure: HanlinExposureKind = switch ep.kind {
-            case .app: .foregroundApp
-            case .assistantTool: .assistantTool
-            case .embeddedResult: .embeddedResult
-            case .widget: .widget
-            case .liveActivity: .liveActivity
-            case .controlWidget: .controlWidget
-            case .appIntentBridge: .appIntent
-            case .notificationUI: .notificationUI
-            case .keyboard: .keyboard
-            case .translationUI: .translationUI
-            case .backgroundTask: .backgroundTask
-            case .spotlight: .spotlight
-            case .shareExtension: .shareExtension
-            }
-            if seen.insert(exposure).inserted {
-                result.append(exposure)
-            }
-        }
-        return result
+        (try? appDescriptor())?.supportedExposures ?? []
     }
 }
 

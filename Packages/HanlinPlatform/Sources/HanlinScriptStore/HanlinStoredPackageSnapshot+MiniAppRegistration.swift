@@ -40,6 +40,15 @@ extension HanlinStoredPackageSnapshot: HanlinMiniAppRegistration {
         }
         let summary = try LocalizedValue(descDict, fallbackLocale: "en")
 
+        var packageExposures: [HanlinExposureKind] = []
+        var seenExposures = Set<HanlinExposureKind>()
+        for ep in entrypoints {
+            let exp = ep.kind.exposureKind
+            if seenExposures.insert(exp).inserted {
+                packageExposures.append(exp)
+            }
+        }
+
         let mappedEntryPoints: [HanlinEntryPointDescriptor] = entrypoints.compactMap { ep in
             guard let canonicalKind = ep.kind.canonicalKind else { return nil }
             let contexts = ep.supportedContexts.isEmpty ? [.mainApplication] : Array(ep.supportedContexts)
@@ -49,6 +58,31 @@ extension HanlinStoredPackageSnapshot: HanlinMiniAppRegistration {
                 allowedContexts: contexts,
                 runtimeProfile: ep.runtimeProfile
             )
+        }
+
+        let finalEntryPoints: [HanlinEntryPointDescriptor]
+        if !mappedEntryPoints.isEmpty {
+            finalEntryPoints = mappedEntryPoints
+        } else if entrypoints.isEmpty {
+            // Legacy script package with no explicit entrypoints.
+            // Synthesize foreground app entrypoint when the legacy manifest represents an app.
+            let isForegroundApp = manifest?.runInApp == true || manifest?.entry != nil || manifest == nil
+            if isForegroundApp {
+                let handler = manifest?.entry ?? "index.tsx"
+                finalEntryPoints = [
+                    HanlinEntryPointDescriptor(kind: .app, handler: handler, allowedContexts: [.mainApplication])
+                ]
+                if seenExposures.insert(.foregroundApp).inserted {
+                    packageExposures.append(.foregroundApp)
+                }
+            } else {
+                finalEntryPoints = []
+            }
+        } else {
+            // Package has explicit entrypoints, but none map to canonical executable HanlinEntryPointKind
+            // (e.g. exposure-only package such as quickLook, capture, safariExtension).
+            // Do NOT fabricate a foreground .app entrypoint.
+            finalEntryPoints = []
         }
 
         let capabilitiesDeclarations: [HanlinCapabilityDeclaration] = grantedCapabilities.map { capID in
@@ -109,9 +143,8 @@ extension HanlinStoredPackageSnapshot: HanlinMiniAppRegistration {
             implementation: isNativeScript
                 ? .nativeScript(packageID: record.packageID)
                 : .script(packageID: record.packageID),
-            entryPoints: mappedEntryPoints.isEmpty
-                ? [HanlinEntryPointDescriptor(kind: .app, handler: "index.tsx", allowedContexts: [.mainApplication])]
-                : mappedEntryPoints,
+            entryPoints: finalEntryPoints,
+            supportedExposures: packageExposures,
             capabilities: capabilitiesDeclarations,
             authors: authorList,
             distribution: .init(
@@ -124,19 +157,5 @@ extension HanlinStoredPackageSnapshot: HanlinMiniAppRegistration {
         )
         try descriptor.validate()
         return descriptor
-    }
-
-    /// Explicit supported exposures reflecting all package entrypoints,
-    /// ensuring secondary surfaces like Share, Spotlight, QuickLook survive canonicalization.
-    public var supportedExposures: [HanlinExposureKind] {
-        var seen = Set<HanlinExposureKind>()
-        var result: [HanlinExposureKind] = []
-        for ep in entrypoints {
-            let exposure = ep.kind.exposureKind
-            if seen.insert(exposure).inserted {
-                result.append(exposure)
-            }
-        }
-        return result
     }
 }

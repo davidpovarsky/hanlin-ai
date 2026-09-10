@@ -223,8 +223,8 @@ public enum HanlinExposureCatalog {
             requiredEntitlements: [],
             requiredInfoPlistKeys: [],
             eligibility: .hybrid,
-            implementationState: .genericHosted,
-            notes: "Generic HanlinScriptingWidgets extension compiles Widget definitions; runtime selects active Mini App configuration."
+            implementationState: .reserved,
+            notes: "WidgetKit surface reserved; requires a dedicated Widget extension target to host Mini App widgets."
         ),
         // 5. Live Activities
         HanlinExposureClassification(
@@ -236,8 +236,8 @@ public enum HanlinExposureCatalog {
             requiredEntitlements: [],
             requiredInfoPlistKeys: ["NSSupportsLiveActivities"],
             eligibility: .hybrid,
-            implementationState: .genericHosted,
-            notes: "Generic ActivityAttributes with dynamic payload rendered by shared WidgetKit extension."
+            implementationState: .reserved,
+            notes: "ActivityKit surface reserved; requires a compiled extension target supporting ActivityAttributes and NSSupportsLiveActivities."
         ),
         // 6. Controls
         HanlinExposureClassification(
@@ -262,8 +262,8 @@ public enum HanlinExposureCatalog {
             requiredEntitlements: [],
             requiredInfoPlistKeys: [],
             eligibility: .hybrid,
-            implementationState: .implemented,
-            notes: "Compiled generic AppIntent definitions forward execution parameters to Mini App actions."
+            implementationState: .reserved,
+            notes: "AppIntents system integration reserved; in-session runtime registration primitives exist in HanlinScriptingApplicationRuntime, but system AppIntent host bridging is not wired today."
         ),
         // 8. Spotlight
         HanlinExposureClassification(
@@ -275,8 +275,8 @@ public enum HanlinExposureCatalog {
             requiredEntitlements: [],
             requiredInfoPlistKeys: [],
             eligibility: .runtimeSelectable,
-            implementationState: .adapterOnly,
-            notes: "In-process indexing of searchable Mini App entities."
+            implementationState: .reserved,
+            notes: "CoreSpotlight search indexing reserved; no in-process or extension search indexing adapter is wired today."
         ),
         // 9. Share Extension
         HanlinExposureClassification(
@@ -288,8 +288,8 @@ public enum HanlinExposureCatalog {
             requiredEntitlements: [],
             requiredInfoPlistKeys: [],
             eligibility: .hybrid,
-            implementationState: .adapterOnly,
-            notes: "Shared generic share sheet extension forwards shared items to selected Mini App."
+            implementationState: .reserved,
+            notes: "Share extension surface reserved; requires a dedicated Share extension target to receive and forward shared items."
         ),
         // 10. Translation UI Provider
         HanlinExposureClassification(
@@ -461,8 +461,8 @@ public enum HanlinExposureCatalog {
             requiresDedicatedExtensionTarget: false,
             requiredEntitlements: [],
             eligibility: .runtimeSelectable,
-            implementationState: .implemented,
-            notes: "Scheduled BGTaskScheduler tasks invoking headless Mini App background routines."
+            implementationState: .reserved,
+            notes: "Background task scheduling reserved; no BGTaskScheduler handler is wired in the main application today."
         ),
         // 24. Watch Complication
         HanlinExposureClassification(

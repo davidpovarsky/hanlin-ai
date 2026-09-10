@@ -151,6 +151,70 @@ struct CanonicalAdapterTests {
     }
 
     @MainActor
+    @Test("Native capability projection maps every supported capability and reports explicit diagnostics for unsupported IDs")
+    func capabilityProjectionMappingAndDiagnostics() throws {
+        let reason = try LocalizedValue(["en": "Access reason"])
+
+        let supportedIDs: [(String, NativeCapabilityID)] = [
+            ("network.fetch", .network),
+            ("network", .network),
+            ("pasteboard.read", .pasteboardRead),
+            ("pasteboard.write", .pasteboardWrite),
+            ("contacts.read", .contactsRead),
+            ("contacts.write", .contactsWrite),
+            ("calendar.read", .calendarRead),
+            ("calendar.write", .calendarWrite),
+            ("files.read", .filesRead),
+            ("files.write", .filesWrite),
+            ("location", .location),
+            ("notifications", .notifications),
+            ("health.read", .healthRead),
+            ("camera", .camera),
+            ("microphone", .microphone),
+            ("speech", .speech),
+            ("translation", .translation)
+        ]
+
+        for (rawID, expectedNativeID) in supportedIDs {
+            let capID = try HanlinCapabilityID(validating: rawID)
+            let decl = HanlinCapabilityDeclaration(id: capID, reason: reason)
+            let result = NativeCapabilityRequest.project(declaration: decl)
+
+            switch result {
+            case let .supported(request):
+                #expect(request.capability == expectedNativeID)
+            case let .unsupported(diag):
+                Issue.record("Expected capability '\(rawID)' to be supported, but got diagnostic: \(diag)")
+            }
+        }
+
+        // Test unsupported / unrecognized capability ID:
+        let unknownCapID = try HanlinCapabilityID(validating: "custom.unsupported.service")
+        let unknownDecl = HanlinCapabilityDeclaration(id: unknownCapID, reason: reason)
+        let unknownResult = NativeCapabilityRequest.project(declaration: unknownDecl)
+
+        switch unknownResult {
+        case let .supported(req):
+            Issue.record("Expected unrecognized capability to be unsupported, but got: \(req)")
+        case let .unsupported(diagnostic):
+            #expect(diagnostic.capabilityID == "custom.unsupported.service")
+            #expect(!diagnostic.reason.isEmpty)
+        }
+
+        // Test projection structure with mixed declarations
+        let mixedDecls = [
+            HanlinCapabilityDeclaration(id: try HanlinCapabilityID(validating: "network.fetch"), reason: reason),
+            HanlinCapabilityDeclaration(id: unknownCapID, reason: reason)
+        ]
+        let projection = NativeCapabilityProjection(declarations: mixedDecls)
+        #expect(projection.supportedRequests.count == 1)
+        #expect(projection.supportedRequests[0].capability == .network)
+        #expect(projection.hasUnsupportedCapabilities == true)
+        #expect(projection.diagnostics.count == 1)
+        #expect(projection.diagnostics[0].capabilityID == "custom.unsupported.service")
+    }
+
+    @MainActor
     @Test("Native tool projection preserves qualified identity and rejects schema mismatch")
     func nativeToolProjection() throws {
         let tool = QuickCalculateTool()
