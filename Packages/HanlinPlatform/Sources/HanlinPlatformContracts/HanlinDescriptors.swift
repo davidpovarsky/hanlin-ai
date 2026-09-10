@@ -266,6 +266,7 @@ public enum HanlinAppCategory: String, Codable, CaseIterable, Hashable, Sendable
 public enum HanlinEntryPointKind: String, Codable, CaseIterable, Hashable, Sendable {
     case app
     case assistantTool
+    case embeddedResult
     case widget
     case liveActivity
     case controlWidget
@@ -407,12 +408,24 @@ public struct HanlinToolPresentationDescriptor: Codable, Hashable, Sendable {
     public let compactStyle: HanlinToolCompactStyle
     public let supportsExpandedPresentation: Bool
 
+    /// Optional execution presentation descriptor. Controls how in-progress
+    /// tool execution appears in the chat/transcript. Distinct from result UI.
+    public let executionPresentation: HanlinToolExecutionPresentationDescriptor?
+
+    /// Optional embedded result presentation. Controls how the tool's final
+    /// result is rendered in embedded surfaces (chat, inline, notifications).
+    public let embeddedPresentation: HanlinEmbeddedPresentationDescriptor?
+
     public init(
         compactStyle: HanlinToolCompactStyle,
-        supportsExpandedPresentation: Bool = false
+        supportsExpandedPresentation: Bool = false,
+        executionPresentation: HanlinToolExecutionPresentationDescriptor? = nil,
+        embeddedPresentation: HanlinEmbeddedPresentationDescriptor? = nil
     ) {
         self.compactStyle = compactStyle
         self.supportsExpandedPresentation = supportsExpandedPresentation
+        self.executionPresentation = executionPresentation
+        self.embeddedPresentation = embeddedPresentation
     }
 }
 

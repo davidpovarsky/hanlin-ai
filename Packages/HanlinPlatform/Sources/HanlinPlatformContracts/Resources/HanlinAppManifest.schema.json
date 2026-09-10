@@ -325,6 +325,7 @@
       "enum": [
         "app",
         "assistantTool",
+        "embeddedResult",
         "widget",
         "liveActivity",
         "controlWidget",
@@ -654,6 +655,68 @@
             },
             "supportsExpandedPresentation": {
               "type": "boolean"
+            },
+            "executionPresentation": {
+              "additionalProperties": true,
+              "properties": {
+                "familyID": {
+                  "type": "string"
+                },
+                "customHandler": {
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            },
+            "embeddedPresentation": {
+              "additionalProperties": true,
+              "properties": {
+                "handler": {
+                  "type": "string"
+                },
+                "sizing": {
+                  "additionalProperties": true,
+                  "properties": {
+                    "preset": {
+                      "enum": [
+                        "automatic",
+                        "compact",
+                        "regular",
+                        "large"
+                      ],
+                      "type": "string"
+                    },
+                    "preferredWidth": {
+                      "type": "number"
+                    },
+                    "preferredHeight": {
+                      "type": "number"
+                    }
+                  },
+                  "type": "object"
+                },
+                "expansion": {
+                  "additionalProperties": true,
+                  "properties": {
+                    "supportedModes": {
+                      "items": {
+                        "enum": [
+                          "sheet",
+                          "fullScreen",
+                          "window"
+                        ],
+                        "type": "string"
+                      },
+                      "type": "array"
+                    },
+                    "expandedHandler": {
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              },
+              "type": "object"
             }
           },
           "required": [
