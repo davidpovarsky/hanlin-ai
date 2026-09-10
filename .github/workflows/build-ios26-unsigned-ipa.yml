@@ -1940,6 +1940,17 @@ jobs:
             fi
           fi
 
+      - name: Analyze performance benchmark results
+        run: |
+          set -euxo pipefail
+          python3 Scripts/CI/analyze_performance_results.py \
+            --log-dir "$LOG_DIR" \
+            --output-json "$LOG_DIR/performance-summary.json" \
+            --output-markdown "$LOG_DIR/performance-summary.md" \
+            --github-step-summary "$GITHUB_STEP_SUMMARY" \
+            --xcode-version "${{ steps.simulator-toolchain.outputs.xcode-version }}" \
+            --runner-arch "${{ steps.simulator-toolchain.outputs.runner-arch }}"
+
       - name: Launch full app and verify runtime acceptance
         run: |
           set -euxo pipefail

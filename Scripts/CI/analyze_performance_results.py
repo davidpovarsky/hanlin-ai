@@ -203,29 +203,33 @@ def render_markdown_report(summary: Dict[str, Any], xcode_version: str = "Xcode 
             "> **All hard regression invariants passed.** Informational timings establish the multi-sample current baseline.\n"
         )
 
-    lines.append("### Measured Performance Matrix (Flows 1–16)")
-    lines.append("")
-    lines.append("| Flow # | Benchmark Flow | Category | N | Median | Mean | Min / Max | StdDev (CV%) | Classification | Status |")
-    lines.append("| :---: | :--- | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: |")
+    if not summary["metrics"]:
+        lines.append("*No performance benchmark samples recorded in this validation run.*")
+        lines.append("")
+    else:
+        lines.append("### Measured Performance Matrix (Flows 1–16)")
+        lines.append("")
+        lines.append("| Flow # | Benchmark Flow | Category | N | Median | Mean | Min / Max | StdDev (CV%) | Classification | Status |")
+        lines.append("| :---: | :--- | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: |")
 
-    for m in summary["metrics"]:
-        flow_num = m["flow_number"]
-        flow_display = f"Flow {flow_num}" if flow_num > 0 else "Stability"
-        flow_name = m["flow_name"]
-        cat = m["category"]
-        unit = m["unit"]
-        stats = m["statistics"]
-        n = stats["count"]
-        med = f"{stats['median']:.4f}{unit}" if stats["median"] < 10 else f"{stats['median']:.2f}{unit}"
-        mean_s = f"{stats['mean']:.4f}{unit}" if stats["mean"] < 10 else f"{stats['mean']:.2f}{unit}"
-        min_max = f"{stats['min']:.4f} / {stats['max']:.4f}{unit}" if stats["max"] < 10 else f"{stats['min']:.2f} / {stats['max']:.2f}{unit}"
-        cv_str = f"±{stats['std_dev']:.4f}{unit} ({stats['cv_percent']:.1f}%)" if stats["std_dev"] < 10 else f"±{stats['std_dev']:.2f}{unit} ({stats['cv_percent']:.1f}%)"
-        classification = "Hard Gate" if m["classification"] == "hard_gate" else "Informational"
-        status_emoji = "✅ PASS" if m["status"] == "PASS" else ("❌ FAIL" if m["status"] == "FAIL" else "ℹ️ INFO")
+        for m in summary["metrics"]:
+            flow_num = m["flow_number"]
+            flow_display = f"Flow {flow_num}" if flow_num > 0 else "Stability"
+            flow_name = m["flow_name"]
+            cat = m["category"]
+            unit = m["unit"]
+            stats = m["statistics"]
+            n = stats["count"]
+            med = f"{stats['median']:.4f}{unit}" if stats["median"] < 10 else f"{stats['median']:.2f}{unit}"
+            mean_s = f"{stats['mean']:.4f}{unit}" if stats["mean"] < 10 else f"{stats['mean']:.2f}{unit}"
+            min_max = f"{stats['min']:.4f} / {stats['max']:.4f}{unit}" if stats["max"] < 10 else f"{stats['min']:.2f} / {stats['max']:.2f}{unit}"
+            cv_str = f"±{stats['std_dev']:.4f}{unit} ({stats['cv_percent']:.1f}%)" if stats["std_dev"] < 10 else f"±{stats['std_dev']:.2f}{unit} ({stats['cv_percent']:.1f}%)"
+            classification = "Hard Gate" if m["classification"] == "hard_gate" else "Informational"
+            status_emoji = "✅ PASS" if m["status"] == "PASS" else ("❌ FAIL" if m["status"] == "FAIL" else "ℹ️ INFO")
 
-        lines.append(
-            f"| {flow_display} | **{flow_name}** | {cat} | {n} | `{med}` | `{mean_s}` | `{min_max}` | `{cv_str}` | {classification} | {status_emoji} |"
-        )
+            lines.append(
+                f"| {flow_display} | **{flow_name}** | {cat} | {n} | `{med}` | `{mean_s}` | `{min_max}` | `{cv_str}` | {classification} | {status_emoji} |"
+            )
 
     lines.append("")
     lines.append("### Simulator vs. Physical iPad Limitation Notice")

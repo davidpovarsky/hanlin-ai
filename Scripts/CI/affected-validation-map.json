@@ -814,6 +814,22 @@
         "run_device_build": true
       }
     },
+    "performance_regression": {
+      "description": "Execute iPad performance regression suite (unit and UI benchmarks)",
+      "job": "simulator",
+      "prerequisites": [
+        "nativescript_dependencies",
+        "runtimecore_host"
+      ],
+      "workflow_outputs": {
+        "run_simulator_job": true,
+        "run_simulator_unit": true,
+        "simulator_unit_filter": "AI_HLYTests/HanlinRuntimePerformanceTests",
+        "run_simulator_targeted_ui": true,
+        "simulator_ui_filter": "AI_HLYUITests/HanlinUIPerformanceUITests",
+        "stage_scriptui_fixtures": true
+      }
+    },
     "ipa_packaging": {
       "description": "Package unsigned IPA, validate dyld closure and system resources",
       "job": "device_build",
