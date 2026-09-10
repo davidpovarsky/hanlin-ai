@@ -361,11 +361,17 @@ public struct HanlinScriptAnalyzer: Sendable {
         let conventions: [(String, HanlinPackageEntrypointKind, HanlinExecutionContext, String)] = [
             ("assistant_tool.tsx", .assistantTool, .mainApplication, "assistant-tool-v1"),
             ("assistant_tool.ts", .assistantTool, .mainApplication, "assistant-tool-v1"),
+            ("embedded_result.tsx", .embeddedResult, .mainApplication, "embedded-result-v1"),
+            ("embedded_result.ts", .embeddedResult, .mainApplication, "embedded-result-v1"),
+            ("chat_card.tsx", .embeddedResult, .mainApplication, "embedded-result-v1"),
+            ("chat_card.ts", .embeddedResult, .mainApplication, "embedded-result-v1"),
             ("widget.tsx", .widget, .widget, "widget-v1"),
             ("widget.ts", .widget, .widget, "widget-v1"),
             ("app_intents.tsx", .appIntent, .appIntent, "app-intent-v1"),
             ("intent.tsx", .appIntent, .appIntent, "app-intent-v1"),
-            ("live_activity.tsx", .liveActivity, .liveActivity, "live-activity-v1")
+            ("live_activity.tsx", .liveActivity, .liveActivity, "live-activity-v1"),
+            ("translation_ui_provider.tsx", .translationUI, .translationUI, "translation-ui-v1"),
+            ("translation_ui_provider.ts", .translationUI, .translationUI, "translation-ui-v1")
         ]
         var kinds = Set(candidates.map { $0.1 })
         for (path, kind, context, policy) in conventions

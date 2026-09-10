@@ -4,14 +4,48 @@ import HanlinPlatformContracts
 public enum HanlinPackageEntrypointKind: String, Codable, CaseIterable, Hashable, Sendable {
     case app
     case assistantTool
+    case embeddedResult
     case widget
     case appIntent
     case liveActivity
+    case translationUI
     case spotlight
     case quickLook
     case share
     case capture
     case safariExtension
+}
+
+extension HanlinPackageEntrypointKind {
+    /// Maps a package entrypoint kind to the corresponding canonical entry point kind.
+    public var canonicalKind: HanlinEntryPointKind? {
+        switch self {
+        case .app: .app
+        case .assistantTool: .assistantTool
+        case .embeddedResult: .embeddedResult
+        case .widget: .widget
+        case .appIntent: .appIntentBridge
+        case .liveActivity: .liveActivity
+        case .translationUI: .translationUI
+        case .spotlight, .quickLook, .share, .capture, .safariExtension:
+            return nil
+        }
+    }
+
+    /// Creates a package entrypoint kind from a canonical entry point kind, if supported.
+    public init?(canonicalKind: HanlinEntryPointKind) {
+        switch canonicalKind {
+        case .app: self = .app
+        case .assistantTool: self = .assistantTool
+        case .embeddedResult: self = .embeddedResult
+        case .widget: self = .widget
+        case .appIntentBridge: self = .appIntent
+        case .liveActivity: self = .liveActivity
+        case .translationUI: self = .translationUI
+        case .controlWidget, .notificationUI, .keyboard, .backgroundTask:
+            return nil
+        }
+    }
 }
 
 public enum HanlinCompatibilityState: String, Codable, Hashable, Sendable {
