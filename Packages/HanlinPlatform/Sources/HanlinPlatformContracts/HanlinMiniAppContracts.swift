@@ -109,3 +109,50 @@ public struct HanlinMiniAppEnvironment: Sendable {
         Locale.Language(identifier: locale.identifier).characterDirection == .rightToLeft
     }
 }
+
+// MARK: - Composite Discovery
+
+/// Aggregates multiple Mini App discovery providers (e.g. built-in native discovery,
+/// installed script package discovery, etc.) into one unified catalog snapshot.
+public struct HanlinCompositeMiniAppDiscovery: HanlinMiniAppDiscovery, Sendable {
+    private let providers: [any HanlinMiniAppDiscovery]
+
+    public init(providers: [any HanlinMiniAppDiscovery]) {
+        self.providers = providers
+    }
+
+    public func registrations() async throws -> [any HanlinMiniAppRegistration] {
+        var seenIDs = Set<HanlinAppID>()
+        var combined: [any HanlinMiniAppRegistration] = []
+        for provider in providers {
+            let regs = try await provider.registrations()
+            for reg in regs {
+                if seenIDs.insert(reg.appID).inserted {
+                    combined.append(reg)
+                }
+            }
+        }
+        return combined
+    }
+
+    public func registration(for appID: HanlinAppID) async throws -> (any HanlinMiniAppRegistration)? {
+        for provider in providers {
+            if let found = try await provider.registration(for: appID) {
+                return found
+            }
+        }
+        return nil
+    }
+
+    public func catalogSnapshot(
+        revision: HanlinCatalogRevision = .init(1)
+    ) async throws -> HanlinCatalogSnapshot {
+        let regs = try await registrations()
+        let descriptors = try regs.map { try $0.appDescriptor() }
+        return HanlinCatalogSnapshot(
+            revision: revision,
+            generatedAt: .now,
+            apps: descriptors
+        )
+    }
+}
