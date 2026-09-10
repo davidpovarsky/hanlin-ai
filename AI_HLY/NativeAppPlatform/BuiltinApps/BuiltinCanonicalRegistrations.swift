@@ -540,4 +540,3 @@ public struct BuiltinMiniAppDiscovery: HanlinMiniAppDiscovery, Sendable {
         )
     }
 }
-
