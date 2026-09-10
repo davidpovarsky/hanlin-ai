@@ -1632,6 +1632,8 @@ jobs:
           rm -rf build/SimulatorRuntimeApp/AI_Hanlin.app/PlugIns/AI_HLYUITests.xctest
           rm -rf build/SimulatorRuntimeApp/AI_Hanlin.app/Frameworks/XC*
           rm -rf build/SimulatorRuntimeApp/AI_Hanlin.app/Frameworks/libXCTest*
+          rm -rf build/SimulatorRuntimeApp/AI_Hanlin.app/Frameworks/Testing.framework
+          rm -rf build/SimulatorRuntimeApp/AI_Hanlin.app/Frameworks/lib_Testing*
           test ! -e build/SimulatorRuntimeApp/AI_Hanlin.app/PlugIns/AI_HLYTests.xctest
 
       - name: Measure same-run simulator no-op rebuild
