@@ -123,8 +123,14 @@ struct ChatEmbeddedResultHost<Content: View, ExpandedContent: View>: View {
       }
 
       content()
-        .frame(maxWidth: .infinity, alignment: .leading)
+        .frame(maxWidth: .infinity, maxHeight: clampedHeight, alignment: .topLeading)
+        .clipped()
     }
+    .frame(
+      maxHeight: ChatHostPresentationPolicy.maxEmbeddedResultHeight(isRegularWidth: isRegularWidth),
+      alignment: .topLeading
+    )
+    .clipped()
   }
 
   // MARK: - Bordered Card Style (for raw unstyled content)

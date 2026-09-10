@@ -16,18 +16,18 @@ import SwiftUI
 
 // MARK: - Embedded Result Sizing & Presets
 
-public enum ChatHostSizePreset: String, Codable, Hashable, Sendable {
+enum ChatHostSizePreset: String, Codable, Hashable, Sendable {
   case compact
   case standard
   case tall
   case expanded
 }
 
-public struct ChatHostSizingPreference: Hashable, Sendable {
-  public var preset: ChatHostSizePreset
-  public var requestedHeight: CGFloat?
+struct ChatHostSizingPreference: Hashable, Sendable {
+  var preset: ChatHostSizePreset
+  var requestedHeight: CGFloat?
 
-  public init(preset: ChatHostSizePreset = .standard, requestedHeight: CGFloat? = nil) {
+  init(preset: ChatHostSizePreset = .standard, requestedHeight: CGFloat? = nil) {
     self.preset = preset
     self.requestedHeight = requestedHeight
   }
@@ -35,13 +35,13 @@ public struct ChatHostSizingPreference: Hashable, Sendable {
 
 // MARK: - Expansion Modes
 
-public enum ChatHostExpansionMode: String, Codable, Hashable, Sendable {
+enum ChatHostExpansionMode: String, Codable, Hashable, Sendable {
   case sheet
   case fullScreen
   case window
 }
 
-public enum ChatHostContainerStyle: String, Codable, Hashable, Sendable {
+enum ChatHostContainerStyle: String, Codable, Hashable, Sendable {
   /// The hosted content already owns its visual card styling (e.g. ModernCards).
   /// The host behaves as a neutral layout host and avoids duplicate borders, backgrounds, or nested scroll views.
   case neutral
@@ -49,12 +49,12 @@ public enum ChatHostContainerStyle: String, Codable, Hashable, Sendable {
   case borderedCard
 }
 
-public struct ChatHostExpansionDescriptor: Hashable, Sendable {
-  public var mode: ChatHostExpansionMode
-  public var title: String?
-  public var launchRequest: NativeAppLaunchRequest?
+struct ChatHostExpansionDescriptor: Hashable, Sendable {
+  var mode: ChatHostExpansionMode
+  var title: String?
+  var launchRequest: NativeAppLaunchRequest?
 
-  public init(
+  init(
     mode: ChatHostExpansionMode = .sheet,
     title: String? = nil,
     launchRequest: NativeAppLaunchRequest? = nil
@@ -67,11 +67,11 @@ public struct ChatHostExpansionDescriptor: Hashable, Sendable {
 
 // MARK: - Embedded Result Presentation Descriptor
 
-public struct ChatHostEmbeddedPresentationDescriptor: Hashable, Sendable {
-  public var sizing: ChatHostSizingPreference
-  public var expansion: ChatHostExpansionDescriptor?
+struct ChatHostEmbeddedPresentationDescriptor: Hashable, Sendable {
+  var sizing: ChatHostSizingPreference
+  var expansion: ChatHostExpansionDescriptor?
 
-  public init(
+  init(
     sizing: ChatHostSizingPreference = ChatHostSizingPreference(),
     expansion: ChatHostExpansionDescriptor? = nil
   ) {
@@ -82,37 +82,37 @@ public struct ChatHostEmbeddedPresentationDescriptor: Hashable, Sendable {
 
 // MARK: - Tool Execution Presentation Families
 
-public struct ChatHostExecutionFamilyID: RawRepresentable, Hashable, Sendable {
-  public let rawValue: String
+struct ChatHostExecutionFamilyID: RawRepresentable, Hashable, Sendable {
+  let rawValue: String
 
-  public init(rawValue: String) {
+  init(rawValue: String) {
     self.rawValue = rawValue
   }
 
-  public static let generic = ChatHostExecutionFamilyID(rawValue: "hanlin.execution.generic")
-  public static let webSearch = ChatHostExecutionFamilyID(rawValue: "hanlin.execution.webSearch")
-  public static let sourceSearch = ChatHostExecutionFamilyID(
+  static let generic = ChatHostExecutionFamilyID(rawValue: "hanlin.execution.generic")
+  static let webSearch = ChatHostExecutionFamilyID(rawValue: "hanlin.execution.webSearch")
+  static let sourceSearch = ChatHostExecutionFamilyID(
     rawValue: "hanlin.execution.sourceSearch")
-  public static let mapLocation = ChatHostExecutionFamilyID(
+  static let mapLocation = ChatHostExecutionFamilyID(
     rawValue: "hanlin.execution.mapLocation")
-  public static let commandExecution = ChatHostExecutionFamilyID(
+  static let commandExecution = ChatHostExecutionFamilyID(
     rawValue: "hanlin.execution.commandExecution")
-  public static let fileOperation = ChatHostExecutionFamilyID(
+  static let fileOperation = ChatHostExecutionFamilyID(
     rawValue: "hanlin.execution.fileOperation")
-  public static let codeExecution = ChatHostExecutionFamilyID(
+  static let codeExecution = ChatHostExecutionFamilyID(
     rawValue: "hanlin.execution.codeExecution")
-  public static let imageGeneration = ChatHostExecutionFamilyID(
+  static let imageGeneration = ChatHostExecutionFamilyID(
     rawValue: "hanlin.execution.imageGeneration")
 }
 
-public struct ChatHostExecutionPresentationDescriptor: Hashable, Sendable {
-  public var familyID: ChatHostExecutionFamilyID
-  public var title: String
-  public var detail: String?
-  public var status: AgentActivityStatus
-  public var progress: Double?  // Nil if indeterminate
+struct ChatHostExecutionPresentationDescriptor: Hashable, Sendable {
+  var familyID: ChatHostExecutionFamilyID
+  var title: String
+  var detail: String?
+  var status: AgentActivityStatus
+  var progress: Double?  // Nil if indeterminate
 
-  public init(
+  init(
     familyID: ChatHostExecutionFamilyID = .generic,
     title: String,
     detail: String? = nil,
