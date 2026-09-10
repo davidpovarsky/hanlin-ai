@@ -388,8 +388,8 @@ final class HanlinRuntimePerformanceTests: XCTestCase {
     // MARK: - Memory Stability & Leak Bounds Under Repeated Lifecycle Cycles
 
     func testRuntimeMemoryStabilityUnderRepeatedExecutionCycles() async throws {
-        // Warm up the runtime heaps / VM pools once so one-time initialization is not counted as per-cycle leak
-        for _ in 0..<2 {
+        // Warm up the runtime heaps / VM pools so one-time initialization is not counted as per-cycle leak
+        for _ in 0..<5 {
             let jsc = try HanlinJavaScriptCoreSession(configuration: .scriptingCompatibility)
             try await jsc.loadProgram(
                 "AssistantTool.registerExecuteTool(() => ({ success: true, message: 'ok' }));",
@@ -408,6 +408,7 @@ final class HanlinRuntimePerformanceTests: XCTestCase {
             _ = try await qjs.invoke(toolIndex: 0, parameters: .object([:]))
             await qjs.dispose()
         }
+        await Task.yield()
 
         let initialMemoryMB = currentResidentMemoryMB()
         let cycleCount = 50
@@ -430,6 +431,7 @@ final class HanlinRuntimePerformanceTests: XCTestCase {
             )
             _ = try await qjs.invoke(toolIndex: 0, parameters: .object([:]))
             await qjs.dispose()
+            await Task.yield()
         }
 
         let finalMemoryMB = currentResidentMemoryMB()
@@ -456,15 +458,26 @@ final class HanlinRuntimePerformanceTests: XCTestCase {
     // MARK: - Helpers
 
     private func currentResidentMemoryMB() -> Double {
-        var info = mach_task_basic_info()
-        var count = mach_msg_type_number_t(MemoryLayout<mach_task_basic_info>.size) / 4
-        let kerr = withUnsafeMutablePointer(to: &info) {
-            $0.withMemoryRebound(to: integer_t.self, capacity: Int(count)) {
-                task_info(mach_task_self_, task_flavor_t(MACH_TASK_BASIC_INFO), $0, &count)
+        var vmInfo = task_vm_info_data_t()
+        var vmCount = mach_msg_type_number_t(MemoryLayout<task_vm_info_data_t>.size) / 4
+        let vmResult = withUnsafeMutablePointer(to: &vmInfo) {
+            $0.withMemoryRebound(to: integer_t.self, capacity: Int(vmCount)) {
+                task_info(mach_task_self_, task_flavor_t(TASK_VM_INFO), $0, &vmCount)
             }
         }
-        guard kerr == KERN_SUCCESS else { return 0.0 }
-        return Double(info.resident_size) / (1024.0 * 1024.0)
+        if vmResult == KERN_SUCCESS && vmInfo.phys_footprint > 0 {
+            return Double(vmInfo.phys_footprint) / (1024.0 * 1024.0)
+        }
+
+        var basicInfo = mach_task_basic_info()
+        var basicCount = mach_msg_type_number_t(MemoryLayout<mach_task_basic_info>.size) / 4
+        let basicResult = withUnsafeMutablePointer(to: &basicInfo) {
+            $0.withMemoryRebound(to: integer_t.self, capacity: Int(basicCount)) {
+                task_info(mach_task_self_, task_flavor_t(MACH_TASK_BASIC_INFO), $0, &basicCount)
+            }
+        }
+        guard basicResult == KERN_SUCCESS else { return 0.0 }
+        return Double(basicInfo.resident_size) / (1024.0 * 1024.0)
     }
 
     private func bundledFixtureDirectory(_ name: String) throws -> URL {

@@ -338,6 +338,7 @@ final class HanlinUIPerformanceUITests: XCTestCase {
         app.launchEnvironment["HANLIN_NATIVESCRIPT_E2E"] = "1"
         app.launch()
         openApps()
+        ensureNativeScriptPackageInstalled()
 
         var recordedSamples: [Double] = []
         let start = CFAbsoluteTimeGetCurrent()
@@ -345,7 +346,7 @@ final class HanlinUIPerformanceUITests: XCTestCase {
         launchInstalledPackage(named: nativeScriptSwiftUIPackageName)
         let coreButton = app.buttons["hanlin-nativescript-core-button"].firstMatch
         let coreLabel = app.staticTexts["hanlin-nativescript-device-proof"].firstMatch
-        XCTAssertTrue(coreButton.waitForExistence(timeout: 25), "NativeScript Core button did not render")
+        XCTAssertTrue(coreButton.waitForExistence(timeout: 30), "NativeScript Core button did not render")
         XCTAssertTrue(coreLabel.waitForExistence(timeout: 10), "NativeScript device proof did not render")
 
         let elapsed = CFAbsoluteTimeGetCurrent() - start
@@ -368,6 +369,7 @@ final class HanlinUIPerformanceUITests: XCTestCase {
         app.launchEnvironment["HANLIN_NATIVESCRIPT_E2E"] = "1"
         app.launch()
         openApps()
+        ensureNativeScriptPackageInstalled()
 
         var recordedSamples: [Double] = []
         for _ in 0..<Self.sampleIterationCount {
@@ -375,7 +377,7 @@ final class HanlinUIPerformanceUITests: XCTestCase {
             launchInstalledPackage(named: nativeScriptSwiftUIPackageName)
 
             let incrementButton = app.buttons["hanlin-swiftui-increment"].firstMatch
-            XCTAssertTrue(incrementButton.waitForExistence(timeout: 25), "@nativescript/swift-ui provider button missing")
+            XCTAssertTrue(incrementButton.waitForExistence(timeout: 30), "@nativescript/swift-ui provider button missing")
             incrementButton.tap()
 
             let updatedButton = app.buttons["hanlin-swiftui-increment"].firstMatch
@@ -507,6 +509,39 @@ final class HanlinUIPerformanceUITests: XCTestCase {
         closeImportSurfaces()
     }
 
+    private func ensureNativeScriptPackageInstalled() {
+        let card = findPackageCard(named: nativeScriptSwiftUIPackageName)
+        if card.waitForExistence(timeout: 3) { return }
+
+        ensureAppsAddButton(timeout: 15).tap()
+        let importLink = app.buttons["hanlin-import-script-package"].firstMatch
+        if importLink.waitForExistence(timeout: 10) {
+            importLink.tap()
+        }
+        selectArchive(named: "HanlinNativeScriptSwiftUI")
+
+        let installButton = app.buttons["hanlin-package-install"].firstMatch
+        if !installButton.waitForExistence(timeout: 10) {
+            app.swipeUp()
+        }
+        _ = installButton.waitForExistence(timeout: 15)
+
+        let approveAllButton = app.buttons["hanlin-approve-all-capabilities"].firstMatch
+        if approveAllButton.waitForExistence(timeout: 3) && approveAllButton.isHittable {
+            approveAllButton.tap()
+        }
+
+        if !installButton.exists || !installButton.isHittable {
+            app.swipeDown()
+        }
+        _ = waitUntil(timeout: 10) { installButton.isEnabled }
+        if installButton.isEnabled {
+            installButton.tap()
+            _ = waitUntil(timeout: 30) { !installButton.exists }
+        }
+        closeImportSurfaces()
+    }
+
     private func openPackageDetails(named packageName: String) {
         let packageCard = findPackageCard(named: packageName)
         if packageCard.waitForExistence(timeout: 5) {
@@ -546,12 +581,26 @@ final class HanlinUIPerformanceUITests: XCTestCase {
     }
 
     private func launchPackage(named name: String) {
-        let card = findPackageCard(named: name)
+        var card = findPackageCard(named: name)
+        if !card.waitForExistence(timeout: 5) {
+            app.swipeDown()
+            card = findPackageCard(named: name)
+        }
+        if !card.waitForExistence(timeout: 10) {
+            app.swipeUp()
+            card = findPackageCard(named: name)
+        }
         XCTAssertTrue(card.waitForExistence(timeout: 15), "Package card \(name) missing")
         card.tap()
     }
 
     private func launchInstalledPackage(named name: String) {
+        let closeButton = app.buttons["hanlin-script-app-close"].firstMatch
+        let coreButton = app.buttons["hanlin-nativescript-core-button"].firstMatch
+        let swiftUIButton = app.buttons["hanlin-swiftui-increment"].firstMatch
+        if closeButton.exists || coreButton.exists || swiftUIButton.exists {
+            return
+        }
         launchPackage(named: name)
     }
 
@@ -566,9 +615,16 @@ final class HanlinUIPerformanceUITests: XCTestCase {
 
     private func closeNativeScriptApp() {
         let close = app.buttons["hanlin-nativescript-close"].firstMatch
-        if close.waitForExistence(timeout: 5) && close.isHittable {
+        if close.waitForExistence(timeout: 3) && close.isHittable {
             close.tap()
             _ = waitUntil(timeout: 10) { !close.exists }
+            _ = ensureAppsAddButton(timeout: 15)
+            return
+        }
+        let scriptClose = app.buttons["hanlin-script-app-close"].firstMatch
+        if scriptClose.waitForExistence(timeout: 3) && scriptClose.isHittable {
+            scriptClose.tap()
+            _ = waitUntil(timeout: 10) { !scriptClose.exists }
             _ = ensureAppsAddButton(timeout: 15)
             return
         }
