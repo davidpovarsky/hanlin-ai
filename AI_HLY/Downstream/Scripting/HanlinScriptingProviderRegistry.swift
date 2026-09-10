@@ -176,7 +176,8 @@ actor HanlinScriptingProviderRegistry {
         at directory: URL,
         trust: HanlinPackageTrust
     ) async throws -> HanlinProviderInstanceID {
-        let package = try HanlinScriptPackageLoader.load(packageDirectory: directory)
+        try await HanlinScriptingPerformanceSignposts.withIntervalAsync("RegistryLoadPackage") {
+            let package = try HanlinScriptPackageLoader.load(packageDirectory: directory)
         guard trust.satisfies(package.manifest.runtime.minimumTrust) else {
             throw HanlinScriptingError.unsupportedABI("runtime_minimum_trust")
         }
@@ -208,6 +209,7 @@ actor HanlinScriptingProviderRegistry {
             session: session
         )
         return package.providerInstanceID
+        }
     }
 
     func unloadPackage(providerInstanceID: HanlinProviderInstanceID) async {
@@ -254,7 +256,8 @@ actor HanlinScriptingProviderRegistry {
         route: HanlinScriptBackendRoute,
         argumentsJSON: String
     ) async throws -> HanlinScriptToolExecutionResult {
-        guard let provider = providers[route.providerInstanceID],
+        try await HanlinScriptingPerformanceSignposts.withIntervalAsync("RegistryExecute") {
+            guard let provider = providers[route.providerInstanceID],
               provider.package.installedPackageID == route.installedPackageID,
               provider.package.manifest.entrypoint.compiledPath == route.entrypointPath,
               provider.package.manifest.entrypoint.exportedTools.contains(where: {
@@ -305,6 +308,7 @@ actor HanlinScriptingProviderRegistry {
             assistantParts: assistantParts,
             structured: true
         )
+        }
     }
 
     private static func outputParts(_ value: HanlinValue?) throws -> [HanlinScriptToolOutputPart]? {

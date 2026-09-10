@@ -1,0 +1,328 @@
+name: Validate Performance Regression
+
+on:
+  workflow_dispatch:
+    inputs:
+      scope:
+        description: 'Performance validation scope: all, runtime-unit, or ui-e2e'
+        required: true
+        default: 'all'
+        type: choice
+        options:
+          - all
+          - runtime-unit
+          - ui-e2e
+      iterations:
+        description: 'Sample iteration count per benchmark'
+        required: false
+        default: '5'
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  validate-performance-regression:
+    name: iPad Performance Regression Suite
+    runs-on: macos-26
+    timeout-minutes: 60
+
+    env:
+      PROJECT_PATH: AI_HLY.xcodeproj
+      SCHEME_NAME: AI_HLY
+      CONFIGURATION: Release
+      DERIVED_DATA_PATH: build/SimulatorDerivedData
+      CLONED_PACKAGES_PATH: build/SourcePackages
+      LOG_DIR: performance-logs
+      IOS_DEPLOYMENT_TARGET: "26.0"
+      PERF_SCOPE: ${{ inputs.scope || 'all' }}
+      PERF_ITERATIONS: ${{ inputs.iterations || '5' }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up pinned RuntimeCore host Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24.5.0
+          cache: npm
+          cache-dependency-path: AI_HLY/Downstream/RuntimeCore/Node/Host/package-lock.json
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Prepare simulator logs and select stable Xcode 26
+        id: toolchain
+        run: |
+          set -euxo pipefail
+          mkdir -p "$LOG_DIR" build
+          selected_xcode="$(find /Applications -maxdepth 1 -type d -name 'Xcode_26*.app' -print \
+            | grep -E '/Xcode_26([._][0-9]+)*\.app$' \
+            | sort -V \
+            | tail -1)"
+          test -n "$selected_xcode"
+          sudo xcode-select -s "$selected_xcode/Contents/Developer"
+          {
+            sw_vers
+            xcode-select -p
+            xcodebuild -version
+            xcodebuild -showsdks
+          } 2>&1 | tee "$LOG_DIR/01-environment.log"
+          xcodebuild -showsdks | grep -E 'iphonesimulator26|iOS Simulator 26'
+          echo "xcode-version=$(xcodebuild -version | sed -n '1s/^Xcode //p')" >> "$GITHUB_OUTPUT"
+          echo "xcode-build=$(xcodebuild -version | sed -n '2s/^Build version //p')" >> "$GITHUB_OUTPUT"
+          echo "runner-arch=$(uname -m)" >> "$GITHUB_OUTPUT"
+          echo "simulator-sdk=$(xcrun --sdk iphonesimulator --show-sdk-version)" >> "$GITHUB_OUTPUT"
+
+      - name: Prepare pinned NativeScript iOS dependency closure
+        run: |
+          set -euxo pipefail
+          npm ci --ignore-scripts --no-audit --no-fund --prefix Scripts/NativeScript
+          npm run prepare:ios-dependencies --prefix Scripts/NativeScript
+          node Scripts/NativeScript/prepare-fixture.mjs
+          npm run prepare:production-package --prefix Scripts/NativeScript
+          (
+            cd build/NativeScriptE2E/swiftui-package
+            zip -qry ../HanlinNativeScriptSwiftUI.hanlinNativeScript *
+          )
+          (
+            cd build/NativeScriptE2E/core-package
+            zip -qry ../HanlinNativeScriptCore.hanlinNativeScript *
+          )
+          test -s build/NativeScriptE2E/HanlinNativeScriptSwiftUI.hanlinNativeScript
+          test -s build/NativeScriptE2E/HanlinNativeScriptCore.hanlinNativeScript
+          npm run preflight:ios-dependencies --prefix Scripts/NativeScript
+
+      - name: Prepare verified embedded RuntimeCore
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euxo pipefail
+          bash Scripts/Runtime/prepare-runtime-core.sh 2>&1 | tee "$LOG_DIR/02-prepare-runtime-core.log"
+          grep -Fq "Prepared verified RuntimeCore 93417cff5ce62098919711e7f6d239a6501fd7a5de1621e38eb2fb5cc8c79269" "$LOG_DIR/02-prepare-runtime-core.log"
+
+      - name: Package current RuntimeCore host resources
+        run: |
+          set -euxo pipefail
+          bash Scripts/Runtime/prepare-runtime-host.sh 2>&1 | tee "$LOG_DIR/03-package-runtime-host.log"
+          cp build/runtime-host/RuntimeHostResources.zip AI_HLY/RuntimeHostResources.zip
+          find build/SimulatorDerivedData -name "RuntimeHostResources.zip" -path "*/AI_Hanlin.app/*" -delete || true
+
+      - name: Restore simulator cloned Swift package dependencies
+        id: simulator-sourcepackages-cache
+        uses: actions/cache/restore@v6
+        with:
+          path: build/SourcePackages
+          key: ios-sourcepackages-v1-${{ runner.os }}-${{ steps.toolchain.outputs.runner-arch }}-${{ steps.toolchain.outputs.xcode-build }}-${{ hashFiles('AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved', 'Packages/HanlinPlatform/Package.swift', 'Packages/HanlinQuickJS/Package.swift', 'Packages/IOSSystemLite/Package.swift', 'Packages/HanlinNativeScriptRuntime/Package.swift') }}
+          restore-keys: |
+            ios-sourcepackages-v1-${{ runner.os }}-${{ steps.toolchain.outputs.runner-arch }}-${{ steps.toolchain.outputs.xcode-build }}-
+
+      - name: Restore compatible simulator compiler state
+        id: simulator-deriveddata-cache
+        uses: actions/cache/restore@v6
+        with:
+          path: |
+            build/SimulatorDerivedData/Build
+            build/SimulatorDerivedData/ModuleCache.noindex
+            build/SimulatorDerivedData/SDKStatCaches.noindex
+            build/SimulatorDerivedData/CacheMetadata/xcode-build-inputs.json
+          key: ios-derived-v4-${{ runner.os }}-${{ steps.toolchain.outputs.runner-arch }}-${{ steps.toolchain.outputs.xcode-build }}-iphonesimulator-${{ steps.toolchain.outputs.simulator-sdk }}-${{ env.CONFIGURATION }}-${{ hashFiles('AI_HLY.xcodeproj/project.pbxproj', 'AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved', 'Packages/HanlinPlatform/Package.swift', 'Packages/HanlinQuickJS/Package.swift', 'Packages/IOSSystemLite/Package.swift', 'Packages/HanlinNativeScriptRuntime/Package.swift', 'Packages/HanlinNativeScriptRuntime/Sources/**', 'Scripts/NativeScript/dependency-lock.json', 'Scripts/NativeScript/Fixtures/Source/**') }}-${{ github.sha }}
+          restore-keys: |
+            ios-derived-v4-${{ runner.os }}-${{ steps.toolchain.outputs.runner-arch }}-${{ steps.toolchain.outputs.xcode-build }}-iphonesimulator-${{ steps.toolchain.outputs.simulator-sdk }}-${{ env.CONFIGURATION }}-${{ hashFiles('AI_HLY.xcodeproj/project.pbxproj', 'AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved', 'Packages/HanlinPlatform/Package.swift', 'Packages/HanlinQuickJS/Package.swift', 'Packages/IOSSystemLite/Package.swift', 'Packages/HanlinNativeScriptRuntime/Package.swift', 'Packages/HanlinNativeScriptRuntime/Sources/**', 'Scripts/NativeScript/dependency-lock.json', 'Scripts/NativeScript/Fixtures/Source/**') }}-
+
+      - name: Create CI Config.xcconfig
+        run: |
+          set -euxo pipefail
+          cat > Config.xcconfig <<'EOF'
+          // Generated by GitHub Actions for CI builds.
+          // Do not commit secrets here.
+
+          HANLIN_API_KEY =
+          HANLIN_OPEN_API_KEY =
+          EOF
+
+      - name: Resolve Swift Package dependencies
+        run: |
+          set -euxo pipefail
+          xcodebuild \
+            -project "$PROJECT_PATH" \
+            -scheme "$SCHEME_NAME" \
+            -resolvePackageDependencies \
+            -clonedSourcePackagesDirPath "$CLONED_PACKAGES_PATH" \
+            -skipPackagePluginValidation \
+            -skipMacroValidation \
+            2>&1 | tee "$LOG_DIR/05-resolve-packages.log"
+
+      - name: Save validated simulator Swift package dependencies
+        uses: actions/cache/save@v6
+        with:
+          path: build/SourcePackages
+          key: ${{ steps.simulator-sourcepackages-cache.outputs.cache-primary-key }}
+
+      - name: Build simulator app for performance testing
+        run: |
+          set -euxo pipefail
+          testing_scope_flags=()
+          if [ "$PERF_SCOPE" = "all" ]; then
+            testing_scope_flags+=("-only-testing:AI_HLYTests/HanlinRuntimePerformanceTests" "-only-testing:AI_HLYUITests/HanlinUIPerformanceUITests")
+          elif [ "$PERF_SCOPE" = "runtime-unit" ]; then
+            testing_scope_flags+=("-only-testing:AI_HLYTests/HanlinRuntimePerformanceTests")
+          elif [ "$PERF_SCOPE" = "ui-e2e" ]; then
+            testing_scope_flags+=("-only-testing:AI_HLYUITests/HanlinUIPerformanceUITests")
+          fi
+
+          started_at="$(date +%s)"
+          xcodebuild \
+            -project "$PROJECT_PATH" \
+            -scheme "$SCHEME_NAME" \
+            -configuration "$CONFIGURATION" \
+            -sdk iphonesimulator \
+            -destination "generic/platform=iOS Simulator" \
+            -derivedDataPath "$DERIVED_DATA_PATH" \
+            -clonedSourcePackagesDirPath "$CLONED_PACKAGES_PATH" \
+            -resultBundlePath "$LOG_DIR/SimulatorBuildResult.xcresult" \
+            -showBuildTimingSummary \
+            -skipPackagePluginValidation \
+            -skipMacroValidation \
+            ENABLE_TESTABILITY=YES \
+            IPHONEOS_DEPLOYMENT_TARGET="$IOS_DEPLOYMENT_TARGET" \
+            ARCHS=arm64 \
+            ONLY_ACTIVE_ARCH=YES \
+            "${testing_scope_flags[@]}" \
+            build-for-testing 2>&1 | tee "$LOG_DIR/06-xcodebuild-build-for-testing.log"
+          echo "$(( $(date +%s) - started_at ))" > "$LOG_DIR/06-compilation-duration-seconds.txt"
+
+          APP_PATH="$DERIVED_DATA_PATH/Build/Products/${CONFIGURATION}-iphonesimulator/AI_Hanlin.app"
+          test -d "$APP_PATH"
+          echo "$APP_PATH" > "$LOG_DIR/app-path.txt"
+
+      - name: Boot iPad Simulator and stage fixtures
+        run: |
+          set -euxo pipefail
+          APP_PATH="$(cat "$LOG_DIR/app-path.txt")"
+          BUNDLE_ID="$(/usr/libexec/PlistBuddy -c 'Print CFBundleIdentifier' "$APP_PATH/Info.plist")"
+
+          selection="$(python3 - <<'PY'
+          import json
+          import subprocess
+
+          payload = json.loads(subprocess.check_output(
+              ["xcrun", "simctl", "list", "devices", "available", "--json"],
+              text=True,
+          ))
+          candidates = []
+          for runtime, devices in payload.get("devices", {}).items():
+              if "iOS-26" not in runtime:
+                  continue
+              for device in devices:
+                  if device.get("isAvailable") and "iPad" in device.get("name", ""):
+                      candidates.append((runtime, device["name"], device["udid"]))
+          if not candidates:
+              raise SystemExit("No available iOS 26 iPad simulator was found")
+          runtime, name, udid = sorted(candidates, reverse=True)[0]
+          print(f"{udid}\t{name}\t{runtime}")
+          PY
+          )"
+          IFS=$'\t' read -r SIMULATOR_UDID SIMULATOR_MODEL SIMULATOR_RUNTIME <<< "$selection"
+          test -n "$SIMULATOR_UDID"
+          printf '%s\n' "$SIMULATOR_UDID" > "$LOG_DIR/simulator-udid.txt"
+          printf '%s\n' "$SIMULATOR_MODEL" > "$LOG_DIR/simulator-model.txt"
+          printf '%s\n' "$SIMULATOR_RUNTIME" > "$LOG_DIR/simulator-runtime.txt"
+          printf '%s\n' "$BUNDLE_ID" > "$LOG_DIR/bundle-id.txt"
+
+          xcrun simctl boot "$SIMULATOR_UDID" 2>/dev/null || true
+          xcrun simctl bootstatus "$SIMULATOR_UDID" -b 2>&1 | tee "$LOG_DIR/07-bootstatus.log"
+
+          # Stage NativeScript fixtures
+          FILES_CONTAINER="$(xcrun simctl get_app_container "$SIMULATOR_UDID" com.apple.DocumentsApp data 2>/dev/null || true)"
+          if [ -n "$FILES_CONTAINER" ]; then
+            mkdir -p "$FILES_CONTAINER/Documents"
+            cp build/NativeScriptE2E/HanlinNativeScriptSwiftUI.hanlinNativeScript "$FILES_CONTAINER/Documents/"
+            cp build/NativeScriptE2E/HanlinNativeScriptCore.hanlinNativeScript "$FILES_CONTAINER/Documents/"
+          fi
+
+          xcrun simctl install "$SIMULATOR_UDID" "$APP_PATH"
+          APP_CONTAINER="$(xcrun simctl get_app_container "$SIMULATOR_UDID" "$BUNDLE_ID" data 2>/dev/null || true)"
+          if [ -n "$APP_CONTAINER" ]; then
+            mkdir -p "$APP_CONTAINER/Documents"
+            cp build/NativeScriptE2E/HanlinNativeScriptSwiftUI.hanlinNativeScript "$APP_CONTAINER/Documents/"
+            cp build/NativeScriptE2E/HanlinNativeScriptCore.hanlinNativeScript "$APP_CONTAINER/Documents/"
+          fi
+
+          # Stage ScriptUI fixtures
+          python3 Scripts/CI/stage_scriptui_fixtures.py \
+            --simulator-udid "$SIMULATOR_UDID" \
+            --app-path "$APP_PATH" \
+            --bundle-id "$BUNDLE_ID" \
+            --log-file "$LOG_DIR/07-scriptui-files-staging.log"
+
+      - name: Run performance benchmark test suite
+        run: |
+          set -euxo pipefail
+          SIMULATOR_UDID="$(cat "$LOG_DIR/simulator-udid.txt")"
+          rm -rf "$LOG_DIR/PerformanceTestResult.xcresult"
+
+          testing_scope_flags=()
+          if [ "$PERF_SCOPE" = "all" ]; then
+            testing_scope_flags+=("-only-testing:AI_HLYTests/HanlinRuntimePerformanceTests" "-only-testing:AI_HLYUITests/HanlinUIPerformanceUITests")
+          elif [ "$PERF_SCOPE" = "runtime-unit" ]; then
+            testing_scope_flags+=("-only-testing:AI_HLYTests/HanlinRuntimePerformanceTests")
+          elif [ "$PERF_SCOPE" = "ui-e2e" ]; then
+            testing_scope_flags+=("-only-testing:AI_HLYUITests/HanlinUIPerformanceUITests")
+          fi
+
+          set +e
+          xcodebuild test-without-building \
+            -project "$PROJECT_PATH" \
+            -scheme "$SCHEME_NAME" \
+            -configuration "$CONFIGURATION" \
+            -destination "platform=iOS Simulator,id=$SIMULATOR_UDID" \
+            -derivedDataPath "$DERIVED_DATA_PATH" \
+            -clonedSourcePackagesDirPath "$CLONED_PACKAGES_PATH" \
+            -resultBundlePath "$LOG_DIR/PerformanceTestResult.xcresult" \
+            -skipPackagePluginValidation \
+            -skipMacroValidation \
+            -parallel-testing-enabled NO \
+            "${testing_scope_flags[@]}" \
+            2>&1 | tee "$LOG_DIR/08-performance-tests.log"
+          test_status="${PIPESTATUS[0]}"
+          set -e
+
+          if [ "$test_status" -ne 0 ]; then
+            echo "::warning::Performance test execution exited with code $test_status. Inspecting detailed result bundle."
+            xcrun xcresulttool get test-results tests \
+              --path "$LOG_DIR/PerformanceTestResult.xcresult" \
+              --format json 2>&1 | tee "$LOG_DIR/08-test-failures.json" || true
+          fi
+
+          echo "test_status=$test_status" >> "$GITHUB_OUTPUT"
+
+      - name: Analyze performance results and render markdown summary
+        run: |
+          set -euxo pipefail
+          python3 Scripts/CI/analyze_performance_results.py \
+            --log-dir "$LOG_DIR" \
+            --xcresult "$LOG_DIR/PerformanceTestResult.xcresult" \
+            --output-json "$LOG_DIR/performance-summary.json" \
+            --output-markdown "$LOG_DIR/performance-summary.md" \
+            --github-step-summary "$GITHUB_STEP_SUMMARY" \
+            --xcode-version "${{ steps.toolchain.outputs.xcode-version }}" \
+            --runner-arch "${{ steps.toolchain.outputs.runner-arch }}"
+
+      - name: Upload performance logs and test results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ipad-performance-regression-results
+          path: |
+            performance-logs/*.log
+            performance-logs/*.txt
+            performance-logs/*.json
+            performance-logs/*.md
+            performance-logs/PerformanceTestResult.xcresult
+          retention-days: 14

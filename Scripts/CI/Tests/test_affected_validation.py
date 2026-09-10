@@ -554,6 +554,22 @@ class AffectedValidationPlannerTests(unittest.TestCase):
         self.assertEqual(plan.step_outputs["simulator_unit_filter"], "AI_HLYTests/CanonicalShadowCoordinatorTests")
         self.assertFalse(plan.step_outputs["run_runtimecore_host"])
 
+    def test_runtime_performance_test_change(self) -> None:
+        changed = ["AI_HLYTests/HanlinRuntimePerformanceTests.swift"]
+        plan = self.plan_files(changed)
+        self.assertTrue(plan.step_outputs["run_simulator_unit"])
+        self.assertEqual(plan.step_outputs["simulator_unit_filter"], "AI_HLYTests/HanlinRuntimePerformanceTests")
+        self.assertTrue(plan.step_outputs["run_runtimecore_host"])
+        self.assertFalse(plan.step_outputs["run_simulator_targeted_ui"])
+
+    def test_ui_performance_test_change(self) -> None:
+        changed = ["AI_HLYUITests/HanlinUIPerformanceUITests.swift"]
+        plan = self.plan_files(changed)
+        self.assertTrue(plan.step_outputs["run_simulator_targeted_ui"])
+        self.assertEqual(plan.step_outputs["simulator_ui_filter"], "AI_HLYUITests/HanlinUIPerformanceUITests")
+        self.assertTrue(plan.step_outputs["stage_scriptui_fixtures"])
+        self.assertFalse(plan.step_outputs["run_simulator_unit"])
+
 
 if __name__ == "__main__":
     unittest.main()

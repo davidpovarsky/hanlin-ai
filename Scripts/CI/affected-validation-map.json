@@ -581,6 +581,36 @@
       ],
       "consumers": []
     },
+    "runtime_performance_test_files": {
+      "description": "Downstream runtime and engine performance benchmark test suite",
+      "patterns": [
+        "AI_HLYTests/HanlinRuntimePerformanceTests.swift"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "prerequisites": [
+        "runtimecore_host"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/HanlinRuntimePerformanceTests"
+      ],
+      "consumers": []
+    },
+    "ui_performance_test_files": {
+      "description": "Downstream UI and end-to-end performance benchmark test suite",
+      "patterns": [
+        "AI_HLYUITests/HanlinUIPerformanceUITests.swift"
+      ],
+      "direct_validation_groups": [
+        "nativescript_dependencies",
+        "simulator_targeted_ui"
+      ],
+      "ui_suites": [
+        "AI_HLYUITests/HanlinUIPerformanceUITests"
+      ],
+      "consumers": []
+    },
     "project_packaging": {
       "description": "Xcode project structure, build settings, entitlements, and configs",
       "patterns": [

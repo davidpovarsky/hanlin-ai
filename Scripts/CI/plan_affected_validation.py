@@ -676,6 +676,7 @@ def plan_affected_validation(
         full_validation
         or ("AI_HLYUITests/HanlinScriptUIProductionE2ETests" in affected_ui_suites)
         or ("HanlinScriptUIProductionE2ETests" in simulator_ui_filter_value)
+        or ("HanlinUIPerformanceUITests" in simulator_ui_filter_value)
     )
 
     # Derive targeted unit suites
