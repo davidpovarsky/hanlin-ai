@@ -33,6 +33,10 @@ struct NativeAppTextStudioAppModule: NativeAppModule {
         NativeCapabilityProjection(declarations: registration.descriptor.capabilities)
     }
 
+    func capabilityProjection(context: NativeAppContext) -> NativeCapabilityProjection {
+        capabilityProjection
+    }
+
     func capabilities(context: NativeAppContext) -> [NativeCapabilityRequest] {
         capabilityProjection.supportedRequests
     }

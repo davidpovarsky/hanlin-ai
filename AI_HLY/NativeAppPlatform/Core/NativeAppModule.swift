@@ -20,6 +20,9 @@ protocol NativeAppModule {
     /// Compact UI providers that can render app data inside chat.
     func chatCards(context: NativeAppContext) -> [NativeChatCardProvider]
 
+    /// Full capability projection preserving both supported requests and diagnostics.
+    func capabilityProjection(context: NativeAppContext) -> NativeCapabilityProjection
+
     /// Declared system capabilities required by this app.
     func capabilities(context: NativeAppContext) -> [NativeCapabilityRequest]
 }
@@ -33,7 +36,18 @@ extension NativeAppModule {
 
     func assistantTools(context: NativeAppContext) -> [NativeTool] { [] }
     func chatCards(context: NativeAppContext) -> [NativeChatCardProvider] { [] }
-    func capabilities(context: NativeAppContext) -> [NativeCapabilityRequest] { [] }
+
+    func capabilityProjection(context: NativeAppContext) -> NativeCapabilityProjection {
+        if let canonical = canonicalRegistration {
+            return NativeCapabilityProjection(declarations: canonical.descriptor.capabilities)
+        }
+        return NativeCapabilityProjection(supportedRequests: [])
+    }
+
+    func capabilities(context: NativeAppContext) -> [NativeCapabilityRequest] {
+        capabilityProjection(context: context).supportedRequests
+    }
+
     var canonicalRegistration: (any HanlinStaticMiniAppRegistration)? { nil }
 }
 

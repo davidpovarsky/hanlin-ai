@@ -1,5 +1,6 @@
 import Foundation
 import HanlinPlatformContracts
+import SwiftUI
 import Testing
 @testable import AI_Hanlin
 
@@ -215,6 +216,134 @@ struct CanonicalAdapterTests {
     }
 
     @MainActor
+    @Test("Unsupported canonical capability survives module capability projection as diagnostic")
+    func moduleCapabilityProjectionPreservesDiagnostics() throws {
+        let reason = try LocalizedValue(["en": "Access reason"])
+        let supportedCap = HanlinCapabilityDeclaration(
+            id: try HanlinCapabilityID(validating: "network.fetch"),
+            reason: reason
+        )
+        let unsupportedCap = HanlinCapabilityDeclaration(
+            id: try HanlinCapabilityID(validating: "custom.unsupported.service"),
+            reason: reason
+        )
+
+        let registration = try TestFixtures.canonicalRegistration(
+            id: "test.module.cap",
+            capabilities: [supportedCap, unsupportedCap]
+        )
+        let module = TestCapabilityModule(id: "test.module.cap", registration: registration)
+        let context = NativeAppContext()
+
+        let projection = module.capabilityProjection(context: context)
+        #expect(projection.hasUnsupportedCapabilities == true)
+        #expect(projection.diagnostics.count == 1)
+        #expect(projection.diagnostics[0].capabilityID == "custom.unsupported.service")
+        #expect(projection.supportedRequests.count == 1)
+        #expect(projection.supportedRequests[0].capability == .network)
+
+        // Verify capabilities(context:) exposes only supported requests without dropping diagnostics unobservably
+        let moduleRequests = module.capabilities(context: context)
+        #expect(moduleRequests.count == 1)
+        #expect(moduleRequests[0].capability == .network)
+    }
+
+    @MainActor
+    @Test("Registry-level capability aggregation preserves diagnostics from canonical modules")
+    func registryCapabilityAggregationPreservesDiagnostics() throws {
+        let reason = try LocalizedValue(["en": "Registry aggregation test"])
+        let supportedCap = HanlinCapabilityDeclaration(
+            id: try HanlinCapabilityID(validating: "pasteboard.read"),
+            reason: reason
+        )
+        let unsupportedCap = HanlinCapabilityDeclaration(
+            id: try HanlinCapabilityID(validating: "unsupported.hardware.sensor"),
+            reason: reason
+        )
+
+        let registration = try TestFixtures.canonicalRegistration(
+            id: "test.registry.cap",
+            capabilities: [supportedCap, unsupportedCap]
+        )
+        let module = TestCapabilityModule(id: "test.registry.cap", registration: registration)
+
+        let registry = NativeAppRegistry()
+        registry.register(module)
+
+        let aggregated = registry.aggregatedCapabilityProjection()
+        #expect(aggregated.hasUnsupportedCapabilities == true)
+        #expect(aggregated.diagnostics.contains { $0.capabilityID == "unsupported.hardware.sensor" })
+        #expect(aggregated.supportedRequests.contains { $0.capability == .pasteboardRead })
+
+        let byModule = registry.allCapabilityProjections()
+        #expect(byModule["test.registry.cap"]?.diagnostics.contains { $0.capabilityID == "unsupported.hardware.sensor" } == true)
+        #expect(byModule["test.registry.cap"]?.supportedRequests.contains { $0.capability == .pasteboardRead } == true)
+
+        let allCaps = registry.allCapabilities()
+        #expect(allCaps.contains { $0.capability == .pasteboardRead })
+    }
+
+    @MainActor
+    @Test("Supported capabilities project normally with domain, reason, and optionality")
+    func supportedCapabilitiesProjectWithMetadata() throws {
+        let reason = try LocalizedValue(["en": "Domain specific network access"])
+        let decl = HanlinCapabilityDeclaration(
+            id: try HanlinCapabilityID(validating: "network.fetch"),
+            domain: "api.example.com",
+            reason: reason,
+            isOptional: true
+        )
+
+        let result = NativeCapabilityRequest.project(declaration: decl)
+        switch result {
+        case let .supported(request):
+            #expect(request.capability == .network)
+            #expect(request.domain == "api.example.com")
+            #expect(request.reason == "Domain specific network access")
+            #expect(request.isOptional == true)
+        case let .unsupported(diag):
+            Issue.record("Expected supported capability with metadata, got diagnostic: \(diag)")
+        }
+
+        let nonOptionalDecl = HanlinCapabilityDeclaration(
+            id: try HanlinCapabilityID(validating: "contacts.read"),
+            reason: try LocalizedValue(["en": "Read contacts"]),
+            isOptional: false
+        )
+        let nonOptionalResult = NativeCapabilityRequest.project(declaration: nonOptionalDecl)
+        switch nonOptionalResult {
+        case let .supported(request):
+            #expect(request.capability == .contactsRead)
+            #expect(request.reason == "Read contacts")
+            #expect(request.isOptional == false)
+            #expect(request.domain == nil)
+        case let .unsupported(diag):
+            Issue.record("Expected supported contacts.read, got diagnostic: \(diag)")
+        }
+    }
+
+    @MainActor
+    @Test("Canonical capability projection is non-lossy and partitions declarations without silent drops")
+    func canonicalCapabilityProjectionPartitioning() throws {
+        let reason = try LocalizedValue(["en": "Partition test"])
+        let decls = [
+            HanlinCapabilityDeclaration(id: try HanlinCapabilityID(validating: "network.fetch"), reason: reason),
+            HanlinCapabilityDeclaration(id: try HanlinCapabilityID(validating: "unknown.capability.one"), reason: reason),
+            HanlinCapabilityDeclaration(id: try HanlinCapabilityID(validating: "location"), reason: reason),
+            HanlinCapabilityDeclaration(id: try HanlinCapabilityID(validating: "unknown.capability.two"), reason: reason)
+        ]
+
+        let projection = NativeCapabilityProjection(declarations: decls)
+        // Strict conservation of declarations: supported + diagnostics == total input
+        #expect(projection.supportedRequests.count + projection.diagnostics.count == decls.count)
+        #expect(projection.supportedRequests.count == 2)
+        #expect(projection.diagnostics.count == 2)
+        #expect(projection.hasUnsupportedCapabilities == true)
+        let diagnosticIDs = Set(projection.diagnostics.map(\.capabilityID))
+        #expect(diagnosticIDs == ["unknown.capability.one", "unknown.capability.two"])
+    }
+
+    @MainActor
     @Test("Native tool projection preserves qualified identity and rejects schema mismatch")
     func nativeToolProjection() throws {
         let tool = QuickCalculateTool()
@@ -403,5 +532,59 @@ enum TestFixtures {
                 #"{"type":"object","properties":{"value":{"type":"string"}},"required":["value"]}"#.utf8
             )
         )
+    }
+
+    static func canonicalRegistration(
+        id: String = "test.custom.app",
+        capabilities: [HanlinCapabilityDeclaration] = []
+    ) throws -> any HanlinStaticMiniAppRegistration {
+        let appID = try HanlinAppID(validating: id)
+        let moduleID = try HanlinModuleID(validating: id)
+        let descriptor = try HanlinAppDescriptor(
+            schemaVersion: .init(major: 1, minor: 0),
+            descriptorRevision: HanlinDescriptorRevision(1),
+            id: appID,
+            name: try LocalizedValue(["en": "Test App"]),
+            summary: try LocalizedValue(["en": "Test summary"]),
+            description: try LocalizedValue(["en": "Test description"]),
+            version: try HanlinPackageVersion(validating: "1.0.0"),
+            apiVersion: .init(major: 1, minor: 0),
+            icon: .systemSymbol(name: "app"),
+            appearance: .init(accentHex: "#000000"),
+            category: .utility,
+            implementation: .native(moduleID: moduleID),
+            entryPoints: [
+                HanlinEntryPointDescriptor(
+                    kind: .app,
+                    handler: id,
+                    allowedContexts: [.mainApplication]
+                )
+            ],
+            capabilities: capabilities
+        )
+        return TestStaticRegistration(appID: appID, descriptor: descriptor)
+    }
+}
+
+struct TestStaticRegistration: HanlinStaticMiniAppRegistration {
+    let appID: HanlinAppID
+    let descriptor: HanlinAppDescriptor
+}
+
+@MainActor
+struct TestCapabilityModule: NativeAppModule {
+    let manifest: NativeAppManifest
+    let canonicalRegistration: (any HanlinStaticMiniAppRegistration)?
+
+    init(
+        id: String = "test.capability.app",
+        registration: (any HanlinStaticMiniAppRegistration)? = nil
+    ) {
+        self.manifest = TestFixtures.nativeManifest(id: id)
+        self.canonicalRegistration = registration
+    }
+
+    func makeRootView(context: NativeAppContext) -> AnyView {
+        AnyView(EmptyView())
     }
 }

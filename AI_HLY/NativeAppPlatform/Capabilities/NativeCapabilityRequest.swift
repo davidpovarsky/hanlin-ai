@@ -119,16 +119,6 @@ struct NativeCapabilityRequest: Identifiable, Hashable, Codable {
             )
         }
     }
-
-    init?(declaration: HanlinPlatformContracts.HanlinCapabilityDeclaration) {
-        let result = Self.project(declaration: declaration)
-        switch result {
-        case let .supported(req):
-            self = req
-        case .unsupported:
-            return nil
-        }
-    }
 }
 
 struct NativeCapabilityDiagnostic: Hashable, CustomStringConvertible, Sendable {
@@ -162,6 +152,11 @@ struct NativeCapabilityProjection: Hashable, Sendable {
         }
         self.supportedRequests = supported
         self.diagnostics = diags
+    }
+
+    init(supportedRequests: [NativeCapabilityRequest] = [], diagnostics: [NativeCapabilityDiagnostic] = []) {
+        self.supportedRequests = supportedRequests
+        self.diagnostics = diagnostics
     }
 
     var hasUnsupportedCapabilities: Bool {
