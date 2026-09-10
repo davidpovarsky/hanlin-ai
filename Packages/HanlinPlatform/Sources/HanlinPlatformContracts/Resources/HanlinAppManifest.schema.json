@@ -312,6 +312,16 @@
         },
         "kind": {
           "$ref": "#/$defs/entryPointKind"
+        },
+        "runtimeProfile": {
+          "enum": [
+            "scripting-jsc",
+            "hanlin-quickjs",
+            "hanlin-node",
+            "hanlin-python",
+            "hanlin-nativescript"
+          ],
+          "type": "string"
         }
       },
       "required": [
@@ -333,7 +343,9 @@
         "notificationUI",
         "keyboard",
         "translationUI",
-        "backgroundTask"
+        "backgroundTask",
+        "spotlight",
+        "shareExtension"
       ],
       "type": "string"
     },
@@ -414,6 +426,22 @@
             },
             "type": {
               "const": "script"
+            }
+          },
+          "required": [
+            "type",
+            "packageID"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": true,
+          "properties": {
+            "packageID": {
+              "$ref": "#/$defs/identifier"
+            },
+            "type": {
+              "const": "nativeScript"
             }
           },
           "required": [

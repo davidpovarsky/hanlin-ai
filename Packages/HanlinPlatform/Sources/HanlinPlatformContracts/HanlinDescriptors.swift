@@ -126,6 +126,7 @@ public enum HanlinDistributionMode: String, Codable, CaseIterable, Hashable, Sen
 public enum HanlinAppImplementation: Codable, Hashable, Sendable {
     case native(moduleID: HanlinModuleID)
     case script(packageID: HanlinPackageID)
+    case nativeScript(packageID: HanlinPackageID)
     case hybrid(moduleID: HanlinModuleID, packageID: HanlinPackageID)
 }
 
@@ -139,6 +140,7 @@ extension HanlinAppImplementation {
     private enum ImplementationType: String, Codable {
         case native
         case script
+        case nativeScript
         case hybrid
     }
 
@@ -151,6 +153,13 @@ extension HanlinAppImplementation {
             )
         case .script:
             self = try .script(
+                packageID: container.decode(
+                    HanlinPackageID.self,
+                    forKey: .packageID
+                )
+            )
+        case .nativeScript:
+            self = try .nativeScript(
                 packageID: container.decode(
                     HanlinPackageID.self,
                     forKey: .packageID
@@ -175,6 +184,9 @@ extension HanlinAppImplementation {
             try container.encode(moduleID, forKey: .moduleID)
         case let .script(packageID):
             try container.encode(ImplementationType.script, forKey: .type)
+            try container.encode(packageID, forKey: .packageID)
+        case let .nativeScript(packageID):
+            try container.encode(ImplementationType.nativeScript, forKey: .type)
             try container.encode(packageID, forKey: .packageID)
         case let .hybrid(moduleID, packageID):
             try container.encode(ImplementationType.hybrid, forKey: .type)
@@ -275,21 +287,49 @@ public enum HanlinEntryPointKind: String, Codable, CaseIterable, Hashable, Senda
     case keyboard
     case translationUI
     case backgroundTask
+    case spotlight
+    case shareExtension
 }
 
 public struct HanlinEntryPointDescriptor: Codable, Hashable, Sendable {
     public let kind: HanlinEntryPointKind
     public let handler: String
     public let allowedContexts: [HanlinExecutionContext]
+    public let runtimeProfile: HanlinRuntimeProfile?
 
     public init(
         kind: HanlinEntryPointKind,
         handler: String,
-        allowedContexts: [HanlinExecutionContext]
+        allowedContexts: [HanlinExecutionContext],
+        runtimeProfile: HanlinRuntimeProfile? = nil
     ) {
         self.kind = kind
         self.handler = handler
         self.allowedContexts = allowedContexts
+        self.runtimeProfile = runtimeProfile
+    }
+
+    private enum CodingKeys: String, CodingKey {
+        case kind
+        case handler
+        case allowedContexts
+        case runtimeProfile
+    }
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        kind = try container.decode(HanlinEntryPointKind.self, forKey: .kind)
+        handler = try container.decode(String.self, forKey: .handler)
+        allowedContexts = try container.decode([HanlinExecutionContext].self, forKey: .allowedContexts)
+        runtimeProfile = try container.decodeIfPresent(HanlinRuntimeProfile.self, forKey: .runtimeProfile)
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(kind, forKey: .kind)
+        try container.encode(handler, forKey: .handler)
+        try container.encode(allowedContexts, forKey: .allowedContexts)
+        try container.encodeIfPresent(runtimeProfile, forKey: .runtimeProfile)
     }
 }
 
@@ -406,7 +446,6 @@ extension HanlinToolOwner {
 
 public struct HanlinToolPresentationDescriptor: Codable, Hashable, Sendable {
     public let compactStyle: HanlinToolCompactStyle
-    public let supportsExpandedPresentation: Bool
 
     /// Optional execution presentation descriptor. Controls how in-progress
     /// tool execution appears in the chat/transcript. Distinct from result UI.
@@ -414,18 +453,70 @@ public struct HanlinToolPresentationDescriptor: Codable, Hashable, Sendable {
 
     /// Optional embedded result presentation. Controls how the tool's final
     /// result is rendered in embedded surfaces (chat, inline, notifications).
+    /// This is the canonical source of truth for result presentation.
     public let embeddedPresentation: HanlinEmbeddedPresentationDescriptor?
 
+    /// Whether this tool result supports expanded presentation.
+    /// Derived from canonical `embeddedPresentation.expansion != nil`
+    /// to ensure the presentation contract is the single semantic authority.
+    public var supportsExpandedPresentation: Bool {
+        embeddedPresentation?.expansion != nil
+    }
+
     public init(
-        compactStyle: HanlinToolCompactStyle,
+        compactStyle: HanlinToolCompactStyle = .automatic,
         supportsExpandedPresentation: Bool = false,
         executionPresentation: HanlinToolExecutionPresentationDescriptor? = nil,
         embeddedPresentation: HanlinEmbeddedPresentationDescriptor? = nil
     ) {
         self.compactStyle = compactStyle
-        self.supportsExpandedPresentation = supportsExpandedPresentation
         self.executionPresentation = executionPresentation
-        self.embeddedPresentation = embeddedPresentation
+        if let embeddedPresentation = embeddedPresentation {
+            self.embeddedPresentation = embeddedPresentation
+        } else if supportsExpandedPresentation {
+            // Construct canonical presentation descriptor from legacy supportsExpandedPresentation
+            self.embeddedPresentation = HanlinEmbeddedPresentationDescriptor(
+                sizing: HanlinEmbeddedSizingPreference(preset: compactStyle.defaultSizingPreset),
+                expansion: HanlinExpansionDescriptor(supportedModes: [.sheet])
+            )
+        } else {
+            self.embeddedPresentation = nil
+        }
+    }
+
+    private enum CodingKeys: String, CodingKey {
+        case compactStyle
+        case supportsExpandedPresentation
+        case executionPresentation
+        case embeddedPresentation
+    }
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        compactStyle = try container.decodeIfPresent(HanlinToolCompactStyle.self, forKey: .compactStyle) ?? .automatic
+        executionPresentation = try container.decodeIfPresent(HanlinToolExecutionPresentationDescriptor.self, forKey: .executionPresentation)
+        let decodedEmbedded = try container.decodeIfPresent(HanlinEmbeddedPresentationDescriptor.self, forKey: .embeddedPresentation)
+        let decodedSupportsExpanded = try container.decodeIfPresent(Bool.self, forKey: .supportsExpandedPresentation) ?? false
+
+        if let decodedEmbedded = decodedEmbedded {
+            self.embeddedPresentation = decodedEmbedded
+        } else if decodedSupportsExpanded {
+            // Construct canonical presentation descriptor from legacy payload
+            self.embeddedPresentation = HanlinEmbeddedPresentationDescriptor(
+                sizing: HanlinEmbeddedSizingPreference(preset: compactStyle.defaultSizingPreset),
+                expansion: HanlinExpansionDescriptor(supportedModes: [.sheet])
+            )
+        } else {
+            self.embeddedPresentation = nil
+        }
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(compactStyle, forKey: .compactStyle)
+        try container.encode(supportsExpandedPresentation, forKey: .supportsExpandedPresentation)
+        try container.encodeIfPresent(executionPresentation, forKey: .executionPresentation)
+        try container.encodeIfPresent(embeddedPresentation, forKey: .embeddedPresentation)
     }
 }
 
@@ -435,6 +526,15 @@ public enum HanlinToolCompactStyle: String, Codable, Hashable, Sendable {
     case entity
     case search
     case error
+
+    public var defaultSizingPreset: HanlinEmbeddedSizePreset {
+        switch self {
+        case .automatic: return .automatic
+        case .text, .error: return .compact
+        case .entity: return .regular
+        case .search: return .large
+        }
+    }
 }
 
 public struct HanlinToolDescriptor: Codable, Hashable, Sendable {

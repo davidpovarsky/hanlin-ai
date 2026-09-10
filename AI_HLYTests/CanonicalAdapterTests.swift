@@ -98,6 +98,59 @@ struct CanonicalAdapterTests {
     }
 
     @MainActor
+    @Test("NativeBuiltinRuntimeBinding resolves canonical tool IDs and card handlers")
+    func builtinRuntimeBindings() {
+        let tools = [
+            "sefaria_search",
+            "sefaria_get_source",
+            "wikipedia_search",
+            "wikipedia_get_summary",
+            "text_analyze",
+            "text_transform"
+        ]
+        for toolName in tools {
+            let tool = NativeBuiltinRuntimeBinding.resolveTool(named: toolName)
+            #expect(tool != nil)
+            #expect(tool?.name == toolName)
+        }
+
+        let cards = [
+            "nativeapp.sefaria.source.card",
+            "nativeapp.wikipedia.summary.card",
+            "nativeapp.textstudio.analysis.card"
+        ]
+        for cardHandler in cards {
+            let card = NativeBuiltinRuntimeBinding.resolveChatCard(handler: cardHandler)
+            #expect(card != nil)
+            #expect(card?.id == cardHandler)
+        }
+    }
+
+    @MainActor
+    @Test("Native app modules derive manifest and capabilities from canonical descriptor")
+    func appModulesDeriveFromCanonicalDescriptor() {
+        let sefaria = NativeAppSefariaAppModule()
+        #expect(sefaria.manifest.title == "Sefaria")
+        #expect(sefaria.manifest.subtitle == "Search, read, save and revisit sources")
+        #expect(sefaria.manifest.systemImage == "books.vertical.fill")
+        #expect(sefaria.manifest.appearance.startHex == "5CB88A")
+        #expect(!sefaria.capabilities(context: NativeAppContext()).isEmpty)
+
+        let wikipedia = NativeAppWikipediaAppModule()
+        #expect(wikipedia.manifest.title == "Wikipedia")
+        #expect(wikipedia.manifest.subtitle == "Explore, save and revisit knowledge")
+        #expect(wikipedia.manifest.systemImage == "globe.americas.fill")
+        #expect(wikipedia.manifest.appearance.startHex == "4C83E8")
+        #expect(!wikipedia.capabilities(context: NativeAppContext()).isEmpty)
+
+        let textStudio = NativeAppTextStudioAppModule()
+        #expect(textStudio.manifest.title == "Text Studio")
+        #expect(textStudio.manifest.subtitle == "Write, inspect, transform and keep history")
+        #expect(textStudio.manifest.systemImage == "textformat.alt")
+        #expect(textStudio.manifest.appearance.startHex == "F06FB5")
+    }
+
+    @MainActor
     @Test("Native tool projection preserves qualified identity and rejects schema mismatch")
     func nativeToolProjection() throws {
         let tool = QuickCalculateTool()

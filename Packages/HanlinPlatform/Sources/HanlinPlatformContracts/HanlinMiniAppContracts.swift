@@ -29,6 +29,39 @@ public protocol HanlinMiniAppRegistration: Sendable {
     /// entry points, tools, capabilities, and presentation metadata.
     /// It can be validated, serialized, and shared across process boundaries.
     func appDescriptor() throws -> HanlinAppDescriptor
+
+    /// The exposure surfaces supported by this Mini App.
+    /// Defaults to the distinct exposures mapped from entry points in `appDescriptor()`.
+    var supportedExposures: [HanlinExposureKind] { get }
+}
+
+extension HanlinMiniAppRegistration {
+    public var supportedExposures: [HanlinExposureKind] {
+        guard let descriptor = try? appDescriptor() else { return [] }
+        var seen = Set<HanlinExposureKind>()
+        var result: [HanlinExposureKind] = []
+        for ep in descriptor.entryPoints {
+            let exposure: HanlinExposureKind = switch ep.kind {
+            case .app: .foregroundApp
+            case .assistantTool: .assistantTool
+            case .embeddedResult: .embeddedResult
+            case .widget: .widget
+            case .liveActivity: .liveActivity
+            case .controlWidget: .controlWidget
+            case .appIntentBridge: .appIntent
+            case .notificationUI: .notificationUI
+            case .keyboard: .keyboard
+            case .translationUI: .translationUI
+            case .backgroundTask: .backgroundTask
+            case .spotlight: .spotlight
+            case .shareExtension: .shareExtension
+            }
+            if seen.insert(exposure).inserted {
+                result.append(exposure)
+            }
+        }
+        return result
+    }
 }
 
 // MARK: - Canonical Mini App Discovery

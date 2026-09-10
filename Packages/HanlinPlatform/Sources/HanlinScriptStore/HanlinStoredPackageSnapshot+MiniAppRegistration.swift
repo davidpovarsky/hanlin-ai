@@ -46,7 +46,8 @@ extension HanlinStoredPackageSnapshot: HanlinMiniAppRegistration {
             return HanlinEntryPointDescriptor(
                 kind: canonicalKind,
                 handler: ep.sourcePath,
-                allowedContexts: contexts
+                allowedContexts: contexts,
+                runtimeProfile: ep.runtimeProfile
             )
         }
 
@@ -95,7 +96,7 @@ extension HanlinStoredPackageSnapshot: HanlinMiniAppRegistration {
 
         let descriptor = HanlinAppDescriptor(
             schemaVersion: .init(major: 1, minor: 0),
-            descriptorRevision: HanlinDescriptorRevision(1),
+            descriptorRevision: try HanlinDescriptorRevision(1),
             id: appID,
             name: name,
             summary: summary,
@@ -105,7 +106,9 @@ extension HanlinStoredPackageSnapshot: HanlinMiniAppRegistration {
             icon: iconDescriptor,
             appearance: .init(accentHex: accentHex),
             category: .utilities,
-            implementation: .script(packageID: record.packageID),
+            implementation: isNativeScript
+                ? .nativeScript(packageID: record.packageID)
+                : .script(packageID: record.packageID),
             entryPoints: mappedEntryPoints.isEmpty
                 ? [HanlinEntryPointDescriptor(kind: .app, handler: "index.tsx", allowedContexts: [.mainApplication])]
                 : mappedEntryPoints,
@@ -121,5 +124,19 @@ extension HanlinStoredPackageSnapshot: HanlinMiniAppRegistration {
         )
         try descriptor.validate()
         return descriptor
+    }
+
+    /// Explicit supported exposures reflecting all package entrypoints,
+    /// ensuring secondary surfaces like Share, Spotlight, QuickLook survive canonicalization.
+    public var supportedExposures: [HanlinExposureKind] {
+        var seen = Set<HanlinExposureKind>()
+        var result: [HanlinExposureKind] = []
+        for ep in entrypoints {
+            let exposure = ep.kind.exposureKind
+            if seen.insert(exposure).inserted {
+                result.append(exposure)
+            }
+        }
+        return result
     }
 }

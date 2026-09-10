@@ -3,23 +3,19 @@ import SwiftUI
 
 @MainActor
 struct NativeAppTextStudioAppModule: NativeAppModule {
+    private let registration = TextStudioCanonicalRegistration()
+
     var canonicalRegistration: (any HanlinStaticMiniAppRegistration)? {
-        TextStudioCanonicalRegistration()
+        registration
     }
 
-    let manifest = NativeAppManifest(
-        id: NativeAppTextStudioIndex.id,
-        title: "Text Studio",
-        subtitle: "Write, inspect, transform and keep history",
-        description: String(localized: "Analyze, transform and continue working with text"),
-        systemImage: "textformat.alt",
-        category: .text,
-        entryPoints: [.fullApp, .assistantTool, .chatCard],
-        requiredCapabilities: NativeAppTextStudioImports.capabilities.map(\.id),
-        keywords: ["text", "editor", "analysis", "transform", "word count", "clipboard"],
-        appearance: NativeAppAppearance(startHex: "F06FB5", endHex: "A84FDB"),
-        isExperimental: true
-    )
+    var manifest: NativeAppManifest {
+        NativeAppManifest(
+            descriptor: registration.descriptor,
+            keywords: ["text", "editor", "analysis", "transform", "word count", "clipboard"],
+            isExperimental: true
+        )
+    }
 
     func makeRootView(context: NativeAppContext) -> AnyView {
         NativeAppTextStudioExports.rootView(context: context)
@@ -34,6 +30,6 @@ struct NativeAppTextStudioAppModule: NativeAppModule {
     }
 
     func capabilities(context: NativeAppContext) -> [NativeCapabilityRequest] {
-        NativeAppTextStudioImports.capabilities
+        registration.descriptor.capabilities.compactMap(NativeCapabilityRequest.init)
     }
 }

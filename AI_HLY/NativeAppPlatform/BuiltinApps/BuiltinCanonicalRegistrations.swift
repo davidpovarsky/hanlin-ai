@@ -19,8 +19,8 @@ struct SefariaCanonicalRegistration: HanlinStaticMiniAppRegistration {
         let moduleID = try! HanlinModuleID(validating: "nativeapp.sefaria")
         let networkCapID = try! HanlinCapabilityID(validating: "network.fetch")
         let pasteCapID = try! HanlinCapabilityID(validating: "pasteboard.write")
-        let toolID = try! HanlinToolID(validating: "sefaria-search")
-        let sourceToolID = try! HanlinToolID(validating: "sefaria-get-source")
+        let toolID = try! HanlinToolID(validating: "sefaria_search")
+        let sourceToolID = try! HanlinToolID(validating: "sefaria_get_source")
         let providerID = try! HanlinProviderInstanceID(
             validating: "native.app.nativeapp.sefaria"
         )
@@ -57,7 +57,7 @@ struct SefariaCanonicalRegistration: HanlinStaticMiniAppRegistration {
                 ),
                 HanlinEntryPointDescriptor(
                     kind: .embeddedResult,
-                    handler: "nativeapp.sefaria",
+                    handler: "nativeapp.sefaria.source.card",
                     allowedContexts: [.mainApplication]
                 )
             ],
@@ -133,7 +133,7 @@ struct SefariaCanonicalRegistration: HanlinStaticMiniAppRegistration {
                         compactStyle: .entity,
                         supportsExpandedPresentation: true,
                         embeddedPresentation: HanlinEmbeddedPresentationDescriptor(
-                            handler: "nativeapp.sefaria.source",
+                            handler: "nativeapp.sefaria.source.card",
                             sizing: HanlinEmbeddedSizingPreference(preset: .regular),
                             expansion: HanlinExpansionDescriptor(
                                 supportedModes: [.sheet, .fullScreen],
@@ -183,8 +183,8 @@ struct WikipediaCanonicalRegistration: HanlinStaticMiniAppRegistration {
         let moduleID = try! HanlinModuleID(validating: "nativeapp.wikipedia")
         let networkCapID = try! HanlinCapabilityID(validating: "network.fetch")
         let pasteCapID = try! HanlinCapabilityID(validating: "pasteboard.write")
-        let searchToolID = try! HanlinToolID(validating: "wikipedia-search")
-        let summaryToolID = try! HanlinToolID(validating: "wikipedia-summary")
+        let searchToolID = try! HanlinToolID(validating: "wikipedia_search")
+        let summaryToolID = try! HanlinToolID(validating: "wikipedia_get_summary")
         let providerID = try! HanlinProviderInstanceID(
             validating: "native.app.nativeapp.wikipedia"
         )
@@ -221,7 +221,7 @@ struct WikipediaCanonicalRegistration: HanlinStaticMiniAppRegistration {
                 ),
                 HanlinEntryPointDescriptor(
                     kind: .embeddedResult,
-                    handler: "nativeapp.wikipedia",
+                    handler: "nativeapp.wikipedia.summary.card",
                     allowedContexts: [.mainApplication]
                 )
             ],
@@ -297,7 +297,7 @@ struct WikipediaCanonicalRegistration: HanlinStaticMiniAppRegistration {
                         compactStyle: .entity,
                         supportsExpandedPresentation: true,
                         embeddedPresentation: HanlinEmbeddedPresentationDescriptor(
-                            handler: "nativeapp.wikipedia.summary",
+                            handler: "nativeapp.wikipedia.summary.card",
                             sizing: HanlinEmbeddedSizingPreference(preset: .regular),
                             expansion: HanlinExpansionDescriptor(
                                 supportedModes: [.sheet, .fullScreen]
@@ -346,8 +346,8 @@ struct TextStudioCanonicalRegistration: HanlinStaticMiniAppRegistration {
         let moduleID = try! HanlinModuleID(validating: "nativeapp.textstudio")
         let pasteReadCapID = try! HanlinCapabilityID(validating: "pasteboard.read")
         let pasteWriteCapID = try! HanlinCapabilityID(validating: "pasteboard.write")
-        let analyzeToolID = try! HanlinToolID(validating: "textstudio-analyze")
-        let transformToolID = try! HanlinToolID(validating: "textstudio-transform")
+        let analyzeToolID = try! HanlinToolID(validating: "text_analyze")
+        let transformToolID = try! HanlinToolID(validating: "text_transform")
         let providerID = try! HanlinProviderInstanceID(
             validating: "native.app.nativeapp.textstudio"
         )
@@ -384,7 +384,7 @@ struct TextStudioCanonicalRegistration: HanlinStaticMiniAppRegistration {
                 ),
                 HanlinEntryPointDescriptor(
                     kind: .embeddedResult,
-                    handler: "nativeapp.textstudio",
+                    handler: "nativeapp.textstudio.analysis.card",
                     allowedContexts: [.mainApplication]
                 )
             ],
@@ -419,7 +419,7 @@ struct TextStudioCanonicalRegistration: HanlinStaticMiniAppRegistration {
                         compactStyle: .text,
                         supportsExpandedPresentation: true,
                         embeddedPresentation: HanlinEmbeddedPresentationDescriptor(
-                            handler: "nativeapp.textstudio.analysis",
+                            handler: "nativeapp.textstudio.analysis.card",
                             sizing: HanlinEmbeddedSizingPreference(preset: .regular)
                         )
                     )

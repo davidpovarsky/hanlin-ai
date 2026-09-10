@@ -31,7 +31,7 @@ struct ExposureContractTests {
         #expect(result != nil)
         #expect(result?.isUserInterface == true)
         #expect(result?.supportsGenericHost == true)
-        #expect(result?.implementationState == .genericHosted)
+        #expect(result?.implementationState == .adapterOnly)
 
         // 4. WidgetKit
         let widget = HanlinExposureCatalog.classification(for: .widget)
@@ -45,12 +45,14 @@ struct ExposureContractTests {
         #expect(liveActivity != nil)
         #expect(liveActivity?.requiresDedicatedExtensionTarget == true)
         #expect(liveActivity?.eligibility == .hybrid)
+        #expect(liveActivity?.requiredInfoPlistKeys.contains("NSSupportsLiveActivities") == true)
 
         // 6. Controls
         let control = HanlinExposureCatalog.classification(for: .controlWidget)
         #expect(control != nil)
         #expect(control?.requiresDedicatedExtensionTarget == true)
         #expect(control?.eligibility == .hybrid)
+        #expect(control?.implementationState == .reserved)
 
         // 7. App Intents
         let appIntent = HanlinExposureCatalog.classification(for: .appIntent)
@@ -62,8 +64,9 @@ struct ExposureContractTests {
         let translation = HanlinExposureCatalog.classification(for: .translationUI)
         #expect(translation != nil)
         #expect(translation?.requiresDedicatedExtensionTarget == true)
-        #expect(translation?.requiredEntitlements.contains("com.apple.developer.translation") == true)
-        #expect(translation?.implementationState == .genericHosted)
+        #expect(translation?.requiredEntitlements == ["com.apple.developer.translation-app"])
+        #expect(translation?.requiredInfoPlistKeys == ["com.apple.developer.translation-ui-provider.network-access"])
+        #expect(translation?.implementationState == .reserved)
 
         // 9. Unsupported surfaces
         let netExt = HanlinExposureCatalog.classification(for: .networkExtension)

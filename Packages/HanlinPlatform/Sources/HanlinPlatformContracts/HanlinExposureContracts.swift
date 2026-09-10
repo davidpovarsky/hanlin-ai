@@ -58,6 +58,7 @@ extension HanlinExposureKind {
     public static let backgroundTask: Self = "background_task"
     public static let watchComplication: Self = "watch_complication"
     public static let visualIntelligence: Self = "visual_intelligence"
+    public static let capture: Self = "capture"
 }
 
 // MARK: - Exposure Eligibility
@@ -112,6 +113,9 @@ public struct HanlinExposureClassification: Codable, Hashable, Sendable, Identif
     /// Apple entitlements required to host or participate in this surface.
     public let requiredEntitlements: [String]
 
+    /// Keys required in Info.plist (e.g. extension network access, live activity support, background modes).
+    public let requiredInfoPlistKeys: [String]
+
     /// Compile-time versus runtime eligibility.
     public let eligibility: HanlinExposureEligibility
 
@@ -128,6 +132,7 @@ public struct HanlinExposureClassification: Codable, Hashable, Sendable, Identif
         supportsGenericHost: Bool,
         requiresDedicatedExtensionTarget: Bool,
         requiredEntitlements: [String] = [],
+        requiredInfoPlistKeys: [String] = [],
         eligibility: HanlinExposureEligibility,
         implementationState: HanlinExposureState,
         notes: String? = nil
@@ -138,9 +143,30 @@ public struct HanlinExposureClassification: Codable, Hashable, Sendable, Identif
         self.supportsGenericHost = supportsGenericHost
         self.requiresDedicatedExtensionTarget = requiresDedicatedExtensionTarget
         self.requiredEntitlements = requiredEntitlements
+        self.requiredInfoPlistKeys = requiredInfoPlistKeys
         self.eligibility = eligibility
         self.implementationState = implementationState
         self.notes = notes
+    }
+
+    private enum CodingKeys: String, CodingKey {
+        case kind, appleFramework, isUserInterface, supportsGenericHost
+        case requiresDedicatedExtensionTarget, requiredEntitlements, requiredInfoPlistKeys
+        case eligibility, implementationState, notes
+    }
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        kind = try container.decode(HanlinExposureKind.self, forKey: .kind)
+        appleFramework = try container.decode(String.self, forKey: .appleFramework)
+        isUserInterface = try container.decode(Bool.self, forKey: .isUserInterface)
+        supportsGenericHost = try container.decode(Bool.self, forKey: .supportsGenericHost)
+        requiresDedicatedExtensionTarget = try container.decode(Bool.self, forKey: .requiresDedicatedExtensionTarget)
+        requiredEntitlements = try container.decodeIfPresent([String].self, forKey: .requiredEntitlements) ?? []
+        requiredInfoPlistKeys = try container.decodeIfPresent([String].self, forKey: .requiredInfoPlistKeys) ?? []
+        eligibility = try container.decode(HanlinExposureEligibility.self, forKey: .eligibility)
+        implementationState = try container.decode(HanlinExposureState.self, forKey: .implementationState)
+        notes = try container.decodeIfPresent(String.self, forKey: .notes)
     }
 }
 
@@ -182,9 +208,10 @@ public enum HanlinExposureCatalog {
             supportsGenericHost: true,
             requiresDedicatedExtensionTarget: false,
             requiredEntitlements: [],
+            requiredInfoPlistKeys: [],
             eligibility: .runtimeSelectable,
-            implementationState: .genericHosted,
-            notes: "Neutral embedded result presentation seam. Host imposes max constraints and expansion policies."
+            implementationState: .adapterOnly,
+            notes: "Canonical seam defined; legacy chat card adapters exist. Dedicated generic chat transcript UI is under active development on the parallel presentation branch."
         ),
         // 4. WidgetKit
         HanlinExposureClassification(
@@ -194,6 +221,7 @@ public enum HanlinExposureCatalog {
             supportsGenericHost: true,
             requiresDedicatedExtensionTarget: true,
             requiredEntitlements: [],
+            requiredInfoPlistKeys: [],
             eligibility: .hybrid,
             implementationState: .genericHosted,
             notes: "Generic HanlinScriptingWidgets extension compiles Widget definitions; runtime selects active Mini App configuration."
@@ -206,6 +234,7 @@ public enum HanlinExposureCatalog {
             supportsGenericHost: true,
             requiresDedicatedExtensionTarget: true,
             requiredEntitlements: [],
+            requiredInfoPlistKeys: ["NSSupportsLiveActivities"],
             eligibility: .hybrid,
             implementationState: .genericHosted,
             notes: "Generic ActivityAttributes with dynamic payload rendered by shared WidgetKit extension."
@@ -218,9 +247,10 @@ public enum HanlinExposureCatalog {
             supportsGenericHost: true,
             requiresDedicatedExtensionTarget: true,
             requiredEntitlements: [],
+            requiredInfoPlistKeys: [],
             eligibility: .hybrid,
-            implementationState: .genericHosted,
-            notes: "ControlWidget templates hosted in widget extension invoking AppIntents."
+            implementationState: .reserved,
+            notes: "ControlWidget templates hosted in widget extension invoking AppIntents; reserved until dedicated Control target/type is compiled."
         ),
         // 7. App Intents
         HanlinExposureClassification(
@@ -230,6 +260,7 @@ public enum HanlinExposureCatalog {
             supportsGenericHost: true,
             requiresDedicatedExtensionTarget: false,
             requiredEntitlements: [],
+            requiredInfoPlistKeys: [],
             eligibility: .hybrid,
             implementationState: .implemented,
             notes: "Compiled generic AppIntent definitions forward execution parameters to Mini App actions."
@@ -242,6 +273,7 @@ public enum HanlinExposureCatalog {
             supportsGenericHost: true,
             requiresDedicatedExtensionTarget: false,
             requiredEntitlements: [],
+            requiredInfoPlistKeys: [],
             eligibility: .runtimeSelectable,
             implementationState: .adapterOnly,
             notes: "In-process indexing of searchable Mini App entities."
@@ -254,6 +286,7 @@ public enum HanlinExposureCatalog {
             supportsGenericHost: true,
             requiresDedicatedExtensionTarget: true,
             requiredEntitlements: [],
+            requiredInfoPlistKeys: [],
             eligibility: .hybrid,
             implementationState: .adapterOnly,
             notes: "Shared generic share sheet extension forwards shared items to selected Mini App."
@@ -266,12 +299,14 @@ public enum HanlinExposureCatalog {
             supportsGenericHost: true,
             requiresDedicatedExtensionTarget: true,
             requiredEntitlements: [
-                "com.apple.developer.translation",
-                "com.apple.developer.translation.network-access"
+                "com.apple.developer.translation-app"
+            ],
+            requiredInfoPlistKeys: [
+                "com.apple.developer.translation-ui-provider.network-access"
             ],
             eligibility: .hybrid,
-            implementationState: .genericHosted,
-            notes: "System translation extension surface. Network access requires Apple provider network entitlement."
+            implementationState: .reserved,
+            notes: "System translation extension surface. Network access requires Apple provider network key in Info.plist; reserved until dedicated extension target is compiled."
         ),
         // 11. Notification UI
         HanlinExposureClassification(

@@ -20,14 +20,16 @@ extension HanlinPackageEntrypointKind {
     /// Maps a package entrypoint kind to the corresponding canonical entry point kind.
     public var canonicalKind: HanlinEntryPointKind? {
         switch self {
-        case .app: .app
-        case .assistantTool: .assistantTool
-        case .embeddedResult: .embeddedResult
-        case .widget: .widget
-        case .appIntent: .appIntentBridge
-        case .liveActivity: .liveActivity
-        case .translationUI: .translationUI
-        case .spotlight, .quickLook, .share, .capture, .safariExtension:
+        case .app: return .app
+        case .assistantTool: return .assistantTool
+        case .embeddedResult: return .embeddedResult
+        case .widget: return .widget
+        case .appIntent: return .appIntentBridge
+        case .liveActivity: return .liveActivity
+        case .translationUI: return .translationUI
+        case .spotlight: return .spotlight
+        case .share: return .shareExtension
+        case .quickLook, .capture, .safariExtension:
             return nil
         }
     }
@@ -42,8 +44,29 @@ extension HanlinPackageEntrypointKind {
         case .appIntentBridge: self = .appIntent
         case .liveActivity: self = .liveActivity
         case .translationUI: self = .translationUI
+        case .spotlight: self = .spotlight
+        case .shareExtension: self = .share
         case .controlWidget, .notificationUI, .keyboard, .backgroundTask:
             return nil
+        }
+    }
+
+    /// Maps every package entrypoint kind to its corresponding canonical exposure kind,
+    /// ensuring metadata survives canonicalization across runtime families.
+    public var exposureKind: HanlinExposureKind {
+        switch self {
+        case .app: .foregroundApp
+        case .assistantTool: .assistantTool
+        case .embeddedResult: .embeddedResult
+        case .widget: .widget
+        case .appIntent: .appIntent
+        case .liveActivity: .liveActivity
+        case .translationUI: .translationUI
+        case .spotlight: .spotlight
+        case .quickLook: .quickLook
+        case .share: .shareExtension
+        case .capture: .capture
+        case .safariExtension: .safariExtension
         }
     }
 }

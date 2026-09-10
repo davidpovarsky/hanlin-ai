@@ -65,6 +65,28 @@ struct NativeCapabilityRequest: Identifiable, Hashable, Codable {
     static func pasteboardWrite(reason: String, optional: Bool = false) -> NativeCapabilityRequest {
         NativeCapabilityRequest(.pasteboardWrite, reason: reason, optional: optional)
     }
+
+    init?(declaration: HanlinPlatformContracts.HanlinCapabilityDeclaration) {
+        let reason = declaration.reason.preferredValue(forLocale: "en")
+        let optional = declaration.optional
+
+        switch declaration.id.rawValue {
+        case "network.fetch":
+            var domain: String? = nil
+            if case let .object(dict) = declaration.constraints,
+               let domainVal = dict["domain"],
+               case let .string(d) = domainVal {
+                domain = d
+            }
+            self.init(.network, domain: domain, reason: reason, optional: optional)
+        case "pasteboard.read":
+            self.init(.pasteboardRead, reason: reason, optional: optional)
+        case "pasteboard.write":
+            self.init(.pasteboardWrite, reason: reason, optional: optional)
+        default:
+            return nil
+        }
+    }
 }
 
 enum NativeCapabilityStatus: String, Codable, Hashable {

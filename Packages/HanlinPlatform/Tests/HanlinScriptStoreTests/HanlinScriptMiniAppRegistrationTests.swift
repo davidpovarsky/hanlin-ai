@@ -111,6 +111,8 @@ struct HanlinScriptMiniAppRegistrationTests {
         #expect(HanlinPackageEntrypointKind.appIntent.canonicalKind == .appIntentBridge)
         #expect(HanlinPackageEntrypointKind.liveActivity.canonicalKind == .liveActivity)
         #expect(HanlinPackageEntrypointKind.translationUI.canonicalKind == .translationUI)
+        #expect(HanlinPackageEntrypointKind.spotlight.canonicalKind == .spotlight)
+        #expect(HanlinPackageEntrypointKind.share.canonicalKind == .shareExtension)
 
         #expect(HanlinPackageEntrypointKind(canonicalKind: .app) == .app)
         #expect(HanlinPackageEntrypointKind(canonicalKind: .assistantTool) == .assistantTool)
@@ -119,6 +121,12 @@ struct HanlinScriptMiniAppRegistrationTests {
         #expect(HanlinPackageEntrypointKind(canonicalKind: .appIntentBridge) == .appIntent)
         #expect(HanlinPackageEntrypointKind(canonicalKind: .liveActivity) == .liveActivity)
         #expect(HanlinPackageEntrypointKind(canonicalKind: .translationUI) == .translationUI)
+        #expect(HanlinPackageEntrypointKind(canonicalKind: .spotlight) == .spotlight)
+        #expect(HanlinPackageEntrypointKind(canonicalKind: .shareExtension) == .share)
+
+        for kind in HanlinPackageEntrypointKind.allCases {
+            #expect(!kind.exposureKind.rawValue.isEmpty)
+        }
     }
 
     @Test("HanlinScriptPackageDiscovery discovers registrations and builds catalog snapshot")
@@ -170,5 +178,98 @@ struct HanlinScriptMiniAppRegistrationTests {
         let catalog = try await discovery.catalogSnapshot(revision: .init(1))
         #expect(catalog.apps.count == 1)
         #expect(catalog.apps[0].id.rawValue == "com.example.notes")
+    }
+
+    @Test("NativeScript package preserves nativeScript implementation, runtimeProfile, and exposures")
+    func nativeScriptPreservesExecutionIdentityAndExposures() throws {
+        let packageID = try HanlinPackageID(validating: "com.example.nativescript.module")
+        let installedID = try HanlinInstalledPackageID(validating: "inst.com.example.nativescript.module")
+        let version = try HanlinPackageVersion(validating: "1.0.0")
+
+        let record = HanlinInstalledPackageRecord(
+            schemaVersion: 1,
+            installedPackageID: installedID,
+            packageID: packageID,
+            version: version,
+            sourceDigest: String(repeating: "f", count: 64),
+            artifactDigest: String(repeating: "a", count: 64),
+            activeGeneration: 1,
+            installedAt: .now,
+            updatedAt: .now
+        )
+
+        let snapshot = HanlinStoredPackageSnapshot(
+            record: record,
+            entrypoints: [
+                .init(
+                    id: "app",
+                    kind: .app,
+                    sourcePath: "index.swift",
+                    supportedContexts: [.mainApplication],
+                    runtimePolicyID: "nativescript-v1",
+                    runtimeProfile: .hanlinNativeScript,
+                    compatibility: .supported
+                ),
+                .init(
+                    id: "spotlight",
+                    kind: .spotlight,
+                    sourcePath: "search.swift",
+                    supportedContexts: [.mainApplication],
+                    runtimePolicyID: "spotlight-v1",
+                    runtimeProfile: .hanlinNativeScript,
+                    compatibility: .supported
+                ),
+                .init(
+                    id: "share",
+                    kind: .share,
+                    sourcePath: "share.swift",
+                    supportedContexts: [.mainApplication],
+                    runtimePolicyID: "share-v1",
+                    runtimeProfile: .hanlinNativeScript,
+                    compatibility: .supported
+                ),
+                .init(
+                    id: "quickLook",
+                    kind: .quickLook,
+                    sourcePath: "preview.swift",
+                    supportedContexts: [.mainApplication],
+                    runtimePolicyID: "quicklook-v1",
+                    runtimeProfile: .hanlinNativeScript,
+                    compatibility: .supported
+                )
+            ],
+            enabled: true,
+            availableGenerations: [1],
+            manifest: .init(name: "Native Module", version: "1.0.0")
+        )
+
+        let descriptor = try snapshot.appDescriptor()
+        try descriptor.validate()
+
+        // 1. Implementation MUST be .nativeScript, NOT .script
+        guard case let .nativeScript(pkgID) = descriptor.implementation else {
+            Issue.record("Expected .nativeScript implementation, got \(descriptor.implementation)")
+            return
+        }
+        #expect(pkgID == packageID)
+
+        // 2. Entry points MUST preserve runtimeProfile
+        let appEP = descriptor.entryPoints.first { $0.kind == .app }
+        #expect(appEP?.runtimeProfile == .hanlinNativeScript)
+
+        let spotlightEP = descriptor.entryPoints.first { $0.kind == .spotlight }
+        #expect(spotlightEP != nil)
+        #expect(spotlightEP?.runtimeProfile == .hanlinNativeScript)
+
+        let shareEP = descriptor.entryPoints.first { $0.kind == .shareExtension }
+        #expect(shareEP != nil)
+        #expect(shareEP?.runtimeProfile == .hanlinNativeScript)
+
+        // 3. Supported exposures MUST include all declared surfaces (even secondary ones like quickLook)
+        let exposures = snapshot.supportedExposures
+        #expect(exposures.contains(.foregroundApp))
+        #expect(exposures.contains(.spotlight))
+        #expect(exposures.contains(.shareExtension))
+        #expect(exposures.contains(.quickLook))
     }
 }

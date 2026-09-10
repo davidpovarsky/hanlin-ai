@@ -196,7 +196,7 @@ func toolPresentationWithExecutionAndEmbeddedRoundTrips() throws {
 @Test
 func toolPresentationBackwardCompatibleWhenNewFieldsAbsent() throws {
     // A tool presentation JSON without executionPresentation or embeddedPresentation
-    // should decode cleanly with those fields as nil.
+    // should decode cleanly with those fields as nil when supportsExpandedPresentation is false.
     let json = """
     {"compactStyle":"automatic","supportsExpandedPresentation":false}
     """.data(using: .utf8)!
@@ -209,6 +209,57 @@ func toolPresentationBackwardCompatibleWhenNewFieldsAbsent() throws {
     #expect(decoded.supportsExpandedPresentation == false)
     #expect(decoded.executionPresentation == nil)
     #expect(decoded.embeddedPresentation == nil)
+}
+
+@Test
+func toolPresentationMigratesLegacyExpandedPayloadToCanonicalDescriptor() throws {
+    // A legacy tool presentation JSON with supportsExpandedPresentation: true
+    // must construct a canonical embeddedPresentation with expansion mode [.sheet].
+    let json = """
+    {"compactStyle":"search","supportsExpandedPresentation":true}
+    """.data(using: .utf8)!
+
+    let decoded = try JSONDecoder().decode(
+        HanlinToolPresentationDescriptor.self,
+        from: json
+    )
+    #expect(decoded.compactStyle == .search)
+    #expect(decoded.supportsExpandedPresentation == true)
+    #expect(decoded.embeddedPresentation != nil)
+    #expect(decoded.embeddedPresentation?.expansion?.supportedModes == [.sheet])
+    #expect(decoded.embeddedPresentation?.sizing.preset == .large)
+
+    // Re-encoding must emit both legacy supportsExpandedPresentation and canonical embeddedPresentation
+    let reencoded = try JSONEncoder().encode(decoded)
+    let redecoded = try JSONDecoder().decode(
+        HanlinToolPresentationDescriptor.self,
+        from: reencoded
+    )
+    #expect(redecoded.supportsExpandedPresentation == true)
+    #expect(redecoded.embeddedPresentation?.expansion != nil)
+}
+
+@Test
+func toolPresentationCanonicalEmbeddedIsAuthoritativeOverLegacyFlag() throws {
+    // When embeddedPresentation is present without expansion,
+    // supportsExpandedPresentation MUST be false even if legacy flag was true.
+    let json = """
+    {
+        "compactStyle": "text",
+        "supportsExpandedPresentation": true,
+        "embeddedPresentation": {
+            "sizing": {"preset": "compact"}
+        }
+    }
+    """.data(using: .utf8)!
+
+    let decoded = try JSONDecoder().decode(
+        HanlinToolPresentationDescriptor.self,
+        from: json
+    )
+    #expect(decoded.compactStyle == .text)
+    #expect(decoded.supportsExpandedPresentation == false)
+    #expect(decoded.embeddedPresentation?.expansion == nil)
 }
 
 // MARK: - App Descriptor with Embedded Result Entry Point

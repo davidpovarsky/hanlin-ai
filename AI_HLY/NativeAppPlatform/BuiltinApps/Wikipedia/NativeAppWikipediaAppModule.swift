@@ -3,23 +3,19 @@ import SwiftUI
 
 @MainActor
 struct NativeAppWikipediaAppModule: NativeAppModule {
+    private let registration = WikipediaCanonicalRegistration()
+
     var canonicalRegistration: (any HanlinStaticMiniAppRegistration)? {
-        WikipediaCanonicalRegistration()
+        registration
     }
 
-    let manifest = NativeAppManifest(
-        id: NativeAppWikipediaIndex.id,
-        title: "Wikipedia",
-        subtitle: "Explore, save and revisit knowledge",
-        description: String(localized: "Search articles and read encyclopedia summaries"),
-        systemImage: "globe.americas.fill",
-        category: .knowledge,
-        entryPoints: [.fullApp, .assistantTool, .chatCard],
-        requiredCapabilities: NativeAppWikipediaImports.capabilities.map(\.id),
-        keywords: ["encyclopedia", "articles", "knowledge", "wiki", "ויקיפדיה"],
-        appearance: NativeAppAppearance(startHex: "4C83E8", endHex: "3452A4"),
-        isExperimental: true
-    )
+    var manifest: NativeAppManifest {
+        NativeAppManifest(
+            descriptor: registration.descriptor,
+            keywords: ["encyclopedia", "articles", "knowledge", "wiki", "ויקיפדיה"],
+            isExperimental: true
+        )
+    }
 
     func makeRootView(context: NativeAppContext) -> AnyView {
         NativeAppWikipediaExports.rootView(context: context)
@@ -34,6 +30,6 @@ struct NativeAppWikipediaAppModule: NativeAppModule {
     }
 
     func capabilities(context: NativeAppContext) -> [NativeCapabilityRequest] {
-        NativeAppWikipediaImports.capabilities
+        registration.descriptor.capabilities.compactMap(NativeCapabilityRequest.init)
     }
 }

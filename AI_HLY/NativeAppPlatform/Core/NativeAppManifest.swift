@@ -51,3 +51,68 @@ struct NativeAppManifest: Identifiable, Hashable, Codable {
             .contains(value)
     }
 }
+
+import HanlinPlatformContracts
+
+extension NativeAppManifest {
+    init(
+        descriptor: HanlinAppDescriptor,
+        keywords: [String] = [],
+        isExperimental: Bool = true,
+        areAssistantToolsEnabledByDefault: Bool = true
+    ) {
+        let title = descriptor.name.preferredValue(forLocale: "en")
+        let subtitle = descriptor.summary.preferredValue(forLocale: "en")
+        let description = descriptor.description.preferredValue(forLocale: "en")
+
+        let systemImage: String
+        switch descriptor.icon {
+        case let .systemSymbol(name):
+            systemImage = name
+        case let .asset(name):
+            systemImage = name
+        case let .packageResource(path):
+            systemImage = path
+        }
+
+        var entryPoints: Set<NativeAppEntryPointKind> = []
+        for ep in descriptor.entryPoints {
+            switch ep.kind {
+            case .app:
+                entryPoints.insert(.fullApp)
+            case .assistantTool:
+                entryPoints.insert(.assistantTool)
+            case .embeddedResult:
+                entryPoints.insert(.chatCard)
+            default:
+                break
+            }
+        }
+
+        let category: NativeAppCategory = switch descriptor.category {
+        case .knowledge: .knowledge
+        case .productivity: .text
+        case .utilities: .utility
+        default: .knowledge
+        }
+
+        let hex = descriptor.appearance.accentHex?.trimmingCharacters(in: CharacterSet(charactersIn: "#")) ?? "5CB88A"
+        let appearance = NativeAppAppearance(startHex: hex, endHex: hex)
+        let requiredCapabilities = descriptor.capabilities.map(\.id.rawValue)
+
+        self.init(
+            id: descriptor.id.rawValue,
+            title: title,
+            subtitle: subtitle,
+            description: description,
+            systemImage: systemImage,
+            category: category,
+            entryPoints: entryPoints,
+            requiredCapabilities: requiredCapabilities,
+            keywords: keywords,
+            appearance: appearance,
+            isExperimental: isExperimental,
+            areAssistantToolsEnabledByDefault: areAssistantToolsEnabledByDefault
+        )
+    }
+}

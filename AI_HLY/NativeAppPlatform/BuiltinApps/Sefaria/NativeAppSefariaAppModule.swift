@@ -3,23 +3,19 @@ import SwiftUI
 
 @MainActor
 struct NativeAppSefariaAppModule: NativeAppModule {
+    private let registration = SefariaCanonicalRegistration()
+
     var canonicalRegistration: (any HanlinStaticMiniAppRegistration)? {
-        SefariaCanonicalRegistration()
+        registration
     }
 
-    let manifest = NativeAppManifest(
-        id: NativeAppSefariaIndex.id,
-        title: "Sefaria",
-        subtitle: "Search, read, save and revisit sources",
-        description: String(localized: "Search and read Jewish texts and sources"),
-        systemImage: "books.vertical.fill",
-        category: .knowledge,
-        entryPoints: [.fullApp, .assistantTool, .chatCard],
-        requiredCapabilities: NativeAppSefariaImports.capabilities.map(\.id),
-        keywords: ["Torah", "Talmud", "Tanakh", "Halacha", "Jewish texts", "מקורות", "ספריא"],
-        appearance: NativeAppAppearance(startHex: "5CB88A", endHex: "2E7D68"),
-        isExperimental: true
-    )
+    var manifest: NativeAppManifest {
+        NativeAppManifest(
+            descriptor: registration.descriptor,
+            keywords: ["Torah", "Talmud", "Tanakh", "Halacha", "Jewish texts", "מקורות", "ספריא"],
+            isExperimental: true
+        )
+    }
 
     func makeRootView(context: NativeAppContext) -> AnyView {
         NativeAppSefariaExports.rootView(context: context)
@@ -34,6 +30,6 @@ struct NativeAppSefariaAppModule: NativeAppModule {
     }
 
     func capabilities(context: NativeAppContext) -> [NativeCapabilityRequest] {
-        NativeAppSefariaImports.capabilities
+        registration.descriptor.capabilities.compactMap(NativeCapabilityRequest.init)
     }
 }
