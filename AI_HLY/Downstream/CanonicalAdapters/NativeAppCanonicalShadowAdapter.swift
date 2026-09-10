@@ -97,7 +97,13 @@ enum NativeAppCanonicalShadowAdapter {
                     handler: manifest.id,
                     allowedContexts: [.appIntent]
                 )
-            case .chatCard, .shareExtension, .spotlight:
+            case .chatCard:
+                return HanlinEntryPointDescriptor(
+                    kind: .embeddedResult,
+                    handler: manifest.id,
+                    allowedContexts: [.mainApplication]
+                )
+            case .shareExtension, .spotlight:
                 findings.append(.init(
                     severity: .warning,
                     path: "apps/\(manifest.id)/entryPoints/\(entryPoint.rawValue)",
