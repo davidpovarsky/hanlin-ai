@@ -43,13 +43,51 @@ class AnalyzePerformanceResultsTests(unittest.TestCase):
                 "classification": "informational",
             }
         ]
-        summary = analyzer.analyze_records(records)
+        summary = analyzer.analyze_records(records, require_canonical_flows=False)
         self.assertTrue(summary["hard_gate_passed"])
         self.assertEqual(len(summary["metrics"]), 1)
         metric = summary["metrics"][0]
         self.assertEqual(metric["flow_number"], 1)
         self.assertEqual(metric["status"], "PASS")
         self.assertAlmostEqual(metric["statistics"]["median"], 0.43)
+
+    def test_analyze_records_missing_canonical_flows_fails_hard_gate(self) -> None:
+        # Records only flow 1 through 11, missing flows 12-16
+        records = [
+            {
+                "flow_number": i,
+                "flow_name": f"Flow {i}",
+                "category": "General",
+                "metric": f"metric_{i}",
+                "unit": "s",
+                "samples": [0.1],
+                "classification": "informational",
+            }
+            for i in range(1, 12)
+        ]
+        summary = analyzer.analyze_records(records, require_canonical_flows=True)
+        self.assertFalse(summary["hard_gate_passed"])
+        failure_text = " ".join(summary["hard_gate_failures"])
+        self.assertIn("Flow 12", failure_text)
+        self.assertIn("Flow 14", failure_text)
+
+    def test_analyze_records_all_canonical_flows_present(self) -> None:
+        # Records flows 1 through 16 plus stability
+        records = [
+            {
+                "flow_number": i,
+                "flow_name": f"Flow {i}",
+                "category": "General",
+                "metric": f"metric_{i}",
+                "unit": "s",
+                "samples": [0.1],
+                "classification": "informational",
+            }
+            for i in range(1, 17)
+        ]
+        summary = analyzer.analyze_records(records, require_canonical_flows=True)
+        self.assertTrue(summary["hard_gate_passed"])
+        self.assertEqual(len(summary["hard_gate_failures"]), 0)
 
     def test_analyze_records_hard_gate_failure(self) -> None:
         records = [
@@ -63,7 +101,7 @@ class AnalyzePerformanceResultsTests(unittest.TestCase):
                 "classification": "hard_gate",
             }
         ]
-        summary = analyzer.analyze_records(records)
+        summary = analyzer.analyze_records(records, require_canonical_flows=False)
         self.assertFalse(summary["hard_gate_passed"])
         self.assertEqual(len(summary["hard_gate_failures"]), 1)
         self.assertIn("75.00 MB", summary["hard_gate_failures"][0])

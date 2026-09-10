@@ -177,47 +177,52 @@ final class HanlinUIPerformanceUITests: XCTestCase {
         app.launchEnvironment["HANLIN_SCRIPTUI_E2E"] = "1"
         app.launch()
         openApps()
-        ensurePackageUninstalled(named: validScriptUIPackageName)
 
         var recordedSamples: [Double] = []
-        let start = CFAbsoluteTimeGetCurrent()
+        let repeatCount = 3
 
-        ensureAppsAddButton(timeout: 15).tap()
-        let importLink = app.buttons["hanlin-import-script-package"].firstMatch
-        XCTAssertTrue(importLink.waitForExistence(timeout: 10), "Import Script Package link missing")
-        importLink.tap()
+        for _ in 0..<repeatCount {
+            ensurePackageUninstalled(named: validScriptUIPackageName)
+            openApps()
 
-        selectArchive(named: "HanlinScriptUIValid")
-        let installButton = app.buttons["hanlin-package-install"].firstMatch
-        XCTAssertTrue(installButton.waitForExistence(timeout: 20), "Install button missing in preview")
+            let start = CFAbsoluteTimeGetCurrent()
+            ensureAppsAddButton(timeout: 15).tap()
+            let importLink = app.buttons["hanlin-import-script-package"].firstMatch
+            XCTAssertTrue(importLink.waitForExistence(timeout: 10), "Import Script Package link missing")
+            importLink.tap()
 
-        var networkToggle = app.switches["network"].firstMatch
-        if !networkToggle.waitForExistence(timeout: 3) {
-            app.swipeUp()
-            networkToggle = app.switches["network"].firstMatch
+            selectArchive(named: "HanlinScriptUIValid")
+            let installButton = app.buttons["hanlin-package-install"].firstMatch
+            XCTAssertTrue(installButton.waitForExistence(timeout: 20), "Install button missing in preview")
+
+            var networkToggle = app.switches["network"].firstMatch
+            if !networkToggle.waitForExistence(timeout: 3) {
+                app.swipeUp()
+                networkToggle = app.switches["network"].firstMatch
+            }
+            let approveAll = app.buttons["hanlin-approve-all-capabilities"].firstMatch
+            if approveAll.waitForExistence(timeout: 3) && approveAll.isHittable {
+                approveAll.tap()
+            } else if networkToggle.waitForExistence(timeout: 5) {
+                toggleSwitch(networkToggle, targetValue: "1")
+            }
+            _ = waitUntil(timeout: 5) { (networkToggle.value as? String) == "1" }
+
+            if !installButton.exists || !installButton.isHittable {
+                app.swipeDown()
+            }
+            XCTAssertTrue(installButton.waitForExistence(timeout: 5), "Install button did not reappear")
+            XCTAssertTrue(waitUntil(timeout: 10) { installButton.isEnabled }, "Install button not enabled")
+            installButton.tap()
+            XCTAssertTrue(waitUntil(timeout: 30) { !installButton.exists }, "Installation did not complete")
+            closeImportSurfaces()
+
+            let elapsed = CFAbsoluteTimeGetCurrent() - start
+            recordedSamples.append(elapsed)
+
+            let packageCard = findPackageCard(named: validScriptUIPackageName)
+            XCTAssertTrue(packageCard.waitForExistence(timeout: 15), "Installed package card missing from Apps list")
         }
-        let approveAll = app.buttons["hanlin-approve-all-capabilities"].firstMatch
-        if approveAll.waitForExistence(timeout: 3) && approveAll.isHittable {
-            approveAll.tap()
-        } else if networkToggle.waitForExistence(timeout: 5) {
-            toggleSwitch(networkToggle, targetValue: "1")
-        }
-        _ = waitUntil(timeout: 5) { (networkToggle.value as? String) == "1" }
-
-        if !installButton.exists || !installButton.isHittable {
-            app.swipeDown()
-        }
-        XCTAssertTrue(installButton.waitForExistence(timeout: 5), "Install button did not reappear")
-        XCTAssertTrue(waitUntil(timeout: 10) { installButton.isEnabled }, "Install button not enabled")
-        installButton.tap()
-        XCTAssertTrue(waitUntil(timeout: 30) { !installButton.exists }, "Installation did not complete")
-        closeImportSurfaces()
-
-        let elapsed = CFAbsoluteTimeGetCurrent() - start
-        recordedSamples.append(elapsed)
-
-        let packageCard = findPackageCard(named: validScriptUIPackageName)
-        XCTAssertTrue(packageCard.waitForExistence(timeout: 15), "Installed package card missing from Apps list")
 
         emitSample(
             flowNumber: 9,
@@ -238,17 +243,20 @@ final class HanlinUIPerformanceUITests: XCTestCase {
         ensureValidScriptUIPackageInstalled()
 
         var recordedSamples: [Double] = []
-        let start = CFAbsoluteTimeGetCurrent()
+        let repeatCount = 3
 
-        launchPackage(named: validScriptUIPackageName)
-        let countText = app.staticTexts["Count 0"].firstMatch
-        XCTAssertTrue(countText.waitForExistence(timeout: 25), "ScriptUI initial state 'Count 0' did not render")
-        let incrementButton = app.buttons["Increment"].firstMatch
-        XCTAssertTrue(incrementButton.waitForExistence(timeout: 10), "ScriptUI Increment button missing")
+        for _ in 0..<repeatCount {
+            let start = CFAbsoluteTimeGetCurrent()
+            launchPackage(named: validScriptUIPackageName)
+            let countText = app.staticTexts["Count 0"].firstMatch
+            XCTAssertTrue(countText.waitForExistence(timeout: 25), "ScriptUI initial state 'Count 0' did not render")
+            let incrementButton = app.buttons["Increment"].firstMatch
+            XCTAssertTrue(incrementButton.waitForExistence(timeout: 10), "ScriptUI Increment button missing")
 
-        let elapsed = CFAbsoluteTimeGetCurrent() - start
-        recordedSamples.append(elapsed)
-        closeScriptApp()
+            let elapsed = CFAbsoluteTimeGetCurrent() - start
+            recordedSamples.append(elapsed)
+            closeScriptApp()
+        }
 
         emitSample(
             flowNumber: 10,
@@ -332,66 +340,110 @@ final class HanlinUIPerformanceUITests: XCTestCase {
         )
     }
 
-    // MARK: - Flow 11 & 12: NativeScript First Initialization and Core UI Render
+    // MARK: - Flow 11, 12, 13: NativeScript First Initialization, Core UI Render, and SwiftUI Provider First Render
 
-    func testFlow11_12_NativeScriptFirstInitializationAndCoreRenderPerformance() throws {
+    func testFlow11_12_13_NativeScriptFirstInitializationAndRenders() throws {
         app.launchEnvironment["HANLIN_NATIVESCRIPT_E2E"] = "1"
         app.launch()
         openApps()
         ensureNativeScriptPackageInstalled()
 
-        var recordedSamples: [Double] = []
-        let start = CFAbsoluteTimeGetCurrent()
+        var initSamples: [Double] = []
+        var coreRenderSamples: [Double] = []
+        var swiftUIFirstRenderSamples: [Double] = []
 
-        launchInstalledPackage(named: nativeScriptSwiftUIPackageName)
-        let coreButton = app.buttons["hanlin-nativescript-core-button"].firstMatch
-        let coreLabel = app.staticTexts["hanlin-nativescript-device-proof"].firstMatch
-        XCTAssertTrue(coreButton.waitForExistence(timeout: 30), "NativeScript Core button did not render")
-        XCTAssertTrue(coreLabel.waitForExistence(timeout: 10), "NativeScript device proof did not render")
-
-        let elapsed = CFAbsoluteTimeGetCurrent() - start
-        recordedSamples.append(elapsed)
-        closeNativeScriptApp()
-
-        emitSample(
-            flowNumber: 11,
-            flowName: "NativeScript First Init & Core UI Render",
-            category: "NativeScript Render",
-            metric: "first_init_and_render_latency",
-            unit: "s",
-            samples: recordedSamples
-        )
-    }
-
-    // MARK: - Flow 13 & 14: @nativescript/swift-ui Provider First & Subsequent Render
-
-    func testFlow13_14_NativeScriptSwiftUIProviderRenderAndRoundTripPerformance() throws {
-        app.launchEnvironment["HANLIN_NATIVESCRIPT_E2E"] = "1"
-        app.launch()
-        openApps()
-        ensureNativeScriptPackageInstalled()
-
-        var recordedSamples: [Double] = []
-        for _ in 0..<Self.sampleIterationCount {
+        let repeatCount = 3
+        for _ in 0..<repeatCount {
             let start = CFAbsoluteTimeGetCurrent()
             launchInstalledPackage(named: nativeScriptSwiftUIPackageName)
 
-            let incrementButton = app.buttons["hanlin-swiftui-increment"].firstMatch
-            XCTAssertTrue(incrementButton.waitForExistence(timeout: 30), "@nativescript/swift-ui provider button missing")
-            incrementButton.tap()
+            // Flow 11: NativeScript initialization is complete when the host container controller is mounted
+            let closeButton = app.buttons["hanlin-script-app-close"].firstMatch
+            XCTAssertTrue(closeButton.waitForExistence(timeout: 20), "NativeScript host container did not mount within timeout")
+            let initElapsed = CFAbsoluteTimeGetCurrent() - start
+            initSamples.append(initElapsed)
 
-            let updatedButton = app.buttons["hanlin-swiftui-increment"].firstMatch
-            XCTAssertTrue(updatedButton.waitForExistence(timeout: 10), "SwiftUI button did not survive round trip")
-            let elapsed = CFAbsoluteTimeGetCurrent() - start
-            recordedSamples.append(elapsed)
+            // Flow 12: NativeScript Core UI first render
+            let coreButton = app.buttons["hanlin-nativescript-core-button"].firstMatch
+            let coreLabel = app.staticTexts["hanlin-nativescript-device-proof"].firstMatch
+            XCTAssertTrue(coreButton.waitForExistence(timeout: 30), "NativeScript Core button did not render")
+            XCTAssertTrue(coreLabel.waitForExistence(timeout: 10), "NativeScript device proof did not render")
+            let coreElapsed = CFAbsoluteTimeGetCurrent() - start
+            coreRenderSamples.append(coreElapsed)
+
+            // Flow 13: @nativescript/swift-ui provider first render
+            let incrementButton = app.buttons["hanlin-swiftui-increment"].firstMatch
+            XCTAssertTrue(incrementButton.waitForExistence(timeout: 30), "@nativescript/swift-ui provider button did not render")
+            let initialCount = app.staticTexts["hanlin-swiftui-count"].firstMatch
+            XCTAssertTrue(initialCount.waitForExistence(timeout: 10), "@nativescript/swift-ui initial count label missing")
+            XCTAssertEqual(initialCount.label, "SwiftUI count: 0", "Initial provider state unexpected")
+            let swiftUIElapsed = CFAbsoluteTimeGetCurrent() - start
+            swiftUIFirstRenderSamples.append(swiftUIElapsed)
+
             closeNativeScriptApp()
         }
 
         emitSample(
+            flowNumber: 11,
+            flowName: "NativeScript First Initialization",
+            category: "NativeScript Render",
+            metric: "first_init_latency",
+            unit: "s",
+            samples: initSamples
+        )
+
+        emitSample(
+            flowNumber: 12,
+            flowName: "NativeScript First Core UI Render",
+            category: "NativeScript Render",
+            metric: "core_ui_render_latency",
+            unit: "s",
+            samples: coreRenderSamples
+        )
+
+        emitSample(
             flowNumber: 13,
-            flowName: "@nativescript/swift-ui Provider Render & Interaction Round-Trip",
+            flowName: "@nativescript/swift-ui Provider First Render",
             category: "NativeScript / SwiftUI",
-            metric: "provider_render_and_event_latency",
+            metric: "provider_first_render_latency",
+            unit: "s",
+            samples: swiftUIFirstRenderSamples
+        )
+    }
+
+    // MARK: - Flow 14: Warm/Subsequent NativeScript/SwiftUI Render & Round-Trip
+
+    func testFlow14_NativeScriptSwiftUIWarmRenderAndInteractionPerformance() throws {
+        app.launchEnvironment["HANLIN_NATIVESCRIPT_E2E"] = "1"
+        app.launch()
+        openApps()
+        ensureNativeScriptPackageInstalled()
+
+        launchInstalledPackage(named: nativeScriptSwiftUIPackageName)
+        let incrementButton = app.buttons["hanlin-swiftui-increment"].firstMatch
+        XCTAssertTrue(incrementButton.waitForExistence(timeout: 30), "@nativescript/swift-ui provider button missing")
+
+        var recordedSamples: [Double] = []
+        for i in 1...Self.sampleIterationCount {
+            let expectedCount = "SwiftUI count: \(i)"
+            let expectedEvent = "NativeScript event count: \(i)"
+            let start = CFAbsoluteTimeGetCurrent()
+            incrementButton.tap()
+
+            let countLabel = app.staticTexts[expectedCount].firstMatch
+            let eventLabel = app.staticTexts[expectedEvent].firstMatch
+            XCTAssertTrue(countLabel.waitForExistence(timeout: 10), "SwiftUI warm state did not update to '\(expectedCount)'")
+            XCTAssertTrue(eventLabel.waitForExistence(timeout: 10), "NativeScript warm event did not update to '\(expectedEvent)'")
+            let elapsed = CFAbsoluteTimeGetCurrent() - start
+            recordedSamples.append(elapsed)
+        }
+        closeNativeScriptApp()
+
+        emitSample(
+            flowNumber: 14,
+            flowName: "NativeScript/SwiftUI Warm & Round-Trip Render",
+            category: "NativeScript / SwiftUI",
+            metric: "warm_interaction_round_trip_latency",
             unit: "s",
             samples: recordedSamples
         )

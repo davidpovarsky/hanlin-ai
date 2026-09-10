@@ -101,7 +101,9 @@ def compute_statistics(samples: List[float]) -> Dict[str, float]:
     }
 
 
-def analyze_records(raw_records: List[Dict[str, Any]]) -> Dict[str, Any]:
+def analyze_records(
+    raw_records: List[Dict[str, Any]], require_canonical_flows: bool = True
+) -> Dict[str, Any]:
     """Group samples by flow and metric, compute stats, and classify gates."""
     metrics_by_key: Dict[str, Dict[str, Any]] = {}
 
@@ -165,6 +167,16 @@ def analyze_records(raw_records: List[Dict[str, Any]]) -> Dict[str, Any]:
             "raw_samples": info["samples"],
         }
         evaluated_metrics.append(entry)
+
+    # When canonical flow validation is required, fail visibly if any canonical flow 1-16 is missing
+    if require_canonical_flows and evaluated_metrics:
+        present_flows = {entry["flow_number"] for entry in evaluated_metrics}
+        for flow_id in range(1, 17):
+            if flow_id not in present_flows:
+                flow_title = FLOW_DEFINITIONS.get(flow_id, f"Flow {flow_id}")
+                hard_gate_failures.append(
+                    f"Missing required canonical benchmark flow: Flow {flow_id} ({flow_title})"
+                )
 
     return {
         "metrics": evaluated_metrics,
@@ -232,6 +244,22 @@ def render_markdown_report(summary: Dict[str, Any], xcode_version: str = "Xcode 
             )
 
     lines.append("")
+    lines.append("### XCTest Instrumentation & Metrics Governance")
+    lines.append("")
+    lines.append("| Metric | Utilized in Suite? | Operational Role & Rationale |")
+    lines.append("| --- | :---: | --- |")
+    lines.append("| **`XCTApplicationLaunchMetric`** | **Yes** | Measures process cold startup duration until the initial scene is responsive (Flow 1). |")
+    lines.append("| **`XCTClockMetric`** | **Yes** | Measures monotonic elapsed wall-clock latency across repeated sample iterations for navigation, compilation, runtime switching, and UI interaction. |")
+    lines.append("| **`XCTCPUMetric`** | **Yes** | Measures multi-threaded CPU execution time. CPU results are XCTest metrics tracked as informational baselines under virtualized runner load. |")
+    lines.append("| **`XCTMemoryMetric`** | **Yes** | Tracks memory footprint delta during XCTest measurement blocks. Memory results are XCTest metrics kept informational alongside the dedicated 50-cycle physical footprint hard gate. |")
+    lines.append("| **`os.OSSignposter`** | **Yes** | High-precision signpost intervals emitted by `HanlinScriptingPerformanceSignposts` around package loading, compilation, and scripting provider invocation. |")
+    lines.append("| **`XCTHitchMetric`** | **No** | **Reason not used:** Designed for scroll hitches and display frame presentation glitches on physical displays. On headless virtualized macOS CI runners, display refresh cycles are virtualized without a real hardware v-sync rasterizer or display engine, making frame hitch metrics non-authoritative, highly noisy, and dominated by host runner virtualization jitter rather than app rendering performance. |")
+    lines.append("| **`XCTStorageMetric`** | **No** | **Reason not used:** Measures raw on-disk volume byte delta during test execution. In this suite, storage import and persistence are measured with exact deterministic verification (`HanlinScriptPackageLoader`) and timing, while memory stability is tracked via Mach physical footprint (`TASK_VM_INFO.phys_footprint`). `XCTStorageMetric` on simulator writes across the shared host container and APFS temp volumes fluctuates due to Xcode derived data and simulator diagnostic logging, making it unstable as an isolated regression gate. |")
+    lines.append("")
+    lines.append("**Performance Artifacts**:")
+    lines.append("- Structured JSON Summary: `performance-summary.json`")
+    lines.append("- Markdown Step Summary: `performance-summary.md`")
+    lines.append("")
     lines.append("### Simulator vs. Physical iPad Limitation Notice")
     lines.append("")
     lines.append("**What this suite can prove well:**")
@@ -258,14 +286,21 @@ def main() -> int:
     parser.add_argument("--xcresult", help="Path to xcresult bundle")
     parser.add_argument("--output-json", help="Path to write JSON performance summary")
     parser.add_argument("--output-markdown", help="Path to write Markdown performance summary")
-    parser.add_argument("--github-step-summary", help="Path to GITHUB_STEP_SUMMARY")
-    parser.add_argument("--xcode-version", default="Xcode 26", help="Xcode version for summary")
-    parser.add_argument("--runner-arch", default="arm64", help="Runner architecture for summary")
+    parser.add_argument("--github-step-summary", help="Path to write GitHub Step Summary")
+    parser.add_argument("--xcode-version", default="Xcode 26", help="Xcode toolchain version string")
+    parser.add_argument("--runner-arch", default="arm64", help="Runner architecture")
+    parser.add_argument(
+        "--no-require-canonical-flows",
+        dest="require_canonical_flows",
+        action="store_false",
+        default=True,
+        help="Disable failure on missing canonical flows 1-16",
+    )
 
     args = parser.parse_args()
 
     raw_samples = parse_log_files(Path(args.log_dir))
-    summary = analyze_records(raw_samples)
+    summary = analyze_records(raw_samples, require_canonical_flows=args.require_canonical_flows)
     markdown = render_markdown_report(summary, xcode_version=args.xcode_version, runner_arch=args.runner_arch)
 
     print(markdown)
