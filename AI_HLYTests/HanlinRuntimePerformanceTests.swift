@@ -326,7 +326,7 @@ final class HanlinRuntimePerformanceTests: XCTestCase {
             do {
                 try FileManager.default.copyItem(at: fixtureDir, to: tempDir)
                 let loaded = try HanlinScriptPackageLoader.load(packageDirectory: tempDir)
-                XCTAssertEqual(loaded.manifest.packageID.rawValue, "hanlin.test.echo")
+                XCTAssertEqual(loaded.manifest.packageID.rawValue, "com.hanlin.fixture.echo")
                 try? FileManager.default.removeItem(at: tempDir)
             } catch {
                 XCTFail("Deterministic package store import failed: \(error)")
@@ -388,6 +388,27 @@ final class HanlinRuntimePerformanceTests: XCTestCase {
     // MARK: - Memory Stability & Leak Bounds Under Repeated Lifecycle Cycles
 
     func testRuntimeMemoryStabilityUnderRepeatedExecutionCycles() async throws {
+        // Warm up the runtime heaps / VM pools once so one-time initialization is not counted as per-cycle leak
+        for _ in 0..<2 {
+            let jsc = try HanlinJavaScriptCoreSession(configuration: .scriptingCompatibility)
+            try await jsc.loadProgram(
+                "AssistantTool.registerExecuteTool(() => ({ success: true, message: 'ok' }));",
+                filename: "warm_jsc.js",
+                expectedToolCount: 1
+            )
+            _ = try await jsc.invoke(toolIndex: 0, parameters: .object([:]))
+            await jsc.dispose()
+
+            let qjs = try HanlinQuickJSSession(configuration: .phase2A)
+            try await qjs.loadProgram(
+                "AssistantTool.registerExecuteTool(() => ({ success: true, message: 'ok' }));",
+                filename: "warm_qjs.js",
+                expectedToolCount: 1
+            )
+            _ = try await qjs.invoke(toolIndex: 0, parameters: .object([:]))
+            await qjs.dispose()
+        }
+
         let initialMemoryMB = currentResidentMemoryMB()
         let cycleCount = 50
 

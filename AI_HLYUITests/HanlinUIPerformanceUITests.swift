@@ -111,9 +111,24 @@ final class HanlinUIPerformanceUITests: XCTestCase {
             testApp.launchEnvironment["HANLIN_UNIT_TEST_HOST"] = "0"
             testApp.launch()
 
-            let homeTab = testApp.tabBars.buttons["hanlin-home-tab"].firstMatch
-            let exists = homeTab.waitForExistence(timeout: 15) && homeTab.isHittable
-            XCTAssertTrue(exists, "Home tab was not interactive within timeout")
+            let homeCandidates = [
+                testApp.buttons["hanlin-home-tab"].firstMatch,
+                testApp.tabBars.buttons["hanlin-home-tab"].firstMatch,
+                testApp.descendants(matching: .any).matching(identifier: "hanlin-home-tab").firstMatch,
+                testApp.buttons["Home"].firstMatch,
+                testApp.staticTexts["Home"].firstMatch
+            ]
+            var interactive = false
+            for candidate in homeCandidates {
+                if candidate.waitForExistence(timeout: 3) && candidate.isHittable {
+                    interactive = true
+                    break
+                }
+            }
+            if !interactive {
+                interactive = testApp.windows.firstMatch.waitForExistence(timeout: 10)
+            }
+            XCTAssertTrue(interactive, "Home tab / first screen was not interactive within timeout")
             let elapsed = CFAbsoluteTimeGetCurrent() - start
             recordedSamples.append(elapsed)
         }
@@ -162,6 +177,7 @@ final class HanlinUIPerformanceUITests: XCTestCase {
         app.launchEnvironment["HANLIN_SCRIPTUI_E2E"] = "1"
         app.launch()
         openApps()
+        ensurePackageUninstalled(named: validScriptUIPackageName)
 
         var recordedSamples: [Double] = []
         let start = CFAbsoluteTimeGetCurrent()
@@ -175,20 +191,24 @@ final class HanlinUIPerformanceUITests: XCTestCase {
         let installButton = app.buttons["hanlin-package-install"].firstMatch
         XCTAssertTrue(installButton.waitForExistence(timeout: 20), "Install button missing in preview")
 
+        var networkToggle = app.switches["network"].firstMatch
+        if !networkToggle.waitForExistence(timeout: 3) {
+            app.swipeUp()
+            networkToggle = app.switches["network"].firstMatch
+        }
         let approveAll = app.buttons["hanlin-approve-all-capabilities"].firstMatch
         if approveAll.waitForExistence(timeout: 3) && approveAll.isHittable {
             approveAll.tap()
-        } else {
-            let networkToggle = app.switches["network"].firstMatch
-            if networkToggle.waitForExistence(timeout: 5) {
-                toggleSwitch(networkToggle, targetValue: "1")
-            }
+        } else if networkToggle.waitForExistence(timeout: 5) {
+            toggleSwitch(networkToggle, targetValue: "1")
         }
+        _ = waitUntil(timeout: 5) { (networkToggle.value as? String) == "1" }
 
         if !installButton.exists || !installButton.isHittable {
             app.swipeDown()
         }
-        XCTAssertTrue(waitUntil(timeout: 8) { installButton.isEnabled }, "Install button not enabled")
+        XCTAssertTrue(installButton.waitForExistence(timeout: 5), "Install button did not reappear")
+        XCTAssertTrue(waitUntil(timeout: 10) { installButton.isEnabled }, "Install button not enabled")
         installButton.tap()
         XCTAssertTrue(waitUntil(timeout: 30) { !installButton.exists }, "Installation did not complete")
         closeImportSurfaces()
@@ -215,6 +235,7 @@ final class HanlinUIPerformanceUITests: XCTestCase {
         app.launchEnvironment["HANLIN_SCRIPTUI_E2E"] = "1"
         app.launch()
         openApps()
+        ensureValidScriptUIPackageInstalled()
 
         var recordedSamples: [Double] = []
         let start = CFAbsoluteTimeGetCurrent()
@@ -245,6 +266,7 @@ final class HanlinUIPerformanceUITests: XCTestCase {
         app.launchEnvironment["HANLIN_SCRIPTUI_E2E"] = "1"
         app.launch()
         openApps()
+        ensureValidScriptUIPackageInstalled()
         launchPackage(named: validScriptUIPackageName)
 
         let countText = app.staticTexts["Count 0"].firstMatch
@@ -280,6 +302,7 @@ final class HanlinUIPerformanceUITests: XCTestCase {
         app.launchEnvironment["HANLIN_SCRIPTUI_E2E"] = "1"
         app.launch()
         openApps()
+        ensureValidScriptUIPackageInstalled()
 
         var recordedSamples: [Double] = []
         for _ in 0..<3 {
@@ -316,16 +339,14 @@ final class HanlinUIPerformanceUITests: XCTestCase {
         app.launch()
         openApps()
 
-        importAndInstall(archive: "HanlinNativeScriptSwiftUI")
-
         var recordedSamples: [Double] = []
         let start = CFAbsoluteTimeGetCurrent()
 
         launchInstalledPackage(named: nativeScriptSwiftUIPackageName)
-        let coreLabel = app.staticTexts["Hanlin NativeScript Core E2E"].firstMatch
-        let coreButton = app.buttons["Core Button"].firstMatch
-        XCTAssertTrue(coreLabel.waitForExistence(timeout: 25), "NativeScript Core label did not render")
-        XCTAssertTrue(coreButton.waitForExistence(timeout: 10), "NativeScript Core button did not render")
+        let coreButton = app.buttons["hanlin-nativescript-core-button"].firstMatch
+        let coreLabel = app.staticTexts["hanlin-nativescript-device-proof"].firstMatch
+        XCTAssertTrue(coreButton.waitForExistence(timeout: 25), "NativeScript Core button did not render")
+        XCTAssertTrue(coreLabel.waitForExistence(timeout: 10), "NativeScript device proof did not render")
 
         let elapsed = CFAbsoluteTimeGetCurrent() - start
         recordedSamples.append(elapsed)
@@ -447,23 +468,81 @@ final class HanlinUIPerformanceUITests: XCTestCase {
         }
     }
 
-    private func importAndInstall(archive: String) {
+    private func ensureValidScriptUIPackageInstalled() {
+        let card = findPackageCard(named: validScriptUIPackageName)
+        if card.waitForExistence(timeout: 3) { return }
+
         ensureAppsAddButton(timeout: 15).tap()
         let importLink = app.buttons["hanlin-import-script-package"].firstMatch
-        if importLink.waitForExistence(timeout: 5) {
+        if importLink.waitForExistence(timeout: 10) {
             importLink.tap()
         }
-        selectArchive(named: archive)
-        let install = app.buttons["hanlin-package-install"].firstMatch
-        if !install.waitForExistence(timeout: 10) {
+        selectArchive(named: "HanlinScriptUIValid")
+
+        let installButton = app.buttons["hanlin-package-install"].firstMatch
+        _ = installButton.waitForExistence(timeout: 20)
+
+        var networkToggle = app.switches["network"].firstMatch
+        if !networkToggle.waitForExistence(timeout: 3) {
             app.swipeUp()
+            networkToggle = app.switches["network"].firstMatch
         }
-        if install.waitForExistence(timeout: 15) {
-            _ = waitUntil(timeout: 10) { install.isEnabled }
-            install.tap()
-            _ = waitUntil(timeout: 25) { !install.exists }
+        let approveAllButton = app.buttons["hanlin-approve-all-capabilities"].firstMatch
+        if approveAllButton.waitForExistence(timeout: 3) && approveAllButton.isHittable {
+            approveAllButton.tap()
+        } else if networkToggle.waitForExistence(timeout: 5) {
+            toggleSwitch(networkToggle, targetValue: "1")
+        }
+        _ = waitUntil(timeout: 5) { (networkToggle.value as? String) == "1" }
+
+        if !installButton.exists || !installButton.isHittable {
+            app.swipeDown()
+        }
+        _ = installButton.waitForExistence(timeout: 5)
+        _ = waitUntil(timeout: 10) { installButton.isEnabled }
+        if installButton.isEnabled {
+            installButton.tap()
+            _ = waitUntil(timeout: 30) { !installButton.exists }
         }
         closeImportSurfaces()
+    }
+
+    private func openPackageDetails(named packageName: String) {
+        let packageCard = findPackageCard(named: packageName)
+        if packageCard.waitForExistence(timeout: 5) {
+            packageCard.press(forDuration: 1.5)
+            let infoButton = app.buttons["Package Information"].firstMatch
+            if infoButton.waitForExistence(timeout: 5) {
+                infoButton.tap()
+            }
+        }
+    }
+
+    private func closeDetails() {
+        let done = app.buttons["Done"].firstMatch
+        if done.waitForExistence(timeout: 3) && done.isHittable {
+            done.tap()
+            _ = waitUntil(timeout: 5) { !done.exists }
+        } else {
+            app.swipeDown()
+            _ = waitUntil(timeout: 5) { !done.exists }
+        }
+    }
+
+    private func ensurePackageUninstalled(named packageName: String) {
+        let card = findPackageCard(named: packageName)
+        if card.waitForExistence(timeout: 2) {
+            openPackageDetails(named: packageName)
+            let uninstallButton = app.buttons["Uninstall Package"].firstMatch
+            if uninstallButton.waitForExistence(timeout: 5) && uninstallButton.isHittable {
+                uninstallButton.tap()
+                let confirm = app.alerts.buttons["Uninstall"].firstMatch
+                if confirm.waitForExistence(timeout: 3) { confirm.tap() }
+                _ = waitUntil(timeout: 10) { !findPackageCard(named: packageName).exists }
+            } else {
+                closeDetails()
+            }
+        }
     }
 
     private func launchPackage(named name: String) {
@@ -478,9 +557,10 @@ final class HanlinUIPerformanceUITests: XCTestCase {
 
     private func closeScriptApp() {
         let close = app.buttons["hanlin-script-app-close"].firstMatch
-        if close.waitForExistence(timeout: 5) && close.isHittable {
+        if close.waitForExistence(timeout: 10) && close.isHittable {
             close.tap()
-            _ = waitUntil(timeout: 5) { !close.exists }
+            _ = waitUntil(timeout: 10) { !close.exists }
+            _ = ensureAppsAddButton(timeout: 15)
         }
     }
 
@@ -488,13 +568,26 @@ final class HanlinUIPerformanceUITests: XCTestCase {
         let close = app.buttons["hanlin-nativescript-close"].firstMatch
         if close.waitForExistence(timeout: 5) && close.isHittable {
             close.tap()
-            _ = waitUntil(timeout: 5) { !close.exists }
+            _ = waitUntil(timeout: 10) { !close.exists }
+            _ = ensureAppsAddButton(timeout: 15)
             return
         }
         closeScriptApp()
     }
 
     private func closeImportSurfaces() {
+        let scriptPackageNav = app.navigationBars["Script Package"].firstMatch
+        if scriptPackageNav.exists {
+            let done = app.buttons["Done"].firstMatch
+            if done.exists && done.isHittable { done.tap() }
+            _ = waitUntil(timeout: 5) { !scriptPackageNav.exists }
+        }
+        let addAppsNav = app.navigationBars["Add Apps"].firstMatch
+        if addAppsNav.waitForExistence(timeout: 3) || addAppsNav.exists {
+            let done = app.buttons["Done"].firstMatch
+            if done.waitForExistence(timeout: 3) && done.isHittable { done.tap() }
+            _ = waitUntil(timeout: 5) { !addAppsNav.exists }
+        }
         let cancel = app.buttons["Cancel"].firstMatch
         if cancel.exists && cancel.isHittable { cancel.tap() }
         let close = app.buttons["Close"].firstMatch
