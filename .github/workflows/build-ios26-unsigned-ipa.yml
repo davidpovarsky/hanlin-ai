@@ -1630,6 +1630,8 @@ jobs:
           # application before validating its dyld closure and launching it.
           rm -rf build/SimulatorRuntimeApp/AI_Hanlin.app/PlugIns/AI_HLYTests.xctest
           rm -rf build/SimulatorRuntimeApp/AI_Hanlin.app/PlugIns/AI_HLYUITests.xctest
+          rm -rf build/SimulatorRuntimeApp/AI_Hanlin.app/Frameworks/XC*
+          rm -rf build/SimulatorRuntimeApp/AI_Hanlin.app/Frameworks/libXCTest*
           test ! -e build/SimulatorRuntimeApp/AI_Hanlin.app/PlugIns/AI_HLYTests.xctest
 
       - name: Measure same-run simulator no-op rebuild
@@ -1941,6 +1943,7 @@ jobs:
           fi
 
       - name: Analyze performance benchmark results
+        if: ${{ always() }}
         run: |
           set -euxo pipefail
           python3 Scripts/CI/analyze_performance_results.py \
