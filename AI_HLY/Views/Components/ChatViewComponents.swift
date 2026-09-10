@@ -444,6 +444,7 @@ struct ChatBubbleView: View {
             text: text,
             images: images,
             uploadDocument: uploadDocument,
+            documentText: documentText,
             prompts: prompts,
             temporaryRecord: temporaryRecord,
             onSaveKnowledge: { content in

@@ -10863,6 +10863,18 @@
         "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "查看全部" } }
       }
     },
+    "置顶" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Pinned" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "מוצמדים" } }
+      }
+    },
+    "最近" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Recent" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "אחרונים" } }
+      }
+    },
     "暂未设置文本优化模型，请前往“设置-模型-优化模型”设置文本优化模型。视觉优化模型仅在视觉功能中需要。" : {
       "localizations" : {
         "en" : {
