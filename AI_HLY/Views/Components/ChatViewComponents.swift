@@ -440,63 +440,20 @@ struct ChatBubbleView: View {
     @State private var animateIn = false
     @ViewBuilder
     private func userMessageView() -> some View {
-        HStack {
-            Spacer()
-            VStack(alignment: .trailing, spacing: 6) {
-                
-                if let images = images, !images.isEmpty {
-                    chatBubbleImage()
-                        .frame(maxWidth: UIScreen.main.bounds.width * 0.75, alignment: .trailing)
-                }
-                
-                if let document = uploadDocument, !document.isEmpty {
-                    chatBubbleDocument(for: document)
-                        .frame(maxWidth: UIScreen.main.bounds.width * 0.5, alignment: .trailing)
-                }
-                
-                if let prompts = prompts, !prompts.isEmpty {
-                    chatBubblePrompt()
-                        .frame(maxWidth: UIScreen.main.bounds.width * 0.75, alignment: .trailing)
-                }
-                
-                HStack {
-                    Text(text)
-                }
-                .padding(10)
-                .background(temporaryRecord ? .primary : Color(.hlBlue))
-                .foregroundColor(temporaryRecord ? Color(.systemBackground) : .white)
-                .contextMenu {
-                    Button(action: {
-                        UIPasteboard.general.string = markdownToPlainText(text)
-                    }) {
-                        Label(String(localized: "复制内容"), systemImage: "square.on.square")
-                    }
-                    Button(action: {
-                        isTextSelectionSheetPresented = true
-                    }) {
-                        Label(String(localized: "选择文本"), systemImage: "text.redaction")
-                    }
-                    Button(action: {
-                        createAndSaveKnowledgeRecord(with: text)
-                    }) {
-                        Label(String(localized: "存为知识"), systemImage: "backpack")
-                    }
-                    Button(action: {
-                        showDeleteConfirmation = true
-                    }) {
-                        Label(String(localized: "删除消息"), systemImage: "trash")
-                    }
-                }
-                .clipShape(CustomCorners(topLeft: 20, topRight: 20, bottomLeft: 20, bottomRight: 5))
-                .fixedSize(horizontal: false, vertical: true)
-                .frame(maxWidth: UIScreen.main.bounds.width * 0.75, alignment: .trailing)
-                .transition(.move(edge: .trailing).combined(with: .opacity))
-                .animation(.spring(response: 0.5, dampingFraction: 0.7, blendDuration: 0.4), value: text.isEmpty)
-                .sheet(isPresented: $isTextSelectionSheetPresented) {
-                    TextSelectionView(text: text)
-                }
+        ChatUserMessageSurface(
+            text: text,
+            images: images,
+            uploadDocument: uploadDocument,
+            documentText: documentText,
+            prompts: prompts,
+            temporaryRecord: temporaryRecord,
+            onSaveKnowledge: { content in
+                createAndSaveKnowledgeRecord(with: content)
+            },
+            onDelete: {
+                showDeleteConfirmation = true
             }
-        }
+        )
     }
     
     @State private var textOffset: CGFloat = 0
@@ -1606,192 +1563,52 @@ struct ChatBubbleView: View {
     
     @ViewBuilder
     private func actionButtons() -> some View {
-        HStack(spacing: 8) {
-            // 复制按钮
-            Button(action: copyToClipboard) {
-                Image(systemName: isCopy ? "checkmark.circle" : "square.on.square")
-                    .font(.system(size: size_15, weight: .medium))
-                    .foregroundColor(isCopy ? Color.hlGreen : .secondary)
-                    .frame(width: size_24, height: size_24)
-                    .clipShape(Circle())
-                    .scaleEffect(isCopy ? 1.2 : 1.0)
-                    .animation(.spring(response: 0.3, dampingFraction: 0.7), value: isCopy)
-            }
-            .buttonStyle(PlainButtonStyle())
-            .sensoryFeedback(.success, trigger: isSuccess)
-            
-            if isCopy {
-                Text(String(localized: "已复制"))
-                    .font(.system(size: size_12, weight: .medium))
-                    .foregroundColor(.hlGreen)
-                    .transition(.opacity.combined(with: .move(edge: .leading)))
-            }
-            
-            // 选择文本
-            Button(action: {
-                isTextSelectionSheetPresented = true
-            }) {
-                Image(systemName: "text.redaction")
-                    .font(.system(size: size_15, weight: .medium))
-                    .frame(width: size_24, height: size_24)
-                    .foregroundColor(.secondary)
-                    .clipShape(Circle())
-            }
-            .buttonStyle(PlainButtonStyle())
-            .sheet(isPresented: $isTextSelectionSheetPresented) {
-                TextSelectionView(text: text)
-            }
-            
-            // 语音朗读
-            Button(action: {
+        ChatAssistantActionsView(
+            text: text,
+            isSpeaking: tts.isSpeaking,
+            isAskingSpeech: tts.isAsking,
+            isTranslating: isTranslating,
+            isTranslated: translated,
+            mathMode: mathMode,
+            onCopy: copyToClipboard,
+            onSelectText: { isTextSelectionSheetPresented = true },
+            onToggleSpeech: {
                 tts.setContextIfNeeded(modelContext)
                 tts.updateSelectedModel()
                 tts.setMessageId(id)
                 tts.toggleSpeech(text: text)
-            }) {
-                if tts.isAsking {
-                    ProgressView()
-                        .scaledToFit()
-                        .padding(2)
-                        .frame(width: size_24, height: size_24)
-                        .foregroundColor(.secondary)
-                        .clipShape(Circle())
-                        .tint(.hlBluefont)
-                } else {
-                    Image(systemName: tts.isSpeaking ? "pause.circle" : "waveform")
-                        .font(.system(size: size_16, weight: .medium))
-                        .frame(width: size_24, height: size_24)
-                        .foregroundColor(tts.isSpeaking ? Color(.systemRed) : .secondary)
-                        .clipShape(Circle())
-                        .scaleEffect(tts.isSpeaking ? 1.2 : 1.0)
-                        .animation(.spring(response: 0.3, dampingFraction: 0.7), value: tts.isSpeaking)
-                }
-            }
-            .buttonStyle(PlainButtonStyle())
-            
-            if tts.isAsking {
-                Text(String(localized: "正在请求"))
-                    .font(.system(size: size_12, weight: .medium))
-                    .foregroundColor(.hlBluefont)
-                    .transition(.opacity.combined(with: .move(edge: .leading)))
-            }
-            
-            // 翻译按钮
-            Button(action: translateText) {
-                if isTranslating {
-                    ProgressView()
-                        .scaledToFit()
-                        .padding(2)
-                        .frame(width: size_24, height: size_24)
-                        .foregroundColor(.secondary)
-                        .clipShape(Circle())
-                        .tint(.hlBluefont)
-                } else if translated {
-                    ZStack(alignment: .center) {
-                        Image("translate")
-                            .resizable()
-                            .renderingMode(.template)
-                            .scaledToFit()
-                            .padding(2)
-                            .frame(width: size_20, height: size_20)
-                            .foregroundColor(.secondary)
-                            .clipShape(Circle())
-                        
-                        Image(systemName: "line.diagonal")
-                            .font(.system(size: size_20))
-                            .frame(width: size_24, height: size_24)
-                            .foregroundColor(.hlRed)
-                            .rotationEffect(.degrees(90))
-                            .background(
-                                Circle()
-                                    .fill(Color(.systemBackground).opacity(0.5))
-                                    .frame(width: size_24, height: size_24)
-                            )
-                    }
-                } else {
-                    Image("translate")
-                        .resizable()
-                        .renderingMode(.template)
-                        .scaledToFit()
-                        .padding(2)
-                        .frame(width: size_24, height: size_24)
-                        .foregroundColor(.secondary)
-                        .clipShape(Circle())
-                }
-            }
-            .disabled(isTranslating)
-            .buttonStyle(PlainButtonStyle())
-            .alert(String(localized: "翻译操作失败"), isPresented: $showErrorAlert) {
-                Button(String(localized: "确定"), role: .cancel) {}
-            } message: {
-                Text(errorMessage)
-            }
-            
-            if isTranslating {
-                Text(String(localized: "正在翻译"))
-                    .font(.system(size: size_12, weight: .medium))
-                    .foregroundColor(.hlBluefont)
-                    .transition(.opacity.combined(with: .move(edge: .leading)))
-            }
-            
-            // 科学模式
-            Button(action: {
+            },
+            onTranslate: translateText,
+            onToggleMath: {
                 mathMode.toggle()
                 showMathModeReminder = true
                 DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                     showMathModeReminder = false
                 }
-            }) {
-                Image(systemName: mathMode ? "note.text" : "x.squareroot")
-                    .font(.system(size: size_16, weight: .medium))
-                    .frame(width: size_24, height: size_24)
-                    .foregroundColor(showMathModeReminder ? .hlBluefont : .secondary)
-                    .clipShape(Circle())
-            }
-            
-            if showMathModeReminder {
-                Text(mathMode ? String(localized: "科学模式") : String(localized: "文本模式"))
-                    .font(.system(size: size_12, weight: .medium))
-                    .foregroundColor(.hlBluefont)
-                    .transition(.opacity.combined(with: .move(edge: .leading)))
-            }
-            
-            // 背包按钮
-            Button(action: {
+            },
+            onSaveKnowledge: {
                 createAndSaveKnowledgeRecord(with: text)
-            }) {
-                Image(systemName: "backpack")
-                    .font(.system(size: size_14, weight: .medium))
-                    .frame(width: size_24, height: size_24)
-                    .foregroundColor(.secondary)
-                    .clipShape(Circle())
+            },
+            onRetry: onRetry,
+            onDelete: {
+                onDelete?()
             }
-            .buttonStyle(PlainButtonStyle())
-            .sheet(isPresented: $isKnowledgeWritingSheetPresented) {
-                if let record = recordToWrite {
-                    NavigationStack {
-                        KnowledgeWritingView(knowledgeRecord: record, fromSheet: true)
-                    }
+        )
+        .sheet(isPresented: $isTextSelectionSheetPresented) {
+            TextSelectionView(text: text)
+        }
+        .sheet(isPresented: $isKnowledgeWritingSheetPresented) {
+            if let record = recordToWrite {
+                NavigationStack {
+                    KnowledgeWritingView(knowledgeRecord: record, fromSheet: true)
                 }
-            }
-            
-            // 重新请求
-            if let retryAction = onRetry {
-                Button(action: retryAction) {
-                    Image(systemName: "arrow.trianglehead.2.clockwise.rotate.90")
-                        .font(.system(size: size_15, weight: .medium))
-                        .frame(width: size_24, height: size_24)
-                        .foregroundColor(.secondary)
-                        .clipShape(Circle())
-                }
-                .buttonStyle(PlainButtonStyle())
             }
         }
-        .padding(.leading, 5)
-        .animation(
-            .spring(response: 0.8, dampingFraction: 0.9, blendDuration: 0.5),
-            value: [showMathModeReminder, isTranslating, isCopy, tts.isAsking]
-        )
+        .alert(String(localized: "翻译操作失败"), isPresented: $showErrorAlert) {
+            Button(String(localized: "确定"), role: .cancel) {}
+        } message: {
+            Text(errorMessage)
+        }
     }
 
     // MARK: - AI 助手消息内容
@@ -2704,11 +2521,11 @@ private struct CodeBlockRow: View {
     @State private var isFeedBack: Bool = false
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 6) {
+        VStack(alignment: .leading, spacing: 8) {
             HStack {
                 Label(String(localized: "程序运行结果"), systemImage: "apple.terminal")
-                    .font(.subheadline)
-                    .foregroundColor(temporaryRecord ? .primary : .hlBluefont)
+                    .font(.caption.weight(.medium))
+                    .foregroundStyle(Color.secondary)
                 Spacer()
                 Button(action: {
                     isFeedBack.toggle()
@@ -2719,9 +2536,10 @@ private struct CodeBlockRow: View {
                         Text(String(localized: "查看源码"))
                     }
                     .font(.caption)
-                    .padding(6)
-                    .background(temporaryRecord ? Color.primary : Color.hlBlue)
-                    .foregroundColor(.white)
+                    .padding(.horizontal, 10)
+                    .padding(.vertical, 4)
+                    .background(Color(uiColor: .tertiarySystemFill))
+                    .foregroundStyle(Color.primary)
                     .clipShape(Capsule())
                 }
                 .sensoryFeedback(.impact, trigger: isFeedBack)
@@ -2734,16 +2552,19 @@ private struct CodeBlockRow: View {
                 .font(.caption.monospaced())
                 .foregroundColor(codeBlock.hasError ? .red : .primary)
                 .frame(maxWidth: .infinity, alignment: .leading)
-                .padding(.vertical, 4)
+                .padding(.vertical, 2)
+                .environment(\.layoutDirection, .leftToRight)
         }
-        .padding(10)
-        .cornerRadius(20)
+        .padding(12)
         .background(
-            BlurView(style: .systemThinMaterial)
-                .cornerRadius(20)
-                .shadow(color: temporaryRecord ? .primary : .hlBlue, radius: 1)
+            RoundedRectangle(cornerRadius: 14, style: .continuous)
+                .fill(Color(uiColor: .secondarySystemGroupedBackground))
         )
-        .frame(maxWidth: UIScreen.main.bounds.width * 0.95, alignment: .leading)
+        .overlay(
+            RoundedRectangle(cornerRadius: 14, style: .continuous)
+                .stroke(Color.primary.opacity(0.08), lineWidth: 0.5)
+        )
+        .frame(maxWidth: 720, alignment: .leading)
     }
 }
 

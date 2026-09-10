@@ -10863,6 +10863,18 @@
         "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "查看全部" } }
       }
     },
+    "置顶" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Pinned" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "מוצמדים" } }
+      }
+    },
+    "最近" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Recent" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "אחרונים" } }
+      }
+    },
     "暂未设置文本优化模型，请前往“设置-模型-优化模型”设置文本优化模型。视觉优化模型仅在视觉功能中需要。" : {
       "localizations" : {
         "en" : {
@@ -10883,6 +10895,181 @@
             "value" : "暂未设置文本优化模型，请前往“设置-模型-优化模型”设置文本优化模型。视觉优化模型仅在视觉功能中需要。"
           }
         }
+      }
+    },
+    "Searching the web…" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Searching the web…" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "מחפש באינטרנט…" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "正在搜索网页…" } }
+      }
+    },
+    "Web search" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Web search" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "חיפוש באינטרנט" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "网页搜索" } }
+      }
+    },
+    "Searching sources…" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Searching sources…" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "מחפש במקורות…" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "正在检索来源…" } }
+      }
+    },
+    "Source search" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Source search" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "חיפוש מקורות" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "来源检索" } }
+      }
+    },
+    "Finding location…" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Finding location…" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "מאתר מיקום…" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "正在查找位置…" } }
+      }
+    },
+    "Location found" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Location found" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "המיקום נמצא" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "已找到位置" } }
+      }
+    },
+    "Running command…" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Running command…" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "מריץ פקודה…" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "正在执行命令…" } }
+      }
+    },
+    "Command completed" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Command completed" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "הפקודה הושלמה" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "命令执行完成" } }
+      }
+    },
+    "Reading files…" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Reading files…" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "קורא קבצים…" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "正在读取文件…" } }
+      }
+    },
+    "File operation" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "File operation" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "פעולת קובץ" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "文件操作" } }
+      }
+    },
+    "Executing code…" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Executing code…" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "מריץ קוד…" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "正在执行代码…" } }
+      }
+    },
+    "Code executed" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Code executed" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "הקוד הורץ" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "代码执行完成" } }
+      }
+    },
+    "Generating image…" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Generating image…" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "יוצר תמונה…" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "正在生成图片…" } }
+      }
+    },
+    "Image generated" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Image generated" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "התמונה נוצרה" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "图片生成完成" } }
+      }
+    },
+    "Thinking…" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Thinking…" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "חושב…" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "正在思考…" } }
+      }
+    },
+    "View full activity" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "View full activity" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "הצגת פעילות מלאה" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "查看完整活动" } }
+      }
+    },
+    "Expand result" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Expand result" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "הרחבת תוצאה" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "展开结果" } }
+      }
+    },
+    "Result" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Result" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "תוצאה" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "结果" } }
+      }
+    },
+    "用户消息" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "User message" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "הודעת משתמש" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "用户消息" } }
+      }
+    },
+    "暂停朗读" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Pause reading" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "השהיית הקראה" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "暂停朗读" } }
+      }
+    },
+    "朗读内容" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Read content" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "הקראת תוכן" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "朗读内容" } }
+      }
+    },
+    "重新生成" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Regenerate" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "יצירה מחדש" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "重新生成" } }
+      }
+    },
+    "普通文本模式" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Plain text mode" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "מצב טקסט רגיל" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "普通文本模式" } }
+      }
+    },
+    "LaTeX科学模式" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "LaTeX math mode" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "מצב מתמטיקה (LaTeX)" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "LaTeX科学模式" } }
+      }
+    },
+    "更多操作" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "More actions" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "פעולות נוספות" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "更多操作" } }
       }
     }
   },

@@ -310,9 +310,13 @@ struct ChatViewBottom: View {
                             .padding(.horizontal, 10)
                             .clipShape(Capsule())
                             .background(
-                                GlassView(style: .systemUltraThinMaterial)
-                                    .clipShape(Capsule())
-                                    .shadow(color: TemporaryRecord ? .primary : .hlBlue, radius: 1)
+                                Capsule()
+                                    .fill(.regularMaterial)
+                                    .overlay(
+                                        Capsule()
+                                            .stroke(Color.primary.opacity(0.08), lineWidth: 0.5)
+                                    )
+                                    .shadow(color: Color.black.opacity(0.08), radius: 4, y: 2)
                             )
                         }
                         .transition(.move(edge: .bottom).combined(with: .opacity))
@@ -342,9 +346,13 @@ struct ChatViewBottom: View {
                                 .frame(width: buttonHeight, height: buttonHeight)
                                 .clipShape(Circle())
                                 .background(
-                                    GlassView(style: .systemUltraThinMaterial)
-                                        .clipShape(Circle())
-                                        .shadow(color: TemporaryRecord ? .primary : .hlBlue, radius: 1)
+                                    Circle()
+                                        .fill(.regularMaterial)
+                                        .overlay(
+                                            Circle()
+                                                .stroke(Color.primary.opacity(0.08), lineWidth: 0.5)
+                                        )
+                                        .shadow(color: Color.black.opacity(0.08), radius: 4, y: 2)
                                 )
                         }
                         .transition(.move(edge: .bottom).combined(with: .opacity))
@@ -454,10 +462,15 @@ struct ChatViewBottom: View {
             }
             .padding(12)
             .background(
-                GlassView(style: .systemUltraThinMaterial) // 毛玻璃背景
-                    .clipShape(RoundedRectangle(cornerRadius: 26))
-                    .shadow(color: TemporaryRecord ? .primary : .hlBlue, radius: 1)
+                RoundedRectangle(cornerRadius: 24, style: .continuous)
+                    .fill(.regularMaterial)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 24, style: .continuous)
+                            .stroke(Color.primary.opacity(0.08), lineWidth: 0.5)
+                    )
+                    .shadow(color: Color.black.opacity(0.06), radius: 8, y: 2)
             )
+            .frame(maxWidth: 720)
             .offset(y: isMultiSelectMode ? 0 : 60) // **初次进入时滑入**
             .opacity(isMultiSelectMode ? 1 : 0)    // **初次进入时淡入**
             .animation(.spring(response: 0.5, dampingFraction: 0.7, blendDuration: 0.4), value: isMultiSelectMode)
@@ -520,7 +533,7 @@ struct ChatViewBottom: View {
                         sourceSelector
                     }
                 }
-                .padding(.bottom, 12)
+                .padding(.bottom, 10)
                 .onTapGesture {
                     showTemperatureSlider = false
                     showTopPSlider = false
@@ -528,15 +541,21 @@ struct ChatViewBottom: View {
                     showMaxMessagesNumSlider = false
                 }
                 .background(
-                    GlassView(style: .systemUltraThinMaterial) // 毛玻璃背景
-                        .clipShape(RoundedRectangle(cornerRadius: 26))
-                        .shadow(color: TemporaryRecord ? .primary : .hlBlue, radius: 1)
+                    RoundedRectangle(cornerRadius: 24, style: .continuous)
+                        .fill(.regularMaterial)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 24, style: .continuous)
+                                .stroke(Color.primary.opacity(0.08), lineWidth: 0.5)
+                        )
+                        .shadow(color: Color.black.opacity(0.06), radius: 8, y: 2)
                 )
+                .frame(maxWidth: 720)
                 .offset(y: isViewLoaded ? 0 : 60) // 初次进入时滑入
                 .opacity(isViewLoaded ? 1 : 0)    // 初次进入时淡入
                 .animation(.spring(response: 0.5, dampingFraction: 0.7, blendDuration: 0.4), value: isViewLoaded)
                 .animation(.spring(response: 0.5, dampingFraction: 0.7, blendDuration: 0.4), value: bottomAnimationState)
             }
+            .frame(maxWidth: .infinity)
             .padding(.vertical, 6)
             .padding(.horizontal, 15)
         }

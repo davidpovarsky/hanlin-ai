@@ -27,13 +27,13 @@ struct ChatRowView: View {
     }
 
     var body: some View {
-        HStack {
+        HStack(spacing: 12) {
             Image(systemName: selectedIcon)
-                .resizable()
-                .frame(width: size_48, height: size_48)
+                .font(.system(size: 18))
                 .foregroundColor(selectedColor)
-                .background(Circle().fill(Color(.clear)))
-                .clipShape(Circle())
+                .frame(width: 36, height: 36)
+                .background(selectedColor.opacity(0.12))
+                .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
 
             VStack(alignment: .leading) {
                 HStack {
