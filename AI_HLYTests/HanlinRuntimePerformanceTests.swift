@@ -99,7 +99,7 @@ final class HanlinRuntimePerformanceTests: XCTestCase {
 
     // MARK: - Flow 5: Execute Tiny Deterministic Script in JavaScriptCore
 
-    func testFlow5_JavaScriptCoreDeterministicExecutionPerformance() throws {
+    func testFlow5_JavaScriptCoreDeterministicExecutionPerformance() async throws {
         var recordedSamples: [Double] = []
         let session = try HanlinJavaScriptCoreSession(configuration: .scriptingCompatibility)
         defer { Task { await session.dispose() } }
@@ -116,7 +116,7 @@ final class HanlinRuntimePerformanceTests: XCTestCase {
             };
         });
         """
-        try session.loadProgram(program, filename: "jsc_perf.js", expectedToolCount: 1)
+        try await session.loadProgram(program, filename: "jsc_perf.js", expectedToolCount: 1)
 
         measure(
             metrics: [XCTClockMetric(), XCTCPUMetric(limitingToCurrentThread: false)],
@@ -193,7 +193,7 @@ final class HanlinRuntimePerformanceTests: XCTestCase {
 
     // MARK: - Flow 7: Execute Tiny Deterministic Operation in QuickJS
 
-    func testFlow7_QuickJSDeterministicExecutionPerformance() throws {
+    func testFlow7_QuickJSDeterministicExecutionPerformance() async throws {
         var recordedSamples: [Double] = []
         let session = try HanlinQuickJSSession(configuration: .phase2A)
         defer { Task { await session.dispose() } }
@@ -210,7 +210,7 @@ final class HanlinRuntimePerformanceTests: XCTestCase {
             };
         });
         """
-        try session.loadProgram(program, filename: "quickjs_perf.js", expectedToolCount: 1)
+        try await session.loadProgram(program, filename: "quickjs_perf.js", expectedToolCount: 1)
 
         measure(
             metrics: [XCTClockMetric(), XCTCPUMetric(limitingToCurrentThread: false)],
@@ -251,7 +251,7 @@ final class HanlinRuntimePerformanceTests: XCTestCase {
 
     // MARK: - Flow 8: Runtime Engine Switch Cost (JSC <-> QuickJS)
 
-    func testFlow8_MultiEngineRuntimeSwitchPerformance() throws {
+    func testFlow8_MultiEngineRuntimeSwitchPerformance() async throws {
         var recordedSamples: [Double] = []
         let jsc = try HanlinJavaScriptCoreSession(configuration: .scriptingCompatibility)
         let qjs = try HanlinQuickJSSession(configuration: .phase2A)
@@ -268,8 +268,8 @@ final class HanlinRuntimePerformanceTests: XCTestCase {
             message: "switched"
         }));
         """
-        try jsc.loadProgram(program, filename: "jsc_switch.js", expectedToolCount: 1)
-        try qjs.loadProgram(program, filename: "qjs_switch.js", expectedToolCount: 1)
+        try await jsc.loadProgram(program, filename: "jsc_switch.js", expectedToolCount: 1)
+        try await qjs.loadProgram(program, filename: "qjs_switch.js", expectedToolCount: 1)
 
         measure(
             metrics: [XCTClockMetric(), XCTCPUMetric(limitingToCurrentThread: false)],
@@ -393,7 +393,7 @@ final class HanlinRuntimePerformanceTests: XCTestCase {
 
         for _ in 0..<cycleCount {
             let jsc = try HanlinJavaScriptCoreSession(configuration: .scriptingCompatibility)
-            try jsc.loadProgram(
+            try await jsc.loadProgram(
                 "AssistantTool.registerExecuteTool(() => ({ success: true, message: 'ok' }));",
                 filename: "mem.js",
                 expectedToolCount: 1
@@ -402,7 +402,7 @@ final class HanlinRuntimePerformanceTests: XCTestCase {
             await jsc.dispose()
 
             let qjs = try HanlinQuickJSSession(configuration: .phase2A)
-            try qjs.loadProgram(
+            try await qjs.loadProgram(
                 "AssistantTool.registerExecuteTool(() => ({ success: true, message: 'ok' }));",
                 filename: "mem_q.js",
                 expectedToolCount: 1
