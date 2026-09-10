@@ -1,7 +1,12 @@
+import HanlinPlatformContracts
 import SwiftUI
 
 @MainActor
 struct NativeAppWikipediaAppModule: NativeAppModule {
+    var canonicalRegistration: (any HanlinStaticMiniAppRegistration)? {
+        WikipediaCanonicalRegistration()
+    }
+
     let manifest = NativeAppManifest(
         id: NativeAppWikipediaIndex.id,
         title: "Wikipedia",

@@ -1,7 +1,12 @@
+import HanlinPlatformContracts
 import SwiftUI
 
 @MainActor
 struct NativeAppTextStudioAppModule: NativeAppModule {
+    var canonicalRegistration: (any HanlinStaticMiniAppRegistration)? {
+        TextStudioCanonicalRegistration()
+    }
+
     let manifest = NativeAppManifest(
         id: NativeAppTextStudioIndex.id,
         title: "Text Studio",

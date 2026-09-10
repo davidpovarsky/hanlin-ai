@@ -1,7 +1,12 @@
+import HanlinPlatformContracts
 import SwiftUI
 
 @MainActor
 struct NativeAppSefariaAppModule: NativeAppModule {
+    var canonicalRegistration: (any HanlinStaticMiniAppRegistration)? {
+        SefariaCanonicalRegistration()
+    }
+
     let manifest = NativeAppManifest(
         id: NativeAppSefariaIndex.id,
         title: "Sefaria",

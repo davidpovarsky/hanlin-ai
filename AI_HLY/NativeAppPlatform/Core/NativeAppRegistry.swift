@@ -1,4 +1,5 @@
 import Foundation
+import HanlinPlatformContracts
 
 @MainActor
 final class NativeAppRegistry {
@@ -60,5 +61,10 @@ final class NativeAppRegistry {
     func allCapabilities(context: NativeAppContext) -> [NativeCapabilityRequest] {
         ensureBuiltinsRegistered()
         return allModules().flatMap { $0.capabilities(context: context) }
+    }
+
+    func allCanonicalRegistrations() -> [any HanlinStaticMiniAppRegistration] {
+        ensureBuiltinsRegistered()
+        return allModules().compactMap { $0.canonicalRegistration }
     }
 }

@@ -1,9 +1,13 @@
 import Foundation
+import HanlinPlatformContracts
 import SwiftUI
 
 @MainActor
 protocol NativeAppModule {
     var manifest: NativeAppManifest { get }
+
+    /// Optional canonical registration providing package-safe descriptor and identity.
+    var canonicalRegistration: (any HanlinStaticMiniAppRegistration)? { get }
 
     /// Full, user-facing app screen shown directly from the Apps grid.
     func makeRootView(context: NativeAppContext) -> AnyView
@@ -30,6 +34,7 @@ extension NativeAppModule {
     func assistantTools(context: NativeAppContext) -> [NativeTool] { [] }
     func chatCards(context: NativeAppContext) -> [NativeChatCardProvider] { [] }
     func capabilities(context: NativeAppContext) -> [NativeCapabilityRequest] { [] }
+    var canonicalRegistration: (any HanlinStaticMiniAppRegistration)? { nil }
 }
 
 @MainActor

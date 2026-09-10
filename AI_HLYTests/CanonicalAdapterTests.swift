@@ -45,6 +45,59 @@ struct CanonicalAdapterTests {
     }
 
     @MainActor
+    @Test("ChatCard entry point projects to canonical embeddedResult")
+    func chatCardProjectsToEmbeddedResult() throws {
+        var manifest = TestFixtures.nativeManifest(id: "test.chatcard.app")
+        manifest = NativeAppManifest(
+            id: "test.chatcard.app",
+            title: "Chat Card Test",
+            subtitle: "Embedded presentation fixture",
+            description: "Tests chatCard projection to embeddedResult.",
+            systemImage: "bubble.left.and.bubble.right",
+            category: .knowledge,
+            entryPoints: [.fullApp, .assistantTool, .chatCard],
+            keywords: ["test"],
+            appearance: .init(startHex: "112233", endHex: "445566")
+        )
+        let projection = try NativeAppCanonicalShadowAdapter.project(
+            manifest: manifest,
+            capabilities: [],
+            hostVersion: try HanlinPackageVersion(validating: "1.0.0"),
+            descriptorRevision: try HanlinDescriptorRevision(1)
+        )
+        let entryPointKinds = projection.descriptor.entryPoints.map(\.kind)
+        #expect(entryPointKinds.contains(.embeddedResult))
+        #expect(entryPointKinds.contains(.app))
+        #expect(entryPointKinds.contains(.assistantTool))
+        let chatCardFindings = projection.findings.filter {
+            $0.path.contains("chatCard")
+        }
+        #expect(chatCardFindings.isEmpty)
+    }
+
+    @MainActor
+    @Test("Built-in canonical registrations validate cleanly and discover")
+    func builtinCanonicalRegistrations() async throws {
+        #expect(BuiltinCanonicalRegistrations.all.count == 3)
+
+        for registration in BuiltinCanonicalRegistrations.all {
+            let descriptor = try registration.appDescriptor()
+            try descriptor.validate()
+            #expect(descriptor.id.rawValue.hasPrefix("nativeapp."))
+            #expect(descriptor.entryPoints.contains { $0.kind == .embeddedResult })
+            #expect(descriptor.entryPoints.contains { $0.kind == .app })
+            #expect(descriptor.entryPoints.contains { $0.kind == .assistantTool })
+        }
+
+        let discovery = BuiltinMiniAppDiscovery()
+        let registrations = try await discovery.registrations()
+        #expect(registrations.count == 3)
+
+        let snapshot = try await discovery.catalogSnapshot(revision: .init(1))
+        #expect(snapshot.apps.count == 3)
+    }
+
+    @MainActor
     @Test("Native tool projection preserves qualified identity and rejects schema mismatch")
     func nativeToolProjection() throws {
         let tool = QuickCalculateTool()
