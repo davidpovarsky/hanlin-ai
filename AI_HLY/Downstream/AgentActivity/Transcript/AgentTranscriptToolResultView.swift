@@ -1,3 +1,4 @@
+import HanlinPlatformContracts
 import SwiftUI
 
 struct AgentTranscriptToolResultView: View {
@@ -9,8 +10,14 @@ struct AgentTranscriptToolResultView: View {
         if !item.nativeUIBlocks.isEmpty {
             switch item.resultRendererKind {
             case .modernNative:
-                let sizing = ChatPresentationBridge.sizingPreference(for: item.nativeUIBlocks)
-                let expansion = ChatPresentationBridge.expansionDescriptor(for: item.nativeUIBlocks)
+                let sizing = ChatPresentationBridge.sizingPreference(
+                    for: item.nativeUIBlocks,
+                    toolName: item.toolName
+                )
+                let expansion = ChatPresentationBridge.expansionDescriptor(
+                    for: item.nativeUIBlocks,
+                    toolName: item.toolName
+                )
                 let title = item.nativeUIBlocks.compactMap(\.title).first ?? item.toolName
 
                 ChatEmbeddedResultHost(

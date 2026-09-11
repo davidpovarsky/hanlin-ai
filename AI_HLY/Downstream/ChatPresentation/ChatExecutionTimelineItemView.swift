@@ -7,10 +7,11 @@
 //  under a shared visual grammar.
 //
 
+import HanlinPlatformContracts
 import SwiftUI
 
 struct ChatExecutionTimelineItemView: View {
-  let familyID: ChatHostExecutionFamilyID
+  let familyID: HanlinExecutionPresentationFamilyID
   let title: String
   let subtitle: String?
   let status: AgentActivityStatus
@@ -22,6 +23,45 @@ struct ChatExecutionTimelineItemView: View {
 
   @State private var isInlineExpanded = false
   @Environment(\.accessibilityReduceMotion) private var reduceMotion
+
+  init(
+    familyID: HanlinExecutionPresentationFamilyID,
+    title: String,
+    subtitle: String? = nil,
+    status: AgentActivityStatus,
+    queries: [String] = [],
+    inputPreview: String? = nil,
+    outputPreview: String? = nil,
+    errorDescription: String? = nil,
+    onOpenDetails: (() -> Void)? = nil
+  ) {
+    self.familyID = familyID
+    self.title = title
+    self.subtitle = subtitle
+    self.status = status
+    self.queries = queries
+    self.inputPreview = inputPreview
+    self.outputPreview = outputPreview
+    self.errorDescription = errorDescription
+    self.onOpenDetails = onOpenDetails
+  }
+
+  init(
+    state: ChatExecutionViewState,
+    onOpenDetails: (() -> Void)? = nil
+  ) {
+    self.init(
+      familyID: state.familyID,
+      title: state.title,
+      subtitle: state.subtitle,
+      status: state.status,
+      queries: state.queries,
+      inputPreview: state.inputPreview,
+      outputPreview: state.outputPreview,
+      errorDescription: state.errorDescription,
+      onOpenDetails: onOpenDetails
+    )
+  }
 
   var body: some View {
     VStack(alignment: .leading, spacing: 4) {
@@ -132,9 +172,9 @@ struct ChatExecutionTimelineItemView: View {
       return "globe"
     case .sourceSearch:
       return "doc.text.magnifyingglass"
-    case .mapLocation:
+    case .map:
       return "map"
-    case .commandExecution:
+    case .command:
       return "terminal"
     case .fileOperation:
       return "folder"
@@ -156,10 +196,10 @@ struct ChatExecutionTimelineItemView: View {
     case .sourceSearch:
       return status == .running
         ? String(localized: "Searching sources…") : String(localized: "Source search")
-    case .mapLocation:
+    case .map:
       return status == .running
         ? String(localized: "Finding location…") : String(localized: "Location found")
-    case .commandExecution:
+    case .command:
       return status == .running
         ? String(localized: "Running command…") : String(localized: "Command completed")
     case .fileOperation:

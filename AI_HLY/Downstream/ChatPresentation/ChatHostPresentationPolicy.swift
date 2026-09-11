@@ -7,6 +7,7 @@
 //  iPhone / iPad adaptations.
 //
 
+import HanlinPlatformContracts
 import SwiftUI
 
 @MainActor
@@ -53,16 +54,14 @@ enum ChatHostPresentationPolicy {
   }
 
   /// Preset heights for embedded results.
-  static func height(for preset: ChatHostSizePreset, isRegularWidth: Bool) -> CGFloat {
+  static func height(for preset: HanlinEmbeddedSizePreset, isRegularWidth: Bool) -> CGFloat {
     switch preset {
     case .compact:
       return isRegularWidth ? 160 : 140
-    case .standard:
+    case .regular, .automatic:
       return isRegularWidth ? 260 : 220
-    case .tall:
+    case .large:
       return isRegularWidth ? 400 : 320
-    case .expanded:
-      return maxEmbeddedResultHeight(isRegularWidth: isRegularWidth)
     }
   }
 
@@ -80,7 +79,7 @@ enum ChatHostPresentationPolicy {
   }
 
   /// Validates if an expansion mode is legitimately available in the current environment.
-  static func isExpansionModeAvailable(_ mode: ChatHostExpansionMode) -> Bool {
+  static func isExpansionModeAvailable(_ mode: HanlinExpansionMode) -> Bool {
     switch mode {
     case .sheet, .fullScreen:
       return true

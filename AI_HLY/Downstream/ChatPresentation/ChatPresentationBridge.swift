@@ -2,44 +2,14 @@
 //  ChatPresentationBridge.swift
 //  AI_HLY
 //
-//  ISOLATED TEMPORARY PRESENTATION BRIDGE
-//  Branch: feature/chat-agent-presentation
-//
-//  This file isolates interim host presentation request structures corresponding
-//  to the presentation contracts being designed on feature/universal-miniapps.
-//  DO NOT re-export or leak these temporary names across the broader codebase.
-//  When the architecture branch lands with canonical HanlinPlatformContracts,
-//  this single bridge file will be updated/replaced during rebase.
+//  Adapter bridging canonical HanlinPlatformContracts presentation metadata
+//  to host-specific Chat presentation and legacy NativeUIBlock structures.
 //
 
+import HanlinPlatformContracts
 import SwiftUI
 
-// MARK: - Embedded Result Sizing & Presets
-
-enum ChatHostSizePreset: String, Codable, Hashable, Sendable {
-  case compact
-  case standard
-  case tall
-  case expanded
-}
-
-struct ChatHostSizingPreference: Hashable, Sendable {
-  var preset: ChatHostSizePreset
-  var requestedHeight: CGFloat?
-
-  init(preset: ChatHostSizePreset = .standard, requestedHeight: CGFloat? = nil) {
-    self.preset = preset
-    self.requestedHeight = requestedHeight
-  }
-}
-
-// MARK: - Expansion Modes
-
-enum ChatHostExpansionMode: String, Codable, Hashable, Sendable {
-  case sheet
-  case fullScreen
-  case window
-}
+// MARK: - Host Container Style
 
 enum ChatHostContainerStyle: String, Codable, Hashable, Sendable {
   /// The hosted content already owns its visual card styling (e.g. ModernCards).
@@ -49,97 +19,110 @@ enum ChatHostContainerStyle: String, Codable, Hashable, Sendable {
   case borderedCard
 }
 
-struct ChatHostExpansionDescriptor: Hashable, Sendable {
-  var mode: ChatHostExpansionMode
+// MARK: - Host-Specific Resolved View Models
+
+/// Host-specific resolved expansion state combining canonical expansion mode
+/// with host presentation concerns (title, native launch routing).
+struct ChatResolvedExpansion: Hashable, Sendable {
+  var mode: HanlinExpansionMode
   var title: String?
   var launchRequest: NativeAppLaunchRequest?
+  var expandedHandler: String?
 
   init(
-    mode: ChatHostExpansionMode = .sheet,
+    mode: HanlinExpansionMode,
     title: String? = nil,
-    launchRequest: NativeAppLaunchRequest? = nil
+    launchRequest: NativeAppLaunchRequest? = nil,
+    expandedHandler: String? = nil
   ) {
     self.mode = mode
     self.title = title
     self.launchRequest = launchRequest
+    self.expandedHandler = expandedHandler
   }
 }
 
-// MARK: - Embedded Result Presentation Descriptor
-
-struct ChatHostEmbeddedPresentationDescriptor: Hashable, Sendable {
-  var sizing: ChatHostSizingPreference
-  var expansion: ChatHostExpansionDescriptor?
-
-  init(
-    sizing: ChatHostSizingPreference = ChatHostSizingPreference(),
-    expansion: ChatHostExpansionDescriptor? = nil
-  ) {
-    self.sizing = sizing
-    self.expansion = expansion
-  }
-}
-
-// MARK: - Tool Execution Presentation Families
-
-struct ChatHostExecutionFamilyID: RawRepresentable, Hashable, Sendable {
-  let rawValue: String
-
-  init(rawValue: String) {
-    self.rawValue = rawValue
-  }
-
-  static let generic = ChatHostExecutionFamilyID(rawValue: "hanlin.execution.generic")
-  static let webSearch = ChatHostExecutionFamilyID(rawValue: "hanlin.execution.webSearch")
-  static let sourceSearch = ChatHostExecutionFamilyID(
-    rawValue: "hanlin.execution.sourceSearch")
-  static let mapLocation = ChatHostExecutionFamilyID(
-    rawValue: "hanlin.execution.mapLocation")
-  static let commandExecution = ChatHostExecutionFamilyID(
-    rawValue: "hanlin.execution.commandExecution")
-  static let fileOperation = ChatHostExecutionFamilyID(
-    rawValue: "hanlin.execution.fileOperation")
-  static let codeExecution = ChatHostExecutionFamilyID(
-    rawValue: "hanlin.execution.codeExecution")
-  static let imageGeneration = ChatHostExecutionFamilyID(
-    rawValue: "hanlin.execution.imageGeneration")
-}
-
-struct ChatHostExecutionPresentationDescriptor: Hashable, Sendable {
-  var familyID: ChatHostExecutionFamilyID
+/// Host-specific view model representing an execution timeline row's display state.
+struct ChatExecutionViewState: Hashable, Sendable {
+  var familyID: HanlinExecutionPresentationFamilyID
   var title: String
-  var detail: String?
+  var subtitle: String?
   var status: AgentActivityStatus
   var progress: Double?  // Nil if indeterminate
+  var queries: [String]
+  var inputPreview: String?
+  var outputPreview: String?
+  var errorDescription: String?
 
   init(
-    familyID: ChatHostExecutionFamilyID = .generic,
+    familyID: HanlinExecutionPresentationFamilyID = .generic,
     title: String,
-    detail: String? = nil,
+    subtitle: String? = nil,
     status: AgentActivityStatus = .running,
-    progress: Double? = nil
+    progress: Double? = nil,
+    queries: [String] = [],
+    inputPreview: String? = nil,
+    outputPreview: String? = nil,
+    errorDescription: String? = nil
   ) {
     self.familyID = familyID
     self.title = title
-    self.detail = detail
+    self.subtitle = subtitle
     self.status = status
     self.progress = progress
+    self.queries = queries
+    self.inputPreview = inputPreview
+    self.outputPreview = outputPreview
+    self.errorDescription = errorDescription
   }
 }
 
-// MARK: - Bridge Helpers & Adapters
+// MARK: - Presentation Bridge / Adapter
 
 enum ChatPresentationBridge {
-  /// Maps existing tool activity and toolName metadata to a standardized execution family.
+
+  // MARK: - Canonical Tool Lookup
+
+  /// Look up canonical tool descriptor by tool name across registered built-in canonical Mini Apps.
+  static func findCanonicalTool(named toolName: String) -> HanlinToolDescriptor? {
+    for registration in BuiltinCanonicalRegistrations.all {
+      if let tool = registration.descriptor.tools.first(where: {
+        $0.logicalID.localToolID.rawValue == toolName
+      }) {
+        return tool
+      }
+    }
+    return nil
+  }
+
+  // MARK: - Execution Presentation
+
+  /// Maps tool activity and toolName metadata to a canonical HanlinExecutionPresentationFamilyID.
+  /// Precedence:
+  /// 1. Declared HanlinToolExecutionPresentationDescriptor from canonical tool
+  /// 2. Heuristic mapping from toolName
+  /// 3. Heuristic mapping from activityKind
+  /// 4. Generic default
   static func executionFamily(
     for activityKind: AgentDisplayActivityKind?,
     toolName: String? = nil
-  ) -> ChatHostExecutionFamilyID {
+  ) -> HanlinExecutionPresentationFamilyID {
+    // 1. If executing canonical tool has declared HanlinToolExecutionPresentationDescriptor, use declared familyID
+    if let toolName, !toolName.isEmpty {
+      if let canonicalTool = findCanonicalTool(named: toolName),
+        let execDesc = canonicalTool.presentation.executionPresentation,
+        let familyID = execDesc.familyID
+      {
+        return familyID
+      }
+    }
+
+    // 2. Fallback to existing reliable toolName heuristics
     if let toolName = toolName?.lowercased(), !toolName.isEmpty {
       if toolName == "write_system_event" || toolName == "run_command"
         || toolName.contains("command") || toolName.contains("terminal")
       {
-        return .commandExecution
+        return .command
       }
       if toolName == "extract_remote_file_content" || toolName == "fileutility"
         || toolName == "create_knowledge_document" || toolName.contains("file")
@@ -160,7 +143,7 @@ enum ChatPresentationBridge {
         || toolName == "search_nearby_locations" || toolName == "get_route"
         || toolName.contains("map") || toolName.contains("location")
       {
-        return .mapLocation
+        return .map
       }
       if toolName == "search_knowledge_bag" || toolName == "retrieve_memory"
         || toolName == "save_memory" || toolName == "update_memory"
@@ -174,6 +157,7 @@ enum ChatPresentationBridge {
       }
     }
 
+    // 3. Fallback to activityKind
     if let activityKind {
       switch activityKind {
       case .search:
@@ -183,7 +167,7 @@ enum ChatPresentationBridge {
       case .code:
         return .codeExecution
       case .map:
-        return .mapLocation
+        return .map
       case .reasoning, .narrative, .tool, .result, .health, .calendar, .error:
         return .generic
       }
@@ -191,6 +175,40 @@ enum ChatPresentationBridge {
 
     return .generic
   }
+
+  // MARK: - Expansion Resolution
+
+  /// Resolves canonical expansion descriptor according to host policy:
+  /// 1. No descriptor or empty supported modes -> nil (no affordance).
+  /// 2. Iterates declared supportedModes in preference order.
+  /// 3. Selects first mode the host/device can legitimately honor.
+  /// 4. Host policy decides availability.
+  /// 5. Does NOT silently turn unsupported .window into .sheet.
+  /// 6. Preserves NativeAppLaunchRequest for window routes.
+  static func resolveExpansion(
+    descriptor: HanlinExpansionDescriptor?,
+    title: String? = nil,
+    launchRequest: NativeAppLaunchRequest? = nil
+  ) -> ChatResolvedExpansion? {
+    guard let descriptor = descriptor, !descriptor.supportedModes.isEmpty else {
+      return nil
+    }
+
+    for mode in descriptor.supportedModes {
+      if ChatHostPresentationPolicy.isExpansionModeAvailable(mode) {
+        return ChatResolvedExpansion(
+          mode: mode,
+          title: title,
+          launchRequest: launchRequest,
+          expandedHandler: descriptor.expandedHandler
+        )
+      }
+    }
+
+    return nil
+  }
+
+  // MARK: - Legacy NativeUIBlock Adapters
 
   private static func hasExpandableContent(_ block: NativeUIBlock) -> Bool {
     let itemLimit = block.compactItemLimit ?? 4
@@ -202,33 +220,34 @@ enum ChatPresentationBridge {
       || block.type == .searchResults && !block.items.isEmpty
   }
 
-  /// Adapts existing NativeUIBlock expansion preferences to ChatHostExpansionDescriptor.
-  static func expansionDescriptor(for blocks: [NativeUIBlock]) -> ChatHostExpansionDescriptor? {
+  /// Adapts NativeUIBlock and canonical tool expansion preferences to ChatResolvedExpansion.
+  static func expansionDescriptor(
+    for blocks: [NativeUIBlock],
+    toolName: String? = nil
+  ) -> ChatResolvedExpansion? {
+    // 1. Check if canonical tool provides embeddedPresentation with expansion
+    let canonicalExpansion: HanlinExpansionDescriptor? = {
+      if let toolName, let tool = findCanonicalTool(named: toolName),
+        let embedded = tool.presentation.embeddedPresentation
+      {
+        return embedded.expansion
+      }
+      return nil
+    }()
+
     guard
       let block = blocks.first(where: { ($0.allowsExpansion ?? true) && hasExpandableContent($0) })
     else {
-      return nil
-    }
-    let mode: ChatHostExpansionMode = {
-      if block.actions.contains(where: { $0.presentationStyle == .newWindow }) {
-        return .window
+      if let canonicalExpansion {
+        return resolveExpansion(descriptor: canonicalExpansion, title: toolName)
       }
-      switch block.preferredExpandedPresentation {
-      case .fullScreen: return .fullScreen
-      case .sheet, .none: return .sheet
-      }
-    }()
-
-    guard ChatHostPresentationPolicy.isExpansionModeAvailable(mode) else {
       return nil
     }
 
     var launchRequest: NativeAppLaunchRequest? = nil
     for action in block.actions {
       if let route = action.route {
-        let style: NativeAppPresentationStyle =
-          action.presentationStyle
-          ?? (mode == .window ? .newWindow : (mode == .fullScreen ? .fullScreen : .largeSheet))
+        let style: NativeAppPresentationStyle = action.presentationStyle ?? .largeSheet
         launchRequest = NativeAppLaunchRequest(
           appID: route.appID,
           presentationStyle: style,
@@ -238,17 +257,45 @@ enum ChatPresentationBridge {
       }
     }
 
-    return ChatHostExpansionDescriptor(mode: mode, title: block.title, launchRequest: launchRequest)
+    let descriptor =
+      canonicalExpansion
+      ?? {
+        let preferredModes: [HanlinExpansionMode] = {
+          if block.actions.contains(where: { $0.presentationStyle == .newWindow }) {
+            return [.window]
+          }
+          switch block.preferredExpandedPresentation {
+          case .fullScreen: return [.fullScreen]
+          case .sheet, .none: return [.sheet]
+          }
+        }()
+        return HanlinExpansionDescriptor(supportedModes: preferredModes)
+      }()
+
+    return resolveExpansion(
+      descriptor: descriptor,
+      title: block.title ?? toolName,
+      launchRequest: launchRequest
+    )
   }
 
-  /// Adapts existing NativeUIBlock compact preferences to ChatHostSizingPreference.
-  static func sizingPreference(for blocks: [NativeUIBlock]) -> ChatHostSizingPreference {
+  /// Adapts NativeUIBlock and canonical tool sizing preferences to HanlinEmbeddedSizingPreference.
+  static func sizingPreference(
+    for blocks: [NativeUIBlock],
+    toolName: String? = nil
+  ) -> HanlinEmbeddedSizingPreference {
+    if let toolName, let tool = findCanonicalTool(named: toolName),
+      let embedded = tool.presentation.embeddedPresentation
+    {
+      return embedded.sizing
+    }
+
     if blocks.contains(where: { $0.type == .searchResults }) {
-      return ChatHostSizingPreference(preset: .standard)
+      return HanlinEmbeddedSizingPreference(preset: .regular)
     }
     if blocks.contains(where: { $0.type == .error || $0.type == .calculation }) {
-      return ChatHostSizingPreference(preset: .compact)
+      return HanlinEmbeddedSizingPreference(preset: .compact)
     }
-    return ChatHostSizingPreference(preset: .standard)
+    return HanlinEmbeddedSizingPreference(preset: .regular)
   }
 }

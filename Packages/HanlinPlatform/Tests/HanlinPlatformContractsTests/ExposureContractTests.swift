@@ -105,7 +105,7 @@ struct ExposureContractTests {
 
     private struct MockMiniAppRegistration: HanlinMiniAppRegistration {
         let appID: HanlinAppID
-        let descriptorProvider: () throws -> HanlinAppDescriptor
+        let descriptorProvider: @Sendable () throws -> HanlinAppDescriptor
 
         func appDescriptor() throws -> HanlinAppDescriptor {
             try descriptorProvider()

@@ -7,12 +7,13 @@
 //  container styling, and optional expansion affordances.
 //
 
+import HanlinPlatformContracts
 import SwiftUI
 
 struct ChatEmbeddedResultHost<Content: View, ExpandedContent: View>: View {
   let title: String?
-  let sizingPreference: ChatHostSizingPreference
-  let expansionDescriptor: ChatHostExpansionDescriptor?
+  let sizingPreference: HanlinEmbeddedSizingPreference
+  let expansionDescriptor: ChatResolvedExpansion?
   let containerStyle: ChatHostContainerStyle
   let onLaunchRequest: ((NativeAppLaunchRequest) -> Void)?
   @ViewBuilder let content: () -> Content
@@ -25,8 +26,8 @@ struct ChatEmbeddedResultHost<Content: View, ExpandedContent: View>: View {
 
   init(
     title: String? = nil,
-    sizingPreference: ChatHostSizingPreference = ChatHostSizingPreference(),
-    expansionDescriptor: ChatHostExpansionDescriptor? = nil,
+    sizingPreference: HanlinEmbeddedSizingPreference = HanlinEmbeddedSizingPreference(),
+    expansionDescriptor: ChatResolvedExpansion? = nil,
     containerStyle: ChatHostContainerStyle = .borderedCard,
     onLaunchRequest: ((NativeAppLaunchRequest) -> Void)? = nil,
     @ViewBuilder content: @escaping () -> Content,
@@ -48,12 +49,20 @@ struct ChatEmbeddedResultHost<Content: View, ExpandedContent: View>: View {
   private var clampedHeight: CGFloat {
     let maxAllowed = ChatHostPresentationPolicy.maxEmbeddedResultHeight(
       isRegularWidth: isRegularWidth)
-    if let requested = sizingPreference.requestedHeight {
-      return min(requested, maxAllowed)
+    if let requested = sizingPreference.preferredHeight, requested > 0, !requested.isNaN {
+      return min(CGFloat(requested), maxAllowed)
     }
     let presetHeight = ChatHostPresentationPolicy.height(
       for: sizingPreference.preset, isRegularWidth: isRegularWidth)
     return min(presetHeight, maxAllowed)
+  }
+
+  private var clampedMaxWidth: CGFloat {
+    let hostMax = ChatHostPresentationPolicy.maxEmbeddedResultWidth(isRegularWidth: isRegularWidth)
+    if let requested = sizingPreference.preferredWidth, requested > 0, !requested.isNaN {
+      return min(CGFloat(requested), hostMax)
+    }
+    return hostMax
   }
 
   var body: some View {
@@ -66,7 +75,7 @@ struct ChatEmbeddedResultHost<Content: View, ExpandedContent: View>: View {
       }
     }
     .frame(
-      maxWidth: ChatHostPresentationPolicy.maxEmbeddedResultWidth(isRegularWidth: isRegularWidth),
+      maxWidth: clampedMaxWidth,
       alignment: .leading
     )
     .sheet(isPresented: $isSheetPresented) {
@@ -112,9 +121,7 @@ struct ChatEmbeddedResultHost<Content: View, ExpandedContent: View>: View {
   @ViewBuilder
   private var neutralHostedContent: some View {
     VStack(alignment: .leading, spacing: 4) {
-      if let expansion = expansionDescriptor,
-        ChatHostPresentationPolicy.isExpansionModeAvailable(expansion.mode)
-      {
+      if let expansion = expansionDescriptor {
         HStack {
           Spacer()
           expansionButton(expansion)
@@ -138,10 +145,7 @@ struct ChatEmbeddedResultHost<Content: View, ExpandedContent: View>: View {
   @ViewBuilder
   private var borderedCardHostedContent: some View {
     VStack(alignment: .leading, spacing: 6) {
-      if title != nil
-        || (expansionDescriptor != nil
-          && ChatHostPresentationPolicy.isExpansionModeAvailable(expansionDescriptor!.mode))
-      {
+      if title != nil || expansionDescriptor != nil {
         HStack(alignment: .center) {
           if let title, !title.isEmpty {
             Text(title)
@@ -152,9 +156,7 @@ struct ChatEmbeddedResultHost<Content: View, ExpandedContent: View>: View {
 
           Spacer(minLength: 8)
 
-          if let expansion = expansionDescriptor,
-            ChatHostPresentationPolicy.isExpansionModeAvailable(expansion.mode)
-          {
+          if let expansion = expansionDescriptor {
             expansionButton(expansion)
           }
         }
@@ -171,6 +173,10 @@ struct ChatEmbeddedResultHost<Content: View, ExpandedContent: View>: View {
       .padding(.horizontal, 10)
       .padding(.bottom, 10)
     }
+    .frame(
+      maxHeight: ChatHostPresentationPolicy.maxEmbeddedResultHeight(isRegularWidth: isRegularWidth),
+      alignment: .topLeading
+    )
     .background(
       RoundedRectangle(
         cornerRadius: ChatHostPresentationPolicy.resultContainerCornerRadius, style: .continuous
@@ -185,7 +191,7 @@ struct ChatEmbeddedResultHost<Content: View, ExpandedContent: View>: View {
     )
   }
 
-  private func expansionButton(_ expansion: ChatHostExpansionDescriptor) -> some View {
+  private func expansionButton(_ expansion: ChatResolvedExpansion) -> some View {
     Button {
       handleExpansion(expansion)
     } label: {
@@ -200,7 +206,7 @@ struct ChatEmbeddedResultHost<Content: View, ExpandedContent: View>: View {
     .accessibilityLabel(String(localized: "Expand result"))
   }
 
-  private func handleExpansion(_ expansion: ChatHostExpansionDescriptor) {
+  private func handleExpansion(_ expansion: ChatResolvedExpansion) {
     switch expansion.mode {
     case .sheet:
       isSheetPresented = true
@@ -229,8 +235,8 @@ struct ChatEmbeddedResultHost<Content: View, ExpandedContent: View>: View {
 extension ChatEmbeddedResultHost where ExpandedContent == Content {
   init(
     title: String? = nil,
-    sizingPreference: ChatHostSizingPreference = ChatHostSizingPreference(),
-    expansionDescriptor: ChatHostExpansionDescriptor? = nil,
+    sizingPreference: HanlinEmbeddedSizingPreference = HanlinEmbeddedSizingPreference(),
+    expansionDescriptor: ChatResolvedExpansion? = nil,
     containerStyle: ChatHostContainerStyle = .borderedCard,
     onLaunchRequest: ((NativeAppLaunchRequest) -> Void)? = nil,
     @ViewBuilder content: @escaping () -> Content

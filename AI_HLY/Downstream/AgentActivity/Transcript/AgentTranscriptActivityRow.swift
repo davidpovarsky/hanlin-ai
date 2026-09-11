@@ -1,3 +1,4 @@
+import HanlinPlatformContracts
 import SwiftUI
 
 struct AgentTranscriptActivityRow: View {
