@@ -79,6 +79,7 @@ struct ChatExecutionViewState: Hashable, Sendable {
 
 // MARK: - Presentation Bridge / Adapter
 
+@MainActor
 enum ChatPresentationBridge {
 
   // MARK: - Canonical Tool Lookup

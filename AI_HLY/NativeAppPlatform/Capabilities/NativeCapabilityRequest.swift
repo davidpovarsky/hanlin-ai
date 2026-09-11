@@ -1,4 +1,5 @@
 import Foundation
+import HanlinPlatformContracts
 
 enum NativeCapabilityID: String, Codable, Hashable, CaseIterable {
     case network

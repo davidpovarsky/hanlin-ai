@@ -47,6 +47,10 @@ public struct LocalizedValue: Codable, Hashable, Sendable {
         return values[fallbackLocale] ?? values.values.sorted().first ?? ""
     }
 
+    public func preferredValue(forLocale locale: String = "en") -> String {
+        resolved(locale: Locale(identifier: locale))
+    }
+
     private enum CodingKeys: String, CodingKey {
         case values
         case fallbackLocale

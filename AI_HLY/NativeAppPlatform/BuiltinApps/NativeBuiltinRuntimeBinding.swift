@@ -10,10 +10,10 @@ import HanlinPlatformContracts
 /// App-side runtime binding table resolving canonical Mini App declarations
 /// (logical tool IDs, presentation handler identifiers) to actual native runtime
 /// implementations (`NativeTool` and `NativeChatCardProvider`).
-public enum NativeBuiltinRuntimeBinding {
+enum NativeBuiltinRuntimeBinding {
     /// Resolves a canonical local tool ID string to its corresponding `NativeTool` instance.
     @MainActor
-    public static func resolveTool(
+    static func resolveTool(
         named toolName: String,
         context: NativeAppContext? = nil
     ) -> (any NativeTool)? {
@@ -49,7 +49,7 @@ public enum NativeBuiltinRuntimeBinding {
 
     /// Resolves a canonical `HanlinLogicalToolID` to its corresponding `NativeTool` instance.
     @MainActor
-    public static func resolveTool(
+    static func resolveTool(
         logicalID: HanlinLogicalToolID,
         context: NativeAppContext? = nil
     ) -> (any NativeTool)? {
@@ -57,7 +57,7 @@ public enum NativeBuiltinRuntimeBinding {
     }
 
     /// Resolves a presentation handler identifier string to its corresponding `NativeChatCardProvider`.
-    public static func resolveChatCard(
+    static func resolveChatCard(
         handler: String
     ) -> (any NativeChatCardProvider)? {
         switch handler {
