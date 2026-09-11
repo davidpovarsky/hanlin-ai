@@ -99,15 +99,22 @@ enum ChatPresentationBridge {
 
   /// Maps tool activity and toolName metadata to a canonical HanlinExecutionPresentationFamilyID.
   /// Precedence:
-  /// 1. Declared HanlinToolExecutionPresentationDescriptor from canonical tool
-  /// 2. Heuristic mapping from toolName
-  /// 3. Heuristic mapping from activityKind
-  /// 4. Generic default
+  /// 1. Explicit attached HanlinToolExecutionPresentationDescriptor from activity/transcript item
+  /// 2. Secondary compatibility fallback: Declared descriptor from built-in canonical registrations
+  /// 3. Heuristic mapping from toolName
+  /// 4. Heuristic mapping from activityKind
+  /// 5. Generic default
   static func executionFamily(
-    for activityKind: AgentDisplayActivityKind?,
+    explicit: HanlinToolExecutionPresentationDescriptor? = nil,
+    for activityKind: AgentDisplayActivityKind? = nil,
     toolName: String? = nil
   ) -> HanlinExecutionPresentationFamilyID {
-    // 1. If executing canonical tool has declared HanlinToolExecutionPresentationDescriptor, use declared familyID
+    // 1. Explicit attached descriptor from activity/transcript item
+    if let explicit, let familyID = explicit.familyID {
+      return familyID
+    }
+
+    // 2. Secondary compatibility fallback: Built-in canonical tool lookup
     if let toolName, !toolName.isEmpty {
       if let canonicalTool = findCanonicalTool(named: toolName),
         let execDesc = canonicalTool.presentation.executionPresentation,
@@ -221,19 +228,27 @@ enum ChatPresentationBridge {
   }
 
   /// Adapts NativeUIBlock and canonical tool expansion preferences to ChatResolvedExpansion.
+  /// Precedence:
+  /// 1. Explicit attached HanlinExpansionDescriptor from activity/transcript item
+  /// 2. Secondary compatibility fallback: Built-in canonical tool lookup
+  /// 3. Heuristic / NativeUIBlock actions fallback
   static func expansionDescriptor(
-    for blocks: [NativeUIBlock],
+    explicit: HanlinExpansionDescriptor? = nil,
+    for blocks: [NativeUIBlock] = [],
     toolName: String? = nil
   ) -> ChatResolvedExpansion? {
-    // 1. Check if canonical tool provides embeddedPresentation with expansion
-    let canonicalExpansion: HanlinExpansionDescriptor? = {
-      if let toolName, let tool = findCanonicalTool(named: toolName),
-        let embedded = tool.presentation.embeddedPresentation
-      {
-        return embedded.expansion
-      }
-      return nil
-    }()
+    // 1. Explicit attached canonical expansion descriptor
+    let canonicalExpansion: HanlinExpansionDescriptor? =
+      explicit
+      ?? {
+        // 2. Secondary compatibility fallback: Built-in canonical tool lookup
+        if let toolName, let tool = findCanonicalTool(named: toolName),
+          let embedded = tool.presentation.embeddedPresentation
+        {
+          return embedded.expansion
+        }
+        return nil
+      }()
 
     guard
       let block = blocks.first(where: { ($0.allowsExpansion ?? true) && hasExpandableContent($0) })
@@ -279,17 +294,37 @@ enum ChatPresentationBridge {
     )
   }
 
+  static func expansionDescriptor(
+    explicit: HanlinEmbeddedPresentationDescriptor?,
+    for blocks: [NativeUIBlock] = [],
+    toolName: String? = nil
+  ) -> ChatResolvedExpansion? {
+    expansionDescriptor(explicit: explicit?.expansion, for: blocks, toolName: toolName)
+  }
+
   /// Adapts NativeUIBlock and canonical tool sizing preferences to HanlinEmbeddedSizingPreference.
+  /// Precedence:
+  /// 1. Explicit attached HanlinEmbeddedSizingPreference from activity/transcript item
+  /// 2. Secondary compatibility fallback: Built-in canonical tool lookup
+  /// 3. Heuristic sizing based on NativeUIBlock content
   static func sizingPreference(
-    for blocks: [NativeUIBlock],
+    explicit: HanlinEmbeddedSizingPreference? = nil,
+    for blocks: [NativeUIBlock] = [],
     toolName: String? = nil
   ) -> HanlinEmbeddedSizingPreference {
+    // 1. Explicit attached preference
+    if let explicit {
+      return explicit
+    }
+
+    // 2. Secondary compatibility fallback: Built-in canonical tool lookup
     if let toolName, let tool = findCanonicalTool(named: toolName),
       let embedded = tool.presentation.embeddedPresentation
     {
       return embedded.sizing
     }
 
+    // 3. Fallback heuristics from blocks
     if blocks.contains(where: { $0.type == .searchResults }) {
       return HanlinEmbeddedSizingPreference(preset: .regular)
     }
@@ -297,5 +332,13 @@ enum ChatPresentationBridge {
       return HanlinEmbeddedSizingPreference(preset: .compact)
     }
     return HanlinEmbeddedSizingPreference(preset: .regular)
+  }
+
+  static func sizingPreference(
+    explicit: HanlinEmbeddedPresentationDescriptor?,
+    for blocks: [NativeUIBlock] = [],
+    toolName: String? = nil
+  ) -> HanlinEmbeddedSizingPreference {
+    sizingPreference(explicit: explicit?.sizing, for: blocks, toolName: toolName)
   }
 }
