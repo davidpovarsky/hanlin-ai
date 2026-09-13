@@ -72,19 +72,20 @@ struct ChatCanonicalPresentationSurvivalTests {
     let call = AgentToolCall.parse(
       id: "call_analytics_1",
       name: toolName,
-      argumentsJSON: #"{"metric":"active_users"}"#,
+      argumentsJSON: #"{"metric":"active_users","result_presentation":"card"}"#,
       presentationProfile: resolution.presentationProfile
     )
+    #expect(call.resultPresentationRequest == .card)
     #expect(call.canonicalExecutionPresentation?.familyID == customFamily)
     #expect(call.canonicalEmbeddedPresentation?.sizing.preset == .large)
 
     // 5. Trace through AgentEventAccumulator
-    var accumulator = AgentEventAccumulator()
+    var accumulator = AgentEventAccumulator(run: AgentRun(groupID: UUID()))
     let callStartedAt = Date()
     accumulator.apply(.toolCallStarted(call))
 
     let transcriptItem = try #require(
-      accumulator.transcript.items.first(where: { $0.callID == call.id }))
+      accumulator.run.transcriptItems.first(where: { $0.callID == call.id }))
     #expect(transcriptItem.toolName == toolName)
     #expect(transcriptItem.canonicalExecutionPresentation?.familyID == customFamily)
     #expect(transcriptItem.canonicalEmbeddedPresentation?.sizing.preset == .large)
@@ -107,7 +108,7 @@ struct ChatCanonicalPresentationSurvivalTests {
     // Tool execution completes with UI blocks
     let resultBlock = NativeUIBlock(
       id: "block_1",
-      type: .custom,
+      type: .card,
       title: "Analytics Result",
       body: "Active users: 4200"
     )
@@ -115,6 +116,7 @@ struct ChatCanonicalPresentationSurvivalTests {
       modelText: "Success",
       userText: "Analytics complete",
       richResultBlocks: [resultBlock],
+      evidenceItems: [],
       hasLegacyPresentationPayload: false,
       isError: false,
       duration: 0.5
@@ -123,7 +125,7 @@ struct ChatCanonicalPresentationSurvivalTests {
 
     // Check user visible result item in transcript
     let resultItem = try #require(
-      accumulator.transcript.items.first(where: { $0.kind == .userVisibleToolResult }))
+      accumulator.run.transcriptItems.first(where: { $0.kind == .userVisibleToolResult }))
     #expect(resultItem.toolName == toolName)
     #expect(resultItem.canonicalExecutionPresentation?.familyID == customFamily)
     #expect(resultItem.canonicalEmbeddedPresentation?.sizing.preset == .large)
@@ -199,7 +201,7 @@ struct ChatCanonicalPresentationSurvivalTests {
       expansion: HanlinExpansionDescriptor(supportedModes: [.sheet])
     )
     let presentation = HanlinToolPresentationDescriptor(
-      compactStyle: .code,
+      compactStyle: .text,
       supportsExpandedPresentation: true,
       executionPresentation: scriptExecution,
       embeddedPresentation: scriptEmbedded

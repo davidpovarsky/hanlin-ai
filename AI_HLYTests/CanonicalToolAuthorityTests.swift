@@ -306,7 +306,8 @@ struct CanonicalToolAuthorityTests {
                     toolName: "unknown"
                 ),
                 presentationProfile: .generic(toolName: "unknown"),
-                resultTitle: nil
+                resultTitle: nil,
+                toolPresentation: HanlinToolPresentationDescriptor()
             )
         )
         #expect(throws: HanlinCanonicalToolAuthorityError.self) {
@@ -330,7 +331,8 @@ struct CanonicalToolAuthorityTests {
             target: .init(
                 backend: .mcp(serverID: UUID(), toolName: "route_fixture"),
                 presentationProfile: .generic(toolName: "route_fixture"),
-                resultTitle: nil
+                resultTitle: nil,
+                toolPresentation: HanlinToolPresentationDescriptor()
             )
         )
         #expect(throws: HanlinCanonicalToolAuthorityError.self) {

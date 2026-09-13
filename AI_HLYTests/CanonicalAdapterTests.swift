@@ -289,9 +289,9 @@ struct CanonicalAdapterTests {
         let reason = try LocalizedValue(["en": "Domain specific network access"])
         let decl = HanlinCapabilityDeclaration(
             id: try HanlinCapabilityID(validating: "network.fetch"),
-            domain: "api.example.com",
             reason: reason,
-            isOptional: true
+            constraints: .object(["domain": .string("api.example.com")]),
+            optional: true
         )
 
         let result = NativeCapabilityRequest.project(declaration: decl)
@@ -300,7 +300,7 @@ struct CanonicalAdapterTests {
             #expect(request.capability == .network)
             #expect(request.domain == "api.example.com")
             #expect(request.reason == "Domain specific network access")
-            #expect(request.isOptional == true)
+            #expect(request.optional == true)
         case let .unsupported(diag):
             Issue.record("Expected supported capability with metadata, got diagnostic: \(diag)")
         }
@@ -308,14 +308,14 @@ struct CanonicalAdapterTests {
         let nonOptionalDecl = HanlinCapabilityDeclaration(
             id: try HanlinCapabilityID(validating: "contacts.read"),
             reason: try LocalizedValue(["en": "Read contacts"]),
-            isOptional: false
+            optional: false
         )
         let nonOptionalResult = NativeCapabilityRequest.project(declaration: nonOptionalDecl)
         switch nonOptionalResult {
         case let .supported(request):
             #expect(request.capability == .contactsRead)
             #expect(request.reason == "Read contacts")
-            #expect(request.isOptional == false)
+            #expect(request.optional == false)
             #expect(request.domain == nil)
         case let .unsupported(diag):
             Issue.record("Expected supported contacts.read, got diagnostic: \(diag)")
@@ -387,7 +387,7 @@ struct CanonicalAdapterTests {
         let snapshot = try MCPCanonicalShadowAdapter.projectTools(
             [tool],
             revision: .init(1),
-            descriptorRevision: HanlinDescriptorRevision(1)
+            descriptorRevision: try HanlinDescriptorRevision(1)
         )
         #expect(snapshot.entries.count == 1)
         #expect(snapshot.entries[0].modelAlias == tool.exposedName)
@@ -427,7 +427,7 @@ struct CanonicalAdapterTests {
             try MCPCanonicalShadowAdapter.projectTools(
                 [invalidTool],
                 revision: .init(1),
-                descriptorRevision: HanlinDescriptorRevision(1)
+                descriptorRevision: try HanlinDescriptorRevision(1)
             )
         }
     }
@@ -540,9 +540,9 @@ enum TestFixtures {
     ) throws -> any HanlinStaticMiniAppRegistration {
         let appID = try HanlinAppID(validating: id)
         let moduleID = try HanlinModuleID(validating: id)
-        let descriptor = try HanlinAppDescriptor(
+        let descriptor = HanlinAppDescriptor(
             schemaVersion: .init(major: 1, minor: 0),
-            descriptorRevision: HanlinDescriptorRevision(1),
+            descriptorRevision: try HanlinDescriptorRevision(1),
             id: appID,
             name: try LocalizedValue(["en": "Test App"]),
             summary: try LocalizedValue(["en": "Test summary"]),
@@ -551,7 +551,7 @@ enum TestFixtures {
             apiVersion: .init(major: 1, minor: 0),
             icon: .systemSymbol(name: "app"),
             appearance: .init(accentHex: "#000000"),
-            category: .utility,
+            category: .utilities,
             implementation: .native(moduleID: moduleID),
             entryPoints: [
                 HanlinEntryPointDescriptor(
@@ -560,7 +560,14 @@ enum TestFixtures {
                     allowedContexts: [.mainApplication]
                 )
             ],
-            capabilities: capabilities
+            capabilities: capabilities,
+            authors: [HanlinAuthor(name: "Test")],
+            distribution: .init(
+                sourceVisible: true,
+                sourceEditable: false,
+                remoteUpdates: false,
+                allowedModes: [.personalDevelopment]
+            )
         )
         return TestStaticRegistration(appID: appID, descriptor: descriptor)
     }

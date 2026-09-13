@@ -377,7 +377,7 @@ struct HanlinScriptMiniAppRegistrationTests {
 
         let descriptor = HanlinAppDescriptor(
             schemaVersion: .init(major: 1, minor: 0),
-            descriptorRevision: HanlinDescriptorRevision(1),
+            descriptorRevision: try HanlinDescriptorRevision(1),
             id: appID,
             name: try LocalizedValue(["en": "Spatial Mini App"]),
             summary: try LocalizedValue(["en": "Custom surface app"]),
@@ -417,7 +417,7 @@ struct HanlinScriptMiniAppRegistrationTests {
 
         let descriptor = HanlinAppDescriptor(
             schemaVersion: .init(major: 1, minor: 0),
-            descriptorRevision: HanlinDescriptorRevision(1),
+            descriptorRevision: try HanlinDescriptorRevision(1),
             id: appID,
             name: try LocalizedValue(["en": "Legacy JSON App"]),
             summary: try LocalizedValue(["en": "Legacy JSON"]),
