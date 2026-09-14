@@ -60,11 +60,21 @@ struct ScheduleChavrusaAlarmIntent: AppIntent {
 
         let time = Alarm.Schedule.Relative.Time(hour: hour, minute: minute)
         let schedule: Alarm.Schedule = .relative(.init(time: time, repeats: .never))
-        let alert = AlarmPresentation.Alert(
-            title: "ChavrusaChat Alarm",
-            secondaryButton: nil,
-            secondaryButtonBehavior: nil
-        )
+        let alert: AlarmPresentation.Alert
+        if #available(iOS 26.1, *) {
+            alert = AlarmPresentation.Alert(title: "ChavrusaChat Alarm")
+        } else {
+            alert = AlarmPresentation.Alert(
+                title: "ChavrusaChat Alarm",
+                stopButton: AlarmButton(
+                    text: "Stop",
+                    textColor: .red,
+                    systemImageName: "stop.circle"
+                ),
+                secondaryButton: nil,
+                secondaryButtonBehavior: nil
+            )
+        }
         let attributes = AlarmAttributes(
             presentation: AlarmPresentation(alert: alert),
             metadata: ChavrusaAlarmMetadata(note: alarmTitle),
