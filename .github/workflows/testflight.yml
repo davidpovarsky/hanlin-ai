@@ -351,6 +351,7 @@ jobs:
           verify_extension notification ChavrusaChatNotificationService.appex "$NOTIFICATION_BUNDLE_ID"
 
           translation_info="$app/Extensions/ChavrusaChatTranslationProvider.appex/Info.plist"
+          test -n "$(/usr/libexec/PlistBuddy -c 'Print :CFBundleDisplayName' "$translation_info")"
           test "$(/usr/libexec/PlistBuddy -c 'Print :EXAppExtensionAttributes:EXExtensionPointIdentifier' "$translation_info")" = com.apple.public.translation-ui-provider
           test "$(/usr/libexec/PlistBuddy -c 'Print :com.apple.developer.translation-ui-provider.network-access' "$app/Info.plist")" = true
           test ! -e "$app/PlugIns/ChavrusaChatTranslationProvider.appex"
