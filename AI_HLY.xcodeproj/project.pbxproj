@@ -28,7 +28,7 @@
 		A10000000000000000000079 /* HanlinNativeScriptRuntime in Frameworks */ = {isa = PBXBuildFile; productRef = C10000000000000000000025 /* HanlinNativeScriptRuntime */; };
 		D20000000000000000000001 /* HanlinScriptingWidgets.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = D20000000000000000000020 /* HanlinScriptingWidgets.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, CodeSignOnCopy, ); }; };
 		E40000000000000000000001 /* ChavrusaChatShare.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = E40000000000000000000020 /* ChavrusaChatShare.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, CodeSignOnCopy, ); }; };
-		E50000000000000000000001 /* ChavrusaChatTranslationProvider.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = E50000000000000000000020 /* ChavrusaChatTranslationProvider.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, CodeSignOnCopy, ); }; };
+		E50000000000000000000001 /* ChavrusaChatTranslationProvider.appex in Embed ExtensionKit Extensions */ = {isa = PBXBuildFile; fileRef = E50000000000000000000020 /* ChavrusaChatTranslationProvider.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		E60000000000000000000001 /* ChavrusaChatNotificationService.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = E60000000000000000000020 /* ChavrusaChatNotificationService.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, CodeSignOnCopy, ); }; };
 		D20000000000000000000002 /* HanlinScriptExtensions in Frameworks */ = {isa = PBXBuildFile; productRef = C10000000000000000000021 /* HanlinScriptExtensions */; };
 		D20000000000000000000003 /* HanlinScriptUI in Frameworks */ = {isa = PBXBuildFile; productRef = C10000000000000000000022 /* HanlinScriptUI */; };
@@ -99,10 +99,20 @@
 			files = (
 				D20000000000000000000001 /* HanlinScriptingWidgets.appex in Embed App Extensions */,
 				E40000000000000000000001 /* ChavrusaChatShare.appex in Embed App Extensions */,
-				E50000000000000000000001 /* ChavrusaChatTranslationProvider.appex in Embed App Extensions */,
 				E60000000000000000000001 /* ChavrusaChatNotificationService.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E50000000000000000000002 /* Embed ExtensionKit Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(EXTENSIONS_FOLDER_PATH)";
+			dstSubfolderSpec = 16;
+			files = (
+				E50000000000000000000001 /* ChavrusaChatTranslationProvider.appex in Embed ExtensionKit Extensions */,
+			);
+			name = "Embed ExtensionKit Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		D79AD5752DB545F9000646D4 /* Embed Frameworks */ = {
@@ -130,7 +140,7 @@
 		E30000000000000000000001 /* AI_HLYUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AI_HLYUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D20000000000000000000020 /* HanlinScriptingWidgets.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = HanlinScriptingWidgets.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		E40000000000000000000020 /* ChavrusaChatShare.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ChavrusaChatShare.appex; sourceTree = BUILT_PRODUCTS_DIR; };
-		E50000000000000000000020 /* ChavrusaChatTranslationProvider.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ChavrusaChatTranslationProvider.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		E50000000000000000000020 /* ChavrusaChatTranslationProvider.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.extensionkit-extension"; includeInIndex = 0; path = ChavrusaChatTranslationProvider.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		E60000000000000000000020 /* ChavrusaChatNotificationService.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ChavrusaChatNotificationService.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		D7C6558C2E6C731A0041F1C7 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -455,6 +465,7 @@
 				D7B6C3BF2D50A55D004E3AD6 /* Resources */,
 				A10000000000000000000050 /* Process Python libraries */,
 				D73E237E2D818F0300ACC644 /* Embed App Extensions */,
+				E50000000000000000000002 /* Embed ExtensionKit Extensions */,
 				D79AD5752DB545F9000646D4 /* Embed Frameworks */,
 			);
 			buildRules = (
@@ -1256,7 +1267,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = NA6HPWARQ2;
-				GENERATE_INFOPLIST_FILE = NO;
+				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ChavrusaChatTranslationProvider/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				LD_RUNPATH_SEARCH_PATHS = ("$(inherited)", "@executable_path/Frameworks", "@executable_path/../../Frameworks", );
@@ -1280,7 +1291,7 @@
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = NA6HPWARQ2;
-				GENERATE_INFOPLIST_FILE = NO;
+				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ChavrusaChatTranslationProvider/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				LD_RUNPATH_SEARCH_PATHS = ("$(inherited)", "@executable_path/Frameworks", "@executable_path/../../Frameworks", );

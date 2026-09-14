@@ -338,8 +338,8 @@ jobs:
 
           verify_bundle "$app" "$APP_BUNDLE_ID" main
           verify_extension() {
-            local role="$1" bundle_name="$2" bundle_id="$3"
-            bundle="$app/PlugIns/$bundle_name"
+            local role="$1" bundle_name="$2" bundle_id="$3" container="${4:-PlugIns}"
+            bundle="$app/$container/$bundle_name"
             test -d "$bundle"
             codesign --verify --strict --verbose=2 "$bundle"
             verify_bundle "$bundle" "$bundle_id" "$role"
@@ -347,12 +347,13 @@ jobs:
           }
           verify_extension share ChavrusaChatShare.appex "$SHARE_BUNDLE_ID"
           verify_extension widgets HanlinScriptingWidgets.appex "$WIDGETS_BUNDLE_ID"
-          verify_extension translation ChavrusaChatTranslationProvider.appex "$TRANSLATION_BUNDLE_ID"
+          verify_extension translation ChavrusaChatTranslationProvider.appex "$TRANSLATION_BUNDLE_ID" Extensions
           verify_extension notification ChavrusaChatNotificationService.appex "$NOTIFICATION_BUNDLE_ID"
 
-          translation_info="$app/PlugIns/ChavrusaChatTranslationProvider.appex/Info.plist"
-          test "$(/usr/libexec/PlistBuddy -c 'Print :NSExtension:NSExtensionPointIdentifier' "$translation_info")" = com.apple.public.translation-ui-provider
-          test "$(/usr/libexec/PlistBuddy -c 'Print :com.apple.developer.translation-ui-provider.network-access' "$translation_info")" = true
+          translation_info="$app/Extensions/ChavrusaChatTranslationProvider.appex/Info.plist"
+          test "$(/usr/libexec/PlistBuddy -c 'Print :EXAppExtensionAttributes:EXExtensionPointIdentifier' "$translation_info")" = com.apple.public.translation-ui-provider
+          test "$(/usr/libexec/PlistBuddy -c 'Print :com.apple.developer.translation-ui-provider.network-access' "$app/Info.plist")" = true
+          test ! -e "$app/PlugIns/ChavrusaChatTranslationProvider.appex"
 
           find "$app/Frameworks" -mindepth 1 -maxdepth 1 -type d -name '*.framework' -print0 |
             while IFS= read -r -d '' framework; do
