@@ -211,6 +211,26 @@ jobs:
             sleep "$delay"
           done
 
+      - name: Normalize third-party App Store binary slices
+        shell: bash
+        run: |
+          set -Eeuo pipefail
+          framework=$(find "$BUILD_DIR/SourcePackages/artifacts" -type d \
+            -path '*/libssh2.xcframework/ios-arm64_arm64e/libssh2.framework' -print -quit)
+          test -d "$framework"
+          binary="$framework/libssh2"
+          test -f "$binary"
+          archs=$(lipo -archs "$binary")
+          grep -qw arm64 <<< "$archs"
+          grep -qw arm64e <<< "$archs"
+          stripped="$RUNNER_TEMP/libssh2-arm64"
+          lipo -remove arm64e -output "$stripped" "$binary"
+          mv "$stripped" "$binary"
+          rm -rf "$framework/_CodeSignature"
+          plutil -replace MinimumOSVersion -string 26.0 "$framework/Info.plist"
+          test "$(lipo -archs "$binary")" = arm64
+          test "$(plutil -extract MinimumOSVersion raw "$framework/Info.plist")" = 26.0
+
       - name: Verify signing settings for every distributed target
         shell: bash
         run: |
@@ -329,6 +349,22 @@ jobs:
           verify_extension widgets HanlinScriptingWidgets.appex "$WIDGETS_BUNDLE_ID"
           verify_extension translation ChavrusaChatTranslationProvider.appex "$TRANSLATION_BUNDLE_ID"
           verify_extension notification ChavrusaChatNotificationService.appex "$NOTIFICATION_BUNDLE_ID"
+
+          translation_info="$app/PlugIns/ChavrusaChatTranslationProvider.appex/Info.plist"
+          test "$(/usr/libexec/PlistBuddy -c 'Print :NSExtension:NSExtensionPointIdentifier' "$translation_info")" = com.apple.public.translation-ui-provider
+          test "$(/usr/libexec/PlistBuddy -c 'Print :com.apple.developer.translation-ui-provider.network-access' "$translation_info")" = true
+
+          find "$app/Frameworks" -mindepth 1 -maxdepth 1 -type d -name '*.framework' -print0 |
+            while IFS= read -r -d '' framework; do
+              info="$framework/Info.plist"
+              binary="$framework/$(basename "$framework" .framework)"
+              test "$(/usr/libexec/PlistBuddy -c 'Print :CFBundlePackageType' "$info")" = FMWK
+              minimum=$(/usr/libexec/PlistBuddy -c 'Print :MinimumOSVersion' "$info")
+              [[ "$minimum" =~ ^[0-9]+(\.[0-9]+){0,2}$ ]]
+              archs=$(lipo -archs "$binary")
+              grep -qw arm64 <<< "$archs"
+              ! grep -Eqw 'arm64e|i386|x86_64' <<< "$archs"
+            done
 
           main_entitlements="$BUILD_DIR/logs/main-signed-entitlements.plist"
           containers=$(/usr/libexec/PlistBuddy -c 'Print :com.apple.developer.icloud-container-identifiers' "$main_entitlements")

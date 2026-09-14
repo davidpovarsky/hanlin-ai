@@ -156,6 +156,7 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				ChavrusaChatTranslationProvider.entitlements,
+				Info.plist,
 			);
 			target = E50000000000000000000050 /* ChavrusaChatTranslationProvider */;
 		};
@@ -1255,8 +1256,8 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = NA6HPWARQ2;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = "ChavrusaChat Translation";
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = ChavrusaChatTranslationProvider/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				LD_RUNPATH_SEARCH_PATHS = ("$(inherited)", "@executable_path/Frameworks", "@executable_path/../../Frameworks", );
 				MARKETING_VERSION = 0.7.3;
@@ -1279,8 +1280,8 @@
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = NA6HPWARQ2;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = "ChavrusaChat Translation";
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = ChavrusaChatTranslationProvider/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				LD_RUNPATH_SEARCH_PATHS = ("$(inherited)", "@executable_path/Frameworks", "@executable_path/../../Frameworks", );
 				MARKETING_VERSION = 0.7.3;
