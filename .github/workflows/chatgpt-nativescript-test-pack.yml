@@ -1,0 +1,68 @@
+name: Build isolated NativeScript test pack
+
+on:
+  push:
+    branches:
+      - tmp/chatgpt-nativescript-test-pack-20260914
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: macos-15
+    timeout-minutes: 20
+    steps:
+      - name: Checkout temporary branch
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: Scripts/NativeScript/package-lock.json
+
+      - name: Install pinned NativeScript tooling
+        run: npm ci --prefix Scripts/NativeScript
+
+      - name: Build five production packages
+        run: node Scripts/NativeScript/build-chatgpt-test-pack.mjs
+
+      - name: Create combined test pack
+        run: |
+          cd build/ChatGPTNativeScriptTestPack
+          zip -qry Hanlin-NativeScript-Test-Pack.zip \
+            NativeScript-Rich-Dashboard.hanlinNativeScript \
+            NativeScript-Interactive-Forms.hanlinNativeScript \
+            NativeScript-Navigation-Catalog.hanlinNativeScript \
+            NativeScript-SwiftUI-Showcase.hanlinNativeScript \
+            NativeScript-RTL-State-Stress.hanlinNativeScript \
+            README.txt
+
+      - name: Verify archive structure
+        run: |
+          set -euo pipefail
+          cd build/ChatGPTNativeScriptTestPack
+          for archive in *.hanlinNativeScript; do
+            echo "--- $archive"
+            unzip -l "$archive"
+            unzip -p "$archive" script.json | python3 -m json.tool >/dev/null
+            unzip -p "$archive" nativescript/app/package.json | python3 -m json.tool >/dev/null
+            unzip -l "$archive" | grep -q 'nativescript/app/bundle.mjs'
+          done
+          unzip -l Hanlin-NativeScript-Test-Pack.zip
+          shasum -a 256 *.hanlinNativeScript Hanlin-NativeScript-Test-Pack.zip | tee SHA256SUMS.txt
+
+      - name: Upload package artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: hanlin-nativescript-test-pack-${{ github.sha }}
+          if-no-files-found: error
+          retention-days: 14
+          path: |
+            build/ChatGPTNativeScriptTestPack/*.hanlinNativeScript
+            build/ChatGPTNativeScriptTestPack/Hanlin-NativeScript-Test-Pack.zip
+            build/ChatGPTNativeScriptTestPack/README.txt
+            build/ChatGPTNativeScriptTestPack/SHA256SUMS.txt
