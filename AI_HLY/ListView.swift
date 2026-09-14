@@ -151,7 +151,7 @@ struct ListView: View {
             } else {
                 NavigationStack(path: $navigationPath) {
                     content
-                        .navigationTitle("Hylic.AI")
+                        .navigationTitle("ChavrusaChat")
                         .safeAreaInset(edge: .bottom) {
                             Color.clear.frame(height: 75)
                         }

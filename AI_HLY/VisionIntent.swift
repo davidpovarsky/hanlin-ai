@@ -20,7 +20,7 @@ struct OpenVisionIntent: AppIntent {
     @MainActor
     func perform() async throws -> some IntentResult {
         
-        if let url = URL(string: "AI-Hanlin://openVisionView") { // 自定义 URL Scheme
+        if let url = URL(string: "chavrusachat://openVisionView") { // 自定义 URL Scheme
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
         }
         

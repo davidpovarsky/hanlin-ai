@@ -2,7 +2,7 @@ import Foundation
 import Security
 
 actor MCPSecretStore {
-    private let service = "cherryai.com.AI-Hanlin.mcp"
+    private let service = "com.itorah.chavrusachat.mcp"
 
     func set(_ secret: String, reference: String = UUID().uuidString) throws -> String {
         guard let data = secret.data(using: .utf8) else { throw MCPError.secretUnavailable }

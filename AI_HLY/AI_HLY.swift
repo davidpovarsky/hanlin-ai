@@ -94,6 +94,7 @@ struct MyApp: App {
             MainTabView(deepLinkTarget: $deepLinkTarget)
                 .modelContainer(appDataManager.modelContainer)
                 .task {
+                    ChavrusaSystemIntegrationBootstrap.configure()
                     HanlinNativeScriptProductionBootstrap.prepareEmbeddedProviders()
                     appDataManager.preloadDataIfNeeded()
                     await RuntimeLifecycleBridge.prepareApplication()

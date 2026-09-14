@@ -981,13 +981,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "© 2026 Hylic.AI All rights reserved"
+            "value" : "© 2026 ChavrusaChat All rights reserved"
           }
         },
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "© 2026 Hylic.AI כל הזכויות שמורות"
+            "value" : "© 2026 ChavrusaChat כל הזכויות שמורות"
           }
         }
       }
@@ -2591,13 +2591,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Hylic.AI"
+            "value" : "ChavrusaChat"
           }
         },
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Hylic.AI"
+            "value" : "ChavrusaChat"
           }
         }
       }
@@ -4933,13 +4933,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Thank you for using Hylic.AI."
+            "value" : "Thank you for using ChavrusaChat."
           }
         },
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Thank you for using Hylic.AI."
+            "value" : "Thank you for using ChavrusaChat."
           }
         }
       }

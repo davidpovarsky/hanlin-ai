@@ -11,7 +11,7 @@ extension hosts three bounded surfaces:
 
 The main app publishes versioned, integrity-checked snapshots through
 `HanlinScriptExtensionStore` in the App Group
-`group.cherryai.com.AI-Hanlin`. Extension processes consume only canonical
+`group.com.itorah.chavrusachat`. Extension processes consume only canonical
 data and the extension-safe ScriptUI subset. They do not link or invoke Node,
 Python, a shell, the compiler, package source, API keys, or arbitrary services.
 

@@ -183,7 +183,7 @@ struct VersionInfoView: View {
                     .frame(width: 140, height: 140)
                     .cornerRadius(20)
                     
-                Text("Hylic.AI")
+                Text("ChavrusaChat")
                     .font(.largeTitle)
                     .bold()
                     .foregroundColor(.primary)
@@ -668,7 +668,7 @@ struct SoftwareIntroView: View {
                     .frame(width: 45, height: 45)
                     .cornerRadius(20)
                     
-                Text("Hylic.AI")
+                Text("ChavrusaChat")
                     .font(.largeTitle)
                     .bold()
             }

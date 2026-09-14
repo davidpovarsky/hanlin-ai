@@ -78,7 +78,7 @@ final class HanlinUIPerformanceUITests: XCTestCase {
             launchedApp.launchEnvironment["HANLIN_UNIT_TEST_HOST"] = "0"
             launchedApp.launch()
             let homeRootPredicate = NSPredicate(
-                format: "label CONTAINS 'Hylic.AI' OR identifier CONTAINS 'Hylic.AI' OR title CONTAINS 'Hylic.AI'"
+                format: "label CONTAINS 'ChavrusaChat' OR identifier CONTAINS 'ChavrusaChat' OR title CONTAINS 'ChavrusaChat'"
             )
             let homeRoot = launchedApp.descendants(matching: .any).matching(homeRootPredicate).firstMatch
             XCTAssertTrue(homeRoot.waitForExistence(timeout: 20), "Cold launch did not reach responsive home screen")

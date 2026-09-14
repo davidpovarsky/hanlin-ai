@@ -44,7 +44,7 @@ struct RuntimeEnvironmentItem: Identifiable, Codable, Hashable, Sendable {
 }
 
 actor RuntimeSecretStore {
-    private let service = "cherryai.com.AI-Hanlin.runtime"
+    private let service = "com.itorah.chavrusachat.runtime"
 
     func set(_ secret: String, reference: String = UUID().uuidString) throws -> String {
         guard let data = secret.data(using: .utf8) else { throw RuntimeCoreError.runtimeFailure("The secret could not be encoded.") }

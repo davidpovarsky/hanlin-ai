@@ -10,7 +10,7 @@ public enum HanlinScriptExtensionStoreError: Error, Equatable, Sendable {
 }
 
 public struct HanlinScriptExtensionStore: Sendable {
-    public static let appGroupIdentifier = "group.cherryai.com.AI-Hanlin"
+    public static let appGroupIdentifier = "group.com.itorah.chavrusachat"
     public static let maximumSnapshotBytes = 4 * 1_024 * 1_024
 
     private struct Envelope: Codable {

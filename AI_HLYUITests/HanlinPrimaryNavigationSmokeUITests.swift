@@ -69,9 +69,9 @@ final class HanlinPrimaryNavigationSmokeUITests: XCTestCase {
     func testWholeAppPrimaryNavigationSmoke() throws {
         // 1. Root: Home / Chat List (Tab 0)
         XCTAssertTrue(selectTab(identifier: "hanlin-home-tab", labels: ["列表", "List", "Chats"]), "Home tab button was absent")
-        let homeRootPredicate = NSPredicate(format: "label CONTAINS 'Hylic.AI' OR identifier CONTAINS 'Hylic.AI' OR title CONTAINS 'Hylic.AI'")
+        let homeRootPredicate = NSPredicate(format: "label CONTAINS 'ChavrusaChat' OR identifier CONTAINS 'ChavrusaChat' OR title CONTAINS 'ChavrusaChat'")
         let homeRoot = app.descendants(matching: .any).matching(homeRootPredicate).firstMatch
-        XCTAssertTrue(homeRoot.waitForExistence(timeout: 15), "Primary navigation to Home/ChatList failed: root 'Hylic.AI' was absent")
+        XCTAssertTrue(homeRoot.waitForExistence(timeout: 15), "Primary navigation to Home/ChatList failed: root 'ChavrusaChat' was absent")
 
         // 2. Vision View (Tab 1)
         XCTAssertTrue(selectTab(identifier: "hanlin-vision-tab", labels: ["视觉", "Vision"]), "Vision tab button was absent")

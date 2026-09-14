@@ -8,10 +8,10 @@
 			<key>CFBundleTypeRole</key>
 			<string>Viewer</string>
 			<key>CFBundleURLName</key>
-			<string>com.aihanlin.AI-HLY</string>
+			<string>com.itorah.chavrusachat</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>AI-Hanlin</string>
+				<string>chavrusachat</string>
 			</array>
 		</dict>
 	</array>
@@ -27,24 +27,9 @@
 		<true/>
 	</dict>
 	<key>NSCameraUsageDescription</key>
-	<string>Hanlin uses the camera only when a running Scripting package asks you to take a photo.</string>
+	<string>ChavrusaChat uses the camera only when you ask it to take a photo.</string>
 	<key>LSSupportsOpeningDocumentsInPlace</key>
 	<true/>
-	<key>MKDirectionsApplicationSupportedModes</key>
-	<array>
-		<string>MKDirectionsModeBike</string>
-		<string>MKDirectionsModeBus</string>
-		<string>MKDirectionsModeCar</string>
-		<string>MKDirectionsModeFerry</string>
-		<string>MKDirectionsModeOther</string>
-		<string>MKDirectionsModePedestrian</string>
-		<string>MKDirectionsModePlane</string>
-		<string>MKDirectionsModeRideShare</string>
-		<string>MKDirectionsModeStreetCar</string>
-		<string>MKDirectionsModeSubway</string>
-		<string>MKDirectionsModeTaxi</string>
-		<string>MKDirectionsModeTrain</string>
-	</array>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>remote-notification</string>
@@ -78,6 +63,10 @@
 	</array>
 	<key>NSSupportsLiveActivities</key>
 	<true/>
+	<key>NSSupportsLiveActivitiesFrequentUpdates</key>
+	<true/>
+	<key>NSAlarmKitUsageDescription</key>
+	<string>ChavrusaChat schedules alarms and study reminders only when you ask it to.</string>
 	<key>com.apple.developer.translation-ui-provider.network-access</key>
 	<true/>
 </dict>

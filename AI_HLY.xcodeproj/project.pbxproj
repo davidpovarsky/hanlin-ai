@@ -27,6 +27,9 @@
 		A10000000000000000000078 /* HanlinScriptDeviceServices in Frameworks */ = {isa = PBXBuildFile; productRef = C10000000000000000000024 /* HanlinScriptDeviceServices */; };
 		A10000000000000000000079 /* HanlinNativeScriptRuntime in Frameworks */ = {isa = PBXBuildFile; productRef = C10000000000000000000025 /* HanlinNativeScriptRuntime */; };
 		D20000000000000000000001 /* HanlinScriptingWidgets.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = D20000000000000000000020 /* HanlinScriptingWidgets.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, CodeSignOnCopy, ); }; };
+		E40000000000000000000001 /* ChavrusaChatShare.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = E40000000000000000000020 /* ChavrusaChatShare.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, CodeSignOnCopy, ); }; };
+		E50000000000000000000001 /* ChavrusaChatTranslationProvider.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = E50000000000000000000020 /* ChavrusaChatTranslationProvider.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, CodeSignOnCopy, ); }; };
+		E60000000000000000000001 /* ChavrusaChatNotificationService.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = E60000000000000000000020 /* ChavrusaChatNotificationService.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, CodeSignOnCopy, ); }; };
 		D20000000000000000000002 /* HanlinScriptExtensions in Frameworks */ = {isa = PBXBuildFile; productRef = C10000000000000000000021 /* HanlinScriptExtensions */; };
 		D20000000000000000000003 /* HanlinScriptUI in Frameworks */ = {isa = PBXBuildFile; productRef = C10000000000000000000022 /* HanlinScriptUI */; };
 		D20000000000000000000004 /* HanlinPlatformContracts in Frameworks */ = {isa = PBXBuildFile; productRef = A10000000000000000000015 /* HanlinPlatformContracts */; };
@@ -64,6 +67,27 @@
 			remoteGlobalIDString = D20000000000000000000050;
 			remoteInfo = HanlinScriptingWidgets;
 		};
+		E40000000000000000000010 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D7B6C3B92D50A55D004E3AD6 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E40000000000000000000050;
+			remoteInfo = ChavrusaChatShare;
+		};
+		E50000000000000000000010 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D7B6C3B92D50A55D004E3AD6 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E50000000000000000000050;
+			remoteInfo = ChavrusaChatTranslationProvider;
+		};
+		E60000000000000000000010 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D7B6C3B92D50A55D004E3AD6 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E60000000000000000000050;
+			remoteInfo = ChavrusaChatNotificationService;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -74,6 +98,9 @@
 			dstSubfolderSpec = 13;
 			files = (
 				D20000000000000000000001 /* HanlinScriptingWidgets.appex in Embed App Extensions */,
+				E40000000000000000000001 /* ChavrusaChatShare.appex in Embed App Extensions */,
+				E50000000000000000000001 /* ChavrusaChatTranslationProvider.appex in Embed App Extensions */,
+				E60000000000000000000001 /* ChavrusaChatNotificationService.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -102,6 +129,9 @@
 		B10000000000000000000002 /* AI_HLYTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AI_HLYTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E30000000000000000000001 /* AI_HLYUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AI_HLYUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D20000000000000000000020 /* HanlinScriptingWidgets.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = HanlinScriptingWidgets.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		E40000000000000000000020 /* ChavrusaChatShare.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ChavrusaChatShare.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		E50000000000000000000020 /* ChavrusaChatTranslationProvider.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ChavrusaChatTranslationProvider.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		E60000000000000000000020 /* ChavrusaChatNotificationService.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ChavrusaChatNotificationService.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		D7C6558C2E6C731A0041F1C7 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -113,6 +143,29 @@
 				Info.plist,
 			);
 			target = D20000000000000000000050 /* HanlinScriptingWidgets */;
+		};
+		E40000000000000000000031 /* Exceptions for ChavrusaChatShare folder */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				ChavrusaChatShare.entitlements,
+				Info.plist,
+			);
+			target = E40000000000000000000050 /* ChavrusaChatShare */;
+		};
+		E50000000000000000000031 /* Exceptions for ChavrusaChatTranslationProvider folder */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				ChavrusaChatTranslationProvider.entitlements,
+			);
+			target = E50000000000000000000050 /* ChavrusaChatTranslationProvider */;
+		};
+		E60000000000000000000031 /* Exceptions for ChavrusaChatNotificationService folder */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				ChavrusaChatNotificationService.entitlements,
+				Info.plist,
+			);
+			target = E60000000000000000000050 /* ChavrusaChatNotificationService */;
 		};
 		A10000000000000000000030 /* Exceptions for AI_HLY folder in AI_Hanlin target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
@@ -231,6 +284,30 @@
 			path = HanlinScriptingWidgets;
 			sourceTree = "<group>";
 		};
+		E40000000000000000000030 /* ChavrusaChatShare */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				E40000000000000000000031 /* Exceptions for ChavrusaChatShare folder */,
+			);
+			path = ChavrusaChatShare;
+			sourceTree = "<group>";
+		};
+		E50000000000000000000030 /* ChavrusaChatTranslationProvider */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				E50000000000000000000031 /* Exceptions for ChavrusaChatTranslationProvider folder */,
+			);
+			path = ChavrusaChatTranslationProvider;
+			sourceTree = "<group>";
+		};
+		E60000000000000000000030 /* ChavrusaChatNotificationService */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				E60000000000000000000031 /* Exceptions for ChavrusaChatNotificationService folder */,
+			);
+			path = ChavrusaChatNotificationService;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -290,6 +367,27 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		E40000000000000000000040 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E50000000000000000000040 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E60000000000000000000040 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -319,6 +417,9 @@
 				B10000000000000000000003 /* AI_HLYTests */,
 				E30000000000000000000002 /* AI_HLYUITests */,
 				D20000000000000000000030 /* HanlinScriptingWidgets */,
+				E40000000000000000000030 /* ChavrusaChatShare */,
+				E50000000000000000000030 /* ChavrusaChatTranslationProvider */,
+				E60000000000000000000030 /* ChavrusaChatNotificationService */,
 				A10000000000000000000064 /* IOSSystemLite Resources */,
 				D73E23062D817B1300ACC644 /* Frameworks */,
 				D7B6C3C22D50A55D004E3AD6 /* Products */,
@@ -333,6 +434,9 @@
 				B10000000000000000000002 /* AI_HLYTests.xctest */,
 				E30000000000000000000001 /* AI_HLYUITests.xctest */,
 				D20000000000000000000020 /* HanlinScriptingWidgets.appex */,
+				E40000000000000000000020 /* ChavrusaChatShare.appex */,
+				E50000000000000000000020 /* ChavrusaChatTranslationProvider.appex */,
+				E60000000000000000000020 /* ChavrusaChatNotificationService.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -356,6 +460,9 @@
 			);
 			dependencies = (
 				D20000000000000000000060 /* PBXTargetDependency */,
+				E40000000000000000000060 /* PBXTargetDependency */,
+				E50000000000000000000060 /* PBXTargetDependency */,
+				E60000000000000000000060 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				D7B6C3C32D50A55D004E3AD6 /* AI_HLY */,
@@ -460,6 +567,72 @@
 			productReference = D20000000000000000000020 /* HanlinScriptingWidgets.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
+		E40000000000000000000050 /* ChavrusaChatShare */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E40000000000000000000072 /* Build configuration list for PBXNativeTarget "ChavrusaChatShare" */;
+			buildPhases = (
+				E40000000000000000000041 /* Sources */,
+				E40000000000000000000040 /* Frameworks */,
+				E40000000000000000000042 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				E40000000000000000000030 /* ChavrusaChatShare */,
+			);
+			name = ChavrusaChatShare;
+			packageProductDependencies = (
+			);
+			productName = ChavrusaChatShare;
+			productReference = E40000000000000000000020 /* ChavrusaChatShare.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		E50000000000000000000050 /* ChavrusaChatTranslationProvider */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E50000000000000000000072 /* Build configuration list for PBXNativeTarget "ChavrusaChatTranslationProvider" */;
+			buildPhases = (
+				E50000000000000000000041 /* Sources */,
+				E50000000000000000000040 /* Frameworks */,
+				E50000000000000000000042 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				E50000000000000000000030 /* ChavrusaChatTranslationProvider */,
+			);
+			name = ChavrusaChatTranslationProvider;
+			packageProductDependencies = (
+			);
+			productName = ChavrusaChatTranslationProvider;
+			productReference = E50000000000000000000020 /* ChavrusaChatTranslationProvider.appex */;
+			productType = "com.apple.product-type.extensionkit-extension";
+		};
+		E60000000000000000000050 /* ChavrusaChatNotificationService */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E60000000000000000000072 /* Build configuration list for PBXNativeTarget "ChavrusaChatNotificationService" */;
+			buildPhases = (
+				E60000000000000000000041 /* Sources */,
+				E60000000000000000000040 /* Frameworks */,
+				E60000000000000000000042 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				E60000000000000000000030 /* ChavrusaChatNotificationService */,
+			);
+			name = ChavrusaChatNotificationService;
+			packageProductDependencies = (
+			);
+			productName = ChavrusaChatNotificationService;
+			productReference = E60000000000000000000020 /* ChavrusaChatNotificationService.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -482,6 +655,15 @@
 						TestTargetID = D7B6C3C02D50A55D004E3AD6;
 					};
 					D20000000000000000000050 = {
+						CreatedOnToolsVersion = 26.0;
+					};
+					E40000000000000000000050 = {
+						CreatedOnToolsVersion = 26.0;
+					};
+					E50000000000000000000050 = {
+						CreatedOnToolsVersion = 26.0;
+					};
+					E60000000000000000000050 = {
 						CreatedOnToolsVersion = 26.0;
 					};
 				};
@@ -522,6 +704,9 @@
 				B10000000000000000000007 /* AI_HLYTests */,
 				E30000000000000000000003 /* AI_HLYUITests */,
 				D20000000000000000000050 /* HanlinScriptingWidgets */,
+				E40000000000000000000050 /* ChavrusaChatShare */,
+				E50000000000000000000050 /* ChavrusaChatTranslationProvider */,
+				E60000000000000000000050 /* ChavrusaChatNotificationService */,
 			);
 		};
 /* End PBXProject section */
@@ -551,6 +736,27 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		D20000000000000000000042 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E40000000000000000000042 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E50000000000000000000042 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E60000000000000000000042 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -618,6 +824,21 @@
 			target = D20000000000000000000050 /* HanlinScriptingWidgets */;
 			targetProxy = D20000000000000000000010 /* PBXContainerItemProxy */;
 		};
+		E40000000000000000000060 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E40000000000000000000050 /* ChavrusaChatShare */;
+			targetProxy = E40000000000000000000010 /* PBXContainerItemProxy */;
+		};
+		E50000000000000000000060 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E50000000000000000000050 /* ChavrusaChatTranslationProvider */;
+			targetProxy = E50000000000000000000010 /* PBXContainerItemProxy */;
+		};
+		E60000000000000000000060 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E60000000000000000000050 /* ChavrusaChatNotificationService */;
+			targetProxy = E60000000000000000000010 /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -649,6 +870,27 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		E40000000000000000000041 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E50000000000000000000041 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E60000000000000000000041 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
@@ -657,10 +899,10 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 87242QY66T;
+				DEVELOPMENT_TEAM = NA6HPWARQ2;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "cherryai.com.AI-HanlinUITests";
+				PRODUCT_BUNDLE_IDENTIFIER = com.itorah.chavrusachat.uitests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
@@ -675,10 +917,10 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 87242QY66T;
+				DEVELOPMENT_TEAM = NA6HPWARQ2;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "cherryai.com.AI-HanlinUITests";
+				PRODUCT_BUNDLE_IDENTIFIER = com.itorah.chavrusachat.uitests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
@@ -694,7 +936,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 87242QY66T;
+				DEVELOPMENT_TEAM = NA6HPWARQ2;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -702,7 +944,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "cherryai.com.AI-HanlinTests";
+				PRODUCT_BUNDLE_IDENTIFIER = com.itorah.chavrusachat.tests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
@@ -718,7 +960,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 87242QY66T;
+				DEVELOPMENT_TEAM = NA6HPWARQ2;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -726,7 +968,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "cherryai.com.AI-HanlinTests";
+				PRODUCT_BUNDLE_IDENTIFIER = com.itorah.chavrusachat.tests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
@@ -773,7 +1015,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = 4UU5YZ4GWN;
+				DEVELOPMENT_TEAM = NA6HPWARQ2;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -842,7 +1084,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = 4UU5YZ4GWN;
+				DEVELOPMENT_TEAM = NA6HPWARQ2;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -875,11 +1117,10 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = AI_HLY/AI_HLY.entitlements;
-				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = AI_HLY/Views;
-				DEVELOPMENT_TEAM = 87242QY66T;
+				DEVELOPMENT_TEAM = NA6HPWARQ2;
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = NO;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				ENABLE_PREVIEWS = YES;
@@ -889,21 +1130,21 @@
 				);
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "AI-HLY-Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = Hylic.AI;
+				INFOPLIST_KEY_CFBundleDisplayName = ChavrusaChat;
 				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
-				INFOPLIST_KEY_NSCalendarsFullAccessUsageDescription = "需要访问您的日历以读取和添加事件。";
-				INFOPLIST_KEY_NSCameraUsageDescription = "需要访问您的相册以保存图片";
-				INFOPLIST_KEY_NSHealthClinicalHealthRecordsShareUsageDescription = "需要访问健康数据以便提供相关服务";
-				INFOPLIST_KEY_NSHealthShareUsageDescription = "需要访问健康数据以便提供相关服务";
-				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "需要写入健康数据用于记录活动";
-				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "需要访问您的位置以提供周边信息";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "需要访问您的位置以提供周边信息";
-				INFOPLIST_KEY_NSMicrophoneUsageDescription = "需要访问您的麦克风进行录音";
-				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "需要访问您的相机用于拍照";
-				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "需要访问您的相册用于选择图片";
-				INFOPLIST_KEY_NSRemindersFullAccessUsageDescription = "需要访问您的提醒事项以读取和添加任务。";
-				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "我们需要访问您的语音识别权限";
+				INFOPLIST_KEY_NSCalendarsFullAccessUsageDescription = "ChavrusaChat accesses your calendars only when you ask it to read or add an event.";
+				INFOPLIST_KEY_NSCameraUsageDescription = "ChavrusaChat accesses the camera only when you ask it to take a photo.";
+				INFOPLIST_KEY_NSHealthClinicalHealthRecordsShareUsageDescription = "ChavrusaChat reads clinical health records only when you request a health feature that needs them.";
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "ChavrusaChat reads health data only when you request a health-related feature.";
+				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "ChavrusaChat writes health data only when you ask it to record an activity.";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "ChavrusaChat uses your location only for location-based features you request.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "ChavrusaChat uses your location only for nearby, maps, and weather features you request.";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "ChavrusaChat uses the microphone only when you ask it to record audio.";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "ChavrusaChat saves media to your photo library only when you ask it to.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "ChavrusaChat reads selected photos only when you choose them.";
+				INFOPLIST_KEY_NSRemindersFullAccessUsageDescription = "ChavrusaChat accesses reminders only when you ask it to read or add a task.";
+				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "ChavrusaChat uses speech recognition only when you ask it to transcribe speech.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen";
@@ -945,9 +1186,8 @@
 					Security,
 				);
 				ONLY_ACTIVE_ARCH = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = "cherryai.com.AI-Hanlin";
+				PRODUCT_BUNDLE_IDENTIFIER = com.itorah.chavrusachat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = YES;
@@ -958,6 +1198,150 @@
 			};
 			name = Debug;
 		};
+		E40000000000000000000070 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CODE_SIGN_ENTITLEMENTS = ChavrusaChatShare/ChavrusaChatShare.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = NA6HPWARQ2;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = ChavrusaChatShare/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				LD_RUNPATH_SEARCH_PATHS = ("$(inherited)", "@executable_path/Frameworks", "@executable_path/../../Frameworks", );
+				MARKETING_VERSION = 0.7.3;
+				PRODUCT_BUNDLE_IDENTIFIER = com.itorah.chavrusachat.share;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		E40000000000000000000071 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CODE_SIGN_ENTITLEMENTS = ChavrusaChatShare/ChavrusaChatShare.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Distribution";
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = NA6HPWARQ2;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = ChavrusaChatShare/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				LD_RUNPATH_SEARCH_PATHS = ("$(inherited)", "@executable_path/Frameworks", "@executable_path/../../Frameworks", );
+				MARKETING_VERSION = 0.7.3;
+				PRODUCT_BUNDLE_IDENTIFIER = com.itorah.chavrusachat.share;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "ChavrusaChat Share App Store";
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		E50000000000000000000070 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CODE_SIGN_ENTITLEMENTS = ChavrusaChatTranslationProvider/ChavrusaChatTranslationProvider.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = NA6HPWARQ2;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "ChavrusaChat Translation";
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				LD_RUNPATH_SEARCH_PATHS = ("$(inherited)", "@executable_path/Frameworks", "@executable_path/../../Frameworks", );
+				MARKETING_VERSION = 0.7.3;
+				PRODUCT_BUNDLE_IDENTIFIER = com.itorah.chavrusachat.translation-provider;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		E50000000000000000000071 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CODE_SIGN_ENTITLEMENTS = ChavrusaChatTranslationProvider/ChavrusaChatTranslationProvider.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Distribution";
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = NA6HPWARQ2;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "ChavrusaChat Translation";
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				LD_RUNPATH_SEARCH_PATHS = ("$(inherited)", "@executable_path/Frameworks", "@executable_path/../../Frameworks", );
+				MARKETING_VERSION = 0.7.3;
+				PRODUCT_BUNDLE_IDENTIFIER = com.itorah.chavrusachat.translation-provider;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "ChavrusaChat Translation Provider App Store";
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		E60000000000000000000070 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CODE_SIGN_ENTITLEMENTS = ChavrusaChatNotificationService/ChavrusaChatNotificationService.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = NA6HPWARQ2;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = ChavrusaChatNotificationService/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				LD_RUNPATH_SEARCH_PATHS = ("$(inherited)", "@executable_path/Frameworks", "@executable_path/../../Frameworks", );
+				MARKETING_VERSION = 0.7.3;
+				PRODUCT_BUNDLE_IDENTIFIER = com.itorah.chavrusachat.notification-service;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		E60000000000000000000071 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CODE_SIGN_ENTITLEMENTS = ChavrusaChatNotificationService/ChavrusaChatNotificationService.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Distribution";
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = NA6HPWARQ2;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = ChavrusaChatNotificationService/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				LD_RUNPATH_SEARCH_PATHS = ("$(inherited)", "@executable_path/Frameworks", "@executable_path/../../Frameworks", );
+				MARKETING_VERSION = 0.7.3;
+				PRODUCT_BUNDLE_IDENTIFIER = com.itorah.chavrusachat.notification-service;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "ChavrusaChat Notification Service App Store";
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		D20000000000000000000070 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -965,7 +1349,7 @@
 				CODE_SIGN_ENTITLEMENTS = HanlinScriptingWidgets/HanlinScriptingWidgets.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 87242QY66T;
+				DEVELOPMENT_TEAM = NA6HPWARQ2;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = HanlinScriptingWidgets/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
@@ -975,7 +1359,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 0.7.3;
-				PRODUCT_BUNDLE_IDENTIFIER = "cherryai.com.AI-Hanlin.ScriptingWidgets";
+				PRODUCT_BUNDLE_IDENTIFIER = com.itorah.chavrusachat.widgets;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -990,9 +1374,10 @@
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = YES;
 				CODE_SIGN_ENTITLEMENTS = HanlinScriptingWidgets/HanlinScriptingWidgets.entitlements;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "Apple Distribution";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 87242QY66T;
+				DEVELOPMENT_TEAM = NA6HPWARQ2;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = HanlinScriptingWidgets/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
@@ -1002,8 +1387,9 @@
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 0.7.3;
-				PRODUCT_BUNDLE_IDENTIFIER = "cherryai.com.AI-Hanlin.ScriptingWidgets";
+				PRODUCT_BUNDLE_IDENTIFIER = com.itorah.chavrusachat.widgets;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "ChavrusaChat Widgets App Store";
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
@@ -1020,11 +1406,11 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = AI_HLY/AI_HLY.entitlements;
-				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "Apple Distribution";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = AI_HLY/Views;
-				DEVELOPMENT_TEAM = 87242QY66T;
+				DEVELOPMENT_TEAM = NA6HPWARQ2;
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = NO;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				ENABLE_PREVIEWS = YES;
@@ -1034,21 +1420,21 @@
 				);
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "AI-HLY-Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = Hylic.AI;
+				INFOPLIST_KEY_CFBundleDisplayName = ChavrusaChat;
 				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
-				INFOPLIST_KEY_NSCalendarsFullAccessUsageDescription = "需要访问您的日历以读取和添加事件。";
-				INFOPLIST_KEY_NSCameraUsageDescription = "需要访问您的相册以保存图片";
-				INFOPLIST_KEY_NSHealthClinicalHealthRecordsShareUsageDescription = "需要访问健康数据以便提供相关服务";
-				INFOPLIST_KEY_NSHealthShareUsageDescription = "需要访问健康数据以便提供相关服务";
-				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "需要写入健康数据用于记录活动";
-				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "需要访问您的位置以提供周边信息";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "需要访问您的位置以提供周边信息";
-				INFOPLIST_KEY_NSMicrophoneUsageDescription = "需要访问您的麦克风进行录音";
-				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "需要访问您的相机用于拍照";
-				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "需要访问您的相册用于选择图片";
-				INFOPLIST_KEY_NSRemindersFullAccessUsageDescription = "需要访问您的提醒事项以读取和添加任务。";
-				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "我们需要访问您的语音识别权限";
+				INFOPLIST_KEY_NSCalendarsFullAccessUsageDescription = "ChavrusaChat accesses your calendars only when you ask it to read or add an event.";
+				INFOPLIST_KEY_NSCameraUsageDescription = "ChavrusaChat accesses the camera only when you ask it to take a photo.";
+				INFOPLIST_KEY_NSHealthClinicalHealthRecordsShareUsageDescription = "ChavrusaChat reads clinical health records only when you request a health feature that needs them.";
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "ChavrusaChat reads health data only when you request a health-related feature.";
+				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "ChavrusaChat writes health data only when you ask it to record an activity.";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "ChavrusaChat uses your location only for location-based features you request.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "ChavrusaChat uses your location only for nearby, maps, and weather features you request.";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "ChavrusaChat uses the microphone only when you ask it to record audio.";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "ChavrusaChat saves media to your photo library only when you ask it to.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "ChavrusaChat reads selected photos only when you choose them.";
+				INFOPLIST_KEY_NSRemindersFullAccessUsageDescription = "ChavrusaChat accesses reminders only when you ask it to read or add a task.";
+				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "ChavrusaChat uses speech recognition only when you ask it to transcribe speech.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen";
@@ -1090,9 +1476,9 @@
 					Security,
 				);
 				ONLY_ACTIVE_ARCH = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = "cherryai.com.AI-Hanlin";
+				PRODUCT_BUNDLE_IDENTIFIER = com.itorah.chavrusachat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE_SPECIFIER = "ChavrusaChat App Store";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = YES;
@@ -1129,6 +1515,33 @@
 			buildConfigurations = (
 				D20000000000000000000070 /* Debug */,
 				D20000000000000000000071 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E40000000000000000000072 /* Build configuration list for PBXNativeTarget "ChavrusaChatShare" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E40000000000000000000070 /* Debug */,
+				E40000000000000000000071 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E50000000000000000000072 /* Build configuration list for PBXNativeTarget "ChavrusaChatTranslationProvider" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E50000000000000000000070 /* Debug */,
+				E50000000000000000000071 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E60000000000000000000072 /* Build configuration list for PBXNativeTarget "ChavrusaChatNotificationService" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E60000000000000000000070 /* Debug */,
+				E60000000000000000000071 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
