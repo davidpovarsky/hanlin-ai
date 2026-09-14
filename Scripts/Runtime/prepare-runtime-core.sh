@@ -105,10 +105,11 @@ cp "${PAYLOAD_ROOT}/RuntimeHostResources.zip" "${host_resource}"
 node "${SCRIPT_DIR}/generate-runtime-manifest.mjs" "${LOCK_FILE}" "${manifest_resource}"
 
 # CPython's installer derives extension-framework identifiers from the host app
-# identifier. Modules beginning with an underscore then produce a component
-# beginning with a hyphen, which App Store Connect treats as an app identifier.
+# identifier, and its template marks those dynamic frameworks as APPL bundles.
+# App Store Connect consequently tries to resolve each module as a separate app.
 # Keep this narrow downstream patch beside the generated vendor payload.
 python_build_utils="${python_vendor}/Python.xcframework/build/utils.sh"
+python_dylib_plist="${python_vendor}/Python.xcframework/build/iOS-dylib-Info-template.plist"
 node -e '
   const fs = require("node:fs");
   const file = process.argv[1];
@@ -121,10 +122,13 @@ node -e '
   }
   fs.writeFileSync(file, source.replace(original, replacement));
 ' "${python_build_utils}"
+plutil -replace CFBundlePackageType -string FMWK "${python_dylib_plist}"
+plutil -lint "${python_dylib_plist}"
 
 test -d "${node_vendor}/NodeMobile.xcframework"
 test -d "${python_vendor}/Python.xcframework"
 grep -Fq 'FRAMEWORK_BUNDLE_ID="org.python.runtime.module-$FRAMEWORK_MODULE_ID"' "${python_build_utils}"
+test "$(plutil -extract CFBundlePackageType raw "${python_dylib_plist}")" = FMWK
 test -f "${host_resource}"
 test -f "${manifest_resource}"
 
