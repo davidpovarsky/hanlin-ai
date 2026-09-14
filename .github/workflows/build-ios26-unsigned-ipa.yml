@@ -3,6 +3,11 @@ name: Build iOS 26 Unsigned IPA
 on:
   workflow_dispatch:
     inputs:
+      testflight_upload:
+        description: Build, sign, validate, and upload ChavrusaChat to TestFlight
+        required: true
+        default: false
+        type: boolean
       runtime_bundle_only:
         description: Validate and publish the pinned RuntimeCore bundle without building the app
         required: true
@@ -67,6 +72,7 @@ permissions:
 
 jobs:
   plan-affected-validation:
+    if: ${{ !inputs.testflight_upload }}
     name: Plan affected validation and tests
     runs-on: ubuntu-latest
     timeout-minutes: 10
@@ -2343,3 +2349,10 @@ jobs:
           path: simulator-logs
           if-no-files-found: error
           retention-days: 14
+
+  upload-chavrusachat-to-testflight:
+    if: ${{ inputs.testflight_upload }}
+    uses: ./.github/workflows/testflight.yml
+    with:
+      upload_to_testflight: true
+    secrets: inherit

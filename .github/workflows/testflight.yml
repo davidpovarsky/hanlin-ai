@@ -1,6 +1,11 @@
 name: Build Signed ChavrusaChat IPA and Upload to TestFlight
 
 on:
+  workflow_call:
+    inputs:
+      upload_to_testflight:
+        required: true
+        type: boolean
   workflow_dispatch:
     inputs:
       upload_to_testflight:
