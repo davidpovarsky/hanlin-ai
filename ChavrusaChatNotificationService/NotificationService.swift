@@ -1,7 +1,8 @@
 import Foundation
 import UserNotifications
 
-final class NotificationService: UNNotificationServiceExtension {
+final class NotificationService: UNNotificationServiceExtension, @unchecked Sendable {
+    private let stateLock = NSLock()
     private var contentHandler: ((UNNotificationContent) -> Void)?
     private var bestAttemptContent: UNMutableNotificationContent?
 
@@ -9,31 +10,34 @@ final class NotificationService: UNNotificationServiceExtension {
         _ request: UNNotificationRequest,
         withContentHandler contentHandler: @escaping (UNNotificationContent) -> Void
     ) {
-        self.contentHandler = contentHandler
         guard let content = request.content.mutableCopy() as? UNMutableNotificationContent else {
             contentHandler(request.content)
             return
         }
-        bestAttemptContent = content
         content.categoryIdentifier = "CHAVRUSA_REMINDER"
+        stateLock.withLock {
+            self.contentHandler = contentHandler
+            bestAttemptContent = content
+        }
 
         guard let value = content.userInfo["media-url"] as? String,
               let remoteURL = URL(string: value) else {
-            contentHandler(content)
+            deliverBestAttempt()
             return
         }
-        Task {
-            if let attachment = try? await attachment(from: remoteURL) {
-                content.attachments = [attachment]
+        Task { [weak self] in
+            guard let self else { return }
+            if let attachment = try? await self.attachment(from: remoteURL) {
+                self.stateLock.withLock {
+                    self.bestAttemptContent?.attachments = [attachment]
+                }
             }
-            contentHandler(content)
+            self.deliverBestAttempt()
         }
     }
 
     override func serviceExtensionTimeWillExpire() {
-        if let contentHandler, let bestAttemptContent {
-            contentHandler(bestAttemptContent)
-        }
+        deliverBestAttempt()
     }
 
     private func attachment(from remoteURL: URL) async throws -> UNNotificationAttachment {
@@ -44,5 +48,17 @@ final class NotificationService: UNNotificationServiceExtension {
             .appendingPathExtension((suggestedName as NSString).pathExtension)
         try FileManager.default.moveItem(at: temporaryURL, to: destination)
         return try UNNotificationAttachment(identifier: "media", url: destination)
+    }
+
+    private func deliverBestAttempt() {
+        let delivery = stateLock.withLock {
+            let delivery = (contentHandler, bestAttemptContent)
+            contentHandler = nil
+            bestAttemptContent = nil
+            return delivery
+        }
+
+        guard let contentHandler = delivery.0, let bestAttemptContent = delivery.1 else { return }
+        contentHandler(bestAttemptContent)
     }
 }
