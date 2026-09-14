@@ -317,20 +317,18 @@ jobs:
           }
 
           verify_bundle "$app" "$APP_BUNDLE_ID" main
-          declare -A extensions=(
-            [share]="ChavrusaChatShare.appex|$SHARE_BUNDLE_ID"
-            [widgets]="HanlinScriptingWidgets.appex|$WIDGETS_BUNDLE_ID"
-            [translation]="ChavrusaChatTranslationProvider.appex|$TRANSLATION_BUNDLE_ID"
-            [notification]="ChavrusaChatNotificationService.appex|$NOTIFICATION_BUNDLE_ID"
-          )
-          for role in "${!extensions[@]}"; do
-            IFS='|' read -r bundle_name bundle_id <<< "${extensions[$role]}"
+          verify_extension() {
+            local role="$1" bundle_name="$2" bundle_id="$3"
             bundle="$app/PlugIns/$bundle_name"
             test -d "$bundle"
             codesign --verify --strict --verbose=2 "$bundle"
             verify_bundle "$bundle" "$bundle_id" "$role"
             test "$(/usr/libexec/PlistBuddy -c 'Print :CFBundleVersion' "$bundle/Info.plist")" = "$BUILD_NUMBER"
-          done
+          }
+          verify_extension share ChavrusaChatShare.appex "$SHARE_BUNDLE_ID"
+          verify_extension widgets HanlinScriptingWidgets.appex "$WIDGETS_BUNDLE_ID"
+          verify_extension translation ChavrusaChatTranslationProvider.appex "$TRANSLATION_BUNDLE_ID"
+          verify_extension notification ChavrusaChatNotificationService.appex "$NOTIFICATION_BUNDLE_ID"
 
           main_entitlements="$BUILD_DIR/logs/main-signed-entitlements.plist"
           containers=$(/usr/libexec/PlistBuddy -c 'Print :com.apple.developer.icloud-container-identifiers' "$main_entitlements")
