@@ -11,8 +11,8 @@ final class ChavrusaChatTranslationProvider: TranslationUIProviderExtension {
     }
 }
 
-private struct TranslationProviderView<Context: TranslationUIProviderContext>: View {
-    let context: Context
+private struct TranslationProviderView: View {
+    let context: any TranslationUIProviderContext
     @State private var translatedText = ""
 
     private var sourceText: String {
