@@ -266,6 +266,7 @@ struct ChatViewBottom: View {
     @State private var showCanvas = false
     @State private var inputExpanded = false
     @State private var showModelMenuSheet = false
+    @State private var showManageModelsSheet = false
     @State private var voiceExpanded = false
     @State private var showImagePicker = false
     @State private var showCameraPicker = false
@@ -529,9 +530,6 @@ struct ChatViewBottom: View {
                 VStack {
                     messageInput
                     modelSelector
-                    if showPhotoSourceOptions {
-                        sourceSelector
-                    }
                 }
                 .padding(.bottom, 10)
                 .onTapGesture {
@@ -1004,6 +1002,9 @@ struct ChatViewBottom: View {
                     isFeedBack: $isFeedBack,
                     showPhotoSourceOptions: $showPhotoSourceOptions,
                     isSourceOptionsVisible: $isSourceOptionsVisible,
+                    showCameraPicker: $showCameraPicker,
+                    showImagePicker: $showImagePicker,
+                    showDocumentPicker: $showDocumentPicker,
                     ifKnowledge: $ifKnowledge,
                     ifSearch: $ifSearch,
                     ifToolUse: $ifToolUse,
@@ -1044,6 +1045,21 @@ struct ChatViewBottom: View {
                 .presentationDetents([.medium, .large])
                 .presentationDragIndicator(.visible)
         }
+        .sheet(isPresented: $showCameraPicker) {
+            ImagePicker(selectedImages: $selectedImages, sourceType: .camera, maxImageNumber: 5)
+                .background(.black)
+        }
+        .sheet(isPresented: $showImagePicker) {
+            ImagePicker(selectedImages: $selectedImages, sourceType: .photoLibrary, maxImageNumber: 5)
+                .ignoresSafeArea()
+        }
+        .sheet(isPresented: $showDocumentPicker) {
+            DocumentPicker(selectedDocumentURLs: $selectedDocumentURLs)
+                .ignoresSafeArea()
+        }
+        .sheet(isPresented: $showManageModelsSheet) {
+            ModelsView(isPresentedInSheet: true)
+        }
     }
 
     // MARK: - 判断是否使用菜单模式
@@ -1051,25 +1067,14 @@ struct ChatViewBottom: View {
         userInfos.first?.modelSelectorStyle == "menu"
     }
 
-    // MARK: 模型选择区域
+    // MARK: - 模型选择区域（仅展示当前选中的模型，点击弹出原生 Menu）
     private var modelSelector: some View {
-        Group {
-            if isMenuMode {
-                menuStyleSelector
-            } else {
-                scrollStyleSelector
-            }
-        }
-    }
-
-    // MARK: - 横向滑动模式选择器
-    private var scrollStyleSelector: some View {
         HStack {
             let visibleIndices = modelTemp.indices.filter { !modelTemp[$0].isHidden }
 
             if modelTemp.isEmpty {
                 // 数据未加载，显示占位符
-                HStack {
+                HStack(spacing: 6) {
                     ProgressView()
                         .scaleEffect(0.8)
                     Text(String(localized: "加载模型中..."))
@@ -1084,63 +1089,56 @@ struct ChatViewBottom: View {
                     .foregroundColor(.secondary)
                     .frame(height: 36)
             } else {
-                // 正常显示模型列表
-                ScrollViewReader { scrollViewProxy in
-                    ScrollView(.horizontal, showsIndicators: false) {
-                        HStack(spacing: 6) {
-                            ForEach(visibleIndices, id: \.self) { index in
-                                if let model = modelTemp[safe: index] {
-                                    Button(action: {
-                                        isSelect.toggle()
-                                        onSelectModel(index)
-                                    }) {
-                                        modelButton(for: model, isSelected: index == selectedModelIndex)
-                                    }
-                                    .sensoryFeedback(.selection, trigger: isSelect)
+                let currentModelIndex: Int = {
+                    if modelTemp.indices.contains(selectedModelIndex) && !modelTemp[selectedModelIndex].isHidden {
+                        return selectedModelIndex
+                    }
+                    return visibleIndices.first ?? 0
+                }()
+                let currentModel = modelTemp[currentModelIndex]
+
+                Menu {
+                    // 最多显示 7 个可用模型
+                    let topIndices = Array(visibleIndices.prefix(7))
+                    ForEach(topIndices, id: \.self) { index in
+                        let model = modelTemp[index]
+                        let isSelected = (index == selectedModelIndex)
+
+                        Button {
+                            isSelect.toggle()
+                            onSelectModel(index)
+                        } label: {
+                            HStack {
+                                Text(model.displayName ?? model.name ?? String(localized: "未知"))
+                                if isSelected {
+                                    Image(systemName: "checkmark")
                                 }
                             }
                         }
                     }
-                    .cornerRadius(size_20)
-                    .onReceive(NotificationCenter.default.publisher(for: .scrollToModelIndex)) { notification in
-                        if let index = notification.object as? Int {
-                            withAnimation(.spring(response: 0.5, dampingFraction: 0.7)) {
-                                scrollViewProxy.scrollTo(index, anchor: .center)
-                            }
-                        }
+
+                    Divider()
+
+                    Button {
+                        showManageModelsSheet = true
+                    } label: {
+                        Label(String(localized: "选择与添加模型..."), systemImage: "square.stack.3d.up")
+                    }
+                } label: {
+                    HStack(spacing: 4) {
+                        modelButton(for: currentModel, isSelected: true)
+                        Image(systemName: "chevron.up.chevron.down")
+                            .font(.system(size: 10, weight: .bold))
+                            .foregroundColor(TemporaryRecord ? .primary.opacity(0.7) : Color.hlBluefont.opacity(0.8))
+                            .padding(.trailing, 6)
                     }
                 }
+                .sensoryFeedback(.selection, trigger: isSelect)
             }
+
+            Spacer()
         }
         .padding(.horizontal, 12)
-    }
-
-    // MARK: - 菜单选择模式选择器（模型按钮已移至 ActionButtonsView，此处仅处理无模型时的提示）
-    private var menuStyleSelector: some View {
-        let visibleIndices = modelTemp.indices.filter { !modelTemp[$0].isHidden }
-
-        return Group {
-            if modelTemp.isEmpty {
-                // 数据未加载，显示占位符
-                HStack {
-                    ProgressView()
-                        .scaleEffect(0.8)
-                    Text(String(localized: "加载模型中..."))
-                        .font(.caption)
-                        .foregroundColor(.secondary)
-                }
-                .frame(height: 36)
-                .padding(.horizontal, 12)
-            } else if visibleIndices.isEmpty {
-                // 没有可用模型
-                Text(String(localized: "暂无可用模型，请前往模型界面开启模型。"))
-                    .font(.caption)
-                    .foregroundColor(.secondary)
-                    .frame(height: 36)
-                    .padding(.horizontal, 12)
-            }
-            // 有模型时不渲染任何内容（隐式 EmptyView）
-        }
     }
 
     private func modelButton(for model: AllModels, isSelected: Bool) -> some View {
@@ -1559,6 +1557,9 @@ struct ActionButtonsView: View {
     @Binding var isFeedBack: Bool
     @Binding var showPhotoSourceOptions: Bool
     @Binding var isSourceOptionsVisible: Bool
+    @Binding var showCameraPicker: Bool
+    @Binding var showImagePicker: Bool
+    @Binding var showDocumentPicker: Bool
 
     @Binding var ifKnowledge: Bool
     @Binding var ifSearch: Bool
@@ -1715,11 +1716,30 @@ struct ActionButtonsView: View {
                 }
             }
 
-            // 附件
+            // 附件 (Menu 模式)
             if model?.supportsTextGen == true {
-                Button {
-                    isFeedBack.toggle()
-                    showPhotoSourceOptions.toggle()
+                Menu {
+                    Button {
+                        isFeedBack.toggle()
+                        showCameraPicker = true
+                    } label: {
+                        Label(String(localized: "拍照"), systemImage: "camera")
+                    }
+
+                    Button {
+                        isFeedBack.toggle()
+                        showImagePicker = true
+                    } label: {
+                        Label(String(localized: "相册选择"), systemImage: "photo.on.rectangle")
+                    }
+
+                    Button {
+                        isFeedBack.toggle()
+                        showDocumentPicker = true
+                    } label: {
+                        Label(String(localized: "文件文本"), systemImage: "doc")
+                    }
+                    .disabled(selectedDocumentURLs.count >= 5)
                 } label: {
                     Image(systemName: "plus.circle")
                         .resizable()
@@ -1727,19 +1747,11 @@ struct ActionButtonsView: View {
                         .foregroundColor(
                             (isResponding || selectedImages.count > 4)
                             ? .gray
-                            : (isSourceOptionsVisible ? .hlRed
-                               : (TemporaryRecord ? .primary : .hlBluefont))
+                            : (TemporaryRecord ? .primary : .hlBluefont)
                         )
-                        .rotationEffect(.degrees(isSourceOptionsVisible ? 45 : 0))
-                        .animation(.spring(response: 0.5), value: isSourceOptionsVisible)
                 }
                 .disabled(isResponding || selectedImages.count > 4)
                 .sensoryFeedback(.impact, trigger: isFeedBack)
-                .onChange(of: showPhotoSourceOptions) {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                        isSourceOptionsVisible = showPhotoSourceOptions
-                    }
-                }
             }
 
             // —— 左侧滚动按钮 —— //

@@ -126,6 +126,8 @@ struct ChatView: View {
     
     @Environment(\.modelContext) private var context: ModelContext
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
+
     
     @State private var chatTemps: [ChatMessages] = []
     @State private var modelTemp: [AllModels] = []
@@ -288,14 +290,18 @@ struct ChatView: View {
                 )
             }
         }
-        .toolbar(.hidden, for: .tabBar)
+        .toolbar(horizontalSizeClass == .compact ? .hidden : .visible, for: .tabBar)
         .background(Color(.systemBackground))
         .onAppear {
             handleOnAppear()
-            NotificationCenter.default.post(name: .hideTabBar, object: true) // 隐藏 TabBar
+            if horizontalSizeClass == .compact {
+                NotificationCenter.default.post(name: .hideTabBar, object: true) // 仅在紧凑模式下隐藏 TabBar
+            }
         }
         .onDisappear {
-            NotificationCenter.default.post(name: .hideTabBar, object: false) // 显示 TabBar
+            if horizontalSizeClass == .compact {
+                NotificationCenter.default.post(name: .hideTabBar, object: false) // 显示 TabBar
+            }
             openHistory()
             if TemporaryRecord {
                 context.delete(chatRecord)
