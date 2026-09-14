@@ -215,7 +215,7 @@ jobs:
             grep -F "PROVISIONING_PROFILE_SPECIFIER = $profile" "$log"
             grep -F "CODE_SIGN_ENTITLEMENTS = $entitlements" "$log"
           }
-          check_target AI_HLY "$APP_BUNDLE_ID" "$MAIN_PROFILE_SPECIFIER" AI_HLY/AI_HLY.entitlements
+          check_target AI_Hanlin "$APP_BUNDLE_ID" "$MAIN_PROFILE_SPECIFIER" AI_HLY/AI_HLY.entitlements
           check_target ChavrusaChatShare "$SHARE_BUNDLE_ID" "$SHARE_PROFILE_SPECIFIER" ChavrusaChatShare/ChavrusaChatShare.entitlements
           check_target HanlinScriptingWidgets "$WIDGETS_BUNDLE_ID" "$WIDGETS_PROFILE_SPECIFIER" HanlinScriptingWidgets/HanlinScriptingWidgets.entitlements
           check_target ChavrusaChatTranslationProvider "$TRANSLATION_BUNDLE_ID" "$TRANSLATION_PROFILE_SPECIFIER" ChavrusaChatTranslationProvider/ChavrusaChatTranslationProvider.entitlements
