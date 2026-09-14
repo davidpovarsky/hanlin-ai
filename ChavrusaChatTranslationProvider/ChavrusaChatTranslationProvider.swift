@@ -1,6 +1,6 @@
 import SwiftUI
-import Translation
-import TranslationUIProvider
+@preconcurrency import Translation
+@preconcurrency import TranslationUIProvider
 
 @main
 final class ChavrusaChatTranslationProvider: TranslationUIProviderExtension {
@@ -12,8 +12,12 @@ final class ChavrusaChatTranslationProvider: TranslationUIProviderExtension {
 }
 
 private struct TranslationProviderView: View {
-    let context: any TranslationUIProviderContext
+    @State private var context: any TranslationUIProviderContext
     @State private var translatedText = ""
+
+    init(context: any TranslationUIProviderContext) {
+        _context = State(initialValue: context)
+    }
 
     private var sourceText: String {
         context.inputText.map { String($0.characters) } ?? ""
