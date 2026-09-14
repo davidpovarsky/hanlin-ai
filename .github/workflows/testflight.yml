@@ -196,9 +196,20 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          xcodebuild -project "$PROJECT_PATH" -scheme "$SCHEME" -resolvePackageDependencies \
-            -clonedSourcePackagesDirPath "$BUILD_DIR/SourcePackages" \
-            -skipPackagePluginValidation -skipMacroValidation
+          for attempt in 1 2 3 4; do
+            if xcodebuild -project "$PROJECT_PATH" -scheme "$SCHEME" -resolvePackageDependencies \
+              -clonedSourcePackagesDirPath "$BUILD_DIR/SourcePackages" \
+              -skipPackagePluginValidation -skipMacroValidation; then
+              break
+            fi
+            if [ "$attempt" -eq 4 ]; then
+              echo "::error::Swift package resolution failed after $attempt attempts"
+              exit 1
+            fi
+            delay=$((attempt * 20))
+            echo "Swift package resolution attempt $attempt failed; retrying in ${delay}s"
+            sleep "$delay"
+          done
 
       - name: Verify signing settings for every distributed target
         shell: bash
