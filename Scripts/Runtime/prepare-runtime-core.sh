@@ -104,8 +104,27 @@ cp "${PAYLOAD_ROOT}/Python-VERSIONS" "${python_vendor}/Python-VERSIONS"
 cp "${PAYLOAD_ROOT}/RuntimeHostResources.zip" "${host_resource}"
 node "${SCRIPT_DIR}/generate-runtime-manifest.mjs" "${LOCK_FILE}" "${manifest_resource}"
 
+# CPython's installer derives extension-framework identifiers from the host app
+# identifier. Modules beginning with an underscore then produce a component
+# beginning with a hyphen, which App Store Connect treats as an app identifier.
+# Keep this narrow downstream patch beside the generated vendor payload.
+python_build_utils="${python_vendor}/Python.xcframework/build/utils.sh"
+node -e '
+  const fs = require("node:fs");
+  const file = process.argv[1];
+  const source = fs.readFileSync(file, "utf8");
+  const original = `    FRAMEWORK_BUNDLE_ID=$(echo $PRODUCT_BUNDLE_IDENTIFIER.$FULL_MODULE_NAME | tr "_" "-")`;
+  const replacement = `    FRAMEWORK_MODULE_ID=$(echo "$FULL_MODULE_NAME" | tr "_." "--")
+    FRAMEWORK_BUNDLE_ID="org.python.runtime.module-$FRAMEWORK_MODULE_ID"`;
+  if (source.split(original).length !== 2) {
+    throw new Error("Unexpected CPython framework bundle identifier implementation");
+  }
+  fs.writeFileSync(file, source.replace(original, replacement));
+' "${python_build_utils}"
+
 test -d "${node_vendor}/NodeMobile.xcframework"
 test -d "${python_vendor}/Python.xcframework"
+grep -Fq 'FRAMEWORK_BUNDLE_ID="org.python.runtime.module-$FRAMEWORK_MODULE_ID"' "${python_build_utils}"
 test -f "${host_resource}"
 test -f "${manifest_resource}"
 
