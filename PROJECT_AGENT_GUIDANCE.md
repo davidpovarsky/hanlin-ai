@@ -321,3 +321,12 @@ unless that exact claim was verified.
 ## 14. User preference
 
 The user wants modern, advanced, clean Swift and SwiftUI code, targets current stable Apple platforms only, does not want backward compatibility, works from Windows, and uses manually requested GitHub Actions for Apple-platform compilation and verification.
+
+## 15. Hanlin NativeScript and MiniApp scripts
+
+When building, modifying, or packaging NativeScript MiniApps and scripts for Hanlin:
+- Consult the full agent and developer guide: [`docs/hanlin-nativescript-guide.md`](file:///c:/Users/DAVID/Code/hanlin-ai/docs/hanlin-nativescript-guide.md).
+- MiniApps use the direct NativeScript iOS Metadata Bridge (`UIKit`, `Foundation`, `Auto Layout`, `UITabBarController`, `UINavigationController`) without `@nativescript/core`.
+- Pass the root controller to the host UI using `NativeScriptEmbedder.sharedInstance().delegate.presentNativeScriptApp(...)`.
+- For TypeScript typings, reference `@nativescript/types-ios`.
+
