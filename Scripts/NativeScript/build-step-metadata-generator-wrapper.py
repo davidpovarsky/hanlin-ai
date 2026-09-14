@@ -16,7 +16,15 @@ def required_env(name: str) -> str:
 
 
 def build_intermediates_root() -> Path:
+    obj_root = os.environ.get("OBJROOT")
+    if obj_root:
+        return Path(obj_root)
+
     build_dir = required_env("BUILD_DIR")
+    build_dir_path = Path(build_dir)
+    if build_dir_path.name == "BuildProductsPath":
+        return build_dir_path.parent / "IntermediateBuildFilesPath"
+
     marker = f"{os.sep}Products"
     marker_index = build_dir.rfind(marker)
     if marker_index < 0:
