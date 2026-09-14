@@ -103,6 +103,7 @@ struct ChatExecutionTimelineItemView: View {
             .foregroundStyle(titleColor)
             .lineLimit(1)
             .truncationMode(.tail)
+            .chatShimmer(isActive: status == .running || status == .pending)
 
           if let countBadge {
             Text(countBadge)

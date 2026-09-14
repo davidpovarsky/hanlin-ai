@@ -9,6 +9,8 @@ import SwiftUI
 import SwiftData
 
 struct ModelsView: View {
+    var isPresentedInSheet: Bool = false
+    @Environment(\.dismiss) private var dismiss
     // MARK: - 数据源与状态变量
     @Query var models: [AllModels] // 从数据库获取所有模型数据
     @Query var apiKeys: [APIKeys] // 读取所有 API Keys
@@ -92,6 +94,13 @@ struct ModelsView: View {
             }
             .searchable(text: $searchText, prompt: selectedIdentity.lowercased() == "agent" ? String(localized: "搜索智能体") : String(localized: "搜索模型"))
             .toolbar {
+                if isPresentedInSheet {
+                    ToolbarItem(placement: .cancellationAction) {
+                        Button(String(localized: "完成")) {
+                            dismiss()
+                        }
+                    }
+                }
                 // 中间 Picker 选择身份
                 ToolbarItem(placement: .principal) {
                     Picker(String(localized: "身份选择"), selection: $selectedIdentity) {
@@ -131,6 +140,9 @@ struct ModelsView: View {
                                 showAddAgentView = true
                             } label: {
                                 Label(String(localized: "添加新智能体"), systemImage: "person.badge.plus")
+                            }
+                            NavigationLink(destination: APIKeysView()) {
+                                Label(String(localized: "模型厂商设置"), systemImage: "key.2.on.ring")
                             }
                         } label: {
                             Image(systemName: "plus")
