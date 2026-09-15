@@ -31,7 +31,10 @@ static TNSIsESModuleFn s_tnsIsESModule = nullptr;
 static void InitTNSSymbols() {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        s_tnsIsESModule = (TNSIsESModuleFn)dlsym(RTLD_DEFAULT, "__ZN3tns10IsESModuleERKNSt3__112basic_stringIcNS0_11char_traitsIcEENS0_9allocatorIcEEEE");
+        s_tnsIsESModule = (TNSIsESModuleFn)dlsym(RTLD_DEFAULT, "_ZN3tns10IsESModuleERKNSt3__112basic_stringIcNS0_11char_traitsIcEENS0_9allocatorIcEEEE");
+        if (!s_tnsIsESModule) {
+            s_tnsIsESModule = (TNSIsESModuleFn)dlsym(RTLD_DEFAULT, "__ZN3tns10IsESModuleERKNSt3__112basic_stringIcNS0_11char_traitsIcEENS0_9allocatorIcEEEE");
+        }
         if (s_tnsIsESModule) {
             NSLog(@"[HanlinLoaderTrace] Successfully resolved tns::IsESModule");
         } else {
@@ -46,23 +49,6 @@ static BOOL HanlinStringEndsWith(const char *str, const char *suffix) {
     size_t sufLen = strlen(suffix);
     if (strLen < sufLen) return NO;
     return strcmp(str + (strLen - sufLen), suffix) == 0;
-}
-
-static NSString *HanlinReadFirstLine(NSString *path) {
-    NSError *error = nil;
-    NSString *content = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:&error];
-    if (!content) { return @"<cannot open>"; }
-    NSArray<NSString *> *lines = [content componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]];
-    for (NSString *line in lines) {
-        NSString *trimmed = [line stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-        if (trimmed.length > 0) {
-            if (trimmed.length > 140) {
-                return [[trimmed substringToIndex:140] stringByAppendingString:@"..."];
-            }
-            return trimmed;
-        }
-    }
-    return @"<empty>";
 }
 
 static NSString *HanlinFindNearestPackageJson(NSString *startDir) {
@@ -90,38 +76,56 @@ static NSString *HanlinReadPackageJsonType(NSString *pkgJsonPath) {
     return @"<invalid-json>";
 }
 
-static void hanlin_log_file_access(const char *path, const char *op) {
+static thread_local bool s_in_hook = false;
+
+static void hanlin_log_file_access(int fd, const char *path, const char *op) {
     if (path == nullptr) return;
-    if (HanlinStringEndsWith(path, ".js") ||
-        HanlinStringEndsWith(path, ".mjs") ||
-        HanlinStringEndsWith(path, ".cjs") ||
-        strstr(path, "package.json") != NULL) {
-
-        char canonical[PATH_MAX] = {0};
-        if (realpath(path, canonical) == nullptr) {
-            strncpy(canonical, path, sizeof(canonical) - 1);
-        }
-
-        InitTNSSymbols();
-        BOOL isESM = NO;
-        if (s_tnsIsESModule) {
-            std::string p(path);
-            isESM = s_tnsIsESModule(p);
-        }
-
-        NSString *nsPath = [NSString stringWithUTF8String:path];
-        NSString *parentDir = [nsPath stringByDeletingLastPathComponent];
-        NSString *nearestPkg = HanlinFindNearestPackageJson(parentDir);
-        NSString *pkgType = HanlinReadPackageJsonType(nearestPkg);
-        NSString *firstLine = HanlinReadFirstLine(nsPath);
-
-        NSLog(@"[HanlinLoaderTrace] >>> %s: %s", op, path);
-        NSLog(@"[HanlinLoaderTrace]     CANONICAL: %s", canonical);
-        NSLog(@"[HanlinLoaderTrace]     IS_ESM: %@", (s_tnsIsESModule ? (isESM ? @"YES (ESM)" : @"NO (CommonJS)") : @"UNKNOWN"));
-        NSLog(@"[HanlinLoaderTrace]     PKG_JSON: %@", nearestPkg ?: @"<NOT FOUND>");
-        NSLog(@"[HanlinLoaderTrace]     PKG_TYPE: %@", pkgType);
-        NSLog(@"[HanlinLoaderTrace]     FIRST_LINE: %@", firstLine);
+    if (!HanlinStringEndsWith(path, ".js") &&
+        !HanlinStringEndsWith(path, ".mjs") &&
+        !HanlinStringEndsWith(path, ".cjs") &&
+        strstr(path, "package.json") == NULL) {
+        return;
     }
+
+    char canonical[PATH_MAX] = {0};
+    if (realpath(path, canonical) == nullptr) {
+        strncpy(canonical, path, sizeof(canonical) - 1);
+    }
+
+    InitTNSSymbols();
+    BOOL isESM = NO;
+    if (s_tnsIsESModule) {
+        std::string p(path);
+        isESM = s_tnsIsESModule(p);
+    }
+
+    char firstLine[160] = {0};
+    if (fd >= 0) {
+        char buf[256] = {0};
+        ssize_t bytesRead = pread(fd, buf, sizeof(buf) - 1, 0);
+        if (bytesRead > 0) {
+            buf[bytesRead] = '\0';
+            char *newline = strpbrk(buf, "\r\n");
+            if (newline) *newline = '\0';
+            strncpy(firstLine, buf, sizeof(firstLine) - 1);
+        } else {
+            strncpy(firstLine, "<empty>", sizeof(firstLine) - 1);
+        }
+    } else {
+        strncpy(firstLine, "<no fd>", sizeof(firstLine) - 1);
+    }
+
+    NSString *nsPath = [NSString stringWithUTF8String:path];
+    NSString *parentDir = [nsPath stringByDeletingLastPathComponent];
+    NSString *nearestPkg = HanlinFindNearestPackageJson(parentDir);
+    NSString *pkgType = HanlinReadPackageJsonType(nearestPkg);
+
+    NSLog(@"[HanlinLoaderTrace] >>> %s: %s", op, path);
+    NSLog(@"[HanlinLoaderTrace]     CANONICAL: %s", canonical);
+    NSLog(@"[HanlinLoaderTrace]     IS_ESM: %@", (s_tnsIsESModule ? (isESM ? @"YES (ESM)" : @"NO (CommonJS)") : @"UNKNOWN"));
+    NSLog(@"[HanlinLoaderTrace]     PKG_JSON: %@", nearestPkg ?: @"<NOT FOUND>");
+    NSLog(@"[HanlinLoaderTrace]     PKG_TYPE: %@", pkgType);
+    NSLog(@"[HanlinLoaderTrace]     FIRST_LINE: %s", firstLine);
 }
 
 static int (*orig_open)(const char *, int, ...) = nullptr;
@@ -136,7 +140,12 @@ static int hanlin_hooked_open(const char *path, int oflag, ...) {
     }
 
     int fd = orig_open ? orig_open(path, oflag, mode) : open(path, oflag, mode);
-    hanlin_log_file_access(path, "OPEN");
+
+    if (!s_in_hook && fd >= 0 && path != nullptr) {
+        s_in_hook = true;
+        hanlin_log_file_access(fd, path, "OPEN");
+        s_in_hook = false;
+    }
     return fd;
 }
 
@@ -144,7 +153,12 @@ static FILE *(*orig_fopen)(const char *, const char *) = nullptr;
 
 static FILE *hanlin_hooked_fopen(const char *path, const char *mode) {
     FILE *f = orig_fopen ? orig_fopen(path, mode) : fopen(path, mode);
-    hanlin_log_file_access(path, "FOPEN");
+    if (!s_in_hook && f != nullptr && path != nullptr) {
+        s_in_hook = true;
+        int fd = fileno(f);
+        hanlin_log_file_access(fd, path, "FOPEN");
+        s_in_hook = false;
+    }
     return f;
 }
 

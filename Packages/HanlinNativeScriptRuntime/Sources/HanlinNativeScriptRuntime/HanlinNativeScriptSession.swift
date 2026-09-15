@@ -312,9 +312,10 @@ public final class HanlinNativeScriptSession {
                 if spec.hasPrefix("./") || spec.hasPrefix("../") {
                     let base = fileURL.deletingLastPathComponent()
                     let target = base.appending(path: spec)
-                    for ext in ["", ".mjs", ".js", ".cjs", "/index.mjs", "/index.js", "/index.cjs"] {
+                    for ext in [".mjs", ".js", ".cjs", "", "/index.mjs", "/index.js", "/index.cjs"] {
                         let tryURL = ext.isEmpty ? target : base.appending(path: spec + ext)
-                        if fm.fileExists(atPath: tryURL.path(percentEncoded: false)) {
+                        var isDir: ObjCBool = false
+                        if fm.fileExists(atPath: tryURL.path(percentEncoded: false), isDirectory: &isDir), !isDir.boolValue {
                             candidate = tryURL
                             break
                         }
@@ -327,9 +328,10 @@ public final class HanlinNativeScriptSession {
                     } else {
                         let cleanSub = subpath.hasPrefix("/") ? String(subpath.dropFirst()) : subpath
                         let target = coreRoot.appending(path: cleanSub)
-                        for ext in ["", ".mjs", ".js", ".cjs", "/index.mjs", "/index.js"] {
+                        for ext in [".mjs", ".js", ".cjs", "", "/index.mjs", "/index.js", "/index.cjs"] {
                             let tryURL = ext.isEmpty ? target : coreRoot.appending(path: cleanSub + ext)
-                            if fm.fileExists(atPath: tryURL.path(percentEncoded: false)) {
+                            var isDir: ObjCBool = false
+                            if fm.fileExists(atPath: tryURL.path(percentEncoded: false), isDirectory: &isDir), !isDir.boolValue {
                                 candidate = tryURL
                                 break
                             }
