@@ -304,12 +304,53 @@ public struct HanlinScriptAnalyzer: Sendable {
                 }
             }
         }
+        var declaredCoreVersion: String?
+        if let deps = packageJSON["dependencies"] as? [String: Any], let version = deps["@nativescript/core"] as? String {
+            declaredCoreVersion = version
+        } else if let devDeps = packageJSON["devDependencies"] as? [String: Any], let version = devDeps["@nativescript/core"] as? String {
+            declaredCoreVersion = version
+        }
+        if let coreVersion = declaredCoreVersion {
+            if isCoreVersionCompatible(coreVersion) {
+                findings.append(.init(
+                    state: .supported,
+                    severity: .information,
+                    sourcePath: packageJSONPath,
+                    message: "NativeScript core @nativescript/core \(coreVersion) is supported by embedded runtime \(nativeScriptRuntimeVersion)."
+                ))
+            } else {
+                findings.append(.init(
+                    state: .unsupported,
+                    severity: .error,
+                    sourcePath: packageJSONPath,
+                    message: "This Hanlin build supports @nativescript/core \(nativeScriptRuntimeVersion), but the package requires \(coreVersion)."
+                ))
+            }
+        }
         findings.append(.init(
             state: .supported,
             severity: .information,
             sourcePath: entrypoint.sourcePath,
             message: "Prepared NativeScript application structure is valid."
         ))
+    }
+
+    private static func isCoreVersionCompatible(_ versionString: String) -> Bool {
+        let trimmed = versionString.trimmingCharacters(in: .whitespacesAndNewlines)
+        if trimmed.isEmpty || trimmed == "*" || trimmed == "latest" {
+            return true
+        }
+        var cleaned = trimmed
+        if cleaned.hasPrefix("^") || cleaned.hasPrefix("~") || cleaned.hasPrefix("=") || cleaned.hasPrefix("v") {
+            cleaned = String(cleaned.dropFirst())
+        }
+        if cleaned.hasPrefix("9.1") {
+            return true
+        }
+        if trimmed.hasPrefix("^9.") {
+            return true
+        }
+        return false
     }
 
     private func packageFiles(root: URL) throws -> [String: Data] {

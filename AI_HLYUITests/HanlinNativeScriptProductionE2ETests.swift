@@ -6,6 +6,7 @@ final class HanlinNativeScriptProductionE2ETests: XCTestCase {
     private let documents = XCUIApplication(bundleIdentifier: "com.apple.DocumentsApp")
     private let swiftUIPackageName = "Hanlin NativeScript SwiftUI E2E"
     private let corePackageName = "Hanlin NativeScript Core E2E"
+    private let sefariaPackageName = "Sefaria Library & Texts (Core)"
 
     override func setUpWithError() throws {
         continueAfterFailure = false
@@ -13,6 +14,111 @@ final class HanlinNativeScriptProductionE2ETests: XCTestCase {
         app.launchEnvironment["HANLIN_UNIT_TEST_HOST"] = "0"
         app.launchEnvironment["HANLIN_NATIVESCRIPT_E2E"] = "1"
         app.launch()
+    }
+
+    func testProductionSefariaCoreEndToEnd() throws {
+        openApps()
+        importAndInstall(archive: "sefaria-reader-core")
+
+        launchInstalledPackage(named: sefariaPackageName)
+
+        let dailyTab = app.tabBars.buttons["לימוד יומי"].firstMatch
+        let dailyTabCandidate = dailyTab.exists ? dailyTab : app.buttons["לימוד יומי"].firstMatch
+        XCTAssertTrue(dailyTabCandidate.waitForExistence(timeout: 30), "Sefaria Core TabView did not render")
+        capture(name: "Sefaria-Core-App-Launched")
+
+        // 1. Daily Study Tab (לימוד יומי)
+        let readButtonPredicate = NSPredicate(format: "label CONTAINS 'פתח לקריאה ולימוד'")
+        let openReadButton = app.buttons.matching(readButtonPredicate).firstMatch
+        XCTAssertTrue(openReadButton.waitForExistence(timeout: 30), "Sefaria Daily Study calendar items did not load via Http")
+        capture(name: "Sefaria-Daily-Tab-Loaded")
+
+        openReadButton.tap()
+
+        // 3. Reader controls (עברית, English, דו-לשוני, font size, navigation)
+        let hebrewMode = app.buttons["עברית"].firstMatch
+        let englishMode = app.buttons["English"].firstMatch
+        let bilingualMode = app.buttons["דו-לשוני"].firstMatch
+        XCTAssertTrue(hebrewMode.waitForExistence(timeout: 30), "Reader page SegmentedBar did not render")
+        capture(name: "Sefaria-Reader-Hebrew")
+
+        if englishMode.exists {
+            englishMode.tap()
+            capture(name: "Sefaria-Reader-English")
+        }
+        if bilingualMode.exists {
+            bilingualMode.tap()
+            capture(name: "Sefaria-Reader-Bilingual")
+        }
+
+        let plusButton = app.buttons["A+"].firstMatch
+        let minusButton = app.buttons["A−"].firstMatch
+        if plusButton.exists { plusButton.tap() }
+        if minusButton.exists { minusButton.tap() }
+
+        let backButton = app.navigationBars.buttons.element(boundBy: 0)
+        if backButton.exists {
+            backButton.tap()
+        }
+
+        // 2. Library Tab (ארון הספרים)
+        let libraryTab = app.tabBars.buttons["ארון הספרים"].firstMatch
+        let libraryTabCandidate = libraryTab.exists ? libraryTab : app.buttons["ארון הספרים"].firstMatch
+        if libraryTabCandidate.waitForExistence(timeout: 10) {
+            libraryTabCandidate.tap()
+            let genesisChip = app.buttons["Genesis 1"].firstMatch
+            if genesisChip.waitForExistence(timeout: 10) {
+                genesisChip.tap()
+                XCTAssertTrue(hebrewMode.waitForExistence(timeout: 30), "Reader failed to load Genesis 1 from library")
+                capture(name: "Sefaria-Library-Genesis-Loaded")
+                if backButton.exists { backButton.tap() }
+            }
+        }
+
+        // 4. Search Tab (חיפוש)
+        let searchTab = app.tabBars.buttons["חיפוש"].firstMatch
+        let searchTabCandidate = searchTab.exists ? searchTab : app.buttons["חיפוש"].firstMatch
+        if searchTabCandidate.waitForExistence(timeout: 10) {
+            searchTabCandidate.tap()
+            let quickChip = app.buttons["Genesis 1"].firstMatch
+            if quickChip.waitForExistence(timeout: 10) {
+                quickChip.tap()
+                capture(name: "Sefaria-Search-Executed")
+                if backButton.exists { backButton.tap() }
+            }
+        }
+
+        // 5. Lexicon Tab (מילון)
+        let lexiconTab = app.tabBars.buttons["מילון"].firstMatch
+        let lexiconTabCandidate = lexiconTab.exists ? lexiconTab : app.buttons["מילון"].firstMatch
+        if lexiconTabCandidate.waitForExistence(timeout: 10) {
+            lexiconTabCandidate.tap()
+            let wordChip = app.buttons["מאימתי"].firstMatch
+            if wordChip.waitForExistence(timeout: 10) {
+                wordChip.tap()
+                let resultPredicate = NSPredicate(format: "label CONTAINS 'מאימתי' OR label CONTAINS 'יסטרוב'")
+                let result = app.descendants(matching: .any).matching(resultPredicate).firstMatch
+                _ = result.waitForExistence(timeout: 20)
+                capture(name: "Sefaria-Lexicon-Results")
+            }
+        }
+
+        closeNativeScriptApp()
+
+        // 8. App restart / persistence smoke check
+        app.terminate()
+        app.launch()
+        openApps()
+        let sefariaPredicate = NSPredicate(format: "label CONTAINS %@", sefariaPackageName)
+        let sefariaCard = app.descendants(matching: .any).matching(sefariaPredicate).firstMatch
+        XCTAssertTrue(
+            sefariaCard.waitForExistence(timeout: 20),
+            "Package \(sefariaPackageName) was not visible after app restart"
+        )
+        launchInstalledPackage(named: sefariaPackageName)
+        XCTAssertTrue(dailyTabCandidate.waitForExistence(timeout: 30), "Sefaria Core failed to relaunch after app restart")
+        capture(name: "Sefaria-Relaunch-Success")
+        closeNativeScriptApp()
     }
 
     func testProductionSwiftUIInteractionCoreRegressionAndLifecycle() throws {

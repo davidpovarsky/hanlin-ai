@@ -8,12 +8,44 @@ public final class HanlinNativeScriptSession {
     private static let supportedSwiftUIVersion = "4.0.2"
     private static weak var activeSession: HanlinNativeScriptSession?
 
+    public static var sharedRuntimeURL: URL? {
+        if let envPath = ProcessInfo.processInfo.environment["HANLIN_NATIVESCRIPT_SHARED_RUNTIME_PATH"] {
+            let envURL = URL(fileURLWithPath: envPath)
+            var isDir: ObjCBool = false
+            if FileManager.default.fileExists(atPath: envURL.path, isDirectory: &isDir), isDir.boolValue {
+                return envURL
+            }
+        }
+        #if SWIFT_PACKAGE
+        if let url = Bundle.module.url(forResource: "NativeScriptSharedRuntime", withExtension: nil) {
+            return url
+        }
+        #endif
+        if let url = Bundle.main.url(forResource: "NativeScriptSharedRuntime", withExtension: nil) {
+            return url
+        }
+        if let bundleURL = Bundle.main.url(forResource: "HanlinNativeScriptRuntime_HanlinNativeScriptRuntime", withExtension: "bundle"),
+           let bundle = Bundle(url: bundleURL),
+           let url = bundle.url(forResource: "NativeScriptSharedRuntime", withExtension: nil) {
+            return url
+        }
+        if let resourceURL = Bundle.main.resourceURL {
+            let candidate = resourceURL.appendingPathComponent("NativeScriptSharedRuntime", isDirectory: true)
+            var isDir: ObjCBool = false
+            if FileManager.default.fileExists(atPath: candidate.path, isDirectory: &isDir), isDir.boolValue {
+                return candidate
+            }
+        }
+        return nil
+    }
+
     public let applicationRoot: URL
     public let containerController: UIViewController
 
     private let presenter: HanlinNativeScriptPresenter
     private var runtime: HanlinNativeScriptRuntimeHost?
     private(set) public var isActive = false
+    private var createdSymlinks: Set<URL> = []
 
     public init(applicationRoot: URL) throws {
         let root = applicationRoot.standardizedFileURL
@@ -31,9 +63,9 @@ public final class HanlinNativeScriptSession {
                 throw HanlinNativeScriptError.missingPreparedFile(required)
             }
         }
-        try Self.validateNativePluginRequirements(
-            packageJSONURL: root.appending(path: "package.json", directoryHint: .notDirectory)
-        )
+        let packageJSONURL = root.appending(path: "package.json", directoryHint: .notDirectory)
+        try Self.validateNativePluginRequirements(packageJSONURL: packageJSONURL)
+        try Self.validateCoreRequirements(packageJSONURL: packageJSONURL)
         self.applicationRoot = root
         presenter = HanlinNativeScriptPresenter()
         containerController = presenter.containerController
@@ -47,6 +79,7 @@ public final class HanlinNativeScriptSession {
 
         presenter.install()
         do {
+            try linkSharedRuntimeIfNeeded()
             let host = try HanlinNativeScriptRuntimeHost(
                 baseDirectory: applicationRoot.deletingLastPathComponent().path(percentEncoded: false),
                 applicationPath: applicationRoot.lastPathComponent
@@ -65,6 +98,7 @@ public final class HanlinNativeScriptSession {
 
     public func shutdown() {
         guard isActive || runtime != nil else {
+            unlinkSharedRuntime()
             presenter.detach()
             return
         }
@@ -72,12 +106,120 @@ public final class HanlinNativeScriptSession {
         runtime?.shutdown()
         runtime = nil
         isActive = false
+        unlinkSharedRuntime()
         if Self.activeSession === self { Self.activeSession = nil }
     }
 
     deinit {
         MainActor.assumeIsolated {
             shutdown()
+        }
+    }
+
+    private func linkSharedRuntimeIfNeeded() throws {
+        guard let sharedRuntime = Self.sharedRuntimeURL else {
+            return
+        }
+        let fm = FileManager.default
+        let items = try fm.contentsOfDirectory(at: sharedRuntime, includingPropertiesForKeys: [.isDirectoryKey], options: [.skipsHiddenFiles])
+        for sourceURL in items {
+            let itemName = sourceURL.lastPathComponent
+            let targetURL = applicationRoot.appending(path: itemName, directoryHint: .isDirectory)
+            let targetPath = targetURL.path(percentEncoded: false)
+
+            if let dest = try? fm.destinationOfSymbolicLink(atPath: targetPath) {
+                if dest == sourceURL.path(percentEncoded: false) {
+                    createdSymlinks.insert(targetURL)
+                    continue
+                } else {
+                    try? fm.removeItem(at: targetURL)
+                }
+            } else if fm.fileExists(atPath: targetPath) {
+                // Already provided by applicationRoot directly (not a symlink)
+                continue
+            }
+
+            do {
+                try fm.createSymbolicLink(at: targetURL, withDestinationURL: sourceURL)
+                createdSymlinks.insert(targetURL)
+            } catch {
+                #if os(Windows)
+                try? fm.copyItem(at: sourceURL, to: targetURL)
+                createdSymlinks.insert(targetURL)
+                #else
+                throw error
+                #endif
+            }
+        }
+
+        let nodeModulesURL = applicationRoot.appending(path: "node_modules", directoryHint: .isDirectory)
+        let nodeModulesPath = nodeModulesURL.path(percentEncoded: false)
+        if let dest = try? fm.destinationOfSymbolicLink(atPath: nodeModulesPath) {
+            if dest == sharedRuntime.path(percentEncoded: false) {
+                createdSymlinks.insert(nodeModulesURL)
+            } else {
+                try? fm.removeItem(at: nodeModulesURL)
+                try? fm.createSymbolicLink(at: nodeModulesURL, withDestinationURL: sharedRuntime)
+                createdSymlinks.insert(nodeModulesURL)
+            }
+        } else if !fm.fileExists(atPath: nodeModulesPath) {
+            do {
+                try fm.createSymbolicLink(at: nodeModulesURL, withDestinationURL: sharedRuntime)
+                createdSymlinks.insert(nodeModulesURL)
+            } catch {
+                #if os(Windows)
+                try? fm.copyItem(at: sharedRuntime, to: nodeModulesURL)
+                createdSymlinks.insert(nodeModulesURL)
+                #else
+                throw error
+                #endif
+            }
+        }
+    }
+
+    private func unlinkSharedRuntime() {
+        let fm = FileManager.default
+        for url in createdSymlinks {
+            try? fm.removeItem(at: url)
+        }
+        createdSymlinks.removeAll()
+    }
+
+    public static func isCoreVersionCompatible(_ versionString: String) -> Bool {
+        let trimmed = versionString.trimmingCharacters(in: .whitespacesAndNewlines)
+        if trimmed.isEmpty || trimmed == "*" || trimmed == "latest" {
+            return true
+        }
+        var cleaned = trimmed
+        if cleaned.hasPrefix("^") || cleaned.hasPrefix("~") || cleaned.hasPrefix("=") || cleaned.hasPrefix("v") {
+            cleaned = String(cleaned.dropFirst())
+        }
+        if cleaned.hasPrefix("9.1") {
+            return true
+        }
+        if trimmed.hasPrefix("^9.") {
+            return true
+        }
+        return false
+    }
+
+    private static func validateCoreRequirements(packageJSONURL: URL) throws {
+        let data = try Data(contentsOf: packageJSONURL)
+        guard let root = try JSONSerialization.jsonObject(with: data) as? [String: Any] else {
+            return
+        }
+        var declaredCoreVersion: String?
+        if let deps = root["dependencies"] as? [String: Any], let version = deps["@nativescript/core"] as? String {
+            declaredCoreVersion = version
+        } else if let devDeps = root["devDependencies"] as? [String: Any], let version = devDeps["@nativescript/core"] as? String {
+            declaredCoreVersion = version
+        }
+        if let version = declaredCoreVersion {
+            guard isCoreVersionCompatible(version) else {
+                throw HanlinNativeScriptError.unsupportedCoreVersion(
+                    "This Hanlin build supports @nativescript/core \(supportedRuntimeVersion), but the package requires \(version)."
+                )
+            }
         }
     }
 

@@ -1,0 +1,93 @@
+import { androidGetCurrentActivity } from '../application/helpers';
+import { getRootView } from '../application/helpers-common';
+import { unsetValue } from '../ui/core/properties/property-shared';
+import { getNodeById } from './dom-types';
+import { mainThreadify } from '../utils';
+function getAppRootView() {
+    if (__ANDROID__) {
+        const activity = androidGetCurrentActivity();
+        if (!activity) {
+            return undefined;
+        }
+        const callbacks = activity['_callbacks'];
+        return callbacks ? callbacks.getRootView() : undefined;
+    }
+    else {
+        return getRootView();
+    }
+}
+function unsetViewValue(view, name) {
+    view[name] = unsetValue;
+}
+function getViewById(nodeId) {
+    const node = getNodeById(nodeId);
+    let view;
+    if (node) {
+        view = node.viewRef.get();
+    }
+    return view;
+}
+export function getDocument() {
+    const appRoot = getAppRootView();
+    if (!appRoot) {
+        return undefined;
+    }
+    try {
+        appRoot.ensureDomNode();
+    }
+    catch (e) {
+        console.log('ERROR in getDocument(): ' + e);
+    }
+    return appRoot.domNode.toObject();
+}
+export function getComputedStylesForNode(nodeId) {
+    const view = getViewById(nodeId);
+    if (view) {
+        return view.domNode.getComputedProperties();
+    }
+    return [];
+}
+export const removeNode = mainThreadify(function removeNode(nodeId) {
+    const view = getViewById(nodeId);
+    if (view) {
+        // Avoid importing layout and content view
+        const parent = view.parent;
+        if (parent.removeChild) {
+            parent.removeChild(view);
+        }
+        else if (parent.content === view) {
+            parent.content = null;
+        }
+        else {
+            console.log("Can't remove child from " + parent);
+        }
+    }
+});
+export const setAttributeAsText = mainThreadify(function setAttributeAsText(nodeId, text, name) {
+    const view = getViewById(nodeId);
+    if (view) {
+        // attribute is registered for the view instance
+        const hasOriginalAttribute = !!name.trim();
+        if (text) {
+            const textParts = text.split('=');
+            if (textParts.length === 2) {
+                const attrName = textParts[0];
+                const attrValue = textParts[1].replace(/['"]+/g, '');
+                // if attr name is being replaced with another
+                if (name !== attrName && hasOriginalAttribute) {
+                    unsetViewValue(view, name);
+                    view[attrName] = attrValue;
+                }
+                else {
+                    view[hasOriginalAttribute ? name : attrName] = attrValue;
+                }
+            }
+        }
+        else {
+            // delete attribute
+            unsetViewValue(view, name);
+        }
+        view.domNode.loadAttributes();
+    }
+});
+//# sourceMappingURL=devtools-elements.common.js.map

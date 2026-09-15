@@ -118,6 +118,36 @@ struct HanlinScriptAnalyzerTests {
         })
     }
 
+    @Test("Validates declared @nativescript/core dependency compatibility")
+    func nativeScriptCoreContract() throws {
+        let supported = try package(files: [
+            "script.json": #"{"name":"Core Fixture","version":"1.0.0","entry":"nativescript/app/bundle.mjs","hanlinRuntime":"hanlin-nativescript"}"#,
+            "nativescript/app/bundle.mjs": "console.log('core')",
+            "nativescript/app/package.json": #"{"name":"fixture","main":"bundle.mjs","hanlinRuntime":"hanlin-nativescript","dependencies":{"@nativescript/core":"9.1.0"}}"#
+        ])
+        defer { try? FileManager.default.removeItem(at: supported.stagingRoot) }
+        let analyzer = HanlinScriptAnalyzer(inventory: .init(
+            baselineID: "fixture",
+            baselineDigest: String(repeating: "a", count: 64),
+            symbols: []
+        ))
+        let supportedPreview = try analyzer.analyze(supported)
+        #expect(supportedPreview.canInstall)
+        #expect(supportedPreview.findings.contains { $0.message.contains("supported by embedded runtime 9.1.0") })
+
+        let unsupported = try package(files: [
+            "script.json": #"{"name":"Unsupported Core Fixture","version":"1.0.0","entry":"nativescript/app/bundle.mjs","hanlinRuntime":"hanlin-nativescript"}"#,
+            "nativescript/app/bundle.mjs": "console.log('unsupported')",
+            "nativescript/app/package.json": #"{"name":"fixture","main":"bundle.mjs","hanlinRuntime":"hanlin-nativescript","dependencies":{"@nativescript/core":"^10.0.0"}}"#
+        ])
+        defer { try? FileManager.default.removeItem(at: unsupported.stagingRoot) }
+        let unsupportedPreview = try analyzer.analyze(unsupported)
+        #expect(!unsupportedPreview.canInstall)
+        #expect(unsupportedPreview.findings.contains {
+            $0.message == "This Hanlin build supports @nativescript/core 9.1.0, but the package requires ^10.0.0."
+        })
+    }
+
     @Test("Detects capability-bearing ambient Scripting globals")
     func ambientGlobals() throws {
         let fixture = try package(files: [

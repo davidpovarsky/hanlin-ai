@@ -1,0 +1,158 @@
+import * as types from './types';
+import { dispatchToMainThread, dispatchToUIThread, isMainThread } from './mainthread-helper';
+import * as emojiRegexModule from 'emoji-regex';
+// Normalize emoji-regex CommonJS / ESM shapes into a callable function.
+// Some bundlers expose it as module.exports, others as module.exports.default.
+const emojiRegex = (() => {
+    const mod = emojiRegexModule;
+    if (mod && typeof mod.default === 'function') {
+        return mod.default;
+    }
+    if (typeof mod === 'function') {
+        return mod;
+    }
+    // Fallback: minimal safe regex that never throws.
+    return () => /./g;
+})();
+export * from './mainthread-helper';
+export * from './macrotask-scheduler';
+export * from './utils-shared';
+export const FILE_PREFIX = 'file:///';
+export const FONT_PREFIX = 'font://';
+export const RESOURCE_PREFIX = 'res://';
+export const SYSTEM_PREFIX = 'sys://';
+export function escapeRegexSymbols(source) {
+    const escapeRegex = /[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g;
+    return source.replace(escapeRegex, '\\$&');
+}
+export function convertString(value) {
+    let result;
+    if (!types.isString(value) || value.trim() === '') {
+        result = value;
+    }
+    else {
+        // Try to convert value to number.
+        const valueAsNumber = +value;
+        if (!isNaN(valueAsNumber)) {
+            result = valueAsNumber;
+        }
+        else if (value && (value.toLowerCase() === 'true' || value.toLowerCase() === 'false')) {
+            result = value.toLowerCase() === 'true' ? true : false;
+        }
+        else {
+            result = value;
+        }
+    }
+    return result;
+}
+export function getModuleName(path) {
+    const moduleName = path.replace('./', '');
+    return sanitizeModuleName(moduleName);
+}
+/**
+ * Helps sanitize a module name if it is prefixed with '~/', '~' or '/'
+ * @param moduleName the name
+ * @param removeExtension whether to remove extension
+ */
+export function sanitizeModuleName(moduleName, removeExtension = true) {
+    moduleName = moduleName.trim();
+    if (moduleName.startsWith('~/')) {
+        moduleName = moduleName.substring(2);
+    }
+    else if (moduleName.startsWith('~')) {
+        moduleName = moduleName.substring(1);
+    }
+    else if (moduleName.startsWith('/')) {
+        moduleName = moduleName.substring(1);
+    }
+    if (removeExtension) {
+        const extToRemove = ['js', 'mjs', 'ts', 'xml', 'html', 'css', 'scss'];
+        const extensionRegEx = new RegExp(`(.*)\\.(?:${extToRemove.join('|')})`, 'i');
+        moduleName = moduleName.replace(extensionRegEx, '$1');
+    }
+    return moduleName;
+}
+export function isFileOrResourcePath(path) {
+    if (!types.isString(path)) {
+        return false;
+    }
+    return (path.indexOf('~/') === 0 || // relative to AppRoot
+        path.indexOf('/') === 0 || // absolute path
+        path.indexOf(RESOURCE_PREFIX) === 0 ||
+        path.indexOf(SYSTEM_PREFIX) === 0); // resource
+}
+export function isFontIconURI(uri) {
+    if (!types.isString(uri)) {
+        return false;
+    }
+    return uri.trim().startsWith(FONT_PREFIX);
+}
+export function isSystemURI(uri) {
+    if (!types.isString(uri)) {
+        return false;
+    }
+    return uri.trim().startsWith(SYSTEM_PREFIX);
+}
+export function isDataURI(uri) {
+    if (!types.isString(uri)) {
+        return false;
+    }
+    const firstSegment = uri.trim().split(',')[0];
+    return firstSegment && firstSegment.indexOf('data:') === 0 && firstSegment.indexOf('base64') >= 0;
+}
+export function mergeSort(arr, compareFunc) {
+    if (arr.length < 2) {
+        return arr;
+    }
+    const middle = arr.length / 2;
+    const left = arr.slice(0, middle);
+    const right = arr.slice(middle, arr.length);
+    return merge(mergeSort(left, compareFunc), mergeSort(right, compareFunc), compareFunc);
+}
+export function merge(left, right, compareFunc) {
+    const result = [];
+    while (left.length && right.length) {
+        if (compareFunc(left[0], right[0]) <= 0) {
+            result.push(left.shift());
+        }
+        else {
+            result.push(right.shift());
+        }
+    }
+    while (left.length) {
+        result.push(left.shift());
+    }
+    while (right.length) {
+        result.push(right.shift());
+    }
+    return result;
+}
+export function hasDuplicates(arr) {
+    return arr.length !== eliminateDuplicates(arr).length;
+}
+export function eliminateDuplicates(arr) {
+    return Array.from(new Set(arr));
+}
+export function executeOnMainThread(func) {
+    if (isMainThread()) {
+        return func();
+    }
+    else {
+        dispatchToMainThread(func);
+    }
+}
+export function executeOnUIThread(func) {
+    dispatchToUIThread(func);
+}
+export function mainThreadify(func) {
+    return function (...args) {
+        const argsToPass = args;
+        executeOnMainThread(() => func.apply(this, argsToPass));
+    };
+}
+export function isEmoji(value) {
+    // TODO: In a future runtime update, we can switch to using Unicode Property Escapes:
+    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Unicode_Property_Escapes
+    return emojiRegex(value).test(value);
+}
+//# sourceMappingURL=common.js.map

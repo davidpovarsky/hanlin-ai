@@ -1,5 +1,5 @@
 import { createHash } from 'node:crypto';
-import { chmod, cp, mkdir, readFile, readdir, rename, rm, writeFile } from 'node:fs/promises';
+import { access, chmod, cp, mkdir, readFile, readdir, rename, rm, writeFile } from 'node:fs/promises';
 import { basename, resolve } from 'node:path';
 
 const scriptRoot = resolve(import.meta.dirname);
@@ -10,6 +10,15 @@ const swiftUIRoot = resolve(scriptRoot, 'node_modules', '@nativescript', 'swift-
 const platformRoot = resolve(coreRoot, 'platforms', 'ios');
 const artifactsRoot = resolve(repositoryRoot, 'Packages', 'HanlinNativeScriptRuntime', 'Artifacts');
 const stagingRoot = `${artifactsRoot}.staging-${process.pid}`;
+const sharedRuntimeRoot = resolve(
+  repositoryRoot,
+  'Packages',
+  'HanlinNativeScriptRuntime',
+  'Sources',
+  'HanlinNativeScriptRuntime',
+  'Resources',
+  'NativeScriptSharedRuntime'
+);
 
 const readJSON = async (path) => JSON.parse(await readFile(path, 'utf8'));
 const sha256 = (bytes) => createHash('sha256').update(bytes).digest('hex');
@@ -139,10 +148,146 @@ await writeFile(resolve(stagingRoot, 'dependency-closure.json'), `${JSON.stringi
     uses: nativeAPIUsage.uses,
     disposition: 'metadata-generator-input',
   },
+  sharedRuntime: {
+    coreVersion: corePackage.version,
+    disposition: 'Embedded JavaScript modules in HanlinNativeScriptRuntime Resources',
+    packages: [
+      '@nativescript/core',
+      '@csstools/css-calc',
+      '@csstools/css-color-parser',
+      '@csstools/css-parser-algorithms',
+      '@csstools/css-tokenizer',
+      'acorn',
+      'css-tree',
+      'css-what',
+      'emoji-regex',
+      'source-map-js',
+      'tslib',
+    ],
+  },
 }, null, 2)}\n`);
 
-await rm(artifactsRoot, { recursive: true, force: true });
-await rename(stagingRoot, artifactsRoot);
+async function safeMoveDirectory(source, destination) {
+  try {
+    await rm(destination, { recursive: true, force: true });
+  } catch {}
+  for (let i = 0; i < 5; i++) {
+    try {
+      await rename(source, destination);
+      return;
+    } catch (e) {
+      if (e.code === 'EPERM' || e.code === 'EBUSY') {
+        await new Promise((r) => setTimeout(r, 200));
+      } else {
+        throw e;
+      }
+    }
+  }
+  await cp(source, destination, { recursive: true });
+  await rm(source, { recursive: true, force: true });
+}
+
+await safeMoveDirectory(stagingRoot, artifactsRoot);
+
+async function stageSharedCoreRuntime(destinationRoot) {
+  const sharedStaging = `${destinationRoot}.staging-${process.pid}`;
+  await rm(sharedStaging, { recursive: true, force: true });
+  await mkdir(sharedStaging, { recursive: true });
+
+  const coreDest = resolve(sharedStaging, '@nativescript', 'core');
+  await mkdir(coreDest, { recursive: true });
+
+  async function copyCoreTree(srcDir, destDir) {
+    const entries = await readdir(srcDir, { withFileTypes: true });
+    for (const entry of entries) {
+      if (entry.name === 'platforms' || entry.name === 'cli-hooks') continue;
+      const srcPath = resolve(srcDir, entry.name);
+      const destPath = resolve(destDir, entry.name);
+      if (entry.isDirectory()) {
+        await mkdir(destPath, { recursive: true });
+        await copyCoreTree(srcPath, destPath);
+      } else if (entry.isFile()) {
+        if ((entry.name.endsWith('.js') || entry.name.endsWith('.mjs') || entry.name === 'package.json') && !entry.name.endsWith('.android.js')) {
+          await cp(srcPath, destPath);
+          if (entry.name.endsWith('.ios.js')) {
+            const alias = resolve(destDir, entry.name.replace(/\.ios\.js$/, '.js'));
+            try { await access(alias); } catch { await cp(srcPath, alias); }
+          } else if (entry.name.endsWith('.ios.mjs')) {
+            const alias = resolve(destDir, entry.name.replace(/\.ios\.mjs$/, '.mjs'));
+            try { await access(alias); } catch { await cp(srcPath, alias); }
+          }
+        }
+      }
+    }
+  }
+  await copyCoreTree(coreRoot, coreDest);
+
+  const dependencies = [
+    '@csstools/css-calc',
+    '@csstools/css-color-parser',
+    '@csstools/css-parser-algorithms',
+    '@csstools/css-tokenizer',
+    'acorn',
+    'css-tree',
+    'css-what',
+    'emoji-regex',
+    'source-map-js',
+    'tslib',
+  ];
+
+  for (const dep of dependencies) {
+    const depSrc = resolve(scriptRoot, 'node_modules', dep);
+    const depDest = resolve(sharedStaging, dep);
+    await mkdir(depDest, { recursive: true });
+
+    async function copyDepTree(srcDir, destDir) {
+      const entries = await readdir(srcDir, { withFileTypes: true });
+      for (const entry of entries) {
+        if (entry.name === 'node_modules' || entry.name.startsWith('.')) continue;
+        const srcPath = resolve(srcDir, entry.name);
+        const destPath = resolve(destDir, entry.name);
+        if (entry.isDirectory()) {
+          await mkdir(destPath, { recursive: true });
+          await copyDepTree(srcPath, destPath);
+        } else if (entry.isFile()) {
+          if (entry.name.endsWith('.js') || entry.name.endsWith('.mjs') || entry.name === 'package.json') {
+            await cp(srcPath, destPath);
+          }
+        }
+      }
+    }
+    await copyDepTree(depSrc, depDest);
+  }
+
+  const reexports = {
+    'tslib/index.mjs': 'export * from "./tslib.es6.mjs";\n',
+    'tslib/index.js': 'export * from "./tslib.es6.mjs";\n',
+    '@csstools/css-calc/index.mjs': 'export * from "./dist/index.mjs";\n',
+    '@csstools/css-calc/index.js': 'export * from "./dist/index.mjs";\n',
+    '@csstools/css-color-parser/index.mjs': 'export * from "./dist/index.mjs";\n',
+    '@csstools/css-color-parser/index.js': 'export * from "./dist/index.mjs";\n',
+    '@csstools/css-parser-algorithms/index.mjs': 'export * from "./dist/index.mjs";\n',
+    '@csstools/css-parser-algorithms/index.js': 'export * from "./dist/index.mjs";\n',
+    '@csstools/css-tokenizer/index.mjs': 'export * from "./dist/index.mjs";\n',
+    '@csstools/css-tokenizer/index.js': 'export * from "./dist/index.mjs";\n',
+    'acorn/index.mjs': 'export * from "./dist/acorn.mjs";\n',
+    'acorn/index.js': 'export * from "./dist/acorn.mjs";\n',
+    'css-tree/index.js': 'export * from "./lib/index.js";\n',
+    'css-what/index.js': 'export * from "./dist/esm/index.js";\n',
+    'source-map-js/index.js': 'export * from "./source-map.js";\n',
+  };
+  for (const [subpath, content] of Object.entries(reexports)) {
+    const targetFile = resolve(sharedStaging, subpath);
+    await writeFile(targetFile, content);
+  }
+
+  await mkdir(resolve(destinationRoot, '..'), { recursive: true });
+  await safeMoveDirectory(sharedStaging, destinationRoot);
+  console.log(`Staged NativeScriptSharedRuntime JavaScript modules at ${destinationRoot}`);
+}
+
+await stageSharedCoreRuntime(sharedRuntimeRoot);
+
 console.log(
   `Prepared NativeScript ${pinnedVersion} iOS dependency closure: ${frameworks.join(', ')}; `
   + `installed Swift metadata wrapper for ${metadataGeneratorDirectories.join(', ')}`

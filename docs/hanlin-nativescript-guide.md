@@ -9,14 +9,14 @@
 
 באפליקציית Hanlin AI מוטמע מנוע ריצה מקורי של **NativeScript iOS Runtime** (הכתוב ב-C++ ו-Objective-C ומבוסס על מנוע JavaScriptCore / V8).
 
-קיימות שתי דרכים עקרוניות לכתוב קוד NativeScript:
-1. **גישה ישירה מול גשר ה-iOS של ה-Runtime (Direct Native Metadata Bridge) – הדרך המומלצת והמועדפת ל-iOS:**
+קיימות שתי דרכים עקרוניות לכתוב קוד NativeScript (ושניהן נתמכות במלואן ב-Hanlin AI וניתנות לשילוב):
+1. **גישה ישירה מול גשר ה-iOS של ה-Runtime (Direct Native Metadata Bridge):**
    * קוד ה-JavaScript/TypeScript מדבר **ישירות** עם כל מחלקות ה-SDK של אפל (`UIKit`, `Foundation`, `CoreGraphics`, `SwiftUI`).
-   * **ללא תלות** בספריית `@nativescript/core` וללא תקורה של וירטואליזציה חוצת-פלטפורמות.
-   * גודל חבילה זעיר (קילובייטים בודדים במקום מגה-בייטים), טעינה מיידית, ביצועי Native מלאים ב-60/120 FPS, ואינטגרציה מושלמת עם `UITabBarController` ו-`UINavigationController` ללא שום התנגשות ב-iPadOS 18.
-2. **מעטפת `@nativescript/core` (Cross-Platform Framework):**
-   * שכבת עטיפה שנועדה לקוד אחיד גם לאנדרואיד (רכיבי `<StackLayout>`, `<Page>`, XML, ומערכת חלונות פנימית).
-   * פחות מומלצת ליישומוני iOS מוטמעים עקב עומס קבצים (Vite vendor bundle) והתנהגות ברירת-מחדל של טאבים ב-iPadOS 18.
+   * ללא צורך בספריות נוספות, ביצועי Native מלאים ואינטגרציה ישירה עם פקדי מערכת ההפעלה.
+2. **מעטפת `@nativescript/core` (Cross-Platform / NativeScript Core APIs):**
+   * שימוש במחלקות הרשמיות של `@nativescript/core` כגון `Application`, `Page`, `Frame`, `StackLayout`, `Button`, `Label`, `Http` וכו'.
+   * גרסה `9.1.0` מוטמעת מראש כחלק מ-Runtime של Hanlin (NativeScriptSharedRuntime); יישומונים מצהירים על `"@nativescript/core": "9.1.0"` ב-`package.json` ויכולים לייבא את המודולים כרגיל ללא צורך בהתקנת npm מקומית או bundling ידני.
+   * שני המודלים מתקיימים יחד: יישומון המשתמש ב-`@nativescript/core` יכול לגשת במקביל ישירות לכל פקד או API של iOS באמצעות הגשר הישיר (לדוגמה `UIDevice`, `UIColor` וכו').
 
 ---
 

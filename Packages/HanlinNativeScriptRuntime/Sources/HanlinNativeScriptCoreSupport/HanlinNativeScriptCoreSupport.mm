@@ -2,6 +2,31 @@
 #import "NativeScriptEmbedder.h"
 #import <NativeScript/NativeScript.h>
 #import <exception>
+#import <string>
+
+namespace tns {
+class __attribute__((visibility("default"))) NativeScriptException {
+public:
+    ~NativeScriptException();
+    const std::string& getMessage() const { return message_; }
+    const std::string& getStackTrace() const { return stackTrace_; }
+private:
+    void* javascriptException_;
+    std::string name_;
+    std::string message_;
+    std::string stackTrace_;
+    std::string fullMessage_;
+};
+}
+
+static NSString *HanlinFormatNativeScriptException(const tns::NativeScriptException &e) {
+    NSString *message = [NSString stringWithUTF8String:e.getMessage().c_str()] ?: @"";
+    NSString *stack = [NSString stringWithUTF8String:e.getStackTrace().c_str()] ?: @"";
+    if (stack.length > 0) {
+        return [NSString stringWithFormat:@"%@\nStack:\n%@", message, stack];
+    }
+    return message;
+}
 
 NSErrorDomain const HanlinNativeScriptRuntimeErrorDomain = @"com.hanlin.nativescript-runtime";
 
@@ -54,6 +79,16 @@ static NSError *HanlinNativeScriptError(HanlinNativeScriptRuntimeErrorCode code,
             }
             return nil;
         }
+    } catch (const tns::NativeScriptException &e) {
+        NSString *detail = [NSString stringWithFormat:@"NativeScript runtime initialization failed: %@", HanlinFormatNativeScriptException(e)];
+        NSLog(@"[HanlinNativeScript] %@", detail);
+        if (error) {
+            *error = HanlinNativeScriptError(
+                HanlinNativeScriptRuntimeErrorInitializationFailed,
+                detail
+            );
+        }
+        return nil;
     } catch (const std::exception &e) {
         NSString *detail = [NSString stringWithFormat:@"NativeScript runtime initialization C++ exception: %s", e.what()];
         NSLog(@"[HanlinNativeScript] %@", detail);
@@ -65,7 +100,19 @@ static NSError *HanlinNativeScriptError(HanlinNativeScriptRuntimeErrorCode code,
         }
         return nil;
     } catch (...) {
-        NSString *detail = @"NativeScript runtime initialization raised an unknown native exception.";
+        NSString *detail = nil;
+        std::exception_ptr p = std::current_exception();
+        try {
+            if (p) std::rethrow_exception(p);
+        } catch (const tns::NativeScriptException &e) {
+            detail = [NSString stringWithFormat:@"NativeScript runtime initialization failed: %@", HanlinFormatNativeScriptException(e)];
+        } catch (const std::exception &e) {
+            detail = [NSString stringWithFormat:@"NativeScript initialization C++ exception: %s", e.what()];
+        } catch (id objcEx) {
+            detail = [NSString stringWithFormat:@"NativeScript initialization ObjC exception: %@", objcEx];
+        } catch (...) {
+            detail = @"NativeScript runtime initialization raised an unknown native exception.";
+        }
         NSLog(@"[HanlinNativeScript] %@", detail);
         if (error) {
             *error = HanlinNativeScriptError(
@@ -117,6 +164,16 @@ static NSError *HanlinNativeScriptError(HanlinNativeScriptRuntimeErrorCode code,
             }
             return NO;
         }
+    } catch (const tns::NativeScriptException &e) {
+        NSString *detail = [NSString stringWithFormat:@"NativeScript script execution failed: %@", HanlinFormatNativeScriptException(e)];
+        NSLog(@"[HanlinNativeScript] %@", detail);
+        if (error) {
+            *error = HanlinNativeScriptError(
+                HanlinNativeScriptRuntimeErrorExecutionFailed,
+                detail
+            );
+        }
+        return NO;
     } catch (const std::exception &e) {
         NSString *detail = [NSString stringWithFormat:@"NativeScript script execution C++ exception: %s", e.what()];
         NSLog(@"[HanlinNativeScript] %@", detail);
@@ -132,6 +189,8 @@ static NSError *HanlinNativeScriptError(HanlinNativeScriptRuntimeErrorCode code,
         std::exception_ptr p = std::current_exception();
         try {
             if (p) std::rethrow_exception(p);
+        } catch (const tns::NativeScriptException &e) {
+            detail = [NSString stringWithFormat:@"NativeScript script execution failed: %@", HanlinFormatNativeScriptException(e)];
         } catch (const std::exception &e) {
             detail = [NSString stringWithFormat:@"NativeScript C++ exception: %s", e.what()];
         } catch (id objcEx) {
@@ -159,6 +218,8 @@ static NSError *HanlinNativeScriptError(HanlinNativeScriptRuntimeErrorCode code,
             } @catch (NSException *exception) {
                 NSLog(@"[HanlinNativeScript] Exception during shutdownRuntime: %@", exception);
             }
+        } catch (const tns::NativeScriptException &e) {
+            NSLog(@"[HanlinNativeScript] NativeScript exception during shutdownRuntime: %@", HanlinFormatNativeScriptException(e));
         } catch (const std::exception &e) {
             NSLog(@"[HanlinNativeScript] C++ exception during shutdownRuntime: %s", e.what());
         } catch (...) {

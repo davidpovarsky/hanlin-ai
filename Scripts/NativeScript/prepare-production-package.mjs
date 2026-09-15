@@ -59,4 +59,9 @@ const malformedRoot = resolve(e2eRoot, 'malformed');
 await mkdir(malformedRoot, { recursive: true });
 await writeFile(resolve(malformedRoot, 'script.json'), '{"name":"Malformed NativeScript E2E",');
 
+const sefariaFixturePath = resolve(scriptRoot, 'Fixtures', 'sefaria-reader-core.hanlinNativeScript');
+try {
+  await cp(sefariaFixturePath, resolve(e2eRoot, 'sefaria-reader-core.hanlinNativeScript'));
+} catch {}
+
 console.log(`Prepared NativeScript production packages at ${e2eRoot}`);

@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       scope:
-        description: 'Performance validation scope: all, runtime-unit, or ui-e2e'
+        description: 'Performance validation scope: all, runtime-unit, ui-e2e, or nativescript-e2e'
         required: true
         default: 'all'
         type: choice
@@ -12,6 +12,7 @@ on:
           - all
           - runtime-unit
           - ui-e2e
+          - nativescript-e2e
       iterations:
         description: 'Sample iteration count per benchmark'
         required: false
@@ -96,6 +97,7 @@ jobs:
           )
           test -s build/NativeScriptE2E/HanlinNativeScriptSwiftUI.hanlinNativeScript
           test -s build/NativeScriptE2E/HanlinNativeScriptCore.hanlinNativeScript
+          test -s build/NativeScriptE2E/sefaria-reader-core.hanlinNativeScript
           npm run preflight:ios-dependencies --prefix Scripts/NativeScript
 
       - name: Prepare verified embedded RuntimeCore
@@ -169,11 +171,13 @@ jobs:
           set -euxo pipefail
           testing_scope_flags=()
           if [ "$PERF_SCOPE" = "all" ]; then
-            testing_scope_flags+=("-only-testing:AI_HLYTests/HanlinRuntimePerformanceTests" "-only-testing:AI_HLYUITests/HanlinUIPerformanceUITests")
+            testing_scope_flags+=("-only-testing:AI_HLYTests/HanlinRuntimePerformanceTests" "-only-testing:AI_HLYUITests/HanlinUIPerformanceUITests" "-only-testing:AI_HLYUITests/HanlinNativeScriptProductionE2ETests")
           elif [ "$PERF_SCOPE" = "runtime-unit" ]; then
             testing_scope_flags+=("-only-testing:AI_HLYTests/HanlinRuntimePerformanceTests")
           elif [ "$PERF_SCOPE" = "ui-e2e" ]; then
             testing_scope_flags+=("-only-testing:AI_HLYUITests/HanlinUIPerformanceUITests")
+          elif [ "$PERF_SCOPE" = "nativescript-e2e" ]; then
+            testing_scope_flags+=("-only-testing:AI_HLYUITests/HanlinNativeScriptProductionE2ETests")
           fi
 
           started_at="$(date +%s)"
@@ -244,6 +248,7 @@ jobs:
             mkdir -p "$FILES_CONTAINER/Documents"
             cp build/NativeScriptE2E/HanlinNativeScriptSwiftUI.hanlinNativeScript "$FILES_CONTAINER/Documents/"
             cp build/NativeScriptE2E/HanlinNativeScriptCore.hanlinNativeScript "$FILES_CONTAINER/Documents/"
+            cp build/NativeScriptE2E/sefaria-reader-core.hanlinNativeScript "$FILES_CONTAINER/Documents/"
           fi
 
           xcrun simctl install "$SIMULATOR_UDID" "$APP_PATH"
@@ -252,6 +257,7 @@ jobs:
             mkdir -p "$APP_CONTAINER/Documents"
             cp build/NativeScriptE2E/HanlinNativeScriptSwiftUI.hanlinNativeScript "$APP_CONTAINER/Documents/"
             cp build/NativeScriptE2E/HanlinNativeScriptCore.hanlinNativeScript "$APP_CONTAINER/Documents/"
+            cp build/NativeScriptE2E/sefaria-reader-core.hanlinNativeScript "$APP_CONTAINER/Documents/"
           fi
 
           # Stage ScriptUI fixtures
@@ -269,11 +275,13 @@ jobs:
 
           testing_scope_flags=()
           if [ "$PERF_SCOPE" = "all" ]; then
-            testing_scope_flags+=("-only-testing:AI_HLYTests/HanlinRuntimePerformanceTests" "-only-testing:AI_HLYUITests/HanlinUIPerformanceUITests")
+            testing_scope_flags+=("-only-testing:AI_HLYTests/HanlinRuntimePerformanceTests" "-only-testing:AI_HLYUITests/HanlinUIPerformanceUITests" "-only-testing:AI_HLYUITests/HanlinNativeScriptProductionE2ETests")
           elif [ "$PERF_SCOPE" = "runtime-unit" ]; then
             testing_scope_flags+=("-only-testing:AI_HLYTests/HanlinRuntimePerformanceTests")
           elif [ "$PERF_SCOPE" = "ui-e2e" ]; then
             testing_scope_flags+=("-only-testing:AI_HLYUITests/HanlinUIPerformanceUITests")
+          elif [ "$PERF_SCOPE" = "nativescript-e2e" ]; then
+            testing_scope_flags+=("-only-testing:AI_HLYUITests/HanlinNativeScriptProductionE2ETests")
           fi
 
           set +e

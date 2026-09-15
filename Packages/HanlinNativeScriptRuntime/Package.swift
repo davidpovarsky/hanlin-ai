@@ -34,7 +34,10 @@ let package = Package(
         .target(
             name: "HanlinNativeScriptRuntime",
             dependencies: ["HanlinNativeScriptCoreSupport"],
-            path: "Sources/HanlinNativeScriptRuntime"
+            path: "Sources/HanlinNativeScriptRuntime",
+            resources: [
+                .copy("Resources/NativeScriptSharedRuntime")
+            ]
         ),
         // @nativescript/core ships these native frameworks separately from
         // ios-spm. The preparation script derives and stages the pinned assets.
