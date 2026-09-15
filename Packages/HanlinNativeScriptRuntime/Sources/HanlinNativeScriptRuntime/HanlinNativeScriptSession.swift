@@ -88,6 +88,8 @@ public final class HanlinNativeScriptSession {
             Self.activeSession = self
             isActive = true
 
+            traceStaticModuleGraph(entryURL: applicationRoot.appending(path: "bundle.mjs"))
+
             try host.runMainApplication()
             NSLog("%@", "HANLIN_NS_INITIALIZED_EXTERNAL_ROOT path=\(applicationRoot.path(percentEncoded: false))")
         } catch {
@@ -256,5 +258,94 @@ public final class HanlinNativeScriptSession {
                 )
             }
         }
+    }
+
+    private func traceStaticModuleGraph(entryURL: URL) {
+        var visited = Set<String>()
+        func walk(fileURL: URL, depth: Int) {
+            guard depth < 15 else { return }
+            let path = fileURL.path(percentEncoded: false)
+            guard visited.insert(path).inserted else { return }
+
+            let canonical = fileURL.resolvingSymlinksInPath().path(percentEncoded: false)
+            let fm = FileManager.default
+            guard let content = try? String(contentsOf: fileURL, encoding: .utf8) else {
+                NSLog("[HanlinStaticGraph] [D%d] CANNOT READ: %@", depth, path)
+                return
+            }
+
+            var currentDir = fileURL.deletingLastPathComponent()
+            var nearestPkg: URL?
+            while currentDir.path(percentEncoded: false) != "/" && currentDir.path(percentEncoded: false).count > 1 {
+                let candidate = currentDir.appending(path: "package.json")
+                if fm.fileExists(atPath: candidate.path(percentEncoded: false)) {
+                    nearestPkg = candidate
+                    break
+                }
+                currentDir = currentDir.deletingLastPathComponent()
+            }
+            var pkgType = "<none>"
+            if let pkg = nearestPkg, let data = try? Data(contentsOf: pkg),
+               let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
+               let type = json["type"] as? String {
+                pkgType = type
+            }
+
+            let firstLine = content.components(separatedBy: .newlines).first(where: { !$0.trimmingCharacters(in: .whitespaces).isEmpty }) ?? "<empty>"
+            let linePrefix = String(firstLine.prefix(100))
+
+            NSLog("[HanlinStaticGraph] [D%d] MODULE: %@", depth, path)
+            NSLog("[HanlinStaticGraph] [D%d]   CANONICAL: %@", depth, canonical)
+            NSLog("[HanlinStaticGraph] [D%d]   PKG: %@ (type: %@)", depth, nearestPkg?.path(percentEncoded: false) ?? "<none>", pkgType)
+            NSLog("[HanlinStaticGraph] [D%d]   FIRST_LINE: %@", depth, linePrefix)
+
+            let pattern = #"(?:import|export)\s+(?:(?:(?:\*\s+as\s+\w+)|(?:\{[^}]*\})|(?:\w+))\s+from\s+)?['"]([^'"]+)['"]"#
+            guard let regex = try? NSRegularExpression(pattern: pattern) else { return }
+            let matches = regex.matches(in: content, range: NSRange(content.startIndex..., in: content))
+
+            for match in matches {
+                guard match.numberOfRanges > 1,
+                      let range = Range(match.range(at: 1), in: content) else { continue }
+                let spec = String(content[range])
+
+                var candidate: URL?
+                if spec.hasPrefix("./") || spec.hasPrefix("../") {
+                    let base = fileURL.deletingLastPathComponent()
+                    let target = base.appending(path: spec)
+                    for ext in ["", ".mjs", ".js", ".cjs", "/index.mjs", "/index.js", "/index.cjs"] {
+                        let tryURL = ext.isEmpty ? target : base.appending(path: spec + ext)
+                        if fm.fileExists(atPath: tryURL.path(percentEncoded: false)) {
+                            candidate = tryURL
+                            break
+                        }
+                    }
+                } else if spec.hasPrefix("@nativescript/core") {
+                    let subpath = String(spec.dropFirst("@nativescript/core".count))
+                    let coreRoot = applicationRoot.appending(path: "@nativescript/core")
+                    if subpath.isEmpty {
+                        candidate = coreRoot.appending(path: "index.js")
+                    } else {
+                        let cleanSub = subpath.hasPrefix("/") ? String(subpath.dropFirst()) : subpath
+                        let target = coreRoot.appending(path: cleanSub)
+                        for ext in ["", ".mjs", ".js", ".cjs", "/index.mjs", "/index.js"] {
+                            let tryURL = ext.isEmpty ? target : coreRoot.appending(path: cleanSub + ext)
+                            if fm.fileExists(atPath: tryURL.path(percentEncoded: false)) {
+                                candidate = tryURL
+                                break
+                            }
+                        }
+                    }
+                }
+
+                NSLog("[HanlinStaticGraph] [D%d]   -> IMPORT: '%@' => %@", depth, spec, candidate?.path(percentEncoded: false) ?? "<UNRESOLVED>")
+                if let next = candidate {
+                    walk(fileURL: next, depth: depth + 1)
+                }
+            }
+        }
+
+        NSLog("[HanlinStaticGraph] === STARTING STATIC GRAPH TRACE FROM %@ ===", entryURL.path(percentEncoded: false))
+        walk(fileURL: entryURL, depth: 0)
+        NSLog("[HanlinStaticGraph] === FINISHED STATIC GRAPH TRACE (total visited: %d) ===", visited.count)
     }
 }

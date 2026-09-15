@@ -1932,16 +1932,18 @@ jobs:
                 if [[ "$SIMULATOR_UI_FILTER" == *"HanlinNativeScriptProductionE2ETests"* ]] || [ -z "$SIMULATOR_UI_FILTER" ] || [ "$RUN_FULL_VALIDATION" = "true" ]; then
                   grep -Fq 'HANLIN_NS_INITIALIZED_EXTERNAL_ROOT' "$LOG_DIR/08-nativescript-production.log"
                   grep -Eq 'HANLIN_NS_INITIALIZED_EXTERNAL_ROOT path=.*/Library/Application Support/' "$LOG_DIR/08-nativescript-production.log"
-                  grep -Fq 'HANLIN_NS_FIXTURE_STARTED' "$LOG_DIR/08-nativescript-production.log"
-                  grep -Fq 'HANLIN_NS_NATIVE_API_OK' "$LOG_DIR/08-nativescript-production.log"
-                  grep -Fq 'HANLIN_NS_SCRIPTING_ADAPTER_OK' "$LOG_DIR/08-nativescript-production.log"
-                  grep -Fq 'HANLIN_NS_MODULE_RESOURCE_OK' "$LOG_DIR/08-nativescript-production.log"
-                  grep -Fq 'HANLIN_NS_CORE_UI_READY controls=Label,Button' "$LOG_DIR/08-nativescript-production.log"
-                  grep -Fq 'HANLIN_NS_SWIFTUI_MODULE_OK package=@nativescript/swift-ui version=4.0.2' "$LOG_DIR/08-nativescript-production.log"
-                  grep -Fq 'HANLIN_NS_SWIFTUI_PROVIDER_READY' "$LOG_DIR/08-nativescript-production.log"
-                  grep -Fq 'HANLIN_NS_SWIFTUI_DATA_OK' "$LOG_DIR/08-nativescript-production.log"
-                  grep -Fq 'HANLIN_NS_SWIFTUI_EVENT_OK count=1 source=swiftui' "$LOG_DIR/08-nativescript-production.log"
-                  grep -Fq 'HANLIN_NS_PRODUCTION_SHUTDOWN_OK' "$LOG_DIR/08-nativescript-production.log"
+                  if [ -z "$SIMULATOR_UI_FILTER" ] || [ "$RUN_FULL_VALIDATION" = "true" ] || [[ "$SIMULATOR_UI_FILTER" == *"testProductionSwiftUIInteractionCoreRegressionAndLifecycle"* ]] || [ "$SIMULATOR_UI_FILTER" = "AI_HLYUITests/HanlinNativeScriptProductionE2ETests" ]; then
+                    grep -Fq 'HANLIN_NS_FIXTURE_STARTED' "$LOG_DIR/08-nativescript-production.log"
+                    grep -Fq 'HANLIN_NS_NATIVE_API_OK' "$LOG_DIR/08-nativescript-production.log"
+                    grep -Fq 'HANLIN_NS_SCRIPTING_ADAPTER_OK' "$LOG_DIR/08-nativescript-production.log"
+                    grep -Fq 'HANLIN_NS_MODULE_RESOURCE_OK' "$LOG_DIR/08-nativescript-production.log"
+                    grep -Fq 'HANLIN_NS_CORE_UI_READY controls=Label,Button' "$LOG_DIR/08-nativescript-production.log"
+                    grep -Fq 'HANLIN_NS_SWIFTUI_MODULE_OK package=@nativescript/swift-ui version=4.0.2' "$LOG_DIR/08-nativescript-production.log"
+                    grep -Fq 'HANLIN_NS_SWIFTUI_PROVIDER_READY' "$LOG_DIR/08-nativescript-production.log"
+                    grep -Fq 'HANLIN_NS_SWIFTUI_DATA_OK' "$LOG_DIR/08-nativescript-production.log"
+                    grep -Fq 'HANLIN_NS_SWIFTUI_EVENT_OK count=1 source=swiftui' "$LOG_DIR/08-nativescript-production.log"
+                    grep -Fq 'HANLIN_NS_PRODUCTION_SHUTDOWN_OK' "$LOG_DIR/08-nativescript-production.log"
+                  fi
                 fi
               fi
             else
