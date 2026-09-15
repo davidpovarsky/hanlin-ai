@@ -1,0 +1,11 @@
+{
+  "name": "hanlin-core-unbundled-test",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "main": "bundle.mjs",
+  "hanlinRuntime": "hanlin-nativescript",
+  "dependencies": {
+    "@nativescript/core": "9.1.0"
+  }
+}

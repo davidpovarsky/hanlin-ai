@@ -15,7 +15,7 @@ import { CSS3Parser } from '../../css/CSS3Parser';
 import { CSSNativeScript } from '../../css/CSSNativeScript';
 import { parse as parseCss } from '../../css/lib/parse';
 // @ts-ignore apps resolve this at runtime with path alias in project bundlers
-import appConfig from '~/package.json';
+import appConfig from '../../app-config.js';
 let parser = 'css-tree';
 try {
     if (appConfig) {

@@ -1,5 +1,5 @@
 // @ts-ignore apps resolve this at runtime with path alias in project bundlers
-import appConfig from '~/package.json';
+import appConfig from '../app-config.js';
 export function uptime() {
     return global.android ? org.nativescript.Process.getUpTime() : global.__tns_uptime();
 }

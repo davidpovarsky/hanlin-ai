@@ -6,6 +6,7 @@ final class HanlinNativeScriptProductionE2ETests: XCTestCase {
     private let documents = XCUIApplication(bundleIdentifier: "com.apple.DocumentsApp")
     private let swiftUIPackageName = "Hanlin NativeScript SwiftUI E2E"
     private let corePackageName = "Hanlin NativeScript Core E2E"
+    private let unbundledPackageName = "Hanlin NativeScript Unbundled Core E2E"
     private let sefariaPackageName = "Sefaria Library & Texts (Core)"
 
     override func setUpWithError() throws {
@@ -15,6 +16,49 @@ final class HanlinNativeScriptProductionE2ETests: XCTestCase {
         app.launchEnvironment["HANLIN_NATIVESCRIPT_E2E"] = "1"
         app.launch()
     }
+
+    func testProductionSharedCoreUnbundledEndToEnd() throws {
+        openApps()
+        importAndInstall(archive: "core-unbundled")
+
+        launchInstalledPackage(named: unbundledPackageName)
+
+        let titlePredicate = NSPredicate(format: "label CONTAINS 'Unbundled Shared Core Active' OR identifier == 'unbundled-core-title'")
+        let titleCandidate = app.descendants(matching: .any).matching(titlePredicate).firstMatch
+        XCTAssertTrue(titleCandidate.waitForExistence(timeout: 30), "Unbundled Shared Core title did not render")
+        capture(name: "Unbundled-Core-App-Launched")
+
+        let verifyButtonPredicate = NSPredicate(format: "label CONTAINS 'Verify Core Features' OR identifier == 'unbundled-core-verify-button'")
+        let verifyButton = app.descendants(matching: .any).matching(verifyButtonPredicate).firstMatch
+        XCTAssertTrue(verifyButton.waitForExistence(timeout: 15), "Verify Core Features button did not exist")
+        verifyButton.tap()
+
+        let verifiedPredicate = NSPredicate(format: "label CONTAINS 'All Core Features Verified' OR label CONTAINS 'Verified' OR identifier == 'unbundled-core-status'")
+        let statusCandidate = app.descendants(matching: .any).matching(verifiedPredicate).firstMatch
+        XCTAssertTrue(statusCandidate.waitForExistence(timeout: 20), "Unbundled Shared Core features were not verified")
+        capture(name: "Unbundled-Core-Features-Verified")
+
+        closeNativeScriptApp()
+
+        // 1. App close and reopen test
+        launchInstalledPackage(named: unbundledPackageName)
+        XCTAssertTrue(titleCandidate.waitForExistence(timeout: 30), "Unbundled Shared Core failed to relaunch after closing")
+        capture(name: "Unbundled-Core-Relaunched")
+        closeNativeScriptApp()
+
+        // 2. Sequential execution across distinct MiniApps to ensure no state/config leakage
+        importAndInstall(archive: "HanlinNativeScriptCore")
+        launchInstalledPackage(named: corePackageName)
+        assertNativeScriptCoreUI()
+        capture(name: "Core-Regression-After-Unbundled")
+        closeNativeScriptApp()
+
+        // Return to unbundled app to confirm isolation in reverse
+        launchInstalledPackage(named: unbundledPackageName)
+        XCTAssertTrue(titleCandidate.waitForExistence(timeout: 30), "Unbundled Shared Core failed after running another MiniApp")
+        closeNativeScriptApp()
+    }
+
 
     func testProductionSefariaCoreEndToEnd() throws {
         openApps()

@@ -153,6 +153,7 @@ await writeFile(resolve(stagingRoot, 'dependency-closure.json'), `${JSON.stringi
     disposition: 'Embedded JavaScript modules in HanlinNativeScriptRuntime Resources',
     packages: [
       '@nativescript/core',
+      '@csstools/color-helpers',
       '@csstools/css-calc',
       '@csstools/css-color-parser',
       '@csstools/css-parser-algorithms',
@@ -222,7 +223,47 @@ async function stageSharedCoreRuntime(destinationRoot) {
   }
   await copyCoreTree(coreRoot, coreDest);
 
+  // Hanlin NativeScript Config-as-JSON ESM Provider
+  // Resolves the current MiniApp's package.json configuration at runtime per session
+  // without bundling @nativescript/core into the MiniApp or compiling raw JSON as JS.
+  const appConfigProviderContent = `// Hanlin NativeScript Config-as-JSON ESM Provider
+// Implements runtime resolution of the active MiniApp's package.json configuration
+// without bundling @nativescript/core into the MiniApp or compiling raw JSON as JS.
+let config = {};
+try {
+  if (typeof global !== 'undefined' && global.require) {
+    config = global.require('~/package.json');
+  }
+} catch (e) {
+  try {
+    if (typeof global !== 'undefined' && global.__hanlinAppConfig) {
+      config = global.__hanlinAppConfig;
+    }
+  } catch (_) {}
+}
+export default config;
+`;
+  await writeFile(resolve(coreDest, 'app-config.js'), appConfigProviderContent);
+  await writeFile(resolve(coreDest, 'app-config.mjs'), appConfigProviderContent);
+
+  // Rewire ~/package.json imports in Core to the Hanlin config-as-JSON provider
+  for (const profilingSubpath of ['profiling/index.js', 'profiling/index.ios.js']) {
+    const p = resolve(coreDest, profilingSubpath);
+    try {
+      const src = await readFile(p, 'utf8');
+      await writeFile(p, src.replace("import appConfig from '~/package.json';", "import appConfig from '../app-config.js';"));
+    } catch {}
+  }
+  for (const styleScopeSubpath of ['ui/styling/style-scope.js', 'ui/styling/style-scope.ios.js']) {
+    const p = resolve(coreDest, styleScopeSubpath);
+    try {
+      const src = await readFile(p, 'utf8');
+      await writeFile(p, src.replace("import appConfig from '~/package.json';", "import appConfig from '../../app-config.js';"));
+    } catch {}
+  }
+
   const dependencies = [
+    '@csstools/color-helpers',
     '@csstools/css-calc',
     '@csstools/css-color-parser',
     '@csstools/css-parser-algorithms',
@@ -260,8 +301,10 @@ async function stageSharedCoreRuntime(destinationRoot) {
   }
 
   const reexports = {
-    'tslib/index.mjs': 'export * from "./tslib.es6.mjs";\n',
-    'tslib/index.js': 'export * from "./tslib.es6.mjs";\n',
+    'tslib/index.mjs': 'import * as tslib from "./tslib.es6.mjs"; export * from "./tslib.es6.mjs"; export default tslib;\n',
+    'tslib/index.js': 'import * as tslib from "./tslib.es6.mjs"; export * from "./tslib.es6.mjs"; export default tslib;\n',
+    '@csstools/color-helpers/index.mjs': 'export * from "./dist/index.mjs";\n',
+    '@csstools/color-helpers/index.js': 'export * from "./dist/index.mjs";\n',
     '@csstools/css-calc/index.mjs': 'export * from "./dist/index.mjs";\n',
     '@csstools/css-calc/index.js': 'export * from "./dist/index.mjs";\n',
     '@csstools/css-color-parser/index.mjs': 'export * from "./dist/index.mjs";\n',
@@ -272,8 +315,11 @@ async function stageSharedCoreRuntime(destinationRoot) {
     '@csstools/css-tokenizer/index.js': 'export * from "./dist/index.mjs";\n',
     'acorn/index.mjs': 'export * from "./dist/acorn.mjs";\n',
     'acorn/index.js': 'export * from "./dist/acorn.mjs";\n',
-    'css-tree/index.js': 'export * from "./lib/index.js";\n',
+    'css-tree/index.mjs': 'export * from "./dist/csstree.esm.js";\n',
+    'css-tree/index.js': 'export * from "./dist/csstree.esm.js";\n',
+    'css-what/index.mjs': 'export * from "./dist/esm/index.js";\n',
     'css-what/index.js': 'export * from "./dist/esm/index.js";\n',
+    'source-map-js/index.mjs': 'export * from "./source-map.js";\n',
     'source-map-js/index.js': 'export * from "./source-map.js";\n',
   };
   for (const [subpath, content] of Object.entries(reexports)) {

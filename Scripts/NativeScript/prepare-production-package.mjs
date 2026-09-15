@@ -64,4 +64,10 @@ try {
   await cp(sefariaFixturePath, resolve(e2eRoot, 'sefaria-reader-core.hanlinNativeScript'));
 } catch {}
 
+const unbundledFixturePath = resolve(scriptRoot, 'Fixtures', 'core-unbundled.hanlinNativeScript');
+try {
+  await cp(unbundledFixturePath, resolve(e2eRoot, 'core-unbundled.hanlinNativeScript'));
+} catch {}
+
 console.log(`Prepared NativeScript production packages at ${e2eRoot}`);
+
