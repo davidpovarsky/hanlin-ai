@@ -6,7 +6,6 @@
 #import <fcntl.h>
 #import <unistd.h>
 #import <exception>
-#import <filesystem>
 #import <fstream>
 #import <string>
 #import <sstream>
@@ -41,52 +40,88 @@ static void InitTNSSymbols() {
     });
 }
 
-static std::string HanlinReadFirstLine(const std::string& path) {
-    std::ifstream file(path);
-    if (!file.is_open()) { return "<cannot open>"; }
-    std::string line;
-    if (std::getline(file, line)) {
-        if (line.size() > 140) {
-            line = line.substr(0, 140) + "...";
-        }
-        return line;
-    }
-    return "<empty>";
+static BOOL HanlinStringEndsWith(const char *str, const char *suffix) {
+    if (!str || !suffix) return NO;
+    size_t strLen = strlen(str);
+    size_t sufLen = strlen(suffix);
+    if (strLen < sufLen) return NO;
+    return strcmp(str + (strLen - sufLen), suffix) == 0;
 }
 
-static std::string HanlinFindNearestPackageJson(const std::string& startDir) {
-    std::filesystem::path current(startDir);
-    while (!current.empty() && current != current.root_path()) {
-        std::filesystem::path pkg = current / "package.json";
-        std::error_code ec;
-        if (std::filesystem::exists(pkg, ec) && !ec) {
-            return pkg.string();
-        }
-        current = current.parent_path();
-    }
-    return "";
-}
-
-static std::string HanlinReadPackageJsonType(const std::string& pkgJsonPath) {
-    if (pkgJsonPath.empty()) return "<none>";
-    std::ifstream file(pkgJsonPath);
-    if (!file.is_open()) return "<cannot open>";
-    std::string content((std::istreambuf_iterator<char>(file)),
-                        std::istreambuf_iterator<char>());
-    size_t typePos = content.find("\"type\"");
-    if (typePos != std::string::npos) {
-        size_t colon = content.find(':', typePos + 6);
-        if (colon != std::string::npos) {
-            size_t valStart = content.find('"', colon + 1);
-            if (valStart != std::string::npos) {
-                size_t valEnd = content.find('"', valStart + 1);
-                if (valEnd != std::string::npos) {
-                    return content.substr(valStart + 1, valEnd - valStart - 1);
-                }
+static NSString *HanlinReadFirstLine(NSString *path) {
+    NSError *error = nil;
+    NSString *content = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:&error];
+    if (!content) { return @"<cannot open>"; }
+    NSArray<NSString *> *lines = [content componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]];
+    for (NSString *line in lines) {
+        NSString *trimmed = [line stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+        if (trimmed.length > 0) {
+            if (trimmed.length > 140) {
+                return [[trimmed substringToIndex:140] stringByAppendingString:@"..."];
             }
+            return trimmed;
         }
     }
-    return "<no-type-field>";
+    return @"<empty>";
+}
+
+static NSString *HanlinFindNearestPackageJson(NSString *startDir) {
+    NSFileManager *fm = [NSFileManager defaultManager];
+    NSString *current = startDir;
+    while (current.length > 1 && ![current isEqualToString:@"/"]) {
+        NSString *pkg = [current stringByAppendingPathComponent:@"package.json"];
+        if ([fm fileExistsAtPath:pkg]) {
+            return pkg;
+        }
+        current = [current stringByDeletingLastPathComponent];
+    }
+    return nil;
+}
+
+static NSString *HanlinReadPackageJsonType(NSString *pkgJsonPath) {
+    if (!pkgJsonPath) return @"<none>";
+    NSData *data = [NSData dataWithContentsOfFile:pkgJsonPath];
+    if (!data) return @"<cannot open>";
+    NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+    if ([json isKindOfClass:[NSDictionary class]]) {
+        NSString *type = json[@"type"];
+        return type ?: @"<no-type-field>";
+    }
+    return @"<invalid-json>";
+}
+
+static void hanlin_log_file_access(const char *path, const char *op) {
+    if (path == nullptr) return;
+    if (HanlinStringEndsWith(path, ".js") ||
+        HanlinStringEndsWith(path, ".mjs") ||
+        HanlinStringEndsWith(path, ".cjs") ||
+        strstr(path, "package.json") != NULL) {
+
+        char canonical[PATH_MAX] = {0};
+        if (realpath(path, canonical) == nullptr) {
+            strncpy(canonical, path, sizeof(canonical) - 1);
+        }
+
+        InitTNSSymbols();
+        BOOL isESM = NO;
+        if (s_tnsIsESModule) {
+            std::string p(path);
+            isESM = s_tnsIsESModule(p);
+        }
+
+        NSString *nsPath = [NSString stringWithUTF8String:path];
+        NSString *parentDir = [nsPath stringByDeletingLastPathComponent];
+        NSString *nearestPkg = HanlinFindNearestPackageJson(parentDir);
+        NSString *pkgType = HanlinReadPackageJsonType(nearestPkg);
+        NSString *firstLine = HanlinReadFirstLine(nsPath);
+
+        NSLog(@"[HanlinLoaderTrace] >>> %s: %s", op, path);
+        NSLog(@"[HanlinLoaderTrace]     CANONICAL: %s", canonical);
+        NSLog(@"[HanlinLoaderTrace]     IS_ESM: %@", (s_tnsIsESModule ? (isESM ? @"YES (ESM)" : @"NO (CommonJS)") : @"UNKNOWN"));
+        NSLog(@"[HanlinLoaderTrace]     PKG_JSON: %@", nearestPkg ?: @"<NOT FOUND>");
+        NSLog(@"[HanlinLoaderTrace]     PKG_TYPE: %@", pkgType);
+        NSLog(@"[HanlinLoaderTrace]     FIRST_LINE: %@", firstLine);
+    }
 }
 
 static int (*orig_open)(const char *, int, ...) = nullptr;
@@ -101,35 +136,16 @@ static int hanlin_hooked_open(const char *path, int oflag, ...) {
     }
 
     int fd = orig_open ? orig_open(path, oflag, mode) : open(path, oflag, mode);
-
-    if (path != nullptr) {
-        std::string p(path);
-        if (p.ends_with(".js") || p.ends_with(".mjs") || p.ends_with(".cjs") || p.ends_with("package.json")) {
-            char canonical[PATH_MAX] = {0};
-            if (realpath(path, canonical) == nullptr) {
-                strncpy(canonical, path, sizeof(canonical) - 1);
-            }
-
-            InitTNSSymbols();
-            bool isESM = false;
-            if (s_tnsIsESModule) {
-                isESM = s_tnsIsESModule(p);
-            }
-
-            std::filesystem::path fp(p);
-            std::string nearestPkg = HanlinFindNearestPackageJson(fp.parent_path().string());
-            std::string pkgType = HanlinReadPackageJsonType(nearestPkg);
-            std::string firstLine = HanlinReadFirstLine(p);
-
-            NSLog(@"[HanlinLoaderTrace] >>> OPEN: %s", path);
-            NSLog(@"[HanlinLoaderTrace]     CANONICAL: %s", canonical);
-            NSLog(@"[HanlinLoaderTrace]     IS_ESM: %s", (s_tnsIsESModule ? (isESM ? "YES (ESM)" : "NO (CommonJS)") : "UNKNOWN"));
-            NSLog(@"[HanlinLoaderTrace]     PKG_JSON: %s", (nearestPkg.empty() ? "<NOT FOUND>" : nearestPkg.c_str()));
-            NSLog(@"[HanlinLoaderTrace]     PKG_TYPE: %s", pkgType.c_str());
-            NSLog(@"[HanlinLoaderTrace]     FIRST_LINE: %s", firstLine.c_str());
-        }
-    }
+    hanlin_log_file_access(path, "OPEN");
     return fd;
+}
+
+static FILE *(*orig_fopen)(const char *, const char *) = nullptr;
+
+static FILE *hanlin_hooked_fopen(const char *path, const char *mode) {
+    FILE *f = orig_fopen ? orig_fopen(path, mode) : fopen(path, mode);
+    hanlin_log_file_access(path, "FOPEN");
+    return f;
 }
 
 static void HanlinInstallLoaderHooks() {
@@ -137,9 +153,10 @@ static void HanlinInstallLoaderHooks() {
     dispatch_once(&hookToken, ^{
         InitTNSSymbols();
         struct rebinding rebindings[] = {
-            {"open", (void *)hanlin_hooked_open, (void **)&orig_open}
+            {"open", (void *)hanlin_hooked_open, (void **)&orig_open},
+            {"fopen", (void *)hanlin_hooked_fopen, (void **)&orig_fopen}
         };
-        int rc = rebind_symbols(rebindings, 1);
+        int rc = rebind_symbols(rebindings, 2);
         NSLog(@"[HanlinLoaderTrace] rebind_symbols installed (rc=%d)", rc);
     });
 }

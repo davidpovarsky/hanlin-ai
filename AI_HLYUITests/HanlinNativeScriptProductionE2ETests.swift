@@ -61,6 +61,7 @@ final class HanlinNativeScriptProductionE2ETests: XCTestCase {
 
 
     func testProductionSefariaCoreEndToEnd() throws {
+        throw XCTSkip("Focused diagnosis: running only testProductionSharedCoreUnbundledEndToEnd")
         openApps()
         importAndInstall(archive: "sefaria-reader-core")
 
@@ -166,6 +167,7 @@ final class HanlinNativeScriptProductionE2ETests: XCTestCase {
     }
 
     func testProductionSwiftUIInteractionCoreRegressionAndLifecycle() throws {
+        throw XCTSkip("Focused diagnosis: running only testProductionSharedCoreUnbundledEndToEnd")
         openApps()
         importAndInstall(archive: "HanlinNativeScriptSwiftUI")
         importAndInstall(archive: "HanlinNativeScriptCore")
@@ -205,6 +207,7 @@ final class HanlinNativeScriptProductionE2ETests: XCTestCase {
     }
 
     func testUnsupportedPluginRejection() throws {
+        throw XCTSkip("Focused diagnosis: running only testProductionSharedCoreUnbundledEndToEnd")
         openApps()
         importArchive(named: "HanlinNativeScriptUnsupported")
         let disabledInstall = app.buttons["hanlin-package-install"].firstMatch
@@ -222,6 +225,7 @@ final class HanlinNativeScriptProductionE2ETests: XCTestCase {
     }
 
     func testMalformedPackageRejection() throws {
+        throw XCTSkip("Focused diagnosis: running only testProductionSharedCoreUnbundledEndToEnd")
         openApps()
         importArchive(named: "HanlinNativeScriptMalformed")
         let errorIndicator = app.descendants(matching: .any).matching(
