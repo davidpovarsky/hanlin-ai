@@ -122,7 +122,7 @@
         "simulator_targeted_ui"
       ],
       "ui_suites": [
-        "AI_HLYUITests/HanlinNativeScriptProductionE2ETests"
+        "AI_HLYUITests/HanlinNativeScriptProductionE2ETests/testProductionSharedCoreUnbundledEndToEnd"
       ],
       "consumers": []
     },
@@ -137,7 +137,7 @@
         "simulator_targeted_ui"
       ],
       "ui_suites": [
-        "AI_HLYUITests/HanlinNativeScriptProductionE2ETests"
+        "AI_HLYUITests/HanlinNativeScriptProductionE2ETests/testProductionSharedCoreUnbundledEndToEnd"
       ],
       "consumers": [
         "device_build"
@@ -541,7 +541,7 @@
         "simulator_targeted_ui"
       ],
       "ui_suites": [
-        "AI_HLYUITests/HanlinNativeScriptProductionE2ETests"
+        "AI_HLYUITests/HanlinNativeScriptProductionE2ETests/testProductionSharedCoreUnbundledEndToEnd"
       ],
       "consumers": []
     },
