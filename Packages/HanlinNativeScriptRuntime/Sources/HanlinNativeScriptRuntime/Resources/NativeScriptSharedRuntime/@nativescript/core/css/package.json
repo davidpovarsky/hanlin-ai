@@ -1,4 +1,5 @@
 {
+  "type": "module",
   "name": "css",
   "version": "2.2.1",
   "description": "CSS parser / stringifier",

@@ -4,7 +4,7 @@ import './debugger/webinspector-dom';
 import './debugger/webinspector-css';
 import { File, knownFolders } from './file-system';
 // import/destructure style helps commonjs/esm build issues
-import * as sourceMapJs from 'source-map-js';
+import * as sourceMapJs from '../../source-map-js/index.js';
 const { SourceMapConsumer } = sourceMapJs;
 // note: bundlers can by default use 'source-map' files with runtimes v9+
 // helps avoid having to decode the inline base64 source maps

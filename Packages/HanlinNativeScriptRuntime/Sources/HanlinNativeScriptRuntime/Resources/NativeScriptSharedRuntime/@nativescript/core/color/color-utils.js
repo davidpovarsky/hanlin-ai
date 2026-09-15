@@ -1,7 +1,7 @@
-import { color } from '@csstools/css-color-parser';
-import { parseComponentValue } from '@csstools/css-parser-algorithms';
-import { serializeRGB } from '@csstools/css-color-parser';
-import { tokenize } from '@csstools/css-tokenizer';
+import { color } from '../../../@csstools/css-color-parser/index.js';
+import { parseComponentValue } from '../../../@csstools/css-parser-algorithms/index.js';
+import { serializeRGB } from '../../../@csstools/css-color-parser/index.js';
+import { tokenize } from '../../../@csstools/css-tokenizer/index.js';
 export const HEX_REGEX = /(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)|(^#[0-9A-F]{8}$)|(^#[0-9A-F]{4}$)/i;
 export function isCssColorMixExpression(value) {
     return value.includes('color-mix(');

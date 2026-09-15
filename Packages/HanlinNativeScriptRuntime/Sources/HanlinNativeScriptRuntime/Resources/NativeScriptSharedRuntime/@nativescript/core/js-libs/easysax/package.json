@@ -1,4 +1,5 @@
 {
+  "type": "module",
   "name": "easysax",
   "description": "pure javascript xml parser",
   "sideEffects": false,

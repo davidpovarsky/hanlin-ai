@@ -1,4 +1,4 @@
-import * as cssTree from 'css-tree';
+import * as cssTree from '../../../css-tree/index.js';
 function mapSelectors(selector) {
     if (!selector) {
         return [];

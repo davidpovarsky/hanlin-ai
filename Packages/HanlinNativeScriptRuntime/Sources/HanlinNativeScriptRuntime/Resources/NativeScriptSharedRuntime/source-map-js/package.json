@@ -1,4 +1,5 @@
 {
+  "type": "module",
   "name": "source-map-js",
   "description": "Generates and consumes source maps",
   "version": "1.2.1",

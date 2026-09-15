@@ -1,4 +1,4 @@
-import { parse as convertToCSSWhatSelector } from 'css-what';
+import { parse as convertToCSSWhatSelector } from '../../../../css-what/index.js';
 import '../../globals';
 import { _expandCssShorthand, _pendingCssShorthandSubstitution, isCssVariable } from '../core/properties';
 import { isNullOrUndefined } from '../../utils/types';

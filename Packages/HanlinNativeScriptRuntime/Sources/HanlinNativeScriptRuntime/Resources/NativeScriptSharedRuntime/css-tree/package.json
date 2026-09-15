@@ -1,4 +1,5 @@
 {
+  "type": "module",
   "name": "css-tree",
   "version": "3.2.1",
   "description": "A tool set for CSS: fast detailed parser (CSS → AST), walker (AST traversal), generator (AST → CSS) and lexer (validation and matching) based on specs and browser implementations",
@@ -17,7 +18,6 @@
     "syntax",
     "validation"
   ],
-  "type": "module",
   "module": "./lib/index.js",
   "sideEffects": false,
   "main": "./cjs/index.cjs",

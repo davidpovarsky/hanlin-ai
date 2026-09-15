@@ -1,4 +1,4 @@
-import { parse } from 'acorn';
+import { parse } from '../../../../../acorn/index.js';
 import { isFunction, isNullOrUndefined, isObject } from '../../../utils/types';
 const expressionsCache = {};
 const FORCED_CHAIN_VALUE = Symbol('forcedChain');

@@ -1,6 +1,6 @@
 import * as types from './types';
 import { dispatchToMainThread, dispatchToUIThread, isMainThread } from './mainthread-helper';
-import * as emojiRegexModule from 'emoji-regex';
+import * as emojiRegexModule from '../../../emoji-regex/index.js';
 // Normalize emoji-regex CommonJS / ESM shapes into a callable function.
 // Some bundlers expose it as module.exports, others as module.exports.default.
 const emojiRegex = (() => {

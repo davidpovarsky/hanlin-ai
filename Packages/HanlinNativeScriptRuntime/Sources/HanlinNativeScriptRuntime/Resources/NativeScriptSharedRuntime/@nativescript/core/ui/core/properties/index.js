@@ -2,7 +2,7 @@ import { WrappedValue } from '../../../data/observable';
 import { Trace } from '../../../trace';
 import { profile } from '../../../profiling';
 import { unsetValue, isResetValue } from './property-shared';
-import { calc } from '@csstools/css-calc';
+import { calc } from '../../../../../@csstools/css-calc/index.js';
 // Backwards compatibility
 export { unsetValue } from './property-shared';
 const cssPropertyNames = [];

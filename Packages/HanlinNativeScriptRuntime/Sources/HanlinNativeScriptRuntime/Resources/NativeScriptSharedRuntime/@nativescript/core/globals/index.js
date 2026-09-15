@@ -1,4 +1,4 @@
-import tslib from 'tslib';
+import tslib from '../../../tslib/index.js';
 import { installPolyfillsFromModule } from './polyfills/utils';
 import './polyfills/polyfill-xhr';
 import * as timer from '../timer';

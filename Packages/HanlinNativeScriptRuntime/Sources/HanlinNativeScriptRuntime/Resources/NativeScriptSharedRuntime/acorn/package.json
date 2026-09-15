@@ -1,4 +1,5 @@
 {
+  "type": "module",
   "name": "acorn",
   "description": "ECMAScript parser",
   "homepage": "https://github.com/acornjs/acorn",
