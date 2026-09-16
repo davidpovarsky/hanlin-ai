@@ -1,7 +1,10 @@
+import HanlinMiniAppCore
+import HanlinPlatformContracts
 import SwiftUI
 
 struct NativeAppsAddSheet: View {
-    let modules: [NativeAppModule]
+    let items: [HanlinMiniAppCatalogItem]
+    let host: HanlinMiniAppHost
     let scriptingPlatform: HanlinScriptingPlatform
     @Environment(\.dismiss) private var dismiss
 
@@ -9,23 +12,40 @@ struct NativeAppsAddSheet: View {
         NavigationStack {
             List {
                 Section {
-                    Label("Compiled Native Apps", systemImage: "shippingbox")
-                        .font(.headline)
-                    Text("Native Apps are compiled into Hanlin. Script packages are inspected without execution before installation is offered.")
+                    Text("Swift apps are compiled into Hanlin. NativeScript packages are dynamically importable.")
                         .font(.subheadline)
                         .foregroundStyle(.secondary)
 
                     NavigationLink {
                         ScriptingPackageImportView(platform: scriptingPlatform)
                     } label: {
-                        Label("Import Script Package", systemImage: "doc.badge.plus")
+                        Label("Import NativeScript Package", systemImage: "doc.badge.plus")
                     }
-                    .accessibilityIdentifier("hanlin-import-script-package")
+                    .accessibilityIdentifier("hanlin-import-nativescript-package")
                 }
 
-                Section("Bundled Apps") {
-                    ForEach(modules, id: \.manifest.id) { module in
-                        Label(module.manifest.title, systemImage: module.manifest.systemImage)
+                let hidden = items.filter { host.isHidden($0.id) }
+                if !hidden.isEmpty {
+                    Section("Hidden Apps") {
+                        ForEach(hidden) { item in
+                            Button {
+                                host.setHidden(false, appID: item.id)
+                            } label: {
+                                Label(
+                                    item.descriptor.name.preferredValue(forLocale: Locale.current.identifier),
+                                    systemImage: "eye"
+                                )
+                            }
+                        }
+                    }
+                }
+
+                Section("Bundled Swift Apps") {
+                    ForEach(items.filter({ $0.engine == .swift })) { item in
+                        Label(
+                            item.descriptor.name.preferredValue(forLocale: Locale.current.identifier),
+                            systemImage: "swift"
+                        )
                     }
                 }
             }
