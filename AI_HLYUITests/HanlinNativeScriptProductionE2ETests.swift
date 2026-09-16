@@ -490,12 +490,16 @@ final class HanlinNativeScriptProductionE2ETests: XCTestCase {
 
     private func waitForTab(named title: String, timeout: TimeInterval = 30) -> XCUIElement? {
         let deadline = Date().addingTimeInterval(timeout)
-        let predicate = NSPredicate(format: "label == %@ OR title == %@ OR identifier == %@", title, title, title)
+        let predicate = NSPredicate(format: "label == %@ OR title == %@ OR identifier == %@ OR label CONTAINS[c] %@", title, title, title, title)
         let queries: [() -> XCUIElement] = [
             { self.app.tabBars.buttons[title].firstMatch },
+            { self.app.tabBars.buttons.matching(predicate).firstMatch },
             { self.app.tabBars.tabs[title].firstMatch },
+            { self.app.tabBars.tabs.matching(predicate).firstMatch },
             { self.app.tabs[title].firstMatch },
+            { self.app.tabs.matching(predicate).firstMatch },
             { self.app.buttons[title].firstMatch },
+            { self.app.buttons.matching(predicate).firstMatch },
             { self.app.descendants(matching: .any).matching(predicate).firstMatch }
         ]
         while Date() < deadline {

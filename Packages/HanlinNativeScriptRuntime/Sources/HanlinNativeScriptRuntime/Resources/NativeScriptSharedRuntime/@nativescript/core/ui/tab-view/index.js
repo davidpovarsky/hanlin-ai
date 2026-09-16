@@ -23,11 +23,17 @@ var UITabBarControllerImpl = (function (_super) {
     UITabBarControllerImpl.initWithOwner = function (owner) {
         var handler = UITabBarControllerImpl.new();
         handler._owner = owner;
+        if (SDK_VERSION >= 18) {
+            try { handler.mode = 2; /* UITabBarControllerModeTabBar */ } catch (e) {}
+        }
         return handler;
     };
     UITabBarControllerImpl.prototype.viewDidLoad = function () {
         _super.prototype.viewDidLoad.call(this);
         this.extendedLayoutIncludesOpaqueBars = true;
+        if (SDK_VERSION >= 18) {
+            try { this.mode = 2; /* UITabBarControllerModeTabBar */ } catch (e) {}
+        }
     };
     UITabBarControllerImpl.prototype.viewWillAppear = function (animated) {
         var _a;
@@ -249,6 +255,11 @@ export class TabViewItem extends TabViewItemBase {
                     // Fallback: if tabForIdentifier is not available for some reason,
                     // do not crash – rely on existing tab configuration.
                 }
+                if (controller.tabBarItem) {
+                    controller.tabBarItem.title = title;
+                    controller.tabBarItem.image = icon;
+                }
+                controller.title = title;
             }
             else {
                 // iOS < 18: keep using UITabBarItem-based configuration.
@@ -269,7 +280,7 @@ export class TabViewItem extends TabViewItemBase {
         // UITab-based configuration (iOS 18+) does not expose the same per-item
         // title/icon positioning APIs as UITabBarItem, so we only adjust
         // positions when using the legacy UITabBarItem setup.
-        if (SDK_VERSION >= 18 || !this.__controller || !this.__controller.tabBarItem) {
+        if (!this.__controller || !this.__controller.tabBarItem) {
             return;
         }
         updateTitleAndIconPositions(this, this.__controller.tabBarItem, this.__controller);
@@ -471,11 +482,19 @@ export class TabView extends TabViewBase {
             // iOS 18+: build UITab instances and assign them to the controller.
             const tabs = [];
             const controllers = [];
+            const states = getTitleAttributesForStates(this);
             items.forEach((item, i) => {
                 const controller = this.getViewController(item);
-                controllers.push(controller);
                 const icon = this._getIcon(item);
                 const title = item.title || '';
+                const tabBarItem = UITabBarItem.alloc().initWithTitleImageTag(title, icon, i);
+                updateTitleAndIconPositions(item, tabBarItem, controller);
+                if (!__VISIONOS__ && SDK_VERSION < 15) {
+                    applyStatesToItem(tabBarItem, states);
+                }
+                controller.tabBarItem = tabBarItem;
+                controller.title = title;
+                controllers.push(controller);
                 const identifier = `${i}`;
                 let tab;
                 if (item.role === 'search') {
@@ -491,12 +510,16 @@ export class TabView extends TabViewBase {
                 tabs.push(tab);
                 item.canBeLoaded = true;
             });
-            try {
-                // Prefer animated setter when available.
-                this._ios.tabs = NSArray.arrayWithArray(tabs);
+            if (SDK_VERSION >= 15) {
+                this.updateBarItemAppearance(this._ios.tabBar, states);
             }
-            catch (e) { }
+            try {
+                this._ios.mode = 2; /* UITabBarControllerModeTabBar */
+            } catch (e) { }
             this._ios.viewControllers = NSArray.arrayWithArray(controllers);
+            try {
+                this._ios.tabs = NSArray.arrayWithArray(tabs);
+            } catch (e) { }
             this._ios.customizableViewControllers = null;
         }
         else {

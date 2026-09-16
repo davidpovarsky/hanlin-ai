@@ -602,9 +602,12 @@ export default { SourceMapConsumer, SourceMapGenerator, SourceNode };
       } catch {}
     }
 
-    // TabView layout and Page child view controller containment:
+    // TabView layout, iOS 18 tab bar mode, and Page child view controller containment:
     // 1. Ensure TabView sets its nativeView frame when hosted inside a layout container (like Page).
-    // 2. Ensure Page invokes didMoveToParentViewController / willMoveToParentViewController
+    // 2. On iOS 18+, enforce UITabBarControllerModeTabBar (mode = 2) so iPad displays standard
+    //    bottom tabs rather than floating top tabs/sidebars, and ensure controller.tabBarItem,
+    //    controller.title, and appearance states are properly configured on child view controllers.
+    // 3. Ensure Page invokes didMoveToParentViewController / willMoveToParentViewController
     //    for proper iOS view controller containment of child view controllers (such as TabView / Frame).
     for (const sub of ['', '.ios']) {
       const tabViewPath = resolve(coreDest, 'ui', 'tab-view', `index${sub}${ext}`);
@@ -613,6 +616,91 @@ export default { SourceMapConsumer, SourceMapGenerator, SourceNode };
         content = content.replace(
           /_setNativeViewFrame\(nativeView,\s*frame\)\s*\{\s*\/\/\s*\}/,
           `_setNativeViewFrame(nativeView, frame) {\n        if (nativeView) {\n            nativeView.frame = frame;\n        }\n    }`
+        );
+        content = content.replace(
+          /handler\._owner\s*=\s*owner;\s*return handler;/,
+          `handler._owner = owner;\n        if (SDK_VERSION >= 18) {\n            try { handler.mode = 2; /* UITabBarControllerModeTabBar */ } catch (e) {}\n        }\n        return handler;`
+        );
+        content = content.replace(
+          /this\.extendedLayoutIncludesOpaqueBars\s*=\s*true;/,
+          `this.extendedLayoutIncludesOpaqueBars = true;\n        if (SDK_VERSION >= 18) {\n            try { this.mode = 2; /* UITabBarControllerModeTabBar */ } catch (e) {}\n        }`
+        );
+        content = content.replace(
+          /if\s*\(SDK_VERSION\s*>=\s*18\)\s*\{\s*\/\/\s*iOS 18\+: use UITab instead of UITabBarItem\.[\s\S]*?do not crash[^\n]*\n\s*\}\s*\}/,
+          `if (SDK_VERSION >= 18) {
+                // iOS 18+: use UITab instead of UITabBarItem.
+                // The UITab instances are created and managed at the TabView level,
+                // so here we just update the corresponding tab for this controller.
+                const identifier = \`\${index}\`;
+                const tabController = parent.viewController;
+                try {
+                    const tab = tabController.tabForIdentifier(identifier);
+                    if (tab) {
+                        tab.title = title;
+                        tab.image = icon;
+                    }
+                }
+                catch (e) {
+                    // Fallback: if tabForIdentifier is not available for some reason,
+                    // do not crash – rely on existing tab configuration.
+                }
+                if (controller.tabBarItem) {
+                    controller.tabBarItem.title = title;
+                    controller.tabBarItem.image = icon;
+                }
+                controller.title = title;
+            }`
+        );
+        content = content.replace(
+          /if\s*\(SDK_VERSION\s*>=\s*18\s*\|\|\s*!this\.__controller\s*\|\|\s*!this\.__controller\.tabBarItem\)/,
+          `if (!this.__controller || !this.__controller.tabBarItem)`
+        );
+        content = content.replace(
+          /if\s*\(SDK_VERSION\s*>=\s*18\)\s*\{\s*\/\/\s*iOS 18\+: build UITab instances[\s\S]*?this\._ios\.customizableViewControllers\s*=\s*null;\s*\}/,
+          `if (SDK_VERSION >= 18) {
+            // iOS 18+: build UITab instances and assign them to the controller.
+            const tabs = [];
+            const controllers = [];
+            const states = getTitleAttributesForStates(this);
+            items.forEach((item, i) => {
+                const controller = this.getViewController(item);
+                const icon = this._getIcon(item);
+                const title = item.title || '';
+                const tabBarItem = UITabBarItem.alloc().initWithTitleImageTag(title, icon, i);
+                updateTitleAndIconPositions(item, tabBarItem, controller);
+                if (!__VISIONOS__ && SDK_VERSION < 15) {
+                    applyStatesToItem(tabBarItem, states);
+                }
+                controller.tabBarItem = tabBarItem;
+                controller.title = title;
+                controllers.push(controller);
+                const identifier = \`\${i}\`;
+                let tab;
+                if (item.role === 'search') {
+                    tab = UISearchTab.alloc().initWithTitleImageIdentifierViewControllerProvider(title, icon, identifier, (t) => {
+                        return controller;
+                    });
+                }
+                else {
+                    tab = UITab.alloc().initWithTitleImageIdentifierViewControllerProvider(title, icon, identifier, (t) => {
+                        return controller;
+                    });
+                }
+                tabs.push(tab);
+                item.canBeLoaded = true;
+            });
+            if (SDK_VERSION >= 15) {
+                this.updateBarItemAppearance(this._ios.tabBar, states);
+            }
+            try {
+                this._ios.mode = 2; /* UITabBarControllerModeTabBar */
+            } catch (e) { }
+            this._ios.viewControllers = NSArray.arrayWithArray(controllers);
+            try {
+                this._ios.tabs = NSArray.arrayWithArray(tabs);
+            } catch (e) { }
+            this._ios.customizableViewControllers = null;
+        }`
         );
         await writeFile(tabViewPath, content);
       } catch {}
