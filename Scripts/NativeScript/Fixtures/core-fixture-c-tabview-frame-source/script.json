@@ -1,0 +1,8 @@
+{
+  "name": "Hanlin NativeScript Core TabView+Frame C E2E",
+  "version": "1.0.0",
+  "description": "Unbundled Core TabView containing Frames verification fixture.",
+  "entry": "nativescript/app/bundle.mjs",
+  "runInApp": true,
+  "hanlinRuntime": "hanlin-nativescript"
+}

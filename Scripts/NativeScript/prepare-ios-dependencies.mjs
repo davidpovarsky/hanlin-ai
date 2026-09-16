@@ -439,6 +439,34 @@ export default { SourceMapConsumer, SourceMapGenerator, SourceNode };
     }
   }
 
+  // Patch TabView for iPadOS 18: ensure embedded UITabBarController uses bottom tab bar mode (mode = 2)
+  // and assigns controller.tabBarItem alongside UITab so standard tab bars render correctly in embedded hosts.
+  for (const ext of ['.js', '.mjs', '.ios.js', '.ios.mjs']) {
+    const tabViewPath = resolve(coreDest, 'ui', 'tab-view', 'index' + ext);
+    try {
+      let content = await readFile(tabViewPath, 'utf8');
+      if (!content.includes('this.mode = 2')) {
+        content = content.replace(
+          'this.extendedLayoutIncludesOpaqueBars = true;\n    };',
+          'this.extendedLayoutIncludesOpaqueBars = true;\n        if (SDK_VERSION >= 18) {\n            try { this.mode = 2; } catch (e) {}\n        }\n    };'
+        );
+        content = content.replace(
+          '// Fallback: if tabForIdentifier is not available for some reason,\n                    // do not crash – rely on existing tab configuration.\n                }\n            }',
+          '// Fallback: if tabForIdentifier is not available for some reason,\n                    // do not crash – rely on existing tab configuration.\n                }\n                const tabBarItem = UITabBarItem.alloc().initWithTitleImageTag(title, icon, index);\n                updateTitleAndIconPositions(this, tabBarItem, controller);\n                controller.tabBarItem = tabBarItem;\n            }'
+        );
+        content = content.replace(
+          'tabs.push(tab);\n                item.canBeLoaded = true;',
+          'const tabBarItem = UITabBarItem.alloc().initWithTitleImageTag(title, icon, i);\n                updateTitleAndIconPositions(item, tabBarItem, controller);\n                controller.tabBarItem = tabBarItem;\n                tabs.push(tab);\n                item.canBeLoaded = true;'
+        );
+        content = content.replace(
+          '// Prefer animated setter when available.\n                this._ios.tabs = NSArray.arrayWithArray(tabs);',
+          'this._ios.mode = 2;\n            } catch (e) {}\n            try {\n                // Prefer animated setter when available.\n                this._ios.tabs = NSArray.arrayWithArray(tabs);'
+        );
+        await writeFile(tabViewPath, content, 'utf8');
+      }
+    } catch {}
+  }
+
   // Rewire cross-package imports within @csstools to relative paths
   const csstoolsRewires = [
     {

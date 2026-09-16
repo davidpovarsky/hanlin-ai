@@ -28,6 +28,9 @@ var UITabBarControllerImpl = (function (_super) {
     UITabBarControllerImpl.prototype.viewDidLoad = function () {
         _super.prototype.viewDidLoad.call(this);
         this.extendedLayoutIncludesOpaqueBars = true;
+        if (SDK_VERSION >= 18) {
+            try { this.mode = 2; } catch (e) {}
+        }
     };
     UITabBarControllerImpl.prototype.viewWillAppear = function (animated) {
         var _a;
@@ -249,6 +252,9 @@ export class TabViewItem extends TabViewItemBase {
                     // Fallback: if tabForIdentifier is not available for some reason,
                     // do not crash – rely on existing tab configuration.
                 }
+                const tabBarItem = UITabBarItem.alloc().initWithTitleImageTag(title, icon, index);
+                updateTitleAndIconPositions(this, tabBarItem, controller);
+                controller.tabBarItem = tabBarItem;
             }
             else {
                 // iOS < 18: keep using UITabBarItem-based configuration.
@@ -488,9 +494,15 @@ export class TabView extends TabViewBase {
                         return controller;
                     });
                 }
+                const tabBarItem = UITabBarItem.alloc().initWithTitleImageTag(title, icon, i);
+                updateTitleAndIconPositions(item, tabBarItem, controller);
+                controller.tabBarItem = tabBarItem;
                 tabs.push(tab);
                 item.canBeLoaded = true;
             });
+            try {
+                this._ios.mode = 2;
+            } catch (e) {}
             try {
                 // Prefer animated setter when available.
                 this._ios.tabs = NSArray.arrayWithArray(tabs);

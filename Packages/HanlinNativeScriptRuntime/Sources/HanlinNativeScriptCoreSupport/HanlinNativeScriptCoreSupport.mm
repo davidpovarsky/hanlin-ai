@@ -236,7 +236,131 @@ static NSError *HanlinNativeScriptError(HanlinNativeScriptRuntimeErrorCode code,
 
 @end
 
+static void HanlinLogControllerHierarchy(NSString *context, UIViewController *vc) {
+    if (!vc) {
+        NSLog(@"[HanlinHostDiag] context=%@ controller=(nil)", context);
+        return;
+    }
+    UIView *view = vc.isViewLoaded ? vc.view : nil;
+    BOOL hasWindow = (view && view.window != nil);
+    BOOL isInHierarchy = (view && view.window != nil && !view.hidden && view.alpha > 0.01);
+
+    NSMutableString *childrenDesc = [NSMutableString string];
+    [childrenDesc appendString:@"["];
+    for (NSUInteger i = 0; i < vc.childViewControllers.count; i++) {
+        UIViewController *child = vc.childViewControllers[i];
+        if (i > 0) [childrenDesc appendString:@", "];
+        [childrenDesc appendFormat:@"%@:%p", NSStringFromClass(child.class), child];
+    }
+    [childrenDesc appendString:@"]"];
+
+    NSString *frameStr = view ? NSStringFromCGRect(view.frame) : @"(no-view)";
+    NSString *boundsStr = view ? NSStringFromCGRect(view.bounds) : @"(no-view)";
+    BOOL hidden = view ? view.hidden : YES;
+    CGFloat alpha = view ? view.alpha : 0.0;
+
+    NSLog(@"[HanlinHostDiag] context=%@ vc=%@:%p parent=%@:%p children=%@ hasWindow=%d inHierarchy=%d frame=%@ bounds=%@ hidden=%d alpha=%.2f",
+          context,
+          NSStringFromClass(vc.class), vc,
+          vc.parentViewController ? NSStringFromClass(vc.parentViewController.class) : @"nil", vc.parentViewController,
+          childrenDesc,
+          hasWindow, isInHierarchy, frameStr, boundsStr, hidden, alpha);
+
+    if ([vc isKindOfClass:[UITabBarController class]]) {
+        UITabBarController *tabBarVC = (UITabBarController *)vc;
+        UIViewController *selected = tabBarVC.selectedViewController;
+        NSUInteger selectedIndex = tabBarVC.selectedIndex;
+        NSUInteger count = tabBarVC.viewControllers.count;
+        NSUInteger tabsCount = 0;
+        if (@available(iOS 18.0, *)) {
+            tabsCount = tabBarVC.tabs.count;
+        }
+        NSLog(@"[HanlinHostDiag]   UITabBarController: selectedIndex=%lu count=%lu tabsCount=%lu selectedVC=%@:%p tabBarFrame=%@",
+              (unsigned long)selectedIndex, (unsigned long)count, (unsigned long)tabsCount,
+              selected ? NSStringFromClass(selected.class) : @"nil", selected,
+              NSStringFromCGRect(tabBarVC.tabBar.frame));
+        if (selected) {
+            HanlinLogControllerHierarchy([NSString stringWithFormat:@"%@->selectedVC", context], selected);
+        }
+    } else if ([vc isKindOfClass:[UINavigationController class]]) {
+        UINavigationController *navVC = (UINavigationController *)vc;
+        UIViewController *top = navVC.topViewController;
+        NSUInteger count = navVC.viewControllers.count;
+        NSLog(@"[HanlinHostDiag]   UINavigationController: count=%lu topVC=%@:%p navBarHidden=%d navBarFrame=%@",
+              (unsigned long)count,
+              top ? NSStringFromClass(top.class) : @"nil", top,
+              navVC.isNavigationBarHidden,
+              NSStringFromCGRect(navVC.navigationBar.frame));
+        if (top) {
+            HanlinLogControllerHierarchy([NSString stringWithFormat:@"%@->topVC", context], top);
+        }
+    }
+}
+
+@interface HanlinNativeScriptContainerController ()
+@property(nonatomic, weak, nullable) UIViewController *guestController;
+@end
+
 @implementation HanlinNativeScriptContainerController
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    self.view.backgroundColor = [UIColor systemBackgroundColor];
+    HanlinLogControllerHierarchy(@"Container.viewDidLoad", self);
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    HanlinLogControllerHierarchy(@"Container.viewWillAppear", self);
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    HanlinLogControllerHierarchy(@"Container.viewDidAppear", self);
+    if (self.guestController && self.guestController.isViewLoaded) {
+        if (!CGRectEqualToRect(self.guestController.view.frame, self.view.bounds)) {
+            self.guestController.view.frame = self.view.bounds;
+            [self.guestController.view setNeedsLayout];
+            [self.guestController.view layoutIfNeeded];
+        }
+    }
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    HanlinLogControllerHierarchy(@"Container.viewWillDisappear", self);
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    HanlinLogControllerHierarchy(@"Container.viewDidDisappear", self);
+}
+
+- (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
+    if (self.guestController && self.guestController.isViewLoaded) {
+        CGRect targetFrame = self.view.bounds;
+        if (!CGRectEqualToRect(self.guestController.view.frame, targetFrame)) {
+            self.guestController.view.frame = targetFrame;
+            [self.guestController.view setNeedsLayout];
+            [self.guestController.view layoutIfNeeded];
+        }
+    }
+    HanlinLogControllerHierarchy(@"Container.viewDidLayoutSubviews", self);
+}
+
+- (UIViewController *)childViewControllerForStatusBarStyle {
+    return self.guestController ?: [super childViewControllerForStatusBarStyle];
+}
+
+- (UIViewController *)childViewControllerForStatusBarHidden {
+    return self.guestController ?: [super childViewControllerForStatusBarHidden];
+}
+
+- (UIViewController *)childViewControllerForHomeIndicatorAutoHidden {
+    return self.guestController ?: [super childViewControllerForHomeIndicatorAutoHidden];
+}
+
 @end
 
 @interface HanlinNativeScriptPresenter () <NativeScriptEmbedderDelegate>
@@ -261,11 +385,21 @@ static NSError *HanlinNativeScriptError(HanlinNativeScriptRuntimeErrorCode code,
 - (id)presentNativeScriptApp:(UIViewController *)viewController {
     [self detachGuestController];
     self.guestController = viewController;
+    self.containerController.guestController = viewController;
+
     [self.containerController addChildViewController:viewController];
     viewController.view.frame = self.containerController.view.bounds;
     viewController.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     [self.containerController.view addSubview:viewController.view];
     [viewController didMoveToParentViewController:self.containerController];
+
+    if (self.containerController.isViewLoaded && !CGRectIsEmpty(self.containerController.view.bounds)) {
+        viewController.view.frame = self.containerController.view.bounds;
+        [viewController.view setNeedsLayout];
+        [viewController.view layoutIfNeeded];
+    }
+
+    HanlinLogControllerHierarchy(@"Presenter.presentNativeScriptApp", viewController);
     return self.containerController;
 }
 
@@ -279,10 +413,12 @@ static NSError *HanlinNativeScriptError(HanlinNativeScriptRuntimeErrorCode code,
 - (void)detachGuestController {
     UIViewController *guest = self.guestController;
     if (!guest) { return; }
+    HanlinLogControllerHierarchy(@"Presenter.detachGuestController", guest);
     [guest willMoveToParentViewController:nil];
     [guest.view removeFromSuperview];
     [guest removeFromParentViewController];
     self.guestController = nil;
+    self.containerController.guestController = nil;
 }
 
 @end

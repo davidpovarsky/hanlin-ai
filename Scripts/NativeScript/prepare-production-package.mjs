@@ -69,5 +69,20 @@ try {
   await cp(unbundledFixturePath, resolve(e2eRoot, 'core-unbundled.hanlinNativeScript'));
 } catch {}
 
+const controllerFixtures = [
+  'uikit-tabbar-bridge.hanlinNativeScript',
+  'core-fixture-a-tabview.hanlinNativeScript',
+  'core-fixture-b-frame.hanlinNativeScript',
+  'core-fixture-c-tabview-frame.hanlinNativeScript'
+];
+
+for (const fix of controllerFixtures) {
+  const fixPath = resolve(scriptRoot, 'Fixtures', fix);
+  try {
+    await cp(fixPath, resolve(e2eRoot, fix));
+  } catch {}
+}
+
 console.log(`Prepared NativeScript production packages at ${e2eRoot}`);
+
 

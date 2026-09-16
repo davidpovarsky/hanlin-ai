@@ -8,6 +8,10 @@ final class HanlinNativeScriptProductionE2ETests: XCTestCase {
     private let corePackageName = "Hanlin NativeScript Core E2E"
     private let unbundledPackageName = "Hanlin NativeScript Unbundled Core E2E"
     private let sefariaPackageName = "Sefaria Library & Texts (Core)"
+    private let uikitTabBarPackageName = "Hanlin UIKit TabBar Bridge E2E"
+    private let fixtureAPackageName = "Hanlin NativeScript Core TabView A E2E"
+    private let fixtureBPackageName = "Hanlin NativeScript Core Frame B E2E"
+    private let fixtureCPackageName = "Hanlin NativeScript Core TabView+Frame C E2E"
 
     override func setUpWithError() throws {
         continueAfterFailure = false
@@ -59,9 +63,106 @@ final class HanlinNativeScriptProductionE2ETests: XCTestCase {
         closeNativeScriptApp()
     }
 
+    func testDirectUIKitTabBarBridge() throws {
+        openApps()
+        importAndInstall(archive: "uikit-tabbar-bridge")
+        launchInstalledPackage(named: uikitTabBarPackageName)
+
+        let titlePredicate = NSPredicate(format: "label CONTAINS 'UIKit TabBar Active' OR identifier == 'uikit-tabbar-bridge-title'")
+        let title = app.descendants(matching: .any).matching(titlePredicate).firstMatch
+        XCTAssertTrue(title.waitForExistence(timeout: 30), "Direct UIKit TabBar title did not render")
+
+        let buttonPredicate = NSPredicate(format: "label CONTAINS 'Direct Button 1' OR identifier == 'uikit-tabbar-bridge-button-1'")
+        let button = app.descendants(matching: .any).matching(buttonPredicate).firstMatch
+        XCTAssertTrue(button.waitForExistence(timeout: 15), "Direct UIKit TabBar button did not exist")
+
+        capture(name: "Direct-UIKit-TabBar-Tab1-Active")
+
+        if let tab2 = waitForTab(named: "Direct Tab 2", timeout: 15) {
+            tab2.tap()
+            let tab2Predicate = NSPredicate(format: "label CONTAINS 'Second Direct Tab' OR identifier == 'uikit-tabbar-bridge-tab2-label'")
+            let tab2Label = app.descendants(matching: .any).matching(tab2Predicate).firstMatch
+            XCTAssertTrue(tab2Label.waitForExistence(timeout: 15), "Direct UIKit TabBar Tab 2 content did not render")
+            capture(name: "Direct-UIKit-TabBar-Tab2-Active")
+        }
+
+        closeNativeScriptApp()
+    }
+
+    func testCoreFixtureATabViewOnly() throws {
+        openApps()
+        importAndInstall(archive: "core-fixture-a-tabview")
+        launchInstalledPackage(named: fixtureAPackageName)
+
+        let titleAPredicate = NSPredicate(format: "label CONTAINS 'Core TabView Page A Active' OR identifier == 'core-tabview-title-a'")
+        let titleA = app.descendants(matching: .any).matching(titleAPredicate).firstMatch
+        XCTAssertTrue(titleA.waitForExistence(timeout: 30), "Core TabView Fixture A Tab 1 did not render")
+        capture(name: "Core-Fixture-A-Tab1-Active")
+
+        if let tabB = waitForTab(named: "Tab B", timeout: 15) {
+            tabB.tap()
+            let titleBPredicate = NSPredicate(format: "label CONTAINS 'Core TabView Page B Active' OR identifier == 'core-tabview-title-b'")
+            let titleB = app.descendants(matching: .any).matching(titleBPredicate).firstMatch
+            XCTAssertTrue(titleB.waitForExistence(timeout: 15), "Core TabView Fixture A Tab 2 did not render")
+            capture(name: "Core-Fixture-A-Tab2-Active")
+        }
+
+        closeNativeScriptApp()
+    }
+
+    func testCoreFixtureBFrameOnly() throws {
+        openApps()
+        importAndInstall(archive: "core-fixture-b-frame")
+        launchInstalledPackage(named: fixtureBPackageName)
+
+        let page1Predicate = NSPredicate(format: "label CONTAINS 'Core Frame Page 1 Active' OR identifier == 'core-frame-page1-title'")
+        let page1 = app.descendants(matching: .any).matching(page1Predicate).firstMatch
+        XCTAssertTrue(page1.waitForExistence(timeout: 30), "Core Frame Fixture B Page 1 did not render")
+        capture(name: "Core-Fixture-B-Page1-Active")
+
+        let nextBtnPredicate = NSPredicate(format: "label CONTAINS 'Navigate to Page 2' OR identifier == 'core-frame-next-button'")
+        let nextBtn = app.descendants(matching: .any).matching(nextBtnPredicate).firstMatch
+        XCTAssertTrue(nextBtn.waitForExistence(timeout: 15), "Navigate to Page 2 button did not exist")
+        nextBtn.tap()
+
+        let page2Predicate = NSPredicate(format: "label CONTAINS 'Core Frame Page 2 Active' OR identifier == 'core-frame-page2-title'")
+        let page2 = app.descendants(matching: .any).matching(page2Predicate).firstMatch
+        XCTAssertTrue(page2.waitForExistence(timeout: 15), "Core Frame Fixture B Page 2 did not render")
+        capture(name: "Core-Fixture-B-Page2-Active")
+
+        let backBtnPredicate = NSPredicate(format: "label CONTAINS 'Back to Page 1' OR identifier == 'core-frame-back-button'")
+        let backBtn = app.descendants(matching: .any).matching(backBtnPredicate).firstMatch
+        XCTAssertTrue(backBtn.waitForExistence(timeout: 15), "Back button did not exist")
+        backBtn.tap()
+
+        XCTAssertTrue(page1.waitForExistence(timeout: 15), "Failed to navigate back to Page 1")
+        capture(name: "Core-Fixture-B-Back-To-Page1")
+
+        closeNativeScriptApp()
+    }
+
+    func testCoreFixtureCTabViewWithFrame() throws {
+        openApps()
+        importAndInstall(archive: "core-fixture-c-tabview-frame")
+        launchInstalledPackage(named: fixtureCPackageName)
+
+        let tab1Predicate = NSPredicate(format: "label CONTAINS 'Core TabView+Frame Tab 1 Active' OR identifier == 'core-tabview-frame-tab1-title'")
+        let tab1 = app.descendants(matching: .any).matching(tab1Predicate).firstMatch
+        XCTAssertTrue(tab1.waitForExistence(timeout: 30), "Core TabView+Frame Fixture C Tab 1 did not render")
+        capture(name: "Core-Fixture-C-Tab1-Active")
+
+        if let tab2 = waitForTab(named: "Second Tab", timeout: 15) {
+            tab2.tap()
+            let tab2Predicate = NSPredicate(format: "label CONTAINS 'Core TabView+Frame Tab 2 Active' OR identifier == 'core-tabview-frame-tab2-title'")
+            let tab2Label = app.descendants(matching: .any).matching(tab2Predicate).firstMatch
+            XCTAssertTrue(tab2Label.waitForExistence(timeout: 15), "Core TabView+Frame Fixture C Tab 2 did not render")
+            capture(name: "Core-Fixture-C-Tab2-Active")
+        }
+
+        closeNativeScriptApp()
+    }
 
     func testProductionSefariaCoreEndToEnd() throws {
-        throw XCTSkip("Temporarily skipped pending Sefaria iPadOS 18 TabView accessibility locator resolution; Core runtime evaluation & Http confirmed.")
 
         openApps()
         importAndInstall(archive: "sefaria-reader-core")

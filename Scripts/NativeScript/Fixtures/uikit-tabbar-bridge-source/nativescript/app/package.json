@@ -1,0 +1,8 @@
+{
+  "name": "uikit-tabbar-bridge",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "main": "bundle.mjs",
+  "hanlinRuntime": "hanlin-nativescript"
+}
