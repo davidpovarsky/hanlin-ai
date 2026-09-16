@@ -16,6 +16,48 @@ import UIKit
 @objcMembers
 public final class HanlinNativeServicesBridge: NSObject {
 
+    // MARK: - Canonical Roots
+
+    public private(set) static var activeAppID: String?
+    public private(set) static var activeDataRoot: String?
+    public private(set) static var activeStateDirectory: String?
+    public private(set) static var activeDocumentsDirectory: String?
+    public private(set) static var activeCacheDirectory: String?
+
+    public static func setActiveContainer(
+        appID: String,
+        dataRoot: String,
+        stateDir: String,
+        docsDir: String,
+        cacheDir: String
+    ) {
+        activeAppID = appID
+        activeDataRoot = dataRoot
+        activeStateDirectory = stateDir
+        activeDocumentsDirectory = docsDir
+        activeCacheDirectory = cacheDir
+    }
+
+    public static func clearActiveContainer() {
+        activeAppID = nil
+        activeDataRoot = nil
+        activeStateDirectory = nil
+        activeDocumentsDirectory = nil
+        activeCacheDirectory = nil
+    }
+
+    /// The root data directory for the active Mini App.
+    public static func dataRootDirectory() -> String? { activeDataRoot }
+
+    /// The private state directory for the active Mini App.
+    public static func stateDirectory() -> String? { activeStateDirectory }
+
+    /// The user documents directory for the active Mini App.
+    public static func documentsDirectory() -> String? { activeDocumentsDirectory }
+
+    /// The cache directory for the active Mini App.
+    public static func cacheDirectory() -> String? { activeCacheDirectory }
+
     // MARK: - Node Runtime
 
     /// Execute JavaScript source via the embedded Node runtime.

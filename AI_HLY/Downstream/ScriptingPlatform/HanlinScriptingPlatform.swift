@@ -11,6 +11,7 @@ import HanlinScriptUI
 import HanlinScriptingApplicationRuntime
 import HanlinScriptingSDK
 import HanlinNativeScriptRuntime
+import HanlinMiniAppCore
 import Observation
 import OSLog
 import SwiftData
@@ -383,8 +384,34 @@ final class HanlinScriptingPlatform {
                 let artifactRoot = try await store.activeArtifactURL(for: id)
                 let entrypointURL = artifactRoot.appending(path: entrypoint.sourcePath, directoryHint: .notDirectory)
                 dismissActiveApplication()
+
+                let appID = package.appID
+                let dataStore = HanlinMiniAppHost.shared.dataStore
+                let container = try await dataStore.container(for: appID)
+                let dataRootStr = container.root.path(percentEncoded: false)
+                let stateDirStr = container.state.path(percentEncoded: false)
+                let docsDirStr = container.documents.path(percentEncoded: false)
+                let cacheDirStr = container.cache.path(percentEncoded: false)
+
+                let env: [String: String] = [
+                    "HANLIN_APP_ID": appID.rawValue,
+                    "HANLIN_MINIAPP_DATA_ROOT": dataRootStr,
+                    "HANLIN_MINIAPP_STATE_DIR": stateDirStr,
+                    "HANLIN_MINIAPP_DOCUMENTS_DIR": docsDirStr,
+                    "HANLIN_MINIAPP_CACHE_DIR": cacheDirStr
+                ]
+
+                HanlinNativeServicesBridge.setActiveContainer(
+                    appID: appID.rawValue,
+                    dataRoot: dataRootStr,
+                    stateDir: stateDirStr,
+                    docsDir: docsDirStr,
+                    cacheDir: cacheDirStr
+                )
+
                 let session = try HanlinNativeScriptSession(
-                    applicationRoot: entrypointURL.deletingLastPathComponent()
+                    applicationRoot: entrypointURL.deletingLastPathComponent(),
+                    environment: env
                 )
                 try session.start()
                 nativeScriptSession = session
@@ -505,6 +532,7 @@ final class HanlinScriptingPlatform {
         }
         nativeScriptSession?.shutdown()
         nativeScriptSession = nil
+        HanlinNativeServicesBridge.clearActiveContainer()
         activeApplicationID = nil
         activeApplicationModel = nil
         activeNativeScriptController = nil

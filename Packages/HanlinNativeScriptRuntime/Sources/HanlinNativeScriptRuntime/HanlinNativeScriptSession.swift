@@ -46,8 +46,9 @@ public final class HanlinNativeScriptSession {
     private var runtime: HanlinNativeScriptRuntimeHost?
     private(set) public var isActive = false
     private var createdSymlinks: Set<URL> = []
+    public let environment: [String: String]
 
-    public init(applicationRoot: URL) throws {
+    public init(applicationRoot: URL, environment: [String: String] = [:]) throws {
         let root = applicationRoot.standardizedFileURL
         guard root.isFileURL else {
             throw HanlinNativeScriptError.invalidApplicationRoot("the URL is not a file URL")
@@ -67,6 +68,7 @@ public final class HanlinNativeScriptSession {
         try Self.validateNativePluginRequirements(packageJSONURL: packageJSONURL)
         try Self.validateCoreRequirements(packageJSONURL: packageJSONURL)
         self.applicationRoot = root
+        self.environment = environment
         presenter = HanlinNativeScriptPresenter()
         containerController = presenter.containerController
     }
@@ -79,6 +81,9 @@ public final class HanlinNativeScriptSession {
 
         presenter.install()
         do {
+            for (key, value) in environment {
+                setenv(key, value, 1)
+            }
             try linkSharedRuntimeIfNeeded()
             let host = try HanlinNativeScriptRuntimeHost(
                 baseDirectory: applicationRoot.deletingLastPathComponent().path(percentEncoded: false),
@@ -97,6 +102,9 @@ public final class HanlinNativeScriptSession {
     }
 
     public func shutdown() {
+        for key in environment.keys {
+            unsetenv(key)
+        }
         guard isActive || runtime != nil else {
             unlinkSharedRuntime()
             presenter.detach()
