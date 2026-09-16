@@ -78,13 +78,13 @@ final class HanlinNativeScriptProductionE2ETests: XCTestCase {
 
         capture(name: "Direct-UIKit-TabBar-Tab1-Active")
 
-        if let tab2 = waitForTab(named: "Direct Tab 2", timeout: 15) {
-            tab2.tap()
-            let tab2Predicate = NSPredicate(format: "label CONTAINS 'Second Direct Tab' OR identifier == 'uikit-tabbar-bridge-tab2-label'")
-            let tab2Label = app.descendants(matching: .any).matching(tab2Predicate).firstMatch
-            XCTAssertTrue(tab2Label.waitForExistence(timeout: 15), "Direct UIKit TabBar Tab 2 content did not render")
-            capture(name: "Direct-UIKit-TabBar-Tab2-Active")
-        }
+        let tab2 = try XCTUnwrap(waitForTab(named: "Direct Tab 2", timeout: 15), "Direct Tab 2 was missing")
+        XCTAssertTrue(waitUntil(timeout: 5) { tab2.isHittable }, "Direct Tab 2 was not hittable")
+        tab2.tap()
+        let tab2Predicate = NSPredicate(format: "label CONTAINS 'Second Direct Tab' OR identifier == 'uikit-tabbar-bridge-tab2-label'")
+        let tab2Label = app.descendants(matching: .any).matching(tab2Predicate).firstMatch
+        XCTAssertTrue(tab2Label.waitForExistence(timeout: 15), "Direct UIKit TabBar Tab 2 content did not render")
+        capture(name: "Direct-UIKit-TabBar-Tab2-Active")
 
         closeNativeScriptApp()
     }
@@ -99,13 +99,13 @@ final class HanlinNativeScriptProductionE2ETests: XCTestCase {
         XCTAssertTrue(titleA.waitForExistence(timeout: 30), "Core TabView Fixture A Tab 1 did not render")
         capture(name: "Core-Fixture-A-Tab1-Active")
 
-        if let tabB = waitForTab(named: "Tab B", timeout: 15) {
-            tabB.tap()
-            let titleBPredicate = NSPredicate(format: "label CONTAINS 'Core TabView Page B Active' OR identifier == 'core-tabview-title-b'")
-            let titleB = app.descendants(matching: .any).matching(titleBPredicate).firstMatch
-            XCTAssertTrue(titleB.waitForExistence(timeout: 15), "Core TabView Fixture A Tab 2 did not render")
-            capture(name: "Core-Fixture-A-Tab2-Active")
-        }
+        let tabB = try XCTUnwrap(waitForTab(named: "Tab B", timeout: 15), "Tab B was missing")
+        XCTAssertTrue(waitUntil(timeout: 5) { tabB.isHittable }, "Tab B was not hittable")
+        tabB.tap()
+        let titleBPredicate = NSPredicate(format: "label CONTAINS 'Core TabView Page B Active' OR identifier == 'core-tabview-title-b'")
+        let titleB = app.descendants(matching: .any).matching(titleBPredicate).firstMatch
+        XCTAssertTrue(titleB.waitForExistence(timeout: 15), "Core TabView Fixture A Tab 2 did not render")
+        capture(name: "Core-Fixture-A-Tab2-Active")
 
         closeNativeScriptApp()
     }
@@ -151,13 +151,34 @@ final class HanlinNativeScriptProductionE2ETests: XCTestCase {
         XCTAssertTrue(tab1.waitForExistence(timeout: 30), "Core TabView+Frame Fixture C Tab 1 did not render")
         capture(name: "Core-Fixture-C-Tab1-Active")
 
-        if let tab2 = waitForTab(named: "Second Tab", timeout: 15) {
-            tab2.tap()
-            let tab2Predicate = NSPredicate(format: "label CONTAINS 'Core TabView+Frame Tab 2 Active' OR identifier == 'core-tabview-frame-tab2-title'")
-            let tab2Label = app.descendants(matching: .any).matching(tab2Predicate).firstMatch
-            XCTAssertTrue(tab2Label.waitForExistence(timeout: 15), "Core TabView+Frame Fixture C Tab 2 did not render")
-            capture(name: "Core-Fixture-C-Tab2-Active")
-        }
+        // 1. In-tab Frame forward navigation
+        let navBtnPredicate = NSPredicate(format: "label CONTAINS 'Navigate in Tab 1 Frame' OR identifier == 'core-tabview-frame-nav-button'")
+        let navBtn = app.descendants(matching: .any).matching(navBtnPredicate).firstMatch
+        XCTAssertTrue(navBtn.waitForExistence(timeout: 15), "Navigate in Tab 1 Frame button did not exist")
+        navBtn.tap()
+
+        let detailPredicate = NSPredicate(format: "label CONTAINS 'Core TabView+Frame Tab 1 Detail Active' OR identifier == 'core-tabview-frame-tab1-detail-title'")
+        let detail = app.descendants(matching: .any).matching(detailPredicate).firstMatch
+        XCTAssertTrue(detail.waitForExistence(timeout: 15), "Tab 1 Frame Detail did not render")
+        capture(name: "Core-Fixture-C-Tab1-Detail-Active")
+
+        // 2. In-tab Frame backward navigation
+        let backBtnPredicate = NSPredicate(format: "label CONTAINS 'Back to Tab 1 Root' OR identifier == 'core-tabview-frame-back-button'")
+        let backBtn = app.descendants(matching: .any).matching(backBtnPredicate).firstMatch
+        XCTAssertTrue(backBtn.waitForExistence(timeout: 15), "Back to Tab 1 Root button did not exist")
+        backBtn.tap()
+
+        XCTAssertTrue(tab1.waitForExistence(timeout: 15), "Failed to navigate back in Tab 1 Frame")
+
+        // 3. Tab switching with hard assertions
+        let tab2 = try XCTUnwrap(waitForTab(named: "Second Tab", timeout: 15), "Second Tab was missing")
+        XCTAssertTrue(waitUntil(timeout: 5) { tab2.isHittable }, "Second Tab was not hittable")
+        tab2.tap()
+
+        let tab2Predicate = NSPredicate(format: "label CONTAINS 'Core TabView+Frame Tab 2 Active' OR identifier == 'core-tabview-frame-tab2-title'")
+        let tab2Label = app.descendants(matching: .any).matching(tab2Predicate).firstMatch
+        XCTAssertTrue(tab2Label.waitForExistence(timeout: 15), "Core TabView+Frame Fixture C Tab 2 did not render")
+        capture(name: "Core-Fixture-C-Tab2-Active")
 
         closeNativeScriptApp()
     }
@@ -208,39 +229,38 @@ final class HanlinNativeScriptProductionE2ETests: XCTestCase {
         }
 
         // 2. Library Tab (ארון הספרים)
-        if let libraryTab = waitForTab(named: "ארון הספרים", timeout: 15) {
-            libraryTab.tap()
-            let genesisChip = app.buttons["Genesis 1"].firstMatch
-            if genesisChip.waitForExistence(timeout: 10) {
-                genesisChip.tap()
-                XCTAssertTrue(hebrewMode.waitForExistence(timeout: 30), "Reader failed to load Genesis 1 from library")
-                capture(name: "Sefaria-Library-Genesis-Loaded")
-                if backButton.exists { backButton.tap() }
-            }
-        }
+        let libraryTab = try XCTUnwrap(waitForTab(named: "ארון הספרים", timeout: 15), "Library Tab was missing")
+        XCTAssertTrue(waitUntil(timeout: 5) { libraryTab.isHittable }, "Library Tab was not hittable")
+        libraryTab.tap()
+        let genesisChip = app.buttons["Genesis 1"].firstMatch
+        XCTAssertTrue(genesisChip.waitForExistence(timeout: 10), "Genesis 1 chip was missing in Library Tab")
+        genesisChip.tap()
+        XCTAssertTrue(hebrewMode.waitForExistence(timeout: 30), "Reader failed to load Genesis 1 from library")
+        capture(name: "Sefaria-Library-Genesis-Loaded")
+        if backButton.exists { backButton.tap() }
 
         // 4. Search Tab (חיפוש)
-        if let searchTab = waitForTab(named: "חיפוש", timeout: 15) {
-            searchTab.tap()
-            let quickChip = app.buttons["Genesis 1"].firstMatch
-            if quickChip.waitForExistence(timeout: 10) {
-                quickChip.tap()
-                capture(name: "Sefaria-Search-Executed")
-                if backButton.exists { backButton.tap() }
-            }
+        let searchTab = try XCTUnwrap(waitForTab(named: "חיפוש", timeout: 15), "Search Tab was missing")
+        XCTAssertTrue(waitUntil(timeout: 5) { searchTab.isHittable }, "Search Tab was not hittable")
+        searchTab.tap()
+        let quickChip = app.buttons["Genesis 1"].firstMatch
+        if quickChip.waitForExistence(timeout: 10) {
+            quickChip.tap()
+            capture(name: "Sefaria-Search-Executed")
+            if backButton.exists { backButton.tap() }
         }
 
         // 5. Lexicon Tab (מילון)
-        if let lexiconTab = waitForTab(named: "מילון", timeout: 15) {
-            lexiconTab.tap()
-            let wordChip = app.buttons["מאימתי"].firstMatch
-            if wordChip.waitForExistence(timeout: 10) {
-                wordChip.tap()
-                let resultPredicate = NSPredicate(format: "label CONTAINS 'מאימתי' OR label CONTAINS 'יסטרוב'")
-                let result = app.descendants(matching: .any).matching(resultPredicate).firstMatch
-                _ = result.waitForExistence(timeout: 20)
-                capture(name: "Sefaria-Lexicon-Results")
-            }
+        let lexiconTab = try XCTUnwrap(waitForTab(named: "מילון", timeout: 15), "Lexicon Tab was missing")
+        XCTAssertTrue(waitUntil(timeout: 5) { lexiconTab.isHittable }, "Lexicon Tab was not hittable")
+        lexiconTab.tap()
+        let wordChip = app.buttons["מאימתי"].firstMatch
+        if wordChip.waitForExistence(timeout: 10) {
+            wordChip.tap()
+            let resultPredicate = NSPredicate(format: "label CONTAINS 'מאימתי' OR label CONTAINS 'יסטרוב'")
+            let result = app.descendants(matching: .any).matching(resultPredicate).firstMatch
+            _ = result.waitForExistence(timeout: 20)
+            capture(name: "Sefaria-Lexicon-Results")
         }
 
         closeNativeScriptApp()
