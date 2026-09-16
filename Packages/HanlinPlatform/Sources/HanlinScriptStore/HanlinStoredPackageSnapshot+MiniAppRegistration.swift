@@ -11,12 +11,22 @@ import HanlinScriptContracts
 
 extension HanlinStoredPackageSnapshot: HanlinMiniAppRegistration {
     public var appID: HanlinAppID {
-        (try? HanlinAppID(validating: record.packageID.rawValue))
-            ?? (try! HanlinAppID(validating: "package.unknown"))
+        stableAppID ?? (try! HanlinAppID(validating: "package.unknown"))
+    }
+
+    /// Extracts a stable canonical app ID from the manifest's `hanlinAppID` field
+    /// if present and valid, falling back to the package ID.
+    private var stableAppID: HanlinAppID? {
+        if let manifest,
+           case let .string(rawID) = manifest.unknownFields["hanlinAppID"],
+           let id = HanlinAppID(rawValue: rawID) {
+            return id
+        }
+        return HanlinAppID(rawValue: record.packageID.rawValue)
     }
 
     public func appDescriptor() throws -> HanlinAppDescriptor {
-        let appID = try HanlinAppID(validating: record.packageID.rawValue)
+        let appID = try stableAppID ?? HanlinAppID(validating: record.packageID.rawValue)
         let nameString = manifest?.name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty == false
             ? manifest!.name
             : record.packageID.rawValue
