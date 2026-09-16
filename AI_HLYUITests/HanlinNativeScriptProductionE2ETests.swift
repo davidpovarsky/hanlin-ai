@@ -447,19 +447,41 @@ final class HanlinNativeScriptProductionE2ETests: XCTestCase {
         let navBar = app.navigationBars["Script Package"].firstMatch
         _ = navBar.waitForExistence(timeout: 5)
 
-        let directArchive = app.buttons[archiveName].firstMatch
-        if directArchive.waitForExistence(timeout: 5) {
+        var directArchive = app.buttons[archiveName].firstMatch
+        if !directArchive.exists {
+            for _ in 1...5 {
+                app.swipeUp()
+                if directArchive.waitForExistence(timeout: 2) {
+                    break
+                }
+            }
+        }
+        if !directArchive.exists {
+            let directCandidate = app.descendants(matching: .any).matching(identifier: archiveName).firstMatch
+            if directCandidate.waitForExistence(timeout: 2) {
+                directArchive = directCandidate
+            }
+        }
+        if directArchive.waitForExistence(timeout: 3) {
             _ = waitUntil(timeout: 5) { directArchive.isHittable }
-            directArchive.tap()
+            if directArchive.isHittable {
+                directArchive.tap()
+            } else {
+                directArchive.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
+            }
 
             let inspecting = app.staticTexts["Inspecting…"].firstMatch
             let install = app.buttons["hanlin-package-install"].firstMatch
             let errorText = app.staticTexts["Import Error"].firstMatch
-            let started = waitUntil(timeout: 4) {
+            let started = waitUntil(timeout: 5) {
                 inspecting.exists || install.exists || errorText.exists
             }
-            if !started && directArchive.exists && directArchive.isHittable {
-                directArchive.tap()
+            if !started && directArchive.exists {
+                if directArchive.isHittable {
+                    directArchive.tap()
+                } else {
+                    directArchive.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
+                }
             }
             return
         }
@@ -554,9 +576,29 @@ final class HanlinNativeScriptProductionE2ETests: XCTestCase {
         ]
         var target: XCUIElement?
         for candidate in packageCandidates {
-            if candidate.waitForExistence(timeout: 5) {
+            if candidate.exists {
                 target = candidate
                 break
+            }
+        }
+        if target == nil {
+            for _ in 1...5 {
+                app.swipeUp()
+                for candidate in packageCandidates {
+                    if candidate.waitForExistence(timeout: 2) {
+                        target = candidate
+                        break
+                    }
+                }
+                if target != nil { break }
+            }
+        }
+        if target == nil {
+            for candidate in packageCandidates {
+                if candidate.waitForExistence(timeout: 5) {
+                    target = candidate
+                    break
+                }
             }
         }
         let package = target ?? app.staticTexts[packageName].firstMatch

@@ -34,6 +34,10 @@ label2.text = "Second Direct Tab";
 label2.accessibilityIdentifier = "uikit-tabbar-bridge-tab2-label";
 vc2.view.addSubview(label2);
 
+try {
+  tabBarController.mode = 2; // UITabBarControllerModeTabBar
+} catch (_) {}
+
 tabBarController.viewControllers = NSArray.arrayWithArray([vc1, vc2]);
 tabBarController.selectedIndex = 0;
 
