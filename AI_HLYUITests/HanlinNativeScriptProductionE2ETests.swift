@@ -448,10 +448,13 @@ final class HanlinNativeScriptProductionE2ETests: XCTestCase {
         _ = navBar.waitForExistence(timeout: 5)
 
         var directArchive = app.buttons[archiveName].firstMatch
-        if !directArchive.exists {
-            for _ in 1...5 {
+        if !directArchive.exists || !directArchive.isHittable {
+            for _ in 1...6 {
+                if directArchive.exists && directArchive.isHittable {
+                    break
+                }
                 app.swipeUp()
-                if directArchive.waitForExistence(timeout: 2) {
+                if directArchive.waitForExistence(timeout: 2) && directArchive.isHittable {
                     break
                 }
             }
@@ -463,7 +466,10 @@ final class HanlinNativeScriptProductionE2ETests: XCTestCase {
             }
         }
         if directArchive.waitForExistence(timeout: 3) {
-            _ = waitUntil(timeout: 5) { directArchive.isHittable }
+            if !directArchive.isHittable {
+                app.swipeUp()
+                _ = waitUntil(timeout: 3) { directArchive.isHittable }
+            }
             if directArchive.isHittable {
                 directArchive.tap()
             } else {
@@ -473,17 +479,26 @@ final class HanlinNativeScriptProductionE2ETests: XCTestCase {
             let inspecting = app.staticTexts["Inspecting…"].firstMatch
             let install = app.buttons["hanlin-package-install"].firstMatch
             let errorText = app.staticTexts["Import Error"].firstMatch
-            let started = waitUntil(timeout: 5) {
+            var started = waitUntil(timeout: 5) {
                 inspecting.exists || install.exists || errorText.exists
             }
             if !started && directArchive.exists {
+                if !directArchive.isHittable {
+                    app.swipeUp()
+                    _ = waitUntil(timeout: 3) { directArchive.isHittable }
+                }
                 if directArchive.isHittable {
                     directArchive.tap()
                 } else {
                     directArchive.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
                 }
+                started = waitUntil(timeout: 5) {
+                    inspecting.exists || install.exists || errorText.exists
+                }
             }
-            return
+            if started || install.waitForExistence(timeout: 5) || errorText.exists {
+                return
+            }
         }
 
         let importer = app.buttons["hanlin-file-importer"].firstMatch
@@ -546,62 +561,80 @@ final class HanlinNativeScriptProductionE2ETests: XCTestCase {
     }
 
     private func closeImportSurfaces() {
-        let scriptPackageNav = app.navigationBars["Script Package"].firstMatch
-        if scriptPackageNav.exists {
-            let done = app.buttons["Done"].firstMatch
-            if done.exists && done.isHittable {
-                done.tap()
+        for _ in 1...5 {
+            if appsAddButton.exists && !app.navigationBars["Script Package"].exists && !app.navigationBars["Add Apps"].exists {
+                break
             }
-            _ = waitUntil(timeout: 5) { !scriptPackageNav.exists }
-        }
-        let addAppsNav = app.navigationBars["Add Apps"].firstMatch
-        if addAppsNav.waitForExistence(timeout: 3) || addAppsNav.exists {
-            let done = app.buttons["Done"].firstMatch
-            if done.waitForExistence(timeout: 3) && done.isHittable {
-                done.tap()
+            let doneButtons = [
+                app.navigationBars["Script Package"].buttons["Done"].firstMatch,
+                app.navigationBars["Add Apps"].buttons["Done"].firstMatch,
+                app.navigationBars.buttons["Done"].firstMatch,
+                app.buttons["Done"].firstMatch
+            ]
+            var tappedDone = false
+            for done in doneButtons {
+                if done.waitForExistence(timeout: 2) && done.isHittable {
+                    done.tap()
+                    tappedDone = true
+                    _ = waitUntil(timeout: 2) { !done.exists }
+                    break
+                }
             }
-            _ = waitUntil(timeout: 5) { !addAppsNav.exists }
+            if !tappedDone {
+                break
+            }
         }
         _ = waitUntil(timeout: 5) {
             !app.navigationBars["Script Package"].exists && !app.navigationBars["Add Apps"].exists
         }
+        ensureAppsAddButton(timeout: 10)
     }
 
     private func launchInstalledPackage(named packageName: String) {
-        let predicate = NSPredicate(format: "label CONTAINS %@ OR identifier CONTAINS %@", packageName, packageName)
-        let packageCandidates = [
-            app.buttons.matching(predicate).firstMatch,
-            app.descendants(matching: .any).matching(predicate).firstMatch,
-            app.staticTexts[packageName].firstMatch
+        let cardPredicate = NSPredicate(format: "label CONTAINS[c] %@ OR identifier CONTAINS[c] %@", packageName, packageName)
+        let packageCandidates: [() -> XCUIElement] = [
+            { self.app.buttons.matching(cardPredicate).firstMatch },
+            { self.app.descendants(matching: .any).matching(cardPredicate).firstMatch }
         ]
+
         var target: XCUIElement?
         for candidate in packageCandidates {
-            if candidate.exists {
-                target = candidate
+            let elem = candidate()
+            if elem.exists && elem.isHittable {
+                target = elem
                 break
             }
         }
+
         if target == nil {
-            for _ in 1...5 {
+            for _ in 1...6 {
                 app.swipeUp()
                 for candidate in packageCandidates {
-                    if candidate.waitForExistence(timeout: 2) {
-                        target = candidate
+                    let elem = candidate()
+                    if elem.waitForExistence(timeout: 2) && elem.isHittable {
+                        target = elem
                         break
                     }
                 }
                 if target != nil { break }
             }
         }
+
         if target == nil {
-            for candidate in packageCandidates {
-                if candidate.waitForExistence(timeout: 5) {
-                    target = candidate
-                    break
+            for _ in 1...6 {
+                app.swipeDown()
+                for candidate in packageCandidates {
+                    let elem = candidate()
+                    if elem.waitForExistence(timeout: 2) && elem.isHittable {
+                        target = elem
+                        break
+                    }
                 }
+                if target != nil { break }
             }
         }
-        let package = target ?? app.staticTexts[packageName].firstMatch
+
+        let package = target ?? app.buttons.matching(cardPredicate).firstMatch
         XCTAssertTrue(package.waitForExistence(timeout: 15), "Installed package \(packageName) was unavailable")
 
         let closeButton = app.buttons["hanlin-script-app-close"].firstMatch
