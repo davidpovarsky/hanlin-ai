@@ -5,6 +5,7 @@
 #import <dlfcn.h>
 #import <fcntl.h>
 #import <unistd.h>
+#import <atomic>
 #import <exception>
 #import <fstream>
 #import <string>
@@ -51,41 +52,29 @@ static BOOL HanlinStringEndsWith(const char *str, const char *suffix) {
     return strcmp(str + (strLen - sufLen), suffix) == 0;
 }
 
-static NSString *HanlinFindNearestPackageJson(NSString *startDir) {
-    NSFileManager *fm = [NSFileManager defaultManager];
-    NSString *current = startDir;
-    while (current.length > 1 && ![current isEqualToString:@"/"]) {
-        NSString *pkg = [current stringByAppendingPathComponent:@"package.json"];
-        if ([fm fileExistsAtPath:pkg]) {
-            return pkg;
-        }
-        current = [current stringByDeletingLastPathComponent];
-    }
-    return nil;
-}
+static std::atomic<uint32_t> s_loaderTraceSeq{0};
 
-static NSString *HanlinReadPackageJsonType(NSString *pkgJsonPath) {
-    if (!pkgJsonPath) return @"<none>";
-    NSData *data = [NSData dataWithContentsOfFile:pkgJsonPath];
-    if (!data) return @"<cannot open>";
-    NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
-    if ([json isKindOfClass:[NSDictionary class]]) {
-        NSString *type = json[@"type"];
-        return type ?: @"<no-type-field>";
+static BOOL HanlinIsWatchedPath(const char *path) {
+    if (!path) return NO;
+    if (strstr(path, "nativescript") == NULL &&
+        strstr(path, "NativeScript") == NULL &&
+        strstr(path, "ScriptingPlatform") == NULL) {
+        return NO;
     }
-    return @"<invalid-json>";
+    return (HanlinStringEndsWith(path, ".js") ||
+            HanlinStringEndsWith(path, ".mjs") ||
+            HanlinStringEndsWith(path, ".cjs") ||
+            strstr(path, "package.json") != NULL);
 }
 
 static thread_local bool s_in_hook = false;
 
 static void hanlin_log_file_access(int fd, const char *path, const char *op) {
-    if (path == nullptr) return;
-    if (!HanlinStringEndsWith(path, ".js") &&
-        !HanlinStringEndsWith(path, ".mjs") &&
-        !HanlinStringEndsWith(path, ".cjs") &&
-        strstr(path, "package.json") == NULL) {
+    if (!HanlinIsWatchedPath(path)) {
         return;
     }
+
+    uint32_t seq = ++s_loaderTraceSeq;
 
     char canonical[PATH_MAX] = {0};
     if (realpath(path, canonical) == nullptr) {
@@ -93,39 +82,36 @@ static void hanlin_log_file_access(int fd, const char *path, const char *op) {
     }
 
     InitTNSSymbols();
-    BOOL isESM = NO;
+    const char *isESMStr = "unknown";
     if (s_tnsIsESModule) {
-        std::string p(path);
-        isESM = s_tnsIsESModule(p);
+        try {
+            std::string p(path);
+            isESMStr = s_tnsIsESModule(p) ? "YES" : "NO";
+        } catch (...) {
+            isESMStr = "threw";
+        }
     }
 
-    char firstLine[160] = {0};
+    char firstLineBuf[128] = {0};
     if (fd >= 0) {
-        char buf[256] = {0};
-        ssize_t bytesRead = pread(fd, buf, sizeof(buf) - 1, 0);
+        ssize_t bytesRead = pread(fd, firstLineBuf, sizeof(firstLineBuf) - 1, 0);
         if (bytesRead > 0) {
-            buf[bytesRead] = '\0';
-            char *newline = strpbrk(buf, "\r\n");
-            if (newline) *newline = '\0';
-            strncpy(firstLine, buf, sizeof(firstLine) - 1);
+            firstLineBuf[bytesRead] = '\0';
+            for (ssize_t i = 0; i < bytesRead; ++i) {
+                if (firstLineBuf[i] == '\r' || firstLineBuf[i] == '\n') {
+                    firstLineBuf[i] = '\0';
+                    break;
+                }
+            }
         } else {
-            strncpy(firstLine, "<empty>", sizeof(firstLine) - 1);
+            strncpy(firstLineBuf, "<empty>", sizeof(firstLineBuf) - 1);
         }
     } else {
-        strncpy(firstLine, "<no fd>", sizeof(firstLine) - 1);
+        strncpy(firstLineBuf, "<no-fd>", sizeof(firstLineBuf) - 1);
     }
 
-    NSString *nsPath = [NSString stringWithUTF8String:path];
-    NSString *parentDir = [nsPath stringByDeletingLastPathComponent];
-    NSString *nearestPkg = HanlinFindNearestPackageJson(parentDir);
-    NSString *pkgType = HanlinReadPackageJsonType(nearestPkg);
-
-    NSLog(@"[HanlinLoaderTrace] >>> %s: %s", op, path);
-    NSLog(@"[HanlinLoaderTrace]     CANONICAL: %s", canonical);
-    NSLog(@"[HanlinLoaderTrace]     IS_ESM: %@", (s_tnsIsESModule ? (isESM ? @"YES (ESM)" : @"NO (CommonJS)") : @"UNKNOWN"));
-    NSLog(@"[HanlinLoaderTrace]     PKG_JSON: %@", nearestPkg ?: @"<NOT FOUND>");
-    NSLog(@"[HanlinLoaderTrace]     PKG_TYPE: %@", pkgType);
-    NSLog(@"[HanlinLoaderTrace]     FIRST_LINE: %s", firstLine);
+    NSLog(@"[HanlinLoaderTrace #%u] %s | req=%s | real=%s | isESM_query=%s | first=\"%s\"",
+          seq, op, path, canonical, isESMStr, firstLineBuf);
 }
 
 static int (*orig_open)(const char *, int, ...) = nullptr;
@@ -298,11 +284,9 @@ static NSError *HanlinNativeScriptError(HanlinNativeScriptRuntimeErrorCode code,
     NSLog(@"[HanlinLoaderTrace] Starting runMainApplication with active loader hooks...");
     try {
         @try {
-            // Use the runtime's supported package entry loader. Application.run()
-            // detects NativeScriptEmbedder's delegate and attaches to the host
-            // controller without starting a second UIApplicationMain.
+            NSLog(@"HANLIN_NS_BEFORE_RUN_MAIN");
             [self.runtime runMainApplication];
-            NSLog(@"[HanlinLoaderTrace] runMainApplication returned successfully.");
+            NSLog(@"HANLIN_NS_AFTER_RUN_MAIN");
         } @catch (NSException *exception) {
             NSString *detail = [NSString stringWithFormat:@"NativeScript script execution NSException: %@ (reason: %@)",
                                 exception.name ?: @"Unknown",
