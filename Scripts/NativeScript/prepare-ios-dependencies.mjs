@@ -601,6 +601,36 @@ export default { SourceMapConsumer, SourceMapGenerator, SourceNode };
         await writeFile(textBasePath, content);
       } catch {}
     }
+
+    // TabView layout and Page child view controller containment:
+    // 1. Ensure TabView sets its nativeView frame when hosted inside a layout container (like Page).
+    // 2. Ensure Page invokes didMoveToParentViewController / willMoveToParentViewController
+    //    for proper iOS view controller containment of child view controllers (such as TabView / Frame).
+    for (const sub of ['', '.ios']) {
+      const tabViewPath = resolve(coreDest, 'ui', 'tab-view', `index${sub}${ext}`);
+      try {
+        let content = await readFile(tabViewPath, 'utf8');
+        content = content.replace(
+          /_setNativeViewFrame\(nativeView,\s*frame\)\s*\{\s*\/\/\s*\}/,
+          `_setNativeViewFrame(nativeView, frame) {\n        if (nativeView) {\n            nativeView.frame = frame;\n        }\n    }`
+        );
+        await writeFile(tabViewPath, content);
+      } catch {}
+
+      const pagePath = resolve(coreDest, 'ui', 'page', `index${sub}${ext}`);
+      try {
+        let content = await readFile(pagePath, 'utf8');
+        content = content.replace(
+          /this\.viewController\.addChildViewController\(viewController\);/,
+          `this.viewController.addChildViewController(viewController);\n            if (typeof viewController.didMoveToParentViewController === 'function') {\n                viewController.didMoveToParentViewController(this.viewController);\n            }`
+        );
+        content = content.replace(
+          /viewController\.removeFromParentViewController\(\);/,
+          `if (typeof viewController.willMoveToParentViewController === 'function') {\n                viewController.willMoveToParentViewController(null);\n            }\n            viewController.removeFromParentViewController();`
+        );
+        await writeFile(pagePath, content);
+      } catch {}
+    }
   }
 
   // Rewrite explicit .js imports in .mjs files so that ESM dependencies and

@@ -66,9 +66,8 @@ final class HanlinNativeScriptProductionE2ETests: XCTestCase {
 
         launchInstalledPackage(named: sefariaPackageName)
 
-        let dailyTab = app.tabBars.buttons["לימוד יומי"].firstMatch
-        let dailyTabCandidate = dailyTab.exists ? dailyTab : app.buttons["לימוד יומי"].firstMatch
-        XCTAssertTrue(dailyTabCandidate.waitForExistence(timeout: 30), "Sefaria Core TabView did not render")
+        let dailyTab = waitForTab(named: "לימוד יומי", timeout: 30)
+        XCTAssertNotNil(dailyTab, "Sefaria Core TabView did not render")
         capture(name: "Sefaria-Core-App-Launched")
 
         // 1. Daily Study Tab (לימוד יומי)
@@ -106,10 +105,8 @@ final class HanlinNativeScriptProductionE2ETests: XCTestCase {
         }
 
         // 2. Library Tab (ארון הספרים)
-        let libraryTab = app.tabBars.buttons["ארון הספרים"].firstMatch
-        let libraryTabCandidate = libraryTab.exists ? libraryTab : app.buttons["ארון הספרים"].firstMatch
-        if libraryTabCandidate.waitForExistence(timeout: 10) {
-            libraryTabCandidate.tap()
+        if let libraryTab = waitForTab(named: "ארון הספרים", timeout: 15) {
+            libraryTab.tap()
             let genesisChip = app.buttons["Genesis 1"].firstMatch
             if genesisChip.waitForExistence(timeout: 10) {
                 genesisChip.tap()
@@ -120,10 +117,8 @@ final class HanlinNativeScriptProductionE2ETests: XCTestCase {
         }
 
         // 4. Search Tab (חיפוש)
-        let searchTab = app.tabBars.buttons["חיפוש"].firstMatch
-        let searchTabCandidate = searchTab.exists ? searchTab : app.buttons["חיפוש"].firstMatch
-        if searchTabCandidate.waitForExistence(timeout: 10) {
-            searchTabCandidate.tap()
+        if let searchTab = waitForTab(named: "חיפוש", timeout: 15) {
+            searchTab.tap()
             let quickChip = app.buttons["Genesis 1"].firstMatch
             if quickChip.waitForExistence(timeout: 10) {
                 quickChip.tap()
@@ -133,10 +128,8 @@ final class HanlinNativeScriptProductionE2ETests: XCTestCase {
         }
 
         // 5. Lexicon Tab (מילון)
-        let lexiconTab = app.tabBars.buttons["מילון"].firstMatch
-        let lexiconTabCandidate = lexiconTab.exists ? lexiconTab : app.buttons["מילון"].firstMatch
-        if lexiconTabCandidate.waitForExistence(timeout: 10) {
-            lexiconTabCandidate.tap()
+        if let lexiconTab = waitForTab(named: "מילון", timeout: 15) {
+            lexiconTab.tap()
             let wordChip = app.buttons["מאימתי"].firstMatch
             if wordChip.waitForExistence(timeout: 10) {
                 wordChip.tap()
@@ -160,7 +153,7 @@ final class HanlinNativeScriptProductionE2ETests: XCTestCase {
             "Package \(sefariaPackageName) was not visible after app restart"
         )
         launchInstalledPackage(named: sefariaPackageName)
-        XCTAssertTrue(dailyTabCandidate.waitForExistence(timeout: 30), "Sefaria Core failed to relaunch after app restart")
+        XCTAssertNotNil(waitForTab(named: "לימוד יומי", timeout: 30), "Sefaria Core failed to relaunch after app restart")
         capture(name: "Sefaria-Relaunch-Success")
         closeNativeScriptApp()
     }
@@ -493,6 +486,32 @@ final class HanlinNativeScriptProductionE2ETests: XCTestCase {
             RunLoop.current.run(until: Date().addingTimeInterval(0.2))
         }
         return condition()
+    }
+
+    private func waitForTab(named title: String, timeout: TimeInterval = 30) -> XCUIElement? {
+        let deadline = Date().addingTimeInterval(timeout)
+        let predicate = NSPredicate(format: "label == %@ OR title == %@ OR identifier == %@", title, title, title)
+        let queries: [() -> XCUIElement] = [
+            { self.app.tabBars.buttons[title].firstMatch },
+            { self.app.tabBars.tabs[title].firstMatch },
+            { self.app.tabs[title].firstMatch },
+            { self.app.buttons[title].firstMatch },
+            { self.app.descendants(matching: .any).matching(predicate).firstMatch }
+        ]
+        while Date() < deadline {
+            for getQuery in queries {
+                let elem = getQuery()
+                if elem.exists {
+                    return elem
+                }
+            }
+            RunLoop.current.run(until: Date().addingTimeInterval(0.25))
+        }
+        for getQuery in queries {
+            let elem = getQuery()
+            if elem.exists { return elem }
+        }
+        return nil
     }
 
     private func capture(name: String) {

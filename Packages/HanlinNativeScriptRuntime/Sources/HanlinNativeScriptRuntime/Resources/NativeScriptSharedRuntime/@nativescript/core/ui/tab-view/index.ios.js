@@ -337,7 +337,9 @@ export class TabView extends TabViewBase {
         //
     }
     _setNativeViewFrame(nativeView, frame) {
-        //
+        if (nativeView) {
+            nativeView.frame = frame;
+        }
     }
     onSelectedIndexChanged(oldIndex, newIndex) {
         const items = this.items;

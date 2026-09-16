@@ -439,6 +439,9 @@ export class Page extends PageBase {
                 return true;
             }
             this.viewController.addChildViewController(viewController);
+            if (typeof viewController.didMoveToParentViewController === 'function') {
+                viewController.didMoveToParentViewController(this.viewController);
+            }
         }
         if (nativeParent && nativeChild) {
             if (typeof atIndex !== 'number' || atIndex >= nativeParent.subviews.count) {
@@ -458,6 +461,9 @@ export class Page extends PageBase {
         }
         const viewController = child.ios instanceof UIViewController ? child.ios : child.viewController;
         if (viewController) {
+            if (typeof viewController.willMoveToParentViewController === 'function') {
+                viewController.willMoveToParentViewController(null);
+            }
             viewController.removeFromParentViewController();
         }
         super._removeViewFromNativeVisualTree(child);
