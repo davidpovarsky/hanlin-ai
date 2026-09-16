@@ -1,3 +1,4 @@
+const __CSS_PARSER__ = globalThis.__CSS_PARSER__ !== undefined ? globalThis.__CSS_PARSER__ : 'css-tree';
 import { getNativeScriptGlobals } from '../../globals/global-utils';
 import { _evaluateCssVariableExpression, _evaluateCssCalcExpression, _expandCssShorthand, _isCssPendingSubstitution, isCssVariable, isCssVariableExpression, isCssCalcExpression } from '../core/properties';
 import { unsetValue } from '../core/properties/property-shared';

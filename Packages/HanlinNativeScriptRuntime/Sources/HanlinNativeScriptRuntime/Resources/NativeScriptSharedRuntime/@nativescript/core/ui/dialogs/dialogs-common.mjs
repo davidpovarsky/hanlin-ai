@@ -1,3 +1,4 @@
+const __APPLE__ = globalThis.__APPLE__ !== undefined ? globalThis.__APPLE__ : true;
 import { Frame } from '../frame';
 import { CSSUtils } from '../../css/system-classes';
 import { isObject, isString } from '../../utils/types';

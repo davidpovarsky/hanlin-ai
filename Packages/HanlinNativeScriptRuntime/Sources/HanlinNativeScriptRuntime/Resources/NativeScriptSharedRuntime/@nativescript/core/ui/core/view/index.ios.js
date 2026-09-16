@@ -1,3 +1,4 @@
+const __VISIONOS__ = globalThis.__VISIONOS__ !== undefined ? globalThis.__VISIONOS__ : false;
 import { ViewCommon, isEnabledProperty, originXProperty, originYProperty, isUserInteractionEnabledProperty, testIDProperty, iosGlassEffectProperty, statusBarStyleProperty } from './view-common';
 import { isAccessibilityServiceEnabled } from '../../../application';
 import { updateA11yPropertiesCallback } from '../../../application/helpers-common';

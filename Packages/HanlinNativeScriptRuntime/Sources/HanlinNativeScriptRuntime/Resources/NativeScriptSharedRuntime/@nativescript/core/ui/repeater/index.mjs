@@ -1,3 +1,5 @@
+const __UI_USE_XML_PARSER__ = globalThis.__UI_USE_XML_PARSER__ !== undefined ? globalThis.__UI_USE_XML_PARSER__ : true;
+const __UI_USE_EXTERNAL_RENDERER__ = globalThis.__UI_USE_EXTERNAL_RENDERER__ !== undefined ? globalThis.__UI_USE_EXTERNAL_RENDERER__ : false;
 import { Label } from '../label';
 import { View, CSSType, CustomLayoutView } from '../core/view';
 import { Property } from '../core/properties';

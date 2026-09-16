@@ -1,3 +1,4 @@
+const __VISIONOS__ = globalThis.__VISIONOS__ !== undefined ? globalThis.__VISIONOS__ : false;
 import { platformNames } from '../common';
 class DeviceRef {
     get manufacturer() {

@@ -1,3 +1,4 @@
+const __APPLE__ = globalThis.__APPLE__ !== undefined ? globalThis.__APPLE__ : true;
 var TabViewBase_1;
 import { View, CSSType } from '../core/view';
 import { ViewBase, booleanConverter } from '../core/view-base';

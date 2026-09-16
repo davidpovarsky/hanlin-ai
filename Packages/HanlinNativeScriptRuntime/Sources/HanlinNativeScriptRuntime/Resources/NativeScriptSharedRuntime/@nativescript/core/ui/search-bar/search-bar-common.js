@@ -1,3 +1,4 @@
+const __APPLE__ = globalThis.__APPLE__ !== undefined ? globalThis.__APPLE__ : true;
 import { View, CSSType } from '../core/view';
 import { Property } from '../core/properties';
 import { Color } from '../../color';

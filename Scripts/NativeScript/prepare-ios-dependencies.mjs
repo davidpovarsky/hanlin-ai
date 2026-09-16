@@ -1,6 +1,6 @@
 import { createHash } from 'node:crypto';
 import { access, chmod, cp, mkdir, readFile, readdir, rename, rm, writeFile } from 'node:fs/promises';
-import { readFileSync, statSync } from 'node:fs';
+import { readFileSync, readdirSync, statSync } from 'node:fs';
 import { basename, resolve } from 'node:path';
 
 const scriptRoot = resolve(import.meta.dirname);
@@ -514,6 +514,67 @@ export default { SourceMapConsumer, SourceMapGenerator, SourceNode };
   }
   await rewriteExplicitJsInMjs(sharedStaging);
 
+  const CANONICAL_BUILD_DEFINES = {
+    __ANDROID__: 'false',
+    __IOS__: 'true',
+    __VISIONOS__: 'false',
+    __APPLE__: 'true',
+    __DEV__: 'false',
+    __COMMONJS__: 'false',
+    __NS_WEBPACK__: 'false',
+    __NS_ENV_VERBOSE__: 'false',
+    __CSS_PARSER__: "'css-tree'",
+    __UI_USE_XML_PARSER__: 'true',
+    __UI_USE_EXTERNAL_RENDERER__: 'false',
+    __TEST__: 'false',
+  };
+
+  // Inject build-time defines into modules that consume them.
+  // NativeScript source code relies on bundler-time DefinePlugin / Vite defines
+  // (__DEV__, __ANDROID__, __IOS__, __APPLE__, etc.) for platform branching.
+  // In the shared unbundled runtime, modules are executed directly without per-app
+  // bundler transformation; prepending per-module shims mirrors NativeScript's Vite
+  // unbundled dev-server transform and prevents ReferenceErrors at module evaluation.
+  async function injectDefinesIntoModules(dir) {
+    const entries = await readdir(dir, { withFileTypes: true });
+    for (const entry of entries) {
+      const full = resolve(dir, entry.name);
+      if (entry.isDirectory()) {
+        await injectDefinesIntoModules(full);
+      } else if (entry.name.endsWith('.js') || entry.name.endsWith('.mjs')) {
+        let content = await readFile(full, 'utf8');
+        const shims = [];
+        for (const [key, defaultValue] of Object.entries(CANONICAL_BUILD_DEFINES)) {
+          const freeRegex = new RegExp(`(?<![.\\w$])${key}\\b`);
+          const declRegex = new RegExp(`(?:^|[\\s;])(?:const|let|var|function|class)\\s+${key}\\b`);
+          if (freeRegex.test(content) && !declRegex.test(content)) {
+            shims.push(`const ${key} = globalThis.${key} !== undefined ? globalThis.${key} : ${defaultValue};`);
+          }
+        }
+        if (shims.length > 0) {
+          await writeFile(full, shims.join('\n') + '\n' + content);
+        }
+      }
+    }
+  }
+  await injectDefinesIntoModules(sharedStaging);
+
+  const globalThisDefines = `if (typeof globalThis !== 'undefined') {\n` +
+    Object.entries(CANONICAL_BUILD_DEFINES)
+      .map(([k, v]) => `  if (globalThis.${k} === undefined) globalThis.${k} = ${v};`)
+      .join('\n') +
+    `\n}\n`;
+
+  for (const ext of ['.js', '.mjs']) {
+    const globalsPath = resolve(coreDest, 'globals', 'index' + ext);
+    try {
+      const content = await readFile(globalsPath, 'utf8');
+      if (!content.includes('globalThis.__DEV__')) {
+        await writeFile(globalsPath, globalThisDefines + content);
+      }
+    } catch {}
+  }
+
   // Normalize all package.json files across the shared runtime to ensure
   // "type": "module" is declared as the first property. This prevents NativeScript's
   // V8 module loader (v8-module-loader.cpp) from misclassifying nested ESM subpackages
@@ -667,6 +728,44 @@ export default { SourceMapConsumer, SourceMapGenerator, SourceNode };
     }
     if (missing.length > 0) {
       throw new Error(`ESM preflight failed: ${missing.length} unresolvable imports in ESM graph: ${JSON.stringify(missing.slice(0, 5))}`);
+    }
+    function preflightVerifyBuildDefines(dir) {
+      function collectMjs(d) {
+        let list = [];
+        for (const entry of readdirSync(d, { withFileTypes: true })) {
+          const full = resolve(d, entry.name);
+          if (entry.isDirectory()) {
+            list = list.concat(collectMjs(full));
+          } else if (entry.name.endsWith('.mjs')) {
+            list.push(full);
+          }
+        }
+        return list;
+      }
+      const allMjs = collectMjs(dir);
+      for (const file of allMjs) {
+        const content = readFileSync(file, 'utf8');
+        for (const [key, _val] of Object.entries(CANONICAL_BUILD_DEFINES)) {
+          // 1. Verify no duplicate declarations
+          const declMatches = content.match(new RegExp(`(?:^|[\\s;])(?:const|let|var)\\s+${key}\\s*=`, 'g'));
+          if (declMatches && declMatches.length > 1) {
+            throw new Error(`Build defines preflight failed: duplicate declaration of ${key} in ${file}`);
+          }
+          // 2. Verify no free identifier remains unshimmed/untransformed
+          const hasFree = new RegExp(`(?<![.\\w$])${key}\\b`).test(content);
+          const hasDecl = new RegExp(`(?:^|[\\s;])(?:const|let|var|function|class)\\s+${key}\\b`).test(content);
+          if (hasFree && !hasDecl) {
+            throw new Error(`Build defines preflight failed: free identifier ${key} in ${file} was not shimmed or declared`);
+          }
+        }
+      }
+      console.log(`Preflight build defines verification passed across all ${allMjs.length} ESM shadow modules.`);
+    }
+    preflightVerifyBuildDefines(sharedRuntimePath);
+
+    const platformCheckMjs = readFileSync(resolve(sharedRuntimePath, '@nativescript', 'core', 'utils', 'platform-check.mjs'), 'utf8');
+    if (!platformCheckMjs.includes('const __DEV__ = globalThis.__DEV__ !== undefined ? globalThis.__DEV__ : false;')) {
+      throw new Error('Preflight failed: @nativescript/core/utils/platform-check.mjs is missing const __DEV__ = ... shim');
     }
     console.log(`Preflight ESM graph verification passed (${visited.size} modules verified; 0 misclassifications, 0 missing).`);
   }

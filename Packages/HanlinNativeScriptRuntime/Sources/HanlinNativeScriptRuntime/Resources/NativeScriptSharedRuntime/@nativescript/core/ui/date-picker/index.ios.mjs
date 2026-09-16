@@ -1,3 +1,4 @@
+const __VISIONOS__ = globalThis.__VISIONOS__ !== undefined ? globalThis.__VISIONOS__ : false;
 import { DatePickerBase, yearProperty, monthProperty, dayProperty, dateProperty, maxDateProperty, minDateProperty, hourProperty, minuteProperty, secondProperty, showTimeProperty, iosPreferredDatePickerStyleProperty } from './date-picker-common';
 import { colorProperty } from '../styling/style-properties';
 import { Color } from '../../color';

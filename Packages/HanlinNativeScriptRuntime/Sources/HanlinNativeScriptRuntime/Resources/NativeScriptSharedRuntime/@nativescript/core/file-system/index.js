@@ -1,3 +1,5 @@
+const __ANDROID__ = globalThis.__ANDROID__ !== undefined ? globalThis.__ANDROID__ : false;
+const __APPLE__ = globalThis.__APPLE__ !== undefined ? globalThis.__APPLE__ : true;
 import { FileSystemAccess, FileSystemAccess29 } from './file-system-access';
 import { SDK_VERSION } from '../utils/constants';
 import { getNativeApp } from '../application/helpers-common';

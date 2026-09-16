@@ -1,3 +1,4 @@
+const __ANDROID__ = globalThis.__ANDROID__ !== undefined ? globalThis.__ANDROID__ : false;
 import { androidGetCurrentActivity } from '../application/helpers';
 import { getRootView } from '../application/helpers-common';
 import { unsetValue } from '../ui/core/properties/property-shared';

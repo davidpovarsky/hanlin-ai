@@ -1,3 +1,7 @@
+const __ANDROID__ = globalThis.__ANDROID__ !== undefined ? globalThis.__ANDROID__ : false;
+const __IOS__ = globalThis.__IOS__ !== undefined ? globalThis.__IOS__ : true;
+const __VISIONOS__ = globalThis.__VISIONOS__ !== undefined ? globalThis.__VISIONOS__ : false;
+const __APPLE__ = globalThis.__APPLE__ !== undefined ? globalThis.__APPLE__ : true;
 /*
  * Enum holding platform names.
  */

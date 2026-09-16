@@ -1,3 +1,4 @@
+const __UI_USE_EXTERNAL_RENDERER__ = globalThis.__UI_USE_EXTERNAL_RENDERER__ !== undefined ? globalThis.__UI_USE_EXTERNAL_RENDERER__ : false;
 import { ListViewBase, separatorColorProperty, itemTemplatesProperty, iosEstimatedRowHeightProperty, stickyHeaderProperty, stickyHeaderTemplateProperty, stickyHeaderHeightProperty, sectionedProperty, showSearchProperty, searchAutoHideProperty, iosSearchInsetBehaviorProperty } from './list-view-common';
 import { View } from '../core/view';
 import { Length } from '../styling/length-shared';

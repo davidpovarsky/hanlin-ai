@@ -1,3 +1,5 @@
+const __ANDROID__ = globalThis.__ANDROID__ !== undefined ? globalThis.__ANDROID__ : false;
+const __IOS__ = globalThis.__IOS__ !== undefined ? globalThis.__IOS__ : true;
 var _a, _b;
 const parent_ = Symbol('[[parent]]');
 const native_ = Symbol('[[native]]');

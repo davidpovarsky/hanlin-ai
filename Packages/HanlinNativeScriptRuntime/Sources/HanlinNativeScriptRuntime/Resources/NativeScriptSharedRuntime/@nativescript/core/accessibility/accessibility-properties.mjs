@@ -1,3 +1,4 @@
+const __APPLE__ = globalThis.__APPLE__ !== undefined ? globalThis.__APPLE__ : true;
 import { CssProperty, InheritedCssProperty, Property } from '../ui/core/properties';
 import { booleanConverter } from '../ui/core/view-base/utils';
 import { Style } from '../ui/styling/style';

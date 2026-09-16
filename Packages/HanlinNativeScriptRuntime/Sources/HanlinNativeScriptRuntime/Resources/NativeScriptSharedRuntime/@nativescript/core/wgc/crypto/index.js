@@ -1,3 +1,5 @@
+const __ANDROID__ = globalThis.__ANDROID__ !== undefined ? globalThis.__ANDROID__ : false;
+const __IOS__ = globalThis.__IOS__ !== undefined ? globalThis.__IOS__ : true;
 import { SubtleCrypto } from './SubtleCrypto';
 const subtle = new SubtleCrypto();
 export class Crypto {

@@ -1,3 +1,5 @@
+const __ANDROID__ = globalThis.__ANDROID__ !== undefined ? globalThis.__ANDROID__ : false;
+const __APPLE__ = globalThis.__APPLE__ !== undefined ? globalThis.__APPLE__ : true;
 import { booleanConverter } from '../core/view-base';
 // Requires.
 import { FormattedString } from './formatted-string';

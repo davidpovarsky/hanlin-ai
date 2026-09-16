@@ -1,3 +1,4 @@
+const __VISIONOS__ = globalThis.__VISIONOS__ !== undefined ? globalThis.__VISIONOS__ : false;
 import { IOSHelper } from '../ui/core/view/view-helper';
 import { SDK_VERSION } from '../utils/constants';
 import { CoreTypes } from '../core-types';

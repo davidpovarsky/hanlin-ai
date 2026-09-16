@@ -1,3 +1,4 @@
+const __APPLE__ = globalThis.__APPLE__ !== undefined ? globalThis.__APPLE__ : true;
 import { View, CustomLayoutView } from '../core/view';
 import { layout } from '../../utils';
 /**

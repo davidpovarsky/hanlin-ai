@@ -1,3 +1,4 @@
+const __VISIONOS__ = globalThis.__VISIONOS__ !== undefined ? globalThis.__VISIONOS__ : false;
 import { Font } from '../styling/font';
 import { IOSHelper, View } from '../core/view';
 import { TabViewBase, TabViewItemBase, itemsProperty, selectedIndexProperty, tabTextColorProperty, tabTextFontSizeProperty, tabBackgroundColorProperty, selectedTabTextColorProperty, iosIconRenderingModeProperty, traceMissingIcon, iosBottomAccessoryProperty, iosTabBarMinimizeBehaviorProperty } from './tab-view-common';

@@ -1,3 +1,4 @@
+const __UI_USE_EXTERNAL_RENDERER__ = globalThis.__UI_USE_EXTERNAL_RENDERER__ !== undefined ? globalThis.__UI_USE_EXTERNAL_RENDERER__ : false;
 // using import is important to ensure webpack keep it in order
 import './globals';
 // Register "dynamically" loaded module that need to be resolved by the

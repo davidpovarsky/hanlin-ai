@@ -1,3 +1,4 @@
+const __APPLE__ = globalThis.__APPLE__ !== undefined ? globalThis.__APPLE__ : true;
 var ScrollViewBase_1;
 import { ContentView } from '../content-view';
 import { Property, makeParser, makeValidator } from '../core/properties';

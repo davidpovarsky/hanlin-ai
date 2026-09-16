@@ -1,3 +1,5 @@
+const __ANDROID__ = globalThis.__ANDROID__ !== undefined ? globalThis.__ANDROID__ : false;
+const __APPLE__ = globalThis.__APPLE__ !== undefined ? globalThis.__APPLE__ : true;
 import { getNativeApp } from '../application/helpers-common';
 // console.log('__dirname:', global.__dirname);
 function getCurrentAppPath() {

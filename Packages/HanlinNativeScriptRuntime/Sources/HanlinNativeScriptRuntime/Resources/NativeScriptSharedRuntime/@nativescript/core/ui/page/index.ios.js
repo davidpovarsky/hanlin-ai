@@ -1,3 +1,4 @@
+const __VISIONOS__ = globalThis.__VISIONOS__ !== undefined ? globalThis.__VISIONOS__ : false;
 import { isAccessibilityServiceEnabled } from '../../application';
 import { NavigationType } from '../frame/frame-interfaces';
 import { View, IOSHelper } from '../core/view';

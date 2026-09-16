@@ -1,3 +1,4 @@
+const __UI_USE_EXTERNAL_RENDERER__ = globalThis.__UI_USE_EXTERNAL_RENDERER__ !== undefined ? globalThis.__UI_USE_EXTERNAL_RENDERER__ : false;
 import { unsetValue } from '../properties/property-shared';
 import { Observable } from '../../../data/observable';
 import { addWeakEventListener, removeWeakEventListener } from '../weak-event-listener';

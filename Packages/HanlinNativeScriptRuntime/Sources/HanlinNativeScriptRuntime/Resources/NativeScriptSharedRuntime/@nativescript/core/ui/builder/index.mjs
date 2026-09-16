@@ -1,3 +1,5 @@
+const __APPLE__ = globalThis.__APPLE__ !== undefined ? globalThis.__APPLE__ : true;
+const __UI_USE_XML_PARSER__ = globalThis.__UI_USE_XML_PARSER__ !== undefined ? globalThis.__UI_USE_XML_PARSER__ : true;
 import { debug } from '../../utils/debug';
 import { isDefined } from '../../utils/types';
 import { sanitizeModuleName } from '../../utils/common';

@@ -1,3 +1,18 @@
+if (typeof globalThis !== 'undefined') {
+  if (globalThis.__ANDROID__ === undefined) globalThis.__ANDROID__ = false;
+  if (globalThis.__IOS__ === undefined) globalThis.__IOS__ = true;
+  if (globalThis.__VISIONOS__ === undefined) globalThis.__VISIONOS__ = false;
+  if (globalThis.__APPLE__ === undefined) globalThis.__APPLE__ = true;
+  if (globalThis.__DEV__ === undefined) globalThis.__DEV__ = false;
+  if (globalThis.__COMMONJS__ === undefined) globalThis.__COMMONJS__ = false;
+  if (globalThis.__NS_WEBPACK__ === undefined) globalThis.__NS_WEBPACK__ = false;
+  if (globalThis.__NS_ENV_VERBOSE__ === undefined) globalThis.__NS_ENV_VERBOSE__ = false;
+  if (globalThis.__CSS_PARSER__ === undefined) globalThis.__CSS_PARSER__ = 'css-tree';
+  if (globalThis.__UI_USE_XML_PARSER__ === undefined) globalThis.__UI_USE_XML_PARSER__ = true;
+  if (globalThis.__UI_USE_EXTERNAL_RENDERER__ === undefined) globalThis.__UI_USE_EXTERNAL_RENDERER__ = false;
+  if (globalThis.__TEST__ === undefined) globalThis.__TEST__ = false;
+}
+const __COMMONJS__ = globalThis.__COMMONJS__ !== undefined ? globalThis.__COMMONJS__ : false;
 import tslib from '../../../tslib/index.mjs';
 import { installPolyfillsFromModule } from './polyfills/utils';
 import './polyfills/polyfill-xhr';

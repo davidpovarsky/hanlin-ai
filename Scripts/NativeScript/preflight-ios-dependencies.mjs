@@ -65,6 +65,65 @@ if (coreFixturePackage.hanlinNativeScript !== undefined) {
   throw new Error('Plugin-free Core fixture unexpectedly declares a native plugin');
 }
 
+const CANONICAL_BUILD_DEFINES = {
+  __ANDROID__: 'false',
+  __IOS__: 'true',
+  __VISIONOS__: 'false',
+  __APPLE__: 'true',
+  __DEV__: 'false',
+  __COMMONJS__: 'false',
+  __NS_WEBPACK__: 'false',
+  __NS_ENV_VERBOSE__: 'false',
+  __CSS_PARSER__: "'css-tree'",
+  __UI_USE_XML_PARSER__: 'true',
+  __UI_USE_EXTERNAL_RENDERER__: 'false',
+  __TEST__: 'false',
+};
+
+const sharedRuntimeDir = resolve(
+  repositoryRoot,
+  'Packages',
+  'HanlinNativeScriptRuntime',
+  'Sources',
+  'HanlinNativeScriptRuntime',
+  'Resources',
+  'NativeScriptSharedRuntime'
+);
+
+async function collectMjsFiles(dir) {
+  let list = [];
+  try {
+    const entries = await readdir(dir, { withFileTypes: true });
+    for (const entry of entries) {
+      const full = resolve(dir, entry.name);
+      if (entry.isDirectory()) {
+        list = list.concat(await collectMjsFiles(full));
+      } else if (entry.name.endsWith('.mjs')) {
+        list.push(full);
+      }
+    }
+  } catch {}
+  return list;
+}
+
+const stagedMjsFiles = await collectMjsFiles(sharedRuntimeDir);
+if (stagedMjsFiles.length > 0) {
+  for (const file of stagedMjsFiles) {
+    const content = await readFile(file, 'utf8');
+    for (const [key, _val] of Object.entries(CANONICAL_BUILD_DEFINES)) {
+      const declMatches = content.match(new RegExp(`(?:^|[\\s;])(?:const|let|var)\\s+${key}\\s*=`, 'g'));
+      if (declMatches && declMatches.length > 1) {
+        throw new Error(`Build defines preflight failed: duplicate declaration of ${key} in ${file}`);
+      }
+      const hasFree = new RegExp(`(?<![.\\w$])${key}\\b`).test(content);
+      const hasDecl = new RegExp(`(?:^|[\\s;])(?:const|let|var|function|class)\\s+${key}\\b`).test(content);
+      if (hasFree && !hasDecl) {
+        throw new Error(`Build defines preflight failed: free identifier ${key} in ${file} was not shimmed or declared`);
+      }
+    }
+  }
+}
+
 const appIndex = process.argv.indexOf('--app');
 if (appIndex >= 0) {
   const argument = process.argv[appIndex + 1];

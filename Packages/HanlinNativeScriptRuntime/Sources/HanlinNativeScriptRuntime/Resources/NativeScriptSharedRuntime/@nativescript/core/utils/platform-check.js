@@ -1,3 +1,6 @@
+const __ANDROID__ = globalThis.__ANDROID__ !== undefined ? globalThis.__ANDROID__ : false;
+const __IOS__ = globalThis.__IOS__ !== undefined ? globalThis.__IOS__ : true;
+const __DEV__ = globalThis.__DEV__ !== undefined ? globalThis.__DEV__ : false;
 /**
  * @internal Util used for exporting opposing platform utils and warning the user if they are trying to access them.
  */

@@ -1,3 +1,5 @@
+const __ANDROID__ = globalThis.__ANDROID__ !== undefined ? globalThis.__ANDROID__ : false;
+const __APPLE__ = globalThis.__APPLE__ !== undefined ? globalThis.__APPLE__ : true;
 /**
  * Do not import other files here to avoid circular dependencies.
  * Used to define helper functions and variables that are shared between Android and iOS.

@@ -1,3 +1,5 @@
+const __UI_USE_XML_PARSER__ = globalThis.__UI_USE_XML_PARSER__ !== undefined ? globalThis.__UI_USE_XML_PARSER__ : true;
+const __UI_USE_EXTERNAL_RENDERER__ = globalThis.__UI_USE_EXTERNAL_RENDERER__ !== undefined ? globalThis.__UI_USE_EXTERNAL_RENDERER__ : false;
 import { ContainerView, CSSType } from '../core/view';
 import { Property, CoercibleProperty, CssProperty } from '../core/properties';
 import { Length } from '../styling/length-shared';

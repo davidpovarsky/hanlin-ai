@@ -1,3 +1,4 @@
+const __VISIONOS__ = globalThis.__VISIONOS__ !== undefined ? globalThis.__VISIONOS__ : false;
 // Requires
 import { ViewHelper } from './view-helper-common';
 import { SDK_VERSION } from '../../../../utils/constants';

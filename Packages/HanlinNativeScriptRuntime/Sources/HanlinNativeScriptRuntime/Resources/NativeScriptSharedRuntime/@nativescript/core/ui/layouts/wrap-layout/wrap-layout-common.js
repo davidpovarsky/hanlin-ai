@@ -1,3 +1,4 @@
+const __APPLE__ = globalThis.__APPLE__ !== undefined ? globalThis.__APPLE__ : true;
 import { LayoutBase } from '../layout-base';
 import { CSSType } from '../../core/view';
 import { Property, makeValidator, makeParser } from '../../core/properties';

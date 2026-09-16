@@ -1,3 +1,7 @@
+const __VISIONOS__ = globalThis.__VISIONOS__ !== undefined ? globalThis.__VISIONOS__ : false;
+const __APPLE__ = globalThis.__APPLE__ !== undefined ? globalThis.__APPLE__ : true;
+const __DEV__ = globalThis.__DEV__ !== undefined ? globalThis.__DEV__ : false;
+const __COMMONJS__ = globalThis.__COMMONJS__ !== undefined ? globalThis.__COMMONJS__ : false;
 import { profile } from '../profiling';
 import { isEmbedded } from '../ui/embedding';
 import { IOSHelper } from '../ui/core/view/view-helper';

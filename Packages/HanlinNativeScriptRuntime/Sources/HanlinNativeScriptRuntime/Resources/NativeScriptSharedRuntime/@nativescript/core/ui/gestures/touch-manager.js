@@ -1,3 +1,5 @@
+const __VISIONOS__ = globalThis.__VISIONOS__ !== undefined ? globalThis.__VISIONOS__ : false;
+const __APPLE__ = globalThis.__APPLE__ !== undefined ? globalThis.__APPLE__ : true;
 import { Animation } from '../animation';
 import { isObject, isFunction } from '../../utils/types';
 import { GestureEvents, GestureStateTypes, GestureTypes } from './gestures-common';

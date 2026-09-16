@@ -1,3 +1,4 @@
+const __APPLE__ = globalThis.__APPLE__ !== undefined ? globalThis.__APPLE__ : true;
 import { AccessibilityRole } from '../../accessibility';
 import { CoercibleProperty, Property } from '../core/properties';
 import { CSSType, View } from '../core/view';
