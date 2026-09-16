@@ -439,31 +439,61 @@ export default { SourceMapConsumer, SourceMapGenerator, SourceNode };
     }
   }
 
-  // Patch TabView for iPadOS 18: ensure embedded UITabBarController uses bottom tab bar mode (mode = 2)
-  // and assigns controller.tabBarItem alongside UITab so standard tab bars render correctly in embedded hosts.
+  // Patch TabView for iPadOS 18 and embedded hosts:
+  // 1. Ensure embedded UITabBarController uses bottom tab bar mode (mode = 2) in viewDidLoad
+  // 2. Wrap custom view hierarchies (StackLayout, etc.) with layout setup before addSubview
+  // 3. Use stable UITabBarItem-based viewControllers configuration for all items rather than
+  //    setting this._ios.tabs with block providers which empties viewControllers on iOS 18 mode = 2.
   for (const ext of ['.js', '.mjs', '.ios.js', '.ios.mjs']) {
     const tabViewPath = resolve(coreDest, 'ui', 'tab-view', 'index' + ext);
     try {
       let content = await readFile(tabViewPath, 'utf8');
-      if (!content.includes('this.mode = 2')) {
-        content = content.replace(
-          'this.extendedLayoutIncludesOpaqueBars = true;\n    };',
-          'this.extendedLayoutIncludesOpaqueBars = true;\n        if (SDK_VERSION >= 18) {\n            try { this.mode = 2; } catch (e) {}\n        }\n    };'
-        );
-        content = content.replace(
-          '// Fallback: if tabForIdentifier is not available for some reason,\n                    // do not crash – rely on existing tab configuration.\n                }\n            }',
-          '// Fallback: if tabForIdentifier is not available for some reason,\n                    // do not crash – rely on existing tab configuration.\n                }\n                const tabBarItem = UITabBarItem.alloc().initWithTitleImageTag(title, icon, index);\n                updateTitleAndIconPositions(this, tabBarItem, controller);\n                controller.tabBarItem = tabBarItem;\n            }'
-        );
-        content = content.replace(
-          'tabs.push(tab);\n                item.canBeLoaded = true;',
-          'const tabBarItem = UITabBarItem.alloc().initWithTitleImageTag(title, icon, i);\n                updateTitleAndIconPositions(item, tabBarItem, controller);\n                controller.tabBarItem = tabBarItem;\n                tabs.push(tab);\n                item.canBeLoaded = true;'
-        );
-        content = content.replace(
-          '// Prefer animated setter when available.\n                this._ios.tabs = NSArray.arrayWithArray(tabs);',
-          'this._ios.mode = 2;\n            } catch (e) {}\n            try {\n                // Prefer animated setter when available.\n                this._ios.tabs = NSArray.arrayWithArray(tabs);'
-        );
-        await writeFile(tabViewPath, content, 'utf8');
-      }
+      content = content.replace(
+        'this.extendedLayoutIncludesOpaqueBars = true;\n    };',
+        'this.extendedLayoutIncludesOpaqueBars = true;\n        if (SDK_VERSION >= 18) {\n            try { this.mode = 2; } catch (e) {}\n        }\n    };'
+      );
+      content = content.replace(
+        '        else {\n            newController = IOSHelper.UILayoutViewController.initWithOwner(new WeakRef(item.view));\n            newController.view.addSubview(item.view.nativeViewProtected);\n            item.view.viewController = newController;\n            item.setViewController(newController, item.view.nativeViewProtected);\n        }',
+        '        else {\n            newController = IOSHelper.UILayoutViewController.initWithOwner(new WeakRef(item.view));\n            if (!item.view.nativeViewProtected) {\n                if (typeof item.view._setupAsRootView === "function") {\n                    item.view._setupAsRootView({});\n                } else if (typeof item.view._setupUI === "function") {\n                    item.view._setupUI({});\n                }\n            }\n            const nativeView = item.view.nativeViewProtected || item.view.ios;\n            if (nativeView instanceof UIView) {\n                newController.view.addSubview(nativeView);\n            }\n            item.view.viewController = newController;\n            item.setViewController(newController, nativeView || newController.view);\n        }'
+      );
+      const setVCPattern = /    setViewControllers\(items\) \{[\s\S]*?        if \(this\._ios\.moreNavigationController\) \{[\s\S]*?        \}\n    \}/;
+      const setVCReplacement = `    setViewControllers(items) {
+        const length = items ? items.length : 0;
+        if (length === 0) {
+            this._ios.viewControllers = null;
+            return;
+        }
+        const controllers = [];
+        const states = getTitleAttributesForStates(this);
+        items.forEach((item, i) => {
+            const controller = this.getViewController(item);
+            const icon = this._getIcon(item);
+            const tabBarItem = UITabBarItem.alloc().initWithTitleImageTag(item.title || '', icon, i);
+            updateTitleAndIconPositions(item, tabBarItem, controller);
+            if (!__VISIONOS__ && SDK_VERSION < 15) {
+                applyStatesToItem(tabBarItem, states);
+            }
+            controller.tabBarItem = tabBarItem;
+            controllers.push(controller);
+            item.canBeLoaded = true;
+        });
+        if (SDK_VERSION >= 15) {
+            this.updateBarItemAppearance(this._ios.tabBar, states);
+        }
+        if (SDK_VERSION >= 18) {
+            try { this._ios.mode = 2; } catch (e) {}
+        }
+        this._ios.viewControllers = NSArray.arrayWithArray(controllers);
+        this._ios.customizableViewControllers = null;
+        if (this._ios.viewControllers && this._ios.viewControllers.count > 0) {
+            try { this._ios.selectedIndex = 0; } catch (e) {}
+        }
+        if (this._ios.moreNavigationController) {
+            this._ios.moreNavigationController.delegate = this.moreNavigationControllerDelegate;
+        }
+    }`;
+      content = content.replace(setVCPattern, setVCReplacement);
+      await writeFile(tabViewPath, content, 'utf8');
     } catch {}
   }
 

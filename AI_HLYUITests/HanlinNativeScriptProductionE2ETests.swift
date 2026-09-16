@@ -351,8 +351,20 @@ final class HanlinNativeScriptProductionE2ETests: XCTestCase {
             return
         }
         XCTAssertTrue(waitUntil(timeout: 15) { install.isEnabled }, "\(archive) was not installable")
-        install.tap()
-        XCTAssertTrue(waitUntil(timeout: 30) { !install.exists }, "\(archive) installation did not finish")
+        if install.isHittable {
+            install.tap()
+        } else {
+            install.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
+        }
+        let dismissed = waitUntil(timeout: 8) { !install.exists }
+        if !dismissed && install.exists {
+            if install.isHittable {
+                install.tap()
+            } else {
+                install.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
+            }
+        }
+        XCTAssertTrue(waitUntil(timeout: 25) { !install.exists }, "\(archive) installation did not finish")
         closeImportSurfaces()
     }
 
@@ -484,7 +496,11 @@ final class HanlinNativeScriptProductionE2ETests: XCTestCase {
 
         let targetArchive = foundArchive ?? candidateArchives[0]
         XCTAssertTrue(targetArchive.waitForExistence(timeout: 20), "Staged archive \(archiveName) was absent from Files")
-        targetArchive.tap()
+        if targetArchive.isHittable {
+            targetArchive.tap()
+        } else {
+            targetArchive.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
+        }
     }
 
     private func closeImportSurfaces() {

@@ -30,13 +30,11 @@ async function buildFixture({ name, displayName, description, bundleCode, isCore
     private: true,
     type: 'module',
     main: 'bundle.mjs',
-    hanlinRuntime: 'hanlin-nativescript'
-  };
-  if (isCore) {
-    packageJSON.dependencies = {
+    hanlinRuntime: 'hanlin-nativescript',
+    dependencies: {
       '@nativescript/core': '9.1.0'
-    };
-  }
+    }
+  };
 
   const scriptJSON = {
     name: displayName,

@@ -4,5 +4,8 @@
   "private": true,
   "type": "module",
   "main": "bundle.mjs",
-  "hanlinRuntime": "hanlin-nativescript"
+  "hanlinRuntime": "hanlin-nativescript",
+  "dependencies": {
+    "@nativescript/core": "9.1.0"
+  }
 }

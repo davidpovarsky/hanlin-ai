@@ -252,9 +252,6 @@ export class TabViewItem extends TabViewItemBase {
                     // Fallback: if tabForIdentifier is not available for some reason,
                     // do not crash – rely on existing tab configuration.
                 }
-                const tabBarItem = UITabBarItem.alloc().initWithTitleImageTag(title, icon, index);
-                updateTitleAndIconPositions(this, tabBarItem, controller);
-                controller.tabBarItem = tabBarItem;
             }
             else {
                 // iOS < 18: keep using UITabBarItem-based configuration.
@@ -449,91 +446,53 @@ export class TabView extends TabViewBase {
         }
         else {
             newController = IOSHelper.UILayoutViewController.initWithOwner(new WeakRef(item.view));
-            newController.view.addSubview(item.view.nativeViewProtected);
+            if (!item.view.nativeViewProtected) {
+                if (typeof item.view._setupAsRootView === "function") {
+                    item.view._setupAsRootView({});
+                } else if (typeof item.view._setupUI === "function") {
+                    item.view._setupUI({});
+                }
+            }
+            const nativeView = item.view.nativeViewProtected || item.view.ios;
+            if (nativeView instanceof UIView) {
+                newController.view.addSubview(nativeView);
+            }
             item.view.viewController = newController;
-            item.setViewController(newController, item.view.nativeViewProtected);
+            item.setViewController(newController, nativeView || newController.view);
         }
         return newController;
     }
     setViewControllers(items) {
         const length = items ? items.length : 0;
         if (length === 0) {
-            if (SDK_VERSION >= 18) {
-                // Clear tabs on iOS 18+ when there are no items.
-                try {
-                    this._ios.tabs = NSArray.arrayWithArray([]);
-                }
-                catch (e) {
-                    // Fallback if tabs API is unavailable for some reason.
-                    this._ios.viewControllers = null;
-                }
-            }
-            else {
-                this._ios.viewControllers = null;
-            }
+            this._ios.viewControllers = null;
             return;
         }
+        const controllers = [];
+        const states = getTitleAttributesForStates(this);
+        items.forEach((item, i) => {
+            const controller = this.getViewController(item);
+            const icon = this._getIcon(item);
+            const tabBarItem = UITabBarItem.alloc().initWithTitleImageTag(item.title || '', icon, i);
+            updateTitleAndIconPositions(item, tabBarItem, controller);
+            if (!__VISIONOS__ && SDK_VERSION < 15) {
+                applyStatesToItem(tabBarItem, states);
+            }
+            controller.tabBarItem = tabBarItem;
+            controllers.push(controller);
+            item.canBeLoaded = true;
+        });
+        if (SDK_VERSION >= 15) {
+            this.updateBarItemAppearance(this._ios.tabBar, states);
+        }
         if (SDK_VERSION >= 18) {
-            // iOS 18+: build UITab instances and assign them to the controller.
-            const tabs = [];
-            const controllers = [];
-            items.forEach((item, i) => {
-                const controller = this.getViewController(item);
-                controllers.push(controller);
-                const icon = this._getIcon(item);
-                const title = item.title || '';
-                const identifier = `${i}`;
-                let tab;
-                if (item.role === 'search') {
-                    tab = UISearchTab.alloc().initWithTitleImageIdentifierViewControllerProvider(title, icon, identifier, (t) => {
-                        return controller;
-                    });
-                }
-                else {
-                    tab = UITab.alloc().initWithTitleImageIdentifierViewControllerProvider(title, icon, identifier, (t) => {
-                        return controller;
-                    });
-                }
-                const tabBarItem = UITabBarItem.alloc().initWithTitleImageTag(title, icon, i);
-                updateTitleAndIconPositions(item, tabBarItem, controller);
-                controller.tabBarItem = tabBarItem;
-                tabs.push(tab);
-                item.canBeLoaded = true;
-            });
-            try {
-                this._ios.mode = 2;
-            } catch (e) {}
-            try {
-                // Prefer animated setter when available.
-                this._ios.tabs = NSArray.arrayWithArray(tabs);
-            }
-            catch (e) { }
-            this._ios.viewControllers = NSArray.arrayWithArray(controllers);
-            this._ios.customizableViewControllers = null;
+            try { this._ios.mode = 2; } catch (e) {}
         }
-        else {
-            // iOS < 18: keep using UITabBarItem-based configuration.
-            const controllers = [];
-            const states = getTitleAttributesForStates(this);
-            items.forEach((item, i) => {
-                const controller = this.getViewController(item);
-                const icon = this._getIcon(item);
-                const tabBarItem = UITabBarItem.alloc().initWithTitleImageTag(item.title || '', icon, i);
-                updateTitleAndIconPositions(item, tabBarItem, controller);
-                if (!__VISIONOS__ && SDK_VERSION < 15) {
-                    applyStatesToItem(tabBarItem, states);
-                }
-                controller.tabBarItem = tabBarItem;
-                controllers.push(controller);
-                item.canBeLoaded = true;
-            });
-            if (SDK_VERSION >= 15) {
-                this.updateBarItemAppearance(this._ios.tabBar, states);
-            }
-            this._ios.viewControllers = NSArray.arrayWithArray(controllers);
-            this._ios.customizableViewControllers = null;
+        this._ios.viewControllers = NSArray.arrayWithArray(controllers);
+        this._ios.customizableViewControllers = null;
+        if (this._ios.viewControllers && this._ios.viewControllers.count > 0) {
+            try { this._ios.selectedIndex = 0; } catch (e) {}
         }
-        // When we set this._ios.viewControllers, someone is clearing the moreNavigationController.delegate, so we have to reassign it each time here.
         if (this._ios.moreNavigationController) {
             this._ios.moreNavigationController.delegate = this.moreNavigationControllerDelegate;
         }
