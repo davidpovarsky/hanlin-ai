@@ -1,15 +1,8 @@
 #import "HanlinNativeScriptCoreSupport.h"
 #import "NativeScriptEmbedder.h"
-#import "fishhook.h"
 #import <NativeScript/NativeScript.h>
-#import <dlfcn.h>
-#import <fcntl.h>
-#import <unistd.h>
-#import <atomic>
 #import <exception>
-#import <fstream>
 #import <string>
-#import <sstream>
 
 namespace tns {
 class __attribute__((visibility("default"))) NativeScriptException {
@@ -26,140 +19,6 @@ private:
 };
 }
 
-typedef bool (*TNSIsESModuleFn)(const std::string&);
-static TNSIsESModuleFn s_tnsIsESModule = nullptr;
-
-static void InitTNSSymbols() {
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        s_tnsIsESModule = (TNSIsESModuleFn)dlsym(RTLD_DEFAULT, "_ZN3tns10IsESModuleERKNSt3__112basic_stringIcNS0_11char_traitsIcEENS0_9allocatorIcEEEE");
-        if (!s_tnsIsESModule) {
-            s_tnsIsESModule = (TNSIsESModuleFn)dlsym(RTLD_DEFAULT, "__ZN3tns10IsESModuleERKNSt3__112basic_stringIcNS0_11char_traitsIcEENS0_9allocatorIcEEEE");
-        }
-        if (s_tnsIsESModule) {
-            NSLog(@"[HanlinLoaderTrace] Successfully resolved tns::IsESModule");
-        } else {
-            NSLog(@"[HanlinLoaderTrace] Warning: could not resolve tns::IsESModule via dlsym");
-        }
-    });
-}
-
-static BOOL HanlinStringEndsWith(const char *str, const char *suffix) {
-    if (!str || !suffix) return NO;
-    size_t strLen = strlen(str);
-    size_t sufLen = strlen(suffix);
-    if (strLen < sufLen) return NO;
-    return strcmp(str + (strLen - sufLen), suffix) == 0;
-}
-
-static std::atomic<uint32_t> s_loaderTraceSeq{0};
-
-static BOOL HanlinIsWatchedPath(const char *path) {
-    if (!path) return NO;
-    if (strstr(path, "nativescript") == NULL &&
-        strstr(path, "NativeScript") == NULL &&
-        strstr(path, "ScriptingPlatform") == NULL) {
-        return NO;
-    }
-    return (HanlinStringEndsWith(path, ".js") ||
-            HanlinStringEndsWith(path, ".mjs") ||
-            HanlinStringEndsWith(path, ".cjs") ||
-            strstr(path, "package.json") != NULL);
-}
-
-static thread_local bool s_in_hook = false;
-
-static void hanlin_log_file_access(int fd, const char *path, const char *op) {
-    if (!HanlinIsWatchedPath(path)) {
-        return;
-    }
-
-    uint32_t seq = ++s_loaderTraceSeq;
-
-    char canonical[PATH_MAX] = {0};
-    if (realpath(path, canonical) == nullptr) {
-        strncpy(canonical, path, sizeof(canonical) - 1);
-    }
-
-    InitTNSSymbols();
-    const char *isESMStr = "unknown";
-    if (s_tnsIsESModule) {
-        try {
-            std::string p(path);
-            isESMStr = s_tnsIsESModule(p) ? "YES" : "NO";
-        } catch (...) {
-            isESMStr = "threw";
-        }
-    }
-
-    char firstLineBuf[128] = {0};
-    if (fd >= 0) {
-        ssize_t bytesRead = pread(fd, firstLineBuf, sizeof(firstLineBuf) - 1, 0);
-        if (bytesRead > 0) {
-            firstLineBuf[bytesRead] = '\0';
-            for (ssize_t i = 0; i < bytesRead; ++i) {
-                if (firstLineBuf[i] == '\r' || firstLineBuf[i] == '\n') {
-                    firstLineBuf[i] = '\0';
-                    break;
-                }
-            }
-        } else {
-            strncpy(firstLineBuf, "<empty>", sizeof(firstLineBuf) - 1);
-        }
-    } else {
-        strncpy(firstLineBuf, "<no-fd>", sizeof(firstLineBuf) - 1);
-    }
-
-    NSLog(@"[HanlinLoaderTrace #%u] %s | req=%s | real=%s | isESM_query=%s | first=\"%s\"",
-          seq, op, path, canonical, isESMStr, firstLineBuf);
-}
-
-static int (*orig_open)(const char *, int, ...) = nullptr;
-
-static int hanlin_hooked_open(const char *path, int oflag, ...) {
-    mode_t mode = 0;
-    if (oflag & O_CREAT) {
-        va_list ap;
-        va_start(ap, oflag);
-        mode = va_arg(ap, int);
-        va_end(ap);
-    }
-
-    int fd = orig_open ? orig_open(path, oflag, mode) : open(path, oflag, mode);
-
-    if (!s_in_hook && fd >= 0 && path != nullptr) {
-        s_in_hook = true;
-        hanlin_log_file_access(fd, path, "OPEN");
-        s_in_hook = false;
-    }
-    return fd;
-}
-
-static FILE *(*orig_fopen)(const char *, const char *) = nullptr;
-
-static FILE *hanlin_hooked_fopen(const char *path, const char *mode) {
-    FILE *f = orig_fopen ? orig_fopen(path, mode) : fopen(path, mode);
-    if (!s_in_hook && f != nullptr && path != nullptr) {
-        s_in_hook = true;
-        int fd = fileno(f);
-        hanlin_log_file_access(fd, path, "FOPEN");
-        s_in_hook = false;
-    }
-    return f;
-}
-
-static void HanlinInstallLoaderHooks() {
-    static dispatch_once_t hookToken;
-    dispatch_once(&hookToken, ^{
-        InitTNSSymbols();
-        struct rebinding rebindings[] = {
-            {"open", (void *)hanlin_hooked_open, (void **)&orig_open},
-            {"fopen", (void *)hanlin_hooked_fopen, (void **)&orig_fopen}
-        };
-        int rc = rebind_symbols(rebindings, 2);
-        NSLog(@"[HanlinLoaderTrace] rebind_symbols installed (rc=%d)", rc);
-    });
-}
 
 
 static NSString *HanlinFormatNativeScriptException(const tns::NativeScriptException &e) {
@@ -200,8 +59,6 @@ static NSError *HanlinNativeScriptError(HanlinNativeScriptRuntimeErrorCode code,
 
     self = [super init];
     if (!self) { return nil; }
-
-    HanlinInstallLoaderHooks();
 
     try {
         @try {
@@ -280,8 +137,6 @@ static NSError *HanlinNativeScriptError(HanlinNativeScriptRuntimeErrorCode code,
         }
         return NO;
     }
-    HanlinInstallLoaderHooks();
-    NSLog(@"[HanlinLoaderTrace] Starting runMainApplication with active loader hooks...");
     try {
         @try {
             NSLog(@"HANLIN_NS_BEFORE_RUN_MAIN");
@@ -291,7 +146,6 @@ static NSError *HanlinNativeScriptError(HanlinNativeScriptRuntimeErrorCode code,
             NSString *detail = [NSString stringWithFormat:@"NativeScript script execution NSException: %@ (reason: %@)",
                                 exception.name ?: @"Unknown",
                                 exception.reason ?: @"No reason provided"];
-            NSLog(@"[HanlinLoaderTrace] !!! NSException: %@", detail);
             NSLog(@"[HanlinNativeScript] %@", detail);
             if (error) {
                 *error = HanlinNativeScriptError(
@@ -313,7 +167,6 @@ static NSError *HanlinNativeScriptError(HanlinNativeScriptRuntimeErrorCode code,
         }
     } catch (const tns::NativeScriptException &e) {
         NSString *detail = [NSString stringWithFormat:@"NativeScript script execution failed: %@", HanlinFormatNativeScriptException(e)];
-        NSLog(@"[HanlinLoaderTrace] !!! NativeScript script execution failed: %@", detail);
         NSLog(@"[HanlinNativeScript] %@", detail);
         if (error) {
             *error = HanlinNativeScriptError(
