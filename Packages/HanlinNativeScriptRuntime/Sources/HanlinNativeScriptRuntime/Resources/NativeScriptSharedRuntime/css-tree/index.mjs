@@ -1,1 +1,1 @@
-export * from "./dist/csstree.esm.js";
+export * from "./dist/csstree.esm.mjs";
