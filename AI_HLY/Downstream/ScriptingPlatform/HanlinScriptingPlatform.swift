@@ -652,6 +652,33 @@ final class HanlinScriptingPlatform {
             }
         }
 
+        for provider in CompiledMiniAppExposureRegistry.all {
+            let descriptor = provider.descriptor
+            if let widgetEntrypoint = descriptor.entryPoints.first(where: { $0.kind == .widget }) {
+                let widgetIdentity = try provider.identity(entrypoint: widgetEntrypoint)
+                let intentIdentity = try descriptor.entryPoints
+                    .first(where: { $0.kind == .appIntentBridge })
+                    .map(provider.identity(entrypoint:))
+                let displayName = descriptor.name.preferredValue(forLocale: Locale.current.identifier)
+                for family in ["systemSmall", "systemMedium", "systemLarge", "systemExtraLarge"] {
+                    widgets.append(.init(
+                        identity: widgetIdentity,
+                        displayName: displayName,
+                        family: family,
+                        actionIdentity: intentIdentity,
+                        validUntil: .now.addingTimeInterval(900),
+                        root: provider.widget(family)
+                    ))
+                }
+            }
+            if let intentEntrypoint = descriptor.entryPoints.first(where: { $0.kind == .appIntentBridge }) {
+                let identity = try provider.identity(entrypoint: intentEntrypoint)
+                intentEntities.append(contentsOf: provider.intentNames.map {
+                    .init(identity: identity, id: $0, displayName: $0)
+                })
+            }
+        }
+
         try extensionStore.save(.init(
             generatedAt: .now,
             widgets: widgets,
@@ -663,6 +690,14 @@ final class HanlinScriptingPlatform {
         guard let store else { return }
         for command in pendingResumeCommands {
             let identity = command.invocation.identity
+            if let provider = CompiledMiniAppExposureRegistry.provider(packageID: identity.packageID),
+               let actionName = command.invocation.entityID {
+                _ = try provider.performIntent(actionName, command.invocation.parameters)
+                try extensionStore?.acknowledge(command.id)
+                pendingResumeCommands.removeAll { $0.id == command.id }
+                WidgetCenter.shared.reloadTimelines(ofKind: "com.hanlin.scripting.widget")
+                continue
+            }
             guard let package = installedPackages.first(where: {
                 $0.record.installedPackageID == identity.installedPackageID
                     && $0.record.packageID == identity.packageID
@@ -1316,6 +1351,9 @@ final class HanlinScriptingPlatform {
     }
 
     nonisolated static func stablePackageID(for manifest: HanlinScriptingManifest) throws -> HanlinPackageID {
+        if case let .string(explicitID)? = manifest.unknownFields["hanlinAppID"] {
+            return try HanlinPackageID(validating: explicitID)
+        }
         let digest = SHA256.hash(data: Data(manifest.name.precomposedStringWithCanonicalMapping.utf8))
             .map { String(format: "%02x", $0) }.joined()
         return try HanlinPackageID(validating: "script-\(digest.prefix(24))")
