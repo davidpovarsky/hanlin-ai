@@ -14,6 +14,10 @@ let package = Package(
             targets: ["HanlinPlatformContracts"]
         ),
         .library(
+            name: "HanlinMiniAppCore",
+            targets: ["HanlinMiniAppCore"]
+        ),
+        .library(
             name: "HanlinScriptContracts",
             targets: ["HanlinScriptContracts"]
         ),
@@ -70,6 +74,14 @@ let package = Package(
         .testTarget(
             name: "HanlinPlatformContractsTests",
             dependencies: ["HanlinPlatformContracts"]
+        ),
+        .target(
+            name: "HanlinMiniAppCore",
+            dependencies: ["HanlinPlatformContracts"]
+        ),
+        .testTarget(
+            name: "HanlinMiniAppCoreTests",
+            dependencies: ["HanlinMiniAppCore", "HanlinPlatformContracts"]
         ),
         .target(
             name: "HanlinScriptContracts",
