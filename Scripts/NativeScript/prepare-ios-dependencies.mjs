@@ -486,6 +486,123 @@ export default { SourceMapConsumer, SourceMapGenerator, SourceNode };
     } catch {}
   }
 
+  // Canonicalize @nativescript/core re-exports in index.mjs and index.js.
+  // When an unbundled MiniApp imports from '@nativescript/core', NativeScript resolves
+  // the app-root symlink candidate (e.g. applicationRoot/@nativescript/core/index.mjs).
+  // Foundation's [NSString stringByStandardizingPath] does NOT resolve symlinks unless
+  // the path contains a '..' component. By re-exporting via '../core/<submodule>' instead
+  // of './<submodule>', the path traversal immediately forces stringByStandardizingPath to
+  // expand the @nativescript symlink to NativeScriptSharedRuntime. This eliminates duplicate
+  // module instances (split V8 ESM realms) between the app fixture and internal core modules.
+  for (const ext of ['.mjs', '.js']) {
+    const indexPath = resolve(coreDest, `index${ext}`);
+    try {
+      let content = await readFile(indexPath, 'utf8');
+      content = content.replace(/(?:from|import)\s+['"]\.\/([^'"\r\n]+)['"]/g, (match, subpath) => {
+        return match.replace(`./${subpath}`, `../core/${subpath}`);
+      });
+      await writeFile(indexPath, content);
+    } catch {}
+  }
+
+  // Cross-realm resilience for Color, Font, and TextBase:
+  // In addition to canonicalizing index re-exports, guarantee that cross-realm or foreign
+  // instances of Color and Font pass instanceof checks via Symbol.hasInstance and unwrap
+  // their native objects (UIColor / UIFont) rather than passing plain JS objects into UIKit
+  // which causes -[DictionaryAdapter ...] unrecognized selector crashes.
+  for (const ext of ['.mjs', '.js']) {
+    const colorCommonPath = resolve(coreDest, 'color', `color-common${ext}`);
+    try {
+      let content = await readFile(colorCommonPath, 'utf8');
+      content = content.replace(
+        'constructor(...args) {',
+        'constructor(...args) {\n        this._isColor = true;'
+      );
+      const hasInstanceColor = `    static [Symbol.hasInstance](value) {\n        return super[Symbol.hasInstance](value) || (value != null && (value._isColor === true || (typeof value.r === 'number' && typeof value.g === 'number' && typeof value.b === 'number' && typeof value.a === 'number') || (value.ios && (typeof value.hex === 'string' || typeof value.argb === 'number'))));\n    }\n`;
+      if (!content.includes('[Symbol.hasInstance]')) {
+        content = content.replace(
+          'export class ColorBase {',
+          `export class ColorBase {\n${hasInstanceColor}`
+        );
+      }
+      const fallbackIosGetter = `    get ios() {\n        if (typeof UIColor !== 'undefined') {\n            if (!this._ios) {\n                this._ios = UIColor.alloc().initWithRedGreenBlueAlpha(this.r / 255, this.g / 255, this.b / 255, this.a / 255);\n            }\n            return this._ios;\n        }\n        return undefined;\n    }`;
+      content = content.replace(
+        /get\s+ios\(\)\s*\{\s*return\s+undefined;\s*\}/,
+        fallbackIosGetter
+      );
+      await writeFile(colorCommonPath, content);
+    } catch {}
+
+    for (const sub of ['', '.ios']) {
+      const colorIosPath = resolve(coreDest, 'color', `index${sub}${ext}`);
+      try {
+        let content = await readFile(colorIosPath, 'utf8');
+        const hasInstanceColor = `    static [Symbol.hasInstance](value) {\n        return super[Symbol.hasInstance](value) || (value != null && (value._isColor === true || (typeof value.r === 'number' && typeof value.g === 'number' && typeof value.b === 'number' && typeof value.a === 'number') || (value.ios && (typeof value.hex === 'string' || typeof value.argb === 'number'))));\n    }\n`;
+        if (!content.includes('[Symbol.hasInstance]')) {
+          content = content.replace(
+            'export class Color extends ColorBase {',
+            `export class Color extends ColorBase {\n${hasInstanceColor}`
+          );
+          await writeFile(colorIosPath, content);
+        }
+      } catch {}
+    }
+
+    // Font resilience
+    const fontCommonPath = resolve(coreDest, 'ui', 'styling', `font-common${ext}`);
+    try {
+      let content = await readFile(fontCommonPath, 'utf8');
+      content = content.replace(
+        'constructor(fontFamily, fontSize, fontStyle, fontWeight, fontScale, fontVariationSettings) {',
+        'constructor(fontFamily, fontSize, fontStyle, fontWeight, fontScale, fontVariationSettings) {\n        this._isFont = true;'
+      );
+      const hasInstanceFont = `    static [Symbol.hasInstance](value) {\n        return super[Symbol.hasInstance](value) || (value != null && (typeof value.getUIFont === 'function' || value._isFont === true));\n    }\n`;
+      if (!content.includes('[Symbol.hasInstance]')) {
+        content = content.replace(
+          'export class Font {',
+          `export class Font {\n${hasInstanceFont}`
+        );
+        await writeFile(fontCommonPath, content);
+      }
+    } catch {}
+
+    for (const sub of ['', '.ios']) {
+      const fontIosPath = resolve(coreDest, 'ui', 'styling', `font${sub}${ext}`);
+      try {
+        let content = await readFile(fontIosPath, 'utf8');
+        const hasInstanceFont = `    static [Symbol.hasInstance](value) {\n        return super[Symbol.hasInstance](value) || (value != null && (typeof value.getUIFont === 'function' || value._isFont === true));\n    }\n`;
+        if (!content.includes('[Symbol.hasInstance]')) {
+          content = content.replace(
+            'export class Font extends FontBase {',
+            `export class Font extends FontBase {\n${hasInstanceFont}`
+          );
+          await writeFile(fontIosPath, content);
+        }
+      } catch {}
+    }
+
+    // TextBase resilience
+    for (const sub of ['', '.ios']) {
+      const textBasePath = resolve(coreDest, 'ui', 'text-base', `index${sub}${ext}`);
+      try {
+        let content = await readFile(textBasePath, 'utf8');
+        content = content.replace(
+          /\[colorProperty\.setNative\]\(value\)\s*\{\s*const\s+color\s*=\s*value\s+instanceof\s+Color\s*\?\s*value\.ios\s*:\s*value;\s*this\._setColor\(color\);\s*\}/,
+          `[colorProperty.setNative](value) {\n        const color = (value instanceof Color || (value && value._isColor) || (value && value.ios instanceof UIColor)) ? value.ios : value;\n        this._setColor(color);\n    }`
+        );
+        content = content.replace(
+          /_setColor\(color\)\s*\{\s*if\s*\(this\.nativeTextViewProtected\s+instanceof\s+UIButton\)\s*\{\s*this\.nativeTextViewProtected\.setTitleColorForState\(color,\s*0\s*\/\*\s*UIControlState\.Normal\s*\*\/\);\s*this\.nativeTextViewProtected\.titleLabel\.textColor\s*=\s*color;\s*\}\s*else\s*\{\s*this\.nativeTextViewProtected\.textColor\s*=\s*color;\s*\}\s*\}/,
+          `_setColor(color) {\n        const nativeColor = (color && color.ios instanceof UIColor) ? color.ios : color;\n        if (this.nativeTextViewProtected instanceof UIButton) {\n            this.nativeTextViewProtected.setTitleColorForState(nativeColor, 0 /* UIControlState.Normal */);\n            this.nativeTextViewProtected.titleLabel.textColor = nativeColor;\n        }\n        else {\n            this.nativeTextViewProtected.textColor = nativeColor;\n        }\n    }`
+        );
+        content = content.replace(
+          /nativeView\.font\s*=\s*value\s+instanceof\s+Font\s*\?\s*value\.getUIFont\(nativeView\.font\)\s*:\s*value;/,
+          `const font = (value instanceof Font || (value && typeof value.getUIFont === 'function')) ? value.getUIFont(nativeView.font) : value;\n            nativeView.font = font;`
+        );
+        await writeFile(textBasePath, content);
+      } catch {}
+    }
+  }
+
   // Rewrite explicit .js imports in .mjs files so that ESM dependencies and
   // submodules within the .mjs shadow never accidentally resolve as CommonJS.
   async function rewriteExplicitJsInMjs(dir) {

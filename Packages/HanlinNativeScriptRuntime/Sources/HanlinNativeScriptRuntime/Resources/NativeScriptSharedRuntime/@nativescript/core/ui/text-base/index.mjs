@@ -156,7 +156,7 @@ export class TextBase extends TextBaseCommon {
         }
     }
     [colorProperty.setNative](value) {
-        const color = value instanceof Color ? value.ios : value;
+        const color = (value instanceof Color || (value && value._isColor) || (value && value.ios instanceof UIColor)) ? value.ios : value;
         this._setColor(color);
     }
     [fontInternalProperty.getDefault]() {
@@ -168,7 +168,8 @@ export class TextBase extends TextBaseCommon {
         if (!(value instanceof Font) || !this.formattedText) {
             let nativeView = this.nativeTextViewProtected;
             nativeView = nativeView instanceof UIButton ? nativeView.titleLabel : nativeView;
-            nativeView.font = value instanceof Font ? value.getUIFont(nativeView.font) : value;
+            const font = (value instanceof Font || (value && typeof value.getUIFont === 'function')) ? value.getUIFont(nativeView.font) : value;
+            nativeView.font = font;
         }
     }
     [fontScaleInternalProperty.setNative](value) {
@@ -255,12 +256,13 @@ export class TextBase extends TextBaseCommon {
         }
     }
     _setColor(color) {
+        const nativeColor = (color && color.ios instanceof UIColor) ? color.ios : color;
         if (this.nativeTextViewProtected instanceof UIButton) {
-            this.nativeTextViewProtected.setTitleColorForState(color, 0 /* UIControlState.Normal */);
-            this.nativeTextViewProtected.titleLabel.textColor = color;
+            this.nativeTextViewProtected.setTitleColorForState(nativeColor, 0 /* UIControlState.Normal */);
+            this.nativeTextViewProtected.titleLabel.textColor = nativeColor;
         }
         else {
-            this.nativeTextViewProtected.textColor = color;
+            this.nativeTextViewProtected.textColor = nativeColor;
         }
     }
     _animationWrap(fn) {

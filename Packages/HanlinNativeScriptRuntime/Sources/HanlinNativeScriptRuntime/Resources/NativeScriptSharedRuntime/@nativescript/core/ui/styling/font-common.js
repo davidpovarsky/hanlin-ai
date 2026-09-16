@@ -2,6 +2,10 @@ import { makeValidator, makeParser } from '../core/properties';
 import { Trace } from '../../trace';
 export const FONTS_BASE_PATH = '/fonts';
 export class Font {
+    static [Symbol.hasInstance](value) {
+        return super[Symbol.hasInstance](value) || (value != null && (typeof value.getUIFont === 'function' || value._isFont === true));
+    }
+
     get isItalic() {
         return this.fontStyle === FontStyle.ITALIC;
     }
@@ -9,6 +13,7 @@ export class Font {
         return isFontWeightBold(this.fontWeight);
     }
     constructor(fontFamily, fontSize, fontStyle, fontWeight, fontScale, fontVariationSettings) {
+        this._isFont = true;
         this.fontFamily = fontFamily;
         this.fontSize = fontSize;
         this.fontVariationSettings = fontVariationSettings;

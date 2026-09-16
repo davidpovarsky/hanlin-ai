@@ -2,7 +2,12 @@ import * as types from '../utils/types';
 import * as knownColors from './known-colors';
 import { HEX_REGEX, argbFromColorMix, argbFromHslOrHsla, argbFromHsvOrHsva, argbFromRgbOrRgba, hslToRgb, hsvToRgb, isCssColorMixExpression, isHslOrHsla, isHsvOrHsva, isRgbOrRgba, rgbToHsl, rgbToHsv, argbFromString } from './color-utils';
 export class ColorBase {
+    static [Symbol.hasInstance](value) {
+        return super[Symbol.hasInstance](value) || (value != null && (value._isColor === true || (typeof value.r === 'number' && typeof value.g === 'number' && typeof value.b === 'number' && typeof value.a === 'number') || (value.ios && (typeof value.hex === 'string' || typeof value.argb === 'number'))));
+    }
+
     constructor(...args) {
+        this._isColor = true;
         if (args.length === 1) {
             const arg = args[0];
             if (types.isString(arg)) {
@@ -97,7 +102,13 @@ export class ColorBase {
     get name() {
         return this._name;
     }
-    get ios() {
+        get ios() {
+        if (typeof UIColor !== 'undefined') {
+            if (!this._ios) {
+                this._ios = UIColor.alloc().initWithRedGreenBlueAlpha(this.r / 255, this.g / 255, this.b / 255, this.a / 255);
+            }
+            return this._ios;
+        }
         return undefined;
     }
     get android() {

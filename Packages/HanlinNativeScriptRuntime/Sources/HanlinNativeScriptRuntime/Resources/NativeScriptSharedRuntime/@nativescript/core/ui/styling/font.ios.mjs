@@ -45,6 +45,10 @@ function getUIFontCached(fontDescriptor) {
     return uiFont;
 }
 export class Font extends FontBase {
+    static [Symbol.hasInstance](value) {
+        return super[Symbol.hasInstance](value) || (value != null && (typeof value.getUIFont === 'function' || value._isFont === true));
+    }
+
     constructor(family, size, style, weight, scale, variationSettings) {
         super(family, size, style, weight, scale, variationSettings);
     }

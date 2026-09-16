@@ -1,5 +1,9 @@
 import { ColorBase } from './color-common';
 export class Color extends ColorBase {
+    static [Symbol.hasInstance](value) {
+        return super[Symbol.hasInstance](value) || (value != null && (value._isColor === true || (typeof value.r === 'number' && typeof value.g === 'number' && typeof value.b === 'number' && typeof value.a === 'number') || (value.ios && (typeof value.hex === 'string' || typeof value.argb === 'number'))));
+    }
+
     get ios() {
         if (!this._ios) {
             // iOS Color is using floating-point values in the [0, 1] range, so divide the components by 255
