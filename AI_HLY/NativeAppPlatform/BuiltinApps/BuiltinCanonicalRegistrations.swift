@@ -1,4 +1,5 @@
 import Foundation
+import HanlinParityMiniApp
 import HanlinPlatformContracts
 
 // MARK: - Built-in Canonical Registrations
@@ -499,6 +500,7 @@ struct TextStudioCanonicalRegistration: HanlinStaticMiniAppRegistration {
 /// legacy `NativeAppModule` → `NativeAppCanonicalShadowAdapter` path.
 enum BuiltinCanonicalRegistrations {
     static let all: [any HanlinStaticMiniAppRegistration] = [
+        SwiftParityMiniAppRegistration(),
         SefariaCanonicalRegistration(),
         WikipediaCanonicalRegistration(),
         TextStudioCanonicalRegistration()

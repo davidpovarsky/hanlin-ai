@@ -1,5 +1,6 @@
 import Foundation
 import HanlinMiniAppCore
+import HanlinParityMiniApp
 import HanlinPlatformContracts
 import HanlinScriptStore
 import Observation
@@ -98,6 +99,20 @@ final class HanlinMiniAppHost {
         let plan = try HanlinMiniAppLaunchPlan(descriptor: item.descriptor)
         guard plan.engine == .swift else {
             throw HanlinMiniAppCatalogError.unsupportedImplementation(item.id)
+        }
+        if item.id == SwiftParityMiniAppRegistration().appID {
+            let store = dataStore
+            let broker = requestBroker
+            return SwiftDestination(
+                appID: item.id,
+                view: AnyView(NavigationStack {
+                    SwiftParityMiniAppView(
+                        storage: HanlinMiniAppStorageContext(appID: item.id, store: store),
+                        requestBroker: broker,
+                        network: Self.fetchStatus
+                    )
+                })
+            )
         }
         guard let module = NativeAppRegistry.shared.module(id: item.id.rawValue) else {
             throw HanlinMiniAppCatalogError.unsupportedImplementation(item.id)
