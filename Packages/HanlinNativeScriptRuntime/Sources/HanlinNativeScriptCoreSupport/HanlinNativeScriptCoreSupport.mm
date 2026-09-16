@@ -215,6 +215,8 @@ static NSError *HanlinNativeScriptError(HanlinNativeScriptRuntimeErrorCode code,
     self = [super init];
     if (!self) { return nil; }
 
+    HanlinInstallLoaderHooks();
+
     try {
         @try {
             Config *config = [[Config alloc] init];
