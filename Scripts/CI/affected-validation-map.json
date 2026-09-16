@@ -113,6 +113,7 @@
         "Scripts/NativeScript/prepare-production-package.mjs",
         "Scripts/NativeScript/build-unbundled-fixture.mjs",
         "Scripts/NativeScript/build-sefaria-fixture.mjs",
+        "Scripts/NativeScript/build-controller-fixtures.mjs",
         "Scripts/NativeScript/nativescript.config.ts",
         "Scripts/NativeScript/tsconfig.json",
         "Scripts/NativeScript/vite.config.mts"
