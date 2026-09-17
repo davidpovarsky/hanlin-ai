@@ -1,0 +1,12 @@
+{
+  "name": "Expo SwiftUI Probe",
+  "version": "1.0.0",
+  "entry": "bundle.js",
+  "hanlinRuntime": "hanlin-expo",
+  "author": {
+    "name": "Hanlin Expo Runtime Team"
+  },
+  "description": "Proof of concept demonstrating dynamic Expo / React Native runtime rendering native Apple SwiftUI through Expo UI.",
+  "icon": "sparkles",
+  "color": "#4A90E2"
+}
