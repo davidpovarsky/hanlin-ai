@@ -529,15 +529,20 @@ final class HanlinNativeScriptProductionE2ETests: XCTestCase {
         let navBar = app.navigationBars["Script Package"].firstMatch
         _ = navBar.waitForExistence(timeout: 5)
 
-        var directArchive = app.buttons[archiveName].firstMatch
+        let directPredicate = NSPredicate(
+            format: "label CONTAINS[c] %@ OR identifier CONTAINS[c] %@",
+            archiveName,
+            archiveName
+        )
+        var directArchive = app.buttons.matching(directPredicate).firstMatch
         if !directArchive.waitForExistence(timeout: 3) {
             app.swipeDown()
-            directArchive = app.buttons[archiveName].firstMatch
+            directArchive = app.buttons.matching(directPredicate).firstMatch
         }
         if !directArchive.waitForExistence(timeout: 2) {
             for _ in 1...6 {
                 app.swipeUp()
-                directArchive = app.buttons[archiveName].firstMatch
+                directArchive = app.buttons.matching(directPredicate).firstMatch
                 if directArchive.waitForExistence(timeout: 2) {
                     break
                 }
@@ -564,16 +569,12 @@ final class HanlinNativeScriptProductionE2ETests: XCTestCase {
         importer.tap()
 
         let targetPredicate = NSPredicate(
-            format: "label == %@ OR label == %@ OR label == %@ OR identifier == %@ OR identifier == %@ OR identifier == %@",
+            format: "label CONTAINS[c] %@ OR identifier CONTAINS[c] %@",
             archiveName,
-            "\(archiveName).hanlinNativeScript",
-            "\(archiveName).scripting",
-            archiveName,
-            "\(archiveName).hanlinNativeScript",
-            "\(archiveName).scripting"
+            archiveName
         )
         let candidateArchives = [
-            app.buttons[archiveName].firstMatch,
+            app.buttons.matching(targetPredicate).firstMatch,
             app.descendants(matching: .any).matching(targetPredicate).firstMatch,
             documents.descendants(matching: .any).matching(targetPredicate).firstMatch
         ]

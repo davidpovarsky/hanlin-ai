@@ -147,13 +147,24 @@ struct CanonicalMiniAppIntegrationTests {
         ))
         #expect(response.value == .string("hello-cross-engine"))
 
-        // 2. Unauthorized capability throws
-        await #expect(throws: HanlinMiniAppRequestError.unauthorized) {
+        // 2. Capability mismatch throws
+        await #expect(throws: HanlinMiniAppRequestError.capabilityMismatch) {
             try await broker.request(.init(
                 caller: callerID,
                 target: targetID,
                 action: actionID,
                 capability: unauthorizedCap,
+                payload: .string("hello-cross-engine")
+            ))
+        }
+
+        // 3. Unauthorized policy throws
+        await #expect(throws: HanlinMiniAppRequestError.unauthorized) {
+            try await broker.request(.init(
+                caller: try HanlinAppID(validating: "unknown.caller"),
+                target: targetID,
+                action: actionID,
+                capability: capID,
                 payload: .string("hello-cross-engine")
             ))
         }
