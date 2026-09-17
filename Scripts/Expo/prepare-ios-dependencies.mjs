@@ -93,29 +93,40 @@ async function prepare() {
         const publicHeaders = resolve(podsRoot, 'Headers', 'Public');
         await mkdir(publicHeaders, { recursive: true });
 
-        const rnHeaders = resolve(artifactsRoot, 'ReactNativeHeaders.xcframework', 'ios-arm64_x86_64-simulator', 'Headers');
-        if (existsSync(rnHeaders)) {
-          await cp(rnHeaders, publicHeaders, { recursive: true });
-        }
-
-        const rnDepsHeaders = resolve(artifactsRoot, 'ReactNativeDependencies.xcframework', 'Headers');
-        if (existsSync(rnDepsHeaders)) {
-          await cp(rnDepsHeaders, publicHeaders, { recursive: true });
-        }
-
+        // Set up React-jsi headers expected by build-xcframework.sh and Package.swift
+        const rnRoot = resolve(scriptRoot, 'node_modules', 'react-native');
         const reactJsiHeaders = resolve(publicHeaders, 'React-jsi', 'jsi');
         await mkdir(reactJsiHeaders, { recursive: true });
-        if (existsSync(resolve(publicHeaders, 'jsi'))) {
-          await cp(resolve(publicHeaders, 'jsi'), reactJsiHeaders, { recursive: true });
-        }
+        await cp(resolve(rnRoot, 'ReactCommon', 'jsi', 'jsi'), reactJsiHeaders, { recursive: true });
 
-        const hermesHeaders = resolve(publicHeaders, 'hermes-engine');
+        // Set up hermes-engine headers
+        const hermesHeaders = resolve(publicHeaders, 'hermes-engine', 'hermes');
         await mkdir(hermesHeaders, { recursive: true });
-        if (existsSync(resolve(publicHeaders, 'hermes'))) {
-          await cp(resolve(publicHeaders, 'hermes'), hermesHeaders, { recursive: true });
+        const rnHeadersRoot = resolve(artifactsRoot, 'ReactNativeHeaders.xcframework', 'ios-arm64_x86_64-simulator', 'Headers');
+        if (existsSync(resolve(rnHeadersRoot, 'hermes'))) {
+          await cp(resolve(rnHeadersRoot, 'hermes'), hermesHeaders, { recursive: true });
         }
 
-        const rnRoot = resolve(scriptRoot, 'node_modules', 'react-native');
+        // Set up dependencies (Folly, fmt, fast_float, glog, DoubleConversion)
+        const rnDepsHeaders = resolve(artifactsRoot, 'ReactNativeDependencies.xcframework', 'Headers');
+        if (existsSync(rnDepsHeaders)) {
+          if (existsSync(resolve(rnDepsHeaders, 'folly'))) {
+            await cp(resolve(rnDepsHeaders, 'folly'), resolve(publicHeaders, 'RCT-Folly', 'folly'), { recursive: true });
+          }
+          if (existsSync(resolve(rnDepsHeaders, 'fmt'))) {
+            await cp(resolve(rnDepsHeaders, 'fmt'), resolve(publicHeaders, 'fmt'), { recursive: true });
+          }
+          if (existsSync(resolve(rnDepsHeaders, 'fast_float'))) {
+            await cp(resolve(rnDepsHeaders, 'fast_float'), resolve(publicHeaders, 'fast_float'), { recursive: true });
+          }
+          if (existsSync(resolve(rnDepsHeaders, 'glog'))) {
+            await cp(resolve(rnDepsHeaders, 'glog'), resolve(publicHeaders, 'glog'), { recursive: true });
+          }
+          if (existsSync(resolve(rnDepsHeaders, 'double-conversion'))) {
+            await cp(resolve(rnDepsHeaders, 'double-conversion'), resolve(publicHeaders, 'DoubleConversion'), { recursive: true });
+          }
+        }
+
         const buildScript = resolve(expoModulesJSIRoot, 'apple', 'scripts', 'build-xcframework.sh');
         const generateScript = resolve(expoModulesJSIRoot, 'apple', 'scripts', 'generate-modulemap.sh');
         const helpersScript = resolve(expoModulesJSIRoot, 'apple', 'scripts', 'xcframework-helpers.sh');
