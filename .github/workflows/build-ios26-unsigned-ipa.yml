@@ -1934,11 +1934,16 @@ jobs:
               2>&1 | tee "$LOG_DIR/08-nativescript-production-ui-tests.log"
               nativescript_e2e_status="${PIPESTATUS[0]}"
               set -e
-              echo "$(( $(date +%s) - nativescript_e2e_started_at ))" > "$LOG_DIR/08-nativescript-production-ui-tests-duration-seconds.txt"
+              test_duration_seconds="$(( $(date +%s) - nativescript_e2e_started_at ))"
+              echo "$test_duration_seconds" > "$LOG_DIR/08-nativescript-production-ui-tests-duration-seconds.txt"
+              log_window_minutes=$(( (test_duration_seconds + 600) / 60 ))
+              if [ "$log_window_minutes" -lt 60 ]; then
+                log_window_minutes=60
+              fi
               xcrun simctl boot "$SIMULATOR_UDID" 2>/dev/null || true
               xcrun simctl spawn "$SIMULATOR_UDID" log show \
                 --style compact \
-                --last 15m \
+                --last "${log_window_minutes}m" \
                 --predicate "process == '$APP_EXECUTABLE'" \
                 > "$LOG_DIR/08-nativescript-production.log" 2>&1 || true
               xcrun xcresulttool get test-results tests \
