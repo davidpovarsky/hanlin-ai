@@ -127,7 +127,9 @@ struct CanonicalMiniAppIntegrationTests {
             let provider = registry.provider(for: appID)
             #expect(provider != nil, "Provider for \(idStr) must be registered")
             #expect(provider?.descriptor.id == appID)
-            #expect(provider?.descriptor.implementation.engine == .swift)
+            if let desc = provider?.descriptor {
+                #expect(HanlinCanonicalMiniAppCatalog.engine(for: desc) == .swift)
+            }
         }
     }
 
@@ -155,12 +157,17 @@ struct CanonicalMiniAppIntegrationTests {
                 .init(kind: .app, handler: "native_app", allowedContexts: [.mainApplication], runtimeProfile: nil),
                 .init(kind: .widget, handler: "ns_widget", allowedContexts: [.widget], runtimeProfile: .hanlinNativeScript)
             ],
-            authors: [.init(name: "Test")]
+            authors: [.init(name: "Test")],
+            distribution: .init(
+                sourceVisible: true,
+                sourceEditable: false,
+                remoteUpdates: false,
+                allowedModes: [.personalDevelopment]
+            )
         )
 
-        let catalog = HanlinCanonicalMiniAppCatalog(discovery: BuiltinMiniAppDiscovery())
-        let appEngine = catalog.engine(for: hybridDesc.entryPoints[0], implementation: hybridDesc.implementation)
-        let widgetEngine = catalog.engine(for: hybridDesc.entryPoints[1], implementation: hybridDesc.implementation)
+        let appEngine = HanlinCanonicalMiniAppCatalog.engine(for: hybridDesc.entryPoints[0], implementation: hybridDesc.implementation)
+        let widgetEngine = HanlinCanonicalMiniAppCatalog.engine(for: hybridDesc.entryPoints[1], implementation: hybridDesc.implementation)
 
         #expect(appEngine == .swift)
         #expect(widgetEngine == .nativeScript)
