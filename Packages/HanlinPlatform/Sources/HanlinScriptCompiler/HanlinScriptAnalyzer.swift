@@ -47,6 +47,9 @@ public struct HanlinCompatibilityInventory: Codable, Hashable, Sendable {
 public struct HanlinScriptAnalyzer: Sendable {
     private static let nativeScriptRuntimeVersion = "9.1.0"
     private static let nativeScriptSwiftUIVersion = "4.0.2"
+    private static let expoSDKVersion = "58.0.3"
+    private static let expoUIVersion = "58.0.3"
+    private static let reactNativeVersion = "0.88.0-rc.0"
     private let inventory: HanlinCompatibilityInventory
     private let symbols: [String: HanlinAPISymbolRecord]
     private var fileManager: FileManager { .default }
@@ -66,6 +69,8 @@ public struct HanlinScriptAnalyzer: Sendable {
         let sourcePaths = files.keys.filter(Self.isModule).sorted()
         let nativeScriptDeclared = package.manifest.unknownFields["hanlinRuntime"]
             == .string(HanlinRuntimeProfile.hanlinNativeScript.rawValue)
+        let expoDeclared = package.manifest.unknownFields["hanlinRuntime"]
+            == .string(HanlinRuntimeProfile.hanlinExpo.rawValue)
         let entrypoints = discoverEntrypoints(
             manifest: package.manifest,
             sourcePaths: sourcePaths
@@ -85,7 +90,7 @@ public struct HanlinScriptAnalyzer: Sendable {
                 ))
                 continue
             }
-            if !nativeScriptDeclared {
+            if !nativeScriptDeclared && !expoDeclared {
                 if Self.matches(#"\bimport\s*\("#, source) {
                     findings.append(.init(
                         state: .unsupported,
@@ -132,6 +137,12 @@ public struct HanlinScriptAnalyzer: Sendable {
 
         if nativeScriptDeclared {
             Self.validatePreparedNativeScriptApplication(
+                files: files,
+                entrypoints: entrypoints,
+                findings: &findings
+            )
+        } else if expoDeclared {
+            Self.validatePreparedExpoApplication(
                 files: files,
                 entrypoints: entrypoints,
                 findings: &findings
@@ -353,6 +364,127 @@ public struct HanlinScriptAnalyzer: Sendable {
         return false
     }
 
+    private static func validatePreparedExpoApplication(
+        files: [String: Data],
+        entrypoints: [HanlinPackageEntrypointDescriptor],
+        findings: inout [HanlinCompatibilityFinding]
+    ) {
+        guard entrypoints.count == 1, let entrypoint = entrypoints.first, entrypoint.kind == .app else {
+            findings.append(.init(
+                state: .unsupported,
+                severity: .error,
+                message: "An Expo package must declare exactly one foreground app entrypoint."
+            ))
+            return
+        }
+        let entryDir = URL(filePath: entrypoint.sourcePath).deletingLastPathComponent().relativePath
+        let candidateA = entryDir.isEmpty || entryDir == "." ? "package.json" : "\(entryDir)/package.json"
+        let packageJSONPath = files[candidateA] != nil ? candidateA : "package.json"
+        guard let packageJSONData = files[packageJSONPath],
+              let packageJSON = try? JSONSerialization.jsonObject(with: packageJSONData) as? [String: Any],
+              packageJSON["hanlinRuntime"] as? String == HanlinRuntimeProfile.hanlinExpo.rawValue else {
+            findings.append(.init(
+                state: .unsupported,
+                severity: .error,
+                sourcePath: packageJSONPath,
+                message: "Expo requires a prepared app package.json with hanlinRuntime set to hanlin-expo."
+            ))
+            return
+        }
+        if let contractValue = packageJSON["hanlinExpo"] {
+            guard let contract = contractValue as? [String: Any],
+                  let runtimeVersion = contract["runtimeVersion"] as? String,
+                  let plugins = contract["plugins"] as? [String: Any] else {
+                findings.append(.init(
+                    state: .unsupported,
+                    severity: .error,
+                    sourcePath: packageJSONPath,
+                    message: "Expo hanlinExpo must declare string runtimeVersion and object plugins fields."
+                ))
+                return
+            }
+            guard isExpoVersionCompatible(runtimeVersion) else {
+                findings.append(.init(
+                    state: .unsupported,
+                    severity: .error,
+                    sourcePath: packageJSONPath,
+                    message: "This Hanlin build supports Expo \(expoSDKVersion), but the package requires \(runtimeVersion)."
+                ))
+                return
+            }
+            for (name, value) in plugins.sorted(by: { $0.key < $1.key }) {
+                guard let version = value as? String else {
+                    findings.append(.init(
+                        state: .unsupported,
+                        severity: .error,
+                        sourcePath: packageJSONPath,
+                        message: "Expo plugin \(name) must declare a string version."
+                    ))
+                    continue
+                }
+                if name != "@expo/ui" || !isExpoVersionCompatible(version) {
+                    findings.append(.init(
+                        state: .unsupported,
+                        severity: .error,
+                        sourcePath: packageJSONPath,
+                        message: "This Hanlin build supports @expo/ui \(expoUIVersion), but the package requires \(name) \(version)."
+                    ))
+                } else {
+                    findings.append(.init(
+                        state: .supported,
+                        severity: .information,
+                        sourcePath: packageJSONPath,
+                        message: "Expo plugin @expo/ui \(expoUIVersion) has embedded native SwiftUI support."
+                    ))
+                }
+            }
+        }
+        var declaredUIVersion: String?
+        if let deps = packageJSON["dependencies"] as? [String: Any], let version = deps["@expo/ui"] as? String {
+            declaredUIVersion = version
+        } else if let devDeps = packageJSON["devDependencies"] as? [String: Any], let version = devDeps["@expo/ui"] as? String {
+            declaredUIVersion = version
+        }
+        if let uiVersion = declaredUIVersion {
+            if isExpoVersionCompatible(uiVersion) {
+                findings.append(.init(
+                    state: .supported,
+                    severity: .information,
+                    sourcePath: packageJSONPath,
+                    message: "Expo UI @expo/ui \(uiVersion) is supported by embedded runtime \(expoUIVersion)."
+                ))
+            } else {
+                findings.append(.init(
+                    state: .unsupported,
+                    severity: .error,
+                    sourcePath: packageJSONPath,
+                    message: "This Hanlin build supports @expo/ui \(expoUIVersion), but the package requires \(uiVersion)."
+                ))
+            }
+        }
+        findings.append(.init(
+            state: .supported,
+            severity: .information,
+            sourcePath: entrypoint.sourcePath,
+            message: "Prepared Expo application structure is valid."
+        ))
+    }
+
+    private static func isExpoVersionCompatible(_ versionString: String) -> Bool {
+        let trimmed = versionString.trimmingCharacters(in: .whitespacesAndNewlines)
+        if trimmed.isEmpty || trimmed == "*" || trimmed == "latest" {
+            return true
+        }
+        var cleaned = trimmed
+        if cleaned.hasPrefix("^") || cleaned.hasPrefix("~") || cleaned.hasPrefix("=") || cleaned.hasPrefix("v") {
+            cleaned = String(cleaned.dropFirst())
+        }
+        if cleaned.hasPrefix("58.") || trimmed.hasPrefix("^58.") {
+            return true
+        }
+        return false
+    }
+
     private func packageFiles(root: URL) throws -> [String: Data] {
         let keys: [URLResourceKey] = [.isRegularFileKey, .isSymbolicLinkKey]
         guard let enumerator = fileManager.enumerator(
@@ -426,6 +558,8 @@ public struct HanlinScriptAnalyzer: Sendable {
             }
             let profile: HanlinRuntimeProfile = if requestedRuntime == HanlinRuntimeProfile.hanlinNativeScript.rawValue {
                 .hanlinNativeScript
+            } else if requestedRuntime == HanlinRuntimeProfile.hanlinExpo.rawValue {
+                .hanlinExpo
             } else if path.lowercased().hasSuffix(".py") {
                 .hanlinPython
             } else {

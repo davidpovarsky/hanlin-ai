@@ -57,7 +57,7 @@ public struct HanlinPackageCenter: Sendable {
     ) throws -> HanlinStagedPackage {
         let format: HanlinScriptingSourceFormat
         switch sourceURL.pathExtension.lowercased() {
-        case "scripting", "hanlinnativescript": format = .scripting
+        case "scripting", "hanlinnativescript", "hanlinexpo": format = .scripting
         case "zip": format = .zip
         default: throw HanlinPackageCenterError.unsupportedSourceFormat
         }

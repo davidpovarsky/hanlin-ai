@@ -104,13 +104,18 @@ extension HanlinStoredPackageSnapshot: HanlinMiniAppRegistration {
         }
 
         let isNativeScript = entrypoints.contains { $0.runtimeProfile == .hanlinNativeScript }
+        let isExpo = entrypoints.contains { $0.runtimeProfile == .hanlinExpo }
 
         let iconDescriptor: HanlinIconDescriptor = if let icon = manifest?.icon, !icon.isEmpty {
             .systemSymbol(name: icon)
         } else if let iconImage = manifest?.iconImage, !iconImage.isEmpty {
             .packageResource(path: iconImage)
+        } else if isNativeScript {
+            .systemSymbol(name: "applescript")
+        } else if isExpo {
+            .systemSymbol(name: "sparkles")
         } else {
-            .systemSymbol(name: isNativeScript ? "applescript" : "scroll")
+            .systemSymbol(name: "scroll")
         }
 
         let accentHex = manifest?.color.flatMap { color -> String? in

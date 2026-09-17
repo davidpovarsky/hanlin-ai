@@ -128,6 +128,10 @@ Scripts/NativeScript/.ns-vite-build/
 Scripts/NativeScript/Prepared/core-fixture/
 Scripts/NativeScript/Prepared/swiftui-fixture/
 Packages/HanlinNativeScriptRuntime/Artifacts/
+Packages/HanlinExpoRuntime/Artifacts/
+Scripts/Expo/node_modules/
+Scripts/Expo/.build-probe/
+Scripts/Expo/.inspect-expo-ui/
 AI_HLY/RuntimeHostResources.zip
 
 # Logs

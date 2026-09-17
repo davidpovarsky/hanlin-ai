@@ -57,6 +57,7 @@
 				<array>
 					<string>scripting</string>
 					<string>hanlinNativeScript</string>
+					<string>hanlinExpo</string>
 				</array>
 			</dict>
 		</dict>
