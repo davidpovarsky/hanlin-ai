@@ -29,7 +29,9 @@ private struct StaticRegistration: HanlinMiniAppRegistration {
                     allowedContexts: [.mainApplication],
                     runtimeProfile: runtime
                 )
-            ]
+            ],
+            authors: [.init(name: "Demo")],
+            distribution: .init(sourceVisible: true, sourceEditable: false, remoteUpdates: false, allowedModes: [.personalDevelopment])
         )
     }
 
@@ -42,6 +44,12 @@ private struct StaticDiscovery: HanlinMiniAppDiscovery {
     func registrations() async throws -> [any HanlinMiniAppRegistration] { apps }
     func registration(for appID: HanlinAppID) async throws -> (any HanlinMiniAppRegistration)? {
         apps.first { $0.appID == appID }
+    }
+    func catalogSnapshot(
+        revision: HanlinCatalogRevision = .init(1)
+    ) async throws -> HanlinCatalogSnapshot {
+        let descriptors = try apps.map { try $0.appDescriptor() }
+        return HanlinCatalogSnapshot(revision: revision, generatedAt: .now, apps: descriptors)
     }
 }
 
@@ -86,8 +94,10 @@ struct HanlinMiniAppCoreTests {
             implementation: .nativeScript(packageID: HanlinPackageID(validating: appID.rawValue)),
             entryPoints: [
                 .init(kind: .app, handler: "index.js", allowedContexts: [.mainApplication], runtimeProfile: .hanlinNativeScript),
-                .init(kind: .backgroundTask, handler: "worker.mjs", allowedContexts: [.background], runtimeProfile: .hanlinNativeScript)
-            ]
+                .init(kind: .backgroundTask, handler: "worker.mjs", allowedContexts: [.backgroundTask], runtimeProfile: .hanlinNativeScript)
+            ],
+            authors: [.init(name: "Demo")],
+            distribution: .init(sourceVisible: true, sourceEditable: false, remoteUpdates: false, allowedModes: [.personalDevelopment])
         )
         #expect(try HanlinMiniAppLaunchPlan(descriptor: descriptor, entryPointKind: .app).entryPoint.runtimeProfile == .hanlinNativeScript)
         #expect(try HanlinMiniAppLaunchPlan(descriptor: descriptor, entryPointKind: .backgroundTask).entryPoint.runtimeProfile == .hanlinNativeScript)
@@ -175,7 +185,9 @@ struct HanlinMiniAppCoreTests {
             entryPoints: [
                 .init(kind: .app, handler: "MainView", allowedContexts: [.mainApplication], runtimeProfile: nil),
                 .init(kind: .backgroundTask, handler: "task.mjs", allowedContexts: [.backgroundTask], runtimeProfile: .hanlinNativeScript)
-            ]
+            ],
+            authors: [.init(name: "Demo")],
+            distribution: .init(sourceVisible: true, sourceEditable: false, remoteUpdates: false, allowedModes: [.personalDevelopment])
         )
 
         // Foreground engine is Swift because .app has runtimeProfile: nil and implementation is .hybrid

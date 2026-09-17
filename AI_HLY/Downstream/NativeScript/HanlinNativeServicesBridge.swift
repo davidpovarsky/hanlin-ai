@@ -94,17 +94,13 @@ public final class HanlinNativeServicesBridge: NSObject {
         }
         Task { @MainActor in
             do {
-                let jsc = AppRuntimeCore.shared.javaScriptCore
+                let layout = RuntimeFileLayout.default
+                let workspace = try layout.workspace(client: .tools, identifier: "nativescript-jsc")
                 let request = RuntimeExecutionRequest(
-                    runtimeKind: .javaScriptCore,
                     source: source,
-                    entrypoint: nil,
-                    arguments: [],
-                    environment: [:],
-                    workspaceURL: nil,
-                    packagesURL: nil
+                    workspace: workspace
                 )
-                let result = try await jsc.execute(request)
+                let result = try await AppRuntimeCore.shared.javaScriptCore.execute(request)
                 let output = result.stdout.trimmingCharacters(in: .whitespacesAndNewlines)
                 completion(output.isEmpty ? "OK" : output, nil)
             } catch {
@@ -127,7 +123,13 @@ public final class HanlinNativeServicesBridge: NSObject {
         Task { @MainActor in
             do {
                 let node = AppRuntimeCore.shared.node
-                let result = try await node.executeJavaScript(source: source)
+                let layout = RuntimeFileLayout.default
+                let workspace = try layout.workspace(client: .tools, identifier: "nativescript-node")
+                let request = RuntimeExecutionRequest(
+                    source: source,
+                    workspace: workspace
+                )
+                let result = try await node.executeJavaScript(request)
                 let output = result.stdout.trimmingCharacters(in: .whitespacesAndNewlines)
                 completion(output, nil)
             } catch {
@@ -143,8 +145,8 @@ public final class HanlinNativeServicesBridge: NSObject {
         Task { @MainActor in
             do {
                 let node = AppRuntimeCore.shared.node
-                let healthy = try await node.healthCheck()
-                completion(healthy, nil)
+                let snapshot = try await node.healthCheck()
+                completion(snapshot.state == .ready, nil)
             } catch {
                 completion(false, error.localizedDescription)
             }
@@ -165,7 +167,13 @@ public final class HanlinNativeServicesBridge: NSObject {
         Task { @MainActor in
             do {
                 let python = AppRuntimeCore.shared.python
-                let result = try await python.execute(source: source)
+                let layout = RuntimeFileLayout.default
+                let workspace = try layout.workspace(client: .tools, identifier: "nativescript-python")
+                let request = RuntimeExecutionRequest(
+                    source: source,
+                    workspace: workspace
+                )
+                let result = try await python.execute(request)
                 let output = result.stdout.trimmingCharacters(in: .whitespacesAndNewlines)
                 completion(output, nil)
             } catch {
@@ -176,7 +184,7 @@ public final class HanlinNativeServicesBridge: NSObject {
 
     /// Returns the embedded Python runtime version, or nil if unavailable.
     public static func pythonVersion() -> String? {
-        AppRuntimeCore.shared.python.version
+        try? PythonRuntimeBridge.version()
     }
 
     // MARK: - Real Network / HTTPS Fetch
@@ -280,7 +288,7 @@ public final class HanlinNativeServicesBridge: NSObject {
                     let payloadStr = (try? String(data: request.payload.canonicalJSONData(), encoding: .utf8)) ?? "{}"
                     handler(request.caller.rawValue, payloadStr) { responseJSON, errorStr in
                         if let errorStr {
-                            continuation.resume(throwing: HanlinMiniAppRequestError.invocationFailed(errorStr))
+                            continuation.resume(throwing: NSError(domain: "HanlinMiniAppRequest", code: 1, userInfo: [NSLocalizedDescriptionKey: errorStr]))
                         } else if let responseJSON, let data = responseJSON.data(using: .utf8),
                                   let value = try? JSONDecoder().decode(HanlinValue.self, from: data) {
                             continuation.resume(returning: value)

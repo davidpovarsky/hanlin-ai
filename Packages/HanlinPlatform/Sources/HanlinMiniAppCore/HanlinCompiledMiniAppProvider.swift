@@ -71,3 +71,30 @@ public final class HanlinCompiledMiniAppRegistry: @unchecked Sendable {
         return Array(providers.values).sorted { $0.appID.rawValue < $1.appID.rawValue }
     }
 }
+
+public struct HanlinCompiledMiniAppDiscovery: HanlinMiniAppDiscovery, Sendable {
+    private let registry: HanlinCompiledMiniAppRegistry
+
+    public init(registry: HanlinCompiledMiniAppRegistry = .shared) {
+        self.registry = registry
+    }
+
+    public func registrations() async throws -> [any HanlinMiniAppRegistration] {
+        registry.allProviders().map(\.registration)
+    }
+
+    public func registration(for appID: HanlinAppID) async throws -> (any HanlinMiniAppRegistration)? {
+        registry.provider(for: appID)?.registration
+    }
+
+    public func catalogSnapshot(
+        revision: HanlinCatalogRevision = .init(1)
+    ) async throws -> HanlinCatalogSnapshot {
+        let descriptors = try registry.allProviders().map { try $0.descriptor }
+        return HanlinCatalogSnapshot(
+            revision: revision,
+            generatedAt: .now,
+            apps: descriptors
+        )
+    }
+}

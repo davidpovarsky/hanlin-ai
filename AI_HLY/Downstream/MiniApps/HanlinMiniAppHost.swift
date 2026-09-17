@@ -81,8 +81,9 @@ final class HanlinMiniAppHost {
                 }
                 return false
             }
+            BuiltinCanonicalRegistrations.ensureRegistered()
             let discovery = HanlinCompositeMiniAppDiscovery(providers: [
-                BuiltinMiniAppDiscovery(),
+                HanlinCompiledMiniAppDiscovery(),
                 HanlinScriptPackageDiscovery(snapshots: nativeScriptPackages)
             ])
             let refreshed = try await HanlinCanonicalMiniAppCatalog(discovery: discovery).items()
