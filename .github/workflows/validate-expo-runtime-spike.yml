@@ -56,6 +56,12 @@ jobs:
         with:
           python-version: "3.12"
 
+      - name: Install Expo tooling dependencies
+        shell: bash
+        run: |
+          set -euxo pipefail
+          npm ci --prefix Scripts/Expo
+
       - name: Prepare Expo iOS dependency closure
         shell: bash
         run: |

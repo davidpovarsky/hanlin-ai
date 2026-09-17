@@ -16,7 +16,7 @@ let package = Package(
         .target(
             name: "HanlinExpoRuntime",
             dependencies: [
-                "RCTDeprecation",
+                "ReactNativeHeaders",
                 "React",
                 "ReactNativeDependencies",
                 "hermesvm",
@@ -32,11 +32,7 @@ let package = Package(
                 .linkedFramework("SwiftUI")
             ]
         ),
-        .target(
-            name: "RCTDeprecation",
-            path: "Sources/RCTDeprecation",
-            publicHeadersPath: "include"
-        ),
+        .binaryTarget(name: "ReactNativeHeaders", path: "Artifacts/ReactNativeHeaders.xcframework"),
         .binaryTarget(name: "React", path: "Artifacts/React.xcframework"),
         .binaryTarget(name: "ReactNativeDependencies", path: "Artifacts/ReactNativeDependencies.xcframework"),
         .binaryTarget(name: "hermesvm", path: "Artifacts/hermesvm.xcframework"),

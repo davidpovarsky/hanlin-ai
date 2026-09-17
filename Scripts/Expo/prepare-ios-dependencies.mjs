@@ -1,5 +1,5 @@
 import { createHash } from 'node:crypto';
-import { access, cp, mkdir, readFile, rm, writeFile } from 'node:fs/promises';
+import { access, chmod, cp, mkdir, readFile, rm, writeFile } from 'node:fs/promises';
 import { createWriteStream, existsSync } from 'node:fs';
 import { basename, resolve } from 'node:path';
 import { execSync } from 'node:child_process';
@@ -82,6 +82,70 @@ async function prepare() {
       console.log(`[HanlinExpo] Staged ${item.name} -> ${item.target}`);
     }
     console.log('[HanlinExpo] All dependencies staged successfully.');
+
+    if (process.platform === 'darwin') {
+      console.log('[HanlinExpo] Building ExpoModulesJSI.xcframework for simulator on macOS...');
+      const expoModulesJSIRoot = resolve(scriptRoot, 'node_modules', 'expo-modules-jsi');
+      if (existsSync(expoModulesJSIRoot)) {
+        const podsRoot = resolve(scriptRoot, '.pods-root');
+        await rm(podsRoot, { recursive: true, force: true });
+
+        const publicHeaders = resolve(podsRoot, 'Headers', 'Public');
+        await mkdir(publicHeaders, { recursive: true });
+
+        const rnHeaders = resolve(artifactsRoot, 'ReactNativeHeaders.xcframework', 'ios-arm64_x86_64-simulator', 'Headers');
+        if (existsSync(rnHeaders)) {
+          await cp(rnHeaders, publicHeaders, { recursive: true });
+        }
+
+        const rnDepsHeaders = resolve(artifactsRoot, 'ReactNativeDependencies.xcframework', 'Headers');
+        if (existsSync(rnDepsHeaders)) {
+          await cp(rnDepsHeaders, publicHeaders, { recursive: true });
+        }
+
+        const reactJsiHeaders = resolve(publicHeaders, 'React-jsi', 'jsi');
+        await mkdir(reactJsiHeaders, { recursive: true });
+        if (existsSync(resolve(publicHeaders, 'jsi'))) {
+          await cp(resolve(publicHeaders, 'jsi'), reactJsiHeaders, { recursive: true });
+        }
+
+        const hermesHeaders = resolve(publicHeaders, 'hermes-engine');
+        await mkdir(hermesHeaders, { recursive: true });
+        if (existsSync(resolve(publicHeaders, 'hermes'))) {
+          await cp(resolve(publicHeaders, 'hermes'), hermesHeaders, { recursive: true });
+        }
+
+        const rnRoot = resolve(scriptRoot, 'node_modules', 'react-native');
+        const buildScript = resolve(expoModulesJSIRoot, 'apple', 'scripts', 'build-xcframework.sh');
+        const generateScript = resolve(expoModulesJSIRoot, 'apple', 'scripts', 'generate-modulemap.sh');
+        const helpersScript = resolve(expoModulesJSIRoot, 'apple', 'scripts', 'xcframework-helpers.sh');
+        if (existsSync(buildScript)) {
+          await chmod(buildScript, 0o755);
+        }
+        if (existsSync(generateScript)) {
+          await chmod(generateScript, 0o755);
+        }
+        if (existsSync(helpersScript)) {
+          await chmod(helpersScript, 0o755);
+        }
+
+        execSync(`bash "${buildScript}"`, {
+          env: {
+            ...process.env,
+            PODS_ROOT: podsRoot,
+            RN_ROOT: rnRoot,
+            PLATFORM_NAME: 'iphonesimulator',
+          },
+          stdio: 'inherit'
+        });
+
+        const builtXCFramework = resolve(expoModulesJSIRoot, 'apple', 'Products', 'ExpoModulesJSI.xcframework');
+        if (existsSync(builtXCFramework)) {
+          await cp(builtXCFramework, resolve(artifactsRoot, 'ExpoModulesJSI.xcframework'), { recursive: true });
+          console.log('[HanlinExpo] ExpoModulesJSI.xcframework built and staged successfully.');
+        }
+      }
+    }
   } finally {
     await rm(tempDir, { recursive: true, force: true });
   }

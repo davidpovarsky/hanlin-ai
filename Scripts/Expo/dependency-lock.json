@@ -83,6 +83,14 @@
       "sha256": "1179456e2f1022850b0f486845faf68c2e4138b998804503e08a7a8e1f8b100d",
       "subpath": "destroot/Library/Frameworks/universal/hermesvm.xcframework",
       "target": "Packages/HanlinExpoRuntime/Artifacts/hermesvm.xcframework"
+    },
+    {
+      "name": "ReactNativeHeaders",
+      "source": "maven",
+      "url": "https://repo1.maven.org/maven2/com/facebook/react/react-native-artifacts/0.88.0-rc.0/react-native-artifacts-0.88.0-rc.0-reactnative-headers-release.tar.gz",
+      "sha256": "7c099a63c639488824080a0dab8ab2085c22aa1b2ceec8f166f5711e370b74dd",
+      "subpath": "ReactNativeHeaders.xcframework",
+      "target": "Packages/HanlinExpoRuntime/Artifacts/ReactNativeHeaders.xcframework"
     }
   ]
 }
