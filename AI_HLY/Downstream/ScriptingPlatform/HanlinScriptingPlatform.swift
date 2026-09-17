@@ -665,7 +665,7 @@ final class HanlinScriptingPlatform {
                                 ))
                             }
                         } else {
-                            let intentName = entrypoint.id.rawValue.isEmpty ? "defaultAction" : entrypoint.id.rawValue
+                            let intentName = entrypoint.id.isEmpty ? "defaultAction" : entrypoint.id
                             intentEntities.append(.init(identity: identity, id: intentName, displayName: displayName))
                         }
                         continue
