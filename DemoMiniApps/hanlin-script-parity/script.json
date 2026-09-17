@@ -1,0 +1,21 @@
+{
+  "name": "HanlinScript Parity",
+  "version": "1.0.0",
+  "description": "Real HanlinScript parity MiniApp with deterministic Node, Python, JavaScript, and HTTPS execution.",
+  "entry": "nativescript/app/bundle.mjs",
+  "runInApp": true,
+  "hanlinRuntime": "hanlin-nativescript",
+  "hanlinAppID": "hanlin.demo.script-parity",
+  "category": "developer",
+  "isBeta": true,
+  "icon": "terminal.fill",
+  "color": "#10B981",
+  "capabilities": [
+    "storage",
+    "network",
+    "node",
+    "python",
+    "javascript",
+    "inter-app.share"
+  ]
+}

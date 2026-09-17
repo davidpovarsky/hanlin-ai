@@ -218,6 +218,7 @@ public final class HanlinNativeServicesBridge: NSObject {
 
     /// Send an authorized inter-app request to another Mini App.
     /// Caller identity is strictly bound to `activeAppID`.
+    @objc(sendRequest:action:capability:payloadJSON:completion:)
     public static func sendRequest(
         targetID: String,
         action: String,
@@ -260,6 +261,7 @@ public final class HanlinNativeServicesBridge: NSObject {
     }
 
     /// Register a handler in HanlinScript for incoming inter-app requests.
+    @objc(registerRequestHandler:capability:handler:)
     public static func registerRequestHandler(
         action: String,
         capability: String,
