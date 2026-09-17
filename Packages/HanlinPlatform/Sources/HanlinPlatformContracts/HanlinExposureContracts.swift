@@ -223,7 +223,7 @@ public enum HanlinExposureCatalog {
             requiredEntitlements: [],
             requiredInfoPlistKeys: [],
             eligibility: .hybrid,
-            implementationState: .genericHosted,
+            implementationState: .reserved,
             notes: "WidgetKit surface reserved; requires a dedicated Widget extension target to host Mini App widgets."
         ),
         // 5. Live Activities
@@ -262,7 +262,7 @@ public enum HanlinExposureCatalog {
             requiredEntitlements: [],
             requiredInfoPlistKeys: [],
             eligibility: .hybrid,
-            implementationState: .genericHosted,
+            implementationState: .reserved,
             notes: "AppIntents system integration reserved; in-session runtime registration primitives exist in HanlinScriptingApplicationRuntime, but system AppIntent host bridging is not wired today."
         ),
         // 8. Spotlight

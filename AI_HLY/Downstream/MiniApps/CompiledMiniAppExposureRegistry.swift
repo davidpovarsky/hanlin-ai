@@ -1,3 +1,4 @@
+import HanlinMiniAppCore
 import HanlinParityMiniApp
 import HanlinPlatformContracts
 import HanlinScriptExtensions
@@ -29,6 +30,7 @@ struct CompiledMiniAppExposureProvider {
     }
 }
 
+@MainActor
 enum CompiledMiniAppExposureRegistry {
     static var all: [CompiledMiniAppExposureProvider] {
         BuiltinCanonicalRegistrations.ensureRegistered()
