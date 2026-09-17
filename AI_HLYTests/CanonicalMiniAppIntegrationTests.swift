@@ -3,6 +3,7 @@ import HanlinMiniAppCore
 import HanlinParityMiniApp
 import HanlinPlatformContracts
 import HanlinScriptContracts
+import HanlinScriptStore
 import Testing
 @testable import AI_Hanlin
 
@@ -224,7 +225,7 @@ struct CanonicalMiniAppIntegrationTests {
             supportedContexts: [.mainApplication],
             runtimePolicyID: "p1",
             runtimeProfile: .hanlinNativeScript,
-            compatibility: .full
+            compatibility: .supported
         )
         let entryB = HanlinPackageEntrypointDescriptor(
             id: "entryB",
@@ -232,8 +233,8 @@ struct CanonicalMiniAppIntegrationTests {
             sourcePath: "entryB.js",
             supportedContexts: [.mainApplication],
             runtimePolicyID: "p2",
-            runtimeProfile: nil,
-            compatibility: .full
+            runtimeProfile: .scriptingJSC,
+            compatibility: .supported
         )
 
         let snapshot = HanlinStoredPackageSnapshot(
@@ -250,12 +251,12 @@ struct CanonicalMiniAppIntegrationTests {
         let resolvedRuntimeB = snapshot.entrypoints[1].runtimeProfile
 
         #expect(resolvedRuntimeA == .hanlinNativeScript)
-        #expect(resolvedRuntimeB == nil)
+        #expect(resolvedRuntimeB == .scriptingJSC)
 
         let registration = snapshot.makeMiniAppRegistration()
         let desc = try registration.appDescriptor()
         #expect(desc.entryPoints[0].runtimeProfile == .hanlinNativeScript)
-        #expect(desc.entryPoints[1].runtimeProfile == nil)
+        #expect(desc.entryPoints[1].runtimeProfile == .scriptingJSC)
     }
 
     @MainActor
