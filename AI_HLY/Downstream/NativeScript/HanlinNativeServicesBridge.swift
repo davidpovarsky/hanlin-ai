@@ -92,6 +92,7 @@ public final class HanlinNativeServicesBridge: NSObject {
             completion(nil, "Permission denied: 'javascript' capability not granted to this Mini App.")
             return
         }
+        nonisolated(unsafe) let safeCompletion = completion
         Task { @MainActor in
             do {
                 let layout = RuntimeFileLayout.default
@@ -102,9 +103,9 @@ public final class HanlinNativeServicesBridge: NSObject {
                 )
                 let result = try await AppRuntimeCore.shared.javaScriptCore.execute(request)
                 let output = result.stdout.trimmingCharacters(in: .whitespacesAndNewlines)
-                completion(output.isEmpty ? "OK" : output, nil)
+                safeCompletion(output.isEmpty ? "OK" : output, nil)
             } catch {
-                completion(nil, error.localizedDescription)
+                safeCompletion(nil, error.localizedDescription)
             }
         }
     }
@@ -120,6 +121,7 @@ public final class HanlinNativeServicesBridge: NSObject {
             completion(nil, "Permission denied: 'node' capability not granted to this Mini App.")
             return
         }
+        nonisolated(unsafe) let safeCompletion = completion
         Task { @MainActor in
             do {
                 let node = AppRuntimeCore.shared.node
@@ -131,9 +133,9 @@ public final class HanlinNativeServicesBridge: NSObject {
                 )
                 let result = try await node.executeJavaScript(request)
                 let output = result.stdout.trimmingCharacters(in: .whitespacesAndNewlines)
-                completion(output, nil)
+                safeCompletion(output, nil)
             } catch {
-                completion(nil, error.localizedDescription)
+                safeCompletion(nil, error.localizedDescription)
             }
         }
     }
@@ -142,13 +144,14 @@ public final class HanlinNativeServicesBridge: NSObject {
     public static func nodeHealthCheck(
         completion: @escaping (Bool, String?) -> Void
     ) {
+        nonisolated(unsafe) let safeCompletion = completion
         Task { @MainActor in
             do {
                 let node = AppRuntimeCore.shared.node
                 let snapshot = try await node.healthCheck()
-                completion(snapshot.state == .ready, nil)
+                safeCompletion(snapshot.state == .ready, nil)
             } catch {
-                completion(false, error.localizedDescription)
+                safeCompletion(false, error.localizedDescription)
             }
         }
     }
@@ -164,6 +167,7 @@ public final class HanlinNativeServicesBridge: NSObject {
             completion(nil, "Permission denied: 'python' capability not granted to this Mini App.")
             return
         }
+        nonisolated(unsafe) let safeCompletion = completion
         Task { @MainActor in
             do {
                 let python = AppRuntimeCore.shared.python
@@ -175,9 +179,9 @@ public final class HanlinNativeServicesBridge: NSObject {
                 )
                 let result = try await python.execute(request)
                 let output = result.stdout.trimmingCharacters(in: .whitespacesAndNewlines)
-                completion(output, nil)
+                safeCompletion(output, nil)
             } catch {
-                completion(nil, error.localizedDescription)
+                safeCompletion(nil, error.localizedDescription)
             }
         }
     }
@@ -206,18 +210,19 @@ public final class HanlinNativeServicesBridge: NSObject {
             completion(nil, "Invalid or non-HTTPS URL: \(urlString)")
             return
         }
+        nonisolated(unsafe) let safeCompletion = completion
         Task { @MainActor in
             do {
                 var request = URLRequest(url: url)
                 request.timeoutInterval = 15
                 let (data, response) = try await URLSession.shared.data(for: request)
                 guard let http = response as? HTTPURLResponse else {
-                    completion(nil, "Invalid server response.")
+                    safeCompletion(nil, "Invalid server response.")
                     return
                 }
-                completion("HTTPS \(http.statusCode), \(data.count) bytes", nil)
+                safeCompletion("HTTPS \(http.statusCode), \(data.count) bytes", nil)
             } catch {
-                completion(nil, error.localizedDescription)
+                safeCompletion(nil, error.localizedDescription)
             }
         }
     }
@@ -242,6 +247,7 @@ public final class HanlinNativeServicesBridge: NSObject {
             completion(nil, "Permission denied: Mini App does not have '\(capability)' capability.")
             return
         }
+        nonisolated(unsafe) let safeCompletion = completion
         Task { @MainActor in
             do {
                 let caller = try HanlinAppID(validating: callerID)
@@ -261,9 +267,9 @@ public final class HanlinNativeServicesBridge: NSObject {
                 )
                 let response = try await broker.request(request)
                 let responseData = try response.value.canonicalJSONData()
-                completion(String(data: responseData, encoding: .utf8), nil)
+                safeCompletion(String(data: responseData, encoding: .utf8), nil)
             } catch {
-                completion(nil, error.localizedDescription)
+                safeCompletion(nil, error.localizedDescription)
             }
         }
     }
