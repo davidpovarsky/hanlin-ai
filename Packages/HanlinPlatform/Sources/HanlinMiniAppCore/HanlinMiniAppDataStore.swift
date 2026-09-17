@@ -91,6 +91,11 @@ public actor HanlinMiniAppDataStore {
         return directories
     }
 
+    /// Alias for prepareContainer(for:) returning the active container directories.
+    public func container(for appID: HanlinAppID) throws -> HanlinMiniAppContainerDirectories {
+        try prepareContainer(for: appID)
+    }
+
     public func read(
         appID: HanlinAppID,
         area: HanlinMiniAppDataArea,

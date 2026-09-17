@@ -406,7 +406,8 @@ final class HanlinScriptingPlatform {
                     dataRoot: dataRootStr,
                     stateDir: stateDirStr,
                     docsDir: docsDirStr,
-                    cacheDir: cacheDirStr
+                    cacheDir: cacheDirStr,
+                    grantedCapabilities: package.grantedCapabilities.map(\.rawValue)
                 )
 
                 let session = try HanlinNativeScriptSession(

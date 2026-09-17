@@ -1,50 +1,69 @@
 import Foundation
+import HanlinMiniAppCore
 import HanlinPlatformContracts
 #if canImport(UIKit)
 import UIKit
 #endif
 
-/// Narrow native bridge exposing Node and Python runtimes to NativeScript
-/// via Objective-C metadata. NativeScript discovers `@objc` classes through
-/// runtime reflection, so marking this class `@objc` and `@objcMembers`
-/// allows NativeScript Core code to call these methods directly without
-/// a separate RPC or broker layer.
+/// Narrow native bridge exposing Node, Python, JavaScript, Network, and Inter-App
+/// request services to HanlinScript (NativeScript) via Objective-C metadata.
 ///
-/// Each method preserves the underlying runtime's cancellation, lifecycle,
-/// and error semantics. No duplicate runtime is created.
+/// Security & Architectural Rules:
+/// 1. Caller identity is strictly HOST-BOUND to the active session (`activeAppID`).
+///    Untrusted scripts cannot supply or spoof their caller identity.
+/// 2. All privileged operations (Node, Python, JavaScript, Network, Inter-App)
+///    are capability-gated against `activeGrantedCapabilities`.
+/// 3. Preserves runtime lifecycle, cancellation, and error semantics.
 @objc(HanlinNativeServicesBridge)
 @objcMembers
 public final class HanlinNativeServicesBridge: NSObject {
 
-    // MARK: - Canonical Roots
+    // MARK: - Active Host Session Context
 
     public private(set) static var activeAppID: String?
     public private(set) static var activeDataRoot: String?
     public private(set) static var activeStateDirectory: String?
     public private(set) static var activeDocumentsDirectory: String?
     public private(set) static var activeCacheDirectory: String?
+    public private(set) static var activeGrantedCapabilities: Set<String> = []
 
     public static func setActiveContainer(
         appID: String,
         dataRoot: String,
         stateDir: String,
         docsDir: String,
-        cacheDir: String
+        cacheDir: String,
+        grantedCapabilities: [String] = []
     ) {
         activeAppID = appID
         activeDataRoot = dataRoot
         activeStateDirectory = stateDir
         activeDocumentsDirectory = docsDir
         activeCacheDirectory = cacheDir
+        activeGrantedCapabilities = Set(grantedCapabilities)
     }
 
     public static func clearActiveContainer() {
+        if let appID = activeAppID, let parsedID = try? HanlinAppID(validating: appID) {
+            Task { @MainActor in
+                await HanlinMiniAppHost.shared.requestBroker.unregisterAll(target: parsedID)
+            }
+        }
         activeAppID = nil
         activeDataRoot = nil
         activeStateDirectory = nil
         activeDocumentsDirectory = nil
         activeCacheDirectory = nil
+        activeGrantedCapabilities.removeAll()
     }
+
+    /// Checks whether the active session has been granted the required capability.
+    private static func hasCapability(_ capability: String) -> Bool {
+        activeGrantedCapabilities.contains(capability)
+            || activeGrantedCapabilities.contains("all")
+    }
+
+    // MARK: - Canonical Roots
 
     /// The root data directory for the active Mini App.
     public static func dataRootDirectory() -> String? { activeDataRoot }
@@ -58,22 +77,59 @@ public final class HanlinNativeServicesBridge: NSObject {
     /// The cache directory for the active Mini App.
     public static func cacheDirectory() -> String? { activeCacheDirectory }
 
-    // MARK: - Node Runtime
+    // MARK: - JavaScript Runtime Service
 
-    /// Execute JavaScript source via the embedded Node runtime.
+    /// Execute JavaScript source code via the host JavaScriptCore engine service.
     ///
     /// - Parameters:
     ///   - source: JavaScript source code string.
-    ///   - completion: Called on main thread with (result JSON string, error description).
+    ///   - completion: Called on main thread with (result output string, error description).
+    public static func executeJavaScript(
+        _ source: String,
+        completion: @escaping (String?, String?) -> Void
+    ) {
+        guard hasCapability("javascript") || hasCapability("runtime.javascript") else {
+            completion(nil, "Permission denied: 'javascript' capability not granted to this Mini App.")
+            return
+        }
+        Task { @MainActor in
+            do {
+                let jsc = AppRuntimeCore.shared.javaScriptCore
+                let request = RuntimeExecutionRequest(
+                    runtimeKind: .javaScriptCore,
+                    source: source,
+                    entrypoint: nil,
+                    arguments: [],
+                    environment: [:],
+                    workspaceURL: nil,
+                    packagesURL: nil
+                )
+                let result = try await jsc.execute(request)
+                let output = result.stdout.trimmingCharacters(in: .whitespacesAndNewlines)
+                completion(output.isEmpty ? "OK" : output, nil)
+            } catch {
+                completion(nil, error.localizedDescription)
+            }
+        }
+    }
+
+    // MARK: - Node Runtime
+
+    /// Execute JavaScript source via the embedded Node runtime.
     public static func executeNode(
         _ source: String,
         completion: @escaping (String?, String?) -> Void
     ) {
+        guard hasCapability("node") || hasCapability("runtime.node") else {
+            completion(nil, "Permission denied: 'node' capability not granted to this Mini App.")
+            return
+        }
         Task { @MainActor in
             do {
                 let node = AppRuntimeCore.shared.node
                 let result = try await node.executeJavaScript(source: source)
-                completion(result.stdout, nil)
+                let output = result.stdout.trimmingCharacters(in: .whitespacesAndNewlines)
+                completion(output, nil)
             } catch {
                 completion(nil, error.localizedDescription)
             }
@@ -98,19 +154,20 @@ public final class HanlinNativeServicesBridge: NSObject {
     // MARK: - Python Runtime
 
     /// Execute Python source via the embedded Python runtime.
-    ///
-    /// - Parameters:
-    ///   - source: Python source code string.
-    ///   - completion: Called on main thread with (result JSON string, error description).
     public static func executePython(
         _ source: String,
         completion: @escaping (String?, String?) -> Void
     ) {
+        guard hasCapability("python") || hasCapability("runtime.python") else {
+            completion(nil, "Permission denied: 'python' capability not granted to this Mini App.")
+            return
+        }
         Task { @MainActor in
             do {
                 let python = AppRuntimeCore.shared.python
                 let result = try await python.execute(source: source)
-                completion(result.stdout, nil)
+                let output = result.stdout.trimmingCharacters(in: .whitespacesAndNewlines)
+                completion(output, nil)
             } catch {
                 completion(nil, error.localizedDescription)
             }
@@ -122,25 +179,60 @@ public final class HanlinNativeServicesBridge: NSObject {
         AppRuntimeCore.shared.python.version
     }
 
-    // MARK: - Inter-App Request Broker
+    // MARK: - Real Network / HTTPS Fetch
 
-    /// Send a canonical inter-app request from NativeScript to another Mini App.
+    /// Perform a real HTTPS request from the Mini App.
     ///
     /// - Parameters:
-    ///   - callerID: The calling app's HanlinAppID raw value.
-    ///   - targetID: The target app's HanlinAppID raw value.
-    ///   - action: The action identifier raw value.
-    ///   - capability: The capability identifier raw value.
-    ///   - payloadJSON: JSON-encoded payload string.
-    ///   - completion: Called with (response JSON string, error description).
+    ///   - urlString: HTTPS URL string.
+    ///   - completion: Called on main thread with (response metadata string, error description).
+    public static func fetchURL(
+        _ urlString: String,
+        completion: @escaping (String?, String?) -> Void
+    ) {
+        guard hasCapability("network") || hasCapability("network.fetch") else {
+            completion(nil, "Permission denied: 'network' capability not granted to this Mini App.")
+            return
+        }
+        guard let url = URL(string: urlString), url.scheme?.lowercased() == "https" else {
+            completion(nil, "Invalid or non-HTTPS URL: \(urlString)")
+            return
+        }
+        Task { @MainActor in
+            do {
+                var request = URLRequest(url: url)
+                request.timeoutInterval = 15
+                let (data, response) = try await URLSession.shared.data(for: request)
+                guard let http = response as? HTTPURLResponse else {
+                    completion(nil, "Invalid server response.")
+                    return
+                }
+                completion("HTTPS \(http.statusCode), \(data.count) bytes", nil)
+            } catch {
+                completion(nil, error.localizedDescription)
+            }
+        }
+    }
+
+    // MARK: - Inter-App Request Broker (Host-Bound Caller Identity)
+
+    /// Send an authorized inter-app request to another Mini App.
+    /// Caller identity is strictly bound to `activeAppID`.
     public static func sendRequest(
-        callerID: String,
         targetID: String,
         action: String,
         capability: String,
         payloadJSON: String,
         completion: @escaping (String?, String?) -> Void
     ) {
+        guard let callerID = activeAppID else {
+            completion(nil, "Unauthorized: No active Mini App session context.")
+            return
+        }
+        guard hasCapability(capability) else {
+            completion(nil, "Permission denied: Mini App does not have '\(capability)' capability.")
+            return
+        }
         Task { @MainActor in
             do {
                 let caller = try HanlinAppID(validating: callerID)
@@ -163,6 +255,38 @@ public final class HanlinNativeServicesBridge: NSObject {
                 completion(String(data: responseData, encoding: .utf8), nil)
             } catch {
                 completion(nil, error.localizedDescription)
+            }
+        }
+    }
+
+    /// Register a handler in HanlinScript for incoming inter-app requests.
+    public static func registerRequestHandler(
+        action: String,
+        capability: String,
+        handler: @escaping (String, String, @escaping (String?, String?) -> Void) -> Void
+    ) {
+        guard let callerID = activeAppID,
+              let appID = try? HanlinAppID(validating: callerID),
+              let actionID = try? HanlinActionID(validating: action),
+              let capabilityID = try? HanlinCapabilityID(validating: capability) else {
+            return
+        }
+        Task { @MainActor in
+            let broker = HanlinMiniAppHost.shared.requestBroker
+            await broker.register(target: appID, action: actionID, capability: capabilityID) { request in
+                try await withCheckedThrowingContinuation { continuation in
+                    let payloadStr = (try? String(data: request.payload.canonicalJSONData(), encoding: .utf8)) ?? "{}"
+                    handler(request.caller.rawValue, payloadStr) { responseJSON, errorStr in
+                        if let errorStr {
+                            continuation.resume(throwing: HanlinMiniAppRequestError.invocationFailed(errorStr))
+                        } else if let responseJSON, let data = responseJSON.data(using: .utf8),
+                                  let value = try? JSONDecoder().decode(HanlinValue.self, from: data) {
+                            continuation.resume(returning: value)
+                        } else {
+                            continuation.resume(returning: .null)
+                        }
+                    }
+                }
             }
         }
     }
