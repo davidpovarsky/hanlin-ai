@@ -247,6 +247,10 @@ final class HanlinScriptUIProductionE2ETests: XCTestCase {
         // 1. User-level in-flight re-entrancy protection (guard !isLaunching)
         let packageCard = findPackageCard(named: validPackageName)
         XCTAssertTrue(packageCard.waitForExistence(timeout: 15), "Package card missing before launch")
+        if !packageCard.isHittable {
+            app.swipeUp()
+            _ = waitUntil(timeout: 2) { packageCard.isHittable }
+        }
 
         // Rapid double tap triggers two immediate launch entries while isLaunching is true
         packageCard.doubleTap()
@@ -348,7 +352,20 @@ final class HanlinScriptUIProductionE2ETests: XCTestCase {
         let navBar = app.navigationBars["Script Package"].firstMatch
         _ = navBar.waitForExistence(timeout: 5)
 
-        let directArchive = app.buttons[archiveName].firstMatch
+        var directArchive = app.buttons[archiveName].firstMatch
+        if !directArchive.waitForExistence(timeout: 3) {
+            app.swipeDown()
+            directArchive = app.buttons[archiveName].firstMatch
+        }
+        if !directArchive.waitForExistence(timeout: 2) {
+            for _ in 1...5 {
+                app.swipeUp()
+                directArchive = app.buttons[archiveName].firstMatch
+                if directArchive.waitForExistence(timeout: 2) {
+                    break
+                }
+            }
+        }
         if directArchive.waitForExistence(timeout: 5) {
             _ = waitUntil(timeout: 5) { directArchive.isHittable }
             directArchive.tap()
@@ -412,13 +429,35 @@ final class HanlinScriptUIProductionE2ETests: XCTestCase {
 
     private func findPackageCard(named packageName: String) -> XCUIElement {
         let predicate = NSPredicate(format: "label CONTAINS %@ OR identifier CONTAINS %@", packageName, packageName)
-        return app.descendants(matching: .any).matching(predicate).firstMatch
+        let element = app.descendants(matching: .any).matching(predicate).firstMatch
+        if element.waitForExistence(timeout: 2) {
+            return element
+        }
+        app.swipeDown()
+        if element.waitForExistence(timeout: 2) {
+            return element
+        }
+        for _ in 1...5 {
+            app.swipeUp()
+            if element.waitForExistence(timeout: 2) {
+                return element
+            }
+        }
+        return element
     }
 
     private func launchPackage(named packageName: String) {
         let packageCard = findPackageCard(named: packageName)
         XCTAssertTrue(packageCard.waitForExistence(timeout: 15), "Package \(packageName) unavailable for launch")
-        packageCard.tap()
+        if !packageCard.isHittable {
+            app.swipeUp()
+            _ = waitUntil(timeout: 2) { packageCard.isHittable }
+        }
+        if packageCard.isHittable {
+            packageCard.tap()
+        } else {
+            packageCard.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
+        }
     }
 
     private func closeScriptApp() {
@@ -475,18 +514,31 @@ final class HanlinScriptUIProductionE2ETests: XCTestCase {
     }
 
     private func closeImportSurfaces() {
-        let scriptPackageNav = app.navigationBars["Script Package"].firstMatch
-        if scriptPackageNav.exists {
+        for _ in 0..<5 {
+            if !app.navigationBars["Script Package"].exists && !app.navigationBars["Add Apps"].exists {
+                return
+            }
             let done = app.buttons["Done"].firstMatch
-            if done.exists && done.isHittable { done.tap() }
-            _ = waitUntil(timeout: 5) { !scriptPackageNav.exists }
+            if done.waitForExistence(timeout: 2) && done.isHittable {
+                done.tap()
+            } else {
+                let back = app.navigationBars.buttons.element(boundBy: 0)
+                if back.waitForExistence(timeout: 1) && back.isHittable {
+                    back.tap()
+                }
+            }
+            if waitUntil(timeout: 3, condition: {
+                !app.navigationBars["Script Package"].exists && !app.navigationBars["Add Apps"].exists
+            }) {
+                return
+            }
         }
-        let addAppsNav = app.navigationBars["Add Apps"].firstMatch
-        if addAppsNav.waitForExistence(timeout: 3) || addAppsNav.exists {
-            let done = app.buttons["Done"].firstMatch
-            if done.waitForExistence(timeout: 3) && done.isHittable { done.tap() }
-            _ = waitUntil(timeout: 5) { !addAppsNav.exists }
-        }
+        XCTAssertTrue(
+            waitUntil(timeout: 5) {
+                !app.navigationBars["Script Package"].exists && !app.navigationBars["Add Apps"].exists
+            },
+            "Import surfaces failed to dismiss"
+        )
     }
 
     @discardableResult

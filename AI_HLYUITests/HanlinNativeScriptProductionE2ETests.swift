@@ -223,9 +223,10 @@ final class HanlinNativeScriptProductionE2ETests: XCTestCase {
         if plusButton.exists { plusButton.tap() }
         if minusButton.exists { minusButton.tap() }
 
-        let backButton = app.navigationBars.buttons.element(boundBy: 0)
-        if backButton.exists {
-            backButton.tap()
+        let innerBackPredicate = NSPredicate(format: "identifier != 'hanlin-script-app-close' AND (label CONTAINS[c] 'back' OR label CONTAINS 'לימוד יומי' OR label CONTAINS 'ארון הספרים' OR label CONTAINS 'חיפוש')")
+        let innerBack = app.navigationBars.buttons.matching(innerBackPredicate).firstMatch
+        if innerBack.waitForExistence(timeout: 2) && innerBack.isHittable {
+            innerBack.tap()
         }
 
         // 2. Library Tab (ארון הספרים)
@@ -237,7 +238,9 @@ final class HanlinNativeScriptProductionE2ETests: XCTestCase {
         genesisChip.tap()
         XCTAssertTrue(hebrewMode.waitForExistence(timeout: 30), "Reader failed to load Genesis 1 from library")
         capture(name: "Sefaria-Library-Genesis-Loaded")
-        if backButton.exists { backButton.tap() }
+        if innerBack.waitForExistence(timeout: 2) && innerBack.isHittable {
+            innerBack.tap()
+        }
 
         // 4. Search Tab (חיפוש)
         let searchTab = try XCTUnwrap(waitForTab(named: "חיפוש", timeout: 15), "Search Tab was missing")
@@ -247,7 +250,9 @@ final class HanlinNativeScriptProductionE2ETests: XCTestCase {
         if quickChip.waitForExistence(timeout: 10) {
             quickChip.tap()
             capture(name: "Sefaria-Search-Executed")
-            if backButton.exists { backButton.tap() }
+            if innerBack.waitForExistence(timeout: 2) && innerBack.isHittable {
+                innerBack.tap()
+            }
         }
 
         // 5. Lexicon Tab (מילון)
