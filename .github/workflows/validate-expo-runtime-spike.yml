@@ -1,0 +1,162 @@
+name: Validate Expo Runtime Spike
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - 'codex/expo-swiftui-runtime-spike'
+
+permissions:
+  contents: read
+
+jobs:
+  validate-expo-runtime:
+    name: Compile and test Hanlin Expo runtime on macOS
+    runs-on: macos-26
+    timeout-minutes: 60
+
+    env:
+      PROJECT_PATH: AI_HLY.xcodeproj
+      SCHEME_NAME: AI_Hanlin
+      DERIVED_DATA_PATH: build/DerivedData
+      LOG_DIR: build-logs
+      SIMULATOR_DEVICE_NAME: 'iPad Pro 13-inch (M4)'
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Select stable Xcode 26
+        id: toolchain
+        shell: bash
+        run: |
+          set -euxo pipefail
+          mkdir -p "$LOG_DIR"
+          selected_xcode="$(find /Applications -maxdepth 1 -type d -name 'Xcode_26*.app' -print \
+            | grep -E '/Xcode_26([._][0-9]+)*\.app$' \
+            | sort -V \
+            | tail -1)"
+          test -n "$selected_xcode"
+          sudo xcode-select -s "$selected_xcode/Contents/Developer"
+          xcodebuild -version | tee "$LOG_DIR/01-xcode-version.log"
+          swift --version | tee -a "$LOG_DIR/01-xcode-version.log"
+          xcrun --sdk iphonesimulator --show-sdk-version | tee "$LOG_DIR/01-sdk-version.log"
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.17.0
+
+      - name: Prepare Expo iOS dependency closure & probe bundles
+        shell: bash
+        run: |
+          set -euxo pipefail
+          cd Scripts/Expo
+          npm install --no-audit --no-fund
+          node prepare-ios-dependencies.mjs
+          node build-probe.mjs
+          cd ../..
+
+      - name: Prepare NativeScript dependency closure for regression testing
+        shell: bash
+        run: |
+          set -euxo pipefail
+          npm ci --ignore-scripts --no-audit --no-fund --prefix Scripts/NativeScript
+          npm run prepare:ios-dependencies --prefix Scripts/NativeScript
+          node Scripts/NativeScript/prepare-fixture.mjs
+          npm run prepare:production-package --prefix Scripts/NativeScript
+          (
+            cd build/NativeScriptE2E/swiftui-package
+            zip -qry ../HanlinNativeScriptSwiftUI.hanlinNativeScript *
+          )
+          (
+            cd build/NativeScriptE2E/core-package
+            zip -qry ../HanlinNativeScriptCore.hanlinNativeScript *
+          )
+
+      - name: Verify HanlinExpoRuntime package resolution
+        shell: bash
+        run: |
+          set -euxo pipefail
+          swift package --package-path Packages/HanlinExpoRuntime resolve
+
+      - name: Build Hanlin application for testing
+        shell: bash
+        run: |
+          set -euxo pipefail
+          xcodebuild build-for-testing \
+            -project "$PROJECT_PATH" \
+            -scheme "$SCHEME_NAME" \
+            -destination "platform=iOS Simulator,name=$SIMULATOR_DEVICE_NAME" \
+            -derivedDataPath "$DERIVED_DATA_PATH" \
+            | tee "$LOG_DIR/02-build-for-testing.log"
+
+      - name: Stage test fixtures into simulator
+        id: stage-fixtures
+        shell: bash
+        run: |
+          set -euxo pipefail
+          SIM_UDID="$(xcrun simctl list devices available --json | node -e '
+            const d = JSON.parse(require("fs").readFileSync(0, "utf8")).devices;
+            for (const runtime of Object.keys(d)) {
+              if (runtime.includes("iOS-26") || runtime.includes("iOS_26")) {
+                const dev = d[runtime].find(x => x.name.includes("iPad Pro 13-inch") && x.isAvailable);
+                if (dev) { console.log(dev.udid); process.exit(0); }
+              }
+            }
+            process.exit(1);
+          ')"
+          echo "Booting simulator $SIM_UDID..."
+          xcrun simctl boot "$SIM_UDID" || true
+          xcrun simctl bootstatus "$SIM_UDID" -b
+
+          # Find app bundle
+          APP_BUNDLE="$(find "$DERIVED_DATA_PATH/Build/Products" -name 'AI_Hanlin.app' | head -1)"
+          test -d "$APP_BUNDLE"
+
+          # Install app and get data container
+          xcrun simctl install "$SIM_UDID" "$APP_BUNDLE"
+          APP_DATA="$(xcrun simctl get_app_container "$SIM_UDID" com.davidpovarsky.AI-HLY data)"
+          mkdir -p "$APP_DATA/Documents"
+
+          # Copy probe packages
+          cp AI_HLYUITests/Fixtures/*.hanlinExpo "$APP_DATA/Documents/"
+          cp build/NativeScriptE2E/*.hanlinNativeScript "$APP_DATA/Documents/" 2>/dev/null || true
+
+          ls -la "$APP_DATA/Documents"
+          echo "sim-udid=$SIM_UDID" >> "$GITHUB_OUTPUT"
+
+      - name: Run Expo SwiftUI Production E2E Tests
+        shell: bash
+        run: |
+          set -euxo pipefail
+          xcodebuild test-without-building \
+            -project "$PROJECT_PATH" \
+            -scheme "$SCHEME_NAME" \
+            -destination "id=${{ steps.stage-fixtures.outputs.sim-udid }}" \
+            -derivedDataPath "$DERIVED_DATA_PATH" \
+            -only-testing:AI_HLYUITests/HanlinExpoProductionE2ETests \
+            -resultBundlePath "build/ExpoE2EResults.xcresult" \
+            | tee "$LOG_DIR/03-expo-e2e-tests.log"
+
+      - name: Run NativeScript Regression Tests
+        shell: bash
+        run: |
+          set -euxo pipefail
+          xcodebuild test-without-building \
+            -project "$PROJECT_PATH" \
+            -scheme "$SCHEME_NAME" \
+            -destination "id=${{ steps.stage-fixtures.outputs.sim-udid }}" \
+            -derivedDataPath "$DERIVED_DATA_PATH" \
+            -only-testing:AI_HLYUITests/HanlinNativeScriptProductionE2ETests/testProductionSwiftUIInteractionCoreRegressionAndLifecycle \
+            -resultBundlePath "build/NativeScriptRegressionResults.xcresult" \
+            | tee "$LOG_DIR/04-nativescript-regression.log"
+
+      - name: Upload Test Results and Logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: expo-runtime-spike-results
+          path: |
+            build-logs/
+            build/*.xcresult
