@@ -70,9 +70,16 @@ final class HanlinMiniAppHost {
     func refresh(installedPackages: [HanlinStoredPackageSnapshot]) async {
         do {
             let nativeScriptPackages = installedPackages.filter { package in
-                package.enabled && package.entrypoints.contains {
-                    $0.runtimeProfile == .hanlinNativeScript
+                guard package.enabled else { return false }
+                if package.entrypoints.contains(where: { $0.runtimeProfile == .hanlinNativeScript }) {
+                    return true
                 }
+                if let rt = package.manifest?.unknownFields["hanlinRuntime"],
+                   case let .string(rtStr) = rt,
+                   rtStr == HanlinRuntimeProfile.hanlinNativeScript.rawValue {
+                    return true
+                }
+                return false
             }
             let discovery = HanlinCompositeMiniAppDiscovery(providers: [
                 BuiltinMiniAppDiscovery(),

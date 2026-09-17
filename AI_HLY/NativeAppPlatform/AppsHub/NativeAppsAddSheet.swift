@@ -21,7 +21,7 @@ struct NativeAppsAddSheet: View {
                     } label: {
                         Label("Import NativeScript Package", systemImage: "doc.badge.plus")
                     }
-                    .accessibilityIdentifier("hanlin-import-nativescript-package")
+                    .accessibilityIdentifier("hanlin-import-script-package")
                 }
 
                 let hidden = items.filter { host.isHidden($0.id) }

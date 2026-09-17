@@ -127,7 +127,8 @@ struct NativeAppsHubView: View {
     }
 
     private func miniAppCard(_ item: HanlinMiniAppCatalogItem) -> some View {
-        ZStack(alignment: .topLeading) {
+        let appName = item.descriptor.name.preferredValue(forLocale: Locale.current.identifier)
+        return ZStack(alignment: .topLeading) {
             Button { launch(item) } label: {
                 MiniAppCardView(descriptor: item.descriptor, isEditing: isEditingApps)
             }
@@ -135,6 +136,7 @@ struct NativeAppsHubView: View {
             .disabled(isEditingApps)
             .contextMenu { commonActions(for: item) }
             .accessibilityIdentifier("hanlin-miniapp-\(item.id.rawValue)")
+            .accessibilityLabel(appName)
 
             if isEditingApps {
                 Button { miniAppHost.setHidden(true, appID: item.id) } label: {
