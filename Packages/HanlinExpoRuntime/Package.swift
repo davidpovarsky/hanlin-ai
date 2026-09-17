@@ -16,9 +16,11 @@ let package = Package(
         .target(
             name: "HanlinExpoRuntime",
             dependencies: [
+                "RCTDeprecation",
                 "React",
                 "ReactNativeDependencies",
                 "hermesvm",
+                "ExpoModulesJSI",
                 "ExpoModulesCore",
                 "ExpoModulesWorklets",
                 "ExpoUI",
@@ -30,9 +32,15 @@ let package = Package(
                 .linkedFramework("SwiftUI")
             ]
         ),
+        .target(
+            name: "RCTDeprecation",
+            path: "Sources/RCTDeprecation",
+            publicHeadersPath: "include"
+        ),
         .binaryTarget(name: "React", path: "Artifacts/React.xcframework"),
         .binaryTarget(name: "ReactNativeDependencies", path: "Artifacts/ReactNativeDependencies.xcframework"),
         .binaryTarget(name: "hermesvm", path: "Artifacts/hermesvm.xcframework"),
+        .binaryTarget(name: "ExpoModulesJSI", path: "Artifacts/ExpoModulesJSI.xcframework"),
         .binaryTarget(name: "ExpoModulesCore", path: "Artifacts/ExpoModulesCore.xcframework"),
         .binaryTarget(name: "ExpoModulesWorklets", path: "Artifacts/ExpoModulesWorklets.xcframework"),
         .binaryTarget(name: "ExpoUI", path: "Artifacts/ExpoUI.xcframework"),

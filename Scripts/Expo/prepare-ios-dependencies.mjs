@@ -72,7 +72,7 @@ async function prepare() {
         execSync(`tar -zxf "${downloadedPath}" -C "${tempDir}" "${item.subpath}"`);
         const extractedSub = resolve(tempDir, item.subpath);
         execSync(`tar -zxf "${extractedSub}" -C "${artifactsRoot}"`);
-      } else if (item.source === 'maven') {
+      } else if (item.source === 'npm-extract' || item.source === 'maven') {
         const unpackDir = resolve(tempDir, `unpack-${item.name}`);
         await mkdir(unpackDir, { recursive: true });
         execSync(`tar -zxf "${downloadedPath}" -C "${unpackDir}"`);

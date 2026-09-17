@@ -1,5 +1,4 @@
 import Foundation
-import Expo
 import ExpoBrownfield
 import ExpoUI
 import React

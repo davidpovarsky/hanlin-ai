@@ -21,6 +21,16 @@
       "target": "Packages/HanlinExpoRuntime/Artifacts/ExpoUI.xcframework"
     },
     {
+      "name": "ExpoModulesJSI",
+      "source": "npm-extract",
+      "package": "expo-modules-jsi",
+      "version": "58.0.2",
+      "tarball": "https://registry.npmjs.org/expo-modules-jsi/-/expo-modules-jsi-58.0.2.tgz",
+      "sha256": "d4967c120c943d234712713947b0f96ff6abbc3a3118c7c996ee7f16d9c20393",
+      "subpath": "package/apple/Products/ExpoModulesJSI.xcframework",
+      "target": "Packages/HanlinExpoRuntime/Artifacts/ExpoModulesJSI.xcframework"
+    },
+    {
       "name": "ExpoModulesCore",
       "source": "npm",
       "package": "expo-modules-core",
