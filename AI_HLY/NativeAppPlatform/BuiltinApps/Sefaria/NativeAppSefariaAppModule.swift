@@ -1,4 +1,5 @@
 import HanlinPlatformContracts
+import HanlinSefariaMiniApp
 import SwiftUI
 
 @MainActor

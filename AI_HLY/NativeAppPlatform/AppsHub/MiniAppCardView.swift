@@ -1,5 +1,8 @@
 import HanlinPlatformContracts
 import SwiftUI
+#if canImport(UIKit)
+import UIKit
+#endif
 
 /// The single Apps Hub card for every active Mini App engine.
 ///
@@ -17,10 +20,32 @@ struct MiniAppCardView: View {
         descriptor.summary.preferredValue(forLocale: Locale.current.identifier)
     }
 
-    private var systemImage: String {
+    @ViewBuilder
+    private var iconView: some View {
         switch descriptor.icon {
-        case let .systemSymbol(name), let .asset(name): name
-        case .packageResource: "app.dashed"
+        case let .systemSymbol(name):
+            Image(systemName: name)
+                .font(.system(size: 27, weight: .semibold))
+        case let .asset(name):
+            Image(name)
+                .resizable()
+                .scaledToFit()
+                .frame(width: 27, height: 27)
+        case let .packageResource(path):
+            #if canImport(UIKit)
+            if let uiImage = UIImage(contentsOfFile: path) {
+                Image(uiImage: uiImage)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 27, height: 27)
+            } else {
+                Image(systemName: "app.dashed")
+                    .font(.system(size: 27, weight: .semibold))
+            }
+            #else
+            Image(systemName: "app.dashed")
+                .font(.system(size: 27, weight: .semibold))
+            #endif
         }
     }
 
@@ -29,7 +54,7 @@ struct MiniAppCardView: View {
     }
 
     private var isBeta: Bool {
-        !descriptor.distribution.allowedModes.contains(.appStoreRestricted)
+        descriptor.appearance.isBeta || !descriptor.distribution.allowedModes.contains(.appStoreRestricted)
     }
 
     var body: some View {
@@ -50,8 +75,7 @@ struct MiniAppCardView: View {
                             .background(.white.opacity(0.2), in: Capsule())
                     }
                     Spacer()
-                    Image(systemName: systemImage)
-                        .font(.system(size: 27, weight: .semibold))
+                    iconView
                 }
 
                 Spacer(minLength: 8)

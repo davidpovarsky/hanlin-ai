@@ -1,8 +1,12 @@
 import Foundation
 import HanlinMiniAppCore
 import HanlinPlatformContracts
+#if canImport(Observation)
 import Observation
+#endif
+#if canImport(SwiftUI)
 import SwiftUI
+#endif
 
 // MARK: - Registration
 
@@ -47,6 +51,32 @@ public struct SwiftParityMiniAppRegistration: HanlinStaticMiniAppRegistration, S
     }
 }
 
+// MARK: - Provider
+
+public struct SwiftParityMiniAppProvider: HanlinCompiledMiniAppProvider, Sendable {
+    public let registration: any HanlinStaticMiniAppRegistration
+    public var appID: HanlinAppID { registration.appID }
+    public var descriptor: HanlinAppDescriptor { (try? registration.appDescriptor())! }
+
+    public init(registration: SwiftParityMiniAppRegistration = SwiftParityMiniAppRegistration()) {
+        self.registration = registration
+    }
+
+    #if canImport(SwiftUI)
+    @MainActor
+    public func makeRootView(context: HanlinMiniAppHostContext) -> AnyView {
+        AnyView(NavigationStack {
+            SwiftParityMiniAppView(
+                storage: context.storage,
+                requestBroker: context.requestBroker,
+                network: context.network
+            )
+        })
+    }
+    #endif
+}
+
+#if canImport(SwiftUI)
 // MARK: - View
 
 public struct SwiftParityMiniAppView: View {
@@ -199,3 +229,4 @@ private struct PersistedState: Codable, Sendable {
     let counter: Int
     let name: String
 }
+#endif

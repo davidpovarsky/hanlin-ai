@@ -19,6 +19,9 @@
 		A10000000000000000000070 /* HanlinPlatformContracts in Frameworks */ = {isa = PBXBuildFile; productRef = A10000000000000000000015 /* HanlinPlatformContracts */; };
 		F70000000000000000000001 /* HanlinMiniAppCore in Frameworks */ = {isa = PBXBuildFile; productRef = F70000000000000000000011 /* HanlinMiniAppCore */; };
 		F70000000000000000000002 /* HanlinParityMiniApp in Frameworks */ = {isa = PBXBuildFile; productRef = F70000000000000000000012 /* HanlinParityMiniApp */; };
+		F70000000000000000000022 /* HanlinSefariaMiniApp in Frameworks */ = {isa = PBXBuildFile; productRef = F70000000000000000000021 /* HanlinSefariaMiniApp */; };
+		F70000000000000000000032 /* HanlinWikipediaMiniApp in Frameworks */ = {isa = PBXBuildFile; productRef = F70000000000000000000031 /* HanlinWikipediaMiniApp */; };
+		F70000000000000000000042 /* HanlinTextStudioMiniApp in Frameworks */ = {isa = PBXBuildFile; productRef = F70000000000000000000041 /* HanlinTextStudioMiniApp */; };
 		A10000000000000000000071 /* HanlinQuickJS in Frameworks */ = {isa = PBXBuildFile; productRef = A10000000000000000000016 /* HanlinQuickJS */; };
 		A10000000000000000000072 /* HanlinScriptContracts in Frameworks */ = {isa = PBXBuildFile; productRef = C10000000000000000000017 /* HanlinScriptContracts */; };
 		A10000000000000000000073 /* HanlinScriptCompiler in Frameworks */ = {isa = PBXBuildFile; productRef = C10000000000000000000018 /* HanlinScriptCompiler */; };
@@ -329,6 +332,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				F70000000000000000000002 /* HanlinParityMiniApp in Frameworks */,
+				F70000000000000000000022 /* HanlinSefariaMiniApp in Frameworks */,
+				F70000000000000000000032 /* HanlinWikipediaMiniApp in Frameworks */,
+				F70000000000000000000042 /* HanlinTextStudioMiniApp in Frameworks */,
 				F70000000000000000000001 /* HanlinMiniAppCore in Frameworks */,
 				A10000000000000000000079 /* HanlinNativeScriptRuntime in Frameworks */,
 				A10000000000000000000078 /* HanlinScriptDeviceServices in Frameworks */,
@@ -486,6 +492,9 @@
 			name = AI_Hanlin;
 			packageProductDependencies = (
 				F70000000000000000000012 /* HanlinParityMiniApp */,
+				F70000000000000000000021 /* HanlinSefariaMiniApp */,
+				F70000000000000000000031 /* HanlinWikipediaMiniApp */,
+				F70000000000000000000041 /* HanlinTextStudioMiniApp */,
 				F70000000000000000000011 /* HanlinMiniAppCore */,
 				C10000000000000000000025 /* HanlinNativeScriptRuntime */,
 				C10000000000000000000024 /* HanlinScriptDeviceServices */,
@@ -699,6 +708,9 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				F70000000000000000000010 /* XCLocalSwiftPackageReference "HanlinParityMiniApp" */,
+				F70000000000000000000020 /* XCLocalSwiftPackageReference "HanlinSefariaMiniApp" */,
+				F70000000000000000000030 /* XCLocalSwiftPackageReference "HanlinWikipediaMiniApp" */,
+				F70000000000000000000040 /* XCLocalSwiftPackageReference "HanlinTextStudioMiniApp" */,
 				A10000000000000000000046 /* XCLocalSwiftPackageReference "HanlinNativeScriptRuntime" */,
 				A10000000000000000000045 /* XCLocalSwiftPackageReference "HanlinQuickJS" */,
 				A10000000000000000000044 /* XCLocalSwiftPackageReference "HanlinPlatform" */,
@@ -1592,6 +1604,18 @@
 			isa = XCLocalSwiftPackageReference;
 			relativePath = Packages/HanlinParityMiniApp;
 		};
+		F70000000000000000000020 /* XCLocalSwiftPackageReference "HanlinSefariaMiniApp" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Packages/HanlinSefariaMiniApp;
+		};
+		F70000000000000000000030 /* XCLocalSwiftPackageReference "HanlinWikipediaMiniApp" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Packages/HanlinWikipediaMiniApp;
+		};
+		F70000000000000000000040 /* XCLocalSwiftPackageReference "HanlinTextStudioMiniApp" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Packages/HanlinTextStudioMiniApp;
+		};
 		A10000000000000000000045 /* XCLocalSwiftPackageReference "HanlinQuickJS" */ = {
 			isa = XCLocalSwiftPackageReference;
 			relativePath = Packages/HanlinQuickJS;
@@ -1703,6 +1727,21 @@
 			isa = XCSwiftPackageProductDependency;
 			package = F70000000000000000000010 /* XCLocalSwiftPackageReference "HanlinParityMiniApp" */;
 			productName = HanlinParityMiniApp;
+		};
+		F70000000000000000000021 /* HanlinSefariaMiniApp */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F70000000000000000000020 /* XCLocalSwiftPackageReference "HanlinSefariaMiniApp" */;
+			productName = HanlinSefariaMiniApp;
+		};
+		F70000000000000000000031 /* HanlinWikipediaMiniApp */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F70000000000000000000030 /* XCLocalSwiftPackageReference "HanlinWikipediaMiniApp" */;
+			productName = HanlinWikipediaMiniApp;
+		};
+		F70000000000000000000041 /* HanlinTextStudioMiniApp */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F70000000000000000000040 /* XCLocalSwiftPackageReference "HanlinTextStudioMiniApp" */;
+			productName = HanlinTextStudioMiniApp;
 		};
 		C10000000000000000000021 /* HanlinScriptExtensions */ = {
 			isa = XCSwiftPackageProductDependency;

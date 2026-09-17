@@ -100,29 +100,21 @@ final class HanlinMiniAppHost {
         guard plan.engine == .swift else {
             throw HanlinMiniAppCatalogError.unsupportedImplementation(item.id)
         }
-        if item.id == SwiftParityMiniAppRegistration().appID {
-            let store = dataStore
-            let broker = requestBroker
-            return SwiftDestination(
-                appID: item.id,
-                view: AnyView(NavigationStack {
-                    SwiftParityMiniAppView(
-                        storage: HanlinMiniAppStorageContext(appID: item.id, store: store),
-                        requestBroker: broker,
-                        network: Self.fetchStatus
-                    )
-                })
-            )
-        }
-        guard let module = NativeAppRegistry.shared.module(id: item.id.rawValue) else {
+        BuiltinCanonicalRegistrations.ensureRegistered()
+        guard let provider = HanlinCompiledMiniAppRegistry.shared.provider(for: item.id) else {
             throw HanlinMiniAppCatalogError.unsupportedImplementation(item.id)
         }
+        let store = dataStore
+        let broker = requestBroker
+        let context = HanlinMiniAppHostContext(
+            appID: item.id,
+            storage: HanlinMiniAppStorageContext(appID: item.id, store: store),
+            requestBroker: broker,
+            network: Self.fetchStatus
+        )
         return SwiftDestination(
             appID: item.id,
-            view: AnyView(NativeAppSessionContainerView(request: NativeAppRouter().launchRequest(
-                appID: module.manifest.id,
-                presentationStyle: .fullScreen
-            )))
+            view: provider.makeRootView(context: context)
         )
     }
 

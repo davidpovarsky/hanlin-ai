@@ -1,4 +1,5 @@
 import HanlinPlatformContracts
+import HanlinTextStudioMiniApp
 import SwiftUI
 
 @MainActor
