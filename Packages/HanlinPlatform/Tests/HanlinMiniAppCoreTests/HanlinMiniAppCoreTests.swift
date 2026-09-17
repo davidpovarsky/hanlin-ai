@@ -174,20 +174,20 @@ struct HanlinMiniAppCoreTests {
             ),
             entryPoints: [
                 .init(kind: .app, handler: "MainView", allowedContexts: [.mainApplication], runtimeProfile: nil),
-                .init(kind: .backgroundTask, handler: "task.mjs", allowedContexts: [.background], runtimeProfile: .hanlinNativeScript)
+                .init(kind: .backgroundTask, handler: "task.mjs", allowedContexts: [.backgroundTask], runtimeProfile: .hanlinNativeScript)
             ]
         )
 
         // Foreground engine is Swift because .app has runtimeProfile: nil and implementation is .hybrid
-        #expect(HanlinCanonicalMiniAppCatalog.foregroundEngine(for: descriptor) == .swift)
+        #expect(HanlinCanonicalMiniAppCatalog.foregroundEngine(for: descriptor) == HanlinMiniAppEngine.swift)
 
         // Launch plan for .app is Swift
         let appPlan = try HanlinMiniAppLaunchPlan(descriptor: descriptor, entryPointKind: .app)
-        #expect(appPlan.engine == .swift)
+        #expect(appPlan.engine == HanlinMiniAppEngine.swift)
 
         // Launch plan for .backgroundTask is NativeScript
         let bgPlan = try HanlinMiniAppLaunchPlan(descriptor: descriptor, entryPointKind: .backgroundTask)
-        #expect(bgPlan.engine == .nativeScript)
-        #expect(bgPlan.entryPoint.runtimeProfile == .hanlinNativeScript)
+        #expect(bgPlan.engine == HanlinMiniAppEngine.nativeScript)
+        #expect(bgPlan.entryPoint.runtimeProfile == HanlinRuntimeProfile.hanlinNativeScript)
     }
 }

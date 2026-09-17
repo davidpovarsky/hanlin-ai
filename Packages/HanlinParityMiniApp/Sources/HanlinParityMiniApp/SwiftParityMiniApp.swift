@@ -125,10 +125,10 @@ public struct SwiftParityMiniAppView: View {
 @MainActor
 @Observable
 private final class Model {
-    static let appID = try! HanlinAppID(validating: "hanlin.demo.swift-parity")
-    private static let scriptID = try! HanlinAppID(validating: "hanlin.demo.script-parity")
-    private static let action = try! HanlinActionID(validating: "share.value")
-    private static let capability = try! HanlinCapabilityID(validating: "inter-app.share")
+    nonisolated static let appID = try! HanlinAppID(validating: "hanlin.demo.swift-parity")
+    nonisolated static let scriptID = try! HanlinAppID(validating: "hanlin.demo.script-parity")
+    nonisolated static let action = try! HanlinActionID(validating: "share.value")
+    nonisolated static let capability = try! HanlinCapabilityID(validating: "inter-app.share")
 
     var counter = 0
     var name = "Hanlin"
