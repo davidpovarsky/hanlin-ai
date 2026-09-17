@@ -47,6 +47,7 @@ enum BuiltinCanonicalRegistrations {
     static var all: [any HanlinStaticMiniAppRegistration] {
         ensureRegistered()
         return HanlinCompiledMiniAppRegistry.shared.allProviders()
+            .filter { $0.appID.rawValue.hasPrefix("nativeapp.") }
             .map(\.registration)
     }
 
@@ -54,6 +55,7 @@ enum BuiltinCanonicalRegistrations {
         for appID: HanlinAppID
     ) -> (any HanlinStaticMiniAppRegistration)? {
         ensureRegistered()
+        guard appID.rawValue.hasPrefix("nativeapp.") else { return nil }
         return HanlinCompiledMiniAppRegistry.shared.provider(for: appID)?.registration
     }
 }

@@ -70,7 +70,6 @@ final class HanlinMiniAppHost {
     func refresh(installedPackages: [HanlinStoredPackageSnapshot]) async {
         do {
             let nativeScriptPackages = installedPackages.filter { package in
-                guard package.enabled else { return false }
                 if package.entrypoints.contains(where: { $0.runtimeProfile == .hanlinNativeScript }) {
                     return true
                 }
@@ -138,7 +137,8 @@ final class HanlinMiniAppHost {
             throw HanlinMiniAppCatalogError.unsupportedImplementation(item.id)
         }
         guard case let .nativeScript(packageID) = item.descriptor.implementation,
-              let package = platform.installedPackages.first(where: { $0.record.packageID == packageID }) else {
+              let package = platform.installedPackages.first(where: { $0.record.packageID == packageID }),
+              package.enabled else {
             throw HanlinMiniAppCatalogError.unsupportedImplementation(item.id)
         }
         await platform.launch(package.record.installedPackageID)

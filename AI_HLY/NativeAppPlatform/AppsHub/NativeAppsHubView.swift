@@ -49,7 +49,7 @@ struct NativeAppsHubView: View {
             }
             .overlay {
                 let canonicalAppIDs = Set(miniAppHost.items.map(\.id))
-                let legacyPackagesCount = scriptingPlatform.installedPackages.filter { $0.enabled && !canonicalAppIDs.contains($0.appID) }.count
+                let legacyPackagesCount = scriptingPlatform.installedPackages.filter { !canonicalAppIDs.contains($0.appID) }.count
                 if !searchText.isEmpty && filteredItems.isEmpty && legacyPackagesCount == 0 {
                     ContentUnavailableView.search(text: searchText)
                 }
@@ -148,7 +148,7 @@ struct NativeAppsHubView: View {
     private func scriptingPackagesSection() -> some View {
         let canonicalAppIDs = Set(miniAppHost.items.map(\.id))
         let remainingPackages = scriptingPlatform.installedPackages.filter { package in
-            package.enabled && !canonicalAppIDs.contains(package.appID)
+            !canonicalAppIDs.contains(package.appID)
         }
         let filtered = remainingPackages.filter { package in
             let query = searchText.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -177,6 +177,7 @@ struct NativeAppsHubView: View {
     private func scriptingPackageCard(_ package: HanlinStoredPackageSnapshot) -> some View {
         let name = package.manifest?.name ?? package.record.packageID.rawValue
         return Button {
+            guard package.enabled else { return }
             Task { await scriptingPlatform.launch(package.record.installedPackageID) }
         } label: {
             ScriptingPackageCardView(package: package)
@@ -187,10 +188,12 @@ struct NativeAppsHubView: View {
         .disabled(isEditingApps)
         .contextMenu {
             Button {
+                guard package.enabled else { return }
                 Task { await scriptingPlatform.launch(package.record.installedPackageID) }
             } label: {
                 Label("Open", systemImage: "play.fill")
             }
+            .disabled(!package.enabled)
             Button {
                 scriptingPackageID = package.record.installedPackageID
             } label: {

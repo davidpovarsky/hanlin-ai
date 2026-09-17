@@ -56,7 +56,8 @@ struct CanonicalMiniAppIntegrationTests {
     @MainActor
     @Test("Canonical catalog discovers Swift built-in parity app and groups engines accurately")
     func catalogEngineGrouping() async throws {
-        let discovery = BuiltinMiniAppDiscovery()
+        BuiltinCanonicalRegistrations.ensureRegistered()
+        let discovery = HanlinCompiledMiniAppDiscovery()
         let catalog = HanlinCanonicalMiniAppCatalog(discovery: discovery)
         let items = try await catalog.items()
 

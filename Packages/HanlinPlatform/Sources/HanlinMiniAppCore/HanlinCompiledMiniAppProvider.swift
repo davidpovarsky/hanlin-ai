@@ -90,7 +90,7 @@ public struct HanlinCompiledMiniAppDiscovery: HanlinMiniAppDiscovery, Sendable {
     public func catalogSnapshot(
         revision: HanlinCatalogRevision = .init(1)
     ) async throws -> HanlinCatalogSnapshot {
-        let descriptors = try registry.allProviders().map { try $0.descriptor }
+        let descriptors = registry.allProviders().map(\.descriptor)
         return HanlinCatalogSnapshot(
             revision: revision,
             generatedAt: .now,
