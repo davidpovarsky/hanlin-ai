@@ -35,7 +35,8 @@ async function buildVariant(variant) {
   const targetZip = resolve(probeSrcRoot, `ExpoSwiftUIProbe${variant}.hanlinExpo`);
   await rm(targetZip, { force: true });
 
-  const pyCmd = `python -c "import zipfile, os, sys; zf = zipfile.ZipFile(sys.argv[1], 'w', zipfile.ZIP_DEFLATED); [zf.write(os.path.join(r, f), os.path.relpath(os.path.join(r, f), sys.argv[2]).replace('\\\\\\\\', '/')) for r, d, files in os.walk(sys.argv[2]) for f in files]; zf.close()" "${targetZip}" "${buildDir}"`;
+  const pythonBin = process.platform === 'win32' ? 'python' : 'python3';
+  const pyCmd = `${pythonBin} -c "import zipfile, os, sys; zf = zipfile.ZipFile(sys.argv[1], 'w', zipfile.ZIP_DEFLATED); [zf.write(os.path.join(r, f), os.path.relpath(os.path.join(r, f), sys.argv[2]).replace('\\\\\\\\', '/')) for r, d, files in os.walk(sys.argv[2]) for f in files]; zf.close()" "${targetZip}" "${buildDir}"`;
   execSync(pyCmd);
 
   console.log(`[HanlinExpo] Created probe package: ${targetZip}`);
@@ -61,7 +62,8 @@ async function buildMalformed() {
 
   const targetZip = resolve(probeSrcRoot, 'ExpoSwiftUIMalformed.hanlinExpo');
   await rm(targetZip, { force: true });
-  const pyCmd = `python -c "import zipfile, os, sys; zf = zipfile.ZipFile(sys.argv[1], 'w', zipfile.ZIP_DEFLATED); [zf.write(os.path.join(r, f), os.path.relpath(os.path.join(r, f), sys.argv[2]).replace('\\\\\\\\', '/')) for r, d, files in os.walk(sys.argv[2]) for f in files]; zf.close()" "${targetZip}" "${buildDir}"`;
+  const pythonBin = process.platform === 'win32' ? 'python' : 'python3';
+  const pyCmd = `${pythonBin} -c "import zipfile, os, sys; zf = zipfile.ZipFile(sys.argv[1], 'w', zipfile.ZIP_DEFLATED); [zf.write(os.path.join(r, f), os.path.relpath(os.path.join(r, f), sys.argv[2]).replace('\\\\\\\\', '/')) for r, d, files in os.walk(sys.argv[2]) for f in files]; zf.close()" "${targetZip}" "${buildDir}"`;
   execSync(pyCmd);
   await cp(targetZip, resolve(uiTestFixturesRoot, 'ExpoSwiftUIMalformed.hanlinExpo'));
   console.log(`[HanlinExpo] Staged malformed probe package: ${targetZip}`);
