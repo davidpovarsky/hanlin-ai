@@ -263,8 +263,7 @@ struct CanonicalMiniAppIntegrationTests {
         #expect(resolvedRuntimeA == .hanlinNativeScript)
         #expect(resolvedRuntimeB == .scriptingJSC)
 
-        let registration = snapshot.makeMiniAppRegistration()
-        let desc = try registration.appDescriptor()
+        let desc = try snapshot.appDescriptor()
         #expect(desc.entryPoints[0].runtimeProfile == HanlinRuntimeProfile.hanlinNativeScript)
         #expect(desc.entryPoints[1].runtimeProfile == HanlinRuntimeProfile.scriptingJSC)
     }
