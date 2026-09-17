@@ -496,9 +496,7 @@ final class HanlinNativeScriptProductionE2ETests: XCTestCase {
                     inspecting.exists || install.exists || errorText.exists
                 }
             }
-            if started || install.waitForExistence(timeout: 5) || errorText.exists {
-                return
-            }
+            return
         }
 
         let importer = app.buttons["hanlin-file-importer"].firstMatch
@@ -562,9 +560,6 @@ final class HanlinNativeScriptProductionE2ETests: XCTestCase {
 
     private func closeImportSurfaces() {
         for _ in 1...5 {
-            if appsAddButton.exists && !app.navigationBars["Script Package"].exists && !app.navigationBars["Add Apps"].exists {
-                break
-            }
             let doneButtons = [
                 app.navigationBars["Script Package"].buttons["Done"].firstMatch,
                 app.navigationBars["Add Apps"].buttons["Done"].firstMatch,
