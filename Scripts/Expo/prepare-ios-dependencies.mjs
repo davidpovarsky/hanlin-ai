@@ -107,6 +107,23 @@ async function prepare() {
           await cp(resolve(rnHeadersRoot, 'hermes'), hermesHeaders, { recursive: true });
         }
 
+        // Set up cxxreact headers (provides cxxreact/ReactNativeVersion.h)
+        if (existsSync(resolve(rnHeadersRoot, 'cxxreact'))) {
+          await cp(resolve(rnHeadersRoot, 'cxxreact'), resolve(publicHeaders, 'cxxreact'), { recursive: true });
+        }
+        if (existsSync(resolve(rnHeadersRoot, 'ReactCommon'))) {
+          await cp(resolve(rnHeadersRoot, 'ReactCommon'), resolve(publicHeaders, 'ReactCommon'), { recursive: true });
+        }
+        if (existsSync(resolve(rnHeadersRoot, 'jsinspector-modern'))) {
+          await cp(resolve(rnHeadersRoot, 'jsinspector-modern'), resolve(publicHeaders, 'jsinspector-modern'), { recursive: true });
+        }
+        if (existsSync(resolve(rnHeadersRoot, 'reacthermes'))) {
+          await cp(resolve(rnHeadersRoot, 'reacthermes'), resolve(publicHeaders, 'reacthermes'), { recursive: true });
+        }
+        if (existsSync(resolve(rnHeadersRoot, 'react'))) {
+          await cp(resolve(rnHeadersRoot, 'react'), resolve(publicHeaders, 'react'), { recursive: true });
+        }
+
         // Set up dependencies (Folly, fmt, fast_float, glog, DoubleConversion)
         const rnDepsHeaders = resolve(artifactsRoot, 'ReactNativeDependencies.xcframework', 'Headers');
         if (existsSync(rnDepsHeaders)) {
