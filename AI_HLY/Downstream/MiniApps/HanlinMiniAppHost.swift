@@ -79,6 +79,9 @@ final class HanlinMiniAppHost {
                    rtStr == HanlinRuntimeProfile.hanlinNativeScript.rawValue {
                     return true
                 }
+                if package.manifest?.entry?.contains("nativescript") == true {
+                    return true
+                }
                 return false
             }
             BuiltinCanonicalRegistrations.ensureRegistered()

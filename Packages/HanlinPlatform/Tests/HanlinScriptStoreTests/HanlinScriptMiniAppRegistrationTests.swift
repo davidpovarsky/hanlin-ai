@@ -446,4 +446,50 @@ struct HanlinScriptMiniAppRegistrationTests {
         let decoded = try JSONDecoder().decode(HanlinAppDescriptor.self, from: legacyData)
         #expect(decoded.supportedExposures == [.foregroundApp])
     }
+
+    @Test("Legacy-format NativeScript package with hanlinRuntime manifest field resolves to .nativeScript")
+    func legacyFormatNativeScriptPackageResolvesProperly() throws {
+        let packageID = try HanlinPackageID(validating: "sefaria-reader-core")
+        let installedID = try HanlinInstalledPackageID(validating: "inst.sefaria-reader-core")
+        let version = try HanlinPackageVersion(validating: "1.0.0")
+
+        let record = HanlinInstalledPackageRecord(
+            schemaVersion: 1,
+            installedPackageID: installedID,
+            packageID: packageID,
+            version: version,
+            sourceDigest: String(repeating: "f", count: 64),
+            artifactDigest: String(repeating: "a", count: 64),
+            activeGeneration: 1,
+            installedAt: .now,
+            updatedAt: .now
+        )
+
+        let snapshot = HanlinStoredPackageSnapshot(
+            record: record,
+            entrypoints: [],
+            enabled: true,
+            availableGenerations: [1],
+            manifest: .init(
+                name: "Sefaria Library & Texts (Core)",
+                version: "1.0.0",
+                entry: "nativescript/app/bundle.mjs",
+                runInApp: true,
+                unknownFields: ["hanlinRuntime": .string("hanlin-nativescript")]
+            )
+        )
+
+        let descriptor = try snapshot.appDescriptor()
+        try descriptor.validate()
+
+        guard case let .nativeScript(pkgID) = descriptor.implementation else {
+            Issue.record("Expected .nativeScript implementation, got \(descriptor.implementation)")
+            return
+        }
+        #expect(pkgID == packageID)
+
+        let appEP = descriptor.entryPoints.first { $0.kind == .app }
+        #expect(appEP?.runtimeProfile == .hanlinNativeScript)
+        #expect(appEP?.handler == "nativescript/app/bundle.mjs")
+    }
 }

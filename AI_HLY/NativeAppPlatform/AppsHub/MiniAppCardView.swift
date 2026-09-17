@@ -107,7 +107,5 @@ struct MiniAppCardView: View {
                 : .default,
             value: isEditing
         )
-        .accessibilityElement(children: .combine)
-        .accessibilityLabel("\(title), \(subtitle)")
     }
 }

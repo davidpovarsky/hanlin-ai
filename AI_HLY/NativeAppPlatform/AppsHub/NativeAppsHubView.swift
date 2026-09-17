@@ -14,6 +14,7 @@ struct NativeAppsHubView: View {
     @State private var miniAppHost = HanlinMiniAppHost.shared
     @State private var swiftDestination: HanlinMiniAppHost.SwiftDestination?
     @State private var informationItem: HanlinMiniAppCatalogItem?
+    @State private var scriptingPackageID: HanlinInstalledPackageID?
     @State private var launchError: String?
 
     private let columns = [
@@ -26,6 +27,7 @@ struct NativeAppsHubView: View {
                 LazyVStack(alignment: .leading, spacing: 28) {
                     engineSection(.swift, title: "Swift")
                     engineSection(.nativeScript, title: "NativeScript")
+                    scriptingPackagesSection()
                 }
                 .padding(.horizontal, 24)
                 .padding(.vertical, 18)
@@ -39,13 +41,16 @@ struct NativeAppsHubView: View {
                         Label("Add App", systemImage: "plus")
                     }
                     .accessibilityIdentifier("hanlin-apps-add")
+                    .accessibilityLabel("hanlin-apps-add")
                 }
                 ToolbarItem(placement: .topBarLeading) {
                     Button(isEditingApps ? "Done" : "Edit") { isEditingApps.toggle() }
                 }
             }
             .overlay {
-                if filteredItems.isEmpty {
+                let canonicalAppIDs = Set(miniAppHost.items.map(\.id))
+                let legacyPackagesCount = scriptingPlatform.installedPackages.filter { $0.enabled && !canonicalAppIDs.contains($0.appID) }.count
+                if !searchText.isEmpty && filteredItems.isEmpty && legacyPackagesCount == 0 {
                     ContentUnavailableView.search(text: searchText)
                 }
             }
@@ -59,6 +64,19 @@ struct NativeAppsHubView: View {
             .sheet(item: $informationItem) { item in
                 MiniAppDescriptorDetailView(item: item)
             }
+            .sheet(isPresented: Binding(
+                get: { scriptingPackageID != nil },
+                set: { if !$0 { scriptingPackageID = nil } }
+            )) {
+                if let packageID = scriptingPackageID {
+                    NavigationStack {
+                        ScriptingInstalledPackageDetailView(
+                            packageID: packageID,
+                            platform: scriptingPlatform
+                        )
+                    }
+                }
+            }
             .fullScreenCover(item: $swiftDestination) { destination in
                 destination.view
             }
@@ -68,7 +86,7 @@ struct NativeAppsHubView: View {
             )) {
                 ScriptingApplicationContainerView(platform: scriptingPlatform)
             }
-            .alert("Mini App Error", isPresented: Binding(
+            .alert("Script App Error", isPresented: Binding(
                 get: { launchError != nil || scriptingPlatform.activity.isFailure },
                 set: {
                     if !$0 {
@@ -82,7 +100,7 @@ struct NativeAppsHubView: View {
                     scriptingPlatform.clearFailure()
                 }
             } message: {
-                Text(launchError ?? scriptingPlatform.activity.failureMessage ?? "The Mini App could not be opened.")
+                Text(launchError ?? scriptingPlatform.activity.failureMessage ?? "The app could not be opened.")
             }
             .task {
                 scriptingPlatform.configure(modelContext: modelContext)
@@ -126,6 +144,61 @@ struct NativeAppsHubView: View {
         }
     }
 
+    @ViewBuilder
+    private func scriptingPackagesSection() -> some View {
+        let canonicalAppIDs = Set(miniAppHost.items.map(\.id))
+        let remainingPackages = scriptingPlatform.installedPackages.filter { package in
+            package.enabled && !canonicalAppIDs.contains(package.appID)
+        }
+        let filtered = remainingPackages.filter { package in
+            let query = searchText.trimmingCharacters(in: .whitespacesAndNewlines)
+            guard !query.isEmpty else { return true }
+            return [
+                package.manifest?.name,
+                package.record.packageID.rawValue,
+                package.manifest?.description
+            ].compactMap { $0 }.joined(separator: " ").localizedStandardContains(query)
+        }
+        if !filtered.isEmpty {
+            Section {
+                LazyVGrid(columns: columns, spacing: 20) {
+                    ForEach(filtered, id: \.record.installedPackageID) { package in
+                        scriptingPackageCard(package)
+                    }
+                }
+            } header: {
+                Text("Packages")
+                    .font(.title2.bold())
+                    .accessibilityIdentifier("hanlin-miniapps-section-packages")
+            }
+        }
+    }
+
+    private func scriptingPackageCard(_ package: HanlinStoredPackageSnapshot) -> some View {
+        let name = package.manifest?.name ?? package.record.packageID.rawValue
+        return Button {
+            Task { await scriptingPlatform.launch(package.record.installedPackageID) }
+        } label: {
+            ScriptingPackageCardView(package: package)
+        }
+        .buttonStyle(.plain)
+        .accessibilityIdentifier("hanlin-package-card-\(name)")
+        .accessibilityLabel(name)
+        .disabled(isEditingApps)
+        .contextMenu {
+            Button {
+                Task { await scriptingPlatform.launch(package.record.installedPackageID) }
+            } label: {
+                Label("Open", systemImage: "play.fill")
+            }
+            Button {
+                scriptingPackageID = package.record.installedPackageID
+            } label: {
+                Label("Package Information", systemImage: "info.circle")
+            }
+        }
+    }
+
     private func miniAppCard(_ item: HanlinMiniAppCatalogItem) -> some View {
         let appName = item.descriptor.name.preferredValue(forLocale: Locale.current.identifier)
         return ZStack(alignment: .topLeading) {
@@ -135,7 +208,7 @@ struct NativeAppsHubView: View {
             .buttonStyle(.plain)
             .disabled(isEditingApps)
             .contextMenu { commonActions(for: item) }
-            .accessibilityIdentifier("hanlin-miniapp-\(item.id.rawValue)")
+            .accessibilityIdentifier("hanlin-package-card-\(appName)")
             .accessibilityLabel(appName)
 
             if isEditingApps {
@@ -163,6 +236,12 @@ struct NativeAppsHubView: View {
     @ViewBuilder
     private func commonActions(for item: HanlinMiniAppCatalogItem) -> some View {
         Button { launch(item) } label: { Label("Open", systemImage: "play.fill") }
+        if case let .nativeScript(packageID) = item.descriptor.implementation,
+           let pkg = scriptingPlatform.installedPackages.first(where: { $0.record.packageID == packageID }) {
+            Button { scriptingPackageID = pkg.record.installedPackageID } label: {
+                Label("Package Information", systemImage: "info.circle")
+            }
+        }
         Button { informationItem = item } label: { Label("App Information", systemImage: "info.circle") }
         Divider()
         Button { miniAppHost.setHidden(true, appID: item.id) } label: {
