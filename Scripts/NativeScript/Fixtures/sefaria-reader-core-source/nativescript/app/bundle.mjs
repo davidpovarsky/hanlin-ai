@@ -84,6 +84,10 @@ function makeBadge(text, color = C.blue, background = C.blueSoft) {
 function makeButton(text, onTap, options = {}) {
   const button = new Button();
   button.text = text;
+  if (options.identifier) {
+    button.accessibilityIdentifier = options.identifier;
+    button.automationText = options.identifier;
+  }
   button.fontSize = options.fontSize || 14;
   button.fontWeight = options.bold === false ? "400" : "600";
   button.height = options.height || 42;
@@ -210,6 +214,30 @@ function createReaderPage(frame, refString, customTitle) {
   let textData = null;
 
   const controlsCard = makeCard(14);
+
+  const topRow = new StackLayout();
+  topRow.orientation = "horizontal";
+  topRow.marginBottom = 10;
+  const backBtn = makeButton("חזרה", () => {
+    if (typeof frame?.canGoBack === "function") {
+      if (frame.canGoBack()) {
+        frame.goBack();
+      }
+    } else if (frame?.goBack) {
+      frame.goBack();
+    }
+  }, {
+    background: C.gray5,
+    color: C.label,
+    height: 34,
+    fontSize: 13,
+    bold: true,
+    identifier: "sefaria-reader-back",
+  });
+  backBtn.width = "25%";
+  topRow.addChild(backBtn);
+  controlsCard.addChild(topRow);
+
   const languageControl = new SegmentedBar();
   const heItem = new SegmentedBarItem();
   heItem.title = "עברית";
