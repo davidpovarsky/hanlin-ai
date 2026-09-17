@@ -630,6 +630,31 @@
       ],
       "consumers": []
     },
+    "canonical_mini_apps": {
+      "description": "Canonical Swift MiniApps, packages, MiniAppHost, DemoMiniApps, and integration tests",
+      "patterns": [
+        "AI_HLY/Downstream/MiniApps/**",
+        "AI_HLYTests/CanonicalMiniAppIntegrationTests.swift",
+        "DemoMiniApps/**",
+        "Packages/HanlinParityMiniApp/**",
+        "Packages/HanlinSefariaMiniApp/**",
+        "Packages/HanlinWikipediaMiniApp/**",
+        "Packages/HanlinTextStudioMiniApp/**"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests",
+        "simulator_targeted_ui"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/CanonicalMiniAppIntegrationTests"
+      ],
+      "ui_suites": [
+        "AI_HLYUITests/HanlinNativeScriptProductionE2ETests"
+      ],
+      "consumers": [
+        "app_ui"
+      ]
+    },
     "project_packaging": {
       "description": "Xcode project structure, build settings, entitlements, and configs",
       "patterns": [
