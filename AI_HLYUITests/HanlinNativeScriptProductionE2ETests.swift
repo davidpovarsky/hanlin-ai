@@ -357,8 +357,13 @@ final class HanlinNativeScriptProductionE2ETests: XCTestCase {
     private func importAndInstall(archive: String) {
         importArchive(named: archive)
         let install = app.buttons["hanlin-package-install"].firstMatch
-        if !install.waitForExistence(timeout: 10) {
-            app.swipeUp()
+        if !install.waitForExistence(timeout: 5) {
+            for _ in 1...6 {
+                app.swipeDown()
+                if install.waitForExistence(timeout: 2) && install.isHittable {
+                    break
+                }
+            }
         }
         if !install.waitForExistence(timeout: 20) {
             capture(name: "\(archive)-Import-Timeout")
@@ -371,6 +376,22 @@ final class HanlinNativeScriptProductionE2ETests: XCTestCase {
             return
         }
         XCTAssertTrue(waitUntil(timeout: 15) { install.isEnabled }, "\(archive) was not installable")
+        if !install.isHittable {
+            for _ in 1...6 {
+                app.swipeDown()
+                if install.waitForExistence(timeout: 2) && install.isHittable {
+                    break
+                }
+            }
+        }
+        if !install.isHittable {
+            for _ in 1...6 {
+                app.swipeUp()
+                if install.waitForExistence(timeout: 2) && install.isHittable {
+                    break
+                }
+            }
+        }
         if install.isHittable {
             install.tap()
         } else {
@@ -378,6 +399,14 @@ final class HanlinNativeScriptProductionE2ETests: XCTestCase {
         }
         let dismissed = waitUntil(timeout: 8) { !install.exists }
         if !dismissed && install.exists {
+            if !install.isHittable {
+                for _ in 1...6 {
+                    app.swipeDown()
+                    if install.waitForExistence(timeout: 2) && install.isHittable {
+                        break
+                    }
+                }
+            }
             if install.isHittable {
                 install.tap()
             } else {
@@ -559,7 +588,7 @@ final class HanlinNativeScriptProductionE2ETests: XCTestCase {
     }
 
     private func closeImportSurfaces() {
-        for _ in 1...5 {
+        for _ in 1...6 {
             let doneButtons = [
                 app.navigationBars["Script Package"].buttons["Done"].firstMatch,
                 app.navigationBars["Add Apps"].buttons["Done"].firstMatch,
@@ -576,7 +605,24 @@ final class HanlinNativeScriptProductionE2ETests: XCTestCase {
                 }
             }
             if !tappedDone {
-                break
+                if !app.navigationBars["Script Package"].exists && !app.navigationBars["Add Apps"].exists && appsAddButton.exists {
+                    break
+                }
+                let backButtons = [
+                    app.navigationBars["Script Package"].buttons.element(boundBy: 0),
+                    app.navigationBars.buttons.element(boundBy: 0)
+                ]
+                for back in backButtons {
+                    if back.waitForExistence(timeout: 1) && back.isHittable {
+                        back.tap()
+                        tappedDone = true
+                        _ = waitUntil(timeout: 2) { !back.exists }
+                        break
+                    }
+                }
+                if !tappedDone {
+                    break
+                }
             }
         }
         _ = waitUntil(timeout: 5) {
@@ -639,6 +685,10 @@ final class HanlinNativeScriptProductionE2ETests: XCTestCase {
         for attempt in 1...3 {
             if closeButton.exists || coreButton.exists || swiftUIButton.exists {
                 return
+            }
+            if !package.isHittable {
+                app.swipeDown()
+                _ = waitUntil(timeout: 2) { package.isHittable }
             }
             if !package.isHittable {
                 app.swipeUp()

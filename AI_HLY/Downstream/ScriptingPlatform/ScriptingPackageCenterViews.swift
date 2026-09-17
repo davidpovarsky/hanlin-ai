@@ -84,6 +84,7 @@ struct ScriptingPackageImportView: View {
                 }
             }
         }
+        .id(platform.preview == nil ? "browse" : "preview")
         .navigationTitle("Script Package")
         .navigationBarTitleDisplayMode(.inline)
         .overlay {
