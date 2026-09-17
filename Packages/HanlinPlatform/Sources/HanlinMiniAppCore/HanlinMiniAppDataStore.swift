@@ -162,7 +162,9 @@ public actor HanlinMiniAppDataStore {
             let values = try item.resourceValues(forKeys: [.isRegularFileKey, .isSymbolicLinkKey])
             if values.isSymbolicLink == true { enumerator.skipDescendants(); continue }
             if values.isRegularFile == true {
-                result.append(String(item.path(percentEncoded: false).dropFirst(areaRoot.path(percentEncoded: false).count + 1)))
+                let areaRootPath = areaRoot.path(percentEncoded: false)
+                let prefixCount = areaRootPath.hasSuffix("/") ? areaRootPath.count : areaRootPath.count + 1
+                result.append(String(item.path(percentEncoded: false).dropFirst(prefixCount)))
             }
         }
         return result.sorted()
@@ -199,7 +201,8 @@ public actor HanlinMiniAppDataStore {
         }
         checked = checked.standardizedFileURL
         let basePath = base.path(percentEncoded: false)
-        guard checked.path(percentEncoded: false).hasPrefix(basePath + "/") else {
+        let prefix = basePath.hasSuffix("/") ? basePath : basePath + "/"
+        guard checked.path(percentEncoded: false).hasPrefix(prefix) else {
             throw HanlinMiniAppDataError.invalidPath(path)
         }
         return checked

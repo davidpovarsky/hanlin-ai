@@ -20,12 +20,12 @@ public final class HanlinNativeServicesBridge: NSObject {
 
     // MARK: - Active Host Session Context
 
-    public private(set) static var activeAppID: String?
-    public private(set) static var activeDataRoot: String?
-    public private(set) static var activeStateDirectory: String?
-    public private(set) static var activeDocumentsDirectory: String?
-    public private(set) static var activeCacheDirectory: String?
-    public private(set) static var activeGrantedCapabilities: Set<String> = []
+    nonisolated(unsafe) public private(set) static var activeAppID: String?
+    nonisolated(unsafe) public private(set) static var activeDataRoot: String?
+    nonisolated(unsafe) public private(set) static var activeStateDirectory: String?
+    nonisolated(unsafe) public private(set) static var activeDocumentsDirectory: String?
+    nonisolated(unsafe) public private(set) static var activeCacheDirectory: String?
+    nonisolated(unsafe) public private(set) static var activeGrantedCapabilities: Set<String> = []
 
     public static func setActiveContainer(
         appID: String,
@@ -281,12 +281,13 @@ public final class HanlinNativeServicesBridge: NSObject {
               let capabilityID = try? HanlinCapabilityID(validating: capability) else {
             return
         }
+        nonisolated(unsafe) let safeHandler = handler
         Task { @MainActor in
             let broker = HanlinMiniAppHost.shared.requestBroker
             await broker.register(target: appID, action: actionID, capability: capabilityID) { request in
                 try await withCheckedThrowingContinuation { continuation in
                     let payloadStr = (try? String(data: request.payload.canonicalJSONData(), encoding: .utf8)) ?? "{}"
-                    handler(request.caller.rawValue, payloadStr) { responseJSON, errorStr in
+                    safeHandler(request.caller.rawValue, payloadStr) { responseJSON, errorStr in
                         if let errorStr {
                             continuation.resume(throwing: NSError(domain: "HanlinMiniAppRequest", code: 1, userInfo: [NSLocalizedDescriptionKey: errorStr]))
                         } else if let responseJSON, let data = responseJSON.data(using: .utf8),

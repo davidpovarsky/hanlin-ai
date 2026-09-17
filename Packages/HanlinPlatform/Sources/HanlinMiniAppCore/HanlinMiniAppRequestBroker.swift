@@ -136,6 +136,10 @@ public actor HanlinMiniAppRequestBroker {
         routes.removeValue(forKey: RouteKey(target: target, action: action))
     }
 
+    public func unregisterAll(target: HanlinAppID) {
+        routes = routes.filter { $0.key.target != target }
+    }
+
     public func request(_ request: HanlinMiniAppRequest) async throws -> HanlinMiniAppResponse {
         let payloadBytes = try estimatedBytes(request.payload)
         guard payloadBytes <= limits.maximumPayloadBytes else {
