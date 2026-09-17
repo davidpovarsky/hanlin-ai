@@ -4,6 +4,13 @@ import HanlinPlatformContracts
 public enum HanlinMiniAppEngine: String, Codable, CaseIterable, Hashable, Sendable {
     case swift
     case nativeScript
+
+    public var displayName: String {
+        switch self {
+        case .swift: return "Swift"
+        case .nativeScript: return "NativeScript"
+        }
+    }
 }
 
 public struct HanlinMiniAppCatalogItem: Identifiable, Hashable, Sendable {
@@ -48,19 +55,50 @@ public struct HanlinCanonicalMiniAppCatalog: Sendable {
         }
     }
 
-    public static func engine(for descriptor: HanlinAppDescriptor) -> HanlinMiniAppEngine? {
+    /// Resolves the execution engine for a specific entrypoint.
+    public static func engine(
+        for entryPoint: HanlinEntryPointDescriptor,
+        implementation: HanlinAppImplementation
+    ) -> HanlinMiniAppEngine? {
+        if let runtime = entryPoint.runtimeProfile {
+            switch runtime {
+            case .hanlinNativeScript:
+                return .nativeScript
+            default:
+                return nil
+            }
+        }
+        switch implementation {
+        case .native, .hybrid:
+            return .swift
+        case .nativeScript:
+            return .nativeScript
+        case .script:
+            return nil
+        }
+    }
+
+    /// Resolves the primary foreground engine for an app descriptor based on its `.app` entrypoint.
+    public static func foregroundEngine(for descriptor: HanlinAppDescriptor) -> HanlinMiniAppEngine? {
+        if let appEntryPoint = descriptor.entryPoints.first(where: { $0.kind == .app }) {
+            return engine(for: appEntryPoint, implementation: descriptor.implementation)
+        }
+        if let firstEntryPoint = descriptor.entryPoints.first {
+            return engine(for: firstEntryPoint, implementation: descriptor.implementation)
+        }
         switch descriptor.implementation {
         case .native, .hybrid:
             return .swift
         case .nativeScript:
             return .nativeScript
         case .script:
-            let profiles = descriptor.entryPoints.compactMap(\.runtimeProfile)
-            if profiles.contains(where: { $0 == .hanlinNativeScript }) {
-                return .nativeScript
-            }
             return nil
         }
+    }
+
+    /// Resolves the engine for an app descriptor (delegates to foregroundEngine).
+    public static func engine(for descriptor: HanlinAppDescriptor) -> HanlinMiniAppEngine? {
+        foregroundEngine(for: descriptor)
     }
 }
 
@@ -73,11 +111,11 @@ public struct HanlinMiniAppLaunchPlan: Hashable, Sendable {
         descriptor: HanlinAppDescriptor,
         entryPointKind: HanlinEntryPointKind = .app
     ) throws {
-        guard let engine = HanlinCanonicalMiniAppCatalog.engine(for: descriptor) else {
-            throw HanlinMiniAppCatalogError.unsupportedImplementation(descriptor.id)
-        }
         guard let entryPoint = descriptor.entryPoints.first(where: { $0.kind == entryPointKind }) else {
             throw HanlinMiniAppCatalogError.missingEntrypoint(descriptor.id, entryPointKind)
+        }
+        guard let engine = HanlinCanonicalMiniAppCatalog.engine(for: entryPoint, implementation: descriptor.implementation) else {
+            throw HanlinMiniAppCatalogError.unsupportedImplementation(descriptor.id)
         }
         if engine == .nativeScript {
             guard let runtime = entryPoint.runtimeProfile else {

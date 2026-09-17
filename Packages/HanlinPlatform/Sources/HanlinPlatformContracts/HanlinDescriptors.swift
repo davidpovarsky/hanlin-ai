@@ -250,13 +250,38 @@ extension HanlinIconDescriptor {
 public struct HanlinAppearanceDescriptor: Codable, Hashable, Sendable {
     public let accentHex: String?
     public let preferredColorScheme: HanlinPreferredColorScheme?
+    public let isBeta: Bool
 
     public init(
         accentHex: String? = nil,
-        preferredColorScheme: HanlinPreferredColorScheme? = nil
+        preferredColorScheme: HanlinPreferredColorScheme? = nil,
+        isBeta: Bool = false
     ) {
         self.accentHex = accentHex
         self.preferredColorScheme = preferredColorScheme
+        self.isBeta = isBeta
+    }
+
+    private enum CodingKeys: String, CodingKey {
+        case accentHex
+        case preferredColorScheme
+        case isBeta
+    }
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        accentHex = try container.decodeIfPresent(String.self, forKey: .accentHex)
+        preferredColorScheme = try container.decodeIfPresent(HanlinPreferredColorScheme.self, forKey: .preferredColorScheme)
+        isBeta = try container.decodeIfPresent(Bool.self, forKey: .isBeta) ?? false
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encodeIfPresent(accentHex, forKey: .accentHex)
+        try container.encodeIfPresent(preferredColorScheme, forKey: .preferredColorScheme)
+        if isBeta {
+            try container.encode(isBeta, forKey: .isBeta)
+        }
     }
 }
 

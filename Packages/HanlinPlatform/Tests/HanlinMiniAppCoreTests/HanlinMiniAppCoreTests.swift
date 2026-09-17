@@ -152,4 +152,42 @@ struct HanlinMiniAppCoreTests {
             try await broker.request(denied)
         }
     }
+
+    @Test("Per-entrypoint engine resolution works for hybrid descriptors")
+    func hybridPerEntrypointResolution() throws {
+        let appID = try HanlinAppID(validating: "demo.hybrid")
+        let descriptor = try HanlinAppDescriptor(
+            schemaVersion: .init(major: 1, minor: 0),
+            descriptorRevision: HanlinDescriptorRevision(1),
+            id: appID,
+            name: LocalizedValue(["en": "Hybrid App"]),
+            summary: LocalizedValue(["en": "App with mixed entrypoint runtimes"]),
+            description: LocalizedValue(["en": "App with mixed entrypoint runtimes"]),
+            version: HanlinPackageVersion(validating: "1.0.0"),
+            apiVersion: .init(major: 1, minor: 0),
+            icon: .systemSymbol(name: "app.badge"),
+            appearance: .init(accentHex: "#123456", isBeta: true),
+            category: .developer,
+            implementation: .hybrid(
+                moduleID: HanlinModuleID(validating: "demo.hybrid.native"),
+                packageID: HanlinPackageID(validating: "demo.hybrid.script")
+            ),
+            entryPoints: [
+                .init(kind: .app, handler: "MainView", allowedContexts: [.mainApplication], runtimeProfile: nil),
+                .init(kind: .backgroundTask, handler: "task.mjs", allowedContexts: [.background], runtimeProfile: .hanlinNativeScript)
+            ]
+        )
+
+        // Foreground engine is Swift because .app has runtimeProfile: nil and implementation is .hybrid
+        #expect(HanlinCanonicalMiniAppCatalog.foregroundEngine(for: descriptor) == .swift)
+
+        // Launch plan for .app is Swift
+        let appPlan = try HanlinMiniAppLaunchPlan(descriptor: descriptor, entryPointKind: .app)
+        #expect(appPlan.engine == .swift)
+
+        // Launch plan for .backgroundTask is NativeScript
+        let bgPlan = try HanlinMiniAppLaunchPlan(descriptor: descriptor, entryPointKind: .backgroundTask)
+        #expect(bgPlan.engine == .nativeScript)
+        #expect(bgPlan.entryPoint.runtimeProfile == .hanlinNativeScript)
+    }
 }

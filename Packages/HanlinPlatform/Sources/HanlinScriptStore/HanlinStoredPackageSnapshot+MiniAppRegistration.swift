@@ -113,7 +113,37 @@ extension HanlinStoredPackageSnapshot: HanlinMiniAppRegistration {
             [HanlinAuthor(name: "Script Author")]
         }
 
-        let isNativeScript = entrypoints.contains { $0.runtimeProfile == .hanlinNativeScript }
+        let hasNativeScript = entrypoints.contains { $0.runtimeProfile == .hanlinNativeScript }
+        let hasOtherScript = entrypoints.contains { $0.runtimeProfile != nil && $0.runtimeProfile != .hanlinNativeScript }
+        let implementation: HanlinAppImplementation
+        if hasNativeScript && !hasOtherScript {
+            implementation = .nativeScript(packageID: record.packageID)
+        } else if hasNativeScript && hasOtherScript {
+            let modID = (try? HanlinModuleID(validating: record.packageID.rawValue))
+                ?? (try! HanlinModuleID(validating: "package.hybrid"))
+            implementation = .hybrid(moduleID: modID, packageID: record.packageID)
+        } else {
+            implementation = .script(packageID: record.packageID)
+        }
+
+        let isNativeScript = hasNativeScript
+
+        let category: HanlinAppCategory = {
+            if let catVal = manifest?.unknownFields["category"],
+               case let .string(catStr) = catVal,
+               let cat = HanlinAppCategory(rawValue: catStr) {
+                return cat
+            }
+            return .utilities
+        }()
+
+        let isBeta: Bool = {
+            if let betaVal = manifest?.unknownFields["isBeta"],
+               case let .bool(b) = betaVal {
+                return b
+            }
+            return false
+        }()
 
         let iconDescriptor: HanlinIconDescriptor = if let icon = manifest?.icon, !icon.isEmpty {
             .systemSymbol(name: icon)
@@ -148,11 +178,9 @@ extension HanlinStoredPackageSnapshot: HanlinMiniAppRegistration {
             version: record.version,
             apiVersion: .init(major: 1, minor: 0),
             icon: iconDescriptor,
-            appearance: .init(accentHex: accentHex),
-            category: .utilities,
-            implementation: isNativeScript
-                ? .nativeScript(packageID: record.packageID)
-                : .script(packageID: record.packageID),
+            appearance: .init(accentHex: accentHex, isBeta: isBeta),
+            category: category,
+            implementation: implementation,
             entryPoints: finalEntryPoints,
             supportedExposures: packageExposures,
             capabilities: capabilitiesDeclarations,
