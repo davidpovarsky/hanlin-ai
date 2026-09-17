@@ -223,6 +223,7 @@ final class HanlinUIPerformanceUITests: XCTestCase {
 
             let packageCard = findPackageCard(named: validScriptUIPackageName)
             XCTAssertTrue(packageCard.waitForExistence(timeout: 15), "Installed package card missing from Apps list")
+            closeAddSheetIfNeeded()
         }
 
         emitSample(
@@ -621,14 +622,27 @@ final class HanlinUIPerformanceUITests: XCTestCase {
         let card = findPackageCard(named: packageName)
         if card.waitForExistence(timeout: 2) {
             openPackageDetails(named: packageName)
-            let uninstallButton = app.buttons["Uninstall Package"].firstMatch
+            let uninstallButton = app.buttons["Uninstall"].firstMatch
             if uninstallButton.waitForExistence(timeout: 5) && uninstallButton.isHittable {
                 uninstallButton.tap()
                 let confirm = app.alerts.buttons["Uninstall"].firstMatch
-                if confirm.waitForExistence(timeout: 3) { confirm.tap() }
+                if confirm.waitForExistence(timeout: 2) && confirm.isHittable {
+                    confirm.tap()
+                }
                 _ = waitUntil(timeout: 10) { !findPackageCard(named: packageName).exists }
             } else {
                 closeDetails()
+            }
+        }
+        closeAddSheetIfNeeded()
+    }
+
+    private func closeAddSheetIfNeeded() {
+        if app.navigationBars["Add Apps"].exists {
+            let done = app.buttons["Done"].firstMatch
+            if done.waitForExistence(timeout: 2) && done.isHittable {
+                done.tap()
+                _ = waitUntil(timeout: 3) { !app.navigationBars["Add Apps"].exists }
             }
         }
     }
@@ -718,8 +732,7 @@ final class HanlinUIPerformanceUITests: XCTestCase {
             if element.waitForExistence(timeout: 2) { return element }
         }
 
-        let appsAddButton = app.buttons["hanlin-apps-add-button"].firstMatch
-        if !app.navigationBars["Add Apps"].exists && appsAddButton.waitForExistence(timeout: 3) {
+        if !app.navigationBars["Add Apps"].exists && appsAddButton.waitForExistence(timeout: 5) {
             appsAddButton.tap()
             _ = app.navigationBars["Add Apps"].waitForExistence(timeout: 5)
             let inSheet = app.descendants(matching: .any).matching(predicate).firstMatch
@@ -732,6 +745,7 @@ final class HanlinUIPerformanceUITests: XCTestCase {
                     return inSheet
                 }
             }
+            closeAddSheetIfNeeded()
         } else if app.navigationBars["Add Apps"].exists {
             let inSheet = app.descendants(matching: .any).matching(predicate).firstMatch
             if inSheet.waitForExistence(timeout: 3) {
