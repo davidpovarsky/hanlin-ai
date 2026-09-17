@@ -237,14 +237,24 @@ struct CanonicalMiniAppIntegrationTests {
             compatibility: .supported
         )
 
+        let record = HanlinInstalledPackageRecord(
+            schemaVersion: 1,
+            installedPackageID: try HanlinInstalledPackageID(validating: "installed.hybrid"),
+            packageID: try HanlinPackageID(validating: "pkg.hybrid"),
+            version: try HanlinPackageVersion(validating: "1.0.0"),
+            sourceDigest: String(repeating: "b", count: 64),
+            artifactDigest: String(repeating: "c", count: 64),
+            activeGeneration: 1,
+            installedAt: .now,
+            updatedAt: .now
+        )
         let snapshot = HanlinStoredPackageSnapshot(
-            record: HanlinStoredPackageRecord(
-                installedPackageID: try HanlinInstalledPackageID(validating: "installed.hybrid"),
-                packageID: try HanlinPackageID(validating: "pkg.hybrid"),
-                activeGeneration: 1
-            ),
-            manifest: manifest,
-            entrypoints: [entryA, entryB]
+            record: record,
+            entrypoints: [entryA, entryB],
+            enabled: true,
+            availableGenerations: [1],
+            grantedCapabilities: [],
+            manifest: manifest
         )
 
         let resolvedRuntimeA = snapshot.entrypoints[0].runtimeProfile
@@ -255,8 +265,8 @@ struct CanonicalMiniAppIntegrationTests {
 
         let registration = snapshot.makeMiniAppRegistration()
         let desc = try registration.appDescriptor()
-        #expect(desc.entryPoints[0].runtimeProfile == .hanlinNativeScript)
-        #expect(desc.entryPoints[1].runtimeProfile == .scriptingJSC)
+        #expect(desc.entryPoints[0].runtimeProfile == HanlinRuntimeProfile.hanlinNativeScript)
+        #expect(desc.entryPoints[1].runtimeProfile == HanlinRuntimeProfile.scriptingJSC)
     }
 
     @MainActor
