@@ -87,7 +87,11 @@ async function main() {
   console.log(`[HanlinExpo] Test fixtures staged into: ${uiTestFixturesRoot}`);
 }
 
-main().catch((err) => {
-  console.error('[HanlinExpo] Failed to build probe:', err);
-  process.exit(1);
-});
+main()
+  .then(() => {
+    process.exit(0);
+  })
+  .catch((err) => {
+    console.error('[HanlinExpo] Failed to build probe:', err);
+    process.exit(1);
+  });

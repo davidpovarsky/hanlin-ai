@@ -18,7 +18,7 @@ async function downloadFile(url, destPath) {
   return new Promise((res, rej) => {
     function get(currentURL) {
       const client = currentURL.startsWith('https') ? https : http;
-      client.get(currentURL, (response) => {
+      client.get(currentURL, { agent: false }, (response) => {
         if (response.statusCode >= 300 && response.statusCode < 400 && response.headers.location) {
           const redirectURL = new URL(response.headers.location, currentURL).toString();
           return get(redirectURL);
@@ -29,7 +29,7 @@ async function downloadFile(url, destPath) {
         const file = createWriteStream(destPath);
         response.pipe(file);
         file.on('finish', () => {
-          file.close(res);
+          file.close(() => res());
         });
       }).on('error', rej);
     }
@@ -87,7 +87,11 @@ async function prepare() {
   }
 }
 
-prepare().catch((err) => {
-  console.error('[HanlinExpo] Preparation failed:', err);
-  process.exit(1);
-});
+prepare()
+  .then(() => {
+    process.exit(0);
+  })
+  .catch((err) => {
+    console.error('[HanlinExpo] Preparation failed:', err);
+    process.exit(1);
+  });
