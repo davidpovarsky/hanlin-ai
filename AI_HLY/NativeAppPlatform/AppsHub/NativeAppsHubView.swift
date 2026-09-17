@@ -128,6 +128,7 @@ struct NativeAppsHubView: View {
                 get: {
                     scriptingPlatform.activeApplicationModel != nil
                         || scriptingPlatform.activeNativeScriptController != nil
+                        || scriptingPlatform.activeExpoController != nil
                 },
                 set: { if !$0 { scriptingPlatform.dismissActiveApplication() } }
             )) {
