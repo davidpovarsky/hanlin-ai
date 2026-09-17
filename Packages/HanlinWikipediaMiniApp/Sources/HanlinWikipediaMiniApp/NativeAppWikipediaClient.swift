@@ -1,7 +1,12 @@
 import Foundation
+#if canImport(FoundationNetworking)
+import FoundationNetworking
+#endif
 
-struct NativeAppWikipediaClient {
-    func search(query: String, limit: Int, languageCode: String) async throws -> [NativeAppWikipediaSearchResult] {
+public struct NativeAppWikipediaClient: Sendable {
+    public init() {}
+
+    public func search(query: String, limit: Int, languageCode: String) async throws -> [NativeAppWikipediaSearchResult] {
         var components = URLComponents(string: "https://\(languageCode).wikipedia.org/w/api.php")!
         components.queryItems = [
             URLQueryItem(name: "action", value: "opensearch"),
@@ -27,7 +32,7 @@ struct NativeAppWikipediaClient {
         }
     }
 
-    func summary(title: String, languageCode: String) async throws -> NativeAppWikipediaSummary {
+    public func summary(title: String, languageCode: String) async throws -> NativeAppWikipediaSummary {
         let encodedTitle = title
             .replacingOccurrences(of: " ", with: "_")
             .addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? title

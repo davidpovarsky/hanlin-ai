@@ -1,7 +1,9 @@
 import Foundation
 
-struct NativeAppTextStudioService {
-    func analyze(_ text: String) -> NativeAppTextStudioAnalysis {
+public struct NativeAppTextStudioService: Sendable {
+    public init() {}
+
+    public func analyze(_ text: String) -> NativeAppTextStudioAnalysis {
         let words = text
             .split { !$0.isLetter && !$0.isNumber && $0 != "'" }
             .map(String.init)
@@ -54,7 +56,7 @@ struct NativeAppTextStudioService {
         )
     }
 
-    func transform(_ text: String, using transform: NativeAppTextStudioTransform) -> String {
+    public func transform(_ text: String, using transform: NativeAppTextStudioTransform) -> String {
         switch transform {
         case .uppercase:
             return text.uppercased()

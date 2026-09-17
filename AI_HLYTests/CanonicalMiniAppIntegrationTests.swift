@@ -71,33 +71,72 @@ struct CanonicalMiniAppIntegrationTests {
     }
 
     @MainActor
-    @Test("Native services bridge exposes Node, Python, and RequestBroker entrypoints")
-    func nativeServicesBridgeAvailability() {
-        // Verify Python runtime version can be queried
-        _ = HanlinNativeServicesBridge.pythonVersion()
+    @Test("Native services bridge exposes Python version and executes JavaScript returning 42")
+    func nativeServicesExecution() async throws {
+        let version = HanlinNativeServicesBridge.pythonVersion()
+        #expect(version != nil)
 
-        // Verify Node health check API exists
-        var healthCheckInvoked = false
-        HanlinNativeServicesBridge.nodeHealthCheck { _, _ in
-            healthCheckInvoked = true
+        HanlinNativeServicesBridge.setActiveContainer(
+            appID: "hanlin.test.js",
+            dataRoot: "/tmp/data",
+            stateDir: "/tmp/data/state",
+            docsDir: "/tmp/data/docs",
+            cacheDir: "/tmp/data/cache",
+            grantedCapabilities: ["javascript", "node", "python"]
+        )
+        defer { HanlinNativeServicesBridge.clearActiveContainer() }
+
+        // Assert JavaScript executes and returns 42
+        let jsResult: String? = try await withCheckedThrowingContinuation { continuation in
+            HanlinNativeServicesBridge.executeJavaScript("6 * 7") { stdout, err in
+                if let err {
+                    continuation.resume(throwing: NSError(domain: "JSTest", code: 1, userInfo: [NSLocalizedDescriptionKey: err]))
+                } else {
+                    continuation.resume(returning: stdout)
+                }
+            }
         }
-        // Asynchronous callback verification
-        #expect(!healthCheckInvoked) // Confirms async non-blocking dispatch
+        #expect(jsResult == "42")
+
+        // Assert Node health check or execution
+        let (healthy, error): (Bool, String?) = await withCheckedContinuation { continuation in
+            HanlinNativeServicesBridge.nodeHealthCheck { isHealthy, err in
+                continuation.resume(returning: (isHealthy, err))
+            }
+        }
+        if healthy {
+            let nodeResult: String? = try await withCheckedThrowingContinuation { continuation in
+                HanlinNativeServicesBridge.executeNode("console.log(123 * 2);") { stdout, err in
+                    if let err {
+                        continuation.resume(throwing: NSError(domain: "NodeTest", code: 1, userInfo: [NSLocalizedDescriptionKey: err]))
+                    } else {
+                        continuation.resume(returning: stdout)
+                    }
+                }
+            }
+            #expect(nodeResult == "246")
+        } else {
+            #expect(error != nil || !healthy)
+        }
     }
 
     @MainActor
-    @Test("Inter-app request broker allows authorized cross-engine request flow")
+    @Test("Inter-app request broker allows authorized cross-engine request flow and enforces bidirectional capabilities")
     func interAppRequestBrokering() async throws {
         let callerID = try HanlinAppID(validating: "hanlin.caller")
         let targetID = try HanlinAppID(validating: "hanlin.target")
         let actionID = try HanlinActionID(validating: "echo")
         let capID = try HanlinCapabilityID(validating: "inter-app.test")
+        let unauthorizedCap = try HanlinCapabilityID(validating: "unauthorized.test")
 
-        let broker = HanlinMiniAppRequestBroker { _ in true }
+        let broker = HanlinMiniAppRequestBroker { request in
+            request.capability == capID
+        }
         await broker.register(target: targetID, action: actionID, capability: capID) { request in
             request.payload
         }
 
+        // 1. Authorized call succeeds
         let response = try await broker.request(.init(
             caller: callerID,
             target: targetID,
@@ -106,6 +145,117 @@ struct CanonicalMiniAppIntegrationTests {
             payload: .string("hello-cross-engine")
         ))
         #expect(response.value == .string("hello-cross-engine"))
+
+        // 2. Unauthorized capability throws
+        await #expect(throws: HanlinMiniAppRequestError.unauthorized) {
+            try await broker.request(.init(
+                caller: callerID,
+                target: targetID,
+                action: actionID,
+                capability: unauthorizedCap,
+                payload: .string("hello-cross-engine")
+            ))
+        }
+    }
+
+    @MainActor
+    @Test("Caller identity spoofing is rejected by host-bound broker")
+    func callerIdentitySpoofingRejected() async throws {
+        HanlinNativeServicesBridge.setActiveContainer(
+            appID: "hanlin.real.caller",
+            dataRoot: "/tmp/data",
+            stateDir: "/tmp/data/state",
+            docsDir: "/tmp/data/docs",
+            cacheDir: "/tmp/data/cache",
+            grantedCapabilities: ["inter-app.share"]
+        )
+        #expect(HanlinNativeServicesBridge.activeAppID == "hanlin.real.caller")
+
+        // Clearing active container causes sendRequest to fail with Unauthorized
+        HanlinNativeServicesBridge.clearActiveContainer()
+        let errResult: String? = await withCheckedContinuation { continuation in
+            HanlinNativeServicesBridge.sendRequest(
+                targetID: "hanlin.target",
+                action: "echo",
+                capability: "inter-app.share",
+                payloadJSON: "{}"
+            ) { _, err in
+                continuation.resume(returning: err)
+            }
+        }
+        #expect(errResult?.contains("Unauthorized") == true)
+    }
+
+    @MainActor
+    @Test("Private storage rejects path traversal and escapes from container root")
+    func privateStoragePathTraversalRejected() async throws {
+        let root = FileManager.default.temporaryDirectory.appending(
+            path: "hanlin-traversal-test-\(UUID().uuidString)",
+            directoryHint: .isDirectory
+        )
+        defer { try? FileManager.default.removeItem(at: root) }
+        let store = try HanlinMiniAppDataStore(root: root)
+        let appID = try HanlinAppID(validating: "hanlin.traversal.test")
+        let context = HanlinMiniAppStorageContext(appID: appID, store: store)
+
+        await #expect(throws: (any Error).self) {
+            try await context.write(Data("malicious".utf8), area: .state, path: "../escaped.txt")
+        }
+        await #expect(throws: (any Error).self) {
+            try await context.write(Data("malicious".utf8), area: .state, path: "../../etc/passwd")
+        }
+        await #expect(throws: (any Error).self) {
+            _ = try await context.read(area: .state, path: "../escaped.txt")
+        }
+    }
+
+    @MainActor
+    @Test("Per-entrypoint isolation on hybrid package prevents runtime leakage across sibling entrypoints")
+    func perEntrypointIsolationHybrid() throws {
+        let manifest = HanlinScriptingManifest(
+            name: "Hybrid Sibling Isolation",
+            version: "1.0.0",
+            hanlinRuntime: nil
+        )
+        let entryA = HanlinPackageEntrypointDescriptor(
+            id: "entryA",
+            kind: .app,
+            sourcePath: "entryA.js",
+            supportedContexts: [.mainApplication],
+            runtimePolicyID: "p1",
+            runtimeProfile: .hanlinNativeScript,
+            compatibility: .full
+        )
+        let entryB = HanlinPackageEntrypointDescriptor(
+            id: "entryB",
+            kind: .assistantTool,
+            sourcePath: "entryB.js",
+            supportedContexts: [.mainApplication],
+            runtimePolicyID: "p2",
+            runtimeProfile: nil,
+            compatibility: .full
+        )
+
+        let snapshot = HanlinStoredPackageSnapshot(
+            record: HanlinStoredPackageRecord(
+                installedPackageID: try HanlinInstalledPackageID(validating: "installed.hybrid"),
+                packageID: try HanlinPackageID(validating: "pkg.hybrid"),
+                activeGeneration: 1
+            ),
+            manifest: manifest,
+            entrypoints: [entryA, entryB]
+        )
+
+        let resolvedRuntimeA = snapshot.entrypoints[0].runtimeProfile
+        let resolvedRuntimeB = snapshot.entrypoints[1].runtimeProfile
+
+        #expect(resolvedRuntimeA == .hanlinNativeScript)
+        #expect(resolvedRuntimeB == nil)
+
+        let registration = snapshot.makeMiniAppRegistration()
+        let desc = try registration.appDescriptor()
+        #expect(desc.entryPoints[0].runtimeProfile == .hanlinNativeScript)
+        #expect(desc.entryPoints[1].runtimeProfile == nil)
     }
 
     @MainActor

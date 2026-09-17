@@ -83,6 +83,13 @@ for (const fix of controllerFixtures) {
   } catch {}
 }
 
+const parityFixturePath = resolve(repositoryRoot, 'DemoMiniApps', 'hanlin-script-parity.hanlinNativeScript');
+try {
+  await cp(parityFixturePath, resolve(e2eRoot, 'hanlin-script-parity.hanlinNativeScript'));
+} catch (err) {
+  console.warn(`Could not copy hanlin-script-parity: ${err}`);
+}
+
 console.log(`Prepared NativeScript production packages at ${e2eRoot}`);
 
 

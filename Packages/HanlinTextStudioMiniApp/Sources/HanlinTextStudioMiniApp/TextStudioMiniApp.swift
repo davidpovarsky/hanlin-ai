@@ -113,53 +113,15 @@ public struct TextStudioMiniAppProvider: HanlinCompiledMiniAppProvider, Sendable
 
     #if canImport(SwiftUI)
     @MainActor
-    public static var customViewFactory: (@MainActor (HanlinMiniAppHostContext) -> AnyView)?
-
-    @MainActor
     public func makeRootView(context: HanlinMiniAppHostContext) -> AnyView {
-        if let factory = Self.customViewFactory {
-            return factory(context)
-        }
-        return AnyView(NavigationStack {
-            TextStudioMiniAppView(context: context)
+        AnyView(NavigationStack {
+            NativeAppTextStudioRootView()
         })
     }
     #endif
 }
 
 #if canImport(SwiftUI)
-// MARK: - Standalone View
-
-public struct TextStudioMiniAppView: View {
-    let context: HanlinMiniAppHostContext
-    @State private var text = ""
-    @State private var analysis = "Word count: 0, Characters: 0"
-
-    public init(context: HanlinMiniAppHostContext) {
-        self.context = context
-    }
-
-    public var body: some View {
-        Form {
-            Section("Editor") {
-                TextEditor(text: $text)
-                    .frame(minHeight: 120)
-                    .onChange(of: text) { _, val in
-                        let words = val.split(whereSeparator: \.isWhitespace).count
-                        analysis = "Word count: \(words), Characters: \(val.count)"
-                    }
-            }
-            Section("Analysis") {
-                Text(analysis).foregroundStyle(.secondary)
-            }
-        }
-        .navigationTitle("Text Studio")
-        .toolbar {
-            ToolbarItem(placement: .cancellationAction) {
-                Button("Close") { context.dismiss() }
-            }
-        }
-    }
-}
+public typealias TextStudioMiniAppView = NativeAppTextStudioRootView
 #endif
 

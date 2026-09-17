@@ -1,4 +1,5 @@
 import Foundation
+import HanlinTextStudioMiniApp
 
 struct NativeAppTextStudioAnalyzeTool: NativeTool {
     let service: NativeAppTextStudioService

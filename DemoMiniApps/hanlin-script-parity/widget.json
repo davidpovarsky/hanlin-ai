@@ -1,0 +1,24 @@
+﻿{
+  "kind": "vStack",
+  "properties": {
+    "spacing": 8
+  },
+  "children": [
+    {
+      "kind": "text",
+      "properties": {
+        "content": "HanlinScript Parity",
+        "font": "headline"
+      },
+      "children": []
+    },
+    {
+      "kind": "text",
+      "properties": {
+        "content": "NativeScript Parity Widget",
+        "font": "caption"
+      },
+      "children": []
+    }
+  ]
+}

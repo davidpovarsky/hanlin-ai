@@ -1,4 +1,5 @@
 import Foundation
+import HanlinWikipediaMiniApp
 
 struct WikipediaAssistantSearchTool: NativeTool {
     let service: NativeAppWikipediaSearchService

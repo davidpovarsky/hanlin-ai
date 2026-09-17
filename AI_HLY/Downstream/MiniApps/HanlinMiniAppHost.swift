@@ -61,6 +61,22 @@ final class HanlinMiniAppHost {
            let rawIDs = try? JSONDecoder().decode([String].self, from: data) {
             hiddenAppIDs = Set(rawIDs.compactMap(HanlinAppID.init(rawValue:)))
         }
+        let broker = requestBroker
+        let store = dataStore
+        Task {
+            if let swiftParityID = try? HanlinAppID(validating: "hanlin.demo.swift-parity"),
+               let shareCap = try? HanlinCapabilityID(validating: "inter-app.share"),
+               let shareAction = try? HanlinActionID(validating: "share.value") {
+                await broker.register(target: swiftParityID, action: shareAction, capability: shareCap) { _ in
+                    let storageContext = HanlinMiniAppStorageContext(appID: swiftParityID, store: store)
+                    if let data = try? await storageContext.read(area: .state, path: "parity.json"),
+                       let val = try? JSONDecoder().decode(PersistedParityState.self, from: data) {
+                        return .object(["name": .string(val.name), "counter": .integer(Int64(val.counter))])
+                    }
+                    return .object(["name": .string("Hanlin"), "counter": .integer(0)])
+                }
+            }
+        }
     }
 
     var visibleItems: [HanlinMiniAppCatalogItem] {
@@ -153,4 +169,9 @@ final class HanlinMiniAppHost {
               data.count <= 1_048_576 else { throw URLError(.badServerResponse) }
         return "HTTPS \(http.statusCode), \(data.count) bytes"
     }
+}
+
+private struct PersistedParityState: Codable, Sendable {
+    let counter: Int
+    let name: String
 }

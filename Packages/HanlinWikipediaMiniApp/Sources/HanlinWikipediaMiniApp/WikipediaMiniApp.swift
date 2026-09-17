@@ -120,51 +120,15 @@ public struct WikipediaMiniAppProvider: HanlinCompiledMiniAppProvider, Sendable 
 
     #if canImport(SwiftUI)
     @MainActor
-    public static var customViewFactory: (@MainActor (HanlinMiniAppHostContext) -> AnyView)?
-
-    @MainActor
     public func makeRootView(context: HanlinMiniAppHostContext) -> AnyView {
-        if let factory = Self.customViewFactory {
-            return factory(context)
-        }
-        return AnyView(NavigationStack {
-            WikipediaMiniAppView(context: context)
+        AnyView(NavigationStack {
+            NativeAppWikipediaRootView()
         })
     }
     #endif
 }
 
 #if canImport(SwiftUI)
-// MARK: - Standalone View
-
-public struct WikipediaMiniAppView: View {
-    let context: HanlinMiniAppHostContext
-    @State private var query = ""
-    @State private var status = "Ready"
-
-    public init(context: HanlinMiniAppHostContext) {
-        self.context = context
-    }
-
-    public var body: some View {
-        List {
-            Section("Search Wikipedia") {
-                TextField("Search articles...", text: $query)
-                Button("Search") {
-                    status = "Searching for '\(query)'..."
-                }
-            }
-            Section("Status") {
-                Text(status).foregroundStyle(.secondary)
-            }
-        }
-        .navigationTitle("Wikipedia")
-        .toolbar {
-            ToolbarItem(placement: .cancellationAction) {
-                Button("Close") { context.dismiss() }
-            }
-        }
-    }
-}
+public typealias WikipediaMiniAppView = NativeAppWikipediaRootView
 #endif
 

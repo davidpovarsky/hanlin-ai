@@ -120,51 +120,15 @@ public struct SefariaMiniAppProvider: HanlinCompiledMiniAppProvider, Sendable {
 
     #if canImport(SwiftUI)
     @MainActor
-    public static var customViewFactory: (@MainActor (HanlinMiniAppHostContext) -> AnyView)?
-
-    @MainActor
     public func makeRootView(context: HanlinMiniAppHostContext) -> AnyView {
-        if let factory = Self.customViewFactory {
-            return factory(context)
-        }
-        return AnyView(NavigationStack {
-            SefariaMiniAppView(context: context)
+        AnyView(NavigationStack {
+            NativeAppSefariaRootView()
         })
     }
     #endif
 }
 
 #if canImport(SwiftUI)
-// MARK: - Standalone View
-
-public struct SefariaMiniAppView: View {
-    let context: HanlinMiniAppHostContext
-    @State private var query = ""
-    @State private var status = "Ready"
-
-    public init(context: HanlinMiniAppHostContext) {
-        self.context = context
-    }
-
-    public var body: some View {
-        List {
-            Section("Search Texts") {
-                TextField("Search Torah, Talmud, Tanakh...", text: $query)
-                Button("Search") {
-                    status = "Searching for '\(query)'..."
-                }
-            }
-            Section("Status") {
-                Text(status).foregroundStyle(.secondary)
-            }
-        }
-        .navigationTitle("Sefaria")
-        .toolbar {
-            ToolbarItem(placement: .cancellationAction) {
-                Button("Close") { context.dismiss() }
-            }
-        }
-    }
-}
+public typealias SefariaMiniAppView = NativeAppSefariaRootView
 #endif
 

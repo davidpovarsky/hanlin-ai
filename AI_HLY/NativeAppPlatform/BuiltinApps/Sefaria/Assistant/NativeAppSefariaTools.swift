@@ -1,4 +1,5 @@
 import Foundation
+import HanlinSefariaMiniApp
 
 struct SefariaAssistantSearchTool: NativeTool {
     let service: NativeAppSefariaSearchService

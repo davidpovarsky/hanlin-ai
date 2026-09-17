@@ -102,7 +102,16 @@ public final class HanlinNativeServicesBridge: NSObject {
                     workspace: workspace
                 )
                 let result = try await AppRuntimeCore.shared.javaScriptCore.execute(request)
-                let output = result.stdout.trimmingCharacters(in: .whitespacesAndNewlines)
+                var output = result.stdout.trimmingCharacters(in: .whitespacesAndNewlines)
+                if output.isEmpty, let val = result.value {
+                    switch val {
+                    case let .string(s): output = s
+                    case let .number(n): output = n.truncatingRemainder(dividingBy: 1) == 0 ? String(Int64(n)) : String(n)
+                    case let .boolean(b): output = String(b)
+                    case .null: output = "null"
+                    default: break
+                    }
+                }
                 safeCompletion(output.isEmpty ? "OK" : output, nil)
             } catch {
                 safeCompletion(nil, error.localizedDescription)

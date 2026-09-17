@@ -144,7 +144,7 @@ public actor HanlinAtomicScriptStore {
         var phase: TransactionPhase
     }
 
-    private let root: URL
+    public nonisolated let root: URL
     private let fileManager: FileManager
     private let faults: any HanlinInstallFaultInjector
     private let now: @Sendable () -> Date

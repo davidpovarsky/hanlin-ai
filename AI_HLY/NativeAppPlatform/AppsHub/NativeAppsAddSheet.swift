@@ -1,5 +1,6 @@
 import HanlinMiniAppCore
 import HanlinPlatformContracts
+import HanlinScriptStore
 import SwiftUI
 
 struct NativeAppsAddSheet: View {
@@ -7,6 +8,8 @@ struct NativeAppsAddSheet: View {
     let host: HanlinMiniAppHost
     let scriptingPlatform: HanlinScriptingPlatform
     @Environment(\.dismiss) private var dismiss
+
+    @State private var selectedPackageID: HanlinInstalledPackageID?
 
     var body: some View {
         NavigationStack {
@@ -40,6 +43,66 @@ struct NativeAppsAddSheet: View {
                     }
                 }
 
+                let canonicalAppIDs = Set(items.map(\.id))
+                let legacyPackages = scriptingPlatform.installedPackages.filter { !canonicalAppIDs.contains($0.appID) }
+                if !legacyPackages.isEmpty {
+                    Section("Scripting Packages") {
+                        ForEach(legacyPackages, id: \.record.installedPackageID) { package in
+                            let name = package.manifest?.name ?? package.record.packageID.rawValue
+                            Button {
+                                guard package.enabled else { return }
+                                let required = Set(package.entrypoints.first(where: { $0.kind == .app })?.requiredCapabilities.filter(\.required).map(\.capabilityID) ?? [])
+                                guard required.isSubset(of: Set(package.grantedCapabilities)) else {
+                                    return
+                                }
+                                dismiss()
+                                Task {
+                                    await scriptingPlatform.launch(package.record.installedPackageID)
+                                }
+                            } label: {
+                                HStack {
+                                    VStack(alignment: .leading, spacing: 4) {
+                                        Text(name)
+                                            .font(.headline)
+                                            .foregroundStyle(.primary)
+                                        Text(package.record.packageID.rawValue)
+                                            .font(.caption)
+                                            .foregroundStyle(.secondary)
+                                    }
+                                    Spacer()
+                                    if !package.enabled {
+                                        Text("Disabled")
+                                            .font(.caption)
+                                            .foregroundStyle(.secondary)
+                                    }
+                                }
+                                .contentShape(Rectangle())
+                            }
+                            .buttonStyle(.plain)
+                            .accessibilityIdentifier("hanlin-package-card-\(name)")
+                            .accessibilityLabel(name)
+                            .contextMenu {
+                                Button {
+                                    guard package.enabled else { return }
+                                    dismiss()
+                                    Task {
+                                        await scriptingPlatform.launch(package.record.installedPackageID)
+                                    }
+                                } label: {
+                                    Label("Open", systemImage: "play.fill")
+                                }
+                                .disabled(!package.enabled)
+
+                                Button {
+                                    selectedPackageID = package.record.installedPackageID
+                                } label: {
+                                    Label("Package Information", systemImage: "info.circle")
+                                }
+                            }
+                        }
+                    }
+                }
+
                 Section("Bundled Swift Apps") {
                     ForEach(items.filter({ $0.engine == .swift })) { item in
                         Label(
@@ -55,6 +118,21 @@ struct NativeAppsAddSheet: View {
                     Button("Done") { dismiss() }
                 }
             }
+            .sheet(item: Binding(
+                get: { selectedPackageID.map { IdentifiablePackageID(id: $0) } },
+                set: { selectedPackageID = $0?.id }
+            )) { wrapper in
+                NavigationStack {
+                    ScriptingInstalledPackageDetailView(
+                        packageID: wrapper.id,
+                        platform: scriptingPlatform
+                    )
+                }
+            }
         }
     }
+}
+
+private struct IdentifiablePackageID: Identifiable {
+    let id: HanlinInstalledPackageID
 }

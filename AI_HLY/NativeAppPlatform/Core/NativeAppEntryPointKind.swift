@@ -1,4 +1,5 @@
 import Foundation
+import HanlinMiniAppCore
 
 enum NativeAppEntryPointKind: String, Codable, Hashable, CaseIterable {
     case fullApp
@@ -24,8 +25,4 @@ enum NativeAppEntryPointKind: String, Codable, Hashable, CaseIterable {
     }
 }
 
-enum NativePresentationMode: String, Codable, Hashable {
-    case fullApp
-    case chatCard
-    case compact
-}
+typealias NativePresentationMode = HanlinMiniAppCore.NativePresentationMode

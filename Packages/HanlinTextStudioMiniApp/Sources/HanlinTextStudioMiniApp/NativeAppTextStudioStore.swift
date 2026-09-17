@@ -1,18 +1,19 @@
 import Foundation
+#if canImport(Combine)
 import Combine
 
 @MainActor
-final class NativeAppTextStudioStore: ObservableObject {
-    @Published var draft: String {
+public final class NativeAppTextStudioStore: ObservableObject {
+    @Published public var draft: String {
         didSet { storage.setPersistentString(draft, forKey: draftKey) }
     }
-    @Published private(set) var history: [NativeAppTextStudioHistoryItem]
+    @Published public private(set) var history: [NativeAppTextStudioHistoryItem]
 
-    private let storage: NativeAppStorageBroker
+    private let storage: any TextStudioStorage
     private let draftKey = "draft"
     private let historyKey = "history"
 
-    init(storage: NativeAppStorageBroker) {
+    public init(storage: any TextStudioStorage = UserDefaultsTextStudioStorage()) {
         self.storage = storage
         self.draft = storage.persistentString(forKey: draftKey) ?? ""
         if let data = storage.persistentData(forKey: historyKey),
@@ -23,18 +24,18 @@ final class NativeAppTextStudioStore: ObservableObject {
         }
     }
 
-    func addHistory(operation: String, input: String, output: String) {
+    public func addHistory(operation: String, input: String, output: String) {
         history.insert(NativeAppTextStudioHistoryItem(operation: operation, input: input, output: output), at: 0)
         history = Array(history.prefix(40))
         persistHistory()
     }
 
-    func clearHistory() {
+    public func clearHistory() {
         history = []
         storage.removePersistentValue(forKey: historyKey)
     }
 
-    func removeHistory(at offsets: IndexSet) {
+    public func removeHistory(at offsets: IndexSet) {
         for index in offsets.sorted(by: >) {
             history.remove(at: index)
         }
@@ -47,3 +48,4 @@ final class NativeAppTextStudioStore: ObservableObject {
         }
     }
 }
+#endif

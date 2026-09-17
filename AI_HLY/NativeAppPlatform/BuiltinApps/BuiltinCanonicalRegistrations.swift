@@ -23,25 +23,6 @@ enum BuiltinCanonicalRegistrations {
         registry.register(SefariaMiniAppProvider())
         registry.register(WikipediaMiniAppProvider())
         registry.register(TextStudioMiniAppProvider())
-
-        SefariaMiniAppProvider.customViewFactory = { context in
-            AnyView(NativeAppSessionContainerView(request: NativeAppRouter().launchRequest(
-                appID: "nativeapp.sefaria",
-                presentationStyle: .fullScreen
-            )))
-        }
-        WikipediaMiniAppProvider.customViewFactory = { context in
-            AnyView(NativeAppSessionContainerView(request: NativeAppRouter().launchRequest(
-                appID: "nativeapp.wikipedia",
-                presentationStyle: .fullScreen
-            )))
-        }
-        TextStudioMiniAppProvider.customViewFactory = { context in
-            AnyView(NativeAppSessionContainerView(request: NativeAppRouter().launchRequest(
-                appID: "nativeapp.textstudio",
-                presentationStyle: .fullScreen
-            )))
-        }
     }
 
     static var all: [any HanlinStaticMiniAppRegistration] {

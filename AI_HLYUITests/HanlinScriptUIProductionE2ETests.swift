@@ -318,7 +318,18 @@ final class HanlinScriptUIProductionE2ETests: XCTestCase {
         return appsAddButton
     }
 
+    private func closeAddSheetIfNeeded() {
+        if app.navigationBars["Add Apps"].exists {
+            let done = app.buttons["Done"].firstMatch
+            if done.waitForExistence(timeout: 2) && done.isHittable {
+                done.tap()
+                _ = waitUntil(timeout: 3) { !app.navigationBars["Add Apps"].exists }
+            }
+        }
+    }
+
     private func openApps() {
+        closeAddSheetIfNeeded()
         if appsAddButton.waitForExistence(timeout: 5) { return }
 
         let candidates = [
@@ -397,7 +408,10 @@ final class HanlinScriptUIProductionE2ETests: XCTestCase {
     }
 
     private func ensurePackageInstalled(named packageName: String, archive: String) {
-        if findPackageCard(named: packageName).exists { return }
+        if findPackageCard(named: packageName).exists {
+            closeAddSheetIfNeeded()
+            return
+        }
         ensureAppsAddButton(timeout: 15).tap()
         let importLink = app.buttons["hanlin-import-script-package"].firstMatch
         XCTAssertTrue(importLink.waitForExistence(timeout: 10))
@@ -441,6 +455,26 @@ final class HanlinScriptUIProductionE2ETests: XCTestCase {
             app.swipeUp()
             if element.waitForExistence(timeout: 2) {
                 return element
+            }
+        }
+        if !app.navigationBars["Add Apps"].exists && appsAddButton.waitForExistence(timeout: 3) {
+            appsAddButton.tap()
+            _ = app.navigationBars["Add Apps"].waitForExistence(timeout: 5)
+            let inSheet = app.descendants(matching: .any).matching(predicate).firstMatch
+            if inSheet.waitForExistence(timeout: 3) {
+                return inSheet
+            }
+            for _ in 1...3 {
+                app.swipeUp()
+                if inSheet.waitForExistence(timeout: 2) {
+                    return inSheet
+                }
+            }
+            closeAddSheetIfNeeded()
+        } else if app.navigationBars["Add Apps"].exists {
+            let inSheet = app.descendants(matching: .any).matching(predicate).firstMatch
+            if inSheet.waitForExistence(timeout: 2) {
+                return inSheet
             }
         }
         return element
@@ -501,6 +535,7 @@ final class HanlinScriptUIProductionE2ETests: XCTestCase {
                 closeDetails()
             }
         }
+        closeAddSheetIfNeeded()
     }
 
     private func toggleSwitch(_ element: XCUIElement, targetValue: String) {

@@ -155,6 +155,8 @@ public struct HanlinScriptingManifest: Codable, Hashable, Sendable {
     public let runInApp: Bool
     public let intentInputTypes: [String]
     public let remoteResource: HanlinScriptingRemoteResource?
+    public let hanlinAppID: String?
+    public let hanlinRuntime: String?
     public let unknownFields: [String: HanlinJSONValue]
 
     public init(
@@ -172,6 +174,8 @@ public struct HanlinScriptingManifest: Codable, Hashable, Sendable {
         runInApp: Bool = false,
         intentInputTypes: [String] = [],
         remoteResource: HanlinScriptingRemoteResource? = nil,
+        hanlinAppID: String? = nil,
+        hanlinRuntime: String? = nil,
         unknownFields: [String: HanlinJSONValue] = [:]
     ) {
         self.name = name
@@ -188,6 +192,20 @@ public struct HanlinScriptingManifest: Codable, Hashable, Sendable {
         self.runInApp = runInApp
         self.intentInputTypes = intentInputTypes
         self.remoteResource = remoteResource
+        if let explicitID = hanlinAppID {
+            self.hanlinAppID = explicitID
+        } else if let field = unknownFields["hanlinAppID"], case let .string(val) = field {
+            self.hanlinAppID = val
+        } else {
+            self.hanlinAppID = nil
+        }
+        if let explicitRT = hanlinRuntime {
+            self.hanlinRuntime = explicitRT
+        } else if let field = unknownFields["hanlinRuntime"], case let .string(val) = field {
+            self.hanlinRuntime = val
+        } else {
+            self.hanlinRuntime = nil
+        }
         self.unknownFields = unknownFields
     }
 
@@ -195,7 +213,7 @@ public struct HanlinScriptingManifest: Codable, Hashable, Sendable {
         "name", "version", "description", "localizedNames",
         "localizedDescriptions", "author", "contributors", "icon",
         "iconImage", "color", "entry", "runInApp", "intentInputTypes",
-        "remoteResource"
+        "remoteResource", "hanlinAppID", "hanlinRuntime"
     ]
 
     public init(from decoder: Decoder) throws {
@@ -230,6 +248,8 @@ public struct HanlinScriptingManifest: Codable, Hashable, Sendable {
             HanlinScriptingRemoteResource.self,
             forKey: key("remoteResource")
         )
+        let decodedAppID = try container.decodeIfPresent(String.self, forKey: key("hanlinAppID"))
+        let decodedRuntime = try container.decodeIfPresent(String.self, forKey: key("hanlinRuntime"))
         var preserved: [String: HanlinJSONValue] = [:]
         for candidate in container.allKeys where !Self.knownKeys.contains(candidate.stringValue) {
             preserved[candidate.stringValue] = try container.decode(
@@ -237,6 +257,18 @@ public struct HanlinScriptingManifest: Codable, Hashable, Sendable {
                 forKey: candidate
             ).value
         }
+        hanlinAppID = decodedAppID ?? {
+            if let field = preserved["hanlinAppID"], case let .string(val) = field {
+                return val
+            }
+            return nil
+        }()
+        hanlinRuntime = decodedRuntime ?? {
+            if let field = preserved["hanlinRuntime"], case let .string(val) = field {
+                return val
+            }
+            return nil
+        }()
         unknownFields = preserved
     }
 
@@ -257,6 +289,8 @@ public struct HanlinScriptingManifest: Codable, Hashable, Sendable {
         try container.encode(runInApp, forKey: key("runInApp"))
         try container.encode(intentInputTypes, forKey: key("intentInputTypes"))
         try container.encodeIfPresent(remoteResource, forKey: key("remoteResource"))
+        try container.encodeIfPresent(hanlinAppID, forKey: key("hanlinAppID"))
+        try container.encodeIfPresent(hanlinRuntime, forKey: key("hanlinRuntime"))
         for (field, value) in unknownFields where !Self.knownKeys.contains(field) {
             try container.encode(ManifestJSONValue(value), forKey: key(field))
         }

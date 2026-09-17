@@ -1,11 +1,12 @@
 import Foundation
+#if canImport(Combine)
 import Combine
 
 @MainActor
-final class NativeAppSefariaStore: ObservableObject {
-    @Published private(set) var recentQueries: [String]
-    @Published private(set) var savedSources: [NativeAppSefariaSource]
-    @Published var preferredLanguage: NativeAppSefariaLanguage {
+public final class NativeAppSefariaStore: ObservableObject {
+    @Published public private(set) var recentQueries: [String]
+    @Published public private(set) var savedSources: [NativeAppSefariaSource]
+    @Published public var preferredLanguage: NativeAppSefariaLanguage {
         didSet { defaults.set(preferredLanguage.rawValue, forKey: languageKey) }
     }
 
@@ -14,7 +15,7 @@ final class NativeAppSefariaStore: ObservableObject {
     private let savedKey = "nativeapp.sefaria.saved"
     private let languageKey = "nativeapp.sefaria.language"
 
-    init(defaults: UserDefaults = .standard) {
+    public init(defaults: UserDefaults = .standard) {
         self.defaults = defaults
         self.recentQueries = defaults.stringArray(forKey: recentKey) ?? []
         if let data = defaults.data(forKey: savedKey),
@@ -28,7 +29,7 @@ final class NativeAppSefariaStore: ObservableObject {
         ) ?? .bilingual
     }
 
-    func addRecentQuery(_ query: String) {
+    public func addRecentQuery(_ query: String) {
         let trimmed = query.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !trimmed.isEmpty else { return }
         recentQueries.removeAll { $0.caseInsensitiveCompare(trimmed) == .orderedSame }
@@ -37,11 +38,11 @@ final class NativeAppSefariaStore: ObservableObject {
         defaults.set(recentQueries, forKey: recentKey)
     }
 
-    func isSaved(_ source: NativeAppSefariaSource) -> Bool {
+    public func isSaved(_ source: NativeAppSefariaSource) -> Bool {
         savedSources.contains { $0.ref == source.ref }
     }
 
-    func toggleSaved(_ source: NativeAppSefariaSource) {
+    public func toggleSaved(_ source: NativeAppSefariaSource) {
         if let index = savedSources.firstIndex(where: { $0.ref == source.ref }) {
             savedSources.remove(at: index)
         } else {
@@ -50,12 +51,12 @@ final class NativeAppSefariaStore: ObservableObject {
         persistSavedSources()
     }
 
-    func clearRecentQueries() {
+    public func clearRecentQueries() {
         recentQueries = []
         defaults.removeObject(forKey: recentKey)
     }
 
-    func clearSavedSources() {
+    public func clearSavedSources() {
         savedSources = []
         defaults.removeObject(forKey: savedKey)
     }
@@ -66,3 +67,4 @@ final class NativeAppSefariaStore: ObservableObject {
         }
     }
 }
+#endif

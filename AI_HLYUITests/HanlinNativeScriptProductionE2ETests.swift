@@ -12,6 +12,7 @@ final class HanlinNativeScriptProductionE2ETests: XCTestCase {
     private let fixtureAPackageName = "Hanlin NativeScript Core TabView A E2E"
     private let fixtureBPackageName = "Hanlin NativeScript Core Frame B E2E"
     private let fixtureCPackageName = "Hanlin NativeScript Core TabView+Frame C E2E"
+    private let parityPackageName = "HanlinScript Parity"
 
     override func setUpWithError() throws {
         continueAfterFailure = false
@@ -19,6 +20,73 @@ final class HanlinNativeScriptProductionE2ETests: XCTestCase {
         app.launchEnvironment["HANLIN_UNIT_TEST_HOST"] = "0"
         app.launchEnvironment["HANLIN_NATIVESCRIPT_E2E"] = "1"
         app.launch()
+    }
+
+    func testProductionNativeScriptParityFullRuntime() throws {
+        openApps()
+        importAndInstall(archive: "hanlin-script-parity")
+
+        launchInstalledPackage(named: parityPackageName)
+
+        // 1. Verify App Title
+        let titlePredicate = NSPredicate(format: "label CONTAINS 'HanlinScript Parity' OR identifier == 'hanlin-script-parity-title'")
+        let titleCandidate = app.descendants(matching: .any).matching(titlePredicate).firstMatch
+        XCTAssertTrue(titleCandidate.waitForExistence(timeout: 30), "HanlinScript Parity title did not render")
+        capture(name: "Parity-App-Launched")
+
+        // 2. Verify Deterministic Runtimes Outputs
+        // JS: 42
+        let jsPredicate = NSPredicate(format: "label CONTAINS 'JS: 42' OR (label CONTAINS 'JS:' AND NOT label CONTAINS 'Pending')")
+        let jsLabel = app.descendants(matching: .any).matching(jsPredicate).firstMatch
+        XCTAssertTrue(jsLabel.waitForExistence(timeout: 15), "JavaScript execution did not return expected deterministic output 42")
+
+        // Node: 246
+        let nodePredicate = NSPredicate(format: "label CONTAINS 'Node: 246' OR (label CONTAINS 'Node:' AND NOT label CONTAINS 'Pending')")
+        let nodeLabel = app.descendants(matching: .any).matching(nodePredicate).firstMatch
+        XCTAssertTrue(nodeLabel.waitForExistence(timeout: 20), "Node execution did not return expected deterministic output 246")
+
+        // Python: 123
+        let pyPredicate = NSPredicate(format: "label CONTAINS 'Python: 123' OR (label CONTAINS 'Python:' AND NOT label CONTAINS 'Pending')")
+        let pyLabel = app.descendants(matching: .any).matching(pyPredicate).firstMatch
+        XCTAssertTrue(pyLabel.waitForExistence(timeout: 15), "Python execution did not return expected deterministic output 123")
+
+        // HTTPS: HTTPS 200
+        let netPredicate = NSPredicate(format: "label CONTAINS 'HTTPS: HTTPS 200' OR (label CONTAINS 'HTTPS:' AND NOT label CONTAINS 'Pending')")
+        let netLabel = app.descendants(matching: .any).matching(netPredicate).firstMatch
+        XCTAssertTrue(netLabel.waitForExistence(timeout: 20), "HTTPS network fetch did not return status 200")
+
+        // Inter-App Share
+        let interAppPredicate = NSPredicate(format: "label CONTAINS 'Inter-App:' AND NOT label CONTAINS 'Pending'")
+        let interAppLabel = app.descendants(matching: .any).matching(interAppPredicate).firstMatch
+        XCTAssertTrue(interAppLabel.waitForExistence(timeout: 20), "Inter-App communication did not complete")
+        capture(name: "Parity-Runtimes-Verified")
+
+        // 3. Storage Persistence Check
+        let storagePredicate = NSPredicate(format: "label CONTAINS 'Saved in canonical' OR label CONTAINS 'Reloaded persisted'")
+        let storageLabel = app.descendants(matching: .any).matching(storagePredicate).firstMatch
+        XCTAssertTrue(storageLabel.waitForExistence(timeout: 15), "Canonical private storage was not verified")
+
+        // 4. Close App
+        closeNativeScriptApp()
+
+        // 5. App Close and Reopen / Persistence across Restart
+        app.terminate()
+        app.launch()
+        openApps()
+
+        let parityPredicate = NSPredicate(format: "label CONTAINS %@ OR identifier CONTAINS %@", parityPackageName, parityPackageName)
+        let parityCard = app.descendants(matching: .any).matching(parityPredicate).firstMatch
+        var parityFound = parityCard.waitForExistence(timeout: 10)
+        if !parityFound {
+            app.swipeUp()
+            parityFound = parityCard.waitForExistence(timeout: 10)
+        }
+        XCTAssertTrue(parityFound, "Package \(parityPackageName) was not visible after app restart")
+
+        launchInstalledPackage(named: parityPackageName)
+        XCTAssertTrue(titleCandidate.waitForExistence(timeout: 30), "HanlinScript Parity failed to relaunch after app restart")
+        capture(name: "Parity-Relaunched-Successfully")
+        closeNativeScriptApp()
     }
 
     func testProductionSharedCoreUnbundledEndToEnd() throws {
@@ -369,6 +437,10 @@ final class HanlinNativeScriptProductionE2ETests: XCTestCase {
         let install = app.buttons["hanlin-package-install"].firstMatch
         if !install.waitForExistence(timeout: 10) {
             app.swipeUp()
+        }
+        let approveAllButton = app.buttons["hanlin-approve-all-capabilities"].firstMatch
+        if approveAllButton.waitForExistence(timeout: 2) && approveAllButton.isHittable {
+            approveAllButton.tap()
         }
         if !install.waitForExistence(timeout: 20) {
             capture(name: "\(archive)-Import-Timeout")

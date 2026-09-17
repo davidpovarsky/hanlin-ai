@@ -1,16 +1,48 @@
 import Foundation
+#if canImport(FoundationNetworking)
+import FoundationNetworking
+#endif
 
-struct NativeAppSefariaClient {
-    var baseURL = URL(string: "https://www.sefaria.org")!
+public enum NativeAppSefariaError: LocalizedError, Sendable {
+    case invalidReference
+    case unresolvedReference(String)
+    case invalidResponse
+    case noText(String)
 
-    func search(query: String, limit: Int) async throws -> [NativeAppSefariaSearchResult] {
+    public var errorDescription: String? {
+        switch self {
+        case .invalidReference:
+            return "The Sefaria reference is empty."
+        case .unresolvedReference(let reference):
+            return "Sefaria could not resolve the reference: \(reference)"
+        case .invalidResponse:
+            return "Sefaria returned an invalid response."
+        case .noText(let reference):
+            return "Sefaria returned no readable text for: \(reference)"
+        }
+    }
+}
+
+public struct NativeAppSefariaClient: Sendable {
+    public typealias TraceLogger = @Sendable (String, [String: Any]) -> Void
+    public typealias TraceErrorLogger = @Sendable (String, any Error, [String: Any]) -> Void
+
+    public nonisolated(unsafe) static var traceLogger: TraceLogger?
+    public nonisolated(unsafe) static var traceErrorLogger: TraceErrorLogger?
+
+    public var baseURL: URL
+
+    public init(baseURL: URL = URL(string: "https://www.sefaria.org")!) {
+        self.baseURL = baseURL
+    }
+
+    public func search(query: String, limit: Int) async throws -> [NativeAppSefariaSearchResult] {
         let normalizedQuery = query.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !normalizedQuery.isEmpty else { return [] }
 
-        NativeToolTraceLogger.shared.log(
-            "sefaria_search_started",
-            ["query": query, "normalizedQuery": normalizedQuery, "limit": limit]
-        )
+        Self.traceLogger?("sefaria_search_started", [
+            "query": query, "normalizedQuery": normalizedQuery, "limit": limit
+        ])
 
         let resolution = try await resolveName(normalizedQuery)
         if let resolvedRef = resolution.resolvedRef {
@@ -34,14 +66,14 @@ struct NativeAppSefariaClient {
                 ref: ref,
                 title: completion.title,
                 snippet: completion.type.map {
-                    String(format: String(localized: "Sefaria result type: %@"), $0)
+                    String(format: "Sefaria result type: %@", $0)
                 } ?? "",
                 url: completion.url ?? Self.sefariaWebURL(for: ref, baseURL: baseURL)
             )
         }
     }
 
-    func resolveName(_ query: String) async throws -> NativeAppSefariaNameResolution {
+    public func resolveName(_ query: String) async throws -> NativeAppSefariaNameResolution {
         let normalizedQuery = query.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !normalizedQuery.isEmpty else {
             return NativeAppSefariaNameResolution(resolvedRef: nil, completions: [])
@@ -52,10 +84,9 @@ struct NativeAppSefariaClient {
             .appendingPathComponent("name")
             .appendingPathComponent(normalizedQuery)
 
-        NativeToolTraceLogger.shared.log(
-            "sefaria_name_resolution_requested",
-            ["query": query, "normalizedQuery": normalizedQuery, "endpoint": url.absoluteString]
-        )
+        Self.traceLogger?("sefaria_name_resolution_requested", [
+            "query": query, "normalizedQuery": normalizedQuery, "endpoint": url.absoluteString
+        ])
 
         let json = try await requestJSON(url: url, endpoint: "api/name")
         let isReference = Self.bool(json["is_ref"])
@@ -73,19 +104,16 @@ struct NativeAppSefariaClient {
         }
 
         let completions = Self.parseCompletions(json, baseURL: baseURL)
-        NativeToolTraceLogger.shared.log(
-            "sefaria_name_resolution_completed",
-            [
-                "query": query,
-                "resolvedRef": resolvedRef as Any,
-                "completionCount": completions.count,
-                "isReference": isReference
-            ]
-        )
+        Self.traceLogger?("sefaria_name_resolution_completed", [
+            "query": query,
+            "resolvedRef": resolvedRef as Any,
+            "completionCount": completions.count,
+            "isReference": isReference
+        ])
         return NativeAppSefariaNameResolution(resolvedRef: resolvedRef, completions: completions)
     }
 
-    func source(ref: String) async throws -> NativeAppSefariaSource {
+    public func source(ref: String) async throws -> NativeAppSefariaSource {
         let normalizedQuery = ref.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !normalizedQuery.isEmpty else { throw NativeAppSefariaError.invalidReference }
         let resolution = try await resolveName(normalizedQuery)
@@ -110,19 +138,16 @@ struct NativeAppSefariaClient {
         ]
         guard let url = components?.url else { throw URLError(.badURL) }
 
-        NativeToolTraceLogger.shared.log(
-            "sefaria_v3_text_requested",
-            ["resolvedRef": resolvedRef, "endpoint": url.absoluteString]
-        )
+        Self.traceLogger?("sefaria_v3_text_requested", [
+            "resolvedRef": resolvedRef, "endpoint": url.absoluteString
+        ])
         let json: [String: Any]
         do {
             json = try await requestJSON(url: url, endpoint: "api/v3/texts")
         } catch {
-            NativeToolTraceLogger.shared.logError(
-                "sefaria_v3_text_failed",
-                error: error,
-                fields: ["resolvedRef": resolvedRef, "succeeded": false]
-            )
+            Self.traceErrorLogger?("sefaria_v3_text_failed", error, [
+                "resolvedRef": resolvedRef, "succeeded": false
+            ])
             throw error
         }
         let versions = (json["versions"] as? [Any]) ?? []
@@ -152,31 +177,27 @@ struct NativeAppSefariaClient {
             heText: hebrewText,
             url: Self.sefariaWebURL(for: normalizedRef, baseURL: baseURL)
         )
-        NativeToolTraceLogger.shared.log(
-            "sefaria_v3_text_completed",
-            [
-                "resolvedRef": normalizedRef,
-                "versionCount": versions.count,
-                "foundHebrew": hebrewText != nil,
-                "foundEnglish": englishText != nil,
-                "hebrewVersionTitle": hebrew?.versionTitle as Any,
-                "englishVersionTitle": english?.versionTitle as Any,
-                "hebrewDirection": hebrew?.direction as Any,
-                "englishDirection": english?.direction as Any,
-                "returnedTextLength": source.combinedText.count,
-                "succeeded": true
-            ]
-        )
+        Self.traceLogger?("sefaria_v3_text_completed", [
+            "resolvedRef": normalizedRef,
+            "versionCount": versions.count,
+            "foundHebrew": hebrewText != nil,
+            "foundEnglish": englishText != nil,
+            "hebrewVersionTitle": hebrew?.versionTitle as Any,
+            "englishVersionTitle": english?.versionTitle as Any,
+            "hebrewDirection": hebrew?.direction as Any,
+            "englishDirection": english?.direction as Any,
+            "returnedTextLength": source.combinedText.count,
+            "succeeded": true
+        ])
         return source
     }
 
     private func requestJSON(url: URL, endpoint: String) async throws -> [String: Any] {
         let (data, response) = try await URLSession.shared.data(from: url)
         guard let http = response as? HTTPURLResponse else { throw URLError(.badServerResponse) }
-        NativeToolTraceLogger.shared.log(
-            "sefaria_endpoint_response",
-            ["endpoint": endpoint, "url": url.absoluteString, "statusCode": http.statusCode]
-        )
+        Self.traceLogger?("sefaria_endpoint_response", [
+            "endpoint": endpoint, "url": url.absoluteString, "statusCode": http.statusCode
+        ])
         guard (200..<300).contains(http.statusCode) else { throw URLError(.badServerResponse) }
         guard let json = try JSONSerialization.jsonObject(with: data) as? [String: Any] else {
             throw NativeAppSefariaError.invalidResponse
@@ -332,25 +353,5 @@ private struct VersionCandidate {
 
     var preferenceScore: Int {
         (isSource ? 2 : 0) + (isPrimary ? 1 : 0)
-    }
-}
-
-private enum NativeAppSefariaError: LocalizedError {
-    case invalidReference
-    case unresolvedReference(String)
-    case invalidResponse
-    case noText(String)
-
-    var errorDescription: String? {
-        switch self {
-        case .invalidReference:
-            return String(localized: "The Sefaria reference is empty.")
-        case .unresolvedReference(let reference):
-            return String(localized: "Sefaria could not resolve the reference: \(reference)")
-        case .invalidResponse:
-            return String(localized: "Sefaria returned an invalid response.")
-        case .noText(let reference):
-            return String(localized: "Sefaria returned no readable text for: \(reference)")
-        }
     }
 }

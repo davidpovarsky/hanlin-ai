@@ -27,7 +27,6 @@ struct NativeAppsHubView: View {
                 LazyVStack(alignment: .leading, spacing: 28) {
                     engineSection(.swift, title: "Swift")
                     engineSection(.nativeScript, title: "NativeScript")
-                    scriptingPackagesSection()
                 }
                 .padding(.horizontal, 24)
                 .padding(.vertical, 18)
@@ -48,9 +47,7 @@ struct NativeAppsHubView: View {
                 }
             }
             .overlay {
-                let canonicalAppIDs = Set(miniAppHost.items.map(\.id))
-                let legacyPackagesCount = scriptingPlatform.installedPackages.filter { !canonicalAppIDs.contains($0.appID) }.count
-                if !searchText.isEmpty && filteredItems.isEmpty && legacyPackagesCount == 0 {
+                if !searchText.isEmpty && filteredItems.isEmpty {
                     ContentUnavailableView.search(text: searchText)
                 }
             }
@@ -140,64 +137,6 @@ struct NativeAppsHubView: View {
                 Text(title)
                     .font(.title2.bold())
                     .accessibilityIdentifier("hanlin-miniapps-section-\(engine.rawValue)")
-            }
-        }
-    }
-
-    @ViewBuilder
-    private func scriptingPackagesSection() -> some View {
-        let canonicalAppIDs = Set(miniAppHost.items.map(\.id))
-        let remainingPackages = scriptingPlatform.installedPackages.filter { package in
-            !canonicalAppIDs.contains(package.appID)
-        }
-        let filtered = remainingPackages.filter { package in
-            let query = searchText.trimmingCharacters(in: .whitespacesAndNewlines)
-            guard !query.isEmpty else { return true }
-            return [
-                package.manifest?.name,
-                package.record.packageID.rawValue,
-                package.manifest?.description
-            ].compactMap { $0 }.joined(separator: " ").localizedStandardContains(query)
-        }
-        if !filtered.isEmpty {
-            Section {
-                LazyVGrid(columns: columns, spacing: 20) {
-                    ForEach(filtered, id: \.record.installedPackageID) { package in
-                        scriptingPackageCard(package)
-                    }
-                }
-            } header: {
-                Text("Packages")
-                    .font(.title2.bold())
-                    .accessibilityIdentifier("hanlin-miniapps-section-packages")
-            }
-        }
-    }
-
-    private func scriptingPackageCard(_ package: HanlinStoredPackageSnapshot) -> some View {
-        let name = package.manifest?.name ?? package.record.packageID.rawValue
-        return Button {
-            guard package.enabled else { return }
-            Task { await scriptingPlatform.launch(package.record.installedPackageID) }
-        } label: {
-            ScriptingPackageCardView(package: package)
-        }
-        .buttonStyle(.plain)
-        .accessibilityIdentifier("hanlin-package-card-\(name)")
-        .accessibilityLabel(name)
-        .disabled(isEditingApps)
-        .contextMenu {
-            Button {
-                guard package.enabled else { return }
-                Task { await scriptingPlatform.launch(package.record.installedPackageID) }
-            } label: {
-                Label("Open", systemImage: "play.fill")
-            }
-            .disabled(!package.enabled)
-            Button {
-                scriptingPackageID = package.record.installedPackageID
-            } label: {
-                Label("Package Information", systemImage: "info.circle")
             }
         }
     }

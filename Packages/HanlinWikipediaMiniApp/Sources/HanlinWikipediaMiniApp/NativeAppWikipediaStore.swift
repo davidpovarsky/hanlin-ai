@@ -1,11 +1,12 @@
 import Foundation
+#if canImport(Combine)
 import Combine
 
 @MainActor
-final class NativeAppWikipediaStore: ObservableObject {
-    @Published private(set) var recentQueries: [String]
-    @Published private(set) var savedArticles: [NativeAppWikipediaSummary]
-    @Published var language: NativeAppWikipediaLanguage {
+public final class NativeAppWikipediaStore: ObservableObject {
+    @Published public private(set) var recentQueries: [String]
+    @Published public private(set) var savedArticles: [NativeAppWikipediaSummary]
+    @Published public var language: NativeAppWikipediaLanguage {
         didSet { defaults.set(language.rawValue, forKey: languageKey) }
     }
 
@@ -14,7 +15,7 @@ final class NativeAppWikipediaStore: ObservableObject {
     private let savedKey = "nativeapp.wikipedia.saved"
     private let languageKey = "nativeapp.wikipedia.language"
 
-    init(defaults: UserDefaults = .standard) {
+    public init(defaults: UserDefaults = .standard) {
         self.defaults = defaults
         self.recentQueries = defaults.stringArray(forKey: recentKey) ?? []
         if let data = defaults.data(forKey: savedKey),
@@ -28,7 +29,7 @@ final class NativeAppWikipediaStore: ObservableObject {
         ) ?? .english
     }
 
-    func addRecentQuery(_ query: String) {
+    public func addRecentQuery(_ query: String) {
         let trimmed = query.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !trimmed.isEmpty else { return }
         recentQueries.removeAll { $0.caseInsensitiveCompare(trimmed) == .orderedSame }
@@ -37,11 +38,11 @@ final class NativeAppWikipediaStore: ObservableObject {
         defaults.set(recentQueries, forKey: recentKey)
     }
 
-    func isSaved(_ article: NativeAppWikipediaSummary) -> Bool {
+    public func isSaved(_ article: NativeAppWikipediaSummary) -> Bool {
         savedArticles.contains { $0.id == article.id }
     }
 
-    func toggleSaved(_ article: NativeAppWikipediaSummary) {
+    public func toggleSaved(_ article: NativeAppWikipediaSummary) {
         if let index = savedArticles.firstIndex(where: { $0.id == article.id }) {
             savedArticles.remove(at: index)
         } else {
@@ -50,12 +51,12 @@ final class NativeAppWikipediaStore: ObservableObject {
         persistSaved()
     }
 
-    func clearRecentQueries() {
+    public func clearRecentQueries() {
         recentQueries = []
         defaults.removeObject(forKey: recentKey)
     }
 
-    func clearSavedArticles() {
+    public func clearSavedArticles() {
         savedArticles = []
         defaults.removeObject(forKey: savedKey)
     }
@@ -66,3 +67,4 @@ final class NativeAppWikipediaStore: ObservableObject {
         }
     }
 }
+#endif

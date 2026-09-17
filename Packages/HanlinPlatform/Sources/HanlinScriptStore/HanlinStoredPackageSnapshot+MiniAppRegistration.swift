@@ -17,10 +17,14 @@ extension HanlinStoredPackageSnapshot: HanlinMiniAppRegistration {
     /// Extracts a stable canonical app ID from the manifest's `hanlinAppID` field
     /// if present and valid, falling back to the package ID.
     private var stableAppID: HanlinAppID? {
-        if let manifest,
-           case let .string(rawID) = manifest.unknownFields["hanlinAppID"],
-           let id = HanlinAppID(rawValue: rawID) {
-            return id
+        if let manifest {
+            if let explicit = manifest.hanlinAppID, let id = HanlinAppID(rawValue: explicit) {
+                return id
+            }
+            if case let .string(rawID) = manifest.unknownFields["hanlinAppID"],
+               let id = HanlinAppID(rawValue: rawID) {
+                return id
+            }
         }
         return HanlinAppID(rawValue: record.packageID.rawValue)
     }
@@ -59,14 +63,31 @@ extension HanlinStoredPackageSnapshot: HanlinMiniAppRegistration {
             }
         }
 
-        let isPackageNativeScript = entrypoints.contains { $0.runtimeProfile == .hanlinNativeScript }
-            || (manifest?.unknownFields["hanlinRuntime"] == .string("hanlin-nativescript"))
-            || (manifest?.entry?.contains("nativescript") == true)
+        // Separate these concepts:
+        // - explicit runtime on an entrypoint (ep.runtimeProfile)
+        // - explicit package-level default runtime declared by manifest metadata
+        // - implementation family
+        // - observed runtime of some other entrypoint (must NOT be used as proof for sibling entrypoint)
+        let manifestDeclaredPackageRuntime: HanlinRuntimeProfile? = {
+            if let manifest {
+                if let rt = manifest.hanlinRuntime, let profile = HanlinRuntimeProfile(rawValue: rt) {
+                    return profile
+                }
+                if case let .string(rawRT) = manifest.unknownFields["hanlinRuntime"],
+                   let profile = HanlinRuntimeProfile(rawValue: rawRT) {
+                    return profile
+                }
+                if manifest.entry?.contains("nativescript") == true {
+                    return .hanlinNativeScript
+                }
+            }
+            return nil
+        }()
 
         let mappedEntryPoints: [HanlinEntryPointDescriptor] = entrypoints.compactMap { ep in
             guard let canonicalKind = ep.kind.canonicalKind else { return nil }
             let contexts = ep.supportedContexts.isEmpty ? [.mainApplication] : Array(ep.supportedContexts)
-            let epRuntime = ep.runtimeProfile ?? (isPackageNativeScript ? .hanlinNativeScript : nil)
+            let epRuntime = ep.runtimeProfile ?? manifestDeclaredPackageRuntime
             return HanlinEntryPointDescriptor(
                 kind: canonicalKind,
                 handler: ep.sourcePath,
@@ -84,7 +105,7 @@ extension HanlinStoredPackageSnapshot: HanlinMiniAppRegistration {
             let isForegroundApp = manifest?.runInApp == true || manifest?.entry != nil || manifest == nil
             if isForegroundApp {
                 let handler = manifest?.entry ?? "index.tsx"
-                let epRuntime: HanlinRuntimeProfile? = isPackageNativeScript ? .hanlinNativeScript : nil
+                let epRuntime: HanlinRuntimeProfile? = manifestDeclaredPackageRuntime
                 finalEntryPoints = [
                     HanlinEntryPointDescriptor(
                         kind: .app,
@@ -124,11 +145,16 @@ extension HanlinStoredPackageSnapshot: HanlinMiniAppRegistration {
             [HanlinAuthor(name: "Script Author")]
         }
 
-        let hasOtherScript = entrypoints.contains { $0.runtimeProfile != nil && $0.runtimeProfile != .hanlinNativeScript }
+        let entrypointRuntimes = Set(finalEntryPoints.compactMap(\.runtimeProfile))
+        let hasNativeScript = entrypointRuntimes.contains(.hanlinNativeScript)
+            || manifestDeclaredPackageRuntime == .hanlinNativeScript
+        let hasOtherRuntime = entrypointRuntimes.contains { $0 != .hanlinNativeScript }
+            || (manifestDeclaredPackageRuntime != nil && manifestDeclaredPackageRuntime != .hanlinNativeScript)
+
         let implementation: HanlinAppImplementation
-        if isPackageNativeScript && !hasOtherScript {
+        if hasNativeScript && !hasOtherRuntime {
             implementation = .nativeScript(packageID: record.packageID)
-        } else if isPackageNativeScript && hasOtherScript {
+        } else if hasNativeScript && hasOtherRuntime {
             let modID = (try? HanlinModuleID(validating: record.packageID.rawValue))
                 ?? (try! HanlinModuleID(validating: "package.hybrid"))
             implementation = .hybrid(moduleID: modID, packageID: record.packageID)
@@ -136,7 +162,7 @@ extension HanlinStoredPackageSnapshot: HanlinMiniAppRegistration {
             implementation = .script(packageID: record.packageID)
         }
 
-        let isNativeScript = isPackageNativeScript
+        let isNativeScript = hasNativeScript
 
         let category: HanlinAppCategory = {
             if let catVal = manifest?.unknownFields["category"],

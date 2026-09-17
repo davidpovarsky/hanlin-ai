@@ -4,6 +4,12 @@ import HanlinPlatformContracts
 import SwiftUI
 #endif
 
+public enum NativePresentationMode: String, Codable, Hashable, Sendable {
+    case fullApp
+    case chatCard
+    case compact
+}
+
 public struct HanlinMiniAppHostContext: Sendable {
     public let appID: HanlinAppID
     public let storage: HanlinMiniAppStorageContext

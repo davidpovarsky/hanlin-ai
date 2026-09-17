@@ -64,8 +64,8 @@ public struct HanlinScriptAnalyzer: Sendable {
     public func analyze(_ package: HanlinStagedPackage) throws -> HanlinImportPreview {
         let files = try packageFiles(root: package.packageRoot)
         let sourcePaths = files.keys.filter(Self.isModule).sorted()
-        let nativeScriptDeclared = package.manifest.unknownFields["hanlinRuntime"]
-            == .string(HanlinRuntimeProfile.hanlinNativeScript.rawValue)
+        let nativeScriptDeclared = package.manifest.hanlinRuntime == HanlinRuntimeProfile.hanlinNativeScript.rawValue
+            || package.manifest.unknownFields["hanlinRuntime"] == .string(HanlinRuntimeProfile.hanlinNativeScript.rawValue)
         let entrypoints = discoverEntrypoints(
             manifest: package.manifest,
             sourcePaths: sourcePaths
@@ -408,8 +408,10 @@ public struct HanlinScriptAnalyzer: Sendable {
             ("chat_card.ts", .embeddedResult, .mainApplication, "embedded-result-v1"),
             ("widget.tsx", .widget, .widget, "widget-v1"),
             ("widget.ts", .widget, .widget, "widget-v1"),
+            ("widget.json", .widget, .widget, "widget-v1"),
             ("app_intents.tsx", .appIntent, .appIntent, "app-intent-v1"),
             ("intent.tsx", .appIntent, .appIntent, "app-intent-v1"),
+            ("intent.json", .appIntent, .appIntent, "app-intent-v1"),
             ("live_activity.tsx", .liveActivity, .liveActivity, "live-activity-v1"),
             ("translation_ui_provider.tsx", .translationUI, .translationUI, "translation-ui-v1"),
             ("translation_ui_provider.ts", .translationUI, .translationUI, "translation-ui-v1")
@@ -421,7 +423,7 @@ public struct HanlinScriptAnalyzer: Sendable {
             candidates.append((path, kind, [context], policy))
         }
         return candidates.map { path, kind, contexts, policy in
-            let requestedRuntime = manifest.unknownFields["hanlinRuntime"].flatMap { value -> String? in
+            let requestedRuntime = manifest.hanlinRuntime ?? manifest.unknownFields["hanlinRuntime"].flatMap { value -> String? in
                 if case let .string(rawValue) = value { rawValue } else { nil }
             }
             let profile: HanlinRuntimeProfile = if requestedRuntime == HanlinRuntimeProfile.hanlinNativeScript.rawValue {

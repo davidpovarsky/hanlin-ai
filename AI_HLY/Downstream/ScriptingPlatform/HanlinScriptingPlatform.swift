@@ -145,6 +145,22 @@ final class HanlinScriptingPlatform {
         }
     }
 
+    public func resolveResourceURL(packageID: HanlinPackageID, relativePath: String) -> URL? {
+        guard let package = installedPackages.first(where: { $0.record.packageID == packageID }),
+              let storeRoot = store?.root else {
+            return nil
+        }
+        let clean = relativePath.trimmingCharacters(in: CharacterSet(charactersIn: "/\\"))
+        let generation = package.record.activeGeneration
+        let packageDir = package.record.installedPackageID.rawValue
+        let candidate = storeRoot
+            .appending(path: "packages/\(packageDir)/generations/\(generation)/\(clean)")
+        if FileManager.default.fileExists(atPath: candidate.path(percentEncoded: false)) {
+            return candidate
+        }
+        return nil
+    }
+
     func importPackage(from sourceURL: URL) async {
         print("HANLIN_IMPORT_PACKAGE_STARTED: url=\(sourceURL.path(percentEncoded: false))")
         discardPreview()
@@ -593,7 +609,8 @@ final class HanlinScriptingPlatform {
 
         for package in installedPackages where package.enabled {
             let extensionEntrypoints = package.entrypoints.filter {
-                $0.runtimeProfile == .scriptingJSC && ($0.kind == .widget || $0.kind == .appIntent)
+                ($0.runtimeProfile == .scriptingJSC || $0.runtimeProfile == .hanlinNativeScript)
+                    && ($0.kind == .widget || $0.kind == .appIntent)
             }
             guard !extensionEntrypoints.isEmpty else { continue }
             do {
@@ -604,6 +621,56 @@ final class HanlinScriptingPlatform {
                 for entrypoint in extensionEntrypoints {
                     let required = Set(entrypoint.requiredCapabilities.filter(\.required).map(\.capabilityID))
                     guard required.isSubset(of: granted) else { continue }
+                    let identity = HanlinScriptExtensionIdentity(
+                        installedPackageID: package.record.installedPackageID,
+                        packageID: package.record.packageID,
+                        generation: package.record.activeGeneration,
+                        entrypointID: entrypoint.id
+                    )
+
+                    if entrypoint.runtimeProfile == .hanlinNativeScript {
+                        if entrypoint.kind == .widget {
+                            let widgetURL = artifactRoot.appending(path: entrypoint.sourcePath)
+                            let rootNode: HanlinScriptUINode
+                            if let data = try? Data(contentsOf: widgetURL),
+                               let decoded = try? JSONDecoder().decode(HanlinScriptUINode.self, from: data) {
+                                rootNode = decoded
+                            } else {
+                                rootNode = .init(
+                                    kind: .vStack,
+                                    properties: ["spacing": .number(8)],
+                                    children: [
+                                        .init(kind: .text, properties: ["content": .string(displayName), "font": .string("headline")]),
+                                        .init(kind: .text, properties: ["content": .string("NativeScript Widget"), "font": .string("caption")])
+                                    ]
+                                )
+                            }
+                            for family in ["systemSmall", "systemMedium", "systemLarge", "systemExtraLarge"] {
+                                widgets.append(.init(
+                                    identity: identity,
+                                    displayName: displayName,
+                                    family: family,
+                                    actionIdentity: package.entrypoints.first(where: {
+                                        $0.kind == .appIntent
+                                    }).map {
+                                        .init(
+                                            installedPackageID: package.record.installedPackageID,
+                                            packageID: package.record.packageID,
+                                            generation: package.record.activeGeneration,
+                                            entrypointID: $0.id
+                                        )
+                                    },
+                                    validUntil: .now.addingTimeInterval(900),
+                                    root: rootNode
+                                ))
+                            }
+                        } else {
+                            let intentName = entrypoint.id.rawValue.isEmpty ? "defaultAction" : entrypoint.id.rawValue
+                            intentEntities.append(.init(identity: identity, id: intentName, displayName: displayName))
+                        }
+                        continue
+                    }
+
                     let compiledPath = try Self.compiledPath(for: entrypoint.sourcePath)
                     let compiledURL = artifactRoot.appending(path: compiledPath, directoryHint: .notDirectory)
                     let attributes = try FileManager.default.attributesOfItem(
@@ -613,12 +680,6 @@ final class HanlinScriptingPlatform {
                         throw HanlinScriptingPlatformError.compiledEntrypointTooLarge
                     }
                     let program = try String(contentsOf: compiledURL, encoding: .utf8)
-                    let identity = HanlinScriptExtensionIdentity(
-                        installedPackageID: package.record.installedPackageID,
-                        packageID: package.record.packageID,
-                        generation: package.record.activeGeneration,
-                        entrypointID: entrypoint.id
-                    )
 
                     if entrypoint.kind == .widget {
                         for family in ["systemSmall", "systemMedium", "systemLarge", "systemExtraLarge"] {
@@ -734,8 +795,25 @@ final class HanlinScriptingPlatform {
                     && $0.enabled
             }), let entrypoint = package.entrypoints.first(where: {
                 $0.id == identity.entrypointID && $0.kind == .appIntent
-                    && $0.runtimeProfile == .scriptingJSC
             }), let actionName = command.invocation.entityID else { continue }
+
+            if entrypoint.runtimeProfile == .hanlinNativeScript {
+                let shareCapability = try? HanlinCapabilityID(validating: "inter-app.share")
+                let actionID = try? HanlinActionID(validating: actionName)
+                if let shareCapability, let actionID {
+                    _ = try? await HanlinMiniAppHost.shared.requestBroker.request(.init(
+                        caller: HanlinAppID(rawValue: identity.packageID.rawValue) ?? (try! HanlinAppID(validating: "hanlin.host")),
+                        target: HanlinAppID(rawValue: identity.packageID.rawValue) ?? (try! HanlinAppID(validating: "hanlin.host")),
+                        action: actionID,
+                        capability: shareCapability,
+                        payload: command.invocation.parameters
+                    ))
+                }
+                try extensionStore?.acknowledge(command.id)
+                pendingResumeCommands.removeAll { $0.id == command.id }
+                WidgetCenter.shared.reloadTimelines(ofKind: "com.hanlin.scripting.widget")
+                continue
+            }
             let required = Set(entrypoint.requiredCapabilities.filter(\.required).map(\.capabilityID))
             let granted = Set(package.grantedCapabilities)
             guard required.isSubset(of: granted) else { continue }
@@ -1380,6 +1458,9 @@ final class HanlinScriptingPlatform {
     }
 
     nonisolated static func stablePackageID(for manifest: HanlinScriptingManifest) throws -> HanlinPackageID {
+        if let explicitID = manifest.hanlinAppID {
+            return try HanlinPackageID(validating: explicitID)
+        }
         if case let .string(explicitID)? = manifest.unknownFields["hanlinAppID"] {
             return try HanlinPackageID(validating: explicitID)
         }

@@ -33,7 +33,17 @@ struct MiniAppCardView: View {
                 .frame(width: 27, height: 27)
         case let .packageResource(path):
             #if canImport(UIKit)
-            if let uiImage = UIImage(contentsOfFile: path) {
+            let imageURL: URL? = {
+                switch descriptor.implementation {
+                case let .nativeScript(pkgID), let .script(pkgID), let .hybrid(_, pkgID):
+                    return HanlinScriptingPlatform.shared.resolveResourceURL(packageID: pkgID, relativePath: path)
+                case .native:
+                    return nil
+                }
+            }()
+            let uiImage = imageURL.flatMap { UIImage(contentsOfFile: $0.path(percentEncoded: false)) }
+                ?? UIImage(contentsOfFile: path)
+            if let uiImage {
                 Image(uiImage: uiImage)
                     .resizable()
                     .scaledToFit()
@@ -54,7 +64,7 @@ struct MiniAppCardView: View {
     }
 
     private var isBeta: Bool {
-        descriptor.appearance.isBeta || !descriptor.distribution.allowedModes.contains(.appStoreRestricted)
+        descriptor.appearance.isBeta
     }
 
     var body: some View {

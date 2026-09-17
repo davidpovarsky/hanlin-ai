@@ -1,3 +1,4 @@
+import HanlinSefariaMiniApp
 import SwiftUI
 
 @MainActor
@@ -7,11 +8,14 @@ enum NativeAppSefariaExports {
     static func sourceService() -> NativeAppSefariaSourceService { NativeAppSefariaSourceService(client: client()) }
 
     static func rootView(context: NativeAppContext) -> AnyView {
-        AnyView(
+        let query = context.initialRoute?.screen == "search" ? context.initialRoute?.payload.string("query") : nil
+        let ref = context.initialRoute?.screen == "source" ? context.initialRoute?.payload.string("ref") : nil
+        return AnyView(
             NativeAppSefariaRootView(
                 searchService: searchService(),
                 sourceService: sourceService(),
-                context: context
+                initialQuery: query,
+                initialReference: ref
             )
         )
     }
