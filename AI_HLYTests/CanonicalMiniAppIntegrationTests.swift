@@ -106,4 +106,96 @@ struct CanonicalMiniAppIntegrationTests {
         ))
         #expect(response.value == .string("hello-cross-engine"))
     }
+
+    @MainActor
+    @Test("All 4 compiled mini app providers are registered and provide canonical descriptors")
+    func allCompiledProvidersRegistered() throws {
+        BuiltinCanonicalRegistrations.ensureRegistered()
+        let registry = HanlinCompiledMiniAppRegistry.shared
+        let providers = registry.allProviders()
+        #expect(providers.count >= 4)
+
+        let expectedIDs = [
+            "hanlin.demo.swift-parity",
+            "nativeapp.sefaria",
+            "nativeapp.wikipedia",
+            "nativeapp.textstudio"
+        ]
+
+        for idStr in expectedIDs {
+            let appID = try HanlinAppID(validating: idStr)
+            let provider = registry.provider(for: appID)
+            #expect(provider != nil, "Provider for \(idStr) must be registered")
+            #expect(provider?.descriptor.id == appID)
+            #expect(provider?.descriptor.implementation.engine == .swift)
+        }
+    }
+
+    @MainActor
+    @Test("Per-entrypoint resolution with hybrid descriptors maps foreground and background engines")
+    func perEntrypointResolutionHybrid() throws {
+        let hybridID = try HanlinAppID(validating: "hybrid.app")
+        let hybridDesc = HanlinAppDescriptor(
+            schemaVersion: .init(major: 1, minor: 0),
+            descriptorRevision: try HanlinDescriptorRevision(1),
+            id: hybridID,
+            name: try LocalizedValue(["en": "Hybrid App"]),
+            summary: try LocalizedValue(["en": "Hybrid"]),
+            description: try LocalizedValue(["en": "Hybrid"]),
+            version: try HanlinPackageVersion(validating: "1.0.0"),
+            apiVersion: .init(major: 1, minor: 0),
+            icon: .systemSymbol(name: "gear"),
+            appearance: .init(accentHex: "#000000"),
+            category: .utilities,
+            implementation: .hybrid(
+                moduleID: try HanlinModuleID(validating: "native.module"),
+                packageID: try HanlinPackageID(validating: "script.pkg")
+            ),
+            entryPoints: [
+                .init(kind: .app, handler: "native_app", allowedContexts: [.mainApplication], runtimeProfile: nil),
+                .init(kind: .widget, handler: "ns_widget", allowedContexts: [.widget], runtimeProfile: .hanlinNativeScript)
+            ],
+            authors: [.init(name: "Test")]
+        )
+
+        let catalog = HanlinCanonicalMiniAppCatalog(discovery: BuiltinMiniAppDiscovery())
+        let appEngine = catalog.engine(for: hybridDesc.entryPoints[0], implementation: hybridDesc.implementation)
+        let widgetEngine = catalog.engine(for: hybridDesc.entryPoints[1], implementation: hybridDesc.implementation)
+
+        #expect(appEngine == .swift)
+        #expect(widgetEngine == .nativeScript)
+    }
+
+    @MainActor
+    @Test("HanlinNativeServicesBridge enforces active container isolation and capability gating")
+    func bridgeContainerAndCapabilityGating() {
+        HanlinNativeServicesBridge.setActiveContainer(
+            appID: "hanlin.test.app",
+            dataRoot: "/tmp/data",
+            stateDir: "/tmp/data/state",
+            docsDir: "/tmp/data/docs",
+            cacheDir: "/tmp/data/cache",
+            grantedCapabilities: ["storage", "javascript"]
+        )
+
+        #expect(HanlinNativeServicesBridge.activeAppID == "hanlin.test.app")
+        #expect(HanlinNativeServicesBridge.dataRootDirectory() == "/tmp/data")
+        #expect(HanlinNativeServicesBridge.stateDirectory() == "/tmp/data/state")
+
+        // Inter-app request without capability should be rejected immediately
+        var errorResult: String?
+        HanlinNativeServicesBridge.sendRequest(
+            targetID: "hanlin.other",
+            action: "echo",
+            capability: "inter-app.unauthorized",
+            payloadJSON: "{}"
+        ) { _, err in
+            errorResult = err
+        }
+        #expect(errorResult != nil)
+        #expect(errorResult?.contains("Permission denied") == true)
+
+        HanlinNativeServicesBridge.clearActiveContainer()
+        #expect(HanlinNativeServicesBridge.activeAppID == nil)
+    }
 }

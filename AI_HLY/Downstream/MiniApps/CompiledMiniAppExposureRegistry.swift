@@ -30,38 +30,46 @@ struct CompiledMiniAppExposureProvider {
 }
 
 enum CompiledMiniAppExposureRegistry {
-    /// Widget node builder for the Swift Parity demo app.
-    private static func parityWidget(family: String) -> HanlinScriptUINode {
-        .init(
-            kind: .vStack,
-            properties: ["spacing": .number(8)],
-            children: [
-                .init(kind: .text, properties: ["text": .string("Swift Parity")]),
-                .init(kind: .text, properties: ["text": .string("Generic hosted widget · \(family)")]),
-                .init(kind: .text, properties: ["text": .string("hanlin.demo.swift-parity")])
-            ]
-        )
-    }
+    static var all: [CompiledMiniAppExposureProvider] {
+        BuiltinCanonicalRegistrations.ensureRegistered()
+        let providers = HanlinCompiledMiniAppRegistry.shared.allProviders()
+        return providers.map { provider in
+            let desc = provider.descriptor
+            let title = desc.name.preferredValue(forLocale: "en")
+            let idString = desc.id.rawValue
 
-    /// App Intent handler for the Swift Parity demo app.
-    private static func parityIntent(name: String, parameters: HanlinValue) throws -> HanlinValue {
-        let intentName = "ReadSwiftParityState"
-        guard name == intentName else { throw HanlinMiniAppRequestError.routeNotFound }
-        return .object([
-            "message": .string("Swift parity App Intent invoked"),
-            "parameters": parameters
-        ])
-    }
+            let widgetNode: @Sendable (String) -> HanlinScriptUINode = { family in
+                .init(
+                    kind: .vStack,
+                    properties: ["spacing": .number(8)],
+                    children: [
+                        .init(kind: .text, properties: ["text": .string(title)]),
+                        .init(kind: .text, properties: ["text": .string("Generic hosted widget · \(family)")]),
+                        .init(kind: .text, properties: ["text": .string(idString)])
+                    ]
+                )
+            }
 
-    static let all: [CompiledMiniAppExposureProvider] = {
-        let registration = SwiftParityMiniAppRegistration()
-        return [.init(
-            descriptor: registration.descriptor,
-            widget: parityWidget,
-            intentNames: ["ReadSwiftParityState"],
-            performIntent: parityIntent
-        )]
-    }()
+            let intentNames = idString == "hanlin.demo.swift-parity"
+                ? ["ReadSwiftParityState"]
+                : ["Read\(idString.replacingOccurrences(of: ".", with: "").capitalized)State"]
+
+            let intentFn: @Sendable (String, HanlinValue) throws -> HanlinValue = { name, parameters in
+                .object([
+                    "appID": .string(idString),
+                    "message": .string("\(title) App Intent invoked"),
+                    "parameters": parameters
+                ])
+            }
+
+            return CompiledMiniAppExposureProvider(
+                descriptor: desc,
+                widget: widgetNode,
+                intentNames: intentNames,
+                performIntent: intentFn
+            )
+        }
+    }
 
     static func provider(packageID: HanlinPackageID) -> CompiledMiniAppExposureProvider? {
         all.first { $0.descriptor.id.rawValue == packageID.rawValue }
