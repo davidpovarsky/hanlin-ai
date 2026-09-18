@@ -1953,10 +1953,10 @@ jobs:
                 --path "$LOG_DIR/NativeScriptProductionE2EResult.xcresult" \
                 --format json 2>&1 | tee "$LOG_DIR/08-nativescript-production-ui-test-results.json" || true
               if [ "$nativescript_e2e_status" -eq 0 ]; then
-                if [[ "$SIMULATOR_UI_FILTER" == *"HanlinNativeScriptProductionE2ETests"* ]] || [ -z "$SIMULATOR_UI_FILTER" ] || [ "$RUN_FULL_VALIDATION" = "true" ]; then
+                if [[ "$SIMULATOR_UI_FILTER" == *"HanlinNativeScriptProductionE2ETests"* ]] || [[ "$SIMULATOR_UI_FILTER" == *"HanlinUIPerformanceUITests"* ]] || [ -z "$SIMULATOR_UI_FILTER" ]; then
                   grep -Fq 'HANLIN_NS_INITIALIZED_EXTERNAL_ROOT' "$LOG_DIR/08-nativescript-production.log"
                   grep -Eq 'HANLIN_NS_INITIALIZED_EXTERNAL_ROOT path=.*/Library/Application Support/' "$LOG_DIR/08-nativescript-production.log"
-                  if [ -z "$SIMULATOR_UI_FILTER" ] || [ "$RUN_FULL_VALIDATION" = "true" ] || [[ "$SIMULATOR_UI_FILTER" == *"testProductionSwiftUIInteractionCoreRegressionAndLifecycle"* ]] || [ "$SIMULATOR_UI_FILTER" = "AI_HLYUITests/HanlinNativeScriptProductionE2ETests" ]; then
+                  if [ -z "$SIMULATOR_UI_FILTER" ] || [[ "$SIMULATOR_UI_FILTER" == *"HanlinNativeScriptProductionE2ETests"* ]] || [[ "$SIMULATOR_UI_FILTER" == *"testProductionSwiftUIInteractionCoreRegressionAndLifecycle"* ]]; then
                     grep -Fq 'HANLIN_NS_FIXTURE_STARTED' "$LOG_DIR/08-nativescript-production.log"
                     grep -Fq 'HANLIN_NS_NATIVE_API_OK' "$LOG_DIR/08-nativescript-production.log"
                     grep -Fq 'HANLIN_NS_SCRIPTING_ADAPTER_OK' "$LOG_DIR/08-nativescript-production.log"

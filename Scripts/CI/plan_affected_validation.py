@@ -772,8 +772,9 @@ def plan_affected_validation(
         g_info = val_groups_config.get(g_name, {})
         g_outputs = g_info.get("workflow_outputs", {})
         for out_k, out_v in g_outputs.items():
-            if out_k == "simulator_unit_filter" and not full_validation and affected_unit_suites:
-                continue
+            if out_k in ("simulator_unit_filter", "simulator_ui_filter"):
+                if full_validation or target_group != g_name:
+                    continue
             step_outputs[out_k] = out_v
 
     # Enforce simulator_e2e_only strict suppression on step outputs
