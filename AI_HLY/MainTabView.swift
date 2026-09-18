@@ -16,6 +16,7 @@ struct MainTabView: View {
         if environment["HANLIN_RUNTIME_INSTALL_ACCEPTANCE"] != nil { return 5 }
         return environment["HANLIN_SCRIPT_RESTART_REPRO_PHASE"] != nil
             || environment["HANLIN_NATIVESCRIPT_E2E"] != nil
+            || environment["HANLIN_EXPO_E2E"] != nil
             || environment["HANLIN_SCRIPTUI_E2E"] != nil ? 4 : 0
     }()
     @State private var hideTabBar: Bool = false
