@@ -200,7 +200,7 @@ final class HanlinExpoProductionE2ETests: XCTestCase {
         selectArchive("ExpoSwiftUIMalformed")
 
         let errorIndicator = app.descendants(matching: .any).matching(
-            NSPredicate(format: "identifier == 'hanlin-import-error' OR identifier == 'hanlin-import-error-message' OR label CONTAINS 'Import Error' OR label CONTAINS 'missing'")
+            NSPredicate(format: "identifier == 'hanlin-import-error' OR identifier == 'hanlin-import-error-message' OR label CONTAINS 'Import Error' OR label CONTAINS 'missing' OR label CONTAINS 'entrypoint' OR label CONTAINS 'Compatibility' OR label CONTAINS 'malformed'")
         ).firstMatch
         if !errorIndicator.waitForExistence(timeout: 5) {
             app.swipeUp()

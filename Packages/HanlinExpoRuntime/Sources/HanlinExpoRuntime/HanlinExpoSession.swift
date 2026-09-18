@@ -9,8 +9,23 @@ import UIKit
 @_silgen_name("jsrt_create_hermes_factory")
 private func hanlin_create_hermes_factory() -> JSRuntimeFactoryRef
 
-private final class HanlinExpoJSRuntimeConfigurator: NSObject, RCTJSRuntimeConfiguratorProtocol {
-    func createJSRuntimeFactory() -> JSRuntimeFactoryRef {
+private final class HanlinExpoReactNativeFactoryDelegate: RCTDefaultReactNativeFactoryDelegate {
+    private let targetBundleURL: URL
+
+    init(bundleURL: URL) {
+        self.targetBundleURL = bundleURL
+        super.init()
+    }
+
+    override func bundleURL() -> URL? {
+        return targetBundleURL
+    }
+
+    override func sourceURL(for bridge: RCTBridge) -> URL? {
+        return targetBundleURL
+    }
+
+    override func createJSRuntimeFactory() -> JSRuntimeFactoryRef {
         return hanlin_create_hermes_factory()
     }
 }
@@ -36,8 +51,8 @@ public final class HanlinExpoSession {
     public let containerController: UIViewController
     public let bundleURL: URL
 
-    private var rootViewFactory: RCTRootViewFactory?
-    private var runtimeConfigurator: HanlinExpoJSRuntimeConfigurator?
+    private var reactNativeFactory: RCTReactNativeFactory?
+    private var factoryDelegate: HanlinExpoReactNativeFactoryDelegate?
     private var appContext: AppContext?
     private var hostedView: UIView?
     private(set) public var isActive = false
@@ -93,20 +108,13 @@ public final class HanlinExpoSession {
             self.appContext = appContext
 
             let bundle = bundleURL
-            let configurator = HanlinExpoJSRuntimeConfigurator()
-            self.runtimeConfigurator = configurator
+            let delegate = HanlinExpoReactNativeFactoryDelegate(bundleURL: bundle)
+            self.factoryDelegate = delegate
 
-            let config = RCTRootViewFactoryConfiguration(
-                bundleURL: bundle,
-                newArchEnabled: true
-            )
-            config.bundleURLBlock = { bundle }
-            config.jsRuntimeConfiguratorDelegate = configurator
+            let factory = RCTReactNativeFactory(delegate: delegate)
+            self.reactNativeFactory = factory
 
-            let factory = RCTRootViewFactory(configuration: config)
-            self.rootViewFactory = factory
-
-            let rootView = factory.view(
+            let rootView = factory.rootViewFactory.view(
                 withModuleName: moduleName,
                 initialProperties: nil,
                 launchOptions: nil
@@ -133,7 +141,7 @@ public final class HanlinExpoSession {
     }
 
     public func shutdown() {
-        guard isActive || rootViewFactory != nil else {
+        guard isActive || reactNativeFactory != nil else {
             HanlinExpoModifierRegistry.unregisterCustomModifiers()
             return
         }
@@ -141,14 +149,14 @@ public final class HanlinExpoSession {
         hostedView?.removeFromSuperview()
         hostedView = nil
 
-        if let factory = rootViewFactory {
-            factory.reactHost = nil
-            factory.setValue(nil, forKey: "_reactHost")
+        if let factory = reactNativeFactory {
+            factory.rootViewFactory.reactHost = nil
+            factory.rootViewFactory.setValue(nil, forKey: "_reactHost")
         }
-        rootViewFactory = nil
+        reactNativeFactory = nil
+        factoryDelegate = nil
         appContext?.destroy()
         appContext = nil
-        runtimeConfigurator = nil
         isActive = false
 
         HanlinExpoModifierRegistry.unregisterCustomModifiers()
