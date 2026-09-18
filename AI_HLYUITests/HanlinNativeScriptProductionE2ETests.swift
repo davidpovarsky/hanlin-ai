@@ -439,8 +439,15 @@ final class HanlinNativeScriptProductionE2ETests: XCTestCase {
             app.swipeUp()
         }
         let approveAllButton = app.buttons["hanlin-approve-all-capabilities"].firstMatch
-        if approveAllButton.waitForExistence(timeout: 2) && approveAllButton.isHittable {
-            approveAllButton.tap()
+        for _ in 0..<3 {
+            if approveAllButton.waitForExistence(timeout: 2) && approveAllButton.isHittable {
+                approveAllButton.tap()
+                break
+            }
+            app.swipeUp()
+        }
+        if !install.exists || !install.isHittable {
+            app.swipeDown()
         }
         if !install.waitForExistence(timeout: 20) {
             capture(name: "\(archive)-Import-Timeout")

@@ -568,7 +568,9 @@ class AffectedValidationPlannerTests(unittest.TestCase):
         self.assertTrue(plan.step_outputs["run_simulator_targeted_ui"])
         self.assertEqual(plan.step_outputs["simulator_ui_filter"], "AI_HLYUITests/HanlinUIPerformanceUITests")
         self.assertTrue(plan.step_outputs["stage_scriptui_fixtures"])
-        self.assertFalse(plan.step_outputs["run_simulator_unit"])
+        self.assertTrue(plan.step_outputs["run_simulator_unit"])
+        self.assertEqual(plan.step_outputs["simulator_unit_filter"], "AI_HLYTests/HanlinRuntimePerformanceTests")
+        self.assertTrue(plan.step_outputs["run_runtimecore_host"])
 
 
 if __name__ == "__main__":

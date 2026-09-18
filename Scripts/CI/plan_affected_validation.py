@@ -694,6 +694,19 @@ def plan_affected_validation(
             for suite in comp_info.get("unit_suites", []):
                 affected_unit_suites.add(suite)
 
+    # HanlinUIPerformanceUITests emits Flows 1, 2, 3, 11-16.
+    # Flows 4-10 are emitted by HanlinRuntimePerformanceTests (unit test).
+    # Benchmark analysis in CI enforces that all 16 flows are present when any benchmark runs.
+    # If HanlinUIPerformanceUITests is selected, we MUST also run HanlinRuntimePerformanceTests.
+    if not full_validation and (
+        any("HanlinUIPerformanceUITests" in s for s in affected_ui_suites)
+        or "HanlinUIPerformanceUITests" in simulator_ui_filter_value
+    ):
+        affected_unit_suites.add("AI_HLYTests/HanlinRuntimePerformanceTests")
+        selected_groups["app_unit_tests"].append(
+            "HanlinUIPerformanceUITests requires HanlinRuntimePerformanceTests flows 4-10"
+        )
+
     if "app_unit_tests" in selected_groups and not full_validation:
         if not affected_unit_suites:
             raise RoutingError(
@@ -717,6 +730,7 @@ def plan_affected_validation(
         "AI_HLYTests/HanlinScriptingProductionCompilerAcceptanceTests",
         "AI_HLYTests/HanlinScriptPackagePhysicalIPadRegressionTests",
         "AI_HLYTests/HanlinTrustedWorkerRouteTests",
+        "AI_HLYTests/HanlinRuntimePerformanceTests",
     }
     if any(
         s == "AI_HLYTests"
