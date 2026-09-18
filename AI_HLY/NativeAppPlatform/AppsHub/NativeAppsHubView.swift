@@ -57,6 +57,7 @@ struct NativeAppsHubView: View {
                 if let packageID = pendingPackageLaunchID {
                     pendingPackageLaunchID = nil
                     Task {
+                        try? await Task.sleep(for: .milliseconds(350))
                         await scriptingPlatform.launch(packageID)
                     }
                 }

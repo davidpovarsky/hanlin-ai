@@ -442,7 +442,15 @@ final class HanlinScriptUIProductionE2ETests: XCTestCase {
     }
 
     private func findPackageCard(named packageName: String) -> XCUIElement {
-        let predicate = NSPredicate(format: "label CONTAINS %@ OR identifier CONTAINS %@", packageName, packageName)
+        let cardById = app.buttons["hanlin-package-card-\(packageName)"].firstMatch
+        if cardById.exists { return cardById }
+
+        let predicate = NSPredicate(
+            format: "(label CONTAINS[c] %@ OR identifier CONTAINS[c] %@) AND elementType != %d",
+            packageName,
+            packageName,
+            XCUIElement.ElementType.navigationBar.rawValue
+        )
         let element = app.descendants(matching: .any).matching(predicate).firstMatch
         if element.waitForExistence(timeout: 2) {
             return element
@@ -477,7 +485,7 @@ final class HanlinScriptUIProductionE2ETests: XCTestCase {
                 return inSheet
             }
         }
-        return element
+        return cardById.exists ? cardById : element
     }
 
     private func launchPackage(named packageName: String) {
@@ -491,6 +499,9 @@ final class HanlinScriptUIProductionE2ETests: XCTestCase {
             packageCard.tap()
         } else {
             packageCard.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
+        }
+        if app.navigationBars["Add Apps"].exists {
+            _ = waitUntil(timeout: 4) { !app.navigationBars["Add Apps"].exists }
         }
     }
 
@@ -516,12 +527,10 @@ final class HanlinScriptUIProductionE2ETests: XCTestCase {
         let done = app.buttons["Done"].firstMatch
         if done.waitForExistence(timeout: 3) && done.isHittable {
             done.tap()
-            _ = waitUntil(timeout: 5) { !done.exists }
         } else {
             app.swipeDown()
-            _ = waitUntil(timeout: 5) { !done.exists }
         }
-        closeAddSheetIfNeeded()
+        _ = waitUntil(timeout: 5) { !app.buttons["Uninstall"].exists && !app.switches["Enabled"].exists }
     }
 
     private func ensurePackageUninstalled(named packageName: String) {

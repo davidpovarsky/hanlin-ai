@@ -447,16 +447,18 @@ final class HanlinNativeScriptProductionE2ETests: XCTestCase {
         }
 
         let approveAllButton = app.buttons["hanlin-approve-all-capabilities"].firstMatch
-        if !install.isEnabled {
-            if approveAllButton.waitForExistence(timeout: 2) && approveAllButton.isHittable {
-                approveAllButton.tap()
-            } else {
-                app.swipeUp()
-                if approveAllButton.waitForExistence(timeout: 3) && approveAllButton.isHittable {
+        if approveAllButton.waitForExistence(timeout: 2) && approveAllButton.isHittable {
+            approveAllButton.tap()
+        } else {
+            app.swipeUp()
+            if approveAllButton.waitForExistence(timeout: 3) {
+                if approveAllButton.isHittable {
                     approveAllButton.tap()
+                } else {
+                    approveAllButton.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
                 }
-                app.swipeDown()
             }
+            app.swipeDown()
         }
 
         if !install.isHittable {
@@ -485,7 +487,14 @@ final class HanlinNativeScriptProductionE2ETests: XCTestCase {
                 install.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
             }
         }
-        XCTAssertTrue(waitUntil(timeout: 25) { !install.exists }, "\(archive) installation did not finish")
+        if !waitUntil(timeout: 25, condition: { !install.exists }) {
+            var detail = "\(archive) installation did not finish."
+            if app.staticTexts["Import Error"].firstMatch.exists {
+                let errorLabels = app.staticTexts.allElementsBoundByIndex.map(\.label).filter { !$0.isEmpty }
+                detail += " Detected error: " + errorLabels.joined(separator: " | ")
+            }
+            XCTFail(detail)
+        }
         closeImportSurfaces()
     }
 
@@ -667,7 +676,12 @@ final class HanlinNativeScriptProductionE2ETests: XCTestCase {
     }
 
     private func launchInstalledPackage(named packageName: String) {
-        let predicate = NSPredicate(format: "label CONTAINS %@ OR identifier CONTAINS %@", packageName, packageName)
+        let predicate = NSPredicate(
+            format: "(label CONTAINS %@ OR identifier CONTAINS %@) AND elementType != %d",
+            packageName,
+            packageName,
+            XCUIElement.ElementType.navigationBar.rawValue
+        )
         let packageCandidates = [
             app.buttons.matching(predicate).firstMatch,
             app.descendants(matching: .any).matching(predicate).firstMatch,
