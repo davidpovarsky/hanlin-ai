@@ -9,11 +9,13 @@ import UIKit
 @_silgen_name("jsrt_create_hermes_factory")
 private func hanlin_create_hermes_factory() -> JSRuntimeFactoryRef
 
-private final class HanlinExpoReactNativeFactoryDelegate: RCTDefaultReactNativeFactoryDelegate {
+private final class HanlinExpoReactNativeFactoryDelegate: RCTDefaultReactNativeFactoryDelegate, @unchecked Sendable {
     private let targetBundleURL: URL
+    private let appContext: AppContext
 
-    init(bundleURL: URL) {
+    init(bundleURL: URL, appContext: AppContext) {
         self.targetBundleURL = bundleURL
+        self.appContext = appContext
         super.init()
     }
 
@@ -27,6 +29,15 @@ private final class HanlinExpoReactNativeFactoryDelegate: RCTDefaultReactNativeF
 
     override func createJSRuntimeFactory() -> JSRuntimeFactoryRef {
         return hanlin_create_hermes_factory()
+    }
+
+    @objc(host:didInitializeRuntime:)
+    func host(_ host: AnyObject, didInitializeRuntime runtime: UnsafeMutableRawPointer) {
+        NSLog("%@", "HANLIN_EXPO_HOST_DID_INITIALIZE_RUNTIME runtime=\(runtime)")
+        appContext.setRuntime(runtime, scheduler: nil, dispatch: nil)
+        NSLog("%@", "HANLIN_EXPO_SET_RUNTIME_DONE")
+        let moduleNames = appContext.getModuleNames()
+        NSLog("%@", "HANLIN_EXPO_REGISTERED_MODULES=\(moduleNames.joined(separator: ", "))")
     }
 }
 
@@ -108,7 +119,7 @@ public final class HanlinExpoSession {
             self.appContext = appContext
 
             let bundle = bundleURL
-            let delegate = HanlinExpoReactNativeFactoryDelegate(bundleURL: bundle)
+            let delegate = HanlinExpoReactNativeFactoryDelegate(bundleURL: bundle, appContext: appContext)
             self.factoryDelegate = delegate
 
             let factory = RCTReactNativeFactory(delegate: delegate)
