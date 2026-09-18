@@ -86,14 +86,6 @@ struct MainTabView: View {
         }
         // background修饰符对于TabView不是必需的，但保留以防有特定需要
         .background(Color(.systemBackground))
-        .onAppear {
-            let env = ProcessInfo.processInfo.environment
-            if env["HANLIN_EXPO_E2E"] != nil
-                || env["HANLIN_NATIVESCRIPT_E2E"] != nil
-                || env["HANLIN_SCRIPTUI_E2E"] != nil {
-                selectedTab = 4
-            }
-        }
     }
 }
 

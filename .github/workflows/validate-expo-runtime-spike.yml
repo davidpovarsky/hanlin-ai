@@ -142,6 +142,7 @@ jobs:
             -clonedSourcePackagesDirPath "$CLONED_PACKAGES_PATH" \
             -skipPackagePluginValidation \
             -skipMacroValidation \
+            -only-testing:AI_HLYUITests \
             ENABLE_TESTABILITY=YES \
             IPHONEOS_DEPLOYMENT_TARGET="$IOS_DEPLOYMENT_TARGET" \
             ARCHS=arm64 \
@@ -156,6 +157,14 @@ jobs:
           APP_PATH="$(find "$DERIVED_DATA_PATH/Build/Products" -name 'AI_Hanlin.app' | head -1)"
           test -d "$APP_PATH"
           echo "Found app bundle at $APP_PATH"
+
+          # Strip embedded unit test bundles and testing frameworks from the product app
+          rm -rf "$APP_PATH/PlugIns/AI_HLYTests.xctest"
+          rm -rf "$APP_PATH/PlugIns/AI_HLYUITests.xctest"
+          rm -rf "$APP_PATH/Frameworks/XC"*
+          rm -rf "$APP_PATH/Frameworks/libXCTest"*
+          rm -rf "$APP_PATH/Frameworks/Testing.framework"
+          rm -rf "$APP_PATH/Frameworks/lib_Testing"*
 
           BUNDLE_ID="$(/usr/libexec/PlistBuddy -c 'Print CFBundleIdentifier' "$APP_PATH/Info.plist")"
           echo "App bundle identifier: $BUNDLE_ID"
