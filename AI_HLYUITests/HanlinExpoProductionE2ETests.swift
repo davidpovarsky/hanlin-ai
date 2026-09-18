@@ -221,50 +221,115 @@ final class HanlinExpoProductionE2ETests: XCTestCase {
     // MARK: - Navigation & Staging Helpers
 
     private var appsAddButton: XCUIElement {
-        let direct = app.buttons["hanlin-apps-add"].firstMatch
-        if direct.exists { return direct }
-        let navDirect = app.navigationBars.buttons["hanlin-apps-add"].firstMatch
-        if navDirect.exists { return navDirect }
-        let byId = app.descendants(matching: .any).matching(identifier: "hanlin-apps-add").firstMatch
-        if byId.exists { return byId }
-        let byLabel = app.buttons["Add App"].firstMatch
-        if byLabel.exists { return byLabel }
-        let navByLabel = app.navigationBars.buttons["Add App"].firstMatch
-        if navByLabel.exists { return navByLabel }
-        return direct
+        let candidates: [XCUIElement] = [
+            app.buttons["hanlin-apps-add"].firstMatch,
+            app.navigationBars.buttons["hanlin-apps-add"].firstMatch,
+            app.descendants(matching: .any).matching(identifier: "hanlin-apps-add").firstMatch,
+            app.buttons["Add App"].firstMatch,
+            app.navigationBars.buttons["Add App"].firstMatch,
+        ]
+        for candidate in candidates {
+            if candidate.exists { return candidate }
+        }
+        return app.buttons["hanlin-apps-add"].firstMatch
     }
 
     @discardableResult
     private func ensureAppsAddButton(timeout: TimeInterval = 20) -> XCUIElement {
-        XCTAssertTrue(appsAddButton.waitForExistence(timeout: timeout), "hanlin-apps-add button did not exist")
+        let candidates: [XCUIElement] = [
+            app.buttons["hanlin-apps-add"].firstMatch,
+            app.navigationBars.buttons["hanlin-apps-add"].firstMatch,
+            app.descendants(matching: .any).matching(identifier: "hanlin-apps-add").firstMatch,
+            app.buttons["Add App"].firstMatch,
+            app.navigationBars.buttons["Add App"].firstMatch,
+        ]
+        let deadline = Date().addingTimeInterval(timeout)
+        while Date() < deadline {
+            for candidate in candidates {
+                if candidate.exists && candidate.isHittable {
+                    return candidate
+                }
+            }
+            RunLoop.current.run(until: Date().addingTimeInterval(0.2))
+        }
+        for candidate in candidates {
+            if candidate.waitForExistence(timeout: 2) {
+                return candidate
+            }
+        }
+        XCTAssertTrue(appsAddButton.waitForExistence(timeout: 2), "hanlin-apps-add button did not exist")
         return appsAddButton
     }
 
     private func openApps() {
-        if appsAddButton.waitForExistence(timeout: 5) { return }
+        if appsAddButton.waitForExistence(timeout: 3) && appsAddButton.isHittable { return }
 
         let candidates = [
-            app.buttons["hanlin-apps-tab"].firstMatch,
             app.tabBars.buttons["hanlin-apps-tab"].firstMatch,
+            app.buttons["hanlin-apps-tab"].firstMatch,
             app.tabs["hanlin-apps-tab"].firstMatch,
-            app.buttons["Apps"].firstMatch,
             app.tabBars.buttons["Apps"].firstMatch,
+            app.buttons["Apps"].firstMatch,
             app.tabs["Apps"].firstMatch,
         ]
         var tapped = false
         for candidate in candidates {
-            if candidate.waitForExistence(timeout: 3) {
+            if candidate.waitForExistence(timeout: 2) && candidate.isHittable {
                 candidate.tap()
                 tapped = true
                 break
+            }
+        }
+        // If tab bar is paged on iPad mini (Next Page / Previous Page)
+        if !tapped {
+            let nextPage = app.buttons["Next Page"].firstMatch
+            if nextPage.waitForExistence(timeout: 2) && nextPage.isHittable {
+                nextPage.tap()
+                for candidate in candidates {
+                    if candidate.waitForExistence(timeout: 2) && candidate.isHittable {
+                        candidate.tap()
+                        tapped = true
+                        break
+                    }
+                }
+            }
+        }
+        if !tapped {
+            let prevPage = app.buttons["Previous Page"].firstMatch
+            if prevPage.waitForExistence(timeout: 2) && prevPage.isHittable {
+                prevPage.tap()
+                for candidate in candidates {
+                    if candidate.waitForExistence(timeout: 2) && candidate.isHittable {
+                        candidate.tap()
+                        tapped = true
+                        break
+                    }
+                }
+            }
+        }
+        if !tapped {
+            let sidebarButton = app.buttons["Sidebar"].firstMatch
+            if sidebarButton.waitForExistence(timeout: 2) && sidebarButton.isHittable {
+                sidebarButton.tap()
+                for candidate in candidates {
+                    if candidate.waitForExistence(timeout: 2) && candidate.isHittable {
+                        candidate.tap()
+                        tapped = true
+                        break
+                    }
+                }
             }
         }
         if !tapped {
             let fallback = app.descendants(matching: .any).matching(
                 NSPredicate(format: "identifier == 'hanlin-apps-tab' OR label == 'Apps'")
             ).firstMatch
-            if fallback.waitForExistence(timeout: 10) {
-                fallback.tap()
+            if fallback.waitForExistence(timeout: 5) {
+                if fallback.isHittable {
+                    fallback.tap()
+                } else {
+                    fallback.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
+                }
             }
         }
         ensureAppsAddButton(timeout: 20)
