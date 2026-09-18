@@ -2,6 +2,7 @@ import Foundation
 import ExpoBrownfield
 import ExpoUI
 import React
+import React_RCTAppDelegate
 import UIKit
 
 @MainActor
@@ -14,8 +15,7 @@ public final class HanlinExpoSession {
     public let containerController: UIViewController
     public let bundleURL: URL
 
-    private var reactNativeFactory: RCTReactNativeFactory?
-    private var reactNativeDelegate: HanlinExpoDelegate?
+    private var rootViewFactory: RCTRootViewFactory?
     private var hostedView: UIView?
     private(set) public var isActive = false
 
@@ -64,12 +64,17 @@ public final class HanlinExpoSession {
         do {
             HanlinExpoModifierRegistry.registerCustomModifiers()
 
-            let delegate = HanlinExpoDelegate(bundleURL: bundleURL)
-            let factory = ExpoReactNativeFactory(delegate: delegate)
-            self.reactNativeDelegate = delegate
-            self.reactNativeFactory = factory
+            let bundle = bundleURL
+            let config = RCTRootViewFactoryConfiguration(
+                bundleURL: bundle,
+                newArchEnabled: true
+            )
+            config.bundleURLBlock = { bundle }
 
-            let rootView = factory.rootViewFactory.view(
+            let factory = RCTRootViewFactory(configuration: config)
+            self.rootViewFactory = factory
+
+            let rootView = factory.view(
                 withModuleName: moduleName,
                 initialProperties: nil,
                 launchOptions: nil
@@ -96,7 +101,7 @@ public final class HanlinExpoSession {
     }
 
     public func shutdown() {
-        guard isActive || reactNativeFactory != nil else {
+        guard isActive || rootViewFactory != nil else {
             HanlinExpoModifierRegistry.unregisterCustomModifiers()
             return
         }
@@ -104,11 +109,11 @@ public final class HanlinExpoSession {
         hostedView?.removeFromSuperview()
         hostedView = nil
 
-        if let rootViewFactory = reactNativeFactory?.rootViewFactory {
-            rootViewFactory.setValue(nil, forKey: "_reactHost")
+        if let factory = rootViewFactory {
+            factory.reactHost = nil
+            factory.setValue(nil, forKey: "_reactHost")
         }
-        reactNativeDelegate = nil
-        reactNativeFactory = nil
+        rootViewFactory = nil
         isActive = false
 
         HanlinExpoModifierRegistry.unregisterCustomModifiers()
@@ -122,22 +127,5 @@ public final class HanlinExpoSession {
         MainActor.assumeIsolated {
             shutdown()
         }
-    }
-}
-
-private final class HanlinExpoDelegate: ExpoReactNativeFactoryDelegate {
-    private let dynamicBundleURL: URL
-
-    init(bundleURL: URL) {
-        self.dynamicBundleURL = bundleURL
-        super.init()
-    }
-
-    override func sourceURL(for bridge: RCTBridge) -> URL? {
-        dynamicBundleURL
-    }
-
-    override func bundleURL() -> URL? {
-        dynamicBundleURL
     }
 }
