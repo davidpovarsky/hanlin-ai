@@ -17,7 +17,7 @@
       "version": "58.0.3",
       "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.3.tgz",
       "sha256": "f6d7545fa251737271d08914b0b48b43ade18ce00785712c41bb488444be7249",
-      "subpath": "package/prebuilds/output/debug/xcframeworks/ExpoUI.tar.gz",
+      "subpath": "package/prebuilds/output/release/xcframeworks/ExpoUI.tar.gz",
       "target": "Packages/HanlinExpoRuntime/Artifacts/ExpoUI.xcframework"
     },
     {
@@ -37,7 +37,7 @@
       "version": "58.0.3",
       "tarball": "https://registry.npmjs.org/expo-modules-core/-/expo-modules-core-58.0.3.tgz",
       "sha256": "4389f42ce8de1d4ada333d0822bf4db81180227a9a4ab44e7ba10f87cc4ee5b6",
-      "subpath": "package/prebuilds/output/debug/xcframeworks/ExpoModulesCore.tar.gz",
+      "subpath": "package/prebuilds/output/release/xcframeworks/ExpoModulesCore.tar.gz",
       "target": "Packages/HanlinExpoRuntime/Artifacts/ExpoModulesCore.xcframework"
     },
     {
@@ -47,7 +47,7 @@
       "version": "58.0.3",
       "tarball": "https://registry.npmjs.org/expo-modules-core/-/expo-modules-core-58.0.3.tgz",
       "sha256": "4389f42ce8de1d4ada333d0822bf4db81180227a9a4ab44e7ba10f87cc4ee5b6",
-      "subpath": "package/prebuilds/output/debug/xcframeworks/ExpoModulesWorklets.tar.gz",
+      "subpath": "package/prebuilds/output/release/xcframeworks/ExpoModulesWorklets.tar.gz",
       "target": "Packages/HanlinExpoRuntime/Artifacts/ExpoModulesWorklets.xcframework"
     },
     {
@@ -57,7 +57,7 @@
       "version": "58.0.3",
       "tarball": "https://registry.npmjs.org/expo-brownfield/-/expo-brownfield-58.0.3.tgz",
       "sha256": "aaa2b1268ec0814a0597dcd043b14038970573a43fa13c3953df3ada1a83a155",
-      "subpath": "package/prebuilds/output/debug/xcframeworks/ExpoBrownfield.tar.gz",
+      "subpath": "package/prebuilds/output/release/xcframeworks/ExpoBrownfield.tar.gz",
       "target": "Packages/HanlinExpoRuntime/Artifacts/ExpoBrownfield.xcframework"
     },
     {
