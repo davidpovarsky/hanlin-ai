@@ -7,6 +7,7 @@ struct NativeAppsAddSheet: View {
     let items: [HanlinMiniAppCatalogItem]
     let host: HanlinMiniAppHost
     let scriptingPlatform: HanlinScriptingPlatform
+    var onLaunchPackage: ((HanlinInstalledPackageID) -> Void)? = nil
     @Environment(\.dismiss) private var dismiss
 
     @State private var selectedPackageID: HanlinInstalledPackageID?
@@ -55,9 +56,15 @@ struct NativeAppsAddSheet: View {
                                 guard required.isSubset(of: Set(package.grantedCapabilities)) else {
                                     return
                                 }
-                                dismiss()
-                                Task {
-                                    await scriptingPlatform.launch(package.record.installedPackageID)
+                                if let onLaunchPackage {
+                                    onLaunchPackage(package.record.installedPackageID)
+                                    dismiss()
+                                } else {
+                                    dismiss()
+                                    Task {
+                                        try? await Task.sleep(for: .milliseconds(500))
+                                        await scriptingPlatform.launch(package.record.installedPackageID)
+                                    }
                                 }
                             } label: {
                                 HStack {
@@ -84,9 +91,15 @@ struct NativeAppsAddSheet: View {
                             .contextMenu {
                                 Button {
                                     guard package.enabled else { return }
-                                    dismiss()
-                                    Task {
-                                        await scriptingPlatform.launch(package.record.installedPackageID)
+                                    if let onLaunchPackage {
+                                        onLaunchPackage(package.record.installedPackageID)
+                                        dismiss()
+                                    } else {
+                                        dismiss()
+                                        Task {
+                                            try? await Task.sleep(for: .milliseconds(500))
+                                            await scriptingPlatform.launch(package.record.installedPackageID)
+                                        }
                                     }
                                 } label: {
                                     Label("Open", systemImage: "play.fill")

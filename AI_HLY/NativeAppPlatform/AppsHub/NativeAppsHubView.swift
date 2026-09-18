@@ -15,6 +15,7 @@ struct NativeAppsHubView: View {
     @State private var swiftDestination: HanlinMiniAppHost.SwiftDestination?
     @State private var informationItem: HanlinMiniAppCatalogItem?
     @State private var scriptingPackageID: HanlinInstalledPackageID?
+    @State private var pendingPackageLaunchID: HanlinInstalledPackageID?
     @State private var launchError: String?
 
     private let columns = [
@@ -51,11 +52,22 @@ struct NativeAppsHubView: View {
                     ContentUnavailableView.search(text: searchText)
                 }
             }
-            .sheet(isPresented: $showsAddSheet, onDismiss: refreshCatalog) {
+            .sheet(isPresented: $showsAddSheet, onDismiss: {
+                refreshCatalog()
+                if let packageID = pendingPackageLaunchID {
+                    pendingPackageLaunchID = nil
+                    Task {
+                        await scriptingPlatform.launch(packageID)
+                    }
+                }
+            }) {
                 NativeAppsAddSheet(
                     items: miniAppHost.items,
                     host: miniAppHost,
-                    scriptingPlatform: scriptingPlatform
+                    scriptingPlatform: scriptingPlatform,
+                    onLaunchPackage: { packageID in
+                        pendingPackageLaunchID = packageID
+                    }
                 )
             }
             .sheet(item: $informationItem) { item in

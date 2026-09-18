@@ -648,17 +648,17 @@ final class HanlinUIPerformanceUITests: XCTestCase {
     }
 
     private func launchPackage(named name: String) {
-        var card = findPackageCard(named: name)
-        if !card.waitForExistence(timeout: 5) {
-            app.swipeDown()
-            card = findPackageCard(named: name)
-        }
-        if !card.waitForExistence(timeout: 10) {
-            app.swipeUp()
-            card = findPackageCard(named: name)
-        }
+        let card = findPackageCard(named: name)
         XCTAssertTrue(card.waitForExistence(timeout: 15), "Package card \(name) missing")
-        card.tap()
+        if !card.isHittable {
+            app.swipeUp()
+            _ = waitUntil(timeout: 2) { card.isHittable }
+        }
+        if card.isHittable {
+            card.tap()
+        } else {
+            card.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
+        }
     }
 
     private func launchInstalledPackage(named name: String) {
