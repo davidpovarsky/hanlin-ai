@@ -19,19 +19,19 @@ private final class HanlinExpoReactNativeFactoryDelegate: RCTDefaultReactNativeF
         super.init()
     }
 
-    override func bundleURL() -> URL? {
+    nonisolated override func bundleURL() -> URL? {
         return targetBundleURL
     }
 
-    override func sourceURL(for bridge: RCTBridge) -> URL? {
+    nonisolated override func sourceURL(for bridge: RCTBridge) -> URL? {
         return targetBundleURL
     }
 
-    override func createJSRuntimeFactory() -> JSRuntimeFactoryRef {
+    nonisolated override func createJSRuntimeFactory() -> JSRuntimeFactoryRef {
         return hanlin_create_hermes_factory()
     }
 
-    @objc(host:didInitializeRuntime:)
+    nonisolated @objc(host:didInitializeRuntime:)
     func host(_ host: AnyObject, didInitializeRuntime runtime: UnsafeMutableRawPointer) {
         NSLog("%@", "HANLIN_EXPO_HOST_DID_INITIALIZE_RUNTIME runtime=\(runtime)")
         appContext.setRuntime(runtime, scheduler: nil, dispatch: nil)
