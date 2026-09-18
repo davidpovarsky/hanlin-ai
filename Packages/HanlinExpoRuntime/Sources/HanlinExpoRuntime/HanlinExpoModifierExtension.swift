@@ -15,7 +15,9 @@ public struct HanlinNavigationBarTitleDisplayModeModifier: ViewModifier {
 }
 
 public enum HanlinExpoModifierRegistry {
+    @MainActor
     public static func registerCustomModifiers() {
+        HanlinExpoSession.ensureAppDefinesLoaded()
         ViewModifierRegistry.register("navigationBarTitleDisplayMode") { params, _, _ in
             let modeString = params["displayMode"] as? String ?? "inline"
             let mode: NavigationBarItem.TitleDisplayMode = switch modeString {

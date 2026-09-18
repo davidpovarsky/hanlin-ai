@@ -68,7 +68,21 @@ public final class HanlinExpoSession {
     private var hostedView: UIView?
     private(set) public var isActive = false
 
+    @MainActor
+    public static func ensureAppDefinesLoaded() {
+        guard EXAppDefines.getAllDefines() == nil else { return }
+        let defines: [String: Any] = [
+            "APP_DEBUG": false,
+            "APP_RCT_DEBUG": false,
+            "APP_RCT_DEV": false,
+            "APP_NEW_ARCH_ENABLED": true
+        ]
+        EXAppDefines.load(defines)
+        NSLog("%@", "HANLIN_EXPO_APP_DEFINES_LOADED storage=\(String(describing: EXAppDefines.getAllDefines()))")
+    }
+
     public init(applicationRoot: URL) throws {
+        Self.ensureAppDefinesLoaded()
         let root = applicationRoot.standardizedFileURL
         guard root.isFileURL else {
             throw HanlinExpoError.invalidApplicationRoot("the URL is not a file URL")
@@ -111,6 +125,7 @@ public final class HanlinExpoSession {
         }
 
         do {
+            Self.ensureAppDefinesLoaded()
             HanlinExpoModifierRegistry.registerCustomModifiers()
 
             let modulesProvider = HanlinExpoModulesProvider()
