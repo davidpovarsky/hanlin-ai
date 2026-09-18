@@ -435,20 +435,6 @@ final class HanlinNativeScriptProductionE2ETests: XCTestCase {
     private func importAndInstall(archive: String) {
         importArchive(named: archive)
         let install = app.buttons["hanlin-package-install"].firstMatch
-        if !install.waitForExistence(timeout: 10) {
-            app.swipeUp()
-        }
-        let approveAllButton = app.buttons["hanlin-approve-all-capabilities"].firstMatch
-        for _ in 0..<3 {
-            if approveAllButton.waitForExistence(timeout: 2) && approveAllButton.isHittable {
-                approveAllButton.tap()
-                break
-            }
-            app.swipeUp()
-        }
-        if !install.exists || !install.isHittable {
-            app.swipeDown()
-        }
         if !install.waitForExistence(timeout: 20) {
             capture(name: "\(archive)-Import-Timeout")
             var detail = "Import Preview did not expose Install for \(archive)."
@@ -459,14 +445,40 @@ final class HanlinNativeScriptProductionE2ETests: XCTestCase {
             XCTFail(detail)
             return
         }
+
+        let approveAllButton = app.buttons["hanlin-approve-all-capabilities"].firstMatch
+        if !install.isEnabled {
+            if approveAllButton.waitForExistence(timeout: 2) && approveAllButton.isHittable {
+                approveAllButton.tap()
+            } else {
+                app.swipeUp()
+                if approveAllButton.waitForExistence(timeout: 3) && approveAllButton.isHittable {
+                    approveAllButton.tap()
+                }
+                app.swipeDown()
+            }
+        }
+
+        if !install.isHittable {
+            app.swipeDown()
+        }
+
         XCTAssertTrue(waitUntil(timeout: 15) { install.isEnabled }, "\(archive) was not installable")
         if install.isHittable {
             install.tap()
         } else {
-            install.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
+            app.swipeDown()
+            if install.isHittable {
+                install.tap()
+            } else {
+                install.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
+            }
         }
         let dismissed = waitUntil(timeout: 8) { !install.exists }
         if !dismissed && install.exists {
+            if !install.isHittable {
+                app.swipeDown()
+            }
             if install.isHittable {
                 install.tap()
             } else {

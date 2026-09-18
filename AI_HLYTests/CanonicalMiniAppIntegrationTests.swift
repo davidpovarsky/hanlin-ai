@@ -131,7 +131,7 @@ struct CanonicalMiniAppIntegrationTests {
         let unauthorizedCap = try HanlinCapabilityID(validating: "unauthorized.test")
 
         let broker = HanlinMiniAppRequestBroker { request in
-            request.capability == capID
+            request.caller == callerID && request.capability == capID
         }
         await broker.register(target: targetID, action: actionID, capability: capID) { request in
             request.payload

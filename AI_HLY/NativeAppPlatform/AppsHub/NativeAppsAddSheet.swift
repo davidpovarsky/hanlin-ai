@@ -48,22 +48,24 @@ struct NativeAppsAddSheet: View {
                 let legacyPackages = scriptingPlatform.installedPackages.filter { !canonicalAppIDs.contains($0.appID) }
                 if !legacyPackages.isEmpty {
                     Section("Scripting Packages") {
-                        ForEach(legacyPackages, id: \.record.installedPackageID) { package in
-                            let name = package.manifest?.name ?? package.record.packageID.rawValue
+                        ForEach(legacyPackages, id: \.self) { package in
+                            let livePackage = scriptingPlatform.installedPackages.first(where: { $0.record.installedPackageID == package.record.installedPackageID }) ?? package
+                            let name = livePackage.manifest?.name ?? livePackage.record.packageID.rawValue
                             Button {
-                                guard package.enabled else { return }
-                                let required = Set(package.entrypoints.first(where: { $0.kind == .app })?.requiredCapabilities.filter(\.required).map(\.capabilityID) ?? [])
-                                guard required.isSubset(of: Set(package.grantedCapabilities)) else {
+                                guard let current = scriptingPlatform.installedPackages.first(where: { $0.record.installedPackageID == livePackage.record.installedPackageID }),
+                                      current.enabled else { return }
+                                let required = Set(current.entrypoints.first(where: { $0.kind == .app })?.requiredCapabilities.filter(\.required).map(\.capabilityID) ?? [])
+                                guard required.isSubset(of: Set(current.grantedCapabilities)) else {
                                     return
                                 }
                                 if let onLaunchPackage {
-                                    onLaunchPackage(package.record.installedPackageID)
+                                    onLaunchPackage(current.record.installedPackageID)
                                     dismiss()
                                 } else {
                                     dismiss()
                                     Task {
                                         try? await Task.sleep(for: .milliseconds(500))
-                                        await scriptingPlatform.launch(package.record.installedPackageID)
+                                        await scriptingPlatform.launch(current.record.installedPackageID)
                                     }
                                 }
                             } label: {
@@ -72,12 +74,12 @@ struct NativeAppsAddSheet: View {
                                         Text(name)
                                             .font(.headline)
                                             .foregroundStyle(.primary)
-                                        Text(package.record.packageID.rawValue)
+                                        Text(livePackage.record.packageID.rawValue)
                                             .font(.caption)
                                             .foregroundStyle(.secondary)
                                     }
                                     Spacer()
-                                    if !package.enabled {
+                                    if !livePackage.enabled {
                                         Text("Disabled")
                                             .font(.caption)
                                             .foregroundStyle(.secondary)
@@ -90,24 +92,25 @@ struct NativeAppsAddSheet: View {
                             .accessibilityLabel(name)
                             .contextMenu {
                                 Button {
-                                    guard package.enabled else { return }
+                                    guard let current = scriptingPlatform.installedPackages.first(where: { $0.record.installedPackageID == livePackage.record.installedPackageID }),
+                                          current.enabled else { return }
                                     if let onLaunchPackage {
-                                        onLaunchPackage(package.record.installedPackageID)
+                                        onLaunchPackage(current.record.installedPackageID)
                                         dismiss()
                                     } else {
                                         dismiss()
                                         Task {
                                             try? await Task.sleep(for: .milliseconds(500))
-                                            await scriptingPlatform.launch(package.record.installedPackageID)
+                                            await scriptingPlatform.launch(current.record.installedPackageID)
                                         }
                                     }
                                 } label: {
                                     Label("Open", systemImage: "play.fill")
                                 }
-                                .disabled(!package.enabled)
+                                .disabled(!livePackage.enabled)
 
                                 Button {
-                                    selectedPackageID = package.record.installedPackageID
+                                    selectedPackageID = livePackage.record.installedPackageID
                                 } label: {
                                     Label("Package Information", systemImage: "info.circle")
                                 }

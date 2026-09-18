@@ -521,6 +521,7 @@ final class HanlinScriptUIProductionE2ETests: XCTestCase {
             app.swipeDown()
             _ = waitUntil(timeout: 5) { !done.exists }
         }
+        closeAddSheetIfNeeded()
     }
 
     private func ensurePackageUninstalled(named packageName: String) {

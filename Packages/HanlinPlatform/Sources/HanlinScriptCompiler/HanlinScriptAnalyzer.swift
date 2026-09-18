@@ -229,7 +229,8 @@ public struct HanlinScriptAnalyzer: Sendable {
         entrypoints: [HanlinPackageEntrypointDescriptor],
         findings: inout [HanlinCompatibilityFinding]
     ) {
-        guard entrypoints.count == 1, let entrypoint = entrypoints.first, entrypoint.kind == .app else {
+        let appEntrypoints = entrypoints.filter { $0.kind == .app }
+        guard appEntrypoints.count == 1, let entrypoint = appEntrypoints.first else {
             findings.append(.init(
                 state: .unsupported,
                 severity: .error,
