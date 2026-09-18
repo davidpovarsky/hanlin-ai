@@ -1,9 +1,30 @@
 import Foundation
 import ExpoBrownfield
+import ExpoModulesCore
 import ExpoUI
 import React
 import React_RCTAppDelegate
 import UIKit
+
+@_silgen_name("jsrt_create_hermes_factory")
+private func hanlin_create_hermes_factory() -> JSRuntimeFactoryRef
+
+private final class HanlinExpoJSRuntimeConfigurator: NSObject, RCTJSRuntimeConfiguratorProtocol {
+    func createJSRuntimeFactory() -> JSRuntimeFactoryRef {
+        return hanlin_create_hermes_factory()
+    }
+}
+
+@objc(ExpoModulesProvider)
+public final class HanlinExpoModulesProvider: ModulesProvider {
+    public override func getModuleClasses() -> [ExpoModuleTupleType] {
+        return [
+            (module: ExpoUIModule.self, name: "ExpoUI"),
+            (module: ExpoBrownfieldModule.self, name: "ExpoBrownfieldModule"),
+            (module: ExpoBrownfieldStateModule.self, name: "ExpoBrownfieldStateModule")
+        ]
+    }
+}
 
 @MainActor
 public final class HanlinExpoSession {
@@ -16,6 +37,8 @@ public final class HanlinExpoSession {
     public let bundleURL: URL
 
     private var rootViewFactory: RCTRootViewFactory?
+    private var runtimeConfigurator: HanlinExpoJSRuntimeConfigurator?
+    private var appContext: AppContext?
     private var hostedView: UIView?
     private(set) public var isActive = false
 
@@ -64,12 +87,21 @@ public final class HanlinExpoSession {
         do {
             HanlinExpoModifierRegistry.registerCustomModifiers()
 
+            let modulesProvider = HanlinExpoModulesProvider()
+            let appContext = AppContext()
+            appContext.registerNativeModules(provider: modulesProvider)
+            self.appContext = appContext
+
             let bundle = bundleURL
+            let configurator = HanlinExpoJSRuntimeConfigurator()
+            self.runtimeConfigurator = configurator
+
             let config = RCTRootViewFactoryConfiguration(
                 bundleURL: bundle,
                 newArchEnabled: true
             )
             config.bundleURLBlock = { bundle }
+            config.jsRuntimeConfiguratorDelegate = configurator
 
             let factory = RCTRootViewFactory(configuration: config)
             self.rootViewFactory = factory
@@ -114,6 +146,9 @@ public final class HanlinExpoSession {
             factory.setValue(nil, forKey: "_reactHost")
         }
         rootViewFactory = nil
+        appContext?.destroy()
+        appContext = nil
+        runtimeConfigurator = nil
         isActive = false
 
         HanlinExpoModifierRegistry.unregisterCustomModifiers()
