@@ -11,6 +11,7 @@ import SwiftData
 @preconcurrency import LLM
 import MapKit
 import Accelerate
+import HanlinChatCore
 
 // MARK: - 数据结构定义
 struct splitMarkerGroup {
@@ -2439,38 +2440,13 @@ class APIManager {
                         ])
                     }
                     
-                    // 构造请求
-                    var request = URLRequest(url: requestURL)
-                    request.httpMethod = "POST"
-                    request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-                    request.setValue("Bearer \(apiKey)", forHTTPHeaderField: "Authorization")
-                    
-                    let baseName = restoreBaseModelName(from: modelInfo.name ?? "Unknown")
-                    var requestBody: [String: Any] = [
-                        "model": baseName,
-                        "messages": finalFormattedMessages,
-                        "stream": true,
-                    ]
+                    // 构造工具与配置
                     var preparedAssistantTools: AssistantToolBridge.PreparedTools?
+                    var tools: [[String: Any]]? = nil
                     if modelInfo.agentCapabilities.supportsNativeToolCalling && ifToolUse {
                         preparedAssistantTools = try await AssistantToolBridge.prepare(
                             scope: assistantToolScope
                         )
-                    }
-                    
-                    // 参数设置
-                    if temperature > 0 {
-                        requestBody["temperature"] = temperature
-                    }
-                    if topP > 0 {
-                        requestBody["top_p"] = topP
-                    }
-                    if maxTokens > 0 {
-                        requestBody["max_tokens"] = maxTokens
-                    }
-                    
-                    // 工具设置
-                    if modelInfo.agentCapabilities.supportsNativeToolCalling && ifToolUse {
                         let memoryEnabled = isMemoryEnabled()
                         let mapEnabled = isMapEnabled()
                         let calendarEnabled = isCalendarEnabled()
@@ -2480,7 +2456,7 @@ class APIManager {
                         let healthEnabled = isHealthEnabled()
                         let weatherEnabled = isWeatherEnabled()
                         let canvasEnabled = isCanvasEnabled()
-                        var tools = buildMemoryTools(
+                        var builtTools = buildMemoryTools(
                             memoryEnabled: memoryEnabled,
                             mapEnabled: mapEnabled,
                             calendarEnabled: calendarEnabled,
@@ -2489,102 +2465,55 @@ class APIManager {
                             codeEnabled: codeEnabled,
                             healthEnabled: healthEnabled,
                             weatherEnabled: weatherEnabled,
-                            canvasEnabled: canvasEnabled,
+                            canvasEnabled: canvasEnabled
                         )
-                        tools.append(contentsOf: preparedAssistantTools?.schemas ?? [])
-                        tools = ToolSchemaDecorator.decorate(
-                            schemas: tools,
+                        builtTools.append(contentsOf: preparedAssistantTools?.schemas ?? [])
+                        builtTools = ToolSchemaDecorator.decorate(
+                            schemas: builtTools,
                             progressSummaryRequired: modelInfo.agentCapabilities.supportsProgressSummaryField
                         )
                         if modelInfo.agentCapabilities.supportsReportProgressTool {
-                            tools.append(ToolSchemaDecorator.reportProgressSchema())
+                            builtTools.append(ToolSchemaDecorator.reportProgressSchema())
                         }
-                        // 获得工具
-                        requestBody["tools"] = tools
+                        tools = builtTools
                     }
-                    
-                    if modelInfo.supportReasoningChange {
-                        if modelInfo.company == "QWEN" ||
-                            modelInfo.company == "MODELSCOPE" ||
-                            modelInfo.company == "SILICONCLOUD" ||
-                            modelInfo.company == "WENXIN"
-                        {
-                            requestBody["enable_thinking"] = ifThink
-                        } else if modelInfo.company == "ANTHROPIC" {
-                            if ifThink {
-                                requestBody["think"] = [
-                                    "type": "enabled",
-                                ]
-                            } else {
-                                requestBody["think"] = [
-                                    "type": "disabled",
-                                ]
-                            }
-                        } else if modelInfo.company == "ZHIPUAI" || modelInfo.company == "HANLIN" || modelInfo.company == "DOUBAO" || modelInfo.company == "OPENROUTER" {
-                            if ifThink {
-                                requestBody["thinking"] = [
-                                    "type": "enabled",
-                                ]
-                            } else {
-                                requestBody["thinking"] = [
-                                    "type": "disabled",
-                                ]
-                            }
-                        } else {
-                            // 给最后一句话加上/think 或者/no_think
-                            if var lastMessage = finalFormattedMessages.last,
-                               lastMessage["role"] as? String == "user",
-                               var content = lastMessage["content"] as? String,
-                               !content.contains("/think") && !content.contains("/no_think") {
-                                content += ifThink ? " /think" : " /no_think"
-                                lastMessage["content"] = content
-                                finalFormattedMessages[finalFormattedMessages.count - 1] = lastMessage
-                            }
-                            // 更新 requestBody
-                            requestBody["messages"] = finalFormattedMessages
-                        }
-                    }
-                    
-                    if modelInfo.supportsReasoning && ifThink && thinkingLength != 0 {
-                        switch thinkingLength {
-                        case 1:
-                            // 短暂思考
-                            if modelInfo.company == "OPENAI" || modelInfo.company == "GOOGLE" || modelInfo.company == "XAI" || modelInfo.company == "DOUBAO" || modelInfo.company == "OPENROUTER"  {
-                                requestBody["reasoning_effort"] = "low"
-                            } else if modelInfo.company == "QWEN" || modelInfo.company == "MODELSCOPE" || modelInfo.company == "SILICONCLOUD" {
-                                requestBody["thinking_budget"] = 1024
-                            }
-                            
-                        case 2:
-                            // 中等思考
-                            if modelInfo.company == "OPENAI" || modelInfo.company == "GOOGLE" || modelInfo.company == "XAI" || modelInfo.company == "DOUBAO" || modelInfo.company == "OPENROUTER"  {
-                                requestBody["reasoning_effort"] = "medium"
-                            } else if modelInfo.company == "QWEN" || modelInfo.company == "MODELSCOPE" || modelInfo.company == "SILICONCLOUD" {
-                                requestBody["thinking_budget"] = 8192
-                            }
 
-                        case 3:
-                            // 深度思考
-                            if modelInfo.company == "OPENAI" || modelInfo.company == "GOOGLE" || modelInfo.company == "XAI" {
-                                requestBody["reasoning_effort"] = "high"
-                            } else if modelInfo.company == "QWEN" || modelInfo.company == "MODELSCOPE" || modelInfo.company == "SILICONCLOUD" || modelInfo.company == "OPENROUTER"  {
-                                requestBody["thinking_budget"] = 16384
-                            }
+                    let chatConfig = HanlinChatModelConfiguration(
+                        modelID: modelInfo.name ?? "Unknown",
+                        baseModelID: restoreBaseModelName(from: modelInfo.name ?? "Unknown"),
+                        displayName: modelInfo.displayName,
+                        company: modelInfo.company,
+                        apiType: "OpenAI",
+                        endpoint: requestURL,
+                        apiKey: apiKey,
+                        temperature: temperature,
+                        topP: topP,
+                        maxTokens: maxTokens > 0 ? maxTokens : 2048,
+                        supportsReasoning: modelInfo.supportsReasoning && ifThink,
+                        supportReasoningChange: modelInfo.supportReasoningChange,
+                        thinkingLength: thinkingLength,
+                        supportsToolUse: modelInfo.agentCapabilities.supportsNativeToolCalling && ifToolUse
+                    )
 
-                        default:
-                            break
-                        }
+                    var requestBody = HanlinChatRequestBuilder.buildOpenAIBody(
+                        formattedMessages: finalFormattedMessages,
+                        configuration: chatConfig,
+                        tools: tools
+                    )
+
+                    if modelInfo.supportsVoiceGen && ifAudio && modelInfo.company == "QWEN" {
+                        requestBody["modalities"] = ["text", "audio"]
+                        requestBody["audio"] = [
+                            "voice": "Cherry",
+                            "format": "wav"
+                        ]
                     }
-                    
-                    if modelInfo.supportsVoiceGen && ifAudio {
-                        if modelInfo.company == "QWEN" {
-                            requestBody["modalities"] = ["text", "audio"]
-                            requestBody["audio"] = [
-                                "voice": "Cherry",
-                                "format": "wav"
-                            ]
-                        }
-                    }
+
+                    var request = URLRequest(url: requestURL)
+                    request.httpMethod = "POST"
+                    request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+                    request.setValue("Bearer \(apiKey)", forHTTPHeaderField: "Authorization")
+                    request.timeoutInterval = 60
 
                     if let recorder = self.agentDiagnosticsRecorder {
                         let requestData = try JSONSerialization.data(withJSONObject: requestBody)

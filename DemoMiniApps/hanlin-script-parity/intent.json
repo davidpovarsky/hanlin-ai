@@ -1,5 +1,7 @@
 {
   "name": "HanlinScriptParityIntent",
   "title": "Perform HanlinScript Parity Intent",
-  "description": "Deterministic NativeScript App Intent"
+  "description": "Deterministic NativeScript App Intent",
+  "action": "parity.intent",
+  "capability": "inter-app.share"
 }

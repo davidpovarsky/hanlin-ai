@@ -1,33 +1,16 @@
 // HanlinCompactAgentContracts.swift
 // HanlinScriptExtensions
 //
-// Extension-safe agent configuration, persistence, and minimal streaming client.
-// Designed to run in App Extensions (Translation UI Provider) without depending
-// on SwiftData, UIKit, or main-app application layers.
+// Extension-safe agent configuration, persistence, and compact streaming client.
+// Reuses the shared HanlinChatCore production engine for model execution.
 
 import CryptoKit
 import Foundation
+@_exported import HanlinChatCore
 
-// MARK: - Message Model
+// MARK: - Message Model Typealias
 
-public struct HanlinCompactChatMessage: Codable, Hashable, Identifiable, Sendable {
-    public let id: UUID
-    public let role: String // "user", "assistant", "system"
-    public var content: String
-    public let timestamp: Date
-
-    public init(
-        id: UUID = UUID(),
-        role: String,
-        content: String,
-        timestamp: Date = .now
-    ) {
-        self.id = id
-        self.role = role
-        self.content = content
-        self.timestamp = timestamp
-    }
-}
+public typealias HanlinCompactChatMessage = HanlinChatMessage
 
 // MARK: - Configuration Model
 
@@ -39,6 +22,13 @@ public struct HanlinCompactAgentConfiguration: Codable, Hashable, Sendable {
     public let displayName: String?
     public let systemPrompt: String?
     public let apiType: String?
+    public let temperature: Double
+    public let topP: Double
+    public let maxTokens: Int
+    public let supportsReasoning: Bool
+    public let supportReasoningChange: Bool
+    public let thinkingLength: Int
+    public let supportsToolUse: Bool
     public let updatedAt: Date
 
     public init(
@@ -49,6 +39,13 @@ public struct HanlinCompactAgentConfiguration: Codable, Hashable, Sendable {
         displayName: String? = nil,
         systemPrompt: String? = nil,
         apiType: String? = "OpenAI",
+        temperature: Double = -999,
+        topP: Double = -999,
+        maxTokens: Int = 2048,
+        supportsReasoning: Bool = false,
+        supportReasoningChange: Bool = false,
+        thinkingLength: Int = 0,
+        supportsToolUse: Bool = false,
         updatedAt: Date = .now
     ) {
         self.endpoint = endpoint
@@ -58,7 +55,60 @@ public struct HanlinCompactAgentConfiguration: Codable, Hashable, Sendable {
         self.displayName = displayName
         self.systemPrompt = systemPrompt
         self.apiType = apiType
+        self.temperature = temperature
+        self.topP = topP
+        self.maxTokens = maxTokens > 0 ? maxTokens : 2048
+        self.supportsReasoning = supportsReasoning
+        self.supportReasoningChange = supportReasoningChange
+        self.thinkingLength = thinkingLength
+        self.supportsToolUse = supportsToolUse
         self.updatedAt = updatedAt
+    }
+
+    public var chatModelConfiguration: HanlinChatModelConfiguration {
+        HanlinChatModelConfiguration(
+            modelID: modelID,
+            displayName: displayName,
+            company: company,
+            apiType: apiType,
+            endpoint: endpoint,
+            apiKey: apiKey,
+            temperature: temperature,
+            topP: topP,
+            maxTokens: maxTokens,
+            supportsReasoning: supportsReasoning,
+            supportReasoningChange: supportReasoningChange,
+            thinkingLength: thinkingLength,
+            supportsToolUse: supportsToolUse,
+            systemPrompt: systemPrompt,
+            updatedAt: updatedAt
+        )
+    }
+
+    private enum CodingKeys: String, CodingKey {
+        case endpoint, apiKey, modelID, company, displayName, systemPrompt, apiType
+        case temperature, topP, maxTokens, supportsReasoning, supportReasoningChange
+        case thinkingLength, supportsToolUse, updatedAt
+    }
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        endpoint = try container.decode(URL.self, forKey: .endpoint)
+        apiKey = try container.decode(String.self, forKey: .apiKey)
+        modelID = try container.decode(String.self, forKey: .modelID)
+        company = try container.decodeIfPresent(String.self, forKey: .company)
+        displayName = try container.decodeIfPresent(String.self, forKey: .displayName)
+        systemPrompt = try container.decodeIfPresent(String.self, forKey: .systemPrompt)
+        apiType = try container.decodeIfPresent(String.self, forKey: .apiType)
+        temperature = try container.decodeIfPresent(Double.self, forKey: .temperature) ?? -999
+        topP = try container.decodeIfPresent(Double.self, forKey: .topP) ?? -999
+        let decodedMaxTokens = try container.decodeIfPresent(Int.self, forKey: .maxTokens) ?? 2048
+        maxTokens = decodedMaxTokens > 0 ? decodedMaxTokens : 2048
+        supportsReasoning = try container.decodeIfPresent(Bool.self, forKey: .supportsReasoning) ?? false
+        supportReasoningChange = try container.decodeIfPresent(Bool.self, forKey: .supportReasoningChange) ?? false
+        thinkingLength = try container.decodeIfPresent(Int.self, forKey: .thinkingLength) ?? 0
+        supportsToolUse = try container.decodeIfPresent(Bool.self, forKey: .supportsToolUse) ?? false
+        updatedAt = try container.decodeIfPresent(Date.self, forKey: .updatedAt) ?? .now
     }
 }
 
@@ -143,10 +193,11 @@ public enum HanlinCompactAgentError: LocalizedError, Sendable {
     }
 }
 
-// MARK: - Minimal Streaming Agent Client
+// MARK: - Compact Streaming Agent Client (Facade over HanlinChatEngine)
 
 public actor HanlinCompactAgentClient {
     private var config: HanlinCompactAgentConfiguration?
+    private let engine = HanlinChatEngine()
 
     public init(configuration: HanlinCompactAgentConfiguration? = nil) {
         self.config = configuration
@@ -166,226 +217,47 @@ public actor HanlinCompactAgentClient {
             throw HanlinCompactAgentError.notConfigured
         }
 
-        let (stream, continuation) = AsyncThrowingStream<String, Error>.makeStream()
+        let chatConfig = activeConfig.chatModelConfiguration
+        let (textStream, continuation) = AsyncThrowingStream<String, Error>.makeStream()
 
-        let task = Task.detached(priority: .userInitiated) { [config = activeConfig] in
+        let task = Task.detached(priority: .userInitiated) { [engine] in
             do {
-                let apiType = (config.apiType ?? "OpenAI").lowercased()
-                let request: URLRequest
-
-                switch apiType {
-                case "anthropic":
-                    var endpointURL = config.endpoint
-                    let urlStr = endpointURL.absoluteString
-                    if urlStr.hasSuffix("/chat/completions") {
-                        if let newURL = URL(string: urlStr.replacingOccurrences(of: "/chat/completions", with: "/messages")) {
-                            endpointURL = newURL
-                        }
-                    } else if !urlStr.contains("/messages") {
-                        let base = urlStr.hasSuffix("/") ? String(urlStr.dropLast()) : urlStr
-                        if let newURL = URL(string: "\(base)/v1/messages") {
-                            endpointURL = newURL
-                        }
-                    }
-
-                    var req = URLRequest(url: endpointURL)
-                    req.httpMethod = "POST"
-                    req.setValue("application/json", forHTTPHeaderField: "Content-Type")
-                    req.setValue(config.apiKey, forHTTPHeaderField: "x-api-key")
-                    req.setValue("2023-06-01", forHTTPHeaderField: "anthropic-version")
-                    req.timeoutInterval = 60
-
-                    var systemContent: String? = nil
-                    if let systemPrompt = config.systemPrompt, !systemPrompt.isEmpty {
-                        var fullSystem = systemPrompt
-                        if let context = systemContext, !context.isEmpty {
-                            fullSystem += "\n\nContext:\n\(context)"
-                        }
-                        systemContent = fullSystem
-                    } else if let context = systemContext, !context.isEmpty {
-                        systemContent = "Context:\n\(context)"
-                    }
-
-                    var anthropicMessages: [[String: String]] = []
-                    for msg in messages {
-                        let role = (msg.role == "assistant" ? "assistant" : "user")
-                        anthropicMessages.append(["role": role, "content": msg.content])
-                    }
-                    if anthropicMessages.isEmpty {
-                        anthropicMessages.append(["role": "user", "content": "Hello"])
-                    }
-
-                    var body: [String: Any] = [
-                        "model": config.modelID,
-                        "stream": true,
-                        "max_tokens": 4096,
-                        "messages": anthropicMessages
-                    ]
-                    if let systemContent = systemContent, !systemContent.isEmpty {
-                        body["system"] = systemContent
-                    }
-                    req.httpBody = try JSONSerialization.data(withJSONObject: body, options: [])
-                    request = req
-
-                case "gemini":
-                    var endpointURL = config.endpoint
-                    let urlStr = endpointURL.absoluteString
-                    if urlStr.contains(":streamGenerateContent") {
-                        var components = URLComponents(url: endpointURL, resolvingAgainstBaseURL: false)
-                        var items = components?.queryItems ?? []
-                        if !items.contains(where: { $0.name == "alt" }) {
-                            items.append(URLQueryItem(name: "alt", value: "sse"))
-                        }
-                        if !items.contains(where: { $0.name == "key" }) {
-                            items.append(URLQueryItem(name: "key", value: config.apiKey))
-                        }
-                        components?.queryItems = items
-                        if let u = components?.url { endpointURL = u }
-                    } else {
-                        let scheme = endpointURL.scheme ?? "https"
-                        let host = endpointURL.host ?? "generativelanguage.googleapis.com"
-                        let urlString = "\(scheme)://\(host)/v1beta/models/\(config.modelID):streamGenerateContent?alt=sse&key=\(config.apiKey)"
-                        if let u = URL(string: urlString) { endpointURL = u }
-                    }
-
-                    var req = URLRequest(url: endpointURL)
-                    req.httpMethod = "POST"
-                    req.setValue("application/json", forHTTPHeaderField: "Content-Type")
-                    req.timeoutInterval = 60
-
-                    var contents: [[String: Any]] = []
-                    for msg in messages {
-                        let role = (msg.role == "assistant" ? "model" : "user")
-                        contents.append([
-                            "role": role,
-                            "parts": [["text": msg.content]]
-                        ])
-                    }
-                    if contents.isEmpty {
-                        contents.append(["role": "user", "parts": [["text": "Hello"]]])
-                    }
-
-                    var body: [String: Any] = [
-                        "contents": contents
-                    ]
-                    if let systemPrompt = config.systemPrompt, !systemPrompt.isEmpty {
-                        var fullSystem = systemPrompt
-                        if let context = systemContext, !context.isEmpty {
-                            fullSystem += "\n\nContext:\n\(context)"
-                        }
-                        body["systemInstruction"] = ["parts": [["text": fullSystem]]]
-                    } else if let context = systemContext, !context.isEmpty {
-                        body["systemInstruction"] = ["parts": [["text": "Context:\n\(context)"]]]
-                    }
-                    req.httpBody = try JSONSerialization.data(withJSONObject: body, options: [])
-                    request = req
-
-                default: // OpenAI, OpenAI-Response, and default
-                    var messagePayloads: [[String: String]] = []
-                    if let systemPrompt = config.systemPrompt, !systemPrompt.isEmpty {
-                        var fullSystem = systemPrompt
-                        if let context = systemContext, !context.isEmpty {
-                            fullSystem += "\n\nContext:\n\(context)"
-                        }
-                        messagePayloads.append(["role": "system", "content": fullSystem])
-                    } else if let context = systemContext, !context.isEmpty {
-                        messagePayloads.append(["role": "system", "content": "Context:\n\(context)"])
-                    }
-
-                    for msg in messages {
-                        messagePayloads.append(["role": msg.role, "content": msg.content])
-                    }
-
-                    let body: [String: Any] = [
-                        "model": config.modelID,
-                        "stream": true,
-                        "messages": messagePayloads
-                    ]
-
-                    var req = URLRequest(url: config.endpoint)
-                    req.httpMethod = "POST"
-                    req.httpBody = try JSONSerialization.data(withJSONObject: body, options: [])
-                    req.setValue("application/json", forHTTPHeaderField: "Content-Type")
-                    req.setValue("Bearer \(config.apiKey)", forHTTPHeaderField: "Authorization")
-                    req.timeoutInterval = 60
-                    request = req
-                }
-
-                let session = URLSession(configuration: .ephemeral)
-                defer { session.finishTasksAndInvalidate() }
-
-                let (bytes, response) = try await session.bytes(for: request)
-                guard let httpResponse = response as? HTTPURLResponse else {
-                    continuation.finish(throwing: HanlinCompactAgentError.networkFailure("Invalid response"))
-                    return
-                }
-
-                guard (200...299).contains(httpResponse.statusCode) else {
-                    var errorDetail = ""
-                    for try await line in bytes.lines {
-                        errorDetail += line
-                        if errorDetail.count > 1024 { break }
-                    }
-                    continuation.finish(throwing: HanlinCompactAgentError.serverError(
-                        statusCode: httpResponse.statusCode,
-                        message: errorDetail.isEmpty ? "Request rejected" : errorDetail
-                    ))
-                    return
-                }
-
-                for try await line in bytes.lines {
-                    try Task.checkCancellation()
-                    guard line.hasPrefix("data:") else { continue }
-                    let dataText = line.dropFirst(5).trimmingCharacters(in: .whitespaces)
-                    if dataText == "[DONE]" { break }
-
-                    guard let chunkData = dataText.data(using: .utf8),
-                          let json = try? JSONSerialization.jsonObject(with: chunkData) as? [String: Any] else {
-                        continue
-                    }
-
-                    switch apiType {
-                    case "anthropic":
-                        if let type = json["type"] as? String, type == "message_stop" {
-                            continuation.finish()
-                            return
-                        }
-                        if let delta = json["delta"] as? [String: Any],
-                           let text = delta["text"] as? String,
-                           !text.isEmpty {
-                            continuation.yield(text)
-                        }
-
-                    case "gemini":
-                        if let candidates = json["candidates"] as? [[String: Any]],
-                           let firstCandidate = candidates.first,
-                           let content = firstCandidate["content"] as? [String: Any],
-                           let parts = content["parts"] as? [[String: Any]],
-                           let firstPart = parts.first,
-                           let text = firstPart["text"] as? String,
-                           !text.isEmpty {
-                            continuation.yield(text)
-                        }
-
-                    default: // OpenAI
-                        if let choices = json["choices"] as? [[String: Any]],
-                           let first = choices.first,
-                           let delta = first["delta"] as? [String: Any],
-                           let text = delta["content"] as? String,
-                           !text.isEmpty {
-                            continuation.yield(text)
-                        }
+                let stream = try await engine.stream(
+                    messages: messages,
+                    configuration: chatConfig,
+                    systemContext: systemContext,
+                    tools: nil
+                )
+                for try await event in stream {
+                    if let content = event.content, !content.isEmpty {
+                        continuation.yield(content)
                     }
                 }
                 continuation.finish()
             } catch is CancellationError {
                 continuation.finish(throwing: HanlinCompactAgentError.cancelled)
+            } catch let err as HanlinChatError {
+                switch err {
+                case .notConfigured:
+                    continuation.finish(throwing: HanlinCompactAgentError.notConfigured)
+                case .cancelled:
+                    continuation.finish(throwing: HanlinCompactAgentError.cancelled)
+                case let .serverError(code, msg):
+                    continuation.finish(throwing: HanlinCompactAgentError.serverError(statusCode: code, message: msg))
+                case let .networkFailure(msg):
+                    continuation.finish(throwing: HanlinCompactAgentError.networkFailure(msg))
+                default:
+                    continuation.finish(throwing: err)
+                }
             } catch {
                 continuation.finish(throwing: error)
             }
         }
 
-        continuation.onTermination = { @Sendable _ in task.cancel() }
-        return stream
+        continuation.onTermination = { @Sendable _ in
+            task.cancel()
+        }
+
+        return textStream
     }
 }

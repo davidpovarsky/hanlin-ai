@@ -87,43 +87,40 @@ final class HanlinMiniAppHost {
             }
         }
 
-        // Generic fallback route registration for all installed Mini Apps declaring inter-app.share
+        // Generic action routing for installed Mini Apps
         for item in items {
             let targetID = item.id
             let capabilities = Set(item.descriptor.capabilities.map(\.id))
-            guard let shareCap = try? HanlinCapabilityID(validating: "inter-app.share"),
-                  capabilities.contains(shareCap),
-                  let shareAction = try? HanlinActionID(validating: "share.value") else { continue }
 
-            await broker.register(target: targetID, action: shareAction, capability: shareCap) { [store] _ in
-                let storageContext = HanlinMiniAppStorageContext(appID: targetID, store: store)
-                let targetSuffix = targetID.rawValue.components(separatedBy: ".").last ?? "state"
-                let candidatePaths = [
-                    "\(targetSuffix).json",
-                    "state.json",
-                    "parity.json"
-                ]
-                for path in candidatePaths {
-                    if let data = try? await storageContext.read(area: .state, path: path) {
-                        if let val = try? JSONDecoder().decode(PersistedParityState.self, from: data) {
-                            return .object(["name": .string(val.name), "counter": .integer(Int64(val.counter))])
-                        }
-                        if let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any] {
-                            let counter = (json["counter"] as? NSNumber)?.int64Value ?? 0
-                            let name = (json["name"] as? String) ?? item.descriptor.name.preferredValue(forLocale: Locale.current.identifier)
-                            return .object([
-                                "source": .string(targetID.rawValue),
-                                "counter": .integer(counter),
-                                "name": .string(name)
-                            ])
-                        }
+            // 1. Actions explicitly declared on the descriptor
+            for action in item.descriptor.actions {
+                for cap in action.capabilities {
+                    guard capabilities.contains(cap) else { continue }
+                    let actionID = action.id
+                    await broker.register(target: targetID, action: actionID, capability: cap) { request in
+                        return try await HanlinScriptingPlatform.shared.executeHeadlessAction(
+                            targetAppID: targetID,
+                            action: actionID,
+                            capability: cap,
+                            payload: request.payload
+                        )
                     }
                 }
-                return .object([
-                    "source": .string(targetID.rawValue),
-                    "counter": .integer(0),
-                    "name": .string(item.descriptor.name.preferredValue(forLocale: Locale.current.identifier))
-                ])
+            }
+
+            // 2. Default share.value route if inter-app.share is granted and not already registered
+            if let shareCap = try? HanlinCapabilityID(validating: "inter-app.share"),
+               capabilities.contains(shareCap),
+               let shareAction = try? HanlinActionID(validating: "share.value"),
+               !item.descriptor.actions.contains(where: { $0.id == shareAction }) {
+                await broker.register(target: targetID, action: shareAction, capability: shareCap) { request in
+                    return try await HanlinScriptingPlatform.shared.executeHeadlessAction(
+                        targetAppID: targetID,
+                        action: shareAction,
+                        capability: shareCap,
+                        payload: request.payload
+                    )
+                }
             }
         }
     }

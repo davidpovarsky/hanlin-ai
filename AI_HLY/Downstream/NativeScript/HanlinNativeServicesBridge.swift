@@ -1,24 +1,22 @@
 import Foundation
 import HanlinMiniAppCore
+import HanlinNativeScriptCoreSupport
 import HanlinPlatformContracts
 #if canImport(UIKit)
 import UIKit
 #endif
 
-/// Narrow native bridge exposing Node, Python, JavaScript, Network, and Inter-App
-/// request services to HanlinScript (NativeScript) via Objective-C metadata.
+/// Production host provider implementing `HanlinNativeServicesProvider` for NativeScript.
 ///
 /// Security & Architectural Rules:
 /// 1. Caller identity is strictly HOST-BOUND to the active session (`activeAppID`).
 ///    Untrusted scripts cannot supply or spoof their caller identity.
 /// 2. All privileged operations (Node, Python, JavaScript, Network, Inter-App)
 ///    are capability-gated against `activeGrantedCapabilities`.
-/// 3. Preserves runtime lifecycle, cancellation, and error semantics.
-@objc(HanlinNativeServicesBridge)
-@objcMembers
-public final class HanlinNativeServicesBridge: NSObject {
-
-    // MARK: - Active Host Session Context
+/// 3. Visible to NativeScript JavaScript because the Objective-C shim
+///    `HanlinNativeServicesBridge` lives in `HanlinNativeScriptCoreSupport`.
+public final class HanlinNativeServicesHostProvider: NSObject, HanlinNativeServicesProvider {
+    public static let shared = HanlinNativeServicesHostProvider()
 
     nonisolated(unsafe) public private(set) static var activeAppID: String?
     nonisolated(unsafe) public private(set) static var activeDataRoot: String?
@@ -26,6 +24,7 @@ public final class HanlinNativeServicesBridge: NSObject {
     nonisolated(unsafe) public private(set) static var activeDocumentsDirectory: String?
     nonisolated(unsafe) public private(set) static var activeCacheDirectory: String?
     nonisolated(unsafe) public private(set) static var activeGrantedCapabilities: Set<String> = []
+    nonisolated(unsafe) public private(set) static var registeredActionIDs: Set<HanlinActionID> = []
 
     public static func setActiveContainer(
         appID: String,
@@ -41,6 +40,8 @@ public final class HanlinNativeServicesBridge: NSObject {
         activeDocumentsDirectory = docsDir
         activeCacheDirectory = cacheDir
         activeGrantedCapabilities = Set(grantedCapabilities)
+        registeredActionIDs.removeAll()
+        HanlinNativeServicesBridge.registerProvider(shared)
     }
 
     public static func clearActiveContainer() {
@@ -56,6 +57,7 @@ public final class HanlinNativeServicesBridge: NSObject {
         activeDocumentsDirectory = nil
         activeCacheDirectory = nil
         activeGrantedCapabilities.removeAll()
+        registeredActionIDs.removeAll()
     }
 
     /// Checks whether the active session has been granted the required capability.
@@ -64,32 +66,29 @@ public final class HanlinNativeServicesBridge: NSObject {
             || activeGrantedCapabilities.contains("all")
     }
 
-    // MARK: - Canonical Roots
+    // MARK: - HanlinNativeServicesProvider Conformance
 
-    /// The root data directory for the active Mini App.
-    public static func dataRootDirectory() -> String? { activeDataRoot }
+    public func dataRootDirectory() -> String? {
+        Self.activeDataRoot
+    }
 
-    /// The private state directory for the active Mini App.
-    public static func stateDirectory() -> String? { activeStateDirectory }
+    public func stateDirectory() -> String? {
+        Self.activeStateDirectory
+    }
 
-    /// The user documents directory for the active Mini App.
-    public static func documentsDirectory() -> String? { activeDocumentsDirectory }
+    public func documentsDirectory() -> String? {
+        Self.activeDocumentsDirectory
+    }
 
-    /// The cache directory for the active Mini App.
-    public static func cacheDirectory() -> String? { activeCacheDirectory }
+    public func cacheDirectory() -> String? {
+        Self.activeCacheDirectory
+    }
 
-    // MARK: - JavaScript Runtime Service
-
-    /// Execute JavaScript source code via the host JavaScriptCore engine service.
-    ///
-    /// - Parameters:
-    ///   - source: JavaScript source code string.
-    ///   - completion: Called on main thread with (result output string, error description).
-    public static func executeJavaScript(
+    public func executeJavaScript(
         _ source: String,
         completion: @escaping (String?, String?) -> Void
     ) {
-        guard hasCapability("javascript") || hasCapability("runtime.javascript") else {
+        guard Self.hasCapability("javascript") || Self.hasCapability("runtime.javascript") else {
             completion(nil, "Permission denied: 'javascript' capability not granted to this Mini App.")
             return
         }
@@ -120,14 +119,11 @@ public final class HanlinNativeServicesBridge: NSObject {
         }
     }
 
-    // MARK: - Node Runtime
-
-    /// Execute JavaScript source via the embedded Node runtime.
-    public static func executeNode(
+    public func executeNode(
         _ source: String,
         completion: @escaping (String?, String?) -> Void
     ) {
-        guard hasCapability("node") || hasCapability("runtime.node") else {
+        guard Self.hasCapability("node") || Self.hasCapability("runtime.node") else {
             completion(nil, "Permission denied: 'node' capability not granted to this Mini App.")
             return
         }
@@ -150,8 +146,8 @@ public final class HanlinNativeServicesBridge: NSObject {
         }
     }
 
-    /// Check whether the Node runtime is available and healthy.
-    public static func nodeHealthCheck(
+    @objc(nodeHealthCheckWithCompletion:)
+    public func nodeHealthCheck(
         completion: @escaping (Bool, String?) -> Void
     ) {
         nonisolated(unsafe) let safeCompletion = completion
@@ -166,14 +162,11 @@ public final class HanlinNativeServicesBridge: NSObject {
         }
     }
 
-    // MARK: - Python Runtime
-
-    /// Execute Python source via the embedded Python runtime.
-    public static func executePython(
+    public func executePython(
         _ source: String,
         completion: @escaping (String?, String?) -> Void
     ) {
-        guard hasCapability("python") || hasCapability("runtime.python") else {
+        guard Self.hasCapability("python") || Self.hasCapability("runtime.python") else {
             completion(nil, "Permission denied: 'python' capability not granted to this Mini App.")
             return
         }
@@ -196,23 +189,15 @@ public final class HanlinNativeServicesBridge: NSObject {
         }
     }
 
-    /// Returns the embedded Python runtime version, or nil if unavailable.
-    public static func pythonVersion() -> String? {
+    public func pythonVersion() -> String? {
         try? PythonRuntimeBridge.version()
     }
 
-    // MARK: - Real Network / HTTPS Fetch
-
-    /// Perform a real HTTPS request from the Mini App.
-    ///
-    /// - Parameters:
-    ///   - urlString: HTTPS URL string.
-    ///   - completion: Called on main thread with (response metadata string, error description).
-    public static func fetchURL(
+    public func fetchURL(
         _ urlString: String,
         completion: @escaping (String?, String?) -> Void
     ) {
-        guard hasCapability("network") || hasCapability("network.fetch") else {
+        guard Self.hasCapability("network") || Self.hasCapability("network.fetch") else {
             completion(nil, "Permission denied: 'network' capability not granted to this Mini App.")
             return
         }
@@ -241,23 +226,18 @@ public final class HanlinNativeServicesBridge: NSObject {
         }
     }
 
-    // MARK: - Inter-App Request Broker (Host-Bound Caller Identity)
-
-    /// Send an authorized inter-app request to another Mini App.
-    /// Caller identity is strictly bound to `activeAppID`.
-    @objc(sendRequest:action:capability:payloadJSON:completion:)
-    public static func sendRequest(
-        targetID: String,
+    public func sendRequest(
+        _ targetID: String,
         action: String,
         capability: String,
         payloadJSON: String,
         completion: @escaping (String?, String?) -> Void
     ) {
-        guard let callerID = activeAppID else {
+        guard let callerID = Self.activeAppID else {
             completion(nil, "Unauthorized: No active Mini App session context.")
             return
         }
-        guard hasCapability(capability) else {
+        guard Self.hasCapability(capability) else {
             completion(nil, "Permission denied: Mini App does not have '\(capability)' capability.")
             return
         }
@@ -288,20 +268,18 @@ public final class HanlinNativeServicesBridge: NSObject {
         }
     }
 
-    /// Register a handler in HanlinScript for incoming inter-app requests.
-    @objc(registerRequestHandler:capability:handler:)
-    public static func registerRequestHandler(
-        action: String,
+    public func registerRequestHandler(
+        _ action: String,
         capability: String,
         handler: @escaping (String, String, @escaping (String?, String?) -> Void) -> Void
     ) {
-        guard let callerID = activeAppID,
+        guard let callerID = Self.activeAppID,
               let appID = try? HanlinAppID(validating: callerID),
               let actionID = try? HanlinActionID(validating: action),
               let capabilityID = try? HanlinCapabilityID(validating: capability) else {
             return
-        }
         nonisolated(unsafe) let safeHandler = handler
+        Self.registeredActionIDs.insert(actionID)
         Task { @MainActor in
             let broker = HanlinMiniAppHost.shared.requestBroker
             await broker.register(target: appID, action: actionID, capability: capabilityID) { request in
@@ -320,5 +298,63 @@ public final class HanlinNativeServicesBridge: NSObject {
                 }
             }
         }
+    }
+}
+
+// MARK: - Backward-Compatible Swift API on HanlinNativeServicesBridge
+
+extension HanlinNativeServicesBridge {
+    public static var activeAppID: String? {
+        HanlinNativeServicesHostProvider.activeAppID
+    }
+
+    public static var activeDataRoot: String? {
+        HanlinNativeServicesHostProvider.activeDataRoot
+    }
+
+    public static var activeStateDirectory: String? {
+        HanlinNativeServicesHostProvider.activeStateDirectory
+    }
+
+    public static var activeDocumentsDirectory: String? {
+        HanlinNativeServicesHostProvider.activeDocumentsDirectory
+    }
+
+    public static var activeCacheDirectory: String? {
+        HanlinNativeServicesHostProvider.activeCacheDirectory
+    }
+
+    public static var activeGrantedCapabilities: Set<String> {
+        HanlinNativeServicesHostProvider.activeGrantedCapabilities
+    }
+
+    public static var registeredActionIDs: Set<HanlinActionID> {
+        HanlinNativeServicesHostProvider.registeredActionIDs
+    }
+
+    public static func setActiveContainer(
+        appID: String,
+        dataRoot: String,
+        stateDir: String,
+        docsDir: String,
+        cacheDir: String,
+        grantedCapabilities: [String] = []
+    ) {
+        HanlinNativeServicesHostProvider.setActiveContainer(
+            appID: appID,
+            dataRoot: dataRoot,
+            stateDir: stateDir,
+            docsDir: docsDir,
+            cacheDir: cacheDir,
+            grantedCapabilities: grantedCapabilities
+        )
+    }
+
+    public static func clearActiveContainer() {
+        HanlinNativeServicesHostProvider.clearActiveContainer()
+    }
+
+    public static func registerHostProvider() {
+        HanlinNativeServicesBridge.registerProvider(HanlinNativeServicesHostProvider.shared)
     }
 }

@@ -558,6 +558,110 @@ final class HanlinScriptingPlatform {
         activeNativeScriptController = nil
     }
 
+    func executeHeadlessAction(
+        targetAppID: HanlinAppID,
+        action: HanlinActionID,
+        capability: HanlinCapabilityID,
+        payload: HanlinValue
+    ) async throws -> HanlinValue {
+        guard let store else {
+            throw HanlinMiniAppRequestError.routeNotFound
+        }
+
+        guard let package = installedPackages.first(where: {
+            ($0.manifest?.hanlinAppID == targetAppID.rawValue || $0.record.packageID.rawValue == targetAppID.rawValue)
+                && $0.enabled
+        }) else {
+            throw HanlinMiniAppRequestError.routeNotFound
+        }
+
+        guard package.grantedCapabilities.contains(capability) else {
+            throw HanlinMiniAppRequestError.capabilityMismatch
+        }
+
+        // If a foreground session for this app is already active, broker will handle it directly
+        if let currentSession = nativeScriptSession, activeApplicationID == package.record.installedPackageID {
+            let hostCallerID = try HanlinAppID(validating: "hanlin.host")
+            let req = HanlinMiniAppRequest(
+                caller: hostCallerID,
+                target: targetAppID,
+                action: action,
+                capability: capability,
+                payload: payload
+            )
+            let res = try await HanlinMiniAppHost.shared.requestBroker.request(req)
+            return res.value
+        }
+
+        guard nativeScriptSession == nil else {
+            // Documented runtime limitation: NativeScript iOS runtime single isolate
+            throw HanlinMiniAppRequestError.unauthorized
+        }
+
+        guard let entrypoint = package.entrypoints.first(where: { $0.runtimeProfile == .hanlinNativeScript })
+                ?? (package.manifest?.hanlinRuntime == "hanlin-nativescript" ? package.entrypoints.first : nil) else {
+            throw HanlinMiniAppRequestError.routeNotFound
+        }
+
+        let artifactRoot = try await store.activeArtifactURL(for: package.record.installedPackageID)
+        let entrypointURL = artifactRoot.appending(path: entrypoint.sourcePath, directoryHint: .notDirectory)
+
+        let appID = targetAppID
+        let container = try HanlinMiniAppDataStore(root: HanlinMiniAppDataStore.applicationSupportRoot())
+            .container(for: appID)
+
+        let dataRootStr = container.root.path(percentEncoded: false)
+        let stateDirStr = container.state.path(percentEncoded: false)
+        let docsDirStr = container.documents.path(percentEncoded: false)
+        let cacheDirStr = container.cache.path(percentEncoded: false)
+
+        let env: [String: String] = [
+            "HANLIN_APP_ID": appID.rawValue,
+            "HANLIN_MINIAPP_DATA_ROOT": dataRootStr,
+            "HANLIN_MINIAPP_STATE_DIR": stateDirStr,
+            "HANLIN_MINIAPP_DOCUMENTS_DIR": docsDirStr,
+            "HANLIN_MINIAPP_CACHE_DIR": cacheDirStr
+        ]
+
+        HanlinNativeServicesBridge.setActiveContainer(
+            appID: appID.rawValue,
+            dataRoot: dataRootStr,
+            stateDir: stateDirStr,
+            docsDir: docsDirStr,
+            cacheDir: cacheDirStr,
+            grantedCapabilities: package.grantedCapabilities.map(\.rawValue)
+        )
+
+        let session = try HanlinNativeScriptSession(
+            applicationRoot: entrypointURL.deletingLastPathComponent(),
+            environment: env
+        )
+
+        defer {
+            session.shutdown()
+            HanlinNativeServicesBridge.clearActiveContainer()
+        }
+
+        try session.start()
+        await Task.yield()
+
+        guard HanlinNativeServicesBridge.registeredActionIDs.contains(action) else {
+            throw HanlinMiniAppRequestError.routeNotFound
+        }
+
+        let hostCallerID = try HanlinAppID(validating: "hanlin.host")
+        let request = HanlinMiniAppRequest(
+            caller: hostCallerID,
+            target: targetAppID,
+            action: action,
+            capability: capability,
+            payload: payload
+        )
+
+        let response = try await HanlinMiniAppHost.shared.requestBroker.request(request)
+        return response.value
+    }
+
     func completeSystemUI(
         id: UUID,
         result: Result<HanlinScriptingSystemUIResult, any Error>
@@ -737,8 +841,36 @@ final class HanlinScriptingPlatform {
                                 ))
                             }
                         } else {
-                            let intentName = entrypoint.id.isEmpty ? "defaultAction" : entrypoint.id
-                            intentEntities.append(.init(identity: identity, id: intentName, displayName: displayName))
+                            // Check for canonical action in intent.json or package actions
+                            var actionIDs: [(id: String, title: String)] = []
+                            let intentURL = artifactRoot.appending(path: "intent.json", directoryHint: .notDirectory)
+                            if let intentData = try? Data(contentsOf: intentURL),
+                               let intentJSON = try? JSONSerialization.jsonObject(with: intentData) as? [String: Any] {
+                                let action = (intentJSON["action"] as? String) ?? (intentJSON["name"] as? String) ?? "defaultAction"
+                                let title = (intentJSON["title"] as? String) ?? displayName
+                                actionIDs.append((id: action, title: title))
+                            }
+                            if let actionsField = package.manifest?.unknownFields["actions"],
+                               case let .array(actionsList) = actionsField {
+                                for item in actionsList {
+                                    if case let .object(actObj) = item,
+                                       case let .string(actID) = actObj["id"],
+                                       !actionIDs.contains(where: { $0.id == actID }) {
+                                        let actTitle: String = {
+                                            if case let .string(t) = actObj["title"] { return t }
+                                            return actID
+                                        }()
+                                        actionIDs.append((id: actID, title: actTitle))
+                                    }
+                                }
+                            }
+                            if actionIDs.isEmpty {
+                                let intentName = entrypoint.id.isEmpty ? "defaultAction" : entrypoint.id
+                                actionIDs.append((id: intentName, title: displayName))
+                            }
+                            for item in actionIDs {
+                                intentEntities.append(.init(identity: identity, id: item.id, displayName: item.title))
+                            }
                         }
                         continue
                     }
@@ -912,6 +1044,13 @@ final class HanlinScriptingPlatform {
                 displayName: selectedModel.displayName ?? selectedModel.name,
                 systemPrompt: "You are Hanlin, an intelligent AI assistant. Provide concise, helpful answers directly relating to the user's selected text and query.",
                 apiType: selectedKey.apiType.rawValue,
+                temperature: -999,
+                topP: -999,
+                maxTokens: 2048,
+                supportsReasoning: selectedModel.supportsReasoning,
+                supportReasoningChange: selectedModel.supportReasoningChange,
+                thinkingLength: 0,
+                supportsToolUse: false,
                 updatedAt: .now
             )
             let store = try HanlinCompactAgentConfigStore()
@@ -943,19 +1082,17 @@ final class HanlinScriptingPlatform {
             }), let actionName = command.invocation.entityID else { continue }
 
             if entrypoint.runtimeProfile == .hanlinNativeScript {
-                guard let shareCapability = try? HanlinCapabilityID(validating: "inter-app.share"),
-                      let actionID = try? HanlinActionID(validating: actionName),
-                      let targetID = HanlinAppID(rawValue: identity.packageID.rawValue) else {
+                let targetID = (try? HanlinAppID(validating: package.manifest?.hanlinAppID ?? identity.packageID.rawValue))
+                    ?? (try! HanlinAppID(validating: identity.packageID.rawValue))
+                guard let actionID = try? HanlinActionID(validating: actionName),
+                      let shareCapability = try? HanlinCapabilityID(validating: "inter-app.share") else {
                     Self.logger.error("Invalid NativeScript AppIntent target or action: \(actionName, privacy: .public)")
                     continue
                 }
 
                 do {
                     let hostCallerID = try HanlinAppID(validating: "hanlin.host")
-                    let payloadValue: HanlinValue = try {
-                        let data = try JSONSerialization.data(withJSONObject: command.invocation.parameters, options: [])
-                        return (try? JSONDecoder().decode(HanlinValue.self, from: data)) ?? .object([:])
-                    }()
+                    let payloadValue = command.invocation.parameters
                     _ = try await HanlinMiniAppHost.shared.requestBroker.request(.init(
                         caller: hostCallerID,
                         target: targetID,

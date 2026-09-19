@@ -22,5 +22,17 @@
     "translation_ui",
     "widget",
     "app_intent"
+  ],
+  "actions": [
+    {
+      "id": "share.value",
+      "capability": "inter-app.share",
+      "title": "Share Parity Value"
+    },
+    {
+      "id": "parity.intent",
+      "capability": "inter-app.share",
+      "title": "Perform HanlinScript Parity Intent"
+    }
   ]
 }

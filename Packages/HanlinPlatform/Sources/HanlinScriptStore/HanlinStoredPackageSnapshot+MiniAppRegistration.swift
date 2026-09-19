@@ -227,6 +227,39 @@ extension HanlinStoredPackageSnapshot: HanlinMiniAppRegistration {
             nil
         }
 
+        var packageActions: [HanlinActionDescriptor] = []
+        if let actionsField = manifest?.unknownFields["actions"],
+           case let .array(actionItems) = actionsField {
+            for item in actionItems {
+                if case let .object(actionObj) = item,
+                   case let .string(actionIDStr) = actionObj["id"],
+                   let actionID = try? HanlinActionID(validating: actionIDStr) {
+                    let titleStr: String = {
+                        if case let .string(s) = actionObj["title"] { return s }
+                        return actionIDStr
+                    }()
+                    let capIDStr: String = {
+                        if case let .string(s) = actionObj["capability"] { return s }
+                        return "inter-app.share"
+                    }()
+                    let capID = (try? HanlinCapabilityID(validating: capIDStr))
+                        ?? (try! HanlinCapabilityID(validating: "inter-app.share"))
+                    let titleVal = (try? LocalizedValue(["en": titleStr]))
+                        ?? (try! LocalizedValue(["en": actionIDStr]))
+                    if let schema = try? HanlinJSONSchemaDocument(dialect: .draft2020_12, root: .object([:])) {
+                        packageActions.append(HanlinActionDescriptor(
+                            id: actionID,
+                            title: titleVal,
+                            inputSchema: schema,
+                            outputSchema: nil,
+                            capabilities: [capID],
+                            risk: .read
+                        ))
+                    }
+                }
+            }
+        }
+
         let descriptor = HanlinAppDescriptor(
             schemaVersion: .init(major: 1, minor: 0),
             descriptorRevision: try HanlinDescriptorRevision(1),
@@ -242,6 +275,7 @@ extension HanlinStoredPackageSnapshot: HanlinMiniAppRegistration {
             implementation: implementation,
             entryPoints: finalEntryPoints,
             supportedExposures: packageExposures,
+            actions: packageActions,
             capabilities: capabilitiesDeclarations,
             authors: authorList,
             distribution: .init(

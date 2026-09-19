@@ -65,10 +65,18 @@ function sendInterApp(targetID, action, capability, payloadJSON, cb) {
 // Storage helpers using NSProcessInfo environment / bridge
 function getStateDirectory() {
   if (bridge && typeof bridge.stateDirectory === "function") {
-    const dir = bridge.stateDirectory();
-    if (dir) return dir;
+    try {
+      const dir = bridge.stateDirectory();
+      if (dir) return dir.toString();
+    } catch (e) {
+      console.warn("[HanlinScriptParity] bridge.stateDirectory() call failed: " + e);
+    }
   }
   const env = NSProcessInfo.processInfo.environment;
+  const miniappStateDir = env.objectForKey("HANLIN_MINIAPP_STATE_DIR");
+  if (miniappStateDir) return miniappStateDir.toString();
+  const miniappDataRoot = env.objectForKey("HANLIN_MINIAPP_DATA_ROOT");
+  if (miniappDataRoot) return miniappDataRoot.toString() + "/state";
   const stateDir = env.objectForKey("HANLIN_STATE_DIR");
   if (stateDir) return stateDir.toString();
   const dataRoot = env.objectForKey("HANLIN_DATA_ROOT");
@@ -109,20 +117,23 @@ function loadStorage() {
   }
 }
 
-// Register inter-app request handler so Swift Parity can call us
+// Register inter-app request handler so Swift Parity and AppIntents can call us
 if (bridge) {
   try {
     const registerFn = bridge.registerRequestHandlerCapabilityHandler || bridge.registerRequestHandler;
     if (typeof registerFn === "function") {
-      registerFn.call(bridge, "share.value", "inter-app.share", (caller, payloadJSON, reply) => {
-        console.log("[HanlinScriptParity] Received request from " + caller + ": " + payloadJSON);
+      const handleRequest = (actionName) => (caller, payloadJSON, reply) => {
+        console.log("[HanlinScriptParity] Received " + actionName + " from " + caller + ": " + payloadJSON);
         const replyPayload = JSON.stringify({
           source: "hanlin.demo.script-parity",
+          action: actionName,
           counter: counter,
           name: persistedName
         });
         reply(replyPayload, null);
-      });
+      };
+      registerFn.call(bridge, "share.value", "inter-app.share", handleRequest("share.value"));
+      registerFn.call(bridge, "parity.intent", "inter-app.share", handleRequest("parity.intent"));
     }
   } catch (e) {
     console.error("[HanlinScriptParity] Error registering handler: " + e);

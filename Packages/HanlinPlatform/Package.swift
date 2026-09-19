@@ -54,6 +54,10 @@ let package = Package(
             targets: ["HanlinScriptExtensions"]
         ),
         .library(
+            name: "HanlinChatCore",
+            targets: ["HanlinChatCore"]
+        ),
+        .library(
             name: "HanlinScriptingApplicationRuntime",
             targets: ["HanlinScriptingApplicationRuntime"]
         )
@@ -143,7 +147,8 @@ let package = Package(
             name: "HanlinScriptUI",
             dependencies: [
                 "HanlinPlatformContracts",
-                "HanlinScriptContracts"
+                "HanlinScriptContracts",
+                "HanlinChatCore"
             ],
             resources: [.process("Resources")]
         ),
@@ -175,16 +180,27 @@ let package = Package(
             dependencies: ["HanlinScriptDeviceServices"]
         ),
         .target(
+            name: "HanlinChatCore",
+            dependencies: [
+                "HanlinPlatformContracts"
+            ]
+        ),
+        .testTarget(
+            name: "HanlinChatCoreTests",
+            dependencies: ["HanlinChatCore"]
+        ),
+        .target(
             name: "HanlinScriptExtensions",
             dependencies: [
                 "HanlinPlatformContracts",
                 "HanlinScriptContracts",
-                "HanlinScriptUI"
+                "HanlinScriptUI",
+                "HanlinChatCore"
             ]
         ),
         .testTarget(
             name: "HanlinScriptExtensionsTests",
-            dependencies: ["HanlinScriptExtensions"]
+            dependencies: ["HanlinScriptExtensions", "HanlinChatCore"]
         ),
         .target(
             name: "HanlinScriptingApplicationRuntime",

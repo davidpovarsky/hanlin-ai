@@ -43,17 +43,18 @@ def write_swift_module_map(module_map: Path, runtime_header: Path, arch: str) ->
             headers.extend(sorted(swift_header_root.rglob("*-Swift.h")))
 
     src_root = Path(required_env("SRCROOT"))
-    core_support_header = (
+    core_support_dir = (
         src_root
         / "Packages"
         / "HanlinNativeScriptRuntime"
         / "Sources"
         / "HanlinNativeScriptCoreSupport"
         / "include"
-        / "HanlinNativeScriptCompatibility.h"
     )
-    if core_support_header.is_file():
-        headers.append(core_support_header)
+    for header_name in ["HanlinNativeScriptCompatibility.h", "HanlinNativeServicesBridge.h"]:
+        h = core_support_dir / header_name
+        if h.is_file():
+            headers.append(h)
 
     unique_headers = []
     seen = set()

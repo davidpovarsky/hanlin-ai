@@ -17,3 +17,9 @@ module UIViewNativeScript {
     header "UIView+NativeScript.h"
     export *
 }
+
+module HanlinNativeServicesBridge {
+    header "HanlinNativeServicesBridge.h"
+    export *
+}
+

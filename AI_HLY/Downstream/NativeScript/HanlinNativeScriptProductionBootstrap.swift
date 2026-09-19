@@ -25,5 +25,6 @@ enum HanlinNativeScriptProductionBootstrap {
 
         HanlinNativeScriptCompatibility.registerFixtureProviderClass(providerClass)
         HanlinNativeScriptCompatibility.setSharedSwiftUIFixtureProvider(provider)
+        HanlinNativeServicesBridge.registerHostProvider()
     }
 }
