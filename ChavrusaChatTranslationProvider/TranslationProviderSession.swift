@@ -33,7 +33,7 @@ final class TranslationProviderSession {
     var sessionContext: HanlinTranslationSessionContext {
         .init(
             sourceText: sourceText,
-            origin: "system.translation",
+            origin: .translationUI,
             presentation: "modal"
         )
     }
