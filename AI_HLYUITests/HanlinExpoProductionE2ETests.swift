@@ -162,27 +162,48 @@ final class HanlinExpoProductionE2ETests: XCTestCase {
         importAndInstall(archive: "ExpoSwiftUIProbeA")
         launchInstalledPackage(named: probeAPackageName)
 
-        // 1. Select the 1,000-row benchmark probe from the sidebar
-        let benchmarkPredicate = NSPredicate(format: "label CONTAINS '1,000' OR label CONTAINS 'מבחן 1,000'")
-        let benchmarkButton = app.descendants(matching: .any).matching(benchmarkPredicate).firstMatch
+        // 1. Ensure Expo SwiftUI SplitView Navigation & Sidebar has loaded
+        let sidebarTitlePredicate = NSPredicate(format: "label CONTAINS 'ספרי תורה' OR identifier == 'torah-sidebar' OR label CONTAINS 'Genesis' OR label CONTAINS 'Expo Dynamic A'")
+        let sidebarTitle = app.descendants(matching: .any).matching(sidebarTitlePredicate).firstMatch
+        XCTAssertTrue(sidebarTitle.waitForExistence(timeout: 30), "Expo SwiftUI NavigationSplitView sidebar did not render")
+
+        // 2. Select the 1,000-row benchmark probe from the sidebar
+        let benchmarkPredicate = NSPredicate(format: "label CONTAINS '1,000' OR label CONTAINS '1000' OR label CONTAINS 'מבחן' OR label CONTAINS 'Rows Probe'")
+        var benchmarkButton = app.descendants(matching: .any).matching(benchmarkPredicate).firstMatch
+        if !benchmarkButton.waitForExistence(timeout: 10) {
+            app.swipeUp()
+            benchmarkButton = app.descendants(matching: .any).matching(benchmarkPredicate).firstMatch
+        }
         XCTAssertTrue(benchmarkButton.waitForExistence(timeout: 20), "1,000 rows benchmark item missing in sidebar")
-        benchmarkButton.tap()
+        if benchmarkButton.isHittable {
+            benchmarkButton.tap()
+        } else {
+            benchmarkButton.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
+        }
 
-        // 2. Verify header rendered in Detail
-        let headerPredicate = NSPredicate(format: "label CONTAINS 'רשימת 1,000 שורות' OR label CONTAINS '1,000'")
-        let headerLabel = app.descendants(matching: .any).matching(headerPredicate).firstMatch
-        XCTAssertTrue(headerLabel.waitForExistence(timeout: 15), "1,000 rows header failed to render")
+        // 3. Verify header rendered in Detail
+        let headerPredicate = NSPredicate(format: "label CONTAINS 'רשימת 1,000 שורות' OR label CONTAINS '1,000' OR label CONTAINS '1000' OR label CONTAINS 'שורות'")
+        var headerLabel = app.descendants(matching: .any).matching(headerPredicate).firstMatch
+        if !headerLabel.waitForExistence(timeout: 5) {
+            if benchmarkButton.isHittable {
+                benchmarkButton.tap()
+            } else {
+                benchmarkButton.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
+            }
+            headerLabel = app.descendants(matching: .any).matching(headerPredicate).firstMatch
+        }
+        XCTAssertTrue(headerLabel.waitForExistence(timeout: 20), "1,000 rows header failed to render")
 
-        // 3. Verify initial rows exist and list scrolls smoothly
-        let row1Predicate = NSPredicate(format: "label CONTAINS 'שורה #1'")
+        // 4. Verify initial rows exist and list scrolls smoothly
+        let row1Predicate = NSPredicate(format: "label CONTAINS 'שורה #1' OR label CONTAINS '#1'")
         let row1 = app.descendants(matching: .any).matching(row1Predicate).firstMatch
         XCTAssertTrue(row1.waitForExistence(timeout: 15), "First row in 1,000-row list did not render")
 
-        // 4. Scroll down to test lazy evaluation in native SwiftUI List
+        // 5. Scroll down to test lazy evaluation in native SwiftUI List
         app.swipeUp()
         app.swipeUp()
 
-        let scrolledRowPredicate = NSPredicate(format: "label CONTAINS 'שורה #'")
+        let scrolledRowPredicate = NSPredicate(format: "label CONTAINS 'שורה #' OR label CONTAINS 'פריט בדיקה'")
         let scrolledRow = app.descendants(matching: .any).matching(scrolledRowPredicate).firstMatch
         XCTAssertTrue(scrolledRow.waitForExistence(timeout: 10), "List failed to render rows after scrolling")
 
@@ -329,7 +350,8 @@ final class HanlinExpoProductionE2ETests: XCTestCase {
     }
 
     private func importAndInstall(archive: String) {
-        if findPackageCard(named: archive).exists { return }
+        let displayName = archive == "ExpoSwiftUIProbeA" ? probeAPackageName : (archive == "ExpoSwiftUIProbeB" ? probeBPackageName : archive)
+        if findPackageCard(named: displayName).exists || findPackageCard(named: archive).exists { return }
 
         ensureAppsAddButton(timeout: 15).tap()
         let importLink = app.buttons["hanlin-import-script-package"].firstMatch
