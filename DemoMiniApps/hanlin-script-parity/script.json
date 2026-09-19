@@ -17,5 +17,10 @@
     "python",
     "javascript",
     "inter-app.share"
+  ],
+  "supportedExposures": [
+    "translation_ui",
+    "widget",
+    "app_intent"
   ]
 }

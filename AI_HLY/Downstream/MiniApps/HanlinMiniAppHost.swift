@@ -14,6 +14,11 @@ actor HanlinMiniAppAuthorizationPolicy {
     }
 
     func authorize(_ request: HanlinMiniAppRequest) -> Bool {
+        if request.caller.rawValue == "hanlin.host" {
+            guard let target = descriptors[request.target] else { return false }
+            let targetCapabilities = Set(target.capabilities.map(\.id))
+            return targetCapabilities.contains(request.capability)
+        }
         guard request.caller != request.target,
               let caller = descriptors[request.caller],
               let target = descriptors[request.target] else { return false }
@@ -81,25 +86,43 @@ final class HanlinMiniAppHost {
                 return .object(["name": .string("Hanlin"), "counter": .integer(0)])
             }
         }
-        if let scriptParityID = try? HanlinAppID(validating: "hanlin.demo.script-parity"),
-           let shareCap = try? HanlinCapabilityID(validating: "inter-app.share"),
-           let shareAction = try? HanlinActionID(validating: "share.value") {
-            await broker.register(target: scriptParityID, action: shareAction, capability: shareCap) { _ in
-                let storageContext = HanlinMiniAppStorageContext(appID: scriptParityID, store: store)
-                if let data = try? await storageContext.read(area: .state, path: "script-parity.json"),
-                   let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any] {
-                    let counter = (json["counter"] as? NSNumber)?.int64Value ?? 0
-                    let name = (json["name"] as? String) ?? "HanlinScript"
-                    return .object([
-                        "source": .string("hanlin.demo.script-parity"),
-                        "counter": .integer(counter),
-                        "name": .string(name)
-                    ])
+
+        // Generic fallback route registration for all installed Mini Apps declaring inter-app.share
+        for item in items {
+            let targetID = item.id
+            let capabilities = Set(item.descriptor.capabilities.map(\.id))
+            guard let shareCap = try? HanlinCapabilityID(validating: "inter-app.share"),
+                  capabilities.contains(shareCap),
+                  let shareAction = try? HanlinActionID(validating: "share.value") else { continue }
+
+            await broker.register(target: targetID, action: shareAction, capability: shareCap) { [store] _ in
+                let storageContext = HanlinMiniAppStorageContext(appID: targetID, store: store)
+                let targetSuffix = targetID.rawValue.components(separatedBy: ".").last ?? "state"
+                let candidatePaths = [
+                    "\(targetSuffix).json",
+                    "state.json",
+                    "parity.json"
+                ]
+                for path in candidatePaths {
+                    if let data = try? await storageContext.read(area: .state, path: path) {
+                        if let val = try? JSONDecoder().decode(PersistedParityState.self, from: data) {
+                            return .object(["name": .string(val.name), "counter": .integer(Int64(val.counter))])
+                        }
+                        if let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any] {
+                            let counter = (json["counter"] as? NSNumber)?.int64Value ?? 0
+                            let name = (json["name"] as? String) ?? item.descriptor.name.preferredValue(forLocale: Locale.current.identifier)
+                            return .object([
+                                "source": .string(targetID.rawValue),
+                                "counter": .integer(counter),
+                                "name": .string(name)
+                            ])
+                        }
+                    }
                 }
                 return .object([
-                    "source": .string("hanlin.demo.script-parity"),
+                    "source": .string(targetID.rawValue),
                     "counter": .integer(0),
-                    "name": .string("HanlinScript")
+                    "name": .string(item.descriptor.name.preferredValue(forLocale: Locale.current.identifier))
                 ])
             }
         }

@@ -226,7 +226,7 @@ private struct HanlinExtensionSnapshotView: View {
                 identity: snapshot.actionIdentity ?? snapshot.identity
             )
         } else {
-            ContentUnavailableView("Choose a Script Package", systemImage: "curlybraces.square")
+            ContentUnavailableView("Choose a Script", systemImage: "curlybraces.square")
         }
     }
 }

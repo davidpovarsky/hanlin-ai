@@ -63,6 +63,29 @@ extension HanlinStoredPackageSnapshot: HanlinMiniAppRegistration {
             }
         }
 
+        if let manifestExposures = manifest?.unknownFields["supportedExposures"] ?? manifest?.unknownFields["exposures"] {
+            if case let .array(items) = manifestExposures {
+                for item in items {
+                    if case let .string(raw) = item {
+                        let kind: HanlinExposureKind
+                        switch raw {
+                        case "translation_ui", "translationUI":
+                            kind = .translationUI
+                        case "widget":
+                            kind = .widget
+                        case "app_intent", "appIntent":
+                            kind = .appIntent
+                        default:
+                            kind = HanlinExposureKind(rawValue: raw)
+                        }
+                        if seenExposures.insert(kind).inserted {
+                            packageExposures.append(kind)
+                        }
+                    }
+                }
+            }
+        }
+
         // Separate these concepts:
         // - explicit runtime on an entrypoint (ep.runtimeProfile)
         // - explicit package-level default runtime declared by manifest metadata
