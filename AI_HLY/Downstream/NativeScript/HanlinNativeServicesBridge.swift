@@ -278,6 +278,7 @@ public final class HanlinNativeServicesHostProvider: NSObject, HanlinNativeServi
               let actionID = try? HanlinActionID(validating: action),
               let capabilityID = try? HanlinCapabilityID(validating: capability) else {
             return
+        }
         nonisolated(unsafe) let safeHandler = handler
         Self.registeredActionIDs.insert(actionID)
         Task { @MainActor in
