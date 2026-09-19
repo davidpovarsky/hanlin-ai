@@ -69,11 +69,11 @@ public final class HanlinExpoSession {
     private var hostedView: UIView?
     private(set) public var isActive = false
 
+    private static var didLoadAppDefines = false
+
     @MainActor
     public static func ensureAppDefinesLoaded() {
-        if let allDefines = EXAppDefines.getAllDefines(), !allDefines.isEmpty {
-            return
-        }
+        guard !didLoadAppDefines else { return }
         let defines: NSDictionary = [
             "APP_DEBUG": false,
             "APP_RCT_DEBUG": false,
@@ -90,10 +90,9 @@ public final class HanlinExpoSession {
             } else {
                 _ = (cls as AnyObject).perform(sel, with: defines)
             }
-        } else {
-            EXAppDefines.load(defines as? [String: Any] ?? [:])
         }
-        NSLog("%@", "HANLIN_EXPO_APP_DEFINES_LOADED storage=\(String(describing: EXAppDefines.getAllDefines()))")
+        didLoadAppDefines = true
+        NSLog("%@", "HANLIN_EXPO_APP_DEFINES_LOADED")
     }
 
     public init(applicationRoot: URL) throws {
