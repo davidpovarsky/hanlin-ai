@@ -87,18 +87,12 @@ export default function App({ variant = 'A' }: AppProps) {
                   {TORAH_BOOKS.map((book) => (
                     <Button
                       key={book.id}
+                      label={`${book.name} (${book.english})`}
                       onPress={() => {
                         setSelectedBookId(book.id);
                         setSelectedSection(book.sections[0]);
                       }}
-                    >
-                      <HStack>
-                        <Text modifiers={[font({ size: 18, weight: 'bold' })]}>{book.name}</Text>
-                        <Text modifiers={[foregroundStyle('secondary'), font({ size: 14 })]}>
-                          {'  '}({book.english})
-                        </Text>
-                      </HStack>
-                    </Button>
+                    />
                   ))}
                 </Section>
                 <Section title="גרסת זמן-ריצה">
@@ -118,21 +112,19 @@ export default function App({ variant = 'A' }: AppProps) {
                   {currentBook.sections.map((section) => (
                     <Button
                       key={section}
+                      label={section}
                       onPress={() => setSelectedSection(section)}
-                    >
-                      <Text
-                        modifiers={[
-                          font({
-                            size: 16,
-                            weight: selectedSection === section ? 'bold' : 'regular',
-                          }),
-                          foregroundStyle(selectedSection === section ? 'tint' : 'primary'),
-                        ]}
-                      >
-                        {section}
-                      </Text>
-                    </Button>
+                    />
                   ))}
+                </Section>
+                <Section title="בדיקות ביצועים">
+                  <Button
+                    label="מבחן 1,000 שורות (1,000 Rows Probe)"
+                    onPress={() => {
+                      setSelectedBookId('benchmark1000');
+                      setSelectedSection('בדיקת עומס');
+                    }}
+                  />
                 </Section>
               </List>
             </NavigationStack>
@@ -142,58 +134,50 @@ export default function App({ variant = 'A' }: AppProps) {
           <NavigationSplitView.Detail>
             <NavigationStack
               modifiers={[
-                navigationTitle(`${currentBook.name} — ${selectedSection}`),
+                navigationTitle(
+                  selectedBookId === 'benchmark1000'
+                    ? 'מבחן 1,000 שורות SwiftUI'
+                    : `${currentBook.name} — ${selectedSection}`
+                ),
                 navigationBarTitleDisplayMode('inline'),
               ]}
             >
-              <VStack modifiers={[padding({ all: 24 })]}>
-                <HStack modifiers={[padding({ bottom: 16 })]}>
-                  <Text
-                    modifiers={[
-                      font({ size: 28, weight: 'bold' }),
-                      foregroundStyle('primary'),
-                    ]}
-                  >
-                    {currentBook.name} : {selectedSection}
-                  </Text>
-                  <Button
-                    onPress={() => {
-                      setSelectedBookId('benchmark1000');
-                      setSelectedSection('בדיקת עומס');
-                    }}
-                  >
-                    <Text modifiers={[font({ size: 15 }), foregroundStyle('tint')]}>1,000 Rows Probe</Text>
-                  </Button>
-                  <Button onPress={() => setShowSettingsSheet(true)}>
-                    <Text modifiers={[font({ size: 15 }), foregroundStyle('tint')]}>הגדרות</Text>
-                  </Button>
-                </HStack>
-
-                {selectedBookId === 'benchmark1000' ? (
-                  <VStack modifiers={[padding({ all: 8 })]}>
-                    <Text modifiers={[font({ size: 18, weight: 'bold' }), padding({ bottom: 8 })]}>
-                      רשימת 1,000 שורות SwiftUI פעילה
+              {selectedBookId === 'benchmark1000' ? (
+                <List modifiers={[listStyle('plain')]}>
+                  <Section title="רשימת 1,000 שורות SwiftUI פעילה">
+                    {Array.from({ length: 1000 }, (_, i) => (
+                      <Button
+                        key={i}
+                        label={`Row #${i + 1} • שורה #${i + 1} (פריט בדיקה ${i + 1})`}
+                        onPress={() => {}}
+                      />
+                    ))}
+                  </Section>
+                </List>
+              ) : (
+                <VStack modifiers={[padding({ all: 24 })]}>
+                  <HStack modifiers={[padding({ bottom: 16 })]}>
+                    <Text
+                      modifiers={[
+                        font({ size: 28, weight: 'bold' }),
+                        foregroundStyle('primary'),
+                      ]}
+                    >
+                      {currentBook.name} : {selectedSection}
                     </Text>
-                    <List>
-                      {Array.from({ length: 1000 }, (_, i) => (
-                        <Button
-                          key={i}
-                          label={`Row #${i + 1} • שורה #${i + 1} (פריט בדיקה ${i + 1})`}
-                          onPress={() => {}}
-                        >
-                          <HStack>
-                            <Text modifiers={[font({ size: 15 })]}>
-                              Row #{i + 1} • שורה #{i + 1}
-                            </Text>
-                            <Text modifiers={[foregroundStyle('secondary'), font({ size: 13 })]}>
-                              {'  '}(פריט בדיקה {i + 1})
-                            </Text>
-                          </HStack>
-                        </Button>
-                      ))}
-                    </List>
-                  </VStack>
-                ) : (
+                    <Button
+                      label="1,000 Rows Probe"
+                      onPress={() => {
+                        setSelectedBookId('benchmark1000');
+                        setSelectedSection('בדיקת עומס');
+                      }}
+                    />
+                    <Button
+                      label="הגדרות"
+                      onPress={() => setShowSettingsSheet(true)}
+                    />
+                  </HStack>
+
                   <VStack
                     modifiers={[
                       padding({ all: 16 }),
@@ -211,44 +195,45 @@ export default function App({ variant = 'A' }: AppProps) {
                         : currentBook.sampleText.replace(/[\u0591-\u05C7]/g, '')}
                     </Text>
                   </VStack>
-                )}
 
-                <VStack modifiers={[padding({ top: 32 })]}>
-                  <Text modifiers={[font({ size: 13 }), foregroundStyle('secondary')]}>
-                    זוהי הרצת בדיקה דינמית של Expo / React Native UI בתוך Hanlin.
-                  </Text>
-                  <Text
-                    modifiers={[
-                      font({ size: 14, weight: 'semibold' }),
-                      foregroundStyle(variant === 'A' ? 'green' : 'blue'),
-                    ]}
-                  >
-                    {variant === 'A'
-                      ? 'מצב פעיל: Expo Dynamic A (Initial MiniApp)'
-                      : 'מצב פעיל: Expo Dynamic B (Hot-Replaced MiniApp)'}
-                  </Text>
-                </VStack>
-
-                {/* BottomSheet settings modal */}
-                <BottomSheet
-                  isPresented={showSettingsSheet}
-                  onDismiss={() => setShowSettingsSheet(false)}
-                >
-                  <VStack modifiers={[padding({ all: 20 })]}>
-                    <Text modifiers={[font({ size: 20, weight: 'bold' }), padding({ bottom: 12 })]}>
-                      הגדרות קריאה
+                  <VStack modifiers={[padding({ top: 32 })]}>
+                    <Text modifiers={[font({ size: 13 }), foregroundStyle('secondary')]}>
+                      זוהי הרצת בדיקה דינמית של Expo / React Native UI בתוך Hanlin.
                     </Text>
-                    <Toggle
-                      isOn={showNikkud}
-                      onIsOnChange={setShowNikkud}
-                      title="הצג ניקוד וטעמים"
-                    />
-                    <Button onPress={() => setShowSettingsSheet(false)}>
-                      <Text modifiers={[padding({ top: 16 }), foregroundStyle('tint')]}>סגור</Text>
-                    </Button>
+                    <Text
+                      modifiers={[
+                        font({ size: 14, weight: 'semibold' }),
+                        foregroundStyle(variant === 'A' ? 'green' : 'blue'),
+                      ]}
+                    >
+                      {variant === 'A'
+                        ? 'מצב פעיל: Expo Dynamic A (Initial MiniApp)'
+                        : 'מצב פעיל: Expo Dynamic B (Hot-Replaced MiniApp)'}
+                    </Text>
                   </VStack>
-                </BottomSheet>
-              </VStack>
+
+                  {/* BottomSheet settings modal */}
+                  <BottomSheet
+                    isPresented={showSettingsSheet}
+                    onDismiss={() => setShowSettingsSheet(false)}
+                  >
+                    <VStack modifiers={[padding({ all: 20 })]}>
+                      <Text modifiers={[font({ size: 20, weight: 'bold' }), padding({ bottom: 12 })]}>
+                        הגדרות קריאה
+                      </Text>
+                      <Toggle
+                        isOn={showNikkud}
+                        onIsOnChange={setShowNikkud}
+                        title="הצג ניקוד וטעמים"
+                      />
+                      <Button
+                        label="סגור"
+                        onPress={() => setShowSettingsSheet(false)}
+                      />
+                    </VStack>
+                  </BottomSheet>
+                </VStack>
+              )}
             </NavigationStack>
           </NavigationSplitView.Detail>
         </NavigationSplitView>

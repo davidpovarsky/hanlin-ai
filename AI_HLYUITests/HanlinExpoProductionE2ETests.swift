@@ -167,19 +167,17 @@ final class HanlinExpoProductionE2ETests: XCTestCase {
         let sidebarTitle = app.descendants(matching: .any).matching(sidebarTitlePredicate).firstMatch
         XCTAssertTrue(sidebarTitle.waitForExistence(timeout: 30), "Expo SwiftUI NavigationSplitView sidebar did not render")
 
-        // 2. Expand sidebar if collapsed on iPad
-        let sidebarToggle = app.navigationBars.buttons.matching(
-            NSPredicate(format: "identifier == 'ToggleSidebar' OR label CONTAINS[c] 'Sidebar' OR label CONTAINS[c] 'סרגל'")
-        ).firstMatch
-        if sidebarToggle.waitForExistence(timeout: 2) && sidebarToggle.isHittable {
-            sidebarToggle.tap()
-        }
-
-        // 3. Select the 1,000-row benchmark probe (from sidebar or detail header)
+        // 2. Select the 1,000-row benchmark probe
         let benchmarkPredicate = NSPredicate(format: "label CONTAINS '1,000' OR label CONTAINS '1000' OR label CONTAINS 'מבחן' OR label CONTAINS 'Rows Probe'")
         var benchmarkButton = app.descendants(matching: .any).matching(benchmarkPredicate).firstMatch
-        if !benchmarkButton.waitForExistence(timeout: 5) {
-            app.swipeUp()
+        if !benchmarkButton.waitForExistence(timeout: 5) || !benchmarkButton.isHittable {
+            // Expand sidebar if collapsed and probe not directly hittable
+            let sidebarToggle = app.navigationBars.buttons.matching(
+                NSPredicate(format: "identifier == 'ToggleSidebar' OR label CONTAINS[c] 'Sidebar' OR label CONTAINS[c] 'סרגל'")
+            ).firstMatch
+            if sidebarToggle.waitForExistence(timeout: 2) && sidebarToggle.isHittable {
+                sidebarToggle.tap()
+            }
             benchmarkButton = app.descendants(matching: .any).matching(benchmarkPredicate).firstMatch
         }
         XCTAssertTrue(benchmarkButton.waitForExistence(timeout: 15), "1,000 rows benchmark item missing")
@@ -190,9 +188,10 @@ final class HanlinExpoProductionE2ETests: XCTestCase {
         }
 
         // 3. Verify header rendered in Detail
-        let headerPredicate = NSPredicate(format: "label CONTAINS 'רשימת 1,000 שורות' OR label CONTAINS '1,000' OR label CONTAINS '1000' OR label CONTAINS 'שורות'")
+        let headerPredicate = NSPredicate(format: "label CONTAINS 'רשימת 1,000 שורות' OR label CONTAINS 'רשימת 1000 שורות' OR label CONTAINS 'בדיקת עומס'")
         var headerLabel = app.descendants(matching: .any).matching(headerPredicate).firstMatch
         if !headerLabel.waitForExistence(timeout: 5) {
+            // If the first tap only dismissed an overlay/drawer scrim, tap the benchmark button again
             if benchmarkButton.isHittable {
                 benchmarkButton.tap()
             } else {
