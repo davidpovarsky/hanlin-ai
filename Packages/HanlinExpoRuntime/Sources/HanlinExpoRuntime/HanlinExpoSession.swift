@@ -2,6 +2,7 @@ import Foundation
 import ExpoBrownfield
 import ExpoModulesCore
 import ExpoUI
+import ObjectiveC
 import React
 import React_RCTAppDelegate
 import UIKit
@@ -70,14 +71,28 @@ public final class HanlinExpoSession {
 
     @MainActor
     public static func ensureAppDefinesLoaded() {
-        guard EXAppDefines.getAllDefines() == nil else { return }
-        let defines: [String: Any] = [
+        if let allDefines = EXAppDefines.getAllDefines(), !allDefines.isEmpty {
+            return
+        }
+        let defines: NSDictionary = [
             "APP_DEBUG": false,
             "APP_RCT_DEBUG": false,
             "APP_RCT_DEV": false,
             "APP_NEW_ARCH_ENABLED": true
         ]
-        EXAppDefines.load(defines)
+        let sel = NSSelectorFromString("load:")
+        if let cls = NSClassFromString("EXAppDefines") {
+            if let metaCls = object_getClass(cls), class_respondsToSelector(metaCls, sel) {
+                typealias LoadFn = @convention(c) (AnyClass, Selector, NSDictionary) -> Void
+                let imp = class_getMethodImplementation(metaCls, sel)
+                let fn = unsafeBitCast(imp, to: LoadFn.self)
+                fn(cls, sel, defines)
+            } else {
+                _ = (cls as AnyObject).perform(sel, with: defines)
+            }
+        } else {
+            EXAppDefines.load(defines as? [String: Any] ?? [:])
+        }
         NSLog("%@", "HANLIN_EXPO_APP_DEFINES_LOADED storage=\(String(describing: EXAppDefines.getAllDefines()))")
     }
 

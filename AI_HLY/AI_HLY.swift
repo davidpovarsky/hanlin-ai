@@ -7,6 +7,7 @@
 
 import AppIntents
 import Foundation
+import HanlinExpoRuntime
 import SwiftData
 import SwiftUI
 
@@ -94,6 +95,7 @@ struct MyApp: App {
             MainTabView(deepLinkTarget: $deepLinkTarget)
                 .modelContainer(appDataManager.modelContainer)
                 .task {
+                    HanlinExpoSession.ensureAppDefinesLoaded()
                     ChavrusaSystemIntegrationBootstrap.configure()
                     HanlinNativeScriptProductionBootstrap.prepareEmbeddedProviders()
                     appDataManager.preloadDataIfNeeded()

@@ -65,6 +65,7 @@ final class HanlinScriptingPlatform {
     private static let logger = Logger(subsystem: "com.hanlin.ai", category: "ScriptPackageInstall")
 
     init(rootOverride: URL? = nil) {
+        HanlinExpoSession.ensureAppDefinesLoaded()
         do {
             let metadata = try HanlinScriptingSDK.metadata()
             analyzer = HanlinScriptAnalyzer(inventory: .init(
