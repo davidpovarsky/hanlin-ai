@@ -129,4 +129,108 @@ struct HanlinScriptExtensionStoreTests {
         try store.acknowledge(command.id)
         #expect(try store.pendingCommands().isEmpty)
     }
+
+    @Test("HanlinCompactAgentConfigStore save, load, and clear round-trip")
+    func compactAgentConfigStoreLifecycle() throws {
+        let tempFile = FileManager.default.temporaryDirectory.appending(
+            path: "compact-agent-test-\(UUID().uuidString).json",
+            directoryHint: .notDirectory
+        )
+        defer { try? FileManager.default.removeItem(at: tempFile) }
+
+        let store = HanlinCompactAgentConfigStore(customURL: tempFile)
+        #expect(try store.load() == nil)
+
+        let config = HanlinCompactAgentConfiguration(
+            endpoint: URL(string: "https://api.openai.com/v1/chat/completions")!,
+            apiKey: "sk-test-key-12345",
+            modelID: "gpt-4o-mini",
+            company: "OPENAI",
+            displayName: "GPT-4o Mini",
+            systemPrompt: "You are Hanlin.",
+            apiType: "OpenAI"
+        )
+        try store.save(config)
+        let loaded = try store.load()
+        #expect(loaded != nil)
+        #expect(loaded?.modelID == "gpt-4o-mini")
+        #expect(loaded?.apiKey == "sk-test-key-12345")
+        #expect(loaded?.apiType == "OpenAI")
+
+        try store.clear()
+        #expect(try store.load() == nil)
+    }
+
+    @Test("HanlinScriptTranslationUISnapshot round-trip in extension store")
+    func translationUISnapshotRoundTrip() throws {
+        let root = FileManager.default.temporaryDirectory.appending(
+            path: "hanlin-trans-test-\(UUID().uuidString)",
+            directoryHint: .isDirectory
+        )
+        defer { try? FileManager.default.removeItem(at: root) }
+
+        let identity = HanlinScriptExtensionIdentity(
+            installedPackageID: try .init(validating: "installed.script-parity"),
+            packageID: try .init(validating: "hanlin.demo.script-parity"),
+            generation: 1,
+            entrypointID: "translationUI"
+        )
+
+        let transApp = HanlinScriptTranslationUISnapshot(
+            identity: identity,
+            appID: "hanlin.demo.script-parity",
+            displayName: "HanlinScript Parity",
+            summary: "Translation parity app",
+            iconSymbol: "terminal.fill",
+            accentHex: "#10B981",
+            isBeta: true,
+            entrypointID: "translationUI",
+            rootNode: .init(
+                kind: .vStack,
+                properties: ["spacing": .number(10)],
+                children: [
+                    .init(kind: .text, properties: ["content": .string("Selected: {{selectedText}}")]),
+                    .init(kind: .text, properties: ["content": .string("Count: {{selectedTextLength}}")])
+                ]
+            )
+        )
+
+        let snapshot = HanlinScriptExtensionSnapshot(
+            generatedAt: Date(timeIntervalSince1970: 100),
+            widgets: [],
+            intentEntities: [],
+            translationApps: [transApp]
+        )
+
+        let store = HanlinScriptExtensionStore(root: root)
+        try store.save(snapshot)
+        let loaded = try store.load()
+        #expect(loaded?.translationApps.count == 1)
+        #expect(loaded?.translationApps.first?.displayName == "HanlinScript Parity")
+        #expect(loaded?.translationApps.first?.appID == "hanlin.demo.script-parity")
+    }
+
+    @Test("HanlinTranslationSessionContext substitution into HanlinScriptUINode")
+    func translationSessionContextSubstitution() {
+        let originalNode = HanlinScriptUINode(
+            kind: .vStack,
+            children: [
+                .init(kind: .text, properties: ["content": .string("Selected Text: {{selectedText}}")]),
+                .init(kind: .text, properties: ["content": .string("Character Count: {{selectedTextLength}}")])
+            ]
+        )
+
+        let sessionContext = HanlinTranslationSessionContext(
+            sourceText: "Hello world!",
+            targetLanguage: "es",
+            appID: "hanlin.demo.script-parity"
+        )
+
+        let substituted = originalNode.substituting(sessionContext: sessionContext)
+        let text1 = substituted.children[0].properties["content"]
+        let text2 = substituted.children[1].properties["content"]
+
+        #expect(text1 == .string("Selected Text: Hello world!"))
+        #expect(text2 == .string("Character Count: 12"))
+    }
 }

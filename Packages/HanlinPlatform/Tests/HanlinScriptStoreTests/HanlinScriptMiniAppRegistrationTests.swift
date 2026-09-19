@@ -492,4 +492,48 @@ struct HanlinScriptMiniAppRegistrationTests {
         #expect(appEP?.runtimeProfile == .hanlinNativeScript)
         #expect(appEP?.handler == "nativescript/app/bundle.mjs")
     }
+
+    @Test("Manifest declared supportedExposures (translation_ui, widget, app_intent) are exposed in appDescriptor")
+    func manifestDeclaredSupportedExposures() throws {
+        let packageID = try HanlinPackageID(validating: "hanlin.demo.script-parity")
+        let version = try HanlinPackageVersion(validating: "1.0.0")
+        let record = HanlinInstalledPackageRecord(
+            installedPackageID: try .init(validating: "installed.script-parity"),
+            packageID: packageID,
+            version: version,
+            sourceDigest: String(repeating: "f", count: 64),
+            artifactDigest: String(repeating: "a", count: 64),
+            activeGeneration: 1,
+            installedAt: .now,
+            updatedAt: .now
+        )
+
+        let snapshot = HanlinStoredPackageSnapshot(
+            record: record,
+            entrypoints: [],
+            enabled: true,
+            availableGenerations: [1],
+            manifest: .init(
+                name: "HanlinScript Parity",
+                version: "1.0.0",
+                entry: "nativescript/app/bundle.mjs",
+                runInApp: true,
+                unknownFields: [
+                    "hanlinRuntime": .string("hanlin-nativescript"),
+                    "supportedExposures": .array([
+                        .string("translation_ui"),
+                        .string("widget"),
+                        .string("app_intent")
+                    ])
+                ]
+            )
+        )
+
+        let descriptor = try snapshot.appDescriptor()
+        try descriptor.validate()
+
+        #expect(descriptor.supportedExposures.contains(.translationUI))
+        #expect(descriptor.supportedExposures.contains(.widget))
+        #expect(descriptor.supportedExposures.contains(.appIntent))
+    }
 }
