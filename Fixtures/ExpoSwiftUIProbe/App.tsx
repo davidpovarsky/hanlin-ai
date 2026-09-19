@@ -235,11 +235,13 @@ export default function App({ variant = 'A' }: AppProps) {
                           הגדרות קריאה
                         </Text>
                         <Toggle
+                          testID="NikkudToggle"
                           isOn={showNikkud}
                           onIsOnChange={setShowNikkud}
                           label="הצג ניקוד וטעמים"
                         />
                         <Text
+                          testID="NikkudStateMarker"
                           modifiers={[
                             font({ size: 14, weight: 'semibold' }),
                             padding({ top: 8, bottom: 8 }),

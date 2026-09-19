@@ -80,18 +80,32 @@ final class HanlinExpoProductionE2ETests: XCTestCase {
         let sheetTitle = app.descendants(matching: .any).matching(sheetTitlePredicate).firstMatch
         XCTAssertTrue(sheetTitle.waitForExistence(timeout: 10), "Expo UI native BottomSheet failed to present")
 
-        let initialNikkudPredicate = NSPredicate(format: "label CONTAINS 'Nikkud: ON'")
+        let initialNikkudPredicate = NSPredicate(format: "identifier == 'NikkudStateMarker' OR label CONTAINS 'Nikkud: ON'")
         let initialNikkud = app.descendants(matching: .any).matching(initialNikkudPredicate).firstMatch
         XCTAssertTrue(initialNikkud.waitForExistence(timeout: 10), "Initial 'Nikkud: ON' marker did not render in BottomSheet")
 
-        let togglePredicate = NSPredicate(format: "label CONTAINS 'הצג ניקוד וטעמים' OR label CONTAINS 'ניקוד' OR identifier == 'Toggle'")
-        let toggle = app.descendants(matching: .any).matching(togglePredicate).firstMatch
+        let togglePredicate = NSPredicate(format: "identifier == 'NikkudToggle' OR label CONTAINS 'הצג ניקוד וטעמים' OR label CONTAINS 'ניקוד' OR identifier == 'Toggle'")
+        var toggle = app.switches.matching(togglePredicate).firstMatch
+        if !toggle.exists {
+            toggle = app.descendants(matching: .any).matching(togglePredicate).firstMatch
+        }
         XCTAssertTrue(toggle.waitForExistence(timeout: 10), "Nikkud toggle was missing in BottomSheet")
         XCTAssertTrue(toggle.isHittable, "Nikkud toggle was not hittable")
-        toggle.tap()
 
         let updatedNikkudPredicate = NSPredicate(format: "label CONTAINS 'Nikkud: OFF'")
         let updatedNikkud = app.descendants(matching: .any).matching(updatedNikkudPredicate).firstMatch
+
+        // In SwiftUI, a full-width Toggle row places the switch knob at the trailing edge (in LTR, dx ≈ 0.9)
+        // or leading edge (in RTL, dx ≈ 0.1). Standard center-tap (0.5, 0.5) hits the empty spacer between
+        // label and switch knob. Tap trailing knob first, then leading knob, then default tap.
+        toggle.coordinate(withNormalizedOffset: CGVector(dx: 0.9, dy: 0.5)).tap()
+        if !updatedNikkud.waitForExistence(timeout: 2) {
+            toggle.coordinate(withNormalizedOffset: CGVector(dx: 0.1, dy: 0.5)).tap()
+        }
+        if !updatedNikkud.waitForExistence(timeout: 2) {
+            toggle.tap()
+        }
+
         XCTAssertTrue(updatedNikkud.waitForExistence(timeout: 10), "Nikkud state marker failed to switch to 'Nikkud: OFF'")
 
         let closeSheetPredicate = NSPredicate(format: "label CONTAINS 'סגור' OR label CONTAINS 'Close'")
