@@ -97,11 +97,23 @@ struct MyApp: App {
                     ChavrusaSystemIntegrationBootstrap.configure()
                     HanlinNativeScriptProductionBootstrap.prepareEmbeddedProviders()
                     appDataManager.preloadDataIfNeeded()
+                    HanlinScriptingPlatform.shared.configure(modelContext: appDataManager.modelContainer.mainContext)
+                    await HanlinScriptingPlatform.shared.publishCompactAgentConfig()
                     await RuntimeLifecycleBridge.prepareApplication()
                     await RuntimeLifecycleBridge.handleScenePhase(scenePhase)
                 }
                 .onChange(of: scenePhase) { _, newPhase in
-                    Task { await RuntimeLifecycleBridge.handleScenePhase(newPhase) }
+                    Task {
+                        await RuntimeLifecycleBridge.handleScenePhase(newPhase)
+                        if newPhase == .active {
+                            await HanlinScriptingPlatform.shared.publishCompactAgentConfig()
+                        }
+                    }
+                }
+                .onReceive(NotificationCenter.default.publisher(for: ModelContext.didSave)) { _ in
+                    Task {
+                        await HanlinScriptingPlatform.shared.publishCompactAgentConfig()
+                    }
                 }
                 .onOpenURL { url in
                     if url.host == "openVisionView" {

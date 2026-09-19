@@ -619,12 +619,24 @@ final class HanlinScriptingPlatform {
 
                 // Translation UI Discovery
                 let translationEntrypoints = package.entrypoints.filter { $0.kind == .translationUI }
+                let manifestDeclaredTranslationUI: Bool = {
+                    if let exposures = package.manifest?.unknownFields["supportedExposures"] ?? package.manifest?.unknownFields["exposures"],
+                       case let .array(items) = exposures {
+                        return items.contains { item in
+                            if case let .string(str) = item {
+                                return str == "translation_ui" || str == "translationUI"
+                            }
+                            return false
+                        }
+                    }
+                    return false
+                }()
                 let translationURL = artifactRoot.appending(path: "translation.json")
                 let translationAltURL = artifactRoot.appending(path: "translation_ui.json")
                 let hasTranslationFile = FileManager.default.fileExists(atPath: translationURL.path(percentEncoded: false))
                     || FileManager.default.fileExists(atPath: translationAltURL.path(percentEncoded: false))
 
-                if !translationEntrypoints.isEmpty || hasTranslationFile {
+                if !translationEntrypoints.isEmpty || manifestDeclaredTranslationUI || hasTranslationFile {
                     let entrypointID = translationEntrypoints.first?.id ?? "translationUI"
                     let identity = HanlinScriptExtensionIdentity(
                         installedPackageID: package.record.installedPackageID,
@@ -844,20 +856,62 @@ final class HanlinScriptingPlatform {
         do {
             let keys = try modelContext.fetch(FetchDescriptor<APIKeys>())
             let models = try modelContext.fetch(FetchDescriptor<AllModels>())
-            let key = keys
-                .filter { !($0.key?.isEmpty ?? true) && $0.requestURL != nil && $0.key?.uppercased() != "LOCAL" }
-                .sorted { ($0.isHidden ? 1 : 0, $0.company ?? "") < ($1.isHidden ? 1 : 0, $1.company ?? "") }
-                .first
-            guard let key, let apiKey = key.key, let endpointStr = key.requestURL, let endpoint = URL(string: endpointStr) else { return }
-            let matchingModel = models.first { $0.company == key.company && !$0.isHidden }
-            let modelID = matchingModel?.name ?? "gpt-4o-mini"
+
+            let validKeys = keys.filter { key in
+                guard let k = key.key, !k.isEmpty, k.uppercased() != "LOCAL",
+                      let company = key.company, !company.isEmpty, company.uppercased() != "LOCAL",
+                      let urlStr = key.requestURL, !urlStr.isEmpty, URL(string: urlStr) != nil else {
+                    return false
+                }
+                return true
+            }
+
+            var keyByCompany: [String: APIKeys] = [:]
+            for key in validKeys {
+                let company = key.company ?? ""
+                if let existing = keyByCompany[company] {
+                    if existing.isHidden && !key.isHidden {
+                        keyByCompany[company] = key
+                    }
+                } else {
+                    keyByCompany[company] = key
+                }
+            }
+
+            let eligibleModels = models.filter { model in
+                guard !model.isHidden,
+                      model.supportsTextGen,
+                      let name = model.name, !name.isEmpty,
+                      let company = model.company,
+                      company.uppercased() != "LOCAL",
+                      keyByCompany[company] != nil else {
+                    return false
+                }
+                return true
+            }
+
+            let sortedModels = eligibleModels.sorted {
+                ($0.position ?? Int.max) < ($1.position ?? Int.max)
+            }
+
+            guard let selectedModel = sortedModels.first,
+                  let selectedKey = keyByCompany[selectedModel.company ?? ""],
+                  let apiKey = selectedKey.key,
+                  let endpointStr = selectedKey.requestURL,
+                  let endpoint = URL(string: endpointStr) else {
+                let store = try HanlinCompactAgentConfigStore()
+                try store.clear()
+                return
+            }
+
             let config = HanlinCompactAgentConfiguration(
                 endpoint: endpoint,
                 apiKey: apiKey,
-                modelID: modelID,
-                company: key.company,
-                displayName: matchingModel?.name,
+                modelID: selectedModel.name ?? "gpt-4o-mini",
+                company: selectedKey.company,
+                displayName: selectedModel.displayName ?? selectedModel.name,
                 systemPrompt: "You are Hanlin, an intelligent AI assistant. Provide concise, helpful answers directly relating to the user's selected text and query.",
+                apiType: selectedKey.apiType.rawValue,
                 updatedAt: .now
             )
             let store = try HanlinCompactAgentConfigStore()
@@ -889,20 +943,32 @@ final class HanlinScriptingPlatform {
             }), let actionName = command.invocation.entityID else { continue }
 
             if entrypoint.runtimeProfile == .hanlinNativeScript {
-                let shareCapability = try? HanlinCapabilityID(validating: "inter-app.share")
-                let actionID = try? HanlinActionID(validating: actionName)
-                if let shareCapability, let actionID {
-                    _ = try? await HanlinMiniAppHost.shared.requestBroker.request(.init(
-                        caller: HanlinAppID(rawValue: identity.packageID.rawValue) ?? (try! HanlinAppID(validating: "hanlin.host")),
-                        target: HanlinAppID(rawValue: identity.packageID.rawValue) ?? (try! HanlinAppID(validating: "hanlin.host")),
+                guard let shareCapability = try? HanlinCapabilityID(validating: "inter-app.share"),
+                      let actionID = try? HanlinActionID(validating: actionName),
+                      let targetID = HanlinAppID(rawValue: identity.packageID.rawValue) else {
+                    Self.logger.error("Invalid NativeScript AppIntent target or action: \(actionName, privacy: .public)")
+                    continue
+                }
+
+                do {
+                    let hostCallerID = try HanlinAppID(validating: "hanlin.host")
+                    let payloadValue: HanlinValue = try {
+                        let data = try JSONSerialization.data(withJSONObject: command.invocation.parameters, options: [])
+                        return (try? JSONDecoder().decode(HanlinValue.self, from: data)) ?? .object([:])
+                    }()
+                    _ = try await HanlinMiniAppHost.shared.requestBroker.request(.init(
+                        caller: hostCallerID,
+                        target: targetID,
                         action: actionID,
                         capability: shareCapability,
-                        payload: command.invocation.parameters
+                        payload: payloadValue
                     ))
+                    try extensionStore?.acknowledge(command.id)
+                    pendingResumeCommands.removeAll { $0.id == command.id }
+                    WidgetCenter.shared.reloadTimelines(ofKind: "com.hanlin.scripting.widget")
+                } catch {
+                    Self.logger.error("Failed to dispatch NativeScript AppIntent \(actionName, privacy: .public): \(Self.safeMessage(error), privacy: .public)")
                 }
-                try extensionStore?.acknowledge(command.id)
-                pendingResumeCommands.removeAll { $0.id == command.id }
-                WidgetCenter.shared.reloadTimelines(ofKind: "com.hanlin.scripting.widget")
                 continue
             }
             let required = Set(entrypoint.requiredCapabilities.filter(\.required).map(\.capabilityID))
