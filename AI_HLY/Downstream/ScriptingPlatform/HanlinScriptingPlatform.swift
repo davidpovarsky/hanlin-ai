@@ -656,7 +656,7 @@ final class HanlinScriptingPlatform {
                         if case let .string(s) = $0 { return s } else { return nil }
                     } ?? "#5CB88A"
                     let isBeta = package.manifest?.unknownFields["isBeta"].flatMap {
-                        if case let .boolean(b) = $0 { return b } else { return nil }
+                        if case let .bool(b) = $0 { return b } else { return nil }
                     } ?? false
 
                     translationApps.append(.init(
@@ -860,7 +860,7 @@ final class HanlinScriptingPlatform {
                 systemPrompt: "You are Hanlin, an intelligent AI assistant. Provide concise, helpful answers directly relating to the user's selected text and query.",
                 updatedAt: .now
             )
-            let store = HanlinCompactAgentConfigStore()
+            let store = try HanlinCompactAgentConfigStore()
             try store.save(config)
         } catch {
             Self.logger.error("Failed to publish compact agent config: \(Self.safeMessage(error), privacy: .public)")
