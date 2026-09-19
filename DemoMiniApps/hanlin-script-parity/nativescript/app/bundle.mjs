@@ -212,7 +212,7 @@ runPython("print(100 + 23)", (res, err) => {
   pythonStatusLabel.text = "Python: " + (err ? "Err: " + err : res);
 });
 
-fetchHTTPS("https://example.com/", (res, err) => {
+fetchHTTPS("https://en.wikipedia.org/", (res, err) => {
   networkStatusLabel.text = "HTTPS: " + (err ? "Err: " + err : res);
 });
 

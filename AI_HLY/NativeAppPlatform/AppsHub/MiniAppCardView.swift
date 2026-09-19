@@ -94,16 +94,18 @@ struct MiniAppCardView: View {
                     Text(title)
                         .font(.title3.weight(.semibold))
                         .lineLimit(2)
+                        .truncationMode(.tail)
                     Text(subtitle)
                         .font(.caption)
                         .lineLimit(2)
+                        .truncationMode(.tail)
                         .opacity(0.82)
                 }
             }
             .foregroundStyle(.white)
             .padding(18)
         }
-        .frame(minHeight: 150)
+        .frame(height: 168)
         .clipShape(RoundedRectangle(cornerRadius: 27, style: .continuous))
         .overlay {
             RoundedRectangle(cornerRadius: 27, style: .continuous)

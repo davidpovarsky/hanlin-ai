@@ -34,6 +34,9 @@
 		D20000000000000000000001 /* HanlinScriptingWidgets.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = D20000000000000000000020 /* HanlinScriptingWidgets.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, CodeSignOnCopy, ); }; };
 		E40000000000000000000001 /* ChavrusaChatShare.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = E40000000000000000000020 /* ChavrusaChatShare.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, CodeSignOnCopy, ); }; };
 		E50000000000000000000001 /* ChavrusaChatTranslationProvider.appex in Embed ExtensionKit Extensions */ = {isa = PBXBuildFile; fileRef = E50000000000000000000020 /* ChavrusaChatTranslationProvider.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		E50000000000000000000003 /* HanlinScriptExtensions in Frameworks */ = {isa = PBXBuildFile; productRef = C10000000000000000000021 /* HanlinScriptExtensions */; };
+		E50000000000000000000004 /* HanlinScriptUI in Frameworks */ = {isa = PBXBuildFile; productRef = C10000000000000000000022 /* HanlinScriptUI */; };
+		E50000000000000000000005 /* HanlinPlatformContracts in Frameworks */ = {isa = PBXBuildFile; productRef = A10000000000000000000015 /* HanlinPlatformContracts */; };
 		E60000000000000000000001 /* ChavrusaChatNotificationService.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = E60000000000000000000020 /* ChavrusaChatNotificationService.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, CodeSignOnCopy, ); }; };
 		D20000000000000000000002 /* HanlinScriptExtensions in Frameworks */ = {isa = PBXBuildFile; productRef = C10000000000000000000021 /* HanlinScriptExtensions */; };
 		D20000000000000000000003 /* HanlinScriptUI in Frameworks */ = {isa = PBXBuildFile; productRef = C10000000000000000000022 /* HanlinScriptUI */; };
@@ -399,6 +402,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E50000000000000000000005 /* HanlinPlatformContracts in Frameworks */,
+				E50000000000000000000004 /* HanlinScriptUI in Frameworks */,
+				E50000000000000000000003 /* HanlinScriptExtensions in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -633,6 +639,9 @@
 			);
 			name = ChavrusaChatTranslationProvider;
 			packageProductDependencies = (
+				C10000000000000000000021 /* HanlinScriptExtensions */,
+				C10000000000000000000022 /* HanlinScriptUI */,
+				A10000000000000000000015 /* HanlinPlatformContracts */,
 			);
 			productName = ChavrusaChatTranslationProvider;
 			productReference = E50000000000000000000020 /* ChavrusaChatTranslationProvider.appex */;

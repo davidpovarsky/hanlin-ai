@@ -47,6 +47,7 @@ public final class HanlinNativeServicesBridge: NSObject {
         if let appID = activeAppID, let parsedID = try? HanlinAppID(validating: appID) {
             Task { @MainActor in
                 await HanlinMiniAppHost.shared.requestBroker.unregisterAll(target: parsedID)
+                await HanlinMiniAppHost.shared.registerFallbackRoutes()
             }
         }
         activeAppID = nil
@@ -227,6 +228,10 @@ public final class HanlinNativeServicesBridge: NSObject {
                 let (data, response) = try await URLSession.shared.data(for: request)
                 guard let http = response as? HTTPURLResponse else {
                     safeCompletion(nil, "Invalid server response.")
+                    return
+                }
+                guard (200...299).contains(http.statusCode) else {
+                    safeCompletion(nil, "HTTP \(http.statusCode) error")
                     return
                 }
                 safeCompletion("HTTPS \(http.statusCode), \(data.count) bytes", nil)

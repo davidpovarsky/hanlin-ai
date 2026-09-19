@@ -38,7 +38,7 @@ struct ExposureContractTests {
         #expect(widget != nil)
         #expect(widget?.requiresDedicatedExtensionTarget == true)
         #expect(widget?.eligibility == .hybrid)
-        #expect(widget?.implementationState == .reserved)
+        #expect(widget?.implementationState == .genericHosted)
 
         // 5. Live Activity
         let liveActivity = HanlinExposureCatalog.classification(for: .liveActivity)
@@ -59,7 +59,7 @@ struct ExposureContractTests {
         let appIntent = HanlinExposureCatalog.classification(for: .appIntent)
         #expect(appIntent != nil)
         #expect(appIntent?.isUserInterface == false)
-        #expect(appIntent?.implementationState == .reserved)
+        #expect(appIntent?.implementationState == .genericHosted)
 
         // 8. Spotlight
         let spotlight = HanlinExposureCatalog.classification(for: .spotlight)
@@ -82,7 +82,7 @@ struct ExposureContractTests {
         #expect(translation?.requiresDedicatedExtensionTarget == true)
         #expect(translation?.requiredEntitlements == ["com.apple.developer.translation-app"])
         #expect(translation?.requiredInfoPlistKeys == ["com.apple.developer.translation-ui-provider.network-access"])
-        #expect(translation?.implementationState == .reserved)
+        #expect(translation?.implementationState == .genericHosted)
 
         // 12. Unsupported surfaces
         let netExt = HanlinExposureCatalog.classification(for: .networkExtension)

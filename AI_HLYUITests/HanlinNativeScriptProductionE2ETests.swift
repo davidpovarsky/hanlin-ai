@@ -36,33 +36,33 @@ final class HanlinNativeScriptProductionE2ETests: XCTestCase {
 
         // 2. Verify Deterministic Runtimes Outputs
         // JS: 42
-        let jsPredicate = NSPredicate(format: "label CONTAINS 'JS: 42' OR (label CONTAINS 'JS:' AND NOT label CONTAINS 'Pending')")
+        let jsPredicate = NSPredicate(format: "label CONTAINS 'JS: 42' AND NOT (label CONTAINS 'Err' OR label CONTAINS 'Error')")
         let jsLabel = app.descendants(matching: .any).matching(jsPredicate).firstMatch
         XCTAssertTrue(jsLabel.waitForExistence(timeout: 15), "JavaScript execution did not return expected deterministic output 42")
 
         // Node: 246
-        let nodePredicate = NSPredicate(format: "label CONTAINS 'Node: 246' OR (label CONTAINS 'Node:' AND NOT label CONTAINS 'Pending')")
+        let nodePredicate = NSPredicate(format: "label CONTAINS 'Node: 246' AND NOT (label CONTAINS 'Err' OR label CONTAINS 'Error')")
         let nodeLabel = app.descendants(matching: .any).matching(nodePredicate).firstMatch
         XCTAssertTrue(nodeLabel.waitForExistence(timeout: 20), "Node execution did not return expected deterministic output 246")
 
         // Python: 123
-        let pyPredicate = NSPredicate(format: "label CONTAINS 'Python: 123' OR (label CONTAINS 'Python:' AND NOT label CONTAINS 'Pending')")
+        let pyPredicate = NSPredicate(format: "label CONTAINS 'Python: 123' AND NOT (label CONTAINS 'Err' OR label CONTAINS 'Error')")
         let pyLabel = app.descendants(matching: .any).matching(pyPredicate).firstMatch
         XCTAssertTrue(pyLabel.waitForExistence(timeout: 15), "Python execution did not return expected deterministic output 123")
 
         // HTTPS: HTTPS 200
-        let netPredicate = NSPredicate(format: "label CONTAINS 'HTTPS: HTTPS 200' OR (label CONTAINS 'HTTPS:' AND NOT label CONTAINS 'Pending')")
+        let netPredicate = NSPredicate(format: "label CONTAINS 'HTTPS: HTTPS 200' AND NOT (label CONTAINS 'Err' OR label CONTAINS 'Error')")
         let netLabel = app.descendants(matching: .any).matching(netPredicate).firstMatch
         XCTAssertTrue(netLabel.waitForExistence(timeout: 20), "HTTPS network fetch did not return status 200")
 
         // Inter-App Share
-        let interAppPredicate = NSPredicate(format: "label CONTAINS 'Inter-App:' AND NOT label CONTAINS 'Pending'")
+        let interAppPredicate = NSPredicate(format: "label CONTAINS 'Inter-App:' AND (label CONTAINS 'swift-parity' OR label CONTAINS 'Hanlin') AND NOT (label CONTAINS 'Err' OR label CONTAINS 'Error' OR label CONTAINS 'denied' OR label CONTAINS 'unavailable' OR label CONTAINS 'Pending')")
         let interAppLabel = app.descendants(matching: .any).matching(interAppPredicate).firstMatch
-        XCTAssertTrue(interAppLabel.waitForExistence(timeout: 20), "Inter-App communication did not complete")
+        XCTAssertTrue(interAppLabel.waitForExistence(timeout: 20), "Inter-App communication did not complete successfully")
         capture(name: "Parity-Runtimes-Verified")
 
         // 3. Storage Persistence Check
-        let storagePredicate = NSPredicate(format: "label CONTAINS 'Saved in canonical' OR label CONTAINS 'Reloaded persisted'")
+        let storagePredicate = NSPredicate(format: "(label CONTAINS 'Saved in canonical' OR label CONTAINS 'Reloaded persisted') AND NOT (label CONTAINS 'Error' OR label CONTAINS 'Err' OR label CONTAINS 'failed')")
         let storageLabel = app.descendants(matching: .any).matching(storagePredicate).firstMatch
         XCTAssertTrue(storageLabel.waitForExistence(timeout: 15), "Canonical private storage was not verified")
 

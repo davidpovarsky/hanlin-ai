@@ -198,7 +198,7 @@ private final class Model {
 
     func runNetworkTest() async {
         do {
-            guard let url = URL(string: "https://example.com/") else {
+            guard let url = URL(string: "https://en.wikipedia.org/") else {
                 networkStatus = "Network failed: invalid demo URL"
                 return
             }

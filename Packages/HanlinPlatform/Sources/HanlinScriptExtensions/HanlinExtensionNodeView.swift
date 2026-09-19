@@ -22,7 +22,7 @@ public struct HanlinExtensionNodeView: View {
     private var primitive: some View {
         switch node.kind {
         case .text:
-            Text(text("text") ?? "")
+            Text(text("text") ?? text("content") ?? "")
         case .image:
             Image(systemName: text("systemName") ?? "photo")
         case .hStack:

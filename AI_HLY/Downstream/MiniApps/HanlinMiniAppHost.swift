@@ -61,20 +61,46 @@ final class HanlinMiniAppHost {
            let rawIDs = try? JSONDecoder().decode([String].self, from: data) {
             hiddenAppIDs = Set(rawIDs.compactMap(HanlinAppID.init(rawValue:)))
         }
+        Task {
+            await registerFallbackRoutes()
+        }
+    }
+
+    public func registerFallbackRoutes() async {
         let broker = requestBroker
         let store = dataStore
-        Task {
-            if let swiftParityID = try? HanlinAppID(validating: "hanlin.demo.swift-parity"),
-               let shareCap = try? HanlinCapabilityID(validating: "inter-app.share"),
-               let shareAction = try? HanlinActionID(validating: "share.value") {
-                await broker.register(target: swiftParityID, action: shareAction, capability: shareCap) { _ in
-                    let storageContext = HanlinMiniAppStorageContext(appID: swiftParityID, store: store)
-                    if let data = try? await storageContext.read(area: .state, path: "parity.json"),
-                       let val = try? JSONDecoder().decode(PersistedParityState.self, from: data) {
-                        return .object(["name": .string(val.name), "counter": .integer(Int64(val.counter))])
-                    }
-                    return .object(["name": .string("Hanlin"), "counter": .integer(0)])
+        if let swiftParityID = try? HanlinAppID(validating: "hanlin.demo.swift-parity"),
+           let shareCap = try? HanlinCapabilityID(validating: "inter-app.share"),
+           let shareAction = try? HanlinActionID(validating: "share.value") {
+            await broker.register(target: swiftParityID, action: shareAction, capability: shareCap) { _ in
+                let storageContext = HanlinMiniAppStorageContext(appID: swiftParityID, store: store)
+                if let data = try? await storageContext.read(area: .state, path: "parity.json"),
+                   let val = try? JSONDecoder().decode(PersistedParityState.self, from: data) {
+                    return .object(["name": .string(val.name), "counter": .integer(Int64(val.counter))])
                 }
+                return .object(["name": .string("Hanlin"), "counter": .integer(0)])
+            }
+        }
+        if let scriptParityID = try? HanlinAppID(validating: "hanlin.demo.script-parity"),
+           let shareCap = try? HanlinCapabilityID(validating: "inter-app.share"),
+           let shareAction = try? HanlinActionID(validating: "share.value") {
+            await broker.register(target: scriptParityID, action: shareAction, capability: shareCap) { _ in
+                let storageContext = HanlinMiniAppStorageContext(appID: scriptParityID, store: store)
+                if let data = try? await storageContext.read(area: .state, path: "script-parity.json"),
+                   let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any] {
+                    let counter = (json["counter"] as? NSNumber)?.int64Value ?? 0
+                    let name = (json["name"] as? String) ?? "HanlinScript"
+                    return .object([
+                        "source": .string("hanlin.demo.script-parity"),
+                        "counter": .integer(counter),
+                        "name": .string(name)
+                    ])
+                }
+                return .object([
+                    "source": .string("hanlin.demo.script-parity"),
+                    "counter": .integer(0),
+                    "name": .string("HanlinScript")
+                ])
             }
         }
     }
@@ -107,6 +133,7 @@ final class HanlinMiniAppHost {
             let refreshed = try await HanlinCanonicalMiniAppCatalog(discovery: discovery).items()
             items = refreshed
             await authorization.replace(with: refreshed)
+            await registerFallbackRoutes()
             lastError = nil
         } catch {
             lastError = error.localizedDescription
@@ -166,6 +193,7 @@ final class HanlinMiniAppHost {
         request.timeoutInterval = 15
         let (data, response) = try await URLSession.shared.data(for: request)
         guard let http = response as? HTTPURLResponse,
+              (200...299).contains(http.statusCode),
               data.count <= 1_048_576 else { throw URLError(.badServerResponse) }
         return "HTTPS \(http.statusCode), \(data.count) bytes"
     }

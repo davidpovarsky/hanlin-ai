@@ -9,5 +9,7 @@
 		<key>EXExtensionPointIdentifier</key>
 		<string>com.apple.public.translation-ui-provider</string>
 	</dict>
+	<key>com.apple.developer.translation-ui-provider.network-access</key>
+	<true/>
 </dict>
 </plist>

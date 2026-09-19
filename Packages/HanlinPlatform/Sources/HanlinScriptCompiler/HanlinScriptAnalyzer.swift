@@ -415,7 +415,9 @@ public struct HanlinScriptAnalyzer: Sendable {
             ("intent.json", .appIntent, .appIntent, "app-intent-v1"),
             ("live_activity.tsx", .liveActivity, .liveActivity, "live-activity-v1"),
             ("translation_ui_provider.tsx", .translationUI, .translationUI, "translation-ui-v1"),
-            ("translation_ui_provider.ts", .translationUI, .translationUI, "translation-ui-v1")
+            ("translation_ui_provider.ts", .translationUI, .translationUI, "translation-ui-v1"),
+            ("translation.json", .translationUI, .translationUI, "translation-ui-v1"),
+            ("translation_ui.json", .translationUI, .translationUI, "translation-ui-v1")
         ]
         var kinds = Set(candidates.map { $0.1 })
         for (path, kind, context, policy) in conventions

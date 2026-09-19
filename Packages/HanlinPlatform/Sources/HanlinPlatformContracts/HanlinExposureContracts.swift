@@ -223,8 +223,8 @@ public enum HanlinExposureCatalog {
             requiredEntitlements: [],
             requiredInfoPlistKeys: [],
             eligibility: .hybrid,
-            implementationState: .reserved,
-            notes: "WidgetKit surface reserved; requires a dedicated Widget extension target to host Mini App widgets."
+            implementationState: .genericHosted,
+            notes: "Generic signed Widget extension target hosts extension-safe declarative widget definitions from installed Mini Apps."
         ),
         // 5. Live Activities
         HanlinExposureClassification(
@@ -262,8 +262,8 @@ public enum HanlinExposureCatalog {
             requiredEntitlements: [],
             requiredInfoPlistKeys: [],
             eligibility: .hybrid,
-            implementationState: .reserved,
-            notes: "AppIntents system integration reserved; in-session runtime registration primitives exist in HanlinScriptingApplicationRuntime, but system AppIntent host bridging is not wired today."
+            implementationState: .genericHosted,
+            notes: "AppIntents system integration wired via HanlinInvokeScriptActionIntent in the extension layer and HanlinScriptAppIntentBridge."
         ),
         // 8. Spotlight
         HanlinExposureClassification(
@@ -305,8 +305,8 @@ public enum HanlinExposureCatalog {
                 "com.apple.developer.translation-ui-provider.network-access"
             ],
             eligibility: .hybrid,
-            implementationState: .reserved,
-            notes: "System translation extension surface. Network access requires Apple provider network key in Info.plist; reserved until dedicated extension target is compiled."
+            implementationState: .genericHosted,
+            notes: "System translation extension surface hosting compact declarative Mini App surfaces around selected text, with network access configured."
         ),
         // 11. Notification UI
         HanlinExposureClassification(

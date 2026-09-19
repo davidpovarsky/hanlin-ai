@@ -15,7 +15,7 @@ struct HanlinScriptingWidgetBundle: WidgetBundle {
 }
 
 struct HanlinScriptPackageEntity: AppEntity {
-    static let typeDisplayRepresentation = TypeDisplayRepresentation(name: "Script Package")
+    static let typeDisplayRepresentation = TypeDisplayRepresentation(name: "Script")
     static let defaultQuery = HanlinScriptPackageEntityQuery()
 
     let id: String
@@ -51,15 +51,20 @@ struct HanlinScriptPackageEntityQuery: EntityQuery {
     }
 
     static func id(_ identity: HanlinScriptExtensionIdentity) -> String {
-        "\(identity.installedPackageID.rawValue)|\(identity.entrypointID)"
+        "\(identity.packageID.rawValue)|\(identity.entrypointID)"
+    }
+
+    static func matches(identity: HanlinScriptExtensionIdentity, id: String) -> Bool {
+        id == "\(identity.packageID.rawValue)|\(identity.entrypointID)"
+            || id == "\(identity.installedPackageID.rawValue)|\(identity.entrypointID)"
     }
 }
 
 struct HanlinWidgetConfigurationIntent: WidgetConfigurationIntent {
-    static let title: LocalizedStringResource = "Script Package"
-    static let description = IntentDescription("Select an installed Script package widget.")
+    static let title: LocalizedStringResource = "Script"
+    static let description = IntentDescription("Choose an installed Script to display.")
 
-    @Parameter(title: "Package")
+    @Parameter(title: "Script")
     var package: HanlinScriptPackageEntity?
 }
 
@@ -106,7 +111,7 @@ struct HanlinWidgetTimelineProvider: AppIntentTimelineProvider {
         }
         if let selected = configuration.package {
             return snapshots.first {
-                HanlinScriptPackageEntityQuery.id($0.identity) == selected.id && $0.family == familyName
+                HanlinScriptPackageEntityQuery.matches(identity: $0.identity, id: selected.id) && $0.family == familyName
             }
         }
         return snapshots.first { $0.family == familyName }
@@ -126,8 +131,8 @@ struct HanlinScriptingWidget: Widget {
                 .widgetURL(entry.snapshot?.deepLink)
                 .containerBackground(.background, for: .widget)
         }
-        .configurationDisplayName("Script Package")
-        .description("Displays an extension-safe snapshot from an installed Script package.")
+        .configurationDisplayName("Hanlin Script")
+        .description("Displays an extension-safe snapshot from an installed Script.")
         .supportedFamilies([.systemSmall, .systemMedium, .systemLarge, .systemExtraLarge])
     }
 }

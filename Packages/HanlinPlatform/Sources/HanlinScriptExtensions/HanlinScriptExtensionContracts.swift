@@ -177,24 +177,126 @@ public struct HanlinScriptLiveActivityDescriptor: Codable, Hashable, Sendable {
     }
 }
 
+public struct HanlinTranslationSessionContext: Codable, Hashable, Sendable {
+    public let sourceText: String
+    public let origin: HanlinExecutionContext
+    public let presentation: String
+    public let createdAt: Date
+
+    public init(
+        sourceText: String,
+        origin: HanlinExecutionContext = .translationUI,
+        presentation: String = "compact",
+        createdAt: Date = .now
+    ) {
+        self.sourceText = sourceText
+        self.origin = origin
+        self.presentation = presentation
+        self.createdAt = createdAt
+    }
+}
+
+public struct HanlinScriptTranslationUISnapshot: Codable, Hashable, Sendable, Identifiable {
+    public var id: String { "\(identity.packageID.rawValue)|\(identity.entrypointID)" }
+    public let identity: HanlinScriptExtensionIdentity
+    public let appID: String
+    public let displayName: String
+    public let summary: String?
+    public let iconSymbol: String?
+    public let accentHex: String?
+    public let isBeta: Bool
+    public let entrypointID: String
+    public let rootNode: HanlinScriptUINode?
+
+    public init(
+        identity: HanlinScriptExtensionIdentity,
+        appID: String,
+        displayName: String,
+        summary: String? = nil,
+        iconSymbol: String? = nil,
+        accentHex: String? = nil,
+        isBeta: Bool = false,
+        entrypointID: String,
+        rootNode: HanlinScriptUINode? = nil
+    ) {
+        self.identity = identity
+        self.appID = appID
+        self.displayName = displayName
+        self.summary = summary
+        self.iconSymbol = iconSymbol
+        self.accentHex = accentHex
+        self.isBeta = isBeta
+        self.entrypointID = entrypointID
+        self.rootNode = rootNode
+    }
+}
+
 public struct HanlinScriptExtensionSnapshot: Codable, Hashable, Sendable {
     public let schemaVersion: UInt32
     public let generatedAt: Date
     public let widgets: [HanlinScriptWidgetSnapshot]
     public let intentEntities: [HanlinScriptIntentEntityRecord]
     public let liveActivities: [HanlinScriptLiveActivityDescriptor]
+    public let translationApps: [HanlinScriptTranslationUISnapshot]
 
     public init(
         schemaVersion: UInt32 = 1,
         generatedAt: Date,
         widgets: [HanlinScriptWidgetSnapshot] = [],
         intentEntities: [HanlinScriptIntentEntityRecord] = [],
-        liveActivities: [HanlinScriptLiveActivityDescriptor] = []
+        liveActivities: [HanlinScriptLiveActivityDescriptor] = [],
+        translationApps: [HanlinScriptTranslationUISnapshot] = []
     ) {
         self.schemaVersion = schemaVersion
         self.generatedAt = generatedAt
         self.widgets = widgets
         self.intentEntities = intentEntities
         self.liveActivities = liveActivities
+        self.translationApps = translationApps
+    }
+
+    private enum CodingKeys: String, CodingKey {
+        case schemaVersion, generatedAt, widgets, intentEntities, liveActivities, translationApps
+    }
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        schemaVersion = try container.decodeIfPresent(UInt32.self, forKey: .schemaVersion) ?? 1
+        generatedAt = try container.decode(Date.self, forKey: .generatedAt)
+        widgets = try container.decodeIfPresent([HanlinScriptWidgetSnapshot].self, forKey: .widgets) ?? []
+        intentEntities = try container.decodeIfPresent([HanlinScriptIntentEntityRecord].self, forKey: .intentEntities) ?? []
+        liveActivities = try container.decodeIfPresent([HanlinScriptLiveActivityDescriptor].self, forKey: .liveActivities) ?? []
+        translationApps = try container.decodeIfPresent([HanlinScriptTranslationUISnapshot].self, forKey: .translationApps) ?? []
+    }
+}
+
+extension HanlinScriptUINode {
+    public func substituting(context: [String: String]) -> HanlinScriptUINode {
+        var updatedProps = properties
+        for (k, v) in properties {
+            if case let .string(s) = v {
+                var substituted = s
+                for (placeholder, replacement) in context {
+                    substituted = substituted.replacingOccurrences(of: "{{\(placeholder)}}", with: replacement)
+                }
+                updatedProps[k] = .string(substituted)
+            }
+        }
+        let updatedChildren = children.map { $0.substituting(context: context) }
+        return HanlinScriptUINode(
+            kind: kind,
+            key: key,
+            properties: updatedProps,
+            children: updatedChildren
+        )
+    }
+
+    public func substituting(sessionContext: HanlinTranslationSessionContext) -> HanlinScriptUINode {
+        substituting(context: [
+            "selectedText": sessionContext.sourceText,
+            "selectedTextLength": String(sessionContext.sourceText.count),
+            "origin": sessionContext.origin,
+            "presentation": sessionContext.presentation
+        ])
     }
 }

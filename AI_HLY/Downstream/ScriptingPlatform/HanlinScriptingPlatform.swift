@@ -134,6 +134,9 @@ final class HanlinScriptingPlatform {
 
     func configure(modelContext: ModelContext) {
         self.modelContext = modelContext
+        Task {
+            await publishCompactAgentConfig()
+        }
     }
 
     func acknowledgeResumeCommand(_ command: HanlinScriptResumeCommand) {
@@ -606,17 +609,74 @@ final class HanlinScriptingPlatform {
         let filesCapability = try HanlinCapabilityID(validating: "files")
         var widgets: [HanlinScriptWidgetSnapshot] = []
         var intentEntities: [HanlinScriptIntentEntityRecord] = []
+        var translationApps: [HanlinScriptTranslationUISnapshot] = []
 
         for package in installedPackages where package.enabled {
-            let extensionEntrypoints = package.entrypoints.filter {
-                ($0.runtimeProfile == .scriptingJSC || $0.runtimeProfile == .hanlinNativeScript)
-                    && ($0.kind == .widget || $0.kind == .appIntent)
-            }
-            guard !extensionEntrypoints.isEmpty else { continue }
             do {
                 let artifactRoot = try await store.activeArtifactURL(for: package.record.installedPackageID)
                 let displayName = package.manifest?.name ?? package.record.packageID.rawValue
                 let granted = Set(package.grantedCapabilities)
+
+                // Translation UI Discovery
+                let translationEntrypoints = package.entrypoints.filter { $0.kind == .translationUI }
+                let translationURL = artifactRoot.appending(path: "translation.json")
+                let translationAltURL = artifactRoot.appending(path: "translation_ui.json")
+                let hasTranslationFile = FileManager.default.fileExists(atPath: translationURL.path(percentEncoded: false))
+                    || FileManager.default.fileExists(atPath: translationAltURL.path(percentEncoded: false))
+
+                if !translationEntrypoints.isEmpty || hasTranslationFile {
+                    let entrypointID = translationEntrypoints.first?.id ?? "translationUI"
+                    let identity = HanlinScriptExtensionIdentity(
+                        installedPackageID: package.record.installedPackageID,
+                        packageID: package.record.packageID,
+                        generation: package.record.activeGeneration,
+                        entrypointID: entrypointID
+                    )
+                    let activeURL = FileManager.default.fileExists(atPath: translationURL.path(percentEncoded: false)) ? translationURL : translationAltURL
+                    let rootNode: HanlinScriptUINode
+                    if let data = try? Data(contentsOf: activeURL),
+                       let decoded = try? JSONDecoder().decode(HanlinScriptUINode.self, from: data) {
+                        rootNode = decoded
+                    } else {
+                        rootNode = .init(
+                            kind: .vStack,
+                            properties: ["spacing": .number(10), "alignment": .string("leading")],
+                            children: [
+                                .init(kind: .text, properties: ["content": .string(displayName), "font": .string("headline")]),
+                                .init(kind: .text, properties: ["content": .string("{{selectedText}}"), "font": .string("body")]),
+                                .init(kind: .text, properties: ["content": .string("Character Count: {{selectedTextLength}}"), "font": .string("caption"), "foreground": .string("secondary")])
+                            ]
+                        )
+                    }
+                    let summary = package.manifest?.description ?? "Hanlin Script Translation Mini App"
+                    let iconSymbol = package.manifest?.unknownFields["icon"].flatMap {
+                        if case let .string(s) = $0 { return s } else { return nil }
+                    } ?? "doc.text.magnifyingglass"
+                    let accentHex = package.manifest?.unknownFields["color"].flatMap {
+                        if case let .string(s) = $0 { return s } else { return nil }
+                    } ?? "#5CB88A"
+                    let isBeta = package.manifest?.unknownFields["isBeta"].flatMap {
+                        if case let .boolean(b) = $0 { return b } else { return nil }
+                    } ?? false
+
+                    translationApps.append(.init(
+                        identity: identity,
+                        appID: package.record.packageID.rawValue,
+                        displayName: displayName,
+                        summary: summary,
+                        iconSymbol: iconSymbol,
+                        accentHex: accentHex,
+                        isBeta: isBeta,
+                        entrypointID: entrypointID,
+                        rootNode: rootNode
+                    ))
+                }
+
+                let extensionEntrypoints = package.entrypoints.filter {
+                    ($0.runtimeProfile == .scriptingJSC || $0.runtimeProfile == .hanlinNativeScript)
+                        && ($0.kind == .widget || $0.kind == .appIntent)
+                }
+                guard !extensionEntrypoints.isEmpty else { continue }
 
                 for entrypoint in extensionEntrypoints {
                     let required = Set(entrypoint.requiredCapabilities.filter(\.required).map(\.capabilityID))
@@ -772,8 +832,39 @@ final class HanlinScriptingPlatform {
         try extensionStore.save(.init(
             generatedAt: .now,
             widgets: widgets,
-            intentEntities: intentEntities
+            intentEntities: intentEntities,
+            translationApps: translationApps
         ))
+        WidgetCenter.shared.reloadTimelines(ofKind: "com.hanlin.scripting.widget")
+        await publishCompactAgentConfig()
+    }
+
+    func publishCompactAgentConfig() async {
+        guard let modelContext else { return }
+        do {
+            let keys = try modelContext.fetch(FetchDescriptor<APIKeys>())
+            let models = try modelContext.fetch(FetchDescriptor<AllModels>())
+            let key = keys
+                .filter { !($0.key?.isEmpty ?? true) && $0.requestURL != nil && $0.key?.uppercased() != "LOCAL" }
+                .sorted { ($0.isHidden ? 1 : 0, $0.company ?? "") < ($1.isHidden ? 1 : 0, $1.company ?? "") }
+                .first
+            guard let key, let apiKey = key.key, let endpointStr = key.requestURL, let endpoint = URL(string: endpointStr) else { return }
+            let matchingModel = models.first { $0.company == key.company && !$0.isHidden }
+            let modelID = matchingModel?.name ?? "gpt-4o-mini"
+            let config = HanlinCompactAgentConfiguration(
+                endpoint: endpoint,
+                apiKey: apiKey,
+                modelID: modelID,
+                company: key.company,
+                displayName: matchingModel?.name,
+                systemPrompt: "You are Hanlin, an intelligent AI assistant. Provide concise, helpful answers directly relating to the user's selected text and query.",
+                updatedAt: .now
+            )
+            let store = HanlinCompactAgentConfigStore()
+            try store.save(config)
+        } catch {
+            Self.logger.error("Failed to publish compact agent config: \(Self.safeMessage(error), privacy: .public)")
+        }
     }
 
     private func processPendingResumeCommands() async throws {
