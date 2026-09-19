@@ -295,7 +295,7 @@ extension HanlinScriptUINode {
         substituting(context: [
             "selectedText": sessionContext.sourceText,
             "selectedTextLength": String(sessionContext.sourceText.count),
-            "origin": sessionContext.origin,
+            "origin": sessionContext.origin.rawValue,
             "presentation": sessionContext.presentation
         ])
     }

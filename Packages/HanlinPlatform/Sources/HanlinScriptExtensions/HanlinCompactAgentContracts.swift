@@ -113,6 +113,8 @@ public enum HanlinCompactAgentError: LocalizedError, Sendable {
     case serverError(statusCode: Int, message: String)
     case cancelled
 
+    public static let unconfigured: HanlinCompactAgentError = .notConfigured
+
     public var errorDescription: String? {
         switch self {
         case .appGroupUnavailable:
@@ -151,7 +153,7 @@ public actor HanlinCompactAgentClient {
             activeConfig = loaded
             self.config = loaded
         } else {
-            throw HanlinCompactAgentError.unconfigured
+            throw HanlinCompactAgentError.notConfigured
         }
 
         let (stream, continuation) = AsyncThrowingStream<String, Error>.makeStream()
