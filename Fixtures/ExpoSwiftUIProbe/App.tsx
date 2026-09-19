@@ -73,6 +73,7 @@ export default function App({ variant = 'A' }: AppProps) {
     <View style={styles.container}>
       <Host style={styles.host}>
         <NavigationSplitView
+          columnVisibility="all"
           modifiers={[
             navigationTitle('Hanlin Sefaria Expo Reader'),
             navigationBarTitleDisplayMode('inline'),
@@ -155,6 +156,14 @@ export default function App({ variant = 'A' }: AppProps) {
                   >
                     {currentBook.name} : {selectedSection}
                   </Text>
+                  <Button
+                    onPress={() => {
+                      setSelectedBookId('benchmark1000');
+                      setSelectedSection('בדיקת עומס');
+                    }}
+                  >
+                    <Text modifiers={[font({ size: 15 }), foregroundStyle('tint')]}>1,000 Rows Probe</Text>
+                  </Button>
                   <Button onPress={() => setShowSettingsSheet(true)}>
                     <Text modifiers={[font({ size: 15 }), foregroundStyle('tint')]}>הגדרות</Text>
                   </Button>

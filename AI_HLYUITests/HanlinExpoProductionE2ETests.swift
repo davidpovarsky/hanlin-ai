@@ -167,14 +167,22 @@ final class HanlinExpoProductionE2ETests: XCTestCase {
         let sidebarTitle = app.descendants(matching: .any).matching(sidebarTitlePredicate).firstMatch
         XCTAssertTrue(sidebarTitle.waitForExistence(timeout: 30), "Expo SwiftUI NavigationSplitView sidebar did not render")
 
-        // 2. Select the 1,000-row benchmark probe from the sidebar
+        // 2. Expand sidebar if collapsed on iPad
+        let sidebarToggle = app.navigationBars.buttons.matching(
+            NSPredicate(format: "identifier == 'ToggleSidebar' OR label CONTAINS[c] 'Sidebar' OR label CONTAINS[c] 'סרגל'")
+        ).firstMatch
+        if sidebarToggle.waitForExistence(timeout: 2) && sidebarToggle.isHittable {
+            sidebarToggle.tap()
+        }
+
+        // 3. Select the 1,000-row benchmark probe (from sidebar or detail header)
         let benchmarkPredicate = NSPredicate(format: "label CONTAINS '1,000' OR label CONTAINS '1000' OR label CONTAINS 'מבחן' OR label CONTAINS 'Rows Probe'")
         var benchmarkButton = app.descendants(matching: .any).matching(benchmarkPredicate).firstMatch
-        if !benchmarkButton.waitForExistence(timeout: 10) {
+        if !benchmarkButton.waitForExistence(timeout: 5) {
             app.swipeUp()
             benchmarkButton = app.descendants(matching: .any).matching(benchmarkPredicate).firstMatch
         }
-        XCTAssertTrue(benchmarkButton.waitForExistence(timeout: 20), "1,000 rows benchmark item missing in sidebar")
+        XCTAssertTrue(benchmarkButton.waitForExistence(timeout: 15), "1,000 rows benchmark item missing")
         if benchmarkButton.isHittable {
             benchmarkButton.tap()
         } else {
@@ -349,9 +357,15 @@ final class HanlinExpoProductionE2ETests: XCTestCase {
         }
     }
 
+    private func hasPackageCard(named packageName: String) -> Bool {
+        let cardPredicate = NSPredicate(format: "label CONTAINS[c] %@ OR identifier CONTAINS[c] %@", packageName, packageName)
+        return app.buttons.matching(cardPredicate).firstMatch.exists ||
+               app.descendants(matching: .any).matching(cardPredicate).firstMatch.exists
+    }
+
     private func importAndInstall(archive: String) {
         let displayName = archive == "ExpoSwiftUIProbeA" ? probeAPackageName : (archive == "ExpoSwiftUIProbeB" ? probeBPackageName : archive)
-        if findPackageCard(named: displayName).exists || findPackageCard(named: archive).exists { return }
+        if hasPackageCard(named: displayName) || hasPackageCard(named: archive) { return }
 
         ensureAppsAddButton(timeout: 15).tap()
         let importLink = app.buttons["hanlin-import-script-package"].firstMatch
