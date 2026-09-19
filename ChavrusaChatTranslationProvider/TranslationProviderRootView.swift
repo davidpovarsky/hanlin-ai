@@ -7,10 +7,16 @@ import SwiftUI
 @preconcurrency import TranslationUIProvider
 
 struct TranslationProviderRootView: View {
+    let context: any TranslationUIProviderContext
     @State private var session: TranslationProviderSession
 
     init(context: any TranslationUIProviderContext) {
+        self.context = context
         _session = State(initialValue: TranslationProviderSession(context: context))
+    }
+
+    private var currentSourceText: String {
+        context.inputText.map { String($0.characters) } ?? ""
     }
 
     var body: some View {
@@ -26,6 +32,12 @@ struct TranslationProviderRootView: View {
                         TranslationProviderMiniChatView(session: session)
                     }
                 }
+        }
+        .onAppear {
+            session.updateSourceTextIfNeeded(currentSourceText)
+        }
+        .task(id: currentSourceText) {
+            session.updateSourceTextIfNeeded(currentSourceText)
         }
     }
 }

@@ -12,22 +12,37 @@ import SwiftUI
 @Observable
 final class TranslationProviderSession {
     let context: any TranslationUIProviderContext
-    let sourceText: String
-    var path: [TranslationRoute] = []
-    var translatedText: String = ""
-    var isTranslating: Bool = false
-    var quickQuery: String = ""
+    private var explicitSourceText: String?
 
-    // Mini Chat State
-    var chatMessages: [HanlinCompactChatMessage] = []
-    var isChatStreaming: Bool = false
-    var chatError: String? = nil
+    var sourceText: String {
+        get {
+            if let explicit = explicitSourceText, !explicit.isEmpty {
+                return explicit
+            }
+            let live = context.inputText.map { String($0.characters) } ?? ""
+            if !live.isEmpty {
+                return live
+            }
+            return ""
+        }
+        set {
+            explicitSourceText = newValue
+        }
+    }
 
-    private let agentClient = HanlinCompactAgentClient()
+    func updateSourceTextIfNeeded(_ text: String) {
+        guard !text.isEmpty else { return }
+        if explicitSourceText != text {
+            explicitSourceText = text
+        }
+    }
 
     init(context: any TranslationUIProviderContext) {
         self.context = context
-        self.sourceText = context.inputText.map { String($0.characters) } ?? ""
+        let initial = context.inputText.map { String($0.characters) } ?? ""
+        if !initial.isEmpty {
+            self.explicitSourceText = initial
+        }
     }
 
     var sessionContext: HanlinTranslationSessionContext {
