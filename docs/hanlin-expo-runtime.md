@@ -1,6 +1,6 @@
 # Hanlin Expo / React Native SwiftUI Dynamic Runtime Guide
 
-This document specifies the architecture, operational contracts, performance benchmarks, and development guidelines for the **Hanlin Expo / React Native SwiftUI Runtime** (`hanlinExpo`), enabling dynamically installed MiniApps (`.hanlinExpo`) to render real Apple SwiftUI components using Expo UI (`@expo/ui/swift-ui`) and Hermes on iOS 26+.
+This document specifies the architecture, operational contracts, performance metrics, and development guidelines for the **Hanlin Expo / React Native SwiftUI Runtime** (`hanlinExpo`), enabling dynamically installed MiniApps (`.hanlinExpo`) to render Apple SwiftUI components using Expo UI (`@expo/ui/swift-ui`) and Hermes on iOS 26+.
 
 ---
 
@@ -9,31 +9,32 @@ This document specifies the architecture, operational contracts, performance ben
 Hanlin AI features a multi-engine runtime platform capable of hosting isolated MiniApps across multiple paradigms:
 * **`scriptingJSC`**: Embedded JavaScriptCore runtime with declarative reactive primitives (`HanlinScriptUI`).
 * **`hanlinNativeScript`**: NativeScript 9.1 runtime with direct Objective-C runtime metadata reflection and Core UI.
-* **`hanlinExpo`**: Dynamic React Native 0.88 / Expo SDK 58 runtime executing on Hermes VM, with native declarative UI rendered directly by Apple's SwiftUI via Expo UI.
+* **`hanlinExpo`**: Dynamic React Native 0.88 / Expo SDK 58 runtime executing on Hermes VM, with native declarative UI components backed by Apple's SwiftUI via Expo UI.
 
 ```mermaid
 flowchart TD
     subgraph Package [Installed MiniApp Package]
         Zip[".hanlinExpo Archive"] --> Store["HanlinPackageCenter (Application Support)"]
         Store --> ScriptJSON["script.json (hanlinRuntime: hanlin-expo)"]
-        Store --> JSBundle["bundle.js (Pure Dynamic JS)"]
+        Store --> JSBundle["bundle.js (Metro-Generated JS Bundle)"]
     end
 
     subgraph Host [Hanlin Host Application]
         Analyzer["HanlinScriptAnalyzer (Contract & Trust Validation)"]
         Platform["HanlinScriptingPlatform (Lifecycle Manager)"]
         Session["HanlinExpoSession"]
-        Delegate["HanlinExpoDelegate (ExpoReactNativeFactoryDelegate)"]
+        Delegate["HanlinExpoReactNativeFactoryDelegate"]
         Factory["RCTReactNativeFactory & Hermes VM"]
         ModifierReg["ViewModifierRegistry (navigationBarTitleDisplayMode)"]
         HostedVC["HanlinHostedViewController"]
     end
 
-    subgraph AppleUI [Apple Native UI Layer]
+    subgraph AppleUI [SwiftUI-Backed Native Expo UI Layer]
         ExpoUI["@expo/ui/swift-ui Engine"]
         SplitView["SwiftUI NavigationSplitView"]
         Sidebar["SwiftUI List & Buttons"]
         Detail["SwiftUI NavigationStack & Detail"]
+        Toolbar["SwiftUI Toolbar & SF Symbol Buttons"]
         Sheet["SwiftUI BottomSheet & Toggle"]
     end
 
@@ -48,15 +49,16 @@ flowchart TD
     ExpoUI --> SplitView
     SplitView --> Sidebar
     SplitView --> Detail
+    Detail --> Toolbar
     Detail --> Sheet
     Session --> HostedVC
 ```
 
 ### Key Architectural Invariants:
 1. **Zero Host Recompilation**: The host app (`AI_Hanlin`) does not compile MiniApp JavaScript into its binary. The JS bundle is resolved dynamically from the installed package directory at runtime.
-2. **Dynamic Hot Replacement**: Swapping from MiniApp A to MiniApp B requires only instantiating a new `HanlinExpoSession` with the new bundle path; the host application remains alive and unchanged.
-3. **Pure Apple SwiftUI Execution**: Unlike traditional React Native which wraps `UIView` instances, `@expo/ui/swift-ui` bridges React virtual nodes to genuine Apple SwiftUI view structs within hosting environments.
-4. **Isolated Memory Lifecycle**: Dismissing an active Expo MiniApp triggers explicit teardown of the `RCTRootView`, `RCTHost`, and Hermes VM instance, releasing JavaScript heaps back to the host system.
+2. **Dynamic Package / Session Switching**: Swapping from MiniApp A to MiniApp B instantiates an isolated `HanlinExpoSession` pointing to the selected package's bundle path; the host application remains alive without recompilation.
+3. **SwiftUI-Backed Components via Expo UI**: The `@expo/ui/swift-ui` components tested in the probe (including `NavigationSplitView`, `NavigationStack`, `List`, `Toolbar`, `Button`, `Toggle`, and `BottomSheet`) are backed by genuine Apple SwiftUI view structs and modifiers. React Native, Hermes, and Expo UI provide the underlying runtime host, event bridging, and state management.
+4. **Session Teardown Lifecycle**: Dismissing an active Expo MiniApp triggers explicit teardown in `HanlinExpoSession.shutdown()`, removing the hosted view, clearing `reactHost` references, releasing factory/delegate resources, destroying the Expo app context, and unregistering custom modifiers.
 
 ---
 
@@ -64,17 +66,15 @@ flowchart TD
 
 ### 2.1 The Dynamic Factory Delegate
 
-In standard Expo/React Native brownfield setups, `bundleURL()` typically points to a resource bundled inside `Bundle.main`. In Hanlin, `HanlinExpoDelegate` dynamically overrides this:
+In standard Expo/React Native brownfield setups, `bundleURL()` typically points to a resource bundled inside `Bundle.main`. In Hanlin, `HanlinExpoReactNativeFactoryDelegate` dynamically provides the installed package bundle URL:
 
 ```swift
-final class HanlinExpoDelegate: ExpoReactNativeFactoryDelegate {
+final class HanlinExpoReactNativeFactoryDelegate: ExpoReactNativeFactoryDelegate {
     private let appBundleURL: URL
-    private let moduleName: String
 
-    init(bundleURL: URL, moduleName: String) {
+    init(bundleURL: URL, appContext: AppContext) {
         self.appBundleURL = bundleURL
-        self.moduleName = moduleName
-        super.init()
+        super.init(appContext: appContext)
     }
 
     override func sourceURL(for bridge: RCTBridge) -> URL? {
@@ -90,13 +90,19 @@ final class HanlinExpoDelegate: ExpoReactNativeFactoryDelegate {
 ### 2.2 Session Lifecycle (`HanlinExpoSession`)
 
 `HanlinExpoSession` manages the isolated runtime instance:
-* **Initialization**: Registers custom SwiftUI modifiers with `ViewModifierRegistry`, sets up `RCTReactNativeFactory`, and creates the root view controller via `rootViewFactory.viewController(withModuleName: initialProperties:)`.
-* **Container Hosting**: Embeds the Expo view controller into a `UIViewController` container ready for `HanlinHostedViewController` presentation.
-* **Invalidation**: Deallocates the root view and triggers `reactHost?.invalidate()`, ensuring that Hermes cleans up all heap memory, thread timers, and native modules.
+* **Initialization**: Registers custom SwiftUI modifiers with `ViewModifierRegistry`, sets up `RCTReactNativeFactory`, and creates the root view via `rootViewFactory.view(withModuleName:initialProperties:launchOptions:)`.
+* **Container Hosting**: Embeds the root view into a `UIViewController` container ready for `HanlinHostedViewController` presentation.
+* **Teardown (`shutdown`)**:
+  - Removes the hosted root view from its superview (`hostedView?.removeFromSuperview()`).
+  - Clears `reactHost` on `rootViewFactory` (`rootViewFactory.reactHost = nil` and `rootViewFactory.setValue(nil, forKey: "_reactHost")`).
+  - Releases factory and delegate references (`reactNativeFactory = nil`, `factoryDelegate = nil`).
+  - Destroys the Expo `AppContext` (`appContext?.destroy()`).
+  - Unregisters custom modifiers (`HanlinExpoModifierRegistry.unregisterCustomModifiers()`).
+  - Clears the active session singleton reference.
 
 ---
 
-## 3. Extensible SwiftUI Modifiers (`HanlinExpoModifierExtension`)
+## 3. Extensible SwiftUI Modifiers (`HanlinExpoModifierRegistry`)
 
 Expo UI supports registering custom Swift modifier factories using its public `ViewModifierRegistry`. Hanlin implements the `navigationBarTitleDisplayMode` modifier:
 
@@ -105,7 +111,7 @@ Expo UI supports registering custom Swift modifier factories using its public `V
 import ExpoUI
 import SwiftUI
 
-public enum HanlinExpoModifierExtension {
+public enum HanlinExpoModifierRegistry {
     public static func registerCustomModifiers() {
         ViewModifierRegistry.register("navigationBarTitleDisplayMode") { (params: [String: Any]) in
             let modeString = params["displayMode"] as? String ?? "inline"
@@ -118,6 +124,10 @@ public enum HanlinExpoModifierExtension {
                 content.navigationBarTitleDisplayMode(displayMode)
             }
         }
+    }
+
+    public static func unregisterCustomModifiers() {
+        ViewModifierRegistry.unregister("navigationBarTitleDisplayMode")
     }
 }
 ```
@@ -179,7 +189,7 @@ A `.hanlinExpo` package is a standard ZIP archive containing:
 
 ---
 
-## 5. Technical Benchmarks & Section 27 Metrics
+## 5. Technical Metrics & Section 27 Overhead
 
 ### 5.1 Binary Size Impact Breakdown
 
@@ -199,28 +209,11 @@ The host integration embeds 7 prebuilt binary XCFrameworks into `HanlinExpoRunti
 > [!NOTE]
 > Fat universal archives contain multi-platform and simulator slices (`ios-arm64_x86_64-simulator`, `maccatalyst`, `tvos`, `xros`). In App Store / TestFlight delivery, Apple's bitcode/thinning pipeline strips non-target architectures, leaving approximately **24.7 MB** compressed download impact.
 
-### 5.2 Memory Footprint Benchmark
+### 5.2 Runtime Performance Status
 
-Measured on iPad Pro (M4, iPadOS 26) with Hanlin host application:
+Physical-device memory, FPS, and startup-latency benchmarks have not yet been collected.
 
-| State | Host Memory (RSS) | Delta from Baseline | Notes |
-|:---|:---:|:---:|:---|
-| **Host Baseline (Idle)** | 84.5 MB | — | Native Hanlin SwiftUI shells, SQLite open |
-| **Active Expo Session (Cold Launch)** | 134.8 MB | +50.3 MB | Hermes VM (~18 MB), RN ShadowTree (~12 MB), SwiftUI views (~20 MB) |
-| **Transient Peak during A → B Swap** | 142.1 MB | +57.6 MB | Concurrent session transition before complete GC sweep |
-| **Settled Hot-Replaced Session B** | 135.2 MB | +50.7 MB | Stable; Session A heap fully deallocated |
-| **Post-Dismissal Baseline** | 85.1 MB | +0.6 MB | Clean release; zero retained leaks in `RCTHost` |
-
-### 5.3 Startup Latency & Execution Performance
-
-| Lifecycle Operation | Latency (ms) | Budget Limit | Status |
-|:---|:---:|:---:|:---:|
-| **Package Decompression & Verification** | 8.2 ms | < 50 ms | ✅ Pass |
-| **Hermes VM & ReactHost Instantiation** | 64.5 ms | < 150 ms | ✅ Pass |
-| **Dynamic JS Bundle Parse & Execute** | 11.8 ms | < 50 ms | ✅ Pass |
-| **SwiftUI View Tree First Layout** | 28.4 ms | < 50 ms | ✅ Pass |
-| **Total Cold Time-to-Interactive (TTI)** | **112.9 ms** | **< 300 ms** | **✅ Optimal** |
-| **Warm A → B Hot Replacement** | **63.4 ms** | **< 150 ms** | **✅ Instant** |
+Baseline verification has been conducted in CI on an iPad mini (A17 Pro) iOS 26.5 Simulator (Xcode 26.6, macOS 26 runner). The verified baseline confirmed end-to-end package resolution, dynamic bundle loading, SwiftUI view hierarchy composition, SF Symbol toolbar interaction, bottom sheet presentation, and toggle state mutation without host recompilation.
 
 ---
 
@@ -230,14 +223,16 @@ Measured on iPad Pro (M4, iPadOS 26) with Hanlin host application:
 |:---|:---|:---|
 | **JS Virtual Machine** | **Hermes VM** (Meta, optimized for low memory & fast startup) | **JavaScriptCore** / V8 (WebKit native bridge) |
 | **Bridge Mechanism** | **JSI (JavaScript Interface)** & C++ TurboModules | **Direct Objective-C Runtime Metadata Reflection** |
-| **UI Paradigm** | **Pure Apple SwiftUI** via `@expo/ui/swift-ui` | **NativeScript Core UI** (`Page`, `Frame`) + Pre-embedded SwiftUI Providers |
-| **Layout Engine** | Native SwiftUI Layout (Flexibility via SwiftUI Containers) | Flexbox Layout (Yoga / NativeScript layout engine) |
+| **UI Paradigm** | **SwiftUI-backed components** via `@expo/ui/swift-ui` in React Native host | **NativeScript Core UI** (`Page`, `Frame`) + Pre-embedded SwiftUI Providers |
+| **Layout Engine** | Native SwiftUI Layout (containers: `NavigationSplitView`, `VStack`, `HStack`) | Flexbox Layout (Yoga / NativeScript layout engine) |
 | **Modifier Architecture** | Dynamic registry (`ViewModifierRegistry`) | Pre-compiled Swift Fixture Providers (`UIDataDriver`) |
-| **MiniApp Bundle Size** | **9.2 KB** (Descriptors only; runtime externalized) | 12 KB – 45 KB (depends on core modules bundled) |
-| **Host Memory Cost** | ~50 MB RSS | ~38 MB RSS |
+| **MiniApp Package Size** | **~266.7 KB** (current generated probe fixture size; full Metro JS bundle) | 12 KB – 45 KB (depends on core modules bundled) |
 | **Threading Model** | Multi-threaded (JS thread + Shadow thread + Main UI) | Single-threaded Main Loop (JS runs directly on main/worker) |
-| **Hot Swapping** | Instant via `RCTHost` URL swap | Context recreation / isolate reload |
-| **Platform Fidelity** | **100% Native Apple SwiftUI** (`NavigationSplitView`, `BottomSheet`) | Direct UIKit views + wrapper-hosted SwiftUI |
+| **Package Switching** | Dynamic package/session switching (isolated session per package bundle path) | Context recreation / isolate reload |
+| **Platform Fidelity** | **SwiftUI-backed native views** for supported components (`NavigationSplitView`, `Toolbar`, `BottomSheet`, `Toggle`) via Expo UI | Direct UIKit views + wrapper-hosted SwiftUI |
+
+> [!NOTE]
+> In baseline testing, NativeScript verification was confirmed specifically by passing `HanlinNativeScriptProductionE2ETests/testProductionSwiftUIInteractionCoreRegressionAndLifecycle`.
 
 ---
 
@@ -261,7 +256,7 @@ AppRegistry.registerComponent('ExpoSwiftUIProbe', () => App);
 ```
 
 ### 7.3 Building & Packaging
-Run `esbuild` to produce a standalone bundle targeting Hermes:
+Run `build-probe.mjs` to produce standalone `.hanlinExpo` packages using Metro:
 ```bash
 node Scripts/Expo/build-probe.mjs
 ```

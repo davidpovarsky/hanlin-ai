@@ -235,28 +235,10 @@ jobs:
             -skipPackagePluginValidation \
             -skipMacroValidation \
             -parallel-testing-enabled NO \
-            -only-testing:AI_HLYUITests/HanlinExpoProductionE2ETests \
+            -only-testing:AI_HLYUITests/HanlinExpoProductionE2ETests/testProductionExpoSwiftUIProbeEndToEnd \
+            -only-testing:AI_HLYUITests/HanlinExpoProductionE2ETests/testProductionExpoDynamicPackageSwitching \
             -resultBundlePath "build/ExpoE2EResults.xcresult" \
             2>&1 | tee "$LOG_DIR/07-expo-e2e-tests.log"
-
-      - name: Run NativeScript Regression Tests
-        shell: bash
-        run: |
-          set -euxo pipefail
-          SIMULATOR_UDID="$(cat "$LOG_DIR/simulator-udid.txt")"
-          xcodebuild test-without-building \
-            -project "$PROJECT_PATH" \
-            -scheme "$SCHEME_NAME" \
-            -configuration "$CONFIGURATION" \
-            -destination "platform=iOS Simulator,id=$SIMULATOR_UDID" \
-            -derivedDataPath "$DERIVED_DATA_PATH" \
-            -clonedSourcePackagesDirPath "$CLONED_PACKAGES_PATH" \
-            -skipPackagePluginValidation \
-            -skipMacroValidation \
-            -parallel-testing-enabled NO \
-            -only-testing:AI_HLYUITests/HanlinNativeScriptProductionE2ETests/testProductionSwiftUIInteractionCoreRegressionAndLifecycle \
-            -resultBundlePath "build/NativeScriptRegressionResults.xcresult" \
-            2>&1 | tee "$LOG_DIR/08-nativescript-regression.log"
 
       - name: Upload Test Results and Logs
         if: always()

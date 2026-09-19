@@ -12,6 +12,7 @@ import {
   BottomSheet,
   HStack,
   VStack,
+  Toolbar,
 } from '@expo/ui/swift-ui';
 import {
   navigationTitle,
@@ -66,6 +67,7 @@ export default function App({ variant = 'A' }: AppProps) {
   const [selectedSection, setSelectedSection] = useState<string>('בראשית');
   const [showSettingsSheet, setShowSettingsSheet] = useState<boolean>(false);
   const [showNikkud, setShowNikkud] = useState<boolean>(true);
+  const [toolbarActionCount, setToolbarActionCount] = useState<number>(0);
 
   const currentBook = TORAH_BOOKS.find((b) => b.id === selectedBookId) ?? TORAH_BOOKS[0];
 
@@ -142,98 +144,125 @@ export default function App({ variant = 'A' }: AppProps) {
                 navigationBarTitleDisplayMode('inline'),
               ]}
             >
-              {selectedBookId === 'benchmark1000' ? (
-                <List modifiers={[listStyle('plain')]}>
-                  <Section title="רשימת 1,000 שורות SwiftUI פעילה">
-                    {Array.from({ length: 1000 }, (_, i) => (
+              <Toolbar>
+                {selectedBookId === 'benchmark1000' ? (
+                  <List modifiers={[listStyle('plain')]}>
+                    <Section title="רשימת 1,000 שורות SwiftUI פעילה">
+                      {Array.from({ length: 1000 }, (_, i) => (
+                        <Button
+                          key={i}
+                          label={`Row #${i + 1} • שורה #${i + 1} (פריט בדיקה ${i + 1})`}
+                          onPress={() => {}}
+                        />
+                      ))}
+                    </Section>
+                  </List>
+                ) : (
+                  <VStack modifiers={[padding({ all: 24 })]}>
+                    <HStack modifiers={[padding({ bottom: 16 })]}>
+                      <Text
+                        modifiers={[
+                          font({ size: 28, weight: 'bold' }),
+                          foregroundStyle('primary'),
+                        ]}
+                      >
+                        {currentBook.name} : {selectedSection}
+                      </Text>
                       <Button
-                        key={i}
-                        label={`Row #${i + 1} • שורה #${i + 1} (פריט בדיקה ${i + 1})`}
-                        onPress={() => {}}
+                        label="1,000 Rows Probe"
+                        onPress={() => {
+                          setSelectedBookId('benchmark1000');
+                          setSelectedSection('בדיקת עומס');
+                        }}
                       />
-                    ))}
-                  </Section>
-                </List>
-              ) : (
-                <VStack modifiers={[padding({ all: 24 })]}>
-                  <HStack modifiers={[padding({ bottom: 16 })]}>
-                    <Text
-                      modifiers={[
-                        font({ size: 28, weight: 'bold' }),
-                        foregroundStyle('primary'),
-                      ]}
-                    >
-                      {currentBook.name} : {selectedSection}
-                    </Text>
-                    <Button
-                      label="1,000 Rows Probe"
-                      onPress={() => {
-                        setSelectedBookId('benchmark1000');
-                        setSelectedSection('בדיקת עומס');
-                      }}
-                    />
-                    <Button
-                      label="הגדרות"
-                      onPress={() => setShowSettingsSheet(true)}
-                    />
-                  </HStack>
+                      <Button
+                        label="הגדרות"
+                        onPress={() => setShowSettingsSheet(true)}
+                      />
+                    </HStack>
 
-                  <VStack
-                    modifiers={[
-                      padding({ all: 16 }),
-                      navigationTitle('טקסט מקור'),
-                    ]}
-                  >
-                    <Text
-                      modifiers={[
-                        font({ size: 22 }),
-                        foregroundStyle('primary'),
-                      ]}
-                    >
-                      {showNikkud
-                        ? currentBook.sampleText
-                        : currentBook.sampleText.replace(/[\u0591-\u05C7]/g, '')}
-                    </Text>
-                  </VStack>
-
-                  <VStack modifiers={[padding({ top: 32 })]}>
-                    <Text modifiers={[font({ size: 13 }), foregroundStyle('secondary')]}>
-                      זוהי הרצת בדיקה דינמית של Expo / React Native UI בתוך Hanlin.
-                    </Text>
                     <Text
                       modifiers={[
                         font({ size: 14, weight: 'semibold' }),
-                        foregroundStyle(variant === 'A' ? 'green' : 'blue'),
+                        foregroundStyle('secondary'),
+                        padding({ bottom: 12 }),
                       ]}
                     >
-                      {variant === 'A'
-                        ? 'מצב פעיל: Expo Dynamic A (Initial MiniApp)'
-                        : 'מצב פעיל: Expo Dynamic B (Hot-Replaced MiniApp)'}
+                      {`Toolbar action count: ${toolbarActionCount}`}
                     </Text>
-                  </VStack>
 
-                  {/* BottomSheet settings modal */}
-                  <BottomSheet
-                    isPresented={showSettingsSheet}
-                    onDismiss={() => setShowSettingsSheet(false)}
-                  >
-                    <VStack modifiers={[padding({ all: 20 })]}>
-                      <Text modifiers={[font({ size: 20, weight: 'bold' }), padding({ bottom: 12 })]}>
-                        הגדרות קריאה
+                    <VStack
+                      modifiers={[
+                        padding({ all: 16 }),
+                        navigationTitle('טקסט מקור'),
+                      ]}
+                    >
+                      <Text
+                        modifiers={[
+                          font({ size: 22 }),
+                          foregroundStyle('primary'),
+                        ]}
+                      >
+                        {showNikkud
+                          ? currentBook.sampleText
+                          : currentBook.sampleText.replace(/[\u0591-\u05C7]/g, '')}
                       </Text>
-                      <Toggle
-                        isOn={showNikkud}
-                        onIsOnChange={setShowNikkud}
-                        title="הצג ניקוד וטעמים"
-                      />
-                      <Button
-                        label="סגור"
-                        onPress={() => setShowSettingsSheet(false)}
-                      />
                     </VStack>
-                  </BottomSheet>
-                </VStack>
-              )}
+
+                    <VStack modifiers={[padding({ top: 32 })]}>
+                      <Text modifiers={[font({ size: 13 }), foregroundStyle('secondary')]}>
+                        זוהי הרצת בדיקה דינמית של Expo / React Native UI בתוך Hanlin.
+                      </Text>
+                      <Text
+                        modifiers={[
+                          font({ size: 14, weight: 'semibold' }),
+                          foregroundStyle(variant === 'A' ? 'green' : 'blue'),
+                        ]}
+                      >
+                        {variant === 'A'
+                          ? 'מצב פעיל: Expo Dynamic A (Initial MiniApp)'
+                          : 'מצב פעיל: Expo Dynamic B (Dynamic Switched MiniApp)'}
+                      </Text>
+                    </VStack>
+
+                    {/* BottomSheet settings modal */}
+                    <BottomSheet
+                      isPresented={showSettingsSheet}
+                      onDismiss={() => setShowSettingsSheet(false)}
+                    >
+                      <VStack modifiers={[padding({ all: 20 })]}>
+                        <Text modifiers={[font({ size: 20, weight: 'bold' }), padding({ bottom: 12 })]}>
+                          הגדרות קריאה
+                        </Text>
+                        <Toggle
+                          isOn={showNikkud}
+                          onIsOnChange={setShowNikkud}
+                          label="הצג ניקוד וטעמים"
+                        />
+                        <Text
+                          modifiers={[
+                            font({ size: 14, weight: 'semibold' }),
+                            padding({ top: 8, bottom: 8 }),
+                          ]}
+                        >
+                          {showNikkud ? 'Nikkud: ON' : 'Nikkud: OFF'}
+                        </Text>
+                        <Button
+                          label="סגור"
+                          onPress={() => setShowSettingsSheet(false)}
+                        />
+                      </VStack>
+                    </BottomSheet>
+                  </VStack>
+                )}
+                <Toolbar.Content>
+                  <Button
+                    label="Toolbar Probe"
+                    systemImage="magnifyingglass"
+                    onPress={() => setToolbarActionCount((value) => value + 1)}
+                  />
+                </Toolbar.Content>
+              </Toolbar>
             </NavigationStack>
           </NavigationSplitView.Detail>
         </NavigationSplitView>

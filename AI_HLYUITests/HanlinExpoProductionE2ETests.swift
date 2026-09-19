@@ -42,7 +42,23 @@ final class HanlinExpoProductionE2ETests: XCTestCase {
         let genesisText = app.descendants(matching: .any).matching(genesisTextPredicate).firstMatch
         XCTAssertTrue(genesisText.waitForExistence(timeout: 15), "Torah source text did not render in detail column")
 
-        // 4. Test interactive state change: switch book to Exodus ('שמות')
+        // 4. Verify native Expo UI Toolbar with SF Symbol button and test React state mutation
+        let toolbarButtonPredicate = NSPredicate(format: "label == 'Toolbar Probe' OR label CONTAINS 'Toolbar Probe' OR identifier == 'Toolbar Probe'")
+        let toolbarButton = app.descendants(matching: .any).matching(toolbarButtonPredicate).firstMatch
+        XCTAssertTrue(toolbarButton.waitForExistence(timeout: 15), "Native Toolbar button 'Toolbar Probe' did not render")
+        XCTAssertTrue(toolbarButton.isHittable, "Native Toolbar button 'Toolbar Probe' is not hittable")
+
+        let initialToolbarCountPredicate = NSPredicate(format: "label CONTAINS 'Toolbar action count: 0'")
+        let initialToolbarCount = app.descendants(matching: .any).matching(initialToolbarCountPredicate).firstMatch
+        XCTAssertTrue(initialToolbarCount.waitForExistence(timeout: 10), "Initial 'Toolbar action count: 0' marker was missing")
+
+        toolbarButton.tap()
+
+        let updatedToolbarCountPredicate = NSPredicate(format: "label CONTAINS 'Toolbar action count: 1'")
+        let updatedToolbarCount = app.descendants(matching: .any).matching(updatedToolbarCountPredicate).firstMatch
+        XCTAssertTrue(updatedToolbarCount.waitForExistence(timeout: 10), "Toolbar action count failed to increment to 1 after tap")
+
+        // 5. Test interactive state change: switch book to Exodus ('שמות')
         let exodusPredicate = NSPredicate(format: "label CONTAINS 'שמות' OR label CONTAINS 'Exodus'")
         let exodusButton = app.descendants(matching: .any).matching(exodusPredicate).firstMatch
         if exodusButton.waitForExistence(timeout: 10) && exodusButton.isHittable {
@@ -53,33 +69,47 @@ final class HanlinExpoProductionE2ETests: XCTestCase {
             XCTAssertTrue(exodusText.waitForExistence(timeout: 15), "Interactive state change failed to load Exodus text")
         }
 
-        // 5. Test native BottomSheet presentation
+        // 6. Test native BottomSheet presentation and Toggle state mutation (required, non-optional)
         let settingsPredicate = NSPredicate(format: "label CONTAINS 'הגדרות' OR label CONTAINS 'Settings'")
         let settingsButton = app.descendants(matching: .any).matching(settingsPredicate).firstMatch
-        if settingsButton.waitForExistence(timeout: 10) && settingsButton.isHittable {
-            settingsButton.tap()
+        XCTAssertTrue(settingsButton.waitForExistence(timeout: 10), "Settings button did not exist")
+        XCTAssertTrue(settingsButton.isHittable, "Settings button was not hittable")
+        settingsButton.tap()
 
-            let sheetTitlePredicate = NSPredicate(format: "label CONTAINS 'הגדרות קריאה' OR label CONTAINS 'הגדרות' OR label CONTAINS 'Settings'")
-            let sheetTitle = app.descendants(matching: .any).matching(sheetTitlePredicate).firstMatch
-            XCTAssertTrue(sheetTitle.waitForExistence(timeout: 10), "Expo UI native BottomSheet failed to present")
+        let sheetTitlePredicate = NSPredicate(format: "label CONTAINS 'הגדרות קריאה' OR label CONTAINS 'הגדרות' OR label CONTAINS 'Settings'")
+        let sheetTitle = app.descendants(matching: .any).matching(sheetTitlePredicate).firstMatch
+        XCTAssertTrue(sheetTitle.waitForExistence(timeout: 10), "Expo UI native BottomSheet failed to present")
 
-            let closeSheetPredicate = NSPredicate(format: "label CONTAINS 'סגור' OR label CONTAINS 'Close'")
-            let closeSheetButton = app.descendants(matching: .any).matching(closeSheetPredicate).firstMatch
-            if closeSheetButton.waitForExistence(timeout: 5) && closeSheetButton.isHittable {
-                closeSheetButton.tap()
-            }
-        }
+        let initialNikkudPredicate = NSPredicate(format: "label CONTAINS 'Nikkud: ON'")
+        let initialNikkud = app.descendants(matching: .any).matching(initialNikkudPredicate).firstMatch
+        XCTAssertTrue(initialNikkud.waitForExistence(timeout: 10), "Initial 'Nikkud: ON' marker did not render in BottomSheet")
 
-        // 6. Close MiniApp and verify clean host return
+        let togglePredicate = NSPredicate(format: "label CONTAINS 'הצג ניקוד וטעמים' OR label CONTAINS 'ניקוד' OR identifier == 'Toggle'")
+        let toggle = app.descendants(matching: .any).matching(togglePredicate).firstMatch
+        XCTAssertTrue(toggle.waitForExistence(timeout: 10), "Nikkud toggle was missing in BottomSheet")
+        XCTAssertTrue(toggle.isHittable, "Nikkud toggle was not hittable")
+        toggle.tap()
+
+        let updatedNikkudPredicate = NSPredicate(format: "label CONTAINS 'Nikkud: OFF'")
+        let updatedNikkud = app.descendants(matching: .any).matching(updatedNikkudPredicate).firstMatch
+        XCTAssertTrue(updatedNikkud.waitForExistence(timeout: 10), "Nikkud state marker failed to switch to 'Nikkud: OFF'")
+
+        let closeSheetPredicate = NSPredicate(format: "label CONTAINS 'סגור' OR label CONTAINS 'Close'")
+        let closeSheetButton = app.descendants(matching: .any).matching(closeSheetPredicate).firstMatch
+        XCTAssertTrue(closeSheetButton.waitForExistence(timeout: 5), "Close sheet button was missing")
+        XCTAssertTrue(closeSheetButton.isHittable, "Close sheet button was not hittable")
+        closeSheetButton.tap()
+
+        // 7. Close MiniApp and verify clean host return
         closeExpoApp()
 
-        // 7. Verify clean relaunch without session leakage
+        // 8. Verify clean relaunch without session leakage
         launchInstalledPackage(named: probeAPackageName)
         XCTAssertTrue(sidebarTitle.waitForExistence(timeout: 30), "Expo SwiftUI MiniApp failed to relaunch cleanly")
         closeExpoApp()
     }
 
-    func testProductionExpoDynamicHotReplacement() throws {
+    func testProductionExpoDynamicPackageSwitching() throws {
         openApps()
 
         // Import and install both Variant A and Variant B dynamically
@@ -95,16 +125,16 @@ final class HanlinExpoProductionE2ETests: XCTestCase {
         )
         closeExpoApp()
 
-        // 2. Launch Variant B without host rebuild — proves dynamic runtime hot replacement
+        // 2. Launch Variant B without host rebuild — proves dynamic package switching
         launchInstalledPackage(named: probeBPackageName)
         let variantBPredicate = NSPredicate(format: "label CONTAINS 'Expo Dynamic B'")
         XCTAssertTrue(
             app.descendants(matching: .any).matching(variantBPredicate).firstMatch.waitForExistence(timeout: 30),
-            "Variant B did not render hot-replaced active indicator"
+            "Variant B did not render dynamically switched active indicator"
         )
         closeExpoApp()
 
-        // 3. Return to Variant A — proves isolated session swap without dirty memory state
+        // 3. Return to Variant A — proves isolated dynamic session switching without contamination
         launchInstalledPackage(named: probeAPackageName)
         XCTAssertTrue(
             app.descendants(matching: .any).matching(variantAPredicate).firstMatch.waitForExistence(timeout: 30),
@@ -201,14 +231,14 @@ final class HanlinExpoProductionE2ETests: XCTestCase {
         }
         XCTAssertTrue(headerLabel.waitForExistence(timeout: 20), "1,000 rows header failed to render")
 
-        // 4. Verify initial rows exist and list scrolls smoothly
+        // 4. Verify initial rows exist and list can be scrolled
         let row1Predicate = NSPredicate(
             format: "label CONTAINS 'Row #1' OR label CONTAINS 'שורה #1' OR label CONTAINS '#1' OR label CONTAINS 'פריט בדיקה 1'"
         )
         let row1 = app.descendants(matching: .any).matching(row1Predicate).firstMatch
         XCTAssertTrue(row1.waitForExistence(timeout: 25), "First row in 1,000-row list did not render")
 
-        // 5. Scroll down to test lazy evaluation in native SwiftUI List
+        // 5. Scroll down and verify rows continue rendering
         app.swipeUp()
         app.swipeUp()
 
