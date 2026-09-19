@@ -13,6 +13,17 @@ import SwiftUI
 final class TranslationProviderSession {
     let context: any TranslationUIProviderContext
     private var explicitSourceText: String?
+    var path: [TranslationRoute] = []
+    var translatedText: String = ""
+    var isTranslating: Bool = false
+    var quickQuery: String = ""
+
+    // Mini Chat State
+    var chatMessages: [HanlinCompactChatMessage] = []
+    var isChatStreaming: Bool = false
+    var chatError: String? = nil
+
+    private let agentClient = HanlinCompactAgentClient()
 
     var sourceText: String {
         get {
