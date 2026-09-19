@@ -607,7 +607,7 @@ final class HanlinScriptingPlatform {
         let entrypointURL = artifactRoot.appending(path: entrypoint.sourcePath, directoryHint: .notDirectory)
 
         let appID = targetAppID
-        let container = try HanlinMiniAppDataStore(root: HanlinMiniAppDataStore.applicationSupportRoot())
+        let container = try await HanlinMiniAppDataStore(root: HanlinMiniAppDataStore.applicationSupportRoot())
             .container(for: appID)
 
         let dataRootStr = container.root.path(percentEncoded: false)
@@ -623,7 +623,7 @@ final class HanlinScriptingPlatform {
             "HANLIN_MINIAPP_CACHE_DIR": cacheDirStr
         ]
 
-        HanlinNativeServicesBridge.setActiveContainer(
+        HanlinNativeServicesHostProvider.setActiveContainer(
             appID: appID.rawValue,
             dataRoot: dataRootStr,
             stateDir: stateDirStr,
@@ -639,13 +639,13 @@ final class HanlinScriptingPlatform {
 
         defer {
             session.shutdown()
-            HanlinNativeServicesBridge.clearActiveContainer()
+            HanlinNativeServicesHostProvider.clearActiveContainer()
         }
 
         try session.start()
         await Task.yield()
 
-        guard HanlinNativeServicesBridge.registeredActionIDs.contains(action) else {
+        guard HanlinNativeServicesHostProvider.registeredActionIDs.contains(action) else {
             throw HanlinMiniAppRequestError.routeNotFound
         }
 
