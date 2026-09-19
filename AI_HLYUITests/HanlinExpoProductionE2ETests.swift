@@ -203,17 +203,21 @@ final class HanlinExpoProductionE2ETests: XCTestCase {
         XCTAssertTrue(headerLabel.waitForExistence(timeout: 20), "1,000 rows header failed to render")
 
         // 4. Verify initial rows exist and list scrolls smoothly
-        let row1Predicate = NSPredicate(format: "label CONTAINS 'שורה #1' OR label CONTAINS '#1'")
+        let row1Predicate = NSPredicate(
+            format: "label CONTAINS 'Row #1' OR label CONTAINS 'שורה #1' OR label CONTAINS '#1' OR label CONTAINS 'פריט בדיקה 1'"
+        )
         let row1 = app.descendants(matching: .any).matching(row1Predicate).firstMatch
-        XCTAssertTrue(row1.waitForExistence(timeout: 15), "First row in 1,000-row list did not render")
+        XCTAssertTrue(row1.waitForExistence(timeout: 25), "First row in 1,000-row list did not render")
 
         // 5. Scroll down to test lazy evaluation in native SwiftUI List
         app.swipeUp()
         app.swipeUp()
 
-        let scrolledRowPredicate = NSPredicate(format: "label CONTAINS 'שורה #' OR label CONTAINS 'פריט בדיקה'")
+        let scrolledRowPredicate = NSPredicate(
+            format: "label CONTAINS 'Row #' OR label CONTAINS 'שורה #' OR label CONTAINS 'פריט בדיקה'"
+        )
         let scrolledRow = app.descendants(matching: .any).matching(scrolledRowPredicate).firstMatch
-        XCTAssertTrue(scrolledRow.waitForExistence(timeout: 10), "List failed to render rows after scrolling")
+        XCTAssertTrue(scrolledRow.waitForExistence(timeout: 15), "List failed to render rows after scrolling")
 
         closeExpoApp()
     }

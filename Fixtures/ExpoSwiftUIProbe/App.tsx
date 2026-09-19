@@ -176,9 +176,15 @@ export default function App({ variant = 'A' }: AppProps) {
                     </Text>
                     <List>
                       {Array.from({ length: 1000 }, (_, i) => (
-                        <Button key={i} onPress={() => {}}>
+                        <Button
+                          key={i}
+                          label={`Row #${i + 1} • שורה #${i + 1} (פריט בדיקה ${i + 1})`}
+                          onPress={() => {}}
+                        >
                           <HStack>
-                            <Text modifiers={[font({ size: 15 })]}>שורה #{i + 1}</Text>
+                            <Text modifiers={[font({ size: 15 })]}>
+                              Row #{i + 1} • שורה #{i + 1}
+                            </Text>
                             <Text modifiers={[foregroundStyle('secondary'), font({ size: 13 })]}>
                               {'  '}(פריט בדיקה {i + 1})
                             </Text>
