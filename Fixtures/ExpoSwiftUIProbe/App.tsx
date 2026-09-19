@@ -250,7 +250,8 @@ export default function App({ variant = 'A' }: AppProps) {
                           {showNikkud ? 'Nikkud: ON' : 'Nikkud: OFF'}
                         </Text>
                         <Button
-                          label="סגור"
+                          testID="CloseSettingsSheetButton"
+                          label="סגור הגדרות"
                           onPress={() => setShowSettingsSheet(false)}
                         />
                       </VStack>

@@ -108,8 +108,11 @@ final class HanlinExpoProductionE2ETests: XCTestCase {
 
         XCTAssertTrue(updatedNikkud.waitForExistence(timeout: 10), "Nikkud state marker failed to switch to 'Nikkud: OFF'")
 
-        let closeSheetPredicate = NSPredicate(format: "label CONTAINS 'סגור' OR label CONTAINS 'Close'")
-        let closeSheetButton = app.descendants(matching: .any).matching(closeSheetPredicate).firstMatch
+        let closeSheetPredicate = NSPredicate(format: "identifier == 'CloseSettingsSheetButton' OR label CONTAINS 'סגור הגדרות' OR label == 'סגור'")
+        var closeSheetButton = app.buttons.matching(closeSheetPredicate).firstMatch
+        if !closeSheetButton.exists {
+            closeSheetButton = app.descendants(matching: .any).matching(closeSheetPredicate).firstMatch
+        }
         XCTAssertTrue(closeSheetButton.waitForExistence(timeout: 5), "Close sheet button was missing")
         XCTAssertTrue(closeSheetButton.isHittable, "Close sheet button was not hittable")
         closeSheetButton.tap()
