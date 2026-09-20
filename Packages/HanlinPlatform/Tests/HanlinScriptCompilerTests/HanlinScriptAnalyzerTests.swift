@@ -148,6 +148,37 @@ struct HanlinScriptAnalyzerTests {
         })
     }
 
+    @Test("Validates the embedded Expo SwiftUI plugin contract")
+    func expoSwiftUIContract() throws {
+        let supported = try package(files: [
+            "script.json": #"{"name":"Expo SwiftUI Fixture","version":"1.0.0","entry":"expo/app/bundle.js","hanlinRuntime":"hanlin-expo"}"#,
+            "expo/app/bundle.js": "console.log('expo swiftui')",
+            "expo/app/package.json": #"{"name":"fixture","main":"bundle.js","hanlinRuntime":"hanlin-expo","hanlinExpo":{"runtimeVersion":"58.0.3","plugins":{"@expo/ui":"58.0.3"}}}"#
+        ])
+        defer { try? FileManager.default.removeItem(at: supported.stagingRoot) }
+        let analyzer = HanlinScriptAnalyzer(inventory: .init(
+            baselineID: "fixture",
+            baselineDigest: String(repeating: "a", count: 64),
+            symbols: []
+        ))
+        let supportedPreview = try analyzer.analyze(supported)
+        #expect(supportedPreview.canInstall)
+        #expect(supportedPreview.entrypoints.first?.runtimeProfile == .hanlinExpo)
+        #expect(supportedPreview.findings.contains { $0.message.contains("embedded native SwiftUI support") })
+
+        let unsupported = try package(files: [
+            "script.json": #"{"name":"Unsupported Expo Fixture","version":"1.0.0","entry":"expo/app/bundle.js","hanlinRuntime":"hanlin-expo"}"#,
+            "expo/app/bundle.js": "console.log('unsupported')",
+            "expo/app/package.json": #"{"name":"fixture","main":"bundle.js","hanlinRuntime":"hanlin-expo","hanlinExpo":{"runtimeVersion":"58.0.3","plugins":{"@expo/ui":"99.0.0"}}}"#
+        ])
+        defer { try? FileManager.default.removeItem(at: unsupported.stagingRoot) }
+        let unsupportedPreview = try analyzer.analyze(unsupported)
+        #expect(!unsupportedPreview.canInstall)
+        #expect(unsupportedPreview.findings.contains {
+            $0.message == "This Hanlin build supports @expo/ui 58.0.3, but the package requires @expo/ui 99.0.0."
+        })
+    }
+
     @Test("Detects capability-bearing ambient Scripting globals")
     func ambientGlobals() throws {
         let fixture = try package(files: [

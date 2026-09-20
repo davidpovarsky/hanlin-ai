@@ -91,7 +91,11 @@ struct NativeAppsHubView: View {
                 destination.view
             }
             .fullScreenCover(isPresented: Binding(
-                get: { scriptingPlatform.activeApplicationModel != nil || scriptingPlatform.activeNativeScriptController != nil },
+                get: {
+                    scriptingPlatform.activeApplicationModel != nil
+                        || scriptingPlatform.activeNativeScriptController != nil
+                        || scriptingPlatform.activeExpoController != nil
+                },
                 set: { if !$0 { scriptingPlatform.dismissActiveApplication() } }
             )) {
                 ScriptingApplicationContainerView(platform: scriptingPlatform)

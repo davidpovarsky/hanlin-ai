@@ -18,7 +18,7 @@ struct ScriptingPackageImportView: View {
               let contents = try? FileManager.default.contentsOfDirectory(at: documentsURL, includingPropertiesForKeys: nil) else {
             return []
         }
-        let supported = Set(["scripting", "hanlinnativescript", "zip"])
+        let supported = Set(["scripting", "hanlinnativescript", "hanlinexpo", "zip"])
         return contents.filter { supported.contains($0.pathExtension.lowercased()) }
             .sorted { $0.lastPathComponent < $1.lastPathComponent }
     }
@@ -78,7 +78,7 @@ struct ScriptingPackageImportView: View {
                         Label("Import Script Package", systemImage: "doc.badge.plus")
                     }
                     .accessibilityIdentifier("hanlin-file-importer")
-                    Text("Choose a .scripting, .hanlinNativeScript, or .zip package. Hanlin copies it into private staging and performs Import Preview without executing package code.")
+                    Text("Choose a .scripting, .hanlinNativeScript, .hanlinExpo, or .zip package. Hanlin copies it into private staging and performs Import Preview without executing package code.")
                         .font(.footnote)
                         .foregroundStyle(.secondary)
                 }
@@ -89,6 +89,7 @@ struct ScriptingPackageImportView: View {
                 platform.discardPreview()
             }
         }
+        .id(platform.preview == nil ? "browse" : "preview")
         .navigationTitle("Script Package")
         .navigationBarTitleDisplayMode(.inline)
         .overlay {
@@ -191,6 +192,7 @@ private struct ScriptingImportPreviewSections: View {
         case .hanlinNode: return "Hanlin manifest selected a trusted Node worker."
         case .hanlinPython: return "Python entrypoint requires trusted local execution."
         case .hanlinNativeScript: return "NativeScript 9.1 provides trusted Apple-native interop and Core UI."
+        case .hanlinExpo: return "Expo 58.0 provides dynamic Apple SwiftUI via Expo UI."
         }
     }
 }
@@ -319,6 +321,8 @@ struct ScriptingApplicationContainerView: View {
                 if let model = platform.activeApplicationModel {
                     HanlinScriptUIView(model: model)
                 } else if let controller = platform.activeNativeScriptController {
+                    HanlinHostedViewController(controller: controller)
+                } else if let controller = platform.activeExpoController {
                     HanlinHostedViewController(controller: controller)
                 } else {
                     ContentUnavailableView("Script App Unavailable", systemImage: "exclamationmark.triangle")

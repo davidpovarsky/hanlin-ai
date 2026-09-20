@@ -11,6 +11,7 @@ import HanlinScriptUI
 import HanlinScriptingApplicationRuntime
 import HanlinScriptingSDK
 import HanlinNativeScriptRuntime
+import HanlinExpoRuntime
 import HanlinMiniAppCore
 import Observation
 import OSLog
@@ -41,6 +42,7 @@ final class HanlinScriptingPlatform {
     private(set) var activeApplicationID: HanlinInstalledPackageID?
     private(set) var activeApplicationModel: HanlinScriptUIModel?
     private(set) var activeNativeScriptController: UIViewController?
+    private(set) var activeExpoController: UIViewController?
     private(set) var systemUIPresentation: HanlinScriptingSystemUIPresentation?
 
     private let packageCenter = HanlinPackageCenter()
@@ -51,6 +53,7 @@ final class HanlinScriptingPlatform {
     private var extensionStore: HanlinScriptExtensionStore?
     private var applicationSession: HanlinScriptingApplicationSession?
     private var nativeScriptSession: HanlinNativeScriptSession?
+    private var expoSession: HanlinExpoSession?
     private var isLaunching = false
     private var systemUIContinuation: CheckedContinuation<HanlinScriptingSystemUIResult, any Error>?
     private var modelContext: ModelContext?
@@ -63,6 +66,7 @@ final class HanlinScriptingPlatform {
     private static let logger = Logger(subsystem: "com.hanlin.ai", category: "ScriptPackageInstall")
 
     init(rootOverride: URL? = nil) {
+        HanlinExpoSession.ensureAppDefinesLoaded()
         do {
             let metadata = try HanlinScriptingSDK.metadata()
             analyzer = HanlinScriptAnalyzer(inventory: .init(
@@ -223,7 +227,7 @@ final class HanlinScriptingPlatform {
             let installed = try await Task.detached(priority: .userInitiated) {
                 defer { try? FileManager.default.removeItem(at: artifactRoot) }
                 let contexts = Set(preview.entrypoints
-                    .filter { ![.hanlinPython, .hanlinNativeScript].contains($0.runtimeProfile) }
+                    .filter { ![.hanlinPython, .hanlinNativeScript, .hanlinExpo].contains($0.runtimeProfile) }
                     .map(\.kind))
                     .sorted { $0.rawValue < $1.rawValue }
                 guard !preview.entrypoints.isEmpty else {
@@ -239,6 +243,8 @@ final class HanlinScriptingPlatform {
                 }
                 let compiled = if preview.entrypoints.contains(where: { $0.runtimeProfile == .hanlinNativeScript }) {
                     try Self.nativeScriptSourceBundle(preview: preview)
+                } else if preview.entrypoints.contains(where: { $0.runtimeProfile == .hanlinExpo }) {
+                    try Self.expoSourceBundle(preview: preview)
                 } else if bundles.isEmpty {
                     try Self.pythonSourceBundle(preview: preview)
                 } else {
@@ -445,6 +451,26 @@ final class HanlinScriptingPlatform {
             }
             return
         }
+        if entrypoint.runtimeProfile == .hanlinExpo {
+            do {
+                let artifactRoot = try await store.activeArtifactURL(for: id)
+                let entrypointURL = artifactRoot.appending(path: entrypoint.sourcePath, directoryHint: .notDirectory)
+                dismissActiveApplication()
+                let session = try HanlinExpoSession(
+                    applicationRoot: entrypointURL.deletingLastPathComponent()
+                )
+                try session.start()
+                expoSession = session
+                activeApplicationID = id
+                activeExpoController = session.containerController
+                activity = .idle
+            } catch {
+                NSLog("[HanlinScriptingPlatform] Expo launch failed for %@: %@", id.rawValue, String(describing: error))
+                dismissActiveApplication()
+                activity = .failed(Self.safeMessage(error))
+            }
+            return
+        }
         guard entrypoint.runtimeProfile == .scriptingJSC else {
             activity = .failed("This interactive entrypoint does not have a foreground runtime.")
             return
@@ -553,9 +579,15 @@ final class HanlinScriptingPlatform {
         nativeScriptSession?.shutdown()
         nativeScriptSession = nil
         HanlinNativeServicesHostProvider.clearActiveContainer()
+        if expoSession != nil {
+            NSLog("HANLIN_EXPO_PRODUCTION_SHUTDOWN_OK")
+        }
+        expoSession?.shutdown()
+        expoSession = nil
         activeApplicationID = nil
         activeApplicationModel = nil
         activeNativeScriptController = nil
+        activeExpoController = nil
     }
 
     func executeHeadlessAction(
@@ -1836,6 +1868,36 @@ final class HanlinScriptingPlatform {
         return .init(
             manifest: .init(
                 compilerVersion: "NativeScript-9.1.0-prepared",
+                compilerIntegrity: preview.source.contentSHA256,
+                compilerOptionsHash: optionsHash,
+                baselineID: metadata.baselineID,
+                baselineDigest: metadata.baselineDigest,
+                hanlinABIVersion: HanlinScriptContractSupport.multiRuntime.abiVersion.description,
+                packageContentDigest: preview.source.contentSHA256,
+                cacheFingerprint: fingerprint,
+                files: []
+            ),
+            modules: [],
+            diagnostics: []
+        )
+    }
+
+    nonisolated private static func expoSourceBundle(
+        preview: HanlinImportPreview
+    ) throws -> HanlinScriptingBundle {
+        let metadata = try HanlinScriptingSDK.metadata()
+        let optionsHash = SHA256.hash(data: Data("expo-source-v1".utf8))
+            .map { String(format: "%02x", $0) }.joined()
+        let fingerprint = SHA256.hash(data: Data([
+            preview.source.contentSHA256,
+            "Expo-58.0.3",
+            metadata.baselineID,
+            metadata.baselineDigest,
+            optionsHash,
+        ].joined(separator: "\n").utf8)).map { String(format: "%02x", $0) }.joined()
+        return .init(
+            manifest: .init(
+                compilerVersion: "Expo-58.0.3-prepared",
                 compilerIntegrity: preview.source.contentSHA256,
                 compilerOptionsHash: optionsHash,
                 baselineID: metadata.baselineID,

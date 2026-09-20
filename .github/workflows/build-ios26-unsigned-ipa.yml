@@ -606,6 +606,8 @@ jobs:
           npm run prepare:ios-dependencies --prefix Scripts/NativeScript
           node Scripts/NativeScript/prepare-fixture.mjs
           npm run preflight:ios-dependencies --prefix Scripts/NativeScript
+          npm ci --prefix Scripts/Expo
+          node Scripts/Expo/prepare-ios-dependencies.mjs
 
       - name: Prepare log folders
         run: |
@@ -1375,6 +1377,8 @@ jobs:
           mkdir -p "$LOG_DIR"
           npm ci --ignore-scripts --no-audit --no-fund --prefix Scripts/NativeScript
           npm run prepare:ios-dependencies --prefix Scripts/NativeScript
+          npm ci --prefix Scripts/Expo
+          node Scripts/Expo/prepare-ios-dependencies.mjs
           if [ "$RUN_NATIVESCRIPT_DEPENDENCIES" = "true" ] || [ "$RUN_FULL_VALIDATION" = "true" ] || [ "$RUN_SIMULATOR_NATIVESCRIPT_POC" = "true" ] || [ "${{ inputs.nativescript_poc_only }}" = "true" ]; then
             node Scripts/NativeScript/prepare-fixture.mjs
             npm run prepare:production-package --prefix Scripts/NativeScript

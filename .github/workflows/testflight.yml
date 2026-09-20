@@ -88,6 +88,8 @@ jobs:
           npm run prepare:ios-dependencies --prefix Scripts/NativeScript
           node Scripts/NativeScript/prepare-fixture.mjs
           npm run preflight:ios-dependencies --prefix Scripts/NativeScript
+          npm ci --prefix Scripts/Expo
+          node Scripts/Expo/prepare-ios-dependencies.mjs
           bash Scripts/Runtime/prepare-runtime-core.sh
           npm ci --ignore-scripts --no-audit --no-fund --prefix Scripts/ScriptingCompiler
           npm ci --ignore-scripts --no-audit --no-fund --prefix AI_HLY/Downstream/RuntimeCore/Node/Host

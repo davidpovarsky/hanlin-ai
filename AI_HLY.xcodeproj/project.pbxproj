@@ -31,6 +31,7 @@
 		A10000000000000000000077 /* HanlinScriptingApplicationRuntime in Frameworks */ = {isa = PBXBuildFile; productRef = C10000000000000000000023 /* HanlinScriptingApplicationRuntime */; };
 		A10000000000000000000078 /* HanlinScriptDeviceServices in Frameworks */ = {isa = PBXBuildFile; productRef = C10000000000000000000024 /* HanlinScriptDeviceServices */; };
 		A10000000000000000000079 /* HanlinNativeScriptRuntime in Frameworks */ = {isa = PBXBuildFile; productRef = C10000000000000000000025 /* HanlinNativeScriptRuntime */; };
+		A1000000000000000000007A /* HanlinExpoRuntime in Frameworks */ = {isa = PBXBuildFile; productRef = C10000000000000000000026 /* HanlinExpoRuntime */; };
 		D20000000000000000000001 /* HanlinScriptingWidgets.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = D20000000000000000000020 /* HanlinScriptingWidgets.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, CodeSignOnCopy, ); }; };
 		E40000000000000000000001 /* ChavrusaChatShare.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = E40000000000000000000020 /* ChavrusaChatShare.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, CodeSignOnCopy, ); }; };
 		E50000000000000000000001 /* ChavrusaChatTranslationProvider.appex in Embed ExtensionKit Extensions */ = {isa = PBXBuildFile; fileRef = E50000000000000000000020 /* ChavrusaChatTranslationProvider.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -340,6 +341,7 @@
 				F70000000000000000000042 /* HanlinTextStudioMiniApp in Frameworks */,
 				F70000000000000000000001 /* HanlinMiniAppCore in Frameworks */,
 				A10000000000000000000079 /* HanlinNativeScriptRuntime in Frameworks */,
+				A1000000000000000000007A /* HanlinExpoRuntime in Frameworks */,
 				A10000000000000000000078 /* HanlinScriptDeviceServices in Frameworks */,
 				A10000000000000000000077 /* HanlinScriptingApplicationRuntime in Frameworks */,
 				A10000000000000000000076 /* HanlinScriptExtensions in Frameworks */,
@@ -503,6 +505,7 @@
 				F70000000000000000000041 /* HanlinTextStudioMiniApp */,
 				F70000000000000000000011 /* HanlinMiniAppCore */,
 				C10000000000000000000025 /* HanlinNativeScriptRuntime */,
+				C10000000000000000000026 /* HanlinExpoRuntime */,
 				C10000000000000000000024 /* HanlinScriptDeviceServices */,
 				C10000000000000000000023 /* HanlinScriptingApplicationRuntime */,
 				C10000000000000000000021 /* HanlinScriptExtensions */,
@@ -721,6 +724,7 @@
 				F70000000000000000000030 /* XCLocalSwiftPackageReference "HanlinWikipediaMiniApp" */,
 				F70000000000000000000040 /* XCLocalSwiftPackageReference "HanlinTextStudioMiniApp" */,
 				A10000000000000000000046 /* XCLocalSwiftPackageReference "HanlinNativeScriptRuntime" */,
+				A10000000000000000000047 /* XCLocalSwiftPackageReference "HanlinExpoRuntime" */,
 				A10000000000000000000045 /* XCLocalSwiftPackageReference "HanlinQuickJS" */,
 				A10000000000000000000044 /* XCLocalSwiftPackageReference "HanlinPlatform" */,
 				A10000000000000000000043 /* XCLocalSwiftPackageReference "IOSSystemLite" */,
@@ -1633,6 +1637,10 @@
 			isa = XCLocalSwiftPackageReference;
 			relativePath = Packages/HanlinNativeScriptRuntime;
 		};
+		A10000000000000000000047 /* XCLocalSwiftPackageReference "HanlinExpoRuntime" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Packages/HanlinExpoRuntime;
+		};
 		A10000000000000000000044 /* XCLocalSwiftPackageReference "HanlinPlatform" */ = {
 			isa = XCLocalSwiftPackageReference;
 			relativePath = Packages/HanlinPlatform;
@@ -1776,6 +1784,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = A10000000000000000000046 /* XCLocalSwiftPackageReference "HanlinNativeScriptRuntime" */;
 			productName = HanlinNativeScriptRuntime;
+		};
+		C10000000000000000000026 /* HanlinExpoRuntime */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A10000000000000000000047 /* XCLocalSwiftPackageReference "HanlinExpoRuntime" */;
+			productName = HanlinExpoRuntime;
 		};
 		C10000000000000000000020 /* HanlinScriptingSDK */ = {
 			isa = XCSwiftPackageProductDependency;

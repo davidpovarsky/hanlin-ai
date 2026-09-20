@@ -186,6 +186,8 @@ extension HanlinStoredPackageSnapshot: HanlinMiniAppRegistration {
         }
 
         let isNativeScript = hasNativeScript
+        let isExpo = entrypoints.contains { $0.runtimeProfile == .hanlinExpo }
+            || manifestDeclaredPackageRuntime == .hanlinExpo
 
         let category: HanlinAppCategory = {
             if let catVal = manifest?.unknownFields["category"],
@@ -208,8 +210,12 @@ extension HanlinStoredPackageSnapshot: HanlinMiniAppRegistration {
             .systemSymbol(name: icon)
         } else if let iconImage = manifest?.iconImage, !iconImage.isEmpty {
             .packageResource(path: iconImage)
+        } else if isNativeScript {
+            .systemSymbol(name: "applescript")
+        } else if isExpo {
+            .systemSymbol(name: "sparkles")
         } else {
-            .systemSymbol(name: isNativeScript ? "applescript" : "scroll")
+            .systemSymbol(name: "scroll")
         }
 
         let accentHex = manifest?.color.flatMap { color -> String? in
