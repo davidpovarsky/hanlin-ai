@@ -4,11 +4,13 @@ import HanlinPlatformContracts
 public enum HanlinMiniAppEngine: String, Codable, CaseIterable, Hashable, Sendable {
     case swift
     case nativeScript
+    case expo
 
     public var displayName: String {
         switch self {
         case .swift: return "Swift"
         case .nativeScript: return "NativeScript"
+        case .expo: return "Expo"
         }
     }
 }
@@ -64,6 +66,8 @@ public struct HanlinCanonicalMiniAppCatalog: Sendable {
             switch runtime {
             case .hanlinNativeScript:
                 return .nativeScript
+            case .hanlinExpo:
+                return .expo
             default:
                 return nil
             }
@@ -122,6 +126,14 @@ public struct HanlinMiniAppLaunchPlan: Hashable, Sendable {
                 throw HanlinMiniAppCatalogError.missingScriptRuntime(descriptor.id, entryPointKind)
             }
             guard runtime == .hanlinNativeScript else {
+                throw HanlinMiniAppCatalogError.unsupportedScriptRuntime(descriptor.id, runtime)
+            }
+        }
+        if engine == .expo {
+            guard let runtime = entryPoint.runtimeProfile else {
+                throw HanlinMiniAppCatalogError.missingScriptRuntime(descriptor.id, entryPointKind)
+            }
+            guard runtime == .hanlinExpo else {
                 throw HanlinMiniAppCatalogError.unsupportedScriptRuntime(descriptor.id, runtime)
             }
         }

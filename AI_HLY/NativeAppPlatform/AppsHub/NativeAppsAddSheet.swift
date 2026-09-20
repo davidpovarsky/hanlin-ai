@@ -16,14 +16,14 @@ struct NativeAppsAddSheet: View {
         NavigationStack {
             List {
                 Section {
-                    Text("Swift apps are compiled into Hanlin. NativeScript packages are dynamically importable.")
+                    Text("Swift apps are compiled into Hanlin. Dynamic packages (NativeScript, Expo) are importable.")
                         .font(.subheadline)
                         .foregroundStyle(.secondary)
 
                     NavigationLink {
                         ScriptingPackageImportView(platform: scriptingPlatform)
                     } label: {
-                        Label("Import NativeScript Package", systemImage: "doc.badge.plus")
+                        Label("Import Package", systemImage: "doc.badge.plus")
                     }
                     .accessibilityIdentifier("hanlin-import-script-package")
                 }

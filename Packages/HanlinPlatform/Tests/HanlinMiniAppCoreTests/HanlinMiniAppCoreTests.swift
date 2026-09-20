@@ -202,4 +202,36 @@ struct HanlinMiniAppCoreTests {
         #expect(bgPlan.engine == HanlinMiniAppEngine.nativeScript)
         #expect(bgPlan.entryPoint.runtimeProfile == HanlinRuntimeProfile.hanlinNativeScript)
     }
+
+    @Test("Expo runtime profile resolves to .expo engine and valid launch plan")
+    func expoEngineResolution() throws {
+        let descriptor = HanlinAppDescriptor(
+            id: try HanlinAppID(validating: "hanlin.test.expo"),
+            version: try HanlinAppVersion(validating: "1.0.0"),
+            name: try LocalizedValue(["en": "Test Expo App"]),
+            summary: try LocalizedValue(["en": "Test Expo Summary"]),
+            description: try LocalizedValue(["en": "Test Expo Description"]),
+            category: .utilities,
+            icon: .systemSymbol(name: "sparkles"),
+            author: [HanlinAuthor(name: "Test")],
+            supportedExposures: [.foregroundApp],
+            entryPoints: [
+                HanlinEntryPointDescriptor(
+                    kind: .app,
+                    handler: "index.bundle.js",
+                    allowedContexts: [.mainApplication],
+                    runtimeProfile: .hanlinExpo
+                )
+            ],
+            capabilities: [],
+            actions: [],
+            implementation: .script(packageID: try HanlinPackageID(validating: "expo.test")),
+            distribution: .init(sourceVisible: true, sourceEditable: false, remoteUpdates: false, allowedModes: [.personalDevelopment])
+        )
+
+        #expect(HanlinCanonicalMiniAppCatalog.foregroundEngine(for: descriptor) == HanlinMiniAppEngine.expo)
+        let plan = try HanlinMiniAppLaunchPlan(descriptor: descriptor, entryPointKind: .app)
+        #expect(plan.engine == HanlinMiniAppEngine.expo)
+        #expect(plan.entryPoint.runtimeProfile == HanlinRuntimeProfile.hanlinExpo)
+    }
 }

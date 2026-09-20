@@ -28,6 +28,7 @@ struct NativeAppsHubView: View {
                 LazyVStack(alignment: .leading, spacing: 28) {
                     engineSection(.swift, title: "Swift")
                     engineSection(.nativeScript, title: "NativeScript")
+                    engineSection(.expo, title: "Expo")
                 }
                 .padding(.horizontal, 24)
                 .padding(.vertical, 18)
@@ -195,8 +196,7 @@ struct NativeAppsHubView: View {
     @ViewBuilder
     private func commonActions(for item: HanlinMiniAppCatalogItem) -> some View {
         Button { launch(item) } label: { Label("Open", systemImage: "play.fill") }
-        if case let .nativeScript(packageID) = item.descriptor.implementation,
-           let pkg = scriptingPlatform.installedPackages.first(where: { $0.record.packageID == packageID }) {
+        if let pkg = scriptingPlatform.installedPackages.first(where: { $0.appID == item.id || $0.record.packageID.rawValue == item.id.rawValue }) {
             Button { scriptingPackageID = pkg.record.installedPackageID } label: {
                 Label("Package Information", systemImage: "info.circle")
             }
@@ -216,6 +216,8 @@ struct NativeAppsHubView: View {
                     swiftDestination = try miniAppHost.swiftDestination(for: item)
                 case .nativeScript:
                     try await miniAppHost.launchNativeScript(item, platform: scriptingPlatform)
+                case .expo:
+                    try await miniAppHost.launchExpo(item, platform: scriptingPlatform)
                 }
             } catch {
                 launchError = error.localizedDescription
@@ -238,7 +240,7 @@ private struct MiniAppDescriptorDetailView: View {
                 Section("Mini App") {
                     LabeledContent("Name", value: item.descriptor.name.preferredValue(forLocale: Locale.current.identifier))
                     LabeledContent("ID", value: item.id.rawValue)
-                    LabeledContent("Engine", value: item.engine == .swift ? "Swift" : "NativeScript")
+                    LabeledContent("Engine", value: item.engine.displayName)
                     LabeledContent("Version", value: item.descriptor.version.rawValue)
                 }
                 Section("Canonical entrypoints") {

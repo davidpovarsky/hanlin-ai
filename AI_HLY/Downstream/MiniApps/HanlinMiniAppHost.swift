@@ -131,16 +131,18 @@ final class HanlinMiniAppHost {
 
     func refresh(installedPackages: [HanlinStoredPackageSnapshot]) async {
         do {
-            let nativeScriptPackages = installedPackages.filter { package in
-                if package.entrypoints.contains(where: { $0.runtimeProfile == .hanlinNativeScript }) {
+            let dynamicPackages = installedPackages.filter { package in
+                if package.entrypoints.contains(where: {
+                    $0.runtimeProfile == .hanlinNativeScript || $0.runtimeProfile == .hanlinExpo
+                }) {
                     return true
                 }
                 if let rt = package.manifest?.unknownFields["hanlinRuntime"],
                    case let .string(rtStr) = rt,
-                   rtStr == HanlinRuntimeProfile.hanlinNativeScript.rawValue {
+                   (rtStr == HanlinRuntimeProfile.hanlinNativeScript.rawValue || rtStr == HanlinRuntimeProfile.hanlinExpo.rawValue) {
                     return true
                 }
-                if package.manifest?.entry?.contains("nativescript") == true {
+                if package.manifest?.entry?.contains("nativescript") == true || package.manifest?.entry?.contains("expo") == true {
                     return true
                 }
                 return false
@@ -148,7 +150,7 @@ final class HanlinMiniAppHost {
             BuiltinCanonicalRegistrations.ensureRegistered()
             let discovery = HanlinCompositeMiniAppDiscovery(providers: [
                 HanlinCompiledMiniAppDiscovery(),
-                HanlinScriptPackageDiscovery(snapshots: nativeScriptPackages)
+                HanlinScriptPackageDiscovery(snapshots: dynamicPackages)
             ])
             let refreshed = try await HanlinCanonicalMiniAppCatalog(discovery: discovery).items()
             items = refreshed
@@ -201,6 +203,21 @@ final class HanlinMiniAppHost {
         }
         guard case let .nativeScript(packageID) = item.descriptor.implementation,
               let package = platform.installedPackages.first(where: { $0.record.packageID == packageID }),
+              package.enabled else {
+            throw HanlinMiniAppCatalogError.unsupportedImplementation(item.id)
+        }
+        await platform.launch(package.record.installedPackageID)
+    }
+
+    func launchExpo(
+        _ item: HanlinMiniAppCatalogItem,
+        platform: HanlinScriptingPlatform
+    ) async throws {
+        let plan = try HanlinMiniAppLaunchPlan(descriptor: item.descriptor)
+        guard plan.engine == .expo else {
+            throw HanlinMiniAppCatalogError.unsupportedImplementation(item.id)
+        }
+        guard let package = platform.installedPackages.first(where: { $0.appID == item.id || $0.record.packageID.rawValue == item.id.rawValue }),
               package.enabled else {
             throw HanlinMiniAppCatalogError.unsupportedImplementation(item.id)
         }
