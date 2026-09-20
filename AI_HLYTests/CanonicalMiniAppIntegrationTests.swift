@@ -1,5 +1,8 @@
 import Foundation
 import HanlinMiniAppCore
+#if canImport(HanlinNativeScriptCoreSupport)
+import HanlinNativeScriptCoreSupport
+#endif
 import HanlinParityMiniApp
 import HanlinPlatformContracts
 import HanlinScriptContracts

@@ -1,6 +1,6 @@
 import Foundation
 import HanlinMiniAppCore
-import HanlinNativeScriptCoreSupport
+@_exported import HanlinNativeScriptCoreSupport
 import HanlinPlatformContracts
 #if canImport(UIKit)
 import UIKit
