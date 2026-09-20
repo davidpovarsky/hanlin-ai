@@ -41,7 +41,7 @@ public final class HanlinNativeServicesHostProvider: NSObject, HanlinNativeServi
         activeCacheDirectory = cacheDir
         activeGrantedCapabilities = Set(grantedCapabilities)
         registeredActionIDs.removeAll()
-        HanlinNativeServicesBridge.registerProvider(shared)
+        HanlinNativeServicesBridge.register(shared)
     }
 
     public static func clearActiveContainer() {
@@ -356,6 +356,6 @@ extension HanlinNativeServicesBridge {
     }
 
     public static func registerHostProvider() {
-        HanlinNativeServicesBridge.registerProvider(HanlinNativeServicesHostProvider.shared)
+        HanlinNativeServicesBridge.register(HanlinNativeServicesHostProvider.shared)
     }
 }

@@ -420,7 +420,7 @@ final class HanlinScriptingPlatform {
                     "HANLIN_MINIAPP_CACHE_DIR": cacheDirStr
                 ]
 
-                HanlinNativeServicesBridge.setActiveContainer(
+                HanlinNativeServicesHostProvider.setActiveContainer(
                     appID: appID.rawValue,
                     dataRoot: dataRootStr,
                     stateDir: stateDirStr,
@@ -552,7 +552,7 @@ final class HanlinScriptingPlatform {
         }
         nativeScriptSession?.shutdown()
         nativeScriptSession = nil
-        HanlinNativeServicesBridge.clearActiveContainer()
+        HanlinNativeServicesHostProvider.clearActiveContainer()
         activeApplicationID = nil
         activeApplicationModel = nil
         activeNativeScriptController = nil
