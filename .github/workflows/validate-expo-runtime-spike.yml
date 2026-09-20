@@ -87,6 +87,13 @@ jobs:
           HANLIN_OPEN_API_KEY =
           EOF
 
+      - name: Prepare NativeScript binary dependencies for package resolution
+        shell: bash
+        run: |
+          set -euxo pipefail
+          npm ci --ignore-scripts --no-audit --no-fund --prefix Scripts/NativeScript
+          npm run prepare:ios-dependencies --prefix Scripts/NativeScript
+
       - name: Verify HanlinExpoRuntime package resolution
         shell: bash
         run: |
