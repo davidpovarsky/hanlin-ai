@@ -15,8 +15,8 @@ import UIKit
 ///    are capability-gated against `activeGrantedCapabilities`.
 /// 3. Visible to NativeScript JavaScript because the Objective-C shim
 ///    `HanlinNativeServicesBridge` lives in `HanlinNativeScriptCoreSupport`.
-public final class HanlinNativeServicesHostProvider: NSObject, HanlinNativeServicesProvider {
-    public static let shared = HanlinNativeServicesHostProvider()
+public final class HanlinNativeServicesHostProvider: NSObject, @unchecked Sendable, HanlinNativeServicesProvider {
+    nonisolated(unsafe) public static let shared = HanlinNativeServicesHostProvider()
 
     nonisolated(unsafe) public private(set) static var activeAppID: String?
     nonisolated(unsafe) public private(set) static var activeDataRoot: String?
