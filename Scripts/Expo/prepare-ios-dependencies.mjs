@@ -84,7 +84,7 @@ async function prepare() {
     console.log('[HanlinExpo] All dependencies staged successfully.');
 
     if (process.platform === 'darwin') {
-      console.log('[HanlinExpo] Building ExpoModulesJSI.xcframework for simulator on macOS...');
+      console.log('[HanlinExpo] Building ExpoModulesJSI.xcframework for iOS device and simulator on macOS...');
       const expoModulesJSIRoot = resolve(scriptRoot, 'node_modules', 'expo-modules-jsi');
       if (existsSync(expoModulesJSIRoot)) {
         const podsRoot = resolve(scriptRoot, '.pods-root');
@@ -148,6 +148,14 @@ async function prepare() {
         const generateScript = resolve(expoModulesJSIRoot, 'apple', 'scripts', 'generate-modulemap.sh');
         const helpersScript = resolve(expoModulesJSIRoot, 'apple', 'scripts', 'xcframework-helpers.sh');
         if (existsSync(buildScript)) {
+          let scriptContent = await readFile(buildScript, 'utf8');
+          if (!scriptContent.includes('CODE_SIGNING_REQUIRED=NO')) {
+            scriptContent = scriptContent.replace(
+              'CLANG_COVERAGE_MAPPING=NO \\',
+              'CLANG_COVERAGE_MAPPING=NO \\\n    CODE_SIGNING_REQUIRED=NO \\\n    CODE_SIGNING_ALLOWED=NO \\\n    CODE_SIGN_IDENTITY="" \\'
+            );
+            await writeFile(buildScript, scriptContent, 'utf8');
+          }
           await chmod(buildScript, 0o755);
         }
         if (existsSync(generateScript)) {
@@ -162,7 +170,6 @@ async function prepare() {
             ...process.env,
             PODS_ROOT: podsRoot,
             RN_ROOT: rnRoot,
-            PLATFORM_NAME: 'iphonesimulator',
           },
           stdio: 'inherit'
         });
