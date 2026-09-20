@@ -358,4 +358,33 @@ extension HanlinNativeServicesBridge {
     public static func registerHostProvider() {
         HanlinNativeServicesBridge.register(HanlinNativeServicesHostProvider.shared)
     }
+
+    public static func sendRequest(
+        targetID: String,
+        action: String,
+        capability: String,
+        payloadJSON: String,
+        completion: @escaping (String?, String?) -> Void
+    ) {
+        HanlinNativeServicesBridge.sendRequest(
+            targetID,
+            action: action,
+            capability: capability,
+            payloadJSON: payloadJSON,
+            completion: completion
+        )
+    }
+
+    public static func registerRequestHandler(
+        action: String,
+        capability: String,
+        handler: @escaping (String, String, @escaping (String?, String?) -> Void) -> Void
+    ) {
+        HanlinNativeServicesBridge.registerRequestHandler(
+            action,
+            capability: capability,
+            handler: handler
+        )
+    }
 }
+
