@@ -205,27 +205,28 @@ struct HanlinMiniAppCoreTests {
 
     @Test("Expo runtime profile resolves to .expo engine and valid launch plan")
     func expoEngineResolution() throws {
-        let descriptor = HanlinAppDescriptor(
+        let descriptor = try HanlinAppDescriptor(
+            schemaVersion: .init(major: 1, minor: 0),
+            descriptorRevision: HanlinDescriptorRevision(1),
             id: try HanlinAppID(validating: "hanlin.test.expo"),
-            version: try HanlinAppVersion(validating: "1.0.0"),
-            name: try LocalizedValue(["en": "Test Expo App"]),
-            summary: try LocalizedValue(["en": "Test Expo Summary"]),
-            description: try LocalizedValue(["en": "Test Expo Description"]),
-            category: .utilities,
+            name: LocalizedValue(["en": "Test Expo App"]),
+            summary: LocalizedValue(["en": "Test Expo Summary"]),
+            description: LocalizedValue(["en": "Test Expo Description"]),
+            version: HanlinPackageVersion(validating: "1.0.0"),
+            apiVersion: .init(major: 1, minor: 0),
             icon: .systemSymbol(name: "sparkles"),
-            author: [HanlinAuthor(name: "Test")],
-            supportedExposures: [.foregroundApp],
+            appearance: .init(accentHex: "#123456", isBeta: true),
+            category: .utilities,
+            implementation: .script(packageID: HanlinPackageID(validating: "expo.test")),
             entryPoints: [
-                HanlinEntryPointDescriptor(
+                .init(
                     kind: .app,
                     handler: "index.bundle.js",
                     allowedContexts: [.mainApplication],
                     runtimeProfile: .hanlinExpo
                 )
             ],
-            capabilities: [],
-            actions: [],
-            implementation: .script(packageID: try HanlinPackageID(validating: "expo.test")),
+            authors: [.init(name: "Test")],
             distribution: .init(sourceVisible: true, sourceEditable: false, remoteUpdates: false, allowedModes: [.personalDevelopment])
         )
 

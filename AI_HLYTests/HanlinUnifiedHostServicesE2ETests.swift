@@ -1,5 +1,5 @@
 import Testing
-@testable import AI_HLY
+@testable import AI_Hanlin
 import HanlinPlatformContracts
 import HanlinMiniAppCore
 
