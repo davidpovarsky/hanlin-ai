@@ -796,7 +796,7 @@ def plan_affected_validation(
         if target_group not in ("device_build", "ipa_packaging"):
             step_outputs["run_device_build"] = False
             step_outputs["run_ipa_packaging"] = False
-        if target_group != "app_unit_tests":
+        if target_group not in ("app_unit_tests", "unified_host_services"):
             step_outputs["run_simulator_unit"] = False
         if target_group != "simulator_scripting_acceptance":
             step_outputs["run_simulator_scripting_acceptance"] = False

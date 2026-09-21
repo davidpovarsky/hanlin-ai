@@ -120,11 +120,15 @@ def capture(
     repository = repository.resolve()
     records = []
     for path in input_files(repository, raw_paths, suffixes):
-        stat = path.stat()
+        try:
+            stat = path.stat()
+            file_digest = digest(path)
+        except OSError:
+            continue
         records.append(
             {
                 "path": path.relative_to(repository).as_posix(),
-                "sha256": digest(path),
+                "sha256": file_digest,
                 "size": stat.st_size,
                 "mtimeNanoseconds": stat.st_mtime_ns,
             }
@@ -133,11 +137,15 @@ def capture(
     directory_records = []
     all_directory_roots = raw_paths + (directory_roots or [])
     for path in input_directories(repository, all_directory_roots):
-        stat = path.stat()
+        try:
+            stat = path.stat()
+            entries_digest = directory_digest(path)
+        except OSError:
+            continue
         directory_records.append(
             {
                 "path": path.relative_to(repository).as_posix(),
-                "entriesSha256": directory_digest(path),
+                "entriesSha256": entries_digest,
                 "mtimeNanoseconds": stat.st_mtime_ns,
             }
         )
@@ -197,12 +205,16 @@ def restore(repository: Path, manifest: Path) -> int:
         if not path.is_file():
             missing += 1
             continue
-        stat = path.stat()
-        if stat.st_size != expected_size or digest(path) != expected_digest:
-            changed += 1
+        try:
+            stat = path.stat()
+            if stat.st_size != expected_size or digest(path) != expected_digest:
+                changed += 1
+                continue
+            os.utime(path, ns=(stat.st_atime_ns, mtime_nanoseconds))
+            restored += 1
+        except OSError:
+            missing += 1
             continue
-        os.utime(path, ns=(stat.st_atime_ns, mtime_nanoseconds))
-        restored += 1
 
     restored_directories = 0
     changed_directories = 0

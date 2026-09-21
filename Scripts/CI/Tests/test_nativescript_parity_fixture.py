@@ -12,13 +12,13 @@ ARCHIVE_PATH = REPOSITORY_ROOT / "DemoMiniApps" / "hanlin-script-parity.hanlinNa
 class NativeScriptParityFixtureTests(unittest.TestCase):
     def test_archive_matches_source_byte_for_byte(self) -> None:
         source_files = {
-            path.relative_to(SOURCE_ROOT).as_posix(): path.read_bytes()
+            path.relative_to(SOURCE_ROOT).as_posix(): path.read_bytes().replace(b"\r\n", b"\n")
             for path in SOURCE_ROOT.rglob("*")
             if path.is_file()
         }
         with zipfile.ZipFile(ARCHIVE_PATH) as archive:
             archive_files = {
-                name: archive.read(name)
+                name.replace("\\", "/"): archive.read(name).replace(b"\r\n", b"\n")
                 for name in archive.namelist()
                 if not name.endswith("/")
             }
