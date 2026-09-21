@@ -27,6 +27,7 @@ struct NativeAppsHubView: View {
             ScrollView {
                 LazyVStack(alignment: .leading, spacing: 28) {
                     engineSection(.swift, title: "Swift")
+                    engineSection(.scriptingJSC, title: "ScriptUI")
                     engineSection(.nativeScript, title: "NativeScript")
                     engineSection(.expo, title: "Expo")
                 }
@@ -218,6 +219,8 @@ struct NativeAppsHubView: View {
                     try await miniAppHost.launchNativeScript(item, platform: scriptingPlatform)
                 case .expo:
                     try await miniAppHost.launchExpo(item, platform: scriptingPlatform)
+                case .scriptingJSC:
+                    try await miniAppHost.launchScriptingJSC(item, platform: scriptingPlatform)
                 }
             } catch {
                 launchError = error.localizedDescription

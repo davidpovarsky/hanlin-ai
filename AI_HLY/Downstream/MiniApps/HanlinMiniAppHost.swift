@@ -219,6 +219,21 @@ final class HanlinMiniAppHost {
         await platform.launch(package.record.installedPackageID)
     }
 
+    func launchScriptingJSC(
+        _ item: HanlinMiniAppCatalogItem,
+        platform: HanlinScriptingPlatform
+    ) async throws {
+        let plan = try HanlinMiniAppLaunchPlan(descriptor: item.descriptor)
+        guard plan.engine == .scriptingJSC else {
+            throw HanlinMiniAppCatalogError.unsupportedImplementation(item.id)
+        }
+        guard let package = platform.installedPackages.first(where: { $0.appID == item.id || $0.record.packageID.rawValue == item.id.rawValue }),
+              package.enabled else {
+            throw HanlinMiniAppCatalogError.unsupportedImplementation(item.id)
+        }
+        await platform.launch(package.record.installedPackageID)
+    }
+
     private static func fetchStatus(_ url: URL) async throws -> String {
         guard url.scheme?.lowercased() == "https" else { throw URLError(.unsupportedURL) }
         var request = URLRequest(url: url)

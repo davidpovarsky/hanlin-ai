@@ -221,9 +221,7 @@ struct HanlinScriptExtensionStoreTests {
         )
 
         let sessionContext = HanlinTranslationSessionContext(
-            sourceText: "Hello world!",
-            targetLanguage: "es",
-            appID: "hanlin.demo.script-parity"
+            sourceText: "Hello world!"
         )
 
         let substituted = originalNode.substituting(sessionContext: sessionContext)
