@@ -27,6 +27,16 @@ public actor HanlinChatEngine {
             tools: tools
         )
 
+        return stream(request: request, configuration: configuration)
+    }
+
+    /// Executes a prebuilt request through the same production transport and
+    /// stream parser used by every Hanlin chat surface. App-only orchestration
+    /// can customize the shared request body before calling this entry point.
+    public func stream(
+        request: URLRequest,
+        configuration: HanlinChatModelConfiguration
+    ) -> AsyncThrowingStream<HanlinChatStreamEvent, Error> {
         let (stream, continuation) = AsyncThrowingStream<HanlinChatStreamEvent, Error>.makeStream()
 
 #if os(iOS) || os(macOS) || os(watchOS) || os(tvOS) || os(visionOS)
@@ -53,6 +63,14 @@ public actor HanlinChatEngine {
                     ))
                     return
                 }
+
+                continuation.yield(HanlinChatStreamEvent(
+                    responseMetadata: HanlinChatResponseMetadata(
+                        statusCode: httpResponse.statusCode,
+                        providerRequestID: httpResponse.value(forHTTPHeaderField: "x-request-id")
+                            ?? httpResponse.value(forHTTPHeaderField: "request-id")
+                    )
+                ))
 
                 let parser = HanlinChatStreamParser(apiType: configuration.apiType)
 

@@ -5,6 +5,16 @@
 
 import Foundation
 
+public struct HanlinChatResponseMetadata: Hashable, Sendable {
+    public let statusCode: Int
+    public let providerRequestID: String?
+
+    public init(statusCode: Int, providerRequestID: String? = nil) {
+        self.statusCode = statusCode
+        self.providerRequestID = providerRequestID
+    }
+}
+
 public struct HanlinChatStreamEvent: @unchecked Sendable {
     public var content: String?
     public var reasoning: String?
@@ -13,6 +23,7 @@ public struct HanlinChatStreamEvent: @unchecked Sendable {
     public var tokenUsage: HanlinChatTokenUsage?
     public var finishReason: String?
     public var isDone: Bool
+    public var responseMetadata: HanlinChatResponseMetadata?
 
     public init(
         content: String? = nil,
@@ -21,7 +32,8 @@ public struct HanlinChatStreamEvent: @unchecked Sendable {
         audioDelta: [String: Any]? = nil,
         tokenUsage: HanlinChatTokenUsage? = nil,
         finishReason: String? = nil,
-        isDone: Bool = false
+        isDone: Bool = false,
+        responseMetadata: HanlinChatResponseMetadata? = nil
     ) {
         self.content = content
         self.reasoning = reasoning
@@ -30,5 +42,6 @@ public struct HanlinChatStreamEvent: @unchecked Sendable {
         self.tokenUsage = tokenUsage
         self.finishReason = finishReason
         self.isDone = isDone
+        self.responseMetadata = responseMetadata
     }
 }

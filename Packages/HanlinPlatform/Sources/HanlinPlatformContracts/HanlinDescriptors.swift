@@ -387,6 +387,7 @@ public struct HanlinActionDescriptor: Codable, Hashable, Sendable {
     public let inputSchema: HanlinJSONSchemaDocument
     public let outputSchema: HanlinJSONSchemaDocument?
     public let capabilities: [HanlinCapabilityID]
+    public let handler: String?
     public let risk: HanlinRiskLevel
 
     public init(
@@ -395,6 +396,7 @@ public struct HanlinActionDescriptor: Codable, Hashable, Sendable {
         inputSchema: HanlinJSONSchemaDocument,
         outputSchema: HanlinJSONSchemaDocument? = nil,
         capabilities: [HanlinCapabilityID] = [],
+        handler: String? = nil,
         risk: HanlinRiskLevel
     ) {
         self.id = id
@@ -402,6 +404,7 @@ public struct HanlinActionDescriptor: Codable, Hashable, Sendable {
         self.inputSchema = inputSchema
         self.outputSchema = outputSchema
         self.capabilities = capabilities
+        self.handler = handler
         self.risk = risk
     }
 }
@@ -1035,6 +1038,13 @@ public struct HanlinAppDescriptor: Codable, Identifiable, Hashable, Sendable {
             }
         }
         for (index, action) in actions.enumerated() {
+            if let handler = action.handler, !Self.isSafeRelativePath(handler) {
+                issues.append(.init(
+                    code: .unsafeEntryPoint,
+                    path: "actions[\(index)].handler",
+                    message: "Action handlers must be normalized relative paths."
+                ))
+            }
             Self.validate(
                 action.inputSchema,
                 path: "actions[\(index)].inputSchema",

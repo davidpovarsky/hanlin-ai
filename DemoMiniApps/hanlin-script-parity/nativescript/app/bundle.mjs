@@ -5,6 +5,9 @@
 console.log("[HanlinScriptParity] Initializing bundle...");
 
 const bridge = typeof HanlinNativeServicesBridge !== "undefined" ? HanlinNativeServicesBridge : null;
+const environment = NSProcessInfo.processInfo.environment;
+const executionMode = environment.objectForKey("HANLIN_EXECUTION_MODE");
+const isHeadlessAction = executionMode && executionMode.toString() === "headless-action";
 
 // Helpers to invoke bridge methods with support for various ObjC selector manglings
 function runJS(code, cb) {
@@ -72,15 +75,10 @@ function getStateDirectory() {
       console.warn("[HanlinScriptParity] bridge.stateDirectory() call failed: " + e);
     }
   }
-  const env = NSProcessInfo.processInfo.environment;
-  const miniappStateDir = env.objectForKey("HANLIN_MINIAPP_STATE_DIR");
+  const miniappStateDir = environment.objectForKey("HANLIN_MINIAPP_STATE_DIR");
   if (miniappStateDir) return miniappStateDir.toString();
-  const miniappDataRoot = env.objectForKey("HANLIN_MINIAPP_DATA_ROOT");
+  const miniappDataRoot = environment.objectForKey("HANLIN_MINIAPP_DATA_ROOT");
   if (miniappDataRoot) return miniappDataRoot.toString() + "/state";
-  const stateDir = env.objectForKey("HANLIN_STATE_DIR");
-  if (stateDir) return stateDir.toString();
-  const dataRoot = env.objectForKey("HANLIN_DATA_ROOT");
-  if (dataRoot) return dataRoot.toString() + "/state";
   return null;
 }
 
@@ -117,7 +115,9 @@ function loadStorage() {
   }
 }
 
-// Register inter-app request handler so Swift Parity and AppIntents can call us
+const initialStorageStatus = loadStorage();
+
+// Register canonical actions for inter-app, Widget/AppIntent, and headless execution.
 if (bridge) {
   try {
     const registerFn = bridge.registerRequestHandlerCapabilityHandler || bridge.registerRequestHandler;
@@ -127,6 +127,8 @@ if (bridge) {
         const replyPayload = JSON.stringify({
           source: "hanlin.demo.script-parity",
           action: actionName,
+          caller: caller,
+          request: JSON.parse(payloadJSON),
           counter: counter,
           name: persistedName
         });
@@ -140,6 +142,9 @@ if (bridge) {
   }
 }
 
+if (isHeadlessAction) {
+  console.log("[HanlinScriptParity] Headless action handlers ready. " + initialStorageStatus);
+} else {
 // Build Direct UIKit UI
 const rootVC = UIViewController.new();
 rootVC.view.backgroundColor = UIColor.systemGroupedBackgroundColor;
@@ -207,9 +212,8 @@ const interAppStatusLabel = addLabel("Inter-App Share: Pending...", "hanlin-scri
 scrollView.contentSize = CGSizeMake(340, yOffset + 60);
 
 // Auto-run deterministic verification passes
-loadStorage();
 counterLabel.text = "Counter: " + counter;
-storageStatusLabel.text = saveStorage();
+storageStatusLabel.text = initialStorageStatus + "; " + saveStorage();
 
 runJS("6 * 7", (res, err) => {
   jsStatusLabel.text = "JS: " + (err ? "Err: " + err : res);
@@ -245,3 +249,4 @@ try {
 }
 
 console.log("[HanlinScriptParity] Bundle setup complete.");
+}

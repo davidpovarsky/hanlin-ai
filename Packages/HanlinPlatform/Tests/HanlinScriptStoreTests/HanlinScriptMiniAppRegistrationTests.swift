@@ -524,6 +524,14 @@ struct HanlinScriptMiniAppRegistrationTests {
                         .string("translation_ui"),
                         .string("widget"),
                         .string("app_intent")
+                    ]),
+                    "actions": .array([
+                        .object([
+                            "id": .string("parity.intent"),
+                            "capability": .string("inter-app.share"),
+                            "handler": .string("nativescript/app/bundle.mjs"),
+                            "title": .string("Perform parity intent")
+                        ])
                     ])
                 ]
             )
@@ -535,5 +543,8 @@ struct HanlinScriptMiniAppRegistrationTests {
         #expect(descriptor.supportedExposures.contains(.translationUI))
         #expect(descriptor.supportedExposures.contains(.widget))
         #expect(descriptor.supportedExposures.contains(.appIntent))
+        #expect(descriptor.actions.first?.id.rawValue == "parity.intent")
+        #expect(descriptor.actions.first?.capabilities.map(\.rawValue) == ["inter-app.share"])
+        #expect(descriptor.actions.first?.handler == "nativescript/app/bundle.mjs")
     }
 }

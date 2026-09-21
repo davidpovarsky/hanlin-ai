@@ -39,12 +39,12 @@ public struct HanlinCompactAgentConfiguration: Codable, Hashable, Sendable {
         displayName: String? = nil,
         systemPrompt: String? = nil,
         apiType: String? = "OpenAI",
-        temperature: Double = -999,
-        topP: Double = -999,
-        maxTokens: Int = 2048,
+        temperature: Double = HanlinChatGenerationDefaults.temperature,
+        topP: Double = HanlinChatGenerationDefaults.topP,
+        maxTokens: Int = HanlinChatGenerationDefaults.maxTokens,
         supportsReasoning: Bool = false,
         supportReasoningChange: Bool = false,
-        thinkingLength: Int = 0,
+        thinkingLength: Int = HanlinChatGenerationDefaults.thinkingLength,
         supportsToolUse: Bool = false,
         updatedAt: Date = .now
     ) {
@@ -57,7 +57,7 @@ public struct HanlinCompactAgentConfiguration: Codable, Hashable, Sendable {
         self.apiType = apiType
         self.temperature = temperature
         self.topP = topP
-        self.maxTokens = maxTokens > 0 ? maxTokens : 2048
+        self.maxTokens = maxTokens > 0 ? maxTokens : HanlinChatGenerationDefaults.maxTokens
         self.supportsReasoning = supportsReasoning
         self.supportReasoningChange = supportReasoningChange
         self.thinkingLength = thinkingLength
@@ -100,10 +100,11 @@ public struct HanlinCompactAgentConfiguration: Codable, Hashable, Sendable {
         displayName = try container.decodeIfPresent(String.self, forKey: .displayName)
         systemPrompt = try container.decodeIfPresent(String.self, forKey: .systemPrompt)
         apiType = try container.decodeIfPresent(String.self, forKey: .apiType)
-        temperature = try container.decodeIfPresent(Double.self, forKey: .temperature) ?? -999
-        topP = try container.decodeIfPresent(Double.self, forKey: .topP) ?? -999
-        let decodedMaxTokens = try container.decodeIfPresent(Int.self, forKey: .maxTokens) ?? 2048
-        maxTokens = decodedMaxTokens > 0 ? decodedMaxTokens : 2048
+        temperature = try container.decodeIfPresent(Double.self, forKey: .temperature) ?? HanlinChatGenerationDefaults.temperature
+        topP = try container.decodeIfPresent(Double.self, forKey: .topP) ?? HanlinChatGenerationDefaults.topP
+        let decodedMaxTokens = try container.decodeIfPresent(Int.self, forKey: .maxTokens)
+            ?? HanlinChatGenerationDefaults.maxTokens
+        maxTokens = decodedMaxTokens > 0 ? decodedMaxTokens : HanlinChatGenerationDefaults.maxTokens
         supportsReasoning = try container.decodeIfPresent(Bool.self, forKey: .supportsReasoning) ?? false
         supportReasoningChange = try container.decodeIfPresent(Bool.self, forKey: .supportReasoningChange) ?? false
         thinkingLength = try container.decodeIfPresent(Int.self, forKey: .thinkingLength) ?? 0

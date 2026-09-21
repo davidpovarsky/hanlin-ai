@@ -55,6 +55,7 @@ final class HanlinScriptingPlatform {
     private var nativeScriptSession: HanlinNativeScriptSession?
     private var expoSession: HanlinExpoSession?
     private var isLaunching = false
+    private var isExecutingHeadlessNativeScriptAction = false
     private var systemUIContinuation: CheckedContinuation<HanlinScriptingSystemUIResult, any Error>?
     private var modelContext: ModelContext?
     private let locationService = HanlinAppleLocationService()
@@ -591,6 +592,7 @@ final class HanlinScriptingPlatform {
     }
 
     func executeHeadlessAction(
+        caller: HanlinAppID,
         targetAppID: HanlinAppID,
         action: HanlinActionID,
         capability: HanlinCapabilityID,
@@ -611,32 +613,39 @@ final class HanlinScriptingPlatform {
             throw HanlinMiniAppRequestError.capabilityMismatch
         }
 
-        // If a foreground session for this app is already active, broker will handle it directly
-        if let currentSession = nativeScriptSession, activeApplicationID == package.record.installedPackageID {
-            let hostCallerID = try HanlinAppID(validating: "hanlin.host")
-            let req = HanlinMiniAppRequest(
-                caller: hostCallerID,
-                target: targetAppID,
-                action: action,
-                capability: capability,
-                payload: payload
-            )
-            let res = try await HanlinMiniAppHost.shared.requestBroker.request(req)
-            return res.value
-        }
-
-        guard nativeScriptSession == nil else {
-            // Documented runtime limitation: NativeScript iOS runtime single isolate
-            throw HanlinMiniAppRequestError.unauthorized
-        }
-
-        guard let entrypoint = package.entrypoints.first(where: { $0.runtimeProfile == .hanlinNativeScript })
-                ?? (package.manifest?.hanlinRuntime == "hanlin-nativescript" ? package.entrypoints.first : nil) else {
+        let descriptor = try package.appDescriptor()
+        guard let declaredAction = descriptor.actions.first(where: { $0.id == action }),
+              declaredAction.capabilities.contains(capability),
+              let handlerPath = declaredAction.handler else {
             throw HanlinMiniAppRequestError.routeNotFound
         }
 
+        if nativeScriptSession != nil, activeApplicationID == package.record.installedPackageID {
+            return try await HanlinNativeServicesHostProvider.invokeRegisteredAction(
+                action,
+                capability: capability,
+                caller: caller,
+                payload: payload
+            )
+        }
+
+        guard nativeScriptSession == nil, !isExecutingHeadlessNativeScriptAction else {
+            // NativeScript iOS currently supports one runtime isolate per process.
+            throw HanlinMiniAppRequestError.unauthorized
+        }
+
         let artifactRoot = try await store.activeArtifactURL(for: package.record.installedPackageID)
-        let entrypointURL = artifactRoot.appending(path: entrypoint.sourcePath, directoryHint: .notDirectory)
+        let handlerURL = artifactRoot
+            .appending(path: handlerPath, directoryHint: .notDirectory)
+            .standardizedFileURL
+        let artifactPath = artifactRoot.standardizedFileURL.path(percentEncoded: false)
+        let handlerFilePath = handlerURL.path(percentEncoded: false)
+        guard handlerFilePath.hasPrefix(artifactPath + "/"),
+              handlerURL.lastPathComponent == "bundle.mjs",
+              (try? handlerURL.resourceValues(forKeys: [.isRegularFileKey, .isSymbolicLinkKey]))
+                .map({ $0.isRegularFile == true && $0.isSymbolicLink != true }) == true else {
+            throw HanlinMiniAppRequestError.routeNotFound
+        }
 
         let appID = targetAppID
         let container = try await HanlinMiniAppDataStore(root: HanlinMiniAppDataStore.applicationSupportRoot())
@@ -652,9 +661,17 @@ final class HanlinScriptingPlatform {
             "HANLIN_MINIAPP_DATA_ROOT": dataRootStr,
             "HANLIN_MINIAPP_STATE_DIR": stateDirStr,
             "HANLIN_MINIAPP_DOCUMENTS_DIR": docsDirStr,
-            "HANLIN_MINIAPP_CACHE_DIR": cacheDirStr
+            "HANLIN_MINIAPP_CACHE_DIR": cacheDirStr,
+            "HANLIN_EXECUTION_MODE": "headless-action",
+            "HANLIN_ACTION_ID": action.rawValue
         ]
 
+        let session = try HanlinNativeScriptSession(
+            applicationRoot: handlerURL.deletingLastPathComponent(),
+            environment: env
+        )
+
+        isExecutingHeadlessNativeScriptAction = true
         HanlinNativeServicesHostProvider.setActiveContainer(
             appID: appID.rawValue,
             dataRoot: dataRootStr,
@@ -663,15 +680,10 @@ final class HanlinScriptingPlatform {
             cacheDir: cacheDirStr,
             grantedCapabilities: package.grantedCapabilities.map(\.rawValue)
         )
-
-        let session = try HanlinNativeScriptSession(
-            applicationRoot: entrypointURL.deletingLastPathComponent(),
-            environment: env
-        )
-
         defer {
             session.shutdown()
             HanlinNativeServicesHostProvider.clearActiveContainer()
+            isExecutingHeadlessNativeScriptAction = false
         }
 
         try session.start()
@@ -681,17 +693,12 @@ final class HanlinScriptingPlatform {
             throw HanlinMiniAppRequestError.routeNotFound
         }
 
-        let hostCallerID = try HanlinAppID(validating: "hanlin.host")
-        let request = HanlinMiniAppRequest(
-            caller: hostCallerID,
-            target: targetAppID,
-            action: action,
+        return try await HanlinNativeServicesHostProvider.invokeRegisteredAction(
+            action,
             capability: capability,
+            caller: caller,
             payload: payload
         )
-
-        let response = try await HanlinMiniAppHost.shared.requestBroker.request(request)
-        return response.value
     }
 
     func completeSystemUI(
@@ -1054,11 +1061,7 @@ final class HanlinScriptingPlatform {
                 return true
             }
 
-            let sortedModels = eligibleModels.sorted {
-                ($0.position ?? Int.max) < ($1.position ?? Int.max)
-            }
-
-            guard let selectedModel = sortedModels.first,
+            guard let selectedModel = HanlinDefaultChatPolicy.defaultModel(in: eligibleModels),
                   let selectedKey = keyByCompany[selectedModel.company ?? ""],
                   let apiKey = selectedKey.key,
                   let endpointStr = selectedKey.requestURL,
@@ -1076,12 +1079,12 @@ final class HanlinScriptingPlatform {
                 displayName: selectedModel.displayName ?? selectedModel.name,
                 systemPrompt: "You are Hanlin, an intelligent AI assistant. Provide concise, helpful answers directly relating to the user's selected text and query.",
                 apiType: selectedKey.apiType.rawValue,
-                temperature: -999,
-                topP: -999,
-                maxTokens: 2048,
-                supportsReasoning: selectedModel.supportsReasoning,
+                temperature: HanlinDefaultChatPolicy.temperature,
+                topP: HanlinDefaultChatPolicy.topP,
+                maxTokens: HanlinDefaultChatPolicy.maxTokens,
+                supportsReasoning: selectedModel.supportsReasoning && !selectedModel.supportReasoningChange,
                 supportReasoningChange: selectedModel.supportReasoningChange,
-                thinkingLength: 0,
+                thinkingLength: HanlinDefaultChatPolicy.thinkingLength,
                 supportsToolUse: false,
                 updatedAt: .now
             )
@@ -1117,7 +1120,9 @@ final class HanlinScriptingPlatform {
                 let targetID = (try? HanlinAppID(validating: package.manifest?.hanlinAppID ?? identity.packageID.rawValue))
                     ?? (try! HanlinAppID(validating: identity.packageID.rawValue))
                 guard let actionID = try? HanlinActionID(validating: actionName),
-                      let shareCapability = try? HanlinCapabilityID(validating: "inter-app.share") else {
+                      let descriptor = try? package.appDescriptor(),
+                      let declaredAction = descriptor.actions.first(where: { $0.id == actionID }),
+                      let requiredCapability = declaredAction.capabilities.first else {
                     Self.logger.error("Invalid NativeScript AppIntent target or action: \(actionName, privacy: .public)")
                     continue
                 }
@@ -1129,7 +1134,7 @@ final class HanlinScriptingPlatform {
                         caller: hostCallerID,
                         target: targetID,
                         action: actionID,
-                        capability: shareCapability,
+                        capability: requiredCapability,
                         payload: payloadValue
                     ))
                     try extensionStore?.acknowledge(command.id)

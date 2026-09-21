@@ -27,11 +27,13 @@
     {
       "id": "share.value",
       "capability": "inter-app.share",
+      "handler": "nativescript/app/bundle.mjs",
       "title": "Share Parity Value"
     },
     {
       "id": "parity.intent",
       "capability": "inter-app.share",
+      "handler": "nativescript/app/bundle.mjs",
       "title": "Perform HanlinScript Parity Intent"
     }
   ]

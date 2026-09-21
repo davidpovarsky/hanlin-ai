@@ -5,6 +5,13 @@
 
 import Foundation
 
+public enum HanlinChatGenerationDefaults {
+    public static let temperature: Double = -999
+    public static let topP: Double = -999
+    public static let maxTokens: Int = 2048
+    public static let thinkingLength: Int = 0
+}
+
 public func restoreBaseModelName(from agentModelName: String) -> String {
     guard let baseName = agentModelName.components(separatedBy: "_agent_").first else {
         return agentModelName
@@ -22,20 +29,38 @@ public func restoreBaseModelName(from agentModelName: String) -> String {
 public struct HanlinChatTokenUsage: Codable, Hashable, Sendable {
     public let inputTokens: Int?
     public let outputTokens: Int?
+    public let reasoningTokens: Int?
+    public let cachedInputTokens: Int?
     public let totalTokens: Int?
 
     public var promptTokens: Int? { inputTokens }
     public var completionTokens: Int? { outputTokens }
 
-    public init(inputTokens: Int? = nil, outputTokens: Int? = nil, totalTokens: Int? = nil) {
+    public init(
+        inputTokens: Int? = nil,
+        outputTokens: Int? = nil,
+        reasoningTokens: Int? = nil,
+        cachedInputTokens: Int? = nil,
+        totalTokens: Int? = nil
+    ) {
         self.inputTokens = inputTokens
         self.outputTokens = outputTokens
+        self.reasoningTokens = reasoningTokens
+        self.cachedInputTokens = cachedInputTokens
         self.totalTokens = totalTokens
     }
 
-    public init(promptTokens: Int? = nil, completionTokens: Int? = nil, totalTokens: Int? = nil) {
+    public init(
+        promptTokens: Int? = nil,
+        completionTokens: Int? = nil,
+        reasoningTokens: Int? = nil,
+        cachedInputTokens: Int? = nil,
+        totalTokens: Int? = nil
+    ) {
         self.inputTokens = promptTokens
         self.outputTokens = completionTokens
+        self.reasoningTokens = reasoningTokens
+        self.cachedInputTokens = cachedInputTokens
         self.totalTokens = totalTokens
     }
 }
@@ -68,12 +93,12 @@ public struct HanlinChatModelConfiguration: Codable, Hashable, Sendable {
         apiType: String? = "OpenAI",
         endpoint: URL,
         apiKey: String,
-        temperature: Double = -999,
-        topP: Double = -999,
-        maxTokens: Int? = 2048,
+        temperature: Double = HanlinChatGenerationDefaults.temperature,
+        topP: Double = HanlinChatGenerationDefaults.topP,
+        maxTokens: Int? = HanlinChatGenerationDefaults.maxTokens,
         supportsReasoning: Bool = false,
         supportReasoningChange: Bool = false,
-        thinkingLength: Int = 0,
+        thinkingLength: Int = HanlinChatGenerationDefaults.thinkingLength,
         reasoningEffort: String? = nil,
         supportsToolUse: Bool = false,
         supportsTextGen: Bool = true,
@@ -89,9 +114,8 @@ public struct HanlinChatModelConfiguration: Codable, Hashable, Sendable {
         self.apiKey = apiKey
         self.temperature = temperature
         self.topP = topP
-        let rawTokens = maxTokens ?? 2048
-        // Default to at least 2048 if negative or 0 to prevent unbounded context billing on OpenRouter
-        self.maxTokens = rawTokens > 0 ? min(rawTokens, 8192) : 2048
+        let rawTokens = maxTokens ?? HanlinChatGenerationDefaults.maxTokens
+        self.maxTokens = rawTokens > 0 ? rawTokens : HanlinChatGenerationDefaults.maxTokens
         self.supportsReasoning = supportsReasoning
         self.supportReasoningChange = supportReasoningChange
         self.thinkingLength = thinkingLength
@@ -111,12 +135,12 @@ public struct HanlinChatModelConfiguration: Codable, Hashable, Sendable {
         endpoint: String,
         apiKey: String? = nil,
         credential: String? = nil,
-        temperature: Double = -999,
-        topP: Double = -999,
-        maxTokens: Int? = 2048,
+        temperature: Double = HanlinChatGenerationDefaults.temperature,
+        topP: Double = HanlinChatGenerationDefaults.topP,
+        maxTokens: Int? = HanlinChatGenerationDefaults.maxTokens,
         supportsReasoning: Bool = false,
         supportReasoningChange: Bool = false,
-        thinkingLength: Int = 0,
+        thinkingLength: Int = HanlinChatGenerationDefaults.thinkingLength,
         reasoningEffort: String? = nil,
         supportsToolUse: Bool = false,
         supportsTextGen: Bool = true,

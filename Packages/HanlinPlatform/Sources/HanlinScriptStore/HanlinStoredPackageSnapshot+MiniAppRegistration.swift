@@ -250,6 +250,11 @@ extension HanlinStoredPackageSnapshot: HanlinMiniAppRegistration {
                     }()
                     let capID = (try? HanlinCapabilityID(validating: capIDStr))
                         ?? (try! HanlinCapabilityID(validating: "inter-app.share"))
+                    let handler: String? = {
+                        if case let .string(value) = actionObj["handler"] { return value }
+                        if case let .string(value) = actionObj["entrypoint"] { return value }
+                        return nil
+                    }()
                     let titleVal = (try? LocalizedValue(["en": titleStr]))
                         ?? (try! LocalizedValue(["en": actionIDStr]))
                     if let schema = try? HanlinJSONSchemaDocument(dialect: .draft2020_12, root: .object([:])) {
@@ -259,6 +264,7 @@ extension HanlinStoredPackageSnapshot: HanlinMiniAppRegistration {
                             inputSchema: schema,
                             outputSchema: nil,
                             capabilities: [capID],
+                            handler: handler,
                             risk: .read
                         ))
                     }

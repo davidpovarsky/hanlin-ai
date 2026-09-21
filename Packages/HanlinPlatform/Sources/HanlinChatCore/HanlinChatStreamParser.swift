@@ -10,6 +10,7 @@ public final class HanlinChatStreamParser: @unchecked Sendable {
     private let apiType: String
     private var inThinkTag: Bool = false
     private var buffer: String = ""
+    private var anthropicToolBlocks: [Int: (id: String, name: String)] = [:]
 
     public init(apiType: String? = "OpenAI") {
         self.apiType = (apiType ?? "OpenAI").lowercased()
@@ -60,9 +61,13 @@ public final class HanlinChatStreamParser: @unchecked Sendable {
         var event = HanlinChatStreamEvent()
 
         if let usage = json["usage"] as? [String: Any] {
+            let promptDetails = usage["prompt_tokens_details"] as? [String: Any]
+            let completionDetails = usage["completion_tokens_details"] as? [String: Any]
             event.tokenUsage = HanlinChatTokenUsage(
                 inputTokens: usage["prompt_tokens"] as? Int,
                 outputTokens: usage["completion_tokens"] as? Int,
+                reasoningTokens: completionDetails?["reasoning_tokens"] as? Int,
+                cachedInputTokens: promptDetails?["cached_tokens"] as? Int,
                 totalTokens: usage["total_tokens"] as? Int
             )
         }
@@ -123,24 +128,55 @@ public final class HanlinChatStreamParser: @unchecked Sendable {
             return event
         }
 
-        if type == "content_block_delta",
+        if type == "content_block_start",
+           let index = json["index"] as? Int,
+           let block = json["content_block"] as? [String: Any],
+           block["type"] as? String == "tool_use",
+           let id = block["id"] as? String,
+           let name = block["name"] as? String {
+            anthropicToolBlocks[index] = (id, name)
+            event.toolCalls = [[
+                "index": index,
+                "id": id,
+                "type": "function",
+                "function": ["name": name, "arguments": ""]
+            ]]
+        } else if type == "content_block_delta",
            let delta = json["delta"] as? [String: Any] {
             let deltaType = delta["type"] as? String
             if deltaType == "text_delta", let text = delta["text"] as? String, !text.isEmpty {
                 event.content = text
             } else if deltaType == "thinking_delta", let thinking = delta["thinking"] as? String, !thinking.isEmpty {
                 event.reasoning = thinking
+            } else if deltaType == "input_json_delta",
+                      let index = json["index"] as? Int,
+                      let partialJSON = delta["partial_json"] as? String,
+                      let tool = anthropicToolBlocks[index] {
+                event.toolCalls = [[
+                    "index": index,
+                    "id": tool.id,
+                    "type": "function",
+                    "function": ["name": tool.name, "arguments": partialJSON]
+                ]]
             } else if let text = delta["text"] as? String, !text.isEmpty {
                 event.content = text
             }
         }
 
+        if type == "message_delta",
+           let delta = json["delta"] as? [String: Any],
+           let stopReason = delta["stop_reason"] as? String {
+            event.finishReason = stopReason == "tool_use" ? "tool_calls" : anthropicFinishReason(stopReason)
+        }
+
+        if type == "message_start",
+           let message = json["message"] as? [String: Any],
+           let usage = message["usage"] as? [String: Any] {
+            event.tokenUsage = anthropicUsage(usage)
+        }
+
         if let usage = json["usage"] as? [String: Any] {
-            event.tokenUsage = HanlinChatTokenUsage(
-                inputTokens: usage["input_tokens"] as? Int,
-                outputTokens: usage["output_tokens"] as? Int,
-                totalTokens: nil
-            )
+            event.tokenUsage = anthropicUsage(usage)
         }
 
         return event
@@ -154,18 +190,44 @@ public final class HanlinChatStreamParser: @unchecked Sendable {
         if let candidates = json["candidates"] as? [[String: Any]],
            let first = candidates.first {
             if let finishReason = first["finishReason"] as? String {
-                event.finishReason = finishReason
+                event.finishReason = geminiFinishReason(finishReason)
                 if finishReason == "STOP" {
                     event.isDone = true
                 }
             }
 
             if let content = first["content"] as? [String: Any],
-               let parts = content["parts"] as? [[String: Any]],
-               let firstPart = parts.first,
-               let text = firstPart["text"] as? String,
-               !text.isEmpty {
-                event.content = text
+               let parts = content["parts"] as? [[String: Any]] {
+                var visibleText = ""
+                var reasoningText = ""
+                var toolCalls: [[String: Any]] = []
+                for (index, part) in parts.enumerated() {
+                    if let text = part["text"] as? String, !text.isEmpty {
+                        if part["thought"] as? Bool == true {
+                            reasoningText += text
+                        } else {
+                            visibleText += text
+                        }
+                    }
+                    if let functionCall = part["functionCall"] as? [String: Any],
+                       let name = functionCall["name"] as? String {
+                        let arguments = functionCall["args"]
+                            .flatMap { try? JSONSerialization.data(withJSONObject: $0) }
+                            .flatMap { String(data: $0, encoding: .utf8) } ?? "{}"
+                        toolCalls.append([
+                            "index": index,
+                            "id": "gemini-\(index)",
+                            "type": "function",
+                            "function": ["name": name, "arguments": arguments]
+                        ])
+                    }
+                }
+                if !visibleText.isEmpty { event.content = visibleText }
+                if !reasoningText.isEmpty { event.reasoning = reasoningText }
+                if !toolCalls.isEmpty {
+                    event.toolCalls = toolCalls
+                    event.finishReason = "tool_calls"
+                }
             }
         }
 
@@ -178,6 +240,33 @@ public final class HanlinChatStreamParser: @unchecked Sendable {
         }
 
         return event
+    }
+
+    private func anthropicUsage(_ usage: [String: Any]) -> HanlinChatTokenUsage {
+        let outputDetails = usage["output_tokens_details"] as? [String: Any]
+        return HanlinChatTokenUsage(
+            inputTokens: usage["input_tokens"] as? Int,
+            outputTokens: usage["output_tokens"] as? Int,
+            reasoningTokens: outputDetails?["thinking_tokens"] as? Int,
+            cachedInputTokens: usage["cache_read_input_tokens"] as? Int,
+            totalTokens: nil
+        )
+    }
+
+    private func anthropicFinishReason(_ reason: String) -> String {
+        switch reason {
+        case "end_turn", "stop_sequence": "stop"
+        case "max_tokens": "length"
+        default: reason
+        }
+    }
+
+    private func geminiFinishReason(_ reason: String) -> String {
+        switch reason {
+        case "STOP": "stop"
+        case "MAX_TOKENS": "length"
+        default: reason.lowercased()
+        }
     }
 
     // MARK: - Helper: Inline <think> tags

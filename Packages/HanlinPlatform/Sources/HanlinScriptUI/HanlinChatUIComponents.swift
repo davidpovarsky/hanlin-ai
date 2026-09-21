@@ -12,6 +12,46 @@ public enum HanlinChatPresentationMode: Sendable {
     case compact
 }
 
+// MARK: - Shared Send Control
+
+public struct HanlinChatSendButton: View {
+    public let canSend: Bool
+    public let isStreaming: Bool
+    public let presentationMode: HanlinChatPresentationMode
+    public let tint: Color
+    public let size: CGFloat
+    public let action: () -> Void
+
+    public init(
+        canSend: Bool,
+        isStreaming: Bool,
+        presentationMode: HanlinChatPresentationMode,
+        tint: Color = .accentColor,
+        size: CGFloat = 32,
+        action: @escaping () -> Void
+    ) {
+        self.canSend = canSend
+        self.isStreaming = isStreaming
+        self.presentationMode = presentationMode
+        self.tint = tint
+        self.size = size
+        self.action = action
+    }
+
+    public var body: some View {
+        Button {
+            if canSend && !isStreaming { action() }
+        } label: {
+            Image(systemName: presentationMode == .compact ? "arrow.up.circle.fill" : "arrowtriangle.up.circle.fill")
+                .resizable()
+                .frame(width: size, height: size)
+                .foregroundStyle(canSend && !isStreaming ? tint : Color(.systemGray4))
+        }
+        .disabled(!canSend || isStreaming)
+        .accessibilityLabel("Send")
+    }
+}
+
 // MARK: - Message Bubble
 
 public struct HanlinChatMessageBubble: View {
@@ -125,16 +165,12 @@ public struct HanlinChatComposer: View {
                     }
                 }
 
-            Button {
-                if canSend && !isStreaming {
-                    onSend()
-                }
-            } label: {
-                Image(systemName: "arrow.up.circle.fill")
-                    .font(.title)
-                    .foregroundStyle(canSend && !isStreaming ? Color.accentColor : Color(.systemGray4))
-            }
-            .disabled(!canSend || isStreaming)
+            HanlinChatSendButton(
+                canSend: canSend,
+                isStreaming: isStreaming,
+                presentationMode: presentationMode,
+                action: onSend
+            )
         }
         .padding(.horizontal, presentationMode == .compact ? 12 : 16)
         .padding(.vertical, 8)

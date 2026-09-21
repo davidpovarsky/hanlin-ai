@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import HanlinChatCore
 import SwiftData
 import SwiftUI
 
@@ -35,7 +36,7 @@ class ChatRecords {
     var useModel: Int? = -1           // 正在使用的模型
     var temperature: Double = -999    // 采样温度参数（默认 不设置）
     var topP: Double = -999           // 累积概率参数（默认 不设置）
-    var maxTokens: Int = -999         // 最大输出参数，默认为 不设置
+    var maxTokens: Int = HanlinChatGenerationDefaults.maxTokens
     var maxMessagesNum: Int = 20      // 消息数量参数，默认为 20
     var systemMessage: String? = ""   // 系统消息
     var useSystemMessage: Bool = true
@@ -57,7 +58,7 @@ class ChatRecords {
         useModel: Int? = -1,            // 正在使用的模型
         temperature: Double = -999,     // 采样温度参数（默认 不设置）
         topP: Double = -999,            // 累积概率参数（默认 不设置）
-        maxTokens: Int = -999,          // 最大输出参数，默认为 不设置
+        maxTokens: Int = HanlinChatGenerationDefaults.maxTokens,
         maxMessagesNum: Int = 20,       // 消息数量参数，默认为 20
         systemMessage: String? = "",
         useSystemMessage: Bool = true,

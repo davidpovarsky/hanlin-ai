@@ -49,6 +49,7 @@ final class HanlinMiniAppHost {
     private let authorization: HanlinMiniAppAuthorizationPolicy
     private let defaults: UserDefaults
     private let hiddenKey = "hanlin.canonical-mini-apps.hidden.v1"
+    private var registeredRouteTargets: Set<HanlinAppID> = []
 
     private init(defaults: UserDefaults = .standard) {
         self.defaults = defaults
@@ -74,9 +75,15 @@ final class HanlinMiniAppHost {
     public func registerFallbackRoutes() async {
         let broker = requestBroker
         let store = dataStore
+        let currentTargets = Set(items.map(\.id))
+        for target in registeredRouteTargets.union(currentTargets) {
+            await broker.unregisterAll(target: target)
+        }
+        registeredRouteTargets = currentTargets
         if let swiftParityID = try? HanlinAppID(validating: "hanlin.demo.swift-parity"),
            let shareCap = try? HanlinCapabilityID(validating: "inter-app.share"),
            let shareAction = try? HanlinActionID(validating: "share.value") {
+            registeredRouteTargets.insert(swiftParityID)
             await broker.register(target: swiftParityID, action: shareAction, capability: shareCap) { _ in
                 let storageContext = HanlinMiniAppStorageContext(appID: swiftParityID, store: store)
                 if let data = try? await storageContext.read(area: .state, path: "parity.json"),
@@ -87,39 +94,27 @@ final class HanlinMiniAppHost {
             }
         }
 
-        // Generic action routing for installed Mini Apps
+        // NativeScript actions keep a stable broker route. The JavaScript bundle
+        // registers its implementation with the active host provider; it never
+        // replaces this authorization boundary.
         for item in items {
             let targetID = item.id
             let capabilities = Set(item.descriptor.capabilities.map(\.id))
 
-            // 1. Actions explicitly declared on the descriptor
             for action in item.descriptor.actions {
+                guard action.handler != nil else { continue }
                 for cap in action.capabilities {
                     guard capabilities.contains(cap) else { continue }
                     let actionID = action.id
                     await broker.register(target: targetID, action: actionID, capability: cap) { request in
                         return try await HanlinScriptingPlatform.shared.executeHeadlessAction(
+                            caller: request.caller,
                             targetAppID: targetID,
                             action: actionID,
                             capability: cap,
                             payload: request.payload
                         )
                     }
-                }
-            }
-
-            // 2. Default share.value route if inter-app.share is granted and not already registered
-            if let shareCap = try? HanlinCapabilityID(validating: "inter-app.share"),
-               capabilities.contains(shareCap),
-               let shareAction = try? HanlinActionID(validating: "share.value"),
-               !item.descriptor.actions.contains(where: { $0.id == shareAction }) {
-                await broker.register(target: targetID, action: shareAction, capability: shareCap) { request in
-                    return try await HanlinScriptingPlatform.shared.executeHeadlessAction(
-                        targetAppID: targetID,
-                        action: shareAction,
-                        capability: shareCap,
-                        payload: request.payload
-                    )
                 }
             }
         }

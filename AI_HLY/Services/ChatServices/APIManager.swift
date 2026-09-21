@@ -843,6 +843,12 @@ class APIManager {
         let fetchDescriptor = FetchDescriptor<APIKeys>(predicate: predicate)
         return (try? context.fetch(fetchDescriptor).first)?.requestURL
     }
+
+    private func getAPIConfiguration(for company: String) -> APIKeys? {
+        let predicate = #Predicate<APIKeys> { $0.company == company }
+        let fetchDescriptor = FetchDescriptor<APIKeys>(predicate: predicate)
+        return try? context.fetch(fetchDescriptor).first
+    }
     
     // 双语检索是否启用
     private func isBilingualSearchEnabled() -> Bool {
@@ -2420,11 +2426,13 @@ class APIManager {
                     
                     continuation.yield(StreamData(operationalState: currentLanguagePrefix ? "正在发送请求" : "Sending request"))
                     
-                    // 获取 API Key 和请求 URL
-                    guard let apiKey = getAPIKey(for: modelInfo.company ?? "Unknown") else {
+                    // 获取与模型厂商匹配的完整 Provider 配置。
+                    guard let providerConfiguration = getAPIConfiguration(for: modelInfo.company ?? "Unknown"),
+                          let apiKey = providerConfiguration.key,
+                          !apiKey.isEmpty else {
                         throw NSError(domain: "APIConfigError", code: -1, userInfo: [NSLocalizedDescriptionKey: "无效的 API Key"])
                     }
-                    guard let requestURLString = getRequestURL(for: modelInfo.company ?? "Unknown"),
+                    guard let requestURLString = providerConfiguration.requestURL,
                           let requestURL = URL(string: requestURLString),
                           !requestURLString.isEmpty else {
                         throw NSError(domain: "URLConfigError", code: -1, userInfo: [NSLocalizedDescriptionKey: "无效的请求 URL"])
@@ -2483,40 +2491,36 @@ class APIManager {
                         baseModelID: restoreBaseModelName(from: modelInfo.name ?? "Unknown"),
                         displayName: modelInfo.displayName,
                         company: modelInfo.company,
-                        apiType: "OpenAI",
+                        apiType: providerConfiguration.apiType.rawValue,
                         endpoint: requestURL,
                         apiKey: apiKey,
                         temperature: temperature,
                         topP: topP,
-                        maxTokens: maxTokens > 0 ? maxTokens : 2048,
+                        maxTokens: maxTokens > 0 ? maxTokens : HanlinChatGenerationDefaults.maxTokens,
                         supportsReasoning: modelInfo.supportsReasoning && ifThink,
                         supportReasoningChange: modelInfo.supportReasoningChange,
                         thinkingLength: thinkingLength,
                         supportsToolUse: modelInfo.agentCapabilities.supportsNativeToolCalling && ifToolUse
                     )
 
-                    var requestBody = HanlinChatRequestBuilder.buildOpenAIBody(
+                    var request = try HanlinChatRequestBuilder.buildRequest(
                         formattedMessages: finalFormattedMessages,
                         configuration: chatConfig,
                         tools: tools
                     )
 
                     if modelInfo.supportsVoiceGen && ifAudio && modelInfo.company == "QWEN" {
+                        guard let bodyData = request.httpBody,
+                              var requestBody = try JSONSerialization.jsonObject(with: bodyData) as? [String: Any] else {
+                            throw HanlinChatError.invalidRequest("QWEN audio request body is unavailable")
+                        }
                         requestBody["modalities"] = ["text", "audio"]
-                        requestBody["audio"] = [
-                            "voice": "Cherry",
-                            "format": "wav"
-                        ]
+                        requestBody["audio"] = ["voice": "Cherry", "format": "wav"]
+                        request.httpBody = try JSONSerialization.data(withJSONObject: requestBody)
                     }
 
-                    var request = URLRequest(url: requestURL)
-                    request.httpMethod = "POST"
-                    request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-                    request.setValue("Bearer \(apiKey)", forHTTPHeaderField: "Authorization")
-                    request.timeoutInterval = 60
-
                     if let recorder = self.agentDiagnosticsRecorder {
-                        let requestData = try JSONSerialization.data(withJSONObject: requestBody)
+                        let requestData = request.httpBody ?? Data()
                         diagnosticsRoundID = await recorder.beginRound(
                             index: depth + 1,
                             trigger: depth == 0 ? "initialUserRequest" : "continueAfterToolResult",
@@ -2524,34 +2528,11 @@ class APIManager {
                         )
                     }
                     
-                    request.httpBody = try? JSONSerialization.data(withJSONObject: requestBody, options: [])
-                    
                     // 推送请求状态
                     continuation.yield(StreamData(operationalState: currentLanguagePrefix ?  "等待模型响应" : "Waiting for model response"))
                     
-                    let (result, response) = try await URLSession.shared.bytes(for: request)
-                    let httpResponse = response as? HTTPURLResponse
-                    if let recorder = self.agentDiagnosticsRecorder, let diagnosticsRoundID {
-                        let requestID = httpResponse?.value(forHTTPHeaderField: "x-request-id")
-                            ?? httpResponse?.value(forHTTPHeaderField: "request-id")
-                        await recorder.responseStarted(
-                            roundID: diagnosticsRoundID,
-                            httpStatus: httpResponse?.statusCode,
-                            providerRequestID: requestID
-                        )
-                    }
-                    
-                    if let httpResponse = httpResponse, !(200...299).contains(httpResponse.statusCode) {
-                        var errorContent = ""
-                        do {
-                            var errorData = Data()
-                            for try await byte in result { errorData.append(byte) }
-                            if let errorString = String(data: errorData, encoding: .utf8) {
-                                errorContent = ":\(errorString)"
-                            }
-                        }
-                        throw NSError(domain: "NetworkError", code: -1, userInfo: [NSLocalizedDescriptionKey: "\(httpResponse.statusCode)请求错误\(errorContent)"])
-                    }
+                    let chatEngine = HanlinChatEngine()
+                    let result = await chatEngine.stream(request: request, configuration: chatConfig)
                     
                     // 定义变量保存所有分片累计的 tool_calls
                     var accumulatedToolCalls: [[String: Any]] = []
@@ -2560,42 +2541,60 @@ class APIManager {
                     self.toolMessage = ""
                     self.toolMessageReasoning = ""
                     var tempOperationalState = ""
-                    var zhipuReasoning: Bool = (
-                        (modelInfo.company == "ZHIPUAI" || modelInfo.company == "HANLIN")
-                        && modelInfo.supportsReasoning
-                        && (modelInfo.name?.hasPrefix("glm-z1") ?? false)
-                    )
+                    // Inline reasoning tags are normalized by HanlinChatStreamParser.
+                    var zhipuReasoning = false
                     var zhipuInThink = false      // 当前是否在 <think>…</think> 区间内
                     var zhipuBuffer = ""          // 用于拼接片段
                     var audioB64 = ""
                     var planning = ""
                     
                     // 处理流式响应
-                    for try await line in result.lines {
+                    for try await event in result {
                         if self.isCancelled {
                             continuation.finish()
                             self.isCancelled = false
                             break
                         }
-                        
-                        if line.hasPrefix("data: ") {
-                            let jsonString = line.replacingOccurrences(of: "data: ", with: "").trimmingCharacters(in: .whitespacesAndNewlines)
-                            guard let jsonData = jsonString.data(using: .utf8),
-                                  let jsonObject = try? JSONSerialization.jsonObject(with: jsonData, options: []) as? [String: Any] else {
-                                continue
-                            }
-                            if let usage = self.agentTokenUsage(from: jsonObject) {
-                                diagnosticsUsage = usage
-                                NativeToolTraceLogger.shared.log(
-                                    "ModelUsageReceived",
-                                    ["inputTokens": usage.inputTokens as Any, "outputTokens": usage.outputTokens as Any],
-                                    modelStep: depth + 1
-                                )
-                            }
-                            guard let choices = jsonObject["choices"] as? [[String: Any]],
-                                  let delta = choices.first?["delta"] as? [String: Any] else {
-                                continue
-                            }
+
+                        if let metadata = event.responseMetadata,
+                           let recorder = self.agentDiagnosticsRecorder,
+                           let diagnosticsRoundID {
+                            await recorder.responseStarted(
+                                roundID: diagnosticsRoundID,
+                                httpStatus: metadata.statusCode,
+                                providerRequestID: metadata.providerRequestID
+                            )
+                        }
+
+                        if let usage = event.tokenUsage {
+                            let providerUsage = AgentTokenUsage(
+                                inputTokens: usage.inputTokens,
+                                outputTokens: usage.outputTokens,
+                                reasoningTokens: usage.reasoningTokens,
+                                cachedInputTokens: usage.cachedInputTokens,
+                                totalTokens: usage.totalTokens,
+                                source: .providerReported
+                            )
+                            diagnosticsUsage = providerUsage
+                            NativeToolTraceLogger.shared.log(
+                                "ModelUsageReceived",
+                                ["inputTokens": providerUsage.inputTokens as Any, "outputTokens": providerUsage.outputTokens as Any],
+                                modelStep: depth + 1
+                            )
+                        }
+
+                        var delta: [String: Any] = [:]
+                        if let content = event.content { delta["content"] = content }
+                        if let reasoning = event.reasoning { delta["reasoning_content"] = reasoning }
+                        if let toolCalls = event.toolCalls { delta["tool_calls"] = toolCalls }
+                        if let audio = event.audioDelta { delta["audio"] = audio }
+                        let choices: [[String: Any]] = [[
+                            "delta": delta,
+                            "finish_reason": event.finishReason as Any
+                        ]]
+                        guard !delta.isEmpty || event.finishReason != nil else {
+                            continue
+                        }
                             
                             var responseData = StreamData()
                             
@@ -4083,7 +4082,6 @@ class APIManager {
                                     }
                                 }
                             }
-                        }
                     }
                     if let recorder = self.agentDiagnosticsRecorder,
                        let diagnosticsRoundID,
@@ -4529,25 +4527,6 @@ class APIManager {
         }
     }
 
-    private func agentTokenUsage(from object: [String: Any]) -> AgentTokenUsage? {
-        guard let usage = object["usage"] as? [String: Any] else { return nil }
-        let input = usage["prompt_tokens"] as? Int ?? usage["input_tokens"] as? Int
-        let output = usage["completion_tokens"] as? Int ?? usage["output_tokens"] as? Int
-        let total = usage["total_tokens"] as? Int
-        let promptDetails = usage["prompt_tokens_details"] as? [String: Any]
-        let completionDetails = usage["completion_tokens_details"] as? [String: Any]
-        let cached = promptDetails?["cached_tokens"] as? Int
-        let reasoning = completionDetails?["reasoning_tokens"] as? Int
-        guard input != nil || output != nil || total != nil else { return nil }
-        return AgentTokenUsage(
-            inputTokens: input,
-            outputTokens: output,
-            reasoningTokens: reasoning,
-            cachedInputTokens: cached,
-            totalTokens: total,
-            source: .providerReported
-        )
-    }
 }
 
 extension MKPolyline {

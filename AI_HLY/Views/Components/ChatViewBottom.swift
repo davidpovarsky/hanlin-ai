@@ -5,6 +5,7 @@
 //  Created by Codex on 3/7/25.
 //
 
+import HanlinScriptUI
 import SwiftUI
 import SwiftData
 import UniformTypeIdentifiers
@@ -2173,14 +2174,15 @@ struct ActionButtonsView: View {
                             || !selectedDocumentURLs.isEmpty
                             || !selectedPrompts.isEmpty
                             || !message.isEmpty {
-                    Button(action: onSendUser) {
-                        Image(systemName: "arrowtriangle.up.circle.fill")
-                            .resizable()
-                            .frame(width: size32, height: size32)
-                            .foregroundColor(sendButtonColor)
-                    }
+                    HanlinChatSendButton(
+                        canSend: !message.isEmpty,
+                        isStreaming: false,
+                        presentationMode: .full,
+                        tint: sendButtonColor,
+                        size: size32,
+                        action: onSendUser
+                    )
                     .animation(.spring(response: 0.5, dampingFraction: 0.7), value: message)
-                    .disabled(message.isEmpty)
                 } else {                     // 观察
                     Button(action: onSendObserve) {
                         Image(systemName: "eye.circle.fill")

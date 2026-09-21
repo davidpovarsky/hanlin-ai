@@ -2,8 +2,8 @@
 // HanlinChatCore
 //
 // Single authoritative remote model request builder for the Hanlin Chat Engine.
-// Preserves production APIManager request structure and bounds max_tokens
-// to eliminate HTTP 402 errors on OpenRouter and multi-provider endpoints.
+// Preserves production APIManager request structure and configured max_tokens
+// semantics across the main app and extension surfaces.
 
 import Foundation
 #if canImport(FoundationNetworking)
@@ -19,8 +19,6 @@ public struct HanlinChatRequestBuilder: Sendable {
         stream: Bool = true,
         tools: [[String: Any]]? = nil
     ) throws -> URLRequest {
-        let apiType = (configuration.apiType ?? "OpenAI").lowercased()
-
         var combinedSystem: String? = nil
         if let systemPrompt = configuration.systemPrompt, !systemPrompt.isEmpty {
             if let ctx = systemContext, !ctx.isEmpty {
@@ -32,38 +30,53 @@ public struct HanlinChatRequestBuilder: Sendable {
             combinedSystem = "Context:\n\(ctx)"
         }
 
-        switch apiType {
+        var messagePayloads: [[String: Any]] = []
+        if let combinedSystem, !combinedSystem.isEmpty {
+            messagePayloads.append([
+                "role": "system",
+                "content": combinedSystem
+            ])
+        }
+        for msg in messages {
+            messagePayloads.append([
+                "role": msg.role,
+                "content": msg.content
+            ])
+        }
+        if messagePayloads.isEmpty {
+            messagePayloads.append(["role": "user", "content": "Hello"])
+        }
+        return try buildRequest(
+            formattedMessages: messagePayloads,
+            configuration: configuration,
+            tools: tools
+        )
+    }
+
+    /// Builds a provider request from the production app's already-formatted
+    /// messages. This is the single request-format dispatch point used by both
+    /// APIManager and compact extension sessions.
+    public static func buildRequest(
+        formattedMessages: [[String: Any]],
+        configuration: HanlinChatModelConfiguration,
+        tools: [[String: Any]]? = nil
+    ) throws -> URLRequest {
+        switch (configuration.apiType ?? "OpenAI").lowercased() {
         case "anthropic":
             return try buildAnthropicRequest(
-                messages: messages,
+                formattedMessages: formattedMessages,
                 configuration: configuration,
-                systemContent: combinedSystem
+                tools: tools
             )
         case "gemini":
             return try buildGeminiRequest(
-                messages: messages,
+                formattedMessages: formattedMessages,
                 configuration: configuration,
-                systemContent: combinedSystem
+                tools: tools
             )
         default:
-            var messagePayloads: [[String: Any]] = []
-            if let combinedSystem, !combinedSystem.isEmpty {
-                messagePayloads.append([
-                    "role": "system",
-                    "content": combinedSystem
-                ])
-            }
-            for msg in messages {
-                messagePayloads.append([
-                    "role": msg.role,
-                    "content": msg.content
-                ])
-            }
-            if messagePayloads.isEmpty {
-                messagePayloads.append(["role": "user", "content": "Hello"])
-            }
             return try buildOpenAIRequest(
-                formattedMessages: messagePayloads,
+                formattedMessages: formattedMessages,
                 configuration: configuration,
                 tools: tools
             )
@@ -78,7 +91,9 @@ public struct HanlinChatRequestBuilder: Sendable {
         tools: [[String: Any]]? = nil
     ) -> [String: Any] {
         let baseName = configuration.baseModelID.isEmpty ? restoreBaseModelName(from: configuration.modelID) : configuration.baseModelID
-        let maxTokens = configuration.maxTokens > 0 ? configuration.maxTokens : 2048
+        let maxTokens = configuration.maxTokens > 0
+            ? configuration.maxTokens
+            : HanlinChatGenerationDefaults.maxTokens
 
         var requestBody: [String: Any] = [
             "model": baseName,
@@ -160,6 +175,16 @@ public struct HanlinChatRequestBuilder: Sendable {
             tools: tools
         )
 
+        return try buildOpenAIRequest(
+            requestBody: requestBody,
+            configuration: configuration
+        )
+    }
+
+    public static func buildOpenAIRequest(
+        requestBody: [String: Any],
+        configuration: HanlinChatModelConfiguration
+    ) throws -> URLRequest {
         var req = URLRequest(url: configuration.endpoint)
         req.httpMethod = "POST"
         req.setValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -174,9 +199,9 @@ public struct HanlinChatRequestBuilder: Sendable {
     // MARK: - Anthropic Request Builder
 
     private static func buildAnthropicRequest(
-        messages: [HanlinChatMessage],
+        formattedMessages: [[String: Any]],
         configuration: HanlinChatModelConfiguration,
-        systemContent: String?
+        tools: [[String: Any]]?
     ) throws -> URLRequest {
         var endpointURL = configuration.endpoint
         let urlStr = endpointURL.absoluteString
@@ -191,17 +216,29 @@ public struct HanlinChatRequestBuilder: Sendable {
             }
         }
 
-        var anthropicMessages: [[String: String]] = []
-        for msg in messages {
-            let role = (msg.role == "assistant" ? "assistant" : "user")
-            anthropicMessages.append(["role": role, "content": msg.content])
+        var systemParts: [String] = []
+        var anthropicMessages: [[String: Any]] = []
+        for message in formattedMessages {
+            let role = message["role"] as? String ?? "user"
+            if role == "system" {
+                if let content = message["content"] as? String, !content.isEmpty {
+                    systemParts.append(content)
+                }
+                continue
+            }
+            let normalizedRole = role == "assistant" ? "assistant" : "user"
+            if let content = message["content"] {
+                anthropicMessages.append(["role": normalizedRole, "content": content])
+            }
         }
         if anthropicMessages.isEmpty {
             anthropicMessages.append(["role": "user", "content": "Hello"])
         }
 
         let baseName = configuration.baseModelID.isEmpty ? restoreBaseModelName(from: configuration.modelID) : configuration.baseModelID
-        let maxTokens = configuration.maxTokens > 0 ? configuration.maxTokens : 4096
+        let maxTokens = configuration.maxTokens > 0
+            ? configuration.maxTokens
+            : HanlinChatGenerationDefaults.maxTokens
 
         var body: [String: Any] = [
             "model": baseName,
@@ -209,11 +246,27 @@ public struct HanlinChatRequestBuilder: Sendable {
             "max_tokens": maxTokens,
             "messages": anthropicMessages
         ]
-        if let systemContent, !systemContent.isEmpty {
-            body["system"] = systemContent
+        if !systemParts.isEmpty {
+            body["system"] = systemParts.joined(separator: "\n\n")
+        }
+        if configuration.temperature > 0 {
+            body["temperature"] = configuration.temperature
+        }
+        if configuration.topP > 0 {
+            body["top_p"] = configuration.topP
         }
         if configuration.supportsReasoning {
-            body["think"] = ["type": "enabled"]
+            let budget: Int = switch configuration.thinkingLength {
+            case 1: 1_024
+            case 2: 8_192
+            case 3: 16_384
+            default: 1_024
+            }
+            body["thinking"] = ["type": "enabled", "budget_tokens": budget]
+        }
+        if configuration.supportsToolUse, let tools {
+            let converted = anthropicTools(from: tools)
+            if !converted.isEmpty { body["tools"] = converted }
         }
 
         var req = URLRequest(url: endpointURL)
@@ -229,9 +282,9 @@ public struct HanlinChatRequestBuilder: Sendable {
     // MARK: - Gemini Request Builder
 
     private static func buildGeminiRequest(
-        messages: [HanlinChatMessage],
+        formattedMessages: [[String: Any]],
         configuration: HanlinChatModelConfiguration,
-        systemContent: String?
+        tools: [[String: Any]]?
     ) throws -> URLRequest {
         let baseName = configuration.baseModelID.isEmpty ? restoreBaseModelName(from: configuration.modelID) : configuration.baseModelID
         var endpointURL = configuration.endpoint
@@ -255,12 +308,21 @@ public struct HanlinChatRequestBuilder: Sendable {
             if let u = URL(string: urlString) { endpointURL = u }
         }
 
+        var systemParts: [String] = []
         var contents: [[String: Any]] = []
-        for msg in messages {
-            let role = (msg.role == "assistant" ? "model" : "user")
+        for message in formattedMessages {
+            let sourceRole = message["role"] as? String ?? "user"
+            if sourceRole == "system" {
+                if let content = message["content"] as? String, !content.isEmpty {
+                    systemParts.append(content)
+                }
+                continue
+            }
+            let role = sourceRole == "assistant" ? "model" : "user"
+            guard let content = message["content"] as? String else { continue }
             contents.append([
                 "role": role,
-                "parts": [["text": msg.content]]
+                "parts": [["text": content]]
             ])
         }
         if contents.isEmpty {
@@ -270,8 +332,8 @@ public struct HanlinChatRequestBuilder: Sendable {
         var body: [String: Any] = [
             "contents": contents
         ]
-        if let systemContent, !systemContent.isEmpty {
-            body["systemInstruction"] = ["parts": [["text": systemContent]]]
+        if !systemParts.isEmpty {
+            body["systemInstruction"] = ["parts": [["text": systemParts.joined(separator: "\n\n")]]]
         }
 
         var genConfig: [String: Any] = [:]
@@ -281,8 +343,27 @@ public struct HanlinChatRequestBuilder: Sendable {
         if configuration.temperature > 0 {
             genConfig["temperature"] = configuration.temperature
         }
+        if configuration.topP > 0 {
+            genConfig["topP"] = configuration.topP
+        }
+        if configuration.supportsReasoning {
+            var thinkingConfig: [String: Any] = ["includeThoughts": true]
+            switch configuration.thinkingLength {
+            case 1: thinkingConfig["thinkingBudget"] = 1_024
+            case 2: thinkingConfig["thinkingBudget"] = 8_192
+            case 3: thinkingConfig["thinkingBudget"] = 16_384
+            default: break
+            }
+            genConfig["thinkingConfig"] = thinkingConfig
+        }
         if !genConfig.isEmpty {
             body["generationConfig"] = genConfig
+        }
+        if configuration.supportsToolUse, let tools {
+            let declarations = geminiFunctionDeclarations(from: tools)
+            if !declarations.isEmpty {
+                body["tools"] = [["functionDeclarations": declarations]]
+            }
         }
 
         var req = URLRequest(url: endpointURL)
@@ -292,5 +373,28 @@ public struct HanlinChatRequestBuilder: Sendable {
         req.timeoutInterval = 60
         req.httpBody = try JSONSerialization.data(withJSONObject: body, options: [])
         return req
+    }
+
+    private static func anthropicTools(from tools: [[String: Any]]) -> [[String: Any]] {
+        tools.compactMap { tool in
+            guard let function = tool["function"] as? [String: Any],
+                  let name = function["name"] as? String else { return nil }
+            var result: [String: Any] = [
+                "name": name,
+                "input_schema": function["parameters"] as? [String: Any] ?? ["type": "object"]
+            ]
+            if let description = function["description"] as? String {
+                result["description"] = description
+            }
+            return result
+        }
+    }
+
+    private static func geminiFunctionDeclarations(from tools: [[String: Any]]) -> [[String: Any]] {
+        tools.compactMap { tool in
+            guard let function = tool["function"] as? [String: Any],
+                  function["name"] is String else { return nil }
+            return function
+        }
     }
 }

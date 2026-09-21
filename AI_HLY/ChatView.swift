@@ -162,7 +162,7 @@ struct ChatView: View {
         
         // 对聊天记录和模型数据排序
         let sortedMessages = messages.sorted { $0.timestamp < $1.timestamp }
-        let firstVisibleModelIndex = modelTemp.firstIndex(where: { !$0.isHidden }) ?? 0
+        let firstVisibleModelIndex = HanlinDefaultChatPolicy.defaultModelIndex(in: modelTemp) ?? 0
         
         // 根据匹配消息决定加载数量
         let targetCount: Int

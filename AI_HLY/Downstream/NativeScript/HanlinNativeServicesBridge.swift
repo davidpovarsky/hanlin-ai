@@ -25,6 +25,12 @@ public final class HanlinNativeServicesHostProvider: NSObject, @unchecked Sendab
     nonisolated(unsafe) public private(set) static var activeCacheDirectory: String?
     nonisolated(unsafe) public private(set) static var activeGrantedCapabilities: Set<String> = []
     nonisolated(unsafe) public private(set) static var registeredActionIDs: Set<HanlinActionID> = []
+    nonisolated(unsafe) private static var registeredActionHandlers: [HanlinActionID: RegisteredActionHandler] = [:]
+
+    private struct RegisteredActionHandler {
+        let capability: HanlinCapabilityID
+        let invoke: (String, String, @escaping (String?, String?) -> Void) -> Void
+    }
 
     public static func setActiveContainer(
         appID: String,
@@ -41,16 +47,11 @@ public final class HanlinNativeServicesHostProvider: NSObject, @unchecked Sendab
         activeCacheDirectory = cacheDir
         activeGrantedCapabilities = Set(grantedCapabilities)
         registeredActionIDs.removeAll()
+        registeredActionHandlers.removeAll()
         HanlinNativeServicesBridge.register(shared)
     }
 
     public static func clearActiveContainer() {
-        if let appID = activeAppID, let parsedID = try? HanlinAppID(validating: appID) {
-            Task { @MainActor in
-                await HanlinMiniAppHost.shared.requestBroker.unregisterAll(target: parsedID)
-                await HanlinMiniAppHost.shared.registerFallbackRoutes()
-            }
-        }
         activeAppID = nil
         activeDataRoot = nil
         activeStateDirectory = nil
@@ -58,6 +59,7 @@ public final class HanlinNativeServicesHostProvider: NSObject, @unchecked Sendab
         activeCacheDirectory = nil
         activeGrantedCapabilities.removeAll()
         registeredActionIDs.removeAll()
+        registeredActionHandlers.removeAll()
     }
 
     /// Checks whether the active session has been granted the required capability.
@@ -273,29 +275,48 @@ public final class HanlinNativeServicesHostProvider: NSObject, @unchecked Sendab
         capability: String,
         handler: @escaping (String, String, @escaping (String?, String?) -> Void) -> Void
     ) {
-        guard let callerID = Self.activeAppID,
-              let appID = try? HanlinAppID(validating: callerID),
+        guard Self.activeAppID != nil,
               let actionID = try? HanlinActionID(validating: action),
               let capabilityID = try? HanlinCapabilityID(validating: capability) else {
             return
         }
         nonisolated(unsafe) let safeHandler = handler
         Self.registeredActionIDs.insert(actionID)
-        Task { @MainActor in
-            let broker = HanlinMiniAppHost.shared.requestBroker
-            await broker.register(target: appID, action: actionID, capability: capabilityID) { request in
-                try await withCheckedThrowingContinuation { continuation in
-                    let payloadStr = (try? String(data: request.payload.canonicalJSONData(), encoding: .utf8)) ?? "{}"
-                    safeHandler(request.caller.rawValue, payloadStr) { responseJSON, errorStr in
-                        if let errorStr {
-                            continuation.resume(throwing: NSError(domain: "HanlinMiniAppRequest", code: 1, userInfo: [NSLocalizedDescriptionKey: errorStr]))
-                        } else if let responseJSON, let data = responseJSON.data(using: .utf8),
-                                  let value = try? JSONDecoder().decode(HanlinValue.self, from: data) {
-                            continuation.resume(returning: value)
-                        } else {
-                            continuation.resume(returning: .null)
-                        }
-                    }
+        Self.registeredActionHandlers[actionID] = RegisteredActionHandler(
+            capability: capabilityID,
+            invoke: safeHandler
+        )
+    }
+
+    @MainActor
+    static func invokeRegisteredAction(
+        _ action: HanlinActionID,
+        capability: HanlinCapabilityID,
+        caller: HanlinAppID,
+        payload: HanlinValue
+    ) async throws -> HanlinValue {
+        guard let registration = registeredActionHandlers[action] else {
+            throw HanlinMiniAppRequestError.routeNotFound
+        }
+        guard registration.capability == capability else {
+            throw HanlinMiniAppRequestError.capabilityMismatch
+        }
+        let payloadJSON = try String(data: payload.canonicalJSONData(), encoding: .utf8)
+            ?? "{}"
+        return try await withCheckedThrowingContinuation { continuation in
+            registration.invoke(caller.rawValue, payloadJSON) { responseJSON, errorString in
+                if let errorString {
+                    continuation.resume(throwing: NSError(
+                        domain: "HanlinMiniAppRequest",
+                        code: 1,
+                        userInfo: [NSLocalizedDescriptionKey: errorString]
+                    ))
+                } else if let responseJSON,
+                          let data = responseJSON.data(using: .utf8),
+                          let value = try? JSONDecoder().decode(HanlinValue.self, from: data) {
+                    continuation.resume(returning: value)
+                } else {
+                    continuation.resume(returning: .null)
                 }
             }
         }

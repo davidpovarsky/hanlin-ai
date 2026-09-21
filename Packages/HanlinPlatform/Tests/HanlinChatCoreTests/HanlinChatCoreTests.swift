@@ -8,9 +8,8 @@ import Testing
 @Suite("HanlinChatCore Tests")
 struct HanlinChatCoreTests {
 
-    @Test("HanlinChatModelConfiguration bounds maxTokens to prevent OpenRouter HTTP 402")
-    func testModelConfigurationBoundsMaxTokens() {
-        // Default maxTokens should be 2048
+    @Test("HanlinChatModelConfiguration uses the shared default and preserves explicit maxTokens")
+    func testModelConfigurationMaxTokenSemantics() {
         let configDefault = HanlinChatModelConfiguration(
             modelID: "openai/gpt-4o",
             displayName: "GPT-4o",
@@ -19,7 +18,7 @@ struct HanlinChatCoreTests {
             endpoint: "https://openrouter.ai/api/v1",
             credential: "test-api-key"
         )
-        #expect(configDefault.maxTokens == 2048)
+        #expect(configDefault.maxTokens == HanlinChatGenerationDefaults.maxTokens)
 
         // Nil maxTokens defaults to 2048
         let configNil = HanlinChatModelConfiguration(
@@ -31,7 +30,7 @@ struct HanlinChatCoreTests {
             credential: "test-api-key",
             maxTokens: nil
         )
-        #expect(configNil.maxTokens == 2048)
+        #expect(configNil.maxTokens == HanlinChatGenerationDefaults.maxTokens)
 
         // Explicit reasonable maxTokens is preserved
         let configExplicit = HanlinChatModelConfiguration(
@@ -45,8 +44,8 @@ struct HanlinChatCoreTests {
         )
         #expect(configExplicit.maxTokens == 4096)
 
-        // Excessive maxTokens is capped to 8192
-        let configExcessive = HanlinChatModelConfiguration(
+        // The engine does not silently replace a user's configured provider limit.
+        let configLarge = HanlinChatModelConfiguration(
             modelID: "deepseek/deepseek-r1",
             displayName: "DeepSeek R1",
             company: "OpenRouter",
@@ -55,10 +54,53 @@ struct HanlinChatCoreTests {
             credential: "test-api-key",
             maxTokens: 128_000
         )
-        #expect(configExcessive.maxTokens == 8192)
+        #expect(configLarge.maxTokens == 128_000)
     }
 
-    @Test("HanlinChatRequestBuilder creates correct OpenAI/OpenRouter request with bounded max_tokens")
+    @Test("Full and compact message adapters produce the same production request")
+    func testSharedRequestPath() throws {
+        let config = HanlinChatModelConfiguration(
+            modelID: "openai/gpt-4o-mini",
+            company: "OpenRouter",
+            apiType: "OpenAI",
+            endpoint: "https://openrouter.ai/api/v1/chat/completions",
+            credential: "test-key",
+            temperature: 0.4,
+            topP: 0.8,
+            maxTokens: 3_333,
+            supportsReasoning: true,
+            supportReasoningChange: true,
+            thinkingLength: 2
+        )
+        let messages: [HanlinChatMessage] = [.user("What does this mean?")]
+        let context = "Selected source text"
+
+        let compactRequest = try HanlinChatRequestBuilder.buildRequest(
+            messages: messages,
+            configuration: config,
+            systemContext: context
+        )
+        let fullMessages: [[String: Any]] = [
+            ["role": "system", "content": "Context:\n\(context)"],
+            ["role": "user", "content": "What does this mean?"]
+        ]
+        let fullRequest = try HanlinChatRequestBuilder.buildRequest(
+            formattedMessages: fullMessages,
+            configuration: config
+        )
+
+        #expect(compactRequest.url == fullRequest.url)
+        #expect(compactRequest.allHTTPHeaderFields == fullRequest.allHTTPHeaderFields)
+        #expect(compactRequest.httpBody == fullRequest.httpBody)
+
+        let body = try #require(
+            JSONSerialization.jsonObject(with: try #require(compactRequest.httpBody)) as? [String: Any]
+        )
+        #expect(body["max_tokens"] as? Int == 3_333)
+        #expect(body["reasoning_effort"] as? String == "medium")
+    }
+
+    @Test("HanlinChatRequestBuilder creates the configured OpenAI/OpenRouter request")
     func testOpenAIRequestBuilder() throws {
         let config = HanlinChatModelConfiguration(
             modelID: "google/gemini-2.0-flash-001",
@@ -86,7 +128,7 @@ struct HanlinChatCoreTests {
         )
 
         #expect(request.httpMethod == "POST")
-        #expect(request.url?.absoluteString == "https://openrouter.ai/api/v1/chat/completions")
+        #expect(request.url?.absoluteString == "https://openrouter.ai/api/v1")
         #expect(request.value(forHTTPHeaderField: "Authorization") == "Bearer sk-or-v1-testkey123")
         #expect(request.value(forHTTPHeaderField: "Content-Type") == "application/json")
         #expect(request.value(forHTTPHeaderField: "HTTP-Referer") != nil)
@@ -294,6 +336,13 @@ struct HanlinChatCoreTests {
         let stopChunk = "data: {\"type\":\"message_stop\"}\n\n"
         let stopEvents = parser.parse(chunk: stopChunk)
         #expect(stopEvents.contains { $0.isDone })
+
+        let toolStart = "data: {\"type\":\"content_block_start\",\"index\":1,\"content_block\":{\"type\":\"tool_use\",\"id\":\"tool-1\",\"name\":\"lookup\"}}\n\n"
+        let toolDelta = "data: {\"type\":\"content_block_delta\",\"index\":1,\"delta\":{\"type\":\"input_json_delta\",\"partial_json\":\"{\\\"term\\\":\\\"shalom\\\"}\"}}\n\n"
+        #expect(parser.parse(chunk: toolStart).first?.toolCalls?.first?["id"] as? String == "tool-1")
+        let function = parser.parse(chunk: toolDelta).first?.toolCalls?.first?["function"] as? [String: Any]
+        #expect(function?["name"] as? String == "lookup")
+        #expect(function?["arguments"] as? String == "{\"term\":\"shalom\"}")
     }
 
     @Test("HanlinChatStreamParser correctly parses Gemini SSE events")
@@ -305,5 +354,8 @@ struct HanlinChatCoreTests {
 
         #expect(events.count == 1)
         #expect(events.first?.content == "Bereshit translates to In the beginning.")
+
+        let stopChunk = "data: {\"candidates\":[{\"finishReason\":\"MAX_TOKENS\"}]}\n\n"
+        #expect(parser.parse(chunk: stopChunk).first?.finishReason == "length")
     }
 }
