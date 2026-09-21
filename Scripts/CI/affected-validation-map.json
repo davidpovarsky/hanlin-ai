@@ -30,6 +30,17 @@
       ],
       "consumers": []
     },
+    "unified_host_services": {
+      "description": "Unified Host Services layer",
+      "patterns": [
+        "AI_HLY/Downstream/HostServices/**",
+        "AI_HLYTests/HanlinUnifiedHostServices*"
+      ],
+      "direct_validation_groups": [
+        "unified_host_services"
+      ],
+      "consumers": []
+    },
     "scripting_reference": {
       "description": "Scripting compatibility reference data, schemas, and generators",
       "patterns": [
@@ -675,6 +686,16 @@
     }
   },
   "validation_groups": {
+    "unified_host_services": {
+      "description": "Unified Host Services layer tests",
+      "job": "simulator",
+      "prerequisites": [],
+      "workflow_outputs": {
+        "run_simulator_job": true,
+        "run_simulator_unit": true,
+        "simulator_unit_filter": "AI_HLYTests/HanlinUnifiedHostServices"
+      }
+    },
     "ci_router": {
       "description": "Execute CI router and cache input normalization unit tests",
       "job": "phase1",

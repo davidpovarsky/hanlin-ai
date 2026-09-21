@@ -10,6 +10,11 @@ final class RuntimeCenterModel {
 
     private let core = AppRuntimeCore.shared
 
+    func toggleAvailability(for kind: RuntimeKind) {
+        let isCurrentlyAvailable = RuntimeAvailabilityStore.shared.isAvailable(kind)
+        RuntimeAvailabilityStore.shared.setAvailable(!isCurrentlyAvailable, for: kind)
+    }
+
     func load() async {
         let values = await core.snapshots()
         snapshots = Dictionary(uniqueKeysWithValues: values.map { ($0.kind, $0) })
@@ -108,6 +113,10 @@ struct RuntimeCenterView: View {
                         image: image,
                         snapshot: snapshot(for: kind),
                         isBusy: model.isBusy,
+                        isAvailable: RuntimeAvailabilityStore.shared.isAvailable(kind),
+                        onToggleAvailability: { newValue in
+                            RuntimeAvailabilityStore.shared.setAvailable(newValue, for: kind)
+                        },
                         prepare: { Task { await model.prepare(kind) } },
                         smoke: { Task { await model.smokeTest(kind) } },
                         destination: { destination(for: kind) }
@@ -160,6 +169,8 @@ private struct RuntimeCard<Destination: View>: View {
     let image: String
     let snapshot: RuntimeSnapshot
     let isBusy: Bool
+    let isAvailable: Bool
+    let onToggleAvailability: (Bool) -> Void
     let prepare: () -> Void
     let smoke: () -> Void
     let destination: () -> Destination
@@ -171,7 +182,13 @@ private struct RuntimeCard<Destination: View>: View {
                     .font(.headline)
                     .accessibilityIdentifier("hanlin-runtime-card-\(kind.rawValue)")
                 Spacer()
+                Toggle("", isOn: Binding(get: { isAvailable }, set: onToggleAvailability))
+                    .labelsHidden()
+                    .accessibilityIdentifier("hanlin-runtime-availability-\(kind.rawValue)")
                 Text(RuntimeL10n.string(snapshot.state.localizationKey)).font(.caption).foregroundStyle(snapshot.state.tint)
+            }
+            if snapshot.state == .stopped && isAvailable {
+                Text(RuntimeL10n.string("Starts on demand")).font(.caption).foregroundStyle(.secondary)
             }
             if let version = snapshot.version { LabeledContent(RuntimeL10n.string("Version"), value: version) }
             if let source = snapshot.source { LabeledContent(RuntimeL10n.string("Source"), value: source) }

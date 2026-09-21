@@ -5,12 +5,14 @@ public enum HanlinMiniAppEngine: String, Codable, CaseIterable, Hashable, Sendab
     case swift
     case nativeScript
     case expo
+    case scriptingJSC
 
     public var displayName: String {
         switch self {
         case .swift: return "Swift"
         case .nativeScript: return "NativeScript"
         case .expo: return "Expo"
+        case .scriptingJSC: return "ScriptUI"
         }
     }
 }
@@ -78,7 +80,7 @@ public struct HanlinCanonicalMiniAppCatalog: Sendable {
         case .nativeScript:
             return .nativeScript
         case .script:
-            return nil
+            return .scriptingJSC
         }
     }
 
@@ -96,7 +98,7 @@ public struct HanlinCanonicalMiniAppCatalog: Sendable {
         case .nativeScript:
             return .nativeScript
         case .script:
-            return nil
+            return .scriptingJSC
         }
     }
 
