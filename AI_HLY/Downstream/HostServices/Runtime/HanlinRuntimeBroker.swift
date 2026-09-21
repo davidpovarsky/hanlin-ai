@@ -74,7 +74,7 @@ actor HanlinRuntimeBroker {
             return executionResult
 
         case .shell:
-            return try core.shell.execute(
+            return try await core.shell.execute(
                 command: source,
                 workspace: workspace,
                 environment: environment,
@@ -98,7 +98,7 @@ actor HanlinRuntimeBroker {
 
         let workspace = try deriveWorkspace(for: context)
 
-        return try core.shell.execute(
+        return try await core.shell.execute(
             command: command,
             workspace: workspace,
             environment: environment,

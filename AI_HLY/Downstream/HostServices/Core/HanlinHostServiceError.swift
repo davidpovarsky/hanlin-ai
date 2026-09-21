@@ -1,7 +1,7 @@
 import Foundation
 import HanlinPlatformContracts
 
-public enum HanlinHostServiceError: Error, Sendable, LocalizedError {
+enum HanlinHostServiceError: Error, Sendable, LocalizedError {
     case runtimeDisabledByUser(RuntimeKind)
     case capabilityNotGranted(String)
     case systemAuthorizationDenied(String)
@@ -17,7 +17,7 @@ public enum HanlinHostServiceError: Error, Sendable, LocalizedError {
     case quotaExceeded(String)
     case invalidRequest(String)
     
-    public var errorDescription: String? {
+    var errorDescription: String? {
         switch self {
         case .runtimeDisabledByUser(let kind):
             return "Runtime disabled by user: \(kind)"

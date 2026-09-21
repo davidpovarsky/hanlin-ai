@@ -6,6 +6,35 @@
 
 import HanlinChatCore
 import SwiftUI
+#if canImport(UIKit)
+import UIKit
+#endif
+
+private extension Color {
+    static var chatSystemGray4: Color {
+        #if canImport(UIKit)
+        Color(uiColor: .systemGray4)
+        #else
+        Color.gray.opacity(0.3)
+        #endif
+    }
+
+    static var chatSecondaryBackground: Color {
+        #if canImport(UIKit)
+        Color(uiColor: .secondarySystemBackground)
+        #else
+        Color.secondary.opacity(0.15)
+        #endif
+    }
+
+    static var chatSystemBackground: Color {
+        #if canImport(UIKit)
+        Color(uiColor: .systemBackground)
+        #else
+        Color.primary.opacity(0.05)
+        #endif
+    }
+}
 
 public enum HanlinChatPresentationMode: Sendable {
     case full
@@ -45,7 +74,7 @@ public struct HanlinChatSendButton: View {
             Image(systemName: presentationMode == .compact ? "arrow.up.circle.fill" : "arrowtriangle.up.circle.fill")
                 .resizable()
                 .frame(width: size, height: size)
-                .foregroundStyle(canSend && !isStreaming ? tint : Color(.systemGray4))
+                .foregroundStyle(canSend && !isStreaming ? tint : Color.chatSystemGray4)
         }
         .disabled(!canSend || isStreaming)
         .accessibilityLabel("Send")
@@ -109,7 +138,7 @@ public struct HanlinChatMessageBubble: View {
                     .padding(presentationMode == .compact ? 12 : 14)
             }
         }
-        .background(Color(.secondarySystemBackground), in: RoundedRectangle(cornerRadius: 16))
+        .background(Color.chatSecondaryBackground, in: RoundedRectangle(cornerRadius: 16))
     }
 
     private var userContent: some View {
@@ -157,7 +186,7 @@ public struct HanlinChatComposer: View {
                 .lineLimit(1...4)
                 .font(presentationMode == .compact ? .subheadline : .body)
                 .padding(10)
-                .background(Color(.secondarySystemBackground), in: RoundedRectangle(cornerRadius: 18))
+                .background(Color.chatSecondaryBackground, in: RoundedRectangle(cornerRadius: 18))
                 .focused($isInputFocused)
                 .onSubmit {
                     if canSend && !isStreaming {
@@ -174,7 +203,7 @@ public struct HanlinChatComposer: View {
         }
         .padding(.horizontal, presentationMode == .compact ? 12 : 16)
         .padding(.vertical, 8)
-        .background(Color(.systemBackground))
+        .background(Color.chatSystemBackground)
     }
 }
 

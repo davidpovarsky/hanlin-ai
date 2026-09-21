@@ -25,7 +25,7 @@ public actor HanlinSystemServicesBroker {
     public init() {}
     
     // Helper to check capabilities
-    private func requireCapability(_ cap: String, in context: HanlinHostCallContext) throws {
+    nonisolated private func requireCapability(_ cap: String, in context: HanlinHostCallContext) throws {
         guard context.effectiveCapabilities.contains(cap) || context.effectiveCapabilities.contains("all") else {
             throw HanlinHostServiceError.capabilityNotGranted(cap)
         }
