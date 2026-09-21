@@ -2,7 +2,7 @@ import Foundation
 import HanlinPlatformContracts
 
 /// Result of evaluating a capability authorization request.
-public enum HanlinHostCapabilityResult: Sendable {
+public enum HanlinHostCapabilityResult: Equatable, Sendable {
     case allowed
     case notGranted
     case notDeclared

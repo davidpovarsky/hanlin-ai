@@ -93,8 +93,9 @@ struct HanlinChatCoreTests {
         #expect(compactRequest.allHTTPHeaderFields == fullRequest.allHTTPHeaderFields)
         #expect(compactRequest.httpBody == fullRequest.httpBody)
 
+        let httpBody = try #require(compactRequest.httpBody)
         let body = try #require(
-            JSONSerialization.jsonObject(with: try #require(compactRequest.httpBody)) as? [String: Any]
+            JSONSerialization.jsonObject(with: httpBody) as? [String: Any]
         )
         #expect(body["max_tokens"] as? Int == 3_333)
         #expect(body["reasoning_effort"] as? String == "medium")
