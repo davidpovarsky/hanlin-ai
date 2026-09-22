@@ -111,12 +111,7 @@ public final class ExpoHostServicesAdapter: NSObject, @unchecked Sendable, Hanli
     }
 
     public func executeSQLite(sql: String, params: [String]?) async throws -> String {
-        let rows = try await HanlinSQLiteHostAdapter.shared.fetchAll(handle: "default", sql: sql, arguments: params, context: context)
-        if JSONSerialization.isValidJSONObject(rows) {
-            let jsonData = try JSONSerialization.data(withJSONObject: rows, options: [])
-            return String(data: jsonData, encoding: .utf8) ?? "[]"
-        }
-        return "[]"
+        return try await HanlinSQLiteHostAdapter.shared.fetchAllJSON(handle: "default", sql: sql, arguments: params, context: context)
     }
 
     public func fetchURL(urlString: String) async throws -> String {

@@ -136,6 +136,21 @@ actor HanlinSQLiteHostAdapter {
         return try svc.fetchAll(handle: handle, sql: sql, arguments: arguments)
     }
 
+    /// Sendable-safe variant: serialises the result to a JSON string inside the actor
+    /// before returning, avoiding [[String: Any]] crossing the actor boundary.
+    func fetchAllJSON(
+        handle: String,
+        sql: String,
+        arguments: [Any]? = nil,
+        context: HanlinHostCallContext
+    ) async throws -> String {
+        let svc = try await service(for: context)
+        let rows = try svc.fetchAll(handle: handle, sql: sql, arguments: arguments)
+        guard JSONSerialization.isValidJSONObject(rows) else { return "[]" }
+        let data = try JSONSerialization.data(withJSONObject: rows, options: [])
+        return String(data: data, encoding: .utf8) ?? "[]"
+    }
+
     // MARK: - Session Cleanup
 
     /// Close all databases and remove the cached service for an app.

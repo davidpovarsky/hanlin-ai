@@ -61,9 +61,9 @@ public final class SwiftMiniAppHostServicesAdapter: NSObject, @unchecked Sendabl
     public func executeSQLite(
         handle: String = "default",
         sql: String,
-        arguments: [Any]? = nil
-    ) async throws -> [[String: Any]] {
-        return try await HanlinSQLiteHostAdapter.shared.fetchAll(
+        arguments: [String]? = nil
+    ) async throws -> String {
+        return try await HanlinSQLiteHostAdapter.shared.fetchAllJSON(
             handle: handle,
             sql: sql,
             arguments: arguments,
