@@ -31,6 +31,18 @@ repository to export the authoritative interfaces and machine-readable manifest.
 routes to the configured macOS/Xcode authority; the downloaded files belong in a local untracked
 directory and must never be committed.
 
+For the iOS 27 inventory, select GitHub's dedicated runner explicitly:
+
+```powershell
+apple-sdk-interface SwiftUI SwiftUICore --sdk iphoneos --xcode stable --runs-on xcode-27
+```
+
+The checked-in inventory records Xcode 27.0 build 27A266a, `iphoneos27.0`, the arm64e device
+variant, source paths, and SHA-256 hashes. The coverage report separates the complete SDK inventory
+from Hanlin's exported surface. Underscored/SPI declarations stay inventoried but are excluded unless
+explicitly allowlisted; unavailable, deprecated, and superseded declarations have terminal
+classifications. `NavigationView` is superseded by `NavigationStack` and `NavigationSplitView`.
+
 First refresh the installed Expo surface with `node Scripts/Expo/inventory-expo-ui.mjs`. Run
 `hanlin-swiftui-bridge` with both full interfaces, `--sdk-manifest`,
 `Tools/SwiftUIBridge/configuration.json`, an explicit SDK identity, and all three destinations:
@@ -49,3 +61,9 @@ map to a typed surface. New SDK declarations that are not mechanically safe rema
 `needs-investigation`; every unresolved signature carries a machine-readable reason. Generic object
 lifetimes are `unsupported`, scene APIs are `host-lifecycle-only`, and non-core framework inputs are
 classified as `companion-framework` rather than silently treated as SwiftUI core.
+
+Manual semantic adapters currently cover controlled search and suggestions, sheet/full-screen/popover
+presentation, inspector, Boolean focus, safe-area inset slots, AsyncImage phases, and serializable
+dynamic tables. Their reviewed label sets deliberately leave token search, item-driven presentation,
+generic focus domains, request-based image builders, sorting, outlines, multi-selection, and column
+customization visible as unresolved overloads.

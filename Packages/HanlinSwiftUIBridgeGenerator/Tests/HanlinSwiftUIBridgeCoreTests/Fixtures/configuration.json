@@ -6,6 +6,15 @@
   "expoModifiers": ["lineLimit"],
   "expoReviewedViews": [],
   "expoReviewedModifiers": [],
+  "underscoredAllowlist": {
+    "_AllowedView": "Explicit fixture opt-in."
+  },
+  "supersededSymbols": {
+    "NavigationView": {
+      "reason": "Use modern navigation containers.",
+      "replacement": ["NavigationStack", "NavigationSplitView"]
+    }
+  },
   "rules": {
     "TextEditor": {
       "status": "manual",

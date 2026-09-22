@@ -19,6 +19,90 @@
     "reason": "Axis.Set is represented by a typed React prop while children preserve native SwiftUI composition.",
     "adapter": "HanlinExpoUIModule.swift"
   },
+  "searchable": {
+    "status": "manual",
+    "reason": "Uses controlled String and Bool bindings with named content and suggestions slots plus submit/change events.",
+    "adapter": "Searchable",
+    "coveredParameterLabelSets": [
+      ["text", "placement", "prompt"],
+      ["text", "isPresented", "placement", "prompt"],
+      ["text", "placement", "prompt", "suggestions"]
+    ],
+    "uncoveredReason": "Token and editable-token search overloads require typed collection identity and token-content adapters."
+  },
+  "sheet": {
+    "status": "manual",
+    "reason": "Uses a controlled Bool presentation adapter with content and presented-content slots.",
+    "adapter": "Sheet",
+    "coveredParameterLabelSets": [["isPresented", "onDismiss", "content"]],
+    "uncoveredReason": "Item-driven presentation requires a typed identifiable-item bridge."
+  },
+  "fullScreenCover": {
+    "status": "manual",
+    "reason": "Uses a controlled Bool presentation adapter with content and presented-content slots.",
+    "adapter": "FullScreenCover",
+    "coveredParameterLabelSets": [["isPresented", "onDismiss", "content"]],
+    "uncoveredReason": "Item-driven presentation requires a typed identifiable-item bridge."
+  },
+  "popover": {
+    "status": "manual",
+    "reason": "Uses a controlled Bool presentation adapter with content and presented-content slots.",
+    "adapter": "PopoverPresentation",
+    "coveredParameterLabelSets": [["isPresented", "attachmentAnchor", "arrowEdge", "content"]],
+    "uncoveredReason": "Item-driven presentation requires a typed identifiable-item bridge."
+  },
+  "inspector": {
+    "status": "manual",
+    "reason": "Uses a controlled Bool inspector adapter with content and inspector slots.",
+    "adapter": "Inspector"
+  },
+  "focused": {
+    "status": "manual",
+    "reason": "Uses a controlled FocusState Bool adapter with focus change events.",
+    "adapter": "Focused",
+    "coveredParameterLabelSets": [["condition"]],
+    "uncoveredReason": "Arbitrary hashable focus values require a typed focus-domain adapter."
+  },
+  "safeAreaInset": {
+    "status": "manual",
+    "reason": "Maps every safe-area edge to native SwiftUI with separate content and inset slots.",
+    "adapter": "SafeAreaInset",
+    "coveredParameterLabelSets": [["edge", "alignment", "spacing", "content"]]
+  },
+  "AsyncImage": {
+    "status": "manual",
+    "reason": "Uses native SwiftUI AsyncImage with typed URL and scale props, phase events, and placeholder and failure slots.",
+    "adapter": "AsyncImage",
+    "coveredParameterLabelSets": [["url", "scale"]],
+    "uncoveredReason": "Request-based and arbitrary Swift image/phase builder overloads are not equivalent to the typed React phase surface."
+  },
+  "Table": {
+    "status": "manual",
+    "reason": "Maps serializable string-keyed rows and dynamic column definitions to native SwiftUI Table with controlled single selection.",
+    "adapter": "Table",
+    "coveredParameterLabelSets": [["data", "columns"]],
+    "uncoveredReason": "Generic row builders, key paths, sorting, multi-selection, outlines, and column customization require additional typed adapters."
+  },
+  "toolbar": {
+    "status": "expo-upstream",
+    "reason": "The reviewed Expo Toolbar component maps wrapped content and a named toolbar-content slot to native SwiftUI toolbar semantics.",
+    "adapter": "@expo/ui/swift-ui Toolbar"
+  },
+  "navigationDestination": {
+    "status": "expo-upstream",
+    "reason": "The reviewed Expo NavigationDestination component maps string path values to native NavigationStack destinations.",
+    "adapter": "@expo/ui/swift-ui NavigationDestination"
+  },
+  "alert": {
+    "status": "expo-upstream",
+    "reason": "The reviewed Expo Alert component provides native SwiftUI alert presentation with typed actions.",
+    "adapter": "@expo/ui/swift-ui Alert"
+  },
+  "confirmationDialog": {
+    "status": "expo-upstream",
+    "reason": "The reviewed Expo ConfirmationDialog component provides native SwiftUI confirmation-dialog presentation.",
+    "adapter": "@expo/ui/swift-ui ConfirmationDialog"
+  },
   "App": {
     "status": "host-lifecycle-only",
     "reason": "An App declaration owns process lifecycle and cannot be embedded as MiniApp child UI."

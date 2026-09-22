@@ -16,6 +16,56 @@ public enum HanlinSwiftUIClassifier {
         return declarations.map { declaration in
             var item = declaration
             let shortName = item.symbol.split(separator: ".").last.map(String.init) ?? item.symbol
+            let allowlistReason = configuration.underscoredAllowlist[item.symbol]
+                ?? configuration.underscoredAllowlist[shortName]
+            if item.sdkVisibility != .public, allowlistReason == nil {
+                applyTerminal(
+                    to: &item,
+                    status: .internalPrivate,
+                    signatureStatus: .internalPrivate,
+                    aggregate: .internalPrivate,
+                    surface: .internalPrivate,
+                    reason: item.sdkVisibility == .spi
+                        ? "The SDK marks this declaration as SPI; it remains inventoried but is not part of the Hanlin public surface."
+                        : "The SDK declaration is underscored/internal; it remains inventoried but is not exported by default."
+                )
+                return finalized(item)
+            }
+            if let superseded = configuration.supersededSymbols[item.symbol]
+                ?? configuration.supersededSymbols[shortName] {
+                item.replacement = superseded.replacement
+                applyTerminal(
+                    to: &item,
+                    status: .superseded,
+                    signatureStatus: .superseded,
+                    aggregate: .superseded,
+                    surface: .superseded,
+                    reason: superseded.reason
+                )
+                return finalized(item)
+            }
+            if item.isDeprecated {
+                applyTerminal(
+                    to: &item,
+                    status: .deprecated,
+                    signatureStatus: .deprecated,
+                    aggregate: .deprecated,
+                    surface: .deprecated,
+                    reason: "The current iOS SDK marks this declaration deprecated; it remains inventoried but is not exported."
+                )
+                return finalized(item)
+            }
+            if item.isUnavailable {
+                applyTerminal(
+                    to: &item,
+                    status: .unavailable,
+                    signatureStatus: .unavailable,
+                    aggregate: .unavailable,
+                    surface: .unavailable,
+                    reason: "The current iOS SDK marks this declaration unavailable."
+                )
+                return finalized(item)
+            }
             item.expoSymbolExists = (item.kind == .view && expoViews.contains(shortName))
                 || (item.kind == .modifier && expoModifiers.contains(shortName))
             let expoSurfaceReviewed = (item.kind == .view && reviewedExpoViews.contains(shortName))
@@ -26,20 +76,9 @@ public enum HanlinSwiftUIClassifier {
 
             if let rule = configuration.rules[item.symbol] ?? configuration.rules[shortName] {
                 apply(rule: rule, to: &item, enums: enums)
-                return item
+                return finalized(item)
             }
-            guard item.kind == .view || item.kind == .modifier else { return item }
-            if item.isDeprecated || item.isUnavailable {
-                item.status = .unsupported
-                item.reason = item.isDeprecated
-                    ? "The current SDK marks this declaration deprecated; it is not emitted as a new bridge API."
-                    : "The current SDK marks this declaration unavailable."
-                item.signatures = item.signatures.map {
-                    covered($0, status: .unsupported, reason: item.reason!, strategy: item.isDeprecated ? "deprecated-sdk-api" : "unavailable-sdk-api")
-                }
-                item.aggregateStatus = .unsupported
-                return item
-            }
+            guard item.kind == .view || item.kind == .modifier else { return finalized(item) }
             if item.expoSymbolExists {
                 item.status = .expoUpstream
                 if expoSurfaceReviewed {
@@ -70,7 +109,7 @@ public enum HanlinSwiftUIClassifier {
                     }
                     item.aggregateStatus = .partial
                 }
-                return item
+                return finalized(item)
             }
             if item.sourceModule != "SwiftUI" && item.sourceModule != "SwiftUICore" {
                 item.status = .companionFramework
@@ -79,7 +118,7 @@ public enum HanlinSwiftUIClassifier {
                     covered($0, status: .needsInvestigation, reason: item.reason!, strategy: "companion-framework")
                 }
                 item.aggregateStatus = .needsInvestigation
-                return item
+                return finalized(item)
             }
 
             item.signatures = classifySignatures(item, enums: enums)
@@ -99,7 +138,7 @@ public enum HanlinSwiftUIClassifier {
                     ? "No public initializer or modifier signature was discovered in the selected interface."
                     : "No discovered signature currently has a safe generated or shared bridge surface."
             }
-            return item
+            return finalized(item)
         }
     }
 
@@ -113,16 +152,28 @@ public enum HanlinSwiftUIClassifier {
         item.manualAdapter = rule.adapter
         switch rule.status {
         case .manual:
-            item.signatures = item.signatures.map {
-                covered(
-                    $0,
-                    status: .coveredByManualAdapter,
-                    reason: rule.reason,
-                    strategy: $0.parameters.contains(where: \.isBinding) ? "controlled-binding-adapter" : "manual-semantic-adapter",
+            item.signatures = item.signatures.map { signature in
+                if let terminal = terminalSignature(signature) { return terminal }
+                let labels = signature.parameters.map(\.localName)
+                let isCovered = rule.coveredParameterLabelSets?.contains(labels) ?? true
+                if isCovered {
+                    return covered(
+                        signature,
+                        status: .coveredByManualAdapter,
+                        reason: rule.reason,
+                        strategy: signature.parameters.contains(where: \.isBinding) ? "controlled-binding-adapter" : "manual-semantic-adapter",
+                        surface: rule.adapter
+                    )
+                }
+                return covered(
+                    signature,
+                    status: .needsInvestigation,
+                    reason: rule.uncoveredReason ?? "This Apple overload is not represented by the reviewed manual semantic surface.",
+                    strategy: "manual-overload-not-covered",
                     surface: rule.adapter
                 )
             }
-            item.aggregateStatus = .full
+            item.aggregateStatus = aggregate(for: item.signatures)
         case .hostLifecycleOnly:
             item.signatures = item.signatures.map {
                 covered($0, status: .hostLifecycle, reason: rule.reason, strategy: "host-lifecycle")
@@ -130,13 +181,15 @@ public enum HanlinSwiftUIClassifier {
             item.aggregateStatus = .lifecycleOnly
         case .unsupported:
             item.signatures = item.signatures.map {
-                covered($0, status: .unsupported, reason: rule.reason, strategy: "unsupported-semantic-family")
+                if let terminal = terminalSignature($0) { return terminal }
+                return covered($0, status: .unsupported, reason: rule.reason, strategy: "unsupported-semantic-family")
             }
-            item.aggregateStatus = .unsupported
+            item.aggregateStatus = aggregate(for: item.signatures)
         case .expoUpstream:
             item.expoSymbolExists = true
             item.expoParity = .partial
             item.signatures = item.signatures.map { signature in
+                if let terminal = terminalSignature(signature) { return terminal }
                 if isGeneratable(signature, declaration: item, enums: enums) || hasSupportedBinding(signature, enums: enums) {
                     return covered(
                         signature,
@@ -155,9 +208,100 @@ public enum HanlinSwiftUIClassifier {
                 )
             }
             item.aggregateStatus = aggregate(for: item.signatures)
+        case .internalPrivate, .deprecated, .superseded, .unavailable:
+            let signatureStatus: HanlinSwiftUISignatureStatus = switch rule.status {
+            case .internalPrivate: .internalPrivate
+            case .deprecated: .deprecated
+            case .superseded: .superseded
+            case .unavailable: .unavailable
+            default: .unsupported
+            }
+            let aggregate: HanlinSwiftUIAggregateStatus = switch rule.status {
+            case .internalPrivate: .internalPrivate
+            case .deprecated: .deprecated
+            case .superseded: .superseded
+            case .unavailable: .unavailable
+            default: .unsupported
+            }
+            item.signatures = item.signatures.map {
+                covered($0, status: signatureStatus, reason: rule.reason, strategy: rule.status.rawValue)
+            }
+            item.aggregateStatus = aggregate
         case .generated, .companionFramework, .needsInvestigation:
             item.signatures = classifySignatures(item, enums: enums)
             item.aggregateStatus = aggregate(for: item.signatures)
+        }
+    }
+
+    private static func applyTerminal(
+        to item: inout HanlinSwiftUIDeclaration,
+        status: HanlinSwiftUIBridgeStatus,
+        signatureStatus: HanlinSwiftUISignatureStatus,
+        aggregate: HanlinSwiftUIAggregateStatus,
+        surface: HanlinSwiftUIPublicSurface,
+        reason: String
+    ) {
+        item.status = status
+        item.aggregateStatus = aggregate
+        item.publicSurface = surface
+        item.reason = reason
+        item.exportedToHanlin = false
+        item.signatures = item.signatures.map {
+            covered($0, status: signatureStatus, reason: reason, strategy: status.rawValue)
+        }
+    }
+
+    private static func finalized(_ declaration: HanlinSwiftUIDeclaration) -> HanlinSwiftUIDeclaration {
+        var result = declaration
+        if result.publicSurface == nil {
+            result.publicSurface = publicSurface(status: result.status, aggregate: result.aggregateStatus)
+        }
+        result.exportedToHanlin = [.expoUpstream, .generated, .manual].contains(result.status)
+            && result.publicSurface != .unsupported
+            && result.publicSurface != .needsInvestigation
+        result.signatures = result.signatures.map { signature in
+            var item = signature
+            item.publicSurface = signaturePublicSurface(signature.status)
+            item.exportedToHanlin = item.status?.isCovered == true && result.exportedToHanlin
+            return item
+        }
+        return result
+    }
+
+    private static func publicSurface(
+        status: HanlinSwiftUIBridgeStatus?,
+        aggregate: HanlinSwiftUIAggregateStatus?
+    ) -> HanlinSwiftUIPublicSurface? {
+        switch status {
+        case .internalPrivate: .internalPrivate
+        case .deprecated: .deprecated
+        case .superseded: .superseded
+        case .unavailable: .unavailable
+        case .hostLifecycleOnly: .hostLifecycleOnly
+        case .companionFramework: .companionFramework
+        case .unsupported: .unsupported
+        case .needsInvestigation: .needsInvestigation
+        case .expoUpstream:
+            aggregate == .full ? .supported : .partial
+        case .generated, .manual:
+            aggregate == .full ? .supported : (aggregate == .partial ? .partial : .needsInvestigation)
+        case nil: nil
+        }
+    }
+
+    private static func signaturePublicSurface(
+        _ status: HanlinSwiftUISignatureStatus?
+    ) -> HanlinSwiftUIPublicSurface? {
+        switch status {
+        case .directGenerated, .coveredBySharedTSSurface, .coveredByManualAdapter, .expoUpstream, .redundantOverload: .supported
+        case .unsupported: .unsupported
+        case .internalPrivate: .internalPrivate
+        case .deprecated: .deprecated
+        case .superseded: .superseded
+        case .unavailable: .unavailable
+        case .hostLifecycle: .hostLifecycleOnly
+        case .needsInvestigation: .needsInvestigation
+        case nil: nil
         }
     }
 
@@ -167,6 +311,7 @@ public enum HanlinSwiftUIClassifier {
     ) -> [HanlinSwiftUISignature] {
         var semanticSurfaces: [String: String] = [:]
         return declaration.signatures.enumerated().map { index, signature in
+            if let terminal = terminalSignature(signature) { return terminal }
             let surface = semanticKey(signature)
             if let existing = semanticSurfaces[surface] {
                 return covered(
@@ -250,10 +395,36 @@ public enum HanlinSwiftUIClassifier {
         return result
     }
 
+    private static func terminalSignature(
+        _ signature: HanlinSwiftUISignature
+    ) -> HanlinSwiftUISignature? {
+        if signature.isUnavailable {
+            return covered(
+                signature,
+                status: .unavailable,
+                reason: "The current iOS SDK marks this overload unavailable.",
+                strategy: "unavailable"
+            )
+        }
+        if signature.isDeprecated {
+            return covered(
+                signature,
+                status: .deprecated,
+                reason: "The current iOS SDK marks this overload deprecated.",
+                strategy: "deprecated"
+            )
+        }
+        return nil
+    }
+
     private static func aggregate(for signatures: [HanlinSwiftUISignature]) -> HanlinSwiftUIAggregateStatus {
         guard !signatures.isEmpty else { return .needsInvestigation }
         let statuses = signatures.compactMap(\.status)
         if statuses.allSatisfy({ $0 == .hostLifecycle }) { return .lifecycleOnly }
+        if statuses.allSatisfy({ $0 == .internalPrivate }) { return .internalPrivate }
+        if statuses.allSatisfy({ $0 == .deprecated }) { return .deprecated }
+        if statuses.allSatisfy({ $0 == .superseded }) { return .superseded }
+        if statuses.allSatisfy({ $0 == .unavailable }) { return .unavailable }
         if statuses.allSatisfy({ $0 == .unsupported }) { return .unsupported }
         let coveredCount = statuses.count(where: \.isCovered)
         if coveredCount == statuses.count { return .full }
@@ -396,6 +567,7 @@ public enum HanlinSwiftUIClassifier {
         enums: [String: [String]],
         surface: String
     ) -> HanlinSwiftUISignature {
+        if let terminal = terminalSignature(signature) { return terminal }
         if signature.isAsync || signature.isThrowing {
             return covered(
                 signature,

@@ -45,6 +45,9 @@ private final class InventoryVisitor: SyntaxVisitor {
     let module: String
     var declarations: [HanlinSwiftUIDeclaration] = []
     private var typeScope: [String] = []
+    private var viewExtensionAvailability: [[String]] = []
+    private var typeExtensionDepths: [Int] = []
+    private var typeExtensionAvailability: [[String]] = []
 
     init(module: String) {
         self.module = module
@@ -106,20 +109,23 @@ private final class InventoryVisitor: SyntaxVisitor {
     }
 
     override func visit(_ node: ProtocolDeclSyntax) -> SyntaxVisitorContinueKind {
-        guard isPublic(node.modifiers) else { return .skipChildren }
-        declarations.append(.init(
-            module: module,
-            symbol: qualified(node.name.text),
-            kind: .protocolDeclaration,
-            sourceModule: module,
-            genericParameters: node.primaryAssociatedTypeClause?.primaryAssociatedTypes.map(\.name.text) ?? [],
-            conformances: node.inheritanceClause?.inheritedTypes.map { $0.type.trimmedDescription } ?? [],
-            availability: availability(node.attributes),
-            isDeprecated: isDeprecatedOnIOS(node.attributes),
-            isUnavailable: isUnavailableOnIOS(node.attributes)
-        ))
+        if isPublic(node.modifiers) {
+            declarations.append(.init(
+                module: module,
+                symbol: qualified(node.name.text),
+                kind: .protocolDeclaration,
+                sourceModule: module,
+                genericParameters: node.primaryAssociatedTypeClause?.primaryAssociatedTypes.map(\.name.text) ?? [],
+                conformances: node.inheritanceClause?.inheritedTypes.map { $0.type.trimmedDescription } ?? [],
+                availability: availability(node.attributes),
+                attributes: attributeList(node.attributes),
+                isDeprecated: isDeprecatedOnIOS(node.attributes),
+                isUnavailable: isUnavailableOnIOS(node.attributes),
+                sdkVisibility: sdkVisibility(symbol: qualified(node.name.text), attributes: node.attributes)
+            ))
+        }
         typeScope.append(node.name.text)
-        return .visitChildren
+        return isPublic(node.modifiers) ? .visitChildren : .skipChildren
     }
 
     override func visitPost(_ node: ProtocolDeclSyntax) {
@@ -127,27 +133,87 @@ private final class InventoryVisitor: SyntaxVisitor {
     }
 
     override func visit(_ node: ExtensionDeclSyntax) -> SyntaxVisitorContinueKind {
-        let extended = node.extendedType.trimmedDescription
-        guard extended == "View" || extended.hasSuffix(".View") else { return .visitChildren }
-        for member in node.memberBlock.members {
-            guard let function = member.decl.as(FunctionDeclSyntax.self), isPublic(function.modifiers) else { continue }
-            let attributes = function.attributes
-            let signature = makeSignature(
-                function.signature,
-                generics: function.genericParameterClause?.parameters.map(\.name.text) ?? []
-            )
-            declarations.append(.init(
-                module: module,
-                symbol: function.name.text,
-                kind: .modifier,
-                sourceModule: module,
-                genericParameters: signature.genericParameters,
-                availability: availability(node.attributes) + availability(attributes),
-                signatures: [signature],
-                isDeprecated: isDeprecatedOnIOS(attributes),
-                isUnavailable: isUnavailableOnIOS(attributes)
-            ))
+        let extended = normalizedQualifiedName(node.extendedType.trimmedDescription)
+        if extended == "View" || extended.hasSuffix(".View") {
+            viewExtensionAvailability.append(availability(node.attributes))
+            typeExtensionDepths.append(0)
+            typeExtensionAvailability.append([])
+            return .visitChildren
         }
+        var components = extended.split(separator: ".").map(String.init)
+        if components.first == module { components.removeFirst() }
+        typeScope.append(contentsOf: components)
+        typeExtensionDepths.append(components.count)
+        typeExtensionAvailability.append(availability(node.attributes))
+        return .visitChildren
+    }
+
+    override func visitPost(_ node: ExtensionDeclSyntax) {
+        let extended = normalizedQualifiedName(node.extendedType.trimmedDescription)
+        if extended == "View" || extended.hasSuffix(".View") {
+            viewExtensionAvailability.removeLast()
+        }
+        let depth = typeExtensionDepths.removeLast()
+        if depth > 0 { typeScope.removeLast(depth) }
+        typeExtensionAvailability.removeLast()
+    }
+
+    override func visit(_ node: FunctionDeclSyntax) -> SyntaxVisitorContinueKind {
+        guard !viewExtensionAvailability.isEmpty, typeScope.isEmpty, isPublic(node.modifiers) else {
+            return .visitChildren
+        }
+        let signature = makeSignature(
+            node.signature,
+            generics: node.genericParameterClause?.parameters.map(\.name.text) ?? [],
+            attributes: node.attributes
+        )
+        declarations.append(.init(
+            module: module,
+            symbol: node.name.text,
+            kind: .modifier,
+            sourceModule: module,
+            genericParameters: signature.genericParameters,
+            availability: viewExtensionAvailability.flatMap { $0 } + availability(node.attributes),
+            attributes: attributeList(node.attributes),
+            signatures: [signature],
+            isDeprecated: isDeprecatedOnIOS(node.attributes),
+            isUnavailable: isUnavailableOnIOS(node.attributes),
+            sdkVisibility: sdkVisibility(symbol: node.name.text, attributes: node.attributes)
+        ))
+        return .skipChildren
+    }
+
+    override func visit(_ node: InitializerDeclSyntax) -> SyntaxVisitorContinueKind {
+        guard !typeScope.isEmpty, isPublic(node.modifiers) else { return .skipChildren }
+        let symbol = typeScope.joined(separator: ".")
+        let declaration = declarations.last(where: { $0.symbol == symbol })
+            ?? HanlinSwiftUIDeclaration(
+                module: module,
+                symbol: symbol,
+                kind: .type,
+                sourceModule: module
+            )
+        let signature = makeSignature(
+            node.signature,
+            generics: node.genericParameterClause?.parameters.map(\.name.text) ?? [],
+            attributes: node.attributes
+        )
+        declarations.append(.init(
+            module: module,
+            symbol: symbol,
+            kind: declaration.kind,
+            sourceModule: module,
+            genericParameters: declaration.genericParameters,
+            conformances: declaration.conformances,
+            availability: declaration.availability
+                + typeExtensionAvailability.flatMap { $0 }
+                + availability(node.attributes),
+            attributes: declaration.attributes + attributeList(node.attributes),
+            signatures: [signature],
+            isDeprecated: declaration.isDeprecated,
+            isUnavailable: declaration.isUnavailable,
+            sdkVisibility: declaration.sdkVisibility
+        ))
         return .skipChildren
     }
 
@@ -160,14 +226,10 @@ private final class InventoryVisitor: SyntaxVisitor {
         members: MemberBlockItemListSyntax,
         protocolKind: Bool
     ) {
-        guard isPublic(modifiers), !name.hasPrefix("_") else { return }
-        let conformances = inheritance?.inheritedTypes.map { $0.type.trimmedDescription } ?? []
-        let signatures = members.compactMap { member -> HanlinSwiftUISignature? in
-            guard let initializer = member.decl.as(InitializerDeclSyntax.self), isPublic(initializer.modifiers) else {
-                return nil
-            }
-            return makeSignature(initializer.signature, generics: initializer.genericParameterClause?.parameters.map(\.name.text) ?? [])
-        }
+        guard isPublic(modifiers) else { return }
+        let conformances = inheritance?.inheritedTypes.map {
+            normalizedQualifiedName($0.type.trimmedDescription)
+        } ?? []
         let enumCases = members.flatMap { member -> [String] in
             guard let declaration = member.decl.as(EnumCaseDeclSyntax.self) else {
                 return []
@@ -201,25 +263,27 @@ private final class InventoryVisitor: SyntaxVisitor {
             genericParameters: generics?.parameters.map(\.name.text) ?? [],
             conformances: conformances,
             availability: availability(attributes),
-            signatures: signatures,
+            attributes: attributeList(attributes),
             enumCases: enumCases,
             optionSetCases: optionSetCases,
             isDeprecated: isDeprecatedOnIOS(attributes),
-            isUnavailable: isUnavailableOnIOS(attributes)
+            isUnavailable: isUnavailableOnIOS(attributes),
+            sdkVisibility: sdkVisibility(symbol: qualified(name), attributes: attributes)
         ))
     }
 
     private func makeSignature(
         _ signature: FunctionSignatureSyntax,
-        generics: [String]
+        generics: [String],
+        attributes: AttributeListSyntax
     ) -> HanlinSwiftUISignature {
         let parameters = signature.parameterClause.parameters.map { parameter in
             let external = parameter.firstName.text == "_" ? nil : parameter.firstName.text
             let local = parameter.secondName?.text ?? parameter.firstName.text
-            let type = parameter.type.trimmedDescription
+            let type = normalizedQualifiedName(parameter.type.trimmedDescription)
             let attributes = parameter.attributes.compactMap { element -> String? in
                 guard case let .attribute(attribute) = element else { return nil }
-                return attribute.attributeName.trimmedDescription
+                return normalizedQualifiedName(attribute.attributeName.trimmedDescription)
             }
             return HanlinSwiftUIParameter(
                 externalName: external,
@@ -228,21 +292,31 @@ private final class InventoryVisitor: SyntaxVisitor {
                 defaultValue: parameter.defaultValue?.value.trimmedDescription,
                 attributes: attributes,
                 isBinding: type.contains("Binding<"),
-                isViewBuilder: attributes.contains(where: { $0.hasSuffix("ViewBuilder") }),
+                isViewBuilder: attributes.contains(where: {
+                    $0.hasSuffix("ViewBuilder") || $0.hasSuffix("ContentBuilder")
+                }),
                 isClosure: type.contains("->")
             )
         }
         return .init(
             parameters: parameters,
-            returnType: signature.returnClause?.type.trimmedDescription,
+            returnType: signature.returnClause.map { normalizedQualifiedName($0.type.trimmedDescription) },
             genericParameters: generics,
             isAsync: signature.effectSpecifiers?.asyncSpecifier != nil,
-            isThrowing: signature.effectSpecifiers?.throwsClause != nil
+            isThrowing: signature.effectSpecifiers?.throwsClause != nil,
+            availability: availability(attributes),
+            attributes: attributeList(attributes),
+            isDeprecated: isDeprecatedOnIOS(attributes),
+            isUnavailable: isUnavailableOnIOS(attributes)
         )
     }
 
     private func qualified(_ name: String) -> String {
         (typeScope + [name]).joined(separator: ".")
+    }
+
+    private func normalizedQualifiedName(_ value: String) -> String {
+        value.replacingOccurrences(of: "::", with: ".")
     }
 
     private func isPublic(_ modifiers: DeclModifierListSyntax) -> Bool {
@@ -259,6 +333,19 @@ private final class InventoryVisitor: SyntaxVisitor {
 
     private func attributeText(_ attributes: AttributeListSyntax) -> String {
         attributes.trimmedDescription
+    }
+
+    private func attributeList(_ attributes: AttributeListSyntax) -> [String] {
+        attributes.compactMap { element -> String? in
+            guard case let .attribute(attribute) = element else { return nil }
+            return attribute.trimmedDescription
+        }
+    }
+
+    private func sdkVisibility(symbol: String, attributes: AttributeListSyntax) -> HanlinSwiftUISDKVisibility {
+        if attributeList(attributes).contains(where: { $0.hasPrefix("@_spi") }) { return .spi }
+        let shortName = symbol.split(separator: ".").last.map(String.init) ?? symbol
+        return shortName.hasPrefix("_") ? .underscored : .public
     }
 
     private func isUnavailableOnIOS(_ attributes: AttributeListSyntax) -> Bool {

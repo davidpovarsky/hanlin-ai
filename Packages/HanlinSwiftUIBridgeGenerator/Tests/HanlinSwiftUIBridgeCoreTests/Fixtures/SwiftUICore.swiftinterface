@@ -1,6 +1,7 @@
 // Focused parser fixture. Full generation consumes the installed Apple SDK interface.
 public protocol View {}
 public protocol App {}
+private protocol SDKImplementationDetail {}
 
 public enum Axis {
   public struct Set: Swift.OptionSet {
@@ -14,6 +15,26 @@ public enum Axis {
 public struct NavigationStack<Root>: View {
   public init(@ViewBuilder root: () -> Root)
 }
+
+public struct NavigationView<Content>: View {
+  public init(@ViewBuilder content: () -> Content)
+}
+
+public struct _PrivateView: View {
+  public init()
+}
+
+public struct _AllowedView: View {
+  public init()
+}
+
+extension SwiftUICore::ExtendedView {
+#if os(iOS)
+  public init(count: Int)
+#endif
+}
+
+public struct ExtendedView: View {}
 
 public struct Group<Content>: View {
   public init(@ViewBuilder content: () -> Content)
@@ -60,4 +81,17 @@ extension View {
   public func lineLimit(_ number: Int?) -> some View
   public func lineLimit(_ limit: Int, reservesSpace: Bool) -> some View
   public func testAxes(_ axes: Axis.Set = [.horizontal, .vertical]) -> some View
+  public func _privateModifier(_ enabled: Bool = true) -> some View
+#if os(iOS)
+  public func conditionalModifier(_ value: Int) -> some View
+#endif
+
+  @available(iOS, deprecated: 17.0)
+  public func mixedAvailability(_ value: String) -> some View
+  public func mixedAvailability(_ value: Int) -> some View
+  public func optionalThenRequired(_ optional: Int = 1, required: Int) -> some View
+}
+
+extension SwiftUICore::View {
+  public func safeAreaInset<V>(edge: Int, @ContentBuilder content: () -> V) -> some View
 }

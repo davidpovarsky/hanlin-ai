@@ -9,10 +9,17 @@ public struct IOSUnavailableView: View {
   public init()
 }
 
+@available(iOS, deprecated: 17.0)
+public struct DeprecatedView: View {
+  public init()
+}
+
 public struct EmptyView: View {
   public init()
 }
 
 public struct AsyncImage<Content>: View {
+#if os(iOS)
   public init(url: URL?, @ViewBuilder content: (AsyncImagePhase) -> Content)
+#endif
 }

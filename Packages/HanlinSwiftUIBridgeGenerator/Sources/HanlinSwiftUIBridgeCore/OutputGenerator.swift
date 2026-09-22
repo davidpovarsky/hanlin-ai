@@ -1,7 +1,7 @@
 import Foundation
 
 public enum HanlinSwiftUIOutputGenerator {
-    public static let version = "2.0.0"
+    public static let version = "3.0.0"
 
     public static func buildInventory(
         inputs: [HanlinSwiftUIInterfaceInput],
@@ -38,9 +38,7 @@ public enum HanlinSwiftUIOutputGenerator {
         encoder.outputFormatting = [.prettyPrinted, .sortedKeys, .withoutEscapingSlashes]
         try appendNewline(encoder.encode(inventory)).write(to: outputRoot.appending(path: "swiftui-inventory.json"))
 
-        let relevant = inventory.declarations.filter {
-            $0.kind == .view || $0.kind == .modifier || $0.status == .hostLifecycleOnly
-        }
+        let relevant = inventory.declarations.filter { $0.status != nil }
         let counts = Dictionary(grouping: relevant, by: { $0.status?.rawValue ?? "unclassified" })
             .mapValues(\.count)
         let aggregateCounts = Dictionary(grouping: relevant, by: { $0.aggregateStatus?.rawValue ?? "unclassified" })
@@ -54,6 +52,14 @@ public enum HanlinSwiftUIOutputGenerator {
             "expo-modifier-symbols": modifiers.count(where: \.expoSymbolExists),
         ]
         let signatureCounts = makeSignatureCounts(views: views, modifiers: modifiers)
+        let inventoryCounts = makeInventoryCounts(inventory.declarations)
+        let publicSurfaceCounts = Dictionary(
+            grouping: inventory.declarations.compactMap(\.publicSurface),
+            by: \.rawValue
+        ).mapValues(\.count).merging([
+            "exported-symbols": inventory.declarations.count(where: \.exportedToHanlin),
+            "sdk-only-symbols": inventory.declarations.count { !$0.exportedToHanlin },
+        ]) { _, new in new }
         let coverage = HanlinSwiftUICoverage(
             sdkIdentity: inventory.sdkIdentity,
             sdkMetadata: inventory.sdkMetadata,
@@ -65,6 +71,8 @@ public enum HanlinSwiftUIOutputGenerator {
             aggregateCounts: aggregateCounts,
             kindCounts: kindCounts,
             signatureCounts: signatureCounts,
+            inventoryCounts: inventoryCounts,
+            publicSurfaceCounts: publicSurfaceCounts,
             symbols: relevant
         )
         try appendNewline(encoder.encode(coverage)).write(to: outputRoot.appending(path: "coverage.json"))
@@ -87,14 +95,27 @@ public enum HanlinSwiftUIOutputGenerator {
     }
 
     private static func mergeOverloads(_ declarations: [HanlinSwiftUIDeclaration]) -> [HanlinSwiftUIDeclaration] {
+        let declaredKinds = Dictionary(grouping: declarations, by: { "\($0.module)|\($0.symbol)" })
+            .mapValues { candidates in
+                candidates.contains(where: { $0.kind == .view }) ? HanlinSwiftUIDeclarationKind.view
+                    : (candidates.contains(where: { $0.kind == .protocolDeclaration }) ? .protocolDeclaration : .type)
+            }
         var merged: [String: HanlinSwiftUIDeclaration] = [:]
-        for declaration in declarations {
+        for original in declarations {
+            var declaration = original
+            if declaration.kind != .modifier {
+                declaration.kind = declaredKinds["\(declaration.module)|\(declaration.symbol)"] ?? declaration.kind
+            }
             let key = "\(declaration.module)|\(declaration.kind.rawValue)|\(declaration.symbol)"
             if var existing = merged[key] {
                 existing.signatures.append(contentsOf: declaration.signatures.filter { !existing.signatures.contains($0) })
                 existing.availability = Array(Set(existing.availability + declaration.availability)).sorted()
+                existing.attributes = Array(Set(existing.attributes + declaration.attributes)).sorted()
                 existing.enumCases = Array(Set(existing.enumCases + declaration.enumCases)).sorted()
                 existing.optionSetCases = Array(Set(existing.optionSetCases + declaration.optionSetCases)).sorted()
+                existing.isDeprecated = existing.isDeprecated && declaration.isDeprecated
+                existing.isUnavailable = existing.isUnavailable && declaration.isUnavailable
+                if declaration.sdkVisibility != .public { existing.sdkVisibility = declaration.sdkVisibility }
                 merged[key] = existing
             } else {
                 merged[key] = declaration
@@ -125,6 +146,14 @@ public enum HanlinSwiftUIOutputGenerator {
         for status in HanlinSwiftUIBridgeStatus.allCases {
             lines.append("| \(status.rawValue) | \(coverage.counts[status.rawValue, default: 0]) |")
         }
+        lines.append(contentsOf: ["", "## SDK inventory", "", "| Metric | Count |", "| --- | ---: |"])
+        for key in coverage.inventoryCounts.keys.sorted() {
+            lines.append("| \(key) | \(coverage.inventoryCounts[key, default: 0]) |")
+        }
+        lines.append(contentsOf: ["", "## Hanlin public surface", "", "| Classification | Count |", "| --- | ---: |"])
+        for key in coverage.publicSurfaceCounts.keys.sorted() {
+            lines.append("| \(key) | \(coverage.publicSurfaceCounts[key, default: 0]) |")
+        }
         lines.append(contentsOf: ["", "## Derived aggregate status", "", "| Aggregate | Count |", "| --- | ---: |"])
         for status in HanlinSwiftUIAggregateStatus.allCases {
             lines.append("| \(status.rawValue) | \(coverage.aggregateCounts[status.rawValue, default: 0]) |")
@@ -146,10 +175,11 @@ public enum HanlinSwiftUIOutputGenerator {
             "| Modifier overloads covered | \(coverage.signatureCounts["modifier.covered", default: 0]) |",
             "| Modifier overloads uncovered | \(coverage.signatureCounts["modifier.uncovered", default: 0]) |",
         ])
-        lines.append(contentsOf: ["", "## Symbols", "", "| Module | Symbol | Kind | Tier | Source | Aggregate | Expo parity | Reason |", "| --- | --- | --- | --- | --- | --- | --- | --- |"])
+        lines.append(contentsOf: ["", "## Symbols", "", "| Module | Symbol | Kind | SDK visibility | Public surface | Exported | Tier | Source | Aggregate | Expo parity | Replacement | Reason |", "| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |"])
         for symbol in coverage.symbols {
             let reason = (symbol.reason ?? "").replacingOccurrences(of: "|", with: "\\|")
-            lines.append("| \(symbol.module) | `\(symbol.symbol)` | \(symbol.kind.rawValue) | \(symbol.tier?.rawValue ?? "-") | \(symbol.status?.rawValue ?? "-") | \(symbol.aggregateStatus?.rawValue ?? "-") | \(symbol.expoParity?.rawValue ?? "-") | \(reason) |")
+            let replacement = symbol.replacement.joined(separator: ", ")
+            lines.append("| \(symbol.module) | `\(symbol.symbol)` | \(symbol.kind.rawValue) | \(symbol.sdkVisibility.rawValue) | \(symbol.publicSurface?.rawValue ?? "-") | \(symbol.exportedToHanlin ? "yes" : "no") | \(symbol.tier?.rawValue ?? "-") | \(symbol.status?.rawValue ?? "-") | \(symbol.aggregateStatus?.rawValue ?? "-") | \(symbol.expoParity?.rawValue ?? "-") | \(replacement) | \(reason) |")
         }
         lines.append(contentsOf: ["", "## Overloads", ""])
         for symbol in coverage.symbols where !symbol.signatures.isEmpty {
@@ -173,15 +203,40 @@ public enum HanlinSwiftUIOutputGenerator {
         var result: [String: Int] = [:]
         for (prefix, declarations) in [("view", views), ("modifier", modifiers)] {
             let signatures = declarations.flatMap(\.signatures)
-            result["\(prefix).total"] = signatures.count
-            result["\(prefix).covered"] = signatures.count { $0.status?.isCovered == true }
-            result["\(prefix).uncovered"] = signatures.count { signature in
-                signature.status != .hostLifecycle && signature.status?.isCovered != true
+            let publicSignatures = signatures.filter { signature in
+                ![.internalPrivate, .deprecated, .superseded, .unavailable, .hostLifecycle].contains(signature.status)
             }
+            result["\(prefix).total"] = signatures.count
+            result["\(prefix).public-total"] = publicSignatures.count
+            result["\(prefix).covered"] = publicSignatures.count { $0.status?.isCovered == true }
+            result["\(prefix).uncovered"] = publicSignatures.count { $0.status?.isCovered != true }
             result["\(prefix).host-lifecycle"] = signatures.count { $0.status == .hostLifecycle }
             for status in HanlinSwiftUISignatureStatus.allCases {
                 result["\(prefix).\(status.rawValue)"] = signatures.count { $0.status == status }
             }
+        }
+        return result
+    }
+
+    private static func makeInventoryCounts(
+        _ declarations: [HanlinSwiftUIDeclaration]
+    ) -> [String: Int] {
+        var result = [
+            "declarations.total": declarations.count,
+            "declarations.public": declarations.count { $0.sdkVisibility == .public },
+            "declarations.underscored": declarations.count { $0.sdkVisibility == .underscored },
+            "declarations.spi": declarations.count { $0.sdkVisibility == .spi },
+            "declarations.deprecated": declarations.count(where: \.isDeprecated),
+            "declarations.unavailable": declarations.count(where: \.isUnavailable),
+            "declarations.exported": declarations.count(where: \.exportedToHanlin),
+        ]
+        for kind in [
+            HanlinSwiftUIDeclarationKind.view,
+            .modifier,
+            .type,
+            .protocolDeclaration,
+        ] {
+            result["kind.\(kind.rawValue)"] = declarations.count { $0.kind == kind }
         }
         return result
     }
@@ -201,7 +256,8 @@ public enum HanlinSwiftUIOutputGenerator {
         configuration: HanlinSwiftUIBridgeConfiguration
     ) -> String {
         let modifiers = inventory.declarations.filter {
-            $0.kind == .modifier && $0.status == .generated && !configuration.expoModifiers.contains($0.symbol)
+            $0.kind == .modifier && $0.status == .generated && $0.exportedToHanlin
+                && !configuration.expoModifiers.contains($0.symbol)
         }
         var lines = [
             "// Generated by hanlin-swiftui-bridge \(version). Do not edit.",
@@ -286,7 +342,9 @@ public enum HanlinSwiftUIOutputGenerator {
     }
 
     private static func generatedTypeScript(_ inventory: HanlinSwiftUIInventory) -> String {
-        let modifiers = inventory.declarations.filter { $0.kind == .modifier && $0.status == .generated }
+        let modifiers = inventory.declarations.filter {
+            $0.kind == .modifier && $0.status == .generated && $0.exportedToHanlin
+        }
         var lines = [
             "// Generated by hanlin-swiftui-bridge \(version). Do not edit.",
             "import { createModifier, type ModifierConfig } from '@expo/ui/swift-ui/modifiers';",
@@ -294,9 +352,12 @@ public enum HanlinSwiftUIOutputGenerator {
         ]
         for modifier in modifiers {
             guard let signature = selectedModifierSignature(modifier) else { continue }
-            let parameters = signature.parameters.map { parameter in
-                let optional = parameter.defaultValue == nil ? "" : "?"
-                return "\(parameter.localName)\(optional): \(typescriptType(parameter.type, inventory: inventory))"
+            let parameters = signature.parameters.enumerated().map { index, parameter in
+                let hasRequiredParameterAfter = signature.parameters[(index + 1)...]
+                    .contains { $0.defaultValue == nil }
+                let optional = parameter.defaultValue != nil && !hasRequiredParameterAfter ? "?" : ""
+                let undefined = parameter.defaultValue != nil && hasRequiredParameterAfter ? " | undefined" : ""
+                return "\(parameter.localName)\(optional): \(typescriptType(parameter.type, inventory: inventory))\(undefined)"
             }.joined(separator: ", ")
             let object = signature.parameters.map { "\($0.localName): \($0.localName)" }.joined(separator: ", ")
             lines.append("export const \(modifier.symbol) = (\(parameters)): ModifierConfig =>")
@@ -310,7 +371,9 @@ public enum HanlinSwiftUIOutputGenerator {
         _ inventory: HanlinSwiftUIInventory,
         configuration: HanlinSwiftUIBridgeConfiguration
     ) -> String {
-        let views = inventory.declarations.filter { $0.kind == .view && $0.status == .generated }
+        let views = inventory.declarations.filter {
+            $0.kind == .view && $0.status == .generated && $0.exportedToHanlin
+        }
         let hasMultiSlotView = views.contains { view in
             (selectedViewSignature(view)?.parameters.count(where: \.isViewBuilder) ?? 0) > 1
         }
@@ -432,7 +495,9 @@ public enum HanlinSwiftUIOutputGenerator {
     }
 
     private static func generatedTypeScriptViews(_ inventory: HanlinSwiftUIInventory) -> String {
-        let views = inventory.declarations.filter { $0.kind == .view && $0.status == .generated }
+        let views = inventory.declarations.filter {
+            $0.kind == .view && $0.status == .generated && $0.exportedToHanlin
+        }
         let hasMultiSlotView = views.contains { view in
             (selectedViewSignature(view)?.parameters.count(where: \.isViewBuilder) ?? 0) > 1
         }
@@ -499,7 +564,7 @@ public enum HanlinSwiftUIOutputGenerator {
     ) -> String {
         let relevant = inventory.declarations.filter { $0.kind == .view || $0.kind == .modifier }
         let symbols = Set(relevant
-            .filter { [.expoUpstream, .generated, .manual].contains($0.status) }
+            .filter(\.exportedToHanlin)
             .map(\.symbol))
             .sorted()
             .map { "  '\($0)'," }

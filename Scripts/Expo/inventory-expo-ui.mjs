@@ -40,12 +40,19 @@ const rules = JSON.parse(await readFile(rulesPath, 'utf8'));
 const reviewedCapabilities = JSON.parse(await readFile(reviewedCapabilitiesPath, 'utf8'));
 const configuration = {
   runtimeVersion: '58.0.3',
-  bridgeVersion: '1.0.0',
+  bridgeVersion: '3.0.0',
   expoUIVersion: '58.0.3',
   expoViews: exportedCallableNames(resolve(expoRoot, 'index.d.ts'), true),
   expoModifiers: exportedCallableNames(resolve(expoRoot, 'modifiers', 'index.d.ts'), false),
   expoReviewedViews: reviewedCapabilities.views,
   expoReviewedModifiers: reviewedCapabilities.modifiers,
+  underscoredAllowlist: {},
+  supersededSymbols: {
+    NavigationView: {
+      reason: 'NavigationView is a legacy navigation container superseded by NavigationStack and NavigationSplitView.',
+      replacement: ['NavigationStack', 'NavigationSplitView'],
+    },
+  },
   rules,
 };
 

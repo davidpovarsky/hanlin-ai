@@ -27,6 +27,13 @@ struct HanlinSwiftUIBridgeCoreTests {
         #expect(byName["NavigationStack"]?.first?.aggregateStatus == .partial)
         #expect(byName["NavigationStack"]?.first?.expoParity == .unknown)
         #expect(byName["NavigationStack"]?.first?.signatures.first?.status == .needsInvestigation)
+        #expect(byName["NavigationView"]?.first?.status == .superseded)
+        #expect(byName["NavigationView"]?.first?.replacement == ["NavigationStack", "NavigationSplitView"])
+        #expect(byName["NavigationView"]?.first?.exportedToHanlin == false)
+        #expect(byName["_PrivateView"]?.first?.status == .internalPrivate)
+        #expect(byName["_PrivateView"]?.first?.exportedToHanlin == false)
+        #expect(byName["_AllowedView"]?.first?.status == .generated)
+        #expect(byName["_AllowedView"]?.first?.exportedToHanlin == true)
         #expect(byName["TextEditor"]?.first?.tier == .t3Binding)
         #expect(byName["TextEditor"]?.first?.status == .manual)
         #expect(byName["TextEditor"]?.first?.signatures.first?.status == .coveredByManualAdapter)
@@ -45,15 +52,25 @@ struct HanlinSwiftUIBridgeCoreTests {
         #expect(byName["PartialView"]?.first?.signatures.map(\.status).contains(.directGenerated) == true)
         #expect(byName["PartialView"]?.first?.signatures.map(\.status).contains(.unsupported) == true)
         #expect(byName["EditButton"]?.first?.status == .generated)
-        #expect(byName["IOSUnavailableView"]?.first?.status == .unsupported)
+        #expect(byName["IOSUnavailableView"]?.first?.status == .unavailable)
+        #expect(byName["DeprecatedView"]?.first?.status == .deprecated)
         #expect(byName["EmptyView"]?.first?.status == .generated)
         #expect(byName["AsyncImage"]?.first?.status == .needsInvestigation)
+        #expect(byName["AsyncImage"]?.first?.signatures.count == 1)
         #expect(byName["searchable"]?.first?.tier == .t3Binding)
         #expect(byName["searchable"]?.first?.status == .needsInvestigation)
         #expect(byName["environmentObject"]?.first?.status == .unsupported)
         #expect(byName["onPreferenceChange"]?.first?.status == .unsupported)
         #expect(byName["lineLimit"]?.first?.signatures.count == 2)
         #expect(byName["testAxes"]?.first?.signatures.first?.status == .directGenerated)
+        #expect(byName["conditionalModifier"]?.first?.signatures.count == 1)
+        #expect(byName["ExtendedView"]?.first?.kind == .view)
+        #expect(byName["ExtendedView"]?.first?.signatures.count == 1)
+        #expect(byName["safeAreaInset"]?.first?.signatures.first?.parameters.last?.isViewBuilder == true)
+        #expect(byName["_privateModifier"]?.first?.status == .internalPrivate)
+        #expect(byName["mixedAvailability"]?.first?.status == .generated)
+        #expect(byName["mixedAvailability"]?.first?.signatures.map(\.status).contains(.deprecated) == true)
+        #expect(byName["mixedAvailability"]?.first?.signatures.map(\.status).contains(.directGenerated) == true)
         #expect(byName["Axis.Set"]?.first?.optionSetCases == ["horizontal", "vertical"])
     }
 
@@ -91,11 +108,17 @@ struct HanlinSwiftUIBridgeCoreTests {
         #expect(swift.contains("HanlinGeneratedAxisSetValue"))
         #expect(swift.contains("values.reduce(into: Axis.Set())"))
         #expect(typeScript.contains("axes?: ('horizontal' | 'vertical')[]"))
+        #expect(typeScript.contains("optional: number | undefined, required: number"))
         #expect(swiftViews.contains("HanlinGeneratedGroupView"))
         #expect(typeScriptViews.contains("export function Group"))
         #expect(swiftViews.contains("HanlinGeneratedSlotView"))
         #expect(swiftViews.contains("namedSlot(\"content\")"))
         #expect(typeScriptViews.contains("label?: React.ReactNode"))
+        #expect(swiftViews.contains("HanlinGenerated_AllowedViewView"))
+        #expect(typeScriptViews.contains("export function _AllowedView"))
+        #expect(!swiftViews.contains("HanlinGeneratedPrivateViewView"))
+        #expect(!typeScriptViews.contains("export function NavigationView"))
+        #expect(!typeScript.contains("_privateModifier"))
         let coverage = try JSONDecoder().decode(
             HanlinSwiftUICoverage.self,
             from: Data(contentsOf: first.appending(path: "coverage.json"))
@@ -103,6 +126,8 @@ struct HanlinSwiftUIBridgeCoreTests {
         #expect(coverage.signatureCounts["view.total", default: 0] > 0)
         #expect(coverage.signatureCounts["view.covered", default: 0] > 0)
         #expect(coverage.aggregateCounts["partial", default: 0] > 0)
+        #expect(coverage.inventoryCounts["declarations.underscored", default: 0] >= 2)
+        #expect(coverage.publicSurfaceCounts["internal-private", default: 0] >= 2)
     }
 
     @Test("Manifest keeps same-named declarations module-qualified")
@@ -116,8 +141,8 @@ struct HanlinSwiftUIBridgeCoreTests {
             sdkIdentity: "collision-fixture",
             interfaces: [],
             declarations: [
-                .init(module: "SwiftUI", symbol: "SharedView", kind: .view, sourceModule: "SwiftUI", status: .expoUpstream),
-                .init(module: "SwiftUICore", symbol: "SharedView", kind: .view, sourceModule: "SwiftUICore", status: .expoUpstream),
+                .init(module: "SwiftUI", symbol: "SharedView", kind: .view, sourceModule: "SwiftUI", status: .expoUpstream, exportedToHanlin: true),
+                .init(module: "SwiftUICore", symbol: "SharedView", kind: .view, sourceModule: "SwiftUICore", status: .expoUpstream, exportedToHanlin: true),
             ]
         )
         let output = FileManager.default.temporaryDirectory.appending(path: UUID().uuidString, directoryHint: .isDirectory)
