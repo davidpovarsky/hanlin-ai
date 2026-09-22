@@ -1,0 +1,33 @@
+{
+  "views": [
+    "Alert",
+    "ColorPicker",
+    "ConfirmationDialog",
+    "ContentUnavailableView",
+    "DatePicker",
+    "DisclosureGroup",
+    "Gauge",
+    "Group",
+    "Label",
+    "LabeledContent",
+    "NavigationSplitView",
+    "NavigationStack",
+    "Picker",
+    "Popover",
+    "Section",
+    "SecureField",
+    "Slider",
+    "Stepper",
+    "TabView",
+    "TextField",
+    "Toggle"
+  ],
+  "modifiers": [
+    "onAppear",
+    "onDisappear",
+    "onLongPressGesture",
+    "onSubmit",
+    "onTapGesture",
+    "refreshable"
+  ]
+}

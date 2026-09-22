@@ -1,6 +1,6 @@
 {
   "runtimeVersion": "58.0.3",
-  "bridgeVersion": "1.0.0",
+  "bridgeVersion": "2.0.0",
   "expoUIVersion": "58.0.3",
   "expoViews": [
     "AccessoryWidgetBackground",
@@ -230,6 +230,37 @@
     "widgetAccentedRenderingMode",
     "widgetURL",
     "zIndex"
+  ],
+  "expoReviewedViews": [
+    "Alert",
+    "ColorPicker",
+    "ConfirmationDialog",
+    "ContentUnavailableView",
+    "DatePicker",
+    "DisclosureGroup",
+    "Gauge",
+    "Group",
+    "Label",
+    "LabeledContent",
+    "NavigationSplitView",
+    "NavigationStack",
+    "Picker",
+    "Popover",
+    "Section",
+    "SecureField",
+    "Slider",
+    "Stepper",
+    "TabView",
+    "TextField",
+    "Toggle"
+  ],
+  "expoReviewedModifiers": [
+    "onAppear",
+    "onDisappear",
+    "onLongPressGesture",
+    "onSubmit",
+    "onTapGesture",
+    "refreshable"
   ],
   "rules": {
     "TextEditor": {

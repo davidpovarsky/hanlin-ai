@@ -1,5 +1,6 @@
 import Foundation
 import SwiftParser
+import SwiftParserDiagnostics
 import SwiftSyntax
 
 public struct HanlinSwiftUIInterfaceInput: Sendable {
@@ -21,8 +22,18 @@ public enum HanlinSwiftUIInterfaceParser {
         guard let source = String(data: data, encoding: .utf8) else {
             throw CocoaError(.fileReadInapplicableStringEncoding)
         }
+        let syntax = Parser.parse(source: source)
+        let diagnostics = ParseDiagnosticsGenerator.diagnostics(for: syntax)
+        guard diagnostics.isEmpty else {
+            let summary = diagnostics.prefix(10).map(\.message).joined(separator: "; ")
+            throw NSError(
+                domain: "HanlinSwiftUIBridgeGenerator",
+                code: 4,
+                userInfo: [NSLocalizedDescriptionKey: "Swift parser diagnostics in \(input.url.path): \(summary)"]
+            )
+        }
         let visitor = InventoryVisitor(module: input.module)
-        visitor.walk(Parser.parse(source: source))
+        visitor.walk(syntax)
         return (
             .init(module: input.module, fileName: input.url.lastPathComponent, sha256: SHA256.hexDigest(data)),
             visitor.declarations
@@ -104,8 +115,8 @@ private final class InventoryVisitor: SyntaxVisitor {
             genericParameters: node.primaryAssociatedTypeClause?.primaryAssociatedTypes.map(\.name.text) ?? [],
             conformances: node.inheritanceClause?.inheritedTypes.map { $0.type.trimmedDescription } ?? [],
             availability: availability(node.attributes),
-            isDeprecated: attributeText(node.attributes).contains("deprecated"),
-            isUnavailable: attributeText(node.attributes).contains("unavailable")
+            isDeprecated: isDeprecatedOnIOS(node.attributes),
+            isUnavailable: isUnavailableOnIOS(node.attributes)
         ))
         typeScope.append(node.name.text)
         return .visitChildren
@@ -133,8 +144,8 @@ private final class InventoryVisitor: SyntaxVisitor {
                 genericParameters: signature.genericParameters,
                 availability: availability(node.attributes) + availability(attributes),
                 signatures: [signature],
-                isDeprecated: attributeText(attributes).contains("deprecated"),
-                isUnavailable: attributeText(attributes).contains("unavailable")
+                isDeprecated: isDeprecatedOnIOS(attributes),
+                isUnavailable: isUnavailableOnIOS(attributes)
             ))
         }
         return .skipChildren
@@ -163,6 +174,22 @@ private final class InventoryVisitor: SyntaxVisitor {
             }
             return declaration.elements.map(\.name.text)
         }
+        let optionSetCases: [String]
+        if conformances.contains(where: { $0 == "OptionSet" || $0.hasSuffix(".OptionSet") }) {
+            optionSetCases = members.flatMap { member -> [String] in
+                guard let declaration = member.decl.as(VariableDeclSyntax.self),
+                      isPublic(declaration.modifiers),
+                      declaration.modifiers.contains(where: { $0.name.text == "static" }) else {
+                    return []
+                }
+                return declaration.bindings.compactMap { binding in
+                    binding.pattern.as(IdentifierPatternSyntax.self)?.identifier.text
+                        .trimmingCharacters(in: CharacterSet(charactersIn: "`"))
+                }
+            }
+        } else {
+            optionSetCases = []
+        }
         let kind: HanlinSwiftUIDeclarationKind = conformances.contains(where: {
             $0 == "View" || $0.hasSuffix(".View")
         }) ? .view : .type
@@ -176,8 +203,9 @@ private final class InventoryVisitor: SyntaxVisitor {
             availability: availability(attributes),
             signatures: signatures,
             enumCases: enumCases,
-            isDeprecated: attributeText(attributes).contains("deprecated"),
-            isUnavailable: attributeText(attributes).contains("unavailable")
+            optionSetCases: optionSetCases,
+            isDeprecated: isDeprecatedOnIOS(attributes),
+            isUnavailable: isUnavailableOnIOS(attributes)
         ))
     }
 
@@ -231,5 +259,23 @@ private final class InventoryVisitor: SyntaxVisitor {
 
     private func attributeText(_ attributes: AttributeListSyntax) -> String {
         attributes.trimmedDescription
+    }
+
+    private func isUnavailableOnIOS(_ attributes: AttributeListSyntax) -> Bool {
+        targetAvailability(attributes).contains { text in
+            text.contains("unavailable")
+        }
+    }
+
+    private func isDeprecatedOnIOS(_ attributes: AttributeListSyntax) -> Bool {
+        targetAvailability(attributes).contains { text in
+            text.contains("deprecated") && !text.contains("deprecated: 100000")
+        }
+    }
+
+    private func targetAvailability(_ attributes: AttributeListSyntax) -> [String] {
+        availability(attributes).filter { text in
+            text.hasPrefix("@available(iOS,") || text.hasPrefix("@available(*,")
+        }
     }
 }

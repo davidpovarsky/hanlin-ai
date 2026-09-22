@@ -7,6 +7,7 @@ const repositoryRoot = resolve(scriptRoot, '..', '..');
 const expoRoot = resolve(scriptRoot, 'node_modules', '@expo', 'ui', 'build', 'swift-ui');
 const outputPath = resolve(repositoryRoot, 'Tools', 'SwiftUIBridge', 'configuration.json');
 const rulesPath = resolve(repositoryRoot, 'Tools', 'SwiftUIBridge', 'rules.json');
+const reviewedCapabilitiesPath = resolve(repositoryRoot, 'Tools', 'SwiftUIBridge', 'expo-reviewed-capabilities.json');
 
 function exportedCallableNames(entry, capitalized) {
   const program = ts.createProgram([entry], {
@@ -36,12 +37,15 @@ function exportedCallableNames(entry, capitalized) {
 }
 
 const rules = JSON.parse(await readFile(rulesPath, 'utf8'));
+const reviewedCapabilities = JSON.parse(await readFile(reviewedCapabilitiesPath, 'utf8'));
 const configuration = {
   runtimeVersion: '58.0.3',
   bridgeVersion: '1.0.0',
   expoUIVersion: '58.0.3',
   expoViews: exportedCallableNames(resolve(expoRoot, 'index.d.ts'), true),
   expoModifiers: exportedCallableNames(resolve(expoRoot, 'modifiers', 'index.d.ts'), false),
+  expoReviewedViews: reviewedCapabilities.views,
+  expoReviewedModifiers: reviewedCapabilities.modifiers,
   rules,
 };
 

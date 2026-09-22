@@ -55,10 +55,29 @@ flowchart TD
 ```
 
 ### Key Architectural Invariants:
-1. **Zero Host Recompilation**: The host app (`AI_Hanlin`) does not compile MiniApp JavaScript into its binary. The JS bundle is resolved dynamically from the installed package directory at runtime.
+1. **No Host Recompilation for Installed Bridge Capabilities**: The host app (`AI_Hanlin`) does not compile MiniApp JavaScript into its binary. The JS bundle is resolved dynamically from the installed package directory. Adding a new native SwiftUI bridge capability or regenerating for a new Apple SDK requires one host build; MiniApps using the capability surface already installed in that host do not.
 2. **Dynamic Package / Session Switching**: Swapping from MiniApp A to MiniApp B instantiates an isolated `HanlinExpoSession` pointing to the selected package's bundle path; the host application remains alive without recompilation.
 3. **SwiftUI-Backed Components via Expo UI**: The `@expo/ui/swift-ui` components tested in the probe (including `NavigationSplitView`, `NavigationStack`, `List`, `Toolbar`, `Button`, `Toggle`, and `BottomSheet`) are backed by genuine Apple SwiftUI view structs and modifiers. React Native, Hermes, and Expo UI provide the underlying runtime host, event bridging, and state management.
 4. **Session Teardown Lifecycle**: Dismissing an active Expo MiniApp triggers explicit teardown in `HanlinExpoSession.shutdown()`, removing the hosted view, clearing `reactHost` references, releasing factory/delegate resources, destroying the Expo app context, and unregistering custom modifiers.
+
+### Generated SwiftUI capability pipeline
+
+The production bridge follows one reproducible path:
+
+```text
+stable Xcode iPhoneOS SwiftUI + SwiftUICore interfaces
+  -> SwiftSyntax inventory and per-overload classification
+  -> generated native SwiftUI wrappers + typed TypeScript
+  -> @hanlin/expo-ui
+  -> dynamic TSX MiniApp
+  -> real SwiftUI views in the prebuilt Hanlin host
+```
+
+The complete SDK interfaces are exported through the generic `apple-sdk-interface` command in
+`apple-devtools`; they are local generation inputs and are not committed. The checked-in coverage
+records their hashes and toolchain identity. Expo symbol presence, reviewed Expo semantic coverage,
+generated adapters, and manual adapters are reported separately, and partial overload support is not
+reported as full symbol support. See `Tools/SwiftUIBridge/README.md` for regeneration details.
 
 ---
 

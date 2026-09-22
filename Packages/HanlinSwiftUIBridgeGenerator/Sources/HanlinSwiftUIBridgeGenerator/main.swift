@@ -4,6 +4,7 @@ import HanlinSwiftUIBridgeCore
 struct Arguments {
     var interfaces: [HanlinSwiftUIInterfaceInput] = []
     var sdkIdentity = "unknown"
+    var sdkManifest: URL?
     var configuration: URL?
     var output: URL?
     var swiftDestination: URL?
@@ -25,6 +26,7 @@ func parseArguments() throws -> Arguments {
             let path = String(value[value.index(after: separator)...])
             parsed.interfaces.append(.init(module: module, url: URL(filePath: path)))
         case "--sdk-identity": parsed.sdkIdentity = iterator.next() ?? "unknown"
+        case "--sdk-manifest": parsed.sdkManifest = iterator.next().map { URL(filePath: $0) }
         case "--configuration": parsed.configuration = iterator.next().map { URL(filePath: $0) }
         case "--output": parsed.output = iterator.next().map { URL(filePath: $0) }
         case "--swift-destination": parsed.swiftDestination = iterator.next().map { URL(filePath: $0) }
@@ -45,9 +47,13 @@ do {
     }
     let decoder = JSONDecoder()
     let configuration = try decoder.decode(HanlinSwiftUIBridgeConfiguration.self, from: Data(contentsOf: configurationURL))
+    let sdkMetadata = try arguments.sdkManifest.map {
+        try decoder.decode(HanlinSwiftUISDKMetadata.self, from: Data(contentsOf: $0))
+    }
     let inventory = try HanlinSwiftUIOutputGenerator.buildInventory(
         inputs: arguments.interfaces,
         sdkIdentity: arguments.sdkIdentity,
+        sdkMetadata: sdkMetadata,
         configuration: configuration
     )
     if arguments.check {

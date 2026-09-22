@@ -1,11 +1,12 @@
 import Foundation
 
 public enum HanlinSwiftUIOutputGenerator {
-    public static let version = "1.0.0"
+    public static let version = "2.0.0"
 
     public static func buildInventory(
         inputs: [HanlinSwiftUIInterfaceInput],
         sdkIdentity: String,
+        sdkMetadata: HanlinSwiftUISDKMetadata? = nil,
         configuration: HanlinSwiftUIBridgeConfiguration
     ) throws -> HanlinSwiftUIInventory {
         var identities: [HanlinSwiftUIInterfaceIdentity] = []
@@ -20,6 +21,7 @@ public enum HanlinSwiftUIOutputGenerator {
         return .init(
             generatorVersion: version,
             sdkIdentity: sdkIdentity,
+            sdkMetadata: sdkMetadata,
             interfaces: identities,
             declarations: declarations
         )
@@ -36,16 +38,33 @@ public enum HanlinSwiftUIOutputGenerator {
         encoder.outputFormatting = [.prettyPrinted, .sortedKeys, .withoutEscapingSlashes]
         try appendNewline(encoder.encode(inventory)).write(to: outputRoot.appending(path: "swiftui-inventory.json"))
 
-        let relevant = inventory.declarations.filter { $0.kind == .view || $0.kind == .modifier }
+        let relevant = inventory.declarations.filter {
+            $0.kind == .view || $0.kind == .modifier || $0.status == .hostLifecycleOnly
+        }
         let counts = Dictionary(grouping: relevant, by: { $0.status?.rawValue ?? "unclassified" })
             .mapValues(\.count)
+        let aggregateCounts = Dictionary(grouping: relevant, by: { $0.aggregateStatus?.rawValue ?? "unclassified" })
+            .mapValues(\.count)
+        let views = relevant.filter { $0.kind == .view }
+        let modifiers = relevant.filter { $0.kind == .modifier }
+        let kindCounts = [
+            "views": views.count,
+            "modifiers": modifiers.count,
+            "expo-view-symbols": views.count(where: \.expoSymbolExists),
+            "expo-modifier-symbols": modifiers.count(where: \.expoSymbolExists),
+        ]
+        let signatureCounts = makeSignatureCounts(views: views, modifiers: modifiers)
         let coverage = HanlinSwiftUICoverage(
             sdkIdentity: inventory.sdkIdentity,
+            sdkMetadata: inventory.sdkMetadata,
             generatorVersion: inventory.generatorVersion,
             bridgeVersion: configuration.bridgeVersion,
             expoUIVersion: configuration.expoUIVersion,
             interfaceHashes: Dictionary(uniqueKeysWithValues: inventory.interfaces.map { ($0.module, $0.sha256) }),
             counts: counts,
+            aggregateCounts: aggregateCounts,
+            kindCounts: kindCounts,
+            signatureCounts: signatureCounts,
             symbols: relevant
         )
         try appendNewline(encoder.encode(coverage)).write(to: outputRoot.appending(path: "coverage.json"))
@@ -75,6 +94,7 @@ public enum HanlinSwiftUIOutputGenerator {
                 existing.signatures.append(contentsOf: declaration.signatures.filter { !existing.signatures.contains($0) })
                 existing.availability = Array(Set(existing.availability + declaration.availability)).sorted()
                 existing.enumCases = Array(Set(existing.enumCases + declaration.enumCases)).sorted()
+                existing.optionSetCases = Array(Set(existing.optionSetCases + declaration.optionSetCases)).sorted()
                 merged[key] = existing
             } else {
                 merged[key] = declaration
@@ -92,19 +112,88 @@ public enum HanlinSwiftUIOutputGenerator {
             "- Generator: `\(coverage.generatorVersion)`",
             "- Bridge: `\(coverage.bridgeVersion)`",
             "- Expo UI: `\(coverage.expoUIVersion)`",
-            "",
-            "| Classification | Count |",
-            "| --- | ---: |",
         ]
+        if let metadata = coverage.sdkMetadata {
+            lines.append("- Xcode: `\(metadata.xcodeVersion.replacingOccurrences(of: "\n", with: " / "))`")
+            lines.append("- SDK: `\(metadata.sdk) \(metadata.sdkVersion)`")
+            lines.append("- Target: `\(metadata.target)`")
+            for (module, item) in metadata.modules.sorted(by: { $0.key < $1.key }) {
+                lines.append("- \(module) interface: `\(item.sourceFile)` (`\(item.sha256)`)")
+            }
+        }
+        lines.append(contentsOf: ["", "| Classification | Count |", "| --- | ---: |"])
         for status in HanlinSwiftUIBridgeStatus.allCases {
             lines.append("| \(status.rawValue) | \(coverage.counts[status.rawValue, default: 0]) |")
         }
-        lines.append(contentsOf: ["", "## Symbols", "", "| Module | Symbol | Kind | Tier | Status | Reason |", "| --- | --- | --- | --- | --- | --- |"])
+        lines.append(contentsOf: ["", "## Derived aggregate status", "", "| Aggregate | Count |", "| --- | ---: |"])
+        for status in HanlinSwiftUIAggregateStatus.allCases {
+            lines.append("| \(status.rawValue) | \(coverage.aggregateCounts[status.rawValue, default: 0]) |")
+        }
+        lines.append(contentsOf: [
+            "",
+            "## Signature coverage",
+            "",
+            "| Metric | Count |",
+            "| --- | ---: |",
+            "| View symbols discovered | \(coverage.kindCounts["views", default: 0]) |",
+            "| Expo view symbols present | \(coverage.kindCounts["expo-view-symbols", default: 0]) |",
+            "| View initializers discovered | \(coverage.signatureCounts["view.total", default: 0]) |",
+            "| View initializers covered | \(coverage.signatureCounts["view.covered", default: 0]) |",
+            "| View initializers uncovered | \(coverage.signatureCounts["view.uncovered", default: 0]) |",
+            "| Modifier symbols discovered | \(coverage.kindCounts["modifiers", default: 0]) |",
+            "| Expo modifier symbols present | \(coverage.kindCounts["expo-modifier-symbols", default: 0]) |",
+            "| Modifier overloads discovered | \(coverage.signatureCounts["modifier.total", default: 0]) |",
+            "| Modifier overloads covered | \(coverage.signatureCounts["modifier.covered", default: 0]) |",
+            "| Modifier overloads uncovered | \(coverage.signatureCounts["modifier.uncovered", default: 0]) |",
+        ])
+        lines.append(contentsOf: ["", "## Symbols", "", "| Module | Symbol | Kind | Tier | Source | Aggregate | Expo parity | Reason |", "| --- | --- | --- | --- | --- | --- | --- | --- |"])
         for symbol in coverage.symbols {
             let reason = (symbol.reason ?? "").replacingOccurrences(of: "|", with: "\\|")
-            lines.append("| \(symbol.module) | `\(symbol.symbol)` | \(symbol.kind.rawValue) | \(symbol.tier?.rawValue ?? "-") | \(symbol.status?.rawValue ?? "-") | \(reason) |")
+            lines.append("| \(symbol.module) | `\(symbol.symbol)` | \(symbol.kind.rawValue) | \(symbol.tier?.rawValue ?? "-") | \(symbol.status?.rawValue ?? "-") | \(symbol.aggregateStatus?.rawValue ?? "-") | \(symbol.expoParity?.rawValue ?? "-") | \(reason) |")
         }
-        return lines.joined(separator: "\n") + "\n"
+        lines.append(contentsOf: ["", "## Overloads", ""])
+        for symbol in coverage.symbols where !symbol.signatures.isEmpty {
+            lines.append("### \(symbol.module).\(symbol.symbol)")
+            lines.append("")
+            lines.append("Aggregate: `\(symbol.aggregateStatus?.rawValue ?? "-")`")
+            lines.append("")
+            for signature in symbol.signatures {
+                let reason = (signature.reason ?? "Unclassified signature.").replacingOccurrences(of: "\n", with: " ")
+                lines.append("- `\(signatureDescription(signature, kind: symbol.kind))` → **\(signature.status?.rawValue ?? "unclassified")** (`\(signature.bridgeStrategy ?? "none")`): \(reason)")
+            }
+            lines.append("")
+        }
+        return lines.joined(separator: "\n").trimmingCharacters(in: .newlines) + "\n"
+    }
+
+    private static func makeSignatureCounts(
+        views: [HanlinSwiftUIDeclaration],
+        modifiers: [HanlinSwiftUIDeclaration]
+    ) -> [String: Int] {
+        var result: [String: Int] = [:]
+        for (prefix, declarations) in [("view", views), ("modifier", modifiers)] {
+            let signatures = declarations.flatMap(\.signatures)
+            result["\(prefix).total"] = signatures.count
+            result["\(prefix).covered"] = signatures.count { $0.status?.isCovered == true }
+            result["\(prefix).uncovered"] = signatures.count { signature in
+                signature.status != .hostLifecycle && signature.status?.isCovered != true
+            }
+            result["\(prefix).host-lifecycle"] = signatures.count { $0.status == .hostLifecycle }
+            for status in HanlinSwiftUISignatureStatus.allCases {
+                result["\(prefix).\(status.rawValue)"] = signatures.count { $0.status == status }
+            }
+        }
+        return result
+    }
+
+    private static func signatureDescription(
+        _ signature: HanlinSwiftUISignature,
+        kind: HanlinSwiftUIDeclarationKind
+    ) -> String {
+        let parameters = signature.parameters.map { parameter in
+            "\(parameter.externalName.map { "\($0) " } ?? "")\(parameter.localName): \(parameter.type)"
+        }.joined(separator: ", ")
+        return "\(kind == .view ? "init" : "func")(\(parameters))"
     }
 
     private static func generatedSwift(
@@ -122,13 +211,23 @@ public enum HanlinSwiftUIOutputGenerator {
             "",
         ]
         let enumDeclarations = Dictionary(uniqueKeysWithValues: inventory.declarations
-            .filter { !$0.enumCases.isEmpty }
+            .filter { !$0.enumCases.isEmpty || !$0.optionSetCases.isEmpty }
             .map { ($0.symbol, $0) })
         let usedEnums = Set(modifiers.flatMap { modifier in
-            modifier.signatures.flatMap(\.parameters).compactMap { parameter in
-                enumDeclarations[parameter.type]?.symbol
-            }
+            selectedModifierSignature(modifier)?.parameters.compactMap { parameter in
+                enumDeclaration(for: parameter.type, enums: enumDeclarations)?.symbol
+            } ?? []
         })
+        let usedStructures = Set(modifiers.flatMap { modifier in
+            selectedModifierSignature(modifier)?.parameters.compactMap { structuralValueName($0.type) } ?? []
+        })
+        let usedOptionSets = Set(modifiers.flatMap { modifier in
+            selectedModifierSignature(modifier)?.parameters.compactMap { parameter in
+                optionSetDeclaration(for: parameter.type, declarations: enumDeclarations)?.symbol
+            } ?? []
+        })
+        appendStructuralValueDeclarations(usedStructures, prefix: "HanlinGenerated", to: &lines)
+        appendOptionSetDeclarations(usedOptionSets, declarations: enumDeclarations, prefix: "HanlinGenerated", to: &lines)
         for enumName in usedEnums.sorted() {
             guard let declaration = enumDeclarations[enumName] else { continue }
             let bridgeType = generatedEnumType(enumName)
@@ -148,13 +247,11 @@ public enum HanlinSwiftUIOutputGenerator {
             lines.append("")
         }
         for modifier in modifiers {
-            guard let signature = modifier.signatures.first(where: { signature in
-                !signature.parameters.contains(where: { $0.isBinding || ($0.isClosure && !$0.isViewBuilder) })
-            }), !signature.parameters.contains(where: \.isViewBuilder) else { continue }
+            guard let signature = selectedModifierSignature(modifier) else { continue }
             let typeName = "HanlinGenerated\(upperCamel(modifier.symbol))Modifier"
             lines.append("public struct \(typeName): ViewModifier, Record {")
             for parameter in signature.parameters {
-                lines.append("    @Field public var \(parameter.localName): \(fieldType(parameter.type, enums: enumDeclarations)) = \(fieldDefault(parameter, enums: enumDeclarations))")
+                lines.append("    @Field public var \(parameter.localName): \(fieldType(parameter, enums: enumDeclarations)) = \(fieldDefault(parameter, enums: enumDeclarations))")
             }
             lines.append("")
             lines.append("    public init() {}")
@@ -196,7 +293,7 @@ public enum HanlinSwiftUIOutputGenerator {
             "",
         ]
         for modifier in modifiers {
-            guard let signature = modifier.signatures.first(where: { !$0.parameters.contains(where: { $0.isClosure || $0.isBinding }) }) else { continue }
+            guard let signature = selectedModifierSignature(modifier) else { continue }
             let parameters = signature.parameters.map { parameter in
                 let optional = parameter.defaultValue == nil ? "" : "?"
                 return "\(parameter.localName)\(optional): \(typescriptType(parameter.type, inventory: inventory))"
@@ -214,8 +311,11 @@ public enum HanlinSwiftUIOutputGenerator {
         configuration: HanlinSwiftUIBridgeConfiguration
     ) -> String {
         let views = inventory.declarations.filter { $0.kind == .view && $0.status == .generated }
+        let hasMultiSlotView = views.contains { view in
+            (selectedViewSignature(view)?.parameters.count(where: \.isViewBuilder) ?? 0) > 1
+        }
         let enumDeclarations = Dictionary(uniqueKeysWithValues: inventory.declarations
-            .filter { !$0.enumCases.isEmpty }
+            .filter { !$0.enumCases.isEmpty || !$0.optionSetCases.isEmpty }
             .map { ($0.symbol, $0) })
         var lines = [
             "// Generated by hanlin-swiftui-bridge \(version). Do not edit.",
@@ -224,11 +324,34 @@ public enum HanlinSwiftUIOutputGenerator {
             "import SwiftUI",
             "",
         ]
+        if hasMultiSlotView {
+            lines.append(contentsOf: [
+                "public final class HanlinGeneratedSlotProps: UIBaseViewProps {",
+                "    @Field public var name = \"\"",
+                "}",
+                "",
+                "public struct HanlinGeneratedSlotView: ExpoSwiftUI.View {",
+                "    @ObservedObject public var props: HanlinGeneratedSlotProps",
+                "    public var body: some View { Children() }",
+                "}",
+                "",
+            ])
+        }
         let usedEnums = Set(views.flatMap { view in
             selectedViewSignature(view)?.parameters.compactMap { parameter in
                 enumDeclaration(for: parameter.type, enums: enumDeclarations)?.symbol
             } ?? []
         })
+        let usedStructures = Set(views.flatMap { view in
+            selectedViewSignature(view)?.parameters.compactMap { structuralValueName($0.type) } ?? []
+        })
+        let usedOptionSets = Set(views.flatMap { view in
+            selectedViewSignature(view)?.parameters.compactMap { parameter in
+                optionSetDeclaration(for: parameter.type, declarations: enumDeclarations)?.symbol
+            } ?? []
+        })
+        appendStructuralValueDeclarations(usedStructures, prefix: "HanlinGeneratedView", to: &lines)
+        appendOptionSetDeclarations(usedOptionSets, declarations: enumDeclarations, prefix: "HanlinGeneratedView", to: &lines)
         for enumName in usedEnums.sorted() {
             guard let declaration = enumDeclarations[enumName] else { continue }
             let bridgeType = generatedViewEnumType(enumName)
@@ -249,9 +372,10 @@ public enum HanlinSwiftUIOutputGenerator {
             let propsName = "HanlinGenerated\(baseName)Props"
             let viewName = "HanlinGenerated\(baseName)View"
             let valueParameters = signature.parameters.filter { !$0.isViewBuilder }
+            let builderParameters = signature.parameters.filter(\.isViewBuilder)
             lines.append("public final class \(propsName): UIBaseViewProps {")
             for parameter in valueParameters {
-                lines.append("    @Field public var \(parameter.localName): \(viewFieldType(parameter.type, enums: enumDeclarations)) = \(viewFieldDefault(parameter, enums: enumDeclarations))")
+                lines.append("    @Field public var \(parameter.localName): \(viewFieldType(parameter, enums: enumDeclarations)) = \(viewFieldDefault(parameter, enums: enumDeclarations))")
             }
             lines.append("}")
             lines.append("")
@@ -263,14 +387,29 @@ public enum HanlinSwiftUIOutputGenerator {
                 let value = viewNativeValue(parameter, enums: enumDeclarations)
                 return parameter.externalName.map { "\($0): \(value)" } ?? value
             }.joined(separator: ", ")
-            if signature.parameters.last?.isViewBuilder == true {
+            if builderParameters.count == 1 {
                 lines.append("        SwiftUI.\(view.symbol)(\(arguments)) {")
                 lines.append("            Children()")
                 lines.append("        }")
+            } else if builderParameters.count > 1 {
+                let first = builderParameters[0]
+                lines.append("        SwiftUI.\(view.symbol)(\(arguments)) {")
+                lines.append("            namedSlot(\"\(first.localName)\")")
+                lines.append("        }" + builderParameters.dropFirst().map { parameter in
+                    " \(parameter.externalName ?? parameter.localName): { namedSlot(\"\(parameter.localName)\") }"
+                }.joined())
             } else {
                 lines.append("        SwiftUI.\(view.symbol)(\(arguments))")
             }
             lines.append("    }")
+            if builderParameters.count > 1 {
+                lines.append("")
+                lines.append("    @ViewBuilder private func namedSlot(_ name: String) -> some View {")
+                lines.append("        if let slot = props.children?.compactMap({ $0.childView as? HanlinGeneratedSlotView }).first(where: { $0.props.name == name }) {")
+                lines.append("            slot")
+                lines.append("        }")
+                lines.append("    }")
+            }
             lines.append("}")
             lines.append("")
         }
@@ -283,6 +422,7 @@ public enum HanlinSwiftUIOutputGenerator {
         lines.append("public final class HanlinGeneratedExpoUIModule: Module {")
         lines.append("    public func definition() -> ModuleDefinition {")
         lines.append("        Name(\"HanlinGeneratedExpoUI\")")
+        if hasMultiSlotView { lines.append("        ExpoUIView(HanlinGeneratedSlotView.self)") }
         for view in views {
             lines.append("        ExpoUIView(HanlinGenerated\(upperCamel(view.symbol))View.self)")
         }
@@ -293,6 +433,9 @@ public enum HanlinSwiftUIOutputGenerator {
 
     private static func generatedTypeScriptViews(_ inventory: HanlinSwiftUIInventory) -> String {
         let views = inventory.declarations.filter { $0.kind == .view && $0.status == .generated }
+        let hasMultiSlotView = views.contains { view in
+            (selectedViewSignature(view)?.parameters.count(where: \.isViewBuilder) ?? 0) > 1
+        }
         var lines = [
             "// Generated by hanlin-swiftui-bridge \(version). Do not edit.",
             "import React from 'react';",
@@ -301,27 +444,48 @@ public enum HanlinSwiftUIOutputGenerator {
             "import { createViewModifierEventListener } from '@expo/ui/swift-ui/modifiers';",
             "",
         ]
+        if hasMultiSlotView {
+            lines.append(contentsOf: [
+                "interface HanlinGeneratedSlotProps { name: string; children?: React.ReactNode }",
+                "const HanlinGeneratedSlot = requireNativeView<HanlinGeneratedSlotProps>('HanlinGeneratedExpoUI', 'HanlinGeneratedSlotView');",
+                "",
+            ])
+        }
         for view in views {
             guard let signature = selectedViewSignature(view) else { continue }
             let name = upperCamel(view.symbol)
             let values = signature.parameters.filter { !$0.isViewBuilder }
+            let builders = signature.parameters.filter(\.isViewBuilder)
             lines.append("export interface \(name)Props extends CommonViewModifierProps {")
             for parameter in values {
                 let optional = parameter.defaultValue == nil ? "" : "?"
                 lines.append("  \(parameter.localName)\(optional): \(typescriptType(parameter.type, inventory: inventory));")
             }
-            if signature.parameters.contains(where: \.isViewBuilder) { lines.append("  children?: React.ReactNode;") }
+            if builders.count == 1 { lines.append("  children?: React.ReactNode;") }
+            if builders.count > 1 {
+                for builder in builders { lines.append("  \(builder.localName)?: React.ReactNode;") }
+                lines.append("  children?: React.ReactNode;")
+            }
             lines.append("}")
             lines.append("")
             lines.append("const Native\(name) = requireNativeView<\(name)Props>('HanlinGeneratedExpoUI', 'HanlinGenerated\(name)View');")
             lines.append("")
-            lines.append("export function \(name)({ modifiers, ...props }: \(name)Props) {")
+            let slotBindings = builders.count > 1 ? ", " + builders.map(\.localName).joined(separator: ", ") : ""
+            lines.append("export function \(name)({ modifiers\(slotBindings), ...props }: \(name)Props) {")
             lines.append("  return (")
             lines.append("    <Native\(name)")
             lines.append("      {...props}")
             lines.append("      modifiers={modifiers}")
             lines.append("      {...(modifiers ? createViewModifierEventListener(modifiers) : undefined)}")
-            lines.append("    />")
+            if builders.count > 1 {
+                lines.append("    >")
+                for builder in builders {
+                    lines.append("      {\(builder.localName) === undefined ? null : <HanlinGeneratedSlot name=\"\(builder.localName)\">{\(builder.localName)}</HanlinGeneratedSlot>}")
+                }
+                lines.append("    </Native\(name)>")
+            } else {
+                lines.append("    />")
+            }
             lines.append("  );")
             lines.append("}")
             lines.append("")
@@ -358,18 +522,43 @@ public enum HanlinSwiftUIOutputGenerator {
         """ + "\n"
     }
 
-    private static func fieldType(_ type: String, enums: [String: HanlinSwiftUIDeclaration]) -> String {
-        let normalized = type.replacingOccurrences(of: "Swift.", with: "")
-        if enums[normalized] != nil { return generatedEnumType(normalized) }
-        return normalized
+    private static func fieldType(
+        _ parameter: HanlinSwiftUIParameter,
+        enums: [String: HanlinSwiftUIDeclaration]
+    ) -> String {
+        let type = parameter.type
+        if let declaration = optionSetDeclaration(for: type, declarations: enums) {
+            let optional = isOptional(type) || parameter.defaultValue != nil ? "?" : ""
+            return "[\(generatedEnumType(declaration.symbol))]\(optional)"
+        }
+        if let declaration = enumDeclaration(for: type, enums: enums) {
+            return generatedEnumType(declaration.symbol) + (isOptional(type) ? "?" : "")
+        }
+        if let structural = structuralValueName(type) {
+            let optional = isOptional(type) || parameter.defaultValue != nil ? "?" : ""
+            if structural == "Angle" || structural == "LocalizedStringKey" || structural == "Text" {
+                return (structural == "Angle" ? "Double" : "String") + optional
+            }
+            return "HanlinGenerated\(structural)Value" + optional
+        }
+        return normalizedSwiftType(type)
     }
 
     private static func fieldDefault(
         _ parameter: HanlinSwiftUIParameter,
         enums: [String: HanlinSwiftUIDeclaration]
     ) -> String {
+        if optionSetDeclaration(for: parameter.type, declarations: enums) != nil {
+            return parameter.defaultValue != nil || isOptional(parameter.type) ? "nil" : "[]"
+        }
         if parameter.defaultValue == nil && parameter.type.trimmingCharacters(in: .whitespaces).hasSuffix("?") {
             return "nil"
+        }
+        if let structural = structuralValueName(parameter.type) {
+            if parameter.defaultValue != nil || isOptional(parameter.type) { return "nil" }
+            if structural == "Angle" { return "0" }
+            if structural == "LocalizedStringKey" || structural == "Text" { return "\"\"" }
+            return "HanlinGenerated\(structural)Value()"
         }
         if let declaration = enumDeclaration(for: parameter.type, enums: enums) {
             return parameter.defaultValue ?? declaration.enumCases.sorted().first.map { ".\($0)" } ?? ".automatic"
@@ -385,6 +574,12 @@ public enum HanlinSwiftUIOutputGenerator {
         _ parameter: HanlinSwiftUIParameter,
         enums: [String: HanlinSwiftUIDeclaration]
     ) -> String {
+        if let declaration = optionSetDeclaration(for: parameter.type, declarations: enums) {
+            return optionSetNativeValue(parameter, declaration: declaration, reference: parameter.localName)
+        }
+        if let structural = structuralValueName(parameter.type) {
+            return structuralNativeValue(structural, reference: parameter.localName, defaultValue: parameter.defaultValue)
+        }
         guard enumDeclaration(for: parameter.type, enums: enums) != nil else { return parameter.localName }
         return parameter.type.trimmingCharacters(in: .whitespaces).hasSuffix("?")
             ? "\(parameter.localName)?.swiftUIValue"
@@ -392,10 +587,26 @@ public enum HanlinSwiftUIOutputGenerator {
     }
 
     private static func typescriptType(_ type: String, inventory: HanlinSwiftUIInventory) -> String {
-        let normalized = type.replacingOccurrences(of: "Swift.", with: "").replacingOccurrences(of: "?", with: "")
+        let normalized = normalizedSwiftType(type).replacingOccurrences(of: "?", with: "")
         if ["Bool"].contains(normalized) { return "boolean" }
         if ["Int", "Int32", "Int64", "Double", "Float", "CGFloat"].contains(normalized) { return "number" }
         if normalized == "String" { return "string" }
+        if let structural = structuralValueName(type) {
+            switch structural {
+            case "UnitPoint", "CGPoint": return "{ x: number; y: number }"
+            case "EdgeInsets": return "{ top: number; leading: number; bottom: number; trailing: number }"
+            case "CGSize": return "{ width: number; height: number }"
+            case "Angle": return "number"
+            case "LocalizedStringKey", "Text": return "string"
+            default: break
+            }
+        }
+        if let optionSet = inventory.declarations.first(where: {
+            !$0.optionSetCases.isEmpty && typeMatches(type, symbol: $0.symbol)
+        }) {
+            let values = optionSet.optionSetCases.sorted().map { "'\($0)'" }.joined(separator: " | ")
+            return "(\(values))[]"
+        }
         if let enumDeclaration = inventory.declarations.first(where: {
             !$0.enumCases.isEmpty && ($0.symbol == normalized || normalized.hasSuffix($0.symbol))
         }) {
@@ -414,14 +625,12 @@ public enum HanlinSwiftUIOutputGenerator {
     }
 
     private static func selectedViewSignature(_ declaration: HanlinSwiftUIDeclaration) -> HanlinSwiftUISignature? {
+        declaration.signatures.first { $0.status == .directGenerated }
+    }
+
+    private static func selectedModifierSignature(_ declaration: HanlinSwiftUIDeclaration) -> HanlinSwiftUISignature? {
         declaration.signatures.first { signature in
-            let builders = signature.parameters.filter(\.isViewBuilder)
-            return !signature.isAsync
-                && !signature.isThrowing
-                && builders.count <= 1
-                && builders.allSatisfy { $0.type.replacingOccurrences(of: " ", with: "").hasPrefix("()->") }
-                && (builders.isEmpty || signature.parameters.last?.isViewBuilder == true)
-                && signature.parameters.allSatisfy { !$0.isBinding && (!$0.isClosure || $0.isViewBuilder) }
+            signature.status == .directGenerated && !signature.parameters.contains(where: \.isViewBuilder)
         }
     }
 
@@ -433,14 +642,53 @@ public enum HanlinSwiftUIOutputGenerator {
             .replacingOccurrences(of: "Swift.", with: "")
             .replacingOccurrences(of: "?", with: "")
             .trimmingCharacters(in: .whitespacesAndNewlines)
-        if let exact = enums[normalized] { return exact }
-        guard let key = enums.keys.sorted().first(where: { normalized.hasSuffix($0) }) else { return nil }
+        if let exact = enums[normalized], exact.optionSetCases.isEmpty { return exact }
+        guard let key = enums.keys.sorted().first(where: { normalized.hasSuffix($0) && enums[$0]?.optionSetCases.isEmpty == true }) else { return nil }
         return enums[key]
     }
 
-    private static func viewFieldType(_ type: String, enums: [String: HanlinSwiftUIDeclaration]) -> String {
+    private static func optionSetDeclaration(
+        for type: String,
+        declarations: [String: HanlinSwiftUIDeclaration]
+    ) -> HanlinSwiftUIDeclaration? {
+        let normalized = type
+            .replacingOccurrences(of: "Swift.", with: "")
+            .replacingOccurrences(of: "SwiftUICore.", with: "")
+            .replacingOccurrences(of: "SwiftUI.", with: "")
+            .replacingOccurrences(of: "?", with: "")
+            .trimmingCharacters(in: .whitespacesAndNewlines)
+        if let exact = declarations[normalized], !exact.optionSetCases.isEmpty { return exact }
+        guard let key = declarations.keys.sorted().first(where: {
+            normalized.hasSuffix($0) && declarations[$0]?.optionSetCases.isEmpty == false
+        }) else { return nil }
+        return declarations[key]
+    }
+
+    private static func typeMatches(_ type: String, symbol: String) -> Bool {
+        let normalized = normalizedSwiftType(type)
+            .replacingOccurrences(of: "?", with: "")
+            .trimmingCharacters(in: .whitespacesAndNewlines)
+        return normalized == symbol || normalized.hasSuffix(symbol)
+    }
+
+    private static func viewFieldType(
+        _ parameter: HanlinSwiftUIParameter,
+        enums: [String: HanlinSwiftUIDeclaration]
+    ) -> String {
+        let type = parameter.type
+        if let declaration = optionSetDeclaration(for: type, declarations: enums) {
+            let optional = isOptional(type) || parameter.defaultValue != nil ? "?" : ""
+            return "[\(generatedViewEnumType(declaration.symbol))]\(optional)"
+        }
         guard let declaration = enumDeclaration(for: type, enums: enums) else {
-            return type.replacingOccurrences(of: "Swift.", with: "")
+            if let structural = structuralValueName(type) {
+                let optional = isOptional(type) || parameter.defaultValue != nil ? "?" : ""
+                if structural == "Angle" || structural == "LocalizedStringKey" || structural == "Text" {
+                    return (structural == "Angle" ? "Double" : "String") + optional
+                }
+                return "HanlinGeneratedView\(structural)Value" + optional
+            }
+            return normalizedSwiftType(type)
         }
         let optional = type.trimmingCharacters(in: .whitespaces).hasSuffix("?") ? "?" : ""
         return generatedViewEnumType(declaration.symbol) + optional
@@ -450,8 +698,17 @@ public enum HanlinSwiftUIOutputGenerator {
         _ parameter: HanlinSwiftUIParameter,
         enums: [String: HanlinSwiftUIDeclaration]
     ) -> String {
+        if optionSetDeclaration(for: parameter.type, declarations: enums) != nil {
+            return parameter.defaultValue != nil || isOptional(parameter.type) ? "nil" : "[]"
+        }
         if parameter.defaultValue == nil && parameter.type.trimmingCharacters(in: .whitespaces).hasSuffix("?") {
             return "nil"
+        }
+        if let structural = structuralValueName(parameter.type) {
+            if parameter.defaultValue != nil || isOptional(parameter.type) { return "nil" }
+            if structural == "Angle" { return "0" }
+            if structural == "LocalizedStringKey" || structural == "Text" { return "\"\"" }
+            return "HanlinGeneratedView\(structural)Value()"
         }
         if let declaration = enumDeclaration(for: parameter.type, enums: enums) {
             return parameter.defaultValue ?? declaration.enumCases.sorted().first.map { ".\($0)" } ?? ".automatic"
@@ -463,6 +720,12 @@ public enum HanlinSwiftUIOutputGenerator {
         _ parameter: HanlinSwiftUIParameter,
         enums: [String: HanlinSwiftUIDeclaration]
     ) -> String {
+        if let declaration = optionSetDeclaration(for: parameter.type, declarations: enums) {
+            return optionSetNativeValue(parameter, declaration: declaration, reference: "props.\(parameter.localName)")
+        }
+        if let structural = structuralValueName(parameter.type) {
+            return structuralNativeValue(structural, reference: "props.\(parameter.localName)", defaultValue: parameter.defaultValue)
+        }
         guard enumDeclaration(for: parameter.type, enums: enums) != nil else { return "props.\(parameter.localName)" }
         return parameter.type.trimmingCharacters(in: .whitespaces).hasSuffix("?")
             ? "props.\(parameter.localName)?.swiftUIValue"
@@ -471,6 +734,150 @@ public enum HanlinSwiftUIOutputGenerator {
 
     private static func generatedViewEnumType(_ value: String) -> String {
         "HanlinGeneratedView" + value.split(separator: ".").map { upperCamel(String($0)) }.joined() + "Value"
+    }
+
+    private static func normalizedSwiftType(_ type: String) -> String {
+        var result = type
+        for prefix in ["Swift.", "SwiftUICore.", "SwiftUI.", "CoreFoundation.", "CoreGraphics."] {
+            result = result.replacingOccurrences(of: prefix, with: "")
+        }
+        return result
+    }
+
+    private static func isOptional(_ type: String) -> Bool {
+        type.trimmingCharacters(in: .whitespacesAndNewlines).hasSuffix("?") || type.contains("Optional<")
+    }
+
+    private static func structuralValueName(_ type: String) -> String? {
+        var normalized = normalizedSwiftType(type).trimmingCharacters(in: .whitespacesAndNewlines)
+        if normalized.hasSuffix("?") { normalized.removeLast() }
+        let supported: Set<String> = ["UnitPoint", "EdgeInsets", "CGPoint", "CGSize", "Angle", "LocalizedStringKey", "Text"]
+        return supported.contains(normalized) ? normalized : nil
+    }
+
+    private static func structuralNativeValue(
+        _ structural: String,
+        reference: String,
+        defaultValue: String?
+    ) -> String {
+        let converted: String
+        let optionalConverted: String
+        switch structural {
+        case "Angle":
+            converted = "SwiftUI.Angle.degrees(\(reference))"
+            optionalConverted = "\(reference).map(SwiftUI.Angle.degrees)"
+        case "LocalizedStringKey":
+            converted = "SwiftUI.LocalizedStringKey(\(reference))"
+            optionalConverted = "\(reference).map(SwiftUI.LocalizedStringKey.init)"
+        case "Text":
+            converted = "SwiftUI.Text(\(reference))"
+            optionalConverted = "\(reference).map(SwiftUI.Text.init)"
+        default:
+            converted = "\(reference).swiftUIValue"
+            optionalConverted = "\(reference)?.swiftUIValue"
+        }
+        guard let defaultValue else { return converted }
+        return "\(optionalConverted) ?? \(defaultValue)"
+    }
+
+    private static func optionSetNativeValue(
+        _ parameter: HanlinSwiftUIParameter,
+        declaration: HanlinSwiftUIDeclaration,
+        reference: String
+    ) -> String {
+        let type = declaration.symbol
+        let reduce = "values.reduce(into: \(type)()) { result, value in result.formUnion(value.swiftUIValue) }"
+        if let defaultValue = parameter.defaultValue {
+            return "\(reference).map { values in \(reduce) } ?? \(defaultValue)"
+        }
+        if isOptional(parameter.type) {
+            return "\(reference).map { values in \(reduce) }"
+        }
+        return "\(reference).reduce(into: \(type)()) { result, value in result.formUnion(value.swiftUIValue) }"
+    }
+
+    private static func appendOptionSetDeclarations(
+        _ names: Set<String>,
+        declarations: [String: HanlinSwiftUIDeclaration],
+        prefix: String,
+        to lines: inout [String]
+    ) {
+        for name in names.sorted() {
+            guard let declaration = declarations[name] else { continue }
+            let bridgeType = prefix + name.split(separator: ".").map { upperCamel(String($0)) }.joined() + "Value"
+            lines.append("public enum \(bridgeType): String, Enumerable {")
+            for option in declaration.optionSetCases.sorted() {
+                lines.append("    case `\(option)`")
+            }
+            lines.append("")
+            lines.append("    var swiftUIValue: \(name) {")
+            lines.append("        switch self {")
+            for option in declaration.optionSetCases.sorted() {
+                lines.append("        case .`\(option)`: .\(option)")
+            }
+            lines.append("        }")
+            lines.append("    }")
+            lines.append("}")
+            lines.append("")
+        }
+    }
+
+    private static func appendStructuralValueDeclarations(
+        _ names: Set<String>,
+        prefix: String,
+        to lines: inout [String]
+    ) {
+        for name in names.sorted() {
+            switch name {
+            case "UnitPoint":
+                lines.append(contentsOf: structuralRecord(
+                    name: "\(prefix)UnitPointValue",
+                    fields: [("x", "CGFloat", "0.5"), ("y", "CGFloat", "0.5")],
+                    nativeType: "SwiftUI.UnitPoint",
+                    initializer: "SwiftUI.UnitPoint(x: x, y: y)"
+                ))
+            case "EdgeInsets":
+                lines.append(contentsOf: structuralRecord(
+                    name: "\(prefix)EdgeInsetsValue",
+                    fields: [("top", "CGFloat", "0"), ("leading", "CGFloat", "0"), ("bottom", "CGFloat", "0"), ("trailing", "CGFloat", "0")],
+                    nativeType: "SwiftUI.EdgeInsets",
+                    initializer: "SwiftUI.EdgeInsets(top: top, leading: leading, bottom: bottom, trailing: trailing)"
+                ))
+            case "CGPoint":
+                lines.append(contentsOf: structuralRecord(
+                    name: "\(prefix)CGPointValue",
+                    fields: [("x", "CGFloat", "0"), ("y", "CGFloat", "0")],
+                    nativeType: "CGPoint",
+                    initializer: "CGPoint(x: x, y: y)"
+                ))
+            case "CGSize":
+                lines.append(contentsOf: structuralRecord(
+                    name: "\(prefix)CGSizeValue",
+                    fields: [("width", "CGFloat", "0"), ("height", "CGFloat", "0")],
+                    nativeType: "CGSize",
+                    initializer: "CGSize(width: width, height: height)"
+                ))
+            default:
+                continue
+            }
+        }
+    }
+
+    private static func structuralRecord(
+        name: String,
+        fields: [(String, String, String)],
+        nativeType: String,
+        initializer: String
+    ) -> [String] {
+        var lines = ["public final class \(name): Record {"]
+        for (field, type, defaultValue) in fields {
+            lines.append("    @Field public var \(field): \(type) = \(defaultValue)")
+        }
+        lines.append("    public required init() {}")
+        lines.append("    var swiftUIValue: \(nativeType) { \(initializer) }")
+        lines.append("}")
+        lines.append("")
+        return lines
     }
 
     private static func appendNewline(_ data: Data) -> Data {

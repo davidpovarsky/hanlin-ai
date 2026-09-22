@@ -5,9 +5,10 @@ installed `@expo/ui/swift-ui` surface and adds downstream native SwiftUI compone
 modifiers. MiniApps contain TypeScript/JavaScript only; all native bridge code is precompiled into
 the Hanlin host.
 
-The checked-in inventory is generated from focused interfaces on Windows. Run the generator against
-the installed stable Xcode SDK's `SwiftUICore.swiftinterface` and `SwiftUI.swiftinterface` before a
-release host build to refresh complete measured coverage.
+The checked-in inventory is generated from the complete `SwiftUICore.swiftinterface` and
+`SwiftUI.swiftinterface` device interfaces exported from the selected stable Xcode iPhoneOS SDK.
+Focused interfaces under the generator tests are deterministic fixtures only and never represent
+production coverage.
 
 ## Authoring contract
 
@@ -29,3 +30,13 @@ JavaScript. It does not create a second broker: calls are JSON/base64 transporte
 Packages declare `hanlinExpo.bridgeVersion`; import analysis and runtime launch reject a package that
 requires a newer bridge. `Scripts/Expo/build-probe.mjs` runs a TypeScript project semantic check before
 Metro so native component props and generated declarations are checked before packaging.
+
+The public package deliberately hides implementation ownership: an import may resolve to upstream
+Expo UI, a generated Hanlin wrapper, or a deliberate manual adapter. Generated value props use narrow
+primitive, enum, OptionSet-array, and structural object types; controlled inputs use the shared
+binding/event conventions. Coverage metadata distinguishes reviewed Expo semantics from symbols whose
+overload parity is still unknown.
+
+Adding Apple APIs to the native bridge or regenerating against a newer SDK requires a new host build
+once. After that host is installed, MiniApps using that installed bridge surface remain dynamic TSX
+and do not require another host build.

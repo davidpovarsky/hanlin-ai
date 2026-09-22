@@ -24,6 +24,40 @@ public enum HanlinSwiftUIBridgeStatus: String, Codable, Sendable, CaseIterable {
     case needsInvestigation = "needs-investigation"
 }
 
+public enum HanlinSwiftUISignatureStatus: String, Codable, Sendable, CaseIterable {
+    case directGenerated = "direct-generated"
+    case coveredBySharedTSSurface = "covered-by-shared-TS-surface"
+    case coveredByManualAdapter = "covered-by-manual-adapter"
+    case expoUpstream = "expo-upstream"
+    case redundantOverload = "redundant-overload"
+    case unsupported
+    case hostLifecycle = "host-lifecycle"
+    case needsInvestigation = "needs-investigation"
+
+    public var isCovered: Bool {
+        switch self {
+        case .directGenerated, .coveredBySharedTSSurface, .coveredByManualAdapter, .expoUpstream, .redundantOverload:
+            true
+        case .unsupported, .hostLifecycle, .needsInvestigation:
+            false
+        }
+    }
+}
+
+public enum HanlinSwiftUIAggregateStatus: String, Codable, Sendable, CaseIterable {
+    case full
+    case partial
+    case unsupported
+    case lifecycleOnly = "lifecycle-only"
+    case needsInvestigation = "needs-investigation"
+}
+
+public enum HanlinSwiftUIExpoParity: String, Codable, Sendable {
+    case verified
+    case partial
+    case unknown
+}
+
 public struct HanlinSwiftUIParameter: Codable, Hashable, Sendable {
     public var externalName: String?
     public var localName: String
@@ -61,19 +95,31 @@ public struct HanlinSwiftUISignature: Codable, Hashable, Sendable {
     public var genericParameters: [String]
     public var isAsync: Bool
     public var isThrowing: Bool
+    public var status: HanlinSwiftUISignatureStatus?
+    public var reason: String?
+    public var bridgeStrategy: String?
+    public var sharedSurface: String?
 
     public init(
         parameters: [HanlinSwiftUIParameter] = [],
         returnType: String? = nil,
         genericParameters: [String] = [],
         isAsync: Bool = false,
-        isThrowing: Bool = false
+        isThrowing: Bool = false,
+        status: HanlinSwiftUISignatureStatus? = nil,
+        reason: String? = nil,
+        bridgeStrategy: String? = nil,
+        sharedSurface: String? = nil
     ) {
         self.parameters = parameters
         self.returnType = returnType
         self.genericParameters = genericParameters
         self.isAsync = isAsync
         self.isThrowing = isThrowing
+        self.status = status
+        self.reason = reason
+        self.bridgeStrategy = bridgeStrategy
+        self.sharedSurface = sharedSurface
     }
 }
 
@@ -87,12 +133,16 @@ public struct HanlinSwiftUIDeclaration: Codable, Hashable, Sendable {
     public var availability: [String]
     public var signatures: [HanlinSwiftUISignature]
     public var enumCases: [String]
+    public var optionSetCases: [String]
     public var isDeprecated: Bool
     public var isUnavailable: Bool
     public var tier: HanlinSwiftUIBridgeTier?
     public var status: HanlinSwiftUIBridgeStatus?
     public var reason: String?
     public var manualAdapter: String?
+    public var aggregateStatus: HanlinSwiftUIAggregateStatus?
+    public var expoSymbolExists: Bool
+    public var expoParity: HanlinSwiftUIExpoParity?
 
     public init(
         module: String,
@@ -104,12 +154,16 @@ public struct HanlinSwiftUIDeclaration: Codable, Hashable, Sendable {
         availability: [String] = [],
         signatures: [HanlinSwiftUISignature] = [],
         enumCases: [String] = [],
+        optionSetCases: [String] = [],
         isDeprecated: Bool = false,
         isUnavailable: Bool = false,
         tier: HanlinSwiftUIBridgeTier? = nil,
         status: HanlinSwiftUIBridgeStatus? = nil,
         reason: String? = nil,
-        manualAdapter: String? = nil
+        manualAdapter: String? = nil,
+        aggregateStatus: HanlinSwiftUIAggregateStatus? = nil,
+        expoSymbolExists: Bool = false,
+        expoParity: HanlinSwiftUIExpoParity? = nil
     ) {
         self.module = module
         self.symbol = symbol
@@ -120,12 +174,16 @@ public struct HanlinSwiftUIDeclaration: Codable, Hashable, Sendable {
         self.availability = availability
         self.signatures = signatures
         self.enumCases = enumCases
+        self.optionSetCases = optionSetCases
         self.isDeprecated = isDeprecated
         self.isUnavailable = isUnavailable
         self.tier = tier
         self.status = status
         self.reason = reason
         self.manualAdapter = manualAdapter
+        self.aggregateStatus = aggregateStatus
+        self.expoSymbolExists = expoSymbolExists
+        self.expoParity = expoParity
     }
 }
 
@@ -141,10 +199,28 @@ public struct HanlinSwiftUIInterfaceIdentity: Codable, Hashable, Sendable {
     }
 }
 
+public struct HanlinSwiftUISDKModuleMetadata: Codable, Hashable, Sendable {
+    public var sourceFile: String
+    public var artifactFile: String
+    public var sha256: String
+}
+
+public struct HanlinSwiftUISDKMetadata: Codable, Hashable, Sendable {
+    public var schemaVersion: Int
+    public var xcodeVersion: String
+    public var developerDir: String
+    public var sdk: String
+    public var sdkRoot: String
+    public var sdkVersion: String
+    public var target: String
+    public var modules: [String: HanlinSwiftUISDKModuleMetadata]
+}
+
 public struct HanlinSwiftUIInventory: Codable, Sendable {
     public var schemaVersion: Int
     public var generatorVersion: String
     public var sdkIdentity: String
+    public var sdkMetadata: HanlinSwiftUISDKMetadata?
     public var interfaces: [HanlinSwiftUIInterfaceIdentity]
     public var declarations: [HanlinSwiftUIDeclaration]
 
@@ -152,12 +228,14 @@ public struct HanlinSwiftUIInventory: Codable, Sendable {
         schemaVersion: Int = 1,
         generatorVersion: String,
         sdkIdentity: String,
+        sdkMetadata: HanlinSwiftUISDKMetadata? = nil,
         interfaces: [HanlinSwiftUIInterfaceIdentity],
         declarations: [HanlinSwiftUIDeclaration]
     ) {
         self.schemaVersion = schemaVersion
         self.generatorVersion = generatorVersion
         self.sdkIdentity = sdkIdentity
+        self.sdkMetadata = sdkMetadata
         self.interfaces = interfaces.sorted { $0.module < $1.module }
         self.declarations = declarations.sorted {
             ($0.module, $0.symbol, $0.kind.rawValue) < ($1.module, $1.symbol, $1.kind.rawValue)
@@ -183,6 +261,8 @@ public struct HanlinSwiftUIBridgeConfiguration: Codable, Sendable {
     public var expoUIVersion: String
     public var expoViews: [String]
     public var expoModifiers: [String]
+    public var expoReviewedViews: [String]
+    public var expoReviewedModifiers: [String]
     public var rules: [String: HanlinSwiftUIManualRule]
 
     public init(
@@ -191,6 +271,8 @@ public struct HanlinSwiftUIBridgeConfiguration: Codable, Sendable {
         expoUIVersion: String,
         expoViews: [String],
         expoModifiers: [String],
+        expoReviewedViews: [String] = [],
+        expoReviewedModifiers: [String] = [],
         rules: [String: HanlinSwiftUIManualRule]
     ) {
         self.runtimeVersion = runtimeVersion
@@ -198,16 +280,22 @@ public struct HanlinSwiftUIBridgeConfiguration: Codable, Sendable {
         self.expoUIVersion = expoUIVersion
         self.expoViews = expoViews.sorted()
         self.expoModifiers = expoModifiers.sorted()
+        self.expoReviewedViews = expoReviewedViews.sorted()
+        self.expoReviewedModifiers = expoReviewedModifiers.sorted()
         self.rules = rules
     }
 }
 
 public struct HanlinSwiftUICoverage: Codable, Sendable {
     public var sdkIdentity: String
+    public var sdkMetadata: HanlinSwiftUISDKMetadata?
     public var generatorVersion: String
     public var bridgeVersion: String
     public var expoUIVersion: String
     public var interfaceHashes: [String: String]
     public var counts: [String: Int]
+    public var aggregateCounts: [String: Int]
+    public var kindCounts: [String: Int]
+    public var signatureCounts: [String: Int]
     public var symbols: [HanlinSwiftUIDeclaration]
 }

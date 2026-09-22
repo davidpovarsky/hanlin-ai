@@ -1,5 +1,11 @@
 // Focused parser fixture. Full generation consumes the installed Apple SDK interface.
+@available(macOS, unavailable)
 public struct EditButton: View {
+  public init()
+}
+
+@available(iOS, unavailable)
+public struct IOSUnavailableView: View {
   public init()
 }
 
