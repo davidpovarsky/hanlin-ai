@@ -211,7 +211,8 @@ public struct HanlinChatRequestBuilder: Sendable {
             }
         } else if !urlStr.contains("/messages") {
             let base = urlStr.hasSuffix("/") ? String(urlStr.dropLast()) : urlStr
-            if let newURL = URL(string: "\(base)/v1/messages") {
+            let pathSuffix = base.hasSuffix("/v1") ? "/messages" : "/v1/messages"
+            if let newURL = URL(string: "\(base)\(pathSuffix)") {
                 endpointURL = newURL
             }
         }

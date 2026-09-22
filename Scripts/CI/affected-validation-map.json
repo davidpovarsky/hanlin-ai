@@ -693,7 +693,7 @@
       "workflow_outputs": {
         "run_simulator_job": true,
         "run_simulator_unit": true,
-        "simulator_unit_filter": "AI_HLYTests/HanlinUnifiedHostServices"
+        "simulator_unit_filter": "AI_HLYTests/HanlinUnifiedHostServicesTests,AI_HLYTests/HanlinUnifiedHostServicesAgentAcceptanceTests,AI_HLYTests/HanlinUnifiedHostServicesE2ETests"
       }
     },
     "ci_router": {
