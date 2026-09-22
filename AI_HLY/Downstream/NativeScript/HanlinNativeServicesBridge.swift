@@ -66,7 +66,7 @@ public final class HanlinNativeServicesHostProvider: NSObject, @unchecked Sendab
     public static var activeGrantedCapabilities: Set<String> {
         shared.lock.lock()
         defer { shared.lock.unlock() }
-        return shared.activeAdapter?.context.grantedCapabilities ?? []
+        return shared.activeAdapter?.context.effectiveCapabilities ?? []
     }
 
     public static var registeredActionIDs: Set<HanlinActionID> {
@@ -253,9 +253,7 @@ public final class HanlinNativeServicesHostProvider: NSObject, @unchecked Sendab
         caller: HanlinAppID,
         payload: HanlinValue
     ) async throws -> HanlinValue {
-        shared.lock.lock()
-        let adapter = shared.activeAdapter
-        shared.lock.unlock()
+        let adapter = shared.lock.withLock { shared.activeAdapter }
         guard let adapter else {
             throw HanlinMiniAppRequestError.routeNotFound
         }

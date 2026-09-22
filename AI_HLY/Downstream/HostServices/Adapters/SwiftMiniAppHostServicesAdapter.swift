@@ -23,7 +23,7 @@ public final class SwiftMiniAppHostServicesAdapter: NSObject, @unchecked Sendabl
     }
     
     // Provides runtime, file, sqlite, and network services to compiled Swift mini apps
-    public func executeRuntime(
+    func executeRuntime(
         _ kind: RuntimeKind,
         source: String,
         arguments: [String] = [],
@@ -41,18 +41,19 @@ public final class SwiftMiniAppHostServicesAdapter: NSObject, @unchecked Sendabl
     }
     
     public func readFile(path: String, area: HanlinMiniAppDataArea = .data) async throws -> Data {
-        return try await HanlinHostServicesBroker.shared.readFile(
-            at: path,
+        let data = try await HanlinHostServicesBroker.shared.readFile(
+            virtualPath: path,
             area: area,
             context: context
         )
+        return data ?? Data()
     }
 
     public func writeFile(path: String, data: Data, area: HanlinMiniAppDataArea = .data) async throws {
         try await HanlinHostServicesBroker.shared.writeFile(
-            at: path,
-            data: data,
+            virtualPath: path,
             area: area,
+            data: data,
             context: context
         )
     }

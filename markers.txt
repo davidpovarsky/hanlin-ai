@@ -1,0 +1,7 @@
+2447: Launch full app on iPad Simulator	Analyze performance benchmark results	﻿2026-09-22T10:16:39.1937860Z ##[group]Run set -euxo pipefail
+2482: Launch full app on iPad Simulator	Analyze performance benchmark results	2026-09-22T10:16:39.2723010Z ##[endgroup]
+2533: Launch full app on iPad Simulator	Collect simulator diagnostics	﻿2026-09-22T10:16:39.5401600Z ##[group]Run set +e
+2592: Launch full app on iPad Simulator	Collect simulator diagnostics	2026-09-22T10:16:39.5464250Z ##[endgroup]
+2594: Launch full app on iPad Simulator	Upload simulator smoke evidence	2026-09-22T10:16:39.5986570Z ##[group]Run actions/upload-artifact@v4
+2628: Launch full app on iPad Simulator	Upload simulator smoke evidence	2026-09-22T10:16:39.5995860Z ##[endgroup]
+2663: Launch full app on iPad Simulator	Complete job	2026-09-22T10:16:48.1996060Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-node@v4, actions/upload-artifact@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

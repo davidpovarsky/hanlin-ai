@@ -459,8 +459,8 @@ final class HanlinScriptingPlatform {
                 dismissActiveApplication()
                 let sessionID = UUID().uuidString.lowercased()
                 let adapter = ExpoHostServicesAdapter(
-                    appID: appID,
-                    installedPackageID: package.id,
+                    appID: package.appID,
+                    installedPackageID: package.record.installedPackageID,
                     grantedCapabilities: Set(package.grantedCapabilities.map(\.rawValue)),
                     sessionID: sessionID
                 )

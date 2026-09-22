@@ -34,7 +34,7 @@ public final class ExpoHostServicesAdapter: NSObject, @unchecked Sendable, Hanli
             || context.effectiveCapabilities.contains("all")
     }
 
-    public func executeRuntime(
+    func executeRuntime(
         _ kind: RuntimeKind,
         source: String,
         arguments: [String] = [],
@@ -92,9 +92,9 @@ public final class ExpoHostServicesAdapter: NSObject, @unchecked Sendable, Hanli
         case "cache": .cache
         default: .data
         }
-        let data = try await HanlinHostServicesBroker.shared.readFile(at: path, area: dataArea, context: context)
-        guard let str = String(data: data, encoding: .utf8) else {
-            throw HanlinHostServiceError.fileOperationFailed("Failed to decode file as UTF-8 string: \(path)")
+        let data = try await HanlinHostServicesBroker.shared.readFile(virtualPath: path, area: dataArea, context: context)
+        guard let str = String(data: data ?? Data(), encoding: .utf8) else {
+            throw HanlinHostServiceError.invalidRequest("Failed to decode file as UTF-8 string: \(path)")
         }
         return str
     }
@@ -107,7 +107,7 @@ public final class ExpoHostServicesAdapter: NSObject, @unchecked Sendable, Hanli
         default: .data
         }
         let data = content.data(using: .utf8) ?? Data()
-        try await HanlinHostServicesBroker.shared.writeFile(at: path, data: data, area: dataArea, context: context)
+        try await HanlinHostServicesBroker.shared.writeFile(virtualPath: path, area: dataArea, data: data, context: context)
     }
 
     public func executeSQLite(sql: String, params: [String]?) async throws -> String {
@@ -122,16 +122,16 @@ public final class ExpoHostServicesAdapter: NSObject, @unchecked Sendable, Hanli
     public func fetchURL(urlString: String) async throws -> String {
         try await HanlinHostServicesBroker.shared.requireCapability("network", context: context)
         guard let url = URL(string: urlString), url.scheme?.lowercased() == "https" else {
-            throw HanlinHostServiceError.invalidPath("Invalid or non-HTTPS URL: \(urlString)")
+            throw HanlinHostServiceError.invalidRequest("Invalid or non-HTTPS URL: \(urlString)")
         }
         var request = URLRequest(url: url)
         request.timeoutInterval = 15
         let (data, response) = try await URLSession.shared.data(for: request)
         guard let http = response as? HTTPURLResponse else {
-            throw HanlinHostServiceError.runtimeExecutionFailed("Invalid server response.")
+            throw HanlinHostServiceError.invalidRequest("Invalid server response.")
         }
         guard (200...299).contains(http.statusCode) else {
-            throw HanlinHostServiceError.runtimeExecutionFailed("HTTP \(http.statusCode) error")
+            throw HanlinHostServiceError.invalidRequest("HTTP \(http.statusCode) error")
         }
         return "HTTPS \(http.statusCode), \(data.count) bytes"
     }

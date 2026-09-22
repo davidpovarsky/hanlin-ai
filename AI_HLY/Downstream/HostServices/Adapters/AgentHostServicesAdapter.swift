@@ -74,7 +74,7 @@ enum AgentHostServicesAdapter {
             source: source,
             workspace: workspace,
             environment: environment,
-            limits: limits
+            limits: limits ?? RuntimeExecutionLimits()
         )
         let core = AppRuntimeCore.shared
         let result = try await core.typeScript.compileAndExecute(

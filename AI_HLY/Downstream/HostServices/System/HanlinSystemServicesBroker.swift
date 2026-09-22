@@ -234,7 +234,7 @@ public actor HanlinSystemServicesBroker {
     
     public func requestLocationAccess(context: HanlinHostCallContext) async throws -> Bool {
         try requireCapability("location", in: context)
-        let manager = await MainActor.run { CLLocationManager() }
+        nonisolated(unsafe) let manager = CLLocationManager()
         let status = await MainActor.run { manager.authorizationStatus }
         switch status {
         case .authorizedWhenInUse, .authorizedAlways:

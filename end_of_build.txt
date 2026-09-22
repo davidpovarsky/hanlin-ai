@@ -1,0 +1,50 @@
+Launch full app on iPad Simulator	Build full arm64 simulator app	2026-09-22T10:15:40.3795950Z 
+Launch full app on iPad Simulator	Build full arm64 simulator app	2026-09-22T10:15:40.3797180Z /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptCoreSupport/include/HanlinNativeScriptCoreSupport.h:45:1: warning: umbrella header for module 'HanlinNativeScriptCoreSupport' does not include header 'UIView+NativeScript.h'
+Launch full app on iPad Simulator	Build full arm64 simulator app	2026-09-22T10:15:40.3797240Z 43 | 
+Launch full app on iPad Simulator	Build full arm64 simulator app	2026-09-22T10:15:40.3797330Z 44 | NS_ASSUME_NONNULL_END
+Launch full app on iPad Simulator	Build full arm64 simulator app	2026-09-22T10:15:40.3797390Z 45 | 
+Launch full app on iPad Simulator	Build full arm64 simulator app	2026-09-22T10:15:40.3797820Z    | `- warning: umbrella header for module 'HanlinNativeScriptCoreSupport' does not include header 'UIView+NativeScript.h'
+Launch full app on iPad Simulator	Build full arm64 simulator app	2026-09-22T10:15:40.3797950Z 
+Launch full app on iPad Simulator	Build full arm64 simulator app	2026-09-22T10:15:40.3798370Z <module-includes>:1:9: note: in file included from <module-includes>:1:
+Launch full app on iPad Simulator	Build full arm64 simulator app	2026-09-22T10:15:40.3798560Z 1 | #import "HanlinNativeScriptCoreSupport.h"
+Launch full app on iPad Simulator	Build full arm64 simulator app	2026-09-22T10:15:40.3798720Z   |         `- note: in file included from <module-includes>:1:
+Launch full app on iPad Simulator	Build full arm64 simulator app	2026-09-22T10:15:40.3798780Z 2 | 
+Launch full app on iPad Simulator	Build full arm64 simulator app	2026-09-22T10:15:40.3798790Z 
+Launch full app on iPad Simulator	Build full arm64 simulator app	2026-09-22T10:15:40.3802460Z /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptCoreSupport/include/HanlinNativeScriptCoreSupport.h:45:1: warning: umbrella header for module 'HanlinNativeScriptCoreSupport' does not include header 'NativeScriptUtils.h'
+Launch full app on iPad Simulator	Build full arm64 simulator app	2026-09-22T10:15:40.3803450Z 43 | 
+Launch full app on iPad Simulator	Build full arm64 simulator app	2026-09-22T10:15:40.3803720Z 44 | NS_ASSUME_NONNULL_END
+Launch full app on iPad Simulator	Build full arm64 simulator app	2026-09-22T10:15:40.3803900Z 45 | 
+Launch full app on iPad Simulator	Build full arm64 simulator app	2026-09-22T10:15:40.3804930Z    | `- warning: umbrella header for module 'HanlinNativeScriptCoreSupport' does not include header 'NativeScriptUtils.h'
+Launch full app on iPad Simulator	Build full arm64 simulator app	2026-09-22T10:15:40.3804960Z 
+Launch full app on iPad Simulator	Build full arm64 simulator app	2026-09-22T10:15:40.3805650Z <module-includes>:1:9: note: in file included from <module-includes>:1:
+Launch full app on iPad Simulator	Build full arm64 simulator app	2026-09-22T10:15:40.3806520Z 1 | #import "HanlinNativeScriptCoreSupport.h"
+Launch full app on iPad Simulator	Build full arm64 simulator app	2026-09-22T10:15:40.3806960Z   |         `- note: in file included from <module-includes>:1:
+Launch full app on iPad Simulator	Build full arm64 simulator app	2026-09-22T10:15:40.3807140Z 2 | 
+Launch full app on iPad Simulator	Build full arm64 simulator app	2026-09-22T10:15:40.3807160Z 
+Launch full app on iPad Simulator	Build full arm64 simulator app	2026-09-22T10:15:40.3810300Z /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptCoreSupport/include/HanlinNativeScriptCoreSupport.h:45:1: warning: umbrella header for module 'HanlinNativeScriptCoreSupport' does not include header 'HanlinNativeServicesBridge.h'
+Launch full app on iPad Simulator	Build full arm64 simulator app	2026-09-22T10:15:40.3810480Z 43 | 
+Launch full app on iPad Simulator	Build full arm64 simulator app	2026-09-22T10:15:40.3810760Z 44 | NS_ASSUME_NONNULL_END
+Launch full app on iPad Simulator	Build full arm64 simulator app	2026-09-22T10:15:40.3810940Z 45 | 
+Launch full app on iPad Simulator	Build full arm64 simulator app	2026-09-22T10:15:40.3812060Z    | `- warning: umbrella header for module 'HanlinNativeScriptCoreSupport' does not include header 'HanlinNativeServicesBridge.h'
+Launch full app on iPad Simulator	Build full arm64 simulator app	2026-09-22T10:15:40.3812080Z 
+Launch full app on iPad Simulator	Build full arm64 simulator app	2026-09-22T10:15:40.3812780Z <module-includes>:1:9: note: in file included from <module-includes>:1:
+Launch full app on iPad Simulator	Build full arm64 simulator app	2026-09-22T10:15:40.3813230Z 1 | #import "HanlinNativeScriptCoreSupport.h"
+Launch full app on iPad Simulator	Build full arm64 simulator app	2026-09-22T10:15:40.3813690Z   |         `- note: in file included from <module-includes>:1:
+Launch full app on iPad Simulator	Build full arm64 simulator app	2026-09-22T10:15:40.3813880Z 2 | 
+Launch full app on iPad Simulator	Build full arm64 simulator app	2026-09-22T10:15:40.3813900Z 
+Launch full app on iPad Simulator	Build full arm64 simulator app	2026-09-22T10:15:40.3814130Z 4 warnings generated.
+Launch full app on iPad Simulator	Build full arm64 simulator app	2026-09-22T10:15:40.3817230Z /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptCoreSupport/include/HanlinNativeScriptCoreSupport.h:45:1: warning: umbrella header for module 'HanlinNativeScriptCoreSupport' does not include header 'NativeScriptEmbedder.h'
+Launch full app on iPad Simulator	Build full arm64 simulator app	2026-09-22T10:15:40.3817420Z 43 | 
+Launch full app on iPad Simulator	Build full arm64 simulator app	2026-09-22T10:15:40.3817680Z 44 | NS_ASSUME_NONNULL_END
+Launch full app on iPad Simulator	Build full arm64 simulator app	2026-09-22T10:15:40.3817860Z 45 | 
+Launch full app on iPad Simulator	Build full arm64 simulator app	2026-09-22T10:15:40.3819080Z    | `- warning: umbrella header for module 'HanlinNativeScriptCoreSupport' does not include header 'NativeScriptEmbedder.h'
+Launch full app on iPad Simulator	Build full arm64 simulator app	2026-09-22T10:15:40.3819110Z 
+Launch full app on iPad Simulator	Build full arm64 simulator app	2026-09-22T10:15:40.3821660Z SwiftExplicitDependencyCompileModuleFromInterface arm64 /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules/ExpoBrownfield-1CGLUXUH1FFPT.swiftmodule
+Launch full app on iPad Simulator	Build full arm64 simulator app	2026-09-22T10:15:40.3821690Z 
+Launch full app on iPad Simulator	Build full arm64 simulator app	2026-09-22T10:15:40.3824630Z SwiftExplicitDependencyCompileModuleFromInterface arm64 /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules/ExpoModulesWorklets-2RI0B6FUV9GLY.swiftmodule
+Launch full app on iPad Simulator	Build full arm64 simulator app	2026-09-22T10:15:40.3824730Z 
+Launch full app on iPad Simulator	Build full arm64 simulator app	2026-09-22T10:15:40.3825700Z SwiftExplicitDependencyCompileModuleFromInterface arm64 /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules/ExpoUI-20J46EGV737SS.swiftmodule
+Launch full app on iPad Simulator	Build full arm64 simulator app	2026-09-22T10:15:40.3825720Z 
+Launch full app on iPad Simulator	Analyze performance benchmark results	﻿2026-09-22T10:16:39.1937860Z ##[group]Run set -euxo pipefail
+Launch full app on iPad Simulator	Analyze performance benchmark results	2026-09-22T10:16:39.1938830Z ^[[36;1mset -euxo pipefail^[[0m
+Launch full app on iPad Simulator	Analyze performance benchmark results	2026-09-22T10:16:39.1939910Z ^[[36;1mpython3 Scripts/CI/analyze_performance_results.py \^[[0m

@@ -16,8 +16,9 @@ public final class NativeScriptHostServicesAdapter: NSObject, @unchecked Sendabl
     public let context: HanlinHostCallContext
 
     private struct RegisteredActionHandler: Sendable {
+        typealias InvokeFn = @Sendable (String, String, @escaping (String?, String?) -> Void) -> Void
         let capability: HanlinCapabilityID
-        let invoke: @Sendable (String, String, @escaping (String?, String?) -> Void) -> Void
+        let invoke: InvokeFn
     }
 
     private let lock = NSLock()
@@ -47,22 +48,30 @@ public final class NativeScriptHostServicesAdapter: NSObject, @unchecked Sendabl
 
     public func dataRootDirectory() -> String? {
         guard let appID = context.appID else { return nil }
-        return try? HanlinMiniAppHost.shared.dataStore.prepareContainer(for: appID).data.path(percentEncoded: false)
+        return try? MainActor.assumeIsolated {
+            try HanlinMiniAppHost.shared.dataStore.prepareContainer(for: appID).data.path(percentEncoded: false)
+        }
     }
 
     public func stateDirectory() -> String? {
         guard let appID = context.appID else { return nil }
-        return try? HanlinMiniAppHost.shared.dataStore.prepareContainer(for: appID).state.path(percentEncoded: false)
+        return try? MainActor.assumeIsolated {
+            try HanlinMiniAppHost.shared.dataStore.prepareContainer(for: appID).state.path(percentEncoded: false)
+        }
     }
 
     public func documentsDirectory() -> String? {
         guard let appID = context.appID else { return nil }
-        return try? HanlinMiniAppHost.shared.dataStore.prepareContainer(for: appID).documents.path(percentEncoded: false)
+        return try? MainActor.assumeIsolated {
+            try HanlinMiniAppHost.shared.dataStore.prepareContainer(for: appID).documents.path(percentEncoded: false)
+        }
     }
 
     public func cacheDirectory() -> String? {
         guard let appID = context.appID else { return nil }
-        return try? HanlinMiniAppHost.shared.dataStore.prepareContainer(for: appID).cache.path(percentEncoded: false)
+        return try? MainActor.assumeIsolated {
+            try HanlinMiniAppHost.shared.dataStore.prepareContainer(for: appID).cache.path(percentEncoded: false)
+        }
     }
 
     // MARK: - Runtime Execution
@@ -236,32 +245,27 @@ public final class NativeScriptHostServicesAdapter: NSObject, @unchecked Sendabl
     public func registerRequestHandler(
         _ action: String,
         capability: String,
-        handler: @escaping (String, String, @escaping (String?, String?) -> Void) -> Void
+        handler: @escaping @Sendable (String, String, @escaping (String?, String?) -> Void) -> Void
     ) {
         guard let actionID = try? HanlinActionID(validating: action),
               let capabilityID = try? HanlinCapabilityID(validating: capability) else {
             return
         }
-        nonisolated(unsafe) let safeHandler = handler
-        lock.lock()
-        registeredActionIDs.insert(actionID)
-        registeredActionHandlers[actionID] = RegisteredActionHandler(
-            capability: capabilityID,
-            invoke: safeHandler
-        )
-        lock.unlock()
+        lock.withLock {
+            registeredActionIDs.insert(actionID)
+            registeredActionHandlers[actionID] = RegisteredActionHandler(
+                capability: capabilityID,
+                invoke: handler
+            )
+        }
     }
 
     public func hasRegisteredAction(_ action: HanlinActionID) -> Bool {
-        lock.lock()
-        defer { lock.unlock() }
-        return registeredActionIDs.contains(action)
+        lock.withLock { registeredActionIDs.contains(action) }
     }
 
     public var allRegisteredActionIDs: Set<HanlinActionID> {
-        lock.lock()
-        defer { lock.unlock() }
-        return registeredActionIDs
+        lock.withLock { registeredActionIDs }
     }
 
     public func invokeRegisteredAction(
@@ -270,17 +274,16 @@ public final class NativeScriptHostServicesAdapter: NSObject, @unchecked Sendabl
         caller: HanlinAppID,
         payload: HanlinValue
     ) async throws -> HanlinValue {
-        lock.lock()
-        guard let registration = registeredActionHandlers[action] else {
-            lock.unlock()
-            throw HanlinMiniAppRequestError.routeNotFound
+        // Extract handler synchronously before any suspension — NSLock requires no await while held
+        let invokeHandler: RegisteredActionHandler.InvokeFn = try lock.withLock {
+            guard let registration = registeredActionHandlers[action] else {
+                throw HanlinMiniAppRequestError.routeNotFound
+            }
+            guard registration.capability == capability else {
+                throw HanlinMiniAppRequestError.capabilityMismatch
+            }
+            return registration.invoke
         }
-        guard registration.capability == capability else {
-            lock.unlock()
-            throw HanlinMiniAppRequestError.capabilityMismatch
-        }
-        let invokeHandler = registration.invoke
-        lock.unlock()
 
         let payloadJSON = try String(data: payload.canonicalJSONData(), encoding: .utf8) ?? "{}"
         return try await withCheckedThrowingContinuation { continuation in
