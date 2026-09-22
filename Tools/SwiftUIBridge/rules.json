@@ -1,0 +1,62 @@
+{
+  "TextEditor": {
+    "status": "manual",
+    "reason": "Uses the shared controlled/uncontrolled Binding<String> adapter.",
+    "adapter": "HanlinExpoUIModule.swift"
+  },
+  "LazyVGrid": {
+    "status": "manual",
+    "reason": "GridItem sizing and dynamic children require a semantic grid adapter.",
+    "adapter": "HanlinExpoUIModule.swift"
+  },
+  "LazyHGrid": {
+    "status": "manual",
+    "reason": "GridItem sizing and dynamic children require a semantic grid adapter.",
+    "adapter": "HanlinExpoUIModule.swift"
+  },
+  "ViewThatFits": {
+    "status": "manual",
+    "reason": "Axis.Set is represented by a typed React prop while children preserve native SwiftUI composition.",
+    "adapter": "HanlinExpoUIModule.swift"
+  },
+  "App": {
+    "status": "host-lifecycle-only",
+    "reason": "An App declaration owns process lifecycle and cannot be embedded as MiniApp child UI."
+  },
+  "Scene": {
+    "status": "host-lifecycle-only",
+    "reason": "A Scene declaration belongs to the Hanlin host lifecycle."
+  },
+  "WindowGroup": {
+    "status": "host-lifecycle-only",
+    "reason": "Window creation belongs to the Hanlin host lifecycle."
+  },
+  "DocumentGroup": {
+    "status": "host-lifecycle-only",
+    "reason": "Document scene ownership is not meaningful inside an embedded MiniApp."
+  },
+  "Settings": {
+    "status": "host-lifecycle-only",
+    "reason": "Settings scene ownership belongs to the host application."
+  },
+  "Commands": {
+    "status": "host-lifecycle-only",
+    "reason": "Application command registration belongs to the host lifecycle."
+  },
+  "ImmersiveSpace": {
+    "status": "host-lifecycle-only",
+    "reason": "Immersive scene creation is not an embedded iOS MiniApp view capability."
+  },
+  "environmentObject": {
+    "status": "unsupported",
+    "reason": "Generic object identity and lifetime cannot be serialized safely across the React bridge."
+  },
+  "preference": {
+    "status": "unsupported",
+    "reason": "Arbitrary PreferenceKey associated-value semantics are not serializable."
+  },
+  "onPreferenceChange": {
+    "status": "unsupported",
+    "reason": "Arbitrary PreferenceKey values and callbacks require a deliberate typed adapter."
+  }
+}

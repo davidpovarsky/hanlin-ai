@@ -1,0 +1,43 @@
+// Focused parser fixture. Full generation consumes the installed Apple SDK interface.
+public protocol View {}
+
+public struct NavigationStack<Root>: View {
+  public init(@ViewBuilder root: () -> Root)
+}
+
+public struct Group<Content>: View {
+  public init(@ViewBuilder content: () -> Content)
+}
+
+public struct TextEditor: View {
+  public init(text: Binding<String>)
+}
+
+// Symbol-only manual-adapter fixtures; the release inventory uses full SDK signatures.
+public struct LazyVGrid<Content>: View {}
+public struct LazyHGrid<Content>: View {}
+
+public struct ViewThatFits<Content>: View {
+  public init(in axes: Axis.Set = [.horizontal, .vertical], @ViewBuilder content: () -> Content)
+}
+
+public struct WindowGroup<Content>: View {
+  public init(@ViewBuilder content: () -> Content)
+}
+
+public struct NavigationBarItem {
+  public enum TitleDisplayMode {
+    public case automatic
+    public case inline
+    public case large
+  }
+}
+
+extension View {
+  public func navigationBarTitleDisplayMode(_ displayMode: NavigationBarItem.TitleDisplayMode) -> some View
+  public func searchable(text: Binding<String>) -> some View
+  public func environmentObject<B>(_ bindable: B) -> some View
+  public func onPreferenceChange<K>(_ key: K.Type, perform action: (K.Value) -> Void) -> some View
+  public func lineLimit(_ number: Int?) -> some View
+  public func lineLimit(_ limit: Int, reservesSpace: Bool) -> some View
+}

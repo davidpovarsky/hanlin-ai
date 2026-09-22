@@ -1,0 +1,18 @@
+{
+  "runtimeVersion": "58.0.3",
+  "bridgeVersion": "1.0.0",
+  "expoUIVersion": "58.0.3",
+  "expoViews": ["NavigationStack"],
+  "expoModifiers": ["lineLimit"],
+  "rules": {
+    "TextEditor": {
+      "status": "manual",
+      "reason": "Uses the shared controlled/uncontrolled Binding<String> adapter.",
+      "adapter": "HanlinTextEditorView.swift"
+    },
+    "WindowGroup": {
+      "status": "host-lifecycle-only",
+      "reason": "A scene declaration is not meaningful inside an embedded MiniApp."
+    }
+  }
+}

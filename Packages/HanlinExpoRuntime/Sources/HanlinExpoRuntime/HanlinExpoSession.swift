@@ -47,6 +47,9 @@ public final class HanlinExpoModulesProvider: ModulesProvider {
     public override func getModuleClasses() -> [ExpoModuleTupleType] {
         return [
             (module: ExpoUIModule.self, name: "ExpoUI"),
+            (module: HanlinExpoUIModule.self, name: "HanlinExpoUI"),
+            (module: HanlinGeneratedExpoUIModule.self, name: "HanlinGeneratedExpoUI"),
+            (module: HanlinExpoHostServicesModule.self, name: "HanlinHostServices"),
             (module: ExpoBrownfieldModule.self, name: "ExpoBrownfieldModule"),
             (module: ExpoBrownfieldStateModule.self, name: "ExpoBrownfieldStateModule")
         ]
@@ -55,8 +58,6 @@ public final class HanlinExpoModulesProvider: ModulesProvider {
 
 @MainActor
 public final class HanlinExpoSession {
-    private static let supportedSDKVersion = "58.0.3"
-    private static let supportedUIVersion = "58.0.3"
     private static weak var activeSession: HanlinExpoSession?
 
     public let applicationRoot: URL
@@ -67,6 +68,7 @@ public final class HanlinExpoSession {
     private var factoryDelegate: HanlinExpoReactNativeFactoryDelegate?
     private var appContext: AppContext?
     private var hostedView: UIView?
+    private let hostServicesBinding: HanlinExpoHostServicesBinding?
     private(set) public var isActive = false
 
     private static var didLoadAppDefines = false
@@ -95,7 +97,10 @@ public final class HanlinExpoSession {
         NSLog("%@", "HANLIN_EXPO_APP_DEFINES_LOADED")
     }
 
-    public init(applicationRoot: URL) throws {
+    public init(
+        applicationRoot: URL,
+        hostServicesBinding: HanlinExpoHostServicesBinding? = nil
+    ) throws {
         Self.ensureAppDefinesLoaded()
         let root = applicationRoot.standardizedFileURL
         guard root.isFileURL else {
@@ -120,6 +125,14 @@ public final class HanlinExpoSession {
             throw HanlinExpoError.unsupportedRuntimeVersion("package.json does not declare hanlinRuntime: hanlin-expo")
         }
 
+        if let contract = packageJSON["hanlinExpo"] as? [String: Any],
+           let requiredBridgeVersion = contract["bridgeVersion"] as? String,
+           !HanlinExpoBridgeMetadata.supports(requiredBridgeVersion: requiredBridgeVersion) {
+            throw HanlinExpoError.unsupportedRuntimeVersion(
+                "This package requires Hanlin Expo UI bridge \(requiredBridgeVersion), but the host provides \(HanlinExpoBridgeMetadata.bridgeVersion)."
+            )
+        }
+
         let entryFileName = (packageJSON["main"] as? String) ?? "bundle.js"
         let resolvedBundleURL = root.appending(path: entryFileName, directoryHint: .notDirectory)
         guard FileManager.default.fileExists(atPath: resolvedBundleURL.path(percentEncoded: false)) else {
@@ -128,6 +141,7 @@ public final class HanlinExpoSession {
 
         self.applicationRoot = root
         self.bundleURL = resolvedBundleURL
+        self.hostServicesBinding = hostServicesBinding
         self.containerController = UIViewController()
         self.containerController.view.backgroundColor = .systemBackground
     }
@@ -141,6 +155,9 @@ public final class HanlinExpoSession {
         do {
             Self.ensureAppDefinesLoaded()
             HanlinExpoModifierRegistry.registerCustomModifiers()
+            if let hostServicesBinding {
+                HanlinExpoHostServicesRuntime.install(hostServicesBinding)
+            }
 
             let modulesProvider = HanlinExpoModulesProvider()
             let appContext = AppContext()
@@ -183,6 +200,7 @@ public final class HanlinExpoSession {
     public func shutdown() {
         guard isActive || reactNativeFactory != nil else {
             HanlinExpoModifierRegistry.unregisterCustomModifiers()
+            HanlinExpoHostServicesRuntime.uninstall()
             return
         }
 
@@ -200,6 +218,7 @@ public final class HanlinExpoSession {
         isActive = false
 
         HanlinExpoModifierRegistry.unregisterCustomModifiers()
+        HanlinExpoHostServicesRuntime.uninstall()
 
         if Self.activeSession === self {
             Self.activeSession = nil

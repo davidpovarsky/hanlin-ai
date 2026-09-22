@@ -457,8 +457,21 @@ final class HanlinScriptingPlatform {
                 let artifactRoot = try await store.activeArtifactURL(for: id)
                 let entrypointURL = artifactRoot.appending(path: entrypoint.sourcePath, directoryHint: .notDirectory)
                 dismissActiveApplication()
+                let hostServices = ExpoHostServicesAdapter(
+                    appID: package.appID,
+                    installedPackageID: id,
+                    grantedCapabilities: Set(package.grantedCapabilities.map(\.rawValue))
+                )
                 let session = try HanlinExpoSession(
-                    applicationRoot: entrypointURL.deletingLastPathComponent()
+                    applicationRoot: entrypointURL.deletingLastPathComponent(),
+                    hostServicesBinding: HanlinExpoHostServicesBinding(
+                        hasCapability: { [hostServices] capability in
+                            hostServices.hasCapability(capability)
+                        },
+                        invoke: { [hostServices] operation, payloadJSON in
+                            try await hostServices.invoke(operation: operation, payloadJSON: payloadJSON)
+                        }
+                    )
                 )
                 try session.start()
                 expoSession = session

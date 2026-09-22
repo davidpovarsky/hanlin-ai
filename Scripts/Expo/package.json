@@ -5,10 +5,12 @@
   "type": "module",
   "scripts": {
     "prepare:ios-dependencies": "node prepare-ios-dependencies.mjs",
-    "build:probe": "node build-probe.mjs"
+    "build:probe": "node build-probe.mjs",
+    "typecheck:probe": "tsc6 --noEmit -p ../../Fixtures/ExpoSwiftUIProbe/tsconfig.json"
   },
   "dependencies": {
     "@expo/ui": "58.0.3",
+    "@hanlin/expo-ui": "file:../../Packages/HanlinExpoUI",
     "expo": "58.0.0-preview.3",
     "expo-brownfield": "58.0.3",
     "expo-modules-core": "58.0.3",
@@ -18,6 +20,7 @@
   "devDependencies": {
     "@react-native-community/cli": "^20.2.0",
     "@react-native/metro-config": "^0.88.0-rc.0",
-    "esbuild": "^0.25.0"
+    "esbuild": "^0.25.0",
+    "typescript": "npm:@typescript/typescript6@6.0.2"
   }
 }

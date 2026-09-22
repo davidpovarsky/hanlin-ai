@@ -13,7 +13,7 @@ import {
   HStack,
   VStack,
   Toolbar,
-} from '@expo/ui/swift-ui';
+} from '@hanlin/expo-ui';
 import {
   navigationTitle,
   padding,
@@ -21,7 +21,7 @@ import {
   font,
   listStyle,
   createModifier,
-} from '@expo/ui/swift-ui/modifiers';
+} from '@hanlin/expo-ui/modifiers';
 
 // Custom modifier registered in Swift via ViewModifierRegistry
 export const navigationBarTitleDisplayMode = (mode: 'inline' | 'large' | 'automatic' = 'inline') =>

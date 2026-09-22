@@ -153,7 +153,7 @@ struct HanlinScriptAnalyzerTests {
         let supported = try package(files: [
             "script.json": #"{"name":"Expo SwiftUI Fixture","version":"1.0.0","entry":"expo/app/bundle.js","hanlinRuntime":"hanlin-expo"}"#,
             "expo/app/bundle.js": "console.log('expo swiftui')",
-            "expo/app/package.json": #"{"name":"fixture","main":"bundle.js","hanlinRuntime":"hanlin-expo","hanlinExpo":{"runtimeVersion":"58.0.3","plugins":{"@expo/ui":"58.0.3"}}}"#
+            "expo/app/package.json": #"{"name":"fixture","main":"bundle.js","hanlinRuntime":"hanlin-expo","hanlinExpo":{"runtimeVersion":"58.0.3","bridgeVersion":"1.0.0","plugins":{"@expo/ui":"58.0.3","@hanlin/expo-ui":"1.0.0"}}}"#
         ])
         defer { try? FileManager.default.removeItem(at: supported.stagingRoot) }
         let analyzer = HanlinScriptAnalyzer(inventory: .init(
@@ -166,6 +166,16 @@ struct HanlinScriptAnalyzerTests {
         #expect(supportedPreview.entrypoints.first?.runtimeProfile == .hanlinExpo)
         #expect(supportedPreview.findings.contains { $0.message.contains("embedded native SwiftUI support") })
 
+        let newerBridge = try package(files: [
+            "script.json": #"{"name":"Newer Expo Bridge Fixture","version":"1.0.0","entry":"expo/app/bundle.js","hanlinRuntime":"hanlin-expo"}"#,
+            "expo/app/bundle.js": "console.log('newer bridge')",
+            "expo/app/package.json": #"{"name":"fixture","main":"bundle.js","hanlinRuntime":"hanlin-expo","hanlinExpo":{"runtimeVersion":"58.0.3","bridgeVersion":"2.0.0","plugins":{"@hanlin/expo-ui":"2.0.0"}}}"#
+        ])
+        defer { try? FileManager.default.removeItem(at: newerBridge.stagingRoot) }
+        let newerBridgePreview = try analyzer.analyze(newerBridge)
+        #expect(!newerBridgePreview.canInstall)
+        #expect(newerBridgePreview.findings.contains { $0.message.contains("bridge 1.0.0") })
+
         let unsupported = try package(files: [
             "script.json": #"{"name":"Unsupported Expo Fixture","version":"1.0.0","entry":"expo/app/bundle.js","hanlinRuntime":"hanlin-expo"}"#,
             "expo/app/bundle.js": "console.log('unsupported')",
@@ -175,7 +185,7 @@ struct HanlinScriptAnalyzerTests {
         let unsupportedPreview = try analyzer.analyze(unsupported)
         #expect(!unsupportedPreview.canInstall)
         #expect(unsupportedPreview.findings.contains {
-            $0.message == "This Hanlin build supports @expo/ui 58.0.3, but the package requires @expo/ui 99.0.0."
+            $0.message.contains("supports @expo/ui 58.0.3") && $0.message.contains("@expo/ui 99.0.0")
         })
     }
 

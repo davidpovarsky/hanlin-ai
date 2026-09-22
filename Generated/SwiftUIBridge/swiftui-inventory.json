@@ -1,0 +1,622 @@
+{
+  "declarations" : [
+    {
+      "availability" : [
+
+      ],
+      "conformances" : [
+        "View"
+      ],
+      "enumCases" : [
+
+      ],
+      "genericParameters" : [
+        "Content"
+      ],
+      "isDeprecated" : false,
+      "isUnavailable" : false,
+      "kind" : "view",
+      "module" : "SwiftUI",
+      "reason" : "No initializer or modifier overload uses only currently serializable types.",
+      "signatures" : [
+        {
+          "genericParameters" : [
+
+          ],
+          "isAsync" : false,
+          "isThrowing" : false,
+          "parameters" : [
+            {
+              "attributes" : [
+
+              ],
+              "externalName" : "url",
+              "isBinding" : false,
+              "isClosure" : false,
+              "isViewBuilder" : false,
+              "localName" : "url",
+              "type" : "URL?"
+            },
+            {
+              "attributes" : [
+                "ViewBuilder"
+              ],
+              "externalName" : "content",
+              "isBinding" : false,
+              "isClosure" : true,
+              "isViewBuilder" : true,
+              "localName" : "content",
+              "type" : "(AsyncImagePhase) -> Content"
+            }
+          ]
+        }
+      ],
+      "sourceModule" : "SwiftUI",
+      "status" : "needs-investigation",
+      "symbol" : "AsyncImage",
+      "tier" : "T2"
+    },
+    {
+      "availability" : [
+
+      ],
+      "conformances" : [
+        "View"
+      ],
+      "enumCases" : [
+
+      ],
+      "genericParameters" : [
+
+      ],
+      "isDeprecated" : false,
+      "isUnavailable" : false,
+      "kind" : "view",
+      "module" : "SwiftUI",
+      "reason" : "At least one signature is representable by the mechanical primitive/content templates.",
+      "signatures" : [
+        {
+          "genericParameters" : [
+
+          ],
+          "isAsync" : false,
+          "isThrowing" : false,
+          "parameters" : [
+
+          ]
+        }
+      ],
+      "sourceModule" : "SwiftUI",
+      "status" : "generated",
+      "symbol" : "EditButton",
+      "tier" : "T1"
+    },
+    {
+      "availability" : [
+
+      ],
+      "conformances" : [
+        "View"
+      ],
+      "enumCases" : [
+
+      ],
+      "genericParameters" : [
+
+      ],
+      "isDeprecated" : false,
+      "isUnavailable" : false,
+      "kind" : "view",
+      "module" : "SwiftUI",
+      "reason" : "At least one signature is representable by the mechanical primitive/content templates.",
+      "signatures" : [
+        {
+          "genericParameters" : [
+
+          ],
+          "isAsync" : false,
+          "isThrowing" : false,
+          "parameters" : [
+
+          ]
+        }
+      ],
+      "sourceModule" : "SwiftUI",
+      "status" : "generated",
+      "symbol" : "EmptyView",
+      "tier" : "T1"
+    },
+    {
+      "availability" : [
+
+      ],
+      "conformances" : [
+        "View"
+      ],
+      "enumCases" : [
+
+      ],
+      "genericParameters" : [
+        "Content"
+      ],
+      "isDeprecated" : false,
+      "isUnavailable" : false,
+      "kind" : "view",
+      "module" : "SwiftUICore",
+      "reason" : "Provided by @expo/ui 58.0.3.",
+      "signatures" : [
+        {
+          "genericParameters" : [
+
+          ],
+          "isAsync" : false,
+          "isThrowing" : false,
+          "parameters" : [
+            {
+              "attributes" : [
+                "ViewBuilder"
+              ],
+              "externalName" : "content",
+              "isBinding" : false,
+              "isClosure" : true,
+              "isViewBuilder" : true,
+              "localName" : "content",
+              "type" : "() -> Content"
+            }
+          ]
+        }
+      ],
+      "sourceModule" : "SwiftUICore",
+      "status" : "expo-upstream",
+      "symbol" : "Group",
+      "tier" : "T2"
+    },
+    {
+      "availability" : [
+
+      ],
+      "conformances" : [
+
+      ],
+      "enumCases" : [
+
+      ],
+      "genericParameters" : [
+
+      ],
+      "isDeprecated" : false,
+      "isUnavailable" : false,
+      "kind" : "type",
+      "module" : "SwiftUICore",
+      "signatures" : [
+
+      ],
+      "sourceModule" : "SwiftUICore",
+      "symbol" : "NavigationBarItem"
+    },
+    {
+      "availability" : [
+
+      ],
+      "conformances" : [
+
+      ],
+      "enumCases" : [
+        "automatic",
+        "inline",
+        "large"
+      ],
+      "genericParameters" : [
+
+      ],
+      "isDeprecated" : false,
+      "isUnavailable" : false,
+      "kind" : "type",
+      "module" : "SwiftUICore",
+      "signatures" : [
+
+      ],
+      "sourceModule" : "SwiftUICore",
+      "symbol" : "NavigationBarItem.TitleDisplayMode"
+    },
+    {
+      "availability" : [
+
+      ],
+      "conformances" : [
+        "View"
+      ],
+      "enumCases" : [
+
+      ],
+      "genericParameters" : [
+        "Root"
+      ],
+      "isDeprecated" : false,
+      "isUnavailable" : false,
+      "kind" : "view",
+      "module" : "SwiftUICore",
+      "reason" : "Provided by @expo/ui 58.0.3.",
+      "signatures" : [
+        {
+          "genericParameters" : [
+
+          ],
+          "isAsync" : false,
+          "isThrowing" : false,
+          "parameters" : [
+            {
+              "attributes" : [
+                "ViewBuilder"
+              ],
+              "externalName" : "root",
+              "isBinding" : false,
+              "isClosure" : true,
+              "isViewBuilder" : true,
+              "localName" : "root",
+              "type" : "() -> Root"
+            }
+          ]
+        }
+      ],
+      "sourceModule" : "SwiftUICore",
+      "status" : "expo-upstream",
+      "symbol" : "NavigationStack",
+      "tier" : "T2"
+    },
+    {
+      "availability" : [
+
+      ],
+      "conformances" : [
+        "View"
+      ],
+      "enumCases" : [
+
+      ],
+      "genericParameters" : [
+
+      ],
+      "isDeprecated" : false,
+      "isUnavailable" : false,
+      "kind" : "view",
+      "manualAdapter" : "HanlinExpoUIModule.swift",
+      "module" : "SwiftUICore",
+      "reason" : "Uses the shared controlled/uncontrolled Binding<String> adapter.",
+      "signatures" : [
+        {
+          "genericParameters" : [
+
+          ],
+          "isAsync" : false,
+          "isThrowing" : false,
+          "parameters" : [
+            {
+              "attributes" : [
+
+              ],
+              "externalName" : "text",
+              "isBinding" : true,
+              "isClosure" : false,
+              "isViewBuilder" : false,
+              "localName" : "text",
+              "type" : "Binding<String>"
+            }
+          ]
+        }
+      ],
+      "sourceModule" : "SwiftUICore",
+      "status" : "manual",
+      "symbol" : "TextEditor",
+      "tier" : "T3"
+    },
+    {
+      "availability" : [
+
+      ],
+      "conformances" : [
+
+      ],
+      "enumCases" : [
+
+      ],
+      "genericParameters" : [
+
+      ],
+      "isDeprecated" : false,
+      "isUnavailable" : false,
+      "kind" : "protocol",
+      "module" : "SwiftUICore",
+      "signatures" : [
+
+      ],
+      "sourceModule" : "SwiftUICore",
+      "symbol" : "View"
+    },
+    {
+      "availability" : [
+
+      ],
+      "conformances" : [
+        "View"
+      ],
+      "enumCases" : [
+
+      ],
+      "genericParameters" : [
+        "Content"
+      ],
+      "isDeprecated" : false,
+      "isUnavailable" : false,
+      "kind" : "view",
+      "manualAdapter" : "HanlinExpoUIModule.swift",
+      "module" : "SwiftUICore",
+      "reason" : "Axis.Set is represented by a typed React prop while children preserve native SwiftUI composition.",
+      "signatures" : [
+        {
+          "genericParameters" : [
+
+          ],
+          "isAsync" : false,
+          "isThrowing" : false,
+          "parameters" : [
+            {
+              "attributes" : [
+
+              ],
+              "defaultValue" : "[.horizontal, .vertical]",
+              "externalName" : "in",
+              "isBinding" : false,
+              "isClosure" : false,
+              "isViewBuilder" : false,
+              "localName" : "axes",
+              "type" : "Axis.Set"
+            },
+            {
+              "attributes" : [
+                "ViewBuilder"
+              ],
+              "externalName" : "content",
+              "isBinding" : false,
+              "isClosure" : true,
+              "isViewBuilder" : true,
+              "localName" : "content",
+              "type" : "() -> Content"
+            }
+          ]
+        }
+      ],
+      "sourceModule" : "SwiftUICore",
+      "status" : "manual",
+      "symbol" : "ViewThatFits",
+      "tier" : "T2"
+    },
+    {
+      "availability" : [
+
+      ],
+      "conformances" : [
+        "View"
+      ],
+      "enumCases" : [
+
+      ],
+      "genericParameters" : [
+        "Content"
+      ],
+      "isDeprecated" : false,
+      "isUnavailable" : false,
+      "kind" : "view",
+      "module" : "SwiftUICore",
+      "reason" : "Window creation belongs to the Hanlin host lifecycle.",
+      "signatures" : [
+        {
+          "genericParameters" : [
+
+          ],
+          "isAsync" : false,
+          "isThrowing" : false,
+          "parameters" : [
+            {
+              "attributes" : [
+                "ViewBuilder"
+              ],
+              "externalName" : "content",
+              "isBinding" : false,
+              "isClosure" : true,
+              "isViewBuilder" : true,
+              "localName" : "content",
+              "type" : "() -> Content"
+            }
+          ]
+        }
+      ],
+      "sourceModule" : "SwiftUICore",
+      "status" : "host-lifecycle-only",
+      "symbol" : "WindowGroup",
+      "tier" : "T2"
+    },
+    {
+      "availability" : [
+
+      ],
+      "conformances" : [
+
+      ],
+      "enumCases" : [
+
+      ],
+      "genericParameters" : [
+
+      ],
+      "isDeprecated" : false,
+      "isUnavailable" : false,
+      "kind" : "modifier",
+      "module" : "SwiftUICore",
+      "reason" : "Provided by @expo/ui 58.0.3.",
+      "signatures" : [
+        {
+          "genericParameters" : [
+
+          ],
+          "isAsync" : false,
+          "isThrowing" : false,
+          "parameters" : [
+            {
+              "attributes" : [
+
+              ],
+              "isBinding" : false,
+              "isClosure" : false,
+              "isViewBuilder" : false,
+              "localName" : "number",
+              "type" : "Int?"
+            }
+          ],
+          "returnType" : "some View"
+        },
+        {
+          "genericParameters" : [
+
+          ],
+          "isAsync" : false,
+          "isThrowing" : false,
+          "parameters" : [
+            {
+              "attributes" : [
+
+              ],
+              "isBinding" : false,
+              "isClosure" : false,
+              "isViewBuilder" : false,
+              "localName" : "limit",
+              "type" : "Int"
+            },
+            {
+              "attributes" : [
+
+              ],
+              "externalName" : "reservesSpace",
+              "isBinding" : false,
+              "isClosure" : false,
+              "isViewBuilder" : false,
+              "localName" : "reservesSpace",
+              "type" : "Bool"
+            }
+          ],
+          "returnType" : "some View"
+        }
+      ],
+      "sourceModule" : "SwiftUICore",
+      "status" : "expo-upstream",
+      "symbol" : "lineLimit",
+      "tier" : "T1"
+    },
+    {
+      "availability" : [
+
+      ],
+      "conformances" : [
+
+      ],
+      "enumCases" : [
+
+      ],
+      "genericParameters" : [
+
+      ],
+      "isDeprecated" : false,
+      "isUnavailable" : false,
+      "kind" : "modifier",
+      "module" : "SwiftUICore",
+      "reason" : "At least one signature is representable by the mechanical primitive/content templates.",
+      "signatures" : [
+        {
+          "genericParameters" : [
+
+          ],
+          "isAsync" : false,
+          "isThrowing" : false,
+          "parameters" : [
+            {
+              "attributes" : [
+
+              ],
+              "isBinding" : false,
+              "isClosure" : false,
+              "isViewBuilder" : false,
+              "localName" : "displayMode",
+              "type" : "NavigationBarItem.TitleDisplayMode"
+            }
+          ],
+          "returnType" : "some View"
+        }
+      ],
+      "sourceModule" : "SwiftUICore",
+      "status" : "generated",
+      "symbol" : "navigationBarTitleDisplayMode",
+      "tier" : "T1"
+    },
+    {
+      "availability" : [
+
+      ],
+      "conformances" : [
+
+      ],
+      "enumCases" : [
+
+      ],
+      "genericParameters" : [
+
+      ],
+      "isDeprecated" : false,
+      "isUnavailable" : false,
+      "kind" : "modifier",
+      "module" : "SwiftUICore",
+      "reason" : "Binding state requires the reusable controlled/uncontrolled adapter template.",
+      "signatures" : [
+        {
+          "genericParameters" : [
+
+          ],
+          "isAsync" : false,
+          "isThrowing" : false,
+          "parameters" : [
+            {
+              "attributes" : [
+
+              ],
+              "externalName" : "text",
+              "isBinding" : true,
+              "isClosure" : false,
+              "isViewBuilder" : false,
+              "localName" : "text",
+              "type" : "Binding<String>"
+            }
+          ],
+          "returnType" : "some View"
+        }
+      ],
+      "sourceModule" : "SwiftUICore",
+      "status" : "needs-investigation",
+      "symbol" : "searchable",
+      "tier" : "T3"
+    }
+  ],
+  "generatorVersion" : "1.0.0",
+  "interfaces" : [
+    {
+      "fileName" : "SwiftUI.swiftinterface",
+      "module" : "SwiftUI",
+      "sha256" : "c659d15ddebe9753b6f503850bceef54d49813253e96c70b48fe7eaa107e74e0"
+    },
+    {
+      "fileName" : "SwiftUICore.swiftinterface",
+      "module" : "SwiftUICore",
+      "sha256" : "5d255599bfd8536240d69e443688a7eb8b771c81ea551b68dae1c5b4c2a9c13c"
+    }
+  ],
+  "schemaVersion" : 1,
+  "sdkIdentity" : "fixture-ios26"
+}

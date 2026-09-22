@@ -1,0 +1,12 @@
+// Focused parser fixture. Full generation consumes the installed Apple SDK interface.
+public struct EditButton: View {
+  public init()
+}
+
+public struct EmptyView: View {
+  public init()
+}
+
+public struct AsyncImage<Content>: View {
+  public init(url: URL?, @ViewBuilder content: (AsyncImagePhase) -> Content)
+}

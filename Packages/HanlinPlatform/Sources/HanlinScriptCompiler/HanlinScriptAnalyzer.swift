@@ -49,6 +49,7 @@ public struct HanlinScriptAnalyzer: Sendable {
     private static let nativeScriptSwiftUIVersion = "4.0.2"
     private static let expoSDKVersion = "58.0.3"
     private static let expoUIVersion = "58.0.3"
+    private static let expoUIBridgeVersion = "1.0.0"
     private static let reactNativeVersion = "0.88.0-rc.0"
     private let inventory: HanlinCompatibilityInventory
     private let symbols: [String: HanlinAPISymbolRecord]
@@ -413,6 +414,15 @@ public struct HanlinScriptAnalyzer: Sendable {
                 ))
                 return
             }
+            if let requiredBridgeVersion = contract["bridgeVersion"] as? String,
+               !isVersion(requiredBridgeVersion, atMost: expoUIBridgeVersion) {
+                findings.append(.init(
+                    state: .unsupported,
+                    severity: .error,
+                    sourcePath: packageJSONPath,
+                    message: "This Hanlin build provides @hanlin/expo-ui bridge \(expoUIBridgeVersion), but the package requires \(requiredBridgeVersion)."
+                ))
+            }
             for (name, value) in plugins.sorted(by: { $0.key < $1.key }) {
                 guard let version = value as? String else {
                     findings.append(.init(
@@ -423,19 +433,24 @@ public struct HanlinScriptAnalyzer: Sendable {
                     ))
                     continue
                 }
-                if name != "@expo/ui" || !isExpoVersionCompatible(version) {
+                let supported = switch name {
+                case "@expo/ui": isExpoVersionCompatible(version)
+                case "@hanlin/expo-ui": isVersion(version, atMost: expoUIBridgeVersion)
+                default: false
+                }
+                if !supported {
                     findings.append(.init(
                         state: .unsupported,
                         severity: .error,
                         sourcePath: packageJSONPath,
-                        message: "This Hanlin build supports @expo/ui \(expoUIVersion), but the package requires \(name) \(version)."
+                        message: "This Hanlin build supports @expo/ui \(expoUIVersion) and @hanlin/expo-ui \(expoUIBridgeVersion), but the package requires \(name) \(version)."
                     ))
                 } else {
                     findings.append(.init(
                         state: .supported,
                         severity: .information,
                         sourcePath: packageJSONPath,
-                        message: "Expo plugin @expo/ui \(expoUIVersion) has embedded native SwiftUI support."
+                        message: "Expo plugin \(name) \(version) has embedded native SwiftUI support."
                     ))
                 }
             }
@@ -484,6 +499,26 @@ public struct HanlinScriptAnalyzer: Sendable {
             return true
         }
         return false
+    }
+
+    private static func isVersion(_ required: String, atMost installed: String) -> Bool {
+        func components(_ value: String) -> [Int]? {
+            var trimmed = value.trimmingCharacters(in: .whitespacesAndNewlines)
+            if trimmed.hasPrefix("^") || trimmed.hasPrefix("~") || trimmed.hasPrefix("=") || trimmed.hasPrefix("v") {
+                trimmed.removeFirst()
+            }
+            let pieces = trimmed.split(separator: ".").prefix(3)
+            guard !pieces.isEmpty, pieces.allSatisfy({ Int($0) != nil }) else { return nil }
+            let values = pieces.compactMap { Int($0) }
+            return values + Array(repeating: 0, count: max(0, 3 - values.count))
+        }
+        guard let requiredComponents = components(required), let installedComponents = components(installed) else {
+            return false
+        }
+        for (requiredPart, installedPart) in zip(requiredComponents, installedComponents) {
+            if requiredPart != installedPart { return requiredPart < installedPart }
+        }
+        return true
     }
 
     private func packageFiles(root: URL) throws -> [String: Data] {
