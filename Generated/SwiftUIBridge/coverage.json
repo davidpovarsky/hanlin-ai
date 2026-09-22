@@ -4,14 +4,15 @@
     "expo-upstream" : 3,
     "generated" : 3,
     "host-lifecycle-only" : 1,
-    "manual" : 2,
-    "needs-investigation" : 2
+    "manual" : 4,
+    "needs-investigation" : 2,
+    "unsupported" : 2
   },
   "expoUIVersion" : "58.0.3",
   "generatorVersion" : "1.0.0",
   "interfaceHashes" : {
-    "SwiftUI" : "c659d15ddebe9753b6f503850bceef54d49813253e96c70b48fe7eaa107e74e0",
-    "SwiftUICore" : "5d255599bfd8536240d69e443688a7eb8b771c81ea551b68dae1c5b4c2a9c13c"
+    "SwiftUI" : "2940000a50386cef751c36cf013170f77290f727035009d2e9df4d7757f8d35d",
+    "SwiftUICore" : "2f2d6ab1b0df8379fa3cab867a7f42df457727959d9e5a840895ffbf16ef4492"
   },
   "sdkIdentity" : "fixture-ios26",
   "symbols" : [
@@ -185,6 +186,60 @@
       "status" : "expo-upstream",
       "symbol" : "Group",
       "tier" : "T2"
+    },
+    {
+      "availability" : [
+
+      ],
+      "conformances" : [
+        "View"
+      ],
+      "enumCases" : [
+
+      ],
+      "genericParameters" : [
+        "Content"
+      ],
+      "isDeprecated" : false,
+      "isUnavailable" : false,
+      "kind" : "view",
+      "manualAdapter" : "HanlinExpoUIModule.swift",
+      "module" : "SwiftUICore",
+      "reason" : "GridItem sizing and dynamic children require a semantic grid adapter.",
+      "signatures" : [
+
+      ],
+      "sourceModule" : "SwiftUICore",
+      "status" : "manual",
+      "symbol" : "LazyHGrid",
+      "tier" : "T1"
+    },
+    {
+      "availability" : [
+
+      ],
+      "conformances" : [
+        "View"
+      ],
+      "enumCases" : [
+
+      ],
+      "genericParameters" : [
+        "Content"
+      ],
+      "isDeprecated" : false,
+      "isUnavailable" : false,
+      "kind" : "view",
+      "manualAdapter" : "HanlinExpoUIModule.swift",
+      "module" : "SwiftUICore",
+      "reason" : "GridItem sizing and dynamic children require a semantic grid adapter.",
+      "signatures" : [
+
+      ],
+      "sourceModule" : "SwiftUICore",
+      "status" : "manual",
+      "symbol" : "LazyVGrid",
+      "tier" : "T1"
     },
     {
       "availability" : [
@@ -391,6 +446,51 @@
 
       ],
       "genericParameters" : [
+        "B"
+      ],
+      "isDeprecated" : false,
+      "isUnavailable" : false,
+      "kind" : "modifier",
+      "module" : "SwiftUICore",
+      "reason" : "Generic object identity and lifetime cannot be serialized safely across the React bridge.",
+      "signatures" : [
+        {
+          "genericParameters" : [
+            "B"
+          ],
+          "isAsync" : false,
+          "isThrowing" : false,
+          "parameters" : [
+            {
+              "attributes" : [
+
+              ],
+              "isBinding" : false,
+              "isClosure" : false,
+              "isViewBuilder" : false,
+              "localName" : "bindable",
+              "type" : "B"
+            }
+          ],
+          "returnType" : "some View"
+        }
+      ],
+      "sourceModule" : "SwiftUICore",
+      "status" : "unsupported",
+      "symbol" : "environmentObject",
+      "tier" : "T1"
+    },
+    {
+      "availability" : [
+
+      ],
+      "conformances" : [
+
+      ],
+      "enumCases" : [
+
+      ],
+      "genericParameters" : [
 
       ],
       "isDeprecated" : false,
@@ -500,6 +600,62 @@
       "status" : "generated",
       "symbol" : "navigationBarTitleDisplayMode",
       "tier" : "T1"
+    },
+    {
+      "availability" : [
+
+      ],
+      "conformances" : [
+
+      ],
+      "enumCases" : [
+
+      ],
+      "genericParameters" : [
+        "K"
+      ],
+      "isDeprecated" : false,
+      "isUnavailable" : false,
+      "kind" : "modifier",
+      "module" : "SwiftUICore",
+      "reason" : "Arbitrary PreferenceKey values and callbacks require a deliberate typed adapter.",
+      "signatures" : [
+        {
+          "genericParameters" : [
+            "K"
+          ],
+          "isAsync" : false,
+          "isThrowing" : false,
+          "parameters" : [
+            {
+              "attributes" : [
+
+              ],
+              "isBinding" : false,
+              "isClosure" : false,
+              "isViewBuilder" : false,
+              "localName" : "key",
+              "type" : "K.Type"
+            },
+            {
+              "attributes" : [
+
+              ],
+              "externalName" : "perform",
+              "isBinding" : false,
+              "isClosure" : true,
+              "isViewBuilder" : false,
+              "localName" : "action",
+              "type" : "(K.Value) -> Void"
+            }
+          ],
+          "returnType" : "some View"
+        }
+      ],
+      "sourceModule" : "SwiftUICore",
+      "status" : "unsupported",
+      "symbol" : "onPreferenceChange",
+      "tier" : "T4"
     },
     {
       "availability" : [

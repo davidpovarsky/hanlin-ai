@@ -76,4 +76,28 @@ struct HanlinSwiftUIBridgeCoreTests {
         #expect(swiftViews.contains("HanlinGeneratedGroupView"))
         #expect(typeScriptViews.contains("export function Group"))
     }
+
+    @Test("Manifest keeps same-named declarations module-qualified")
+    func namingCollisions() throws {
+        let configuration = try JSONDecoder().decode(
+            HanlinSwiftUIBridgeConfiguration.self,
+            from: Data(contentsOf: fixture("configuration.json"))
+        )
+        let inventory = HanlinSwiftUIInventory(
+            generatorVersion: HanlinSwiftUIOutputGenerator.version,
+            sdkIdentity: "collision-fixture",
+            interfaces: [],
+            declarations: [
+                .init(module: "SwiftUI", symbol: "SharedView", kind: .view, sourceModule: "SwiftUI", status: .expoUpstream),
+                .init(module: "SwiftUICore", symbol: "SharedView", kind: .view, sourceModule: "SwiftUICore", status: .expoUpstream),
+            ]
+        )
+        let output = FileManager.default.temporaryDirectory.appending(path: UUID().uuidString, directoryHint: .isDirectory)
+        defer { try? FileManager.default.removeItem(at: output) }
+        try HanlinSwiftUIOutputGenerator.write(inventory: inventory, configuration: configuration, outputRoot: output)
+        let manifest = try String(contentsOf: output.appending(path: "bridge-manifest.ts"), encoding: .utf8)
+        #expect(manifest.contains("'SwiftUI.SharedView': 'expo-upstream'"))
+        #expect(manifest.contains("'SwiftUICore.SharedView': 'expo-upstream'"))
+        #expect(manifest.components(separatedBy: "  'SharedView',").count == 2)
+    }
 }

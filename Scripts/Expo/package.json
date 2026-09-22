@@ -20,6 +20,7 @@
   "devDependencies": {
     "@react-native-community/cli": "^20.2.0",
     "@react-native/metro-config": "^0.88.0-rc.0",
+    "@types/react": "19.2.0",
     "esbuild": "^0.25.0",
     "typescript": "npm:@typescript/typescript6@6.0.2"
   }

@@ -10,9 +10,27 @@
       "reason": "Uses the shared controlled/uncontrolled Binding<String> adapter.",
       "adapter": "HanlinTextEditorView.swift"
     },
+    "LazyVGrid": {
+      "status": "manual",
+      "reason": "Grid tracks and dynamic children use a semantic adapter.",
+      "adapter": "HanlinExpoUIModule.swift"
+    },
+    "LazyHGrid": {
+      "status": "manual",
+      "reason": "Grid tracks and dynamic children use a semantic adapter.",
+      "adapter": "HanlinExpoUIModule.swift"
+    },
     "WindowGroup": {
       "status": "host-lifecycle-only",
       "reason": "A scene declaration is not meaningful inside an embedded MiniApp."
+    },
+    "environmentObject": {
+      "status": "unsupported",
+      "reason": "Generic object identity and lifetime are not serializable."
+    },
+    "onPreferenceChange": {
+      "status": "unsupported",
+      "reason": "Arbitrary PreferenceKey callbacks require a typed adapter."
     }
   }
 }

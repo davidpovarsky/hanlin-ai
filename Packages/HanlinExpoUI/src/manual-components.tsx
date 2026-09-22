@@ -14,7 +14,7 @@ export interface TextEditorProps extends CommonViewModifierProps {
   onValueChange?: (value: string) => void;
 }
 
-const NativeTextEditor = requireNativeView<TextEditorProps & {
+const NativeTextEditor = requireNativeView<Omit<TextEditorProps, 'onValueChange'> & {
   onValueChange?: (event: ValueChangeEvent) => void;
 }>('HanlinExpoUI', 'HanlinTextEditorView');
 

@@ -8,7 +8,6 @@ const probeSrcRoot = resolve(repositoryRoot, 'Fixtures', 'ExpoSwiftUIProbe');
 const uiTestFixturesRoot = resolve(repositoryRoot, 'AI_HLYUITests', 'Fixtures');
 
 async function buildVariant(variant) {
-  execSync('npm run typecheck:probe', { cwd: scriptRoot, stdio: 'inherit' });
   console.log(`[HanlinExpo] Building Expo SwiftUI Probe Variant ${variant} with Metro...`);
   const buildDir = resolve(scriptRoot, '.build-probe', `variant-${variant}`);
   await rm(buildDir, { recursive: true, force: true });
@@ -71,6 +70,8 @@ async function buildMalformed() {
 }
 
 async function main() {
+  console.log('[HanlinExpo] Running semantic TypeScript project check before Metro...');
+  execSync('npm run typecheck:probe', { cwd: scriptRoot, stdio: 'inherit' });
   const zipA = await buildVariant('A');
   const zipB = await buildVariant('B');
   await buildMalformed();

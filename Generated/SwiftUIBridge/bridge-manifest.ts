@@ -3,16 +3,32 @@ export const HANLIN_EXPO_RUNTIME_VERSION = '58.0.3' as const;
 export const HANLIN_EXPO_UI_BRIDGE_VERSION = '1.0.0' as const;
 export const HANLIN_SWIFTUI_SDK_IDENTITY = 'fixture-ios26' as const;
 export const HANLIN_SWIFTUI_SYMBOLS = [
-  'AsyncImage',
   'EditButton',
   'EmptyView',
   'Group',
+  'LazyHGrid',
+  'LazyVGrid',
   'NavigationStack',
   'TextEditor',
   'ViewThatFits',
-  'WindowGroup',
   'lineLimit',
   'navigationBarTitleDisplayMode',
-  'searchable',
 ] as const;
 export type HanlinSwiftUISymbol = (typeof HANLIN_SWIFTUI_SYMBOLS)[number];
+export const HANLIN_SWIFTUI_CLASSIFICATIONS = {
+  'SwiftUI.AsyncImage': 'needs-investigation',
+  'SwiftUI.EditButton': 'generated',
+  'SwiftUI.EmptyView': 'generated',
+  'SwiftUICore.Group': 'expo-upstream',
+  'SwiftUICore.LazyHGrid': 'manual',
+  'SwiftUICore.LazyVGrid': 'manual',
+  'SwiftUICore.NavigationStack': 'expo-upstream',
+  'SwiftUICore.TextEditor': 'manual',
+  'SwiftUICore.ViewThatFits': 'manual',
+  'SwiftUICore.WindowGroup': 'host-lifecycle-only',
+  'SwiftUICore.environmentObject': 'unsupported',
+  'SwiftUICore.lineLimit': 'expo-upstream',
+  'SwiftUICore.navigationBarTitleDisplayMode': 'generated',
+  'SwiftUICore.onPreferenceChange': 'unsupported',
+  'SwiftUICore.searchable': 'needs-investigation',
+} as const;

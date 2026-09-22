@@ -3,7 +3,7 @@ import ExpoModulesCore
 import ExpoUI
 import SwiftUI
 
-private enum HanlinGeneratedNavigationBarItemTitleDisplayModeValue: String, Enumerable {
+public enum HanlinGeneratedNavigationBarItemTitleDisplayModeValue: String, Enumerable {
     case automatic
     case inline
     case large

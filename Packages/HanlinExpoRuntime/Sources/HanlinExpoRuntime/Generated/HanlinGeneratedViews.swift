@@ -25,6 +25,12 @@ public struct HanlinGeneratedEmptyViewView: ExpoSwiftUI.View {
     }
 }
 
+public enum HanlinGeneratedBridgeMetadata {
+    public static let runtimeVersion = "58.0.3"
+    public static let bridgeVersion = "1.0.0"
+    public static let inventoryIdentity = "fixture-ios26"
+}
+
 public final class HanlinGeneratedExpoUIModule: Module {
     public func definition() -> ModuleDefinition {
         Name("HanlinGeneratedExpoUI")

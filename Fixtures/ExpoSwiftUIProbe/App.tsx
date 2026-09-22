@@ -13,6 +13,12 @@ import {
   HStack,
   VStack,
   Toolbar,
+  TextEditor,
+  LazyVGrid,
+  LazyHGrid,
+  ViewThatFits,
+  EditButton,
+  EmptyView,
 } from '@hanlin/expo-ui';
 import {
   navigationTitle,
@@ -20,12 +26,8 @@ import {
   foregroundStyle,
   font,
   listStyle,
-  createModifier,
+  navigationBarTitleDisplayMode,
 } from '@hanlin/expo-ui/modifiers';
-
-// Custom modifier registered in Swift via ViewModifierRegistry
-export const navigationBarTitleDisplayMode = (mode: 'inline' | 'large' | 'automatic' = 'inline') =>
-  createModifier('navigationBarTitleDisplayMode', { displayMode: mode });
 
 export interface AppProps {
   variant?: 'A' | 'B';
@@ -68,6 +70,7 @@ export default function App({ variant = 'A' }: AppProps) {
   const [showSettingsSheet, setShowSettingsSheet] = useState<boolean>(false);
   const [showNikkud, setShowNikkud] = useState<boolean>(true);
   const [toolbarActionCount, setToolbarActionCount] = useState<number>(0);
+  const [editorText, setEditorText] = useState<string>('SwiftUI bridge text');
 
   const currentBook = TORAH_BOOKS.find((b) => b.id === selectedBookId) ?? TORAH_BOOKS[0];
 
@@ -225,9 +228,43 @@ export default function App({ variant = 'A' }: AppProps) {
                       </Text>
                     </VStack>
 
+                    <VStack modifiers={[padding({ top: 24 })]}>
+                      <TextEditor
+                        value={editorText}
+                        placeholder="Type through Binding<String>"
+                        onValueChange={setEditorText}
+                      />
+                      <ViewThatFits axes="horizontal">
+                        <HStack>
+                          <Text>ViewThatFits horizontal candidate</Text>
+                          <EditButton />
+                        </HStack>
+                        <VStack>
+                          <Text>ViewThatFits compact candidate</Text>
+                          <EditButton />
+                        </VStack>
+                      </ViewThatFits>
+                      <LazyVGrid
+                        tracks={[
+                          { size: 'adaptive', minimum: 96, maximum: 180 },
+                        ]}
+                        spacing={8}
+                      >
+                        <Text>Grid A</Text>
+                        <Text>Grid B</Text>
+                        <Text>Grid C</Text>
+                      </LazyVGrid>
+                      <LazyHGrid tracks={[{ size: 'fixed', value: 32 }]} spacing={8}>
+                        <Text>Row A</Text>
+                        <Text>Row B</Text>
+                      </LazyHGrid>
+                      <EmptyView />
+                    </VStack>
+
                     {/* BottomSheet settings modal */}
                     <BottomSheet
                       isPresented={showSettingsSheet}
+                      onIsPresentedChange={setShowSettingsSheet}
                       onDismiss={() => setShowSettingsSheet(false)}
                     >
                       <VStack modifiers={[padding({ all: 20 })]}>

@@ -10,8 +10,8 @@
 | --- | ---: |
 | expo-upstream | 3 |
 | generated | 3 |
-| manual | 2 |
-| unsupported | 0 |
+| manual | 4 |
+| unsupported | 2 |
 | host-lifecycle-only | 1 |
 | companion-framework | 0 |
 | needs-investigation | 2 |
@@ -24,10 +24,14 @@
 | SwiftUI | `EditButton` | view | T1 | generated | At least one signature is representable by the mechanical primitive/content templates. |
 | SwiftUI | `EmptyView` | view | T1 | generated | At least one signature is representable by the mechanical primitive/content templates. |
 | SwiftUICore | `Group` | view | T2 | expo-upstream | Provided by @expo/ui 58.0.3. |
+| SwiftUICore | `LazyHGrid` | view | T1 | manual | GridItem sizing and dynamic children require a semantic grid adapter. |
+| SwiftUICore | `LazyVGrid` | view | T1 | manual | GridItem sizing and dynamic children require a semantic grid adapter. |
 | SwiftUICore | `NavigationStack` | view | T2 | expo-upstream | Provided by @expo/ui 58.0.3. |
 | SwiftUICore | `TextEditor` | view | T3 | manual | Uses the shared controlled/uncontrolled Binding<String> adapter. |
 | SwiftUICore | `ViewThatFits` | view | T2 | manual | Axis.Set is represented by a typed React prop while children preserve native SwiftUI composition. |
 | SwiftUICore | `WindowGroup` | view | T2 | host-lifecycle-only | Window creation belongs to the Hanlin host lifecycle. |
+| SwiftUICore | `environmentObject` | modifier | T1 | unsupported | Generic object identity and lifetime cannot be serialized safely across the React bridge. |
 | SwiftUICore | `lineLimit` | modifier | T1 | expo-upstream | Provided by @expo/ui 58.0.3. |
 | SwiftUICore | `navigationBarTitleDisplayMode` | modifier | T1 | generated | At least one signature is representable by the mechanical primitive/content templates. |
+| SwiftUICore | `onPreferenceChange` | modifier | T4 | unsupported | Arbitrary PreferenceKey values and callbacks require a deliberate typed adapter. |
 | SwiftUICore | `searchable` | modifier | T3 | needs-investigation | Binding state requires the reusable controlled/uncontrolled adapter template. |
