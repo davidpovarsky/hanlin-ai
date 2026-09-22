@@ -243,7 +243,8 @@ public final class HanlinNativeServicesHostProvider: NSObject, @unchecked Sendab
         guard let adapter else {
             return
         }
-        adapter.registerRequestHandler(action, capability: capability, handler: handler)
+        nonisolated(unsafe) let safeHandler = handler
+        adapter.registerRequestHandler(action, capability: capability, handler: safeHandler)
     }
 
     @MainActor

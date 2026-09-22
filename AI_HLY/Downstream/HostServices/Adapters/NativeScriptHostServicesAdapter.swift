@@ -15,8 +15,8 @@ public final class NativeScriptHostServicesAdapter: NSObject, @unchecked Sendabl
     public let sessionID: String
     public let context: HanlinHostCallContext
 
-    private struct RegisteredActionHandler: Sendable {
-        typealias InvokeFn = @Sendable (String, String, @escaping (String?, String?) -> Void) -> Void
+    private struct RegisteredActionHandler {
+        typealias InvokeFn = (String, String, @escaping (String?, String?) -> Void) -> Void
         let capability: HanlinCapabilityID
         let invoke: InvokeFn
     }
@@ -46,32 +46,42 @@ public final class NativeScriptHostServicesAdapter: NSObject, @unchecked Sendabl
 
     // MARK: - Directory Resolution
 
+    /// Compute app container paths using the same layout as HanlinMiniAppDataStore,
+    /// without requiring actor isolation. This is safe because the layout is fixed
+    /// (applicationSupport/Hanlin/MiniApps/{appID}/{area}) and directories are
+    /// created lazily by the store on first actual read/write.
+    private func containerPath(for appID: HanlinAppID, area: String) -> String? {
+        guard let support = try? FileManager.default.url(
+            for: .applicationSupportDirectory,
+            in: .userDomainMask,
+            appropriateFor: nil,
+            create: false
+        ) else { return nil }
+        return support
+            .appending(path: "Hanlin/MiniApps", directoryHint: .isDirectory)
+            .appending(path: appID.rawValue, directoryHint: .isDirectory)
+            .appending(path: area, directoryHint: .isDirectory)
+            .path(percentEncoded: false)
+    }
+
     public func dataRootDirectory() -> String? {
         guard let appID = context.appID else { return nil }
-        return try? MainActor.assumeIsolated {
-            try HanlinMiniAppHost.shared.dataStore.prepareContainer(for: appID).data.path(percentEncoded: false)
-        }
+        return containerPath(for: appID, area: "Data")
     }
 
     public func stateDirectory() -> String? {
         guard let appID = context.appID else { return nil }
-        return try? MainActor.assumeIsolated {
-            try HanlinMiniAppHost.shared.dataStore.prepareContainer(for: appID).state.path(percentEncoded: false)
-        }
+        return containerPath(for: appID, area: "State")
     }
 
     public func documentsDirectory() -> String? {
         guard let appID = context.appID else { return nil }
-        return try? MainActor.assumeIsolated {
-            try HanlinMiniAppHost.shared.dataStore.prepareContainer(for: appID).documents.path(percentEncoded: false)
-        }
+        return containerPath(for: appID, area: "Documents")
     }
 
     public func cacheDirectory() -> String? {
         guard let appID = context.appID else { return nil }
-        return try? MainActor.assumeIsolated {
-            try HanlinMiniAppHost.shared.dataStore.prepareContainer(for: appID).cache.path(percentEncoded: false)
-        }
+        return containerPath(for: appID, area: "Cache")
     }
 
     // MARK: - Runtime Execution
@@ -245,17 +255,21 @@ public final class NativeScriptHostServicesAdapter: NSObject, @unchecked Sendabl
     public func registerRequestHandler(
         _ action: String,
         capability: String,
-        handler: @escaping @Sendable (String, String, @escaping (String?, String?) -> Void) -> Void
+        handler: @escaping (String, String, @escaping (String?, String?) -> Void) -> Void
     ) {
         guard let actionID = try? HanlinActionID(validating: action),
               let capabilityID = try? HanlinCapabilityID(validating: capability) else {
             return
         }
+        // NSLock.withLock{} guards the dictionary mutation.
+        // nonisolated(unsafe) suppresses Swift 6 Sendable warning on the closure capture;
+        // the lock ensures no concurrent access to registeredActionHandlers.
+        nonisolated(unsafe) let safeHandler = handler
         lock.withLock {
             registeredActionIDs.insert(actionID)
             registeredActionHandlers[actionID] = RegisteredActionHandler(
                 capability: capabilityID,
-                invoke: handler
+                invoke: safeHandler
             )
         }
     }
