@@ -192,7 +192,7 @@ public struct HanlinChatRequestBuilder: Sendable {
         req.setValue("https://hanlin.ai", forHTTPHeaderField: "HTTP-Referer")
         req.setValue("Hanlin", forHTTPHeaderField: "X-Title")
         req.timeoutInterval = 60
-        req.httpBody = try JSONSerialization.data(withJSONObject: requestBody, options: [])
+        req.httpBody = try JSONSerialization.data(withJSONObject: requestBody, options: [.sortedKeys])
         return req
     }
 
@@ -276,7 +276,7 @@ public struct HanlinChatRequestBuilder: Sendable {
         req.setValue(configuration.apiKey, forHTTPHeaderField: "x-api-key")
         req.setValue("2023-06-01", forHTTPHeaderField: "anthropic-version")
         req.timeoutInterval = 60
-        req.httpBody = try JSONSerialization.data(withJSONObject: body, options: [])
+        req.httpBody = try JSONSerialization.data(withJSONObject: body, options: [.sortedKeys])
         return req
     }
 
@@ -372,7 +372,7 @@ public struct HanlinChatRequestBuilder: Sendable {
         req.setValue("application/json", forHTTPHeaderField: "Content-Type")
         req.setValue(configuration.apiKey, forHTTPHeaderField: "x-goog-api-key")
         req.timeoutInterval = 60
-        req.httpBody = try JSONSerialization.data(withJSONObject: body, options: [])
+        req.httpBody = try JSONSerialization.data(withJSONObject: body, options: [.sortedKeys])
         return req
     }
 

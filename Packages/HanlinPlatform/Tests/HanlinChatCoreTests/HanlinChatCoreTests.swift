@@ -91,11 +91,15 @@ struct HanlinChatCoreTests {
 
         #expect(compactRequest.url == fullRequest.url)
         #expect(compactRequest.allHTTPHeaderFields == fullRequest.allHTTPHeaderFields)
-        #expect(compactRequest.httpBody == fullRequest.httpBody)
 
-        let httpBody = try #require(compactRequest.httpBody)
+        let compactBodyData = try #require(compactRequest.httpBody)
+        let fullBodyData = try #require(fullRequest.httpBody)
+        let compactDict = try #require(JSONSerialization.jsonObject(with: compactBodyData) as? NSDictionary)
+        let fullDict = try #require(JSONSerialization.jsonObject(with: fullBodyData) as? NSDictionary)
+        #expect(compactDict == fullDict)
+
         let body = try #require(
-            JSONSerialization.jsonObject(with: httpBody) as? [String: Any]
+            JSONSerialization.jsonObject(with: compactBodyData) as? [String: Any]
         )
         #expect(body["max_tokens"] as? Int == 3_333)
         #expect(body["reasoning_effort"] as? String == "medium")
