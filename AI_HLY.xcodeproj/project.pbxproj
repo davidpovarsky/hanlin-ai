@@ -1186,6 +1186,8 @@
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				INFOPLIST_KEY_NSCalendarsFullAccessUsageDescription = "ChavrusaChat accesses your calendars only when you ask it to read or add an event.";
 				INFOPLIST_KEY_NSCameraUsageDescription = "ChavrusaChat accesses the camera only when you ask it to take a photo.";
+				INFOPLIST_KEY_NSContactsUsageDescription = "ChavrusaChat accesses your contacts only when you ask it to find a person or use contact information for a feature you requested.";
+				INFOPLIST_KEY_NSFaceIDUsageDescription = "ChavrusaChat uses Face ID only when you ask it to unlock or authorize a protected action in the app.";
 				INFOPLIST_KEY_NSHealthClinicalHealthRecordsShareUsageDescription = "ChavrusaChat reads clinical health records only when you request a health feature that needs them.";
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "ChavrusaChat reads health data only when you request a health-related feature.";
 				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "ChavrusaChat writes health data only when you ask it to record an activity.";
@@ -1477,6 +1479,8 @@
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				INFOPLIST_KEY_NSCalendarsFullAccessUsageDescription = "ChavrusaChat accesses your calendars only when you ask it to read or add an event.";
 				INFOPLIST_KEY_NSCameraUsageDescription = "ChavrusaChat accesses the camera only when you ask it to take a photo.";
+				INFOPLIST_KEY_NSContactsUsageDescription = "ChavrusaChat accesses your contacts only when you ask it to find a person or use contact information for a feature you requested.";
+				INFOPLIST_KEY_NSFaceIDUsageDescription = "ChavrusaChat uses Face ID only when you ask it to unlock or authorize a protected action in the app.";
 				INFOPLIST_KEY_NSHealthClinicalHealthRecordsShareUsageDescription = "ChavrusaChat reads clinical health records only when you request a health feature that needs them.";
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "ChavrusaChat reads health data only when you request a health-related feature.";
 				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "ChavrusaChat writes health data only when you ask it to record an activity.";

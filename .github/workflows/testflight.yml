@@ -321,6 +321,37 @@ jobs:
           test "$(/usr/libexec/PlistBuddy -c 'Print :CFBundleIdentifier' "$app/Info.plist")" = "$APP_BUNDLE_ID"
           test "$(/usr/libexec/PlistBuddy -c 'Print :CFBundleDisplayName' "$app/Info.plist")" = ChavrusaChat
           test "$(/usr/libexec/PlistBuddy -c 'Print :CFBundleVersion' "$app/Info.plist")" = "$BUILD_NUMBER"
+
+          privacy_log="$BUILD_DIR/logs/main-privacy-purpose-strings.txt"
+          required_usage_descriptions=(
+            NSAlarmKitUsageDescription
+            NSCalendarsFullAccessUsageDescription
+            NSCameraUsageDescription
+            NSContactsUsageDescription
+            NSFaceIDUsageDescription
+            NSHealthClinicalHealthRecordsShareUsageDescription
+            NSHealthShareUsageDescription
+            NSHealthUpdateUsageDescription
+            NSLocationAlwaysAndWhenInUseUsageDescription
+            NSLocationWhenInUseUsageDescription
+            NSMicrophoneUsageDescription
+            NSPhotoLibraryAddUsageDescription
+            NSPhotoLibraryUsageDescription
+            NSRemindersFullAccessUsageDescription
+            NSSpeechRecognitionUsageDescription
+          )
+          : > "$privacy_log"
+          for key in "${required_usage_descriptions[@]}"; do
+            value=$(/usr/libexec/PlistBuddy -c "Print :$key" "$app/Info.plist" 2>/dev/null || true)
+            trimmed_value=$(printf '%s' "$value" | tr -d '[:space:]')
+            if [ -z "$trimmed_value" ]; then
+              echo "::error::Final IPA Info.plist is missing a non-empty $key"
+              exit 1
+            fi
+            printf '%s=%s\n' "$key" "$value" >> "$privacy_log"
+          done
+          echo "Verified ${#required_usage_descriptions[@]} non-empty privacy purpose strings in the final IPA"
+
           codesign --verify --deep --strict --verbose=2 "$app"
 
           verify_bundle() {
