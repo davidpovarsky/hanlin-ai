@@ -10,7 +10,6 @@ struct HanlinUnifiedHostServicesAgentAcceptanceTests {
         let context = HanlinHostCallContext.forAgent()
         #expect(context.effectiveCapabilities.contains("all"))
         #expect(context.origin == .assistantModel)
-        #expect(context.storageScope is HanlinHostStorageScope)
         if case .agent = context.storageScope {
             // Expected
         } else {
@@ -66,8 +65,8 @@ struct HanlinUnifiedHostServicesAgentAcceptanceTests {
             argumentsJSON: "{\"source\": \"6 * 7\", \"runtime\": \"jscore\"}",
             context: context
         )
-        #expect(result.isSuccess)
-        #expect(result.output.contains("42"))
+        #expect(!result.isError)
+        #expect(result.modelText.contains("42"))
     }
 
     @Test func agentToolExecutesNode() async {
@@ -77,8 +76,8 @@ struct HanlinUnifiedHostServicesAgentAcceptanceTests {
             argumentsJSON: "{\"source\": \"console.log(14 * 3);\", \"runtime\": \"node\"}",
             context: context
         )
-        if result.isSuccess {
-            #expect(result.output.contains("42"))
+        if !result.isError {
+            #expect(result.modelText.contains("42"))
         }
     }
 
@@ -89,8 +88,8 @@ struct HanlinUnifiedHostServicesAgentAcceptanceTests {
             argumentsJSON: "{\"source\": \"print(40 + 2)\"}",
             context: context
         )
-        if result.isSuccess {
-            #expect(result.output.contains("42"))
+        if !result.isError {
+            #expect(result.modelText.contains("42"))
         }
     }
 
@@ -101,8 +100,8 @@ struct HanlinUnifiedHostServicesAgentAcceptanceTests {
             argumentsJSON: "{\"source\": \"const ans: number = 42; console.log(ans);\"}",
             context: context
         )
-        if result.isSuccess {
-            #expect(result.output.contains("42"))
+        if !result.isError {
+            #expect(result.modelText.contains("42"))
         }
     }
 
@@ -113,8 +112,8 @@ struct HanlinUnifiedHostServicesAgentAcceptanceTests {
             argumentsJSON: "{\"command\": \"echo 42\"}",
             context: context
         )
-        if result.isSuccess {
-            #expect(result.output.contains("42"))
+        if !result.isError {
+            #expect(result.modelText.contains("42"))
         }
     }
 
@@ -131,7 +130,7 @@ struct HanlinUnifiedHostServicesAgentAcceptanceTests {
             argumentsJSON: "{\"source\": \"6 * 7\", \"runtime\": \"jscore\"}",
             context: context
         )
-        #expect(!result.isSuccess)
-        #expect(result.output.lowercased().contains("disabled") || result.output.lowercased().contains("unavailable"))
+        #expect(result.isError)
+        #expect(result.modelText.lowercased().contains("disabled") || result.modelText.lowercased().contains("unavailable"))
     }
 }
