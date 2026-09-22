@@ -24,6 +24,12 @@ typedef NS_ERROR_ENUM(HanlinNativeScriptRuntimeErrorDomain, HanlinNativeScriptRu
 
 - (BOOL)runMainApplicationWithError:(NSError * _Nullable * _Nullable)error;
 
+/// Installs a provider-bound Host Services bridge into this runtime before
+/// application JavaScript starts. The session identifier is never exposed to
+/// the application and cannot be supplied on individual calls.
+- (BOOL)bindHostServicesSessionID:(NSString *)sessionID
+                            error:(NSError * _Nullable * _Nullable)error;
+
 - (void)shutdown;
 
 @end

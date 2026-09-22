@@ -53,6 +53,7 @@ final class HanlinScriptingPlatform {
     private var extensionStore: HanlinScriptExtensionStore?
     private var applicationSession: HanlinScriptingApplicationSession?
     private var nativeScriptSession: HanlinNativeScriptSession?
+    private var nativeScriptHostServices: NativeScriptHostServicesAdapter?
     private var expoSession: HanlinExpoSession?
     private var isLaunching = false
     private var isExecutingHeadlessNativeScriptAction = false
@@ -128,6 +129,7 @@ final class HanlinScriptingPlatform {
     func restore() async {
         guard let store else { return }
         do {
+            await HanlinHostCapabilityAuthority.shared.usePackageGrantStore(store)
             installedPackages = try await store.restore()
             pendingResumeCommands = try extensionStore?.pendingCommands() ?? []
             try await refreshExtensionSnapshot()
@@ -372,7 +374,7 @@ final class HanlinScriptingPlatform {
     ) async {
         guard let store else { return }
         do {
-            if !granted, activeApplicationID == id { dismissActiveApplication() }
+            await HanlinHostCapabilityAuthority.shared.usePackageGrantStore(store)
             try await store.setCapabilityGranted(granted, capability: capability, for: id)
             installedPackages = try await store.snapshots()
             try await refreshExtensionSnapshot()
@@ -392,6 +394,7 @@ final class HanlinScriptingPlatform {
             activity = .failed("The installed package could not be found.")
             return
         }
+        await HanlinHostCapabilityAuthority.shared.usePackageGrantStore(store)
         guard package.enabled else {
             activity = .failed("Enable this package before launching it.")
             return
@@ -427,21 +430,23 @@ final class HanlinScriptingPlatform {
                     "HANLIN_MINIAPP_CACHE_DIR": cacheDirStr
                 ]
 
-                HanlinNativeServicesHostProvider.setActiveContainer(
-                    appID: appID.rawValue,
-                    dataRoot: dataRootStr,
-                    stateDir: stateDirStr,
-                    docsDir: docsDirStr,
-                    cacheDir: cacheDirStr,
-                    grantedCapabilities: package.grantedCapabilities.map(\.rawValue)
+                let sessionID = UUID().uuidString.lowercased()
+                let adapter = NativeScriptHostServicesAdapter(
+                    appID: appID,
+                    installedPackageID: package.record.installedPackageID,
+                    grantedCapabilities: Set(package.grantedCapabilities.map(\.rawValue)),
+                    sessionID: sessionID
                 )
+                HanlinNativeServicesBridge.register(adapter, forSessionID: sessionID)
 
                 let session = try HanlinNativeScriptSession(
                     applicationRoot: entrypointURL.deletingLastPathComponent(),
-                    environment: env
+                    environment: env,
+                    sessionID: sessionID
                 )
-                try session.start()
                 nativeScriptSession = session
+                nativeScriptHostServices = adapter
+                try session.start()
                 activeApplicationID = id
                 activeNativeScriptController = session.containerController
                 activity = .idle
@@ -469,8 +474,8 @@ final class HanlinScriptingPlatform {
                     applicationRoot: entrypointURL.deletingLastPathComponent(),
                     sessionID: sessionID
                 )
-                try session.start()
                 expoSession = session
+                try session.start()
                 activeApplicationID = id
                 activeExpoController = session.containerController
                 activity = .idle
@@ -587,15 +592,19 @@ final class HanlinScriptingPlatform {
             NSLog("HANLIN_NS_PRODUCTION_SHUTDOWN_OK")
         }
         nativeScriptSession?.shutdown()
+        if let session = nativeScriptSession {
+            HanlinNativeServicesBridge.unregisterProvider(forSessionID: session.sessionID)
+        }
         nativeScriptSession = nil
+        nativeScriptHostServices = nil
         HanlinNativeServicesHostProvider.clearActiveContainer()
         if expoSession != nil {
             NSLog("HANLIN_EXPO_PRODUCTION_SHUTDOWN_OK")
         }
+        expoSession?.shutdown()
         if let session = expoSession {
             HanlinExpoHostServicesBridge.unregister(sessionID: session.sessionID)
         }
-        expoSession?.shutdown()
         expoSession = nil
         activeApplicationID = nil
         activeApplicationModel = nil
@@ -633,7 +642,10 @@ final class HanlinScriptingPlatform {
         }
 
         if nativeScriptSession != nil, activeApplicationID == package.record.installedPackageID {
-            return try await HanlinNativeServicesHostProvider.invokeRegisteredAction(
+            guard let nativeScriptHostServices else {
+                throw HanlinMiniAppRequestError.routeNotFound
+            }
+            return try await nativeScriptHostServices.invokeRegisteredAction(
                 action,
                 capability: capability,
                 caller: caller,
@@ -680,32 +692,33 @@ final class HanlinScriptingPlatform {
 
         let session = try HanlinNativeScriptSession(
             applicationRoot: handlerURL.deletingLastPathComponent(),
-            environment: env
+            environment: env,
+            sessionID: UUID().uuidString.lowercased()
+        )
+
+        let adapter = NativeScriptHostServicesAdapter(
+            appID: appID,
+            installedPackageID: package.record.installedPackageID,
+            grantedCapabilities: Set(package.grantedCapabilities.map(\.rawValue)),
+            sessionID: session.sessionID
         )
 
         isExecutingHeadlessNativeScriptAction = true
-        HanlinNativeServicesHostProvider.setActiveContainer(
-            appID: appID.rawValue,
-            dataRoot: dataRootStr,
-            stateDir: stateDirStr,
-            docsDir: docsDirStr,
-            cacheDir: cacheDirStr,
-            grantedCapabilities: package.grantedCapabilities.map(\.rawValue)
-        )
+        HanlinNativeServicesBridge.register(adapter, forSessionID: session.sessionID)
         defer {
             session.shutdown()
-            HanlinNativeServicesHostProvider.clearActiveContainer()
+            HanlinNativeServicesBridge.unregisterProvider(forSessionID: session.sessionID)
             isExecutingHeadlessNativeScriptAction = false
         }
 
         try session.start()
         await Task.yield()
 
-        guard HanlinNativeServicesHostProvider.registeredActionIDs.contains(action) else {
+        guard adapter.allRegisteredActionIDs.contains(action) else {
             throw HanlinMiniAppRequestError.routeNotFound
         }
 
-        return try await HanlinNativeServicesHostProvider.invokeRegisteredAction(
+        return try await adapter.invokeRegisteredAction(
             action,
             capability: capability,
             caller: caller,

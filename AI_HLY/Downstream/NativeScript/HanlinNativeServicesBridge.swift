@@ -6,26 +6,14 @@ import HanlinPlatformContracts
 import UIKit
 #endif
 
-/// Production host provider implementing `HanlinNativeServicesProvider` for NativeScript.
+/// Legacy single-session compatibility provider.
 ///
 /// Security & Architectural Rules:
-import Foundation
-import HanlinMiniAppCore
-@_exported import HanlinNativeScriptCoreSupport
-import HanlinPlatformContracts
-#if canImport(UIKit)
-import UIKit
-#endif
-
-/// Production host provider implementing `HanlinNativeServicesProvider` for NativeScript.
-///
-/// Security & Architectural Rules:
-/// 1. Caller identity is strictly HOST-BOUND to the active session (`activeAppID`).
-///    Untrusted scripts cannot supply or spoof their caller identity.
-/// 2. All privileged operations (Node, Python, JavaScript, Network, Inter-App)
-///    are capability-gated against `activeGrantedCapabilities`.
-/// 3. Visible to NativeScript JavaScript because the Objective-C shim
-///    `HanlinNativeServicesBridge` lives in `HanlinNativeScriptCoreSupport`.
+/// Modern production sessions register a dedicated
+/// `NativeScriptHostServicesAdapter` and receive a provider-bound bridge object
+/// before application JavaScript runs. The mutable state below remains only for
+/// older single-session Swift call sites and is not authoritative for modern
+/// NativeScript JavaScript calls.
 public final class HanlinNativeServicesHostProvider: NSObject, @unchecked Sendable, HanlinNativeServicesProvider {
     nonisolated(unsafe) public static let shared = HanlinNativeServicesHostProvider()
 

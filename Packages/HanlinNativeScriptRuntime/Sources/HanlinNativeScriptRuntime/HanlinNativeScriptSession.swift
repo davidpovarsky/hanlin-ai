@@ -41,6 +41,7 @@ public final class HanlinNativeScriptSession {
 
     public let applicationRoot: URL
     public let containerController: UIViewController
+    public let sessionID: String
 
     private let presenter: HanlinNativeScriptPresenter
     private var runtime: HanlinNativeScriptRuntimeHost?
@@ -48,7 +49,11 @@ public final class HanlinNativeScriptSession {
     private var createdSymlinks: Set<URL> = []
     public let environment: [String: String]
 
-    public init(applicationRoot: URL, environment: [String: String] = [:]) throws {
+    public init(
+        applicationRoot: URL,
+        environment: [String: String] = [:],
+        sessionID: String = UUID().uuidString.lowercased()
+    ) throws {
         let root = applicationRoot.standardizedFileURL
         guard root.isFileURL else {
             throw HanlinNativeScriptError.invalidApplicationRoot("the URL is not a file URL")
@@ -69,6 +74,7 @@ public final class HanlinNativeScriptSession {
         try Self.validateCoreRequirements(packageJSONURL: packageJSONURL)
         self.applicationRoot = root
         self.environment = environment
+        self.sessionID = sessionID
         presenter = HanlinNativeScriptPresenter()
         containerController = presenter.containerController
     }
@@ -89,6 +95,7 @@ public final class HanlinNativeScriptSession {
                 baseDirectory: applicationRoot.deletingLastPathComponent().path(percentEncoded: false),
                 applicationPath: applicationRoot.lastPathComponent
             )
+            try host.bindHostServicesSessionID(sessionID)
             runtime = host
             Self.activeSession = self
             isActive = true

@@ -1,4 +1,5 @@
 import HanlinNativeScriptRuntime
+import HanlinPlatformContracts
 import SwiftUI
 import UIKit
 
@@ -12,6 +13,7 @@ struct HanlinNativeScriptPOCView: UIViewControllerRepresentable {
         func shutdown() {
             guard let session else { return }
             session.shutdown()
+            HanlinNativeServicesBridge.unregisterProvider(forSessionID: session.sessionID)
             self.session = nil
             NSLog("HANLIN_NS_SHUTDOWN_OK")
         }
@@ -37,6 +39,13 @@ struct HanlinNativeScriptPOCView: UIViewControllerRepresentable {
             let fixtureRoot = applicationSupport
                 .appending(path: "HanlinNativeScriptPOC/fixture-a/nativescript/app", directoryHint: .isDirectory)
             let session = try HanlinNativeScriptSession(applicationRoot: fixtureRoot)
+            let appID = try HanlinAppID(validating: "hanlin-nativescript-poc")
+            let adapter = NativeScriptHostServicesAdapter(
+                appID: appID,
+                grantedCapabilities: ["runtime.javascript", "runtime.node", "runtime.python", "network"],
+                sessionID: session.sessionID
+            )
+            HanlinNativeServicesBridge.register(adapter, forSessionID: session.sessionID)
             context.coordinator.session = session
             try session.start()
             NSLog("HANLIN_NS_INITIALIZED_EXTERNAL_ROOT path=\(fixtureRoot.path(percentEncoded: false))")

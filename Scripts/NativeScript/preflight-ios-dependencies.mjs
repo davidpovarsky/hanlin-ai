@@ -155,18 +155,35 @@ if (appIndex >= 0) {
       throw new Error('Unable to resolve the built application executable');
     }
     const executable = resolve(appRoot, plist.stdout.trim());
-    // Release app binaries are stripped. Validate that the provider class is
-    // registered in the Mach-O Objective-C runtime class metadata rather than
-    // requiring an exported symbol table entry; this directly matches the
-    // NSClassFromString / objc_lookUpClass contract used by NativeScript at runtime.
-    const objcRuntime = spawnSync('/usr/bin/otool', ['-ov', executable], {
-      encoding: 'utf8',
-      maxBuffer: 64 * 1024 * 1024
-    });
-    if (objcRuntime.status !== 0
-        || !objcRuntime.stdout.includes('HanlinNativeScriptSwiftUIFixtureProvider')) {
-      const detail = objcRuntime.error ? ` (${objcRuntime.error.message})` : '';
-      throw new Error(`The built app does not register the embedded NativeScript SwiftUI provider class${detail}`);
+    // SwiftPM may place the provider in an embedded package-product framework
+    // instead of the main executable. Scan every Mach-O in the app's dyld
+    // closure and still require real Objective-C class metadata, matching the
+    // NSClassFromString / objc_lookUpClass contract used at runtime.
+    const frameworkRoot = resolve(appRoot, 'Frameworks');
+    const closureExecutables = [executable];
+    for (const entry of await readdir(frameworkRoot, { withFileTypes: true })) {
+      if (entry.isDirectory() && entry.name.endsWith('.framework')) {
+        const frameworkName = entry.name.slice(0, -'.framework'.length);
+        closureExecutables.push(resolve(frameworkRoot, entry.name, frameworkName));
+      }
+    }
+    let providerExecutable = null;
+    let objcRuntimeError = null;
+    for (const candidate of closureExecutables) {
+      const objcRuntime = spawnSync('/usr/bin/otool', ['-ov', candidate], {
+        encoding: 'utf8',
+        maxBuffer: 64 * 1024 * 1024
+      });
+      if (objcRuntime.error) objcRuntimeError = objcRuntime.error;
+      if (objcRuntime.status === 0
+          && objcRuntime.stdout.includes('HanlinNativeScriptSwiftUIFixtureProvider')) {
+        providerExecutable = candidate;
+        break;
+      }
+    }
+    if (!providerExecutable) {
+      const detail = objcRuntimeError ? ` (${objcRuntimeError.message})` : '';
+      throw new Error(`The built app closure does not register the embedded NativeScript SwiftUI provider class${detail}`);
     }
     const loadCommands = spawnSync('/usr/bin/otool', ['-l', executable], {
       encoding: 'utf8',
@@ -175,7 +192,7 @@ if (appIndex >= 0) {
     if (loadCommands.status !== 0 || !loadCommands.stdout.includes('__TNSMetadata')) {
       throw new Error('The built app does not contain the NativeScript metadata section');
     }
-    const strings = spawnSync('/usr/bin/strings', [executable], {
+    const strings = spawnSync('/usr/bin/strings', [providerExecutable], {
       encoding: 'utf8',
       maxBuffer: 64 * 1024 * 1024
     });

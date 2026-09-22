@@ -1,7 +1,11 @@
+import CryptoKit
+import Foundation
 import Testing
 @testable import AI_Hanlin
 import HanlinPlatformContracts
 import HanlinMiniAppCore
+import HanlinScriptContracts
+import HanlinScriptStore
 
 @Suite("Unified Host Services E2E")
 struct HanlinUnifiedHostServicesE2ETests {
@@ -62,6 +66,50 @@ struct HanlinUnifiedHostServicesE2ETests {
         await authority.revoke(capability: "runtime.node", for: appID)
         let afterRevoke = await authority.grantedCapabilities(for: appID)
         #expect(!afterRevoke.contains("runtime.node"))
+    }
+
+    @Test func packageStoreGrantPrecedenceAndLiveRevocation() async throws {
+        let fixture = try HostServicesPackageFixture()
+        defer { fixture.remove() }
+
+        let store = try HanlinAtomicScriptStore(root: fixture.storeRoot)
+        _ = try await store.install(
+            plan: fixture.plan,
+            artifactDirectory: fixture.artifactRoot,
+            artifactManifest: fixture.manifest
+        )
+
+        let authority = HanlinHostCapabilityAuthority.shared
+        await authority.usePackageGrantStore(store)
+
+        // Deliberately grant the compiled-app domain. Package identity must win.
+        await authority.grant(capability: "network", for: fixture.appID)
+        defer {
+            Task {
+                await authority.revoke(capability: "network", for: fixture.appID)
+                await authority.clearPackageGrantStore()
+            }
+        }
+
+        let context = HanlinHostCallContext.forMiniApp(
+            appID: fixture.appID,
+            installedPackageID: fixture.installedPackageID,
+            origin: .scriptPackage,
+            capabilities: ["network"],
+            canPresentUI: true
+        )
+
+        let initial = await authority.authorize(capability: "network", context: context)
+        #expect(initial == .notGranted)
+
+        try await store.setCapabilityGranted(true, capability: fixture.networkCapability, for: fixture.installedPackageID)
+        try await HanlinHostServicesBroker.shared.requireCapability("network", context: context)
+
+        // Revoke through the real package store and reuse the exact same context.
+        try await store.setCapabilityGranted(false, capability: fixture.networkCapability, for: fixture.installedPackageID)
+        await #expect(throws: HanlinHostServiceError.self) {
+            try await HanlinHostServicesBroker.shared.requireCapability("network", context: context)
+        }
     }
 
     @Test @MainActor func crossCallerConcurrency() async throws {
@@ -205,7 +253,7 @@ struct HanlinUnifiedHostServicesE2ETests {
 
     // MARK: - NativeScript and Expo Multi-Session
 
-    @Test func multiSessionBridgeRegistration() {
+    @Test func nativeScriptSessionsResolveExactlyAndTeardownIndependently() {
         let app1 = try! HanlinAppID(validating: "miniapp-one")
         let app2 = try! HanlinAppID(validating: "miniapp-two")
 
@@ -214,6 +262,7 @@ struct HanlinUnifiedHostServicesE2ETests {
 
         HanlinNativeServicesBridge.register(ns1, forSessionID: "session-1")
         HanlinNativeServicesBridge.register(ns2, forSessionID: "session-2")
+        HanlinNativeServicesBridge.register(ns2) // legacy fallback must not affect exact lookup
 
         let p1 = HanlinNativeServicesBridge.provider(forSessionID: "session-1")
         let p2 = HanlinNativeServicesBridge.provider(forSessionID: "session-2")
@@ -221,8 +270,103 @@ struct HanlinUnifiedHostServicesE2ETests {
         #expect(p1 !== nil)
         #expect(p2 !== nil)
         #expect(p1 !== p2)
+        #expect(HanlinNativeServicesBridge.provider(forSessionID: "missing-session") == nil)
 
         HanlinNativeServicesBridge.unregisterProvider(forSessionID: "session-1")
+        #expect(HanlinNativeServicesBridge.provider(forSessionID: "session-1") == nil)
+        #expect(HanlinNativeServicesBridge.provider(forSessionID: "session-2") === ns2)
         HanlinNativeServicesBridge.unregisterProvider(forSessionID: "session-2")
+        HanlinNativeServicesBridge.register(nil)
+    }
+
+    @Test func expoAppContextsResolveExactlyAndTeardownIndependently() throws {
+        let app1 = try HanlinAppID(validating: "expo-miniapp-one")
+        let app2 = try HanlinAppID(validating: "expo-miniapp-two")
+        let expo1 = ExpoHostServicesAdapter(appID: app1, grantedCapabilities: [], sessionID: "expo-session-1")
+        let expo2 = ExpoHostServicesAdapter(appID: app2, grantedCapabilities: [], sessionID: "expo-session-2")
+        let context1 = NSObject()
+        let context2 = NSObject()
+        let unboundContext = NSObject()
+
+        HanlinExpoHostServicesBridge.register(provider: expo1, forSessionID: expo1.sessionID)
+        HanlinExpoHostServicesBridge.register(provider: expo2, forSessionID: expo2.sessionID)
+        HanlinExpoHostServicesBridge.register(provider: expo2) // legacy fallback only
+        #expect(HanlinExpoHostServicesBridge.bind(sessionID: expo1.sessionID, toAppContext: context1))
+        #expect(HanlinExpoHostServicesBridge.bind(sessionID: expo2.sessionID, toAppContext: context2))
+
+        #expect(HanlinExpoHostServicesBridge.provider(forAppContext: context1) === expo1)
+        #expect(HanlinExpoHostServicesBridge.provider(forAppContext: context2) === expo2)
+        #expect(HanlinExpoHostServicesBridge.provider(forAppContext: unboundContext) == nil)
+
+        HanlinExpoHostServicesBridge.unregister(sessionID: expo1.sessionID)
+        #expect(HanlinExpoHostServicesBridge.provider(forAppContext: context1) == nil)
+        #expect(HanlinExpoHostServicesBridge.provider(forAppContext: context2) === expo2)
+
+        HanlinExpoHostServicesBridge.unregister(sessionID: expo2.sessionID)
+        HanlinExpoHostServicesBridge.register(provider: nil)
+    }
+}
+
+private struct HostServicesPackageFixture {
+    let root: URL
+    let storeRoot: URL
+    let artifactRoot: URL
+    let manifest: HanlinPackageArtifactManifest
+    let installedPackageID: HanlinInstalledPackageID
+    let appID: HanlinAppID
+    let networkCapability: HanlinCapabilityID
+
+    init() throws {
+        root = FileManager.default.temporaryDirectory.appending(
+            path: "hanlin-host-services-\(UUID().uuidString.lowercased())",
+            directoryHint: .isDirectory
+        )
+        storeRoot = root.appending(path: "store", directoryHint: .isDirectory)
+        artifactRoot = root.appending(path: "artifact", directoryHint: .isDirectory)
+        installedPackageID = try HanlinInstalledPackageID(validating: "host-services-fixture")
+        appID = try HanlinAppID(validating: "host-services-fixture-app")
+        networkCapability = try HanlinCapabilityID(validating: "network")
+
+        try FileManager.default.createDirectory(at: artifactRoot, withIntermediateDirectories: true)
+        let source = Data("export default 1".utf8)
+        try source.write(to: artifactRoot.appending(path: "main.js"))
+        let file = HanlinArtifactFile(
+            logicalPath: "main.js",
+            sha256: SHA256.hash(data: source).map { String(format: "%02x", $0) }.joined(),
+            byteCount: Int64(source.count),
+            context: .app
+        )
+        manifest = HanlinPackageArtifactManifest(
+            compilerVersion: "6.0.3",
+            compilerIntegrity: "sha512-fixture",
+            compilerOptionsHash: String(repeating: "a", count: 64),
+            baselineID: "fixture",
+            baselineDigest: String(repeating: "b", count: 64),
+            hanlinABIVersion: "2",
+            packageContentDigest: String(repeating: "c", count: 64),
+            cacheFingerprint: String(repeating: "d", count: 64),
+            files: [file]
+        )
+        let encoder = JSONEncoder()
+        encoder.outputFormatting = [.sortedKeys]
+        try encoder.encode(manifest).write(to: artifactRoot.appending(path: "artifact-manifest.json"))
+    }
+
+    var plan: HanlinInstallPlan {
+        get throws {
+            HanlinInstallPlan(
+                installedPackageID: installedPackageID,
+                packageID: try HanlinPackageID(validating: "host-services-package"),
+                version: try HanlinPackageVersion(validating: "1.0.0"),
+                sourceDigest: manifest.packageContentDigest,
+                entrypoints: [],
+                requestedCapabilities: [],
+                grantedCapabilities: []
+            )
+        }
+    }
+
+    func remove() {
+        try? FileManager.default.removeItem(at: root)
     }
 }

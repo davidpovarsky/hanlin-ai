@@ -186,6 +186,19 @@ public actor HanlinAtomicScriptStore {
         }.sorted { $0.record.installedPackageID.rawValue < $1.record.installedPackageID.rawValue }
     }
 
+    /// Returns the current persisted capability grants for one installed package.
+    ///
+    /// Host Services calls this at authorization time so a grant change is
+    /// visible to an already-running package on its next privileged request.
+    public func grantedCapabilities(
+        for id: HanlinInstalledPackageID
+    ) throws -> Set<HanlinCapabilityID> {
+        guard let entry = registry.packages[id.rawValue] else {
+            throw HanlinAtomicScriptStoreError.notInstalled(id)
+        }
+        return Set(entry.grantedCapabilities ?? [])
+    }
+
     public func unifiedCatalog(native: HanlinCatalogSnapshot) -> HanlinUnifiedPackageCatalogSnapshot {
         .init(
             revision: max(registry.revision, native.revision.rawValue),

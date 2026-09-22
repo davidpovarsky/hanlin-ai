@@ -144,6 +144,9 @@ public final class HanlinExpoSession {
 
             let modulesProvider = HanlinExpoModulesProvider()
             let appContext = AppContext()
+            guard HanlinExpoHostServicesBridge.bind(sessionID: sessionID, toAppContext: appContext) else {
+                throw HanlinExpoError.bootstrapFailed("No Host Services provider is registered for this Expo session.")
+            }
             appContext.registerNativeModules(provider: modulesProvider)
             self.appContext = appContext
 
@@ -181,7 +184,7 @@ public final class HanlinExpoSession {
     }
 
     public func shutdown() {
-        guard isActive || reactNativeFactory != nil else {
+        guard isActive || reactNativeFactory != nil || appContext != nil else {
             HanlinExpoModifierRegistry.unregisterCustomModifiers()
             return
         }
@@ -195,7 +198,10 @@ public final class HanlinExpoSession {
         }
         reactNativeFactory = nil
         factoryDelegate = nil
-        appContext?.destroy()
+        if let appContext {
+            HanlinExpoHostServicesBridge.unbind(appContext: appContext)
+            appContext.destroy()
+        }
         appContext = nil
         isActive = false
 

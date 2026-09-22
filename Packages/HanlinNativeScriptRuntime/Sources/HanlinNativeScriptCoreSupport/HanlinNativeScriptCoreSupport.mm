@@ -4,6 +4,8 @@
 #import <exception>
 #import <string>
 
+extern "C" NSString * _Nullable HanlinNativeServicesPrepareSessionBootstrap(NSString *sessionID);
+
 namespace tns {
 class __attribute__((visibility("default"))) NativeScriptException {
 public:
@@ -205,6 +207,50 @@ static NSError *HanlinNativeScriptError(HanlinNativeScriptRuntimeErrorCode code,
                 HanlinNativeScriptRuntimeErrorExecutionFailed,
                 detail
             );
+        }
+        return NO;
+    }
+    return YES;
+}
+
+- (BOOL)bindHostServicesSessionID:(NSString *)sessionID error:(NSError **)error {
+    if (!self.runtime) {
+        if (error) {
+            *error = HanlinNativeScriptError(
+                HanlinNativeScriptRuntimeErrorExecutionFailed,
+                @"NativeScript runtime is not active."
+            );
+        }
+        return NO;
+    }
+
+    NSString *token = HanlinNativeServicesPrepareSessionBootstrap(sessionID);
+    if (token.length == 0) {
+        if (error) {
+            *error = HanlinNativeScriptError(
+                HanlinNativeScriptRuntimeErrorInvalidConfiguration,
+                @"No Host Services provider is registered for this NativeScript session."
+            );
+        }
+        return NO;
+    }
+
+    NSString *bootstrap = [NSString stringWithFormat:
+        @"(() => { const bridgeClass = HanlinNativeServicesBridge; "
+         "const bridge = bridgeClass.claimSessionBridgeWithToken('%@'); "
+         "if (!bridge) throw new Error('Unable to bind Hanlin Host Services session'); "
+         "Object.defineProperty(globalThis, 'HanlinNativeServicesBridge', "
+         "{ value: bridge, writable: false, configurable: false }); })();",
+        token
+    ];
+
+    @try {
+        [self.runtime runScriptString:bootstrap runLoop:NO];
+    } @catch (NSException *exception) {
+        if (error) {
+            NSString *detail = [NSString stringWithFormat:@"NativeScript Host Services binding failed: %@",
+                                exception.reason ?: exception.name];
+            *error = HanlinNativeScriptError(HanlinNativeScriptRuntimeErrorExecutionFailed, detail);
         }
         return NO;
     }
