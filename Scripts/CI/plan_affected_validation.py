@@ -800,7 +800,7 @@ def plan_affected_validation(
             step_outputs["run_simulator_unit"] = False
         if target_group != "simulator_scripting_acceptance":
             step_outputs["run_simulator_scripting_acceptance"] = False
-        if target_group not in ("simulator_targeted_ui", "performance_benchmarks"):
+        if target_group and target_group not in ("simulator_targeted_ui", "performance_benchmarks"):
             step_outputs["run_simulator_targeted_ui"] = False
 
     # Ensure composite job flags are set correctly
