@@ -3,6 +3,7 @@ import Testing
 import HanlinPlatformContracts
 import HanlinMiniAppCore
 
+@MainActor
 @Suite("Agent Host Services Acceptance")
 struct HanlinUnifiedHostServicesAgentAcceptanceTests {
 
