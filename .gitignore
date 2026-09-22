@@ -158,3 +158,14 @@ __pycache__/
 # Local development
 local.properties
 scratch/
+
+# CI diagnostic scratch files (never committed)
+smoke_logs/
+build_errors.txt
+compile_errors.txt
+end_of_build.txt
+markers.txt
+simulator_build_step.txt
+timestamps.txt
+xcodebuild_tail.txt
+sim_job.log
