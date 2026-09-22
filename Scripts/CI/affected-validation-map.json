@@ -34,7 +34,8 @@
       "description": "Unified Host Services layer",
       "patterns": [
         "AI_HLY/Downstream/HostServices/**",
-        "AI_HLYTests/HanlinUnifiedHostServices*"
+        "AI_HLYTests/HanlinUnifiedHostServices*",
+        "Packages/HanlinExpoRuntime/**"
       ],
       "direct_validation_groups": [
         "unified_host_services"
