@@ -44,6 +44,7 @@
 		D20000000000000000000004 /* HanlinPlatformContracts in Frameworks */ = {isa = PBXBuildFile; productRef = A10000000000000000000015 /* HanlinPlatformContracts */; };
 		B10000000000000000000001 /* HanlinPlatformContracts in Frameworks */ = {isa = PBXBuildFile; productRef = A10000000000000000000015 /* HanlinPlatformContracts */; };
 		B10000000000000000000079 /* HanlinNativeScriptRuntime in Frameworks */ = {isa = PBXBuildFile; productRef = C10000000000000000000025 /* HanlinNativeScriptRuntime */; };
+		B1000000000000000000007A /* HanlinExpoRuntime in Frameworks */ = {isa = PBXBuildFile; productRef = C10000000000000000000026 /* HanlinExpoRuntime */; };
 		A10000000000000000000060 /* commandDictionary.plist in Resources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000062 /* commandDictionary.plist */; };
 		A10000000000000000000061 /* extraCommandsDictionary.plist in Resources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000063 /* extraCommandsDictionary.plist */; };
 		D786F6B02E63DE70004DAC20 /* LLM in Frameworks */ = {isa = PBXBuildFile; productRef = D786F6AF2E63DE70004DAC20 /* LLM */; };
@@ -375,6 +376,7 @@
 			files = (
 				B10000000000000000000001 /* HanlinPlatformContracts in Frameworks */,
 				B10000000000000000000079 /* HanlinNativeScriptRuntime in Frameworks */,
+				B1000000000000000000007A /* HanlinExpoRuntime in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -553,6 +555,7 @@
 			packageProductDependencies = (
 				A10000000000000000000015 /* HanlinPlatformContracts */,
 				C10000000000000000000025 /* HanlinNativeScriptRuntime */,
+				C10000000000000000000026 /* HanlinExpoRuntime */,
 			);
 			productName = AI_HLYTests;
 			productReference = B10000000000000000000002 /* AI_HLYTests.xctest */;

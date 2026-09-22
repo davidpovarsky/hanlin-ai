@@ -6,6 +6,7 @@ import HanlinPlatformContracts
 import HanlinMiniAppCore
 import HanlinScriptContracts
 import HanlinScriptStore
+import HanlinExpoRuntime
 
 @Suite("Unified Host Services E2E")
 struct HanlinUnifiedHostServicesE2ETests {
