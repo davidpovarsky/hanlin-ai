@@ -1,4 +1,4 @@
-﻿import Foundation
+import Foundation
 import ExpoModulesCore
 
 public final class HanlinHostServicesModule: Module {
@@ -60,7 +60,7 @@ public final class HanlinHostServicesModule: Module {
             try await provider.writeFile(path: path, content: content, area: area)
         }
 
-        AsyncFunction("executeSQLite") { (sql: String, params: [Any]?) -> [[String: Any]] in
+        AsyncFunction("executeSQLite") { (sql: String, params: [String]?) -> String in
             guard let provider = HanlinExpoHostServicesBridge.currentProvider else {
                 throw NSError(
                     domain: "HanlinExpoHostServices",

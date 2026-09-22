@@ -6,7 +6,7 @@ public protocol HanlinExpoHostServicesProvider: AnyObject, Sendable {
     func executePython(source: String) async throws -> String
     func readFile(path: String, area: String) async throws -> String
     func writeFile(path: String, content: String, area: String) async throws
-    func executeSQLite(sql: String, params: [Any]?) async throws -> [[String: Any]]
+    func executeSQLite(sql: String, params: [String]?) async throws -> String
     func fetchURL(urlString: String) async throws -> String
 }
 
