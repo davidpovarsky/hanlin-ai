@@ -58,4 +58,80 @@ struct HanlinUnifiedHostServicesAgentAcceptanceTests {
             }
         }
     }
+
+    @Test func agentToolExecutesJavaScriptCore() async {
+        let tool = ExecuteJavaScriptTool()
+        let context = NativeToolExecutionContext(localeIdentifier: "en")
+        let result = await tool.execute(
+            argumentsJSON: "{\"source\": \"6 * 7\", \"runtime\": \"jscore\"}",
+            context: context
+        )
+        #expect(result.isSuccess)
+        #expect(result.output.contains("42"))
+    }
+
+    @Test func agentToolExecutesNode() async {
+        let tool = ExecuteJavaScriptTool()
+        let context = NativeToolExecutionContext(localeIdentifier: "en")
+        let result = await tool.execute(
+            argumentsJSON: "{\"source\": \"console.log(14 * 3);\", \"runtime\": \"node\"}",
+            context: context
+        )
+        if result.isSuccess {
+            #expect(result.output.contains("42"))
+        }
+    }
+
+    @Test func agentToolExecutesPython() async {
+        let tool = ExecuteLocalPythonTool()
+        let context = NativeToolExecutionContext(localeIdentifier: "en")
+        let result = await tool.execute(
+            argumentsJSON: "{\"source\": \"print(40 + 2)\"}",
+            context: context
+        )
+        if result.isSuccess {
+            #expect(result.output.contains("42"))
+        }
+    }
+
+    @Test func agentToolExecutesTypeScript() async {
+        let tool = ExecuteTypeScriptTool()
+        let context = NativeToolExecutionContext(localeIdentifier: "en")
+        let result = await tool.execute(
+            argumentsJSON: "{\"source\": \"const ans: number = 42; console.log(ans);\"}",
+            context: context
+        )
+        if result.isSuccess {
+            #expect(result.output.contains("42"))
+        }
+    }
+
+    @Test func agentToolExecutesShell() async {
+        let tool = ExecuteShellCommandTool()
+        let context = NativeToolExecutionContext(localeIdentifier: "en")
+        let result = await tool.execute(
+            argumentsJSON: "{\"command\": \"echo 42\"}",
+            context: context
+        )
+        if result.isSuccess {
+            #expect(result.output.contains("42"))
+        }
+    }
+
+    @Test func agentToolRespectsDisabledRuntimeToggle() async {
+        let store = RuntimeAvailabilityStore.shared
+        let original = store.isAvailable(.javaScriptCore)
+        defer { store.setAvailable(original, for: .javaScriptCore) }
+
+        store.setAvailable(false, for: .javaScriptCore)
+
+        let tool = ExecuteJavaScriptTool()
+        let context = NativeToolExecutionContext(localeIdentifier: "en")
+        let result = await tool.execute(
+            argumentsJSON: "{\"source\": \"6 * 7\", \"runtime\": \"jscore\"}",
+            context: context
+        )
+        #expect(!result.isSuccess)
+        #expect(result.output.lowercased().contains("disabled") || result.output.lowercased().contains("unavailable"))
+    }
 }

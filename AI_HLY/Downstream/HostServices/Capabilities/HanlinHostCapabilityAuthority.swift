@@ -21,13 +21,20 @@ actor HanlinHostCapabilityAuthority {
 
     /// Per-compiled-app grant tracking. Key is `appID.rawValue`.
     private var compiledAppGrants: [String: Set<String>] = [:]
+    /// Per-package grant tracking. Key is `packageID.rawValue`.
+    private var packageGrants: [String: Set<String>] = [:]
 
     private let persistenceKey = "hanlin.host-capability-grants.v1"
+    private let packagePersistenceKey = "hanlin.host-package-capability-grants.v1"
 
     private init() {
         if let data = UserDefaults.standard.data(forKey: persistenceKey),
            let decoded = try? JSONDecoder().decode([String: Set<String>].self, from: data) {
             self.compiledAppGrants = decoded
+        }
+        if let data = UserDefaults.standard.data(forKey: packagePersistenceKey),
+           let decoded = try? JSONDecoder().decode([String: Set<String>].self, from: data) {
+            self.packageGrants = decoded
         }
     }
 
@@ -35,33 +42,70 @@ actor HanlinHostCapabilityAuthority {
         if let encoded = try? JSONEncoder().encode(compiledAppGrants) {
             UserDefaults.standard.set(encoded, forKey: persistenceKey)
         }
+        if let encoded = try? JSONEncoder().encode(packageGrants) {
+            UserDefaults.standard.set(encoded, forKey: packagePersistenceKey)
+        }
     }
 
     // MARK: - Authorization
 
     /// Check whether a capability is effectively allowed for the given context.
     ///
-    /// The `context.effectiveCapabilities` set is pre-populated by the engine
-    /// adapter when constructing the `HanlinHostCallContext`, so this check is
-    /// a straightforward membership test. The "all" wildcard bypasses checks.
+    /// Evaluates live persisted grants dynamically at call time so that
+    /// permissions revoked by the user or system take immediate effect on the
+    /// very next privileged operation without requiring session recreation.
     func authorize(
         capability: String,
         context: HanlinHostCallContext
     ) -> HanlinHostCapabilityResult {
         let canonical = Self.canonicalCapabilityID(capability)
 
-        if context.effectiveCapabilities.contains("all") {
+        // Agent context retains its intended privileged wildcard policy
+        if context.origin == .assistantModel || context.storageScope == .agent || context.effectiveCapabilities.contains("all") {
             return .allowed
         }
 
-        guard context.effectiveCapabilities.contains(canonical) else {
+        // 1. Check live grants for compiled app caller
+        if let appID = context.appID {
+            let key = appID.rawValue
+            // If live grants have not been registered yet, seed from context
+            if compiledAppGrants[key] == nil {
+                let canonicalSet = Set(context.effectiveCapabilities.map(Self.canonicalCapabilityID))
+                compiledAppGrants[key] = canonicalSet
+                save()
+            }
+            guard let liveGrants = compiledAppGrants[key],
+                  liveGrants.contains(canonical) || liveGrants.contains("all") else {
+                return .notGranted
+            }
+            return .allowed
+        }
+
+        // 2. Check live grants for script package caller
+        if let packageID = context.installedPackageID {
+            let key = packageID.rawValue
+            if packageGrants[key] == nil {
+                let canonicalSet = Set(context.effectiveCapabilities.map(Self.canonicalCapabilityID))
+                packageGrants[key] = canonicalSet
+                save()
+            }
+            guard let liveGrants = packageGrants[key],
+                  liveGrants.contains(canonical) || liveGrants.contains("all") else {
+                return .notGranted
+            }
+            return .allowed
+        }
+
+        // 3. Fallback to canonical check against context capabilities
+        let canonicalSet = Set(context.effectiveCapabilities.map(Self.canonicalCapabilityID))
+        guard canonicalSet.contains(canonical) || canonicalSet.contains("all") else {
             return .notGranted
         }
 
         return .allowed
     }
 
-    // MARK: - Compiled App Grant Management
+    // MARK: - App Grant Management
 
     func grant(capability: String, for appID: HanlinAppID) {
         let key = appID.rawValue
@@ -73,14 +117,57 @@ actor HanlinHostCapabilityAuthority {
 
     func revoke(capability: String, for appID: HanlinAppID) {
         let key = appID.rawValue
-        guard var grants = compiledAppGrants[key] else { return }
-        grants.remove(Self.canonicalCapabilityID(capability))
+        var grants = compiledAppGrants[key, default: []]
+        let canonical = Self.canonicalCapabilityID(capability)
+        grants.remove(canonical)
+        // Also remove legacy forms if present
+        for (alias, target) in HanlinHostCapabilityMetadata.legacyAliases where target == canonical {
+            grants.remove(alias)
+        }
         compiledAppGrants[key] = grants
         save()
     }
 
     func grantedCapabilities(for appID: HanlinAppID) -> Set<String> {
         compiledAppGrants[appID.rawValue] ?? []
+    }
+
+    func setGrants(_ grants: Set<String>, for appID: HanlinAppID) {
+        let key = appID.rawValue
+        compiledAppGrants[key] = Set(grants.map(Self.canonicalCapabilityID))
+        save()
+    }
+
+    // MARK: - Package Grant Management
+
+    func grant(capability: String, for packageID: HanlinInstalledPackageID) {
+        let key = packageID.rawValue
+        var grants = packageGrants[key, default: []]
+        grants.insert(Self.canonicalCapabilityID(capability))
+        packageGrants[key] = grants
+        save()
+    }
+
+    func revoke(capability: String, for packageID: HanlinInstalledPackageID) {
+        let key = packageID.rawValue
+        var grants = packageGrants[key, default: []]
+        let canonical = Self.canonicalCapabilityID(capability)
+        grants.remove(canonical)
+        for (alias, target) in HanlinHostCapabilityMetadata.legacyAliases where target == canonical {
+            grants.remove(alias)
+        }
+        packageGrants[key] = grants
+        save()
+    }
+
+    func grantedCapabilities(for packageID: HanlinInstalledPackageID) -> Set<String> {
+        packageGrants[packageID.rawValue] ?? []
+    }
+
+    func setGrants(_ grants: Set<String>, for packageID: HanlinInstalledPackageID) {
+        let key = packageID.rawValue
+        packageGrants[key] = Set(grants.map(Self.canonicalCapabilityID))
+        save()
     }
 
     // MARK: - Legacy Alias Resolution

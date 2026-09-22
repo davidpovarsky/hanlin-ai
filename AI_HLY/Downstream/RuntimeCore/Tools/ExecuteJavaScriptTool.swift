@@ -23,12 +23,16 @@ struct ExecuteJavaScriptTool: NativeTool {
             let requested = NativeToolJSON.optionalString(arguments, "runtime") ?? "auto"
             let argv = arguments["arguments"] as? [String] ?? []
             let useNode = requested == "node" || (requested == "auto" && Self.requiresNode(source))
-            let layout = RuntimeFileLayout.default
-            let workspace = try layout.workspace(client: .tools, identifier: name)
             let scope: RuntimeEnvironmentScope = useNode ? .node : .javaScriptCore
             let environment = try await AppRuntimeCore.shared.environment.resolved(scopes: [.shared, scope])
-            let request = RuntimeExecutionRequest(source: source, arguments: argv, workspace: workspace, environment: environment, limits: RuntimeToolSupport.limits(arguments))
-            let result = useNode ? try await AppRuntimeCore.shared.node.executeJavaScript(request) : try await AppRuntimeCore.shared.javaScriptCore.execute(request)
+            let kind: RuntimeKind = useNode ? .node : .javaScriptCore
+            let result = try await AgentHostServicesAdapter.executeRuntime(
+                kind,
+                source: source,
+                arguments: argv,
+                environment: environment,
+                limits: RuntimeToolSupport.limits(arguments)
+            )
             return RuntimeToolSupport.result(result, title: useNode ? "Node.js" : "JavaScriptCore", systemImage: "curlybraces")
         } catch { return RuntimeToolSupport.failure(error, title: "JavaScript failed") }
     }

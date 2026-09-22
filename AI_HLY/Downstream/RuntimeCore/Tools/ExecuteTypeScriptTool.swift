@@ -21,10 +21,14 @@ struct ExecuteTypeScriptTool: NativeTool {
             let arguments = try NativeToolJSON.dictionary(from: argumentsJSON)
             let source = try NativeToolJSON.requiredString(arguments, "source")
             let compileOnly = NativeToolJSON.bool(arguments, "compile_only")
-            let workspace = try RuntimeFileLayout.default.workspace(client: .tools, identifier: name)
             let environment = try await AppRuntimeCore.shared.environment.resolved(scopes: [.shared, .node])
-            let request = RuntimeExecutionRequest(source: source, workspace: workspace, environment: environment, limits: RuntimeToolSupport.limits(arguments))
-            let result = try await AppRuntimeCore.shared.typeScript.compileAndExecute(source: source, request: request, fileName: NativeToolJSON.optionalString(arguments, "file_name") ?? "main.ts", compileOnly: compileOnly)
+            let result = try await AgentHostServicesAdapter.compileAndExecuteTypeScript(
+                source: source,
+                fileName: NativeToolJSON.optionalString(arguments, "file_name") ?? "main.ts",
+                compileOnly: compileOnly,
+                environment: environment,
+                limits: RuntimeToolSupport.limits(arguments)
+            )
             if let execution = result.execution { return RuntimeToolSupport.result(execution, title: "TypeScript", systemImage: "t.square") }
             let diagnostics = result.compilation.diagnostics.map { "TS\($0.code): \($0.message)" }.joined(separator: "\n")
             let emitted = result.compilation.javaScript ?? ""

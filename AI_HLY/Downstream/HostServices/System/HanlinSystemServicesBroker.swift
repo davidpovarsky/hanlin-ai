@@ -12,15 +12,9 @@ import Vision
 import PDFKit
 
 import HanlinPlatformContracts
-// import HanlinScriptDeviceServices
+import HanlinScriptDeviceServices
 
 public actor HanlinSystemServicesBroker {
-    
-    // Existing device services routing (placeholder types to illustrate delegation)
-    // private let calendarService = HanlinScriptDeviceCalendarService()
-    // private let healthService = HanlinScriptDeviceHealthService()
-    // private let locationService = HanlinScriptDeviceLocationService()
-    // private let notificationService = HanlinScriptDeviceNotificationService()
     
     public init() {}
     
@@ -76,21 +70,40 @@ public actor HanlinSystemServicesBroker {
     
     // MARK: - 3. Speech Recognition
     
-    public func recognizeSpeech(context: HanlinHostCallContext) async throws -> String {
+    public func recognizeSpeech(audioURL: URL? = nil, context: HanlinHostCallContext) async throws -> String {
         try requireCapability("speech-recognition", in: context)
         let status = SFSpeechRecognizer.authorizationStatus()
         guard status == .authorized || status == .notDetermined else {
             throw HanlinHostServiceError.systemAuthorizationDenied("speech-recognition")
         }
-        return "TODO: Implement actual SFSpeechRecognizer flow"
+        guard let recognizer = SFSpeechRecognizer(), recognizer.isAvailable else {
+            throw HanlinHostServiceError.systemCapabilityUnavailable("Speech recognizer is not available on this device/simulator.")
+        }
+        guard let audioURL else {
+            throw HanlinHostServiceError.invalidRequest("Audio URL is required for headless speech recognition.")
+        }
+        let request = SFSpeechURLRecognitionRequest(url: audioURL)
+        return try await withCheckedThrowingContinuation { continuation in
+            recognizer.recognitionTask(with: request) { result, error in
+                if let error {
+                    continuation.resume(throwing: error)
+                } else if let result, result.isFinal {
+                    continuation.resume(returning: result.bestTranscription.formattedString)
+                }
+            }
+        }
     }
     
     // MARK: - 4. Translation
     
     public func translateText(_ text: String, context: HanlinHostCallContext) async throws -> String {
         try requireCapability("translation", in: context)
-        // TODO: Implement actual Translation framework session
-        return "TODO: Translated \(text)"
+        guard #available(iOS 17.4, *) else {
+            throw HanlinHostServiceError.systemCapabilityUnavailable("Translation framework requires iOS 17.4+")
+        }
+        // Apple's Translation framework requires an active SwiftUI TranslationSession (.translationTask).
+        // Headless non-interactive execution must explicitly signal session requirement.
+        throw HanlinHostServiceError.systemCapabilityUnavailable("Interactive SwiftUI TranslationSession required for Translation framework.")
     }
     
     // MARK: - 5. WeatherKit
@@ -195,29 +208,48 @@ public actor HanlinSystemServicesBroker {
         return fullText
     }
     
-    // MARK: - Routing to Existing Services
+    // MARK: - 12. Routing to Real Device Services
     
     public func requestCalendarAccess(context: HanlinHostCallContext) async throws -> Bool {
         try requireCapability("calendar", in: context)
-        // return try await calendarService.requestAccess()
-        return true
+        let service = await MainActor.run { HanlinAppleCalendarService() }
+        return try await service.requestCalendarAuthorization()
+    }
+    
+    public func requestReminderAccess(context: HanlinHostCallContext) async throws -> Bool {
+        try requireCapability("reminders", in: context)
+        let service = await MainActor.run { HanlinAppleCalendarService() }
+        return try await service.requestReminderAuthorization()
     }
     
     public func requestHealthAccess(context: HanlinHostCallContext) async throws -> Bool {
         try requireCapability("health", in: context)
-        // return try await healthService.requestAccess()
+        guard HanlinAppleHealthService.isHealthDataAvailable else {
+            throw HanlinHostServiceError.systemCapabilityUnavailable("HealthKit data is not available on this platform/device.")
+        }
+        let service = HanlinAppleHealthService()
+        try await service.requestReadAuthorization(for: [.steps, .walkingRunningDistance, .activeEnergy, .heartRate])
         return true
     }
     
     public func requestLocationAccess(context: HanlinHostCallContext) async throws -> Bool {
         try requireCapability("location", in: context)
-        // return try await locationService.requestAccess()
-        return true
+        let manager = await MainActor.run { CLLocationManager() }
+        let status = await MainActor.run { manager.authorizationStatus }
+        switch status {
+        case .authorizedWhenInUse, .authorizedAlways:
+            return true
+        case .notDetermined:
+            await MainActor.run { manager.requestWhenInUseAuthorization() }
+            return true
+        default:
+            throw HanlinHostServiceError.systemAuthorizationDenied("location")
+        }
     }
     
     public func requestNotificationAccess(context: HanlinHostCallContext) async throws -> Bool {
         try requireCapability("notifications", in: context)
-        // return try await notificationService.requestAccess()
-        return true
+        let service = HanlinAppleNotificationService()
+        return try await service.requestAuthorization()
     }
 }

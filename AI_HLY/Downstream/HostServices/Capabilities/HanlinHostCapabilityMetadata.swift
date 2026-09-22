@@ -32,7 +32,6 @@ public struct HanlinHostCapabilityMetadata: Sendable {
         
         // System & Network
         .init(id: "network", displayName: "Network Access", risk: .write),
-        .init(id: "network.fetch", displayName: "Network Fetch", risk: .write),
         
         // Permissions Requiring System Authorization
         .init(id: "location", displayName: "Location Services", risk: .sensitiveRead, requiresSystemAuthorization: true, systemAuthorizationDescription: "Access your current location"),
@@ -68,7 +67,14 @@ public struct HanlinHostCapabilityMetadata: Sendable {
         "typescript": "runtime.typescript",
         "python": "runtime.python",
         "javascript": "runtime.javascript",
+        "runtime.jsc": "runtime.javascript",
+        "jsc": "runtime.javascript",
         "shell": "runtime.shell",
-        "network": "network.fetch"
+        "network.fetch": "network",
+        "speech": "speech-recognition",
+        "biometrics": "local-authentication",
+        "icloud": "cloud",
+        "sharesheet": "share-sheet",
+        "vision": "document-utilities"
     ]
 }

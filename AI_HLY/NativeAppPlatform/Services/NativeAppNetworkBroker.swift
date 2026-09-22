@@ -1,12 +1,22 @@
 import Foundation
+import HanlinPlatformContracts
+import HanlinMiniAppCore
 
 struct NativeAppNetworkBroker {
     let appID: String?
     let capabilityRegistry: NativeCapabilityRegistry
 
-    // Future policy enforcement belongs here: declared capability, allowed domain,
-    // origin, user initiation, and runtime-script restrictions.
     func data(from url: URL) async throws -> (Data, URLResponse) {
-        try await URLSession.shared.data(from: url)
+        let validAppID = (try? HanlinAppID(validating: appID ?? "hanlin.swift.app"))
+            ?? (try! HanlinAppID(validating: "hanlin.swift.app"))
+        let context = HanlinHostCallContext.forMiniApp(
+            appID: validAppID,
+            installedPackageID: nil,
+            origin: .system,
+            capabilities: ["network"],
+            canPresentUI: true
+        )
+        try await HanlinHostServicesBroker.shared.requireCapability("network", context: context)
+        return try await URLSession.shared.data(from: url)
     }
 }

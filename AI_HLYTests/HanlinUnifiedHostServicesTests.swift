@@ -48,10 +48,20 @@ struct HanlinUnifiedHostServicesTests {
         #expect(HanlinHostCapabilityAuthority.canonicalCapabilityID("node") == "runtime.node")
         #expect(HanlinHostCapabilityAuthority.canonicalCapabilityID("python") == "runtime.python")
         #expect(HanlinHostCapabilityAuthority.canonicalCapabilityID("javascript") == "runtime.javascript")
-        #expect(HanlinHostCapabilityAuthority.canonicalCapabilityID("network") == "network.fetch")
+        #expect(HanlinHostCapabilityAuthority.canonicalCapabilityID("jsc") == "runtime.javascript")
+        #expect(HanlinHostCapabilityAuthority.canonicalCapabilityID("runtime.jsc") == "runtime.javascript")
+        #expect(HanlinHostCapabilityAuthority.canonicalCapabilityID("typescript") == "runtime.node")
+        #expect(HanlinHostCapabilityAuthority.canonicalCapabilityID("shell") == "runtime.shell")
+        #expect(HanlinHostCapabilityAuthority.canonicalCapabilityID("network.fetch") == "network")
+        #expect(HanlinHostCapabilityAuthority.canonicalCapabilityID("speech") == "speech-recognition")
+        #expect(HanlinHostCapabilityAuthority.canonicalCapabilityID("biometrics") == "local-authentication")
+        #expect(HanlinHostCapabilityAuthority.canonicalCapabilityID("icloud") == "cloud")
+        #expect(HanlinHostCapabilityAuthority.canonicalCapabilityID("sharesheet") == "share-sheet")
+        #expect(HanlinHostCapabilityAuthority.canonicalCapabilityID("vision") == "document-utilities")
         // Non-aliased IDs pass through unchanged
         #expect(HanlinHostCapabilityAuthority.canonicalCapabilityID("files") == "files")
         #expect(HanlinHostCapabilityAuthority.canonicalCapabilityID("sqlite") == "sqlite")
+        #expect(HanlinHostCapabilityAuthority.canonicalCapabilityID("network") == "network")
     }
 
     @Test func allKnownCapabilitiesHaveMetadata() {
@@ -86,6 +96,39 @@ struct HanlinUnifiedHostServicesTests {
             context: context
         )
         #expect(result == .notGranted)
+    }
+
+    @Test func liveCapabilityGrantAndRevokeTakesImmediateEffect() async throws {
+        let appID = try HanlinAppID(validating: "dynamic-perm-app")
+        let authority = HanlinHostCapabilityAuthority.shared
+        
+        // Ensure clean initial state
+        await authority.revoke(capability: "runtime.node", for: appID)
+        
+        let context = HanlinHostCallContext.forMiniApp(
+            appID: appID,
+            origin: .nativeModule,
+            capabilities: ["files"],
+            canPresentUI: false
+        )
+        
+        // 1. Initial check: not granted
+        let r1 = await authority.authorize(capability: "runtime.node", context: context)
+        #expect(r1 == .notGranted)
+        
+        // 2. Grant dynamically at runtime
+        await authority.grant(capability: "runtime.node", for: appID)
+        
+        // 3. Same context now immediately authorized without recreation!
+        let r2 = await authority.authorize(capability: "runtime.node", context: context)
+        #expect(r2 == .allowed)
+        
+        // 4. Revoke dynamically at runtime
+        await authority.revoke(capability: "runtime.node", for: appID)
+        
+        // 5. Same context now immediately denied without recreation!
+        let r3 = await authority.authorize(capability: "runtime.node", context: context)
+        #expect(r3 == .notGranted)
     }
 
     // MARK: - Availability Store

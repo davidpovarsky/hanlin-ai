@@ -34,6 +34,10 @@ typedef void (^HanlinBridgeRequestHandlerBlock)(NSString *caller, NSString *payl
 
 @interface HanlinNativeServicesBridge : NSObject
 
++ (void)registerProvider:(nullable id<HanlinNativeServicesProvider>)provider forSessionID:(NSString *)sessionID;
++ (void)unregisterProviderForSessionID:(NSString *)sessionID;
++ (nullable id<HanlinNativeServicesProvider>)providerForSessionID:(NSString *)sessionID;
+
 + (void)registerProvider:(nullable id<HanlinNativeServicesProvider>)provider;
 + (nullable id<HanlinNativeServicesProvider>)currentProvider;
 

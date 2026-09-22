@@ -15,10 +15,10 @@ actor HanlinHostServicesBroker {
 
     // MARK: - Capability Checks
 
-    func requireCapability(_ capabilityID: String, context: HanlinHostCallContext) throws {
+    func requireCapability(_ capabilityID: String, context: HanlinHostCallContext) async throws {
         let canonical = HanlinHostCapabilityAuthority.canonicalCapabilityID(capabilityID)
-        guard context.effectiveCapabilities.contains(canonical)
-            || context.effectiveCapabilities.contains("all") else {
+        let result = await capabilityAuthority.authorize(capability: canonical, context: context)
+        guard result == .allowed else {
             throw HanlinHostServiceError.capabilityNotGranted(canonical)
         }
     }
@@ -56,23 +56,22 @@ actor HanlinHostServicesBroker {
         await Self._dataStore
     }
 
-    private func requireAppID(_ context: HanlinHostCallContext) throws -> HanlinAppID {
-        guard let appID = context.appID else {
-            throw HanlinHostServiceError.invalidCallerContext(
-                "File operations require an app context"
-            )
-        }
-        return appID
-    }
-
     func readFile(
         virtualPath: String,
         area: HanlinMiniAppDataArea,
         context: HanlinHostCallContext
     ) async throws -> Data? {
-        try requireCapability("files", context: context)
-        let appID = try requireAppID(context)
-        return try await resolveDataStore().read(appID: appID, area: area, path: virtualPath)
+        try await requireCapability("files", context: context)
+        let fileURL = try await HanlinFileService.physicalURL(
+            for: virtualPath,
+            area: area,
+            scope: context.storageScope,
+            context: context
+        )
+        guard FileManager.default.fileExists(atPath: fileURL.path(percentEncoded: false)) else {
+            return nil
+        }
+        return try Data(contentsOf: fileURL)
     }
 
     func writeFile(
@@ -81,9 +80,16 @@ actor HanlinHostServicesBroker {
         data: Data,
         context: HanlinHostCallContext
     ) async throws {
-        try requireCapability("files", context: context)
-        let appID = try requireAppID(context)
-        try await resolveDataStore().write(data, appID: appID, area: area, path: virtualPath)
+        try await requireCapability("files", context: context)
+        let fileURL = try await HanlinFileService.physicalURL(
+            for: virtualPath,
+            area: area,
+            scope: context.storageScope,
+            context: context
+        )
+        let parent = fileURL.deletingLastPathComponent()
+        try FileManager.default.createDirectory(at: parent, withIntermediateDirectories: true)
+        try data.write(to: fileURL, options: .atomic)
     }
 
     func deleteFile(
@@ -91,17 +97,36 @@ actor HanlinHostServicesBroker {
         area: HanlinMiniAppDataArea,
         context: HanlinHostCallContext
     ) async throws {
-        try requireCapability("files", context: context)
-        let appID = try requireAppID(context)
-        try await resolveDataStore().remove(appID: appID, area: area, path: virtualPath)
+        try await requireCapability("files", context: context)
+        let fileURL = try await HanlinFileService.physicalURL(
+            for: virtualPath,
+            area: area,
+            scope: context.storageScope,
+            context: context
+        )
+        if FileManager.default.fileExists(atPath: fileURL.path(percentEncoded: false)) {
+            try FileManager.default.removeItem(at: fileURL)
+        }
     }
 
     func listFiles(
         area: HanlinMiniAppDataArea,
         context: HanlinHostCallContext
     ) async throws -> [String] {
-        try requireCapability("files", context: context)
-        let appID = try requireAppID(context)
-        return try await resolveDataStore().list(appID: appID, area: area)
+        try await requireCapability("files", context: context)
+        if case .app(let appID) = context.storageScope {
+            return try await resolveDataStore().list(appID: appID, area: area)
+        }
+        let areaDir = try await HanlinFileService.physicalURL(
+            for: "temp-probe",
+            area: area,
+            scope: context.storageScope,
+            context: context
+        ).deletingLastPathComponent()
+        let fm = FileManager.default
+        guard fm.fileExists(atPath: areaDir.path(percentEncoded: false)) else {
+            return []
+        }
+        return try fm.contentsOfDirectory(atPath: areaDir.path(percentEncoded: false))
     }
 }

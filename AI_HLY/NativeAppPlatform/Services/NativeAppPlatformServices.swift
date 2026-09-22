@@ -1,5 +1,7 @@
 import Foundation
 import SwiftData
+import HanlinPlatformContracts
+import HanlinMiniAppCore
 
 @MainActor
 struct NativeAppPlatformServices {
@@ -12,6 +14,7 @@ struct NativeAppPlatformServices {
     let network: NativeAppNetworkBroker
     let actionBus: NativeAppActionBus
     let capabilityRegistry: NativeCapabilityRegistry
+    let hostServices: SwiftMiniAppHostServicesAdapter
 
     static func `default`(
         appID: String?, modelContext: ModelContext?, openURL: NativeOpenURLAction?,
@@ -25,10 +28,14 @@ struct NativeAppPlatformServices {
         let actionBus = NativeAppActionBus(router: router, storage: storage, pasteboard: pasteboard,
                                            openURL: openURLBroker, network: network,
                                            capabilityRegistry: capabilityRegistry)
+        let validAppID = (try? HanlinAppID(validating: appID ?? "hanlin.swift.app"))
+            ?? (try! HanlinAppID(validating: "hanlin.swift.app"))
+        let hostServices = SwiftMiniAppHostServicesAdapter(appID: validAppID)
         return NativeAppPlatformServices(appID: appID, modelContext: modelContext,
                                          router: router, storage: storage,
                                          pasteboard: pasteboard, openURL: openURLBroker,
                                          network: network, actionBus: actionBus,
-                                         capabilityRegistry: capabilityRegistry)
+                                         capabilityRegistry: capabilityRegistry,
+                                         hostServices: hostServices)
     }
 }

@@ -18,9 +18,13 @@ struct ExecuteShellCommandTool: NativeTool {
         do {
             let arguments = try NativeToolJSON.dictionary(from: argumentsJSON)
             let command = try NativeToolJSON.requiredString(arguments, "command")
-            let workspace = try RuntimeFileLayout.default.workspace(client: .tools, identifier: name)
             let environment = try await AppRuntimeCore.shared.environment.resolved(scopes: [.shared, .shell])
-            let result = try await AppRuntimeCore.shared.shell.execute(command: command, workspace: workspace, environment: environment, allowNetwork: NativeToolJSON.bool(arguments, "allow_network"))
+            let result = try await AgentHostServicesAdapter.executeShell(
+                command: command,
+                environment: environment,
+                allowNetwork: NativeToolJSON.bool(arguments, "allow_network"),
+                limits: RuntimeToolSupport.limits(arguments)
+            )
             return RuntimeToolSupport.result(result, title: "Shell / ios_system", systemImage: "apple.terminal")
         } catch { return RuntimeToolSupport.failure(error, title: "Shell command failed") }
     }

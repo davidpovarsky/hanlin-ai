@@ -1,11 +1,12 @@
 import Foundation
 import HanlinPlatformContracts
 
-public enum HanlinHostStorageScope: Sendable {
+public enum HanlinHostStorageScope: Sendable, Hashable, Equatable {
     case app(HanlinAppID)
     case package(HanlinInstalledPackageID)
     case agent
     case system
+    case shared
 }
 
 public struct HanlinHostCallContext: Sendable {
@@ -68,7 +69,7 @@ public struct HanlinHostCallContext: Sendable {
             runtimeSessionID: runtimeSession,
             effectiveCapabilities: ["all"],
             storageScope: .agent,
-            runtimeWorkspaceIdentifier: "agent-workspace",
+            runtimeWorkspaceIdentifier: "agent-\(runtimeSession.rawValue)",
             userGesturePresent: false,
             canPresentUI: false
         )
@@ -80,10 +81,13 @@ public struct HanlinHostCallContext: Sendable {
         origin: HanlinExecutionOrigin,
         capabilities: Set<String>,
         sessionID: HanlinAppSessionID? = nil,
+        runtimeSessionID: HanlinRuntimeSessionID? = nil,
+        storageScope: HanlinHostStorageScope? = nil,
         canPresentUI: Bool
     ) -> HanlinHostCallContext {
         let appSession = sessionID ?? (try! HanlinAppSessionID(validating: makeSessionID(kind: "app-session")))
-        let runtimeSession = try! HanlinRuntimeSessionID(validating: makeSessionID(kind: "runtime-session"))
+        let runtimeSession = runtimeSessionID ?? (try! HanlinRuntimeSessionID(validating: makeSessionID(kind: "runtime-session")))
+        let resolvedScope = storageScope ?? (installedPackageID.map { .package($0) } ?? .app(appID))
         return HanlinHostCallContext(
             subject: .app(appID, installedPackageID: installedPackageID),
             origin: origin,
@@ -92,8 +96,8 @@ public struct HanlinHostCallContext: Sendable {
             appSessionID: appSession,
             runtimeSessionID: runtimeSession,
             effectiveCapabilities: capabilities,
-            storageScope: .app(appID),
-            runtimeWorkspaceIdentifier: "miniapp-\(appID.rawValue)",
+            storageScope: resolvedScope,
+            runtimeWorkspaceIdentifier: "miniapp-\(appID.rawValue)-\(appSession.rawValue)",
             userGesturePresent: false,
             canPresentUI: canPresentUI
         )

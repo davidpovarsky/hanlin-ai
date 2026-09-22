@@ -8,34 +8,83 @@ import HanlinMiniAppCore
 actor HanlinSQLiteHostAdapter {
     static let shared = HanlinSQLiteHostAdapter()
 
-    /// Cached service instances keyed by app ID raw value.
+    /// Cached service instances keyed by storage scope key.
     private var services: [String: HanlinSQLiteService] = [:]
 
     private init() {}
 
     // MARK: - Service Resolution
 
+    private func scopeKey(for scope: HanlinHostStorageScope) -> String {
+        switch scope {
+        case .app(let appID): return "app:\(appID.rawValue)"
+        case .package(let packageID): return "package:\(packageID.rawValue)"
+        case .agent: return "agent"
+        case .shared: return "shared"
+        case .system: return "system"
+        }
+    }
+
+    private func resolveRootURL(for scope: HanlinHostStorageScope, context: HanlinHostCallContext) async throws -> URL {
+        let fm = FileManager.default
+        let appSupport = try fm.url(
+            for: .applicationSupportDirectory,
+            in: .userDomainMask,
+            appropriateFor: nil,
+            create: true
+        )
+
+        switch scope {
+        case .app(let appID):
+            let container = await MainActor.run {
+                HanlinMiniAppHost.shared.dataStore
+            }
+            let directories = try await container.prepareContainer(for: appID)
+            return directories.state
+
+        case .package(let packageID):
+            let pkgState = appSupport
+                .appending(path: "HanlinPackages", directoryHint: .isDirectory)
+                .appending(path: packageID.rawValue, directoryHint: .isDirectory)
+                .appending(path: "State", directoryHint: .isDirectory)
+            try fm.createDirectory(at: pkgState, withIntermediateDirectories: true)
+            return pkgState
+
+        case .agent:
+            let agentState = appSupport
+                .appending(path: "HanlinAgent", directoryHint: .isDirectory)
+                .appending(path: "State", directoryHint: .isDirectory)
+            try fm.createDirectory(at: agentState, withIntermediateDirectories: true)
+            return agentState
+
+        case .shared:
+            try await HanlinHostServicesBroker.shared.requireCapability("shared-data", context: context)
+            let sharedState = appSupport
+                .appending(path: "HanlinShared", directoryHint: .isDirectory)
+                .appending(path: "State", directoryHint: .isDirectory)
+            try fm.createDirectory(at: sharedState, withIntermediateDirectories: true)
+            return sharedState
+
+        case .system:
+            let systemState = appSupport
+                .appending(path: "HanlinSystem", directoryHint: .isDirectory)
+                .appending(path: "State", directoryHint: .isDirectory)
+            try fm.createDirectory(at: systemState, withIntermediateDirectories: true)
+            return systemState
+        }
+    }
+
     /// Get or create a SQLite service for the given context.
     func service(for context: HanlinHostCallContext) async throws -> HanlinSQLiteService {
         try await HanlinHostServicesBroker.shared.requireCapability("sqlite", context: context)
 
-        guard let appID = context.appID else {
-            throw HanlinHostServiceError.invalidCallerContext(
-                "SQLite operations require an app context"
-            )
-        }
-
-        let key = appID.rawValue
+        let key = scopeKey(for: context.storageScope)
         if let existing = services[key] {
             return existing
         }
 
-        // Access data store from MainActor-isolated HanlinMiniAppHost
-        let container = await MainActor.run {
-            HanlinMiniAppHost.shared.dataStore
-        }
-        let directories = try await container.prepareContainer(for: appID)
-        let service = HanlinSQLiteService(rootURL: directories.state)
+        let rootURL = try await resolveRootURL(for: context.storageScope, context: context)
+        let service = HanlinSQLiteService(rootURL: rootURL)
         services[key] = service
         return service
     }

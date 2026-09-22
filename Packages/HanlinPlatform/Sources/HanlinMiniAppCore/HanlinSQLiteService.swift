@@ -130,8 +130,10 @@ public final class HanlinSQLiteService: @unchecked Sendable {
 
     // MARK: - Execute
 
+    // MARK: - Execute
+
     /// Execute one or more SQL statements (no results returned).
-    public func execute(handle: String, sql: String, arguments: [Any]? = nil) throws {
+    public func execute(handle: String, sql: String, arguments: Any? = nil) throws {
         lock.lock()
         defer { lock.unlock() }
         guard let database = databases[handle] else {
@@ -146,7 +148,7 @@ public final class HanlinSQLiteService: @unchecked Sendable {
     // MARK: - Fetch
 
     /// Execute a SELECT statement and return all result rows.
-    public func fetchAll(handle: String, sql: String, arguments: [Any]? = nil) throws -> [[String: Any]] {
+    public func fetchAll(handle: String, sql: String, arguments: Any? = nil) throws -> [[String: Any]] {
         lock.lock()
         defer { lock.unlock() }
         guard let database = databases[handle] else {
@@ -164,7 +166,7 @@ public final class HanlinSQLiteService: @unchecked Sendable {
         try executeImpl(sql: sql, arguments: nil, database: database)
     }
 
-    private func executeImpl(sql: String, arguments: [Any]?, database: OpaquePointer) throws {
+    private func executeImpl(sql: String, arguments: Any?, database: OpaquePointer) throws {
         var remaining = sql
         var isFirstStatement = true
         while !remaining.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
@@ -187,7 +189,7 @@ public final class HanlinSQLiteService: @unchecked Sendable {
         }
     }
 
-    private func fetchAllImpl(sql: String, arguments: [Any]?, database: OpaquePointer) throws -> [[String: Any]] {
+    private func fetchAllImpl(sql: String, arguments: Any?, database: OpaquePointer) throws -> [[String: Any]] {
         var statement: OpaquePointer?
         guard sqlite3_prepare_v2(database, sql, -1, &statement, nil) == SQLITE_OK,
               let statement else { throw sqliteError(database) }
@@ -211,17 +213,31 @@ public final class HanlinSQLiteService: @unchecked Sendable {
         return rows
     }
 
-    private func bind(_ values: [Any], to statement: OpaquePointer) throws {
+    private func bind(_ arguments: Any?, to statement: OpaquePointer) throws {
+        guard let arguments, !(arguments is NSNull) else { return }
         let count = Int(sqlite3_bind_parameter_count(statement))
         guard count <= Self.maximumBindParameters else {
             throw HanlinSQLiteServiceError.tooManyParameters
         }
-        guard values.count == count else {
-            throw HanlinSQLiteServiceError.argumentCountMismatch(expected: count, got: values.count)
+        if let values = arguments as? [Any] {
+            guard values.count == count else {
+                throw HanlinSQLiteServiceError.argumentCountMismatch(expected: count, got: values.count)
+            }
+            for (offset, value) in values.enumerated() {
+                try bindValue(value, index: Int32(offset + 1), to: statement)
+            }
+            return
         }
-        for (offset, value) in values.enumerated() {
-            try bindValue(value, index: Int32(offset + 1), to: statement)
+        if let values = arguments as? [String: Any] {
+            for (name, value) in values {
+                let candidates = [":\(name)", "@\(name)", "$\(name)"]
+                guard let index = candidates.lazy.map({ sqlite3_bind_parameter_index(statement, $0) })
+                    .first(where: { $0 > 0 }) else { continue }
+                try bindValue(value, index: index, to: statement)
+            }
+            return
         }
+        throw HanlinSQLiteServiceError.invalidArgument("SQLite arguments must be an array or object")
     }
 
     private func bindValue(_ value: Any, index: Int32, to statement: OpaquePointer) throws {
@@ -261,7 +277,8 @@ public final class HanlinSQLiteService: @unchecked Sendable {
             return sqlite3_column_text(statement, index).map { String(cString: $0) } ?? ""
         case SQLITE_BLOB:
             guard let bytes = sqlite3_column_blob(statement, index) else { return NSNull() }
-            return Data(bytes: bytes, count: Int(sqlite3_column_bytes(statement, index)))
+            let data = Data(bytes: bytes, count: Int(sqlite3_column_bytes(statement, index)))
+            return ["__hanlinSQLiteData": data.base64EncodedString()]
         default:
             return NSNull()
         }

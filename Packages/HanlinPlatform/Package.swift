@@ -206,7 +206,8 @@ let package = Package(
             name: "HanlinScriptingApplicationRuntime",
             dependencies: [
                 "HanlinPlatformContracts",
-                "HanlinScriptUI"
+                "HanlinScriptUI",
+                "HanlinMiniAppCore"
             ],
             linkerSettings: [
                 .linkedFramework("JavaScriptCore"),
@@ -218,6 +219,7 @@ let package = Package(
             name: "HanlinScriptingApplicationRuntimeTests",
             dependencies: [
                 "HanlinPlatformContracts",
+                "HanlinMiniAppCore",
                 "HanlinScriptingApplicationRuntime"
             ]
         )

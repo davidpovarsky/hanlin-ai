@@ -3,10 +3,14 @@ import HanlinPlatformContracts
 import HanlinMiniAppCore
 
 @MainActor
-final class SwiftMiniAppHostServicesAdapter {
-    let context: HanlinHostCallContext
+public final class SwiftMiniAppHostServicesAdapter: NSObject, @unchecked Sendable {
+    public let context: HanlinHostCallContext
     
-    init(appID: HanlinAppID, capabilities: Set<String>, sessionID: HanlinAppSessionID) {
+    public init(
+        appID: HanlinAppID,
+        capabilities: Set<String> = [],
+        sessionID: HanlinAppSessionID = try! HanlinAppSessionID(validating: UUID().uuidString.lowercased())
+    ) {
         self.context = HanlinHostCallContext.forMiniApp(
             appID: appID,
             installedPackageID: nil,
@@ -15,10 +19,11 @@ final class SwiftMiniAppHostServicesAdapter {
             sessionID: sessionID,
             canPresentUI: true
         )
+        super.init()
     }
     
-    // Provides runtime, file, and system services to compiled Swift mini apps
-    func executeRuntime(
+    // Provides runtime, file, sqlite, and network services to compiled Swift mini apps
+    public func executeRuntime(
         _ kind: RuntimeKind,
         source: String,
         arguments: [String] = [],
@@ -35,11 +40,38 @@ final class SwiftMiniAppHostServicesAdapter {
         )
     }
     
-    func readFile(path: String, area: HanlinMiniAppDataArea) async throws -> Data? {
+    public func readFile(path: String, area: HanlinMiniAppDataArea = .data) async throws -> Data {
         return try await HanlinHostServicesBroker.shared.readFile(
-            virtualPath: path,
+            at: path,
             area: area,
             context: context
         )
+    }
+
+    public func writeFile(path: String, data: Data, area: HanlinMiniAppDataArea = .data) async throws {
+        try await HanlinHostServicesBroker.shared.writeFile(
+            at: path,
+            data: data,
+            area: area,
+            context: context
+        )
+    }
+
+    public func executeSQLite(
+        handle: String = "default",
+        sql: String,
+        arguments: [Any]? = nil
+    ) async throws -> [[String: Any]] {
+        return try await HanlinSQLiteHostAdapter.shared.fetchAll(
+            handle: handle,
+            sql: sql,
+            arguments: arguments,
+            context: context
+        )
+    }
+
+    public func data(from url: URL) async throws -> (Data, URLResponse) {
+        try await HanlinHostServicesBroker.shared.requireCapability("network", context: context)
+        return try await URLSession.shared.data(from: url)
     }
 }

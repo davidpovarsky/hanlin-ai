@@ -9,6 +9,17 @@ import UIKit
 /// Production host provider implementing `HanlinNativeServicesProvider` for NativeScript.
 ///
 /// Security & Architectural Rules:
+import Foundation
+import HanlinMiniAppCore
+@_exported import HanlinNativeScriptCoreSupport
+import HanlinPlatformContracts
+#if canImport(UIKit)
+import UIKit
+#endif
+
+/// Production host provider implementing `HanlinNativeServicesProvider` for NativeScript.
+///
+/// Security & Architectural Rules:
 /// 1. Caller identity is strictly HOST-BOUND to the active session (`activeAppID`).
 ///    Untrusted scripts cannot supply or spoof their caller identity.
 /// 2. All privileged operations (Node, Python, JavaScript, Network, Inter-App)
@@ -18,18 +29,50 @@ import UIKit
 public final class HanlinNativeServicesHostProvider: NSObject, @unchecked Sendable, HanlinNativeServicesProvider {
     nonisolated(unsafe) public static let shared = HanlinNativeServicesHostProvider()
 
-    nonisolated(unsafe) public private(set) static var activeAppID: String?
-    nonisolated(unsafe) public private(set) static var activeDataRoot: String?
-    nonisolated(unsafe) public private(set) static var activeStateDirectory: String?
-    nonisolated(unsafe) public private(set) static var activeDocumentsDirectory: String?
-    nonisolated(unsafe) public private(set) static var activeCacheDirectory: String?
-    nonisolated(unsafe) public private(set) static var activeGrantedCapabilities: Set<String> = []
-    nonisolated(unsafe) public private(set) static var registeredActionIDs: Set<HanlinActionID> = []
-    nonisolated(unsafe) private static var registeredActionHandlers: [HanlinActionID: RegisteredActionHandler] = [:]
+    private let lock = NSLock()
+    private var activeAdapter: NativeScriptHostServicesAdapter?
+    private var overrideDirs: (data: String?, state: String?, docs: String?, cache: String?)?
 
-    private struct RegisteredActionHandler {
-        let capability: HanlinCapabilityID
-        let invoke: (String, String, @escaping (String?, String?) -> Void) -> Void
+    public static var activeAppID: String? {
+        shared.lock.lock()
+        defer { shared.lock.unlock() }
+        return shared.activeAdapter?.context.appID?.rawValue
+    }
+
+    public static var activeDataRoot: String? {
+        shared.lock.lock()
+        defer { shared.lock.unlock() }
+        return shared.overrideDirs?.data ?? shared.activeAdapter?.dataRootDirectory()
+    }
+
+    public static var activeStateDirectory: String? {
+        shared.lock.lock()
+        defer { shared.lock.unlock() }
+        return shared.overrideDirs?.state ?? shared.activeAdapter?.stateDirectory()
+    }
+
+    public static var activeDocumentsDirectory: String? {
+        shared.lock.lock()
+        defer { shared.lock.unlock() }
+        return shared.overrideDirs?.docs ?? shared.activeAdapter?.documentsDirectory()
+    }
+
+    public static var activeCacheDirectory: String? {
+        shared.lock.lock()
+        defer { shared.lock.unlock() }
+        return shared.overrideDirs?.cache ?? shared.activeAdapter?.cacheDirectory()
+    }
+
+    public static var activeGrantedCapabilities: Set<String> {
+        shared.lock.lock()
+        defer { shared.lock.unlock() }
+        return shared.activeAdapter?.context.grantedCapabilities ?? []
+    }
+
+    public static var registeredActionIDs: Set<HanlinActionID> {
+        shared.lock.lock()
+        defer { shared.lock.unlock() }
+        return shared.activeAdapter?.allRegisteredActionIDs ?? []
     }
 
     public static func setActiveContainer(
@@ -40,192 +83,136 @@ public final class HanlinNativeServicesHostProvider: NSObject, @unchecked Sendab
         cacheDir: String,
         grantedCapabilities: [String] = []
     ) {
-        activeAppID = appID
-        activeDataRoot = dataRoot
-        activeStateDirectory = stateDir
-        activeDocumentsDirectory = docsDir
-        activeCacheDirectory = cacheDir
-        activeGrantedCapabilities = Set(grantedCapabilities)
-        registeredActionIDs.removeAll()
-        registeredActionHandlers.removeAll()
-        HanlinNativeServicesBridge.register(shared)
+        let validAppID = (try? HanlinAppID(validating: appID)) ?? (try! HanlinAppID(validating: "unknown-miniapp"))
+        let adapter = NativeScriptHostServicesAdapter(
+            appID: validAppID,
+            grantedCapabilities: Set(grantedCapabilities),
+            sessionID: appID
+        )
+
+        shared.lock.lock()
+        shared.activeAdapter = adapter
+        shared.overrideDirs = (dataRoot, stateDir, docsDir, cacheDir)
+        shared.lock.unlock()
+
+        HanlinNativeServicesBridge.register(adapter, forSessionID: appID)
+        HanlinNativeServicesBridge.register(adapter)
     }
 
     public static func clearActiveContainer() {
-        activeAppID = nil
-        activeDataRoot = nil
-        activeStateDirectory = nil
-        activeDocumentsDirectory = nil
-        activeCacheDirectory = nil
-        activeGrantedCapabilities.removeAll()
-        registeredActionIDs.removeAll()
-        registeredActionHandlers.removeAll()
-    }
+        shared.lock.lock()
+        let oldAppID = shared.activeAdapter?.sessionID
+        shared.activeAdapter = nil
+        shared.overrideDirs = nil
+        shared.lock.unlock()
 
-    /// Checks whether the active session has been granted the required capability.
-    private static func hasCapability(_ capability: String) -> Bool {
-        activeGrantedCapabilities.contains(capability)
-            || activeGrantedCapabilities.contains("all")
+        if let oldAppID {
+            HanlinNativeServicesBridge.unregisterProvider(forSessionID: oldAppID)
+        }
+        HanlinNativeServicesBridge.register(nil)
     }
 
     // MARK: - HanlinNativeServicesProvider Conformance
 
     public func dataRootDirectory() -> String? {
-        Self.activeDataRoot
+        lock.lock()
+        defer { lock.unlock() }
+        return overrideDirs?.data ?? activeAdapter?.dataRootDirectory()
     }
 
     public func stateDirectory() -> String? {
-        Self.activeStateDirectory
+        lock.lock()
+        defer { lock.unlock() }
+        return overrideDirs?.state ?? activeAdapter?.stateDirectory()
     }
 
     public func documentsDirectory() -> String? {
-        Self.activeDocumentsDirectory
+        lock.lock()
+        defer { lock.unlock() }
+        return overrideDirs?.docs ?? activeAdapter?.documentsDirectory()
     }
 
     public func cacheDirectory() -> String? {
-        Self.activeCacheDirectory
+        lock.lock()
+        defer { lock.unlock() }
+        return overrideDirs?.cache ?? activeAdapter?.cacheDirectory()
     }
 
     public func executeJavaScript(
         _ source: String,
         completion: @escaping (String?, String?) -> Void
     ) {
-        guard Self.hasCapability("javascript") || Self.hasCapability("runtime.javascript") else {
-            completion(nil, "Permission denied: 'javascript' capability not granted to this Mini App.")
+        lock.lock()
+        let adapter = activeAdapter
+        lock.unlock()
+        guard let adapter else {
+            completion(nil, "Unauthorized: No active Mini App session context.")
             return
         }
-        nonisolated(unsafe) let safeCompletion = completion
-        Task { @MainActor in
-            do {
-                let layout = RuntimeFileLayout.default
-                let workspace = try layout.workspace(client: .tools, identifier: "nativescript-jsc")
-                let request = RuntimeExecutionRequest(
-                    source: source,
-                    workspace: workspace
-                )
-                let result = try await AppRuntimeCore.shared.javaScriptCore.execute(request)
-                var output = result.stdout.trimmingCharacters(in: .whitespacesAndNewlines)
-                if output.isEmpty, let val = result.value {
-                    switch val {
-                    case let .string(s): output = s
-                    case let .number(n): output = n.truncatingRemainder(dividingBy: 1) == 0 ? String(Int64(n)) : String(n)
-                    case let .boolean(b): output = String(b)
-                    case .null: output = "null"
-                    default: break
-                    }
-                }
-                safeCompletion(output.isEmpty ? "OK" : output, nil)
-            } catch {
-                safeCompletion(nil, error.localizedDescription)
-            }
-        }
+        adapter.executeJavaScript(source, completion: completion)
     }
 
     public func executeNode(
         _ source: String,
         completion: @escaping (String?, String?) -> Void
     ) {
-        guard Self.hasCapability("node") || Self.hasCapability("runtime.node") else {
-            completion(nil, "Permission denied: 'node' capability not granted to this Mini App.")
+        lock.lock()
+        let adapter = activeAdapter
+        lock.unlock()
+        guard let adapter else {
+            completion(nil, "Unauthorized: No active Mini App session context.")
             return
         }
-        nonisolated(unsafe) let safeCompletion = completion
-        Task { @MainActor in
-            do {
-                let node = AppRuntimeCore.shared.node
-                let layout = RuntimeFileLayout.default
-                let workspace = try layout.workspace(client: .tools, identifier: "nativescript-node")
-                let request = RuntimeExecutionRequest(
-                    source: source,
-                    workspace: workspace
-                )
-                let result = try await node.executeJavaScript(request)
-                let output = result.stdout.trimmingCharacters(in: .whitespacesAndNewlines)
-                safeCompletion(output, nil)
-            } catch {
-                safeCompletion(nil, error.localizedDescription)
-            }
-        }
+        adapter.executeNode(source, completion: completion)
     }
 
     @objc(nodeHealthCheckWithCompletion:)
     public func nodeHealthCheck(
         completion: @escaping (Bool, String?) -> Void
     ) {
-        nonisolated(unsafe) let safeCompletion = completion
-        Task { @MainActor in
-            do {
-                let node = AppRuntimeCore.shared.node
-                let snapshot = try await node.healthCheck()
-                safeCompletion(snapshot.state == .ready, nil)
-            } catch {
-                safeCompletion(false, error.localizedDescription)
-            }
+        lock.lock()
+        let adapter = activeAdapter
+        lock.unlock()
+        guard let adapter else {
+            completion(false, "Unauthorized: No active Mini App session context.")
+            return
         }
+        adapter.nodeHealthCheck(completion: completion)
     }
 
     public func executePython(
         _ source: String,
         completion: @escaping (String?, String?) -> Void
     ) {
-        guard Self.hasCapability("python") || Self.hasCapability("runtime.python") else {
-            completion(nil, "Permission denied: 'python' capability not granted to this Mini App.")
+        lock.lock()
+        let adapter = activeAdapter
+        lock.unlock()
+        guard let adapter else {
+            completion(nil, "Unauthorized: No active Mini App session context.")
             return
         }
-        nonisolated(unsafe) let safeCompletion = completion
-        Task { @MainActor in
-            do {
-                let python = AppRuntimeCore.shared.python
-                let layout = RuntimeFileLayout.default
-                let workspace = try layout.workspace(client: .tools, identifier: "nativescript-python")
-                let request = RuntimeExecutionRequest(
-                    source: source,
-                    workspace: workspace
-                )
-                let result = try await python.execute(request)
-                let output = result.stdout.trimmingCharacters(in: .whitespacesAndNewlines)
-                safeCompletion(output, nil)
-            } catch {
-                safeCompletion(nil, error.localizedDescription)
-            }
-        }
+        adapter.executePython(source, completion: completion)
     }
 
     public func pythonVersion() -> String? {
-        try? PythonRuntimeBridge.version()
+        lock.lock()
+        let adapter = activeAdapter
+        lock.unlock()
+        return adapter?.pythonVersion() ?? (try? PythonRuntimeBridge.version())
     }
 
     public func fetchURL(
         _ urlString: String,
         completion: @escaping (String?, String?) -> Void
     ) {
-        guard Self.hasCapability("network") || Self.hasCapability("network.fetch") else {
-            completion(nil, "Permission denied: 'network' capability not granted to this Mini App.")
+        lock.lock()
+        let adapter = activeAdapter
+        lock.unlock()
+        guard let adapter else {
+            completion(nil, "Unauthorized: No active Mini App session context.")
             return
         }
-        guard let url = URL(string: urlString), url.scheme?.lowercased() == "https" else {
-            completion(nil, "Invalid or non-HTTPS URL: \(urlString)")
-            return
-        }
-        nonisolated(unsafe) let safeCompletion = completion
-        Task { @MainActor in
-            do {
-                var request = URLRequest(url: url)
-                request.timeoutInterval = 15
-                let (data, response) = try await URLSession.shared.data(for: request)
-                guard let http = response as? HTTPURLResponse else {
-                    safeCompletion(nil, "Invalid server response.")
-                    return
-                }
-                guard (200...299).contains(http.statusCode) else {
-                    safeCompletion(nil, "HTTP \(http.statusCode) error")
-                    return
-                }
-                safeCompletion("HTTPS \(http.statusCode), \(data.count) bytes", nil)
-            } catch {
-                safeCompletion(nil, error.localizedDescription)
-            }
-        }
+        adapter.fetchURL(urlString, completion: completion)
     }
 
     public func sendRequest(
@@ -235,39 +222,14 @@ public final class HanlinNativeServicesHostProvider: NSObject, @unchecked Sendab
         payloadJSON: String,
         completion: @escaping (String?, String?) -> Void
     ) {
-        guard let callerID = Self.activeAppID else {
+        lock.lock()
+        let adapter = activeAdapter
+        lock.unlock()
+        guard let adapter else {
             completion(nil, "Unauthorized: No active Mini App session context.")
             return
         }
-        guard Self.hasCapability(capability) else {
-            completion(nil, "Permission denied: Mini App does not have '\(capability)' capability.")
-            return
-        }
-        nonisolated(unsafe) let safeCompletion = completion
-        Task { @MainActor in
-            do {
-                let caller = try HanlinAppID(validating: callerID)
-                let target = try HanlinAppID(validating: targetID)
-                let actionID = try HanlinActionID(validating: action)
-                let capabilityID = try HanlinCapabilityID(validating: capability)
-                let payloadData = payloadJSON.data(using: .utf8) ?? Data()
-                let payload = try JSONDecoder().decode(HanlinValue.self, from: payloadData)
-
-                let broker = HanlinMiniAppHost.shared.requestBroker
-                let request = HanlinMiniAppRequest(
-                    caller: caller,
-                    target: target,
-                    action: actionID,
-                    capability: capabilityID,
-                    payload: payload
-                )
-                let response = try await broker.request(request)
-                let responseData = try response.value.canonicalJSONData()
-                safeCompletion(String(data: responseData, encoding: .utf8), nil)
-            } catch {
-                safeCompletion(nil, error.localizedDescription)
-            }
-        }
+        adapter.sendRequest(targetID, action: action, capability: capability, payloadJSON: payloadJSON, completion: completion)
     }
 
     public func registerRequestHandler(
@@ -275,17 +237,13 @@ public final class HanlinNativeServicesHostProvider: NSObject, @unchecked Sendab
         capability: String,
         handler: @escaping (String, String, @escaping (String?, String?) -> Void) -> Void
     ) {
-        guard Self.activeAppID != nil,
-              let actionID = try? HanlinActionID(validating: action),
-              let capabilityID = try? HanlinCapabilityID(validating: capability) else {
+        lock.lock()
+        let adapter = activeAdapter
+        lock.unlock()
+        guard let adapter else {
             return
         }
-        nonisolated(unsafe) let safeHandler = handler
-        Self.registeredActionIDs.insert(actionID)
-        Self.registeredActionHandlers[actionID] = RegisteredActionHandler(
-            capability: capabilityID,
-            invoke: safeHandler
-        )
+        adapter.registerRequestHandler(action, capability: capability, handler: handler)
     }
 
     @MainActor
@@ -295,31 +253,13 @@ public final class HanlinNativeServicesHostProvider: NSObject, @unchecked Sendab
         caller: HanlinAppID,
         payload: HanlinValue
     ) async throws -> HanlinValue {
-        guard let registration = registeredActionHandlers[action] else {
+        shared.lock.lock()
+        let adapter = shared.activeAdapter
+        shared.lock.unlock()
+        guard let adapter else {
             throw HanlinMiniAppRequestError.routeNotFound
         }
-        guard registration.capability == capability else {
-            throw HanlinMiniAppRequestError.capabilityMismatch
-        }
-        let payloadJSON = try String(data: payload.canonicalJSONData(), encoding: .utf8)
-            ?? "{}"
-        return try await withCheckedThrowingContinuation { continuation in
-            registration.invoke(caller.rawValue, payloadJSON) { responseJSON, errorString in
-                if let errorString {
-                    continuation.resume(throwing: NSError(
-                        domain: "HanlinMiniAppRequest",
-                        code: 1,
-                        userInfo: [NSLocalizedDescriptionKey: errorString]
-                    ))
-                } else if let responseJSON,
-                          let data = responseJSON.data(using: .utf8),
-                          let value = try? JSONDecoder().decode(HanlinValue.self, from: data) {
-                    continuation.resume(returning: value)
-                } else {
-                    continuation.resume(returning: .null)
-                }
-            }
-        }
+        return try await adapter.invokeRegisteredAction(action, capability: capability, caller: caller, payload: payload)
     }
 }
 

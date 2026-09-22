@@ -25,7 +25,7 @@ actor HanlinRuntimeBroker {
         limits: RuntimeExecutionLimits? = nil
     ) async throws -> RuntimeExecutionResult {
         try checkAvailability(for: kind)
-        try checkCapability(for: kind, in: context)
+        try await checkCapability(for: kind, in: context)
 
         let workspace = try deriveWorkspace(for: context)
         let effectiveLimits = limits ?? RuntimeExecutionLimits()
@@ -94,7 +94,7 @@ actor HanlinRuntimeBroker {
         limits: RuntimeExecutionLimits? = nil
     ) async throws -> RuntimeExecutionResult {
         try checkAvailability(for: .shell)
-        try checkCapability(for: .shell, in: context)
+        try await checkCapability(for: .shell, in: context)
 
         let workspace = try deriveWorkspace(for: context)
 
@@ -114,7 +114,7 @@ actor HanlinRuntimeBroker {
         context: HanlinHostCallContext
     ) async throws -> TypeScriptCompilationResult {
         try checkAvailability(for: .typeScript)
-        try checkCapability(for: .typeScript, in: context)
+        try await checkCapability(for: .typeScript, in: context)
 
         return try await core.typeScript.compile(source: source)
     }
@@ -127,26 +127,24 @@ actor HanlinRuntimeBroker {
         }
     }
 
-    private func checkCapability(for kind: RuntimeKind, in context: HanlinHostCallContext) throws {
-        // Agent context with "all" bypasses individual checks
-        if context.effectiveCapabilities.contains("all") { return }
-
-        let validCapabilities: Set<String>
+    private func checkCapability(for kind: RuntimeKind, in context: HanlinHostCallContext) async throws {
+        let capID: String
         switch kind {
         case .node:
-            validCapabilities = ["runtime.node", "node"]
+            capID = "runtime.node"
         case .localPython:
-            validCapabilities = ["runtime.python", "python"]
+            capID = "runtime.python"
         case .typeScript:
-            validCapabilities = ["runtime.typescript", "typescript", "runtime.node", "node"]
+            capID = "runtime.typescript"
         case .javaScriptCore:
-            validCapabilities = ["runtime.javascript", "javascript"]
+            capID = "runtime.javascript"
         case .shell:
-            validCapabilities = ["runtime.shell", "shell"]
+            capID = "runtime.shell"
         }
 
-        guard !validCapabilities.isDisjoint(with: context.effectiveCapabilities) else {
-            throw HanlinHostServiceError.capabilityNotGranted("runtime.\(kind.rawValue)")
+        let result = await HanlinHostCapabilityAuthority.shared.authorize(capability: capID, context: context)
+        guard result == .allowed else {
+            throw HanlinHostServiceError.capabilityNotGranted(capID)
         }
     }
 

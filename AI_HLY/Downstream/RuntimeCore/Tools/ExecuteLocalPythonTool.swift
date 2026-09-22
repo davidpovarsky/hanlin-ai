@@ -29,10 +29,14 @@ struct ExecuteLocalPythonTool: NativeTool {
             let arguments = try NativeToolJSON.dictionary(from: argumentsJSON)
             let source = try NativeToolJSON.requiredString(arguments, "source")
             let argv = arguments["arguments"] as? [String] ?? []
-            let layout = RuntimeFileLayout.default
-            let workspace = try layout.workspace(client: .tools, identifier: name)
             let environment = try await AppRuntimeCore.shared.environment.resolved(scopes: [.shared, .python])
-            let result = try await AppRuntimeCore.shared.python.execute(.init(source: source, arguments: argv, workspace: workspace, environment: environment, limits: RuntimeToolSupport.limits(arguments)))
+            let result = try await AgentHostServicesAdapter.executeRuntime(
+                .localPython,
+                source: source,
+                arguments: argv,
+                environment: environment,
+                limits: RuntimeToolSupport.limits(arguments)
+            )
             return RuntimeToolSupport.result(result, title: "Local Python", systemImage: "chevron.left.forwardslash.chevron.right")
         } catch { return RuntimeToolSupport.failure(error, title: "Local Python failed") }
     }

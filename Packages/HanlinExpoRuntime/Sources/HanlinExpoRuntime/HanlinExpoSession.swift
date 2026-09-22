@@ -48,7 +48,8 @@ public final class HanlinExpoModulesProvider: ModulesProvider {
         return [
             (module: ExpoUIModule.self, name: "ExpoUI"),
             (module: ExpoBrownfieldModule.self, name: "ExpoBrownfieldModule"),
-            (module: ExpoBrownfieldStateModule.self, name: "ExpoBrownfieldStateModule")
+            (module: ExpoBrownfieldStateModule.self, name: "ExpoBrownfieldStateModule"),
+            (module: HanlinHostServicesModule.self, name: "HanlinHostServices")
         ]
     }
 }
@@ -57,8 +58,9 @@ public final class HanlinExpoModulesProvider: ModulesProvider {
 public final class HanlinExpoSession {
     private static let supportedSDKVersion = "58.0.3"
     private static let supportedUIVersion = "58.0.3"
-    private static weak var activeSession: HanlinExpoSession?
+    private static var activeSessions: [String: HanlinExpoSession] = [:]
 
+    public let sessionID: String
     public let applicationRoot: URL
     public let containerController: UIViewController
     public let bundleURL: URL
@@ -95,7 +97,7 @@ public final class HanlinExpoSession {
         NSLog("%@", "HANLIN_EXPO_APP_DEFINES_LOADED")
     }
 
-    public init(applicationRoot: URL) throws {
+    public init(applicationRoot: URL, sessionID: String = UUID().uuidString.lowercased()) throws {
         Self.ensureAppDefinesLoaded()
         let root = applicationRoot.standardizedFileURL
         guard root.isFileURL else {
@@ -126,6 +128,7 @@ public final class HanlinExpoSession {
             throw HanlinExpoError.missingPreparedFile(entryFileName)
         }
 
+        self.sessionID = sessionID
         self.applicationRoot = root
         self.bundleURL = resolvedBundleURL
         self.containerController = UIViewController()
@@ -134,9 +137,6 @@ public final class HanlinExpoSession {
 
     public func start(moduleName: String = "main") throws {
         guard !isActive else { return }
-        guard Self.activeSession == nil else {
-            throw HanlinExpoError.sessionAlreadyActive
-        }
 
         do {
             Self.ensureAppDefinesLoaded()
@@ -170,7 +170,7 @@ public final class HanlinExpoSession {
             ])
 
             self.hostedView = rootView
-            Self.activeSession = self
+            Self.activeSessions[sessionID] = self
             isActive = true
 
             NSLog("%@", "HANLIN_EXPO_INITIALIZED_EXTERNAL_ROOT path=\(applicationRoot.path(percentEncoded: false)) bundle=\(bundleURL.lastPathComponent)")
@@ -201,9 +201,7 @@ public final class HanlinExpoSession {
 
         HanlinExpoModifierRegistry.unregisterCustomModifiers()
 
-        if Self.activeSession === self {
-            Self.activeSession = nil
-        }
+        Self.activeSessions.removeValue(forKey: sessionID)
     }
 
     deinit {

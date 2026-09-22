@@ -1,8 +1,44 @@
 #import "HanlinNativeServicesBridge.h"
 
 static id<HanlinNativeServicesProvider> _currentProvider = nil;
+static NSMutableDictionary<NSString *, id<HanlinNativeServicesProvider>> *_sessionProviders = nil;
+static NSLock *_sessionLock = nil;
 
 @implementation HanlinNativeServicesBridge
+
++ (void)initialize {
+    if (self == [HanlinNativeServicesBridge class]) {
+        _sessionProviders = [[NSMutableDictionary alloc] init];
+        _sessionLock = [[NSLock alloc] init];
+    }
+}
+
++ (void)registerProvider:(nullable id<HanlinNativeServicesProvider>)provider forSessionID:(NSString *)sessionID {
+    if (!sessionID) return;
+    [_sessionLock lock];
+    if (provider) {
+        _sessionProviders[sessionID] = provider;
+        _currentProvider = provider;
+    } else {
+        [_sessionProviders removeObjectForKey:sessionID];
+    }
+    [_sessionLock unlock];
+}
+
++ (void)unregisterProviderForSessionID:(NSString *)sessionID {
+    if (!sessionID) return;
+    [_sessionLock lock];
+    [_sessionProviders removeObjectForKey:sessionID];
+    [_sessionLock unlock];
+}
+
++ (nullable id<HanlinNativeServicesProvider>)providerForSessionID:(NSString *)sessionID {
+    if (!sessionID) return _currentProvider;
+    [_sessionLock lock];
+    id<HanlinNativeServicesProvider> provider = _sessionProviders[sessionID] ?: _currentProvider;
+    [_sessionLock unlock];
+    return provider;
+}
 
 + (void)registerProvider:(nullable id<HanlinNativeServicesProvider>)provider {
     _currentProvider = provider;

@@ -457,8 +457,17 @@ final class HanlinScriptingPlatform {
                 let artifactRoot = try await store.activeArtifactURL(for: id)
                 let entrypointURL = artifactRoot.appending(path: entrypoint.sourcePath, directoryHint: .notDirectory)
                 dismissActiveApplication()
+                let sessionID = UUID().uuidString.lowercased()
+                let adapter = ExpoHostServicesAdapter(
+                    appID: appID,
+                    installedPackageID: package.id,
+                    grantedCapabilities: Set(package.grantedCapabilities.map(\.rawValue)),
+                    sessionID: sessionID
+                )
+                HanlinExpoHostServicesBridge.register(provider: adapter, forSessionID: sessionID)
                 let session = try HanlinExpoSession(
-                    applicationRoot: entrypointURL.deletingLastPathComponent()
+                    applicationRoot: entrypointURL.deletingLastPathComponent(),
+                    sessionID: sessionID
                 )
                 try session.start()
                 expoSession = session
@@ -582,6 +591,9 @@ final class HanlinScriptingPlatform {
         HanlinNativeServicesHostProvider.clearActiveContainer()
         if expoSession != nil {
             NSLog("HANLIN_EXPO_PRODUCTION_SHUTDOWN_OK")
+        }
+        if let session = expoSession {
+            HanlinExpoHostServicesBridge.unregister(sessionID: session.sessionID)
         }
         expoSession?.shutdown()
         expoSession = nil
