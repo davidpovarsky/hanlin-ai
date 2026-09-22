@@ -1,4 +1,4 @@
-﻿import Foundation
+import Foundation
 
 public protocol HanlinExpoHostServicesProvider: AnyObject, Sendable {
     func executeRuntime(kind: String, source: String) async throws -> String
@@ -12,8 +12,8 @@ public protocol HanlinExpoHostServicesProvider: AnyObject, Sendable {
 
 public final class HanlinExpoHostServicesBridge: @unchecked Sendable {
     private static let lock = NSLock()
-    private static var _currentProvider: HanlinExpoHostServicesProvider?
-    private static var _sessionProviders: [String: HanlinExpoHostServicesProvider] = [:]
+    nonisolated(unsafe) private static var _currentProvider: HanlinExpoHostServicesProvider?
+    nonisolated(unsafe) private static var _sessionProviders: [String: HanlinExpoHostServicesProvider] = [:]
 
     public static var currentProvider: HanlinExpoHostServicesProvider? {
         lock.lock()
