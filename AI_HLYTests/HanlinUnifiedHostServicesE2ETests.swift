@@ -191,14 +191,15 @@ struct HanlinUnifiedHostServicesE2ETests {
             arguments: ["first", 42],
             context: ctx
         )
-        let rows = try await adapter.fetchAll(
+        let rowsJSON = try await adapter.fetchAllJSON(
             handle: "valid",
             sql: "SELECT * FROM items WHERE id = ?;",
             arguments: ["first"],
             context: ctx
         )
-        #expect(!rows.isEmpty)
-        #expect(rows.first?["id"] as? String == "first")
+        let parsed = (try? JSONSerialization.jsonObject(with: Data(rowsJSON.utf8))) as? [[String: Any]]
+        #expect(parsed?.isEmpty == false)
+        #expect(parsed?.first?["id"] as? String == "first")
         try await adapter.close(handle: "valid", context: ctx)
     }
 
