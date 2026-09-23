@@ -83,8 +83,8 @@ enum AgentRuntimeUIAcceptanceProvider {
                             id: HanlinLaunchID(unchecked: "launch-acceptance"),
                             requestID: HanlinRequestID(unchecked: "req-acceptance"),
                             target: HanlinLaunchTarget(appID: appID),
-                            presentation: .sheet,
-                            origin: .chatUI
+                            presentation: .largeSheet,
+                            origin: .assistantModel
                         )
                     )
                     var enrichedPayload = payload ?? HanlinEmbeddedResultPayload()

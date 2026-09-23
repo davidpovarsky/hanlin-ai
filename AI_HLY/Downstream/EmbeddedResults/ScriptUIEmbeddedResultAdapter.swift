@@ -41,17 +41,16 @@ public enum ScriptUIEmbeddedResultAdapter {
 
             let payloadJSON: String = {
                 if let payload = payload?.payload {
+                    if let data = try? payload.canonicalJSONData(),
+                       let str = String(data: data, encoding: .utf8) {
+                        return str
+                    }
                     switch payload {
                     case .string(let s): return s
+                    case .integer(let i): return "\(i)"
                     case .number(let n): return "\(n)"
-                    case .boolean(let b): return "\(b)"
-                    case .object(let dict):
-                        let data = (try? JSONSerialization.data(withJSONObject: dict)) ?? Data()
-                        return String(decoding: data, as: UTF8.self)
-                    case .array(let arr):
-                        let data = (try? JSONSerialization.data(withJSONObject: arr)) ?? Data()
-                        return String(decoding: data, as: UTF8.self)
-                    case .null: return "{}"
+                    case .bool(let b): return "\(b)"
+                    default: return "{}"
                     }
                 }
                 return "{}"

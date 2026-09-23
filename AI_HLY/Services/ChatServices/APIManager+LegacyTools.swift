@@ -5,6 +5,7 @@
 
 import Foundation
 import SwiftData
+import CoreLocation
 import HanlinPlatformContracts
 
 extension APIManager {
@@ -13,7 +14,7 @@ extension APIManager {
         name: String,
         argumentsJSON: String,
         context: NativeToolExecutionContext,
-        continuation: AsyncStream<StreamData>.Continuation?
+        continuation: AsyncThrowingStream<StreamData, Error>.Continuation?
     ) async -> NativeToolResult {
         let currentLanguage = context.localeIdentifier ?? "en"
         let currentLanguagePrefix = currentLanguage.hasPrefix("zh")
@@ -24,6 +25,10 @@ extension APIManager {
         var toolResultFront = ""
         var executionOutcome: NativeToolExecutionOutcome = .succeeded
         var useFunctionName = functionName
+        var executionEvidenceItems: [AgentEvidenceItem] = []
+        var executionReturnedError = false
+        var executionDiagnostics = NativeToolExecutionDiagnostics()
+        let toolCallID = context.toolCallID ?? name
 
         switch functionName {
                                             case "save_memory":
@@ -659,21 +664,27 @@ extension APIManager {
                                                 
                                                 useFunctionName = functionName
                                                 
-                                                let htmlString = try await createWebView(extractValue(from: functionArguments, forKey: "code") ?? "Unknown")
-                                                
-                                                if !htmlString.isEmpty, htmlString != "Unknown" {
-                                                    self.htmlContent = htmlString
-                                                    toolResult = currentLanguagePrefix ?
-                                                    "成功渲染网页，现在用户可以看到网页内容及网页的源代码了。" :
-                                                    "The webpage has been successfully rendered, and users can now see both the webpage content and its source code."
-                                                    toolResultFront = currentLanguagePrefix ?
-                                                    "成功向系统发送渲染网页请求" :
-                                                    "The request to render the webpage has been successfully sent to the system."
-                                                } else {
-                                                    toolResult = currentLanguagePrefix ?
-                                                    "网页渲染失败" :
-                                                    "Web page rendering failed."
+                                                do {
+                                                    let htmlString = try await createWebView(extractValue(from: functionArguments, forKey: "code") ?? "Unknown")
+
+                                                    if !htmlString.isEmpty, htmlString != "Unknown" {
+                                                        self.htmlContent = htmlString
+                                                        toolResult = currentLanguagePrefix ?
+                                                        "成功渲染网页，现在用户可以看到网页内容及网页的源代码了。" :
+                                                        "The webpage has been successfully rendered, and users can now see both the webpage content and its source code."
+                                                        toolResultFront = currentLanguagePrefix ?
+                                                        "成功向系统发送渲染网页请求" :
+                                                        "The request to render the webpage has been successfully sent to the system."
+                                                    } else {
+                                                        toolResult = currentLanguagePrefix ?
+                                                        "网页渲染失败" :
+                                                        "Web page rendering failed."
+                                                        toolResultFront = toolResult
+                                                    }
+                                                } catch {
+                                                    toolResult = currentLanguagePrefix ? "网页渲染失败: \(error.localizedDescription)" : "Web page rendering failed: \(error.localizedDescription)"
                                                     toolResultFront = toolResult
+                                                    executionOutcome = .failed
                                                 }
                                                 
                                             case "execute_remote_python_code", "execute_python_code":
@@ -773,8 +784,9 @@ extension APIManager {
 
                                                 do {
                                                     // 5) 执行 Canvas 内容修改
+                                                    let currentCanvas = self.canvasInfo ?? CanvasServices.createCanvasData(title: "Untitled", content: "", type: "markdown")
                                                     let updatedCanvas = try CanvasServices.editCanvasContent(
-                                                        canvas: canvasData,
+                                                        canvas: currentCanvas,
                                                         rules: rules
                                                     )
 
@@ -976,7 +988,8 @@ extension APIManager {
         return NativeToolResult(
             modelText: toolResult,
             userText: toolResultFront,
-            outcome: executionOutcome
+            outcome: executionOutcome,
+            diagnostics: executionDiagnostics
         )
     }
 }

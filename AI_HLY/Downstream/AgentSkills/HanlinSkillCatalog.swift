@@ -67,7 +67,7 @@ public final class HanlinSkillCatalog {
 
         // 2. Compiled Swift Mini Apps
         BuiltinCanonicalRegistrations.ensureRegistered()
-        for provider in HanlinCompiledMiniAppRegistry.shared.providers {
+        for provider in HanlinCompiledMiniAppRegistry.shared.allProviders() {
             for skill in provider.descriptor.skills {
                 register(skill: skill) { [weak provider] in
                     if case .resource(let path) = skill.instructions, let provider {
@@ -85,7 +85,8 @@ public final class HanlinSkillCatalog {
         // 3. Installed scripting packages (ScriptUI, NativeScript, Expo)
         let platform = HanlinScriptingPlatform.shared
         for package in platform.installedPackages where package.enabled {
-            for skill in package.descriptor.skills {
+            guard let desc = try? package.appDescriptor() else { continue }
+            for skill in desc.skills {
                 register(skill: skill) {
                     if case .resource(let path) = skill.instructions {
                         if let artifactURL = platform.activeArtifactURL(for: package) {

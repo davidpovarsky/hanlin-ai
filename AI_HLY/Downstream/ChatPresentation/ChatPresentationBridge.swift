@@ -253,6 +253,24 @@ enum ChatPresentationBridge {
     return results
   }
 
+  static func resolveExpansions(
+    descriptor: HanlinEmbeddedPresentationDescriptor?,
+    title: String? = nil,
+    launchRequest: HanlinLaunchRequest? = nil,
+    legacyLaunchRequest: NativeAppLaunchRequest? = nil,
+    handler: String? = nil,
+    canResolveHandler: ((String) -> Bool)? = nil
+  ) -> [ChatResolvedExpansion] {
+    resolveExpansions(
+      descriptor: descriptor?.expansion,
+      title: title,
+      launchRequest: launchRequest,
+      legacyLaunchRequest: legacyLaunchRequest,
+      handler: handler ?? descriptor?.handler,
+      canResolveHandler: canResolveHandler
+    )
+  }
+
   /// Single expansion resolver for backwards compatibility.
   static func resolveExpansion(
     descriptor: HanlinExpansionDescriptor?,
@@ -317,7 +335,7 @@ enum ChatPresentationBridge {
       let block = blocks.first(where: { ($0.allowsExpansion ?? true) && hasExpandableContent($0) })
     else {
       if let canonicalExpansion {
-        return resolveExpansion(descriptor: canonicalExpansion, title: toolName)
+        return resolveExpansions(descriptor: canonicalExpansion, title: toolName).first
       }
       return nil
     }
@@ -415,8 +433,8 @@ extension HanlinLaunchRequest {
     let reqID = HanlinRequestID(unchecked: legacy.id.uuidString)
     let intent: HanlinPresentationIntent = switch legacy.presentationStyle {
     case .fullScreen: .fullScreen
-    case .largeSheet: .sheet
-    case .newWindow: .window
+    case .largeSheet: .largeSheet
+    case .newWindow: .newWindow
     }
     self.init(
       id: launchID,
@@ -424,7 +442,7 @@ extension HanlinLaunchRequest {
       target: HanlinLaunchTarget(appID: appID),
       presentation: intent,
       initialRoute: nil,
-      origin: .chatUI
+      origin: .assistantModel
     )
   }
 
@@ -437,9 +455,8 @@ extension NativeAppLaunchRequest {
   init(from canonical: HanlinLaunchRequest) {
     let style: NativeAppPresentationStyle = switch canonical.presentation {
     case .fullScreen: .fullScreen
-    case .sheet: .largeSheet
-    case .window: .newWindow
-    case .inline: .largeSheet
+    case .largeSheet: .largeSheet
+    case .newWindow: .newWindow
     }
     self.init(
       id: UUID(uuidString: canonical.id.rawValue) ?? UUID(),

@@ -389,8 +389,8 @@ struct EmbeddedResultResolverTests {
             id: HanlinLaunchID(unchecked: "launch-pipeline-test"),
             requestID: HanlinRequestID(unchecked: "req-pipeline-test"),
             target: HanlinLaunchTarget(appID: try HanlinAppID(validating: "test.app")),
-            presentation: .sheet,
-            origin: .chatUI
+            presentation: .largeSheet,
+            origin: .assistantModel
         )
         let action1 = HanlinEmbeddedContentAction(
             id: "action_1",

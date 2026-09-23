@@ -19,6 +19,25 @@ extension HanlinStringIdentifier {
         self = value
     }
 
+    public init(unchecked rawValue: String) {
+        if let value = try? Self(validating: rawValue) {
+            self = value
+        } else {
+            var sanitized = rawValue.lowercased().filter { ("a"..."z").contains($0) || ("0"..."9").contains($0) || $0 == "." || $0 == "-" || $0 == "_" }
+            while sanitized.hasPrefix(".") || sanitized.hasPrefix("-") || sanitized.hasPrefix("_") {
+                sanitized.removeFirst()
+            }
+            while sanitized.hasSuffix(".") || sanitized.hasSuffix("-") || sanitized.hasSuffix("_") {
+                sanitized.removeLast()
+            }
+            if let value = try? Self(validating: sanitized) {
+                self = value
+            } else {
+                self = (try? Self(validating: "default.id")) ?? (try! Self(validating: "default"))
+            }
+        }
+    }
+
     public var description: String {
         rawValue
     }
