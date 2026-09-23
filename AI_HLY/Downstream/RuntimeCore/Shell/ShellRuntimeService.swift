@@ -173,6 +173,7 @@ actor ShellRuntimeService {
             throw RuntimeCoreError.invalidRequest("This command requires explicit network permission.")
         }
         try validateArguments(tokens.dropFirst(), command: name)
+        try validateWorkspacePaths(tokens.dropFirst(), command: name, workspace: scopedWorkspace)
         for key in environment.keys { _ = try RuntimePolicy.validateEnvironmentName(key) }
 
         let started = ContinuousClock.now
@@ -302,6 +303,20 @@ actor ShellRuntimeService {
             guard !normalized.hasPrefix("/"), !normalized.split(separator: "/").contains("..") else {
                 throw RuntimeCoreError.pathEscapesRoot
             }
+        }
+    }
+
+    private func validateWorkspacePaths(
+        _ arguments: ArraySlice<String>,
+        command: String,
+        workspace: URL
+    ) throws {
+        for argument in arguments where !argument.hasPrefix("-") {
+            if command == "curl", let url = URL(string: argument), url.scheme != nil {
+                continue
+            }
+            let candidate = workspace.appending(path: argument).standardizedFileURL
+            _ = try fileLayout.validatedDescendant(candidate, of: workspace, allowRoot: true)
         }
     }
 }

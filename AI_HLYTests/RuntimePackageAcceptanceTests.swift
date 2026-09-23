@@ -39,7 +39,7 @@ struct RuntimePackageAcceptanceTests {
             #expect(nodeResult.modelText.contains("true"))
 
             let typeScriptResult = await ExecuteTypeScriptTool().execute(
-                argumentsJSON: #"{"source":"const {default: isNumber} = await import('is-number'); console.log(isNumber('42'));","file_name":"npm-acceptance.ts","compile_only":false,"timeout_seconds":30}"#,
+                argumentsJSON: #"{"source":"import isNumber from 'is-number'; console.log(isNumber('42'));","file_name":"npm-acceptance.ts","compile_only":false,"timeout_seconds":30}"#,
                 context: NativeToolExecutionContext(localeIdentifier: "en")
             )
             #expect(typeScriptResult.outcome == .succeeded)

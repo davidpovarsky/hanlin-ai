@@ -168,7 +168,7 @@ public final class HanlinSQLiteService: @unchecked Sendable {
 
     private func executeImpl(sql: String, arguments: Any?, database: OpaquePointer) throws {
         var remaining = sql
-        var isFirstStatement = true
+        var didBindArguments = false
         while !remaining.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
             var statement: OpaquePointer?
             var tail: UnsafePointer<CChar>?
@@ -178,15 +178,41 @@ public final class HanlinSQLiteService: @unchecked Sendable {
             guard result == SQLITE_OK else { throw sqliteError(database) }
             guard let statement else { break }
             defer { sqlite3_finalize(statement) }
-            if isFirstStatement, let arguments {
+            let parameterCount = Int(sqlite3_bind_parameter_count(statement))
+            if parameterCount > 0, let arguments {
+                guard !didBindArguments else {
+                    throw HanlinSQLiteServiceError.invalidArgument(
+                        "Arguments may target only one statement in a multi-statement execution"
+                    )
+                }
                 try bind(arguments, to: statement)
+                didBindArguments = true
             }
             let step = sqlite3_step(statement)
             guard step == SQLITE_DONE || step == SQLITE_ROW else { throw sqliteError(database) }
-            isFirstStatement = false
             guard let tail else { break }
             remaining = String(cString: tail)
         }
+        if let arguments, !didBindArguments {
+            try requireEmptyArguments(arguments)
+        }
+    }
+
+    private func requireEmptyArguments(_ arguments: Any) throws {
+        if arguments is NSNull { return }
+        if let values = arguments as? [Any] {
+            guard values.isEmpty else {
+                throw HanlinSQLiteServiceError.argumentCountMismatch(expected: 0, got: values.count)
+            }
+            return
+        }
+        if let values = arguments as? [String: Any] {
+            guard values.isEmpty else {
+                throw HanlinSQLiteServiceError.argumentCountMismatch(expected: 0, got: values.count)
+            }
+            return
+        }
+        throw HanlinSQLiteServiceError.invalidArgument("SQLite arguments must be an array or object")
     }
 
     private func fetchAllImpl(sql: String, arguments: Any?, database: OpaquePointer) throws -> [[String: Any]] {

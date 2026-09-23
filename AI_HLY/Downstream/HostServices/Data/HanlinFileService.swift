@@ -108,7 +108,8 @@ enum HanlinFileService {
 
         let basePath = baseDirectory.standardizedFileURL.path(percentEncoded: false)
         let resolvedPath = resolved.path(percentEncoded: false)
-        guard resolvedPath == basePath || resolvedPath.hasPrefix(basePath + "/") else {
+        let basePrefix = basePath.hasSuffix("/") ? basePath : basePath + "/"
+        guard resolvedPath == basePath || resolvedPath.hasPrefix(basePrefix) else {
             throw HanlinHostServiceError.pathOutOfScope(virtualPath)
         }
 
