@@ -103,11 +103,22 @@ class APIManager {
     }
     
     private var context: ModelContext
+    private let chatEngineFactory: () -> HanlinChatEngine
     private var currentTask: URLSessionDataTask? // 当前流式请求任务
     private var isCancelled = false              // 请求取消标记
     
-    init(context: ModelContext) {
+    init(
+        context: ModelContext,
+        chatEngineFactory: (() -> HanlinChatEngine)? = nil
+    ) {
         self.context = context
+        self.chatEngineFactory = chatEngineFactory ?? {
+            AgentRuntimeUIAcceptanceProvider.makeChatEngine()
+        }
+    }
+
+    func diagnosticsSnapshot() async -> AgentDiagnosticsSession? {
+        await agentDiagnosticsRecorder?.session
     }
     
     // 解析参数
@@ -2531,7 +2542,7 @@ class APIManager {
                     // 推送请求状态
                     continuation.yield(StreamData(operationalState: currentLanguagePrefix ?  "等待模型响应" : "Waiting for model response"))
                     
-                    let chatEngine = HanlinChatEngine()
+                    let chatEngine = self.chatEngineFactory()
                     let result = await chatEngine.stream(request: request, configuration: chatConfig)
                     
                     // 定义变量保存所有分片累计的 tool_calls
@@ -4111,6 +4122,9 @@ class APIManager {
                             usage: diagnosticsUsage
                         )
                     }
+                    if depth == 0 {
+                        await self.agentDiagnosticsRecorder?.complete(status: "completed")
+                    }
                     // 流完成
                     continuation.finish()
                     self.isCancelled = false
@@ -4122,6 +4136,12 @@ class APIManager {
                             roundID: diagnosticsRoundID,
                             finishReason: diagnosticsFinishReason,
                             usage: diagnosticsUsage,
+                            error: AgentSafeError(error).message
+                        )
+                    }
+                    if depth == 0 {
+                        await self.agentDiagnosticsRecorder?.complete(
+                            status: "failed",
                             error: AgentSafeError(error).message
                         )
                     }

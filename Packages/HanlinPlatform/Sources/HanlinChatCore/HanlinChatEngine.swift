@@ -11,8 +11,11 @@ import FoundationNetworking
 #endif
 
 public actor HanlinChatEngine {
+    private let sessionConfiguration: URLSessionConfiguration
 
-    public init() {}
+    public init(sessionConfiguration: URLSessionConfiguration = .ephemeral) {
+        self.sessionConfiguration = sessionConfiguration
+    }
 
     public func stream(
         messages: [HanlinChatMessage],
@@ -40,8 +43,8 @@ public actor HanlinChatEngine {
         let (stream, continuation) = AsyncThrowingStream<HanlinChatStreamEvent, Error>.makeStream()
 
 #if os(iOS) || os(macOS) || os(watchOS) || os(tvOS) || os(visionOS)
+        let session = URLSession(configuration: sessionConfiguration)
         let task = Task.detached(priority: .userInitiated) {
-            let session = URLSession(configuration: .ephemeral)
             defer { session.finishTasksAndInvalidate() }
 
             do {

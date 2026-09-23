@@ -179,6 +179,7 @@ struct InputTextField: UIViewRepresentable {
         tf.onPasteImage    = onPasteImage
         tf.onPasteFile     = onPasteFile
         tf.placeholder     = placeholder
+        tf.accessibilityIdentifier = "hanlin-chat-input"
         tf.font            = .systemFont(ofSize: fontSize)
         tf.borderStyle     = .none
         tf.setContentHuggingPriority(.required, for: .horizontal)
@@ -2182,6 +2183,7 @@ struct ActionButtonsView: View {
                         size: size32,
                         action: onSendUser
                     )
+                    .accessibilityIdentifier("hanlin-chat-send")
                     .animation(.spring(response: 0.5, dampingFraction: 0.7), value: message)
                 } else {                     // 观察
                     Button(action: onSendObserve) {

@@ -71,6 +71,7 @@ class AppDataManager: ObservableObject {
         preloadUserInfoIfNeeded(context: context)
         preloadPromptIfNeeded(context: context)
         clearOrphanData(context: context)
+        AgentRuntimeUIAcceptanceProvider.configureIfRequested(context: context)
     }
 }
 

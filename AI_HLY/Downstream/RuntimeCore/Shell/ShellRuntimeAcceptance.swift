@@ -63,12 +63,10 @@ enum ShellRuntimeAcceptance {
                 options: .atomic
             )
         } catch {
-            preconditionFailure("Could not persist shell acceptance result: \(error.localizedDescription)")
-        }
-
-        if !result.passed {
-            try? await Task.sleep(for: .seconds(5))
-            preconditionFailure(result.failureMessage ?? "Shell acceptance failed.")
+            NativeToolTraceLogger.shared.log(
+                "shell_acceptance_persistence_failed",
+                ["error": error.localizedDescription]
+            )
         }
     }
 

@@ -108,8 +108,18 @@ enum HanlinFileService {
 
         let basePath = baseDirectory.standardizedFileURL.path(percentEncoded: false)
         let resolvedPath = resolved.path(percentEncoded: false)
-        guard resolvedPath.hasPrefix(basePath) else {
+        guard resolvedPath == basePath || resolvedPath.hasPrefix(basePath + "/") else {
             throw HanlinHostServiceError.pathOutOfScope(virtualPath)
+        }
+
+        var candidate = baseDirectory.standardizedFileURL
+        for component in virtualPath.split(separator: "/", omittingEmptySubsequences: true) {
+            candidate.append(path: String(component))
+            guard fm.fileExists(atPath: candidate.path(percentEncoded: false)) else { continue }
+            let values = try candidate.resourceValues(forKeys: [.isSymbolicLinkKey])
+            if values.isSymbolicLink == true {
+                throw HanlinHostServiceError.pathOutOfScope(virtualPath)
+            }
         }
 
         return resolved
