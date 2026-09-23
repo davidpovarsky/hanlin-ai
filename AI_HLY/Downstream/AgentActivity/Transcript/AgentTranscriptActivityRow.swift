@@ -14,9 +14,17 @@ struct AgentTranscriptActivityRow: View {
       for: activity?.kind,
       toolName: item.toolName
     )
-    let title =
-      activity?.narrativeText ?? activity?.title ?? item.text ?? String(localized: "Thinking")
+    let isReasoning = activity?.kind == .reasoning || (family == .generic && item.toolName == nil)
+    let title: String = {
+      if isReasoning {
+        return String(localized: "Thinking")
+      }
+      return activity?.narrativeText ?? activity?.title ?? item.text ?? String(localized: "Thinking")
+    }()
+
     let queries = activity?.queries ?? []
+    let reasoningDetails = isReasoning ? (activity?.outputPreview ?? activity?.narrativeText) : nil
+    let outputPreview = reasoningDetails ?? activity?.outputPreview
 
     ChatExecutionTimelineItemView(
       familyID: family,
@@ -25,7 +33,7 @@ struct AgentTranscriptActivityRow: View {
       status: activity?.status ?? item.status,
       queries: queries,
       inputPreview: activity?.inputPreview,
-      outputPreview: activity?.outputPreview,
+      outputPreview: outputPreview,
       errorDescription: activity?.errorDescription,
       customHandler: explicitExecution?.customHandler,
       toolName: item.toolName,

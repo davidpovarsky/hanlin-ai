@@ -22,22 +22,38 @@ enum ChatHostContainerStyle: String, Codable, Hashable, Sendable {
 // MARK: - Host-Specific Resolved View Models
 
 /// Host-specific resolved expansion state combining canonical expansion mode
-/// with host presentation concerns (title, native launch routing).
+/// with host presentation concerns (title, canonical HanlinLaunchRequest, legacy routing).
 struct ChatResolvedExpansion: Hashable, Sendable {
   var mode: HanlinExpansionMode
   var title: String?
-  var launchRequest: NativeAppLaunchRequest?
+  var launchRequest: HanlinLaunchRequest?
+  var legacyLaunchRequest: NativeAppLaunchRequest?
   var expandedHandler: String?
 
   init(
     mode: HanlinExpansionMode,
     title: String? = nil,
-    launchRequest: NativeAppLaunchRequest? = nil,
+    launchRequest: HanlinLaunchRequest? = nil,
+    legacyLaunchRequest: NativeAppLaunchRequest? = nil,
     expandedHandler: String? = nil
   ) {
     self.mode = mode
     self.title = title
     self.launchRequest = launchRequest
+    self.legacyLaunchRequest = legacyLaunchRequest
+    self.expandedHandler = expandedHandler
+  }
+
+  init(
+    mode: HanlinExpansionMode,
+    title: String? = nil,
+    launchRequest: NativeAppLaunchRequest?,
+    expandedHandler: String? = nil
+  ) {
+    self.mode = mode
+    self.title = title
+    self.launchRequest = launchRequest.map { HanlinLaunchRequest(from: $0) }
+    self.legacyLaunchRequest = launchRequest
     self.expandedHandler = expandedHandler
   }
 }
@@ -186,34 +202,80 @@ enum ChatPresentationBridge {
 
   // MARK: - Expansion Resolution
 
-  /// Resolves canonical expansion descriptor according to host policy:
-  /// 1. No descriptor or empty supported modes -> nil (no affordance).
-  /// 2. Iterates declared supportedModes in preference order.
-  /// 3. Selects first mode the host/device can legitimately honor.
-  /// 4. Host policy decides availability.
-  /// 5. Does NOT silently turn unsupported .window into .sheet.
-  /// 6. Preserves NativeAppLaunchRequest for window routes.
+  /// Resolves canonical expansion descriptor into all valid and supported host expansion modes:
+  /// 1. No descriptor or empty supported modes -> empty array.
+  /// 2. Iterates declared supportedModes in declared order.
+  /// 3. Filters out modes the host/device cannot legitimately honor.
+  /// 4. Does NOT silently turn unsupported .window into .sheet.
+  /// 5. Validates that declared expandedHandler is valid/resolvable if specified.
+  static func resolveExpansions(
+    descriptor: HanlinExpansionDescriptor?,
+    title: String? = nil,
+    launchRequest: HanlinLaunchRequest? = nil,
+    legacyLaunchRequest: NativeAppLaunchRequest? = nil,
+    handler: String? = nil,
+    canResolveHandler: ((String) -> Bool)? = nil
+  ) -> [ChatResolvedExpansion] {
+    guard let descriptor = descriptor, !descriptor.supportedModes.isEmpty else {
+      return []
+    }
+
+    var results: [ChatResolvedExpansion] = []
+    let effectiveHandler = descriptor.expandedHandler ?? handler
+
+    for mode in descriptor.supportedModes {
+      // 1. Check host/platform availability
+      guard ChatHostPresentationPolicy.isExpansionModeAvailable(mode) else {
+        continue
+      }
+
+      // 2. If expansion declares an expandedHandler, verify it resolves
+      if let expHandler = descriptor.expandedHandler {
+        guard !expHandler.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
+          continue
+        }
+        if let canResolve = canResolveHandler, !canResolve(expHandler) {
+          continue
+        }
+      }
+
+      results.append(
+        ChatResolvedExpansion(
+          mode: mode,
+          title: title,
+          launchRequest: launchRequest,
+          legacyLaunchRequest: legacyLaunchRequest,
+          expandedHandler: effectiveHandler
+        )
+      )
+    }
+
+    return results
+  }
+
+  /// Single expansion resolver for backwards compatibility.
   static func resolveExpansion(
     descriptor: HanlinExpansionDescriptor?,
     title: String? = nil,
     launchRequest: NativeAppLaunchRequest? = nil
   ) -> ChatResolvedExpansion? {
-    guard let descriptor = descriptor, !descriptor.supportedModes.isEmpty else {
-      return nil
-    }
+    resolveExpansions(
+      descriptor: descriptor,
+      title: title,
+      legacyLaunchRequest: launchRequest
+    ).first
+  }
 
-    for mode in descriptor.supportedModes {
-      if ChatHostPresentationPolicy.isExpansionModeAvailable(mode) {
-        return ChatResolvedExpansion(
-          mode: mode,
-          title: title,
-          launchRequest: launchRequest,
-          expandedHandler: descriptor.expandedHandler
-        )
-      }
-    }
-
-    return nil
+  static func resolveExpansion(
+    descriptor: HanlinExpansionDescriptor?,
+    title: String? = nil,
+    launchRequest: HanlinLaunchRequest? = nil
+  ) -> ChatResolvedExpansion? {
+    resolveExpansions(
+      descriptor: descriptor,
+      title: title,
+      launchRequest: launchRequest
+    ).first
   }
 
   // MARK: - Legacy NativeUIBlock Adapters
@@ -341,5 +403,53 @@ enum ChatPresentationBridge {
     toolName: String? = nil
   ) -> HanlinEmbeddedSizingPreference {
     sizingPreference(explicit: explicit?.sizing, for: blocks, toolName: toolName)
+  }
+}
+
+// MARK: - Launch Request Conversions
+
+extension HanlinLaunchRequest {
+  init(from legacy: NativeAppLaunchRequest) {
+    let appID = (try? HanlinAppID(validating: legacy.appID)) ?? HanlinAppID(unchecked: legacy.appID)
+    let launchID = HanlinLaunchID(unchecked: legacy.id.uuidString)
+    let reqID = HanlinRequestID(unchecked: legacy.id.uuidString)
+    let intent: HanlinPresentationIntent = switch legacy.presentationStyle {
+    case .fullScreen: .fullScreen
+    case .largeSheet: .sheet
+    case .newWindow: .window
+    }
+    self.init(
+      id: launchID,
+      requestID: reqID,
+      target: HanlinLaunchTarget(appID: appID),
+      presentation: intent,
+      initialRoute: nil,
+      origin: .chatUI
+    )
+  }
+
+  func toLegacy() -> NativeAppLaunchRequest {
+    NativeAppLaunchRequest(from: self)
+  }
+}
+
+extension NativeAppLaunchRequest {
+  init(from canonical: HanlinLaunchRequest) {
+    let style: NativeAppPresentationStyle = switch canonical.presentation {
+    case .fullScreen: .fullScreen
+    case .sheet: .largeSheet
+    case .window: .newWindow
+    case .inline: .largeSheet
+    }
+    self.init(
+      id: UUID(uuidString: canonical.id.rawValue) ?? UUID(),
+      appID: canonical.target.appID.rawValue,
+      presentationStyle: style,
+      initialRoute: nil
+    )
+  }
+
+  func toCanonical() -> HanlinLaunchRequest {
+    HanlinLaunchRequest(from: self)
   }
 }

@@ -123,9 +123,11 @@ struct ChatExecutionTimelineItemView: View {
           Image(systemName: isInlineExpanded ? "chevron.down" : "chevron.forward")
             .font(.caption2.weight(.semibold))
             .foregroundStyle(.tertiary)
+            .accessibilityIdentifier("chat_execution_chevron")
         }
       }
       .contentShape(Rectangle())
+      .accessibilityIdentifier("chat_execution_row")
       .onTapGesture {
         if hasDetails {
           toggleInlineExpansion()
@@ -136,6 +138,7 @@ struct ChatExecutionTimelineItemView: View {
 
       if isInlineExpanded {
         inlineDetailsView
+          .accessibilityIdentifier("chat_execution_inline_details")
           .transition(.opacity.combined(with: .move(edge: .top)))
       }
     }

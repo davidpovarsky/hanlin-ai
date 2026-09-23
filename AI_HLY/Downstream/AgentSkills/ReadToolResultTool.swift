@@ -49,7 +49,7 @@ public enum ReadToolResultTool {
 
         let ref = args.reference.trimmingCharacters(in: .whitespacesAndNewlines)
         let offset = max(0, args.offset ?? 0)
-        let limit = min(max(1, args.limit ?? 4096), 16384)
+        let limit = min(max(1, args.limit ?? ToolResultStore.defaultReadLimit), ToolResultStore.maxReadLimit)
 
         guard let slice = session.resultStore.read(reference: ref, offset: offset, limit: limit) else {
             return "Error: Tool result reference '\(ref)' not found or has expired."

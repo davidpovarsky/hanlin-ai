@@ -37,7 +37,7 @@ public enum ToolSearchTool {
     public static func execute(
         argumentsJSON: String,
         session: AssistantCapabilitySession,
-        searchProvider: (String, Int) -> [CanonicalToolSearchRecord]
+        searchProvider: (String, Int, Set<String>) -> [CanonicalToolSearchRecord]
     ) -> String {
         guard let data = argumentsJSON.data(using: .utf8),
               let args = try? JSONDecoder().decode(Arguments.self, from: data) else {
@@ -50,7 +50,7 @@ public enum ToolSearchTool {
         }
 
         let limit = min(max(args.limit ?? 5, 1), 10)
-        let results = searchProvider(query, limit)
+        let results = searchProvider(query, limit, session.activeSkillToolHints)
 
         guard !results.isEmpty else {
             return "No matching tools found for '\(query)'. Try different keywords or load a relevant skill."
@@ -65,5 +65,16 @@ public enum ToolSearchTool {
         }
 
         return response.trimmingCharacters(in: .whitespacesAndNewlines)
+    }
+
+    @MainActor
+    public static func execute(
+        argumentsJSON: String,
+        session: AssistantCapabilitySession,
+        searchProvider: (String, Int) -> [CanonicalToolSearchRecord]
+    ) -> String {
+        execute(argumentsJSON: argumentsJSON, session: session) { query, limit, _ in
+            searchProvider(query, limit)
+        }
     }
 }

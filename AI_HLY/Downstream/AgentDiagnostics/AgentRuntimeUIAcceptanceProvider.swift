@@ -59,7 +59,7 @@ enum AgentRuntimeUIAcceptanceProvider {
                 useModel: 0
             ))
             if isSkillsEnabled {
-                if let skillID = try? HanlinSkillID(validating: "acceptance-skill"),
+                if let skillID = try? HanlinSkillID(validating: "acceptance_skill"),
                    let descriptor = try? HanlinSkillDescriptor(
                        id: skillID,
                        title: "Acceptance Skill",

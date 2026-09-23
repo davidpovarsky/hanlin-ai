@@ -13,6 +13,7 @@ public final class AssistantCapabilitySession {
 
     public private(set) var loadedSkillIDs: Set<HanlinSkillID> = []
     public private(set) var loadedInstructionTexts: [String] = []
+    public private(set) var activeSkillToolHints: Set<String> = []
     public private(set) var exposedToolAliases: Set<String> = []
     public private(set) var discoveredToolAliases: [String] = []
 
@@ -26,11 +27,18 @@ public final class AssistantCapabilitySession {
         self.exposedToolAliases = initialExposedAliases
     }
 
-    /// Mark a skill as loaded and append its instructions to be returned to the agent.
-    public func recordSkillLoaded(id: HanlinSkillID, instructionText: String) {
+    /// Mark a skill as loaded, append its instructions and record preferred tool hints.
+    public func recordSkillLoaded(
+        id: HanlinSkillID,
+        instructionText: String,
+        preferredToolIDs: [String] = []
+    ) {
         loadedSkillIDs.insert(id)
         if !instructionText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
             loadedInstructionTexts.append(instructionText)
+        }
+        for hint in preferredToolIDs {
+            activeSkillToolHints.insert(hint)
         }
     }
 
@@ -52,5 +60,20 @@ public final class AssistantCapabilitySession {
     /// Check if a tool alias is currently exposed.
     public func isToolExposed(_ alias: String) -> Bool {
         exposedToolAliases.contains(alias)
+    }
+
+    /// Clears run-scoped state and expires stored large tool results.
+    public func reset() {
+        loadedSkillIDs.removeAll()
+        loadedInstructionTexts.removeAll()
+        activeSkillToolHints.removeAll()
+        exposedToolAliases.removeAll()
+        discoveredToolAliases.removeAll()
+        resultStore.clear()
+    }
+
+    /// Explicitly finishes the current assistant run, clearing temporary stored results.
+    public func finishRun() {
+        resultStore.clear()
     }
 }

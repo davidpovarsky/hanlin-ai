@@ -47,7 +47,11 @@ public enum LoadSkillTool {
         }
 
         let instructions = await catalog.loadInstructions(for: descriptor)
-        session.recordSkillLoaded(id: descriptor.id, instructionText: instructions)
+        session.recordSkillLoaded(
+            id: descriptor.id,
+            instructionText: instructions,
+            preferredToolIDs: descriptor.preferredToolIDs
+        )
 
         let candidateAliases = descriptor.preferredToolIDs
         let decision = planner.plan(

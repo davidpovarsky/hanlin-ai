@@ -122,6 +122,8 @@ public struct CanonicalToolSearchRecord: Hashable, Sendable {
   public let source: String
   public let keywords: [String]
   public let schemaSizeBytes: Int
+  public let category: String?
+  public let owner: String?
 
   public init(
     alias: String,
@@ -129,7 +131,9 @@ public struct CanonicalToolSearchRecord: Hashable, Sendable {
     summary: String,
     source: String,
     keywords: [String] = [],
-    schemaSizeBytes: Int = 0
+    schemaSizeBytes: Int = 0,
+    category: String? = nil,
+    owner: String? = nil
   ) {
     self.alias = alias
     self.title = title
@@ -137,6 +141,8 @@ public struct CanonicalToolSearchRecord: Hashable, Sendable {
     self.source = source
     self.keywords = keywords
     self.schemaSizeBytes = schemaSizeBytes
+    self.category = category
+    self.owner = owner
   }
 }
 
@@ -264,10 +270,9 @@ struct HanlinCanonicalToolAuthority {
         }
         return 400
       }()
+      let target = backendRouteIndex.target(logicalToolID: route.logicalToolID)
       let sourceName: String = {
-        guard let target = backendRouteIndex.target(logicalToolID: route.logicalToolID) else {
-          return "unknown"
-        }
+        guard let target else { return "unknown" }
         switch target.backend {
         case .native: return "native"
         case .mcp: return "mcp"
@@ -277,13 +282,29 @@ struct HanlinCanonicalToolAuthority {
       }()
       let titleStr = descriptor.title.preferredValue()
       let summaryStr = descriptor.summary.preferredValue()
+      let toolName = route.logicalToolID.localToolID.rawValue
+      var allKeywords = [route.alias, titleStr, summaryStr]
+      var category: String? = nil
+      var owner: String? = route.logicalToolID.providerInstanceID.rawValue
+
+      if case .legacy = target?.backend {
+        allKeywords += LegacyToolCanonicalAdapter.keywords(for: toolName)
+        category = LegacyToolCanonicalAdapter.category(for: toolName)
+        owner = "legacy"
+      } else {
+        allKeywords += descriptor.capabilities.map(\.rawValue)
+        category = sourceName
+      }
+
       return CanonicalToolSearchRecord(
         alias: route.alias,
         title: titleStr,
         summary: summaryStr,
         source: sourceName,
-        keywords: [route.alias, titleStr, summaryStr],
-        schemaSizeBytes: schemaBytes
+        keywords: Array(Set(allKeywords)),
+        schemaSizeBytes: schemaBytes,
+        category: category,
+        owner: owner
       )
     }
   }

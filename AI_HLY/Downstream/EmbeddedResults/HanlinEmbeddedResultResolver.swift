@@ -16,21 +16,45 @@ public final class HanlinEmbeddedResultResolver {
     public init() {}
 
     /// Resolves an arbitrary embedded result handler into an interactive session.
+    /// Requires explicit canonical owner identity (via ownerID or payload.ownerID) or a qualified "owner:handler" format.
+    /// Never falls back to guessing ownership from toolName.
     public func resolve(
         handler: String,
+        ownerID: String? = nil,
         toolName: String? = nil,
         payload: HanlinEmbeddedResultPayload? = nil
     ) -> (any HanlinEmbeddedResultSession)? {
         let trimmedHandler = handler.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !trimmedHandler.isEmpty else { return nil }
 
-        // Parse handler format: either "appID:handlerName" or "handlerName"
-        let parts = trimmedHandler.split(separator: ":", maxSplits: 1).map(String.init)
-        let resolvedAppIDStr = parts.count == 2 ? parts[0] : (toolName ?? "")
-        let subHandler = parts.count == 2 ? parts[1] : parts[0]
+        // 1. Explicit canonical owner identity (from argument or payload.ownerID)
+        // 2. Compatibility fallback: qualified "ownerID:handlerName"
+        // NEVER fall back to toolName == appID
+        let explicitOwner = (ownerID ?? payload?.ownerID)?.trimmingCharacters(in: .whitespacesAndNewlines)
+        let resolvedOwnerStr: String
+        let subHandler: String
+
+        if let explicitOwner, !explicitOwner.isEmpty {
+            resolvedOwnerStr = explicitOwner
+            if trimmedHandler.hasPrefix(explicitOwner + ":") {
+                subHandler = String(trimmedHandler.dropFirst(explicitOwner.count + 1))
+            } else {
+                subHandler = trimmedHandler
+            }
+        } else {
+            let parts = trimmedHandler.split(separator: ":", maxSplits: 1).map(String.init)
+            guard parts.count == 2 else {
+                // Without explicit owner identity or qualified format, resolution fails cleanly
+                return nil
+            }
+            resolvedOwnerStr = parts[0]
+            subHandler = parts[1]
+        }
+
+        guard !resolvedOwnerStr.isEmpty, !subHandler.isEmpty else { return nil }
 
         // 1. Check for Swift compiled mini app
-        if let appID = try? HanlinAppID(validating: resolvedAppIDStr) {
+        if let appID = try? HanlinAppID(validating: resolvedOwnerStr) {
             if let custom = customSwiftResolver?(appID, subHandler, payload) {
                 return custom
             }
@@ -40,7 +64,7 @@ public final class HanlinEmbeddedResultResolver {
         }
 
         // 2. Check for installed scripting package (ScriptUI, NativeScript, Expo)
-        if let packageID = try? HanlinPackageID(validating: resolvedAppIDStr) {
+        if let packageID = try? HanlinPackageID(validating: resolvedOwnerStr) {
             // Injected test resolvers first
             if let custom = customScriptUIResolver?(packageID, subHandler, payload) {
                 return custom

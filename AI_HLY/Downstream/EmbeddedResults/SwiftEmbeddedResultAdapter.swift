@@ -33,18 +33,17 @@ public enum SwiftEmbeddedResultAdapter {
 
         let safePayload = payload ?? HanlinEmbeddedResultPayload()
 
-        let rootView: AnyView
-        if let embeddedProvider = provider as? any HanlinCompiledEmbeddedResultProvider,
-           let customView = embeddedProvider.makeEmbeddedView(handler: handler, payload: safePayload, context: context) {
-            rootView = customView
-        } else {
-            rootView = provider.makeRootView(context: context)
+        // Strict resolution: Only render custom embedded view if declared and resolved.
+        // Never embed the full foreground app UI (makeRootView) for an unhandled tool result.
+        guard let embeddedProvider = provider as? any HanlinCompiledEmbeddedResultProvider,
+              let customView = embeddedProvider.makeEmbeddedView(handler: handler, payload: safePayload, context: context) else {
+            return nil
         }
 
         return AnyEmbeddedResultSession(
             engine: .swift,
             appID: appID,
-            rootView: rootView
+            rootView: customView
         )
     }
 }

@@ -143,18 +143,225 @@ struct EmbeddedResultResolverTests {
     @Test("BoundedToolResultStore enforces capacity bounds and provides slices")
     func boundedResultStoreCapacity() throws {
         let store = BoundedToolResultStore(maxStoredBytes: 500)
-        let ref1 = store.store("AAAAA")
-        let ref2 = store.store("BBBBB")
+        let ref1 = store.store(String(repeating: "A", count: 200))
+        let ref2 = store.store(String(repeating: "B", count: 200))
 
-        #expect(store.read(reference: ref1, offset: 0, limit: 10)?.text == "AAAAA")
-        #expect(store.read(reference: ref2, offset: 0, limit: 10)?.text == "BBBBB")
+        #expect(!ref1.isEmpty && !ref2.isEmpty)
+        #expect(store.currentTotalBytes == 400)
+        #expect(store.read(reference: ref1, offset: 0, limit: 10)?.text == "AAAAAAAAAA")
+        #expect(store.read(reference: ref2, offset: 0, limit: 10)?.text == "BBBBBBBBBB")
 
-        // Overfill store
-        let large = String(repeating: "Z", count: 600)
-        let ref3 = store.store(large)
+        // 1. Oversized entry that individually exceeds maxTotalBytes (600 > 500) is rejected
+        let refOversized = store.store(String(repeating: "Z", count: 600))
+        #expect(refOversized.isEmpty)
+        #expect(store.currentTotalBytes == 400)
+        #expect(store.read(reference: ref1, offset: 0, limit: 10)?.text == "AAAAAAAAAA")
 
-        #expect(store.read(reference: ref3, offset: 0, limit: 10)?.text == "ZZZZZZZZZZ")
-        // Older entries should be pruned to keep total stored bytes under bound
+        // 2. Adding a valid entry (200 bytes) pushes total (600 > 500), evicting oldest (ref1)
+        let ref3 = store.store(String(repeating: "C", count: 200))
+        #expect(!ref3.isEmpty)
+        #expect(store.currentTotalBytes == 400)
         #expect(store.read(reference: ref1, offset: 0, limit: 10) == nil)
+        #expect(store.read(reference: ref2, offset: 0, limit: 10)?.text == "BBBBBBBBBB")
+        #expect(store.read(reference: ref3, offset: 0, limit: 10)?.text == "CCCCCCCCCC")
+    }
+
+    @MainActor
+    @Test("BoundedToolResultStore supports Unicode UTF-8 multi-byte pagination without truncation")
+    func resultStoreUnicodePagination() throws {
+        let store = BoundedToolResultStore(maxStoredBytes: 2048)
+        let hebrewText = "שלום עולם! בדיקת תוצאה משובצת במסד נתונים מקומי."
+        let ref = store.store(hebrewText)
+        #expect(!ref.isEmpty)
+
+        // Read initial chunk
+        let slice1 = store.read(reference: ref, offset: 0, limit: 15)
+        #expect(slice1 != nil)
+        #expect(!slice1!.chunk.isEmpty)
+        #expect(slice1!.hasMore)
+
+        // Read with offset mid-character: snaps forward to valid leading UTF-8 byte
+        let sliceMid = store.read(reference: ref, offset: 1, limit: 20)
+        #expect(sliceMid != nil)
+        #expect(!sliceMid!.chunk.isEmpty)
+
+        // Full payload retrieval returns identical string
+        let full = store.fullPayload(for: ref)
+        #expect(full == hebrewText)
+    }
+
+    @MainActor
+    @Test("ResultStore entries expire and clear upon session run finish")
+    func resultStoreSessionCleanup() throws {
+        let session = AssistantCapabilitySession()
+        let ref = session.resultStore.store("temporary run artifact")
+        #expect(!ref.isEmpty)
+        #expect(session.resultStore.read(reference: ref, offset: 0, limit: 10)?.text == "temporary ")
+
+        session.finishRun()
+        #expect(session.resultStore.currentTotalBytes == 0)
+        #expect(session.resultStore.read(reference: ref, offset: 0, limit: 10) == nil)
+    }
+
+    @MainActor
+    @Test("Swift embedded adapter strictly resolves custom view and never embeds full app")
+    func swiftAdapterStrictResolution() throws {
+        let sefariaAppID = try HanlinAppID(validating: "nativeapp.sefaria")
+        // Sefaria provider exists and conforms to HanlinCompiledMiniAppProvider (makeRootView),
+        // but does NOT conform to HanlinCompiledEmbeddedResultProvider.
+        // It must cleanly return nil rather than embedding the entire foreground application!
+        let session = SwiftEmbeddedResultAdapter.resolve(
+            appID: sefariaAppID,
+            handler: "custom_card",
+            payload: nil
+        )
+        #expect(session == nil)
+    }
+
+    @MainActor
+    @Test("ScriptUI, NativeScript and Expo adapters return nil for undeclared handlers")
+    func scriptingAdaptersStrictResolution() throws {
+        let unknownPackageID = try HanlinPackageID(validating: "com.example.nonexistent")
+        let scriptSession = ScriptUIEmbeddedResultAdapter.resolve(
+            packageID: unknownPackageID,
+            handler: "chart_view",
+            payload: nil
+        )
+        #expect(scriptSession == nil)
+
+        let nativeSession = NativeScriptEmbeddedResultAdapter.resolve(
+            packageID: unknownPackageID,
+            handler: "native_chart",
+            payload: nil
+        )
+        #expect(nativeSession == nil)
+
+        let expoSession = ExpoEmbeddedResultAdapter.resolve(
+            packageID: unknownPackageID,
+            handler: "expo_chart",
+            payload: nil
+        )
+        #expect(expoSession == nil)
+    }
+
+    @MainActor
+    @Test("Resolver uses explicit owner identity and never falls back to toolName guessing")
+    func resolverOwnerIdentityRouting() throws {
+        let resolver = HanlinEmbeddedResultResolver()
+        var receivedAppID: HanlinAppID?
+
+        resolver.customSwiftResolver = { appID, handler, _ in
+            receivedAppID = appID
+            return AnyEmbeddedResultSession(
+                engine: .swift,
+                appID: appID,
+                rootView: AnyView(Text("View"))
+            )
+        }
+
+        // 1. Explicit ownerID is respected
+        let session1 = resolver.resolve(
+            handler: "render_view",
+            ownerID: "explicit.app",
+            toolName: "some_unrelated_tool",
+            payload: nil
+        )
+        #expect(session1 != nil)
+        #expect(receivedAppID?.rawValue == "explicit.app")
+
+        // 2. Unqualified handler with NO ownerID returns nil — toolName is NEVER guessed as appID!
+        receivedAppID = nil
+        let session2 = resolver.resolve(
+            handler: "render_view",
+            ownerID: nil,
+            toolName: "some_unrelated_tool",
+            payload: nil
+        )
+        #expect(session2 == nil)
+        #expect(receivedAppID == nil)
+
+        // 3. Qualified handler format "owner:handler" resolves
+        let session3 = resolver.resolve(
+            handler: "qualified.app:render_view",
+            ownerID: nil,
+            toolName: nil,
+            payload: nil
+        )
+        #expect(session3 != nil)
+        #expect(receivedAppID?.rawValue == "qualified.app")
+    }
+
+    @MainActor
+    @Test("ChatPresentationBridge resolves multiple valid expansions and validates expandedHandler")
+    func chatPresentationBridgeMultiExpansions() throws {
+        // 1. Multiple valid expansion modes coexist
+        let multiDescriptor = HanlinExpansionDescriptor(
+            supportedModes: [.sheet, .fullScreen]
+        )
+        let expansions = ChatPresentationBridge.resolveExpansions(
+            descriptor: multiDescriptor,
+            title: "Result View"
+        )
+        #expect(expansions.count == 2)
+        #expect(expansions[0].mode == .sheet)
+        #expect(expansions[1].mode == .fullScreen)
+
+        // 2. When expandedHandler cannot resolve, expansion is excluded
+        let expDescriptor = HanlinExpansionDescriptor(
+            supportedModes: [.sheet],
+            expandedHandler: "modal_expanded_view"
+        )
+        let rejected = ChatPresentationBridge.resolveExpansions(
+            descriptor: expDescriptor,
+            canResolveHandler: { _ in false }
+        )
+        #expect(rejected.isEmpty)
+
+        // 3. When expandedHandler resolves, expansion is included with expandedHandler
+        let accepted = ChatPresentationBridge.resolveExpansions(
+            descriptor: expDescriptor,
+            canResolveHandler: { handler in handler == "modal_expanded_view" }
+        )
+        #expect(accepted.count == 1)
+        #expect(accepted.first?.expandedHandler == "modal_expanded_view")
+    }
+
+    @MainActor
+    @Test("HanlinEmbeddedContentAction and HanlinLaunchRequest preserve canonical structure")
+    func contentActionsAndLaunchRequestStructure() throws {
+        let appID = try HanlinAppID(validating: "nativeapp.maps")
+        let legacyRequest = NativeAppLaunchRequest(
+            id: UUID(),
+            appID: "nativeapp.maps",
+            presentationStyle: .fullScreen,
+            initialRoute: nil
+        )
+
+        let canonicalRequest = legacyRequest.toCanonical()
+        #expect(canonicalRequest.target.appID == appID)
+        #expect(canonicalRequest.presentation == .fullScreen)
+
+        let action = HanlinEmbeddedContentAction(
+            id: "navigate_maps",
+            title: "Navigate",
+            systemImage: "map.fill",
+            launchRequest: canonicalRequest
+        )
+
+        let payload = HanlinEmbeddedResultPayload(
+            ownerID: "nativeapp.maps",
+            actions: [action]
+        )
+
+        #expect(payload.ownerID == "nativeapp.maps")
+        #expect(payload.actions.count == 1)
+        #expect(payload.actions[0].id == "navigate_maps")
+        #expect(payload.actions[0].title == "Navigate")
+        #expect(payload.actions[0].systemImage == "map.fill")
+
+        // Round-trip conversion
+        let roundTripLegacy = canonicalRequest.toLegacy()
+        #expect(roundTripLegacy.appID == "nativeapp.maps")
+        #expect(roundTripLegacy.presentationStyle == .fullScreen)
     }
 }

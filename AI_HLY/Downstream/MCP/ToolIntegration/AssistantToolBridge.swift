@@ -61,10 +61,10 @@ enum AssistantToolBridge {
       self.executeScripting = executeScripting
       self.executeLegacy = executeLegacy ?? { toolName, _, _ in
         NativeToolResult(
-          modelText: "Legacy tool '\(toolName)' executed.",
-          userText: nil,
+          modelText: "Legacy tool '\(toolName)' executor not configured.",
+          userText: "Legacy tool '\(toolName)' is not configured.",
           uiBlocks: [],
-          outcome: .succeeded
+          outcome: .failed
         )
       }
     }
@@ -162,13 +162,7 @@ enum AssistantToolBridge {
             )
           }
         },
-        executeLegacy: executeLegacy ?? { toolName, _, _ in
-          NativeToolResult(
-            modelText: "Legacy tool '\(toolName)' executed.",
-            userText: nil,
-            outcome: .succeeded
-          )
-        }
+        executeLegacy: executeLegacy
       )
     }
 
@@ -249,27 +243,52 @@ enum AssistantToolBridge {
       return sizes
     }
 
-    func search(query: String, limit: Int = 10) -> [CanonicalToolSearchRecord] {
+    func search(
+      query: String,
+      limit: Int = 10,
+      preferredAliases: Set<String> = []
+    ) -> [CanonicalToolSearchRecord] {
       let terms = query.lowercased().split(separator: " ").map(String.init)
       let all = authority.searchableMetadata()
-      guard !terms.isEmpty else { return Array(all.prefix(limit)) }
+      guard !terms.isEmpty else {
+        return Array(all.sorted {
+          let p0 = preferredAliases.contains($0.alias) ? 1 : 0
+          let p1 = preferredAliases.contains($1.alias) ? 1 : 0
+          if p0 != p1 { return p0 > p1 }
+          return $0.alias < $1.alias
+        }.prefix(limit))
+      }
       let scored = all.compactMap { record -> (CanonicalToolSearchRecord, Int)? in
         var score = 0
         let alias = record.alias.lowercased()
         let title = record.title.lowercased()
         let summary = record.summary.lowercased()
+        let category = record.category?.lowercased() ?? ""
+
+        // Loaded skill boost: prefer tools hinted by the active skill, without excluding others
+        if preferredAliases.contains(record.alias) {
+          score += 30
+        }
+
         for term in terms {
           if alias == term { score += 50 }
           else if alias.contains(term) { score += 20 }
           if title.contains(term) { score += 15 }
           if summary.contains(term) { score += 10 }
+          if category.contains(term) { score += 10 }
           for kw in record.keywords where kw.lowercased().contains(term) {
             score += 5
           }
         }
         return score > 0 ? (record, score) : nil
       }
-      return scored.sorted { $0.1 > $1.1 }.map(\.0)
+
+      // Deterministic ranking: score descending, then alias ascending
+      let sorted = scored.sorted {
+        if $0.1 != $1.1 { return $0.1 > $1.1 }
+        return $0.0.alias < $1.0.alias
+      }
+      return Array(sorted.map(\.0).prefix(limit))
     }
 
     func presentationProfile(for alias: String) -> ToolPresentationProfile? {

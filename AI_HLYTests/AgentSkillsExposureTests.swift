@@ -202,4 +202,88 @@ struct AgentSkillsExposureTests {
         )
         #expect(missing.contains("not found or has expired"))
     }
+
+    @MainActor
+    @Test("Production Skill catalog synchronizes system and canonical skills without acceptance bootstrap")
+    func productionSkillCatalogSynchronization() throws {
+        let catalog = HanlinSkillCatalog()
+        catalog.synchronizeProductionSkills(systemSkillConfig: SystemSkillsConfig(
+            memoryEnabled: true,
+            mapEnabled: true,
+            calendarEnabled: true,
+            searchEnabled: true,
+            knowledgeEnabled: true,
+            codeEnabled: true,
+            healthEnabled: true,
+            weatherEnabled: true,
+            canvasEnabled: true
+        ))
+
+        let skills = catalog.allSkills()
+        #expect(skills.count >= 9)
+
+        // Check key system domains are discoverable
+        let skillIDs = Set(skills.map(\.id.rawValue))
+        #expect(skillIDs.contains("memory_management"))
+        #expect(skillIDs.contains("calendar_and_reminders"))
+        #expect(skillIDs.contains("maps_and_navigation"))
+        #expect(skillIDs.contains("weather_forecast"))
+        #expect(skillIDs.contains("web_research"))
+        #expect(skillIDs.contains("knowledge_base"))
+        #expect(skillIDs.contains("canvas_editor"))
+        #expect(skillIDs.contains("code_execution"))
+        #expect(skillIDs.contains("health_and_fitness"))
+
+        // Feature toggle exclusion
+        let filteredCatalog = HanlinSkillCatalog()
+        filteredCatalog.synchronizeProductionSkills(systemSkillConfig: SystemSkillsConfig(
+            memoryEnabled: true,
+            mapEnabled: true,
+            calendarEnabled: true,
+            searchEnabled: true,
+            knowledgeEnabled: true,
+            codeEnabled: true,
+            healthEnabled: true,
+            weatherEnabled: false, // Weather disabled
+            canvasEnabled: true
+        ))
+        let filteredIDs = Set(filteredCatalog.allSkills().map(\.id.rawValue))
+        #expect(!filteredIDs.contains("weather_forecast"))
+        #expect(filteredIDs.contains("maps_and_navigation"))
+
+        // Initial skill index prompt reflects production skills
+        let indexPrompt = HanlinSkillIndex.prompt(for: filteredCatalog.allSkills())
+        #expect(indexPrompt.contains("`maps_and_navigation`"))
+        #expect(!indexPrompt.contains("acceptance_skill"))
+    }
+
+    @MainActor
+    @Test("LoadSkill propagates instructions and tool hints into session context")
+    func loadSkillInstructionContextPropagation() async throws {
+        let catalog = HanlinSkillCatalog()
+        let skillID = try HanlinSkillID(validating: "finance_analyst")
+        let descriptor = try HanlinSkillDescriptor(
+            id: skillID,
+            title: "Finance Analyst",
+            summary: "Financial metrics analysis",
+            instructions: .inline("Always calculate Sharpe ratio and volatility."),
+            preferredToolIDs: ["calculate_metrics", "plot_trend"]
+        )
+        catalog.register(descriptor: descriptor)
+
+        let session = AssistantCapabilitySession()
+        let result = await LoadSkillTool.execute(
+            argumentsJSON: "{\"skill_id\": \"finance_analyst\"}",
+            session: session,
+            catalog: catalog,
+            planner: AssistantToolExposurePlanner(maxSchemaBytes: 2000),
+            schemaSizes: [:]
+        )
+
+        #expect(session.loadedSkillIDs.contains(skillID))
+        #expect(session.loadedSkillInstructions.contains("Always calculate Sharpe ratio and volatility."))
+        #expect(session.activeSkillToolHints.contains("calculate_metrics"))
+        #expect(session.activeSkillToolHints.contains("plot_trend"))
+        #expect(result.contains("Finance Analyst"))
+    }
 }

@@ -30,9 +30,10 @@ public enum ExpoEmbeddedResultAdapter {
             return nil
         }
 
+        // Strict match: must correspond to a declared embedded-capable entrypoint
         guard let entrypoint = package.entrypoints.first(where: {
-            $0.id == handler || $0.runtimeProfile == .hanlinExpo
-        }) ?? package.entrypoints.first(where: { $0.runtimeProfile == .hanlinExpo }) else {
+            $0.id == handler && $0.runtimeProfile == .hanlinExpo
+        }) else {
             return nil
         }
 
@@ -50,6 +51,18 @@ public enum ExpoEmbeddedResultAdapter {
                 sessionID: sessionID
             )
             HanlinExpoHostServicesBridge.register(provider: adapter, forSessionID: sessionID)
+
+            var env = ProcessInfo.processInfo.environment
+            env["HANLIN_EMBEDDED"] = "1"
+            env["HANLIN_HANDLER"] = handler
+            if let ref = payload?.resultReference {
+                env["HANLIN_RESULT_REF"] = ref
+            }
+            if let json = payload?.payload,
+               let data = try? JSONEncoder().encode(json),
+               let str = String(data: data, encoding: .utf8) {
+                env["HANLIN_PAYLOAD"] = str
+            }
 
             let session = try HanlinExpoSession(
                 applicationRoot: entrypointURL.deletingLastPathComponent(),

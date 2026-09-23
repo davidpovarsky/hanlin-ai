@@ -14,8 +14,11 @@ struct ChatEmbeddedResultHost<Content: View, ExpandedContent: View>: View {
   let title: String?
   let sizingPreference: HanlinEmbeddedSizingPreference
   let expansions: [ChatResolvedExpansion]
+  let contentActions: [HanlinEmbeddedContentAction]
   let containerStyle: ChatHostContainerStyle
-  let onLaunchRequest: ((NativeAppLaunchRequest) -> Void)?
+  let onLaunchRequest: ((HanlinLaunchRequest) -> Void)?
+  let onLegacyLaunchRequest: ((NativeAppLaunchRequest) -> Void)?
+  let onContentAction: ((HanlinEmbeddedContentAction) -> Void)?
   @ViewBuilder let content: () -> Content
   @ViewBuilder let expandedContent: () -> ExpandedContent
 
@@ -28,26 +31,60 @@ struct ChatEmbeddedResultHost<Content: View, ExpandedContent: View>: View {
     title: String? = nil,
     sizingPreference: HanlinEmbeddedSizingPreference = HanlinEmbeddedSizingPreference(),
     expansions: [ChatResolvedExpansion] = [],
+    contentActions: [HanlinEmbeddedContentAction] = [],
     containerStyle: ChatHostContainerStyle = .borderedCard,
-    onLaunchRequest: ((NativeAppLaunchRequest) -> Void)? = nil,
+    onLaunchRequest: ((HanlinLaunchRequest) -> Void)? = nil,
+    onLegacyLaunchRequest: ((NativeAppLaunchRequest) -> Void)? = nil,
+    onContentAction: ((HanlinEmbeddedContentAction) -> Void)? = nil,
     @ViewBuilder content: @escaping () -> Content,
     @ViewBuilder expandedContent: @escaping () -> ExpandedContent
   ) {
     self.title = title
     self.sizingPreference = sizingPreference
     self.expansions = expansions
+    self.contentActions = contentActions
     self.containerStyle = containerStyle
     self.onLaunchRequest = onLaunchRequest
+    self.onLegacyLaunchRequest = onLegacyLaunchRequest
+    self.onContentAction = onContentAction
     self.content = content
     self.expandedContent = expandedContent
+  }
+
+  // Legacy initializer supporting NativeAppLaunchRequest
+  init(
+    title: String? = nil,
+    sizingPreference: HanlinEmbeddedSizingPreference = HanlinEmbeddedSizingPreference(),
+    expansions: [ChatResolvedExpansion] = [],
+    contentActions: [HanlinEmbeddedContentAction] = [],
+    containerStyle: ChatHostContainerStyle = .borderedCard,
+    onLaunchRequest: ((NativeAppLaunchRequest) -> Void)? = nil,
+    onContentAction: ((HanlinEmbeddedContentAction) -> Void)? = nil,
+    @ViewBuilder content: @escaping () -> Content,
+    @ViewBuilder expandedContent: @escaping () -> ExpandedContent
+  ) {
+    self.init(
+      title: title,
+      sizingPreference: sizingPreference,
+      expansions: expansions,
+      contentActions: contentActions,
+      containerStyle: containerStyle,
+      onLaunchRequest: onLaunchRequest.map { legacy in { req in legacy(req.toLegacy()) } },
+      onLegacyLaunchRequest: onLaunchRequest,
+      onContentAction: onContentAction,
+      content: content,
+      expandedContent: expandedContent
+    )
   }
 
   init(
     title: String? = nil,
     sizingPreference: HanlinEmbeddedSizingPreference = HanlinEmbeddedSizingPreference(),
     expansionDescriptor: ChatResolvedExpansion? = nil,
+    contentActions: [HanlinEmbeddedContentAction] = [],
     containerStyle: ChatHostContainerStyle = .borderedCard,
     onLaunchRequest: ((NativeAppLaunchRequest) -> Void)? = nil,
+    onContentAction: ((HanlinEmbeddedContentAction) -> Void)? = nil,
     @ViewBuilder content: @escaping () -> Content,
     @ViewBuilder expandedContent: @escaping () -> ExpandedContent
   ) {
@@ -55,8 +92,10 @@ struct ChatEmbeddedResultHost<Content: View, ExpandedContent: View>: View {
       title: title,
       sizingPreference: sizingPreference,
       expansions: expansionDescriptor.map { [$0] } ?? [],
+      contentActions: contentActions,
       containerStyle: containerStyle,
       onLaunchRequest: onLaunchRequest,
+      onContentAction: onContentAction,
       content: content,
       expandedContent: expandedContent
     )
@@ -108,7 +147,7 @@ struct ChatEmbeddedResultHost<Content: View, ExpandedContent: View>: View {
         }
       }
 
-      if !validExpansions.isEmpty {
+      if !validExpansions.isEmpty || !contentActions.isEmpty {
         floatingControlsView
           .padding(12)
       }
@@ -156,10 +195,37 @@ struct ChatEmbeddedResultHost<Content: View, ExpandedContent: View>: View {
   }
 
   // MARK: - Floating Action Controls (Legacy Map/Web visual grammar)
+  // Shared visual control group for both content actions and host presentation/expansion actions.
 
   @ViewBuilder
   private var floatingControlsView: some View {
     HStack(spacing: 6) {
+      // 1. Content Actions (e.g. Open in Maps, Open in Mini App)
+      ForEach(contentActions, id: \.id) { action in
+        Button {
+          if let onContentAction {
+            onContentAction(action)
+          } else if let launchReq = action.launchRequest {
+            if let onLaunchRequest {
+              onLaunchRequest(launchReq)
+            } else if let onLegacyLaunchRequest {
+              onLegacyLaunchRequest(launchReq.toLegacy())
+            }
+          }
+        } label: {
+          Image(systemName: action.systemImage ?? "arrow.up.right.square")
+            .font(.caption2.weight(.semibold))
+            .foregroundStyle(.primary)
+            .frame(width: 28, height: 28)
+            .background(.ultraThinMaterial, in: Circle())
+            .shadow(color: Color.black.opacity(0.12), radius: 2, x: 0, y: 1)
+        }
+        .buttonStyle(.plain)
+        .accessibilityLabel(action.title)
+        .accessibilityIdentifier("content_action_\(action.id)")
+      }
+
+      // 2. Host Presentation / Expansion Actions
       ForEach(validExpansions, id: \.mode) { expansion in
         Button {
           handleExpansion(expansion)
@@ -173,6 +239,7 @@ struct ChatEmbeddedResultHost<Content: View, ExpandedContent: View>: View {
         }
         .buttonStyle(.plain)
         .accessibilityLabel(accessibilityLabel(for: expansion.mode))
+        .accessibilityIdentifier("expansion_action_\(expansion.mode.rawValue)")
       }
     }
   }
@@ -264,19 +331,27 @@ struct ChatEmbeddedResultHost<Content: View, ExpandedContent: View>: View {
     case .fullScreen:
       isFullScreenPresented = true
     case .window:
-      if ChatHostPresentationPolicy.supportsWindowExpansion,
-        let launchRequest = expansion.launchRequest
-      {
-        if let onLaunchRequest {
-          onLaunchRequest(launchRequest)
-        } else {
-          #if targetEnvironment(macCatalyst) || os(visionOS)
-            openWindow(value: launchRequest)
-          #elseif os(iOS)
-            if UIApplication.shared.supportsMultipleScenes {
-              openWindow(value: launchRequest)
-            }
-          #endif
+      if ChatHostPresentationPolicy.supportsWindowExpansion {
+        if let canonical = expansion.launchRequest {
+          if let onLaunchRequest {
+            onLaunchRequest(canonical)
+          } else if let onLegacyLaunchRequest {
+            onLegacyLaunchRequest(canonical.toLegacy())
+          } else {
+            #if targetEnvironment(macCatalyst) || os(visionOS)
+              openWindow(value: canonical)
+            #elseif os(iOS)
+              if UIApplication.shared.supportsMultipleScenes {
+                openWindow(value: canonical)
+              }
+            #endif
+          }
+        } else if let legacy = expansion.legacyLaunchRequest {
+          if let onLegacyLaunchRequest {
+            onLegacyLaunchRequest(legacy)
+          } else if let onLaunchRequest {
+            onLaunchRequest(legacy.toCanonical())
+          }
         }
       }
     }
@@ -288,16 +363,45 @@ extension ChatEmbeddedResultHost where ExpandedContent == Content {
     title: String? = nil,
     sizingPreference: HanlinEmbeddedSizingPreference = HanlinEmbeddedSizingPreference(),
     expansions: [ChatResolvedExpansion] = [],
+    contentActions: [HanlinEmbeddedContentAction] = [],
     containerStyle: ChatHostContainerStyle = .borderedCard,
-    onLaunchRequest: ((NativeAppLaunchRequest) -> Void)? = nil,
+    onLaunchRequest: ((HanlinLaunchRequest) -> Void)? = nil,
+    onLegacyLaunchRequest: ((NativeAppLaunchRequest) -> Void)? = nil,
+    onContentAction: ((HanlinEmbeddedContentAction) -> Void)? = nil,
     @ViewBuilder content: @escaping () -> Content
   ) {
     self.init(
       title: title,
       sizingPreference: sizingPreference,
       expansions: expansions,
+      contentActions: contentActions,
       containerStyle: containerStyle,
       onLaunchRequest: onLaunchRequest,
+      onLegacyLaunchRequest: onLegacyLaunchRequest,
+      onContentAction: onContentAction,
+      content: content,
+      expandedContent: content
+    )
+  }
+
+  init(
+    title: String? = nil,
+    sizingPreference: HanlinEmbeddedSizingPreference = HanlinEmbeddedSizingPreference(),
+    expansions: [ChatResolvedExpansion] = [],
+    contentActions: [HanlinEmbeddedContentAction] = [],
+    containerStyle: ChatHostContainerStyle = .borderedCard,
+    onLaunchRequest: ((NativeAppLaunchRequest) -> Void)? = nil,
+    onContentAction: ((HanlinEmbeddedContentAction) -> Void)? = nil,
+    @ViewBuilder content: @escaping () -> Content
+  ) {
+    self.init(
+      title: title,
+      sizingPreference: sizingPreference,
+      expansions: expansions,
+      contentActions: contentActions,
+      containerStyle: containerStyle,
+      onLaunchRequest: onLaunchRequest,
+      onContentAction: onContentAction,
       content: content,
       expandedContent: content
     )
@@ -307,16 +411,20 @@ extension ChatEmbeddedResultHost where ExpandedContent == Content {
     title: String? = nil,
     sizingPreference: HanlinEmbeddedSizingPreference = HanlinEmbeddedSizingPreference(),
     expansionDescriptor: ChatResolvedExpansion? = nil,
+    contentActions: [HanlinEmbeddedContentAction] = [],
     containerStyle: ChatHostContainerStyle = .borderedCard,
     onLaunchRequest: ((NativeAppLaunchRequest) -> Void)? = nil,
+    onContentAction: ((HanlinEmbeddedContentAction) -> Void)? = nil,
     @ViewBuilder content: @escaping () -> Content
   ) {
     self.init(
       title: title,
       sizingPreference: sizingPreference,
       expansions: expansionDescriptor.map { [$0] } ?? [],
+      contentActions: contentActions,
       containerStyle: containerStyle,
       onLaunchRequest: onLaunchRequest,
+      onContentAction: onContentAction,
       content: content,
       expandedContent: content
     )

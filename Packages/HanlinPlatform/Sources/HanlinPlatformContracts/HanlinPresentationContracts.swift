@@ -197,6 +197,32 @@ extension HanlinExpansionMode {
     }
 }
 
+// MARK: - Embedded Content Action
+
+/// Canonical content action supplied by an embedded result provider (e.g. "Open in Maps", "View Route").
+/// Pure engine-neutral contract without semantic card types or SwiftUI dependencies.
+public struct HanlinEmbeddedContentAction: Codable, Hashable, Sendable {
+    public let id: String
+    public let title: String
+    public let systemImage: String?
+    public let launchRequest: HanlinLaunchRequest?
+    public let routeRequest: HanlinRouteRequest?
+
+    public init(
+        id: String,
+        title: String,
+        systemImage: String? = nil,
+        launchRequest: HanlinLaunchRequest? = nil,
+        routeRequest: HanlinRouteRequest? = nil
+    ) {
+        self.id = id
+        self.title = title
+        self.systemImage = systemImage
+        self.launchRequest = launchRequest
+        self.routeRequest = routeRequest
+    }
+}
+
 // MARK: - Embedded Result Payload
 
 /// Data payload for an arbitrary Mini-App-rendered embedded tool result.
@@ -210,16 +236,43 @@ public struct HanlinEmbeddedResultPayload: Codable, Hashable, Sendable {
     public let title: String?
     /// Optional custom metadata dictionary for runtime adapters.
     public let metadata: [String: String]?
+    /// Explicit canonical owner identity (app ID or package ID) for runtime engine resolution.
+    public let ownerID: String?
+    /// Engine-neutral content actions (e.g. Open in Maps, View Details).
+    public let actions: [HanlinEmbeddedContentAction]
 
     public init(
         payload: HanlinValue? = nil,
         resultReference: String? = nil,
         title: String? = nil,
-        metadata: [String: String]? = nil
+        metadata: [String: String]? = nil,
+        ownerID: String? = nil,
+        actions: [HanlinEmbeddedContentAction] = []
     ) {
         self.payload = payload
         self.resultReference = resultReference
         self.title = title
         self.metadata = metadata
+        self.ownerID = ownerID
+        self.actions = actions
+    }
+
+    enum CodingKeys: String, CodingKey {
+        case payload
+        case resultReference
+        case title
+        case metadata
+        case ownerID
+        case actions
+    }
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        payload = try container.decodeIfPresent(HanlinValue.self, forKey: .payload)
+        resultReference = try container.decodeIfPresent(String.self, forKey: .resultReference)
+        title = try container.decodeIfPresent(String.self, forKey: .title)
+        metadata = try container.decodeIfPresent([String: String].self, forKey: .metadata)
+        ownerID = try container.decodeIfPresent(String.self, forKey: .ownerID)
+        actions = try container.decodeIfPresent([HanlinEmbeddedContentAction].self, forKey: .actions) ?? []
     }
 }

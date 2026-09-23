@@ -18,47 +18,50 @@ public enum ScriptUIEmbeddedResultAdapter {
             return nil
         }
 
-        // If payload contains structured HanlinValue with UI node representation, render it directly
-        // via independent HanlinScriptUIModel without touching activeApplicationModel
-        let titleNode = HanlinScriptUINode(
-            kind: .text,
-            properties: [
-                "text": .string(payload?.title ?? handler),
-                "font": .string("headline")
-            ]
-        )
-        var children = [titleNode]
-        if let jsonPayload = payload?.payload {
-            let bodyText: String
-            if let data = try? JSONEncoder().encode(jsonPayload),
-               let str = String(data: data, encoding: .utf8) {
-                bodyText = str
-            } else {
-                bodyText = String(describing: jsonPayload)
-            }
-            children.append(
-                HanlinScriptUINode(
-                    kind: .text,
-                    properties: [
-                        "text": .string(bodyText),
-                        "font": .string("body")
-                    ]
-                )
-            )
+        // Strict declared handler match
+        guard let entrypoint = package.entrypoints.first(where: {
+            $0.id == handler && $0.runtimeProfile == .scriptingJSC
+        }) else {
+            return nil
         }
-        let rootNode = HanlinScriptUINode(
-            kind: .vStack,
-            properties: ["spacing": .number(8)],
-            children: children
-        )
 
-        let model = HanlinScriptUIModel(root: rootNode) { _, _ in }
-        let view = HanlinScriptUIView(model: model)
+        guard let artifactRoot = platform.activeArtifactURL(for: package) else {
+            return nil
+        }
 
-        return AnyEmbeddedResultSession(
-            engine: .scriptingJSC,
-            appID: package.appID,
-            rootView: AnyView(view)
-        )
+        let compiledURL = artifactRoot.appending(path: entrypoint.sourcePath, directoryHint: .notDirectory)
+        guard FileManager.default.fileExists(atPath: compiledURL.path(percentEncoded: false)),
+              let program = try? String(contentsOf: compiledURL, encoding: .utf8) else {
+            return nil
+        }
+
+        do {
+            let storageCapability = try HanlinCapabilityID(validating: "storage")
+            let filesCapability = try HanlinCapabilityID(validating: "files")
+
+            // Real ScriptUI application session with independent lifecycle (never overwrites activeApplicationModel)
+            let session = try HanlinScriptingApplicationSession(
+                installedPackageID: package.record.installedPackageID,
+                program: program,
+                filename: entrypoint.sourcePath,
+                entrypointContext: .application,
+                storageAllowed: package.grantedCapabilities.contains(storageCapability),
+                filesAllowed: package.grantedCapabilities.contains(filesCapability),
+                packageSourceDirectory: artifactRoot.appending(path: "source", directoryHint: .isDirectory)
+            )
+
+            let view = HanlinScriptUIView(model: session.model)
+
+            return AnyEmbeddedResultSession(
+                engine: .scriptingJSC,
+                appID: package.appID,
+                rootView: AnyView(view),
+                onTearDown: {
+                    session.dispose()
+                }
+            )
+        } catch {
+            return nil
+        }
     }
 }

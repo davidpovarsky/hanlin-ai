@@ -50,6 +50,10 @@ struct NativeToolResult {
     var outcome: NativeToolExecutionOutcome
     var diagnostics: NativeToolExecutionDiagnostics
     var embeddedPayload: HanlinEmbeddedResultPayload?
+    var isStoreEligible: Bool = false
+    var fullResultPayload: String? = nil
+    var fullResultMIMEType: String? = nil
+    var resultReference: String? = nil
 
     var isError: Bool {
         !outcome.isSuccess
@@ -61,7 +65,11 @@ struct NativeToolResult {
         uiBlocks: [NativeUIBlock] = [],
         outcome: NativeToolExecutionOutcome? = nil,
         diagnostics: NativeToolExecutionDiagnostics = .init(),
-        embeddedPayload: HanlinEmbeddedResultPayload? = nil
+        embeddedPayload: HanlinEmbeddedResultPayload? = nil,
+        isStoreEligible: Bool = false,
+        fullResultPayload: String? = nil,
+        fullResultMIMEType: String? = nil,
+        resultReference: String? = nil
     ) {
         self.modelText = modelText
         self.userText = userText
@@ -72,5 +80,9 @@ struct NativeToolResult {
         self.diagnostics.userResultByteCount = userText?.utf8.count ?? 0
         self.diagnostics.uiBlockTypes = uiBlocks.map { String(describing: $0.type) }
         self.embeddedPayload = embeddedPayload
+        self.isStoreEligible = isStoreEligible
+        self.fullResultPayload = fullResultPayload
+        self.fullResultMIMEType = fullResultMIMEType
+        self.resultReference = resultReference
     }
 }

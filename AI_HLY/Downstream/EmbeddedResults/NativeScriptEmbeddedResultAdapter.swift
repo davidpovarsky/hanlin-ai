@@ -31,9 +31,10 @@ public enum NativeScriptEmbeddedResultAdapter {
             return nil
         }
 
+        // Strict match: must correspond to a declared embedded-capable entrypoint
         guard let entrypoint = package.entrypoints.first(where: {
-            $0.id == handler || $0.runtimeProfile == .hanlinNativeScript
-        }) ?? package.entrypoints.first(where: { $0.runtimeProfile == .hanlinNativeScript }) else {
+            $0.id == handler && $0.runtimeProfile == .hanlinNativeScript
+        }) else {
             return nil
         }
 
@@ -57,6 +58,11 @@ public enum NativeScriptEmbeddedResultAdapter {
             env["HANLIN_HANDLER"] = handler
             if let ref = payload?.resultReference {
                 env["HANLIN_RESULT_REF"] = ref
+            }
+            if let json = payload?.payload,
+               let data = try? JSONEncoder().encode(json),
+               let str = String(data: data, encoding: .utf8) {
+                env["HANLIN_PAYLOAD"] = str
             }
 
             let session = try HanlinNativeScriptSession(
