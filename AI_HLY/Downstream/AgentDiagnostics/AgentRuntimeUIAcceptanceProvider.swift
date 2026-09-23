@@ -4,12 +4,21 @@ import SwiftData
 
 enum AgentRuntimeUIAcceptanceProvider {
     static let environmentKey = "HANLIN_AGENT_RUNTIME_UI_ACCEPTANCE"
+    static let skillsEnvironmentKey = "HANLIN_AGENT_SKILLS_EMBEDDED_ACCEPTANCE"
     static let modelName = "hanlin-agent-acceptance"
     static let chatName = "Agent Acceptance Chat"
 
+    static var isSkillsEnabled: Bool {
+#if targetEnvironment(simulator)
+        ProcessInfo.processInfo.environment[skillsEnvironmentKey] == "1"
+#else
+        false
+#endif
+    }
+
     static var isEnabled: Bool {
 #if targetEnvironment(simulator)
-        ProcessInfo.processInfo.environment[environmentKey] == "1"
+        ProcessInfo.processInfo.environment[environmentKey] == "1" || ProcessInfo.processInfo.environment[skillsEnvironmentKey] == "1"
 #else
         false
 #endif
@@ -48,6 +57,17 @@ enum AgentRuntimeUIAcceptanceProvider {
                 type: "chat",
                 useModel: 0
             ))
+            if isSkillsEnabled {
+                HanlinSkillCatalog.shared.register(descriptor: HanlinSkillDescriptor(
+                    id: "acceptance_skill",
+                    title: HanlinLocalizedText(english: "Acceptance Skill"),
+                    summary: HanlinLocalizedText(english: "Demonstrates agent skills and embedded result UI"),
+                    instructionSource: .inline("Always show embedded results for acceptance testing."),
+                    preferredLogicalToolIDs: [
+                        HanlinLogicalToolID(providerInstanceID: "hanlin-legacy", localToolID: "create_web_view")
+                    ]
+                ))
+            }
             try context.save()
             AgentRuntimeUIAcceptanceURLProtocol.reset()
         } catch {
@@ -89,7 +109,70 @@ private final class AgentRuntimeUIAcceptanceURLProtocol: URLProtocol, @unchecked
         Self.lock.unlock()
 
         let payload: [String: Any]
-        if index == 0 {
+        if AgentRuntimeUIAcceptanceProvider.isSkillsEnabled {
+            if index == 0 {
+                let arguments = #"{"skill_id":"acceptance_skill"}"#
+                payload = [
+                    "choices": [[
+                        "delta": [
+                            "tool_calls": [[
+                                "index": 0,
+                                "id": "ui-load-skill-call",
+                                "type": "function",
+                                "function": [
+                                    "name": "load_skill",
+                                    "arguments": arguments
+                                ]
+                            ]]
+                        ],
+                        "finish_reason": "tool_calls"
+                    ]]
+                ]
+            } else if index == 1 {
+                let arguments = #"{"query":"web"}"#
+                payload = [
+                    "choices": [[
+                        "delta": [
+                            "tool_calls": [[
+                                "index": 0,
+                                "id": "ui-tool-search-call",
+                                "type": "function",
+                                "function": [
+                                    "name": "tool_search",
+                                    "arguments": arguments
+                                ]
+                            ]]
+                        ],
+                        "finish_reason": "tool_calls"
+                    ]]
+                ]
+            } else if index == 2 {
+                let arguments = #"{"code":"<h1>Acceptance Web Surface</h1><p>Embedded result rendered</p>","result_presentation":"card"}"#
+                payload = [
+                    "choices": [[
+                        "delta": [
+                            "tool_calls": [[
+                                "index": 0,
+                                "id": "ui-web-call",
+                                "type": "function",
+                                "function": [
+                                    "name": "create_web_view",
+                                    "arguments": arguments
+                                ]
+                            ]]
+                        ],
+                        "finish_reason": "tool_calls"
+                    ]]
+                ]
+            } else {
+                payload = [
+                    "choices": [[
+                        "delta": ["content": "AGENT_SKILLS_EMBEDDED_ACCEPTANCE_COMPLETE"],
+                        "finish_reason": "stop"
+                    ]]
+                ]
+            }
+        } else if index == 0 {
             let arguments = #"{"source":"print('should-not-run')","unexpected":true}"#
             payload = [
                 "choices": [[

@@ -257,7 +257,7 @@ struct AgentEventAccumulator {
         let decision = ToolResultPresentationCoordinator.decide(
           call: call,
           profile: profile,
-          hasPayload: !result.richResultBlocks.isEmpty || result.hasLegacyPresentationPayload
+          hasPayload: !result.richResultBlocks.isEmpty || result.hasLegacyPresentationPayload || result.embeddedResultPayload != nil
         )
         if decision.shouldPresent, let rendererKind = decision.rendererKind {
           transcript.insertUserVisibleResult(
@@ -268,7 +268,8 @@ struct AgentEventAccumulator {
             blocks: result.richResultBlocks,
             completedAt: Date(),
             canonicalExecutionPresentation: profile.canonicalExecutionPresentation,
-            canonicalEmbeddedPresentation: profile.canonicalEmbeddedPresentation
+            canonicalEmbeddedPresentation: profile.canonicalEmbeddedPresentation,
+            embeddedResultPayload: result.embeddedResultPayload
           )
         }
       }

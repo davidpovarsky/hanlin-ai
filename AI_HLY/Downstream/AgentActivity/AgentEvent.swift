@@ -104,6 +104,7 @@ struct AgentToolResult: @unchecked Sendable {
   var isError: Bool
   var semanticOutcome: NativeToolExecutionOutcome = .succeeded
   var duration: TimeInterval
+  var embeddedResultPayload: HanlinEmbeddedResultPayload? = nil
 }
 enum AgentAnswerDisposition: String, Codable, Hashable, Sendable {
   case provisional

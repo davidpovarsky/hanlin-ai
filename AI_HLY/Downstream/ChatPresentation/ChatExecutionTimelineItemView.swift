@@ -2,9 +2,9 @@
 //  ChatExecutionTimelineItemView.swift
 //  AI_HLY
 //
-//  Compact, secondary execution timeline item for tools and agent actions,
-//  implementing the 8 canonical Hanlin execution presentation families
-//  under a shared visual grammar.
+//  Lightweight, secondary execution presentation for tools, thinking, and agent actions.
+//  Uses minimal shimmering text with chevron disclosure; no spinners, icons, or card chrome.
+//  Renders compact custom execution UI when a customHandler resolves.
 //
 
 import HanlinPlatformContracts
@@ -19,13 +19,16 @@ struct ChatExecutionTimelineItemView: View {
   let inputPreview: String?
   let outputPreview: String?
   let errorDescription: String?
+  let customHandler: String?
+  let toolName: String?
+  let payload: HanlinEmbeddedResultPayload?
   let onOpenDetails: (() -> Void)?
 
   @State private var isInlineExpanded = false
   @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
   init(
-    familyID: HanlinExecutionPresentationFamilyID,
+    familyID: HanlinExecutionPresentationFamilyID = .generic,
     title: String,
     subtitle: String? = nil,
     status: AgentActivityStatus,
@@ -33,6 +36,9 @@ struct ChatExecutionTimelineItemView: View {
     inputPreview: String? = nil,
     outputPreview: String? = nil,
     errorDescription: String? = nil,
+    customHandler: String? = nil,
+    toolName: String? = nil,
+    payload: HanlinEmbeddedResultPayload? = nil,
     onOpenDetails: (() -> Void)? = nil
   ) {
     self.familyID = familyID
@@ -43,11 +49,17 @@ struct ChatExecutionTimelineItemView: View {
     self.inputPreview = inputPreview
     self.outputPreview = outputPreview
     self.errorDescription = errorDescription
+    self.customHandler = customHandler
+    self.toolName = toolName
+    self.payload = payload
     self.onOpenDetails = onOpenDetails
   }
 
   init(
     state: ChatExecutionViewState,
+    customHandler: String? = nil,
+    toolName: String? = nil,
+    payload: HanlinEmbeddedResultPayload? = nil,
     onOpenDetails: (() -> Void)? = nil
   ) {
     self.init(
@@ -59,133 +71,75 @@ struct ChatExecutionTimelineItemView: View {
       inputPreview: state.inputPreview,
       outputPreview: state.outputPreview,
       errorDescription: state.errorDescription,
+      customHandler: customHandler,
+      toolName: toolName,
+      payload: payload,
       onOpenDetails: onOpenDetails
     )
   }
 
   var body: some View {
+    // If a custom execution handler is present and resolves, render compact execution UI
+    if let customHandler,
+       let session = HanlinEmbeddedResultResolver.shared.resolve(
+         handler: customHandler,
+         toolName: toolName,
+         payload: payload
+       ) {
+      session.rootView
+        .frame(maxHeight: ChatHostPresentationPolicy.maxExecutionHeight)
+        .clipped()
+        .onDisappear {
+          session.tearDown()
+        }
+    } else {
+      lightweightExecutionRow
+    }
+  }
+
+  // MARK: - Lightweight Text & Shimmer Presentation
+
+  private var lightweightExecutionRow: some View {
     VStack(alignment: .leading, spacing: 4) {
-      headerRow
+      HStack(spacing: 4) {
+        Text(displayTitle)
+          .font(.subheadline)
+          .foregroundStyle(titleColor)
+          .lineLimit(1)
+          .truncationMode(.tail)
+          .chatShimmer(isActive: status == .running || status == .pending)
+
+        if let countBadge {
+          Text(countBadge)
+            .font(.caption2.weight(.medium))
+            .foregroundStyle(.secondary)
+            .padding(.horizontal, 5)
+            .padding(.vertical, 1)
+            .background(Color(uiColor: .tertiarySystemFill))
+            .clipShape(Capsule())
+        }
+
+        if hasDetails {
+          Image(systemName: isInlineExpanded ? "chevron.down" : "chevron.forward")
+            .font(.caption2.weight(.semibold))
+            .foregroundStyle(.tertiary)
+        }
+      }
+      .contentShape(Rectangle())
+      .onTapGesture {
+        if hasDetails {
+          toggleInlineExpansion()
+        } else {
+          onOpenDetails?()
+        }
+      }
 
       if isInlineExpanded {
         inlineDetailsView
           .transition(.opacity.combined(with: .move(edge: .top)))
       }
     }
-    .padding(.vertical, 3)
-    .padding(.horizontal, 10)
-    .background(
-      RoundedRectangle(cornerRadius: 10, style: .continuous)
-        .fill(isInlineExpanded ? Color(uiColor: .secondarySystemFill) : Color.clear)
-    )
-    .frame(
-      maxHeight: isInlineExpanded
-        ? ChatHostPresentationPolicy.maxExecutionHeight
-        : ChatHostPresentationPolicy.standardExecutionRowHeight,
-      alignment: .topLeading
-    )
-    .contentShape(Rectangle())
-  }
-
-  // MARK: - Header Row
-
-  private var headerRow: some View {
-    HStack(spacing: 8) {
-      // Status / Family Icon
-      familyIconView
-        .frame(width: 18, height: 18)
-
-      // Primary title & subtitle
-      VStack(alignment: .leading, spacing: 1) {
-        HStack(spacing: 6) {
-          Text(displayTitle)
-            .font(.subheadline)
-            .foregroundStyle(titleColor)
-            .lineLimit(1)
-            .truncationMode(.tail)
-            .chatShimmer(isActive: status == .running || status == .pending)
-
-          if let countBadge {
-            Text(countBadge)
-              .font(.caption2.weight(.medium))
-              .foregroundStyle(.secondary)
-              .padding(.horizontal, 5)
-              .padding(.vertical, 1)
-              .background(Color(uiColor: .tertiarySystemFill))
-              .clipShape(Capsule())
-          }
-        }
-
-        if let subtitle, !subtitle.isEmpty, !isInlineExpanded {
-          Text(subtitle)
-            .font(.caption)
-            .foregroundStyle(.secondary)
-            .lineLimit(1)
-        }
-      }
-
-      Spacer(minLength: 4)
-
-      // Disclosure Toggle
-      if hasDetails {
-        Button {
-          toggleInlineExpansion()
-        } label: {
-          Image(systemName: isInlineExpanded ? "chevron.down" : "chevron.right")
-            .font(.caption2.weight(.semibold))
-            .foregroundStyle(.tertiary)
-            .frame(width: 24, height: 24)
-        }
-        .buttonStyle(.plain)
-      }
-    }
-    .frame(minHeight: ChatHostPresentationPolicy.standardExecutionRowHeight)
-    .onTapGesture {
-      if hasDetails {
-        toggleInlineExpansion()
-      } else {
-        onOpenDetails?()
-      }
-    }
-  }
-
-  // MARK: - Family Icon
-
-  @ViewBuilder
-  private var familyIconView: some View {
-    if status == .running || status == .pending {
-      ProgressView()
-        .controlSize(.mini)
-    } else if status == .failed {
-      Image(systemName: "exclamationmark.circle.fill")
-        .font(.caption)
-        .foregroundStyle(Color.red)
-    } else {
-      Image(systemName: systemImageName)
-        .font(.caption)
-        .foregroundStyle(Color.secondary)
-    }
-  }
-
-  private var systemImageName: String {
-    switch familyID {
-    case .webSearch:
-      return "globe"
-    case .sourceSearch:
-      return "doc.text.magnifyingglass"
-    case .map:
-      return "map"
-    case .command:
-      return "terminal"
-    case .fileOperation:
-      return "folder"
-    case .codeExecution:
-      return "chevron.left.forwardslash.chevron.right"
-    case .imageGeneration:
-      return "photo.badge.plus"
-    default:
-      return "sparkle"
-    }
+    .padding(.vertical, 2)
   }
 
   private var displayTitle: String {
@@ -213,7 +167,7 @@ struct ChatExecutionTimelineItemView: View {
       return status == .running
         ? String(localized: "Generating image…") : String(localized: "Image generated")
     default:
-      return status == .running ? String(localized: "Thinking…") : String(localized: "Done")
+      return status == .running ? String(localized: "Thinking") : String(localized: "Done")
     }
   }
 
@@ -309,8 +263,8 @@ struct ChatExecutionTimelineItemView: View {
     }
     .scrollBounceBehavior(.basedOnSize)
     .frame(maxHeight: ChatHostPresentationPolicy.maxExecutionDetailsHeight)
-    .padding(.leading, 26)
+    .padding(.leading, 12)
     .padding(.top, 2)
-    .padding(.bottom, 6)
+    .padding(.bottom, 4)
   }
 }

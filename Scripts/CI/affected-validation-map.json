@@ -389,6 +389,8 @@
         "AI_HLY/Downstream/CanonicalTools/**",
         "AI_HLY/Downstream/AgentActivity/**",
         "AI_HLY/Downstream/AgentDiagnostics/**",
+        "AI_HLY/Downstream/AgentSkills/**",
+        "AI_HLY/Downstream/EmbeddedResults/**",
         "AI_HLY/Downstream/Compatibility/**",
         "AI_HLY/Downstream/RuntimeCore/Core/**",
         "AI_HLY/Downstream/RuntimeCore/Environment/**",
@@ -403,12 +405,15 @@
         "app_unit_tests"
       ],
       "unit_suites": [
+        "AI_HLYTests/AgentSkillsExposureTests",
         "AI_HLYTests/CanonicalAdapterTests",
         "AI_HLYTests/CanonicalShadowCoordinatorTests",
         "AI_HLYTests/CanonicalToolAuthorityTests",
         "AI_HLYTests/ChatCanonicalPresentationSurvivalTests",
+        "AI_HLYTests/EmbeddedResultResolverTests",
         "AI_HLYTests/FoundationJSONShadowAdapterTests",
         "AI_HLYTests/HanlinScriptingAssistantProviderAdapterTests",
+        "AI_HLYTests/LegacyToolMigrationTests",
         "AI_HLYTests/ScriptingCanonicalAuthorityTests"
       ],
       "consumers": [
@@ -540,6 +545,58 @@
       ],
       "unit_suites": [
         "AI_HLYTests/ChatCanonicalPresentationSurvivalTests"
+      ],
+      "consumers": []
+    },
+    "agent_skills_unit_tests": {
+      "description": "Agent skills, tool exposure, and capability session unit tests",
+      "patterns": [
+        "AI_HLYTests/AgentSkillsExposureTests.swift"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/AgentSkillsExposureTests"
+      ],
+      "consumers": []
+    },
+    "legacy_tool_migration_unit_tests": {
+      "description": "Legacy tool migration and canonical discovery unit tests",
+      "patterns": [
+        "AI_HLYTests/LegacyToolMigrationTests.swift"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/LegacyToolMigrationTests"
+      ],
+      "consumers": []
+    },
+    "embedded_results_unit_tests": {
+      "description": "Embedded results resolver and engine adapters unit tests",
+      "patterns": [
+        "AI_HLYTests/EmbeddedResultResolverTests.swift"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/EmbeddedResultResolverTests"
+      ],
+      "consumers": []
+    },
+    "agent_skills_ui_test_files": {
+      "description": "Agent skills, lightweight execution, and embedded results UI acceptance test suite",
+      "patterns": [
+        "AI_HLYUITests/AgentSkillsEmbeddedResultsUITests.swift"
+      ],
+      "direct_validation_groups": [
+        "simulator_targeted_ui"
+      ],
+      "ui_suites": [
+        "AI_HLYUITests/AgentSkillsEmbeddedResultsUITests"
       ],
       "consumers": []
     },

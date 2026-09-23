@@ -143,6 +143,15 @@ public struct HanlinToolID: HanlinStringIdentifier {
     }
 }
 
+public struct HanlinSkillID: HanlinStringIdentifier {
+    public static let identifierKind = "skill"
+    public let rawValue: String
+    public init(validating rawValue: String) throws {
+        try HanlinIdentifierValidator.validate(rawValue, kind: Self.identifierKind)
+        self.rawValue = rawValue
+    }
+}
+
 public struct HanlinCapabilityID: HanlinStringIdentifier {
     public static let identifierKind = "capability"
     public let rawValue: String

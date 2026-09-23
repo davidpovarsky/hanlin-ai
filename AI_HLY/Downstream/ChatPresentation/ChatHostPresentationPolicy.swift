@@ -59,7 +59,7 @@ enum ChatHostPresentationPolicy {
     case .compact:
       return isRegularWidth ? 160 : 140
     case .regular, .automatic:
-      return isRegularWidth ? 260 : 220
+      return 240
     case .large:
       return isRegularWidth ? 400 : 320
     }

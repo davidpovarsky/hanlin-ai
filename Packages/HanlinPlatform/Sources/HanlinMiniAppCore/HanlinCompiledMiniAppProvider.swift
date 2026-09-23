@@ -42,6 +42,17 @@ public protocol HanlinCompiledMiniAppProvider: Sendable {
     #endif
 }
 
+public protocol HanlinCompiledEmbeddedResultProvider: HanlinCompiledMiniAppProvider {
+    #if canImport(SwiftUI)
+    @MainActor
+    func makeEmbeddedView(
+        handler: String,
+        payload: HanlinEmbeddedResultPayload,
+        context: HanlinMiniAppHostContext
+    ) -> AnyView?
+    #endif
+}
+
 public extension HanlinCompiledMiniAppProvider {
     var descriptor: HanlinAppDescriptor {
         guard let desc = try? registration.appDescriptor() else {

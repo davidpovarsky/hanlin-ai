@@ -27,6 +27,9 @@ struct AgentTranscriptActivityRow: View {
       inputPreview: activity?.inputPreview,
       outputPreview: activity?.outputPreview,
       errorDescription: activity?.errorDescription,
+      customHandler: explicitExecution?.customHandler,
+      toolName: item.toolName,
+      payload: item.embeddedResultPayload,
       onOpenDetails: {
         AgentActivityTrace.selected(item: item)
         onSelectActivity(selectionID)

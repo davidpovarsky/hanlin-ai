@@ -4,7 +4,7 @@
 //
 //  Generic host container for embedded tool results and Mini Apps.
 //  Enforces centralized size policy, safe transcript placement, calm neutral
-//  container styling, and optional expansion affordances.
+//  container styling, and optional expansion affordances with floating circular controls.
 //
 
 import HanlinPlatformContracts
@@ -13,7 +13,7 @@ import SwiftUI
 struct ChatEmbeddedResultHost<Content: View, ExpandedContent: View>: View {
   let title: String?
   let sizingPreference: HanlinEmbeddedSizingPreference
-  let expansionDescriptor: ChatResolvedExpansion?
+  let expansions: [ChatResolvedExpansion]
   let containerStyle: ChatHostContainerStyle
   let onLaunchRequest: ((NativeAppLaunchRequest) -> Void)?
   @ViewBuilder let content: () -> Content
@@ -27,7 +27,7 @@ struct ChatEmbeddedResultHost<Content: View, ExpandedContent: View>: View {
   init(
     title: String? = nil,
     sizingPreference: HanlinEmbeddedSizingPreference = HanlinEmbeddedSizingPreference(),
-    expansionDescriptor: ChatResolvedExpansion? = nil,
+    expansions: [ChatResolvedExpansion] = [],
     containerStyle: ChatHostContainerStyle = .borderedCard,
     onLaunchRequest: ((NativeAppLaunchRequest) -> Void)? = nil,
     @ViewBuilder content: @escaping () -> Content,
@@ -35,11 +35,31 @@ struct ChatEmbeddedResultHost<Content: View, ExpandedContent: View>: View {
   ) {
     self.title = title
     self.sizingPreference = sizingPreference
-    self.expansionDescriptor = expansionDescriptor
+    self.expansions = expansions
     self.containerStyle = containerStyle
     self.onLaunchRequest = onLaunchRequest
     self.content = content
     self.expandedContent = expandedContent
+  }
+
+  init(
+    title: String? = nil,
+    sizingPreference: HanlinEmbeddedSizingPreference = HanlinEmbeddedSizingPreference(),
+    expansionDescriptor: ChatResolvedExpansion? = nil,
+    containerStyle: ChatHostContainerStyle = .borderedCard,
+    onLaunchRequest: ((NativeAppLaunchRequest) -> Void)? = nil,
+    @ViewBuilder content: @escaping () -> Content,
+    @ViewBuilder expandedContent: @escaping () -> ExpandedContent
+  ) {
+    self.init(
+      title: title,
+      sizingPreference: sizingPreference,
+      expansions: expansionDescriptor.map { [$0] } ?? [],
+      containerStyle: containerStyle,
+      onLaunchRequest: onLaunchRequest,
+      content: content,
+      expandedContent: expandedContent
+    )
   }
 
   private var isRegularWidth: Bool {
@@ -65,13 +85,32 @@ struct ChatEmbeddedResultHost<Content: View, ExpandedContent: View>: View {
     return hostMax
   }
 
+  /// All expansion modes that are valid and resolvable in the current environment.
+  private var validExpansions: [ChatResolvedExpansion] {
+    expansions.filter { expansion in
+      switch expansion.mode {
+      case .sheet, .fullScreen:
+        return true
+      case .window:
+        return ChatHostPresentationPolicy.supportsWindowExpansion
+      }
+    }
+  }
+
   var body: some View {
-    Group {
-      switch containerStyle {
-      case .neutral:
-        neutralHostedContent
-      case .borderedCard:
-        borderedCardHostedContent
+    ZStack(alignment: .bottomTrailing) {
+      Group {
+        switch containerStyle {
+        case .neutral:
+          neutralHostedContent
+        case .borderedCard:
+          borderedCardHostedContent
+        }
+      }
+
+      if !validExpansions.isEmpty {
+        floatingControlsView
+          .padding(12)
       }
     }
     .frame(
@@ -116,49 +155,76 @@ struct ChatEmbeddedResultHost<Content: View, ExpandedContent: View>: View {
     }
   }
 
-  // MARK: - Neutral Style (for results that already own card chrome like ModernCards)
+  // MARK: - Floating Action Controls (Legacy Map/Web visual grammar)
+
+  @ViewBuilder
+  private var floatingControlsView: some View {
+    HStack(spacing: 6) {
+      ForEach(validExpansions, id: \.mode) { expansion in
+        Button {
+          handleExpansion(expansion)
+        } label: {
+          Image(systemName: iconName(for: expansion.mode))
+            .font(.caption2.weight(.semibold))
+            .foregroundStyle(.primary)
+            .frame(width: 28, height: 28)
+            .background(.ultraThinMaterial, in: Circle())
+            .shadow(color: Color.black.opacity(0.12), radius: 2, x: 0, y: 1)
+        }
+        .buttonStyle(.plain)
+        .accessibilityLabel(accessibilityLabel(for: expansion.mode))
+      }
+    }
+  }
+
+  private func iconName(for mode: HanlinExpansionMode) -> String {
+    switch mode {
+    case .sheet:
+      return "arrow.down.backward.and.arrow.up.forward"
+    case .fullScreen:
+      return "arrow.up.left.and.arrow.down.right"
+    case .window:
+      return "macwindow.badge.plus"
+    }
+  }
+
+  private func accessibilityLabel(for mode: HanlinExpansionMode) -> String {
+    switch mode {
+    case .sheet:
+      return String(localized: "Expand into sheet")
+    case .fullScreen:
+      return String(localized: "Open full screen")
+    case .window:
+      return String(localized: "Open in new window")
+    }
+  }
+
+  // MARK: - Neutral Style
 
   @ViewBuilder
   private var neutralHostedContent: some View {
-    VStack(alignment: .leading, spacing: 4) {
-      if let expansion = expansionDescriptor {
-        HStack {
-          Spacer()
-          expansionButton(expansion)
-        }
-        .padding(.horizontal, 4)
-      }
-
-      content()
-        .frame(maxWidth: .infinity, maxHeight: clampedHeight, alignment: .topLeading)
-        .clipped()
-    }
-    .frame(
-      maxHeight: ChatHostPresentationPolicy.maxEmbeddedResultHeight(isRegularWidth: isRegularWidth),
-      alignment: .topLeading
-    )
-    .clipped()
+    content()
+      .frame(maxWidth: .infinity, maxHeight: clampedHeight, alignment: .topLeading)
+      .clipped()
+      .frame(
+        maxHeight: ChatHostPresentationPolicy.maxEmbeddedResultHeight(isRegularWidth: isRegularWidth),
+        alignment: .topLeading
+      )
+      .clipped()
   }
 
-  // MARK: - Bordered Card Style (for raw unstyled content)
+  // MARK: - Bordered Card Style
 
   @ViewBuilder
   private var borderedCardHostedContent: some View {
     VStack(alignment: .leading, spacing: 6) {
-      if title != nil || expansionDescriptor != nil {
+      if let title, !title.isEmpty {
         HStack(alignment: .center) {
-          if let title, !title.isEmpty {
-            Text(title)
-              .font(.caption.weight(.medium))
-              .foregroundStyle(.secondary)
-              .lineLimit(1)
-          }
-
+          Text(title)
+            .font(.caption.weight(.medium))
+            .foregroundStyle(.secondary)
+            .lineLimit(1)
           Spacer(minLength: 8)
-
-          if let expansion = expansionDescriptor {
-            expansionButton(expansion)
-          }
         }
         .padding(.horizontal, 12)
         .padding(.top, 8)
@@ -191,21 +257,6 @@ struct ChatEmbeddedResultHost<Content: View, ExpandedContent: View>: View {
     )
   }
 
-  private func expansionButton(_ expansion: ChatResolvedExpansion) -> some View {
-    Button {
-      handleExpansion(expansion)
-    } label: {
-      Image(systemName: "arrow.down.backward.and.arrow.up.forward")
-        .font(.caption2.weight(.semibold))
-        .foregroundStyle(.secondary)
-        .frame(width: 26, height: 26)
-        .background(Color(uiColor: .tertiarySystemFill))
-        .clipShape(Circle())
-    }
-    .buttonStyle(.plain)
-    .accessibilityLabel(String(localized: "Expand result"))
-  }
-
   private func handleExpansion(_ expansion: ChatResolvedExpansion) {
     switch expansion.mode {
     case .sheet:
@@ -236,6 +287,25 @@ extension ChatEmbeddedResultHost where ExpandedContent == Content {
   init(
     title: String? = nil,
     sizingPreference: HanlinEmbeddedSizingPreference = HanlinEmbeddedSizingPreference(),
+    expansions: [ChatResolvedExpansion] = [],
+    containerStyle: ChatHostContainerStyle = .borderedCard,
+    onLaunchRequest: ((NativeAppLaunchRequest) -> Void)? = nil,
+    @ViewBuilder content: @escaping () -> Content
+  ) {
+    self.init(
+      title: title,
+      sizingPreference: sizingPreference,
+      expansions: expansions,
+      containerStyle: containerStyle,
+      onLaunchRequest: onLaunchRequest,
+      content: content,
+      expandedContent: content
+    )
+  }
+
+  init(
+    title: String? = nil,
+    sizingPreference: HanlinEmbeddedSizingPreference = HanlinEmbeddedSizingPreference(),
     expansionDescriptor: ChatResolvedExpansion? = nil,
     containerStyle: ChatHostContainerStyle = .borderedCard,
     onLaunchRequest: ((NativeAppLaunchRequest) -> Void)? = nil,
@@ -244,7 +314,7 @@ extension ChatEmbeddedResultHost where ExpandedContent == Content {
     self.init(
       title: title,
       sizingPreference: sizingPreference,
-      expansionDescriptor: expansionDescriptor,
+      expansions: expansionDescriptor.map { [$0] } ?? [],
       containerStyle: containerStyle,
       onLaunchRequest: onLaunchRequest,
       content: content,

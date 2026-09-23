@@ -272,6 +272,79 @@ extension HanlinStoredPackageSnapshot: HanlinMiniAppRegistration {
             }
         }
 
+        var packageSkills: [HanlinSkillDescriptor] = []
+        if let skillsField = manifest?.unknownFields["skills"],
+           case let .array(skillItems) = skillsField {
+            for item in skillItems {
+                if case let .object(skillObj) = item,
+                   case let .string(skillIDStr) = skillObj["id"],
+                   let skillID = try? HanlinSkillID(validating: skillIDStr) {
+                    let titleStr: String = {
+                        if case let .string(s) = skillObj["title"] { return s }
+                        return skillIDStr
+                    }()
+                    let summaryStr: String = {
+                        if case let .string(s) = skillObj["summary"] { return s }
+                        if case let .string(s) = skillObj["description"] { return s }
+                        return titleStr
+                    }()
+                    let titleVal = (try? LocalizedValue(["en": titleStr]))
+                        ?? (try! LocalizedValue(["en": skillIDStr]))
+                    let summaryVal = (try? LocalizedValue(["en": summaryStr]))
+                        ?? titleVal
+
+                    let instructionSource: HanlinSkillInstructionSource = {
+                        if case let .string(text) = skillObj["instructions"] {
+                            return .inline(text)
+                        }
+                        if case let .object(instObj) = skillObj["instructions"] {
+                            if case let .string(text) = instObj["inline"] {
+                                return .inline(text)
+                            }
+                            if case let .string(path) = instObj["resource"] ?? instObj["path"] {
+                                return .resource(path: path)
+                            }
+                        }
+                        if case let .string(path) = skillObj["resource"] {
+                            return .resource(path: path)
+                        }
+                        return .inline("")
+                    }()
+
+                    var keywords: [String] = []
+                    if case let .array(kwItems) = skillObj["keywords"] {
+                        for kw in kwItems {
+                            if case let .string(s) = kw { keywords.append(s) }
+                        }
+                    }
+
+                    var triggerHints: [String] = []
+                    if case let .array(thItems) = skillObj["triggerHints"] ?? skillObj["examples"] {
+                        for th in thItems {
+                            if case let .string(s) = th { triggerHints.append(s) }
+                        }
+                    }
+
+                    var preferredTools: [String] = []
+                    if case let .array(ptItems) = skillObj["preferredToolIDs"] ?? skillObj["preferredTools"] {
+                        for pt in ptItems {
+                            if case let .string(s) = pt { preferredTools.append(s) }
+                        }
+                    }
+
+                    packageSkills.append(HanlinSkillDescriptor(
+                        id: skillID,
+                        title: titleVal,
+                        summary: summaryVal,
+                        instructions: instructionSource,
+                        keywords: keywords,
+                        triggerHints: triggerHints,
+                        preferredToolIDs: preferredTools
+                    ))
+                }
+            }
+        }
+
         let descriptor = HanlinAppDescriptor(
             schemaVersion: .init(major: 1, minor: 0),
             descriptorRevision: try HanlinDescriptorRevision(1),
@@ -288,6 +361,7 @@ extension HanlinStoredPackageSnapshot: HanlinMiniAppRegistration {
             entryPoints: finalEntryPoints,
             supportedExposures: packageExposures,
             actions: packageActions,
+            skills: packageSkills,
             capabilities: capabilitiesDeclarations,
             authors: authorList,
             distribution: .init(

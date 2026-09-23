@@ -158,9 +158,10 @@ struct AgentTranscriptAccumulator {
     blocks: [NativeUIBlock],
     completedAt: Date = Date(),
     canonicalExecutionPresentation: HanlinToolExecutionPresentationDescriptor? = nil,
-    canonicalEmbeddedPresentation: HanlinEmbeddedPresentationDescriptor? = nil
+    canonicalEmbeddedPresentation: HanlinEmbeddedPresentationDescriptor? = nil,
+    embeddedResultPayload: HanlinEmbeddedResultPayload? = nil
   ) -> Bool {
-    guard !blocks.isEmpty || rendererKind == .legacyExisting else { return false }
+    guard !blocks.isEmpty || rendererKind == .legacyExisting || embeddedResultPayload != nil else { return false }
     let key = Self.resultKey(callID: callID, rendererKind: rendererKind, blocks: blocks)
     guard resultDeduplicationKeys.insert(key).inserted else {
       AgentTranscriptDiagnostics.duplicateResultSuppressed(callID: callID)
@@ -182,7 +183,8 @@ struct AgentTranscriptAccumulator {
       nativeUIBlocks: blocks,
       visibilityAfterCompletion: .remainInChat,
       canonicalExecutionPresentation: canonicalExecutionPresentation,
-      canonicalEmbeddedPresentation: canonicalEmbeddedPresentation
+      canonicalEmbeddedPresentation: canonicalEmbeddedPresentation,
+      embeddedResultPayload: embeddedResultPayload
     )
     items.append(item)
     itemIndexByExternalID[externalID] = items.count - 1

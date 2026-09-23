@@ -2308,10 +2308,12 @@ class APIManager {
                                     selectedURLs: [String]?,
                                     selectedPromptsContent: [String]?,
                                     systemMessage: String,
-                                    depth: Int = 0
+                                    depth: Int = 0,
+                                    capabilitySession: AssistantCapabilitySession? = nil
     ) async throws -> AsyncThrowingStream<StreamData, Error> {
         
         var updatedMessages = messages
+        let session = capabilitySession ?? AssistantCapabilitySession()
         
         return AsyncThrowingStream<StreamData, Error> { continuation in
             
@@ -2463,38 +2465,50 @@ class APIManager {
                     var preparedAssistantTools: AssistantToolBridge.PreparedTools?
                     var tools: [[String: Any]]? = nil
                     if modelInfo.agentCapabilities.supportsNativeToolCalling && ifToolUse {
+                        let legacySources = LegacyToolCanonicalAdapter.sources(
+                            memoryEnabled: isMemoryEnabled(),
+                            mapEnabled: isMapEnabled(),
+                            calendarEnabled: isCalendarEnabled(),
+                            searchEnabled: isSearchEnabled(),
+                            knowledgeEnabled: isKnowledgeEnabled(),
+                            codeEnabled: isCodeEnabled(),
+                            healthEnabled: isHealthEnabled(),
+                            weatherEnabled: isWeatherEnabled(),
+                            canvasEnabled: isCanvasEnabled()
+                        )
                         preparedAssistantTools = try await AssistantToolBridge.prepare(
-                            scope: assistantToolScope
+                            scope: assistantToolScope,
+                            legacySources: legacySources
                         )
-                        let memoryEnabled = isMemoryEnabled()
-                        let mapEnabled = isMapEnabled()
-                        let calendarEnabled = isCalendarEnabled()
-                        let searchEnabled = isSearchEnabled()
-                        let knowledgeEnabled = isKnowledgeEnabled()
-                        let codeEnabled = isCodeEnabled()
-                        let healthEnabled = isHealthEnabled()
-                        let weatherEnabled = isWeatherEnabled()
-                        let canvasEnabled = isCanvasEnabled()
-                        var builtTools = buildMemoryTools(
-                            memoryEnabled: memoryEnabled,
-                            mapEnabled: mapEnabled,
-                            calendarEnabled: calendarEnabled,
-                            searchEnabled: searchEnabled,
-                            knowledgeEnabled: knowledgeEnabled,
-                            codeEnabled: codeEnabled,
-                            healthEnabled: healthEnabled,
-                            weatherEnabled: weatherEnabled,
-                            canvasEnabled: canvasEnabled
-                        )
-                        builtTools.append(contentsOf: preparedAssistantTools?.schemas ?? [])
-                        builtTools = ToolSchemaDecorator.decorate(
-                            schemas: builtTools,
+
+                        // Inject compact Skill Index once when depth == 0
+                        if depth == 0 {
+                            let skillIndexPrompt = HanlinSkillIndex.prompt(for: HanlinSkillCatalog.shared.allSkills())
+                            if !skillIndexPrompt.isEmpty && !finalFormattedMessages.contains(where: { ($0["content"] as? String)?.contains("## Available Skills") == true }) {
+                                finalFormattedMessages.append([
+                                    "role": "system",
+                                    "content": skillIndexPrompt
+                                ])
+                            }
+                        }
+
+                        // Build model-visible tool schemas strictly from session + meta tools
+                        var visibleTools: [[String: Any]] = []
+                        visibleTools.append(LoadSkillTool.schema)
+                        visibleTools.append(ToolSearchTool.schema)
+                        visibleTools.append(ReadToolResultTool.schema)
+                        if let prepared = preparedAssistantTools {
+                            let exposed = prepared.schemas(for: session.exposedToolAliases)
+                            visibleTools.append(contentsOf: exposed)
+                        }
+                        visibleTools = ToolSchemaDecorator.decorate(
+                            schemas: visibleTools,
                             progressSummaryRequired: modelInfo.agentCapabilities.supportsProgressSummaryField
                         )
                         if modelInfo.agentCapabilities.supportsReportProgressTool {
-                            builtTools.append(ToolSchemaDecorator.reportProgressSchema())
+                            visibleTools.append(ToolSchemaDecorator.reportProgressSchema())
                         }
-                        tools = builtTools
+                        tools = visibleTools
                     }
 
                     let chatConfig = HanlinChatModelConfiguration(
@@ -2822,6 +2836,7 @@ class APIManager {
                                             var executionReturnedError = false
                                             var executionOutcome: NativeToolExecutionOutcome = .succeeded
                                             var executionDiagnostics = NativeToolExecutionDiagnostics()
+                                            var executionEmbeddedPayload: HanlinEmbeddedResultPayload? = nil
                                             let previousSearchResources = self.searchResources
                                             let previousLocationsInfo = self.locationsInfo
                                             let previousRouteInfo = self.storeRouteInfo
@@ -2844,6 +2859,40 @@ class APIManager {
                                             
                                             // 根据具体函数名称调用对应的本地函数
                                             switch functionName {
+                                            case LoadSkillTool.toolName:
+                                                continuation.yield(StreamData(operationalState: currentLanguagePrefix ? "加载技能..." : "Loading skill..."))
+                                                let resultText = await LoadSkillTool.execute(
+                                                    argumentsJSON: functionArguments,
+                                                    session: session,
+                                                    schemaSizes: preparedAssistantTools?.schemaSizes() ?? [:]
+                                                )
+                                                toolResult = resultText
+                                                toolResultFront = resultText
+                                                useFunctionName = functionName
+
+                                            case ToolSearchTool.toolName:
+                                                continuation.yield(StreamData(operationalState: currentLanguagePrefix ? "搜索工具..." : "Searching tools..."))
+                                                let resultText = ToolSearchTool.execute(
+                                                    argumentsJSON: functionArguments,
+                                                    session: session,
+                                                    searchProvider: { q, l in
+                                                        preparedAssistantTools?.search(query: q, limit: l) ?? []
+                                                    }
+                                                )
+                                                toolResult = resultText
+                                                toolResultFront = resultText
+                                                useFunctionName = functionName
+
+                                            case ReadToolResultTool.toolName:
+                                                continuation.yield(StreamData(operationalState: currentLanguagePrefix ? "读取结果..." : "Reading tool result..."))
+                                                let resultText = ReadToolResultTool.execute(
+                                                    argumentsJSON: functionArguments,
+                                                    session: session
+                                                )
+                                                toolResult = resultText
+                                                toolResultFront = resultText
+                                                useFunctionName = functionName
+
                                             case "save_memory":
                                                 // 记忆函数
                                                 continuation.yield(StreamData(operationalState: currentLanguagePrefix ? "正在记忆" : "Taking Notes"))
@@ -3797,6 +3846,7 @@ class APIManager {
                                                     executionOutcome = nativeResult.outcome
                                                     executionDiagnostics = nativeResult.diagnostics
                                                     executionReturnedError = !nativeResult.outcome.isSuccess
+                                                    executionEmbeddedPayload = nativeResult.embeddedPayload
 
                                                     break
                                                 }
@@ -3846,7 +3896,7 @@ class APIManager {
                                             let presentationDecision = ToolResultPresentationCoordinator.decide(
                                                 call: parsedCall,
                                                 profile: parsedCall.presentationProfile,
-                                                hasPayload: !executionUIBlocks.isEmpty || legacyPayloadAvailable
+                                                hasPayload: !executionUIBlocks.isEmpty || legacyPayloadAvailable || executionEmbeddedPayload != nil
                                             )
                                             if parsedCall.presentationProfile.result?.rendererKind == .legacyExisting,
                                                !presentationDecision.shouldPresent {
@@ -3883,7 +3933,8 @@ class APIManager {
                                                                 && legacyPayloadAvailable,
                                                             isError: executionReturnedError,
                                                             semanticOutcome: executionOutcome,
-                                                            duration: executionDuration
+                                                            duration: executionDuration,
+                                                            embeddedResultPayload: executionEmbeddedPayload
                                                         )
                                                     )
                                                 ]))
@@ -4024,7 +4075,8 @@ class APIManager {
                                                                                             selectedURLs: selectedURLs,
                                                                                             selectedPromptsContent: selectedPromptsContent,
                                                                                             systemMessage: systemMessage,
-                                                                                            depth: depth + 1)
+                                                                                            depth: depth + 1,
+                                                                                            capabilitySession: session)
                                     for try await recursiveData in recursiveStream {
                                         continuation.yield(recursiveData)
                                     }
@@ -4088,7 +4140,8 @@ class APIManager {
                                                                                                     selectedURLs: selectedURLs,
                                                                                                     selectedPromptsContent: selectedPromptsContent,
                                                                                                     systemMessage: systemMessage,
-                                                                                                    depth: depth + 1)
+                                                                                                    depth: depth + 1,
+                                                                                                    capabilitySession: session)
                                             for try await recursiveData in recursiveStream {
                                                 continuation.yield(recursiveData)
                                             }

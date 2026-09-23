@@ -376,7 +376,7 @@
     "Thinking" : {
       "localizations" : {
         "en" : { "stringUnit" : { "state" : "translated", "value" : "Thinking" } },
-        "he" : { "stringUnit" : { "state" : "translated", "value" : "חשיבה" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "חושב" } },
         "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "思考" } }
       }
     },

@@ -43,6 +43,7 @@ struct AgentTranscriptItem: Codable, Hashable, Identifiable {
   var visibilityAfterCompletion: AgentTranscriptCompletionVisibility
   var canonicalExecutionPresentation: HanlinToolExecutionPresentationDescriptor?
   var canonicalEmbeddedPresentation: HanlinEmbeddedPresentationDescriptor?
+  var embeddedResultPayload: HanlinEmbeddedResultPayload?
 
   init(
     id: UUID = UUID(),
@@ -63,7 +64,8 @@ struct AgentTranscriptItem: Codable, Hashable, Identifiable {
     textRole: AgentTranscriptTextRole? = nil,
     visibilityAfterCompletion: AgentTranscriptCompletionVisibility,
     canonicalExecutionPresentation: HanlinToolExecutionPresentationDescriptor? = nil,
-    canonicalEmbeddedPresentation: HanlinEmbeddedPresentationDescriptor? = nil
+    canonicalEmbeddedPresentation: HanlinEmbeddedPresentationDescriptor? = nil,
+    embeddedResultPayload: HanlinEmbeddedResultPayload? = nil
   ) {
     self.id = id
     self.externalID = externalID
@@ -84,6 +86,7 @@ struct AgentTranscriptItem: Codable, Hashable, Identifiable {
     self.visibilityAfterCompletion = visibilityAfterCompletion
     self.canonicalExecutionPresentation = canonicalExecutionPresentation
     self.canonicalEmbeddedPresentation = canonicalEmbeddedPresentation
+    self.embeddedResultPayload = embeddedResultPayload
   }
 
   private enum CodingKeys: String, CodingKey {
@@ -92,6 +95,7 @@ struct AgentTranscriptItem: Codable, Hashable, Identifiable {
     case startedAt, completedAt, status, text, nativeUIBlocks, textRole
     case visibilityAfterCompletion
     case canonicalExecutionPresentation, canonicalEmbeddedPresentation
+    case embeddedResultPayload
   }
 
   init(from decoder: Decoder) throws {
@@ -127,6 +131,10 @@ struct AgentTranscriptItem: Codable, Hashable, Identifiable {
     canonicalEmbeddedPresentation = try container.decodeIfPresent(
       HanlinEmbeddedPresentationDescriptor.self,
       forKey: .canonicalEmbeddedPresentation
+    )
+    embeddedResultPayload = try container.decodeIfPresent(
+      HanlinEmbeddedResultPayload.self,
+      forKey: .embeddedResultPayload
     )
   }
 }

@@ -104,6 +104,12 @@
       },
       "type": "array"
     },
+    "skills": {
+      "items": {
+        "$ref": "#/$defs/skill"
+      },
+      "type": "array"
+    },
     "tools": {
       "items": {
         "$ref": "#/$defs/tool"
@@ -778,6 +784,67 @@
         "capabilities",
         "risk",
         "presentation"
+      ],
+      "type": "object"
+    },
+    "skill": {
+      "additionalProperties": true,
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "instructions": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "additionalProperties": false,
+              "properties": {
+                "inline": {
+                  "type": "string"
+                },
+                "path": {
+                  "type": "string"
+                },
+                "resource": {
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            }
+          ]
+        },
+        "keywords": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "preferredToolIDs": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "summary": {
+          "$ref": "#/$defs/localizedValue"
+        },
+        "title": {
+          "$ref": "#/$defs/localizedValue"
+        },
+        "triggerHints": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "id",
+        "title",
+        "summary",
+        "instructions"
       ],
       "type": "object"
     },

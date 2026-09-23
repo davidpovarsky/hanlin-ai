@@ -30,6 +30,7 @@ enum HanlinCanonicalToolBackendRoute: Hashable, Sendable {
   case native(providerInstanceID: HanlinProviderInstanceID, toolName: String)
   case mcp(serverID: UUID, toolName: String)
   case scripting(HanlinScriptBackendRoute)
+  case legacy(toolName: String)
 
   var providerIdentity: String {
     switch self {
@@ -39,6 +40,8 @@ enum HanlinCanonicalToolBackendRoute: Hashable, Sendable {
       serverID.uuidString.lowercased()
     case .scripting(let route):
       route.providerInstanceID.rawValue
+    case .legacy:
+      "hanlin-legacy"
     }
   }
 }
@@ -112,6 +115,31 @@ struct HanlinCanonicalToolBackendRouteIndex: Sendable {
     "\(logicalID.providerInstanceID.rawValue)|\(logicalID.localToolID.rawValue)"
   }
 }
+public struct CanonicalToolSearchRecord: Hashable, Sendable {
+  public let alias: String
+  public let title: String
+  public let summary: String
+  public let source: String
+  public let keywords: [String]
+  public let schemaSizeBytes: Int
+
+  public init(
+    alias: String,
+    title: String,
+    summary: String,
+    source: String,
+    keywords: [String] = [],
+    schemaSizeBytes: Int = 0
+  ) {
+    self.alias = alias
+    self.title = title
+    self.summary = summary
+    self.source = source
+    self.keywords = keywords
+    self.schemaSizeBytes = schemaSizeBytes
+  }
+}
+
 @MainActor
 struct HanlinCanonicalToolAuthority {
   struct NativeSource {
@@ -142,6 +170,31 @@ struct HanlinCanonicalToolAuthority {
     let resultTitle: String?
   }
 
+  struct LegacySource {
+    let descriptor: HanlinToolDescriptor
+    let preferredAlias: String
+    let modelSchema: [String: Any]
+    let toolName: String
+    let presentationProfile: ToolPresentationProfile
+    let resultTitle: String?
+
+    init(
+      descriptor: HanlinToolDescriptor,
+      preferredAlias: String,
+      modelSchema: [String: Any],
+      toolName: String,
+      presentationProfile: ToolPresentationProfile,
+      resultTitle: String? = nil
+    ) {
+      self.descriptor = descriptor
+      self.preferredAlias = preferredAlias
+      self.modelSchema = modelSchema
+      self.toolName = toolName
+      self.presentationProfile = presentationProfile
+      self.resultTitle = resultTitle
+    }
+  }
+
   struct Resolution {
     let route: HanlinToolRoute
     let backend: HanlinCanonicalToolBackendRoute
@@ -159,6 +212,7 @@ struct HanlinCanonicalToolAuthority {
   let routingTable: HanlinToolRoutingTable
   let backendRouteIndex: HanlinCanonicalToolBackendRouteIndex
   let modelSchemas: [[String: Any]]
+  let schemasByAlias: [String: [String: Any]]
 
   var backendRoutes: [BackendRouteEntry] {
     routingTable.routes.compactMap { route in
@@ -191,10 +245,54 @@ struct HanlinCanonicalToolAuthority {
       .descriptor
   }
 
+  func schemas(forAliases aliases: Set<String>) -> [[String: Any]] {
+    routingTable.routes
+      .filter { aliases.contains($0.alias) }
+      .compactMap { schemasByAlias[$0.alias] }
+  }
+
+  func searchableMetadata() -> [CanonicalToolSearchRecord] {
+    routingTable.routes.compactMap { route in
+      guard let entry = catalog.entries.first(where: { $0.descriptor.logicalID == route.logicalToolID }) else {
+        return nil
+      }
+      let descriptor = entry.descriptor
+      let schema = schemasByAlias[route.alias]
+      let schemaBytes: Int = {
+        if let schema, let data = try? JSONSerialization.data(withJSONObject: schema) {
+          return data.count
+        }
+        return 400
+      }()
+      let sourceName: String = {
+        guard let target = backendRouteIndex.target(logicalToolID: route.logicalToolID) else {
+          return "unknown"
+        }
+        switch target.backend {
+        case .native: return "native"
+        case .mcp: return "mcp"
+        case .scripting: return "script"
+        case .legacy: return "legacy"
+        }
+      }()
+      let titleStr = descriptor.title.preferredValue()
+      let summaryStr = descriptor.summary.preferredValue()
+      return CanonicalToolSearchRecord(
+        alias: route.alias,
+        title: titleStr,
+        summary: summaryStr,
+        source: sourceName,
+        keywords: [route.alias, titleStr, summaryStr],
+        schemaSizeBytes: schemaBytes
+      )
+    }
+  }
+
   static func build(
     nativeSources: [NativeSource],
     mcpTools: [MCPToolDescriptor],
     scriptSources: [ScriptSource] = [],
+    legacySources: [LegacySource] = [],
     generatedAt: Date = .now
   ) throws -> Self {
     let descriptorRevision = try HanlinDescriptorRevision(1)
@@ -311,6 +409,29 @@ struct HanlinCanonicalToolAuthority {
         ))
     }
 
+    for source in legacySources {
+      let discriminator = "legacy:\(source.toolName)"
+      var profile = source.presentationProfile
+      if profile.canonicalExecutionPresentation == nil {
+        profile.canonicalExecutionPresentation = source.descriptor.presentation.executionPresentation
+      }
+      if profile.canonicalEmbeddedPresentation == nil {
+        profile.canonicalEmbeddedPresentation = source.descriptor.presentation.embeddedPresentation
+      }
+      candidates.append(
+        Candidate(
+          descriptor: source.descriptor,
+          preferredAlias: source.preferredAlias,
+          modelSchema: source.modelSchema,
+          backend: .legacy(toolName: source.toolName),
+          presentationProfile: profile,
+          resultTitle: source.resultTitle,
+          precedence: 3,
+          discriminator: discriminator
+        )
+      )
+    }
+
     candidates.sort(by: Candidate.precedes)
     try validateLogicalIdentities(candidates)
 
@@ -376,11 +497,16 @@ struct HanlinCanonicalToolAuthority {
         "canonical alias routes do not close over the catalog"
       )
     }
+    var schemasByAlias: [String: [String: Any]] = [:]
+    for item in resolved {
+      schemasByAlias[item.alias] = item.modelSchema
+    }
     return Self(
       catalog: catalog,
       routingTable: routingTable,
       backendRouteIndex: backendRouteIndex,
-      modelSchemas: resolved.map(\.modelSchema)
+      modelSchemas: resolved.map(\.modelSchema),
+      schemasByAlias: schemasByAlias
     )
   }
 

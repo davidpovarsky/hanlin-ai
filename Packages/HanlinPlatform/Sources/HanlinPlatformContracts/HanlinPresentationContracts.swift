@@ -196,3 +196,30 @@ extension HanlinExpansionMode {
         }
     }
 }
+
+// MARK: - Embedded Result Payload
+
+/// Data payload for an arbitrary Mini-App-rendered embedded tool result.
+/// This contract is pure engine-neutral data and does not represent a fixed card taxonomy.
+public struct HanlinEmbeddedResultPayload: Codable, Hashable, Sendable {
+    /// Optional structured value payload for the renderer.
+    public let payload: HanlinValue?
+    /// Optional opaque result reference ID for large/external results stored out-of-band.
+    public let resultReference: String?
+    /// Content title hint.
+    public let title: String?
+    /// Optional custom metadata dictionary for runtime adapters.
+    public let metadata: [String: String]?
+
+    public init(
+        payload: HanlinValue? = nil,
+        resultReference: String? = nil,
+        title: String? = nil,
+        metadata: [String: String]? = nil
+    ) {
+        self.payload = payload
+        self.resultReference = resultReference
+        self.title = title
+        self.metadata = metadata
+    }
+}

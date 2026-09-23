@@ -741,6 +741,7 @@ public struct HanlinAppDescriptor: Codable, Identifiable, Hashable, Sendable {
     public let routes: [HanlinRouteDescriptor]
     public let actions: [HanlinActionDescriptor]
     public let tools: [HanlinToolDescriptor]
+    public let skills: [HanlinSkillDescriptor]
     public let capabilities: [HanlinCapabilityDeclaration]
     public let dependencies: [HanlinDependencyDeclaration]
     public let extensions: [HanlinExtensionDeclaration]
@@ -793,6 +794,7 @@ public struct HanlinAppDescriptor: Codable, Identifiable, Hashable, Sendable {
         routes: [HanlinRouteDescriptor] = [],
         actions: [HanlinActionDescriptor] = [],
         tools: [HanlinToolDescriptor] = [],
+        skills: [HanlinSkillDescriptor] = [],
         capabilities: [HanlinCapabilityDeclaration] = [],
         dependencies: [HanlinDependencyDeclaration] = [],
         extensions: [HanlinExtensionDeclaration] = [],
@@ -820,6 +822,7 @@ public struct HanlinAppDescriptor: Codable, Identifiable, Hashable, Sendable {
         self.routes = routes
         self.actions = actions
         self.tools = tools
+        self.skills = skills
         self.capabilities = capabilities
         self.dependencies = dependencies
         self.extensions = extensions
@@ -832,7 +835,7 @@ public struct HanlinAppDescriptor: Codable, Identifiable, Hashable, Sendable {
         case schemaVersion, descriptorRevision, id, name, summary, description
         case version, minimumHostVersion, apiVersion, icon, appearance, category
         case implementation, entryPoints, supportedExposures, routes, actions
-        case tools, capabilities, dependencies, extensions, authors, distribution, integrity
+        case tools, skills, capabilities, dependencies, extensions, authors, distribution, integrity
     }
 
     public init(from decoder: Decoder) throws {
@@ -856,6 +859,7 @@ public struct HanlinAppDescriptor: Codable, Identifiable, Hashable, Sendable {
         routes = try container.decodeIfPresent([HanlinRouteDescriptor].self, forKey: .routes) ?? []
         actions = try container.decodeIfPresent([HanlinActionDescriptor].self, forKey: .actions) ?? []
         tools = try container.decodeIfPresent([HanlinToolDescriptor].self, forKey: .tools) ?? []
+        skills = try container.decodeIfPresent([HanlinSkillDescriptor].self, forKey: .skills) ?? []
         capabilities = try container.decodeIfPresent([HanlinCapabilityDeclaration].self, forKey: .capabilities) ?? []
         dependencies = try container.decodeIfPresent([HanlinDependencyDeclaration].self, forKey: .dependencies) ?? []
         extensions = try container.decodeIfPresent([HanlinExtensionDeclaration].self, forKey: .extensions) ?? []
@@ -884,6 +888,7 @@ public struct HanlinAppDescriptor: Codable, Identifiable, Hashable, Sendable {
         try container.encode(routes, forKey: .routes)
         try container.encode(actions, forKey: .actions)
         try container.encode(tools, forKey: .tools)
+        try container.encode(skills, forKey: .skills)
         try container.encode(capabilities, forKey: .capabilities)
         try container.encode(dependencies, forKey: .dependencies)
         try container.encode(extensions, forKey: .extensions)
@@ -1072,6 +1077,21 @@ public struct HanlinAppDescriptor: Codable, Identifiable, Hashable, Sendable {
                 )
             }
         }
+        Self.appendDuplicateIssues(
+            values: skills.map(\.id),
+            code: .duplicateSkill,
+            path: "skills",
+            into: &issues
+        )
+        for (index, skill) in skills.enumerated() {
+            if case .resource(let path) = skill.instructions, !Self.isSafeRelativePath(path) {
+                issues.append(.init(
+                    code: .unsafeEntryPoint,
+                    path: "skills[\(index)].instructions",
+                    message: "Skill instruction resources must be normalized relative paths."
+                ))
+            }
+        }
         guard issues.isEmpty else {
             throw HanlinContractError.invalidManifest(issues)
         }
@@ -1143,6 +1163,7 @@ public enum HanlinManifestIssueCode: String, Codable, Hashable, Sendable {
     case duplicateRoute
     case duplicateAction
     case duplicateTool
+    case duplicateSkill
     case duplicateCapability
     case duplicateDependency
     case invalidAuthor

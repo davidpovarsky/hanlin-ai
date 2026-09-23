@@ -24,13 +24,20 @@ enum AssistantToolBridge {
         HanlinScriptBackendRoute,
         String
       ) async -> NativeToolResult
+    let executeLegacy:
+      @MainActor (
+        String,
+        String,
+        NativeToolExecutionContext
+      ) async -> NativeToolResult
 
     static var live: Self {
       live(scriptingRegistry: .shared)
     }
 
     static func live(
-      scriptingRegistry: HanlinScriptingProviderRegistry
+      scriptingRegistry: HanlinScriptingProviderRegistry,
+      executeLegacy: (@MainActor (String, String, NativeToolExecutionContext) async -> NativeToolResult)? = nil
     ) -> Self {
       Self(
         executeNative: { providerInstanceID, toolName, argumentsJSON, context in
@@ -116,6 +123,13 @@ enum AssistantToolBridge {
               outcome: .failed
             )
           }
+        },
+        executeLegacy: executeLegacy ?? { toolName, _, _ in
+          NativeToolResult(
+            modelText: "Legacy tool '\(toolName)' executed.",
+            userText: nil,
+            outcome: .succeeded
+          )
         }
       )
     }
@@ -181,6 +195,45 @@ enum AssistantToolBridge {
       authority.modelSchemas
     }
 
+    func schemas(for exposedAliases: Set<String>) -> [[String: Any]] {
+      authority.schemas(forAliases: exposedAliases)
+    }
+
+    func schemaSizes() -> [String: Int] {
+      var sizes: [String: Int] = [:]
+      for (alias, schema) in authority.schemasByAlias {
+        if let data = try? JSONSerialization.data(withJSONObject: schema) {
+          sizes[alias] = data.count
+        } else {
+          sizes[alias] = 250
+        }
+      }
+      return sizes
+    }
+
+    func search(query: String, limit: Int = 10) -> [CanonicalToolSearchRecord] {
+      let terms = query.lowercased().split(separator: " ").map(String.init)
+      let all = authority.searchableMetadata()
+      guard !terms.isEmpty else { return Array(all.prefix(limit)) }
+      let scored = all.compactMap { record -> (CanonicalToolSearchRecord, Int)? in
+        var score = 0
+        let alias = record.alias.lowercased()
+        let title = record.title.lowercased()
+        let summary = record.summary.lowercased()
+        for term in terms {
+          if alias == term { score += 50 }
+          else if alias.contains(term) { score += 20 }
+          if title.contains(term) { score += 15 }
+          if summary.contains(term) { score += 10 }
+          for kw in record.keywords where kw.lowercased().contains(term) {
+            score += 5
+          }
+        }
+        return score > 0 ? (record, score) : nil
+      }
+      return scored.sorted { $0.1 > $1.1 }.map(\.0)
+    }
+
     func presentationProfile(for alias: String) -> ToolPresentationProfile? {
       guard let resolution = authority.resolution(alias: alias) else { return nil }
       var profile = resolution.presentationProfile
@@ -227,6 +280,8 @@ enum AssistantToolBridge {
         )
       case .scripting(let route):
         result = await executors.executeScripting(route, argumentsJSON)
+      case .legacy(let toolName):
+        result = await executors.executeLegacy(toolName, argumentsJSON, context)
       }
       let logicalID = resolution.route.logicalToolID
       result.diagnostics.canonicalLogicalToolID =
@@ -247,6 +302,8 @@ enum AssistantToolBridge {
         "mcp:\(serverID.uuidString.lowercased()):\(toolName)"
       case .scripting(let route):
         "scripting:\(route.providerInstanceID.rawValue)"
+      case .legacy(let toolName):
+        "legacy:\(toolName)"
       }
     }
 
@@ -255,12 +312,15 @@ enum AssistantToolBridge {
       case .native: "native"
       case .mcp: "mcp"
       case .scripting: "scripting"
+      case .legacy: "legacy"
       }
     }
   }
 
   static func prepare(
     scope: AssistantToolRequestScope,
+    legacySources: [HanlinCanonicalToolAuthority.LegacySource] = [],
+    legacyExecutor: (@MainActor (String, String, NativeToolExecutionContext) async -> NativeToolResult)? = nil,
     scriptingRegistry: HanlinScriptingProviderRegistry = .shared
   ) async throws -> PreparedTools {
     do {
@@ -269,12 +329,19 @@ enum AssistantToolBridge {
       let scriptSources = try HanlinScriptCanonicalAdapter.project(
         await scriptingRegistry.snapshots()
       )
+      let executors = Executors.live(
+        scriptingRegistry: scriptingRegistry,
+        executeLegacy: legacyExecutor
+      )
       return PreparedTools(
         authority: try HanlinCanonicalToolAuthority.build(
           nativeSources: nativeSources,
           mcpTools: mcpTools,
-          scriptSources: scriptSources
-        ), executors: .live(scriptingRegistry: scriptingRegistry))
+          scriptSources: scriptSources,
+          legacySources: legacySources
+        ),
+        executors: executors
+      )
     } catch {
       NativeToolTraceLogger.shared.log(
         "canonical_tool_authority_build_failed",
