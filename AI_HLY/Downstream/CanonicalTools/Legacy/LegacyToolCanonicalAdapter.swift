@@ -86,7 +86,7 @@ enum LegacyToolCanonicalAdapter {
             return []
         }
 
-        return tools.compactMap { toolDict in
+        return tools.compactMap { toolDict -> HanlinCanonicalToolAuthority.LegacySource? in
             guard let function = toolDict["function"] as? [String: Any],
                   let name = function["name"] as? String else {
                 return nil
@@ -103,19 +103,36 @@ enum LegacyToolCanonicalAdapter {
 
             let presentationProfile = LegacyToolPresentationAdapter.profile(for: name) ?? .generic(toolName: name)
             let presentationDesc = HanlinToolPresentationDescriptor(
+                compactStyle: .automatic,
                 executionPresentation: nil,
                 embeddedPresentation: nil
             )
 
-            guard let revision = try? HanlinDescriptorRevision(1) else { return nil }
+            guard let revision = try? HanlinDescriptorRevision(1),
+                  let titleVal = try? LocalizedValue(["en": name]),
+                  let summaryVal = try? LocalizedValue(["en": description]) else {
+                return nil
+            }
+
+            let parameters = function["parameters"] ?? ["type": "object", "properties": [String: Any]()]
+            let root = (try? HanlinFoundationJSONShadowAdapter.project(parameters)) ?? .object([:])
+            guard let document = try? HanlinJSONSchemaDocument(
+                dialect: .draft2020_12,
+                root: root,
+                sourceProviderInstanceID: providerInstanceID
+            ) else {
+                return nil
+            }
 
             let toolDesc = HanlinToolDescriptor(
                 logicalID: logicalID,
                 descriptorRevision: revision,
-                owner: .system(name: "Hanlin Legacy"),
-                title: .single(name),
-                summary: .single(description),
-                inputSchema: HanlinJSONSchemaDocument(schema: .object([:])),
+                owner: .system,
+                title: titleVal,
+                summary: summaryVal,
+                inputSchema: document,
+                outputSchema: nil,
+                capabilities: [],
                 risk: .read,
                 presentation: presentationDesc
             )

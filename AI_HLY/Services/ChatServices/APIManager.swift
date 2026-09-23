@@ -12,6 +12,7 @@ import SwiftData
 import MapKit
 import Accelerate
 import HanlinChatCore
+import HanlinPlatformContracts
 
 // MARK: - 数据结构定义
 struct splitMarkerGroup {
