@@ -179,13 +179,17 @@ actor NodeRuntimeService {
             "timeoutMilliseconds": milliseconds,
             "maximumOutputBytes": request.limits.maximumOutputBytes
         ])
-        let payload = try await host.decode(
-            HostExecutionResponse.self,
-            path: "/v1/executions",
-            method: "POST",
-            body: body,
-            timeout: TimeInterval(max(5, milliseconds / 1_000 + 5))
-        )
+        let payload = try await withTaskCancellationHandler {
+            try await host.decode(
+                HostExecutionResponse.self,
+                path: "/v1/executions",
+                method: "POST",
+                body: body,
+                timeout: TimeInterval(max(5, milliseconds / 1_000 + 5))
+            )
+        } onCancel: {
+            Task { await self.cancelExecution(id: request.id) }
+        }
         return RuntimeExecutionResult(
             executionID: payload.executionID,
             stdout: payload.stdout,

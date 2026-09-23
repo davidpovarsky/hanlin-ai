@@ -1,4 +1,5 @@
 import Foundation
+import IOSSystemLite
 
 actor PythonRuntimeService {
     private struct BridgeResponse: Decodable {
@@ -50,7 +51,9 @@ actor PythonRuntimeService {
             "environment": request.environment,
             "timeoutSeconds": seconds
         ])
-        let responseData = try PythonRuntimeBridge.execute(requestJSON: String(decoding: json, as: UTF8.self))
+        let responseData = try IOSSystemRunner.withProcessCurrentDirectoryLock {
+            try PythonRuntimeBridge.execute(requestJSON: String(decoding: json, as: UTF8.self))
+        }
         let response = try JSONDecoder().decode(BridgeResponse.self, from: responseData)
         if let error = response.error { throw RuntimeCoreError.runtimeFailure(error) }
         let duration = started.duration(to: .now)

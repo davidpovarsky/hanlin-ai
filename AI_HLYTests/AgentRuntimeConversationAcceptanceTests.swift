@@ -32,7 +32,7 @@ private final class ScriptedAgentURLProtocol: URLProtocol, @unchecked Sendable {
 
     override func startLoading() {
         Self.lock.lock()
-        Self.capturedBodies.append(request.httpBody ?? Data())
+        Self.capturedBodies.append(Self.bodyData(from: request))
         let responseData = Self.responses.isEmpty ? nil : Self.responses.removeFirst()
         Self.lock.unlock()
 
@@ -61,6 +61,21 @@ private final class ScriptedAgentURLProtocol: URLProtocol, @unchecked Sendable {
     }
 
     override func stopLoading() {}
+
+    private static func bodyData(from request: URLRequest) -> Data {
+        if let body = request.httpBody { return body }
+        guard let stream = request.httpBodyStream else { return Data() }
+        stream.open()
+        defer { stream.close() }
+        var data = Data()
+        var buffer = [UInt8](repeating: 0, count: 4_096)
+        while true {
+            let count = stream.read(&buffer, maxLength: buffer.count)
+            guard count > 0 else { break }
+            data.append(contentsOf: buffer.prefix(count))
+        }
+        return data
+    }
 }
 
 @MainActor

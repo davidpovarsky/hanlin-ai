@@ -35,9 +35,10 @@ enum AgentHostServicesAdapter {
         arguments: [String] = [],
         environment: [String: String] = [:],
         allowNetwork: Bool = false,
-        limits: RuntimeExecutionLimits? = nil
+        limits: RuntimeExecutionLimits? = nil,
+        context: HanlinHostCallContext? = nil
     ) async throws -> RuntimeExecutionResult {
-        let context = makeContext()
+        let context = context ?? makeContext()
         return try await HanlinRuntimeBroker.shared.executeShell(
             program: program,
             arguments: arguments,
@@ -53,9 +54,10 @@ enum AgentHostServicesAdapter {
         command: String,
         environment: [String: String] = [:],
         allowNetwork: Bool = false,
-        limits: RuntimeExecutionLimits? = nil
+        limits: RuntimeExecutionLimits? = nil,
+        context: HanlinHostCallContext? = nil
     ) async throws -> RuntimeExecutionResult {
-        let context = makeContext()
+        let context = context ?? makeContext()
         return try await HanlinRuntimeBroker.shared.executeLegacyShell(
             command: command,
             context: context,

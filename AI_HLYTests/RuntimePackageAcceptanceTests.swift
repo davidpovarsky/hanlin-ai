@@ -32,14 +32,14 @@ struct RuntimePackageAcceptanceTests {
             let probe = try await manager.probe(installed)
             #expect(probe.exitCode == 0)
             let nodeResult = await ExecuteJavaScriptTool().execute(
-                argumentsJSON: #"{"source":"const isNumber = require('is-number'); console.log(isNumber('42'));","runtime":"node"}"#,
+                argumentsJSON: #"{"source":"const {default: isNumber} = await import('is-number'); console.log(isNumber('42'));","runtime":"node"}"#,
                 context: NativeToolExecutionContext(localeIdentifier: "en")
             )
             #expect(nodeResult.outcome == .succeeded)
             #expect(nodeResult.modelText.contains("true"))
 
             let typeScriptResult = await ExecuteTypeScriptTool().execute(
-                argumentsJSON: #"{"source":"declare function require(name: string): any; const isNumber = require('is-number'); console.log(isNumber('42'));","file_name":"npm-acceptance.ts","compile_only":false,"timeout_seconds":30}"#,
+                argumentsJSON: #"{"source":"const {default: isNumber} = await import('is-number'); console.log(isNumber('42'));","file_name":"npm-acceptance.ts","compile_only":false,"timeout_seconds":30}"#,
                 context: NativeToolExecutionContext(localeIdentifier: "en")
             )
             #expect(typeScriptResult.outcome == .succeeded)
@@ -67,7 +67,7 @@ struct RuntimePackageAcceptanceTests {
             #expect(try await manager.installed().allSatisfy { $0.name != npmPackage.name && $0.name != npmESMPackage.name })
 
             let missingImport = await ExecuteJavaScriptTool().execute(
-                argumentsJSON: #"{"source":"require('is-number')","runtime":"node"}"#,
+                argumentsJSON: #"{"source":"await import('is-number')","runtime":"node"}"#,
                 context: NativeToolExecutionContext(localeIdentifier: "en")
             )
             #expect(missingImport.outcome == .failed)
@@ -130,7 +130,7 @@ struct RuntimePackageAcceptanceTests {
             try await manager.uninstall(installed)
             #expect(try await manager.installed().allSatisfy { $0.normalizedName != pythonPackage.name })
             let missingImport = await ExecuteLocalPythonTool().execute(
-                argumentsJSON: #"{"source":"import requests"}"#,
+                argumentsJSON: #"{"source":"import importlib, sys\nfor name in list(sys.modules):\n    if name == 'requests' or name.startswith('requests.'):\n        del sys.modules[name]\nimportlib.invalidate_caches()\nimport requests"}"#,
                 context: NativeToolExecutionContext(localeIdentifier: "en")
             )
             #expect(missingImport.outcome == .failed)

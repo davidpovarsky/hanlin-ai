@@ -8,7 +8,7 @@ import HanlinScriptContracts
 import HanlinScriptStore
 import HanlinExpoRuntime
 
-@Suite("Unified Host Services E2E")
+@Suite("Unified Host Services E2E", .serialized)
 struct HanlinUnifiedHostServicesE2ETests {
 
     @Test func runtimeBrokerRespectsAvailabilityToggle() async throws {
@@ -46,18 +46,6 @@ struct HanlinUnifiedHostServicesE2ETests {
 
         // Clean state
         let originalGrants = await authority.grantedCapabilities(for: appID)
-        defer {
-            Task {
-                // Restore original state
-                for cap in await authority.grantedCapabilities(for: appID) {
-                    await authority.revoke(capability: cap, for: appID)
-                }
-                for cap in originalGrants {
-                    await authority.grant(capability: cap, for: appID)
-                }
-            }
-        }
-
         // Grant a capability
         await authority.grant(capability: "runtime.node", for: appID)
         let granted = await authority.grantedCapabilities(for: appID)
@@ -67,6 +55,7 @@ struct HanlinUnifiedHostServicesE2ETests {
         await authority.revoke(capability: "runtime.node", for: appID)
         let afterRevoke = await authority.grantedCapabilities(for: appID)
         #expect(!afterRevoke.contains("runtime.node"))
+        await authority.setGrants(originalGrants, for: appID)
     }
 
     @Test func packageStoreGrantPrecedenceAndLiveRevocation() async throws {
@@ -84,38 +73,41 @@ struct HanlinUnifiedHostServicesE2ETests {
         await authority.usePackageGrantStore(store)
 
         // Deliberately grant the compiled-app domain. Package identity must win.
+        let originalAppGrants = await authority.grantedCapabilities(for: fixture.appID)
         await authority.grant(capability: "network", for: fixture.appID)
-        defer {
-            Task {
-                await authority.revoke(capability: "network", for: fixture.appID)
-                await authority.clearPackageGrantStore()
-            }
-        }
+        do {
+            let context = HanlinHostCallContext.forMiniApp(
+                appID: fixture.appID,
+                installedPackageID: fixture.installedPackageID,
+                origin: .scriptPackage,
+                capabilities: ["network"],
+                canPresentUI: true
+            )
 
-        let context = HanlinHostCallContext.forMiniApp(
-            appID: fixture.appID,
-            installedPackageID: fixture.installedPackageID,
-            origin: .scriptPackage,
-            capabilities: ["network"],
-            canPresentUI: true
-        )
+            let initial = await authority.authorize(capability: "network", context: context)
+            #expect(initial == .notGranted)
 
-        let initial = await authority.authorize(capability: "network", context: context)
-        #expect(initial == .notGranted)
-
-        try await store.setCapabilityGranted(true, capability: fixture.networkCapability, for: fixture.installedPackageID)
-        try await HanlinHostServicesBroker.shared.requireCapability("network", context: context)
-
-        // Revoke through the real package store and reuse the exact same context.
-        try await store.setCapabilityGranted(false, capability: fixture.networkCapability, for: fixture.installedPackageID)
-        await #expect(throws: HanlinHostServiceError.self) {
+            try await store.setCapabilityGranted(true, capability: fixture.networkCapability, for: fixture.installedPackageID)
             try await HanlinHostServicesBroker.shared.requireCapability("network", context: context)
+
+            // Revoke through the real package store and reuse the exact same context.
+            try await store.setCapabilityGranted(false, capability: fixture.networkCapability, for: fixture.installedPackageID)
+            await #expect(throws: HanlinHostServiceError.self) {
+                try await HanlinHostServicesBroker.shared.requireCapability("network", context: context)
+            }
+        } catch {
+            await authority.setGrants(originalAppGrants, for: fixture.appID)
+            await authority.clearPackageGrantStore()
+            throw error
         }
+        await authority.setGrants(originalAppGrants, for: fixture.appID)
+        await authority.clearPackageGrantStore()
     }
 
     @Test @MainActor func crossCallerConcurrency() async throws {
-        let appA = try HanlinAppID(validating: "app-concurrent-a")
-        let appB = try HanlinAppID(validating: "app-concurrent-b")
+        let suffix = UUID().uuidString.lowercased()
+        let appA = try HanlinAppID(validating: "app-concurrent-a-\(suffix)")
+        let appB = try HanlinAppID(validating: "app-concurrent-b-\(suffix)")
 
         let swiftAdapter = SwiftMiniAppHostServicesAdapter(appID: appA, capabilities: ["sqlite", "files"])
         let nsAdapter = NativeScriptHostServicesAdapter(
@@ -148,8 +140,9 @@ struct HanlinUnifiedHostServicesE2ETests {
     // MARK: - Storage Isolation Acceptance
 
     @Test func storageIsolationBetweenApps() async throws {
-        let appA = try HanlinAppID(validating: "isolation-app-a")
-        let appB = try HanlinAppID(validating: "isolation-app-b")
+        let suffix = UUID().uuidString.lowercased()
+        let appA = try HanlinAppID(validating: "isolation-app-a-\(suffix)")
+        let appB = try HanlinAppID(validating: "isolation-app-b-\(suffix)")
 
         let ctxA = HanlinHostCallContext.forMiniApp(
             appID: appA,
@@ -205,14 +198,17 @@ struct HanlinUnifiedHostServicesE2ETests {
         let suffix = UUID().uuidString.lowercased()
         let appID = try HanlinAppID(validating: "file-scope-app-\(suffix)")
         let packageID = try HanlinInstalledPackageID(validating: "file-scope-package-\(suffix)")
+        let deniedAppID = try HanlinAppID(validating: "file-scope-denied-\(suffix)")
         let baseSession = try HanlinAppSessionID(validating: suffix)
         let baseRuntime = try HanlinRuntimeSessionID(validating: suffix)
+        await HanlinHostCapabilityAuthority.shared.setGrants(["files", "shared-data"], for: appID)
+        await HanlinHostCapabilityAuthority.shared.setGrants(["files"], for: deniedAppID)
         let makeContext: (HanlinHostStorageScope, Set<String>) -> HanlinHostCallContext = { scope, capabilities in
             HanlinHostCallContext(
-                subject: .app(appID, installedPackageID: packageID),
-                origin: .scriptPackage,
+                subject: .app(appID, installedPackageID: nil),
+                origin: .system,
                 appID: appID,
-                installedPackageID: packageID,
+                installedPackageID: nil,
                 appSessionID: baseSession,
                 runtimeSessionID: baseRuntime,
                 effectiveCapabilities: capabilities,
@@ -225,7 +221,13 @@ struct HanlinUnifiedHostServicesE2ETests {
         let app = makeContext(.app(appID), ["files"])
         let package = makeContext(.package(packageID), ["files"])
         let agent = HanlinHostCallContext.forAgent(runtimeSessionID: baseRuntime)
-        let sharedDenied = makeContext(.shared, ["files"])
+        let sharedDenied = HanlinHostCallContext.forMiniApp(
+            appID: deniedAppID,
+            origin: .system,
+            capabilities: ["files"],
+            storageScope: .shared,
+            canPresentUI: false
+        )
         let sharedAllowed = makeContext(.shared, ["files", "shared-data"])
         let broker = HanlinHostServicesBroker.shared
         let path = "scope-\(suffix)/test.txt"
@@ -275,7 +277,7 @@ struct HanlinUnifiedHostServicesE2ETests {
     // MARK: - SQLite Acceptance
 
     @Test func sqliteScopeAndTraversalRejection() async throws {
-        let appID = try HanlinAppID(validating: "sqlite-test-app")
+        let appID = try HanlinAppID(validating: "sqlite-test-app-\(UUID().uuidString.lowercased())")
         let ctx = HanlinHostCallContext.forMiniApp(
             appID: appID,
             origin: .system,
@@ -329,12 +331,13 @@ struct HanlinUnifiedHostServicesE2ETests {
         let packageID = try HanlinInstalledPackageID(validating: "sqlite-package-\(suffix)")
         let session = try HanlinAppSessionID(validating: suffix)
         let runtime = try HanlinRuntimeSessionID(validating: suffix)
+        await HanlinHostCapabilityAuthority.shared.setGrants(["sqlite", "shared-data"], for: appID)
         let makeContext: (HanlinHostStorageScope) -> HanlinHostCallContext = { scope in
             HanlinHostCallContext(
-                subject: .app(appID, installedPackageID: packageID),
-                origin: .scriptPackage,
+                subject: .app(appID, installedPackageID: nil),
+                origin: .system,
                 appID: appID,
-                installedPackageID: packageID,
+                installedPackageID: nil,
                 appSessionID: session,
                 runtimeSessionID: runtime,
                 effectiveCapabilities: ["sqlite", "shared-data"],

@@ -159,8 +159,9 @@ enum RuntimeToolSupport {
             }
         }
         let nsError = error as NSError
-        if nsError.domain == NSURLErrorDomain && nsError.code == NSURLErrorTimedOut {
-            return .timedOut
+        if nsError.domain == NSURLErrorDomain {
+            if nsError.code == NSURLErrorCancelled { return .cancelled }
+            if nsError.code == NSURLErrorTimedOut { return .timedOut }
         }
         return .failed
     }

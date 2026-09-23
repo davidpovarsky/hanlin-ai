@@ -24,7 +24,7 @@ struct HanlinUnifiedHostServicesAgentAcceptanceTests {
         #expect(context.origin == .assistantModel)
         #expect(context.appID == nil)
         #expect(context.canPresentUI == false)
-        #expect(context.runtimeWorkspaceIdentifier == "agent-workspace")
+        #expect(context.runtimeWorkspaceIdentifier == "agent-\(context.runtimeSessionID.rawValue)")
     }
 
     @Test func agentContextSessionIDsAreUnique() {
@@ -104,7 +104,9 @@ struct HanlinUnifiedHostServicesAgentAcceptanceTests {
     }
 
     @Test func agentToolExecutesShell() async {
-        let tool = ExecuteShellCommandTool()
+        let shellSession = try HanlinRuntimeSessionID(validating: UUID().uuidString.lowercased())
+        let shellContext = HanlinHostCallContext.forAgent(runtimeSessionID: shellSession)
+        let tool = ExecuteShellCommandTool(hostContext: shellContext)
         let context = NativeToolExecutionContext(localeIdentifier: "en")
         let result = await tool.execute(
             argumentsJSON: "{\"program\": \"ls\", \"arguments\": []}",
@@ -364,7 +366,10 @@ struct HanlinUnifiedHostServicesAgentAcceptanceTests {
         )
         #expect(networkFlagAccepted.outcome == .succeeded)
 
-        let workspace = try RuntimeFileLayout.default.workspace(client: .executions, identifier: "agent-workspace")
+        let workspace = try RuntimeFileLayout.default.workspace(
+            client: .executions,
+            identifier: shellContext.runtimeWorkspaceIdentifier
+        )
         try FileManager.default.createDirectory(at: workspace, withIntermediateDirectories: true)
         let outside = FileManager.default.temporaryDirectory.appending(path: "hanlin-shell-outside-\(UUID().uuidString)")
         let link = workspace.appending(path: "acceptance-escape")

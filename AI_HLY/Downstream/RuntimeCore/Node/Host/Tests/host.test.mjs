@@ -178,8 +178,15 @@ test('host redirects npm state before preview and install modules initialize', a
       source: 'const answer: number = 42; console.log(answer);',
       fileName: 'main.ts',
     });
-    assert.equal(compiled.succeeded, true);
+    assert.equal(compiled.succeeded, true, JSON.stringify(compiled.diagnostics));
     assert.match(compiled.javaScript, /const answer = 42/);
+
+    const semanticFailure = await hostRequest(ready.port, launchToken, '/v1/typescript/compile', {
+      source: "const answer: number = 'wrong';",
+      fileName: 'semantic-error.ts',
+    });
+    assert.equal(semanticFailure.succeeded, false);
+    assert.ok(semanticFailure.diagnostics.some(item => item.code === 2322));
 
     await fs.writeFile(path.join(workspace, 'tsconfig.json'), JSON.stringify({
       compilerOptions: { target: 'ES2022', module: 'ESNext', rootDir: 'src', outDir: 'dist', strict: true },

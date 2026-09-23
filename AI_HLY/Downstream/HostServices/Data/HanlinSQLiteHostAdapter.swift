@@ -101,14 +101,18 @@ actor HanlinSQLiteHostAdapter {
         busyTimeoutMs: Int32 = 5_000
     ) async throws -> String {
         let svc = try await service(for: context)
-        return try svc.open(
-            handle: handle,
-            name: name,
-            readonly: readonly,
-            foreignKeys: foreignKeys,
-            walMode: walMode,
-            busyTimeoutMs: busyTimeoutMs
-        )
+        do {
+            return try svc.open(
+                handle: handle,
+                name: name,
+                readonly: readonly,
+                foreignKeys: foreignKeys,
+                walMode: walMode,
+                busyTimeoutMs: busyTimeoutMs
+            )
+        } catch HanlinSQLiteServiceError.invalidPath(let path) {
+            throw HanlinHostServiceError.pathOutOfScope(path)
+        }
     }
 
     func close(handle: String, context: HanlinHostCallContext) async throws {
@@ -155,7 +159,7 @@ actor HanlinSQLiteHostAdapter {
 
     /// Close all databases and remove the cached service for an app.
     func endSession(appID: HanlinAppID) {
-        let key = appID.rawValue
+        let key = "app:\(appID.rawValue)"
         if let service = services.removeValue(forKey: key) {
             service.closeAll()
         }

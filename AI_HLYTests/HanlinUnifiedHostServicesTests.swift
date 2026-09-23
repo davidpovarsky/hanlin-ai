@@ -3,7 +3,7 @@ import Testing
 import HanlinPlatformContracts
 import HanlinMiniAppCore
 
-@Suite("Unified Host Services")
+@Suite("Unified Host Services", .serialized)
 struct HanlinUnifiedHostServicesTests {
 
     // MARK: - Context Construction
@@ -39,7 +39,7 @@ struct HanlinUnifiedHostServicesTests {
             capabilities: [],
             canPresentUI: false
         )
-        #expect(context.runtimeWorkspaceIdentifier == "miniapp-my-app")
+        #expect(context.runtimeWorkspaceIdentifier == "miniapp-my-app-\(context.appSessionID.rawValue)")
     }
 
     // MARK: - Capability Authority
@@ -50,7 +50,7 @@ struct HanlinUnifiedHostServicesTests {
         #expect(HanlinHostCapabilityAuthority.canonicalCapabilityID("javascript") == "runtime.javascript")
         #expect(HanlinHostCapabilityAuthority.canonicalCapabilityID("jsc") == "runtime.javascript")
         #expect(HanlinHostCapabilityAuthority.canonicalCapabilityID("runtime.jsc") == "runtime.javascript")
-        #expect(HanlinHostCapabilityAuthority.canonicalCapabilityID("typescript") == "runtime.node")
+        #expect(HanlinHostCapabilityAuthority.canonicalCapabilityID("typescript") == "runtime.typescript")
         #expect(HanlinHostCapabilityAuthority.canonicalCapabilityID("shell") == "runtime.shell")
         #expect(HanlinHostCapabilityAuthority.canonicalCapabilityID("network.fetch") == "network")
         #expect(HanlinHostCapabilityAuthority.canonicalCapabilityID("speech") == "speech-recognition")

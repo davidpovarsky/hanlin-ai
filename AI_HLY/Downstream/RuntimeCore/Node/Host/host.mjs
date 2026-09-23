@@ -354,26 +354,64 @@ async function executeJavaScript(body) {
 async function compileTypeScript(body) {
   if (typeof body.source !== 'string' || Buffer.byteLength(body.source) > maximumBody) throw new Error('TypeScript source is missing or too large.');
   const ts = await import('typescript');
+  const requestedFileName = typeof body.fileName === 'string' ? body.fileName : 'main.ts';
+  if (!/^[A-Za-z0-9][A-Za-z0-9._-]{0,127}\.tsx?$/.test(requestedFileName)) throw new Error('TypeScript fileName must be a safe .ts or .tsx basename.');
+  const virtualRoot = path.join(clientsRoot, 'typescript-compile');
+  const virtualFileName = path.join(virtualRoot, requestedFileName);
   const baseOptions = {
     target: ts.ScriptTarget.ES2022,
     module: ts.ModuleKind.ESNext,
     moduleResolution: ts.ModuleResolutionKind.Bundler,
     strict: true,
+    allowJs: true,
+    checkJs: false,
+    paths: { '*': [path.join(root, 'packages', 'node-global', 'node_modules', '*')] },
     sourceMap: true,
     inlineSources: true,
   };
   const converted = ts.convertCompilerOptionsFromJson(body.tsconfig?.compilerOptions ?? {}, '.');
-  const result = ts.transpileModule(body.source, {
-    fileName: typeof body.fileName === 'string' ? body.fileName : 'main.ts',
-    compilerOptions: { ...baseOptions, ...converted.options },
-    reportDiagnostics: true,
-  });
-  const diagnostics = [...(converted.errors ?? []), ...(result.diagnostics ?? [])].map(diagnostic => {
+  const compilerOptions = { ...baseOptions, ...converted.options };
+  const sourceFile = ts.createSourceFile(
+    virtualFileName,
+    body.source,
+    compilerOptions.target ?? ts.ScriptTarget.ES2022,
+    true,
+    requestedFileName.endsWith('.tsx') ? ts.ScriptKind.TSX : ts.ScriptKind.TS,
+  );
+  const compilerHost = ts.createCompilerHost(compilerOptions);
+  const originalGetSourceFile = compilerHost.getSourceFile.bind(compilerHost);
+  const originalFileExists = compilerHost.fileExists.bind(compilerHost);
+  const originalReadFile = compilerHost.readFile.bind(compilerHost);
+  let javaScript = null;
+  let sourceMap = null;
+  compilerHost.getSourceFile = (fileName, languageVersion, onError, shouldCreateNewSourceFile) =>
+    path.resolve(fileName) === virtualFileName
+      ? sourceFile
+      : originalGetSourceFile(fileName, languageVersion, onError, shouldCreateNewSourceFile);
+  compilerHost.fileExists = fileName => path.resolve(fileName) === virtualFileName || originalFileExists(fileName);
+  compilerHost.readFile = fileName => path.resolve(fileName) === virtualFileName ? body.source : originalReadFile(fileName);
+  compilerHost.writeFile = (fileName, data) => {
+    if (fileName.endsWith('.js')) javaScript = data;
+    else if (fileName.endsWith('.js.map')) sourceMap = data;
+  };
+  const program = ts.createProgram([virtualFileName], compilerOptions, compilerHost);
+  const rawDiagnostics = [...(converted.errors ?? []), ...ts.getPreEmitDiagnostics(program)];
+  if (!rawDiagnostics.some(item => item.category === ts.DiagnosticCategory.Error)) {
+    rawDiagnostics.push(...program.emit().diagnostics);
+  }
+  const diagnostics = rawDiagnostics.map(diagnostic => {
     const position = diagnostic.file && typeof diagnostic.start === 'number' ? diagnostic.file.getLineAndCharacterOfPosition(diagnostic.start) : null;
-    return { code: diagnostic.code, category: diagnostic.category, message: ts.flattenDiagnosticMessageText(diagnostic.messageText, '\n'), line: position ? position.line + 1 : null, column: position ? position.character + 1 : null };
+    return {
+      code: diagnostic.code,
+      category: diagnostic.category,
+      message: ts.flattenDiagnosticMessageText(diagnostic.messageText, '\n'),
+      file: diagnostic.file?.fileName ? path.basename(diagnostic.file.fileName) : null,
+      line: position ? position.line + 1 : null,
+      column: position ? position.character + 1 : null,
+    };
   });
   const failed = diagnostics.some(item => item.category === ts.DiagnosticCategory.Error);
-  return { javaScript: failed ? null : result.outputText, sourceMap: failed ? null : result.sourceMapText ?? null, diagnostics: diagnostics.map(({ category, ...item }) => item), succeeded: !failed };
+  return { javaScript: failed ? null : javaScript, sourceMap: failed ? null : sourceMap, diagnostics: diagnostics.map(({ category, ...item }) => item), succeeded: !failed };
 }
 
 async function compileTypeScriptProject(body) {

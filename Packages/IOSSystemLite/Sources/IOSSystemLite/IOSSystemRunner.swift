@@ -85,6 +85,17 @@ public enum IOSSystemRunner {
     private static let registrationState = Mutex<RegistrationState>(.uninitialized)
     private static let executionLock = Mutex<Void>(())
 
+    /// Serialize operations that temporarily mutate the process-wide current
+    /// directory. Embedded CPython and ios_system share that global state even
+    /// though their higher-level runtime actors are otherwise independent.
+    public static func withProcessCurrentDirectoryLock<Result>(
+        _ operation: () throws -> Result
+    ) rethrows -> Result {
+        try executionLock.withLock { _ in
+            try operation()
+        }
+    }
+
     public static func registrationReport() throws -> IOSSystemRegistrationReport {
         try registrationState.withLock { state in
             switch state {
@@ -149,7 +160,7 @@ public enum IOSSystemRunner {
             )
         }
         _ = try availableCommands()
-        return try executionLock.withLock { _ in
+        return try withProcessCurrentDirectoryLock {
             try executeLocked(
                 tokens: tokens,
                 workspace: workspace,
@@ -375,6 +386,10 @@ public enum IOSSystemRunner {
         environment: [String: String],
         standardInput: Data
     ) throws -> IOSSystemExecution {
+        let previousDirectory = FileManager.default.currentDirectoryPath
+        defer {
+            _ = FileManager.default.changeCurrentDirectoryPath(previousDirectory)
+        }
         guard ios_setMiniRootURL(workspace) == 1 else {
             throw NSError(
                 domain: "IOSSystemLite",
