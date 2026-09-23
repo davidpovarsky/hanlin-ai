@@ -143,22 +143,22 @@ struct EmbeddedResultResolverTests {
     @Test("BoundedToolResultStore enforces capacity bounds and provides slices")
     func boundedResultStoreCapacity() throws {
         let store = BoundedToolResultStore(maxStoredBytes: 500)
-        let ref1 = store.store(String(repeating: "A", count: 200))
-        let ref2 = store.store(String(repeating: "B", count: 200))
+        let ref1 = try #require(store.store(String(repeating: "A", count: 200)))
+        let ref2 = try #require(store.store(String(repeating: "B", count: 200)))
 
         #expect(!ref1.isEmpty && !ref2.isEmpty)
         #expect(store.currentTotalBytes == 400)
         #expect(store.read(reference: ref1, offset: 0, limit: 10)?.text == "AAAAAAAAAA")
         #expect(store.read(reference: ref2, offset: 0, limit: 10)?.text == "BBBBBBBBBB")
 
-        // 1. Oversized entry that individually exceeds maxTotalBytes (600 > 500) is rejected
+        // 1. Oversized entry that individually exceeds maxTotalBytes (600 > 500) is rejected returning nil
         let refOversized = store.store(String(repeating: "Z", count: 600))
-        #expect(refOversized.isEmpty)
+        #expect(refOversized == nil)
         #expect(store.currentTotalBytes == 400)
         #expect(store.read(reference: ref1, offset: 0, limit: 10)?.text == "AAAAAAAAAA")
 
         // 2. Adding a valid entry (200 bytes) pushes total (600 > 500), evicting oldest (ref1)
-        let ref3 = store.store(String(repeating: "C", count: 200))
+        let ref3 = try #require(store.store(String(repeating: "C", count: 200)))
         #expect(!ref3.isEmpty)
         #expect(store.currentTotalBytes == 400)
         #expect(store.read(reference: ref1, offset: 0, limit: 10) == nil)
@@ -167,11 +167,28 @@ struct EmbeddedResultResolverTests {
     }
 
     @MainActor
+    @Test("BoundedToolResultStore hard bound rejection returns nil and preserves existing data")
+    func boundedResultStoreHardBoundRejection() throws {
+        let store = BoundedToolResultStore(maxStoredBytes: 1000)
+        let initialRef = try #require(store.store("Initial data that fits", mimeType: "text/plain"))
+        #expect(store.currentTotalBytes == "Initial data that fits".utf8.count)
+
+        // Attempting to store single payload strictly exceeding 1000 bytes returns nil
+        let hugePayload = String(repeating: "X", count: 1001)
+        let rejectedRef = store.store(hugePayload, mimeType: "text/plain")
+        #expect(rejectedRef == nil)
+
+        // Existing store data is completely uncorrupted and retains its exact bytes
+        #expect(store.currentTotalBytes == "Initial data that fits".utf8.count)
+        #expect(store.read(reference: initialRef, offset: 0, limit: 50)?.text == "Initial data that fits")
+    }
+
+    @MainActor
     @Test("BoundedToolResultStore supports Unicode UTF-8 multi-byte pagination without truncation")
     func resultStoreUnicodePagination() throws {
         let store = BoundedToolResultStore(maxStoredBytes: 2048)
         let hebrewText = "שלום עולם! בדיקת תוצאה משובצת במסד נתונים מקומי."
-        let ref = store.store(hebrewText)
+        let ref = try #require(store.store(hebrewText))
         #expect(!ref.isEmpty)
 
         // Read initial chunk
@@ -194,7 +211,7 @@ struct EmbeddedResultResolverTests {
     @Test("ResultStore entries expire and clear upon session run finish")
     func resultStoreSessionCleanup() throws {
         let session = AssistantCapabilitySession()
-        let ref = session.resultStore.store("temporary run artifact")
+        let ref = try #require(session.resultStore.store("temporary run artifact"))
         #expect(!ref.isEmpty)
         #expect(session.resultStore.read(reference: ref, offset: 0, limit: 10)?.text == "temporary ")
 
@@ -363,5 +380,106 @@ struct EmbeddedResultResolverTests {
         let roundTripLegacy = canonicalRequest.toLegacy()
         #expect(roundTripLegacy.appID == "nativeapp.maps")
         #expect(roundTripLegacy.presentationStyle == .fullScreen)
+    }
+
+    @MainActor
+    @Test("HanlinEmbeddedContentAction pipeline correctly bridges from payload to transcript item and handles callback dispatch")
+    func contentActionsPipelineAndDispatch() throws {
+        let launchReq = HanlinLaunchRequest(
+            id: HanlinLaunchID(unchecked: "launch-pipeline-test"),
+            requestID: HanlinRequestID(unchecked: "req-pipeline-test"),
+            target: HanlinLaunchTarget(appID: try HanlinAppID(validating: "test.app")),
+            presentation: .sheet,
+            origin: .chatUI
+        )
+        let action1 = HanlinEmbeddedContentAction(
+            id: "action_1",
+            title: "Action One",
+            systemImage: "play.circle",
+            launchRequest: launchReq
+        )
+        var callbackInvoked = false
+        let action2 = HanlinEmbeddedContentAction(
+            id: "action_2",
+            title: "Action Two",
+            systemImage: "star.fill",
+            onAction: {
+                callbackInvoked = true
+            }
+        )
+
+        let payload = HanlinEmbeddedResultPayload(
+            ownerID: "test.app",
+            actions: [action1, action2]
+        )
+
+        let item = AgentTranscriptItem(
+            externalID: "item-test",
+            sequence: 1,
+            kind: .userVisibleToolResult,
+            callID: "call-1",
+            toolName: "test_tool",
+            resultRendererKind: .modernNative,
+            resultPresentationRequest: .card,
+            startedAt: Date(),
+            completedAt: Date(),
+            status: .completed,
+            nativeUIBlocks: [],
+            visibilityAfterCompletion: .remainInChat,
+            embeddedResultPayload: payload
+        )
+
+        #expect(item.embeddedResultPayload?.actions.count == 2)
+        #expect(item.embeddedResultPayload?.actions[0].id == "action_1")
+        #expect(item.embeddedResultPayload?.actions[0].launchRequest?.id.rawValue == "launch-pipeline-test")
+
+        // Execute callback
+        item.embeddedResultPayload?.actions[1].onAction?()
+        #expect(callbackInvoked == true)
+
+        // Launch request conversion to legacy for chat host
+        var dispatchedLegacyLaunch: NativeAppLaunchRequest?
+        let onLaunch: (NativeAppLaunchRequest) -> Void = { req in
+            dispatchedLegacyLaunch = req
+        }
+        if let legacy = item.embeddedResultPayload?.actions[0].launchRequest?.toLegacy() {
+            onLaunch(legacy)
+        }
+        #expect(dispatchedLegacyLaunch?.appID == "test.app")
+        #expect(dispatchedLegacyLaunch?.presentationStyle == .sheet)
+    }
+
+    @MainActor
+    @Test("ScriptUI application session receives structured EmbeddedInput when launched via embeddedResult context")
+    func scriptUIEmbeddedInputContext() throws {
+        let packageID = try HanlinPackageID(validating: "com.example.scriptui")
+        let installedPackageID = try HanlinInstalledPackageID(validating: "pkg-scriptui-test")
+        let payload = HanlinEmbeddedResultPayload(
+            ownerID: packageID.rawValue,
+            resultReference: "ref_script_123"
+        )
+
+        let context = HanlinScriptingEntrypointContext.embeddedResult(
+            handler: "custom_embedded_card",
+            payloadJSON: "{\"score\": 99}",
+            resultReference: payload.resultReference,
+            ownerID: packageID.rawValue
+        )
+
+        let session = try HanlinScriptingApplicationSession(
+            installedPackageID: installedPackageID,
+            program: "console.log('embedded launched');",
+            filename: "main.js",
+            entrypointContext: context,
+            storageAllowed: false
+        )
+
+        #expect(session.embeddedInput != nil)
+        #expect(session.embeddedInput?.handler == "custom_embedded_card")
+        #expect(session.embeddedInput?.payloadJSON == "{\"score\": 99}")
+        #expect(session.embeddedInput?.resultReference == "ref_script_123")
+        #expect(session.embeddedInput?.ownerID == "com.example.scriptui")
+
+        session.dispose()
     }
 }

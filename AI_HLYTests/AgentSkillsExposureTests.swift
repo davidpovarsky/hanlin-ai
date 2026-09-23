@@ -179,7 +179,7 @@ struct AgentSkillsExposureTests {
     func readToolResultToolPagination() throws {
         let session = AssistantCapabilitySession()
         let largeContent = String(repeating: "0123456789ABCDEF", count: 100)
-        let ref = session.resultStore.store(largeContent)
+        let ref = try #require(session.resultStore.store(largeContent))
 
         let slice1 = ReadToolResultTool.execute(
             argumentsJSON: "{\"reference\": \"\(ref)\", \"offset\": 0, \"limit\": 100}",

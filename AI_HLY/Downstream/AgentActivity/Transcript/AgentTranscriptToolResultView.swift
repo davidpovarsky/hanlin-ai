@@ -7,8 +7,17 @@ struct AgentTranscriptToolResultView: View {
   let onLaunchRequest: ((NativeAppLaunchRequest) -> Void)?
 
   var body: some View {
-    // 1. If canonical embedded handler exists AND resolves -> render arbitrary Mini-App surface in ChatEmbeddedResultHost
-    if let embedded = item.canonicalEmbeddedPresentation,
+    // 1. If canonical embedded handler exists (or declared on payload) AND resolves -> render arbitrary Mini-App surface in ChatEmbeddedResultHost
+    let effectiveEmbedded: HanlinEmbeddedPresentationDescriptor? = item.canonicalEmbeddedPresentation
+      ?? item.embeddedResultPayload?.ownerID.map { ownerID in
+        HanlinEmbeddedPresentationDescriptor(
+          handler: ownerID,
+          sizing: HanlinEmbeddedSizingPreference(preset: .regular),
+          expansion: HanlinExpansionDescriptor(supportedModes: [.sheet, .fullScreen])
+        )
+      }
+
+    if let embedded = effectiveEmbedded,
        let handler = embedded.handler,
        let session = HanlinEmbeddedResultResolver.shared.resolve(
          handler: handler,

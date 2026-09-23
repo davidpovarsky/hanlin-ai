@@ -105,7 +105,7 @@ enum LegacyToolCanonicalAdapter {
             let presentationDesc = HanlinToolPresentationDescriptor(
                 compactStyle: .automatic,
                 executionPresentation: nil,
-                embeddedPresentation: nil
+                embeddedPresentation: presentationProfile.canonicalEmbeddedPresentation
             )
 
             guard let revision = try? HanlinDescriptorRevision(1),

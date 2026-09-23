@@ -1,7 +1,9 @@
 import Foundation
 import HanlinChatCore
+import HanlinMiniAppCore
 import HanlinPlatformContracts
 import SwiftData
+import SwiftUI
 
 enum AgentRuntimeUIAcceptanceProvider {
     static let environmentKey = "HANLIN_AGENT_RUNTIME_UI_ACCEPTANCE"
@@ -68,6 +70,43 @@ enum AgentRuntimeUIAcceptanceProvider {
                        preferredToolIDs: ["create_web_view"]
                    ) {
                     HanlinSkillCatalog.shared.register(skill: descriptor)
+                }
+
+                // Register test double for arbitrary embedded result handler in HanlinEmbeddedResultResolver
+                HanlinEmbeddedResultResolver.shared.customSwiftResolver = { appID, handler, payload in
+                    guard appID.rawValue == "acceptance.app" || appID.rawValue == "legacy.web" else { return nil }
+                    let action = HanlinEmbeddedContentAction(
+                        id: "open_acceptance_details",
+                        title: "Open Details",
+                        systemImage: "arrow.up.right.square",
+                        launchRequest: HanlinLaunchRequest(
+                            id: HanlinLaunchID(unchecked: "launch-acceptance"),
+                            requestID: HanlinRequestID(unchecked: "req-acceptance"),
+                            target: HanlinLaunchTarget(appID: appID),
+                            presentation: .sheet,
+                            origin: .chatUI
+                        )
+                    )
+                    var enrichedPayload = payload ?? HanlinEmbeddedResultPayload()
+                    if enrichedPayload.actions.isEmpty {
+                        enrichedPayload.actions = [action]
+                    }
+                    return AnyEmbeddedResultSession(
+                        engine: .swift,
+                        appID: appID,
+                        rootView: AnyView(
+                            VStack(spacing: 8) {
+                                Text("Acceptance Embedded Card Surface")
+                                    .font(.headline)
+                                    .accessibilityIdentifier("acceptance_embedded_surface")
+                                Text("Arbitrary Mini App Result: \(handler)")
+                                    .font(.caption)
+                                    .accessibilityIdentifier("acceptance_embedded_detail")
+                            }
+                            .padding()
+                            .frame(maxWidth: .infinity)
+                        )
+                    )
                 }
             }
             try context.save()

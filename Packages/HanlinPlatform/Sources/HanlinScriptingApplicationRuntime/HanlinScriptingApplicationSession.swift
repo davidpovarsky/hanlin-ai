@@ -10,6 +10,7 @@ public enum HanlinScriptingEntrypointContext: Equatable, Sendable {
     case intent(HanlinScriptingIntentInput = .init())
     case widget(family: String, parameter: String = "")
     case appIntentRegistration
+    case embeddedResult(handler: String, payloadJSON: String, resultReference: String?, ownerID: String)
 }
 
 public enum HanlinScriptingShortcutParameter: Equatable, Sendable {
@@ -92,6 +93,27 @@ public final class HanlinScriptingApplicationSession {
     public private(set) var requestedWidgetReload = false
     public private(set) var scriptDidExit = false
     public private(set) var scriptResult: HanlinValue?
+
+    public struct EmbeddedInput: Equatable, Sendable {
+        public let handler: String
+        public let payloadJSON: String
+        public let resultReference: String?
+        public let ownerID: String
+
+        public init(handler: String, payloadJSON: String, resultReference: String?, ownerID: String) {
+            self.handler = handler
+            self.payloadJSON = payloadJSON
+            self.resultReference = resultReference
+            self.ownerID = ownerID
+        }
+    }
+
+    public var embeddedInput: EmbeddedInput? {
+        if case let .embeddedResult(handler, payloadJSON, resultReference, ownerID) = entrypointContext {
+            return EmbeddedInput(handler: handler, payloadJSON: payloadJSON, resultReference: resultReference, ownerID: ownerID)
+        }
+        return nil
+    }
 
     private let context: JSContext
     private let virtualMachine: JSVirtualMachine
@@ -216,7 +238,7 @@ public final class HanlinScriptingApplicationSession {
         try evaluate(Self.bootstrap, filename: "hanlin-scripting-ui-runtime.js")
         try evaluate(program, filename: filename)
         switch entrypointContext {
-        case .application:
+        case .application, .embeddedResult:
             guard context.objectForKeyedSubscript("__hanlinHasPresentedUI")?.toBool() == true else {
                 throw HanlinScriptingApplicationError.missingPresentedUI
             }
@@ -332,6 +354,10 @@ public final class HanlinScriptingApplicationSession {
         context.setObject(nil, forKeyedSubscript: "__hanlinNativeEntrypointKind" as NSString)
         context.setObject(nil, forKeyedSubscript: "__hanlinNativeWidgetFamily" as NSString)
         context.setObject(nil, forKeyedSubscript: "__hanlinNativeWidgetParameter" as NSString)
+        context.setObject(nil, forKeyedSubscript: "__hanlinNativeEmbeddedHandler" as NSString)
+        context.setObject(nil, forKeyedSubscript: "__hanlinNativeEmbeddedPayloadJSON" as NSString)
+        context.setObject(nil, forKeyedSubscript: "__hanlinNativeEmbeddedResultReference" as NSString)
+        context.setObject(nil, forKeyedSubscript: "__hanlinNativeEmbeddedOwnerID" as NSString)
     }
 
     private func installNativeBridges() {
@@ -529,6 +555,14 @@ public final class HanlinScriptingApplicationSession {
             context.setObject(parameter, forKeyedSubscript: "__hanlinNativeWidgetParameter" as NSString)
         case .appIntentRegistration:
             context.setObject("appIntent", forKeyedSubscript: "__hanlinNativeEntrypointKind" as NSString)
+        case let .embeddedResult(handler, payloadJSON, resultReference, ownerID):
+            context.setObject("embeddedResult", forKeyedSubscript: "__hanlinNativeEntrypointKind" as NSString)
+            context.setObject(handler, forKeyedSubscript: "__hanlinNativeEmbeddedHandler" as NSString)
+            context.setObject(payloadJSON, forKeyedSubscript: "__hanlinNativeEmbeddedPayloadJSON" as NSString)
+            if let resultReference {
+                context.setObject(resultReference, forKeyedSubscript: "__hanlinNativeEmbeddedResultReference" as NSString)
+            }
+            context.setObject(ownerID, forKeyedSubscript: "__hanlinNativeEmbeddedOwnerID" as NSString)
         }
     }
 
@@ -3473,6 +3507,24 @@ private extension HanlinScriptingApplicationSession {
       class IntentViewValue extends HanlinIntentValue {
         constructor(value) { super(value, "IntentViewValue"); }
       }
+      const EmbeddedResult = (() => {
+        if (globalThis.__hanlinNativeEntrypointKind !== "embeddedResult") return null;
+        let payload = null;
+        try {
+          if (typeof globalThis.__hanlinNativeEmbeddedPayloadJSON === "string") {
+            payload = JSON.parse(globalThis.__hanlinNativeEmbeddedPayloadJSON);
+          }
+        } catch (_) {
+          payload = globalThis.__hanlinNativeEmbeddedPayloadJSON;
+        }
+        return Object.freeze({
+          handler: globalThis.__hanlinNativeEmbeddedHandler ?? "",
+          payload: payload,
+          resultReference: globalThis.__hanlinNativeEmbeddedResultReference ?? null,
+          ownerID: globalThis.__hanlinNativeEmbeddedOwnerID ?? ""
+        });
+      })();
+      globalThis.EmbeddedResult = EmbeddedResult;
       const intentInput = (() => {
         if (globalThis.__hanlinNativeEntrypointKind !== "intent"
             || typeof globalThis.__hanlinNativeIntentInputJSON !== "string") return {};

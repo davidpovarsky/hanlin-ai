@@ -74,14 +74,14 @@ public final class ToolResultStore: @unchecked Sendable {
         _ payload: String,
         mimeType: String = "text/plain",
         metadata: [String: String] = [:]
-    ) -> String {
+    ) -> String? {
         lock.lock()
         defer { lock.unlock() }
 
         let entryBytes = payload.utf8.count
         guard entryBytes <= maxTotalBytes else {
             // Truthfully reject entry that exceeds the store's hard byte capacity
-            return ""
+            return nil
         }
 
         let referenceID = "ref_\(UUID().uuidString.replacingOccurrences(of: "-", with: "").lowercased().prefix(16))"
@@ -114,7 +114,7 @@ public final class ToolResultStore: @unchecked Sendable {
         payload: String,
         mimeType: String = "text/plain",
         metadata: [String: String] = [:]
-    ) -> String {
+    ) -> String? {
         store(payload, mimeType: mimeType, metadata: metadata)
     }
 

@@ -1,4 +1,5 @@
 import Foundation
+import HanlinPlatformContracts
 
 enum LegacyToolPresentationAdapter {
     private static let resultTools: Set<String> = [
@@ -20,7 +21,14 @@ enum LegacyToolPresentationAdapter {
             result: hasResult
                 ? ToolResultPresentationDescriptor(rendererKind: .legacyExisting, supportsCard: true)
                 : nil,
-            resultDisplayPolicy: hasResult ? .modelControlled : .never
+            resultDisplayPolicy: hasResult ? .modelControlled : .never,
+            canonicalEmbeddedPresentation: normalized == "create_web_view"
+                ? HanlinEmbeddedPresentationDescriptor(
+                    handler: "legacy_web_view",
+                    sizing: HanlinEmbeddedSizingPreference(preset: .regular),
+                    expansion: HanlinExpansionDescriptor(supportedModes: [.sheet, .fullScreen])
+                )
+                : nil
         )
     }
 

@@ -39,12 +39,35 @@ public enum ScriptUIEmbeddedResultAdapter {
             let storageCapability = try HanlinCapabilityID(validating: "storage")
             let filesCapability = try HanlinCapabilityID(validating: "files")
 
+            let payloadJSON: String = {
+                if let payload = payload?.payload {
+                    switch payload {
+                    case .string(let s): return s
+                    case .number(let n): return "\(n)"
+                    case .boolean(let b): return "\(b)"
+                    case .object(let dict):
+                        let data = (try? JSONSerialization.data(withJSONObject: dict)) ?? Data()
+                        return String(decoding: data, as: UTF8.self)
+                    case .array(let arr):
+                        let data = (try? JSONSerialization.data(withJSONObject: arr)) ?? Data()
+                        return String(decoding: data, as: UTF8.self)
+                    case .null: return "{}"
+                    }
+                }
+                return "{}"
+            }()
+
             // Real ScriptUI application session with independent lifecycle (never overwrites activeApplicationModel)
             let session = try HanlinScriptingApplicationSession(
                 installedPackageID: package.record.installedPackageID,
                 program: program,
                 filename: entrypoint.sourcePath,
-                entrypointContext: .application,
+                entrypointContext: .embeddedResult(
+                    handler: handler,
+                    payloadJSON: payloadJSON,
+                    resultReference: payload?.resultReference,
+                    ownerID: packageID.rawValue
+                ),
                 storageAllowed: package.grantedCapabilities.contains(storageCapability),
                 filesAllowed: package.grantedCapabilities.contains(filesCapability),
                 packageSourceDirectory: artifactRoot.appending(path: "source", directoryHint: .isDirectory)

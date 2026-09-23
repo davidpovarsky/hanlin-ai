@@ -2504,6 +2504,18 @@ class APIManager {
                             }
                         }
 
+                        // Inject active loaded Skill instructions into system messages on subsequent rounds
+                        if !session.loadedSkillInstructions.isEmpty {
+                            for instruction in session.loadedSkillInstructions {
+                                if !finalFormattedMessages.contains(where: { ($0["content"] as? String)?.contains(instruction) == true }) {
+                                    finalFormattedMessages.append([
+                                        "role": "system",
+                                        "content": "### Active Skill Instructions\n\(instruction)"
+                                    ])
+                                }
+                            }
+                        }
+
                         // Build model-visible tool schemas strictly from session + meta tools
                         var visibleTools: [[String: Any]] = []
                         visibleTools.append(LoadSkillTool.schema)
@@ -2932,8 +2944,7 @@ default:
                                                     if shouldStore {
                                                         let payloadToStore = nativeResult.fullResultPayload ?? nativeResult.modelText
                                                         let mimeType = nativeResult.fullResultMIMEType ?? "text/plain"
-                                                        let ref = session.resultStore.store(payloadToStore, mimeType: mimeType)
-                                                        if !ref.isEmpty {
+                                                        if let ref = session.resultStore.store(payloadToStore, mimeType: mimeType) {
                                                             if executionEmbeddedPayload != nil {
                                                                 executionEmbeddedPayload?.resultReference = ref
                                                             }
@@ -2942,6 +2953,20 @@ default:
                                                             Summary: \(String(nativeResult.modelText.prefix(200)))
                                                             To inspect or paginate this result, call `read_tool_result(reference: "\(ref)", offset: 0, limit: 4096)`.
                                                             """
+                                                        } else {
+                                                            // Storing rejected (e.g. entry exceeds store hard capacity).
+                                                            // Truthful fallback: preserve usable model result directly, never set empty reference or lose data.
+                                                            if toolResult.isEmpty, let full = nativeResult.fullResultPayload {
+                                                                toolResult = full
+                                                            }
+                                                            NativeToolTraceLogger.shared.log(
+                                                                "tool_result_store_rejected_oversized",
+                                                                [
+                                                                    "toolName": functionName,
+                                                                    "bytes": String(payloadToStore.utf8.count),
+                                                                    "maxBytes": String(session.resultStore.maxTotalBytes)
+                                                                ]
+                                                            )
                                                         }
                                                     }
 
