@@ -5,6 +5,7 @@
 //  Native Agent Extensions - JSON helpers for Swift-only native tools.
 //
 
+import CoreFoundation
 import Foundation
 
 enum NativeToolJSON {
@@ -84,10 +85,11 @@ enum NativeToolJSON {
 
     static func strictBool(_ dictionary: [String: Any], _ key: String, default defaultValue: Bool = false) throws -> Bool {
         guard let raw = dictionary[key] else { return defaultValue }
-        guard let value = raw as? Bool else {
+        guard let number = raw as? NSNumber,
+              CFGetTypeID(number) == CFBooleanGetTypeID() else {
             throw JSONError.invalidType(key: key, expected: "a boolean")
         }
-        return value
+        return number.boolValue
     }
 
     static func strictInt(
@@ -97,7 +99,8 @@ enum NativeToolJSON {
         range: ClosedRange<Int>? = nil
     ) throws -> Int {
         guard let raw = dictionary[key] else { return defaultValue }
-        guard !(raw is Bool), let number = raw as? NSNumber else {
+        guard let number = raw as? NSNumber,
+              CFGetTypeID(number) != CFBooleanGetTypeID() else {
             throw JSONError.invalidType(key: key, expected: "an integer")
         }
         let double = number.doubleValue

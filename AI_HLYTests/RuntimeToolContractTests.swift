@@ -157,6 +157,21 @@ struct RuntimeToolContractTests {
         #expect(unsupportedShell.outcome == .invalidArguments)
     }
 
+    @Test func strictJSONScalarsDistinguishOneFromTrue() throws {
+        let arguments = try NativeToolJSON.dictionary(
+            from: #"{"one":1,"enabled":true}"#
+        )
+
+        #expect(try NativeToolJSON.strictInt(arguments, "one", default: 30) == 1)
+        #expect(try NativeToolJSON.strictBool(arguments, "enabled"))
+        #expect(throws: NativeToolJSON.JSONError.self) {
+            try NativeToolJSON.strictInt(arguments, "enabled", default: 30)
+        }
+        #expect(throws: NativeToolJSON.JSONError.self) {
+            try NativeToolJSON.strictBool(arguments, "one")
+        }
+    }
+
     @Test func javaScriptCoreExpressionValueReachesModel() async {
         let availability = RuntimeAvailabilityStore.shared
         let original = availability.isAvailable(.javaScriptCore)

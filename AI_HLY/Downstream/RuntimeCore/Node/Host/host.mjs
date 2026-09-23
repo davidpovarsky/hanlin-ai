@@ -363,6 +363,10 @@ async function compileTypeScript(body) {
     module: ts.ModuleKind.ESNext,
     moduleResolution: ts.ModuleResolutionKind.Bundler,
     strict: true,
+    // Installed pure-JavaScript packages are valid runtime dependencies even
+    // when they do not publish a declaration package. Explicit TypeScript type
+    // errors remain enabled through the rest of strict mode.
+    noImplicitAny: false,
     allowJs: true,
     checkJs: false,
     paths: { '*': [path.join(root, 'packages', 'node-global', 'node_modules', '*')] },
