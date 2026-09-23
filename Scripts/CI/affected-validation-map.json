@@ -30,6 +30,21 @@
       ],
       "consumers": []
     },
+    "runtime_tooling_acceptance": {
+      "description": "Full Runtime, package, Host Services, Mini App, Agent, and UI acceptance collector",
+      "patterns": [
+        "Scripts/Runtime/run_runtime_tooling_acceptance.py",
+        "AI_HLY/Downstream/AgentDiagnostics/AgentRuntimeUIAcceptanceProvider.swift",
+        "AI_HLYTests/RuntimeToolContractTests.swift",
+        "AI_HLYTests/RuntimePackageAcceptanceTests.swift",
+        "AI_HLYTests/AgentRuntimeConversationAcceptanceTests.swift",
+        "AI_HLYUITests/AgentRuntimeConversationUITests.swift"
+      ],
+      "direct_validation_groups": [
+        "runtime_tooling_full_acceptance"
+      ],
+      "consumers": []
+    },
     "unified_host_services": {
       "description": "Unified Host Services layer",
       "patterns": [
@@ -687,6 +702,17 @@
     }
   },
   "validation_groups": {
+    "runtime_tooling_full_acceptance": {
+      "description": "Run cohesive Runtime, package, Host Services, Mini App, Agent, and UI simulator acceptance with consolidated reporting",
+      "job": "simulator",
+      "prerequisites": [
+        "runtimecore_host"
+      ],
+      "workflow_outputs": {
+        "run_simulator_job": true,
+        "run_runtime_tooling_full_acceptance": true
+      }
+    },
     "unified_host_services": {
       "description": "Unified Host Services layer tests",
       "job": "simulator",

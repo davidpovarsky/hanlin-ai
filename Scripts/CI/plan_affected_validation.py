@@ -775,6 +775,7 @@ def plan_affected_validation(
         "run_simulator_mcp_acceptance": False,
         "run_simulator_smoke_launch": False,
         "run_simulator_nativescript_poc": False,
+        "run_runtime_tooling_full_acceptance": False,
         "selected_groups": ",".join(sorted(selected_groups.keys())),
         "base_sha": base_sha,
         "head_sha": head_sha,
@@ -826,6 +827,7 @@ def plan_affected_validation(
             "run_simulator_mcp_acceptance",
             "run_simulator_smoke_launch",
             "run_simulator_nativescript_poc",
+            "run_runtime_tooling_full_acceptance",
         ]
     ):
         step_outputs["run_simulator_job"] = True
@@ -848,6 +850,7 @@ def plan_affected_validation(
         "ios_system",
         "simulator_shell_acceptance",
         "simulator_mcp_acceptance",
+        "runtime_tooling_full_acceptance",
         "device_build",
         "ipa_packaging",
     }
@@ -879,6 +882,13 @@ def plan_affected_validation(
                 s = s.strip()
                 if s:
                     build_for_testing_args.append(f"-only-testing:{s}")
+        if step_outputs.get("run_runtime_tooling_full_acceptance"):
+            build_for_testing_args.extend([
+                "-only-testing:AI_HLYTests",
+                "-only-testing:AI_HLYUITests/HanlinRuntimeInstallationUITests",
+                "-only-testing:AI_HLYUITests/HanlinRuntimeCommandAcceptanceUITests",
+                "-only-testing:AI_HLYUITests/AgentRuntimeConversationUITests",
+            ])
 
     simulator_build_for_testing_args_value = " ".join(build_for_testing_args)
 

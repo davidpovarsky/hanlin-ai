@@ -9,7 +9,7 @@ Run this checklist on an iPad or iPhone after installing the signed build. A suc
 5. Compile and run typed TypeScript code.
 6. Run local Python that prints Hebrew UTF-8 text.
 7. Disable networking and confirm the same local Python code still runs.
-8. Restore networking and confirm the existing Piston `execute_python_code` tool still works.
+8. Restore networking and confirm the remote Piston `execute_remote_python_code` tool still works. Historical persisted calls named `execute_python_code` should continue to resolve as a compatibility alias, but that legacy name must not be advertised to the model.
 9. Install and import a pure npm package.
 10. Install a TypeScript-authored npm package that publishes JavaScript output and import it.
 11. Install and import a `py3-none-any` pure-Python wheel.

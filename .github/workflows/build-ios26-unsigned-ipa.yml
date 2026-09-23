@@ -102,6 +102,7 @@ jobs:
       run_simulator_mcp_acceptance: ${{ steps.plan.outputs.run_simulator_mcp_acceptance }}
       run_simulator_smoke_launch: ${{ steps.plan.outputs.run_simulator_smoke_launch }}
       run_simulator_nativescript_poc: ${{ steps.plan.outputs.run_simulator_nativescript_poc }}
+      run_runtime_tooling_full_acceptance: ${{ steps.plan.outputs.run_runtime_tooling_full_acceptance }}
       selected_groups: ${{ steps.plan.outputs.selected_groups }}
       base_sha: ${{ steps.plan.outputs.base_sha }}
       head_sha: ${{ steps.plan.outputs.head_sha }}
@@ -1359,6 +1360,7 @@ jobs:
       RUN_SIMULATOR_MCP_ACCEPTANCE: ${{ needs.plan-affected-validation.outputs.run_simulator_mcp_acceptance }}
       RUN_SIMULATOR_SMOKE_LAUNCH: ${{ needs.plan-affected-validation.outputs.run_simulator_smoke_launch }}
       RUN_SIMULATOR_NATIVESCRIPT_POC: ${{ needs.plan-affected-validation.outputs.run_simulator_nativescript_poc }}
+      RUN_RUNTIME_TOOLING_FULL_ACCEPTANCE: ${{ needs.plan-affected-validation.outputs.run_runtime_tooling_full_acceptance }}
 
     steps:
       - name: Checkout repository
@@ -2000,6 +2002,28 @@ jobs:
             --xcode-version "${{ steps.simulator-toolchain.outputs.xcode-version }}" \
             --runner-arch "${{ steps.simulator-toolchain.outputs.runner-arch }}"
 
+      - name: Run full Runtime Tooling acceptance and collect every group
+        if: ${{ env.RUN_RUNTIME_TOOLING_FULL_ACCEPTANCE == 'true' }}
+        run: |
+          set -uo pipefail
+          SIMULATOR_UDID="$(cat "$LOG_DIR/simulator-udid.txt")"
+          SIMULATOR_MODEL="$(cat "$LOG_DIR/simulator-model.txt")"
+          SIMULATOR_RUNTIME="$(cat "$LOG_DIR/simulator-runtime.txt")"
+          mkdir -p build/acceptance
+          python3 Scripts/Runtime/run_runtime_tooling_acceptance.py \
+            --project "$PROJECT_PATH" \
+            --scheme "$SCHEME_NAME" \
+            --configuration "$CONFIGURATION" \
+            --destination "platform=iOS Simulator,id=$SIMULATOR_UDID" \
+            --derived-data "$DERIVED_DATA_PATH" \
+            --source-packages "$CLONED_PACKAGES_PATH" \
+            --output-dir build/acceptance \
+            --commit "$GITHUB_SHA" \
+            --branch "$GITHUB_REF_NAME" \
+            --xcode-version "${{ steps.simulator-toolchain.outputs.xcode-version }} (${{ steps.simulator-toolchain.outputs.xcode-build }})" \
+            --simulator-device "$SIMULATOR_MODEL" \
+            --simulator-os "$SIMULATOR_RUNTIME"
+
       - name: Launch full app and verify runtime acceptance
         run: |
           set -euxo pipefail
@@ -2384,7 +2408,9 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: AI_Hanlin-iOS26-simulator-smoke-logs
-          path: simulator-logs
+          path: |
+            simulator-logs
+            build/acceptance
           if-no-files-found: error
           retention-days: 14
 

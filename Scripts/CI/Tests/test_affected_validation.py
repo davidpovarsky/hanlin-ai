@@ -259,6 +259,19 @@ class AffectedValidationPlannerTests(unittest.TestCase):
         self.assertNotIn("device_build", plan.selected_groups)
         self.assertFalse(plan.step_outputs["run_device_build"])
 
+    def test_runtime_tooling_target_builds_every_collected_suite_once(self) -> None:
+        plan = self.plan_files([], target_group="runtime_tooling_full_acceptance")
+
+        self.assertTrue(plan.step_outputs["run_runtime_tooling_full_acceptance"])
+        self.assertTrue(plan.step_outputs["run_simulator_job"])
+        self.assertTrue(plan.step_outputs["run_runtimecore_host"])
+        build_args = plan.step_outputs["simulator_build_for_testing_args"]
+        self.assertIn("-only-testing:AI_HLYTests", build_args)
+        self.assertIn("-only-testing:AI_HLYUITests/HanlinRuntimeInstallationUITests", build_args)
+        self.assertIn("-only-testing:AI_HLYUITests/HanlinRuntimeCommandAcceptanceUITests", build_args)
+        self.assertIn("-only-testing:AI_HLYUITests/AgentRuntimeConversationUITests", build_args)
+        self.assertEqual(plan.step_outputs["simulator_configuration"], "Release")
+
     # 13. Base SHA resolution failure throws actionable BaseSHAResolutionError
     def test_base_sha_resolution_error_diagnostic(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
