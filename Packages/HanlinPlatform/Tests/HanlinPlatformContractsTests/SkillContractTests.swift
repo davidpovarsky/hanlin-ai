@@ -69,7 +69,7 @@ func skillDescriptorEncodesAndDecodesCorrectly() throws {
 
 @Test
 func appDescriptorDecodesLegacyPayloadWithoutSkills() throws {
-    let fixture = try ContractFixtures.appDescriptorFixture()
+    let fixture = try ContractFixtures.descriptor()
     let data = try fixture.canonicalJSONData()
 
     // Decode without skills field explicitly present in original fixture
@@ -79,7 +79,7 @@ func appDescriptorDecodesLegacyPayloadWithoutSkills() throws {
 
 @Test
 func appDescriptorRejectsDuplicateSkillIDs() throws {
-    let base = try ContractFixtures.appDescriptorFixture()
+    let base = try ContractFixtures.descriptor()
     let skillID = try HanlinSkillID(validating: "duplicate-skill")
     let skill1 = try HanlinSkillDescriptor(
         id: skillID,
@@ -129,7 +129,7 @@ func appDescriptorRejectsDuplicateSkillIDs() throws {
 
 @Test
 func appDescriptorRejectsUnsafeResourcePaths() throws {
-    let base = try ContractFixtures.appDescriptorFixture()
+    let base = try ContractFixtures.descriptor()
     let unsafeSkill = try HanlinSkillDescriptor(
         id: try HanlinSkillID(validating: "unsafe-path-skill"),
         title: "Unsafe Skill",

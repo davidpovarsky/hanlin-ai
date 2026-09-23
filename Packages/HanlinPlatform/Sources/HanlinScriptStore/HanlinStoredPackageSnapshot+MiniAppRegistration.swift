@@ -110,7 +110,7 @@ extension HanlinStoredPackageSnapshot: HanlinMiniAppRegistration {
         let mappedEntryPoints: [HanlinEntryPointDescriptor] = entrypoints.compactMap { ep in
             guard let canonicalKind = ep.kind.canonicalKind else { return nil }
             let contexts = ep.supportedContexts.isEmpty ? [.mainApplication] : Array(ep.supportedContexts)
-            let epRuntime = ep.runtimeProfile ?? manifestDeclaredPackageRuntime
+            let epRuntime = ep.runtimeProfile
             return HanlinEntryPointDescriptor(
                 kind: canonicalKind,
                 handler: ep.sourcePath,
