@@ -19,43 +19,52 @@ public struct AssistantToolExposurePlanner: Sendable {
         public let deferredAliases: [String]
         public let totalExposedBytes: Int
         public let totalDeferredBytes: Int
+
+        public init(
+            exposedAliases: [String],
+            deferredAliases: [String],
+            totalExposedBytes: Int,
+            totalDeferredBytes: Int
+        ) {
+            self.exposedAliases = exposedAliases
+            self.deferredAliases = deferredAliases
+            self.totalExposedBytes = totalExposedBytes
+            self.totalDeferredBytes = totalDeferredBytes
+        }
     }
 
     /// Evaluates candidate tool aliases against the schema byte budget.
     /// Uses schemas from `authority` or size proxy.
     public func plan(
         candidateAliases: [String],
-        schemaSizes: [String: Int]
+        schemaSizes: [String: Int],
+        currentlyExposedAliases: Set<String> = []
     ) -> PlanningDecision {
         var exposed: [String] = []
         var deferred: [String] = []
-        var currentBytes = 0
+        var currentBytes = currentlyExposedAliases.reduce(0) { $0 + (schemaSizes[$1] ?? 600) }
 
-        // Calculate total candidate bytes
-        let totalCandidateBytes = candidateAliases.reduce(0) { $0 + (schemaSizes[$1] ?? 600) }
-
-        if totalCandidateBytes <= maxSchemaBytes {
-            // Fits within budget: expose all candidates directly
-            return PlanningDecision(
-                exposedAliases: candidateAliases,
-                deferredAliases: [],
-                totalExposedBytes: totalCandidateBytes,
-                totalDeferredBytes: 0
-            )
-        } else {
-            // Exceeds budget: keep tools deferred to tool_search
-            var remainingDeferredBytes = 0
-            for alias in candidateAliases {
-                let bytes = schemaSizes[alias] ?? 600
-                deferred.append(alias)
-                remainingDeferredBytes += bytes
+        for alias in candidateAliases {
+            if currentlyExposedAliases.contains(alias) {
+                exposed.append(alias)
+                continue
             }
-            return PlanningDecision(
-                exposedAliases: [],
-                deferredAliases: deferred,
-                totalExposedBytes: 0,
-                totalDeferredBytes: remainingDeferredBytes
-            )
+            let bytes = schemaSizes[alias] ?? 600
+            if currentBytes + bytes <= maxSchemaBytes {
+                exposed.append(alias)
+                currentBytes += bytes
+            } else {
+                deferred.append(alias)
+            }
         }
+
+        let totalDeferredBytes = deferred.reduce(0) { $0 + (schemaSizes[$1] ?? 600) }
+
+        return PlanningDecision(
+            exposedAliases: exposed,
+            deferredAliases: deferred,
+            totalExposedBytes: currentBytes,
+            totalDeferredBytes: totalDeferredBytes
+        )
     }
 }

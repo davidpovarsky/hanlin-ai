@@ -31,6 +31,44 @@ enum AssistantToolBridge {
         NativeToolExecutionContext
       ) async -> NativeToolResult
 
+    init(
+      executeNative: @escaping @MainActor (
+        HanlinProviderInstanceID,
+        String,
+        String,
+        NativeToolExecutionContext
+      ) async -> NativeToolResult,
+      executeMCP: @escaping @MainActor (
+        UUID,
+        String,
+        String,
+        String
+      ) async -> NativeToolResult = { _, _, _, _ in
+        NativeToolResult(modelText: "MCP not configured", outcome: .failed)
+      },
+      executeScripting: @escaping @MainActor (
+        HanlinScriptBackendRoute,
+        String
+      ) async -> NativeToolResult,
+      executeLegacy: (@MainActor (
+        String,
+        String,
+        NativeToolExecutionContext
+      ) async -> NativeToolResult)? = nil
+    ) {
+      self.executeNative = executeNative
+      self.executeMCP = executeMCP
+      self.executeScripting = executeScripting
+      self.executeLegacy = executeLegacy ?? { toolName, _, _ in
+        NativeToolResult(
+          modelText: "Legacy tool '\(toolName)' executed.",
+          userText: nil,
+          uiBlocks: [],
+          outcome: .succeeded
+        )
+      }
+    }
+
     static var live: Self {
       live(scriptingRegistry: .shared)
     }

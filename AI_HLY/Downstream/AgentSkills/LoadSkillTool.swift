@@ -52,7 +52,8 @@ public enum LoadSkillTool {
         let candidateAliases = descriptor.preferredToolIDs
         let decision = planner.plan(
             candidateAliases: candidateAliases,
-            schemaSizes: schemaSizes
+            schemaSizes: schemaSizes,
+            currentlyExposedAliases: session.exposedToolAliases
         )
 
         if !decision.exposedAliases.isEmpty {
