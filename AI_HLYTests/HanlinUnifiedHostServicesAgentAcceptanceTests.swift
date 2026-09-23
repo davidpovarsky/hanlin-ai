@@ -104,9 +104,7 @@ struct HanlinUnifiedHostServicesAgentAcceptanceTests {
     }
 
     @Test func agentToolExecutesShell() async {
-        let shellSession = try HanlinRuntimeSessionID(validating: UUID().uuidString.lowercased())
-        let shellContext = HanlinHostCallContext.forAgent(runtimeSessionID: shellSession)
-        let tool = ExecuteShellCommandTool(hostContext: shellContext)
+        let tool = ExecuteShellCommandTool()
         let context = NativeToolExecutionContext(localeIdentifier: "en")
         let result = await tool.execute(
             argumentsJSON: "{\"program\": \"ls\", \"arguments\": []}",
@@ -329,7 +327,9 @@ struct HanlinUnifiedHostServicesAgentAcceptanceTests {
         let original = store.isAvailable(.shell)
         defer { store.setAvailable(original, for: .shell) }
         store.setAvailable(true, for: .shell)
-        let tool = ExecuteShellCommandTool()
+        let shellSession = try HanlinRuntimeSessionID(validating: UUID().uuidString.lowercased())
+        let shellContext = HanlinHostCallContext.forAgent(runtimeSessionID: shellSession)
+        let tool = ExecuteShellCommandTool(hostContext: shellContext)
         let context = NativeToolExecutionContext(localeIdentifier: "en")
 
         for program in ["echo", "date", "bash", "sh", "python", "node"] {
