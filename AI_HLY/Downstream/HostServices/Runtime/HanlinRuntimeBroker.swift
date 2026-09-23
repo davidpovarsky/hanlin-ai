@@ -56,13 +56,11 @@ actor HanlinRuntimeBroker {
             return try await core.javaScriptCore.execute(request)
 
         case .typeScript:
-            let request = RuntimeExecutionRequest(
-                source: "", // TypeScript compile-and-execute uses separate source param
-                workspace: workspace, environment: environment,
+            let tsResult = try await compileAndExecuteTypeScript(
+                source: source,
+                context: context,
+                environment: environment,
                 limits: effectiveLimits
-            )
-            let tsResult = try await core.typeScript.compileAndExecute(
-                source: source, request: request
             )
             guard tsResult.compilation.succeeded else {
                 let diagnosticText = tsResult.compilation.diagnostics.map(\.message).joined(separator: "\n")
@@ -87,6 +85,29 @@ actor HanlinRuntimeBroker {
     // MARK: - Shell-Specific
 
     func executeShell(
+        program: String,
+        arguments: [String],
+        context: HanlinHostCallContext,
+        environment: [String: String] = [:],
+        allowNetwork: Bool = false,
+        limits: RuntimeExecutionLimits? = nil
+    ) async throws -> RuntimeExecutionResult {
+        try checkAvailability(for: .shell)
+        try await checkCapability(for: .shell, in: context)
+
+        let workspace = try deriveWorkspace(for: context)
+
+        return try await core.shell.execute(
+            tokens: [program] + arguments,
+            workspace: workspace,
+            environment: environment,
+            allowNetwork: allowNetwork,
+            limits: limits ?? RuntimeExecutionLimits()
+        )
+    }
+
+    /// Compatibility route for persisted calls that predate the structured shell schema.
+    func executeLegacyShell(
         command: String,
         context: HanlinHostCallContext,
         environment: [String: String] = [:],
@@ -108,6 +129,35 @@ actor HanlinRuntimeBroker {
     }
 
     // MARK: - TypeScript Compilation Only
+
+    func compileAndExecuteTypeScript(
+        source: String,
+        context: HanlinHostCallContext,
+        fileName: String = "main.ts",
+        compileOnly: Bool = false,
+        environment: [String: String] = [:],
+        limits: RuntimeExecutionLimits? = nil
+    ) async throws -> TypeScriptExecutionResult {
+        try checkAvailability(for: .typeScript)
+        try await checkCapability(for: .typeScript, in: context)
+        if !compileOnly {
+            try checkAvailability(for: .node)
+            try await checkCapability(for: .node, in: context)
+        }
+
+        let request = RuntimeExecutionRequest(
+            source: source,
+            workspace: try deriveWorkspace(for: context),
+            environment: environment,
+            limits: limits ?? RuntimeExecutionLimits()
+        )
+        return try await core.typeScript.compileAndExecute(
+            source: source,
+            request: request,
+            fileName: fileName,
+            compileOnly: compileOnly
+        )
+    }
 
     func compileTypeScript(
         source: String,

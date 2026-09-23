@@ -1,7 +1,7 @@
 import Foundation
 
 struct AgentDiagnosticsSession: Codable, Identifiable, Sendable {
-    static let currentSchemaVersion = 1
+    static let currentSchemaVersion = 2
 
     var schemaVersion = currentSchemaVersion
     var id: UUID
@@ -77,6 +77,31 @@ struct AgentDiagnosticsToolCall: Codable, Identifiable, Sendable {
     var error: String?
     var wasDeduplicated: Bool
     var duplicateOfCallID: String?
+    var canonicalLogicalToolID: String? = nil
+    var modelFacingAlias: String? = nil
+    var backendRoute: String? = nil
+    var backendSource: String? = nil
+    var runtimeKind: String? = nil
+    var outcome: String? = nil
+    var failureCategory: String? = nil
+    var argumentKeys: [String]? = nil
+    var argumentHash: String? = nil
+    var capabilityDecision: String? = nil
+    var availabilityDecision: String? = nil
+    var runtimeStateBefore: String? = nil
+    var runtimeStateAfter: String? = nil
+    var exitCode: Int? = nil
+    var didTimeOut: Bool? = nil
+    var wasCancelled: Bool? = nil
+    var outputWasTruncated: Bool? = nil
+    var stdoutByteCount: Int? = nil
+    var stderrByteCount: Int? = nil
+    var valueType: String? = nil
+    var modelResultByteCount: Int? = nil
+    var userResultByteCount: Int? = nil
+    var uiBlockTypes: [String]? = nil
+    var callerIdentity: String? = nil
+    var durationMilliseconds: Int? = nil
 }
 
 struct AgentEfficiencyReport: Codable, Hashable, Sendable {
@@ -100,6 +125,12 @@ struct AgentEfficiencyReport: Codable, Hashable, Sendable {
     var timeToFirstAnswerToken: TimeInterval?
     var totalDuration: TimeInterval?
     var failedToolCount = 0
+    var succeededToolCount: Int? = nil
+    var invalidArgumentToolCount: Int? = nil
+    var capabilityDeniedToolCount: Int? = nil
+    var availabilityDeniedToolCount: Int? = nil
+    var timedOutToolCount: Int? = nil
+    var cancelledToolCount: Int? = nil
     var retryCount = 0
     var warnings: [String] = []
 }

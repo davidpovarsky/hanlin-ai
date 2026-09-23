@@ -66,7 +66,7 @@ struct HanlinUnifiedHostServicesAgentAcceptanceTests {
             argumentsJSON: "{\"source\": \"6 * 7\", \"runtime\": \"jscore\"}",
             context: context
         )
-        #expect(!result.isError)
+        #expect(result.outcome == .succeeded)
         #expect(result.modelText.contains("42"))
     }
 
@@ -77,9 +77,8 @@ struct HanlinUnifiedHostServicesAgentAcceptanceTests {
             argumentsJSON: "{\"source\": \"console.log(14 * 3);\", \"runtime\": \"node\"}",
             context: context
         )
-        if !result.isError {
-            #expect(result.modelText.contains("42"))
-        }
+        #expect(result.outcome == .succeeded)
+        #expect(result.modelText.contains("42"))
     }
 
     @Test func agentToolExecutesPython() async {
@@ -89,9 +88,8 @@ struct HanlinUnifiedHostServicesAgentAcceptanceTests {
             argumentsJSON: "{\"source\": \"print(40 + 2)\"}",
             context: context
         )
-        if !result.isError {
-            #expect(result.modelText.contains("42"))
-        }
+        #expect(result.outcome == .succeeded)
+        #expect(result.modelText.contains("42"))
     }
 
     @Test func agentToolExecutesTypeScript() async {
@@ -101,21 +99,18 @@ struct HanlinUnifiedHostServicesAgentAcceptanceTests {
             argumentsJSON: "{\"source\": \"const ans: number = 42; console.log(ans);\"}",
             context: context
         )
-        if !result.isError {
-            #expect(result.modelText.contains("42"))
-        }
+        #expect(result.outcome == .succeeded)
+        #expect(result.modelText.contains("42"))
     }
 
     @Test func agentToolExecutesShell() async {
         let tool = ExecuteShellCommandTool()
         let context = NativeToolExecutionContext(localeIdentifier: "en")
         let result = await tool.execute(
-            argumentsJSON: "{\"command\": \"echo 42\"}",
+            argumentsJSON: "{\"program\": \"ls\", \"arguments\": []}",
             context: context
         )
-        if !result.isError {
-            #expect(result.modelText.contains("42"))
-        }
+        #expect(result.outcome == .succeeded)
     }
 
     @Test func agentToolRespectsDisabledRuntimeToggle() async {
@@ -131,7 +126,7 @@ struct HanlinUnifiedHostServicesAgentAcceptanceTests {
             argumentsJSON: "{\"source\": \"6 * 7\", \"runtime\": \"jscore\"}",
             context: context
         )
-        #expect(result.isError)
+        #expect(result.outcome == .rejectedByAvailability)
         #expect(result.modelText.lowercased().contains("disabled") || result.modelText.lowercased().contains("unavailable"))
     }
 }

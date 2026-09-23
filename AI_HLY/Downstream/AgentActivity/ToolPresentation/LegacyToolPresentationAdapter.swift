@@ -6,7 +6,7 @@ enum LegacyToolPresentationAdapter {
         "query_location", "get_current_location", "search_nearby_locations", "get_route",
         "search_online", "search_arxiv_papers", "read_web_page",
         "search_knowledge_bag", "create_knowledge_document", "create_canvas", "edit_canvas",
-        "create_web_view", "execute_python_code", "make_nutrition_data"
+        "create_web_view", "execute_remote_python_code", "execute_python_code", "make_nutrition_data"
     ]
 
     static func profile(for toolName: String) -> ToolPresentationProfile? {
@@ -42,7 +42,7 @@ enum LegacyToolPresentationAdapter {
         "query_location", "get_current_location", "search_nearby_locations", "get_route",
         "query_weather", "search_online", "read_web_page", "search_arxiv_papers",
         "extract_remote_file_content", "search_knowledge_bag", "create_knowledge_document",
-        "create_canvas", "edit_canvas", "create_web_view", "execute_python_code",
+        "create_canvas", "edit_canvas", "create_web_view", "execute_remote_python_code", "execute_python_code",
         "fetch_step_details", "fetch_energy_details", "fetch_nutrition_details", "make_nutrition_data"
     ]
 

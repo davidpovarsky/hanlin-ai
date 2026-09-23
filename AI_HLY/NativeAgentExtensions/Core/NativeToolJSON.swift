@@ -12,6 +12,9 @@ enum NativeToolJSON {
         case invalidUTF8
         case invalidObject
         case missingRequiredString(String)
+        case invalidType(key: String, expected: String)
+        case unknownArguments([String])
+        case invalidValue(key: String, description: String)
 
         var errorDescription: String? {
             switch self {
@@ -21,6 +24,12 @@ enum NativeToolJSON {
                 return "Tool arguments must be a JSON object."
             case .missingRequiredString(let key):
                 return "Missing required string argument: \(key)."
+            case .invalidType(let key, let expected):
+                return "Argument '\(key)' must be \(expected)."
+            case .unknownArguments(let keys):
+                return "Unknown tool argument(s): \(keys.sorted().joined(separator: ", "))."
+            case .invalidValue(let key, let description):
+                return "Invalid value for argument '\(key)': \(description)"
             }
         }
     }
@@ -34,6 +43,71 @@ enum NativeToolJSON {
             throw JSONError.invalidObject
         }
         return dictionary
+    }
+
+    static func validatedDictionary(
+        from jsonString: String,
+        allowedKeys: Set<String>
+    ) throws -> [String: Any] {
+        let dictionary = try dictionary(from: jsonString)
+        let unknown = Set(dictionary.keys).subtracting(allowedKeys)
+        guard unknown.isEmpty else { throw JSONError.unknownArguments(Array(unknown)) }
+        return dictionary
+    }
+
+    static func strictRequiredString(_ dictionary: [String: Any], _ key: String) throws -> String {
+        guard let raw = dictionary[key] else { throw JSONError.missingRequiredString(key) }
+        guard let value = raw as? String else {
+            throw JSONError.invalidType(key: key, expected: "a string")
+        }
+        let trimmed = value.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !trimmed.isEmpty else { throw JSONError.missingRequiredString(key) }
+        return value
+    }
+
+    static func strictOptionalString(_ dictionary: [String: Any], _ key: String) throws -> String? {
+        guard let raw = dictionary[key] else { return nil }
+        guard let value = raw as? String else {
+            throw JSONError.invalidType(key: key, expected: "a string")
+        }
+        let trimmed = value.trimmingCharacters(in: .whitespacesAndNewlines)
+        return trimmed.isEmpty ? nil : value
+    }
+
+    static func strictStringArray(_ dictionary: [String: Any], _ key: String) throws -> [String] {
+        guard let raw = dictionary[key] else { return [] }
+        guard let values = raw as? [Any], values.allSatisfy({ $0 is String }) else {
+            throw JSONError.invalidType(key: key, expected: "an array of strings")
+        }
+        return values.compactMap { $0 as? String }
+    }
+
+    static func strictBool(_ dictionary: [String: Any], _ key: String, default defaultValue: Bool = false) throws -> Bool {
+        guard let raw = dictionary[key] else { return defaultValue }
+        guard let value = raw as? Bool else {
+            throw JSONError.invalidType(key: key, expected: "a boolean")
+        }
+        return value
+    }
+
+    static func strictInt(
+        _ dictionary: [String: Any],
+        _ key: String,
+        default defaultValue: Int,
+        range: ClosedRange<Int>? = nil
+    ) throws -> Int {
+        guard let raw = dictionary[key] else { return defaultValue }
+        guard !(raw is Bool), let number = raw as? NSNumber else {
+            throw JSONError.invalidType(key: key, expected: "an integer")
+        }
+        let double = number.doubleValue
+        guard double.isFinite, double.rounded() == double, let value = Int(exactly: double) else {
+            throw JSONError.invalidType(key: key, expected: "an integer")
+        }
+        if let range, !range.contains(value) {
+            throw JSONError.invalidValue(key: key, description: "expected \(range.lowerBound)...\(range.upperBound)")
+        }
+        return value
     }
 
     static func optionalString(_ dictionary: [String: Any], _ key: String) -> String? {

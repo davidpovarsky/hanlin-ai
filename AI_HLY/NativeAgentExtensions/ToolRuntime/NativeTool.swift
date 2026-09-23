@@ -69,4 +69,21 @@ enum NativeToolSchema {
         if let maximum { schema["maximum"] = maximum }
         return schema
     }
+
+    static func integer(description: String, minimum: Int? = nil, maximum: Int? = nil) -> [String: Any] {
+        var schema: [String: Any] = ["type": "integer", "description": description]
+        if let minimum { schema["minimum"] = minimum }
+        if let maximum { schema["maximum"] = maximum }
+        return schema
+    }
+
+    static func stringArray(description: String, maximumItems: Int? = nil) -> [String: Any] {
+        var schema: [String: Any] = [
+            "type": "array",
+            "items": ["type": "string"],
+            "description": description
+        ]
+        if let maximumItems { schema["maxItems"] = maximumItems }
+        return schema
+    }
 }

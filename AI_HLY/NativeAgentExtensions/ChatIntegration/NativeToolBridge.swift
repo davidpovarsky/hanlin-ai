@@ -70,7 +70,8 @@ enum NativeToolBridge {
                     title: "Tool unavailable",
                     body: "The selected tool route is no longer available.",
                     systemImage: "wrench.and.screwdriver.fill"
-                )]
+                )],
+                outcome: .rejectedByAvailability
             )
         }
 
@@ -90,7 +91,8 @@ enum NativeToolBridge {
                         body: "\(entry.title) is disabled in Settings.",
                         systemImage: "wrench.and.screwdriver.fill"
                     )
-                ]
+                ],
+                outcome: .rejectedByAvailability
             )
         }
 
@@ -105,14 +107,26 @@ enum NativeToolBridge {
         )
 
         let extraction = ToolInvocationMetadataExtractor.extract(from: argumentsJSON)
-        let result = await tool.execute(argumentsJSON: extraction.sanitizedArgumentsJSON, context: context)
+        var result = await tool.execute(argumentsJSON: extraction.sanitizedArgumentsJSON, context: context)
         let durationMs = Int(Date().timeIntervalSince(start) * 1000)
+        result.diagnostics.argumentKeys = Self.argumentKeys(in: extraction.sanitizedArgumentsJSON)
 
         NativeToolTraceLogger.shared.log(
-            "tool_execution_completed",
+            result.outcome.isSuccess ? "tool_execution_succeeded" : "tool_execution_failed",
             [
                 "toolName": toolName,
                 "durationMs": durationMs,
+                "outcome": result.outcome.rawValue,
+                "failureCategory": result.diagnostics.failureCategory as Any,
+                "backendRoute": result.diagnostics.backendRoute as Any,
+                "runtimeKind": result.diagnostics.runtimeKind as Any,
+                "exitCode": result.diagnostics.exitCode as Any,
+                "didTimeOut": result.diagnostics.didTimeOut,
+                "wasCancelled": result.diagnostics.wasCancelled,
+                "outputWasTruncated": result.diagnostics.outputWasTruncated,
+                "stdoutByteCount": result.diagnostics.stdoutByteCount,
+                "stderrByteCount": result.diagnostics.stderrByteCount,
+                "valueType": result.diagnostics.valueType as Any,
                 "modelTextLength": result.modelText.count,
                 "userTextLength": result.userText?.count ?? 0,
                 "uiBlockCount": result.uiBlocks.count,
@@ -121,5 +135,13 @@ enum NativeToolBridge {
         )
 
         return result
+    }
+
+    private static func argumentKeys(in argumentsJSON: String) -> [String] {
+        guard let data = argumentsJSON.data(using: .utf8),
+              let dictionary = try? JSONSerialization.jsonObject(with: data) as? [String: Any] else {
+            return []
+        }
+        return dictionary.keys.sorted()
     }
 }

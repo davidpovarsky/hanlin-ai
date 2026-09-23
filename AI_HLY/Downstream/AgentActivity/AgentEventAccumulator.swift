@@ -230,19 +230,22 @@ struct AgentEventAccumulator {
         step.output = Self.safePreview(result.userText ?? result.modelText)
         step.richResultBlocks = result.richResultBlocks
         if let profile {
-          step.title =
-            result.isError
-            ? profile.activity.failedTitle
-            : profile.activity.completedTitle
+          step.title = Self.executionTitle(
+            outcome: result.semanticOutcome,
+            profile: profile
+          )
         }
-        step.status = result.isError ? .failed : .completed
+        step.status = Self.activityStatus(for: result.semanticOutcome)
         if result.isError {
           step.errorDescription = Self.safePreview(result.userText ?? result.modelText)
         }
         step.completedAt = step.startedAt.addingTimeInterval(max(0, result.duration))
       }
       if let transcriptID = toolTranscriptIDByCallID[callID] {
-        transcript.complete(externalID: transcriptID, status: result.isError ? .failed : .completed)
+        transcript.complete(
+          externalID: transcriptID,
+          status: Self.activityStatus(for: result.semanticOutcome)
+        )
       }
       if let call = toolCallByID[callID], let profile {
         evidence.insert(
@@ -391,6 +394,32 @@ struct AgentEventAccumulator {
         visibility: .collapseIntoThinking,
         sequence: sequence
       )
+    }
+  }
+
+  private static func activityStatus(
+    for outcome: NativeToolExecutionOutcome
+  ) -> AgentActivityStatus {
+    switch outcome {
+    case .succeeded: .completed
+    case .cancelled: .cancelled
+    case .failed, .invalidArguments, .rejectedByCapability,
+         .rejectedByAvailability, .timedOut: .failed
+    }
+  }
+
+  private static func executionTitle(
+    outcome: NativeToolExecutionOutcome,
+    profile: ToolPresentationProfile
+  ) -> String {
+    switch outcome {
+    case .succeeded: profile.activity.completedTitle
+    case .failed: profile.activity.failedTitle
+    case .invalidArguments: String(localized: "Invalid arguments")
+    case .rejectedByCapability: String(localized: "Denied")
+    case .rejectedByAvailability: String(localized: "Unavailable")
+    case .timedOut: String(localized: "Timed out")
+    case .cancelled: String(localized: "Cancelled")
     }
   }
 

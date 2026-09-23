@@ -142,7 +142,7 @@ enum ChatPresentationBridge {
       {
         return .imageGeneration
       }
-      if toolName == "execute_python_code" || toolName == "python"
+      if toolName == "execute_remote_python_code" || toolName == "execute_python_code" || toolName == "python"
         || toolName.contains("code")
       {
         return .codeExecution

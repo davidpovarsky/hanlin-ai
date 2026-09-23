@@ -102,6 +102,7 @@ struct AgentToolResult: @unchecked Sendable {
   var evidenceItems: [AgentEvidenceItem] = []
   var hasLegacyPresentationPayload: Bool
   var isError: Bool
+  var semanticOutcome: NativeToolExecutionOutcome = .succeeded
   var duration: TimeInterval
 }
 enum AgentAnswerDisposition: String, Codable, Hashable, Sendable {

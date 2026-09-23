@@ -146,6 +146,7 @@ actor AgentDiagnosticsRecorder {
             if duplicateOf != nil { break }
         }
         let full = session.level == .fullLocalDebug
+        let argumentKeys = Self.argumentKeys(from: call.sanitizedArgumentsJSON)
         let diagnosticsCall = AgentDiagnosticsToolCall(
             callID: call.id,
             toolName: call.name,
@@ -166,7 +167,10 @@ actor AgentDiagnosticsRecorder {
             resultByteCount: 0,
             error: nil,
             wasDeduplicated: duplicateOf != nil,
-            duplicateOfCallID: duplicateOf
+            duplicateOfCallID: duplicateOf,
+            modelFacingAlias: call.name,
+            argumentKeys: argumentKeys,
+            argumentHash: argumentHash
         )
         updateRound(roundID) { $0.toolCalls.append(diagnosticsCall) }
         updateDerivedValues()
@@ -181,6 +185,8 @@ actor AgentDiagnosticsRecorder {
         resultForModel: String,
         resultForUser: String?,
         duration: TimeInterval,
+        outcome: NativeToolExecutionOutcome = .succeeded,
+        diagnostics: NativeToolExecutionDiagnostics = .init(),
         error: String? = nil,
         presentationDecision: ToolResultPresentationDecision? = nil
     ) async {
@@ -200,7 +206,9 @@ actor AgentDiagnosticsRecorder {
 
             var call = round.toolCalls[index]
             call.executionCompletedAt = completedAt
-            call.status = error == nil ? "completed" : "failed"
+            call.status = outcome.rawValue
+            call.outcome = outcome.rawValue
+            call.failureCategory = diagnostics.failureCategory ?? (outcome.isSuccess ? nil : outcome.rawValue)
             call.resultByteCount = resultByteCount
             call.error = sanitizedError
             call.resultForModel = sanitizedModelResult
@@ -209,14 +217,47 @@ actor AgentDiagnosticsRecorder {
             call.resultRendererKind = presentationDecision?.rendererKind?.rawValue
             call.resultPresentationSuppressed = presentationDecision.map { !$0.shouldPresent }
             call.suppressionReason = presentationDecision?.suppressionReason?.rawValue
+            call.canonicalLogicalToolID = diagnostics.canonicalLogicalToolID
+            call.modelFacingAlias = diagnostics.modelFacingAlias ?? call.modelFacingAlias
+            call.backendRoute = diagnostics.backendRoute
+            call.backendSource = diagnostics.source
+            call.runtimeKind = diagnostics.runtimeKind
+            call.argumentKeys = diagnostics.argumentKeys.isEmpty ? call.argumentKeys : diagnostics.argumentKeys
+            call.capabilityDecision = diagnostics.capabilityDecision
+            call.availabilityDecision = diagnostics.availabilityDecision
+            call.runtimeStateBefore = diagnostics.runtimeStateBefore
+            call.runtimeStateAfter = diagnostics.runtimeStateAfter
+            call.exitCode = diagnostics.exitCode
+            call.didTimeOut = diagnostics.didTimeOut
+            call.wasCancelled = diagnostics.wasCancelled
+            call.outputWasTruncated = diagnostics.outputWasTruncated
+            call.stdoutByteCount = diagnostics.stdoutByteCount
+            call.stderrByteCount = diagnostics.stderrByteCount
+            call.valueType = diagnostics.valueType
+            call.modelResultByteCount = diagnostics.modelResultByteCount
+            call.userResultByteCount = diagnostics.userResultByteCount
+            call.uiBlockTypes = diagnostics.uiBlockTypes
+            call.callerIdentity = diagnostics.callerIdentity
+            call.durationMilliseconds = Int(max(0, duration) * 1_000)
             round.toolCalls[index] = call
         }
         updateDerivedValues()
         await persist()
         trace(
-            error == nil ? "ToolExecutionCompleted" : "ToolExecutionFailed",
+            outcome.isSuccess ? "ToolExecutionSucceeded" : "ToolExecutionFailed",
             roundID: roundID,
-            fields: ["callID": callID, "duration": duration, "resultBytes": resultByteCount]
+            fields: [
+                "callID": callID,
+                "duration": duration,
+                "resultBytes": resultByteCount,
+                "outcome": outcome.rawValue,
+                "failureCategory": diagnostics.failureCategory as Any,
+                "backendRoute": diagnostics.backendRoute as Any,
+                "runtimeKind": diagnostics.runtimeKind as Any,
+                "exitCode": diagnostics.exitCode as Any,
+                "didTimeOut": diagnostics.didTimeOut,
+                "wasCancelled": diagnostics.wasCancelled
+            ]
         )
     }
 
@@ -292,7 +333,15 @@ actor AgentDiagnosticsRecorder {
         report.resultPresentationSchemaEstimatedTokens = session.rounds.compactMap {
             $0.request.composition.resultPresentationSchemaEstimatedTokens
         }.max()
-        report.failedToolCount = calls.filter { $0.status == "failed" }.count
+        let succeededStatuses = Set([NativeToolExecutionOutcome.succeeded.rawValue, "completed"])
+        let completedCalls = calls.filter { $0.status != "running" }
+        report.succeededToolCount = completedCalls.filter { succeededStatuses.contains($0.status) }.count
+        report.failedToolCount = completedCalls.filter { !succeededStatuses.contains($0.status) }.count
+        report.invalidArgumentToolCount = completedCalls.filter { $0.status == NativeToolExecutionOutcome.invalidArguments.rawValue }.count
+        report.capabilityDeniedToolCount = completedCalls.filter { $0.status == NativeToolExecutionOutcome.rejectedByCapability.rawValue }.count
+        report.availabilityDeniedToolCount = completedCalls.filter { $0.status == NativeToolExecutionOutcome.rejectedByAvailability.rawValue }.count
+        report.timedOutToolCount = completedCalls.filter { $0.status == NativeToolExecutionOutcome.timedOut.rawValue }.count
+        report.cancelledToolCount = completedCalls.filter { $0.status == NativeToolExecutionOutcome.cancelled.rawValue }.count
         report.totalDuration = session.completedAt.map { $0.timeIntervalSince(session.startedAt) }
         if report.duplicateToolCallCount > 0 { report.warnings.append("Repeated identical tool calls detected") }
         if report.modelRoundCount > 8 { report.warnings.append("High model round count") }
@@ -407,6 +456,14 @@ actor AgentDiagnosticsRecorder {
         return sanitizedJSONString(from: value)
     }
 
+    private static func argumentKeys(from json: String) -> [String] {
+        guard let data = json.data(using: .utf8),
+              let dictionary = try? JSONSerialization.jsonObject(with: data) as? [String: Any] else {
+            return []
+        }
+        return dictionary.keys.sorted()
+    }
+
     private static func sanitizedJSONString(from value: Any) -> String {
         AgentDiagnosticsRedactor.sanitizedJSONString(from: value)
     }
@@ -435,6 +492,12 @@ actor AgentDiagnosticsRecorder {
                 lines += [
                     "", "Tool execution", "Tool name: \(tool.toolName)", "Call ID: \(tool.callID)",
                     "Status: \(tool.status)",
+                    "Outcome: \(tool.outcome ?? tool.status)",
+                    "Failure category: \(tool.failureCategory ?? "—")",
+                    "Canonical tool: \(tool.canonicalLogicalToolID ?? "—")",
+                    "Model alias: \(tool.modelFacingAlias ?? tool.toolName)",
+                    "Backend: \(tool.backendRoute ?? "—")",
+                    "Runtime: \(tool.runtimeKind ?? "—")",
                     "Presentation profile: \(tool.presentationProfileIdentity ?? "—")",
                     "Result requested: \(tool.resultPresentationRequested ?? "none")",
                     "Result presented: \(tool.resultPresentationEffective.map(String.init) ?? "—")",
@@ -451,6 +514,13 @@ actor AgentDiagnosticsRecorder {
             "Output: \(session.totals.outputTokens.map(String.init) ?? "unavailable")",
             "Source: \(session.totals.source.rawValue)", "", "Efficiency report",
             "Model rounds: \(session.efficiency.modelRoundCount)", "Tool calls: \(session.efficiency.toolCallCount)",
+            "Succeeded tools: \(session.efficiency.succeededToolCount ?? 0)",
+            "Failed tools: \(session.efficiency.failedToolCount)",
+            "Invalid arguments: \(session.efficiency.invalidArgumentToolCount ?? 0)",
+            "Capability denied: \(session.efficiency.capabilityDeniedToolCount ?? 0)",
+            "Availability denied: \(session.efficiency.availabilityDeniedToolCount ?? 0)",
+            "Timed out: \(session.efficiency.timedOutToolCount ?? 0)",
+            "Cancelled: \(session.efficiency.cancelledToolCount ?? 0)",
             "Duplicate tool calls: \(session.efficiency.duplicateToolCallCount)", "Warnings: \(session.efficiency.warnings.joined(separator: "; "))"
         ]
         return AgentDiagnosticsRedactor.sanitize(lines.joined(separator: "\n"))

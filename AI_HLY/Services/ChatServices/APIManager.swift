@@ -2809,6 +2809,8 @@ class APIManager {
                                             var executionUIBlocks: [NativeUIBlock] = []
                                             var executionEvidenceItems: [AgentEvidenceItem] = []
                                             var executionReturnedError = false
+                                            var executionOutcome: NativeToolExecutionOutcome = .succeeded
+                                            var executionDiagnostics = NativeToolExecutionDiagnostics()
                                             let previousSearchResources = self.searchResources
                                             let previousLocationsInfo = self.locationsInfo
                                             let previousRouteInfo = self.storeRouteInfo
@@ -3481,7 +3483,7 @@ class APIManager {
                                                     toolResultFront = toolResult
                                                 }
                                                 
-                                            case "execute_python_code":
+                                            case "execute_remote_python_code", "execute_python_code":
                                                 // 调用 Python 执行工具
                                                 continuation.yield(StreamData(operationalState: currentLanguagePrefix ? "正在执行代码" : "Executing Code"))
                                                 useFunctionName = functionName
@@ -3501,12 +3503,22 @@ class APIManager {
                                                         self.codeBlock = []
                                                     }
                                                     self.codeBlock?.append(resultBlock)
+                                                    executionOutcome = resultBlock.hasError ? .failed : .succeeded
+                                                    executionReturnedError = resultBlock.hasError
+                                                    executionDiagnostics.backendRoute = "remote:piston"
+                                                    executionDiagnostics.source = "legacy"
+                                                    executionDiagnostics.failureCategory = resultBlock.hasError ? NativeToolExecutionOutcome.failed.rawValue : nil
                                                     
                                                 } catch {
                                                     // 出现严重异常（如网络失败、结构解析错误等）
                                                     toolResult = currentLanguagePrefix
                                                     ? "执行 Python 代码时发生错误：\(error.localizedDescription)"
                                                     : "An error occurred while executing the Python code: \(error.localizedDescription)"
+                                                    executionOutcome = .failed
+                                                    executionReturnedError = true
+                                                    executionDiagnostics.backendRoute = "remote:piston"
+                                                    executionDiagnostics.source = "legacy"
+                                                    executionDiagnostics.failureCategory = NativeToolExecutionOutcome.failed.rawValue
                                                 }
                                                 
                                                 toolResultFront = toolResult
@@ -3771,12 +3783,16 @@ class APIManager {
                                                     toolResultFront = nativeResult.userText ?? nativeResult.modelText
 
                                                     executionUIBlocks = nativeResult.uiBlocks
-                                                    executionReturnedError = nativeResult.isError
+                                                    executionOutcome = nativeResult.outcome
+                                                    executionDiagnostics = nativeResult.diagnostics
+                                                    executionReturnedError = !nativeResult.outcome.isSuccess
 
                                                     break
                                                 }
 
                                                 toolResult = "Unknown"
+                                                executionOutcome = .invalidArguments
+                                                executionDiagnostics.failureCategory = NativeToolExecutionOutcome.invalidArguments.rawValue
                                                 useFunctionName = functionName
                                                 continuation.yield(StreamData(operationalState: currentLanguagePrefix ?  "工具不存在" : "Tool does not exist"))
                                                 toolResultFront = currentLanguagePrefix ?  "工具不存在" : "Tool does not exist"
@@ -3806,7 +3822,7 @@ class APIManager {
                                                     return self.htmlContent?.isEmpty == false && self.htmlContent != previousHTMLContent
                                                 case "make_nutrition_data":
                                                     return (self.healthCard?.count ?? 0) > (previousHealthCard?.count ?? 0)
-                                                case "execute_python_code":
+                                                case "execute_remote_python_code", "execute_python_code":
                                                     return (self.codeBlock?.count ?? 0) > (previousCodeBlock?.count ?? 0)
                                                 case "create_knowledge_document":
                                                     return (self.knowledgeCard?.count ?? 0) > (previousKnowledgeCard?.count ?? 0)
@@ -3855,6 +3871,7 @@ class APIManager {
                                                                 && presentationDecision.rendererKind == .legacyExisting
                                                                 && legacyPayloadAvailable,
                                                             isError: executionReturnedError,
+                                                            semanticOutcome: executionOutcome,
                                                             duration: executionDuration
                                                         )
                                                     )
@@ -3867,7 +3884,9 @@ class APIManager {
                                                     resultForModel: toolResult,
                                                     resultForUser: toolResultFront,
                                                     duration: executionDuration,
-                                                    error: toolResult == "Unknown" ? toolResultFront : nil,
+                                                    outcome: executionOutcome,
+                                                    diagnostics: executionDiagnostics,
+                                                    error: executionOutcome.isSuccess ? nil : toolResultFront,
                                                     presentationDecision: presentationDecision
                                                 )
                                             }

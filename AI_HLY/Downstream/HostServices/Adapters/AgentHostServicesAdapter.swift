@@ -31,13 +31,32 @@ enum AgentHostServicesAdapter {
 
     /// Execute a shell command through the broker with agent permissions.
     static func executeShell(
-        command: String,
+        program: String,
+        arguments: [String] = [],
         environment: [String: String] = [:],
         allowNetwork: Bool = false,
         limits: RuntimeExecutionLimits? = nil
     ) async throws -> RuntimeExecutionResult {
         let context = makeContext()
         return try await HanlinRuntimeBroker.shared.executeShell(
+            program: program,
+            arguments: arguments,
+            context: context,
+            environment: environment,
+            allowNetwork: allowNetwork,
+            limits: limits
+        )
+    }
+
+    /// Compatibility route for historical free-form shell tool calls.
+    static func executeLegacyShell(
+        command: String,
+        environment: [String: String] = [:],
+        allowNetwork: Bool = false,
+        limits: RuntimeExecutionLimits? = nil
+    ) async throws -> RuntimeExecutionResult {
+        let context = makeContext()
+        return try await HanlinRuntimeBroker.shared.executeLegacyShell(
             command: command,
             context: context,
             environment: environment,
@@ -54,34 +73,13 @@ enum AgentHostServicesAdapter {
         environment: [String: String] = [:],
         limits: RuntimeExecutionLimits? = nil
     ) async throws -> (compilation: TypeScriptCompilationResult, execution: RuntimeExecutionResult?) {
-        let context = makeContext()
-        let availability = RuntimeAvailabilityStore.shared
-        guard availability.isAvailable(.typeScript) else {
-            throw HanlinHostServiceError.runtimeDisabledByUser(.typeScript)
-        }
-        if !compileOnly {
-            guard availability.isAvailable(.node) else {
-                throw HanlinHostServiceError.runtimeDisabledByUser(.node)
-            }
-        }
-        let authResult = await HanlinHostCapabilityAuthority.shared.authorize(capability: "runtime.typescript", context: context)
-        guard authResult == .allowed else {
-            throw HanlinHostServiceError.capabilityNotGranted("runtime.typescript")
-        }
-
-        let workspace = try RuntimeFileLayout.default.workspace(client: .tools, identifier: "execute_typescript_code")
-        let request = RuntimeExecutionRequest(
+        let result = try await HanlinRuntimeBroker.shared.compileAndExecuteTypeScript(
             source: source,
-            workspace: workspace,
-            environment: environment,
-            limits: limits ?? RuntimeExecutionLimits()
-        )
-        let core = AppRuntimeCore.shared
-        let result = try await core.typeScript.compileAndExecute(
-            source: source,
-            request: request,
+            context: makeContext(),
             fileName: fileName,
-            compileOnly: compileOnly
+            compileOnly: compileOnly,
+            environment: environment,
+            limits: limits
         )
         return (result.compilation, result.execution)
     }

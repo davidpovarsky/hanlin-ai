@@ -326,20 +326,20 @@ func buildMemoryTools(
     if codeEnabled {
         tools.append(["type": "function", "function": [
             "name": "create_web_view",
-            "description": zh ? "用途：渲染 HTML/CSS/JS 为可交互网页预览，以移动端为首要适配目标。触发场景：需要展示前端界面、组件或动态图表。输入要求：code 为完整前端源码，应包含 `<meta viewport>`，使用响应式布局 (flex/grid)，按键元素需支持触控事件，同时遵循系统深浅色 (prefer‑color‑scheme)。可与 execute_python_code 联用，在预览中展示动态计算结果。" :
-                "Purpose: render given HTML/CSS/JS into interactive preview, prioritising mobile. Trigger: need to showcase UI, component, or dynamic chart. Input: 'code' must be full front‑end source, include <meta viewport>, responsive layout (flex/grid), buttons handle touch, supports prefers‑color‑scheme for dark/light. Pair with: execute_python_code to inject dynamic results.",
+            "description": zh ? "用途：渲染 HTML/CSS/JS 为可交互网页预览，以移动端为首要适配目标。触发场景：需要展示前端界面、组件或动态图表。输入要求：code 为完整前端源码，应包含 `<meta viewport>`，使用响应式布局 (flex/grid)，按键元素需支持触控事件，同时遵循系统深浅色 (prefer‑color‑scheme)。可与 execute_remote_python_code 联用，在预览中展示动态计算结果。" :
+                "Purpose: render given HTML/CSS/JS into interactive preview, prioritising mobile. Trigger: need to showcase UI, component, or dynamic chart. Input: 'code' must be full front-end source, include <meta viewport>, responsive layout (flex/grid), buttons handle touch, supports prefers-color-scheme for dark/light. Pair with execute_remote_python_code to inject remotely computed results.",
             "parameters": ["type": "object", "properties": [
                 "code": ["type": "string", "description": zh ? "完整网页版源码" : "Full webpage source code"]
             ], "required": ["code"]]
         ]])
 
         tools.append(["type": "function", "function": [
-            "name": "execute_python_code",
-            "description": zh ? "用途：执行 Python3.10 脚本并返回 stdout/stderr。触发场景：需要数据分析、数学计算等优先考虑使用本工具进行计算。沙盒环境，不支持图表绘制和联网请求。输入要求：code 应包含至少一次 print 以输出结果。约束：脚本最长 3 秒；禁止访问外网、读写文件或阻塞输入。可与 create_web_view 联用，将脚本生成的数据注入网页。" :
-                "Purpose: Execute Python 3.10 scripts and return stdout/stderr. Triggering scenario: When data analysis, mathematical calculations, etc. are needed, prioritize using this tool for calculations. Sandbox environment, does not support chart plotting or network requests. Input requirements: The code must include at least one print statement to output results. Constraints: Script execution limited to 3 seconds; access to external networks, file reading/writing, or blocking input is prohibited. Can be used in conjunction with createwebview to inject script-generated data into a webpage.",
+            "name": "execute_remote_python_code",
+            "description": zh ? "通过已配置的远程 Piston/代码执行服务运行 Python 并返回 stdout/stderr。需要网络；这不是设备上的嵌入式 Python。仅在明确需要远程沙箱时使用。代码最长运行 3 秒，不能访问外网、文件或阻塞输入。" :
+                "Run Python remotely through the configured Piston/code-execution service and return stdout/stderr. This requires network access and is not Hanlin's embedded on-device Python runtime. Use it only when remote sandbox execution is explicitly appropriate. The remote script is limited to 3 seconds and cannot access external networks, files, or blocking input.",
             "parameters": ["type": "object", "properties": [
                 "code": ["type": "string", "description": zh ? "Python 代码" : "Python code"]
-            ], "required": ["code"]]
+            ], "required": ["code"], "additionalProperties": false]
         ]])
     }
 

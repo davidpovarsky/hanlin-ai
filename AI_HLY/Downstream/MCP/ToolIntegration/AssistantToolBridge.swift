@@ -84,7 +84,8 @@ enum AssistantToolBridge {
                     body: result.message,
                     systemImage: "exclamationmark.triangle"
                   )
-                ]
+                ],
+              outcome: result.success ? .succeeded : .failed
             )
           } catch let error as HanlinScriptingError {
             return NativeToolResult(
@@ -97,7 +98,8 @@ enum AssistantToolBridge {
                   body: error.localizedDescription,
                   systemImage: "exclamationmark.triangle"
                 )
-              ]
+              ],
+              outcome: .failed
             )
           } catch {
             return NativeToolResult(
@@ -110,7 +112,8 @@ enum AssistantToolBridge {
                   body: "The Script tool could not complete.",
                   systemImage: "exclamationmark.triangle"
                 )
-              ]
+              ],
+              outcome: .failed
             )
           }
         }
@@ -155,7 +158,8 @@ enum AssistantToolBridge {
       return NativeToolResult(
         modelText: modelText,
         userText: userText.isEmpty ? nil : userText,
-        uiBlocks: blocks
+        uiBlocks: blocks,
+        outcome: result.success ? .succeeded : .failed
       )
     }
   }
@@ -205,23 +209,52 @@ enum AssistantToolBridge {
       guard let resolution = authority.resolution(alias: alias) else {
         return nil
       }
+      var result: NativeToolResult
       switch resolution.backend {
       case .native(let providerInstanceID, let toolName):
-        return await executors.executeNative(
+        result = await executors.executeNative(
           providerInstanceID,
           toolName,
           argumentsJSON,
           context
         )
       case .mcp(let serverID, let toolName):
-        return await executors.executeMCP(
+        result = await executors.executeMCP(
           serverID,
           toolName,
           resolution.resultTitle ?? toolName,
           argumentsJSON
         )
       case .scripting(let route):
-        return await executors.executeScripting(route, argumentsJSON)
+        result = await executors.executeScripting(route, argumentsJSON)
+      }
+      let logicalID = resolution.route.logicalToolID
+      result.diagnostics.canonicalLogicalToolID =
+        "\(logicalID.providerInstanceID.rawValue)|\(logicalID.localToolID.rawValue)"
+      result.diagnostics.modelFacingAlias = alias
+      result.diagnostics.backendRoute = backendRouteDescription(resolution.backend)
+      result.diagnostics.source = backendSource(resolution.backend)
+      return result
+    }
+
+    private func backendRouteDescription(
+      _ backend: HanlinCanonicalToolBackendRoute
+    ) -> String {
+      switch backend {
+      case .native(let providerInstanceID, let toolName):
+        "native:\(providerInstanceID.rawValue):\(toolName)"
+      case .mcp(let serverID, let toolName):
+        "mcp:\(serverID.uuidString.lowercased()):\(toolName)"
+      case .scripting(let route):
+        "scripting:\(route.providerInstanceID.rawValue)"
+      }
+    }
+
+    private func backendSource(_ backend: HanlinCanonicalToolBackendRoute) -> String {
+      switch backend {
+      case .native: "native"
+      case .mcp: "mcp"
+      case .scripting: "scripting"
       }
     }
   }
