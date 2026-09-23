@@ -3,8 +3,45 @@ import Testing
 @testable import AI_Hanlin
 
 @MainActor
-@Suite("Runtime Tool Contracts")
+@Suite("Runtime Tool Contracts", .serialized)
 struct RuntimeToolContractTests {
+    @Test func preparedSchemasHaveUniqueAliasesRoutesAndValidObjectContracts() async throws {
+        let prepared = try await AssistantToolBridge.prepare(scope: .nativeOnly)
+        let schemas = prepared.schemas
+        #expect(!schemas.isEmpty)
+
+        var aliases: [String] = []
+        var logicalRoutes: [String] = []
+        for schema in schemas {
+            #expect(schema["type"] as? String == "function")
+            let function = try #require(schema["function"] as? [String: Any])
+            let alias = try #require(function["name"] as? String)
+            let description = try #require(function["description"] as? String)
+            let parameters = try #require(function["parameters"] as? [String: Any])
+            let properties = try #require(parameters["properties"] as? [String: Any])
+            let required = parameters["required"] as? [String] ?? []
+            #expect(!alias.isEmpty)
+            #expect(!description.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
+            #expect(parameters["type"] as? String == "object")
+            #expect(Set(required).isSubset(of: Set(properties.keys)))
+            if let additionalProperties = parameters["additionalProperties"] {
+                #expect(additionalProperties is Bool)
+            }
+
+            aliases.append(alias)
+            let resolution = try #require(prepared.authority.resolution(alias: alias))
+            logicalRoutes.append(
+                "\(resolution.route.logicalToolID.providerInstanceID.rawValue)|\(resolution.route.logicalToolID.localToolID.rawValue)"
+            )
+        }
+
+        #expect(Set(aliases).count == aliases.count)
+        #expect(Set(logicalRoutes).count == logicalRoutes.count)
+        #expect(prepared.authority.backendRoutes.count == schemas.count)
+        #expect(prepared.authority.catalog.entries.count == schemas.count)
+        #expect(!aliases.contains("execute_python_code"))
+    }
+
     @Test func localAndRemotePythonAreUnambiguous() throws {
         let localSchema = ExecuteLocalPythonTool().openAIToolSchema()
         let localFunction = try #require(localSchema["function"] as? [String: Any])
@@ -55,6 +92,29 @@ struct RuntimeToolContractTests {
         #expect(advertised.count == 23)
         #expect(!advertised.contains("echo"))
         #expect(!advertised.contains("date"))
+    }
+
+    @Test func runtimeSchemasAdvertiseOnlyHandledParameters() throws {
+        try assertParameters(
+            ExecuteLocalPythonTool().openAIToolSchema(),
+            properties: ["source", "arguments", "timeout_seconds"],
+            required: ["source"]
+        )
+        try assertParameters(
+            ExecuteJavaScriptTool().openAIToolSchema(),
+            properties: ["source", "runtime", "arguments", "timeout_seconds"],
+            required: ["source"]
+        )
+        try assertParameters(
+            ExecuteTypeScriptTool().openAIToolSchema(),
+            properties: ["source", "file_name", "compile_only", "timeout_seconds"],
+            required: ["source"]
+        )
+        try assertParameters(
+            ExecuteShellCommandTool().openAIToolSchema(),
+            properties: ["program", "arguments", "allow_network"],
+            required: ["program"]
+        )
     }
 
     @Test func runtimeToolsRejectMalformedArgumentsSemantically() async {
@@ -166,5 +226,18 @@ struct RuntimeToolContractTests {
 
     private static func functionName(_ schema: [String: Any]) -> String? {
         (schema["function"] as? [String: Any])?["name"] as? String
+    }
+
+    private func assertParameters(
+        _ schema: [String: Any],
+        properties expectedProperties: Set<String>,
+        required expectedRequired: Set<String>
+    ) throws {
+        let function = try #require(schema["function"] as? [String: Any])
+        let parameters = try #require(function["parameters"] as? [String: Any])
+        let properties = try #require(parameters["properties"] as? [String: Any])
+        #expect(Set(properties.keys) == expectedProperties)
+        #expect(Set(parameters["required"] as? [String] ?? []) == expectedRequired)
+        #expect(parameters["additionalProperties"] as? Bool == false)
     }
 }

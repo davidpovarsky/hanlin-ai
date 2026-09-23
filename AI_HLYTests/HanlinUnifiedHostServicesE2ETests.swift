@@ -201,6 +201,77 @@ struct HanlinUnifiedHostServicesE2ETests {
         }
     }
 
+    @Test func fileScopesOverwriteDeleteSharedGateAndSymlinkProtection() async throws {
+        let suffix = UUID().uuidString.lowercased()
+        let appID = try HanlinAppID(validating: "file-scope-app-\(suffix)")
+        let packageID = try HanlinInstalledPackageID(validating: "file-scope-package-\(suffix)")
+        let baseSession = try HanlinAppSessionID(validating: suffix)
+        let baseRuntime = try HanlinRuntimeSessionID(validating: suffix)
+        let makeContext: (HanlinHostStorageScope, Set<String>) -> HanlinHostCallContext = { scope, capabilities in
+            HanlinHostCallContext(
+                subject: .app(appID, installedPackageID: packageID),
+                origin: .scriptPackage,
+                appID: appID,
+                installedPackageID: packageID,
+                appSessionID: baseSession,
+                runtimeSessionID: baseRuntime,
+                effectiveCapabilities: capabilities,
+                storageScope: scope,
+                runtimeWorkspaceIdentifier: "file-scope-\(suffix)",
+                userGesturePresent: false,
+                canPresentUI: false
+            )
+        }
+        let app = makeContext(.app(appID), ["files"])
+        let package = makeContext(.package(packageID), ["files"])
+        let agent = HanlinHostCallContext.forAgent(runtimeSessionID: baseRuntime)
+        let sharedDenied = makeContext(.shared, ["files"])
+        let sharedAllowed = makeContext(.shared, ["files", "shared-data"])
+        let broker = HanlinHostServicesBroker.shared
+        let path = "scope-\(suffix)/test.txt"
+
+        try await broker.writeFile(virtualPath: path, area: .documents, data: Data("APP".utf8), context: app)
+        try await broker.writeFile(virtualPath: path, area: .documents, data: Data("PACKAGE".utf8), context: package)
+        try await broker.writeFile(virtualPath: path, area: .documents, data: Data("AGENT".utf8), context: agent)
+        #expect(String(data: try #require(await broker.readFile(virtualPath: path, area: .documents, context: app)), encoding: .utf8) == "APP")
+        #expect(String(data: try #require(await broker.readFile(virtualPath: path, area: .documents, context: package)), encoding: .utf8) == "PACKAGE")
+        #expect(String(data: try #require(await broker.readFile(virtualPath: path, area: .documents, context: agent)), encoding: .utf8) == "AGENT")
+
+        try await broker.writeFile(virtualPath: path, area: .documents, data: Data("OVERWRITTEN".utf8), context: app)
+        #expect(String(data: try #require(await broker.readFile(virtualPath: path, area: .documents, context: app)), encoding: .utf8) == "OVERWRITTEN")
+        try await broker.deleteFile(virtualPath: path, area: .documents, context: app)
+        #expect(try await broker.readFile(virtualPath: path, area: .documents, context: app) == nil)
+
+        await #expect(throws: HanlinHostServiceError.self) {
+            try await broker.writeFile(virtualPath: path, area: .documents, data: Data("DENIED".utf8), context: sharedDenied)
+        }
+        try await broker.writeFile(virtualPath: path, area: .documents, data: Data("SHARED".utf8), context: sharedAllowed)
+        #expect(String(data: try #require(await broker.readFile(virtualPath: path, area: .documents, context: sharedAllowed)), encoding: .utf8) == "SHARED")
+
+        let linkPath = "scope-\(suffix)/escape-link"
+        let linkURL = try await HanlinFileService.physicalURL(
+            for: linkPath,
+            area: .documents,
+            scope: app.storageScope,
+            context: app
+        )
+        try FileManager.default.createDirectory(at: linkURL.deletingLastPathComponent(), withIntermediateDirectories: true)
+        let outside = FileManager.default.temporaryDirectory.appending(path: "hanlin-outside-\(suffix)", directoryHint: .isDirectory)
+        try FileManager.default.createDirectory(at: outside, withIntermediateDirectories: true)
+        defer {
+            try? FileManager.default.removeItem(at: linkURL)
+            try? FileManager.default.removeItem(at: outside)
+        }
+        try FileManager.default.createSymbolicLink(at: linkURL, withDestinationURL: outside)
+        await #expect(throws: HanlinHostServiceError.self) {
+            _ = try await broker.readFile(
+                virtualPath: "\(linkPath)/secret.txt",
+                area: .documents,
+                context: app
+            )
+        }
+    }
+
     // MARK: - SQLite Acceptance
 
     @Test func sqliteScopeAndTraversalRejection() async throws {
@@ -250,6 +321,148 @@ struct HanlinUnifiedHostServicesE2ETests {
         #expect(parsed?.isEmpty == false)
         #expect(parsed?.first?["id"] as? String == "first")
         try await adapter.close(handle: "valid", context: ctx)
+    }
+
+    @Test func sqliteTransactionsTypesConcurrencyAndScopeIsolation() async throws {
+        let suffix = UUID().uuidString.lowercased()
+        let appID = try HanlinAppID(validating: "sqlite-app-\(suffix)")
+        let packageID = try HanlinInstalledPackageID(validating: "sqlite-package-\(suffix)")
+        let session = try HanlinAppSessionID(validating: suffix)
+        let runtime = try HanlinRuntimeSessionID(validating: suffix)
+        let makeContext: (HanlinHostStorageScope) -> HanlinHostCallContext = { scope in
+            HanlinHostCallContext(
+                subject: .app(appID, installedPackageID: packageID),
+                origin: .scriptPackage,
+                appID: appID,
+                installedPackageID: packageID,
+                appSessionID: session,
+                runtimeSessionID: runtime,
+                effectiveCapabilities: ["sqlite", "shared-data"],
+                storageScope: scope,
+                runtimeWorkspaceIdentifier: "sqlite-\(suffix)",
+                userGesturePresent: false,
+                canPresentUI: false
+            )
+        }
+        let contexts = [
+            ("app", makeContext(.app(appID))),
+            ("package", makeContext(.package(packageID))),
+            ("agent", HanlinHostCallContext.forAgent(runtimeSessionID: runtime)),
+            ("shared", makeContext(.shared))
+        ]
+        let adapter = HanlinSQLiteHostAdapter.shared
+
+        for (label, context) in contexts {
+            let handle = "scope-\(label)-\(suffix)"
+            _ = try await adapter.open(
+                handle: handle,
+                name: "identical.db",
+                context: context,
+                foreignKeys: true,
+                walMode: true
+            )
+            try await adapter.execute(
+                handle: handle,
+                sql: "CREATE TABLE IF NOT EXISTS scope_values (label TEXT NOT NULL); DELETE FROM scope_values; INSERT INTO scope_values(label) VALUES (?);",
+                arguments: [label],
+                context: context
+            )
+            let json = try await adapter.fetchAllJSON(
+                handle: handle,
+                sql: "SELECT label FROM scope_values;",
+                context: context
+            )
+            #expect(json.contains("\"label\":\"\(label)\""))
+        }
+
+        let context = HanlinHostCallContext.forAgent(runtimeSessionID: try HanlinRuntimeSessionID(validating: UUID().uuidString.lowercased()))
+        let handle = "full-\(suffix)"
+        _ = try await adapter.open(handle: handle, name: "full-\(suffix).db", context: context, foreignKeys: true, walMode: true)
+        try await adapter.execute(
+            handle: handle,
+            sql: "CREATE TABLE parent(id INTEGER PRIMARY KEY); CREATE TABLE child(id INTEGER PRIMARY KEY, parent_id INTEGER REFERENCES parent(id)); CREATE TABLE values_table(id INTEGER PRIMARY KEY, text_value TEXT, payload BLOB, nullable TEXT);",
+            context: context
+        )
+
+        try await adapter.execute(handle: handle, sql: "BEGIN;", context: context)
+        try await adapter.execute(
+            handle: handle,
+            sql: "INSERT INTO values_table(id, text_value, payload, nullable) VALUES (?, ?, ?, ?);",
+            arguments: [1, "שלום", Data([0x00, 0x2A, 0xFF]), NSNull()],
+            context: context
+        )
+        try await adapter.execute(handle: handle, sql: "ROLLBACK;", context: context)
+        let rolledBack = try await adapter.fetchAllJSON(
+            handle: handle,
+            sql: "SELECT COUNT(*) AS count FROM values_table;",
+            context: context
+        )
+        #expect(rolledBack.contains("\"count\":0"))
+
+        try await adapter.execute(handle: handle, sql: "BEGIN;", context: context)
+        try await adapter.execute(
+            handle: handle,
+            sql: "INSERT INTO values_table(id, text_value, payload, nullable) VALUES (?, ?, ?, ?);",
+            arguments: [1, "שלום", Data([0x00, 0x2A, 0xFF]), NSNull()],
+            context: context
+        )
+        try await adapter.execute(handle: handle, sql: "COMMIT;", context: context)
+        let typed = try await adapter.fetchAllJSON(
+            handle: handle,
+            sql: "SELECT text_value, hex(payload) AS payload_hex, nullable IS NULL AS was_null FROM values_table WHERE id = ?;",
+            arguments: [1],
+            context: context
+        )
+        #expect(typed.contains("שלום"))
+        #expect(typed.contains("002AFF"))
+        #expect(typed.contains("\"was_null\":1"))
+
+        try await adapter.execute(
+            handle: handle,
+            sql: "UPDATE values_table SET text_value = ? WHERE id = ?;",
+            arguments: ["עודכן", 1],
+            context: context
+        )
+        await #expect(throws: (any Error).self) {
+            try await adapter.execute(
+                handle: handle,
+                sql: "INSERT INTO child(id, parent_id) VALUES (?, ?);",
+                arguments: [1, 999],
+                context: context
+            )
+        }
+
+        async let first: Void = adapter.execute(
+            handle: handle,
+            sql: "INSERT INTO values_table(id, text_value) VALUES (?, ?);",
+            arguments: [2, "A"],
+            context: context
+        )
+        async let second: Void = adapter.execute(
+            handle: handle,
+            sql: "INSERT INTO values_table(id, text_value) VALUES (?, ?);",
+            arguments: [3, "B"],
+            context: context
+        )
+        _ = try await (first, second)
+        let multiple = try await adapter.fetchAllJSON(
+            handle: handle,
+            sql: "SELECT COUNT(*) AS count FROM values_table;",
+            context: context
+        )
+        #expect(multiple.contains("\"count\":3"))
+
+        try await adapter.execute(handle: handle, sql: "DELETE FROM values_table WHERE id = ?;", arguments: [1], context: context)
+        let afterDelete = try await adapter.fetchAllJSON(
+            handle: handle,
+            sql: "SELECT COUNT(*) AS count FROM values_table;",
+            context: context
+        )
+        #expect(afterDelete.contains("\"count\":2"))
+        try await adapter.close(handle: handle, context: context)
+        for (label, scopedContext) in contexts {
+            try await adapter.close(handle: "scope-\(label)-\(suffix)", context: scopedContext)
+        }
     }
 
     // MARK: - NativeScript and Expo Multi-Session

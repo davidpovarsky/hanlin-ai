@@ -255,6 +255,14 @@ final class HanlinRuntimeInstallationUITests: XCTestCase {
         XCTAssertTrue(probeOutputAfterRestart.waitForExistence(timeout: 30), "Import probe after restart did not produce expected output")
         capture(name: "NodePackages-PostRestartProbeSuccess")
 
+        // 7. Uninstall updates the live package list.
+        XCTAssertTrue(persistedPackage.waitForExistence(timeout: 5), "Installed npm row was unavailable for uninstall")
+        persistedPackage.swipeLeft()
+        let uninstallButton = app.buttons["Uninstall"].firstMatch
+        XCTAssertTrue(uninstallButton.waitForExistence(timeout: 5), "npm uninstall action was missing")
+        uninstallButton.tap()
+        XCTAssertTrue(persistedPackage.waitForNonExistence(timeout: 15), "npm package remained visible after uninstall")
+
         navigateBack()
     }
 
@@ -319,7 +327,7 @@ final class HanlinRuntimeInstallationUITests: XCTestCase {
             "Python packages view did not open"
         )
 
-        let existingPythonPkg = app.descendants(matching: .any)["hanlin-python-installed-item-six"].firstMatch
+        let existingPythonPkg = app.descendants(matching: .any)["hanlin-python-installed-item-requests"].firstMatch
         if existingPythonPkg.waitForExistence(timeout: 2) {
             existingPythonPkg.swipeLeft()
             let uninstallButton = app.buttons["Uninstall"].firstMatch
@@ -334,8 +342,8 @@ final class HanlinRuntimeInstallationUITests: XCTestCase {
         let previewButton = app.buttons["hanlin-python-preview-button"].firstMatch
         let installButton = app.buttons["hanlin-python-install-button"].firstMatch
 
-        typeIntoField(nameField, text: "six")
-        typeIntoField(versionField, text: "1.17.0")
+        typeIntoField(nameField, text: "requests")
+        typeIntoField(versionField, text: "2.34.2")
 
         // 1. Preview
         XCTAssertTrue(previewButton.isEnabled, "Preview button should be enabled")
@@ -361,23 +369,23 @@ final class HanlinRuntimeInstallationUITests: XCTestCase {
         wait(for: [completedExpectation], timeout: 60)
 
         // 3. Verify in installed list
-        let installedPackage = app.descendants(matching: .any)["hanlin-python-installed-item-six"].firstMatch
-        let installedFallback = app.staticTexts.matching(NSPredicate(format: "label == 'six' OR label CONTAINS[c] 'six'")).firstMatch
+        let installedPackage = app.descendants(matching: .any)["hanlin-python-installed-item-requests"].firstMatch
+        let installedFallback = app.staticTexts.matching(NSPredicate(format: "label == 'requests' OR label CONTAINS[c] 'requests'")).firstMatch
         XCTAssertTrue(
             installedPackage.waitForExistence(timeout: 15) || installedFallback.waitForExistence(timeout: 2),
-            "Installed package 'six' was not listed"
+            "Installed package 'requests' was not listed"
         )
         capture(name: "PythonPackages-InstallSuccess")
 
         // 4. Import probe execution via real Python runtime
-        let probeButton = app.buttons["hanlin-python-probe-button-six"].firstMatch
+        let probeButton = app.buttons["hanlin-python-probe-button-requests"].firstMatch
         let probeFallback = app.buttons["Import Probe"].firstMatch
         XCTAssertTrue(probeButton.waitForExistence(timeout: 10) || probeFallback.waitForExistence(timeout: 2), "Import Probe button was missing")
         (probeButton.exists ? probeButton : probeFallback).tap()
 
-        let probePredicate = NSPredicate(format: "label CONTAINS[c] '1.17.0' OR label CONTAINS[c] 'import-ok'")
+        let probePredicate = NSPredicate(format: "label CONTAINS[c] '2.34.2' OR label CONTAINS[c] 'import-ok'")
         let probeOutput = app.staticTexts.containing(probePredicate).firstMatch
-        XCTAssertTrue(probeOutput.waitForExistence(timeout: 30), "Import probe did not produce expected output for six")
+        XCTAssertTrue(probeOutput.waitForExistence(timeout: 30), "Import probe did not produce expected output for requests")
         capture(name: "PythonPackages-ProbeSuccess")
 
         // 5. Restart persistence
@@ -391,22 +399,30 @@ final class HanlinRuntimeInstallationUITests: XCTestCase {
             pythonPackagesNav.waitForExistence(timeout: 10) || pythonPackagesNavFallback.waitForExistence(timeout: 3),
             "Python packages view did not open after restart"
         )
-        let persistedPackage = app.descendants(matching: .any)["hanlin-python-installed-item-six"].firstMatch
-        let persistedFallback = app.staticTexts.matching(NSPredicate(format: "label == 'six' OR label CONTAINS[c] 'six'")).firstMatch
+        let persistedPackage = app.descendants(matching: .any)["hanlin-python-installed-item-requests"].firstMatch
+        let persistedFallback = app.staticTexts.matching(NSPredicate(format: "label == 'requests' OR label CONTAINS[c] 'requests'")).firstMatch
         XCTAssertTrue(
             persistedPackage.waitForExistence(timeout: 15) || persistedFallback.waitForExistence(timeout: 2),
-            "Package 'six' was not persisted after restart"
+            "Package 'requests' was not persisted after restart"
         )
 
         // 6. Re-probe after restart
-        let probeButtonAfterRestart = app.buttons["hanlin-python-probe-button-six"].firstMatch
+        let probeButtonAfterRestart = app.buttons["hanlin-python-probe-button-requests"].firstMatch
         let probeFallbackAfterRestart = app.buttons["Import Probe"].firstMatch
         XCTAssertTrue(probeButtonAfterRestart.waitForExistence(timeout: 10) || probeFallbackAfterRestart.waitForExistence(timeout: 2), "Import Probe button missing after restart")
         (probeButtonAfterRestart.exists ? probeButtonAfterRestart : probeFallbackAfterRestart).tap()
 
         let probeOutputAfterRestart = app.staticTexts.containing(probePredicate).firstMatch
-        XCTAssertTrue(probeOutputAfterRestart.waitForExistence(timeout: 30), "Import probe after restart did not produce expected output for six")
+        XCTAssertTrue(probeOutputAfterRestart.waitForExistence(timeout: 30), "Import probe after restart did not produce expected output for requests")
         capture(name: "PythonPackages-PostRestartProbeSuccess")
+
+        // 7. Uninstall updates the live package list.
+        XCTAssertTrue(persistedPackage.waitForExistence(timeout: 5), "Installed Python row was unavailable for uninstall")
+        persistedPackage.swipeLeft()
+        let uninstallButton = app.buttons["Uninstall"].firstMatch
+        XCTAssertTrue(uninstallButton.waitForExistence(timeout: 5), "Python uninstall action was missing")
+        uninstallButton.tap()
+        XCTAssertTrue(persistedPackage.waitForNonExistence(timeout: 15), "Python package remained visible after uninstall")
 
         navigateBack()
     }
