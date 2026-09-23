@@ -23,4 +23,9 @@ public enum HanlinSkillIndex {
         lines.append("To find tools not listed above, call tool_search(query: \"...\").")
         return lines.joined(separator: "\n")
     }
+
+    /// Convenience alias matching APIManager integration.
+    public static func prompt(for skills: [HanlinSkillDescriptor]) -> String {
+        formattedIndex(skills: skills)
+    }
 }

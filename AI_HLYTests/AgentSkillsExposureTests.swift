@@ -11,15 +11,13 @@ struct AgentSkillsExposureTests {
     @Test("Skill Catalog registration and instruction resolution")
     func skillCatalogRegistration() async throws {
         let catalog = HanlinSkillCatalog()
-        let skillID: HanlinSkillID = "data_analysis"
-        let descriptor = HanlinSkillDescriptor(
+        let skillID = try HanlinSkillID(validating: "data_analysis")
+        let descriptor = try HanlinSkillDescriptor(
             id: skillID,
-            title: HanlinLocalizedText(english: "Data Analysis"),
-            summary: HanlinLocalizedText(english: "Analyze tabular data and generate plots"),
-            instructionSource: .inline("Always verify data distributions before plotting."),
-            preferredLogicalToolIDs: [
-                HanlinLogicalToolID(providerInstanceID: "hanlin.builtin", localToolID: "run_python_code")
-            ]
+            title: "Data Analysis",
+            summary: "Analyze tabular data and generate plots",
+            instructions: .inline("Always verify data distributions before plotting."),
+            preferredToolIDs: ["run_python_code"]
         )
 
         catalog.register(descriptor: descriptor)
@@ -27,7 +25,7 @@ struct AgentSkillsExposureTests {
         #expect(catalog.allSkills().count == 1)
         let resolved = catalog.resolve(id: skillID)
         #expect(resolved?.id == skillID)
-        #expect(resolved?.title.english == "Data Analysis")
+        #expect(resolved?.title.preferredValue() == "Data Analysis")
 
         let resolvedByRaw = catalog.resolve(rawID: "data_analysis")
         #expect(resolvedByRaw?.id == skillID)
@@ -40,20 +38,22 @@ struct AgentSkillsExposureTests {
     @Test("Skill Index prompt generation produces compact markdown index")
     func skillIndexPrompt() throws {
         let skills = [
-            HanlinSkillDescriptor(
-                id: "weather_expert",
-                title: HanlinLocalizedText(english: "Weather Expert"),
-                summary: HanlinLocalizedText(english: "Retrieve current and future weather forecasts")
+            try HanlinSkillDescriptor(
+                id: HanlinSkillID(validating: "weather_expert"),
+                title: "Weather Expert",
+                summary: "Retrieve current and future weather forecasts",
+                instructions: .inline("Weather instructions")
             ),
-            HanlinSkillDescriptor(
-                id: "code_runner",
-                title: HanlinLocalizedText(english: "Code Runner"),
-                summary: HanlinLocalizedText(english: "Execute safe sandboxed Python code")
+            try HanlinSkillDescriptor(
+                id: HanlinSkillID(validating: "code_runner"),
+                title: "Code Runner",
+                summary: "Execute safe sandboxed Python code",
+                instructions: .inline("Code instructions")
             )
         ]
 
         let prompt = HanlinSkillIndex.prompt(for: skills)
-        #expect(prompt.contains("## Available Skills"))
+        #expect(prompt.contains("Available Skills"))
         #expect(prompt.contains("`weather_expert`"))
         #expect(prompt.contains("Retrieve current and future weather forecasts"))
         #expect(prompt.contains("`code_runner`"))
@@ -97,7 +97,7 @@ struct AgentSkillsExposureTests {
         #expect(!session2.exposedToolAliases.contains("search_online"))
         #expect(!session2.exposedToolAliases.contains("get_route"))
 
-        let skillID: HanlinSkillID = "test_skill"
+        let skillID = try HanlinSkillID(validating: "test_skill")
         session1.recordSkillLoaded(id: skillID, instructionText: "test instructions")
         #expect(session1.loadedSkillIDs.contains(skillID))
         #expect(!session2.loadedSkillIDs.contains(skillID))
@@ -107,16 +107,13 @@ struct AgentSkillsExposureTests {
     @Test("LoadSkillTool execution loads instructions, exposes tools and reports deferred")
     func loadSkillToolExecution() async throws {
         let catalog = HanlinSkillCatalog()
-        let skillID: HanlinSkillID = "math_solver"
-        let descriptor = HanlinSkillDescriptor(
+        let skillID = try HanlinSkillID(validating: "math_solver")
+        let descriptor = try HanlinSkillDescriptor(
             id: skillID,
-            title: HanlinLocalizedText(english: "Math Solver"),
-            summary: HanlinLocalizedText(english: "Solve symbolic mathematics"),
-            instructionSource: .inline("Use precise formulas."),
-            preferredLogicalToolIDs: [
-                HanlinLogicalToolID(providerInstanceID: "builtin", localToolID: "calculate_integral"),
-                HanlinLogicalToolID(providerInstanceID: "builtin", localToolID: "solve_equation")
-            ]
+            title: "Math Solver",
+            summary: "Solve symbolic mathematics",
+            instructions: .inline("Use precise formulas."),
+            preferredToolIDs: ["calculate_integral", "solve_equation"]
         )
         catalog.register(descriptor: descriptor)
 

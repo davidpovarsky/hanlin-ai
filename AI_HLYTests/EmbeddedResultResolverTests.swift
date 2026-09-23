@@ -13,7 +13,7 @@ struct EmbeddedResultResolverTests {
     @Test("Resolver dispatches to injected Swift test double")
     func resolverDispatchesToSwift() throws {
         let resolver = HanlinEmbeddedResultResolver()
-        let expectedAppID = try HanlinAppID("test.miniapp")
+        let expectedAppID = try HanlinAppID(validating: "test.miniapp")
         var receivedHandler: String?
         var receivedPayload: HanlinEmbeddedResultPayload?
 
@@ -29,8 +29,10 @@ struct EmbeddedResultResolverTests {
         }
 
         let testPayload = HanlinEmbeddedResultPayload(
-            modelVisibleSummary: "Test summary",
-            rawJSONPayload: "{\"metric\": 42}"
+            payload: .string("{\"metric\": 42}"),
+            resultReference: "ref_test",
+            title: "Test summary",
+            metadata: ["metric": "42"]
         )
 
         let session = resolver.resolve(
@@ -42,20 +44,20 @@ struct EmbeddedResultResolverTests {
         #expect(session?.engine == .swift)
         #expect(session?.appID == expectedAppID)
         #expect(receivedHandler == "render_chart")
-        #expect(receivedPayload?.modelVisibleSummary == "Test summary")
+        #expect(receivedPayload?.title == "Test summary")
     }
 
     @MainActor
     @Test("Resolver dispatches to injected ScriptUI, NativeScript and Expo test doubles")
     func resolverDispatchesToScriptingEngines() throws {
         let resolver = HanlinEmbeddedResultResolver()
-        let packageID = try HanlinPackageID("com.example.package")
+        let packageID = try HanlinPackageID(validating: "com.example.package")
 
         resolver.customScriptUIResolver = { pkgID, handler, _ in
             guard pkgID == packageID && handler == "script_view" else { return nil }
             return AnyEmbeddedResultSession(
                 engine: .scriptUI,
-                appID: try! HanlinAppID("script.ui"),
+                appID: try! HanlinAppID(validating: "script.ui"),
                 rootView: AnyView(Text("ScriptUI View"))
             )
         }
@@ -64,7 +66,7 @@ struct EmbeddedResultResolverTests {
             guard pkgID == packageID && handler == "native_view" else { return nil }
             return AnyEmbeddedResultSession(
                 engine: .nativeScript,
-                appID: try! HanlinAppID("native.script"),
+                appID: try! HanlinAppID(validating: "native.script"),
                 rootView: AnyView(Text("NativeScript View"))
             )
         }
@@ -73,7 +75,7 @@ struct EmbeddedResultResolverTests {
             guard pkgID == packageID && handler == "expo_view" else { return nil }
             return AnyEmbeddedResultSession(
                 engine: .expo,
-                appID: try! HanlinAppID("expo.app"),
+                appID: try! HanlinAppID(validating: "expo.app"),
                 rootView: AnyView(Text("Expo View"))
             )
         }
@@ -105,7 +107,7 @@ struct EmbeddedResultResolverTests {
         var didTearDown = false
         let session = AnyEmbeddedResultSession(
             engine: .swift,
-            appID: try HanlinAppID("lifecycle.test"),
+            appID: try HanlinAppID(validating: "lifecycle.test"),
             rootView: AnyView(Text("Content")),
             onTearDown: {
                 didTearDown = true
@@ -118,30 +120,23 @@ struct EmbeddedResultResolverTests {
     }
 
     @MainActor
-    @Test("EmbeddedResultPayload preserves sizing, expansion, and metadata")
+    @Test("EmbeddedResultPayload preserves payload, reference, title, and metadata")
     func payloadPreservation() throws {
-        let sizing = HanlinEmbeddedSizingPreference(
-            preset: .large,
-            idealHeight: 350,
-            minimumHeight: 200,
-            maximumHeight: 600
-        )
-        let expansion = HanlinExpansionDescriptor(
-            supportedModes: [.sheet, .fullScreen]
-        )
         let payload = HanlinEmbeddedResultPayload(
-            modelVisibleSummary: "Calculated analytics",
-            rawJSONPayload: "{\"val\": 123}",
-            sizing: sizing,
-            expansion: expansion
+            payload: .string("{\"val\": 123}"),
+            resultReference: "ref_analytics",
+            title: "Calculated analytics",
+            metadata: ["source": "tool_exec"]
         )
 
-        #expect(payload.modelVisibleSummary == "Calculated analytics")
-        #expect(payload.sizing?.preset == .large)
-        #expect(payload.sizing?.idealHeight == 350)
-        #expect(payload.expansion?.supportedModes.contains(.sheet) == true)
-        #expect(payload.expansion?.supportedModes.contains(.fullScreen) == true)
-        #expect(payload.expansion?.supportedModes.contains(.window) == false)
+        #expect(payload.title == "Calculated analytics")
+        #expect(payload.resultReference == "ref_analytics")
+        #expect(payload.metadata?["source"] == "tool_exec")
+        if case .string(let val)? = payload.payload {
+            #expect(val == "{\"val\": 123}")
+        } else {
+            #expect(Bool(false), "Payload value was not string")
+        }
     }
 
     @MainActor

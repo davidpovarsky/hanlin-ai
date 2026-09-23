@@ -3,31 +3,33 @@ import Foundation
 public enum ReadToolResultTool {
     public static let toolName = "read_tool_result"
 
-    public static let schema: [String: Any] = [
-        "type": "function",
-        "function": [
-            "name": toolName,
-            "description": "Read paginated or sliced content from a stored large tool result using its opaque reference ID.",
-            "parameters": [
-                "type": "object",
-                "properties": [
-                    "reference": [
-                        "type": "string",
-                        "description": "The opaque reference ID of the stored tool result (e.g. 'ref_...')."
+    public static var schema: [String: Any] {
+        [
+            "type": "function",
+            "function": [
+                "name": toolName,
+                "description": "Read paginated or sliced content from a stored large tool result using its opaque reference ID.",
+                "parameters": [
+                    "type": "object",
+                    "properties": [
+                        "reference": [
+                            "type": "string",
+                            "description": "The opaque reference ID of the stored tool result (e.g. 'ref_...')."
+                        ],
+                        "offset": [
+                            "type": "integer",
+                            "description": "The character/byte offset to start reading from (default: 0)."
+                        ],
+                        "limit": [
+                            "type": "integer",
+                            "description": "The maximum number of bytes to read (default: 4096, max: 16384)."
+                        ]
                     ],
-                    "offset": [
-                        "type": "integer",
-                        "description": "The character/byte offset to start reading from (default: 0)."
-                    ],
-                    "limit": [
-                        "type": "integer",
-                        "description": "The maximum number of bytes to read (default: 4096, max: 16384)."
-                    ]
-                ],
-                "required": ["reference"]
+                    "required": ["reference"]
+                ]
             ]
         ]
-    ]
+    }
 
     public struct Arguments: Decodable, Sendable {
         public let reference: String

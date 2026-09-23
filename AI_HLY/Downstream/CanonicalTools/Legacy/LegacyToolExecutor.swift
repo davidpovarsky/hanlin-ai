@@ -1,14 +1,14 @@
 import Foundation
 import HanlinPlatformContracts
 
-public struct LegacyToolExecutionResult: Sendable {
-    public let modelText: String
-    public let userText: String?
-    public let outcome: NativeToolExecutionOutcome
-    public let uiBlocks: [NativeUIBlock]
-    public let diagnostics: NativeToolExecutionDiagnostics
+struct LegacyToolExecutionResult: Sendable {
+    let modelText: String
+    let userText: String?
+    let outcome: NativeToolExecutionOutcome
+    let uiBlocks: [NativeUIBlock]
+    let diagnostics: NativeToolExecutionDiagnostics
 
-    public init(
+    init(
         modelText: String,
         userText: String? = nil,
         outcome: NativeToolExecutionOutcome = .succeeded,
@@ -24,7 +24,7 @@ public struct LegacyToolExecutionResult: Sendable {
 }
 
 @MainActor
-public protocol LegacyToolExecutionHandler: AnyObject {
+protocol LegacyToolExecutionHandler: AnyObject {
     func executeLegacyTool(
         name: String,
         argumentsJSON: String,
@@ -32,9 +32,9 @@ public protocol LegacyToolExecutionHandler: AnyObject {
     ) async -> LegacyToolExecutionResult
 }
 
-public enum LegacyToolExecutor {
+enum LegacyToolExecutor {
     @MainActor
-    public static func execute(
+    static func execute(
         name: String,
         argumentsJSON: String,
         context: NativeToolExecutionContext,
@@ -54,7 +54,7 @@ public enum LegacyToolExecutor {
             modelText: "Legacy tool '\(name)' execution handler not configured.",
             userText: "Legacy tool not configured.",
             uiBlocks: [],
-            outcome: .failed
+            outcome: NativeToolExecutionOutcome.failed
         )
     }
 }

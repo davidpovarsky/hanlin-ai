@@ -4,6 +4,7 @@
 //
 
 import Foundation
+import HanlinPlatformContracts
 
 enum NativeToolExecutionOutcome: String, Codable, CaseIterable, Sendable {
     case succeeded

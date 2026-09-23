@@ -495,6 +495,9 @@ enum MCPRuntimeAcceptance {
                 case .scripting:
                     backend = .scripting
                     targetExists = false
+                case .legacy:
+                    backend = .native
+                    targetExists = true
                 }
                 return HanlinCanonicalShadowCoordinator.ToolRouteSource(
                     logicalIdentity: logicalIdentity(

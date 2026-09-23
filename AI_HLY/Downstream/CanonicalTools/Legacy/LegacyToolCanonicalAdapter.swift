@@ -1,11 +1,11 @@
 import Foundation
 import HanlinPlatformContracts
 
-public enum LegacyToolCanonicalAdapter {
-    public static let providerInstanceIDString = "hanlin-legacy"
+enum LegacyToolCanonicalAdapter {
+    static let providerInstanceIDString = "hanlin-legacy"
 
     /// Categorizes legacy tools for metadata and search hints.
-    public static func category(for toolName: String) -> String {
+    static func category(for toolName: String) -> String {
         switch toolName {
         case "save_memory", "retrieve_memory", "update_memory":
             return "memory"
@@ -31,7 +31,7 @@ public enum LegacyToolCanonicalAdapter {
     }
 
     /// Provides keywords for tool search ranking.
-    public static func keywords(for toolName: String) -> [String] {
+    static func keywords(for toolName: String) -> [String] {
         var words = [toolName, category(for: toolName)]
         switch toolName {
         case "save_memory", "retrieve_memory", "update_memory":
@@ -59,7 +59,7 @@ public enum LegacyToolCanonicalAdapter {
     }
 
     /// Converts active legacy tools into canonical tool authority sources.
-    public static func sources(
+    static func sources(
         memoryEnabled: Bool = true,
         mapEnabled: Bool = true,
         calendarEnabled: Bool = true,
@@ -91,7 +91,7 @@ public enum LegacyToolCanonicalAdapter {
                   let name = function["name"] as? String else {
                 return nil
             }
-            guard let localToolID = try? HanlinLocalToolID(validating: name) else {
+            guard let localToolID = try? HanlinToolID(validating: name) else {
                 return nil
             }
 

@@ -4,27 +4,29 @@ import HanlinPlatformContracts
 public enum ToolSearchTool {
     public static let toolName = "tool_search"
 
-    public static let schema: [String: Any] = [
-        "type": "function",
-        "function": [
-            "name": toolName,
-            "description": "Search the canonical tool catalog by keywords, name, or capability. Tools found by this search are automatically exposed and ready for use in subsequent calls.",
-            "parameters": [
-                "type": "object",
-                "properties": [
-                    "query": [
-                        "type": "string",
-                        "description": "Keywords or phrase describing the tool or capability needed."
+    public static var schema: [String: Any] {
+        [
+            "type": "function",
+            "function": [
+                "name": toolName,
+                "description": "Search the canonical tool catalog by keywords, name, or capability. Tools found by this search are automatically exposed and ready for use in subsequent calls.",
+                "parameters": [
+                    "type": "object",
+                    "properties": [
+                        "query": [
+                            "type": "string",
+                            "description": "Keywords or phrase describing the tool or capability needed."
+                        ],
+                        "limit": [
+                            "type": "integer",
+                            "description": "Maximum number of tools to return (default: 5, max: 10)."
+                        ]
                     ],
-                    "limit": [
-                        "type": "integer",
-                        "description": "Maximum number of tools to return (default: 5, max: 10)."
-                    ]
-                ],
-                "required": ["query"]
+                    "required": ["query"]
+                ]
             ]
         ]
-    ]
+    }
 
     public struct Arguments: Decodable, Sendable {
         public let query: String

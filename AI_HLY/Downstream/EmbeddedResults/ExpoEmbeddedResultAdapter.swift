@@ -1,5 +1,8 @@
 import Foundation
+import HanlinExpoRuntime
+import HanlinMiniAppCore
 import HanlinPlatformContracts
+import HanlinScriptContracts
 import SwiftUI
 import UIKit
 
@@ -27,15 +30,14 @@ public enum ExpoEmbeddedResultAdapter {
             return nil
         }
 
-        guard let entrypoint = package.manifest.entrypoints.first(where: {
-            $0.id.rawValue == handler || $0.runtimeProfile == .hanlinExpo
-        }) ?? package.manifest.entrypoints.first(where: { $0.runtimeProfile == .hanlinExpo }) else {
+        guard let entrypoint = package.entrypoints.first(where: {
+            $0.id == handler || $0.runtimeProfile == .hanlinExpo
+        }) ?? package.entrypoints.first(where: { $0.runtimeProfile == .hanlinExpo }) else {
             return nil
         }
 
         do {
-            let store = platform.store
-            guard let artifactRoot = try? store.activeArtifactURL(for: package.record.installedPackageID) else {
+            guard let artifactRoot = platform.activeArtifactURL(for: package) else {
                 return nil
             }
             let entrypointURL = artifactRoot.appending(path: entrypoint.sourcePath, directoryHint: .notDirectory)
@@ -64,7 +66,7 @@ public enum ExpoEmbeddedResultAdapter {
                 appID: package.appID,
                 rootView: AnyView(wrapper),
                 onTearDown: {
-                    HanlinExpoHostServicesBridge.unregisterProvider(forSessionID: sessionID)
+                    HanlinExpoHostServicesBridge.unregister(sessionID: sessionID)
                 }
             )
         } catch {

@@ -15,6 +15,9 @@ public enum HanlinMiniAppEngine: String, Codable, CaseIterable, Hashable, Sendab
         case .scriptingJSC: return "ScriptUI"
         }
     }
+
+    /// Convenience alias for .scriptingJSC matching UI conventions.
+    public static var scriptUI: HanlinMiniAppEngine { .scriptingJSC }
 }
 
 public struct HanlinMiniAppCatalogItem: Identifiable, Hashable, Sendable {

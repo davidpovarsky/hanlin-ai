@@ -1,4 +1,5 @@
 import Foundation
+import HanlinMiniAppCore
 import HanlinPlatformContracts
 import HanlinScriptUI
 import SwiftUI
@@ -19,25 +20,37 @@ public enum ScriptUIEmbeddedResultAdapter {
 
         // If payload contains structured HanlinValue with UI node representation, render it directly
         // via independent HanlinScriptUIModel without touching activeApplicationModel
-        let rootNode: HanlinScriptUINode
+        let titleNode = HanlinScriptUINode(
+            kind: .text,
+            properties: [
+                "text": .string(payload?.title ?? handler),
+                "font": .string("headline")
+            ]
+        )
+        var children = [titleNode]
         if let jsonPayload = payload?.payload {
-            rootNode = .vstack(
-                spacing: 8,
-                alignment: .leading,
-                children: [
-                    .text(payload?.title ?? handler, font: .subheadline, weight: .semibold),
-                    .text(jsonPayload.description, font: .body, foregroundColor: .primary)
-                ]
-            )
-        } else {
-            rootNode = .vstack(
-                spacing: 8,
-                alignment: .leading,
-                children: [
-                    .text(payload?.title ?? handler, font: .subheadline, weight: .semibold)
-                ]
+            let bodyText: String
+            if let data = try? JSONEncoder().encode(jsonPayload),
+               let str = String(data: data, encoding: .utf8) {
+                bodyText = str
+            } else {
+                bodyText = String(describing: jsonPayload)
+            }
+            children.append(
+                HanlinScriptUINode(
+                    kind: .text,
+                    properties: [
+                        "text": .string(bodyText),
+                        "font": .string("body")
+                    ]
+                )
             )
         }
+        let rootNode = HanlinScriptUINode(
+            kind: .vStack,
+            properties: ["spacing": .number(8)],
+            children: children
+        )
 
         let model = HanlinScriptUIModel(root: rootNode) { _, _ in }
         let view = HanlinScriptUIView(model: model)

@@ -1,5 +1,9 @@
 import Foundation
+import HanlinMiniAppCore
+import HanlinNativeScriptCoreSupport
+import HanlinNativeScriptRuntime
 import HanlinPlatformContracts
+import HanlinScriptContracts
 import SwiftUI
 import UIKit
 
@@ -27,25 +31,24 @@ public enum NativeScriptEmbeddedResultAdapter {
             return nil
         }
 
-        guard let entrypoint = package.manifest.entrypoints.first(where: {
-            $0.id.rawValue == handler || $0.runtimeProfile == .nativeScript
-        }) ?? package.manifest.entrypoints.first(where: { $0.runtimeProfile == .nativeScript }) else {
+        guard let entrypoint = package.entrypoints.first(where: {
+            $0.id == handler || $0.runtimeProfile == .hanlinNativeScript
+        }) ?? package.entrypoints.first(where: { $0.runtimeProfile == .hanlinNativeScript }) else {
             return nil
         }
 
         do {
-            let store = platform.store
-            guard let artifactRoot = try? store.activeArtifactURL(for: package.record.installedPackageID) else {
+            guard let artifactRoot = platform.activeArtifactURL(for: package) else {
                 return nil
             }
             let entrypointURL = artifactRoot.appending(path: entrypoint.sourcePath, directoryHint: .notDirectory)
             let sessionID = UUID().uuidString.lowercased()
 
             let adapter = NativeScriptHostServicesAdapter(
-                installedPackageID: package.record.installedPackageID,
                 appID: package.appID,
+                installedPackageID: package.record.installedPackageID,
                 grantedCapabilities: Set(package.grantedCapabilities.map(\.rawValue)),
-                sessionID: try HanlinAppSessionID(validating: "sess-" + String(sessionID.prefix(8)))
+                sessionID: sessionID
             )
             HanlinNativeServicesBridge.register(adapter, forSessionID: sessionID)
 

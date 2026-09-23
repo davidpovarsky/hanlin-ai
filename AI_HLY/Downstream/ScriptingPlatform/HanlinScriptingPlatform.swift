@@ -44,6 +44,7 @@ final class HanlinScriptingPlatform {
     private(set) var activeNativeScriptController: UIViewController?
     private(set) var activeExpoController: UIViewController?
     private(set) var systemUIPresentation: HanlinScriptingSystemUIPresentation?
+    private(set) var installedRoot: URL?
 
     private let packageCenter = HanlinPackageCenter()
     private var stagedPackage: HanlinStagedPackage?
@@ -115,9 +116,9 @@ final class HanlinScriptingPlatform {
             )
             let staging = platformRoot.appending(path: "ImportStaging", directoryHint: .isDirectory)
             try FileManager.default.createDirectory(at: staging, withIntermediateDirectories: true)
-            store = try HanlinAtomicScriptStore(
-                root: platformRoot.appending(path: "Installed", directoryHint: .isDirectory)
-            )
+            let installed = platformRoot.appending(path: "Installed", directoryHint: .isDirectory)
+            store = try HanlinAtomicScriptStore(root: installed)
+            installedRoot = installed
             extensionStore = try? HanlinScriptExtensionStore()
             stagingRoot = staging
         } catch {
@@ -137,6 +138,12 @@ final class HanlinScriptingPlatform {
         } catch {
             bootstrapError = Self.safeMessage(error)
         }
+    }
+
+    func activeArtifactURL(for package: HanlinStoredPackageSnapshot) -> URL? {
+        guard let installedRoot else { return nil }
+        return installedRoot
+            .appending(path: "packages/\(package.record.installedPackageID.rawValue)/generations/\(package.record.activeGeneration)", directoryHint: .isDirectory)
     }
 
     func configure(modelContext: ModelContext) {

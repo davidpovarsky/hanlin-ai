@@ -21,6 +21,14 @@ public final class HanlinSkillCatalog {
         }
     }
 
+    /// Registers a skill descriptor (convenience alias).
+    public func register(
+        descriptor: HanlinSkillDescriptor,
+        instructionLoader: (@Sendable () async -> String)? = nil
+    ) {
+        register(skill: descriptor, instructionLoader: instructionLoader)
+    }
+
     /// Registers all skills declared in an app descriptor.
     public func register(app: HanlinAppDescriptor) {
         for skill in app.skills {

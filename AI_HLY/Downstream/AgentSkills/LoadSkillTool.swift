@@ -4,23 +4,25 @@ import HanlinPlatformContracts
 public enum LoadSkillTool {
     public static let toolName = "load_skill"
 
-    public static let schema: [String: Any] = [
-        "type": "function",
-        "function": [
-            "name": toolName,
-            "description": "Load specialized instructions and enable tool access for a specific skill. Skills provide focused workflows and expose relevant tools on demand.",
-            "parameters": [
-                "type": "object",
-                "properties": [
-                    "skill_id": [
-                        "type": "string",
-                        "description": "The unique identifier of the skill to load (e.g. from the skill index)."
-                    ]
-                ],
-                "required": ["skill_id"]
+    public static var schema: [String: Any] {
+        [
+            "type": "function",
+            "function": [
+                "name": toolName,
+                "description": "Load specialized instructions and enable tool access for a specific skill. Skills provide focused workflows and expose relevant tools on demand.",
+                "parameters": [
+                    "type": "object",
+                    "properties": [
+                        "skill_id": [
+                            "type": "string",
+                            "description": "The unique identifier of the skill to load (e.g. from the skill index)."
+                        ]
+                    ],
+                    "required": ["skill_id"]
+                ]
             ]
         ]
-    ]
+    }
 
     public struct Arguments: Decodable, Sendable {
         public let skill_id: String
@@ -47,7 +49,7 @@ public enum LoadSkillTool {
         let instructions = await catalog.loadInstructions(for: descriptor)
         session.recordSkillLoaded(id: descriptor.id, instructionText: instructions)
 
-        let candidateAliases = descriptor.preferredLogicalToolIDs.map(\.rawValue)
+        let candidateAliases = descriptor.preferredToolIDs
         let decision = planner.plan(
             candidateAliases: candidateAliases,
             schemaSizes: schemaSizes

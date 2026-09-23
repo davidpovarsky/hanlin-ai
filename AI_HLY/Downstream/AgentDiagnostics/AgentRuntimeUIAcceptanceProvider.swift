@@ -1,5 +1,6 @@
 import Foundation
 import HanlinChatCore
+import HanlinPlatformContracts
 import SwiftData
 
 enum AgentRuntimeUIAcceptanceProvider {
@@ -58,15 +59,16 @@ enum AgentRuntimeUIAcceptanceProvider {
                 useModel: 0
             ))
             if isSkillsEnabled {
-                HanlinSkillCatalog.shared.register(descriptor: HanlinSkillDescriptor(
-                    id: "acceptance_skill",
-                    title: HanlinLocalizedText(english: "Acceptance Skill"),
-                    summary: HanlinLocalizedText(english: "Demonstrates agent skills and embedded result UI"),
-                    instructionSource: .inline("Always show embedded results for acceptance testing."),
-                    preferredLogicalToolIDs: [
-                        HanlinLogicalToolID(providerInstanceID: "hanlin-legacy", localToolID: "create_web_view")
-                    ]
-                ))
+                if let skillID = try? HanlinSkillID(validating: "acceptance-skill"),
+                   let descriptor = try? HanlinSkillDescriptor(
+                       id: skillID,
+                       title: "Acceptance Skill",
+                       summary: "Demonstrates agent skills and embedded result UI",
+                       instructions: .inline("Always show embedded results for acceptance testing."),
+                       preferredToolIDs: ["create_web_view"]
+                   ) {
+                    HanlinSkillCatalog.shared.register(skill: descriptor)
+                }
             }
             try context.save()
             AgentRuntimeUIAcceptanceURLProtocol.reset()

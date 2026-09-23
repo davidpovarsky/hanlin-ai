@@ -1,4 +1,5 @@
 import Foundation
+import HanlinMiniAppCore
 import HanlinPlatformContracts
 import SwiftUI
 

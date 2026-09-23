@@ -1,5 +1,32 @@
 import Foundation
 
+public typealias BoundedToolResultStore = ToolResultStore
+
+public struct ToolResultSlice: Sendable {
+    public let text: String
+    public let chunk: String
+    public let offset: Int
+    public let sliceLength: Int
+    public let totalLength: Int
+    public let totalBytes: Int
+    public let hasMore: Bool
+
+    public init(
+        chunk: String,
+        offset: Int,
+        totalBytes: Int,
+        hasMore: Bool
+    ) {
+        self.text = chunk
+        self.chunk = chunk
+        self.offset = offset
+        self.sliceLength = chunk.utf8.count
+        self.totalLength = totalBytes
+        self.totalBytes = totalBytes
+        self.hasMore = hasMore
+    }
+}
+
 /// Run-scoped, bounded in-memory store for large tool execution results.
 /// Prevents context bloat by storing full payloads behind opaque reference strings.
 public final class ToolResultStore: @unchecked Sendable {
@@ -27,9 +54,14 @@ public final class ToolResultStore: @unchecked Sendable {
         self.maxTotalBytes = maxTotalBytes
     }
 
+    public convenience init(maxStoredBytes: Int) {
+        self.init(maxEntries: 100, maxTotalBytes: maxStoredBytes)
+    }
+
     /// Stores a large tool output and returns an opaque, unguessable reference string.
+    @discardableResult
     public func store(
-        payload: String,
+        _ payload: String,
         mimeType: String = "text/plain",
         metadata: [String: String] = [:]
     ) -> String {
@@ -61,12 +93,22 @@ public final class ToolResultStore: @unchecked Sendable {
         return referenceID
     }
 
+    /// Stores a large tool output with labeled payload parameter.
+    @discardableResult
+    public func store(
+        payload: String,
+        mimeType: String = "text/plain",
+        metadata: [String: String] = [:]
+    ) -> String {
+        store(payload, mimeType: mimeType, metadata: metadata)
+    }
+
     /// Reads a slice of the stored tool result with offset and limit pagination.
     public func read(
         reference: String,
         offset: Int = 0,
         limit: Int = 2000
-    ) -> (chunk: String, totalBytes: Int, hasMore: Bool)? {
+    ) -> ToolResultSlice? {
         lock.lock()
         defer { lock.unlock() }
 
@@ -75,7 +117,7 @@ public final class ToolResultStore: @unchecked Sendable {
         let total = utf8.count
 
         guard offset >= 0 && offset < total else {
-            return (chunk: "", totalBytes: total, hasMore: false)
+            return ToolResultSlice(chunk: "", offset: offset, totalBytes: total, hasMore: false)
         }
 
         let clampedLimit = max(1, min(limit, 10000))
@@ -84,7 +126,7 @@ public final class ToolResultStore: @unchecked Sendable {
         let endIdx = utf8.index(utf8.startIndex, offsetBy: endOffset)
         let slice = String(utf8[startIdx..<endIdx]) ?? ""
 
-        return (chunk: slice, totalBytes: total, hasMore: endOffset < total)
+        return ToolResultSlice(chunk: slice, offset: offset, totalBytes: total, hasMore: endOffset < total)
     }
 
     /// Returns the complete payload for UI / embedded renderers.
