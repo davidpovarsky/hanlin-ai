@@ -42,6 +42,8 @@ static NSError *HanlinNativeScriptError(HanlinNativeScriptRuntimeErrorCode code,
 
 @interface HanlinNativeScriptRuntimeHost ()
 @property(nonatomic, strong, nullable) NativeScript *runtime;
+@property(nonatomic, copy, nullable) NSString *boundSessionID;
+@property(nonatomic, strong, nullable) HanlinNativeServicesSessionBridge *boundBridge;
 @end
 
 @implementation HanlinNativeScriptRuntimeHost
@@ -70,6 +72,8 @@ static NSError *HanlinNativeScriptError(HanlinNativeScriptRuntimeErrorCode code,
             config.IsDebug = NO;
             config.LogToSystemConsole = YES;
             self.runtime = [[NativeScript alloc] initWithConfig:config];
+            NSLog(@"HANLIN_NS_RUNTIME_CREATED");
+            NSLog(@"HANLIN_NS_CONTEXT_READY");
         } @catch (NSException *exception) {
             NSString *detail = [NSString stringWithFormat:@"NativeScript runtime initialization NSException: %@ (reason: %@)",
                                 exception.name ?: @"Unknown",
@@ -141,9 +145,9 @@ static NSError *HanlinNativeScriptError(HanlinNativeScriptRuntimeErrorCode code,
     }
     try {
         @try {
-            NSLog(@"HANLIN_NS_BEFORE_RUN_MAIN");
+            NSLog(@"HANLIN_NS_RUN_MAIN_BEGIN");
             [self.runtime runMainApplication];
-            NSLog(@"HANLIN_NS_AFTER_RUN_MAIN");
+            NSLog(@"HANLIN_NS_RUN_MAIN_OK");
         } @catch (NSException *exception) {
             NSString *detail = [NSString stringWithFormat:@"NativeScript script execution NSException: %@ (reason: %@)",
                                 exception.name ?: @"Unknown",
@@ -224,6 +228,8 @@ static NSError *HanlinNativeScriptError(HanlinNativeScriptRuntimeErrorCode code,
         return NO;
     }
 
+    NSLog(@"HANLIN_NS_HOST_SERVICES_BIND_BEGIN");
+
     NSString *token = HanlinNativeServicesPrepareSessionBootstrap(sessionID);
     if (token.length == 0) {
         if (error) {
@@ -235,29 +241,32 @@ static NSError *HanlinNativeScriptError(HanlinNativeScriptRuntimeErrorCode code,
         return NO;
     }
 
-    NSString *bootstrap = [NSString stringWithFormat:
-        @"(() => { const bridgeClass = HanlinNativeServicesBridge; "
-         "const bridge = bridgeClass.claimSessionBridgeWithToken('%@'); "
-         "if (!bridge) throw new Error('Unable to bind Hanlin Host Services session'); "
-         "Object.defineProperty(globalThis, 'HanlinNativeServicesBridge', "
-         "{ value: bridge, writable: false, configurable: false }); })();",
-        token
-    ];
-
-    @try {
-        [self.runtime runScriptString:bootstrap runLoop:NO];
-    } @catch (NSException *exception) {
+    HanlinNativeServicesSessionBridge *bridge = [HanlinNativeServicesBridge claimSessionBridgeWithToken:token];
+    if (!bridge) {
         if (error) {
-            NSString *detail = [NSString stringWithFormat:@"NativeScript Host Services binding failed: %@",
-                                exception.reason ?: exception.name];
-            *error = HanlinNativeScriptError(HanlinNativeScriptRuntimeErrorExecutionFailed, detail);
+            *error = HanlinNativeScriptError(
+                HanlinNativeScriptRuntimeErrorExecutionFailed,
+                @"Unable to claim session bridge for NativeScript host."
+            );
         }
         return NO;
     }
+
+    self.boundSessionID = sessionID;
+    self.boundBridge = bridge;
+    [HanlinNativeServicesBridge setActiveSessionBridge:bridge forSessionID:sessionID];
+
+    NSLog(@"HANLIN_NS_HOST_SERVICES_BIND_OK");
     return YES;
 }
 
 - (void)shutdown {
+    if (self.boundSessionID) {
+        [HanlinNativeServicesBridge clearActiveSessionBridgeForSessionID:self.boundSessionID];
+        [self.boundBridge invalidate];
+        self.boundBridge = nil;
+        self.boundSessionID = nil;
+    }
     if (self.runtime) {
         try {
             @try {

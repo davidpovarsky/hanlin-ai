@@ -12,6 +12,7 @@ static id<HanlinNativeServicesProvider> _currentProvider = nil;
 static NSMutableDictionary<NSString *, id<HanlinNativeServicesProvider>> *_sessionProviders = nil;
 static NSMutableDictionary<NSString *, HanlinNativeServicesSessionBridge *> *_bootstrapBridges = nil;
 static NSMutableDictionary<NSString *, NSMutableArray<HanlinNativeServicesSessionBridge *> *> *_boundBridges = nil;
+static HanlinNativeServicesSessionBridge *_activeSessionBridge = nil;
 static NSLock *_sessionLock = nil;
 
 @implementation HanlinNativeServicesSessionBridge
@@ -119,6 +120,10 @@ static NSLock *_sessionLock = nil;
         [bridge invalidate];
     }
     [_boundBridges removeObjectForKey:sessionID];
+    if ([_activeSessionBridge.sessionID isEqualToString:sessionID]) {
+        [_activeSessionBridge invalidate];
+        _activeSessionBridge = nil;
+    }
     NSArray<NSString *> *tokens = [_bootstrapBridges keysOfEntriesPassingTest:
         ^BOOL(NSString *token, HanlinNativeServicesSessionBridge *bridge, BOOL *stop) {
             return [bridge.sessionID isEqualToString:sessionID];
@@ -152,6 +157,29 @@ static NSLock *_sessionLock = nil;
     return bridge;
 }
 
++ (void)setActiveSessionBridge:(nullable HanlinNativeServicesSessionBridge *)bridge forSessionID:(NSString *)sessionID {
+    if (sessionID.length == 0) return;
+    [_sessionLock lock];
+    _activeSessionBridge = bridge;
+    [_sessionLock unlock];
+}
+
++ (void)clearActiveSessionBridgeForSessionID:(NSString *)sessionID {
+    if (sessionID.length == 0) return;
+    [_sessionLock lock];
+    if ([_activeSessionBridge.sessionID isEqualToString:sessionID]) {
+        _activeSessionBridge = nil;
+    }
+    [_sessionLock unlock];
+}
+
++ (nullable HanlinNativeServicesSessionBridge *)activeSessionBridge {
+    [_sessionLock lock];
+    HanlinNativeServicesSessionBridge *bridge = _activeSessionBridge;
+    [_sessionLock unlock];
+    return bridge;
+}
+
 + (void)registerProvider:(nullable id<HanlinNativeServicesProvider>)provider {
     [_sessionLock lock];
     _currentProvider = provider;
@@ -160,7 +188,12 @@ static NSLock *_sessionLock = nil;
 
 + (nullable id<HanlinNativeServicesProvider>)currentProvider {
     [_sessionLock lock];
-    id<HanlinNativeServicesProvider> provider = _currentProvider;
+    id<HanlinNativeServicesProvider> provider = nil;
+    if (_activeSessionBridge) {
+        provider = [_activeSessionBridge providerSnapshot];
+    } else {
+        provider = _currentProvider;
+    }
     [_sessionLock unlock];
     return provider;
 }

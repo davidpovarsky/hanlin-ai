@@ -7,6 +7,8 @@ import HanlinMiniAppCore
 import HanlinScriptContracts
 import HanlinScriptStore
 import HanlinExpoRuntime
+import HanlinNativeScriptRuntime
+import HanlinNativeScriptCoreSupport
 
 @Suite("Unified Host Services E2E", .serialized)
 struct HanlinUnifiedHostServicesE2ETests {
@@ -494,6 +496,131 @@ struct HanlinUnifiedHostServicesE2ETests {
         #expect(HanlinNativeServicesBridge.provider(forSessionID: "session-2") === ns2)
         HanlinNativeServicesBridge.unregisterProvider(forSessionID: "session-2")
         HanlinNativeServicesBridge.register(nil)
+    }
+
+    @Test func nativeScriptActiveBridgeIsolationAndNoGlobalLeakage() throws {
+        let app1 = try HanlinAppID(validating: "miniapp-active-one")
+        let app2 = try HanlinAppID(validating: "miniapp-active-two")
+        let appLegacy = try HanlinAppID(validating: "miniapp-legacy")
+
+        let ns1 = NativeScriptHostServicesAdapter(appID: app1, grantedCapabilities: ["javascript"], sessionID: "session-active-1")
+        let ns2 = NativeScriptHostServicesAdapter(appID: app2, grantedCapabilities: ["javascript"], sessionID: "session-active-2")
+        let legacyAdapter = NativeScriptHostServicesAdapter(appID: appLegacy, grantedCapabilities: ["javascript"], sessionID: "session-legacy")
+
+        // 1. Register session 1 provider
+        HanlinNativeServicesBridge.register(ns1, forSessionID: "session-active-1")
+        let token1 = try #require(HanlinNativeServicesPrepareSessionBootstrap("session-active-1"))
+        let bridge1 = try #require(HanlinNativeServicesBridge.claimSessionBridge(withToken: token1))
+
+        // 2. Set active session bridge
+        HanlinNativeServicesBridge.setActiveSessionBridge(bridge1, forSessionID: "session-active-1")
+        #expect(HanlinNativeServicesBridge.activeSessionBridge() === bridge1)
+        #expect(HanlinNativeServicesBridge.currentProvider() === ns1)
+
+        // 3. Register legacy provider — active session must NOT leak to legacy global provider
+        HanlinNativeServicesBridge.register(legacyAdapter)
+        #expect(HanlinNativeServicesBridge.currentProvider() === ns1)
+
+        // 4. Invalidate session 1
+        HanlinNativeServicesBridge.unregisterProvider(forSessionID: "session-active-1")
+        #expect(HanlinNativeServicesBridge.provider(forSessionID: "session-active-1") == nil)
+        // Bound bridge is invalidated, so currentProvider must return nil, NOT legacyAdapter
+        #expect(HanlinNativeServicesBridge.currentProvider() == nil)
+
+        // 5. Clear active bridge
+        HanlinNativeServicesBridge.clearActiveSessionBridge(forSessionID: "session-active-1")
+        #expect(HanlinNativeServicesBridge.activeSessionBridge() == nil)
+
+        // 6. Sequential session 2 works cleanly
+        HanlinNativeServicesBridge.register(ns2, forSessionID: "session-active-2")
+        let token2 = try #require(HanlinNativeServicesPrepareSessionBootstrap("session-active-2"))
+        let bridge2 = try #require(HanlinNativeServicesBridge.claimSessionBridge(withToken: token2))
+        HanlinNativeServicesBridge.setActiveSessionBridge(bridge2, forSessionID: "session-active-2")
+        #expect(HanlinNativeServicesBridge.activeSessionBridge() === bridge2)
+        #expect(HanlinNativeServicesBridge.currentProvider() === ns2)
+
+        // 7. Teardown session 2
+        HanlinNativeServicesBridge.clearActiveSessionBridge(forSessionID: "session-active-2")
+        HanlinNativeServicesBridge.unregisterProvider(forSessionID: "session-active-2")
+        HanlinNativeServicesBridge.register(nil)
+        #expect(HanlinNativeServicesBridge.currentProvider() == nil)
+    }
+
+    @Test @MainActor func nativeScriptRuntimeRealLaunchFixtureAndTeardown() throws {
+        let appID1 = try HanlinAppID(validating: "ns-fixture-app-1")
+        let sessionID1 = "ns-session-" + UUID().uuidString.lowercased()
+
+        let tempDir = FileManager.default.temporaryDirectory.appending(
+            path: "hanlin-ns-acceptance-\(UUID().uuidString.lowercased())",
+            directoryHint: .isDirectory
+        )
+        let appDir = tempDir.appending(path: "app", directoryHint: .isDirectory)
+        try FileManager.default.createDirectory(at: appDir, withIntermediateDirectories: true)
+        defer { try? FileManager.default.removeItem(at: tempDir) }
+
+        let packageJSON = """
+        {
+          "name": "ns-fixture-app",
+          "version": "1.0.0",
+          "main": "bundle.js",
+          "hanlinRuntime": "hanlin-nativescript",
+          "dependencies": {
+            "@nativescript/core": "9.1.0"
+          }
+        }
+        """
+        try Data(packageJSON.utf8).write(to: appDir.appending(path: "package.json"))
+
+        let bundleJS = """
+        console.log("HANLIN_NS_FIXTURE_RUNNING");
+        """
+        try Data(bundleJS.utf8).write(to: appDir.appending(path: "bundle.js"))
+
+        // Session 1:
+        let adapter1 = NativeScriptHostServicesAdapter(
+            appID: appID1,
+            grantedCapabilities: ["network"],
+            sessionID: sessionID1
+        )
+        HanlinNativeServicesBridge.register(adapter1, forSessionID: sessionID1)
+
+        let session1 = try HanlinNativeScriptSession(
+            applicationRoot: appDir,
+            sessionID: sessionID1
+        )
+
+        // Starting session must bind host services and run main application without V8 crash
+        try session1.start()
+        #expect(session1.isActive)
+        #expect(HanlinNativeServicesBridge.currentProvider() === adapter1)
+
+        // Shutdown session 1
+        session1.shutdown()
+        #expect(!session1.isActive)
+        HanlinNativeServicesBridge.unregisterProvider(forSessionID: sessionID1)
+        #expect(HanlinNativeServicesBridge.provider(forSessionID: sessionID1) == nil)
+
+        // Session 2 (sequential after session 1):
+        let appID2 = try HanlinAppID(validating: "ns-fixture-app-2")
+        let sessionID2 = "ns-session-" + UUID().uuidString.lowercased()
+        let adapter2 = NativeScriptHostServicesAdapter(
+            appID: appID2,
+            grantedCapabilities: ["network"],
+            sessionID: sessionID2
+        )
+        HanlinNativeServicesBridge.register(adapter2, forSessionID: sessionID2)
+
+        let session2 = try HanlinNativeScriptSession(
+            applicationRoot: appDir,
+            sessionID: sessionID2
+        )
+        try session2.start()
+        #expect(session2.isActive)
+        #expect(HanlinNativeServicesBridge.currentProvider() === adapter2)
+
+        session2.shutdown()
+        #expect(!session2.isActive)
+        HanlinNativeServicesBridge.unregisterProvider(forSessionID: sessionID2)
     }
 
     @Test func expoAppContextsResolveExactlyAndTeardownIndependently() throws {

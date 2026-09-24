@@ -70,6 +70,11 @@ typedef void (^HanlinBridgeRequestHandlerBlock)(NSString *caller, NSString *payl
 /// never supplies a session identifier to a Host Services operation.
 + (nullable HanlinNativeServicesSessionBridge *)claimSessionBridgeWithToken:(NSString *)token;
 
+/// Active session bridge binding for runtime hosts
++ (void)setActiveSessionBridge:(nullable HanlinNativeServicesSessionBridge *)bridge forSessionID:(NSString *)sessionID;
++ (void)clearActiveSessionBridgeForSessionID:(NSString *)sessionID;
++ (nullable HanlinNativeServicesSessionBridge *)activeSessionBridge;
+
 // Legacy single-session fallback. Modern sessions use the bound bridge above.
 + (void)registerProvider:(nullable id<HanlinNativeServicesProvider>)provider;
 + (nullable id<HanlinNativeServicesProvider>)currentProvider;
@@ -98,5 +103,8 @@ typedef void (^HanlinBridgeRequestHandlerBlock)(NSString *caller, NSString *payl
                        handler:(HanlinBridgeRequestHandlerBlock)handler;
 
 @end
+
+/// Prepares a one-time bootstrap token for a registered session.
+FOUNDATION_EXPORT NSString * _Nullable HanlinNativeServicesPrepareSessionBootstrap(NSString *sessionID);
 
 NS_ASSUME_NONNULL_END
