@@ -111,14 +111,17 @@ struct NodePackagesView: View {
                         .accessibilityIdentifier("hanlin-npm-empty-state")
                 }
                 ForEach(model.installed) { item in
-                    NavigationLink { List { NodePackageDetailsView(item: item) }.navigationTitle(item.name) } label: {
-                        VStack(alignment: .leading) {
-                            Text(item.name)
-                            Text(item.version).font(.caption).foregroundStyle(.secondary)
+                    VStack(alignment: .leading, spacing: 6) {
+                        NavigationLink { List { NodePackageDetailsView(item: item) }.navigationTitle(item.name) } label: {
+                            VStack(alignment: .leading) {
+                                Text(item.name)
+                                Text(item.version).font(.caption).foregroundStyle(.secondary)
+                            }
                         }
+                        Button(RuntimeL10n.string("Import Probe")) { model.probe(item) }
+                            .buttonStyle(.borderless)
                     }
                     .accessibilityIdentifier("hanlin-npm-installed-item-\(item.name)")
-                    Button(RuntimeL10n.string("Import Probe")) { model.probe(item) }.buttonStyle(.borderless)
                     .swipeActions {
                         Button(RuntimeL10n.string("Uninstall"), role: .destructive) { model.uninstall(item) }
                         Button(RuntimeL10n.string("Update")) { model.update(item) }.tint(.blue)

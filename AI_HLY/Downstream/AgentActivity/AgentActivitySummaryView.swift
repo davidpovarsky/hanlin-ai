@@ -38,6 +38,7 @@ struct AgentActivitySummaryView: View {
             .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
+        .accessibilityIdentifier("hanlin-agent-activity-summary")
         .accessibilityLabel(timeline.summaryTitle)
         .accessibilityHint(accessibilityHint)
     }

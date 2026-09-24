@@ -23,19 +23,26 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         XCTAssertTrue(send.waitForExistence(timeout: 10), "The real chat send button did not appear.")
         send.tap()
 
-        let failedActivity = app.staticTexts.matching(
-            NSPredicate(format: "label CONTAINS[c] 'Failed' OR label CONTAINS[c] 'invalid' OR label CONTAINS[c] 'unknown argument'")
+        let finalAnswer = app.staticTexts.matching(
+            NSPredicate(format: "label CONTAINS 'AGENT_UI_ACCEPTANCE_COMPLETE'")
         ).firstMatch
-        XCTAssertTrue(failedActivity.waitForExistence(timeout: 45), "The intentional tool failure was not presented truthfully in the real chat UI.")
+        XCTAssertTrue(finalAnswer.waitForExistence(timeout: 45), "The deterministic provider's final answer was not rendered.")
+
+        let activitySummary = app.buttons["hanlin-agent-activity-summary"].firstMatch
+        XCTAssertTrue(activitySummary.waitForExistence(timeout: 10), "The completed agent activity summary was not rendered.")
+        activitySummary.tap()
+
+        let failedActivity = app.buttons["hanlin-agent-tool-failed"].firstMatch
+        XCTAssertTrue(failedActivity.waitForExistence(timeout: 10), "The intentional tool failure was not presented truthfully in the real chat UI.")
+        XCTAssertTrue(
+            failedActivity.label.localizedCaseInsensitiveContains("invalid"),
+            "The failed activity did not identify the invalid arguments."
+        )
 
         let toolActivity = app.staticTexts.matching(
             NSPredicate(format: "label CONTAINS[c] 'Local Python' OR label CONTAINS[c] 'ui-tool-ok'")
         ).firstMatch
         XCTAssertTrue(toolActivity.waitForExistence(timeout: 45), "Tool activity/result was not rendered in the real chat UI.")
 
-        let finalAnswer = app.staticTexts.matching(
-            NSPredicate(format: "label CONTAINS 'AGENT_UI_ACCEPTANCE_COMPLETE'")
-        ).firstMatch
-        XCTAssertTrue(finalAnswer.waitForExistence(timeout: 45), "The deterministic provider's final answer was not rendered.")
     }
 }
