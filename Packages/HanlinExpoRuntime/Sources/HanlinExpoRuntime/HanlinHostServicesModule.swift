@@ -1,7 +1,7 @@
 import Foundation
 import ExpoModulesCore
 
-public final class HanlinHostServicesModule: Module {
+public final class HanlinHostServicesModule: Module, @unchecked Sendable {
     private static func missingProviderError() -> NSError {
         NSError(
             domain: "HanlinExpoHostServices",
