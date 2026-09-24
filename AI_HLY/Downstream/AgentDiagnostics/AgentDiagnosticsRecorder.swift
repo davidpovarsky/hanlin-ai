@@ -78,7 +78,17 @@ actor AgentDiagnosticsRecorder {
     }
 
     @discardableResult
-    func beginRound(index: Int, trigger: String, requestData: Data) async -> UUID {
+    func beginRound(
+        index: Int,
+        trigger: String,
+        requestData: Data,
+        loadedSkillIDs: [String]? = nil,
+        modelVisibleToolAliases: [String]? = nil,
+        modelVisibleToolCount: Int? = nil,
+        modelVisibleSchemaBytes: Int? = nil,
+        providerID: String? = nil,
+        modelID: String? = nil
+    ) async -> UUID {
         let requestObject = (try? JSONSerialization.jsonObject(with: requestData)) ?? [:]
         let sanitizedJSON = AgentDiagnosticsRedactor.sanitizedJSONString(from: requestObject, pretty: true)
         let metadataOnly = session.level != .fullLocalDebug
@@ -97,12 +107,27 @@ actor AgentDiagnosticsRecorder {
             request: request,
             response: AgentDiagnosticsModelResponse(streamEventCount: 0),
             toolCalls: [],
-            usage: .unavailable
+            usage: .unavailable,
+            loadedSkillIDs: loadedSkillIDs,
+            modelVisibleToolAliases: modelVisibleToolAliases,
+            modelVisibleToolCount: modelVisibleToolCount ?? modelVisibleToolAliases?.count,
+            modelVisibleSchemaBytes: modelVisibleSchemaBytes,
+            providerID: providerID ?? session.providerID,
+            modelID: modelID ?? session.modelID,
+            meaningfulStreamEventCount: 0
         )
         session.rounds.append(round)
         updateDerivedValues()
         await persist()
-        trace("ModelRoundStarted", roundIndex: index)
+        var traceFields: [String: Any] = [
+            "bytes": request.byteCount,
+            "hash": request.contentHash
+        ]
+        if let loadedSkillIDs { traceFields["loadedSkillIDs"] = loadedSkillIDs }
+        if let modelVisibleToolAliases { traceFields["modelVisibleToolAliases"] = modelVisibleToolAliases }
+        if let count = round.modelVisibleToolCount { traceFields["modelVisibleToolCount"] = count }
+        if let bytes = modelVisibleSchemaBytes { traceFields["modelVisibleSchemaBytes"] = bytes }
+        trace("ModelRoundStarted", roundIndex: index, fields: traceFields)
         trace("ModelRequestPrepared", roundIndex: index, fields: ["bytes": request.byteCount, "hash": request.contentHash])
         return round.id
     }
@@ -118,11 +143,19 @@ actor AgentDiagnosticsRecorder {
         trace("ModelResponseStarted", roundID: roundID)
     }
 
-    func recordStreamEvent(roundID: UUID, visibleContent: String?, visibleReasoningSummary: String?) {
+    func recordStreamEvent(
+        roundID: UUID,
+        visibleContent: String?,
+        visibleReasoningSummary: String?,
+        isMeaningful: Bool = true
+    ) {
         let shouldStoreFullContent = session.level == .fullLocalDebug
 
         updateRound(roundID) { round in
             round.response.streamEventCount += 1
+            if isMeaningful && ((visibleContent?.isEmpty == false) || (visibleReasoningSummary?.isEmpty == false)) {
+                round.meaningfulStreamEventCount = (round.meaningfulStreamEventCount ?? 0) + 1
+            }
 
             guard shouldStoreFullContent else { return }
 
@@ -265,7 +298,8 @@ actor AgentDiagnosticsRecorder {
         roundID: UUID,
         finishReason: String?,
         usage: AgentTokenUsage?,
-        error: String? = nil
+        error: String? = nil,
+        meaningfulEventCount: Int? = nil
     ) async {
         let completedAt = Date()
         let sanitizedError = error.map(AgentDiagnosticsRedactor.sanitize)
@@ -275,6 +309,9 @@ actor AgentDiagnosticsRecorder {
             round.response.finishReason = finishReason
             round.response.error = sanitizedError
             round.response.totalLatency = completedAt.timeIntervalSince(round.startedAt)
+            if let meaningfulEventCount {
+                round.meaningfulStreamEventCount = meaningfulEventCount
+            }
             if let usage {
                 round.usage = usage
             } else {
@@ -285,18 +322,42 @@ actor AgentDiagnosticsRecorder {
         }
         updateDerivedValues()
         await persist()
-        trace("ModelRoundCompleted", roundID: roundID)
+        var fields: [String: Any] = [:]
+        if let finishReason { fields["finishReason"] = finishReason }
+        if let count = session.rounds.first(where: { $0.id == roundID })?.meaningfulStreamEventCount {
+            fields["meaningfulStreamEvents"] = count
+        }
+        trace("ModelRoundCompleted", roundID: roundID, fields: fields)
     }
 
     func complete(status: String, error: String? = nil) async {
+        guard !session.isComplete else { return }
+        let normalizedStatus: String
+        switch status.lowercased() {
+        case "completed", "succeeded", "success":
+            normalizedStatus = "completed"
+        case "cancelled", "canceled", "cancel":
+            normalizedStatus = "cancelled"
+        default:
+            normalizedStatus = "failed"
+        }
+
         session.completedAt = Date()
         session.lastUpdatedAt = Date()
-        session.status = status
+        session.status = normalizedStatus
         session.isComplete = true
         if let error { session.efficiency.warnings.append(AgentDiagnosticsRedactor.sanitize(error)) }
         updateDerivedValues()
         await persist()
-        trace(status == "completed" ? "AgentRunCompleted" : "AgentRun\(status.capitalized)")
+
+        let eventName: String
+        switch normalizedStatus {
+        case "completed": eventName = "AgentRunCompleted"
+        case "cancelled": eventName = "AgentRunCancelled"
+        case "failed": eventName = "AgentRunFailed"
+        default: eventName = "AgentRun\(normalizedStatus.capitalized)"
+        }
+        trace(eventName)
     }
 
     func fileURLs() -> (json: URL, text: URL) { (jsonURL, textURL) }

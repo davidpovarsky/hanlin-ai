@@ -33,6 +33,13 @@ struct AgentDiagnosticsRound: Codable, Identifiable, Sendable {
     var response: AgentDiagnosticsModelResponse
     var toolCalls: [AgentDiagnosticsToolCall]
     var usage: AgentTokenUsage
+    var loadedSkillIDs: [String]? = nil
+    var modelVisibleToolAliases: [String]? = nil
+    var modelVisibleToolCount: Int? = nil
+    var modelVisibleSchemaBytes: Int? = nil
+    var providerID: String? = nil
+    var modelID: String? = nil
+    var meaningfulStreamEventCount: Int? = nil
 }
 
 struct AgentDiagnosticsModelRequest: Codable, Sendable {

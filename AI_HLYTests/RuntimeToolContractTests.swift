@@ -239,6 +239,79 @@ struct RuntimeToolContractTests {
         #expect(session.rounds.first?.toolCalls.first?.outcome == "invalidArguments")
     }
 
+    @Test func diagnosticsTerminalStateIsIdempotent() async throws {
+        // complete -> fail => stays completed
+        let r1 = try #require(await AgentDiagnosticsRecorder.start(runID: UUID(), groupID: UUID(), providerID: "test", modelID: "test"))
+        await r1.complete(status: "completed")
+        await r1.complete(status: "failed", error: "late error")
+        let s1 = await r1.session
+        #expect(s1.status == "completed")
+        #expect(s1.isComplete)
+
+        // fail -> complete => stays failed
+        let r2 = try #require(await AgentDiagnosticsRecorder.start(runID: UUID(), groupID: UUID(), providerID: "test", modelID: "test"))
+        await r2.complete(status: "failed", error: "initial error")
+        await r2.complete(status: "completed")
+        let s2 = await r2.session
+        #expect(s2.status == "failed")
+        #expect(s2.isComplete)
+
+        // complete -> complete => stays completed
+        let r3 = try #require(await AgentDiagnosticsRecorder.start(runID: UUID(), groupID: UUID(), providerID: "test", modelID: "test"))
+        await r3.complete(status: "completed")
+        await r3.complete(status: "completed")
+        let s3 = await r3.session
+        #expect(s3.status == "completed")
+        #expect(s3.isComplete)
+
+        // cancel -> other end => stays cancelled
+        let r4 = try #require(await AgentDiagnosticsRecorder.start(runID: UUID(), groupID: UUID(), providerID: "test", modelID: "test"))
+        await r4.complete(status: "cancelled")
+        await r4.complete(status: "completed")
+        await r4.complete(status: "failed")
+        let s4 = await r4.session
+        #expect(s4.status == "cancelled")
+        #expect(s4.isComplete)
+    }
+
+    @Test func diagnosticsRecordsStepMetadataWithoutSecrets() async throws {
+        let recorder = try #require(await AgentDiagnosticsRecorder.start(runID: UUID(), groupID: UUID(), providerID: "openai", modelID: "gpt-4o"))
+        let requestData = try JSONSerialization.data(withJSONObject: [
+            "messages": [["role": "user", "content": "analyze data"]],
+            "tools": []
+        ])
+
+        let roundID = await recorder.beginRound(
+            index: 1,
+            trigger: "initialUserRequest",
+            requestData: requestData,
+            loadedSkillIDs: ["data_analysis"],
+            modelVisibleToolAliases: ["run_python", "tool_search"],
+            modelVisibleToolCount: 2,
+            modelVisibleSchemaBytes: 1024,
+            providerID: "openai",
+            modelID: "gpt-4o"
+        )
+
+        recorder.recordStreamEvent(roundID: roundID, visibleContent: "Processing", visibleReasoningSummary: "Thinking", isMeaningful: true)
+        recorder.recordStreamEvent(roundID: roundID, visibleContent: nil, visibleReasoningSummary: nil, isMeaningful: false)
+
+        await recorder.finishRound(roundID: roundID, finishReason: "stop", usage: nil, meaningfulEventCount: 1)
+        await recorder.complete(status: "completed")
+
+        let session = await recorder.session
+        let round = try #require(session.rounds.first)
+        #expect(round.index == 1)
+        #expect(round.loadedSkillIDs == ["data_analysis"])
+        #expect(round.modelVisibleToolAliases == ["run_python", "tool_search"])
+        #expect(round.modelVisibleToolCount == 2)
+        #expect(round.modelVisibleSchemaBytes == 1024)
+        #expect(round.providerID == "openai")
+        #expect(round.modelID == "gpt-4o")
+        #expect(round.response.finishReason == "stop")
+        #expect(round.meaningfulStreamEventCount == 1)
+    }
+
     private static func functionName(_ schema: [String: Any]) -> String? {
         (schema["function"] as? [String: Any])?["name"] as? String
     }
