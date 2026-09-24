@@ -33,15 +33,62 @@
     "runtime_tooling_acceptance": {
       "description": "Full Runtime, package, Host Services, Mini App, Agent, and UI acceptance collector",
       "patterns": [
-        "Scripts/Runtime/run_runtime_tooling_acceptance.py",
-        "AI_HLY/Downstream/AgentDiagnostics/AgentRuntimeUIAcceptanceProvider.swift",
-        "AI_HLYTests/RuntimeToolContractTests.swift",
-        "AI_HLYTests/RuntimePackageAcceptanceTests.swift",
-        "AI_HLYTests/AgentRuntimeConversationAcceptanceTests.swift",
-        "AI_HLYUITests/AgentRuntimeConversationUITests.swift"
+        "Scripts/Runtime/run_runtime_tooling_acceptance.py"
       ],
       "direct_validation_groups": [
         "runtime_tooling_full_acceptance"
+      ],
+      "consumers": []
+    },
+    "runtime_tool_contract_unit_tests": {
+      "description": "Runtime tool contract unit tests",
+      "patterns": [
+        "AI_HLYTests/RuntimeToolContractTests.swift"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/RuntimeToolContractTests"
+      ],
+      "consumers": []
+    },
+    "runtime_package_acceptance_unit_tests": {
+      "description": "Runtime package acceptance unit tests",
+      "patterns": [
+        "AI_HLYTests/RuntimePackageAcceptanceTests.swift"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/RuntimePackageAcceptanceTests"
+      ],
+      "consumers": []
+    },
+    "agent_runtime_conversation_acceptance_unit_tests": {
+      "description": "Agent runtime conversation acceptance unit tests",
+      "patterns": [
+        "AI_HLYTests/AgentRuntimeConversationAcceptanceTests.swift"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/AgentRuntimeConversationAcceptanceTests"
+      ],
+      "consumers": []
+    },
+    "agent_runtime_conversation_ui_tests": {
+      "description": "Agent runtime conversation UI tests",
+      "patterns": [
+        "AI_HLYUITests/AgentRuntimeConversationUITests.swift"
+      ],
+      "direct_validation_groups": [
+        "simulator_targeted_ui"
+      ],
+      "ui_suites": [
+        "AI_HLYUITests/AgentRuntimeConversationUITests"
       ],
       "consumers": []
     },

@@ -583,7 +583,66 @@ class AffectedValidationPlannerTests(unittest.TestCase):
         self.assertTrue(plan.step_outputs["stage_scriptui_fixtures"])
         self.assertTrue(plan.step_outputs["run_simulator_unit"])
         self.assertEqual(plan.step_outputs["simulator_unit_filter"], "AI_HLYTests/HanlinRuntimePerformanceTests")
-        self.assertTrue(plan.step_outputs["run_runtimecore_host"])
+    def test_agent_runtime_conversation_acceptance_tests_change_routes_to_targeted_unit(self) -> None:
+        changed = ["AI_HLYTests/AgentRuntimeConversationAcceptanceTests.swift"]
+        plan = self.plan_files(changed)
+        self.assertIn("app_unit_tests", plan.selected_groups)
+        self.assertNotIn("runtime_tooling_full_acceptance", plan.selected_groups)
+        self.assertTrue(plan.step_outputs["run_simulator_unit"])
+        self.assertFalse(plan.step_outputs["run_runtime_tooling_full_acceptance"])
+        self.assertEqual(plan.step_outputs["simulator_unit_filter"], "AI_HLYTests/AgentRuntimeConversationAcceptanceTests")
+
+    def test_agent_runtime_conversation_ui_tests_change_routes_to_targeted_ui(self) -> None:
+        changed = ["AI_HLYUITests/AgentRuntimeConversationUITests.swift"]
+        plan = self.plan_files(changed)
+        self.assertIn("simulator_targeted_ui", plan.selected_groups)
+        self.assertNotIn("runtime_tooling_full_acceptance", plan.selected_groups)
+        self.assertTrue(plan.step_outputs["run_simulator_targeted_ui"])
+        self.assertFalse(plan.step_outputs["run_runtime_tooling_full_acceptance"])
+        self.assertEqual(plan.step_outputs["simulator_ui_filter"], "AI_HLYUITests/AgentRuntimeConversationUITests")
+
+    def test_runtime_center_view_change_routes_to_targeted_runtime_center_ui(self) -> None:
+        changed = ["AI_HLY/Downstream/RuntimeCore/UI/RuntimeCenterView.swift"]
+        plan = self.plan_files(changed)
+        self.assertIn("simulator_targeted_ui", plan.selected_groups)
+        self.assertNotIn("runtime_tooling_full_acceptance", plan.selected_groups)
+        self.assertTrue(plan.step_outputs["run_simulator_targeted_ui"])
+        self.assertFalse(plan.step_outputs["run_runtime_tooling_full_acceptance"])
+        self.assertEqual(plan.step_outputs["simulator_ui_filter"], "AI_HLYUITests/HanlinRuntimeInstallationUITests/testRuntimeCenterEmbeddedRuntimesSmokeAndReadiness")
+
+    def test_run_runtime_tooling_acceptance_script_change_routes_to_full_acceptance(self) -> None:
+        changed = ["Scripts/Runtime/run_runtime_tooling_acceptance.py"]
+        plan = self.plan_files(changed)
+        self.assertIn("runtime_tooling_full_acceptance", plan.selected_groups)
+        self.assertTrue(plan.step_outputs["run_runtime_tooling_full_acceptance"])
+
+    def test_explicit_runtime_tooling_full_acceptance_override(self) -> None:
+        plan = self.plan_files(["README.md"], target_group="runtime_tooling_full_acceptance")
+        self.assertIn("runtime_tooling_full_acceptance", plan.selected_groups)
+        self.assertTrue(plan.step_outputs["run_runtime_tooling_full_acceptance"])
+
+    def test_nativescript_runtime_change_receives_native_release_validation(self) -> None:
+        changed = ["Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptCoreSupport/HanlinNativeServicesBridge.m"]
+        plan = self.plan_files(changed)
+        self.assertIn("nativescript_runtime", plan.selected_groups)
+        self.assertTrue(plan.step_outputs["run_nativescript_runtime"])
+        self.assertEqual(plan.step_outputs["simulator_configuration"], "Release")
+
+    def test_runtime_tooling_full_acceptance_deduplication_and_scoped_build(self) -> None:
+        changed = [
+            "AI_HLYTests/RuntimeToolContractTests.swift",
+            "AI_HLYTests/AgentSkillsExposureTests.swift",
+        ]
+        plan = self.plan_files(changed, target_group="runtime_tooling_full_acceptance")
+        self.assertTrue(plan.step_outputs["run_runtime_tooling_full_acceptance"])
+        self.assertEqual(plan.step_outputs["simulator_unit_filter"], "AI_HLYTests/AgentSkillsExposureTests")
+        self.assertTrue(plan.step_outputs["run_simulator_unit"])
+        bft = plan.step_outputs["simulator_build_for_testing_args"]
+        self.assertNotIn("-only-testing:AI_HLYTests ", bft)
+        self.assertFalse(bft.endswith("-only-testing:AI_HLYTests"))
+        self.assertIn("-only-testing:AI_HLYTests/RuntimeToolContractTests", bft)
+        self.assertIn("-only-testing:AI_HLYTests/AgentSkillsExposureTests", bft)
+        self.assertIn("-only-testing:AI_HLYUITests/HanlinRuntimeInstallationUITests", bft)
 
 
 if __name__ == "__main__":

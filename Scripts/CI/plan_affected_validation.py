@@ -122,6 +122,32 @@ def fetch_commit_if_needed(sha: str, cwd: pathlib.Path) -> bool:
         return False
 
 
+COLLECTOR_UNIT_SUITES = {
+    "AI_HLYTests/RuntimeToolContractTests",
+    "AI_HLYTests/HanlinUnifiedHostServicesAgentAcceptanceTests",
+    "AI_HLYTests/RuntimePackageAcceptanceTests",
+    "AI_HLYTests/HanlinUnifiedHostServicesE2ETests",
+    "AI_HLYTests/CanonicalMiniAppIntegrationTests",
+    "AI_HLYTests/AgentRuntimeConversationAcceptanceTests",
+}
+
+COLLECTOR_UI_SUITES = {
+    "AI_HLYUITests/HanlinRuntimeInstallationUITests/testNodePackageManagerUIWorkflowAndFailure",
+    "AI_HLYUITests/HanlinRuntimeInstallationUITests/testNodePackageManagerUIWorkflowAndSuccess",
+    "AI_HLYUITests/HanlinRuntimeInstallationUITests/testPythonPackageManagerUIWorkflowAndFailure",
+    "AI_HLYUITests/HanlinRuntimeInstallationUITests/testPythonPackageManagerUIWorkflowAndSuccess",
+    "AI_HLYUITests/HanlinRuntimeInstallationUITests/testRuntimeCenterEmbeddedRuntimesSmokeAndReadiness",
+    "AI_HLYUITests/HanlinRuntimeCommandAcceptanceUITests",
+    "AI_HLYUITests/AgentRuntimeConversationUITests",
+}
+
+COLLECTOR_BUILD_UI_SUITES = {
+    "AI_HLYUITests/HanlinRuntimeInstallationUITests",
+    "AI_HLYUITests/HanlinRuntimeCommandAcceptanceUITests",
+    "AI_HLYUITests/AgentRuntimeConversationUITests",
+}
+
+
 def resolve_comparison_range(
     repo_root: pathlib.Path,
     event_name: str,
@@ -652,6 +678,15 @@ def plan_affected_validation(
             for suite in comp_info.get("ui_suites", []):
                 affected_ui_suites.add(suite)
 
+    is_collector_active = "runtime_tooling_full_acceptance" in selected_groups
+    if is_collector_active:
+        affected_ui_suites = {
+            s for s in affected_ui_suites
+            if not (s in COLLECTOR_UI_SUITES or any(c.startswith(s + "/") for c in COLLECTOR_UI_SUITES))
+        }
+        if not affected_ui_suites and not full_validation:
+            selected_groups.pop("simulator_targeted_ui", None)
+
     if "simulator_targeted_ui" in selected_groups and not full_validation:
         if not affected_ui_suites:
             raise RoutingError(
@@ -706,6 +741,14 @@ def plan_affected_validation(
         selected_groups["app_unit_tests"].append(
             "HanlinUIPerformanceUITests requires HanlinRuntimePerformanceTests flows 4-10"
         )
+
+    if is_collector_active and not full_validation:
+        affected_unit_suites = {
+            s for s in affected_unit_suites
+            if not any(s == c or s.startswith(c + "/") or c.startswith(s + "/") for c in COLLECTOR_UNIT_SUITES)
+        }
+        if not affected_unit_suites:
+            selected_groups.pop("app_unit_tests", None)
 
     if "app_unit_tests" in selected_groups and not full_validation:
         if not affected_unit_suites:
@@ -883,14 +926,19 @@ def plan_affected_validation(
                 if s:
                     build_for_testing_args.append(f"-only-testing:{s}")
         if step_outputs.get("run_runtime_tooling_full_acceptance"):
-            build_for_testing_args.extend([
-                "-only-testing:AI_HLYTests",
-                "-only-testing:AI_HLYUITests/HanlinRuntimeInstallationUITests",
-                "-only-testing:AI_HLYUITests/HanlinRuntimeCommandAcceptanceUITests",
-                "-only-testing:AI_HLYUITests/AgentRuntimeConversationUITests",
-            ])
+            for suite in sorted(COLLECTOR_UNIT_SUITES):
+                build_for_testing_args.append(f"-only-testing:{suite}")
+            for suite in sorted(COLLECTOR_BUILD_UI_SUITES):
+                build_for_testing_args.append(f"-only-testing:{suite}")
 
-    simulator_build_for_testing_args_value = " ".join(build_for_testing_args)
+    seen_args = set()
+    deduped_args = []
+    for arg in build_for_testing_args:
+        if arg not in seen_args:
+            seen_args.add(arg)
+            deduped_args.append(arg)
+
+    simulator_build_for_testing_args_value = " ".join(deduped_args)
 
     step_outputs["simulator_configuration"] = simulator_configuration
     step_outputs["simulator_build_for_testing_args"] = simulator_build_for_testing_args_value
