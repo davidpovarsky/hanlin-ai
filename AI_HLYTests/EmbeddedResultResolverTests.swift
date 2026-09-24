@@ -460,7 +460,7 @@ struct EmbeddedResultResolverTests {
 
         let session = try HanlinScriptingApplicationSession(
             installedPackageID: installedPackageID,
-            program: "console.log('embedded launched');",
+            program: #"Navigation.present({ element: createElement(Text, null, "Ready") });"#,
             filename: "main.js",
             entrypointContext: context,
             storageAllowed: false

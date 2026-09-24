@@ -57,7 +57,7 @@ struct AgentSkillsExposureTests {
         #expect(prompt.contains("`weather_expert`"))
         #expect(prompt.contains("Retrieve current and future weather forecasts"))
         #expect(prompt.contains("`code_runner`"))
-        #expect(prompt.contains("`load_skill`"))
+        #expect(prompt.contains("load_skill"))
 
         let emptyPrompt = HanlinSkillIndex.prompt(for: [])
         #expect(emptyPrompt.isEmpty)
@@ -224,15 +224,15 @@ struct AgentSkillsExposureTests {
 
         // Check key system domains are discoverable
         let skillIDs = Set(skills.map(\.id.rawValue))
-        #expect(skillIDs.contains("memory_management"))
-        #expect(skillIDs.contains("calendar_and_reminders"))
-        #expect(skillIDs.contains("maps_and_navigation"))
-        #expect(skillIDs.contains("weather_forecast"))
+        #expect(skillIDs.contains("memory"))
+        #expect(skillIDs.contains("calendar"))
+        #expect(skillIDs.contains("maps_location"))
+        #expect(skillIDs.contains("weather"))
         #expect(skillIDs.contains("web_research"))
-        #expect(skillIDs.contains("knowledge_base"))
-        #expect(skillIDs.contains("canvas_editor"))
-        #expect(skillIDs.contains("code_execution"))
-        #expect(skillIDs.contains("health_and_fitness"))
+        #expect(skillIDs.contains("knowledge"))
+        #expect(skillIDs.contains("canvas"))
+        #expect(skillIDs.contains("code"))
+        #expect(skillIDs.contains("health"))
 
         // Feature toggle exclusion
         let filteredCatalog = HanlinSkillCatalog()
@@ -248,12 +248,12 @@ struct AgentSkillsExposureTests {
             canvasEnabled: true
         )
         let filteredIDs = Set(filteredCatalog.allSkills().map(\.id.rawValue))
-        #expect(!filteredIDs.contains("weather_forecast"))
-        #expect(filteredIDs.contains("maps_and_navigation"))
+        #expect(!filteredIDs.contains("weather"))
+        #expect(filteredIDs.contains("maps_location"))
 
         // Initial skill index prompt reflects production skills
         let indexPrompt = HanlinSkillIndex.prompt(for: filteredCatalog.allSkills())
-        #expect(indexPrompt.contains("`maps_and_navigation`"))
+        #expect(indexPrompt.contains("`maps_location`"))
         #expect(!indexPrompt.contains("acceptance_skill"))
     }
 

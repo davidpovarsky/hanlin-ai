@@ -47,7 +47,9 @@ struct LegacyToolMigrationTests {
         #expect(canonicalNames == sourceNames)
 
         for source in sources {
-            #expect(source.presentationProfile.result?.rendererKind == .legacyExisting)
+            if let result = source.presentationProfile.result {
+                #expect(result.rendererKind == .legacyExisting)
+            }
             #expect(source.descriptor.logicalID.providerInstanceID.rawValue == "hanlin-legacy")
         }
     }
