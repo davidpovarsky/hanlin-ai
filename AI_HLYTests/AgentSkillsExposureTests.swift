@@ -347,8 +347,9 @@ struct AgentSkillsExposureTests {
 
         let preparedTools = AssistantToolBridge.PreparedTools(authority: authority, executors: executors)
 
-        var interceptedStepActiveTools: [[String]] = []
-        var executionEvents: [AgentEvent] = []
+        let interceptedRequests = ManagedAtomicArray<URLRequest>()
+        let interceptedStepActiveTools = ManagedAtomicArray<[String]>()
+        let executionEvents = ManagedAtomicArray<AgentEvent>()
 
         let adapter = HanlinAISDKToolAdapter(
             session: session,
@@ -359,9 +360,9 @@ struct AgentSkillsExposureTests {
             )
         )
 
-        var requestStep = 0
         let fetch: FetchFunction = { request in
-            requestStep += 1
+            interceptedRequests.append(request)
+            let requestStep = interceptedRequests.count
             if requestStep == 1 {
                 // Round 1: model calls load_skill
                 let sse = [
@@ -449,5 +450,34 @@ struct AgentSkillsExposureTests {
             headerFields: ["Content-Type": "text/event-stream"]
         )!
         return FetchResponse(body: .stream(stream), urlResponse: response)
+    }
+}
+
+private final class ManagedAtomicArray<T>: @unchecked Sendable {
+    private var elements: [T] = []
+    private let lock = NSLock()
+
+    func append(_ element: T) {
+        lock.lock()
+        defer { lock.unlock() }
+        elements.append(element)
+    }
+
+    var all: [T] {
+        lock.lock()
+        defer { lock.unlock() }
+        return elements
+    }
+
+    var count: Int {
+        lock.lock()
+        defer { lock.unlock() }
+        return elements.count
+    }
+
+    subscript(index: Int) -> T {
+        lock.lock()
+        defer { lock.unlock() }
+        return elements[index]
     }
 }
