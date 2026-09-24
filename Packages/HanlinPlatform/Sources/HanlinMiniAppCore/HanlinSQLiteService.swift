@@ -1,4 +1,5 @@
 import Foundation
+#if canImport(SQLite3)
 import SQLite3
 
 /// Shared SQLite service for all Mini App engines and agent tools.
@@ -316,6 +317,41 @@ public final class HanlinSQLiteService: @unchecked Sendable {
     }
 }
 
+private let sqliteTransient = unsafeBitCast(-1, to: sqlite3_destructor_type.self)
+#else
+public final class HanlinSQLiteService: @unchecked Sendable {
+    public static let maximumOpenDatabases = 16
+    public static let maximumFetchRows = 10_000
+    public static let maximumBindParameters = 1_024
+    public static let maximumStatementBytes = 1_048_576
+
+    public init(rootURL: URL) {}
+
+    public func open(
+        handle: String,
+        name: String,
+        readonly: Bool = false,
+        foreignKeys: Bool = false,
+        walMode: Bool = true,
+        busyTimeoutMs: Int32 = 5_000
+    ) throws -> String {
+        throw HanlinSQLiteServiceError.openFailed("SQLite3 is not available on this platform")
+    }
+
+    public func close(handle: String) {}
+
+    public func closeAll() {}
+
+    public func execute(handle: String, sql: String, arguments: Any? = nil) throws {
+        throw HanlinSQLiteServiceError.sqliteError("SQLite3 is not available on this platform")
+    }
+
+    public func fetchAll(handle: String, sql: String, arguments: Any? = nil) throws -> [[String: Any]] {
+        throw HanlinSQLiteServiceError.sqliteError("SQLite3 is not available on this platform")
+    }
+}
+#endif
+
 // MARK: - Errors
 
 public enum HanlinSQLiteServiceError: Error, Equatable, Sendable, LocalizedError {
@@ -347,5 +383,3 @@ public enum HanlinSQLiteServiceError: Error, Equatable, Sendable, LocalizedError
         }
     }
 }
-
-private let sqliteTransient = unsafeBitCast(-1, to: sqlite3_destructor_type.self)

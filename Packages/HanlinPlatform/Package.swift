@@ -64,6 +64,10 @@ let package = Package(
     ],
     dependencies: [
         .package(
+            url: "https://github.com/davidpovarsky/swift-ai-sdk.git",
+            revision: "038e2513ed4790cc53604950067c8483de427edf"
+        ),
+        .package(
             url: "https://github.com/weichsel/ZIPFoundation.git",
             exact: "0.9.19"
         )
@@ -182,12 +186,28 @@ let package = Package(
         .target(
             name: "HanlinChatCore",
             dependencies: [
-                "HanlinPlatformContracts"
+                "HanlinPlatformContracts",
+                .product(name: "SwiftAISDK", package: "swift-ai-sdk"),
+                .product(name: "AISDKProvider", package: "swift-ai-sdk"),
+                .product(name: "AISDKProviderUtils", package: "swift-ai-sdk"),
+                .product(name: "OpenAIProvider", package: "swift-ai-sdk"),
+                .product(name: "AnthropicProvider", package: "swift-ai-sdk"),
+                .product(name: "GoogleProvider", package: "swift-ai-sdk"),
+                .product(name: "OpenAICompatibleProvider", package: "swift-ai-sdk")
             ]
         ),
         .testTarget(
             name: "HanlinChatCoreTests",
-            dependencies: ["HanlinChatCore"]
+            dependencies: [
+                "HanlinChatCore",
+                .product(name: "SwiftAISDK", package: "swift-ai-sdk"),
+                .product(name: "AISDKProvider", package: "swift-ai-sdk"),
+                .product(name: "AISDKProviderUtils", package: "swift-ai-sdk"),
+                .product(name: "OpenAIProvider", package: "swift-ai-sdk"),
+                .product(name: "AnthropicProvider", package: "swift-ai-sdk"),
+                .product(name: "GoogleProvider", package: "swift-ai-sdk"),
+                .product(name: "OpenAICompatibleProvider", package: "swift-ai-sdk")
+            ]
         ),
         .target(
             name: "HanlinScriptExtensions",

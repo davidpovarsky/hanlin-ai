@@ -11,7 +11,7 @@ import FoundationNetworking
 #endif
 
 public actor HanlinChatEngine {
-    private let sessionConfiguration: URLSessionConfiguration
+    public let sessionConfiguration: URLSessionConfiguration
 
     public init(sessionConfiguration: URLSessionConfiguration = .ephemeral) {
         self.sessionConfiguration = sessionConfiguration
