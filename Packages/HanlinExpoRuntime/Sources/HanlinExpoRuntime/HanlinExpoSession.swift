@@ -144,10 +144,13 @@ public final class HanlinExpoSession {
 
             let modulesProvider = HanlinExpoModulesProvider()
             let appContext = AppContext()
+            NSLog("%@", "HANLIN_EXPO_APPCONTEXT_CREATED")
             guard HanlinExpoHostServicesBridge.bind(sessionID: sessionID, toAppContext: appContext) else {
                 throw HanlinExpoError.bootstrapFailed("No Host Services provider is registered for this Expo session.")
             }
+            NSLog("%@", "HANLIN_EXPO_HOSTSERVICES_BOUND")
             appContext.registerNativeModules(provider: modulesProvider)
+            NSLog("%@", "HANLIN_EXPO_MODULES_REGISTERED")
             self.appContext = appContext
 
             let bundle = bundleURL
@@ -155,6 +158,7 @@ public final class HanlinExpoSession {
             self.factoryDelegate = delegate
 
             let factory = RCTReactNativeFactory(delegate: delegate)
+            NSLog("%@", "HANLIN_EXPO_REACT_FACTORY_CREATED")
             self.reactNativeFactory = factory
 
             let rootView = factory.rootViewFactory.view(
@@ -162,6 +166,7 @@ public final class HanlinExpoSession {
                 initialProperties: nil,
                 launchOptions: nil
             )
+            NSLog("%@", "HANLIN_EXPO_ROOTVIEW_CREATED")
 
             rootView.translatesAutoresizingMaskIntoConstraints = false
             containerController.view.addSubview(rootView)
@@ -184,6 +189,7 @@ public final class HanlinExpoSession {
     }
 
     public func shutdown() {
+        NSLog("%@", "HANLIN_EXPO_SHUTDOWN_BEGIN")
         guard isActive || reactNativeFactory != nil || appContext != nil else {
             HanlinExpoModifierRegistry.unregisterCustomModifiers()
             return
@@ -194,13 +200,14 @@ public final class HanlinExpoSession {
 
         if let factory = reactNativeFactory {
             factory.rootViewFactory.reactHost = nil
-            factory.rootViewFactory.setValue(nil, forKey: "_reactHost")
         }
         reactNativeFactory = nil
         factoryDelegate = nil
         if let appContext {
             HanlinExpoHostServicesBridge.unbind(appContext: appContext)
+            NSLog("%@", "HANLIN_EXPO_UNBOUND")
             appContext.destroy()
+            NSLog("%@", "HANLIN_EXPO_APPCONTEXT_DESTROYED")
         }
         appContext = nil
         isActive = false
