@@ -19,6 +19,11 @@ actor JavaScriptCoreRuntimeService {
         return snapshotValue
     }
 
+    func stop() -> RuntimeSnapshot {
+        snapshotValue = .stopped(.javaScriptCore)
+        return snapshotValue
+    }
+
     func execute(_ request: RuntimeExecutionRequest) throws -> RuntimeExecutionResult {
         guard request.source.utf8.count <= 2 * 1_024 * 1_024 else { throw RuntimeCoreError.invalidRequest("JavaScriptCore source exceeds 2 MB.") }
         guard !request.source.contains("while (true)"), !request.source.contains("for (;;)") else {

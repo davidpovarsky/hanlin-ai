@@ -10,9 +10,32 @@ final class RuntimeCenterModel {
 
     private let core = AppRuntimeCore.shared
 
-    func toggleAvailability(for kind: RuntimeKind) {
-        let isCurrentlyAvailable = RuntimeAvailabilityStore.shared.isAvailable(kind)
-        RuntimeAvailabilityStore.shared.setAvailable(!isCurrentlyAvailable, for: kind)
+    func isStarted(for kind: RuntimeKind) -> Bool {
+        guard let snapshot = snapshots[kind] else { return false }
+        return snapshot.state == .ready || snapshot.state == .executing || snapshot.state == .preparing
+    }
+
+    func toggleLifecycle(for kind: RuntimeKind) async {
+        if isStarted(for: kind) {
+            await stop(kind)
+        } else {
+            await start(kind)
+        }
+    }
+
+    func start(_ kind: RuntimeKind) async {
+        await perform {
+            _ = try await self.core.start(kind)
+        }
+    }
+
+    func stop(_ kind: RuntimeKind) async {
+        await perform {
+            let snapshot = try await self.core.stop(kind)
+            if snapshot.state == .appRestartRequired {
+                self.lastMessage = RuntimeL10n.string("Node.js cannot be unloaded from process memory without restarting the app.")
+            }
+        }
     }
 
     func load() async {
@@ -20,26 +43,9 @@ final class RuntimeCenterModel {
         snapshots = Dictionary(uniqueKeysWithValues: values.map { ($0.kind, $0) })
     }
 
-    func prepare(_ kind: RuntimeKind) async {
-        await perform {
-            switch kind {
-            case .node:
-                _ = try await self.core.node.healthCheck()
-            case .typeScript:
-                let result = try await self.core.typeScript.compile(source: "const answer: number = 42")
-                guard result.succeeded else { throw RuntimeCoreError.runtimeFailure("TypeScript compiler health check failed.") }
-            case .localPython:
-                _ = try await self.core.python.prepare()
-            case .javaScriptCore:
-                _ = try await self.core.javaScriptCore.healthCheck()
-            case .shell:
-                _ = try await self.core.shell.healthCheck()
-            }
-        }
-    }
-
     func smokeTest(_ kind: RuntimeKind) async {
         await perform {
+            _ = try await self.core.ensureStarted(kind)
             let layout = RuntimeFileLayout.default
             let workspace = try layout.workspace(client: .tools, identifier: "runtime-smoke")
             switch kind {
@@ -113,11 +119,10 @@ struct RuntimeCenterView: View {
                         image: image,
                         snapshot: snapshot(for: kind),
                         isBusy: model.isBusy,
-                        isAvailable: RuntimeAvailabilityStore.shared.isAvailable(kind),
-                        onToggleAvailability: { newValue in
-                            RuntimeAvailabilityStore.shared.setAvailable(newValue, for: kind)
+                        isStarted: model.isStarted(for: kind),
+                        onToggle: {
+                            Task { await model.toggleLifecycle(for: kind) }
                         },
-                        prepare: { Task { await model.prepare(kind) } },
                         smoke: { Task { await model.smokeTest(kind) } },
                         destination: { destination(for: kind) }
                     )
@@ -146,7 +151,9 @@ struct RuntimeCenterView: View {
     private func snapshot(for kind: RuntimeKind) -> RuntimeSnapshot {
         if kind == .typeScript {
             var value = model.snapshots[.node] ?? .stopped(.typeScript)
-            value = RuntimeSnapshot(kind: .typeScript, state: value.state, version: "6.0.3", source: "typescript npm package", lastHealthCheck: value.lastHealthCheck, lastErrorCode: value.lastErrorCode, storageBytes: nil, cacheBytes: nil, activeExecutionCount: value.activeExecutionCount, packageCount: nil)
+            let isTSStarted = model.isStarted(for: .typeScript)
+            let state: RuntimeOperationalState = isTSStarted ? value.state : .stopped
+            value = RuntimeSnapshot(kind: .typeScript, state: state, version: "6.0.3", source: "typescript npm package", lastHealthCheck: value.lastHealthCheck, lastErrorCode: value.lastErrorCode, storageBytes: nil, cacheBytes: nil, activeExecutionCount: value.activeExecutionCount, packageCount: nil)
             return value
         }
         return model.snapshots[kind] ?? .stopped(kind)
@@ -169,9 +176,8 @@ private struct RuntimeCard<Destination: View>: View {
     let image: String
     let snapshot: RuntimeSnapshot
     let isBusy: Bool
-    let isAvailable: Bool
-    let onToggleAvailability: (Bool) -> Void
-    let prepare: () -> Void
+    let isStarted: Bool
+    let onToggle: () -> Void
     let smoke: () -> Void
     let destination: () -> Destination
 
@@ -182,12 +188,12 @@ private struct RuntimeCard<Destination: View>: View {
                     .font(.headline)
                     .accessibilityIdentifier("hanlin-runtime-card-\(kind.rawValue)")
                 Spacer()
-                Toggle("", isOn: Binding(get: { isAvailable }, set: onToggleAvailability))
+                Toggle("", isOn: Binding(get: { isStarted }, set: { _ in onToggle() }))
                     .labelsHidden()
                     .accessibilityIdentifier("hanlin-runtime-availability-\(kind.rawValue)")
                 Text(RuntimeL10n.string(snapshot.state.localizationKey)).font(.caption).foregroundStyle(snapshot.state.tint)
             }
-            if snapshot.state == .stopped && isAvailable {
+            if snapshot.state == .stopped {
                 Text(RuntimeL10n.string("Starts on demand")).font(.caption).foregroundStyle(.secondary)
             }
             if let version = snapshot.version { LabeledContent(RuntimeL10n.string("Version"), value: version) }
@@ -195,14 +201,12 @@ private struct RuntimeCard<Destination: View>: View {
             if let date = snapshot.lastHealthCheck { LabeledContent(RuntimeL10n.string("Last health check"), value: date.formatted(date: .abbreviated, time: .standard)) }
             if let error = snapshot.lastErrorCode { Text(error).font(.caption).foregroundStyle(.red).textSelection(.enabled) }
             if let diagnostic = snapshot.lastDiagnostic {
-                Text(diagnostic).font(.caption).foregroundStyle(snapshot.state == .failed ? .red : .secondary).textSelection(.enabled)
+                Text(diagnostic).font(.caption).foregroundStyle(snapshot.state == .failed || snapshot.state == .appRestartRequired ? .red : .secondary).textSelection(.enabled)
             }
             if let missingCommands = snapshot.missingCommands, !missingCommands.isEmpty {
                 Text(missingCommands.joined(separator: ", ")).font(.caption2.monospaced()).foregroundStyle(.red).textSelection(.enabled)
             }
             HStack {
-                Button(RuntimeL10n.string(snapshot.state == .stopped ? "Prepare" : "Health Check"), action: prepare)
-                    .accessibilityIdentifier("hanlin-runtime-prepare-\(kind.rawValue)")
                 Button(RuntimeL10n.string("Smoke Test"), action: smoke)
                     .accessibilityIdentifier("hanlin-runtime-smoke-\(kind.rawValue)")
                 NavigationLink(RuntimeL10n.string("Open Details")) { destination() }

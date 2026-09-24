@@ -17,6 +17,12 @@ struct ExecuteJavaScriptTool: NativeTool {
     }
 
     func execute(argumentsJSON: String, context: NativeToolExecutionContext) async -> NativeToolResult {
+        guard await isAllowedByCatalog() else {
+            return RuntimeToolSupport.failure(
+                HanlinHostServiceError.capabilityNotGranted("tool.\(name)"),
+                title: "JavaScript disabled"
+            )
+        }
         do {
             let arguments = try NativeToolJSON.validatedDictionary(
                 from: argumentsJSON,
@@ -61,5 +67,13 @@ struct ExecuteJavaScriptTool: NativeTool {
 
     private static func requiresNode(_ source: String) -> Bool {
         source.range(of: #"\b(process|Buffer|require|module\.exports|import\s|export\s|node:)"#, options: .regularExpression) != nil
+    }
+
+    private func isAllowedByCatalog() async -> Bool {
+        await MainActor.run {
+            NativeToolCatalog.shared.ensureBuiltinsRegistered()
+            guard let entry = NativeToolCatalog.shared.entry(named: name) else { return true }
+            return NativeToolCatalog.shared.isEffectivelyEnabled(entry)
+        }
     }
 }

@@ -34,25 +34,43 @@ struct HanlinUnifiedHostServicesAgentAcceptanceTests {
         #expect(c1.runtimeSessionID != c2.runtimeSessionID)
     }
 
-    @Test func runtimeBrokerRejectsDisabledRuntime() async throws {
+    @Test func runtimeBrokerAutoStartsStoppedRuntime() async throws {
         let store = RuntimeAvailabilityStore.shared
         let kind = RuntimeKind.javaScriptCore
         let original = store.isAvailable(kind)
         defer { store.setAvailable(original, for: kind) }
 
         store.setAvailable(false, for: kind)
+        #expect(!store.isAvailable(kind))
 
         let context = AgentHostServicesAdapter.makeContext()
+        let result = try await HanlinRuntimeBroker.shared.execute(
+            kind: kind,
+            source: "1+1",
+            context: context
+        )
+        #expect(result.value == .number(2))
+        #expect(store.isAvailable(kind))
+    }
+
+    @Test func runtimeBrokerRejectsDisabledRuntime() async throws {
+        let context = HanlinHostCallContext(
+            caller: "unauthorized_agent",
+            appID: nil,
+            sessionID: UUID().uuidString,
+            grantedCapabilities: [],
+            localeIdentifier: "en"
+        )
         do {
             _ = try await HanlinRuntimeBroker.shared.execute(
-                kind: kind,
+                kind: .localPython,
                 source: "1+1",
                 context: context
             )
-            Issue.record("Expected runtimeDisabledByUser error")
+            Issue.record("Expected capabilityNotGranted error")
         } catch let error as HanlinHostServiceError {
-            if case .runtimeDisabledByUser(let disabledKind) = error {
-                #expect(disabledKind == kind)
+            if case .capabilityNotGranted = error {
+                // Expected rejection
             } else {
                 Issue.record("Unexpected error: \(error)")
             }
@@ -127,20 +145,29 @@ struct HanlinUnifiedHostServicesAgentAcceptanceTests {
     }
 
     @Test func agentToolRespectsDisabledRuntimeToggle() async {
-        let store = RuntimeAvailabilityStore.shared
-        let original = store.isAvailable(.javaScriptCore)
-        defer { store.setAvailable(original, for: .javaScriptCore) }
-
-        store.setAvailable(false, for: .javaScriptCore)
-
         let tool = ExecuteJavaScriptTool()
+        let entry = await MainActor.run {
+            NativeToolCatalog.shared.ensureBuiltinsRegistered()
+            return NativeToolCatalog.shared.entry(named: tool.name)!
+        }
+        let originalEnabled = await MainActor.run { NativeToolCatalog.shared.isEnabled(entry) }
+        defer {
+            Task { @MainActor in
+                NativeToolCatalog.shared.setEnabled(originalEnabled, for: entry)
+            }
+        }
+
+        await MainActor.run {
+            NativeToolCatalog.shared.setEnabled(false, for: entry)
+        }
+
         let context = NativeToolExecutionContext(localeIdentifier: "en")
         let result = await tool.execute(
             argumentsJSON: "{\"source\": \"6 * 7\", \"runtime\": \"jscore\"}",
             context: context
         )
-        #expect(result.outcome == .rejectedByAvailability)
-        #expect(result.modelText.lowercased().contains("disabled") || result.modelText.lowercased().contains("unavailable"))
+        #expect(result.outcome == .rejectedByCapability)
+        #expect(result.modelText.lowercased().contains("disabled") || result.modelText.lowercased().contains("capability"))
     }
 
     @Test func pythonFullContract() async throws {

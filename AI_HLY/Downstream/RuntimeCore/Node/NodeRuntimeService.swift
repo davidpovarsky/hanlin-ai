@@ -158,6 +158,19 @@ actor NodeRuntimeService {
         return snapshotValue
     }
 
+    func stop() -> RuntimeSnapshot {
+        connection = nil
+        if nativeLaunchSucceeded {
+            snapshotValue.state = .appRestartRequired
+            snapshotValue.healthCategory = NodeHostHealthFailure.unreachable.rawValue
+            snapshotValue.lastErrorCode = "app_restart_required"
+            snapshotValue.lastDiagnostic = "Embedded Node cannot be unloaded without restarting the application."
+        } else {
+            snapshotValue.state = .stopped
+        }
+        return snapshotValue
+    }
+
     func executeJavaScript(_ request: RuntimeExecutionRequest, moduleKind: String = "esm") async throws -> RuntimeExecutionResult {
         let workspace = try fileLayout.validatedDescendant(request.workspace, of: fileLayout.clients, allowRoot: false)
         let host = try await ensureRunning()

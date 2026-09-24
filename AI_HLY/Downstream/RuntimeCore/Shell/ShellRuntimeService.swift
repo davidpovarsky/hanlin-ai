@@ -136,6 +136,11 @@ actor ShellRuntimeService {
         }
     }
 
+    func stop() -> RuntimeSnapshot {
+        snapshotValue = .stopped(.shell)
+        return snapshotValue
+    }
+
     func execute(
         command: String,
         workspace: URL,

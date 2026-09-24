@@ -30,6 +30,11 @@ actor PythonRuntimeService {
         return snapshotValue
     }
 
+    func stop() -> RuntimeSnapshot {
+        snapshotValue = .stopped(.localPython)
+        return snapshotValue
+    }
+
     func execute(_ request: RuntimeExecutionRequest) throws -> RuntimeExecutionResult {
         if snapshotValue.state != .ready { _ = try prepare() }
         let workspace = try fileLayout.validatedDescendant(request.workspace, of: fileLayout.clients, allowRoot: false)

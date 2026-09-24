@@ -3,33 +3,41 @@ import Foundation
 final class RuntimeAvailabilityStore: @unchecked Sendable {
     static let shared = RuntimeAvailabilityStore()
     
-    private let defaults: UserDefaults
-    private let keyPrefix = "hanlin.runtime-availability."
+    private let lock = NSLock()
+    private var activeRuntimes: Set<RuntimeKind> = []
     
-    private init(defaults: UserDefaults = .standard) {
-        self.defaults = defaults
-    }
-    
-    private func key(for kind: RuntimeKind) -> String {
-        return "\(keyPrefix)\(String(describing: kind))"
+    private init() {
+        // Fresh app process: all runtimes visually OFF/stopped.
+        // Process lifecycle is never persisted across launches via UserDefaults.
+        activeRuntimes = []
     }
     
     func isAvailable(_ kind: RuntimeKind) -> Bool {
-        let k = key(for: kind)
-        if defaults.object(forKey: k) == nil {
-            return true // ALL runtimes available by default
-        }
-        return defaults.bool(forKey: k)
+        lock.lock()
+        defer { lock.unlock() }
+        return activeRuntimes.contains(kind)
     }
     
     func setAvailable(_ available: Bool, for kind: RuntimeKind) {
-        defaults.set(available, forKey: key(for: kind))
+        lock.lock()
+        if available {
+            activeRuntimes.insert(kind)
+        } else {
+            activeRuntimes.remove(kind)
+        }
+        lock.unlock()
+    }
+    
+    func reset() {
+        lock.lock()
+        activeRuntimes.removeAll()
+        lock.unlock()
     }
     
     // TypeScript depends on Node - report dependency
     func dependencyWarning(for kind: RuntimeKind) -> String? {
         if kind == .typeScript && !isAvailable(.node) {
-            return "TypeScript execution requires Node.js, which is currently disabled. Please enable the Node runtime."
+            return "TypeScript execution requires Node.js, which is currently stopped. Starting TypeScript will activate Node."
         }
         return nil
     }

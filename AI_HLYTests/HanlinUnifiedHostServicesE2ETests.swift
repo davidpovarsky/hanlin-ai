@@ -13,33 +13,49 @@ import HanlinNativeScriptCoreSupport
 @Suite("Unified Host Services E2E", .serialized)
 struct HanlinUnifiedHostServicesE2ETests {
 
-    @Test func runtimeBrokerRespectsAvailabilityToggle() async throws {
+    @Test func runtimeBrokerAutoStartsStoppedRuntime() async throws {
         let store = RuntimeAvailabilityStore.shared
         let kind = RuntimeKind.shell
         let original = store.isAvailable(kind)
         defer { store.setAvailable(original, for: kind) }
 
-        // Disable the runtime
+        // Start from stopped state
         store.setAvailable(false, for: kind)
+        #expect(!store.isAvailable(kind))
 
         let context = HanlinHostCallContext.forAgent()
+        let result = try await HanlinHostServicesBroker.shared.executeRuntime(
+            kind,
+            source: "ls",
+            context: context
+        )
+        #expect(result.exitCode == 0)
+        // Auto-start should make the runtime available/running
+        #expect(store.isAvailable(kind))
+    }
+
+    @Test func runtimeBrokerRespectsAvailabilityToggle() async throws {
+        let context = HanlinHostCallContext(
+            caller: "unauthorized_caller",
+            appID: nil,
+            sessionID: UUID().uuidString,
+            grantedCapabilities: [],
+            localeIdentifier: "en"
+        )
         do {
             _ = try await HanlinHostServicesBroker.shared.executeRuntime(
-                kind,
+                .shell,
                 source: "echo hello",
                 context: context
             )
-            Issue.record("Expected runtimeDisabledByUser when runtime is disabled")
+            Issue.record("Expected capabilityNotGranted error")
         } catch let error as HanlinHostServiceError {
-            if case .runtimeDisabledByUser = error {
-                // Expected — the broker correctly prevented execution
+            if case .capabilityNotGranted = error {
+                // Expected rejection
             } else {
-                Issue.record("Unexpected error type: \(error)")
+                Issue.record("Unexpected error: \(error)")
             }
         }
-
-        // Re-enable — should no longer throw the disabled error
-        store.setAvailable(true, for: kind)
     }
 
     @Test func capabilityAuthorityGrantRevokePersists() async throws {

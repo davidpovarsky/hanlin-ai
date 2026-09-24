@@ -25,6 +25,13 @@ struct ExecuteLocalPythonTool: NativeTool {
     }
 
     func execute(argumentsJSON: String, context: NativeToolExecutionContext) async -> NativeToolResult {
+        guard await isAllowedByCatalog() else {
+            return RuntimeToolSupport.failure(
+                HanlinHostServiceError.capabilityNotGranted("tool.\(name)"),
+                title: "Local Python disabled",
+                runtimeKind: .localPython
+            )
+        }
         do {
             let arguments = try NativeToolJSON.validatedDictionary(
                 from: argumentsJSON,

@@ -21,6 +21,13 @@ struct ExecuteShellCommandTool: NativeTool {
     }
 
     func execute(argumentsJSON: String, context: NativeToolExecutionContext) async -> NativeToolResult {
+        guard await isAllowedByCatalog() else {
+            return RuntimeToolSupport.failure(
+                HanlinHostServiceError.capabilityNotGranted("tool.\(name)"),
+                title: "Shell disabled",
+                runtimeKind: .shell
+            )
+        }
         do {
             let arguments = try NativeToolJSON.validatedDictionary(
                 from: argumentsJSON,
@@ -80,5 +87,13 @@ struct ExecuteShellCommandTool: NativeTool {
                 argumentKeys: Array(arguments.keys)
             )
         } catch { return RuntimeToolSupport.failure(error, title: "Shell command failed", runtimeKind: .shell) }
+    }
+
+    private func isAllowedByCatalog() async -> Bool {
+        await MainActor.run {
+            NativeToolCatalog.shared.ensureBuiltinsRegistered()
+            guard let entry = NativeToolCatalog.shared.entry(named: name) else { return true }
+            return NativeToolCatalog.shared.isEffectivelyEnabled(entry)
+        }
     }
 }

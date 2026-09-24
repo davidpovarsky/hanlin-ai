@@ -10,7 +10,6 @@ actor HanlinRuntimeBroker {
     static let shared = HanlinRuntimeBroker()
 
     private let core = AppRuntimeCore.shared
-    private let availability = RuntimeAvailabilityStore.shared
 
     private init() {}
 
@@ -24,8 +23,8 @@ actor HanlinRuntimeBroker {
         environment: [String: String] = [:],
         limits: RuntimeExecutionLimits? = nil
     ) async throws -> RuntimeExecutionResult {
-        try checkAvailability(for: kind)
         try await checkCapability(for: kind, in: context)
+        _ = try await core.ensureStarted(kind)
 
         let workspace = try deriveWorkspace(for: context)
         let effectiveLimits = limits ?? RuntimeExecutionLimits()
@@ -92,8 +91,8 @@ actor HanlinRuntimeBroker {
         allowNetwork: Bool = false,
         limits: RuntimeExecutionLimits? = nil
     ) async throws -> RuntimeExecutionResult {
-        try checkAvailability(for: .shell)
         try await checkCapability(for: .shell, in: context)
+        _ = try await core.ensureStarted(.shell)
 
         let workspace = try deriveWorkspace(for: context)
 
@@ -114,8 +113,8 @@ actor HanlinRuntimeBroker {
         allowNetwork: Bool = false,
         limits: RuntimeExecutionLimits? = nil
     ) async throws -> RuntimeExecutionResult {
-        try checkAvailability(for: .shell)
         try await checkCapability(for: .shell, in: context)
+        _ = try await core.ensureStarted(.shell)
 
         let workspace = try deriveWorkspace(for: context)
 
@@ -138,12 +137,12 @@ actor HanlinRuntimeBroker {
         environment: [String: String] = [:],
         limits: RuntimeExecutionLimits? = nil
     ) async throws -> TypeScriptExecutionResult {
-        try checkAvailability(for: .typeScript)
         try await checkCapability(for: .typeScript, in: context)
         if !compileOnly {
-            try checkAvailability(for: .node)
             try await checkCapability(for: .node, in: context)
         }
+        _ = try await core.ensureStarted(.node)
+        _ = try await core.ensureStarted(.typeScript)
 
         let request = RuntimeExecutionRequest(
             source: source,
@@ -163,18 +162,11 @@ actor HanlinRuntimeBroker {
         source: String,
         context: HanlinHostCallContext
     ) async throws -> TypeScriptCompilationResult {
-        try checkAvailability(for: .typeScript)
         try await checkCapability(for: .typeScript, in: context)
+        _ = try await core.ensureStarted(.node)
+        _ = try await core.ensureStarted(.typeScript)
 
         return try await core.typeScript.compile(source: source)
-    }
-
-    // MARK: - Validation Helpers
-
-    private func checkAvailability(for kind: RuntimeKind) throws {
-        guard availability.isAvailable(kind) else {
-            throw HanlinHostServiceError.runtimeDisabledByUser(kind)
-        }
     }
 
     private func checkCapability(for kind: RuntimeKind, in context: HanlinHostCallContext) async throws {

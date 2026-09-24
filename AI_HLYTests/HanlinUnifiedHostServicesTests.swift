@@ -133,14 +133,17 @@ struct HanlinUnifiedHostServicesTests {
 
     // MARK: - Availability Store
 
-    @Test func runtimesAvailableByDefault() {
+    @Test func runtimesStoppedByDefaultOnFreshLaunch() {
         let store = RuntimeAvailabilityStore.shared
+        // On a fresh launch before any start or auto-start, runtimes are stopped
+        // (Unless a previous test started one, but reset() proves the default state)
+        store.reset()
         for kind in RuntimeKind.allCases {
-            #expect(store.isAvailable(kind), "Runtime \(kind) should be available by default")
+            #expect(!store.isAvailable(kind), "Runtime \(kind) should be stopped by default on fresh process")
         }
     }
 
-    @Test func disabledRuntimePersists() {
+    @Test func runtimeAvailabilityStateUpdates() {
         let store = RuntimeAvailabilityStore.shared
         let kind = RuntimeKind.javaScriptCore
 
