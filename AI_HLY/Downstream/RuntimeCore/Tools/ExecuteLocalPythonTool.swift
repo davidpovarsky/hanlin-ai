@@ -58,4 +58,12 @@ struct ExecuteLocalPythonTool: NativeTool {
             return RuntimeToolSupport.failure(error, title: "Local Python failed", runtimeKind: .localPython)
         }
     }
+
+    private func isAllowedByCatalog() async -> Bool {
+        await MainActor.run {
+            NativeToolCatalog.shared.ensureBuiltinsRegistered()
+            guard let entry = NativeToolCatalog.shared.entry(named: name) else { return true }
+            return NativeToolCatalog.shared.isEffectivelyEnabled(entry)
+        }
+    }
 }
