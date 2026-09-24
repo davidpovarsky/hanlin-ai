@@ -7,6 +7,15 @@ enum AgentActivityTitleBuilder {
         queries: [String],
         status: AgentActivityStatus
     ) -> String {
+        if status == .failed || status == .cancelled,
+           let terminalTitle = steps.reversed()
+            .first(where: { $0.status == status })?
+            .title,
+           let sanitizedTitle = ProgressSummarySanitizer.sanitize(terminalTitle),
+           !isGeneric(sanitizedTitle) {
+            return sanitizedTitle
+        }
+
         if let summary = steps.compactMap(\.userFacingSummary)
             .compactMap({ ProgressSummarySanitizer.sanitize($0) })
             .first(where: { !isGeneric($0) }) {
