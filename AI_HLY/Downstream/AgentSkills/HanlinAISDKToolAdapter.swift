@@ -30,6 +30,7 @@ final class HanlinAISDKToolAdapter {
 
     let session: AssistantCapabilitySession
     let preparedTools: AssistantToolBridge.PreparedTools
+    let catalog: HanlinSkillCatalog
     let modelContext: ModelContext?
     let currentLanguage: String
     let progressSummaryRequired: Bool
@@ -43,6 +44,7 @@ final class HanlinAISDKToolAdapter {
     init(
         session: AssistantCapabilitySession,
         preparedTools: AssistantToolBridge.PreparedTools,
+        catalog: HanlinSkillCatalog = .shared,
         modelContext: ModelContext? = nil,
         currentLanguage: String = "en",
         progressSummaryRequired: Bool = false,
@@ -54,6 +56,7 @@ final class HanlinAISDKToolAdapter {
     ) {
         self.session = session
         self.preparedTools = preparedTools
+        self.catalog = catalog
         self.modelContext = modelContext
         self.currentLanguage = currentLanguage
         self.progressSummaryRequired = progressSummaryRequired
@@ -147,6 +150,7 @@ final class HanlinAISDKToolAdapter {
                 let result = await LoadSkillTool.execute(
                     argumentsJSON: argumentsJSON,
                     session: self.session,
+                    catalog: self.catalog,
                     schemaSizes: self.preparedTools.schemaSizes()
                 )
                 self.callbacks.onStreamData?(StreamData(

@@ -354,6 +354,7 @@ struct AgentSkillsExposureTests {
         let adapter = HanlinAISDKToolAdapter(
             session: session,
             preparedTools: preparedTools,
+            catalog: catalog,
             currentLanguage: "en",
             callbacks: HanlinAISDKToolAdapter.Callbacks(
                 onAgentEvent: { executionEvents.append($0) }
