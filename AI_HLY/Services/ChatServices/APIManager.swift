@@ -2552,6 +2552,21 @@ class APIManager {
                         supportsToolUse: modelInfo.agentCapabilities.supportsNativeToolCalling && ifToolUse
                     )
 
+                    if modelInfo.agentCapabilities.supportsNativeToolCalling && ifToolUse,
+                       let prepared = preparedAssistantTools {
+                        try await self.processSDKAgentEngine(
+                            formattedMessages: finalFormattedMessages,
+                            modelInfo: modelInfo,
+                            chatConfig: chatConfig,
+                            preparedAssistantTools: prepared,
+                            session: session,
+                            currentLanguage: currentLanguage,
+                            currentLanguagePrefix: currentLanguagePrefix,
+                            continuation: continuation
+                        )
+                        return
+                    }
+
                     var request = try HanlinChatRequestBuilder.buildRequest(
                         formattedMessages: finalFormattedMessages,
                         configuration: chatConfig,

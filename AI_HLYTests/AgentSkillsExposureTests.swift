@@ -1,5 +1,7 @@
 import Foundation
 import HanlinPlatformContracts
+import HanlinChatCore
+import AISDKProviderUtils
 import Testing
 
 @testable import AI_Hanlin
@@ -285,5 +287,176 @@ struct AgentSkillsExposureTests {
         #expect(session.activeSkillToolHints.contains("calculate_metrics"))
         #expect(session.activeSkillToolHints.contains("plot_trend"))
         #expect(result.contains("Finance Analyst"))
+    }
+
+    @MainActor
+    @Test("Full SDK flow: load_skill -> active tools change -> canonical tool call -> native continuation -> final answer")
+    func fullSDKSkillToToolFlow() async throws {
+        let catalog = HanlinSkillCatalog()
+        let skillID = try HanlinSkillID(validating: "finance_analyst")
+        let descriptor = try HanlinSkillDescriptor(
+            id: skillID,
+            title: "Finance Analyst",
+            summary: "Financial metrics analysis",
+            instructions: .inline("Always calculate Sharpe ratio."),
+            preferredToolIDs: ["calculate_metrics"]
+        )
+        catalog.register(descriptor: descriptor)
+
+        let session = AssistantCapabilitySession()
+
+        let toolName = "calculate_metrics"
+        let schema: [String: Any] = [
+            "type": "function",
+            "function": [
+                "name": toolName,
+                "description": "Calculate financial metrics",
+                "parameters": [
+                    "type": "object",
+                    "properties": [
+                        "param": ["type": "integer"]
+                    ],
+                    "required": ["param"]
+                ]
+            ]
+        ]
+
+        var toolExecCount = 0
+        let legacySource = HanlinCanonicalToolAuthority.LegacySource(
+            descriptor: HanlinToolDescriptor(
+                logicalID: try HanlinLogicalToolID(
+                    providerInstanceID: try HanlinProviderInstanceID(validating: "acceptance"),
+                    localToolID: try HanlinLocalToolID(validating: toolName)
+                ),
+                title: HanlinLocalizedText(text: "Calculate"),
+                summary: HanlinLocalizedText(text: "Calculates"),
+                capabilities: []
+            ),
+            preferredAlias: toolName,
+            modelSchema: schema,
+            toolName: toolName,
+            presentationProfile: ToolPresentationProfileRegistry.resolve(toolName: toolName)
+        )
+
+        let authority = try HanlinCanonicalToolAuthority.build(
+            nativeSources: [],
+            mcpTools: [],
+            scriptSources: [],
+            legacySources: [legacySource]
+        )
+
+        let executors = AssistantToolBridge.Executors(
+            executeNative: { _, _, _, _ in NativeToolResult(modelText: "native", outcome: .failed) },
+            executeScripting: { _, _ in NativeToolResult(modelText: "scripting", outcome: .failed) },
+            executeLegacy: { name, args, ctx in
+                toolExecCount += 1
+                return NativeToolResult(modelText: "Sharpe: 1.8", outcome: .succeeded)
+            }
+        )
+
+        let preparedTools = AssistantToolBridge.PreparedTools(authority: authority, executors: executors)
+
+        var interceptedStepActiveTools: [[String]] = []
+        var executionEvents: [AgentEvent] = []
+
+        let adapter = HanlinAISDKToolAdapter(
+            session: session,
+            preparedTools: preparedTools,
+            currentLanguage: "en",
+            callbacks: HanlinAISDKToolAdapter.Callbacks(
+                onAgentEvent: { executionEvents.append($0) }
+            )
+        )
+
+        var requestStep = 0
+        let fetch: FetchFunction = { request in
+            requestStep += 1
+            if requestStep == 1 {
+                // Round 1: model calls load_skill
+                let sse = [
+                    "data: {\"id\":\"c1\",\"choices\":[{\"index\":0,\"delta\":{\"tool_calls\":[{\"index\":0,\"id\":\"call_1\",\"type\":\"function\",\"function\":{\"name\":\"load_skill\",\"arguments\":\"{\\\"skill_id\\\":\\\"finance_analyst\\\"}\"}}]},\"finish_reason\":null}]}\n\n",
+                    "data: {\"id\":\"c1\",\"choices\":[{\"index\":0,\"delta\":{},\"finish_reason\":\"tool_calls\"}]}\n\n",
+                    "data: [DONE]\n\n"
+                ]
+                return makeSSEResponse(chunks: sse, url: request.url!)
+            } else if requestStep == 2 {
+                // Round 2: model sees calculate_metrics and calls it
+                let sse = [
+                    "data: {\"id\":\"c2\",\"choices\":[{\"index\":0,\"delta\":{\"tool_calls\":[{\"index\":0,\"id\":\"call_2\",\"type\":\"function\",\"function\":{\"name\":\"calculate_metrics\",\"arguments\":\"{\\\"param\\\":10}\"}}]},\"finish_reason\":null}]}\n\n",
+                    "data: {\"id\":\"c2\",\"choices\":[{\"index\":0,\"delta\":{},\"finish_reason\":\"tool_calls\"}]}\n\n",
+                    "data: [DONE]\n\n"
+                ]
+                return makeSSEResponse(chunks: sse, url: request.url!)
+            } else {
+                // Round 3: model gives final answer
+                let sse = [
+                    "data: {\"id\":\"c3\",\"choices\":[{\"index\":0,\"delta\":{\"content\":\"The Sharpe ratio is 1.8.\"},\"finish_reason\":null}]}\n\n",
+                    "data: {\"id\":\"c3\",\"choices\":[{\"index\":0,\"delta\":{},\"finish_reason\":\"stop\"}]}\n\n",
+                    "data: [DONE]\n\n"
+                ]
+                return makeSSEResponse(chunks: sse, url: request.url!)
+            }
+        }
+
+        let chatConfig = HanlinChatModelConfiguration(
+            modelID: "gpt-4o",
+            company: "OpenAI",
+            apiType: "openai",
+            endpoint: URL(string: "https://api.openai.com/v1/chat/completions")!,
+            apiKey: "sk-test"
+        )
+
+        let engine = try HanlinAISDKAgentEngine(configuration: chatConfig, fetch: fetch)
+        let toolDefs = try adapter.allToolDefinitions()
+
+        let stream = try await engine.stream(
+            messages: [HanlinAISDKMessage(role: .user, text: "Calculate metrics")],
+            baseSystemPrompt: "System",
+            tools: toolDefs,
+            prepareStep: {
+                let prep = adapter.prepareStep()
+                interceptedStepActiveTools.append(prep.activeToolAliases)
+                return prep
+            }
+        )
+
+        var finalAnswer = ""
+        var runFinishedCount = 0
+
+        for try await event in stream {
+            switch event {
+            case .textDelta(let text):
+                finalAnswer += text
+            case .finished:
+                runFinishedCount += 1
+            default:
+                break
+            }
+        }
+
+        #expect(finalAnswer == "The Sharpe ratio is 1.8.")
+        #expect(toolExecCount == 1, "Canonical tool must execute exactly once")
+        #expect(runFinishedCount == 1, "Run must terminate exactly once")
+        #expect(session.isSkillLoaded(skillID), "Session must retain loaded skill across steps")
+        #expect(session.isToolExposed("calculate_metrics"), "Tool must be exposed in session")
+        #expect(interceptedStepActiveTools.count >= 2)
+        #expect(!interceptedStepActiveTools[0].contains("calculate_metrics"), "Round 1 must not expose calculate_metrics before skill loaded")
+        #expect(interceptedStepActiveTools[1].contains("calculate_metrics"), "Round 2 must expose calculate_metrics after skill loaded")
+    }
+
+    private static func makeSSEResponse(chunks: [String], url: URL) -> FetchResponse {
+        let stream = AsyncThrowingStream<Data, Error> { continuation in
+            for chunk in chunks {
+                continuation.yield(Data(chunk.utf8))
+            }
+            continuation.finish()
+        }
+        let response = HTTPURLResponse(
+            url: url,
+            statusCode: 200,
+            httpVersion: "HTTP/1.1",
+            headerFields: ["Content-Type": "text/event-stream"]
+        )!
+        return FetchResponse(body: .stream(stream), urlResponse: response)
     }
 }
