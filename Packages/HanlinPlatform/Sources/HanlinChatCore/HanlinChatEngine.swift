@@ -9,12 +9,17 @@ import Foundation
 #if canImport(FoundationNetworking)
 import FoundationNetworking
 #endif
+import AISDKProviderUtils
 
 public actor HanlinChatEngine {
     public let sessionConfiguration: URLSessionConfiguration
 
     public init(sessionConfiguration: URLSessionConfiguration = .ephemeral) {
         self.sessionConfiguration = sessionConfiguration
+    }
+
+    public func makeAISDKFetch() -> FetchFunction {
+        HanlinAISDKProviderFactory.makeFetch(sessionConfiguration: sessionConfiguration)
     }
 
     public func stream(

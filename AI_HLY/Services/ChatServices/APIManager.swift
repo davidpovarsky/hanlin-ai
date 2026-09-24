@@ -3811,7 +3811,7 @@ default:
 
         let toolDefinitions = try toolAdapter.allToolDefinitions()
         let chatEngine = self.chatEngineFactory()
-        let fetch = HanlinAISDKProviderFactory.makeFetch(sessionConfiguration: chatEngine.sessionConfiguration)
+        let fetch = await chatEngine.makeAISDKFetch()
         let agentEngine = try HanlinAISDKAgentEngine(configuration: chatConfig, fetch: fetch)
 
         let sdkStream = try await agentEngine.stream(
