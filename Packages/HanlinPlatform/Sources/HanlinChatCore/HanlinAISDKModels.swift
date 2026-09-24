@@ -131,7 +131,7 @@ public enum HanlinAISDKStreamEvent: Sendable {
     case toolCallArgumentsStarted(id: String, name: String)
     case toolCallArgumentsDelta(id: String, delta: String)
     case toolCall(HanlinAISDKToolCall)
-    case toolResult(callID: String, name: String, modelText: String, resultReference: String?)
+    case toolResult(callID: String, name: String, modelText: String, resultReference: String?, isError: Bool)
     case stepFinished(index: Int, finishReason: String, usage: HanlinChatTokenUsage, meaningfulEventCount: Int)
     case finished(reason: String, usage: HanlinChatTokenUsage)
     case cancelled

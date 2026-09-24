@@ -205,7 +205,11 @@ actor AgentDiagnosticsRecorder {
             argumentKeys: argumentKeys,
             argumentHash: argumentHash
         )
-        updateRound(roundID) { $0.toolCalls.append(diagnosticsCall) }
+        updateRound(roundID) { round in
+            if !round.toolCalls.contains(where: { $0.callID == call.id }) {
+                round.toolCalls.append(diagnosticsCall)
+            }
+        }
         updateDerivedValues()
         await persist()
         trace("ToolCallReceived", roundID: roundID, toolName: call.name, fields: ["callID": call.id])

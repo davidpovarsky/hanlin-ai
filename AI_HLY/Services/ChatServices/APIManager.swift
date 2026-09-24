@@ -3886,10 +3886,64 @@ default:
                 continuation.yield(StreamData(agentEvents: [.toolCallArgumentsDelta(id: id, delta: delta)]))
 
             case .toolCall(let call):
-                break
+                if let stepID = currentStepID {
+                    let profile = preparedAssistantTools.presentationProfile(for: call.name)
+                        ?? ToolPresentationProfileRegistry.resolve(toolName: call.name)
+                    let parsedCall = AgentToolCall.parse(
+                        id: call.id,
+                        name: call.name,
+                        argumentsJSON: call.argumentsJSON,
+                        presentationProfile: profile
+                    )
+                    await self.agentDiagnosticsRecorder?.recordToolCall(roundID: stepID, call: parsedCall)
+                }
 
-            case .toolResult(let callID, let name, let modelText, let resultRef):
-                break
+            case .toolResult(let callID, let name, let modelText, let resultRef, let isError):
+                if !toolAdapter.completedCallIDs.contains(callID) {
+                    let profile = preparedAssistantTools.presentationProfile(for: name)
+                        ?? ToolPresentationProfileRegistry.resolve(toolName: name)
+                    let parsedCall = AgentToolCall.parse(
+                        id: callID,
+                        name: name,
+                        argumentsJSON: "{}",
+                        presentationProfile: profile
+                    )
+                    let errorText = currentLanguage.hasPrefix("zh") ? "工具不存在" : "Tool does not exist"
+                    let finalErrorText = modelText.isEmpty ? errorText : modelText
+                    let executionID = "\(callID):execution"
+
+                    continuation.yield(StreamData(agentEvents: [
+                        .toolCallStarted(parsedCall),
+                        .toolCallCompleted(parsedCall),
+                        .toolExecutionStarted(AgentToolExecution(
+                            id: executionID,
+                            callID: callID,
+                            name: name,
+                            startedAt: Date()
+                        )),
+                        .toolExecutionFailed(
+                            id: executionID,
+                            error: AgentSafeError(message: finalErrorText)
+                        )
+                    ]))
+
+                    if let stepID = currentStepID {
+                        await self.agentDiagnosticsRecorder?.recordToolCall(roundID: stepID, call: parsedCall)
+                        var diag = NativeToolExecutionDiagnostics()
+                        diag.failureCategory = NativeToolExecutionOutcome.invalidArguments.rawValue
+                        await self.agentDiagnosticsRecorder?.completeToolCall(
+                            roundID: stepID,
+                            callID: callID,
+                            resultForModel: "Unknown",
+                            resultForUser: finalErrorText,
+                            duration: 0,
+                            outcome: .invalidArguments,
+                            diagnostics: diag,
+                            error: finalErrorText
+                        )
+                    }
+                    toolAdapter.completedCallIDs.insert(callID)
+                }
 
             case .stepFinished(let index, let finishReason, let usage, let meaningfulCount):
                 if let stepID = currentStepID {

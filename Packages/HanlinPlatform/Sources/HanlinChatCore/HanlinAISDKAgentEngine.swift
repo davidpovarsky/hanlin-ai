@@ -118,7 +118,8 @@ public actor HanlinAISDKAgentEngine {
                                 callID: result.toolCallId,
                                 name: result.toolName,
                                 modelText: projected.modelText,
-                                resultReference: projected.resultReference
+                                resultReference: projected.resultReference,
+                                isError: projected.isError
                             ))
                         case .finishStep(_, let usage, let reason, let rawReason, _):
                             continuation.yield(.stepFinished(
@@ -137,7 +138,14 @@ public actor HanlinAISDKAgentEngine {
                         case .error(let error):
                             throw error
                         case .toolError(let error):
-                            throw error.error
+                            meaningfulEventCount += 1
+                            continuation.yield(.toolResult(
+                                callID: error.toolCallId,
+                                name: error.toolName,
+                                modelText: AISDKProvider.getErrorMessage(error.error),
+                                resultReference: nil,
+                                isError: true
+                            ))
                         case .textStart, .textEnd, .reasoningStart, .reasoningEnd,
                              .toolInputEnd, .toolOutputDenied, .toolApprovalRequest,
                              .source, .custom, .file, .reasoningFile, .raw:
@@ -166,9 +174,20 @@ public actor HanlinAISDKAgentEngine {
             } catch {
                 throw HanlinAISDKError.invalidToolSchema(name: definition.name)
             }
+            let rawSchema = Schema<JSONValue>(
+                jsonSchemaResolver: { schema },
+                validator: { value in
+                    do {
+                        let converted = try jsonValue(from: value)
+                        return .success(value: converted)
+                    } catch {
+                        return .failure(error: TypeValidationError.wrap(value: value, cause: error))
+                    }
+                }
+            )
             let sdkTool = Tool(
                 description: definition.description,
-                inputSchema: FlexibleSchema(jsonSchema(schema)),
+                inputSchema: FlexibleSchema(rawSchema),
                 execute: { input, options in
                     let arguments = try jsonString(input)
                     let output = try await definition.execute(arguments, options.toolCallId)

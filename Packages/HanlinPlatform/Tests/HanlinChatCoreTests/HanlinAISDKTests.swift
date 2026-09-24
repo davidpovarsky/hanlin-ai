@@ -362,7 +362,7 @@ struct HanlinAISDKAgentEngineTests {
             return false
         }
         let hasToolResult = events.contains {
-            if case .toolResult(let callID, _, let text, _) = $0 {
+            if case .toolResult(let callID, _, let text, _, _) = $0 {
                 return callID == "call_abc123" && text.contains("peace")
             }
             return false
@@ -433,7 +433,7 @@ struct HanlinAISDKAgentEngineTests {
 
         var toolResults: [String: String] = [:]
         for try await event in stream {
-            if case .toolResult(let callID, _, let text, _) = event {
+            if case .toolResult(let callID, _, let text, _, _) = event {
                 toolResults[callID] = text
             }
         }
@@ -548,6 +548,262 @@ struct HanlinAISDKAgentEngineTests {
         #expect(stepStartedPreparations[0].activeToolAliases == ["load_skill"])
         #expect(stepStartedPreparations[1].activeToolAliases == ["load_skill", "execute_python"])
         #expect(stepStartedPreparations[1].loadedSkillIDs == ["code"])
+    }
+
+    @Test("Advertised tool schema preserves original required, properties, and constraints")
+    func testAdvertisedSchemaPreservesOriginalConstraints() async throws {
+        let capturedRequests = ManagedAtomicArray<URLRequest>()
+        let fetch: FetchFunction = { request in
+            capturedRequests.append(request)
+            let sse = [
+                "data: {\"id\":\"s1\",\"choices\":[{\"index\":0,\"delta\":{\"content\":\"Hello\"},\"finish_reason\":\"stop\"}]}\n\n",
+                "data: [DONE]\n\n"
+            ]
+            return Self.makeSSEResponse(chunks: sse, url: request.url!)
+        }
+
+        let config = HanlinChatModelConfiguration(
+            modelID: "gpt-4o",
+            company: "OpenAI",
+            apiType: "openai",
+            endpoint: "https://api.openai.com/v1/chat/completions",
+            credential: "sk-test"
+        )
+        let engine = try HanlinAISDKAgentEngine(configuration: config, fetch: fetch)
+
+        let pythonTool = HanlinAISDKToolDefinition(
+            name: "execute_local_python_code",
+            description: "Run normal Python source with embedded CPython",
+            inputSchemaData: try JSONSerialization.data(withJSONObject: [
+                "type": "object",
+                "properties": [
+                    "source": [
+                        "type": "string",
+                        "description": "Python source code to run locally."
+                    ],
+                    "arguments": [
+                        "type": "array",
+                        "items": ["type": "string"],
+                        "description": "Optional script arguments"
+                    ],
+                    "timeout_seconds": [
+                        "type": "integer",
+                        "description": "Bounded execution timeout"
+                    ]
+                ],
+                "required": ["source"]
+            ]),
+            execute: { _, _ in HanlinAISDKToolExecutionOutput(modelText: "ok") }
+        )
+
+        let stream = try await engine.stream(
+            messages: [.init(role: .user, text: "Run python")],
+            baseSystemPrompt: "System",
+            tools: [pythonTool],
+            prepareStep: {
+                HanlinAISDKStepPreparation(activeToolAliases: ["execute_local_python_code"])
+            }
+        )
+
+        for try await _ in stream {}
+
+        #expect(capturedRequests.count == 1)
+        let bodyData = try #require(capturedRequests.all[0].httpBody)
+        let bodyJSON = try #require(JSONSerialization.jsonObject(with: bodyData) as? [String: Any])
+        let tools = try #require(bodyJSON["tools"] as? [[String: Any]])
+        let function = try #require(tools.first?["function"] as? [String: Any])
+        let parameters = try #require(function["parameters"] as? [String: Any])
+
+        #expect(function["name"] as? String == "execute_local_python_code")
+        #expect(parameters["type"] as? String == "object")
+        let properties = try #require(parameters["properties"] as? [String: Any])
+        #expect(properties["source"] != nil)
+        #expect(properties["timeout_seconds"] != nil)
+        let required = try #require(parameters["required"] as? [String])
+        #expect(required.contains("source"))
+    }
+
+    @Test("Invalid and extra arguments reach Hanlin executor and return non-fatal error")
+    func testInvalidArgumentsReachExecutorWithoutAborting() async throws {
+        let stepCount = ManagedAtomicInt()
+        let fetch: FetchFunction = { request in
+            let count = stepCount.increment()
+            if count == 1 {
+                let sse = [
+                    "data: {\"id\":\"c1\",\"choices\":[{\"index\":0,\"delta\":{\"tool_calls\":[{\"index\":0,\"id\":\"call_inv_1\",\"type\":\"function\",\"function\":{\"name\":\"strict_tool\",\"arguments\":\"{\\\"unexpected\\\":true}\"}}]},\"finish_reason\":\"tool_calls\"}]}\n\n",
+                    "data: [DONE]\n\n"
+                ]
+                return Self.makeSSEResponse(chunks: sse, url: request.url!)
+            } else {
+                let sse = [
+                    "data: {\"id\":\"c2\",\"choices\":[{\"index\":0,\"delta\":{\"content\":\"RECOVERED_AFTER_INVALID_ARGS\"},\"finish_reason\":\"stop\"}]}\n\n",
+                    "data: [DONE]\n\n"
+                ]
+                return Self.makeSSEResponse(chunks: sse, url: request.url!)
+            }
+        }
+
+        let config = HanlinChatModelConfiguration(
+            modelID: "gpt-4o",
+            company: "OpenAI",
+            apiType: "openai",
+            endpoint: "https://api.openai.com/v1/chat/completions",
+            credential: "sk-test"
+        )
+        let engine = try HanlinAISDKAgentEngine(configuration: config, fetch: fetch)
+
+        let receivedArguments = ManagedAtomicArray<String>()
+        let strictTool = HanlinAISDKToolDefinition(
+            name: "strict_tool",
+            description: "Strict validator tool",
+            inputSchemaData: try JSONSerialization.data(withJSONObject: [
+                "type": "object",
+                "properties": ["source": ["type": "string"]],
+                "required": ["source"]
+            ]),
+            execute: { args, callID in
+                receivedArguments.append(args)
+                return HanlinAISDKToolExecutionOutput(
+                    modelText: "Missing required argument 'source'",
+                    isError: true
+                )
+            }
+        )
+
+        let stream = try await engine.stream(
+            messages: [.init(role: .user, text: "Run strict tool")],
+            baseSystemPrompt: "System",
+            tools: [strictTool],
+            prepareStep: {
+                HanlinAISDKStepPreparation(activeToolAliases: ["strict_tool"])
+            }
+        )
+
+        var events: [HanlinAISDKStreamEvent] = []
+        var finalContent = ""
+        for try await event in stream {
+            events.append(event)
+            if case .textDelta(let text) = event {
+                finalContent += text
+            }
+        }
+
+        #expect(receivedArguments.count == 1)
+        #expect(receivedArguments.all[0].contains("unexpected"))
+
+        let toolResults = events.compactMap { event -> (id: String, text: String, isError: Bool)? in
+            if case .toolResult(let id, _, let text, _, let isError) = event {
+                return (id, text, isError)
+            }
+            return nil
+        }
+        #expect(toolResults.count == 1)
+        #expect(toolResults[0].id == "call_inv_1")
+        #expect(toolResults[0].isError == true)
+        #expect(toolResults[0].text.contains("Missing required argument"))
+        #expect(finalContent.contains("RECOVERED_AFTER_INVALID_ARGS"))
+    }
+
+    @Test("Unknown tool call produces non-fatal tool error and allows multi-step recovery")
+    func testUnknownToolProducesNonFatalErrorAndAllowsRecovery() async throws {
+        let stepCount = ManagedAtomicInt()
+        let fetch: FetchFunction = { request in
+            let count = stepCount.increment()
+            if count == 1 {
+                let sse = [
+                    "data: {\"id\":\"u1\",\"choices\":[{\"index\":0,\"delta\":{\"tool_calls\":[{\"index\":0,\"id\":\"call_unknown_42\",\"type\":\"function\",\"function\":{\"name\":\"ghost_tool_not_registered\",\"arguments\":\"{}\"}}]},\"finish_reason\":\"tool_calls\"}]}\n\n",
+                    "data: [DONE]\n\n"
+                ]
+                return Self.makeSSEResponse(chunks: sse, url: request.url!)
+            } else {
+                let sse = [
+                    "data: {\"id\":\"u2\",\"choices\":[{\"index\":0,\"delta\":{\"content\":\"RECOVERED_FROM_UNKNOWN_TOOL\"},\"finish_reason\":\"stop\"}]}\n\n",
+                    "data: [DONE]\n\n"
+                ]
+                return Self.makeSSEResponse(chunks: sse, url: request.url!)
+            }
+        }
+
+        let config = HanlinChatModelConfiguration(
+            modelID: "gpt-4o",
+            company: "OpenAI",
+            apiType: "openai",
+            endpoint: "https://api.openai.com/v1/chat/completions",
+            credential: "sk-test"
+        )
+        let engine = try HanlinAISDKAgentEngine(configuration: config, fetch: fetch)
+
+        let knownTool = HanlinAISDKToolDefinition(
+            name: "known_tool",
+            description: "Known tool",
+            inputSchemaData: try JSONSerialization.data(withJSONObject: [
+                "type": "object",
+                "properties": ["arg": ["type": "string"]]
+            ]),
+            execute: { _, _ in HanlinAISDKToolExecutionOutput(modelText: "ok") }
+        )
+
+        let stream = try await engine.stream(
+            messages: [.init(role: .user, text: "Try tools")],
+            baseSystemPrompt: "System",
+            tools: [knownTool],
+            prepareStep: {
+                HanlinAISDKStepPreparation(activeToolAliases: ["known_tool"])
+            }
+        )
+
+        var events: [HanlinAISDKStreamEvent] = []
+        var finalContent = ""
+        for try await event in stream {
+            events.append(event)
+            if case .textDelta(let text) = event {
+                finalContent += text
+            }
+        }
+
+        let toolResults = events.compactMap { event -> (id: String, name: String, isError: Bool)? in
+            if case .toolResult(let id, let name, _, _, let isError) = event {
+                return (id, name, isError)
+            }
+            return nil
+        }
+        #expect(toolResults.count == 1)
+        #expect(toolResults[0].id == "call_unknown_42")
+        #expect(toolResults[0].name == "ghost_tool_not_registered")
+        #expect(toolResults[0].isError == true)
+        #expect(finalContent.contains("RECOVERED_FROM_UNKNOWN_TOOL"))
+    }
+
+    @Test("Real provider or transport error terminates stream")
+    func testRealProviderTransportErrorAbortsStream() async throws {
+        let fetch: FetchFunction = { request in
+            throw URLError(.cannotConnectToHost)
+        }
+
+        let config = HanlinChatModelConfiguration(
+            modelID: "gpt-4o",
+            company: "OpenAI",
+            apiType: "openai",
+            endpoint: "https://api.openai.com/v1/chat/completions",
+            credential: "sk-test"
+        )
+        let engine = try HanlinAISDKAgentEngine(configuration: config, fetch: fetch)
+
+        let stream = try await engine.stream(
+            messages: [.init(role: .user, text: "Hello")],
+            baseSystemPrompt: nil,
+            tools: [],
+            prepareStep: { HanlinAISDKStepPreparation(activeToolAliases: []) }
+        )
+
+        var didCatchError = false
+        do {
+            for try await _ in stream {}
+        } catch {
+            didCatchError = true
+        }
+
+        #expect(didCatchError)
     }
 }
 

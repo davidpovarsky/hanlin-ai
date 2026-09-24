@@ -40,6 +40,7 @@ final class HanlinAISDKToolAdapter {
     var latestToolProgressSummary: String?
     var diagnosticsRecorder: AgentDiagnosticsRecorder?
     var currentRoundID: UUID?
+    var completedCallIDs: Set<String> = []
 
     init(
         session: AssistantCapabilitySession,
@@ -145,6 +146,21 @@ final class HanlinAISDKToolAdapter {
                 guard let self else {
                     return HanlinAISDKToolExecutionOutput(modelText: "Tool adapter deallocated", isError: true)
                 }
+                let profile = ToolPresentationProfileRegistry.resolve(toolName: LoadSkillTool.toolName)
+                let parsedCall = AgentToolCall.parse(id: callID, name: LoadSkillTool.toolName, argumentsJSON: argumentsJSON, presentationProfile: profile)
+                if let recorder = self.diagnosticsRecorder, let roundID = self.currentRoundID {
+                    await recorder.recordToolCall(roundID: roundID, call: parsedCall)
+                }
+                let executionID = "\(callID):execution"
+                let executionStart = Date()
+                self.callbacks.onAgentEvent?(.toolCallStarted(parsedCall))
+                self.callbacks.onAgentEvent?(.toolCallCompleted(parsedCall))
+                self.callbacks.onAgentEvent?(.toolExecutionStarted(AgentToolExecution(
+                    id: executionID,
+                    callID: callID,
+                    name: LoadSkillTool.toolName,
+                    startedAt: executionStart
+                )))
                 let isZh = self.currentLanguage.hasPrefix("zh")
                 self.callbacks.onStreamData?(StreamData(operationalState: isZh ? "加载技能..." : "Loading skill..."))
                 let result = await LoadSkillTool.execute(
@@ -153,11 +169,37 @@ final class HanlinAISDKToolAdapter {
                     catalog: self.catalog,
                     schemaSizes: self.preparedTools.schemaSizes()
                 )
+                let duration = Date().timeIntervalSince(executionStart)
+                self.callbacks.onAgentEvent?(.toolExecutionCompleted(
+                    id: executionID,
+                    result: AgentToolResult(
+                        modelText: result,
+                        userText: result,
+                        richResultBlocks: [],
+                        evidenceItems: [],
+                        hasLegacyPresentationPayload: false,
+                        isError: false,
+                        semanticOutcome: .succeeded,
+                        duration: duration,
+                        embeddedResultPayload: nil
+                    )
+                ))
                 self.callbacks.onStreamData?(StreamData(
                     toolContent: result,
                     toolName: LoadSkillTool.toolName,
                     operationalDescription: result
                 ))
+                if let recorder = self.diagnosticsRecorder, let roundID = self.currentRoundID {
+                    await recorder.completeToolCall(
+                        roundID: roundID,
+                        callID: callID,
+                        resultForModel: result,
+                        resultForUser: result,
+                        duration: duration,
+                        outcome: .succeeded
+                    )
+                }
+                self.completedCallIDs.insert(callID)
                 return HanlinAISDKToolExecutionOutput(modelText: result)
             }
         )
@@ -177,6 +219,21 @@ final class HanlinAISDKToolAdapter {
                 guard let self else {
                     return HanlinAISDKToolExecutionOutput(modelText: "Tool adapter deallocated", isError: true)
                 }
+                let profile = ToolPresentationProfileRegistry.resolve(toolName: ToolSearchTool.toolName)
+                let parsedCall = AgentToolCall.parse(id: callID, name: ToolSearchTool.toolName, argumentsJSON: argumentsJSON, presentationProfile: profile)
+                if let recorder = self.diagnosticsRecorder, let roundID = self.currentRoundID {
+                    await recorder.recordToolCall(roundID: roundID, call: parsedCall)
+                }
+                let executionID = "\(callID):execution"
+                let executionStart = Date()
+                self.callbacks.onAgentEvent?(.toolCallStarted(parsedCall))
+                self.callbacks.onAgentEvent?(.toolCallCompleted(parsedCall))
+                self.callbacks.onAgentEvent?(.toolExecutionStarted(AgentToolExecution(
+                    id: executionID,
+                    callID: callID,
+                    name: ToolSearchTool.toolName,
+                    startedAt: executionStart
+                )))
                 let isZh = self.currentLanguage.hasPrefix("zh")
                 self.callbacks.onStreamData?(StreamData(operationalState: isZh ? "搜索工具..." : "Searching tools..."))
                 let result = ToolSearchTool.execute(
@@ -187,11 +244,37 @@ final class HanlinAISDKToolAdapter {
                         return self.preparedTools.search(query: q, limit: l, preferredAliases: self.session.activeSkillToolHints)
                     }
                 )
+                let duration = Date().timeIntervalSince(executionStart)
+                self.callbacks.onAgentEvent?(.toolExecutionCompleted(
+                    id: executionID,
+                    result: AgentToolResult(
+                        modelText: result,
+                        userText: result,
+                        richResultBlocks: [],
+                        evidenceItems: [],
+                        hasLegacyPresentationPayload: false,
+                        isError: false,
+                        semanticOutcome: .succeeded,
+                        duration: duration,
+                        embeddedResultPayload: nil
+                    )
+                ))
                 self.callbacks.onStreamData?(StreamData(
                     toolContent: result,
                     toolName: ToolSearchTool.toolName,
                     operationalDescription: result
                 ))
+                if let recorder = self.diagnosticsRecorder, let roundID = self.currentRoundID {
+                    await recorder.completeToolCall(
+                        roundID: roundID,
+                        callID: callID,
+                        resultForModel: result,
+                        resultForUser: result,
+                        duration: duration,
+                        outcome: .succeeded
+                    )
+                }
+                self.completedCallIDs.insert(callID)
                 return HanlinAISDKToolExecutionOutput(modelText: result)
             }
         )
@@ -211,17 +294,58 @@ final class HanlinAISDKToolAdapter {
                 guard let self else {
                     return HanlinAISDKToolExecutionOutput(modelText: "Tool adapter deallocated", isError: true)
                 }
+                let profile = ToolPresentationProfileRegistry.resolve(toolName: ReadToolResultTool.toolName)
+                let parsedCall = AgentToolCall.parse(id: callID, name: ReadToolResultTool.toolName, argumentsJSON: argumentsJSON, presentationProfile: profile)
+                if let recorder = self.diagnosticsRecorder, let roundID = self.currentRoundID {
+                    await recorder.recordToolCall(roundID: roundID, call: parsedCall)
+                }
+                let executionID = "\(callID):execution"
+                let executionStart = Date()
+                self.callbacks.onAgentEvent?(.toolCallStarted(parsedCall))
+                self.callbacks.onAgentEvent?(.toolCallCompleted(parsedCall))
+                self.callbacks.onAgentEvent?(.toolExecutionStarted(AgentToolExecution(
+                    id: executionID,
+                    callID: callID,
+                    name: ReadToolResultTool.toolName,
+                    startedAt: executionStart
+                )))
                 let isZh = self.currentLanguage.hasPrefix("zh")
                 self.callbacks.onStreamData?(StreamData(operationalState: isZh ? "读取结果..." : "Reading tool result..."))
                 let result = ReadToolResultTool.execute(
                     argumentsJSON: argumentsJSON,
                     session: self.session
                 )
+                let duration = Date().timeIntervalSince(executionStart)
+                self.callbacks.onAgentEvent?(.toolExecutionCompleted(
+                    id: executionID,
+                    result: AgentToolResult(
+                        modelText: result,
+                        userText: result,
+                        richResultBlocks: [],
+                        evidenceItems: [],
+                        hasLegacyPresentationPayload: false,
+                        isError: false,
+                        semanticOutcome: .succeeded,
+                        duration: duration,
+                        embeddedResultPayload: nil
+                    )
+                ))
                 self.callbacks.onStreamData?(StreamData(
                     toolContent: result,
                     toolName: ReadToolResultTool.toolName,
                     operationalDescription: result
                 ))
+                if let recorder = self.diagnosticsRecorder, let roundID = self.currentRoundID {
+                    await recorder.completeToolCall(
+                        roundID: roundID,
+                        callID: callID,
+                        resultForModel: result,
+                        resultForUser: result,
+                        duration: duration,
+                        outcome: .succeeded
+                    )
+                }
+                self.completedCallIDs.insert(callID)
                 return HanlinAISDKToolExecutionOutput(modelText: result)
             }
         )
@@ -241,6 +365,11 @@ final class HanlinAISDKToolAdapter {
                 guard let self else {
                     return HanlinAISDKToolExecutionOutput(modelText: "Progress update delivered.")
                 }
+                let profile = ToolPresentationProfileRegistry.resolve(toolName: ToolSchemaDecorator.reportProgressName)
+                let parsedCall = AgentToolCall.parse(id: callID, name: ToolSchemaDecorator.reportProgressName, argumentsJSON: argumentsJSON, presentationProfile: profile)
+                if let recorder = self.diagnosticsRecorder, let roundID = self.currentRoundID {
+                    await recorder.recordToolCall(roundID: roundID, call: parsedCall)
+                }
                 let candidate = ToolProgressSummary.reportProgressMessage(from: argumentsJSON)
                 if let message = self.reportProgressController.accept(
                     candidate,
@@ -255,7 +384,19 @@ final class HanlinAISDKToolAdapter {
                     self.callbacks.onProgressMessage?(progressMsg)
                     self.callbacks.onAgentEvent?(.progressMessage(progressMsg))
                 }
-                return HanlinAISDKToolExecutionOutput(modelText: "Progress update delivered.")
+                let result = "Progress update delivered."
+                if let recorder = self.diagnosticsRecorder, let roundID = self.currentRoundID {
+                    await recorder.completeToolCall(
+                        roundID: roundID,
+                        callID: callID,
+                        resultForModel: result,
+                        resultForUser: nil,
+                        duration: 0,
+                        outcome: .succeeded
+                    )
+                }
+                self.completedCallIDs.insert(callID)
+                return HanlinAISDKToolExecutionOutput(modelText: result)
             }
         )
     }
@@ -359,6 +500,7 @@ final class HanlinAISDKToolAdapter {
                     error: errorText
                 )
             }
+            self.completedCallIDs.insert(callID)
             return HanlinAISDKToolExecutionOutput(modelText: errorText, isError: true)
         }
 
@@ -444,6 +586,7 @@ final class HanlinAISDKToolAdapter {
                 presentationDecision: presentationDecision
             )
         }
+        self.completedCallIDs.insert(callID)
 
         return HanlinAISDKToolExecutionOutput(
             modelText: modelText,
