@@ -2221,25 +2221,25 @@ jobs:
               --summary-output "$LOG_DIR/08-shell-acceptance-summary.json" \
               | tee "$LOG_DIR/08-shell-acceptance.log"
             python3 - "$LOG_DIR/shell-acceptance.json" <<'PY' | tee "$LOG_DIR/08-shell-canonical-shadow.log"
-            import json
-            import sys
+          import json
+          import sys
 
-            payload = json.load(open(sys.argv[1], encoding="utf-8"))
-            report = payload.get("canonicalShadow")
-            if report is None:
-                raise SystemExit("Shell acceptance did not emit canonical shadow evidence")
-            domains = {item["domain"]: item for item in report["domains"]}
-            if report["summary"]["mismatchCount"] != 0:
-                raise SystemExit("Shell canonical shadow reported a mismatch")
-            if domains.get("runtime.core", {}).get("status") != "passed":
-                raise SystemExit("Shell RuntimeCore canonical shadow did not pass")
-            print(
-                "HANLIN_CANONICAL_SHADOW_CI acceptance=shell "
-                f"passed={report['summary']['passedCount']} "
-                f"warnings={report['summary']['warningCount']} "
-                f"mismatches={report['summary']['mismatchCount']} "
-                f"skipped={report['summary']['skippedCount']}"
-            )
+          payload = json.load(open(sys.argv[1], encoding="utf-8"))
+          report = payload.get("canonicalShadow")
+          if report is None:
+              raise SystemExit("Shell acceptance did not emit canonical shadow evidence")
+          domains = {item["domain"]: item for item in report["domains"]}
+          if report["summary"]["mismatchCount"] != 0:
+              raise SystemExit("Shell canonical shadow reported a mismatch")
+          if domains.get("runtime.core", {}).get("status") != "passed":
+              raise SystemExit("Shell RuntimeCore canonical shadow did not pass")
+          print(
+              "HANLIN_CANONICAL_SHADOW_CI acceptance=shell "
+              f"passed={report['summary']['passedCount']} "
+              f"warnings={report['summary']['warningCount']} "
+              f"mismatches={report['summary']['mismatchCount']} "
+              f"skipped={report['summary']['skippedCount']}"
+          )
           PY
 
             ALIVE_SECONDS="$(( $(date +%s) - LAUNCH_EPOCH ))"
@@ -2319,26 +2319,26 @@ jobs:
             test -n "$COMPATIBILITY_REPORT"
             cp "$COMPATIBILITY_REPORT" "$LOG_DIR/server-everything-compatibility-report.json"
             python3 - "$LOG_DIR/mcp-acceptance.json" <<'PY' | tee "$LOG_DIR/08-mcp-canonical-shadow.log"
-            import json
-            import sys
+          import json
+          import sys
 
-            payload = json.load(open(sys.argv[1], encoding="utf-8"))
-            report = payload.get("canonicalShadow")
-            if report is None:
-                raise SystemExit("MCP acceptance did not emit canonical shadow evidence")
-            domains = {item["domain"]: item for item in report["domains"]}
-            if report["summary"]["mismatchCount"] != 0:
-                raise SystemExit("MCP canonical shadow reported a mismatch")
-            for domain in ("native.tools", "mcp", "runtime.core", "cross-domain.tools"):
-                if domains.get(domain, {}).get("status") != "passed":
-                    raise SystemExit(f"{domain} canonical shadow did not pass")
-            print(
-                "HANLIN_CANONICAL_SHADOW_CI acceptance=mcp "
-                f"passed={report['summary']['passedCount']} "
-                f"warnings={report['summary']['warningCount']} "
-                f"mismatches={report['summary']['mismatchCount']} "
-                f"skipped={report['summary']['skippedCount']}"
-            )
+          payload = json.load(open(sys.argv[1], encoding="utf-8"))
+          report = payload.get("canonicalShadow")
+          if report is None:
+              raise SystemExit("MCP acceptance did not emit canonical shadow evidence")
+          domains = {item["domain"]: item for item in report["domains"]}
+          if report["summary"]["mismatchCount"] != 0:
+              raise SystemExit("MCP canonical shadow reported a mismatch")
+          for domain in ("native.tools", "mcp", "runtime.core", "cross-domain.tools"):
+              if domains.get(domain, {}).get("status") != "passed":
+                  raise SystemExit(f"{domain} canonical shadow did not pass")
+          print(
+              "HANLIN_CANONICAL_SHADOW_CI acceptance=mcp "
+              f"passed={report['summary']['passedCount']} "
+              f"warnings={report['summary']['warningCount']} "
+              f"mismatches={report['summary']['mismatchCount']} "
+              f"skipped={report['summary']['skippedCount']}"
+          )
           PY
             xcrun simctl spawn "$SIMULATOR_UDID" launchctl print "pid/$MCP_APP_PID" >/dev/null
             xcrun simctl terminate "$SIMULATOR_UDID" "$BUNDLE_ID" 2>/dev/null || true
