@@ -96,11 +96,26 @@
       "description": "Unified Host Services layer",
       "patterns": [
         "AI_HLY/Downstream/HostServices/**",
-        "AI_HLYTests/HanlinUnifiedHostServices*",
-        "Packages/HanlinExpoRuntime/**"
+        "AI_HLYTests/HanlinUnifiedHostServices*"
       ],
       "direct_validation_groups": [
         "unified_host_services"
+      ],
+      "consumers": []
+    },
+    "expo_runtime": {
+      "description": "Hanlin Expo dynamic runtime and fixtures",
+      "patterns": [
+        "Packages/HanlinExpoRuntime/**",
+        "Fixtures/ExpoSwiftUIProbe/**",
+        "Scripts/Expo/**",
+        "AI_HLYUITests/HanlinExpoProductionE2ETests.swift"
+      ],
+      "direct_validation_groups": [
+        "simulator_targeted_ui"
+      ],
+      "ui_suites": [
+        "AI_HLYUITests/HanlinExpoProductionE2ETests"
       ],
       "consumers": []
     },
@@ -446,6 +461,7 @@
         "AI_HLY/Downstream/RuntimeCore/JavaScriptCore/**",
         "AI_HLY/Downstream/Scripting/**",
         "AI_HLY/Downstream/ChatPresentation/**",
+        "AI_HLY/Downstream/ChatCore/**",
         "AI_HLY/Downstream/SystemIntegrations/**"
       ],
       "direct_validation_groups": [
