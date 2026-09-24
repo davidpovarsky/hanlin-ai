@@ -41,6 +41,8 @@ typedef void (^HanlinBridgeRequestHandlerBlock)(NSString *caller, NSString *payl
 - (nullable NSString *)documentsDirectory;
 - (nullable NSString *)cacheDirectory;
 
+- (void)invalidate;
+
 - (void)executeJavaScript:(NSString *)source completion:(HanlinBridgeStringResultBlock)completion;
 - (void)executeNode:(NSString *)source completion:(HanlinBridgeStringResultBlock)completion;
 - (void)nodeHealthCheckWithCompletion:(HanlinBridgeBoolResultBlock)completion;
