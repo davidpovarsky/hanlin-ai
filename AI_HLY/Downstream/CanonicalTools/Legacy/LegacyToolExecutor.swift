@@ -1,7 +1,7 @@
 import Foundation
 import HanlinPlatformContracts
 
-struct LegacyToolExecutionResult: Sendable {
+struct LegacyToolExecutionResult: @unchecked Sendable {
     let modelText: String
     let userText: String?
     let outcome: NativeToolExecutionOutcome

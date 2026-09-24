@@ -106,7 +106,7 @@ struct NativeUIKeyValue: Codable, Identifiable, Hashable {
     }
 }
 
-struct NativeUIBlock: Codable, Identifiable, Hashable {
+struct NativeUIBlock: Codable, Identifiable, Hashable, @unchecked Sendable {
     var id: String
     var type: NativeUIBlockType
     var title: String?
