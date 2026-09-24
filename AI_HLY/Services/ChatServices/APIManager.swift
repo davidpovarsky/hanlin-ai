@@ -2945,8 +2945,15 @@ default:
                                                         let payloadToStore = nativeResult.fullResultPayload ?? nativeResult.modelText
                                                         let mimeType = nativeResult.fullResultMIMEType ?? "text/plain"
                                                         if let ref = session.resultStore.store(payloadToStore, mimeType: mimeType) {
-                                                            if executionEmbeddedPayload != nil {
-                                                                executionEmbeddedPayload?.resultReference = ref
+                                                            if let currentPayload = executionEmbeddedPayload {
+                                                                executionEmbeddedPayload = HanlinEmbeddedResultPayload(
+                                                                    payload: currentPayload.payload,
+                                                                    resultReference: ref,
+                                                                    title: currentPayload.title,
+                                                                    metadata: currentPayload.metadata,
+                                                                    ownerID: currentPayload.ownerID,
+                                                                    actions: currentPayload.actions
+                                                                )
                                                             }
                                                             toolResult = """
                                                             [Large result stored behind reference: \(ref) (\(payloadToStore.utf8.count) bytes)]
