@@ -56,7 +56,7 @@ struct AgentTranscriptToolResultView: View {
         HanlinEmbeddedResultSurface(session: session)
       } expandedContent: {
         // If an expandedHandler is declared and resolves, present that; otherwise reuse session
-        if let expHandler = embedded.expandedHandler,
+        if let expHandler = embedded.expansion?.expandedHandler,
            let expandedSession = HanlinEmbeddedResultResolver.shared.resolve(
              handler: expHandler,
              ownerID: item.embeddedResultPayload?.ownerID,

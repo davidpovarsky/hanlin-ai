@@ -13,6 +13,7 @@ public final class AssistantCapabilitySession {
 
     public private(set) var loadedSkillIDs: Set<HanlinSkillID> = []
     public private(set) var loadedInstructionTexts: [String] = []
+    public var loadedSkillInstructions: [String] { loadedInstructionTexts }
     public private(set) var activeSkillToolHints: Set<String> = []
     public private(set) var exposedToolAliases: Set<String> = []
     public private(set) var discoveredToolAliases: [String] = []

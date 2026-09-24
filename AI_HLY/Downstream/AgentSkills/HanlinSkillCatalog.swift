@@ -69,9 +69,10 @@ public final class HanlinSkillCatalog {
         BuiltinCanonicalRegistrations.ensureRegistered()
         for provider in HanlinCompiledMiniAppRegistry.shared.allProviders() {
             for skill in provider.descriptor.skills {
-                register(skill: skill) { [weak provider] in
-                    if case .resource(let path) = skill.instructions, let provider {
-                        if let url = Bundle(for: type(of: provider)).url(forResource: path, withExtension: nil)
+                register(skill: skill) {
+                    if case .resource(let path) = skill.instructions {
+                        let providerBundle: Bundle? = (type(of: provider) as? AnyClass).map { Bundle(for: $0) }
+                        if let url = providerBundle?.url(forResource: path, withExtension: nil)
                             ?? Bundle.main.url(forResource: path, withExtension: nil),
                            let content = try? String(contentsOf: url, encoding: .utf8) {
                             return content
@@ -89,7 +90,7 @@ public final class HanlinSkillCatalog {
             for skill in desc.skills {
                 register(skill: skill) {
                     if case .resource(let path) = skill.instructions {
-                        if let artifactURL = platform.activeArtifactURL(for: package) {
+                        if let artifactURL = await platform.activeArtifactURL(for: package) {
                             let candidateURL = artifactURL.appending(path: path)
                             if let content = try? String(contentsOf: candidateURL, encoding: .utf8) {
                                 return content

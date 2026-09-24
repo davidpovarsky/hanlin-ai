@@ -23,10 +23,12 @@ protocol NativeTool {
 struct NativeToolExecutionContext {
     var localeIdentifier: String
     var modelContext: ModelContext?
+    var toolCallID: String?
 
-    init(localeIdentifier: String, modelContext: ModelContext? = nil) {
+    init(localeIdentifier: String, modelContext: ModelContext? = nil, toolCallID: String? = nil) {
         self.localeIdentifier = localeIdentifier
         self.modelContext = modelContext
+        self.toolCallID = toolCallID
     }
 
     var isHebrew: Bool { localeIdentifier.hasPrefix("he") }

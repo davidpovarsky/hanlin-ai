@@ -87,10 +87,15 @@ enum AgentRuntimeUIAcceptanceProvider {
                             origin: .assistantModel
                         )
                     )
-                    var enrichedPayload = payload ?? HanlinEmbeddedResultPayload()
-                    if enrichedPayload.actions.isEmpty {
-                        enrichedPayload.actions = [action]
-                    }
+                    let existingActions = payload?.actions ?? []
+                    let enrichedPayload = HanlinEmbeddedResultPayload(
+                        payload: payload?.payload,
+                        resultReference: payload?.resultReference,
+                        title: payload?.title,
+                        metadata: payload?.metadata,
+                        ownerID: payload?.ownerID ?? appID.rawValue,
+                        actions: existingActions.isEmpty ? [action] : existingActions
+                    )
                     return AnyEmbeddedResultSession(
                         engine: .swift,
                         appID: appID,

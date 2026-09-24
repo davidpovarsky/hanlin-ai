@@ -16,7 +16,7 @@ extension APIManager {
         context: NativeToolExecutionContext,
         continuation: AsyncThrowingStream<StreamData, Error>.Continuation?
     ) async -> NativeToolResult {
-        let currentLanguage = context.localeIdentifier ?? "en"
+        let currentLanguage = context.localeIdentifier
         let currentLanguagePrefix = currentLanguage.hasPrefix("zh")
         let functionName = name
         let functionArguments = argumentsJSON
