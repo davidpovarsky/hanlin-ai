@@ -8,14 +8,14 @@ import HanlinChatCore
 /// `ToolSearchTool`, `ReadToolResultTool`), and preserving large tool results, UI blocks,
 /// diagnostics, and presentation decisions.
 @MainActor
-public final class HanlinAISDKToolAdapter {
-    public struct Callbacks {
-        public var onStreamData: ((StreamData) -> Void)?
-        public var onAgentEvent: ((AgentEvent) -> Void)?
-        public var onProgressMessage: ((AgentProgressMessage) -> Void)?
-        public var currentReasoningSummary: (() -> String?)?
+final class HanlinAISDKToolAdapter {
+    struct Callbacks {
+        var onStreamData: ((StreamData) -> Void)?
+        var onAgentEvent: ((AgentEvent) -> Void)?
+        var onProgressMessage: ((AgentProgressMessage) -> Void)?
+        var currentReasoningSummary: (() -> String?)?
 
-        public init(
+        init(
             onStreamData: ((StreamData) -> Void)? = nil,
             onAgentEvent: ((AgentEvent) -> Void)? = nil,
             onProgressMessage: ((AgentProgressMessage) -> Void)? = nil,
@@ -28,19 +28,19 @@ public final class HanlinAISDKToolAdapter {
         }
     }
 
-    public let session: AssistantCapabilitySession
-    public let preparedTools: AssistantToolBridge.PreparedTools
-    public let modelContext: ModelContext?
-    public let currentLanguage: String
-    public let progressSummaryRequired: Bool
-    public let supportsReportProgress: Bool
-    public var callbacks: Callbacks
-    public var reportProgressController: ReportProgressController
-    public var latestToolProgressSummary: String?
-    public var diagnosticsRecorder: AgentDiagnosticsRecorder?
-    public var currentRoundID: UUID?
+    let session: AssistantCapabilitySession
+    let preparedTools: AssistantToolBridge.PreparedTools
+    let modelContext: ModelContext?
+    let currentLanguage: String
+    let progressSummaryRequired: Bool
+    let supportsReportProgress: Bool
+    var callbacks: Callbacks
+    var reportProgressController: ReportProgressController
+    var latestToolProgressSummary: String?
+    var diagnosticsRecorder: AgentDiagnosticsRecorder?
+    var currentRoundID: UUID?
 
-    public init(
+    init(
         session: AssistantCapabilitySession,
         preparedTools: AssistantToolBridge.PreparedTools,
         modelContext: ModelContext? = nil,
@@ -65,7 +65,7 @@ public final class HanlinAISDKToolAdapter {
     }
 
     /// Evaluates currently active tool aliases for model exposure in the next step.
-    public func currentActiveToolAliases() -> [String] {
+    func currentActiveToolAliases() -> [String] {
         var aliases: [String] = [
             LoadSkillTool.toolName,
             ToolSearchTool.toolName,
@@ -83,7 +83,7 @@ public final class HanlinAISDKToolAdapter {
     }
 
     /// Generates step preparation metadata for `HanlinAISDKAgentEngine`.
-    public func prepareStep() -> HanlinAISDKStepPreparation {
+    func prepareStep() -> HanlinAISDKStepPreparation {
         let active = currentActiveToolAliases()
         let sizes = preparedTools.schemaSizes()
         let visibleBytes = active.reduce(0) { $0 + (sizes[$1] ?? 400) }
@@ -97,7 +97,7 @@ public final class HanlinAISDKToolAdapter {
 
     /// Builds all available tool definitions for the SDK engine.
     /// Dynamic visibility is managed per step via `prepareStep()`.
-    public func allToolDefinitions() throws -> [HanlinAISDKToolDefinition] {
+    func allToolDefinitions() throws -> [HanlinAISDKToolDefinition] {
         var definitions: [HanlinAISDKToolDefinition] = []
 
         // 1. load_skill

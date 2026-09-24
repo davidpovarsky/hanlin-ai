@@ -293,8 +293,8 @@ struct RuntimeToolContractTests {
             modelID: "gpt-4o"
         )
 
-        recorder.recordStreamEvent(roundID: roundID, visibleContent: "Processing", visibleReasoningSummary: "Thinking", isMeaningful: true)
-        recorder.recordStreamEvent(roundID: roundID, visibleContent: nil, visibleReasoningSummary: nil, isMeaningful: false)
+        await recorder.recordStreamEvent(roundID: roundID, visibleContent: "Processing", visibleReasoningSummary: "Thinking", isMeaningful: true)
+        await recorder.recordStreamEvent(roundID: roundID, visibleContent: nil, visibleReasoningSummary: nil, isMeaningful: false)
 
         await recorder.finishRound(roundID: roundID, finishReason: "stop", usage: nil, meaningfulEventCount: 1)
         await recorder.complete(status: "completed")
