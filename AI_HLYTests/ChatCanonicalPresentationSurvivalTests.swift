@@ -8,6 +8,40 @@ import Testing
 @Suite("Chat canonical presentation survival", .serialized)
 struct ChatCanonicalPresentationSurvivalTests {
 
+  @Test("Failed activity preserves the semantic terminal title")
+  func failedActivityTitle() throws {
+    let toolName = "execute_shell_command"
+    let profile = ToolPresentationProfile.generic(toolName: toolName)
+    let steps = [
+      AgentActivityStep(
+        externalID: "call:invalid-shell",
+        sequence: 0,
+        kind: .toolCall,
+        presentationProfile: profile,
+        title: "Using Shell",
+        subtitle: toolName,
+        status: .completed
+      ),
+      AgentActivityStep(
+        externalID: "execution:invalid-shell",
+        sequence: 1,
+        kind: .toolExecution,
+        presentationProfile: profile,
+        title: "Invalid arguments",
+        subtitle: toolName,
+        status: .failed,
+        errorDescription: "Unknown shell argument."
+      ),
+    ]
+    let timeline = AgentActivityComposer.compose(
+      AgentRun(groupID: UUID(), status: .completed, steps: steps)
+    )
+    let activity = try #require(timeline.activities.first)
+
+    #expect(activity.status == .failed)
+    #expect(activity.title == "Invalid arguments")
+  }
+
   @MainActor
   @Test(
     "Dynamic non-builtin tool preserves presentation descriptors across entire event and transcript pipeline"
