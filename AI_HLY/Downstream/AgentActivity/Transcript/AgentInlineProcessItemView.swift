@@ -47,6 +47,13 @@ struct AgentInlineProcessItemView: View {
                 .contentShape(Rectangle())
             }
             .buttonStyle(.plain)
+            .accessibilityIdentifier(
+                item.status == .failed
+                    ? "hanlin-agent-tool-failed"
+                    : "hanlin-agent-tool-\(item.status.rawValue)"
+            )
+            .accessibilityLabel(activity?.title ?? String(localized: "Using a tool"))
+            .accessibilityValue(statusLabel)
             .accessibilityHint(String(localized: "Open activity"))
         case .error:
             if let text = nonempty(item.text) {
@@ -66,6 +73,15 @@ struct AgentInlineProcessItemView: View {
 
     private var statusColor: Color {
         item.status == .failed || item.status == .cancelled ? .red : .secondary
+    }
+
+    private var statusLabel: String {
+        switch item.status {
+        case .pending, .running: String(localized: "Working…")
+        case .completed: String(localized: "Completed")
+        case .failed: String(localized: "Failed")
+        case .cancelled: String(localized: "Cancelled")
+        }
     }
 
     private var toolSummary: String? {

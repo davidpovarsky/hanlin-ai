@@ -316,6 +316,16 @@ actor ShellRuntimeService {
                 continue
             }
             let candidate = workspace.appending(path: argument).standardizedFileURL
+            if command == "readlink" {
+                // readlink inspects the link itself without following its target.
+                // Its parent must still be a real descendant of the workspace.
+                _ = try fileLayout.validatedDescendant(
+                    candidate.deletingLastPathComponent(),
+                    of: workspace,
+                    allowRoot: true
+                )
+                continue
+            }
             _ = try fileLayout.validatedDescendant(candidate, of: workspace, allowRoot: true)
         }
     }
