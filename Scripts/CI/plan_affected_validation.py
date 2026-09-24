@@ -585,17 +585,33 @@ def plan_affected_validation(
             "operator override: simulator_e2e_only=true"
         )
 
+    target_component_unit_suites: Set[str] = set()
+    target_component_ui_suites: Set[str] = set()
     if target_group and target_group.strip():
         tgt = target_group.strip()
-        if tgt not in val_groups_config:
-            valid_groups = ", ".join(sorted(val_groups_config.keys()))
-            raise RoutingError(
-                f"Unknown target validation group '{tgt}'. Valid groups: {valid_groups}"
+        if tgt in val_groups_config:
+            explicit_overrides.append(f"target_validation_group={tgt}")
+            selected_groups[tgt].append(
+                f"explicit operator override: target_validation_group={tgt}"
             )
-        explicit_overrides.append(f"target_validation_group={tgt}")
-        selected_groups[tgt].append(
-            f"explicit operator override: target_validation_group={tgt}"
-        )
+        elif tgt in components:
+            comp_info = components[tgt]
+            c_groups = comp_info.get("direct_validation_groups", [])
+            explicit_overrides.append(f"target_validation_group={tgt}")
+            for g in c_groups:
+                if g in val_groups_config:
+                    selected_groups[g].append(
+                        f"explicit operator override for component '{tgt}': target_validation_group={tgt}"
+                    )
+            for s in comp_info.get("unit_suites", []):
+                target_component_unit_suites.add(s)
+            for s in comp_info.get("ui_suites", []):
+                target_component_ui_suites.add(s)
+        else:
+            valid_targets = ", ".join(sorted(set(list(val_groups_config.keys()) + list(components.keys()))))
+            raise RoutingError(
+                f"Unknown target validation group or component '{tgt}'. Valid targets: {valid_targets}"
+            )
 
     # Perform normal dependency-aware routing from changed files
     # 1. Identify directly affected components
@@ -638,6 +654,24 @@ def plan_affected_validation(
             if p in val_groups_config and p not in selected_groups:
                 selected_groups[p].append(f"prerequisite for component '{comp_name}'")
 
+    # If an explicit target group or component was specified, suppress heavy groups not part of the target
+    if target_group and target_group.strip():
+        tgt = target_group.strip()
+        if tgt in components:
+            comp_info = components[tgt]
+            c_direct = set(comp_info.get("direct_validation_groups", []))
+            # Keep only the component's direct validation groups
+            selected_groups = collections.defaultdict(
+                list,
+                {g: reasons for g, reasons in selected_groups.items() if g in c_direct},
+            )
+        else:
+            if tgt != "runtime_tooling_full_acceptance":
+                selected_groups.pop("runtime_tooling_full_acceptance", None)
+            if tgt not in ("device_build", "ipa_packaging"):
+                selected_groups.pop("device_build", None)
+                selected_groups.pop("ipa_packaging", None)
+
     # 4. Resolve prerequisites of selected validation groups
     prereq_queue = list(selected_groups.keys())
     while prereq_queue:
@@ -660,10 +694,13 @@ def plan_affected_validation(
 
     # Derive targeted UI suites
     affected_ui_suites: Set[str] = set()
-    for comp_name in affected_components:
-        comp_info = components.get(comp_name, {})
-        for suite in comp_info.get("ui_suites", []):
-            affected_ui_suites.add(suite)
+    if target_component_ui_suites:
+        affected_ui_suites.update(target_component_ui_suites)
+    elif not target_group:
+        for comp_name in affected_components:
+            comp_info = components.get(comp_name, {})
+            for suite in comp_info.get("ui_suites", []):
+                affected_ui_suites.add(suite)
 
     if full_validation:
         for comp_info in components.values():
@@ -716,7 +753,9 @@ def plan_affected_validation(
 
     # Derive targeted unit suites
     affected_unit_suites: Set[str] = set()
-    if not full_validation:
+    if target_component_unit_suites:
+        affected_unit_suites.update(target_component_unit_suites)
+    elif not full_validation:
         for comp_name in affected_components:
             comp_info = components.get(comp_name, {})
             for suite in comp_info.get("unit_suites", []):

@@ -644,6 +644,21 @@ class AffectedValidationPlannerTests(unittest.TestCase):
         self.assertIn("-only-testing:AI_HLYTests/AgentSkillsExposureTests", bft)
         self.assertIn("-only-testing:AI_HLYUITests/HanlinRuntimeInstallationUITests", bft)
 
+    def test_explicit_component_targeted_validation_avoids_full_acceptance(self) -> None:
+        changed = [
+            "Scripts/Runtime/run_runtime_tooling_acceptance.py",
+            "AI_HLYTests/RuntimePackageAcceptanceTests.swift",
+        ]
+        plan = self.plan_files(changed, target_group="runtime_package_acceptance_unit_tests")
+        self.assertFalse(plan.step_outputs["run_runtime_tooling_full_acceptance"])
+        self.assertFalse(plan.step_outputs["run_device_build"])
+        self.assertFalse(plan.step_outputs["run_phase1"])
+        self.assertTrue(plan.step_outputs["run_simulator_job"])
+        self.assertTrue(plan.step_outputs["run_simulator_unit"])
+        self.assertEqual(plan.step_outputs["simulator_unit_filter"], "AI_HLYTests/RuntimePackageAcceptanceTests")
+        self.assertIn("app_unit_tests", plan.selected_groups)
+        self.assertNotIn("runtime_tooling_full_acceptance", plan.selected_groups)
+
 
 if __name__ == "__main__":
     unittest.main()
