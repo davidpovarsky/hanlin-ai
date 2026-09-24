@@ -207,7 +207,7 @@ struct AgentSkillsExposureTests {
     @Test("Production Skill catalog synchronizes system and canonical skills without acceptance bootstrap")
     func productionSkillCatalogSynchronization() throws {
         let catalog = HanlinSkillCatalog()
-        catalog.synchronizeProductionSkills(systemSkillConfig: SystemSkillsConfig(
+        catalog.synchronizeProductionSkills(
             memoryEnabled: true,
             mapEnabled: true,
             calendarEnabled: true,
@@ -217,7 +217,7 @@ struct AgentSkillsExposureTests {
             healthEnabled: true,
             weatherEnabled: true,
             canvasEnabled: true
-        ))
+        )
 
         let skills = catalog.allSkills()
         #expect(skills.count >= 9)
@@ -236,7 +236,7 @@ struct AgentSkillsExposureTests {
 
         // Feature toggle exclusion
         let filteredCatalog = HanlinSkillCatalog()
-        filteredCatalog.synchronizeProductionSkills(systemSkillConfig: SystemSkillsConfig(
+        filteredCatalog.synchronizeProductionSkills(
             memoryEnabled: true,
             mapEnabled: true,
             calendarEnabled: true,
@@ -246,7 +246,7 @@ struct AgentSkillsExposureTests {
             healthEnabled: true,
             weatherEnabled: false, // Weather disabled
             canvasEnabled: true
-        ))
+        )
         let filteredIDs = Set(filteredCatalog.allSkills().map(\.id.rawValue))
         #expect(!filteredIDs.contains("weather_forecast"))
         #expect(filteredIDs.contains("maps_and_navigation"))

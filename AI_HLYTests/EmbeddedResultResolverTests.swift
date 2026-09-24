@@ -398,14 +398,10 @@ struct EmbeddedResultResolverTests {
             systemImage: "play.circle",
             launchRequest: launchReq
         )
-        var callbackInvoked = false
         let action2 = HanlinEmbeddedContentAction(
             id: "action_2",
             title: "Action Two",
-            systemImage: "star.fill",
-            onAction: {
-                callbackInvoked = true
-            }
+            systemImage: "star.fill"
         )
 
         let payload = HanlinEmbeddedResultPayload(
@@ -433,10 +429,6 @@ struct EmbeddedResultResolverTests {
         #expect(item.embeddedResultPayload?.actions[0].id == "action_1")
         #expect(item.embeddedResultPayload?.actions[0].launchRequest?.id.rawValue == "launch-pipeline-test")
 
-        // Execute callback
-        item.embeddedResultPayload?.actions[1].onAction?()
-        #expect(callbackInvoked == true)
-
         // Launch request conversion to legacy for chat host
         var dispatchedLegacyLaunch: NativeAppLaunchRequest?
         let onLaunch: (NativeAppLaunchRequest) -> Void = { req in
@@ -446,7 +438,7 @@ struct EmbeddedResultResolverTests {
             onLaunch(legacy)
         }
         #expect(dispatchedLegacyLaunch?.appID == "test.app")
-        #expect(dispatchedLegacyLaunch?.presentationStyle == .sheet)
+        #expect(dispatchedLegacyLaunch?.presentationStyle == .largeSheet)
     }
 
     @MainActor
@@ -455,8 +447,8 @@ struct EmbeddedResultResolverTests {
         let packageID = try HanlinPackageID(validating: "com.example.scriptui")
         let installedPackageID = try HanlinInstalledPackageID(validating: "pkg-scriptui-test")
         let payload = HanlinEmbeddedResultPayload(
-            ownerID: packageID.rawValue,
-            resultReference: "ref_script_123"
+            resultReference: "ref_script_123",
+            ownerID: packageID.rawValue
         )
 
         let context = HanlinScriptingEntrypointContext.embeddedResult(
