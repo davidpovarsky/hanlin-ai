@@ -306,52 +306,43 @@ struct AgentSkillsExposureTests {
         let session = AssistantCapabilitySession()
 
         let toolName = "calculate_metrics"
-        let schema: [String: Any] = [
-            "type": "function",
-            "function": [
-                "name": toolName,
-                "description": "Calculate financial metrics",
-                "parameters": [
-                    "type": "object",
-                    "properties": [
-                        "param": ["type": "integer"]
-                    ],
-                    "required": ["param"]
-                ]
-            ]
-        ]
-
-        var toolExecCount = 0
-        let legacySource = HanlinCanonicalToolAuthority.LegacySource(
-            descriptor: HanlinToolDescriptor(
-                logicalID: try HanlinLogicalToolID(
-                    providerInstanceID: try HanlinProviderInstanceID(validating: "acceptance"),
-                    localToolID: try HanlinLocalToolID(validating: toolName)
-                ),
-                title: HanlinLocalizedText(text: "Calculate"),
-                summary: HanlinLocalizedText(text: "Calculates"),
-                capabilities: []
+        let toolProfile = ToolPresentationProfile.generic(toolName: toolName)
+        let canonicalSchema = NativeToolSchema.function(
+            name: toolName,
+            description: "Calculate financial metrics",
+            parameters: NativeToolSchema.object(
+                properties: ["param": NativeToolSchema.number(description: "Parameter")],
+                required: ["param"]
+            )
+        )
+        let nativeSource = HanlinCanonicalToolAuthority.NativeSource(
+            entry: NativeToolCatalogEntry(
+                name: toolName,
+                title: "Calculate",
+                summary: "Calculates",
+                presentationProfile: toolProfile
             ),
-            preferredAlias: toolName,
-            modelSchema: schema,
-            toolName: toolName,
-            presentationProfile: ToolPresentationProfileRegistry.resolve(toolName: toolName)
+            canonicalSchema: canonicalSchema,
+            modelSchema: ToolSchemaDecorator.decorate(
+                schema: canonicalSchema,
+                profile: toolProfile,
+                progressSummaryRequired: false
+            ),
+            preferredAlias: toolName
         )
 
+        var toolExecCount = 0
         let authority = try HanlinCanonicalToolAuthority.build(
-            nativeSources: [],
-            mcpTools: [],
-            scriptSources: [],
-            legacySources: [legacySource]
+            nativeSources: [nativeSource],
+            mcpTools: []
         )
 
         let executors = AssistantToolBridge.Executors(
-            executeNative: { _, _, _, _ in NativeToolResult(modelText: "native", outcome: .failed) },
-            executeScripting: { _, _ in NativeToolResult(modelText: "scripting", outcome: .failed) },
-            executeLegacy: { name, args, ctx in
+            executeNative: { _, _, _, _ in
                 toolExecCount += 1
                 return NativeToolResult(modelText: "Sharpe: 1.8", outcome: .succeeded)
-            }
+            },
+            executeScripting: { _, _ in NativeToolResult(modelText: "scripting", outcome: .failed) }
         )
 
         let preparedTools = AssistantToolBridge.PreparedTools(authority: authority, executors: executors)
@@ -378,7 +369,7 @@ struct AgentSkillsExposureTests {
                     "data: {\"id\":\"c1\",\"choices\":[{\"index\":0,\"delta\":{},\"finish_reason\":\"tool_calls\"}]}\n\n",
                     "data: [DONE]\n\n"
                 ]
-                return makeSSEResponse(chunks: sse, url: request.url!)
+                return Self.makeSSEResponse(chunks: sse, url: request.url!)
             } else if requestStep == 2 {
                 // Round 2: model sees calculate_metrics and calls it
                 let sse = [
@@ -386,7 +377,7 @@ struct AgentSkillsExposureTests {
                     "data: {\"id\":\"c2\",\"choices\":[{\"index\":0,\"delta\":{},\"finish_reason\":\"tool_calls\"}]}\n\n",
                     "data: [DONE]\n\n"
                 ]
-                return makeSSEResponse(chunks: sse, url: request.url!)
+                return Self.makeSSEResponse(chunks: sse, url: request.url!)
             } else {
                 // Round 3: model gives final answer
                 let sse = [
@@ -394,7 +385,7 @@ struct AgentSkillsExposureTests {
                     "data: {\"id\":\"c3\",\"choices\":[{\"index\":0,\"delta\":{},\"finish_reason\":\"stop\"}]}\n\n",
                     "data: [DONE]\n\n"
                 ]
-                return makeSSEResponse(chunks: sse, url: request.url!)
+                return Self.makeSSEResponse(chunks: sse, url: request.url!)
             }
         }
 
