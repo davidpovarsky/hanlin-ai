@@ -122,7 +122,6 @@ static NSLock *_sessionLock = nil;
     [_boundBridges removeObjectForKey:sessionID];
     if ([_activeSessionBridge.sessionID isEqualToString:sessionID]) {
         [_activeSessionBridge invalidate];
-        _activeSessionBridge = nil;
     }
     NSArray<NSString *> *tokens = [_bootstrapBridges keysOfEntriesPassingTest:
         ^BOOL(NSString *token, HanlinNativeServicesSessionBridge *bridge, BOOL *stop) {

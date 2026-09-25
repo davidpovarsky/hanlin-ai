@@ -591,25 +591,41 @@ struct HanlinUnifiedHostServicesE2ETests {
         var bridge = (typeof NSClassFromString === 'function') ? NSClassFromString('HanlinNativeServicesBridge') : (globalThis.HanlinNativeServicesBridge || null);
         var dataDir = null;
         var stateDir = null;
-        if (bridge) {
-            var rawData = (typeof bridge.dataRootDirectory === 'function') ? bridge.dataRootDirectory() : bridge.dataRootDirectory;
-            var rawState = (typeof bridge.stateDirectory === 'function') ? bridge.stateDirectory() : bridge.stateDirectory;
-            if (rawData) { dataDir = (rawData.toString ? rawData.toString() : String(rawData)); }
-            if (rawState) { stateDir = (rawState.toString ? rawState.toString() : String(rawState)); }
+
+        if (compat && typeof compat.roundTripValueKey === 'function') {
+            try {
+                var p1 = compat.roundTripValueKey('', 'hostService.dataRoot');
+                var p2 = compat.roundTripValueKey('', 'hostService.state');
+                if (p1 && p1.length > 0) { dataDir = (p1.toString ? p1.toString() : String(p1)); }
+                if (p2 && p2.length > 0) { stateDir = (p2.toString ? p2.toString() : String(p2)); }
+            } catch (e) {}
         }
+
+        if (!dataDir && bridge) {
+            try {
+                var rawData = (typeof bridge.dataRootDirectory === 'function') ? bridge.dataRootDirectory() : bridge.dataRootDirectory;
+                var rawState = (typeof bridge.stateDirectory === 'function') ? bridge.stateDirectory() : bridge.stateDirectory;
+                if (rawData) { dataDir = (rawData.toString ? rawData.toString() : String(rawData)); }
+                if (rawState) { stateDir = (rawState.toString ? rawState.toString() : String(rawState)); }
+            } catch (e) {}
+        }
+
         if (!dataDir && compat) {
-            if (typeof compat.hostServicePathForType === 'function') {
-                var p1 = compat.hostServicePathForType('dataRoot');
-                var p2 = compat.hostServicePathForType('state');
-                if (p1) { dataDir = (p1.toString ? p1.toString() : String(p1)); }
-                if (p2) { stateDir = (p2.toString ? p2.toString() : String(p2)); }
-            } else {
-                var rawCompatData = (typeof compat.currentDataRootDirectory === 'function') ? compat.currentDataRootDirectory() : compat.currentDataRootDirectory;
-                var rawCompatState = (typeof compat.currentStateDirectory === 'function') ? compat.currentStateDirectory() : compat.currentStateDirectory;
-                if (rawCompatData) { dataDir = (rawCompatData.toString ? rawCompatData.toString() : String(rawCompatData)); }
-                if (rawCompatState) { stateDir = (rawCompatState.toString ? rawCompatState.toString() : String(rawCompatState)); }
-            }
+            try {
+                if (typeof compat.hostServicePathForType === 'function') {
+                    var p1 = compat.hostServicePathForType('dataRoot');
+                    var p2 = compat.hostServicePathForType('state');
+                    if (p1) { dataDir = (p1.toString ? p1.toString() : String(p1)); }
+                    if (p2) { stateDir = (p2.toString ? p2.toString() : String(p2)); }
+                } else {
+                    var rawCompatData = (typeof compat.currentDataRootDirectory === 'function') ? compat.currentDataRootDirectory() : compat.currentDataRootDirectory;
+                    var rawCompatState = (typeof compat.currentStateDirectory === 'function') ? compat.currentStateDirectory() : compat.currentStateDirectory;
+                    if (rawCompatData) { dataDir = (rawCompatData.toString ? rawCompatData.toString() : String(rawCompatData)); }
+                    if (rawCompatState) { stateDir = (rawCompatState.toString ? rawCompatState.toString() : String(rawCompatState)); }
+                }
+            } catch (e) {}
         }
+
         if (!dataDir) {
             throw new Error('Host services dataRootDirectory was nil (bridge=' + typeof bridge + ', compat=' + typeof compat + ')');
         }
@@ -635,6 +651,7 @@ struct HanlinUnifiedHostServicesE2ETests {
             sessionID: sessionID1
         )
         HanlinNativeServicesBridge.register(adapter1, forSessionID: sessionID1)
+        HanlinNativeServicesBridge.register(adapter1)
 
         let session1 = try HanlinNativeScriptSession(
             applicationRoot: appDir,
@@ -655,6 +672,7 @@ struct HanlinUnifiedHostServicesE2ETests {
         session1.shutdown()
         #expect(!session1.isActive)
         HanlinNativeServicesBridge.unregisterProvider(forSessionID: sessionID1)
+        HanlinNativeServicesBridge.register(nil)
         #expect(HanlinNativeServicesBridge.provider(forSessionID: sessionID1) == nil)
 
         UserDefaults.standard.removeObject(forKey: "HanlinNS_Test_DataRoot")
@@ -669,6 +687,7 @@ struct HanlinUnifiedHostServicesE2ETests {
             sessionID: sessionID2
         )
         HanlinNativeServicesBridge.register(adapter2, forSessionID: sessionID2)
+        HanlinNativeServicesBridge.register(adapter2)
 
         let session2 = try HanlinNativeScriptSession(
             applicationRoot: appDir,
@@ -686,6 +705,7 @@ struct HanlinUnifiedHostServicesE2ETests {
         session2.shutdown()
         #expect(!session2.isActive)
         HanlinNativeServicesBridge.unregisterProvider(forSessionID: sessionID2)
+        HanlinNativeServicesBridge.register(nil)
     }
 
     @Test func expoAppContextsResolveExactlyAndTeardownIndependently() throws {

@@ -10,6 +10,12 @@ static NSInteger _latestEventCount = 0;
 @implementation HanlinNativeScriptCompatibility
 
 + (NSString *)roundTripValue:(NSString *)value key:(NSString *)key {
+    if ([key isEqualToString:@"hostService.dataRoot"]) {
+        return [HanlinNativeServicesBridge dataRootDirectory] ?: @"";
+    }
+    if ([key isEqualToString:@"hostService.state"]) {
+        return [HanlinNativeServicesBridge stateDirectory] ?: @"";
+    }
     NSString *scopedKey = [@"hanlin.nativescript.compatibility." stringByAppendingString:key];
     NSUserDefaults *defaults = NSUserDefaults.standardUserDefaults;
     [defaults setObject:value forKey:scopedKey];
