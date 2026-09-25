@@ -135,4 +135,21 @@ static NSInteger _latestEventCount = 0;
     return _latestEvent;
 }
 
++ (nullable NSString *)currentDataRootDirectory {
+    return [HanlinNativeServicesBridge dataRootDirectory];
+}
+
++ (nullable NSString *)currentStateDirectory {
+    return [HanlinNativeServicesBridge stateDirectory];
+}
+
++ (nullable NSString *)hostServicePathForType:(NSString *)pathType {
+    if ([pathType isEqualToString:@"dataRoot"] || [pathType isEqualToString:@"data"]) {
+        return [HanlinNativeServicesBridge dataRootDirectory];
+    } else if ([pathType isEqualToString:@"state"]) {
+        return [HanlinNativeServicesBridge stateDirectory];
+    }
+    return nil;
+}
+
 @end

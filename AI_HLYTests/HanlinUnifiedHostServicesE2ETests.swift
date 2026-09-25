@@ -587,14 +587,31 @@ struct HanlinUnifiedHostServicesE2ETests {
         try Data(packageJSON.utf8).write(to: appDir.appending(path: "package.json"))
 
         let bundleJS = """
-        var bridge = (typeof NSClassFromString === 'function') ? NSClassFromString('HanlinNativeServicesBridge') : null;
-        if (!bridge) {
-            throw new Error('HanlinNativeServicesBridge class not available');
+        var compat = (typeof NSClassFromString === 'function') ? NSClassFromString('HanlinNativeScriptCompatibility') : (globalThis.HanlinNativeScriptCompatibility || null);
+        var bridge = (typeof NSClassFromString === 'function') ? NSClassFromString('HanlinNativeServicesBridge') : (globalThis.HanlinNativeServicesBridge || null);
+        var dataDir = null;
+        var stateDir = null;
+        if (bridge) {
+            var rawData = (typeof bridge.dataRootDirectory === 'function') ? bridge.dataRootDirectory() : bridge.dataRootDirectory;
+            var rawState = (typeof bridge.stateDirectory === 'function') ? bridge.stateDirectory() : bridge.stateDirectory;
+            if (rawData) { dataDir = (rawData.toString ? rawData.toString() : String(rawData)); }
+            if (rawState) { stateDir = (rawState.toString ? rawState.toString() : String(rawState)); }
         }
-        var dataDir = bridge.dataRootDirectory();
-        var stateDir = bridge.stateDirectory();
+        if (!dataDir && compat) {
+            if (typeof compat.hostServicePathForType === 'function') {
+                var p1 = compat.hostServicePathForType('dataRoot');
+                var p2 = compat.hostServicePathForType('state');
+                if (p1) { dataDir = (p1.toString ? p1.toString() : String(p1)); }
+                if (p2) { stateDir = (p2.toString ? p2.toString() : String(p2)); }
+            } else {
+                var rawCompatData = (typeof compat.currentDataRootDirectory === 'function') ? compat.currentDataRootDirectory() : compat.currentDataRootDirectory;
+                var rawCompatState = (typeof compat.currentStateDirectory === 'function') ? compat.currentStateDirectory() : compat.currentStateDirectory;
+                if (rawCompatData) { dataDir = (rawCompatData.toString ? rawCompatData.toString() : String(rawCompatData)); }
+                if (rawCompatState) { stateDir = (rawCompatState.toString ? rawCompatState.toString() : String(rawCompatState)); }
+            }
+        }
         if (!dataDir) {
-            throw new Error('Host services dataRootDirectory was nil');
+            throw new Error('Host services dataRootDirectory was nil (bridge=' + typeof bridge + ', compat=' + typeof compat + ')');
         }
         NSUserDefaults.standardUserDefaults.setObjectForKey(dataDir, 'HanlinNS_Test_DataRoot');
         NSUserDefaults.standardUserDefaults.setObjectForKey(stateDir, 'HanlinNS_Test_StateRoot');

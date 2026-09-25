@@ -17,6 +17,9 @@ NS_ASSUME_NONNULL_BEGIN
 + (void)recordEvent:(NSDictionary *)payload;
 + (nullable NSNumber *)latestEventCount;
 + (nullable NSDictionary *)latestEvent;
++ (nullable NSString *)currentDataRootDirectory;
++ (nullable NSString *)currentStateDirectory;
++ (nullable NSString *)hostServicePathForType:(NSString *)pathType;
 @end
 
 NS_ASSUME_NONNULL_END
