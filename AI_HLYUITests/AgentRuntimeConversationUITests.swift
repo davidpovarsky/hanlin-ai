@@ -9,6 +9,21 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         app.launchEnvironment["HANLIN_AGENT_RUNTIME_UI_ACCEPTANCE"] = "1"
         app.launch()
 
+        // 1. Initial State: Python runtime is OFF + Assistant Python permission is ON
+        openRuntimeCenter(in: app)
+        let initialPythonToggle = toggleSwitch(for: "localPython", in: app)
+        XCTAssertTrue(initialPythonToggle.waitForExistence(timeout: 10), "Python toggle card was missing in Runtime Center")
+        XCTAssertFalse(isToggleOn(initialPythonToggle), "Python toggle should initially be OFF on fresh process")
+
+        let toolPerm = app.switches["hanlin-tool-permission-execute_local_python_code"].firstMatch
+        if !toolPerm.exists { app.swipeUp() }
+        if toolPerm.exists {
+            XCTAssertTrue(isToggleOn(toolPerm), "Assistant Python permission should be ON")
+        }
+
+        // 2. Switch to Chat and prompt the Agent to execute Python
+        openChat(in: app)
+
         let input = app.textFields["hanlin-chat-input"].firstMatch
         if !input.waitForExistence(timeout: 5) {
             let seededChat = app.staticTexts["Agent Acceptance Chat"].firstMatch
@@ -44,5 +59,86 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         ).firstMatch
         XCTAssertTrue(toolActivity.waitForExistence(timeout: 45), "Tool activity/result was not rendered in the real chat UI.")
 
+        // 3. Verify Runtime Center reactively shows Python ON after agent execution
+        openRuntimeCenter(in: app)
+        let postPythonToggle = toggleSwitch(for: "localPython", in: app)
+        XCTAssertTrue(
+            waitForToggle(postPythonToggle, toBe: true, timeout: 20),
+            "Python runtime should auto-start on agent execution and Runtime Center must show Python ON"
+        )
+    }
+
+    // MARK: - Navigation & Toggle Helpers
+
+    private func selectTab(identifier: String, labels: [String] = [], in app: XCUIApplication) -> Bool {
+        var candidates: [XCUIElement] = [
+            app.tabBars.buttons[identifier].firstMatch,
+            app.buttons[identifier].firstMatch,
+            app.tabs[identifier].firstMatch
+        ]
+        for label in labels {
+            candidates.append(app.tabBars.buttons[label].firstMatch)
+            candidates.append(app.buttons[label].firstMatch)
+            candidates.append(app.tabs[label].firstMatch)
+        }
+
+        for candidate in candidates {
+            if candidate.waitForExistence(timeout: 2) && candidate.isHittable {
+                candidate.tap()
+                return true
+            }
+        }
+        return false
+    }
+
+    private func openSettings(in app: XCUIApplication) {
+        let settingsNav = app.navigationBars["设置"].firstMatch
+        let settingsNavEn = app.navigationBars["Settings"].firstMatch
+        if settingsNav.exists || settingsNavEn.exists { return }
+        _ = selectTab(identifier: "hanlin-settings-tab", labels: ["Settings", "设置"], in: app)
+    }
+
+    private func openRuntimeCenter(in app: XCUIApplication) {
+        let runtimeCenterNav = app.navigationBars["Runtimes & Packages"].firstMatch
+        if runtimeCenterNav.exists { return }
+        openSettings(in: app)
+        let link = app.descendants(matching: .any)["hanlin-runtimes-packages-link"].firstMatch
+        if !link.waitForExistence(timeout: 5) {
+            app.swipeUp()
+        }
+        if link.waitForExistence(timeout: 10) && link.isHittable {
+            link.tap()
+        }
+        _ = runtimeCenterNav.waitForExistence(timeout: 10)
+    }
+
+    private func openChat(in app: XCUIApplication) {
+        _ = selectTab(identifier: "hanlin-home-tab", labels: ["Chats", "Messages", "Home", "列表"], in: app)
+    }
+
+    private func toggleSwitch(for kindRaw: String, in app: XCUIApplication) -> XCUIElement {
+        let sw = app.switches["hanlin-runtime-availability-\(kindRaw)"].firstMatch
+        if sw.exists { return sw }
+        return app.descendants(matching: .switch)["hanlin-runtime-availability-\(kindRaw)"].firstMatch
+    }
+
+    private func isToggleOn(_ element: XCUIElement) -> Bool {
+        guard element.exists else { return false }
+        if let valStr = element.value as? String {
+            return valStr == "1" || valStr.lowercased() == "on" || valStr.lowercased() == "true"
+        }
+        if let valInt = element.value as? Int {
+            return valInt == 1
+        }
+        return false
+    }
+
+    private func waitForToggle(_ element: XCUIElement, toBe targetState: Bool, timeout: TimeInterval = 15) -> Bool {
+        let predicate = NSPredicate { _, _ in
+            self.isToggleOn(element) == targetState
+        }
+        let exp = expectation(for: predicate, evaluatedWith: element)
+        let result = XCTWaiter.wait(for: [exp], timeout: timeout)
+        return result == .completed
     }
 }

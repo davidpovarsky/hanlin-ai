@@ -44,7 +44,7 @@ actor AppRuntimeCore {
         let pythonSnapshot = await python.snapshot()
         let javaScriptCoreSnapshot = await javaScriptCore.snapshot()
         let shellSnapshot = await shell.snapshot()
-        let tsState = RuntimeAvailabilityStore.shared.isAvailable(.typeScript) ? nodeSnapshot.state : (nodeSnapshot.state == .ready ? .ready : .stopped)
+        let tsState: RuntimeOperationalState = RuntimeAvailabilityStore.shared.isAvailable(.typeScript) ? nodeSnapshot.state : .stopped
         let tsSnapshot = RuntimeSnapshot(
             kind: .typeScript,
             state: tsState,

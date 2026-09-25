@@ -3,6 +3,8 @@ import Foundation
 final class RuntimeAvailabilityStore: @unchecked Sendable {
     static let shared = RuntimeAvailabilityStore()
     
+    public static let didChangeNotification = Notification.Name("HanlinRuntimeAvailabilityDidChange")
+    
     private let lock = NSLock()
     private var activeRuntimes: Set<RuntimeKind> = []
     
@@ -17,21 +19,44 @@ final class RuntimeAvailabilityStore: @unchecked Sendable {
         defer { lock.unlock() }
         return activeRuntimes.contains(kind)
     }
+
+    func activeRuntimeKinds() -> Set<RuntimeKind> {
+        lock.lock()
+        defer { lock.unlock() }
+        return activeRuntimes
+    }
     
     func setAvailable(_ available: Bool, for kind: RuntimeKind) {
         lock.lock()
+        let changed: Bool
         if available {
-            activeRuntimes.insert(kind)
+            changed = activeRuntimes.insert(kind).inserted
         } else {
-            activeRuntimes.remove(kind)
+            changed = activeRuntimes.remove(kind) != nil
         }
         lock.unlock()
+
+        if changed {
+            NotificationCenter.default.post(
+                name: Self.didChangeNotification,
+                object: self,
+                userInfo: ["kind": kind.rawValue, "available": available]
+            )
+        }
     }
     
     func reset() {
         lock.lock()
+        let wasEmpty = activeRuntimes.isEmpty
         activeRuntimes.removeAll()
         lock.unlock()
+
+        if !wasEmpty {
+            NotificationCenter.default.post(
+                name: Self.didChangeNotification,
+                object: self
+            )
+        }
     }
     
     // TypeScript depends on Node - report dependency

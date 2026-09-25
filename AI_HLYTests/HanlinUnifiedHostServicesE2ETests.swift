@@ -587,9 +587,29 @@ struct HanlinUnifiedHostServicesE2ETests {
         try Data(packageJSON.utf8).write(to: appDir.appending(path: "package.json"))
 
         let bundleJS = """
-        console.log("HANLIN_NS_FIXTURE_RUNNING");
+        var bridge = (typeof NSClassFromString === 'function') ? NSClassFromString('HanlinNativeServicesBridge') : null;
+        if (!bridge) {
+            throw new Error('HanlinNativeServicesBridge class not available');
+        }
+        var dataDir = bridge.dataRootDirectory();
+        var stateDir = bridge.stateDirectory();
+        if (!dataDir) {
+            throw new Error('Host services dataRootDirectory was nil');
+        }
+        NSUserDefaults.standardUserDefaults.setObjectForKey(dataDir, 'HanlinNS_Test_DataRoot');
+        NSUserDefaults.standardUserDefaults.setObjectForKey(stateDir, 'HanlinNS_Test_StateRoot');
+        NSUserDefaults.standardUserDefaults.synchronize();
+        console.log('HANLIN_NS_BRIDGE_CALL_OK data=' + dataDir);
         """
         try Data(bundleJS.utf8).write(to: appDir.appending(path: "bundle.js"))
+        try Data(bundleJS.utf8).write(to: appDir.appending(path: "bundle.mjs"))
+
+        UserDefaults.standard.removeObject(forKey: "HanlinNS_Test_DataRoot")
+        UserDefaults.standard.removeObject(forKey: "HanlinNS_Test_StateRoot")
+        defer {
+            UserDefaults.standard.removeObject(forKey: "HanlinNS_Test_DataRoot")
+            UserDefaults.standard.removeObject(forKey: "HanlinNS_Test_StateRoot")
+        }
 
         // Session 1:
         let adapter1 = NativeScriptHostServicesAdapter(
@@ -609,11 +629,19 @@ struct HanlinUnifiedHostServicesE2ETests {
         #expect(session1.isActive)
         #expect(HanlinNativeServicesBridge.currentProvider() === adapter1)
 
+        let data1 = UserDefaults.standard.string(forKey: "HanlinNS_Test_DataRoot")
+        let state1 = UserDefaults.standard.string(forKey: "HanlinNS_Test_StateRoot")
+        #expect(data1?.contains("ns-fixture-app-1") == true, "JS call through bridge did not route to adapter1 dataRoot: \(String(describing: data1))")
+        #expect(state1?.contains("ns-fixture-app-1") == true, "JS call through bridge did not route to adapter1 stateRoot: \(String(describing: state1))")
+
         // Shutdown session 1
         session1.shutdown()
         #expect(!session1.isActive)
         HanlinNativeServicesBridge.unregisterProvider(forSessionID: sessionID1)
         #expect(HanlinNativeServicesBridge.provider(forSessionID: sessionID1) == nil)
+
+        UserDefaults.standard.removeObject(forKey: "HanlinNS_Test_DataRoot")
+        UserDefaults.standard.removeObject(forKey: "HanlinNS_Test_StateRoot")
 
         // Session 2 (sequential after session 1):
         let appID2 = try HanlinAppID(validating: "ns-fixture-app-2")
@@ -632,6 +660,11 @@ struct HanlinUnifiedHostServicesE2ETests {
         try session2.start()
         #expect(session2.isActive)
         #expect(HanlinNativeServicesBridge.currentProvider() === adapter2)
+
+        let data2 = UserDefaults.standard.string(forKey: "HanlinNS_Test_DataRoot")
+        let state2 = UserDefaults.standard.string(forKey: "HanlinNS_Test_StateRoot")
+        #expect(data2?.contains("ns-fixture-app-2") == true, "JS call through bridge did not route to adapter2 dataRoot: \(String(describing: data2))")
+        #expect(state2?.contains("ns-fixture-app-2") == true, "JS call through bridge did not route to adapter2 stateRoot: \(String(describing: state2))")
 
         session2.shutdown()
         #expect(!session2.isActive)

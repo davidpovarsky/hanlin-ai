@@ -35,6 +35,60 @@ final class HanlinRuntimeInstallationUITests: XCTestCase {
 
         capture(name: "RuntimeCenter-Initial")
 
+        // Verify lifecycle controls: fresh launch starts all toggles OFF & no Prepare button exists
+        XCTAssertFalse(app.buttons["Prepare"].exists, "Prepare button must not exist in Runtime Center")
+        XCTAssertFalse(app.descendants(matching: .any)["hanlin-runtime-prepare"].exists, "Prepare button must not exist in Runtime Center")
+
+        let nodeToggle = toggleSwitch(for: "node")
+        let tsToggle = toggleSwitch(for: "typeScript")
+        let pythonToggle = toggleSwitch(for: "localPython")
+        let jscToggle = toggleSwitch(for: "javaScriptCore")
+        let shellToggle = toggleSwitch(for: "shell")
+
+        XCTAssertFalse(isToggleOn(nodeToggle), "Node toggle should be OFF on fresh launch")
+        XCTAssertFalse(isToggleOn(tsToggle), "TypeScript toggle should be OFF on fresh launch")
+        XCTAssertFalse(isToggleOn(pythonToggle), "Local Python toggle should be OFF on fresh launch")
+        if jscToggle.exists { XCTAssertFalse(isToggleOn(jscToggle), "JSC toggle should be OFF on fresh launch") }
+        if shellToggle.exists { XCTAssertFalse(isToggleOn(shellToggle), "Shell toggle should be OFF on fresh launch") }
+
+        // Tap Python Toggle -> visible state changes correctly
+        pythonToggle.tap()
+        XCTAssertTrue(waitForToggle(pythonToggle, toBe: true, timeout: 20), "Python toggle should visibly transition to ON")
+        pythonToggle.tap()
+        XCTAssertTrue(waitForToggle(pythonToggle, toBe: false, timeout: 20), "Python toggle should visibly transition to OFF")
+
+        // Node ON does not force TypeScript ON
+        nodeToggle.tap()
+        XCTAssertTrue(waitForToggle(nodeToggle, toBe: true, timeout: 25), "Node toggle should transition to ON")
+        XCTAssertFalse(isToggleOn(tsToggle), "Node ON must not force TypeScript ON")
+
+        // Turn TypeScript ON -> Node ON too
+        tsToggle.tap()
+        XCTAssertTrue(waitForToggle(tsToggle, toBe: true, timeout: 25), "TypeScript toggle should transition to ON")
+        XCTAssertTrue(isToggleOn(nodeToggle), "Node toggle must be ON when TypeScript is ON")
+
+        // Turn TypeScript OFF -> TypeScript stays OFF while Node remains ON
+        tsToggle.tap()
+        XCTAssertTrue(waitForToggle(tsToggle, toBe: false, timeout: 25), "TypeScript toggle should transition to OFF")
+        XCTAssertTrue(isToggleOn(nodeToggle), "Node toggle must remain ON when TypeScript is turned OFF")
+
+        // Turn Node OFF
+        nodeToggle.tap()
+        XCTAssertTrue(waitForToggle(nodeToggle, toBe: false, timeout: 25), "Node toggle should transition to OFF")
+
+        // Restart app -> lifecycle toggles return OFF
+        app.terminate()
+        app.launch()
+        openSettings()
+        openRuntimeCenter()
+
+        let nodeToggleRestart = toggleSwitch(for: "node")
+        let tsToggleRestart = toggleSwitch(for: "typeScript")
+        let pythonToggleRestart = toggleSwitch(for: "localPython")
+        XCTAssertFalse(isToggleOn(nodeToggleRestart), "Node toggle should return OFF after restart")
+        XCTAssertFalse(isToggleOn(tsToggleRestart), "TypeScript toggle should return OFF after restart")
+        XCTAssertFalse(isToggleOn(pythonToggleRestart), "Python toggle should return OFF after restart")
+
         // 2. JavaScriptCore Smoke Test (1 + 2 = 3)
         tapButton(withId: "hanlin-runtime-smoke-javaScriptCore")
         let jscResult = app.descendants(matching: .any)["hanlin-runtime-last-message"].firstMatch
@@ -596,5 +650,31 @@ final class HanlinRuntimeInstallationUITests: XCTestCase {
             RunLoop.current.run(until: Date().addingTimeInterval(0.2))
         }
         return condition()
+    }
+
+    private func toggleSwitch(for kindRaw: String) -> XCUIElement {
+        let sw = app.switches["hanlin-runtime-availability-\(kindRaw)"].firstMatch
+        if sw.exists { return sw }
+        return app.descendants(matching: .switch)["hanlin-runtime-availability-\(kindRaw)"].firstMatch
+    }
+
+    private func isToggleOn(_ element: XCUIElement) -> Bool {
+        guard element.exists else { return false }
+        if let valStr = element.value as? String {
+            return valStr == "1" || valStr.lowercased() == "on" || valStr.lowercased() == "true"
+        }
+        if let valInt = element.value as? Int {
+            return valInt == 1
+        }
+        return false
+    }
+
+    private func waitForToggle(_ element: XCUIElement, toBe targetState: Bool, timeout: TimeInterval = 15) -> Bool {
+        let predicate = NSPredicate { _, _ in
+            self.isToggleOn(element) == targetState
+        }
+        let exp = expectation(for: predicate, evaluatedWith: element)
+        let result = XCTWaiter.wait(for: [exp], timeout: timeout)
+        return result == .completed
     }
 }

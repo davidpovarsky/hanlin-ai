@@ -5,12 +5,16 @@ import SwiftUI
 @Observable
 final class RuntimeCenterModel {
     var snapshots: [RuntimeKind: RuntimeSnapshot] = [:]
+    var optimisticStates: [RuntimeKind: RuntimeOperationalState] = [:]
     var isBusy = false
     var lastMessage: String?
 
     private let core = AppRuntimeCore.shared
 
     func isStarted(for kind: RuntimeKind) -> Bool {
+        if let optimistic = optimisticStates[kind] {
+            return optimistic == .ready || optimistic == .executing || optimistic == .preparing
+        }
         guard let snapshot = snapshots[kind] else { return false }
         return snapshot.state == .ready || snapshot.state == .executing || snapshot.state == .preparing
     }
@@ -24,12 +28,17 @@ final class RuntimeCenterModel {
     }
 
     func start(_ kind: RuntimeKind) async {
+        optimisticStates[kind] = .preparing
+        if kind == .typeScript && !isStarted(for: .node) {
+            optimisticStates[.node] = .preparing
+        }
         await perform {
             _ = try await self.core.start(kind)
         }
     }
 
     func stop(_ kind: RuntimeKind) async {
+        optimisticStates[kind] = .stopped
         await perform {
             let snapshot = try await self.core.stop(kind)
             if snapshot.state == .appRestartRequired {
@@ -78,7 +87,10 @@ final class RuntimeCenterModel {
     private func perform(_ operation: @escaping @MainActor () async throws -> Void) async {
         isBusy = true
         lastMessage = nil
-        defer { isBusy = false }
+        defer {
+            isBusy = false
+            optimisticStates.removeAll()
+        }
         do {
             try await operation()
             if lastMessage == nil { lastMessage = RuntimeL10n.string("Completed") }
@@ -144,19 +156,39 @@ struct RuntimeCenterView: View {
             Section(RuntimeL10n.string("Runtime tools")) { RuntimeToolsSettingsView() }
         }
         .navigationTitle(RuntimeL10n.string("Runtimes & Packages"))
-        .task { await model.load() }
+        .task {
+            await model.load()
+            for await _ in NotificationCenter.default.notifications(named: RuntimeAvailabilityStore.didChangeNotification) {
+                await model.load()
+            }
+        }
         .refreshable { await model.load() }
     }
 
     private func snapshot(for kind: RuntimeKind) -> RuntimeSnapshot {
-        if kind == .typeScript {
-            var value = model.snapshots[.node] ?? .stopped(.typeScript)
-            let isTSStarted = model.isStarted(for: .typeScript)
-            let state: RuntimeOperationalState = isTSStarted ? value.state : .stopped
-            value = RuntimeSnapshot(kind: .typeScript, state: state, version: "6.0.3", source: "typescript npm package", lastHealthCheck: value.lastHealthCheck, lastErrorCode: value.lastErrorCode, storageBytes: nil, cacheBytes: nil, activeExecutionCount: value.activeExecutionCount, packageCount: nil)
-            return value
+        var snap = model.snapshots[kind] ?? .stopped(kind)
+        if let optimistic = model.optimisticStates[kind] {
+            snap.state = optimistic
+            return snap
         }
-        return model.snapshots[kind] ?? .stopped(kind)
+        if kind == .typeScript {
+            let isTSStarted = model.isStarted(for: .typeScript)
+            let nodeSnap = model.snapshots[.node] ?? .stopped(.node)
+            let state: RuntimeOperationalState = isTSStarted ? nodeSnap.state : .stopped
+            return RuntimeSnapshot(
+                kind: .typeScript,
+                state: state,
+                version: "6.0.3",
+                source: "typescript npm package",
+                lastHealthCheck: nodeSnap.lastHealthCheck,
+                lastErrorCode: nodeSnap.lastErrorCode,
+                storageBytes: nil,
+                cacheBytes: nil,
+                activeExecutionCount: nodeSnap.activeExecutionCount,
+                packageCount: nil
+            )
+        }
+        return snap
     }
 
     @ViewBuilder
@@ -251,6 +283,7 @@ private struct RuntimeToolsSettingsView: View {
                     }
                 } icon: { Image(systemName: entry.systemImage) }
             }
+            .accessibilityIdentifier("hanlin-tool-permission-\(entry.name)")
         }
         .task {
             let names = Set(["execute_local_python_code", "execute_javascript_code", "execute_typescript_code", "execute_shell_command"])
