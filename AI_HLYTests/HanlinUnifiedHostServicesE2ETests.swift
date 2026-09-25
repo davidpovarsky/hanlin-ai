@@ -35,12 +35,11 @@ struct HanlinUnifiedHostServicesE2ETests {
     }
 
     @Test func runtimeBrokerRespectsAvailabilityToggle() async throws {
-        let context = HanlinHostCallContext(
-            caller: "unauthorized_caller",
-            appID: nil,
-            sessionID: UUID().uuidString,
-            grantedCapabilities: [],
-            localeIdentifier: "en"
+        let context = HanlinHostCallContext.forMiniApp(
+            appID: try HanlinAppID(validating: "unauthorized.caller"),
+            origin: .system,
+            capabilities: [],
+            canPresentUI: false
         )
         do {
             _ = try await HanlinHostServicesBroker.shared.executeRuntime(
@@ -529,7 +528,7 @@ struct HanlinUnifiedHostServicesE2ETests {
         let bridge1 = try #require(HanlinNativeServicesBridge.claimSessionBridge(withToken: token1))
 
         // 2. Set active session bridge
-        HanlinNativeServicesBridge.setActiveSessionBridge(bridge1, forSessionID: "session-active-1")
+        HanlinNativeServicesBridge.setActiveSession(bridge1, forSessionID: "session-active-1")
         #expect(HanlinNativeServicesBridge.activeSessionBridge() === bridge1)
         #expect(HanlinNativeServicesBridge.currentProvider() === ns1)
 
@@ -551,7 +550,7 @@ struct HanlinUnifiedHostServicesE2ETests {
         HanlinNativeServicesBridge.register(ns2, forSessionID: "session-active-2")
         let token2 = try #require(HanlinNativeServicesPrepareSessionBootstrap("session-active-2"))
         let bridge2 = try #require(HanlinNativeServicesBridge.claimSessionBridge(withToken: token2))
-        HanlinNativeServicesBridge.setActiveSessionBridge(bridge2, forSessionID: "session-active-2")
+        HanlinNativeServicesBridge.setActiveSession(bridge2, forSessionID: "session-active-2")
         #expect(HanlinNativeServicesBridge.activeSessionBridge() === bridge2)
         #expect(HanlinNativeServicesBridge.currentProvider() === ns2)
 
