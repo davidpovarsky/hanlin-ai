@@ -54,12 +54,11 @@ struct HanlinUnifiedHostServicesAgentAcceptanceTests {
     }
 
     @Test func runtimeBrokerRejectsDisabledRuntime() async throws {
-        let context = HanlinHostCallContext(
-            caller: "unauthorized_agent",
-            appID: nil,
-            sessionID: UUID().uuidString,
-            grantedCapabilities: [],
-            localeIdentifier: "en"
+        let context = HanlinHostCallContext.forMiniApp(
+            appID: try HanlinAppID(validating: "unauthorized.agent"),
+            origin: .system,
+            capabilities: [],
+            canPresentUI: false
         )
         do {
             _ = try await HanlinRuntimeBroker.shared.execute(
