@@ -9,7 +9,7 @@ struct ExecuteShellCommandTool: NativeTool {
     }
 
     var catalogEntry: NativeToolCatalogEntry {
-        .init(name: name, title: RuntimeL10n.string("Shell / ios_system"), summary: RuntimeL10n.string("Run one approved ios_system program with a structured argument array."), categories: ["runtime", "code", "shell"], keywords: ["shell", "files", "ios_system"], examples: ["List the files in the local workspace"], isSensitive: true, systemImage: "apple.terminal", isEnabledByDefault: false, presentationProfile: RuntimeToolSupport.profile(name: name, image: "apple.terminal", running: "Running shell command", completed: "Shell command completed", arguments: ["program", "arguments", "allow_network"]))
+        .init(name: name, title: RuntimeL10n.string("Shell / ios_system"), summary: RuntimeL10n.string("Run one approved ios_system program with a structured argument array."), categories: ["runtime", "code", "shell"], keywords: ["shell", "files", "ios_system"], examples: ["List the files in the local workspace"], isSensitive: true, systemImage: "apple.terminal", presentationProfile: RuntimeToolSupport.profile(name: name, image: "apple.terminal", running: "Running shell command", completed: "Shell command completed", arguments: ["program", "arguments", "allow_network"]))
     }
 
     func openAIToolSchema() -> [String: Any] {

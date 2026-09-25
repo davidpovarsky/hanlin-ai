@@ -591,6 +591,7 @@ struct HanlinUnifiedHostServicesE2ETests {
         var bridge = (typeof NSClassFromString === 'function') ? NSClassFromString('HanlinNativeServicesBridge') : (globalThis.HanlinNativeServicesBridge || null);
         var dataDir = null;
         var stateDir = null;
+        var errs = [];
 
         if (compat && typeof compat.roundTripValueKey === 'function') {
             try {
@@ -598,16 +599,16 @@ struct HanlinUnifiedHostServicesE2ETests {
                 var p2 = compat.roundTripValueKey('', 'hostService.state');
                 if (p1 && p1.length > 0) { dataDir = (p1.toString ? p1.toString() : String(p1)); }
                 if (p2 && p2.length > 0) { stateDir = (p2.toString ? p2.toString() : String(p2)); }
-            } catch (e) {}
+            } catch (e) { errs.push('roundTrip:' + e); }
         }
 
         if (!dataDir && bridge) {
             try {
-                var rawData = (typeof bridge.dataRootDirectory === 'function') ? bridge.dataRootDirectory() : bridge.dataRootDirectory;
-                var rawState = (typeof bridge.stateDirectory === 'function') ? bridge.stateDirectory() : bridge.stateDirectory;
+                var rawData = (typeof bridge.dataRootDirectory === 'function') ? bridge.dataRootDirectory() : (bridge.dataRootDirectory || (typeof bridge.activeDataRoot === 'function' ? bridge.activeDataRoot() : bridge.activeDataRoot));
+                var rawState = (typeof bridge.stateDirectory === 'function') ? bridge.stateDirectory() : (bridge.stateDirectory || (typeof bridge.activeStateDirectory === 'function' ? bridge.activeStateDirectory() : bridge.activeStateDirectory));
                 if (rawData) { dataDir = (rawData.toString ? rawData.toString() : String(rawData)); }
                 if (rawState) { stateDir = (rawState.toString ? rawState.toString() : String(rawState)); }
-            } catch (e) {}
+            } catch (e) { errs.push('bridge:' + e); }
         }
 
         if (!dataDir && compat) {
@@ -623,11 +624,23 @@ struct HanlinUnifiedHostServicesE2ETests {
                     if (rawCompatData) { dataDir = (rawCompatData.toString ? rawCompatData.toString() : String(rawCompatData)); }
                     if (rawCompatState) { stateDir = (rawCompatState.toString ? rawCompatState.toString() : String(rawCompatState)); }
                 }
-            } catch (e) {}
+            } catch (e) { errs.push('compatFallback:' + e); }
         }
 
         if (!dataDir) {
-            throw new Error('Host services dataRootDirectory was nil (bridge=' + typeof bridge + ', compat=' + typeof compat + ')');
+            try {
+                if (typeof NSProcessInfo === 'function' && NSProcessInfo.processInfo) {
+                    var env = NSProcessInfo.processInfo.environment;
+                    if (env) {
+                        dataDir = env.objectForKey('HANLIN_MINIAPP_DATA_ROOT');
+                        stateDir = env.objectForKey('HANLIN_MINIAPP_STATE_DIR');
+                    }
+                }
+            } catch (e) { errs.push('processInfo:' + e); }
+        }
+
+        if (!dataDir) {
+            throw new Error('Host services dataRootDirectory was nil (bridge=' + typeof bridge + ', compat=' + typeof compat + ', errs=' + errs.join(';') + ')');
         }
         NSUserDefaults.standardUserDefaults.setObjectForKey(dataDir, 'HanlinNS_Test_DataRoot');
         NSUserDefaults.standardUserDefaults.setObjectForKey(stateDir, 'HanlinNS_Test_StateRoot');
@@ -642,6 +655,7 @@ struct HanlinUnifiedHostServicesE2ETests {
         defer {
             UserDefaults.standard.removeObject(forKey: "HanlinNS_Test_DataRoot")
             UserDefaults.standard.removeObject(forKey: "HanlinNS_Test_StateRoot")
+            HanlinNativeServicesHostProvider.clearActiveContainer()
         }
 
         // Session 1:
@@ -650,11 +664,33 @@ struct HanlinUnifiedHostServicesE2ETests {
             grantedCapabilities: ["network"],
             sessionID: sessionID1
         )
+        let dataDir1 = adapter1.dataRootDirectory() ?? ""
+        let stateDir1 = adapter1.stateDirectory() ?? ""
+        let docsDir1 = adapter1.documentsDirectory() ?? ""
+        let cacheDir1 = adapter1.cacheDirectory() ?? ""
+
+        HanlinNativeServicesHostProvider.setActiveContainer(
+            appID: appID1.rawValue,
+            dataRoot: dataDir1,
+            stateDir: stateDir1,
+            docsDir: docsDir1,
+            cacheDir: cacheDir1,
+            grantedCapabilities: ["network"]
+        )
         HanlinNativeServicesBridge.register(adapter1, forSessionID: sessionID1)
         HanlinNativeServicesBridge.register(adapter1)
 
+        let env1: [String: String] = [
+            "HANLIN_APP_ID": appID1.rawValue,
+            "HANLIN_MINIAPP_DATA_ROOT": dataDir1,
+            "HANLIN_MINIAPP_STATE_DIR": stateDir1,
+            "HANLIN_MINIAPP_DOCUMENTS_DIR": docsDir1,
+            "HANLIN_MINIAPP_CACHE_DIR": cacheDir1
+        ]
+
         let session1 = try HanlinNativeScriptSession(
             applicationRoot: appDir,
+            environment: env1,
             sessionID: sessionID1
         )
 
@@ -673,6 +709,7 @@ struct HanlinUnifiedHostServicesE2ETests {
         #expect(!session1.isActive)
         HanlinNativeServicesBridge.unregisterProvider(forSessionID: sessionID1)
         HanlinNativeServicesBridge.register(nil)
+        HanlinNativeServicesHostProvider.clearActiveContainer()
         #expect(HanlinNativeServicesBridge.provider(forSessionID: sessionID1) == nil)
 
         UserDefaults.standard.removeObject(forKey: "HanlinNS_Test_DataRoot")
@@ -686,11 +723,33 @@ struct HanlinUnifiedHostServicesE2ETests {
             grantedCapabilities: ["network"],
             sessionID: sessionID2
         )
+        let dataDir2 = adapter2.dataRootDirectory() ?? ""
+        let stateDir2 = adapter2.stateDirectory() ?? ""
+        let docsDir2 = adapter2.documentsDirectory() ?? ""
+        let cacheDir2 = adapter2.cacheDirectory() ?? ""
+
+        HanlinNativeServicesHostProvider.setActiveContainer(
+            appID: appID2.rawValue,
+            dataRoot: dataDir2,
+            stateDir: stateDir2,
+            docsDir: docsDir2,
+            cacheDir: cacheDir2,
+            grantedCapabilities: ["network"]
+        )
         HanlinNativeServicesBridge.register(adapter2, forSessionID: sessionID2)
         HanlinNativeServicesBridge.register(adapter2)
 
+        let env2: [String: String] = [
+            "HANLIN_APP_ID": appID2.rawValue,
+            "HANLIN_MINIAPP_DATA_ROOT": dataDir2,
+            "HANLIN_MINIAPP_STATE_DIR": stateDir2,
+            "HANLIN_MINIAPP_DOCUMENTS_DIR": docsDir2,
+            "HANLIN_MINIAPP_CACHE_DIR": cacheDir2
+        ]
+
         let session2 = try HanlinNativeScriptSession(
             applicationRoot: appDir,
+            environment: env2,
             sessionID: sessionID2
         )
         try session2.start()
@@ -706,6 +765,7 @@ struct HanlinUnifiedHostServicesE2ETests {
         #expect(!session2.isActive)
         HanlinNativeServicesBridge.unregisterProvider(forSessionID: sessionID2)
         HanlinNativeServicesBridge.register(nil)
+        HanlinNativeServicesHostProvider.clearActiveContainer()
     }
 
     @Test func expoAppContextsResolveExactlyAndTeardownIndependently() throws {

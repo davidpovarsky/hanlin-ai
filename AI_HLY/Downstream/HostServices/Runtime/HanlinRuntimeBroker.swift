@@ -140,6 +140,9 @@ actor HanlinRuntimeBroker {
         try await checkCapability(for: .typeScript, in: context)
         if !compileOnly {
             try await checkCapability(for: .node, in: context)
+            guard RuntimeAvailabilityStore.shared.isAvailable(.node) else {
+                throw HanlinHostServiceError.runtimeUnavailable("node")
+            }
         }
         _ = try await core.ensureStarted(.node)
         _ = try await core.ensureStarted(.typeScript)

@@ -388,32 +388,44 @@ async function compileTypeScript(body) {
   const originalReadFile = compilerHost.readFile.bind(compilerHost);
   let javaScript = null;
   let sourceMap = null;
+  const isVirtual = fileName => path.basename(fileName) === requestedFileName || path.resolve(fileName) === virtualFileName || fileName === virtualFileName;
   compilerHost.getSourceFile = (fileName, languageVersion, onError, shouldCreateNewSourceFile) =>
-    path.resolve(fileName) === virtualFileName
+    isVirtual(fileName)
       ? sourceFile
       : originalGetSourceFile(fileName, languageVersion, onError, shouldCreateNewSourceFile);
-  compilerHost.fileExists = fileName => path.resolve(fileName) === virtualFileName || originalFileExists(fileName);
-  compilerHost.readFile = fileName => path.resolve(fileName) === virtualFileName ? body.source : originalReadFile(fileName);
+  compilerHost.fileExists = fileName => isVirtual(fileName) || originalFileExists(fileName);
+  compilerHost.readFile = fileName => isVirtual(fileName) ? body.source : originalReadFile(fileName);
   compilerHost.writeFile = (fileName, data) => {
     if (fileName.endsWith('.js')) javaScript = data;
     else if (fileName.endsWith('.js.map')) sourceMap = data;
   };
   const program = ts.createProgram([virtualFileName], compilerOptions, compilerHost);
-  const rawDiagnostics = [...(converted.errors ?? []), ...ts.getPreEmitDiagnostics(program)];
+  const rawDiagnostics = [
+    ...(converted.errors ?? []),
+    ...ts.getPreEmitDiagnostics(program, sourceFile),
+    ...program.getSemanticDiagnostics(sourceFile),
+    ...program.getSyntacticDiagnostics(sourceFile),
+  ];
   if (!rawDiagnostics.some(item => item.category === ts.DiagnosticCategory.Error)) {
     rawDiagnostics.push(...program.emit().diagnostics);
   }
-  const diagnostics = rawDiagnostics.map(diagnostic => {
+  const seen = new Set();
+  const diagnostics = [];
+  for (const diagnostic of rawDiagnostics) {
     const position = diagnostic.file && typeof diagnostic.start === 'number' ? diagnostic.file.getLineAndCharacterOfPosition(diagnostic.start) : null;
-    return {
-      code: diagnostic.code,
-      category: diagnostic.category,
-      message: ts.flattenDiagnosticMessageText(diagnostic.messageText, '\n'),
-      file: diagnostic.file?.fileName ? path.basename(diagnostic.file.fileName) : null,
-      line: position ? position.line + 1 : null,
-      column: position ? position.character + 1 : null,
-    };
-  });
+    const key = `${diagnostic.code}:${position?.line}:${position?.character}:${diagnostic.messageText}`;
+    if (!seen.has(key)) {
+      seen.add(key);
+      diagnostics.push({
+        code: diagnostic.code,
+        category: diagnostic.category,
+        message: ts.flattenDiagnosticMessageText(diagnostic.messageText, '\n'),
+        file: diagnostic.file?.fileName ? path.basename(diagnostic.file.fileName) : null,
+        line: position ? position.line + 1 : null,
+        column: position ? position.character + 1 : null,
+      });
+    }
+  }
   const failed = diagnostics.some(item => item.category === ts.DiagnosticCategory.Error);
   return { javaScript: failed ? null : javaScript, sourceMap: failed ? null : sourceMap, diagnostics: diagnostics.map(({ category, ...item }) => item), succeeded: !failed };
 }

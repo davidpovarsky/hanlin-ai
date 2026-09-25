@@ -31,6 +31,13 @@ struct ExecuteTypeScriptTool: NativeTool {
             )
             let source = try NativeToolJSON.strictRequiredString(arguments, "source")
             let compileOnly = try NativeToolJSON.strictBool(arguments, "compile_only")
+            guard compileOnly || RuntimeAvailabilityStore.shared.isAvailable(.node) else {
+                return RuntimeToolSupport.failure(
+                    HanlinHostServiceError.runtimeUnavailable("node"),
+                    title: "Node unavailable",
+                    runtimeKind: .node
+                )
+            }
             let environment = try await AppRuntimeCore.shared.environment.resolved(scopes: [.shared, .node])
             let result = try await AgentHostServicesAdapter.compileAndExecuteTypeScript(
                 source: source,

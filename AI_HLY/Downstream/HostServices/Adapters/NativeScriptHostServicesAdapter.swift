@@ -65,21 +65,25 @@ public final class NativeScriptHostServicesAdapter: NSObject, @unchecked Sendabl
         return dir.path(percentEncoded: false)
     }
 
+    @objc(dataRootDirectory)
     public func dataRootDirectory() -> String? {
         guard let appID = context.appID else { return nil }
         return containerPath(for: appID, area: "Data")
     }
 
+    @objc(stateDirectory)
     public func stateDirectory() -> String? {
         guard let appID = context.appID else { return nil }
         return containerPath(for: appID, area: "State")
     }
 
+    @objc(documentsDirectory)
     public func documentsDirectory() -> String? {
         guard let appID = context.appID else { return nil }
         return containerPath(for: appID, area: "Documents")
     }
 
+    @objc(cacheDirectory)
     public func cacheDirectory() -> String? {
         guard let appID = context.appID else { return nil }
         return containerPath(for: appID, area: "Cache")
@@ -174,6 +178,7 @@ public final class NativeScriptHostServicesAdapter: NSObject, @unchecked Sendabl
         }
     }
 
+    @objc(pythonVersion)
     public func pythonVersion() -> String? {
         try? PythonRuntimeBridge.version()
     }
