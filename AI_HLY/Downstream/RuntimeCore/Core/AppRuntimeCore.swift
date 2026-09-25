@@ -118,36 +118,31 @@ actor AppRuntimeCore {
         case .node:
             let s = await node.snapshot()
             if s.state == .ready || s.state == .executing {
-                RuntimeAvailabilityStore.shared.setAvailable(true, for: .node)
                 return s
             }
-            return try await start(.node)
+            return try await node.healthCheck()
         case .typeScript:
             _ = try await ensureStarted(.node)
-            RuntimeAvailabilityStore.shared.setAvailable(true, for: .typeScript)
             let s = await node.snapshot()
             return RuntimeSnapshot(kind: .typeScript, state: s.state, version: "6.0.3", source: "typescript npm package", lastHealthCheck: s.lastHealthCheck, lastErrorCode: s.lastErrorCode, storageBytes: nil, cacheBytes: nil, activeExecutionCount: s.activeExecutionCount, packageCount: nil)
         case .localPython:
             let s = await python.snapshot()
             if s.state == .ready || s.state == .executing {
-                RuntimeAvailabilityStore.shared.setAvailable(true, for: .localPython)
                 return s
             }
-            return try await start(.localPython)
+            return try await python.prepare()
         case .javaScriptCore:
             let s = await javaScriptCore.snapshot()
             if s.state == .ready || s.state == .executing {
-                RuntimeAvailabilityStore.shared.setAvailable(true, for: .javaScriptCore)
                 return s
             }
-            return try await start(.javaScriptCore)
+            return try await javaScriptCore.healthCheck()
         case .shell:
             let s = await shell.snapshot()
             if s.state == .ready || s.state == .executing {
-                RuntimeAvailabilityStore.shared.setAvailable(true, for: .shell)
                 return s
             }
-            return try await start(.shell)
+            return try await shell.healthCheck()
         }
     }
 

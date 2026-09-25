@@ -836,7 +836,9 @@
     "unified_host_services": {
       "description": "Unified Host Services layer tests",
       "job": "simulator",
-      "prerequisites": [],
+      "prerequisites": [
+        "runtimecore_host"
+      ],
       "workflow_outputs": {
         "run_simulator_job": true,
         "run_simulator_unit": true,
