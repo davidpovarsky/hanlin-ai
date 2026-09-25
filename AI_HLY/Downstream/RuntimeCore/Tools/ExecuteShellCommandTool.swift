@@ -90,7 +90,10 @@ struct ExecuteShellCommandTool: NativeTool {
     }
 
     private func isAllowedByCatalog() async -> Bool {
-        await MainActor.run {
+        if let hostContext, hostContext.hasCapability("all") || hostContext.hasCapability("shell") || hostContext.hasCapability("runtime.shell") || hostContext.origin == .assistantModel {
+            return true
+        }
+        return await MainActor.run {
             NativeToolCatalog.shared.ensureBuiltinsRegistered()
             guard let entry = NativeToolCatalog.shared.entry(named: name) else { return true }
             return NativeToolCatalog.shared.isEffectivelyEnabled(entry)

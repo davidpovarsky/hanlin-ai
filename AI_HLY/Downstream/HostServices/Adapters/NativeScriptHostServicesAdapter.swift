@@ -51,17 +51,18 @@ public final class NativeScriptHostServicesAdapter: NSObject, @unchecked Sendabl
     /// (applicationSupport/Hanlin/MiniApps/{appID}/{area}) and directories are
     /// created lazily by the store on first actual read/write.
     private func containerPath(for appID: HanlinAppID, area: String) -> String? {
-        guard let support = try? FileManager.default.url(
+        guard let support = (try? FileManager.default.url(
             for: .applicationSupportDirectory,
             in: .userDomainMask,
             appropriateFor: nil,
-            create: false
-        ) else { return nil }
-        return support
+            create: true
+        )) ?? FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first else { return nil }
+        let dir = support
             .appending(path: "Hanlin/MiniApps", directoryHint: .isDirectory)
             .appending(path: appID.rawValue, directoryHint: .isDirectory)
             .appending(path: area, directoryHint: .isDirectory)
-            .path(percentEncoded: false)
+        try? FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
+        return dir.path(percentEncoded: false)
     }
 
     public func dataRootDirectory() -> String? {
