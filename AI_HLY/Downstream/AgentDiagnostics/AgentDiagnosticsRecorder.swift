@@ -170,6 +170,11 @@ actor AgentDiagnosticsRecorder {
     }
 
     func recordToolCall(roundID: UUID, call: AgentToolCall) async {
+        for round in session.rounds {
+            if round.toolCalls.contains(where: { $0.callID == call.id }) {
+                return
+            }
+        }
         let argumentHash = Self.sha256(call.sanitizedArgumentsJSON)
         var duplicateOf: String?
         for round in session.rounds {
@@ -238,7 +243,14 @@ actor AgentDiagnosticsRecorder {
             : nil
         let resultByteCount = resultForModel.utf8.count
 
-        updateRound(roundID) { round in
+        var targetRoundID = roundID
+        if !session.rounds.contains(where: { $0.id == roundID && $0.toolCalls.contains(where: { $0.callID == callID }) }) {
+            if let containingRound = session.rounds.first(where: { $0.toolCalls.contains(where: { $0.callID == callID }) }) {
+                targetRoundID = containingRound.id
+            }
+        }
+
+        updateRound(targetRoundID) { round in
             guard let index = round.toolCalls.firstIndex(where: { $0.callID == callID }) else { return }
 
             var call = round.toolCalls[index]

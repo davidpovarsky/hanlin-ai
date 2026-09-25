@@ -3893,18 +3893,8 @@ default:
             case .toolCallArgumentsDelta(let id, let delta):
                 continuation.yield(StreamData(agentEvents: [.toolCallArgumentsDelta(id: id, delta: delta)]))
 
-            case .toolCall(let call):
-                if let stepID = currentStepID {
-                    let profile = preparedAssistantTools.presentationProfile(for: call.name)
-                        ?? ToolPresentationProfileRegistry.resolve(toolName: call.name)
-                    let parsedCall = AgentToolCall.parse(
-                        id: call.id,
-                        name: call.name,
-                        argumentsJSON: call.argumentsJSON,
-                        presentationProfile: profile
-                    )
-                    await self.agentDiagnosticsRecorder?.recordToolCall(roundID: stepID, call: parsedCall)
-                }
+            case .toolCall:
+                break
 
             case .toolResult(let callID, let name, let modelText, let resultRef, let isError):
                 if !toolAdapter.completedCallIDs.contains(callID) {
@@ -3939,6 +3929,8 @@ default:
                         await self.agentDiagnosticsRecorder?.recordToolCall(roundID: stepID, call: parsedCall)
                         var diag = NativeToolExecutionDiagnostics()
                         diag.failureCategory = NativeToolExecutionOutcome.invalidArguments.rawValue
+                        diag.canonicalLogicalToolID = preparedAssistantTools.authority.canonicalID(for: name) ?? name
+                        diag.modelFacingAlias = name
                         await self.agentDiagnosticsRecorder?.completeToolCall(
                             roundID: stepID,
                             callID: callID,
