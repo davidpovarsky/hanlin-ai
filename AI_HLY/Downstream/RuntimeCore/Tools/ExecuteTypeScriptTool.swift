@@ -33,7 +33,7 @@ struct ExecuteTypeScriptTool: NativeTool {
             let compileOnly = try NativeToolJSON.strictBool(arguments, "compile_only")
             guard compileOnly || RuntimeAvailabilityStore.shared.isAvailable(.node) else {
                 return RuntimeToolSupport.failure(
-                    HanlinHostServiceError.runtimeUnavailable("node"),
+                    HanlinHostServiceError.runtimeUnavailable(.node),
                     title: "Node unavailable",
                     runtimeKind: .node
                 )
