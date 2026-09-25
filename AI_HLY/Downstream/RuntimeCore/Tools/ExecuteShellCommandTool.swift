@@ -90,7 +90,11 @@ struct ExecuteShellCommandTool: NativeTool {
     }
 
     private func isAllowedByCatalog() async -> Bool {
-        if let hostContext, hostContext.hasCapability("all") || hostContext.hasCapability("shell") || hostContext.hasCapability("runtime.shell") || hostContext.origin == .assistantModel {
+        if let hostContext,
+           hostContext.effectiveCapabilities.contains("all") ||
+           hostContext.effectiveCapabilities.contains("shell") ||
+           hostContext.effectiveCapabilities.contains("runtime.shell") ||
+           hostContext.origin == .assistantModel {
             return true
         }
         return await MainActor.run {
