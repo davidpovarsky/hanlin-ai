@@ -190,7 +190,7 @@ extension HanlinAISDKProviderFactory {
                     do {
                         for try await byte in bytes {
                             buffer.append(byte)
-                            if buffer.count >= 16_384 {
+                            if byte == 0x0A || buffer.count >= 1024 {
                                 continuation.yield(buffer)
                                 buffer.removeAll(keepingCapacity: true)
                             }

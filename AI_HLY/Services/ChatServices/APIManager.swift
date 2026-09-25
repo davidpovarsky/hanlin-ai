@@ -2493,6 +2493,14 @@ class APIManager {
                             }
                         )
 
+                        if assistantToolScope == .nativeOnly ||
+                           (AgentRuntimeUIAcceptanceProvider.isEnabled && !AgentRuntimeUIAcceptanceProvider.isSkillsEnabled) ||
+                           HanlinSkillCatalog.shared.allSkills().isEmpty {
+                            if let prepared = preparedAssistantTools {
+                                session.exposeTools(aliases: Array(prepared.authority.schemasByAlias.keys).sorted())
+                            }
+                        }
+
                         // Inject compact Skill Index once when depth == 0
                         if depth == 0 {
                             let skillIndexPrompt = HanlinSkillIndex.prompt(for: HanlinSkillCatalog.shared.allSkills())

@@ -435,6 +435,7 @@ final class HanlinAISDKToolAdapter {
         argumentsJSON: String,
         profile: ToolPresentationProfile
     ) async -> HanlinAISDKToolExecutionOutput {
+        self.session.exposeTools(aliases: [alias])
         var parsedCall = AgentToolCall.parse(
             id: callID,
             name: alias,
