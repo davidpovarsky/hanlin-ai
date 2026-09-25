@@ -25,6 +25,7 @@ actor HanlinRuntimeBroker {
     ) async throws -> RuntimeExecutionResult {
         try await checkCapability(for: kind, in: context)
         _ = try await core.ensureStarted(kind)
+        RuntimeAvailabilityStore.shared.setAvailable(true, for: kind)
 
         let workspace = try deriveWorkspace(for: context)
         let effectiveLimits = limits ?? RuntimeExecutionLimits()
@@ -93,6 +94,7 @@ actor HanlinRuntimeBroker {
     ) async throws -> RuntimeExecutionResult {
         try await checkCapability(for: .shell, in: context)
         _ = try await core.ensureStarted(.shell)
+        RuntimeAvailabilityStore.shared.setAvailable(true, for: .shell)
 
         let workspace = try deriveWorkspace(for: context)
 
@@ -115,6 +117,7 @@ actor HanlinRuntimeBroker {
     ) async throws -> RuntimeExecutionResult {
         try await checkCapability(for: .shell, in: context)
         _ = try await core.ensureStarted(.shell)
+        RuntimeAvailabilityStore.shared.setAvailable(true, for: .shell)
 
         let workspace = try deriveWorkspace(for: context)
 
@@ -146,6 +149,7 @@ actor HanlinRuntimeBroker {
         }
         _ = try await core.ensureStarted(.node)
         _ = try await core.ensureStarted(.typeScript)
+        RuntimeAvailabilityStore.shared.setAvailable(true, for: .typeScript)
 
         let request = RuntimeExecutionRequest(
             source: source,
@@ -168,6 +172,7 @@ actor HanlinRuntimeBroker {
         try await checkCapability(for: .typeScript, in: context)
         _ = try await core.ensureStarted(.node)
         _ = try await core.ensureStarted(.typeScript)
+        RuntimeAvailabilityStore.shared.setAvailable(true, for: .typeScript)
 
         return try await core.typeScript.compile(source: source)
     }
