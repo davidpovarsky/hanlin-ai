@@ -3929,7 +3929,8 @@ default:
                         await self.agentDiagnosticsRecorder?.recordToolCall(roundID: stepID, call: parsedCall)
                         var diag = NativeToolExecutionDiagnostics()
                         diag.failureCategory = NativeToolExecutionOutcome.invalidArguments.rawValue
-                        diag.canonicalLogicalToolID = preparedAssistantTools.authority.canonicalID(for: name) ?? name
+                        let logicalID = preparedAssistantTools.authority.toolDescriptor(for: name)?.logicalID
+                        diag.canonicalLogicalToolID = logicalID.map { "\($0.providerInstanceID.rawValue)|\($0.localToolID.rawValue)" } ?? name
                         diag.modelFacingAlias = name
                         await self.agentDiagnosticsRecorder?.completeToolCall(
                             roundID: stepID,

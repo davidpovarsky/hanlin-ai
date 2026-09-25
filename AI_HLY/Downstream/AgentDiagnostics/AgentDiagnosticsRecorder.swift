@@ -266,7 +266,7 @@ actor AgentDiagnosticsRecorder {
             call.resultRendererKind = presentationDecision?.rendererKind?.rawValue
             call.resultPresentationSuppressed = presentationDecision.map { !$0.shouldPresent }
             call.suppressionReason = presentationDecision?.suppressionReason?.rawValue
-            call.canonicalLogicalToolID = diagnostics.canonicalLogicalToolID
+            call.canonicalLogicalToolID = diagnostics.canonicalLogicalToolID ?? call.canonicalLogicalToolID ?? call.modelFacingAlias
             call.modelFacingAlias = diagnostics.modelFacingAlias ?? call.modelFacingAlias
             call.backendRoute = diagnostics.backendRoute
             call.backendSource = diagnostics.source
