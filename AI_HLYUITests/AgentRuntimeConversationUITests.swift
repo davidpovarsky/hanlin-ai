@@ -129,7 +129,10 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         let settingsNav = app.navigationBars["设置"].firstMatch
         let settingsNavEn = app.navigationBars["Settings"].firstMatch
         if settingsNav.exists || settingsNavEn.exists { return }
-        _ = selectTab(identifier: "hanlin-settings-tab", labels: ["Settings", "设置"], in: app)
+        if !selectTab(identifier: "hanlin-settings-tab", labels: ["Settings", "设置"], in: app) {
+            navigateBack(in: app)
+            _ = selectTab(identifier: "hanlin-settings-tab", labels: ["Settings", "设置"], in: app)
+        }
         _ = settingsNavEn.waitForExistence(timeout: 5) || settingsNav.waitForExistence(timeout: 5)
     }
 

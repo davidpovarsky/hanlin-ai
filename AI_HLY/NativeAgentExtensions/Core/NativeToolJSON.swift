@@ -20,17 +20,17 @@ enum NativeToolJSON {
         var errorDescription: String? {
             switch self {
             case .invalidUTF8:
-                return "Tool arguments are not valid UTF-8 JSON."
+                return "Invalid arguments: tool arguments are not valid UTF-8 JSON."
             case .invalidObject:
-                return "Tool arguments must be a JSON object."
+                return "Invalid arguments: tool arguments must be a JSON object."
             case .missingRequiredString(let key):
-                return "Missing required string argument: \(key)."
+                return "Invalid arguments: missing required string argument '\(key)'."
             case .invalidType(let key, let expected):
-                return "Argument '\(key)' must be \(expected)."
+                return "Invalid arguments: argument '\(key)' must be \(expected)."
             case .unknownArguments(let keys):
-                return "Unknown tool argument(s): \(keys.sorted().joined(separator: ", "))."
+                return "Invalid arguments: unknown tool argument(s): \(keys.sorted().joined(separator: ", "))."
             case .invalidValue(let key, let description):
-                return "Invalid value for argument '\(key)': \(description)"
+                return "Invalid arguments: invalid value for argument '\(key)': \(description)"
             }
         }
     }

@@ -93,8 +93,9 @@ struct AgentInlineProcessItemView: View {
 
     private var accessibilityTitleAndSummary: String {
         let base = activity?.title ?? String(localized: "Using a tool")
-        if let summary = toolSummary {
-            return "\(base), \(summary)"
+        let detail = toolSummary ?? (item.status == .failed ? nonempty(activity?.errorDescription) ?? nonempty(item.text) : nil)
+        if let detail {
+            return "\(base), \(detail)"
         }
         return base
     }

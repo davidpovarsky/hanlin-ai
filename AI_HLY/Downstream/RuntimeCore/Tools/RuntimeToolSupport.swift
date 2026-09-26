@@ -93,10 +93,13 @@ enum RuntimeToolSupport {
         argumentKeys: [String] = []
     ) -> NativeToolResult {
         let outcome = outcome(for: error)
+        let message = outcome == .invalidArguments && !error.localizedDescription.localizedCaseInsensitiveContains("invalid")
+            ? "\(RuntimeL10n.string("The runtime arguments are invalid.")): \(error.localizedDescription)"
+            : error.localizedDescription
         return NativeToolResult(
-            modelText: "\(RuntimeL10n.string(title)): \(error.localizedDescription)",
-            userText: error.localizedDescription,
-            uiBlocks: [.init(type: .error, title: RuntimeL10n.string(title), body: error.localizedDescription, systemImage: "exclamationmark.triangle")],
+            modelText: "\(RuntimeL10n.string(title)): \(message)",
+            userText: message,
+            uiBlocks: [.init(type: .error, title: RuntimeL10n.string(title), body: message, systemImage: "exclamationmark.triangle")],
             outcome: outcome,
             diagnostics: NativeToolExecutionDiagnostics(
                 backendRoute: "host-services/runtime-broker",
