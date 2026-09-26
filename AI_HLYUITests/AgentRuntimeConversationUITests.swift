@@ -12,6 +12,7 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         // 1. Initial State: Python runtime is OFF + Assistant Python permission is ON
         openRuntimeCenter(in: app)
         let initialPythonToggle = toggleSwitch(for: "localPython", in: app)
+        if !initialPythonToggle.waitForExistence(timeout: 5) { app.swipeUp() }
         XCTAssertTrue(initialPythonToggle.waitForExistence(timeout: 10), "Python toggle card was missing in Runtime Center")
         XCTAssertFalse(isToggleOn(initialPythonToggle), "Python toggle should initially be OFF on fresh process")
 
@@ -62,6 +63,7 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         // 3. Verify Runtime Center reactively shows Python ON after agent execution
         openRuntimeCenter(in: app)
         let postPythonToggle = toggleSwitch(for: "localPython", in: app)
+        if !postPythonToggle.waitForExistence(timeout: 5) { app.swipeUp() }
         XCTAssertTrue(
             waitForToggle(postPythonToggle, toBe: true, timeout: 20),
             "Python runtime should auto-start on agent execution and Runtime Center must show Python ON"
@@ -82,12 +84,46 @@ final class AgentRuntimeConversationUITests: XCTestCase {
             candidates.append(app.tabs[label].firstMatch)
         }
 
+        // 1. Try directly on current tab page
         for candidate in candidates {
             if candidate.waitForExistence(timeout: 2) && candidate.isHittable {
                 candidate.tap()
                 return true
             }
         }
+
+        // 2. If tab bar is paged (e.g. iPad floating tab bar with Next Page / Previous Page)
+        let nextPage = app.buttons["Next Page"].firstMatch
+        if nextPage.waitForExistence(timeout: 2) && nextPage.isHittable {
+            nextPage.tap()
+            for candidate in candidates {
+                if candidate.waitForExistence(timeout: 3) && candidate.isHittable {
+                    candidate.tap()
+                    return true
+                }
+            }
+        }
+
+        let prevPage = app.buttons["Previous Page"].firstMatch
+        if prevPage.waitForExistence(timeout: 2) && prevPage.isHittable {
+            prevPage.tap()
+            for candidate in candidates {
+                if candidate.waitForExistence(timeout: 3) && candidate.isHittable {
+                    candidate.tap()
+                    return true
+                }
+            }
+        }
+
+        // 3. Fallback to broad hierarchy predicate
+        let labelClauses = labels.map { "label CONTAINS '\($0)'" }
+        let format = (["identifier == '\(identifier)'"] + labelClauses).joined(separator: " OR ")
+        let fallback = app.descendants(matching: .any).matching(NSPredicate(format: format)).firstMatch
+        if fallback.waitForExistence(timeout: 3) && fallback.isHittable {
+            fallback.tap()
+            return true
+        }
+
         return false
     }
 
@@ -96,18 +132,24 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         let settingsNavEn = app.navigationBars["Settings"].firstMatch
         if settingsNav.exists || settingsNavEn.exists { return }
         _ = selectTab(identifier: "hanlin-settings-tab", labels: ["Settings", "设置"], in: app)
+        _ = settingsNavEn.waitForExistence(timeout: 5) || settingsNav.waitForExistence(timeout: 5)
     }
 
     private func openRuntimeCenter(in app: XCUIApplication) {
-        let runtimeCenterNav = app.navigationBars["Runtimes & Packages"].firstMatch
-        if runtimeCenterNav.exists { return }
         openSettings(in: app)
+        let runtimeCenterNav = app.navigationBars["Runtimes & Packages"].firstMatch
+        if runtimeCenterNav.waitForExistence(timeout: 3) { return }
         let link = app.descendants(matching: .any)["hanlin-runtimes-packages-link"].firstMatch
         if !link.waitForExistence(timeout: 5) {
             app.swipeUp()
         }
-        if link.waitForExistence(timeout: 10) && link.isHittable {
-            link.tap()
+        if link.waitForExistence(timeout: 10) {
+            if link.isHittable {
+                link.tap()
+            } else {
+                app.swipeUp()
+                link.tap()
+            }
         }
         _ = runtimeCenterNav.waitForExistence(timeout: 10)
     }

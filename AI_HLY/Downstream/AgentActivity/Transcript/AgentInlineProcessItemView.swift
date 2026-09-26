@@ -52,7 +52,7 @@ struct AgentInlineProcessItemView: View {
                     ? "hanlin-agent-tool-failed"
                     : "hanlin-agent-tool-\(item.status.rawValue)"
             )
-            .accessibilityLabel(activity?.title ?? String(localized: "Using a tool"))
+            .accessibilityLabel(accessibilityTitleAndSummary)
             .accessibilityValue(statusLabel)
             .accessibilityHint(String(localized: "Open activity"))
         case .error:
@@ -89,6 +89,14 @@ struct AgentInlineProcessItemView: View {
               AgentActivityDeduplicator.normalized(text)
                 != AgentActivityDeduplicator.normalized(activity?.title) else { return nil }
         return text
+    }
+
+    private var accessibilityTitleAndSummary: String {
+        let base = activity?.title ?? String(localized: "Using a tool")
+        if let summary = toolSummary {
+            return "\(base), \(summary)"
+        }
+        return base
     }
 
     private func nonempty(_ value: String?) -> String? {
