@@ -3827,7 +3827,24 @@ default:
             baseSystemPrompt: baseSystemPrompt,
             tools: toolDefinitions,
             prepareStep: {
-                toolAdapter.prepareStep()
+                let prep = toolAdapter.prepareStep()
+                if let recorder = toolAdapter.diagnosticsRecorder {
+                    let nextIndex = toolAdapter.currentStepIndex + 1
+                    let stepID = await recorder.beginRound(
+                        index: nextIndex,
+                        trigger: nextIndex <= 1 ? "initialUserRequest" : "continueAfterToolResult",
+                        requestData: Data(),
+                        loadedSkillIDs: prep.loadedSkillIDs,
+                        modelVisibleToolAliases: prep.activeToolAliases,
+                        modelVisibleToolCount: prep.activeToolAliases.count,
+                        modelVisibleSchemaBytes: prep.visibleSchemaBytes,
+                        providerID: chatConfig.company ?? "Unknown",
+                        modelID: chatConfig.modelID
+                    )
+                    toolAdapter.currentRoundID = stepID
+                    toolAdapter.currentStepIndex = nextIndex
+                }
+                return prep
             }
         )
 
@@ -3846,19 +3863,24 @@ default:
                 continuation.yield(StreamData(operationalState: currentLanguagePrefix ? "正在处理" : "Processing"))
 
             case .stepStarted(let index, let prep):
-                let stepID = await self.agentDiagnosticsRecorder?.beginRound(
-                    index: index,
-                    trigger: index <= 1 ? "initialUserRequest" : "continueAfterToolResult",
-                    requestData: Data(),
-                    loadedSkillIDs: prep.loadedSkillIDs,
-                    modelVisibleToolAliases: prep.activeToolAliases,
-                    modelVisibleToolCount: prep.activeToolAliases.count,
-                    modelVisibleSchemaBytes: prep.visibleSchemaBytes,
-                    providerID: chatConfig.company ?? "Unknown",
-                    modelID: chatConfig.modelID
-                )
+                let stepID: UUID?
+                if let existing = toolAdapter.currentRoundID {
+                    stepID = existing
+                } else {
+                    stepID = await self.agentDiagnosticsRecorder?.beginRound(
+                        index: index,
+                        trigger: index <= 1 ? "initialUserRequest" : "continueAfterToolResult",
+                        requestData: Data(),
+                        loadedSkillIDs: prep.loadedSkillIDs,
+                        modelVisibleToolAliases: prep.activeToolAliases,
+                        modelVisibleToolCount: prep.activeToolAliases.count,
+                        modelVisibleSchemaBytes: prep.visibleSchemaBytes,
+                        providerID: chatConfig.company ?? "Unknown",
+                        modelID: chatConfig.modelID
+                    )
+                    toolAdapter.currentRoundID = stepID
+                }
                 currentStepID = stepID
-                toolAdapter.currentRoundID = stepID
                 continuation.yield(StreamData(operationalState: currentLanguagePrefix ? "等待模型响应" : "Waiting for model response"))
 
             case .textDelta(let text):
