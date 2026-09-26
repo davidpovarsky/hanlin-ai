@@ -45,7 +45,28 @@ final class HanlinAISDKToolAdapter {
 
     func resolveRoundID() async -> UUID? {
         if let currentRoundID { return currentRoundID }
-        return await diagnosticsRecorder?.latestRoundID()
+        let targetIndex = currentStepIndex + 1
+        if let recorder = diagnosticsRecorder {
+            if let existingID = await recorder.roundID(forIndex: targetIndex) {
+                currentRoundID = existingID
+                currentStepIndex = targetIndex
+                return existingID
+            }
+            let prep = prepareStep()
+            let stepID = await recorder.beginRound(
+                index: targetIndex,
+                trigger: targetIndex <= 1 ? "initialUserRequest" : "continueAfterToolResult",
+                requestData: Data(),
+                loadedSkillIDs: prep.loadedSkillIDs,
+                modelVisibleToolAliases: prep.activeToolAliases,
+                modelVisibleToolCount: prep.activeToolAliases.count,
+                modelVisibleSchemaBytes: prep.visibleSchemaBytes
+            )
+            currentRoundID = stepID
+            currentStepIndex = targetIndex
+            return stepID
+        }
+        return nil
     }
 
     init(

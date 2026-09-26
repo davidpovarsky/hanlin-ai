@@ -3827,24 +3827,7 @@ default:
             baseSystemPrompt: baseSystemPrompt,
             tools: toolDefinitions,
             prepareStep: {
-                let prep = toolAdapter.prepareStep()
-                if let recorder = toolAdapter.diagnosticsRecorder {
-                    let nextIndex = toolAdapter.currentStepIndex + 1
-                    let stepID = await recorder.beginRound(
-                        index: nextIndex,
-                        trigger: nextIndex <= 1 ? "initialUserRequest" : "continueAfterToolResult",
-                        requestData: Data(),
-                        loadedSkillIDs: prep.loadedSkillIDs,
-                        modelVisibleToolAliases: prep.activeToolAliases,
-                        modelVisibleToolCount: prep.activeToolAliases.count,
-                        modelVisibleSchemaBytes: prep.visibleSchemaBytes,
-                        providerID: chatConfig.company ?? "Unknown",
-                        modelID: chatConfig.modelID
-                    )
-                    toolAdapter.currentRoundID = stepID
-                    toolAdapter.currentStepIndex = nextIndex
-                }
-                return prep
+                toolAdapter.prepareStep()
             }
         )
 
@@ -3864,7 +3847,7 @@ default:
 
             case .stepStarted(let index, let prep):
                 let stepID: UUID?
-                if let existing = toolAdapter.currentRoundID {
+                if let existing = toolAdapter.currentRoundID, toolAdapter.currentStepIndex == index {
                     stepID = existing
                 } else {
                     stepID = await self.agentDiagnosticsRecorder?.beginRound(
@@ -3879,6 +3862,7 @@ default:
                         modelID: chatConfig.modelID
                     )
                     toolAdapter.currentRoundID = stepID
+                    toolAdapter.currentStepIndex = index
                 }
                 currentStepID = stepID
                 continuation.yield(StreamData(operationalState: currentLanguagePrefix ? "等待模型响应" : "Waiting for model response"))
@@ -3985,6 +3969,7 @@ default:
                         meaningfulEventCount: meaningfulCount
                     )
                 }
+                toolAdapter.currentRoundID = nil
 
             case .finished(let reason, let usage):
                 await self.agentDiagnosticsRecorder?.complete(status: "completed")
