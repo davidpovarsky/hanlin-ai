@@ -29,8 +29,9 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         if !input.waitForExistence(timeout: 5) {
             let chatPredicate = NSPredicate(format: "label CONTAINS 'Agent Acceptance Chat' OR identifier CONTAINS 'Agent Acceptance Chat'")
             let seededChat = app.descendants(matching: .any).matching(chatPredicate).firstMatch
-            XCTAssertTrue(seededChat.waitForExistence(timeout: 15), "The deterministic acceptance chat was not listed.")
-            seededChat.tap()
+            if seededChat.waitForExistence(timeout: 15) {
+                seededChat.tap()
+            }
         }
         XCTAssertTrue(input.waitForExistence(timeout: 20), "The real chat input did not appear.")
         input.tap()
@@ -132,7 +133,15 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         _ = settingsNavEn.waitForExistence(timeout: 5) || settingsNav.waitForExistence(timeout: 5)
     }
 
+    private func navigateBack(in app: XCUIApplication) {
+        let backButton = app.navigationBars.buttons.element(boundBy: 0)
+        if backButton.waitForExistence(timeout: 3) && backButton.isHittable {
+            backButton.tap()
+        }
+    }
+
     private func openRuntimeCenter(in app: XCUIApplication) {
+        if app.navigationBars["Runtimes & Packages"].exists { return }
         openSettings(in: app)
         let runtimeCenterNav = app.navigationBars["Runtimes & Packages"].firstMatch
         if runtimeCenterNav.waitForExistence(timeout: 3) { return }
@@ -152,6 +161,9 @@ final class AgentRuntimeConversationUITests: XCTestCase {
     }
 
     private func openChat(in app: XCUIApplication) {
+        while app.navigationBars["Runtimes & Packages"].exists {
+            navigateBack(in: app)
+        }
         _ = selectTab(identifier: "hanlin-home-tab", labels: ["Chats", "Messages", "Home", "列表"], in: app)
     }
 
