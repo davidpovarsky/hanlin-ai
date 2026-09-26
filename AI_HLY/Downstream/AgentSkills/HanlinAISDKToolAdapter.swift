@@ -43,8 +43,9 @@ final class HanlinAISDKToolAdapter {
     var currentStepIndex: Int = 0
     var completedCallIDs: Set<String> = []
 
-    var activeOrLatestRoundID: UUID? {
-        currentRoundID ?? diagnosticsRecorder?.session.rounds.last?.id
+    func resolveRoundID() async -> UUID? {
+        if let currentRoundID { return currentRoundID }
+        return await diagnosticsRecorder?.latestRoundID()
     }
 
     init(
@@ -153,7 +154,8 @@ final class HanlinAISDKToolAdapter {
                 }
                 let profile = ToolPresentationProfileRegistry.resolve(toolName: LoadSkillTool.toolName)
                 let parsedCall = AgentToolCall.parse(id: callID, name: LoadSkillTool.toolName, argumentsJSON: argumentsJSON, presentationProfile: profile)
-                if let recorder = self.diagnosticsRecorder, let roundID = self.activeOrLatestRoundID {
+                let roundID = await self.resolveRoundID()
+                if let recorder = self.diagnosticsRecorder, let roundID {
                     await recorder.recordToolCall(roundID: roundID, call: parsedCall)
                 }
                 let executionID = "\(callID):execution"
@@ -194,7 +196,7 @@ final class HanlinAISDKToolAdapter {
                     toolName: LoadSkillTool.toolName,
                     operationalDescription: result
                 ))
-                if let recorder = self.diagnosticsRecorder, let roundID = self.activeOrLatestRoundID {
+                if let recorder = self.diagnosticsRecorder, let roundID {
                     await recorder.completeToolCall(
                         roundID: roundID,
                         callID: callID,
@@ -226,7 +228,8 @@ final class HanlinAISDKToolAdapter {
                 }
                 let profile = ToolPresentationProfileRegistry.resolve(toolName: ToolSearchTool.toolName)
                 let parsedCall = AgentToolCall.parse(id: callID, name: ToolSearchTool.toolName, argumentsJSON: argumentsJSON, presentationProfile: profile)
-                if let recorder = self.diagnosticsRecorder, let roundID = self.activeOrLatestRoundID {
+                let roundID = await self.resolveRoundID()
+                if let recorder = self.diagnosticsRecorder, let roundID {
                     await recorder.recordToolCall(roundID: roundID, call: parsedCall)
                 }
                 let executionID = "\(callID):execution"
@@ -269,7 +272,7 @@ final class HanlinAISDKToolAdapter {
                     toolName: ToolSearchTool.toolName,
                     operationalDescription: result
                 ))
-                if let recorder = self.diagnosticsRecorder, let roundID = self.activeOrLatestRoundID {
+                if let recorder = self.diagnosticsRecorder, let roundID = await self.resolveRoundID() {
                     await recorder.completeToolCall(
                         roundID: roundID,
                         callID: callID,
@@ -301,7 +304,8 @@ final class HanlinAISDKToolAdapter {
                 }
                 let profile = ToolPresentationProfileRegistry.resolve(toolName: ReadToolResultTool.toolName)
                 let parsedCall = AgentToolCall.parse(id: callID, name: ReadToolResultTool.toolName, argumentsJSON: argumentsJSON, presentationProfile: profile)
-                if let recorder = self.diagnosticsRecorder, let roundID = self.activeOrLatestRoundID {
+                let roundID = await self.resolveRoundID()
+                if let recorder = self.diagnosticsRecorder, let roundID {
                     await recorder.recordToolCall(roundID: roundID, call: parsedCall)
                 }
                 let executionID = "\(callID):execution"
@@ -340,7 +344,7 @@ final class HanlinAISDKToolAdapter {
                     toolName: ReadToolResultTool.toolName,
                     operationalDescription: result
                 ))
-                if let recorder = self.diagnosticsRecorder, let roundID = self.activeOrLatestRoundID {
+                if let recorder = self.diagnosticsRecorder, let roundID = await self.resolveRoundID() {
                     await recorder.completeToolCall(
                         roundID: roundID,
                         callID: callID,
@@ -372,7 +376,8 @@ final class HanlinAISDKToolAdapter {
                 }
                 let profile = ToolPresentationProfileRegistry.resolve(toolName: ToolSchemaDecorator.reportProgressName)
                 let parsedCall = AgentToolCall.parse(id: callID, name: ToolSchemaDecorator.reportProgressName, argumentsJSON: argumentsJSON, presentationProfile: profile)
-                if let recorder = self.diagnosticsRecorder, let roundID = self.activeOrLatestRoundID {
+                let roundID = await self.resolveRoundID()
+                if let recorder = self.diagnosticsRecorder, let roundID {
                     await recorder.recordToolCall(roundID: roundID, call: parsedCall)
                 }
                 let candidate = ToolProgressSummary.reportProgressMessage(from: argumentsJSON)
@@ -390,7 +395,7 @@ final class HanlinAISDKToolAdapter {
                     self.callbacks.onAgentEvent?(.progressMessage(progressMsg))
                 }
                 let result = "Progress update delivered."
-                if let recorder = self.diagnosticsRecorder, let roundID = self.activeOrLatestRoundID {
+                if let recorder = self.diagnosticsRecorder, let roundID = await self.resolveRoundID() {
                     await recorder.completeToolCall(
                         roundID: roundID,
                         callID: callID,
@@ -454,7 +459,8 @@ final class HanlinAISDKToolAdapter {
             parsedCall.progressSummarySource = .providerReasoningSummary
         }
 
-        if let recorder = diagnosticsRecorder, let roundID = activeOrLatestRoundID {
+        let roundID = await resolveRoundID()
+        if let recorder = diagnosticsRecorder, let roundID {
             await recorder.recordToolCall(roundID: roundID, call: parsedCall)
         }
 
@@ -495,7 +501,7 @@ final class HanlinAISDKToolAdapter {
                 toolName: alias,
                 operationalDescription: errorText
             ))
-            if let recorder = diagnosticsRecorder, let roundID = activeOrLatestRoundID {
+            if let recorder = diagnosticsRecorder, let roundID = await resolveRoundID() {
                 await recorder.completeToolCall(
                     roundID: roundID,
                     callID: callID,
@@ -511,7 +517,7 @@ final class HanlinAISDKToolAdapter {
         }
 
         var modelText = result.modelText
-        var userText = result.userText ?? result.modelText
+        let userText = result.userText ?? result.modelText
         var resultRef: String? = nil
         var embeddedPayload = result.embeddedPayload
 
@@ -579,7 +585,7 @@ final class HanlinAISDKToolAdapter {
             operationalDescription: userText
         ))
 
-        if let recorder = diagnosticsRecorder, let roundID = activeOrLatestRoundID {
+        if let recorder = diagnosticsRecorder, let roundID = await resolveRoundID() {
             await recorder.completeToolCall(
                 roundID: roundID,
                 callID: callID,

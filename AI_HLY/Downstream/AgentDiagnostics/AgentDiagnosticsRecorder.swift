@@ -132,6 +132,10 @@ actor AgentDiagnosticsRecorder {
         return round.id
     }
 
+    func latestRoundID() -> UUID? {
+        session.rounds.last?.id
+    }
+
     func responseStarted(roundID: UUID, httpStatus: Int?, providerRequestID: String?) async {
         let responseStartedAt = Date()
         updateRound(roundID) { round in
