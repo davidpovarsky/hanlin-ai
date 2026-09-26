@@ -27,7 +27,8 @@ final class AgentRuntimeConversationUITests: XCTestCase {
 
         let input = app.textFields["hanlin-chat-input"].firstMatch
         if !input.waitForExistence(timeout: 5) {
-            let seededChat = app.staticTexts["Agent Acceptance Chat"].firstMatch
+            let chatPredicate = NSPredicate(format: "label CONTAINS 'Agent Acceptance Chat' OR identifier CONTAINS 'Agent Acceptance Chat'")
+            let seededChat = app.descendants(matching: .any).matching(chatPredicate).firstMatch
             XCTAssertTrue(seededChat.waitForExistence(timeout: 15), "The deterministic acceptance chat was not listed.")
             seededChat.tap()
         }
@@ -84,38 +85,34 @@ final class AgentRuntimeConversationUITests: XCTestCase {
             candidates.append(app.tabs[label].firstMatch)
         }
 
-        // 1. Try directly on current tab page
-        for candidate in candidates {
-            if candidate.waitForExistence(timeout: 2) && candidate.isHittable {
-                candidate.tap()
-                return true
-            }
-        }
-
-        // 2. If tab bar is paged (e.g. iPad floating tab bar with Next Page / Previous Page)
-        let nextPage = app.buttons["Next Page"].firstMatch
-        if nextPage.waitForExistence(timeout: 2) && nextPage.isHittable {
-            nextPage.tap()
+        func findCandidate() -> Bool {
             for candidate in candidates {
-                if candidate.waitForExistence(timeout: 3) && candidate.isHittable {
+                if candidate.waitForExistence(timeout: 2) && candidate.isHittable {
                     candidate.tap()
                     return true
                 }
             }
+            return false
         }
 
+        // 1. Try directly on current tab page
+        if findCandidate() { return true }
+
+        // 2. Try Previous Page (e.g. if we are on later tab page like Settings and want Home)
         let prevPage = app.buttons["Previous Page"].firstMatch
         if prevPage.waitForExistence(timeout: 2) && prevPage.isHittable {
             prevPage.tap()
-            for candidate in candidates {
-                if candidate.waitForExistence(timeout: 3) && candidate.isHittable {
-                    candidate.tap()
-                    return true
-                }
-            }
+            if findCandidate() { return true }
         }
 
-        // 3. Fallback to broad hierarchy predicate
+        // 3. Try Next Page (e.g. if target tab is on subsequent page)
+        let nextPage = app.buttons["Next Page"].firstMatch
+        if nextPage.waitForExistence(timeout: 2) && nextPage.isHittable {
+            nextPage.tap()
+            if findCandidate() { return true }
+        }
+
+        // 4. Fallback to broad hierarchy predicate
         let labelClauses = labels.map { "label CONTAINS '\($0)'" }
         let format = (["identifier == '\(identifier)'"] + labelClauses).joined(separator: " OR ")
         let fallback = app.descendants(matching: .any).matching(NSPredicate(format: format)).firstMatch
