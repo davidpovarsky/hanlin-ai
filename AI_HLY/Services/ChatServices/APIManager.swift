@@ -3843,16 +3843,22 @@ default:
         let fetch = HanlinAISDKProviderFactory.makeFetch(
             sessionConfiguration: .default,
             onRequest: { [weak self] request in
-                if let recorder = self?.agentDiagnosticsRecorder, let currentRoundID = toolAdapter.currentRoundID {
+                let (recorder, roundID) = await MainActor.run { [weak self] () -> (AgentDiagnosticsRecorder?, UUID?) in
+                    (self?.agentDiagnosticsRecorder, toolAdapter.currentRoundID)
+                }
+                if let recorder, let roundID {
                     let body = request.httpBody ?? Data()
                     let headers = request.allHTTPHeaderFields ?? [:]
-                    await recorder.recordModelRequest(roundID: currentRoundID, requestData: body, httpHeaders: headers)
+                    await recorder.recordModelRequest(roundID: roundID, requestData: body, httpHeaders: headers)
                 }
             },
             onResponse: { [weak self] request, response in
-                if let recorder = self?.agentDiagnosticsRecorder, let currentRoundID = toolAdapter.currentRoundID {
+                let (recorder, roundID) = await MainActor.run { [weak self] () -> (AgentDiagnosticsRecorder?, UUID?) in
+                    (self?.agentDiagnosticsRecorder, toolAdapter.currentRoundID)
+                }
+                if let recorder, let roundID {
                     let reqID = response.allHeaderFields["x-request-id"] as? String
-                    await recorder.responseStarted(roundID: currentRoundID, httpStatus: response.statusCode, providerRequestID: reqID)
+                    await recorder.responseStarted(roundID: roundID, httpStatus: response.statusCode, providerRequestID: reqID)
                 }
             }
         )

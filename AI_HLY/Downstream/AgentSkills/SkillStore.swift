@@ -274,6 +274,46 @@ public final class SkillStore {
         HanlinSkillCatalog.shared.refreshFromStore()
     }
 
+    public func install(stagedPackage: StagedSkillPackage) throws -> StoredSkillRecord {
+        let id = stagedPackage.skillID
+        let targetDir = skillsDirectoryURL.appendingPathComponent(id.rawValue, isDirectory: true)
+        if fileManager.fileExists(atPath: targetDir.path) {
+            try fileManager.removeItem(at: targetDir)
+        }
+        try fileManager.moveItem(at: stagedPackage.extractedDirectoryURL, to: targetDir)
+
+        var meta = stagedPackage.metadata
+        meta.originURL = stagedPackage.originURL ?? meta.originURL
+        meta.sha256 = stagedPackage.sha256 ?? meta.sha256
+        meta.updatedAt = Date()
+        cachedState.metadataBySkillID[id.rawValue] = meta
+        saveState()
+        HanlinSkillCatalog.shared.refreshFromStore()
+
+        let descriptor = HanlinSkillDescriptor(
+            id: id,
+            title: .raw(stagedPackage.parsedMarkdown.name),
+            description: .raw(stagedPackage.parsedMarkdown.description),
+            instructions: stagedPackage.parsedMarkdown.body,
+            preferredToolIDs: meta.preferredToolIDs.compactMap { try? CanonicalToolIdentifier(validating: $0) },
+            triggerHints: meta.triggerHints,
+            keywords: meta.keywords
+        )
+        return StoredSkillRecord(
+            descriptor: descriptor,
+            sourceKind: stagedPackage.originURL != nil ? .imported : .custom,
+            isEnabled: isSkillEnabled(id: id),
+            isOverride: false,
+            baseSkillID: nil,
+            originURL: meta.originURL,
+            sha256: meta.sha256,
+            directoryURL: targetDir,
+            resources: listResources(for: id),
+            installedAt: meta.installedAt,
+            updatedAt: meta.updatedAt
+        )
+    }
+
     public func createOrUpdateOverride(
         for baseSkill: HanlinSkillDescriptor,
         newTitle: String? = nil,
