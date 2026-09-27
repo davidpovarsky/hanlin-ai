@@ -247,7 +247,7 @@ public final class SkillStore {
         let dir = skillsDirectoryURL.appendingPathComponent(id.rawValue, isDirectory: true)
         try fileManager.createDirectory(at: dir, withIntermediateDirectories: true)
 
-        let skillMD = SkillMarkdownParser.serialize(name: id.rawValue, description: description, body: instructions)
+        let skillMD = SkillMarkdownParser.serialize(name: title, description: description, body: instructions)
         let skillMDURL = dir.appendingPathComponent("SKILL.md")
         try skillMD.data(using: .utf8)?.write(to: skillMDURL, options: .atomic)
 
@@ -322,7 +322,7 @@ public final class SkillStore {
 
         let title = newTitle ?? baseSkill.title.preferredValue()
         let desc = newDescription ?? baseSkill.summary.preferredValue()
-        let skillMD = SkillMarkdownParser.serialize(name: baseSkill.id.rawValue, description: desc, body: newInstructions)
+        let skillMD = SkillMarkdownParser.serialize(name: title, description: desc, body: newInstructions)
         let skillMDURL = dir.appendingPathComponent("SKILL.md")
         try skillMD.data(using: .utf8)?.write(to: skillMDURL, options: .atomic)
 
