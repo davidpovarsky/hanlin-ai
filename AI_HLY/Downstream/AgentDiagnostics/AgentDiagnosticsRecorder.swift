@@ -89,6 +89,10 @@ actor AgentDiagnosticsRecorder {
         providerID: String? = nil,
         modelID: String? = nil
     ) async -> UUID {
+        if session.isComplete {
+            trace("LateMutationAttemptedAfterTerminal", fields: ["operation": "beginRound", "roundIndex": index])
+            return UUID()
+        }
         let requestObject = (try? JSONSerialization.jsonObject(with: requestData)) ?? [:]
         let sanitizedJSON = AgentDiagnosticsRedactor.sanitizedJSONString(from: requestObject, pretty: true)
         let metadataOnly = session.level != .fullLocalDebug
@@ -140,7 +144,44 @@ actor AgentDiagnosticsRecorder {
         session.rounds.first(where: { $0.index == index })?.id
     }
 
+    func recordModelRequest(
+        roundID: UUID,
+        requestData: Data,
+        httpHeaders: [String: String]? = nil
+    ) async {
+        if session.isComplete {
+            trace("LateMutationAttemptedAfterTerminal", roundID: roundID, fields: ["operation": "recordModelRequest"])
+            return
+        }
+        guard !requestData.isEmpty else { return }
+
+        let requestObject = (try? JSONSerialization.jsonObject(with: requestData)) ?? [:]
+        let sanitizedJSON = AgentDiagnosticsRedactor.sanitizedJSONString(from: requestObject, pretty: true)
+        let metadataOnly = session.level != .fullLocalDebug
+        let requestText = metadataOnly ? nil : sanitizedJSON
+        let request = AgentDiagnosticsModelRequest(
+            sanitizedJSON: requestText,
+            byteCount: sanitizedJSON.utf8.count,
+            contentHash: Self.sha256(sanitizedJSON),
+            composition: Self.composition(from: requestObject)
+        )
+
+        updateRound(roundID) { round in
+            round.request = request
+        }
+        await persist()
+
+        trace("ModelRequestPrepared", roundID: roundID, fields: [
+            "bytes": request.byteCount,
+            "hash": request.contentHash
+        ])
+    }
+
     func responseStarted(roundID: UUID, httpStatus: Int?, providerRequestID: String?) async {
+        if session.isComplete {
+            trace("LateMutationAttemptedAfterTerminal", roundID: roundID, fields: ["operation": "responseStarted"])
+            return
+        }
         let responseStartedAt = Date()
         updateRound(roundID) { round in
             round.response.httpStatus = httpStatus
@@ -157,6 +198,7 @@ actor AgentDiagnosticsRecorder {
         visibleReasoningSummary: String?,
         isMeaningful: Bool = true
     ) {
+        if session.isComplete { return }
         let shouldStoreFullContent = session.level == .fullLocalDebug
 
         updateRound(roundID) { round in
@@ -178,6 +220,10 @@ actor AgentDiagnosticsRecorder {
     }
 
     func recordToolCall(roundID: UUID, call: AgentToolCall) async {
+        if session.isComplete {
+            trace("LateMutationAttemptedAfterTerminal", roundID: roundID, toolName: call.name, fields: ["operation": "recordToolCall", "callID": call.id])
+            return
+        }
         for round in session.rounds {
             if round.toolCalls.contains(where: { $0.callID == call.id }) {
                 return
@@ -240,6 +286,10 @@ actor AgentDiagnosticsRecorder {
         error: String? = nil,
         presentationDecision: ToolResultPresentationDecision? = nil
     ) async {
+        if session.isComplete {
+            trace("LateMutationAttemptedAfterTerminal", roundID: roundID, fields: ["operation": "completeToolCall", "callID": callID])
+            return
+        }
         let shouldStoreFullContent = session.level == .fullLocalDebug
         let completedAt = Date()
         let sanitizedError = error.map(AgentDiagnosticsRedactor.sanitize)
@@ -325,6 +375,10 @@ actor AgentDiagnosticsRecorder {
         error: String? = nil,
         meaningfulEventCount: Int? = nil
     ) async {
+        if session.isComplete {
+            trace("LateMutationAttemptedAfterTerminal", roundID: roundID, fields: ["operation": "finishRound"])
+            return
+        }
         let completedAt = Date()
         let sanitizedError = error.map(AgentDiagnosticsRedactor.sanitize)
 
@@ -366,8 +420,9 @@ actor AgentDiagnosticsRecorder {
             normalizedStatus = "failed"
         }
 
-        session.completedAt = Date()
-        session.lastUpdatedAt = Date()
+        let terminalDate = Date()
+        session.completedAt = terminalDate
+        session.lastUpdatedAt = terminalDate
         session.status = normalizedStatus
         session.isComplete = true
         if let error { session.efficiency.warnings.append(AgentDiagnosticsRedactor.sanitize(error)) }
@@ -387,6 +442,7 @@ actor AgentDiagnosticsRecorder {
     func fileURLs() -> (json: URL, text: URL) { (jsonURL, textURL) }
 
     private func updateRound(_ id: UUID, update: (inout AgentDiagnosticsRound) -> Void) {
+        guard !session.isComplete else { return }
         guard let index = session.rounds.firstIndex(where: { $0.id == id }) else { return }
 
         var round = session.rounds[index]
@@ -433,6 +489,9 @@ actor AgentDiagnosticsRecorder {
         if report.toolSchemaOverheadTokens > 8_000 { report.warnings.append("Excessive tool schema overhead") }
         if report.largestToolResultCharacters > 100_000 { report.warnings.append("Very large tool result") }
         session.efficiency = report
+        if session.isComplete, let completedAt = session.completedAt {
+            session.lastUpdatedAt = completedAt
+        }
     }
 
     private func persist() async {

@@ -178,11 +178,19 @@ extension HanlinAISDKProviderFactory {
         }
     }
 
-    public static func makeFetch(sessionConfiguration: URLSessionConfiguration) -> FetchFunction {
+    public static func makeFetch(
+        sessionConfiguration: URLSessionConfiguration,
+        onRequest: (@Sendable (URLRequest) async -> Void)? = nil,
+        onResponse: (@Sendable (URLRequest, HTTPURLResponse) async -> Void)? = nil
+    ) -> FetchFunction {
         let session = URLSession(configuration: sessionConfiguration)
         return { request in
+            await onRequest?(request)
 #if os(macOS) || os(iOS) || os(tvOS) || os(watchOS) || os(visionOS)
             let (bytes, response) = try await session.bytes(for: request)
+            if let httpResponse = response as? HTTPURLResponse {
+                await onResponse?(request, httpResponse)
+            }
             let stream = AsyncThrowingStream<Data, Error> { continuation in
                 let task = Task {
                     var buffer = Data()
@@ -212,6 +220,9 @@ extension HanlinAISDKProviderFactory {
                     if let error {
                         continuation.resume(throwing: error)
                     } else if let response {
+                        if let httpResponse = response as? HTTPURLResponse {
+                            Task { await onResponse?(request, httpResponse) }
+                        }
                         continuation.resume(returning: FetchResponse(body: .data(data ?? Data()), urlResponse: response))
                     } else {
                         continuation.resume(throwing: URLError(.unknown))

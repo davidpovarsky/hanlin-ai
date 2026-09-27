@@ -18,8 +18,15 @@ public actor HanlinChatEngine {
         self.sessionConfiguration = sessionConfiguration
     }
 
-    public func makeAISDKFetch() -> FetchFunction {
-        HanlinAISDKProviderFactory.makeFetch(sessionConfiguration: sessionConfiguration)
+    public func makeAISDKFetch(
+        onRequest: (@Sendable (URLRequest) async -> Void)? = nil,
+        onResponse: (@Sendable (URLRequest, HTTPURLResponse) async -> Void)? = nil
+    ) -> FetchFunction {
+        HanlinAISDKProviderFactory.makeFetch(
+            sessionConfiguration: sessionConfiguration,
+            onRequest: onRequest,
+            onResponse: onResponse
+        )
     }
 
     public func stream(

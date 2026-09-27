@@ -105,6 +105,10 @@ struct SettingsView: View {
                         Label(RuntimeL10n.string("Runtimes & Packages"), systemImage: "shippingbox.and.arrow.backward")
                     }
                     .accessibilityIdentifier("hanlin-runtimes-packages-link")
+                    NavigationLink(destination: SkillCenterView().onAppear { isPushed = true }.onDisappear { isPushed = false }.toolbar(.hidden, for: .tabBar)) {
+                        Label(SkillL10n.string("Skill Center"), systemImage: "sparkles.rectangle.stack")
+                    }
+                    .accessibilityIdentifier("hanlin-skill-center-link")
                     NavigationLink(destination: SearchSettingView().onAppear { isPushed = true }.onDisappear { isPushed = false }.toolbar(.hidden, for: .tabBar)) {
                         Label(String(localized: "联网搜索"), systemImage: "magnifyingglass")
                     }

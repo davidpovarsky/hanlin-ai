@@ -4,10 +4,35 @@ import Foundation
 import SwiftAISDK
 
 public actor HanlinAISDKAgentEngine {
-    public typealias StepPreparation = @MainActor @Sendable () -> HanlinAISDKStepPreparation
+    public typealias StepPreparation = @MainActor @Sendable (_ stepNumber: Int) async -> HanlinAISDKStepPreparation
 
     private let configuration: HanlinChatModelConfiguration
     private let resolvedProvider: HanlinAISDKResolvedProvider
+
+    private final class StreamStopper: @unchecked Sendable {
+        private let lock = NSLock()
+        private var stopClosure: (@Sendable () -> Void)?
+        private var isStopped = false
+
+        func setStopper(_ closure: @escaping @Sendable () -> Void) {
+            lock.lock()
+            defer { lock.unlock() }
+            if isStopped {
+                closure()
+            } else {
+                stopClosure = closure
+            }
+        }
+
+        func stop() {
+            lock.lock()
+            isStopped = true
+            let closure = stopClosure
+            stopClosure = nil
+            lock.unlock()
+            closure?()
+        }
+    }
 
     public init(
         configuration: HanlinChatModelConfiguration,
@@ -58,6 +83,7 @@ public actor HanlinAISDKAgentEngine {
         )
 
         return AsyncThrowingStream { continuation in
+            let stopper = StreamStopper()
             let task = Task {
                 do {
                     continuation.yield(.runStarted)
@@ -68,7 +94,7 @@ public actor HanlinAISDKAgentEngine {
                         tools: tools,
                         providerOptions: resolvedProvider.providerOptions,
                         prepareStep: { options in
-                            let preparation = await prepareStep()
+                            let preparation = await prepareStep(options.stepNumber)
                             continuation.yield(.stepStarted(index: options.stepNumber, preparation: preparation))
                             return PrepareStepResult(
                                 activeTools: preparation.activeToolAliases,
@@ -81,6 +107,10 @@ public actor HanlinAISDKAgentEngine {
                         stopWhen: [stepCountIs(32)],
                         settings: settings
                     )
+
+                    stopper.setStopper {
+                        result.stop()
+                    }
 
                     var stepIndex = -1
                     var meaningfulEventCount = 0
@@ -133,8 +163,12 @@ public actor HanlinAISDKAgentEngine {
                                 reason: rawReason ?? reason.rawValue,
                                 usage: Self.usage(from: usage)
                             ))
+                            continuation.finish()
+                            return
                         case .abort:
                             continuation.yield(.cancelled)
+                            continuation.finish()
+                            return
                         case .error(let error):
                             throw error
                         case .toolError(let error):
@@ -160,7 +194,10 @@ public actor HanlinAISDKAgentEngine {
                     continuation.finish(throwing: error)
                 }
             }
-            continuation.onTermination = { _ in task.cancel() }
+            continuation.onTermination = { @Sendable _ in
+                task.cancel()
+                stopper.stop()
+            }
         }
     }
 

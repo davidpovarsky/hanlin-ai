@@ -37,7 +37,7 @@ public final class HanlinSkillCatalog {
         }
     }
 
-    /// Synchronizes skills from built-in system providers, compiled Mini Apps, and installed packages.
+    /// Synchronizes skills from built-in system providers, compiled Mini Apps, installed packages, and SkillStore.
     public func synchronizeProductionSkills(
         memoryEnabled: Bool = true,
         mapEnabled: Bool = true,
@@ -49,6 +49,9 @@ public final class HanlinSkillCatalog {
         weatherEnabled: Bool = true,
         canvasEnabled: Bool = true
     ) {
+        registeredSkills.removeAll()
+        skillInstructionLoaders.removeAll()
+
         // 1. System Skills for enabled legacy domains
         let sysSkills = SystemSkillsProvider.systemSkills(
             memoryEnabled: memoryEnabled,
@@ -109,6 +112,45 @@ public final class HanlinSkillCatalog {
                 }
             }
         }
+
+        // 4. Custom Skills and User Overrides from SkillStore
+        // Precedence: User Override > Custom Installed > Scripting Package > Mini App > System
+        let store = SkillStore.shared
+        for skill in store.allCustomSkillDescriptors() {
+            register(skill: skill) {
+                if case .inline(let text) = skill.instructions { return text }
+                return "# \(skill.title.preferredValue())\n\n\(skill.summary.preferredValue())"
+            }
+        }
+
+        for (baseID, overrideDesc) in store.allOverrideDescriptors() {
+            register(skill: overrideDesc) {
+                if case .inline(let text) = overrideDesc.instructions { return text }
+                return "# \(overrideDesc.title.preferredValue())\n\n\(overrideDesc.summary.preferredValue())"
+            }
+        }
+
+        // Filter out disabled skills
+        for disabledID in store.disabledSkillIDs() {
+            registeredSkills.removeValue(forKey: disabledID)
+            skillInstructionLoaders.removeValue(forKey: disabledID)
+        }
+    }
+
+    /// Explicitly refreshes the catalog after store changes.
+    public func refreshFromStore() {
+        synchronizeProductionSkills()
+    }
+
+    /// Resolves a safe resource URL inside a skill directory or main bundle.
+    public func resolveResourceURL(skillID: HanlinSkillID, relativePath: String) -> URL? {
+        if let storeURL = SkillStore.shared.safeResourceURL(for: skillID, relativePath: relativePath) {
+            return storeURL
+        }
+        if let bundleURL = Bundle.main.url(forResource: relativePath, withExtension: nil) {
+            return bundleURL
+        }
+        return nil
     }
 
     /// All registered skills for catalog discovery.

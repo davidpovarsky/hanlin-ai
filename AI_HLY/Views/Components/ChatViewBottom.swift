@@ -2170,6 +2170,7 @@ struct ActionButtonsView: View {
                             .foregroundColor(.hlRed)
                             .symbolEffect(.breathe, isActive: true)
                     }
+                    .accessibilityIdentifier("hanlin-chat-stop")
                     .animation(.spring(response: 0.5, dampingFraction: 0.7), value: isResponding)
                 } else if !selectedImages.isEmpty
                             || !selectedDocumentURLs.isEmpty

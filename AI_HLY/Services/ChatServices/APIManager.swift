@@ -1351,6 +1351,7 @@ class APIManager {
         isCancelled = true
         currentTask?.cancel()
         currentTask = nil
+        AgentRunCoordinator.shared.cancelRun()
     }
 
     func completeAgentDiagnostics(status: String, error: Error? = nil) async {
@@ -2291,6 +2292,7 @@ class APIManager {
                                     formattedMessages: [[String: Any]]? = nil,
                                     modelInfo: AllModels,
                                     groupID: UUID,
+                                    runID: UUID? = nil,
                                     currentLanguage: String,
                                     ifSearch: Bool,
                                     ifKnowledge: Bool,
@@ -2315,10 +2317,20 @@ class APIManager {
         
         var updatedMessages = messages
         let session = capabilitySession ?? AssistantCapabilitySession()
+        let currentRunID = runID ?? self.agentDiagnosticsRecorder?.runID ?? session.id
         
         return AsyncThrowingStream<StreamData, Error> { continuation in
             
-            Task(priority: .userInitiated) {
+            let producerTask = Task(priority: .userInitiated) {
+                guard AgentRunCoordinator.shared.isCurrentRun(currentRunID) else {
+                    continuation.finish()
+                    return
+                }
+                defer {
+                    if depth == 0 {
+                        AgentRunCoordinator.shared.finishRun(runID: currentRunID)
+                    }
+                }
                 var diagnosticsRoundID: UUID?
                 var diagnosticsRoundFinished = false
                 var diagnosticsUsage: AgentTokenUsage?
@@ -2563,6 +2575,7 @@ class APIManager {
                     if modelInfo.agentCapabilities.supportsNativeToolCalling && ifToolUse,
                        let prepared = preparedAssistantTools {
                         try await self.processSDKAgentEngine(
+                            runID: currentRunID,
                             formattedMessages: finalFormattedMessages,
                             modelInfo: modelInfo,
                             chatConfig: chatConfig,
@@ -3352,9 +3365,15 @@ default:
                     }
                     continuation.finish(throwing: error)
                 }
-                
-                continuation.onTermination = { _ in
-                    continuation.finish()
+            }
+            if depth == 0 {
+                AgentRunCoordinator.shared.attachProducerTask(producerTask, for: currentRunID)
+                self.currentTask = producerTask
+            }
+            continuation.onTermination = { @Sendable _ in
+                producerTask.cancel()
+                Task { @MainActor in
+                    AgentRunCoordinator.shared.cancelRun(runID: currentRunID)
                 }
             }
         }
@@ -3701,6 +3720,7 @@ default:
                            imageReversePrompt: String
     ) async throws -> AsyncThrowingStream<StreamData, Error> {
         // 取消当前任务
+        AgentRunCoordinator.shared.beginRun(runID: runID, recorder: nil)
         currentTask?.cancel()
         currentTask = nil
         isCancelled = false
@@ -3723,6 +3743,7 @@ default:
             providerID: modelInfo.company ?? "Unknown",
             modelID: modelInfo.name ?? modelName
         )
+        AgentRunCoordinator.shared.beginRun(runID: runID, recorder: agentDiagnosticsRecorder)
         
         let company = modelInfo.company?.uppercased()
         if company == "LOCAL" {
@@ -3741,6 +3762,7 @@ default:
                 return try await processRemoteModel(messages: messages,
                                                     modelInfo: modelInfo,
                                                     groupID: groupID,
+                                                    runID: runID,
                                                     currentLanguage: currentLanguage,
                                                     ifSearch: ifSearch,
                                                     ifKnowledge: ifKnowledge,
@@ -3773,6 +3795,7 @@ default:
 
     // MARK: - SDK Agent Engine
     private func processSDKAgentEngine(
+        runID: UUID,
         formattedMessages: [[String: Any]],
         modelInfo: AllModels,
         chatConfig: HanlinChatModelConfiguration,
@@ -3819,22 +3842,37 @@ default:
 
         let toolDefinitions = try toolAdapter.allToolDefinitions()
         let chatEngine = self.chatEngineFactory()
-        let fetch = await chatEngine.makeAISDKFetch()
+        let fetch = await chatEngine.makeAISDKFetch(
+            onRequest: { [weak self] requestData, headers in
+                Task { [weak self] in
+                    if let recorder = self?.agentDiagnosticsRecorder, let currentRoundID = toolAdapter.currentRoundID {
+                        await recorder.recordModelRequest(roundID: currentRoundID, requestData: requestData, httpHeaders: headers)
+                    }
+                }
+            },
+            onResponse: { [weak self] response, responseData in
+                Task { [weak self] in
+                    if let recorder = self?.agentDiagnosticsRecorder, let currentRoundID = toolAdapter.currentRoundID {
+                        await recorder.responseStarted(roundID: currentRoundID)
+                    }
+                }
+            }
+        )
         let agentEngine = try HanlinAISDKAgentEngine(configuration: chatConfig, fetch: fetch)
 
         let sdkStream = try await agentEngine.stream(
             messages: sdkMessages,
             baseSystemPrompt: baseSystemPrompt,
             tools: toolDefinitions,
-            prepareStep: {
-                toolAdapter.prepareStep()
+            prepareStep: { stepNumber in
+                await toolAdapter.prepareStep(stepNumber: stepNumber)
             }
         )
 
         var currentStepID: UUID?
 
         for try await event in sdkStream {
-            if self.isCancelled {
+            if self.isCancelled || Task.isCancelled || !AgentRunCoordinator.shared.isCurrentRun(runID) {
                 continuation.finish()
                 self.isCancelled = false
                 await self.agentDiagnosticsRecorder?.complete(status: "cancelled")
@@ -3846,25 +3884,7 @@ default:
                 continuation.yield(StreamData(operationalState: currentLanguagePrefix ? "正在处理" : "Processing"))
 
             case .stepStarted(let index, let prep):
-                let stepID: UUID?
-                if let existing = toolAdapter.currentRoundID, toolAdapter.currentStepIndex == index {
-                    stepID = existing
-                } else {
-                    stepID = await self.agentDiagnosticsRecorder?.beginRound(
-                        index: index,
-                        trigger: index <= 1 ? "initialUserRequest" : "continueAfterToolResult",
-                        requestData: Data(),
-                        loadedSkillIDs: prep.loadedSkillIDs,
-                        modelVisibleToolAliases: prep.activeToolAliases,
-                        modelVisibleToolCount: prep.activeToolAliases.count,
-                        modelVisibleSchemaBytes: prep.visibleSchemaBytes,
-                        providerID: chatConfig.company ?? "Unknown",
-                        modelID: chatConfig.modelID
-                    )
-                    toolAdapter.currentRoundID = stepID
-                    toolAdapter.currentStepIndex = index
-                }
-                currentStepID = stepID
+                currentStepID = toolAdapter.currentRoundID
                 continuation.yield(StreamData(operationalState: currentLanguagePrefix ? "等待模型响应" : "Waiting for model response"))
 
             case .textDelta(let text):
@@ -3984,7 +4004,7 @@ default:
             }
         }
 
-        await self.agentDiagnosticsRecorder?.complete(status: "completed")
+        await self.agentDiagnosticsRecorder?.complete(status: "failed", error: "Stream ended unexpectedly without terminal event")
         continuation.finish()
     }
 }

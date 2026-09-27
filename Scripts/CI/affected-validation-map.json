@@ -477,7 +477,9 @@
         "AI_HLYTests/FoundationJSONShadowAdapterTests",
         "AI_HLYTests/HanlinScriptingAssistantProviderAdapterTests",
         "AI_HLYTests/LegacyToolMigrationTests",
-        "AI_HLYTests/ScriptingCanonicalAuthorityTests"
+        "AI_HLYTests/ProductionSystemSkillsTests",
+        "AI_HLYTests/ScriptingCanonicalAuthorityTests",
+        "AI_HLYTests/SkillStoreAndImportTests"
       ],
       "consumers": [
         "app_ui"
@@ -624,6 +626,32 @@
       ],
       "consumers": []
     },
+    "production_system_skills_unit_tests": {
+      "description": "Production system skills and code tool priority unit tests",
+      "patterns": [
+        "AI_HLYTests/ProductionSystemSkillsTests.swift"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/ProductionSystemSkillsTests"
+      ],
+      "consumers": []
+    },
+    "skill_store_and_import_unit_tests": {
+      "description": "Skill store persistence, overrides, and archive importer unit tests",
+      "patterns": [
+        "AI_HLYTests/SkillStoreAndImportTests.swift"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/SkillStoreAndImportTests"
+      ],
+      "consumers": []
+    },
     "legacy_tool_migration_unit_tests": {
       "description": "Legacy tool migration and canonical discovery unit tests",
       "patterns": [
@@ -660,6 +688,19 @@
       ],
       "ui_suites": [
         "AI_HLYUITests/AgentSkillsEmbeddedResultsUITests"
+      ],
+      "consumers": []
+    },
+    "skill_center_ui_tests": {
+      "description": "Native Skill Center management and interaction UI acceptance test suite",
+      "patterns": [
+        "AI_HLYUITests/HanlinSkillCenterUITests.swift"
+      ],
+      "direct_validation_groups": [
+        "simulator_targeted_ui"
+      ],
+      "ui_suites": [
+        "AI_HLYUITests/HanlinSkillCenterUITests"
       ],
       "consumers": []
     },

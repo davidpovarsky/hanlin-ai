@@ -199,6 +199,130 @@ struct AgentRuntimeConversationAcceptanceTests {
         #expect(result.diagnostics.efficiency.invalidArgumentToolCount == 6)
     }
 
+    @Test("Production code skill loads local python and completes in the same user turn without extra nudge")
+    func productionCodeSkillLocalPythonCompletesSameUserTurn() async throws {
+        let result = try await runConversation(
+            responses: [
+                toolCall("call-load-code", "load_skill", ["skill_id": "code"]),
+                toolCall("call-exec-python", "execute_local_python_code", ["source": "print(123 * 456)"]),
+                finalAnswer("Calculated result: 56088.")
+            ]
+        )
+
+        #expect(result.answer.contains("56088"))
+        #expect(result.diagnostics.status == "completed")
+        #expect(result.diagnostics.efficiency.failedToolCount == 0)
+        #expect(result.diagnostics.efficiency.succeededToolCount == 2)
+
+        // Verify that round 2 advertised execute_local_python_code and not execute_remote_python_code
+        if result.requests.count >= 2 {
+            let round2Body = String(decoding: result.requests[1], as: UTF8.self)
+            #expect(round2Body.contains("execute_local_python_code"))
+            #expect(!round2Body.contains("execute_remote_python_code"))
+        }
+    }
+
+    @Test("Production tool failure renders error card and recovers in same turn")
+    func productionToolFailureRecoversAndAnswersSameTurn() async throws {
+        let result = try await runConversation(
+            responses: [
+                toolCall("call-bad-shell", "execute_shell_command", ["program": "not_an_approved_program_binary", "arguments": []]),
+                finalAnswer("Recovered from tool failure.")
+            ]
+        )
+
+        #expect(result.answer.contains("Recovered from tool failure."))
+        #expect(result.diagnostics.status == "completed")
+        #expect(result.diagnostics.efficiency.failedToolCount == 1)
+
+        let calls = result.diagnostics.rounds.flatMap(\.toolCalls)
+        #expect(calls.count == 1)
+        #expect(calls.first?.resultPresentationSuppressed == false)
+    }
+
+    @Test("Cancellation during agent run cancels coordinator and marks run cancelled")
+    func cancelDuringAgentWorkStopsAllLaterToolExecution() async throws {
+        let runID = UUID()
+        let recorder = await AgentDiagnosticsRecorder.start(
+            runID: runID,
+            groupID: UUID(),
+            providerID: "TEST",
+            modelID: "test"
+        )
+        AgentRunCoordinator.shared.beginRun(runID: runID, recorder: recorder)
+        #expect(AgentRunCoordinator.shared.isCurrentRun(runID))
+
+        AgentRunCoordinator.shared.cancelRun(runID: runID)
+        #expect(!AgentRunCoordinator.shared.isCurrentRun(runID))
+
+        let snapshot = await recorder.snapshot()
+        #expect(snapshot.status == "cancelled")
+        #expect(snapshot.isComplete)
+    }
+
+    @Test("Starting a new run cancels old run without ghost work")
+    func startingNewRunCancelsOldRunWithoutGhostWork() async throws {
+        let runID1 = UUID()
+        let recorder1 = await AgentDiagnosticsRecorder.start(
+            runID: runID1,
+            groupID: UUID(),
+            providerID: "TEST",
+            modelID: "test"
+        )
+        AgentRunCoordinator.shared.beginRun(runID: runID1, recorder: recorder1)
+        #expect(AgentRunCoordinator.shared.isCurrentRun(runID1))
+
+        let runID2 = UUID()
+        let recorder2 = await AgentDiagnosticsRecorder.start(
+            runID: runID2,
+            groupID: UUID(),
+            providerID: "TEST",
+            modelID: "test"
+        )
+        AgentRunCoordinator.shared.beginRun(runID: runID2, recorder: recorder2)
+
+        #expect(!AgentRunCoordinator.shared.isCurrentRun(runID1))
+        #expect(AgentRunCoordinator.shared.isCurrentRun(runID2))
+
+        let snapshot1 = await recorder1.snapshot()
+        #expect(snapshot1.status == "cancelled")
+
+        AgentRunCoordinator.shared.finishRun(runID: runID2)
+        #expect(!AgentRunCoordinator.shared.isCurrentRun(runID2))
+    }
+
+    @Test("Terminal diagnostics are immutable and reject late mutations")
+    func terminalDiagnosticsAreImmutable() async throws {
+        let runID = UUID()
+        let recorder = await AgentDiagnosticsRecorder.start(
+            runID: runID,
+            groupID: UUID(),
+            providerID: "TEST",
+            modelID: "test"
+        )
+
+        let roundID = await recorder.beginRound(
+            index: 1,
+            trigger: "initial",
+            requestData: Data("req".utf8)
+        )
+        #expect(roundID != nil)
+
+        await recorder.complete(status: "completed")
+        let snapshot1 = await recorder.snapshot()
+        #expect(snapshot1.isComplete)
+        #expect(snapshot1.completedAt != nil)
+
+        let lateRound = await recorder.beginRound(index: 2, trigger: "late", requestData: Data())
+        #expect(lateRound == nil)
+
+        await recorder.recordStreamEvent(roundID: roundID!, visibleContent: "late content")
+        let snapshot2 = await recorder.snapshot()
+        #expect(snapshot2.rounds.count == 1)
+        #expect(snapshot2.rounds[0].visibleResponseContent.isEmpty)
+        #expect(snapshot2.lastUpdatedAt == snapshot1.completedAt)
+    }
+
     private func runConversation(responses: [String]) async throws -> ConversationResult {
         ScriptedAgentURLProtocol.configure(responses: responses)
         let configuration = URLSessionConfiguration.ephemeral

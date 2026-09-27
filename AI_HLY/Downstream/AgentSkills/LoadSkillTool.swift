@@ -34,7 +34,8 @@ public enum LoadSkillTool {
         session: AssistantCapabilitySession,
         catalog: HanlinSkillCatalog = .shared,
         planner: AssistantToolExposurePlanner = AssistantToolExposurePlanner(),
-        schemaSizes: [String: Int] = [:]
+        schemaSizes: [String: Int] = [:],
+        availableAliases: Set<String>? = nil
     ) async -> String {
         guard let data = argumentsJSON.data(using: .utf8),
               let args = try? JSONDecoder().decode(Arguments.self, from: data) else {
@@ -46,6 +47,15 @@ public enum LoadSkillTool {
             return "Error: Skill '\(args.skill_id)' not found. Available skills: [\(available)]."
         }
 
+        if session.isSkillLoaded(descriptor.id) {
+            let exposed = session.exposedToolAliases.sorted()
+            var response = "Skill '\(descriptor.title.preferredValue())' [\(descriptor.id.rawValue)] is already loaded."
+            if !exposed.isEmpty {
+                response += "\n\nCurrently exposed tools:\n" + exposed.map { "- `\($0)`" }.joined(separator: "\n")
+            }
+            return response
+        }
+
         let instructions = await catalog.loadInstructions(for: descriptor)
         session.recordSkillLoaded(
             id: descriptor.id,
@@ -53,7 +63,13 @@ public enum LoadSkillTool {
             preferredToolIDs: descriptor.preferredToolIDs
         )
 
-        let candidateAliases = descriptor.preferredToolIDs
+        let candidateAliases: [String]
+        if let available = availableAliases {
+            candidateAliases = descriptor.preferredToolIDs.filter { available.contains($0) }
+        } else {
+            candidateAliases = descriptor.preferredToolIDs
+        }
+
         let decision = planner.plan(
             candidateAliases: candidateAliases,
             schemaSizes: schemaSizes,

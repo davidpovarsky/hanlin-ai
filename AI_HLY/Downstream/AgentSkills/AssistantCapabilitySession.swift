@@ -34,9 +34,10 @@ public final class AssistantCapabilitySession {
         instructionText: String,
         preferredToolIDs: [String] = []
     ) {
-        loadedSkillIDs.insert(id)
-        if !instructionText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-            loadedInstructionTexts.append(instructionText)
+        let isNew = loadedSkillIDs.insert(id).inserted
+        let trimmed = instructionText.trimmingCharacters(in: .whitespacesAndNewlines)
+        if isNew && !trimmed.isEmpty && !loadedInstructionTexts.contains(trimmed) {
+            loadedInstructionTexts.append(trimmed)
         }
         for hint in preferredToolIDs {
             activeSkillToolHints.insert(hint)
@@ -56,6 +57,12 @@ public final class AssistantCapabilitySession {
     /// Check if a skill is already loaded.
     public func isSkillLoaded(_ id: HanlinSkillID) -> Bool {
         loadedSkillIDs.contains(id)
+    }
+
+    /// Check if a skill is already loaded by raw string ID.
+    public func isSkillLoaded(_ rawID: String) -> Bool {
+        guard let id = try? HanlinSkillID(validating: rawID) else { return false }
+        return isSkillLoaded(id)
     }
 
     /// Check if a tool alias is currently exposed.

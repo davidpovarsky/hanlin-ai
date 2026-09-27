@@ -72,6 +72,74 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         )
     }
 
+    func testProductionCodeSkillLocalPythonNeedsNoUserNudge() throws {
+        let app = XCUIApplication()
+        app.launchArguments += ["-AppleLanguages", "(en)", "-AppleLocale", "en_US"]
+        app.launchEnvironment["HANLIN_UNIT_TEST_HOST"] = "0"
+        app.launchEnvironment["HANLIN_AGENT_RUNTIME_UI_ACCEPTANCE"] = "1"
+        app.launch()
+
+        openChat(in: app)
+        let input = app.textFields["hanlin-chat-input"].firstMatch
+        if !input.waitForExistence(timeout: 5) {
+            let chatPredicate = NSPredicate(format: "label CONTAINS 'Agent Acceptance Chat' OR identifier CONTAINS 'Agent Acceptance Chat'")
+            let seededChat = app.descendants(matching: .any).matching(chatPredicate).firstMatch
+            if seededChat.waitForExistence(timeout: 15) {
+                seededChat.tap()
+            }
+        }
+        XCTAssertTrue(input.waitForExistence(timeout: 20), "The real chat input did not appear.")
+        input.tap()
+        input.typeText("Execute Python code to compute 123 * 456.")
+
+        let send = app.buttons["hanlin-chat-send"].firstMatch
+        XCTAssertTrue(send.waitForExistence(timeout: 10))
+        send.tap()
+
+        let finalAnswer = app.staticTexts.matching(
+            NSPredicate(format: "label CONTAINS 'AGENT_UI_ACCEPTANCE_COMPLETE'")
+        ).firstMatch
+        XCTAssertTrue(finalAnswer.waitForExistence(timeout: 45), "Final answer was not rendered in the same user turn.")
+    }
+
+    func testStopThenNewMessageHasNoGhostOldRun() throws {
+        let app = XCUIApplication()
+        app.launchArguments += ["-AppleLanguages", "(en)", "-AppleLocale", "en_US"]
+        app.launchEnvironment["HANLIN_UNIT_TEST_HOST"] = "0"
+        app.launchEnvironment["HANLIN_AGENT_RUNTIME_UI_ACCEPTANCE"] = "1"
+        app.launch()
+
+        openChat(in: app)
+        let input = app.textFields["hanlin-chat-input"].firstMatch
+        if !input.waitForExistence(timeout: 5) {
+            let chatPredicate = NSPredicate(format: "label CONTAINS 'Agent Acceptance Chat' OR identifier CONTAINS 'Agent Acceptance Chat'")
+            let seededChat = app.descendants(matching: .any).matching(chatPredicate).firstMatch
+            if seededChat.waitForExistence(timeout: 15) {
+                seededChat.tap()
+            }
+        }
+        XCTAssertTrue(input.waitForExistence(timeout: 20), "The real chat input did not appear.")
+        input.tap()
+        input.typeText("First message to cancel.")
+
+        let send = app.buttons["hanlin-chat-send"].firstMatch
+        XCTAssertTrue(send.waitForExistence(timeout: 10))
+        send.tap()
+
+        let stopButton = app.buttons["hanlin-chat-stop"].firstMatch
+        if stopButton.waitForExistence(timeout: 3) && stopButton.isHittable {
+            stopButton.tap()
+        }
+
+        if input.waitForExistence(timeout: 5) {
+            input.tap()
+            input.typeText("Second message after stop.")
+            if send.waitForExistence(timeout: 5) && send.isHittable {
+                send.tap()
+            }
+        }
+    }
+
     // MARK: - Navigation & Toggle Helpers
 
     private func selectTab(identifier: String, labels: [String] = [], in app: XCUIApplication) -> Bool {

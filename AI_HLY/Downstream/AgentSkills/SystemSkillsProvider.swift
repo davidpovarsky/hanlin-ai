@@ -153,14 +153,24 @@ public enum SystemSkillsProvider {
                let desc = try? HanlinSkillDescriptor(
                    id: skillID,
                    title: "Code Execution",
-                   summary: "Execute sandboxed Python scripts and render interactive web views.",
+                   summary: "Execute Python scripts, calculations, JavaScript/TypeScript, and render interactive web views.",
                    instructions: .inline("""
                    Code and computation workflow:
-                   - Call `execute_remote_python_code` for data analysis, computations, and programmatic tasks.
+                   - Call `execute_local_python_code` for data analysis, math, file processing, and computations. Local Python starts automatically when needed.
+                   - Call `quick_calculate` for simple single-expression math.
+                   - Call `execute_javascript_code` or `execute_typescript_code` for JS/TS scripts.
+                   - Call `execute_shell_command` for terminal commands when permitted.
                    - Call `create_web_view` to render HTML/JavaScript previews.
                    """),
-                   keywords: ["code", "python", "script", "compute", "execute", "html"],
-                   preferredToolIDs: ["create_web_view", "execute_remote_python_code"]
+                   keywords: ["code", "python", "script", "compute", "execute", "math", "javascript", "typescript", "html"],
+                   preferredToolIDs: [
+                       "execute_local_python_code",
+                       "quick_calculate",
+                       "execute_javascript_code",
+                       "execute_typescript_code",
+                       "execute_shell_command",
+                       "create_web_view"
+                   ]
                ) {
                 descriptors.append(desc)
             }
