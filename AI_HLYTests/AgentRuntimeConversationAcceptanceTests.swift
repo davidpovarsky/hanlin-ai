@@ -306,17 +306,15 @@ struct AgentRuntimeConversationAcceptanceTests {
             trigger: "initial",
             requestData: Data("req".utf8)
         )
-        #expect(roundID != nil)
 
         await recorder.complete(status: "completed")
         let snapshot1 = await recorder.session
         #expect(snapshot1.isComplete)
         #expect(snapshot1.completedAt != nil)
 
-        let lateRound = await recorder.beginRound(index: 2, trigger: "late", requestData: Data())
-        #expect(lateRound == nil)
+        _ = await recorder.beginRound(index: 2, trigger: "late", requestData: Data())
 
-        await recorder.recordStreamEvent(roundID: roundID!, visibleContent: "late content", visibleReasoningSummary: nil)
+        await recorder.recordStreamEvent(roundID: roundID, visibleContent: "late content", visibleReasoningSummary: nil)
         let snapshot2 = await recorder.session
         #expect(snapshot2.rounds.count == 1)
         #expect(snapshot2.rounds[0].response.visibleContent?.isEmpty != false)
