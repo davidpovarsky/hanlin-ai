@@ -280,7 +280,7 @@ public final class SkillStore {
         if fileManager.fileExists(atPath: targetDir.path) {
             try fileManager.removeItem(at: targetDir)
         }
-        try fileManager.moveItem(at: stagedPackage.extractedDirectoryURL, to: targetDir)
+        try fileManager.moveItem(at: stagedPackage.skillRootDirectoryURL, to: targetDir)
 
         var meta = stagedPackage.metadata
         meta.originURL = stagedPackage.originURL ?? meta.originURL
@@ -290,15 +290,9 @@ public final class SkillStore {
         saveState()
         HanlinSkillCatalog.shared.refreshFromStore()
 
-        let descriptor = HanlinSkillDescriptor(
-            id: id,
-            title: .raw(stagedPackage.parsedMarkdown.name),
-            description: .raw(stagedPackage.parsedMarkdown.description),
-            instructions: stagedPackage.parsedMarkdown.body,
-            preferredToolIDs: meta.preferredToolIDs.compactMap { try? CanonicalToolIdentifier(validating: $0) },
-            triggerHints: meta.triggerHints,
-            keywords: meta.keywords
-        )
+        guard let descriptor = loadDescriptor(from: targetDir, skillID: id, isOverride: false) else {
+            throw SkillImportError.invalidFrontmatter("Could not load installed skill descriptor.")
+        }
         return StoredSkillRecord(
             descriptor: descriptor,
             sourceKind: stagedPackage.originURL != nil ? .imported : .custom,
