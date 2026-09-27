@@ -692,7 +692,8 @@ final class HanlinAISDKToolAdapter {
         let presentationDecision = ToolResultPresentationCoordinator.decide(
             call: parsedCall,
             profile: parsedCall.presentationProfile,
-            hasPayload: !effectiveUIBlocks.isEmpty || embeddedPayload != nil
+            hasPayload: !effectiveUIBlocks.isEmpty || embeddedPayload != nil,
+            isError: !isSuccess
         )
 
         if isSuccess || presentationDecision.shouldPresent {

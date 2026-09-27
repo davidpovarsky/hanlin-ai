@@ -17,7 +17,8 @@ enum ToolResultPresentationCoordinator {
     call: AgentToolCall,
     profile: ToolPresentationProfile,
     hasPayload: Bool,
-    isDuplicate: Bool = false
+    isDuplicate: Bool = false,
+    isError: Bool = false
   ) -> ToolResultPresentationDecision {
     let decision: ToolResultPresentationDecision
     let hasCanonicalEmbedded = profile.canonicalEmbeddedPresentation != nil
@@ -30,14 +31,20 @@ enum ToolResultPresentationCoordinator {
 
     if isDuplicate {
       decision = suppressed(.duplicate)
+    } else if !hasPayload {
+      decision = suppressed(.emptyResult)
+    } else if isError {
+      decision = ToolResultPresentationDecision(
+        shouldPresent: true,
+        rendererKind: rendererKind ?? .modernNative,
+        suppressionReason: nil
+      )
     } else if call.hadInvalidResultPresentation {
       decision = suppressed(.invalidRequest)
     } else if displayPolicy == .never || !supportsCard {
       decision = suppressed(.toolDoesNotSupportResultUI)
     } else if displayPolicy == .modelControlled && call.resultPresentationRequest != .card {
       decision = suppressed(.notRequested)
-    } else if !hasPayload {
-      decision = suppressed(.emptyResult)
     } else {
       decision = ToolResultPresentationDecision(
         shouldPresent: true,
