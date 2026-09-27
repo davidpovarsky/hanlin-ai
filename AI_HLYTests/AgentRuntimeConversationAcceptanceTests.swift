@@ -249,10 +249,10 @@ struct AgentRuntimeConversationAcceptanceTests {
             providerID: "TEST",
             modelID: "test"
         ))
-        AgentRunLifecycleCoordinator.shared.beginRun(runID: runID, recorder: recorder)
+        await AgentRunLifecycleCoordinator.shared.beginRun(runID: runID, recorder: recorder)
         #expect(AgentRunLifecycleCoordinator.shared.isCurrentRun(runID))
 
-        AgentRunLifecycleCoordinator.shared.cancelRun(runID: runID)
+        await AgentRunLifecycleCoordinator.shared.cancelRun(runID: runID)
         #expect(!AgentRunLifecycleCoordinator.shared.isCurrentRun(runID))
 
         let snapshot = await recorder.session
@@ -269,7 +269,7 @@ struct AgentRuntimeConversationAcceptanceTests {
             providerID: "TEST",
             modelID: "test"
         ))
-        AgentRunLifecycleCoordinator.shared.beginRun(runID: runID1, recorder: recorder1)
+        await AgentRunLifecycleCoordinator.shared.beginRun(runID: runID1, recorder: recorder1)
         #expect(AgentRunLifecycleCoordinator.shared.isCurrentRun(runID1))
 
         let runID2 = UUID()
@@ -279,7 +279,7 @@ struct AgentRuntimeConversationAcceptanceTests {
             providerID: "TEST",
             modelID: "test"
         ))
-        AgentRunLifecycleCoordinator.shared.beginRun(runID: runID2, recorder: recorder2)
+        await AgentRunLifecycleCoordinator.shared.beginRun(runID: runID2, recorder: recorder2)
 
         #expect(!AgentRunLifecycleCoordinator.shared.isCurrentRun(runID1))
         #expect(AgentRunLifecycleCoordinator.shared.isCurrentRun(runID2))

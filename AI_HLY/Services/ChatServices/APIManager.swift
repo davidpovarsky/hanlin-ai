@@ -3222,6 +3222,7 @@ default:
                                                                                             formattedMessages: newFormattedMessages,
                                                                                             modelInfo: modelInfo,
                                                                                             groupID: groupID,
+                                                                                            runID: currentRunID,
                                                                                             currentLanguage: currentLanguage,
                                                                                             ifSearch: ifSearch,
                                                                                             ifKnowledge: ifKnowledge,
@@ -3287,6 +3288,7 @@ default:
                                                                                                     formattedMessages: tempFormattedMessages,
                                                                                                     modelInfo: modelInfo,
                                                                                                     groupID: groupID,
+                                                                                                    runID: currentRunID,
                                                                                                     currentLanguage: currentLanguage,
                                                                                                     ifSearch: ifSearch,
                                                                                                     ifKnowledge: ifKnowledge,
@@ -3369,10 +3371,12 @@ default:
             if depth == 0 {
                 AgentRunLifecycleCoordinator.shared.attachProducerTask(producerTask, for: currentRunID)
             }
-            continuation.onTermination = { @Sendable _ in
-                producerTask.cancel()
-                Task { @MainActor in
-                    AgentRunLifecycleCoordinator.shared.cancelRun(runID: currentRunID)
+            continuation.onTermination = { @Sendable termination in
+                if case .cancelled = termination {
+                    producerTask.cancel()
+                    Task { @MainActor in
+                        AgentRunLifecycleCoordinator.shared.cancelRun(runID: currentRunID)
+                    }
                 }
             }
         }
@@ -3719,7 +3723,7 @@ default:
                            imageReversePrompt: String
     ) async throws -> AsyncThrowingStream<StreamData, Error> {
         // 取消当前任务
-        AgentRunLifecycleCoordinator.shared.beginRun(runID: runID, recorder: nil)
+        await AgentRunLifecycleCoordinator.shared.beginRun(runID: runID, recorder: nil)
         currentTask?.cancel()
         currentTask = nil
         isCancelled = false
@@ -3742,7 +3746,7 @@ default:
             providerID: modelInfo.company ?? "Unknown",
             modelID: modelInfo.name ?? modelName
         )
-        AgentRunLifecycleCoordinator.shared.beginRun(runID: runID, recorder: agentDiagnosticsRecorder)
+        await AgentRunLifecycleCoordinator.shared.beginRun(runID: runID, recorder: agentDiagnosticsRecorder)
         
         let company = modelInfo.company?.uppercased()
         if company == "LOCAL" {
@@ -3840,8 +3844,8 @@ default:
         )
 
         let toolDefinitions = try toolAdapter.allToolDefinitions()
-        let fetch = HanlinAISDKProviderFactory.makeFetch(
-            sessionConfiguration: .default,
+        let chatEngine = self.chatEngineFactory()
+        let fetch = await chatEngine.makeAISDKFetch(
             onRequest: { [weak self] request in
                 let (recorder, roundID) = await MainActor.run { [weak self] () -> (AgentDiagnosticsRecorder?, UUID?) in
                     (self?.agentDiagnosticsRecorder, toolAdapter.currentRoundID)

@@ -15,6 +15,19 @@ final class AgentRunLifecycleCoordinator {
     init() {}
 
     /// Begins a new Agent run, cancelling and superseding any existing run.
+    func beginRun(runID: UUID, recorder: AgentDiagnosticsRecorder?) async {
+        if let oldTask = activeProducerTask {
+            oldTask.cancel()
+            activeProducerTask = nil
+        }
+        if let oldRecorder = activeRecorder, oldRecorder !== recorder {
+            await oldRecorder.complete(status: "cancelled")
+        }
+        activeRunID = runID
+        activeRecorder = recorder
+    }
+
+    /// Synchronous overload for beginRun.
     func beginRun(runID: UUID, recorder: AgentDiagnosticsRecorder?) {
         if let oldTask = activeProducerTask {
             oldTask.cancel()
@@ -38,7 +51,21 @@ final class AgentRunLifecycleCoordinator {
         activeProducerTask = task
     }
 
-    /// Cancels the specified run, or the currently active run if runID is nil.
+    /// Cancels the specified run, or the currently active run if runID is nil (async).
+    func cancelRun(runID: UUID? = nil) async {
+        if let runID, activeRunID != runID {
+            return
+        }
+        activeProducerTask?.cancel()
+        activeProducerTask = nil
+        if let recorder = activeRecorder {
+            await recorder.complete(status: "cancelled")
+        }
+        activeRunID = nil
+        activeRecorder = nil
+    }
+
+    /// Cancels the specified run, or the currently active run if runID is nil (sync).
     func cancelRun(runID: UUID? = nil) {
         if let runID, activeRunID != runID {
             return
