@@ -122,14 +122,14 @@ public final class HanlinSkillCatalog {
         let platform = HanlinScriptingPlatform.shared
         for package in platform.installedPackages where package.enabled {
             guard let desc = try? package.appDescriptor() else { continue }
-            let packageID = package.id
+            let packageID = package.record.packageID
             for skill in desc.skills {
                 register(skill: skill, tier: .installedPackage) {
-                    guard let currentPackage = HanlinScriptingPlatform.shared.installedPackages.first(where: { $0.id == packageID && $0.enabled }) else {
+                    guard let currentPackage = HanlinScriptingPlatform.shared.installedPackages.first(where: { $0.record.packageID == packageID && $0.enabled }) else {
                         return ""
                     }
                     if case .resource(let path) = skill.instructions {
-                        if let artifactURL = await HanlinScriptingPlatform.shared.activeArtifactURL(for: currentPackage) {
+                        if let artifactURL = HanlinScriptingPlatform.shared.activeArtifactURL(for: currentPackage) {
                             let candidateURL = artifactURL.appending(path: path)
                             if let content = try? String(contentsOf: candidateURL, encoding: .utf8) {
                                 return content
@@ -138,6 +138,10 @@ public final class HanlinSkillCatalog {
                             if let content = try? String(contentsOf: sourceCandidate, encoding: .utf8) {
                                 return content
                             }
+                        }
+                        if let resURL = HanlinScriptingPlatform.shared.resolveResourceURL(packageID: packageID, relativePath: path),
+                           let content = try? String(contentsOf: resURL, encoding: .utf8) {
+                            return content
                         }
                         if let url = Bundle.main.url(forResource: path, withExtension: nil),
                            let content = try? String(contentsOf: url, encoding: .utf8) {
