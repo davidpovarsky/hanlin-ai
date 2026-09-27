@@ -66,7 +66,7 @@ struct ProductionSystemSkillsTests {
     @Test("Disabled domain disappears from skill index")
     func disabledDomainDisappearsFromSkillIndex() throws {
         let catalog = HanlinSkillCatalog.shared
-        catalog.synchronizeProductionSkills(codeEnabled: false, memoryEnabled: false)
+        catalog.synchronizeProductionSkills(memoryEnabled: false, codeEnabled: false)
         let skills = catalog.allSkills()
         #expect(!skills.contains { $0.id.rawValue == "code" })
         #expect(!skills.contains { $0.id.rawValue == "memory" })
@@ -74,7 +74,7 @@ struct ProductionSystemSkillsTests {
         #expect(catalog.resolve(rawID: "memory") == nil)
 
         // Restore
-        catalog.synchronizeProductionSkills(codeEnabled: true, memoryEnabled: true)
+        catalog.synchronizeProductionSkills(memoryEnabled: true, codeEnabled: true)
         #expect(catalog.resolve(rawID: "code") != nil)
         #expect(catalog.resolve(rawID: "memory") != nil)
     }

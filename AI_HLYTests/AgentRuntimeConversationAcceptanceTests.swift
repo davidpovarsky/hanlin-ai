@@ -318,12 +318,11 @@ struct AgentRuntimeConversationAcceptanceTests {
         await recorder.recordModelRequest(roundID: roundID, requestData: Data("late-model-req".utf8))
         await recorder.responseStarted(roundID: roundID, httpStatus: 200, providerRequestID: "late-id")
         await recorder.recordStreamEvent(roundID: roundID, visibleContent: "late content", visibleReasoningSummary: nil)
-        let lateCall = AgentToolCall(
+        let lateCall = AgentToolCall.parse(
             id: "late-call",
             name: "quick_calculate",
-            rawArgumentsJSON: "{}",
-            sanitizedArgumentsJSON: "{}",
-            presentationProfile: ToolPresentationProfile(identity: "quick_calculate")
+            argumentsJSON: "{}",
+            presentationProfile: .generic(toolName: "quick_calculate")
         )
         await recorder.recordToolCall(roundID: roundID, call: lateCall)
         await recorder.completeToolCall(roundID: roundID, callID: "late-call", resultForModel: "late", resultForUser: nil, duration: 1.0)

@@ -180,7 +180,7 @@ struct SkillStoreAndImportTests {
             stagingDirectoryURL: brokenStagingDir,
             skillRootDirectoryURL: brokenSkillRoot,
             skillID: skillID,
-            parsedMarkdown: SkillMarkdownParser.ParsedSkillMarkdown(name: "Broken", description: "Broken", body: "Broken"),
+            parsedMarkdown: SkillMarkdownParser.ParsedSkillMarkdown(name: "Broken", description: "Broken", body: "Broken", rawFrontmatter: [:]),
             metadata: HanlinSkillMetadata(preferredToolIDs: [], triggerHints: [], keywords: [], baseSkillID: nil, originURL: nil, sha256: nil, isEnabled: true, installedAt: Date(), updatedAt: Date()),
             resources: [],
             sha256: "dummy-hash"
