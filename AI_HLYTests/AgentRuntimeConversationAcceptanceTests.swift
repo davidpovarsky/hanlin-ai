@@ -243,19 +243,19 @@ struct AgentRuntimeConversationAcceptanceTests {
     @Test("Cancellation during agent run cancels coordinator and marks run cancelled")
     func cancelDuringAgentWorkStopsAllLaterToolExecution() async throws {
         let runID = UUID()
-        let recorder = await AgentDiagnosticsRecorder.start(
+        let recorder = try #require(await AgentDiagnosticsRecorder.start(
             runID: runID,
             groupID: UUID(),
             providerID: "TEST",
             modelID: "test"
-        )
+        ))
         AgentRunLifecycleCoordinator.shared.beginRun(runID: runID, recorder: recorder)
         #expect(AgentRunLifecycleCoordinator.shared.isCurrentRun(runID))
 
         AgentRunLifecycleCoordinator.shared.cancelRun(runID: runID)
         #expect(!AgentRunLifecycleCoordinator.shared.isCurrentRun(runID))
 
-        let snapshot = await recorder.snapshot()
+        let snapshot = await recorder.session
         #expect(snapshot.status == "cancelled")
         #expect(snapshot.isComplete)
     }
@@ -263,28 +263,28 @@ struct AgentRuntimeConversationAcceptanceTests {
     @Test("Starting a new run cancels old run without ghost work")
     func startingNewRunCancelsOldRunWithoutGhostWork() async throws {
         let runID1 = UUID()
-        let recorder1 = await AgentDiagnosticsRecorder.start(
+        let recorder1 = try #require(await AgentDiagnosticsRecorder.start(
             runID: runID1,
             groupID: UUID(),
             providerID: "TEST",
             modelID: "test"
-        )
+        ))
         AgentRunLifecycleCoordinator.shared.beginRun(runID: runID1, recorder: recorder1)
         #expect(AgentRunLifecycleCoordinator.shared.isCurrentRun(runID1))
 
         let runID2 = UUID()
-        let recorder2 = await AgentDiagnosticsRecorder.start(
+        let recorder2 = try #require(await AgentDiagnosticsRecorder.start(
             runID: runID2,
             groupID: UUID(),
             providerID: "TEST",
             modelID: "test"
-        )
+        ))
         AgentRunLifecycleCoordinator.shared.beginRun(runID: runID2, recorder: recorder2)
 
         #expect(!AgentRunLifecycleCoordinator.shared.isCurrentRun(runID1))
         #expect(AgentRunLifecycleCoordinator.shared.isCurrentRun(runID2))
 
-        let snapshot1 = await recorder1.snapshot()
+        let snapshot1 = await recorder1.session
         #expect(snapshot1.status == "cancelled")
 
         AgentRunLifecycleCoordinator.shared.finishRun(runID: runID2)
@@ -294,12 +294,12 @@ struct AgentRuntimeConversationAcceptanceTests {
     @Test("Terminal diagnostics are immutable and reject late mutations")
     func terminalDiagnosticsAreImmutable() async throws {
         let runID = UUID()
-        let recorder = await AgentDiagnosticsRecorder.start(
+        let recorder = try #require(await AgentDiagnosticsRecorder.start(
             runID: runID,
             groupID: UUID(),
             providerID: "TEST",
             modelID: "test"
-        )
+        ))
 
         let roundID = await recorder.beginRound(
             index: 1,
@@ -309,17 +309,17 @@ struct AgentRuntimeConversationAcceptanceTests {
         #expect(roundID != nil)
 
         await recorder.complete(status: "completed")
-        let snapshot1 = await recorder.snapshot()
+        let snapshot1 = await recorder.session
         #expect(snapshot1.isComplete)
         #expect(snapshot1.completedAt != nil)
 
         let lateRound = await recorder.beginRound(index: 2, trigger: "late", requestData: Data())
         #expect(lateRound == nil)
 
-        await recorder.recordStreamEvent(roundID: roundID!, visibleContent: "late content")
-        let snapshot2 = await recorder.snapshot()
+        await recorder.recordStreamEvent(roundID: roundID!, visibleContent: "late content", visibleReasoningSummary: nil)
+        let snapshot2 = await recorder.session
         #expect(snapshot2.rounds.count == 1)
-        #expect(snapshot2.rounds[0].visibleResponseContent.isEmpty)
+        #expect(snapshot2.rounds[0].response.visibleContent?.isEmpty != false)
         #expect(snapshot2.lastUpdatedAt == snapshot1.completedAt)
     }
 

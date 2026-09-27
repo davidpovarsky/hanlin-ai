@@ -64,7 +64,7 @@ struct SkillStoreAndImportTests {
     }
 
     @Test("SkillStore override takes precedence and resets cleanly")
-    func overridePrecedenceAndReset() throws {
+    func overridePrecedenceAndReset() async throws {
         let store = SkillStore.shared
         let catalog = HanlinSkillCatalog.shared
         catalog.synchronizeProductionSkills()
