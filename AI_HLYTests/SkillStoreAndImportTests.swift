@@ -5,7 +5,7 @@ import HanlinScriptCompiler
 @testable import AI_Hanlin
 
 @MainActor
-@Suite("Skill Store, Markdown Parser, and Importer Tests")
+@Suite("Skill Store, Markdown Parser, and Importer Tests", .serialized)
 struct SkillStoreAndImportTests {
 
     @Test("SkillMarkdownParser parses frontmatter and serializes roundtrip")

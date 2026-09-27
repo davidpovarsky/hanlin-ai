@@ -174,6 +174,35 @@ public final class HanlinSkillCatalog {
         for disabledID in store.disabledSkillIDs() {
             skillEntries.removeValue(forKey: disabledID)
         }
+
+        // Unconditionally prune disabled domains
+        if !memoryEnabled, let id = try? HanlinSkillID(validating: "memory") {
+            skillEntries.removeValue(forKey: id)
+        }
+        if !codeEnabled, let id = try? HanlinSkillID(validating: "code") {
+            skillEntries.removeValue(forKey: id)
+        }
+        if !mapEnabled, let id = try? HanlinSkillID(validating: "maps_location") {
+            skillEntries.removeValue(forKey: id)
+        }
+        if !calendarEnabled, let id = try? HanlinSkillID(validating: "calendar") {
+            skillEntries.removeValue(forKey: id)
+        }
+        if !searchEnabled, let id = try? HanlinSkillID(validating: "web_research") {
+            skillEntries.removeValue(forKey: id)
+        }
+        if !knowledgeEnabled, let id = try? HanlinSkillID(validating: "knowledge") {
+            skillEntries.removeValue(forKey: id)
+        }
+        if !healthEnabled, let id = try? HanlinSkillID(validating: "health") {
+            skillEntries.removeValue(forKey: id)
+        }
+        if !weatherEnabled, let id = try? HanlinSkillID(validating: "weather") {
+            skillEntries.removeValue(forKey: id)
+        }
+        if !canvasEnabled, let id = try? HanlinSkillID(validating: "canvas") {
+            skillEntries.removeValue(forKey: id)
+        }
     }
 
     /// Clears all registered skills (useful for isolated tests).

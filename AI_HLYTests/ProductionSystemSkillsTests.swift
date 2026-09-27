@@ -5,7 +5,7 @@ import HanlinMiniAppCore
 @testable import AI_Hanlin
 
 @MainActor
-@Suite("Production System Skills Verification")
+@Suite("Production System Skills Verification", .serialized)
 struct ProductionSystemSkillsTests {
 
     @Test("Code skill prioritizes execute_local_python_code and drops execute_remote_python_code")
