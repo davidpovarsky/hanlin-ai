@@ -249,11 +249,11 @@ struct AgentRuntimeConversationAcceptanceTests {
             providerID: "TEST",
             modelID: "test"
         )
-        AgentRunCoordinator.shared.beginRun(runID: runID, recorder: recorder)
-        #expect(AgentRunCoordinator.shared.isCurrentRun(runID))
+        AgentRunLifecycleCoordinator.shared.beginRun(runID: runID, recorder: recorder)
+        #expect(AgentRunLifecycleCoordinator.shared.isCurrentRun(runID))
 
-        AgentRunCoordinator.shared.cancelRun(runID: runID)
-        #expect(!AgentRunCoordinator.shared.isCurrentRun(runID))
+        AgentRunLifecycleCoordinator.shared.cancelRun(runID: runID)
+        #expect(!AgentRunLifecycleCoordinator.shared.isCurrentRun(runID))
 
         let snapshot = await recorder.snapshot()
         #expect(snapshot.status == "cancelled")
@@ -269,8 +269,8 @@ struct AgentRuntimeConversationAcceptanceTests {
             providerID: "TEST",
             modelID: "test"
         )
-        AgentRunCoordinator.shared.beginRun(runID: runID1, recorder: recorder1)
-        #expect(AgentRunCoordinator.shared.isCurrentRun(runID1))
+        AgentRunLifecycleCoordinator.shared.beginRun(runID: runID1, recorder: recorder1)
+        #expect(AgentRunLifecycleCoordinator.shared.isCurrentRun(runID1))
 
         let runID2 = UUID()
         let recorder2 = await AgentDiagnosticsRecorder.start(
@@ -279,16 +279,16 @@ struct AgentRuntimeConversationAcceptanceTests {
             providerID: "TEST",
             modelID: "test"
         )
-        AgentRunCoordinator.shared.beginRun(runID: runID2, recorder: recorder2)
+        AgentRunLifecycleCoordinator.shared.beginRun(runID: runID2, recorder: recorder2)
 
-        #expect(!AgentRunCoordinator.shared.isCurrentRun(runID1))
-        #expect(AgentRunCoordinator.shared.isCurrentRun(runID2))
+        #expect(!AgentRunLifecycleCoordinator.shared.isCurrentRun(runID1))
+        #expect(AgentRunLifecycleCoordinator.shared.isCurrentRun(runID2))
 
         let snapshot1 = await recorder1.snapshot()
         #expect(snapshot1.status == "cancelled")
 
-        AgentRunCoordinator.shared.finishRun(runID: runID2)
-        #expect(!AgentRunCoordinator.shared.isCurrentRun(runID2))
+        AgentRunLifecycleCoordinator.shared.finishRun(runID: runID2)
+        #expect(!AgentRunLifecycleCoordinator.shared.isCurrentRun(runID2))
     }
 
     @Test("Terminal diagnostics are immutable and reject late mutations")

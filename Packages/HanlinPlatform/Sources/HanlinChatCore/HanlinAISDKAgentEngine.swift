@@ -67,6 +67,34 @@ public actor HanlinAISDKAgentEngine {
         messages: [HanlinAISDKMessage],
         baseSystemPrompt: String?,
         tools definitions: [HanlinAISDKToolDefinition],
+        prepareStep: @escaping @MainActor @Sendable () -> HanlinAISDKStepPreparation
+    ) throws -> AsyncThrowingStream<HanlinAISDKStreamEvent, Error> {
+        try stream(
+            messages: messages,
+            baseSystemPrompt: baseSystemPrompt,
+            tools: definitions,
+            prepareStep: { (_: Int) in prepareStep() }
+        )
+    }
+
+    public func stream(
+        messages: [HanlinAISDKMessage],
+        baseSystemPrompt: String?,
+        tools definitions: [HanlinAISDKToolDefinition],
+        prepareStep: @escaping @MainActor @Sendable () async -> HanlinAISDKStepPreparation
+    ) throws -> AsyncThrowingStream<HanlinAISDKStreamEvent, Error> {
+        try stream(
+            messages: messages,
+            baseSystemPrompt: baseSystemPrompt,
+            tools: definitions,
+            prepareStep: { (_: Int) async in await prepareStep() }
+        )
+    }
+
+    public func stream(
+        messages: [HanlinAISDKMessage],
+        baseSystemPrompt: String?,
+        tools definitions: [HanlinAISDKToolDefinition],
         prepareStep: @escaping StepPreparation
     ) throws -> AsyncThrowingStream<HanlinAISDKStreamEvent, Error> {
         let modelMessages = try Self.modelMessages(from: messages)

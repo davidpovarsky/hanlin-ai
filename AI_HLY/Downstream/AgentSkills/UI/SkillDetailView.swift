@@ -232,15 +232,12 @@ struct SkillDetailView: View {
             case .imported:
                 text = "Imported"
                 color = .blue
-            case .system:
+            case .builtin:
                 text = SkillL10n.string("System")
                 color = .secondary
-            case .miniApp:
-                text = "Mini App"
+            case .appPackage:
+                text = "Package"
                 color = .teal
-            case .override:
-                text = SkillL10n.string("Overrides")
-                color = .orange
             }
         } else {
             text = SkillL10n.string("System")

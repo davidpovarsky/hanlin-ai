@@ -1351,7 +1351,7 @@ class APIManager {
         isCancelled = true
         currentTask?.cancel()
         currentTask = nil
-        AgentRunCoordinator.shared.cancelRun()
+        AgentRunLifecycleCoordinator.shared.cancelRun()
     }
 
     func completeAgentDiagnostics(status: String, error: Error? = nil) async {
@@ -2317,18 +2317,18 @@ class APIManager {
         
         var updatedMessages = messages
         let session = capabilitySession ?? AssistantCapabilitySession()
-        let currentRunID = runID ?? self.agentDiagnosticsRecorder?.runID ?? session.id
+        let currentRunID = runID ?? session.id
         
         return AsyncThrowingStream<StreamData, Error> { continuation in
             
             let producerTask = Task(priority: .userInitiated) {
-                guard AgentRunCoordinator.shared.isCurrentRun(currentRunID) else {
+                guard AgentRunLifecycleCoordinator.shared.isCurrentRun(currentRunID) else {
                     continuation.finish()
                     return
                 }
                 defer {
                     if depth == 0 {
-                        AgentRunCoordinator.shared.finishRun(runID: currentRunID)
+                        AgentRunLifecycleCoordinator.shared.finishRun(runID: currentRunID)
                     }
                 }
                 var diagnosticsRoundID: UUID?
@@ -3367,13 +3367,12 @@ default:
                 }
             }
             if depth == 0 {
-                AgentRunCoordinator.shared.attachProducerTask(producerTask, for: currentRunID)
-                self.currentTask = producerTask
+                AgentRunLifecycleCoordinator.shared.attachProducerTask(producerTask, for: currentRunID)
             }
             continuation.onTermination = { @Sendable _ in
                 producerTask.cancel()
                 Task { @MainActor in
-                    AgentRunCoordinator.shared.cancelRun(runID: currentRunID)
+                    AgentRunLifecycleCoordinator.shared.cancelRun(runID: currentRunID)
                 }
             }
         }
@@ -3720,7 +3719,7 @@ default:
                            imageReversePrompt: String
     ) async throws -> AsyncThrowingStream<StreamData, Error> {
         // 取消当前任务
-        AgentRunCoordinator.shared.beginRun(runID: runID, recorder: nil)
+        AgentRunLifecycleCoordinator.shared.beginRun(runID: runID, recorder: nil)
         currentTask?.cancel()
         currentTask = nil
         isCancelled = false
@@ -3743,7 +3742,7 @@ default:
             providerID: modelInfo.company ?? "Unknown",
             modelID: modelInfo.name ?? modelName
         )
-        AgentRunCoordinator.shared.beginRun(runID: runID, recorder: agentDiagnosticsRecorder)
+        AgentRunLifecycleCoordinator.shared.beginRun(runID: runID, recorder: agentDiagnosticsRecorder)
         
         let company = modelInfo.company?.uppercased()
         if company == "LOCAL" {
@@ -3841,20 +3840,19 @@ default:
         )
 
         let toolDefinitions = try toolAdapter.allToolDefinitions()
-        let chatEngine = self.chatEngineFactory()
-        let fetch = await chatEngine.makeAISDKFetch(
-            onRequest: { [weak self] requestData, headers in
-                Task { [weak self] in
-                    if let recorder = self?.agentDiagnosticsRecorder, let currentRoundID = toolAdapter.currentRoundID {
-                        await recorder.recordModelRequest(roundID: currentRoundID, requestData: requestData, httpHeaders: headers)
-                    }
+        let fetch = HanlinAISDKProviderFactory.makeFetch(
+            sessionConfiguration: .default,
+            onRequest: { [weak self] request in
+                if let recorder = self?.agentDiagnosticsRecorder, let currentRoundID = toolAdapter.currentRoundID {
+                    let body = request.httpBody ?? Data()
+                    let headers = request.allHTTPHeaderFields ?? [:]
+                    await recorder.recordModelRequest(roundID: currentRoundID, requestData: body, httpHeaders: headers)
                 }
             },
-            onResponse: { [weak self] response, responseData in
-                Task { [weak self] in
-                    if let recorder = self?.agentDiagnosticsRecorder, let currentRoundID = toolAdapter.currentRoundID {
-                        await recorder.responseStarted(roundID: currentRoundID)
-                    }
+            onResponse: { [weak self] request, response in
+                if let recorder = self?.agentDiagnosticsRecorder, let currentRoundID = toolAdapter.currentRoundID {
+                    let reqID = response.allHeaderFields["x-request-id"] as? String
+                    await recorder.responseStarted(roundID: currentRoundID, httpStatus: response.statusCode, providerRequestID: reqID)
                 }
             }
         )
@@ -3872,7 +3870,7 @@ default:
         var currentStepID: UUID?
 
         for try await event in sdkStream {
-            if self.isCancelled || Task.isCancelled || !AgentRunCoordinator.shared.isCurrentRun(runID) {
+            if self.isCancelled || Task.isCancelled || !AgentRunLifecycleCoordinator.shared.isCurrentRun(runID) {
                 continuation.finish()
                 self.isCancelled = false
                 await self.agentDiagnosticsRecorder?.complete(status: "cancelled")

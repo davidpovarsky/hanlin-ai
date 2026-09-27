@@ -5,8 +5,8 @@ import Foundation
 /// Prevents cross-run races, ghost tool executions, and ensures a superseded
 /// or cancelled run cannot mutate state or diagnostics for a subsequent run.
 @MainActor
-final class AgentRunCoordinator {
-    static let shared = AgentRunCoordinator()
+final class AgentRunLifecycleCoordinator {
+    static let shared = AgentRunLifecycleCoordinator()
 
     private(set) var activeRunID: UUID?
     private var activeProducerTask: Task<Void, Never>?

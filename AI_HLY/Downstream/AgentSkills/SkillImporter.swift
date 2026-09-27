@@ -66,13 +66,27 @@ public struct StagedSkillPackage: Sendable {
     }
 }
 
-public final class SkillImporter: Sendable {
+public final class SkillImporter: @unchecked Sendable {
     public static let shared = SkillImporter()
     public static let maxDownloadBytes: Int64 = 25 * 1_048_576
 
     private let fileManager = FileManager.default
 
     public init() {}
+
+    @MainActor
+    public func importSkill(fromArchiveAt fileURL: URL) throws -> HanlinSkillDescriptor {
+        let staged = try stageAndInspect(fileURL: fileURL)
+        let record = try SkillStore.shared.install(stagedPackage: staged)
+        return record.descriptor
+    }
+
+    @MainActor
+    public func installFromHTTPSURL(_ url: URL) async throws -> HanlinSkillDescriptor {
+        let staged = try await downloadAndStage(from: url)
+        let record = try SkillStore.shared.install(stagedPackage: staged)
+        return record.descriptor
+    }
 
     // MARK: - Staging from Local File / ZIP
 
