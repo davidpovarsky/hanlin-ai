@@ -29,6 +29,7 @@ struct SkillCenterView: View {
 
     @State private var showImporter: Bool = false
     @State private var showCreator: Bool = false
+    @State private var importInitialTab: Int = 0
 
     var body: some View {
         List {
@@ -65,14 +66,36 @@ struct SkillCenterView: View {
             ToolbarItem(placement: .topBarTrailing) {
                 HStack(spacing: 12) {
                     Button {
+                        importInitialTab = 0
                         showImporter = true
                     } label: {
                         Label(SkillL10n.string("Import"), systemImage: "square.and.arrow.down")
                     }
                     .accessibilityIdentifier("hanlin-skill-center-import-button")
 
-                    Button {
-                        showCreator = true
+                    Menu {
+                        Button {
+                            showCreator = true
+                        } label: {
+                            Label(SkillL10n.string("New Skill"), systemImage: "plus")
+                        }
+                        .accessibilityIdentifier("hanlin-skill-center-menu-new-skill")
+
+                        Button {
+                            importInitialTab = 0
+                            showImporter = true
+                        } label: {
+                            Label(SkillL10n.string("Import Skill"), systemImage: "doc.zipper")
+                        }
+                        .accessibilityIdentifier("hanlin-skill-center-menu-import-skill")
+
+                        Button {
+                            importInitialTab = 1
+                            showImporter = true
+                        } label: {
+                            Label(SkillL10n.string("Install from URL"), systemImage: "link")
+                        }
+                        .accessibilityIdentifier("hanlin-skill-center-menu-install-url")
                     } label: {
                         Image(systemName: "plus")
                     }
@@ -81,7 +104,7 @@ struct SkillCenterView: View {
             }
         }
         .sheet(isPresented: $showImporter) {
-            SkillImportView {
+            SkillImportView(initialTab: importInitialTab) {
                 reloadData()
             }
         }

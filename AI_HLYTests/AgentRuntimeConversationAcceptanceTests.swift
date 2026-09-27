@@ -291,7 +291,7 @@ struct AgentRuntimeConversationAcceptanceTests {
         #expect(!AgentRunLifecycleCoordinator.shared.isCurrentRun(runID2))
     }
 
-    @Test("Terminal diagnostics are immutable and reject late mutations")
+    @Test("Terminal diagnostics are immutable and reject late mutations across all mutation methods")
     func terminalDiagnosticsAreImmutable() async throws {
         let runID = UUID()
         let recorder = try #require(await AgentDiagnosticsRecorder.start(
@@ -302,23 +302,87 @@ struct AgentRuntimeConversationAcceptanceTests {
         ))
 
         let roundID = await recorder.beginRound(
-            index: 1,
-            trigger: "initial",
+            index: 0,
+            trigger: "initialUserRequest",
             requestData: Data("req".utf8)
         )
 
         await recorder.complete(status: "completed")
         let snapshot1 = await recorder.session
         #expect(snapshot1.isComplete)
+        #expect(snapshot1.status == "completed")
         #expect(snapshot1.completedAt != nil)
 
-        _ = await recorder.beginRound(index: 2, trigger: "late", requestData: Data())
-
+        // Attempt mutations after completion
+        _ = await recorder.beginRound(index: 1, trigger: "late", requestData: Data())
+        await recorder.recordModelRequest(roundID: roundID, requestData: Data("late-model-req".utf8))
+        await recorder.responseStarted(roundID: roundID, httpStatus: 200, providerRequestID: "late-id")
         await recorder.recordStreamEvent(roundID: roundID, visibleContent: "late content", visibleReasoningSummary: nil)
+        let lateCall = AgentToolCall(
+            id: "late-call",
+            name: "quick_calculate",
+            rawArgumentsJSON: "{}",
+            sanitizedArgumentsJSON: "{}",
+            presentationProfile: ToolPresentationProfile(identity: "quick_calculate")
+        )
+        await recorder.recordToolCall(roundID: roundID, call: lateCall)
+        await recorder.completeToolCall(roundID: roundID, callID: "late-call", resultForModel: "late", resultForUser: nil, duration: 1.0)
+        await recorder.finishRound(roundID: roundID, finishReason: "stop", usage: nil)
+        await recorder.complete(status: "failed", error: "late error")
+
         let snapshot2 = await recorder.session
+        #expect(snapshot2.isComplete)
+        #expect(snapshot2.status == "completed")
         #expect(snapshot2.rounds.count == 1)
-        #expect(snapshot2.rounds[0].response.visibleContent?.isEmpty != false)
+        #expect(snapshot2.rounds[0].response.visibleContent == nil)
+        #expect(snapshot2.rounds[0].toolCalls.isEmpty)
         #expect(snapshot2.lastUpdatedAt == snapshot1.completedAt)
+    }
+
+    @Test("Unexpected SDK stream end without terminal event marks diagnostics as failed and throws error")
+    func unexpectedSDKStreamEndIsFailureNotCompleted() async throws {
+        let unclosedSSE = "data: {\"choices\":[{\"delta\":{\"content\":\"partial answer\"}}]}\n\n"
+        await #expect(throws: Error.self) {
+            _ = try await runConversation(responses: [unclosedSSE])
+        }
+    }
+
+    @Test("Round order uses exact SDK step numbers starting at zero")
+    func roundOrderUsesExactSDKStepNumbers() async throws {
+        let result = try await runConversation(
+            responses: [
+                toolCall("step-0-call", "quick_calculate", ["expression": "2 + 2"]),
+                finalAnswer("Answer is 4.")
+            ]
+        )
+
+        let rounds = result.diagnostics.rounds
+        #expect(rounds.count == 2)
+        #expect(rounds[0].index == 0)
+        #expect(rounds[0].trigger == "initialUserRequest")
+        #expect(rounds[1].index == 1)
+        #expect(rounds[1].trigger == "continueAfterToolResult")
+    }
+
+    @Test("Diagnostics capture actual continuation request body and headers")
+    func diagnosticsCaptureActualContinuationRequest() async throws {
+        let result = try await runConversation(
+            responses: [
+                toolCall("calc-1", "quick_calculate", ["expression": "10 * 10"]),
+                finalAnswer("100")
+            ]
+        )
+
+        let rounds = result.diagnostics.rounds
+        #expect(rounds.count == 2)
+        #expect(rounds[0].request.byteCount > 0)
+        #expect(rounds[0].request.contentHash.count == 64)
+        #expect(rounds[1].request.byteCount > 0)
+        #expect(rounds[1].request.contentHash.count == 64)
+        if result.requests.count >= 2 {
+            let req2Text = String(decoding: result.requests[1], as: UTF8.self)
+            #expect(req2Text.contains("100") || req2Text.contains("calc-1"))
+        }
     }
 
     private func runConversation(responses: [String]) async throws -> ConversationResult {

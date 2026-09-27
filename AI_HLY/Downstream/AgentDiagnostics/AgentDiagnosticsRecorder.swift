@@ -198,7 +198,10 @@ actor AgentDiagnosticsRecorder {
         visibleReasoningSummary: String?,
         isMeaningful: Bool = true
     ) {
-        if session.isComplete { return }
+        if session.isComplete {
+            trace("LateMutationAttemptedAfterTerminal", roundID: roundID, fields: ["operation": "recordStreamEvent"])
+            return
+        }
         let shouldStoreFullContent = session.level == .fullLocalDebug
 
         updateRound(roundID) { round in
@@ -409,7 +412,10 @@ actor AgentDiagnosticsRecorder {
     }
 
     func complete(status: String, error: String? = nil) async {
-        guard !session.isComplete else { return }
+        guard !session.isComplete else {
+            trace("LateMutationAttemptedAfterTerminal", fields: ["operation": "complete", "attemptedStatus": status])
+            return
+        }
         let normalizedStatus: String
         switch status.lowercased() {
         case "completed", "succeeded", "success":

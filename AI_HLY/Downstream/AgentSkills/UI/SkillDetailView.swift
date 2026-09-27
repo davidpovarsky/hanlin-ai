@@ -16,6 +16,11 @@ struct SkillDetailView: View {
     @State private var showEditor: Bool = false
     @State private var showDeleteConfirm: Bool = false
     @State private var previewResource: SkillResourceFile?
+    @State private var showAddResource: Bool = false
+    @State private var newResourcePath: String = ""
+    @State private var newResourceContent: String = ""
+    @State private var addResourceError: String? = nil
+    @State private var binaryMetadataResource: SkillResourceFile?
 
     @Environment(\.dismiss) private var dismiss
 
@@ -39,6 +44,12 @@ struct SkillDetailView: View {
         }
         .sheet(item: $previewResource) { res in
             resourcePreviewSheet(res)
+        }
+        .sheet(isPresented: $showAddResource) {
+            addResourceSheet
+        }
+        .sheet(item: $binaryMetadataResource) { res in
+            binaryMetadataSheet(res)
         }
         .confirmationDialog(
             SkillL10n.string("Delete Skill"),
@@ -136,7 +147,22 @@ struct SkillDetailView: View {
     }
 
     private var resourcesSection: some View {
-        Section(header: Text(SkillL10n.string("Resources"))) {
+        Section(header: HStack {
+            Text(SkillL10n.string("Resources"))
+            Spacer()
+            if isCustomOrImported {
+                Button {
+                    newResourcePath = ""
+                    newResourceContent = ""
+                    addResourceError = nil
+                    showAddResource = true
+                } label: {
+                    Image(systemName: "plus")
+                        .font(.caption)
+                }
+                .accessibilityIdentifier("hanlin-skill-detail-add-resource-button")
+            }
+        }) {
             if resources.isEmpty {
                 Text(SkillL10n.string("No resources"))
                     .font(.footnote)
@@ -160,14 +186,32 @@ struct SkillDetailView: View {
                             }
                             .buttonStyle(.bordered)
                             .font(.caption)
+                            .accessibilityIdentifier("hanlin-skill-detail-view-resource-\(res.relativePath)")
                         } else {
-                            Text("Binary")
-                                .font(.caption2)
-                                .foregroundColor(.secondary)
-                                .padding(.horizontal, 6)
-                                .padding(.vertical, 2)
-                                .background(Color.secondary.opacity(0.1))
-                                .cornerRadius(4)
+                            Button {
+                                binaryMetadataResource = res
+                            } label: {
+                                Text("Binary")
+                                    .font(.caption2)
+                                    .padding(.horizontal, 6)
+                                    .padding(.vertical, 2)
+                                    .background(Color.secondary.opacity(0.1))
+                                    .cornerRadius(4)
+                            }
+                            .buttonStyle(.plain)
+                            .accessibilityIdentifier("hanlin-skill-detail-binary-resource-\(res.relativePath)")
+                        }
+
+                        if isCustomOrImported {
+                            Button(role: .destructive) {
+                                deleteResource(res.relativePath)
+                            } label: {
+                                Image(systemName: "trash")
+                                    .font(.caption)
+                                    .foregroundColor(.red)
+                            }
+                            .buttonStyle(.borderless)
+                            .accessibilityIdentifier("hanlin-skill-detail-delete-resource-\(res.relativePath)")
                         }
                     }
                 }
@@ -306,6 +350,93 @@ struct SkillDetailView: View {
                     }
                 }
             }
+        }
+    }
+
+    private var addResourceSheet: some View {
+        NavigationStack {
+            Form {
+                if let err = addResourceError {
+                    Section {
+                        Text(err)
+                            .foregroundColor(.red)
+                            .font(.footnote)
+                    }
+                }
+
+                Section(header: Text("Resource Relative Path")) {
+                    TextField("references/guide.md", text: $newResourcePath)
+                        .autocorrectionDisabled()
+                        .textInputAutocapitalization(.never)
+                        .accessibilityIdentifier("hanlin-skill-detail-new-resource-path")
+                }
+
+                Section(header: Text("Content")) {
+                    TextEditor(text: $newResourceContent)
+                        .frame(minHeight: 180)
+                        .font(.system(.body, design: .monospaced))
+                        .accessibilityIdentifier("hanlin-skill-detail-new-resource-content")
+                }
+            }
+            .navigationTitle("Add Resource")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button("Cancel") {
+                        showAddResource = false
+                    }
+                }
+                ToolbarItem(placement: .confirmationAction) {
+                    Button("Save") {
+                        saveNewResource()
+                    }
+                    .bold()
+                    .disabled(newResourcePath.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
+                    .accessibilityIdentifier("hanlin-skill-detail-save-resource-button")
+                }
+            }
+        }
+    }
+
+    private func binaryMetadataSheet(_ res: SkillResourceFile) -> some View {
+        NavigationStack {
+            List {
+                Section(header: Text("Binary Resource Info")) {
+                    LabeledContent("Relative Path", value: res.relativePath)
+                    LabeledContent("File Size", value: ByteCountFormatter.string(fromByteCount: res.byteCount, countStyle: .file))
+                    LabeledContent("Bytes", value: "\(res.byteCount)")
+                    LabeledContent("MIME Type", value: res.mimeType)
+                }
+            }
+            .navigationTitle(res.relativePath)
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .confirmationAction) {
+                    Button("Close") {
+                        binaryMetadataResource = nil
+                    }
+                }
+            }
+        }
+    }
+
+    private func saveNewResource() {
+        let clean = newResourcePath.trimmingCharacters(in: .whitespacesAndNewlines)
+        do {
+            try SkillStore.shared.addOrUpdateTextResource(for: skillID, relativePath: clean, content: newResourceContent)
+            showAddResource = false
+            loadSkillData()
+        } catch {
+            addResourceError = error.localizedDescription
+        }
+    }
+
+    private func deleteResource(_ relativePath: String) {
+        do {
+            try SkillStore.shared.deleteResource(for: skillID, relativePath: relativePath)
+            loadSkillData()
+        } catch {
+            print("Failed to delete resource: \(error)")
         }
     }
 

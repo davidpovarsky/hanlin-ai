@@ -196,7 +196,11 @@ public final class SkillStore {
         let resolvedCandidate = candidate.standardizedFileURL.resolvingSymlinksInPath()
         let resolvedBase = base.standardizedFileURL.resolvingSymlinksInPath()
 
-        guard resolvedCandidate.path.hasPrefix(resolvedBase.path) else {
+        let basePath = resolvedBase.path
+        let candidatePath = resolvedCandidate.path
+        let basePathWithSlash = basePath.hasSuffix("/") ? basePath : basePath + "/"
+
+        guard candidatePath == basePath || candidatePath.hasPrefix(basePathWithSlash) else {
             return nil
         }
         guard fileManager.fileExists(atPath: candidate.path) else {
@@ -277,35 +281,76 @@ public final class SkillStore {
     public func install(stagedPackage: StagedSkillPackage) throws -> StoredSkillRecord {
         let id = stagedPackage.skillID
         let targetDir = skillsDirectoryURL.appendingPathComponent(id.rawValue, isDirectory: true)
-        if fileManager.fileExists(atPath: targetDir.path) {
-            try fileManager.removeItem(at: targetDir)
-        }
-        try fileManager.moveItem(at: stagedPackage.skillRootDirectoryURL, to: targetDir)
+        let backupDir = skillsDirectoryURL.appendingPathComponent(".backup-\(id.rawValue)-\(UUID().uuidString)", isDirectory: true)
 
-        var meta = stagedPackage.metadata
-        meta.originURL = stagedPackage.originURL ?? meta.originURL
-        meta.sha256 = stagedPackage.sha256 ?? meta.sha256
-        meta.updatedAt = Date()
-        cachedState.metadataBySkillID[id.rawValue] = meta
-        saveState()
+        let hadExisting = fileManager.fileExists(atPath: targetDir.path)
+        if hadExisting {
+            try fileManager.moveItem(at: targetDir, to: backupDir)
+        }
+
+        do {
+            try fileManager.moveItem(at: stagedPackage.skillRootDirectoryURL, to: targetDir)
+
+            guard let descriptor = loadDescriptor(from: targetDir, skillID: id, isOverride: false) else {
+                throw SkillImportError.invalidFrontmatter("Could not load installed skill descriptor.")
+            }
+
+            var meta = stagedPackage.metadata
+            meta.originURL = stagedPackage.originURL ?? meta.originURL
+            meta.sha256 = stagedPackage.sha256 ?? meta.sha256
+            meta.updatedAt = Date()
+            cachedState.metadataBySkillID[id.rawValue] = meta
+            saveState()
+            HanlinSkillCatalog.shared.refreshFromStore()
+
+            if hadExisting {
+                try? fileManager.removeItem(at: backupDir)
+            }
+
+            return StoredSkillRecord(
+                descriptor: descriptor,
+                sourceKind: stagedPackage.originURL != nil ? .imported : .custom,
+                isEnabled: isSkillEnabled(id: id),
+                isOverride: false,
+                baseSkillID: nil,
+                originURL: meta.originURL,
+                sha256: meta.sha256,
+                directoryURL: targetDir,
+                resources: listResources(for: id),
+                installedAt: meta.installedAt,
+                updatedAt: meta.updatedAt
+            )
+        } catch {
+            if fileManager.fileExists(atPath: targetDir.path) {
+                try? fileManager.removeItem(at: targetDir)
+            }
+            if hadExisting && fileManager.fileExists(atPath: backupDir.path) {
+                try? fileManager.moveItem(at: backupDir, to: targetDir)
+            }
+            throw error
+        }
+    }
+
+    public func addOrUpdateTextResource(for skillID: HanlinSkillID, relativePath: String, content: String) throws {
+        guard let base = directoryURL(for: skillID) else {
+            throw SkillImportError.stagingFailed("Skill '\(skillID.rawValue)' directory not found.")
+        }
+        let clean = relativePath.replacingOccurrences(of: "\\", with: "/").trimmingCharacters(in: CharacterSet(charactersIn: "/ "))
+        guard !clean.isEmpty, !clean.contains(".."), !clean.contains("\0"), !clean.hasPrefix("/") else {
+            throw SkillImportError.stagingFailed("Invalid resource path '\(relativePath)'.")
+        }
+        let fileURL = base.appendingPathComponent(clean)
+        try fileManager.createDirectory(at: fileURL.deletingLastPathComponent(), withIntermediateDirectories: true)
+        try content.data(using: .utf8)?.write(to: fileURL, options: .atomic)
         HanlinSkillCatalog.shared.refreshFromStore()
+    }
 
-        guard let descriptor = loadDescriptor(from: targetDir, skillID: id, isOverride: false) else {
-            throw SkillImportError.invalidFrontmatter("Could not load installed skill descriptor.")
+    public func deleteResource(for skillID: HanlinSkillID, relativePath: String) throws {
+        guard let url = safeResourceURL(for: skillID, relativePath: relativePath) else {
+            throw SkillImportError.stagingFailed("Resource '\(relativePath)' not found.")
         }
-        return StoredSkillRecord(
-            descriptor: descriptor,
-            sourceKind: stagedPackage.originURL != nil ? .imported : .custom,
-            isEnabled: isSkillEnabled(id: id),
-            isOverride: false,
-            baseSkillID: nil,
-            originURL: meta.originURL,
-            sha256: meta.sha256,
-            directoryURL: targetDir,
-            resources: listResources(for: id),
-            installedAt: meta.installedAt,
-            updatedAt: meta.updatedAt
-        )
+        try fileManager.removeItem(at: url)
+        HanlinSkillCatalog.shared.refreshFromStore()
     }
 
     public func createOrUpdateOverride(

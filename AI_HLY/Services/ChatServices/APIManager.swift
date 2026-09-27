@@ -107,6 +107,8 @@ class APIManager {
     private let chatEngineFactory: () -> HanlinChatEngine
     private var currentTask: URLSessionDataTask? // 当前流式请求任务
     private var isCancelled = false              // 请求取消标记
+    private var activeAgentProducerTask: Task<Void, Never>?
+    private var activeAgentRunID: UUID?
     
     init(
         context: ModelContext,
@@ -1351,6 +1353,9 @@ class APIManager {
         isCancelled = true
         currentTask?.cancel()
         currentTask = nil
+        activeAgentProducerTask?.cancel()
+        activeAgentProducerTask = nil
+        activeAgentRunID = nil
         AgentRunLifecycleCoordinator.shared.cancelRun()
     }
 
@@ -3369,14 +3374,15 @@ default:
                 }
             }
             if depth == 0 {
+                self.activeAgentProducerTask?.cancel()
+                self.activeAgentProducerTask = producerTask
+                self.activeAgentRunID = currentRunID
                 AgentRunLifecycleCoordinator.shared.attachProducerTask(producerTask, for: currentRunID)
             }
-            continuation.onTermination = { @Sendable termination in
-                if case .cancelled = termination {
-                    producerTask.cancel()
-                    Task { @MainActor in
-                        AgentRunLifecycleCoordinator.shared.cancelRun(runID: currentRunID)
-                    }
+            continuation.onTermination = { @Sendable _ in
+                producerTask.cancel()
+                Task { @MainActor in
+                    AgentRunLifecycleCoordinator.shared.cancelRun(runID: currentRunID)
                 }
             }
         }
@@ -3880,9 +3886,8 @@ default:
         var currentStepID: UUID?
 
         for try await event in sdkStream {
-            if self.isCancelled || Task.isCancelled || !AgentRunLifecycleCoordinator.shared.isCurrentRun(runID) {
+            if Task.isCancelled || !AgentRunLifecycleCoordinator.shared.isCurrentRun(runID) {
                 continuation.finish()
-                self.isCancelled = false
                 await self.agentDiagnosticsRecorder?.complete(status: "cancelled")
                 return
             }
@@ -4013,7 +4018,9 @@ default:
         }
 
         await self.agentDiagnosticsRecorder?.complete(status: "failed", error: "Stream ended unexpectedly without terminal event")
-        continuation.finish()
+        let error = HanlinChatError.networkFailure("Stream ended unexpectedly without terminal event")
+        continuation.finish(throwing: error)
+        throw error
     }
 }
 

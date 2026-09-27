@@ -1,4 +1,4 @@
-﻿from __future__ import annotations
+from __future__ import annotations
 
 import argparse
 import importlib.util
@@ -75,7 +75,7 @@ class RuntimeToolingAcceptanceRunnerTests(unittest.TestCase):
             report_file = out_dir / "acceptance" / "runtime-tooling-acceptance.json"
             self.assertTrue(report_file.exists())
             report = json.loads(report_file.read_text(encoding="utf-8"))
-            self.assertEqual(len(report["groupSummaries"]), 7)
+            self.assertEqual(len(report["groupSummaries"]), len(acceptance_runner.GROUPS))
             self.assertEqual(report["caseCount"], len(report["cases"]))
 
     def test_evaluate_acceptance_maps_nodes_to_cases(self) -> None:
@@ -115,7 +115,7 @@ class RuntimeToolingAcceptanceRunnerTests(unittest.TestCase):
                 out_dir, acceptance_runner.GROUPS, unit_phase, ui_phase
             )
 
-            self.assertEqual(len(group_results), 7)
+            self.assertEqual(len(group_results), len(acceptance_runner.GROUPS))
             cases_by_id = {c["caseID"]: c for c in cases}
 
             case_passed = cases_by_id["schema.all-tools.unique-routed-valid"]

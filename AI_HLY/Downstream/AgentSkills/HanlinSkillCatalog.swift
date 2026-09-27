@@ -6,34 +6,67 @@ import HanlinPlatformContracts
 public final class HanlinSkillCatalog {
     public static let shared = HanlinSkillCatalog()
 
-    private var registeredSkills: [HanlinSkillID: HanlinSkillDescriptor] = [:]
-    private var skillInstructionLoaders: [HanlinSkillID: @Sendable () async -> String] = [:]
+    public enum SkillPrecedenceTier: Int, Comparable, Sendable {
+        case system = 0
+        case compiledMiniApp = 1
+        case installedPackage = 2
+        case userCustom = 3
+        case userOverride = 4
+
+        public static func < (lhs: SkillPrecedenceTier, rhs: SkillPrecedenceTier) -> Bool {
+            lhs.rawValue < rhs.rawValue
+        }
+    }
+
+    private struct SkillEntry {
+        let descriptor: HanlinSkillDescriptor
+        let tier: SkillPrecedenceTier
+        let isExplicitOverride: Bool
+        let loader: (@Sendable () async -> String)?
+    }
+
+    private var skillEntries: [HanlinSkillID: SkillEntry] = [:]
 
     public init() {}
 
-    /// Registers a skill with optional custom instruction loader.
+    /// Registers a skill with tier and optional custom instruction loader.
     public func register(
         skill: HanlinSkillDescriptor,
+        tier: SkillPrecedenceTier = .userCustom,
+        isExplicitOverride: Bool = false,
         instructionLoader: (@Sendable () async -> String)? = nil
     ) {
-        registeredSkills[skill.id] = skill
-        if let instructionLoader {
-            skillInstructionLoaders[skill.id] = instructionLoader
+        if let existing = skillEntries[skill.id] {
+            // Collision rule: userCustom cannot overwrite built-in or package skill without explicit override
+            if tier == .userCustom && existing.tier < .userCustom && !isExplicitOverride {
+                return
+            }
+            if tier < existing.tier {
+                return
+            }
         }
+        skillEntries[skill.id] = SkillEntry(
+            descriptor: skill,
+            tier: tier,
+            isExplicitOverride: isExplicitOverride,
+            loader: instructionLoader
+        )
     }
 
     /// Registers a skill descriptor (convenience alias).
     public func register(
         descriptor: HanlinSkillDescriptor,
+        tier: SkillPrecedenceTier = .userCustom,
+        isExplicitOverride: Bool = false,
         instructionLoader: (@Sendable () async -> String)? = nil
     ) {
-        register(skill: descriptor, instructionLoader: instructionLoader)
+        register(skill: descriptor, tier: tier, isExplicitOverride: isExplicitOverride, instructionLoader: instructionLoader)
     }
 
     /// Registers all skills declared in an app descriptor.
-    public func register(app: HanlinAppDescriptor) {
+    public func register(app: HanlinAppDescriptor, tier: SkillPrecedenceTier = .compiledMiniApp) {
         for skill in app.skills {
-            register(skill: skill)
+            register(skill: skill, tier: tier)
         }
     }
 
@@ -49,8 +82,7 @@ public final class HanlinSkillCatalog {
         weatherEnabled: Bool = true,
         canvasEnabled: Bool = true
     ) {
-        registeredSkills.removeAll()
-        skillInstructionLoaders.removeAll()
+        skillEntries.removeAll()
 
         // 1. System Skills for enabled legacy domains
         let sysSkills = SystemSkillsProvider.systemSkills(
@@ -65,14 +97,14 @@ public final class HanlinSkillCatalog {
             canvasEnabled: canvasEnabled
         )
         for skill in sysSkills {
-            register(skill: skill)
+            register(skill: skill, tier: .system)
         }
 
         // 2. Compiled Swift Mini Apps
         BuiltinCanonicalRegistrations.ensureRegistered()
         for provider in HanlinCompiledMiniAppRegistry.shared.allProviders() {
             for skill in provider.descriptor.skills {
-                register(skill: skill) {
+                register(skill: skill, tier: .compiledMiniApp) {
                     if case .resource(let path) = skill.instructions {
                         let providerBundle: Bundle? = (type(of: provider) as? AnyClass).map { Bundle(for: $0) }
                         if let url = providerBundle?.url(forResource: path, withExtension: nil)
@@ -90,10 +122,14 @@ public final class HanlinSkillCatalog {
         let platform = HanlinScriptingPlatform.shared
         for package in platform.installedPackages where package.enabled {
             guard let desc = try? package.appDescriptor() else { continue }
+            let packageID = package.id
             for skill in desc.skills {
-                register(skill: skill) {
+                register(skill: skill, tier: .installedPackage) {
+                    guard let currentPackage = HanlinScriptingPlatform.shared.installedPackages.first(where: { $0.id == packageID && $0.enabled }) else {
+                        return ""
+                    }
                     if case .resource(let path) = skill.instructions {
-                        if let artifactURL = await platform.activeArtifactURL(for: package) {
+                        if let artifactURL = await HanlinScriptingPlatform.shared.activeArtifactURL(for: currentPackage) {
                             let candidateURL = artifactURL.appending(path: path)
                             if let content = try? String(contentsOf: candidateURL, encoding: .utf8) {
                                 return content
@@ -114,17 +150,17 @@ public final class HanlinSkillCatalog {
         }
 
         // 4. Custom Skills and User Overrides from SkillStore
-        // Precedence: User Override > Custom Installed > Scripting Package > Mini App > System
+        // Precedence: User Override (4) > Custom Installed (3) > Scripting Package (2) > Mini App (1) > System (0)
         let store = SkillStore.shared
         for skill in store.allCustomSkillDescriptors() {
-            register(skill: skill) {
+            register(skill: skill, tier: .userCustom, isExplicitOverride: false) {
                 if case .inline(let text) = skill.instructions { return text }
                 return "# \(skill.title.preferredValue())\n\n\(skill.summary.preferredValue())"
             }
         }
 
         for (baseID, overrideDesc) in store.allOverrideDescriptors() {
-            register(skill: overrideDesc) {
+            register(skill: overrideDesc, tier: .userOverride, isExplicitOverride: true) {
                 if case .inline(let text) = overrideDesc.instructions { return text }
                 return "# \(overrideDesc.title.preferredValue())\n\n\(overrideDesc.summary.preferredValue())"
             }
@@ -132,9 +168,13 @@ public final class HanlinSkillCatalog {
 
         // Filter out disabled skills
         for disabledID in store.disabledSkillIDs() {
-            registeredSkills.removeValue(forKey: disabledID)
-            skillInstructionLoaders.removeValue(forKey: disabledID)
+            skillEntries.removeValue(forKey: disabledID)
         }
+    }
+
+    /// Clears all registered skills (useful for isolated tests).
+    public func reset() {
+        skillEntries.removeAll()
     }
 
     /// Explicitly refreshes the catalog after store changes.
@@ -155,18 +195,18 @@ public final class HanlinSkillCatalog {
 
     /// All registered skills for catalog discovery.
     public func allSkills() -> [HanlinSkillDescriptor] {
-        if registeredSkills.isEmpty {
+        if skillEntries.isEmpty {
             synchronizeProductionSkills()
         }
-        return Array(registeredSkills.values.sorted(by: { $0.id.rawValue < $1.id.rawValue }))
+        return Array(skillEntries.values.map(\.descriptor).sorted(by: { $0.id.rawValue < $1.id.rawValue }))
     }
 
     /// Resolves a skill descriptor by ID.
     public func resolve(id: HanlinSkillID) -> HanlinSkillDescriptor? {
-        if registeredSkills.isEmpty {
+        if skillEntries.isEmpty {
             synchronizeProductionSkills()
         }
-        return registeredSkills[id]
+        return skillEntries[id]?.descriptor
     }
 
     /// Resolves a skill descriptor by raw string ID.
@@ -177,7 +217,7 @@ public final class HanlinSkillCatalog {
 
     /// Loads the full instruction text for a skill.
     public func loadInstructions(for skill: HanlinSkillDescriptor) async -> String {
-        if let loader = skillInstructionLoaders[skill.id] {
+        if let loader = skillEntries[skill.id]?.loader {
             return await loader()
         }
         switch skill.instructions {

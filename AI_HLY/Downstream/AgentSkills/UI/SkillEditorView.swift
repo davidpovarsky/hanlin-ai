@@ -26,6 +26,7 @@ struct SkillEditorView: View {
     @State private var title: String = ""
     @State private var summary: String = ""
     @State private var instructions: String = ""
+    @State private var selectedTools: Set<String> = []
     @State private var preferredToolsText: String = ""
     @State private var triggerHintsText: String = ""
     @State private var keywordsText: String = ""
@@ -40,6 +41,7 @@ struct SkillEditorView: View {
             _title = State(initialValue: "")
             _summary = State(initialValue: "")
             _instructions = State(initialValue: "")
+            _selectedTools = State(initialValue: [])
             _preferredToolsText = State(initialValue: "")
             _triggerHintsText = State(initialValue: "")
             _keywordsText = State(initialValue: "")
@@ -55,6 +57,7 @@ struct SkillEditorView: View {
                 bodyText = ""
             }
             _instructions = State(initialValue: bodyText)
+            _selectedTools = State(initialValue: Set(record.descriptor.preferredToolIDs))
             _preferredToolsText = State(initialValue: record.descriptor.preferredToolIDs.joined(separator: ", "))
             _triggerHintsText = State(initialValue: record.descriptor.triggerHints.joined(separator: ", "))
             _keywordsText = State(initialValue: record.descriptor.keywords.joined(separator: ", "))
@@ -71,6 +74,7 @@ struct SkillEditorView: View {
                     bodyText = ""
                 }
                 _instructions = State(initialValue: bodyText)
+                _selectedTools = State(initialValue: Set(existing.descriptor.preferredToolIDs))
                 _preferredToolsText = State(initialValue: existing.descriptor.preferredToolIDs.joined(separator: ", "))
                 _triggerHintsText = State(initialValue: existing.descriptor.triggerHints.joined(separator: ", "))
                 _keywordsText = State(initialValue: existing.descriptor.keywords.joined(separator: ", "))
@@ -84,11 +88,42 @@ struct SkillEditorView: View {
                     bodyText = ""
                 }
                 _instructions = State(initialValue: bodyText)
+                _selectedTools = State(initialValue: Set(baseSkill.preferredToolIDs))
                 _preferredToolsText = State(initialValue: baseSkill.preferredToolIDs.joined(separator: ", "))
                 _triggerHintsText = State(initialValue: baseSkill.triggerHints.joined(separator: ", "))
                 _keywordsText = State(initialValue: baseSkill.keywords.joined(separator: ", "))
             }
         }
+    }
+
+    private var availableCanonicalTools: [NativeToolCatalogEntry] {
+        NativeToolCatalog.shared.ensureBuiltinsRegistered()
+        return NativeToolCatalog.shared.allEntries().sorted(by: { $0.name < $1.name })
+    }
+
+    private var idValidationError: String? {
+        let trimmed = rawID.trimmingCharacters(in: .whitespacesAndNewlines)
+        if trimmed.isEmpty { return "Identifier is required." }
+        guard (try? HanlinSkillID(validating: trimmed)) != nil else {
+            return "Invalid Skill ID: use lowercase letters, numbers, hyphens, and underscores."
+        }
+        if case .create = mode {
+            if HanlinSkillCatalog.shared.resolve(rawID: trimmed) != nil {
+                return "Skill '\(trimmed)' already exists. Edit or override it instead."
+            }
+        }
+        return nil
+    }
+
+    private var titleValidationError: String? {
+        if title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+            return "Title is required."
+        }
+        return nil
+    }
+
+    private var isFormValid: Bool {
+        idValidationError == nil && titleValidationError == nil
     }
 
     var body: some View {
@@ -108,6 +143,11 @@ struct SkillEditorView: View {
                             .autocorrectionDisabled()
                             .textInputAutocapitalization(.never)
                             .accessibilityIdentifier("hanlin-skill-editor-id-input")
+                        if let err = idValidationError {
+                            Text(err)
+                                .foregroundColor(.red)
+                                .font(.caption)
+                        }
                     } else {
                         Text(rawID)
                             .foregroundColor(.secondary)
@@ -117,6 +157,11 @@ struct SkillEditorView: View {
                 Section(header: Text(SkillL10n.string("Title"))) {
                     TextField(SkillL10n.string("Title"), text: $title)
                         .accessibilityIdentifier("hanlin-skill-editor-name-input")
+                    if let err = titleValidationError {
+                        Text(err)
+                            .foregroundColor(.red)
+                            .font(.caption)
+                    }
                 }
 
                 Section(header: Text(SkillL10n.string("Description"))) {
@@ -132,11 +177,50 @@ struct SkillEditorView: View {
                         .accessibilityIdentifier("hanlin-skill-editor-body-input")
                 }
 
-                Section(header: Text(SkillL10n.string("Preferred Tool Aliases (comma-separated)"))) {
-                    TextField("tool_a, tool_b", text: $preferredToolsText)
-                        .autocorrectionDisabled()
-                        .textInputAutocapitalization(.never)
-                        .accessibilityIdentifier("hanlin-skill-editor-tools-input")
+                Section(header: Text(SkillL10n.string("Preferred Canonical Tools"))) {
+                    let entries = availableCanonicalTools
+                    if entries.isEmpty {
+                        Text("No canonical tools registered.")
+                            .font(.footnote)
+                            .foregroundColor(.secondary)
+                    } else {
+                        ForEach(entries) { entry in
+                            Button {
+                                toggleTool(entry.name)
+                            } label: {
+                                HStack {
+                                    VStack(alignment: .leading, spacing: 2) {
+                                        Text(entry.name)
+                                            .font(.system(.subheadline, design: .monospaced))
+                                            .foregroundColor(.primary)
+                                        Text(entry.title)
+                                            .font(.caption2)
+                                            .foregroundColor(.secondary)
+                                    }
+                                    Spacer()
+                                    if selectedTools.contains(entry.name) {
+                                        Image(systemName: "checkmark")
+                                            .foregroundColor(.accentColor)
+                                            .bold()
+                                    }
+                                }
+                            }
+                            .accessibilityIdentifier("hanlin-skill-editor-tool-\(entry.name)")
+                        }
+                    }
+
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text("Tool Aliases (comma-separated)")
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                        TextField("tool_a, tool_b", text: $preferredToolsText)
+                            .autocorrectionDisabled()
+                            .textInputAutocapitalization(.never)
+                            .accessibilityIdentifier("hanlin-skill-editor-tools-input")
+                            .onChange(of: preferredToolsText) { _, newText in
+                                syncToolsFromText(newText)
+                            }
+                    }
                 }
 
                 Section(header: Text(SkillL10n.string("Trigger Hints (comma-separated)"))) {
@@ -161,6 +245,7 @@ struct SkillEditorView: View {
                         save()
                     }
                     .bold()
+                    .disabled(!isFormValid)
                     .accessibilityIdentifier("hanlin-skill-editor-save-button")
                 }
             }
@@ -173,6 +258,23 @@ struct SkillEditorView: View {
         case .editCustom: return SkillL10n.string("Edit Skill")
         case .editOverride: return SkillL10n.string("Customize (Override)")
         }
+    }
+
+    private func toggleTool(_ name: String) {
+        if selectedTools.contains(name) {
+            selectedTools.remove(name)
+        } else {
+            selectedTools.insert(name)
+        }
+        preferredToolsText = selectedTools.sorted().joined(separator: ", ")
+    }
+
+    private func syncToolsFromText(_ text: String) {
+        let tools = text
+            .split(separator: ",")
+            .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
+            .filter { !$0.isEmpty }
+        selectedTools = Set(tools)
     }
 
     private func save() {
@@ -189,13 +291,15 @@ struct SkillEditorView: View {
             return
         }
 
+        if case .create = mode, HanlinSkillCatalog.shared.resolve(rawID: trimmedID) != nil {
+            errorMessage = "Skill '\(trimmedID)' already exists. Edit or override it instead."
+            return
+        }
+
         let trimmedSummary = summary.trimmingCharacters(in: .whitespacesAndNewlines)
         let trimmedInstructions = instructions.trimmingCharacters(in: .whitespacesAndNewlines)
 
-        let tools = preferredToolsText
-            .split(separator: ",")
-            .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
-            .filter { !$0.isEmpty }
+        let tools = Array(selectedTools).sorted()
 
         let hints = triggerHintsText
             .split(separator: ",")

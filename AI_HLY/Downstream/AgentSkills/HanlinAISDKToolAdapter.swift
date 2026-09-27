@@ -51,10 +51,10 @@ final class HanlinAISDKToolAdapter {
                 return existingID
             }
             let prep = prepareStep()
-            let targetIndex = max(1, currentStepIndex)
+            let targetIndex = currentStepIndex
             let stepID = await recorder.beginRound(
                 index: targetIndex,
-                trigger: targetIndex <= 1 ? "initialUserRequest" : "continueAfterToolResult",
+                trigger: targetIndex == 0 ? "initialUserRequest" : "continueAfterToolResult",
                 requestData: Data(),
                 loadedSkillIDs: prep.loadedSkillIDs,
                 modelVisibleToolAliases: prep.activeToolAliases,
@@ -127,7 +127,7 @@ final class HanlinAISDKToolAdapter {
         if let recorder = diagnosticsRecorder {
             let stepID = await recorder.beginRound(
                 index: stepNumber,
-                trigger: stepNumber <= 1 ? "initialUserRequest" : "continueAfterToolResult",
+                trigger: stepNumber == 0 ? "initialUserRequest" : "continueAfterToolResult",
                 requestData: Data(),
                 loadedSkillIDs: prep.loadedSkillIDs,
                 modelVisibleToolAliases: prep.activeToolAliases,

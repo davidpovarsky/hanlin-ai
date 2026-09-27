@@ -48,10 +48,30 @@ public enum LoadSkillTool {
         }
 
         if session.isSkillLoaded(descriptor.id) {
-            let exposed = session.exposedToolAliases.sorted()
+            let candidateAliases: [String]
+            if let available = availableAliases {
+                candidateAliases = descriptor.preferredToolIDs.filter { available.contains($0) }
+            } else {
+                candidateAliases = descriptor.preferredToolIDs
+            }
+
+            let decision = planner.plan(
+                candidateAliases: candidateAliases,
+                schemaSizes: schemaSizes,
+                currentlyExposedAliases: session.exposedToolAliases
+            )
+
+            if !decision.exposedAliases.isEmpty {
+                session.exposeTools(aliases: decision.exposedAliases)
+            }
+
             var response = "Skill '\(descriptor.title.preferredValue())' [\(descriptor.id.rawValue)] is already loaded."
-            if !exposed.isEmpty {
-                response += "\n\nCurrently exposed tools:\n" + exposed.map { "- `\($0)`" }.joined(separator: "\n")
+            if !decision.exposedAliases.isEmpty {
+                response += "\n\nNewly exposed tools:\n" + decision.exposedAliases.map { "- `\($0)`" }.joined(separator: "\n")
+            }
+            let allExposed = session.exposedToolAliases.sorted()
+            if !allExposed.isEmpty {
+                response += "\n\nCurrently exposed tools:\n" + allExposed.map { "- `\($0)`" }.joined(separator: "\n")
             }
             return response
         }

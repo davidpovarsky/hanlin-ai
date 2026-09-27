@@ -242,6 +242,187 @@ public struct HanlinArchivePolicy: Sendable {
         )
     }
 
+    public func inspectSkillArchive(
+        entries: [HanlinArchiveEntryMetadata],
+        centralDirectoryEntryCount: Int,
+        archiveBytes: Int64
+    ) -> HanlinArchiveInspection {
+        var findings: [HanlinArchiveFinding] = []
+        var ignored: [String] = []
+        var normalizedPaths: [String] = []
+        var fileCount = 0
+        var directoryCount = 0
+        var uncompressedBytes: Int64 = 0
+        var compressedBytes: Int64 = 0
+        var maximumDepth = 0
+        var canonicalPaths: [String: String] = [:]
+        var caseFoldedPaths: [String: String] = [:]
+
+        if archiveBytes > limits.maximumArchiveBytes {
+            findings.append(.init(
+                code: .compressedSizeLimit,
+                severity: .error,
+                message: "Archive byte count exceeds the configured limit."
+            ))
+        }
+        if entries.count != centralDirectoryEntryCount {
+            findings.append(.init(
+                code: .encryptedEntry,
+                severity: .error,
+                message: "The central directory contains unreadable or encrypted entries."
+            ))
+        }
+
+        for entry in entries {
+            let path = entry.path.replacingOccurrences(of: "\\", with: "/")
+            if Self.isIgnored(path) {
+                ignored.append(path)
+                continue
+            }
+            if path.contains("\0") {
+                findings.append(finding(.nulByte, path, "Archive path contains a NUL byte."))
+                continue
+            }
+            if path.hasPrefix("/") || path.hasPrefix("\\") {
+                findings.append(finding(.absolutePath, path, "Absolute archive paths are forbidden."))
+            }
+            if Self.hasDrivePrefix(path) {
+                findings.append(finding(.drivePrefix, path, "Windows drive-prefixed paths are forbidden."))
+            }
+            let components = path.split(separator: "/", omittingEmptySubsequences: false)
+            if components.contains("..") {
+                findings.append(finding(.parentTraversal, path, "Parent traversal is forbidden."))
+            }
+            let canonicalComponents = path.hasSuffix("/") ? components.dropLast() : components[...]
+            if canonicalComponents.contains(where: { $0.isEmpty || $0 == "." }) {
+                findings.append(finding(
+                    .parentTraversal,
+                    path,
+                    "Empty and current-directory path components are forbidden."
+                ))
+            }
+            let effectiveComponents = components.filter { !$0.isEmpty && $0 != "." }
+            maximumDepth = max(maximumDepth, effectiveComponents.count)
+            if effectiveComponents.count > limits.maximumDepth {
+                findings.append(finding(.depthLimit, path, "Archive nesting depth exceeds policy."))
+            }
+            switch entry.kind {
+            case .file:
+                fileCount += 1
+                if !Self.isAllowedSkillFile(path) {
+                    findings.append(finding(
+                        .unsupportedFileType,
+                        path,
+                        "The archive contains a file type that skill packages cannot install."
+                    ))
+                }
+            case .directory:
+                directoryCount += 1
+            case .symbolicLink:
+                findings.append(finding(.symbolicLink, path, "Symbolic links are forbidden."))
+            case .hardLink:
+                findings.append(finding(.hardLink, path, "Hard links are forbidden."))
+            }
+            compressedBytes = Self.adding(entry.compressedBytes, to: compressedBytes)
+            uncompressedBytes = Self.adding(entry.uncompressedBytes, to: uncompressedBytes)
+            if entry.uncompressedBytes > 0 {
+                if entry.compressedBytes == 0
+                    || entry.uncompressedBytes / max(1, entry.compressedBytes) > limits.maximumCompressionRatio
+                {
+                    findings.append(finding(
+                        .compressionRatioLimit,
+                        path,
+                        "Entry compression ratio exceeds policy."
+                    ))
+                }
+            }
+
+            let unicodeKey = path.precomposedStringWithCanonicalMapping
+            if let existing = canonicalPaths[unicodeKey] {
+                findings.append(finding(
+                    .unicodeCollision,
+                    path,
+                    existing == path
+                        ? "Archive contains a duplicate path."
+                        : "Path collides with '\(existing)' after Unicode normalization."
+                ))
+            } else {
+                canonicalPaths[unicodeKey] = path
+            }
+            let caseKey = unicodeKey.lowercased(with: Locale(identifier: "en_US_POSIX"))
+            if let existing = caseFoldedPaths[caseKey], existing != path {
+                findings.append(finding(
+                    .caseCollision,
+                    path,
+                    "Path collides with '\(existing)' on a case-insensitive file system."
+                ))
+            } else {
+                caseFoldedPaths[caseKey] = path
+            }
+            normalizedPaths.append(path)
+        }
+
+        if fileCount > limits.maximumFiles {
+            findings.append(.init(
+                code: .fileCountLimit,
+                severity: .error,
+                message: "Archive file count exceeds policy."
+            ))
+        }
+        if directoryCount > limits.maximumDirectories {
+            findings.append(.init(
+                code: .fileCountLimit,
+                severity: .error,
+                message: "Archive directory count exceeds policy."
+            ))
+        }
+        if uncompressedBytes > limits.maximumUncompressedBytes {
+            findings.append(.init(
+                code: .uncompressedSizeLimit,
+                severity: .error,
+                message: "Expanded archive size exceeds policy."
+            ))
+        }
+
+        let manifests = normalizedPaths.filter {
+            $0 == "SKILL.md" || $0.hasSuffix("/SKILL.md")
+        }
+        let manifestPath = manifests.count == 1 ? manifests[0] : nil
+        if manifests.count != 1 {
+            findings.append(.init(
+                code: .ambiguousManifest,
+                severity: .error,
+                message: manifests.isEmpty
+                    ? "Archive does not contain SKILL.md."
+                    : "Archive contains more than one SKILL.md."
+            ))
+        }
+        let wrapper = manifestPath.flatMap(Self.wrapperDirectory(for:))
+        if let wrapper,
+           normalizedPaths.contains(where: {
+               $0 != wrapper && !$0.hasPrefix("\(wrapper)/")
+           })
+        {
+            findings.append(.init(
+                code: .ambiguousManifest,
+                severity: .error,
+                message: "Entries exist outside the skill wrapper directory."
+            ))
+        }
+
+        return HanlinArchiveInspection(
+            fileCount: fileCount,
+            directoryCount: directoryCount,
+            compressedBytes: compressedBytes,
+            uncompressedBytes: uncompressedBytes,
+            maximumDepth: maximumDepth,
+            wrapperDirectory: wrapper,
+            manifestPath: manifestPath,
+            ignoredEntries: ignored.sorted(),
+            findings: findings
+        )
+    }
+
     public static func normalizedRelativePath(_ value: String) -> String? {
         var path = value.replacingOccurrences(of: "\\", with: "/")
         if path.hasSuffix("/") {
@@ -283,6 +464,18 @@ public struct HanlinArchivePolicy: Sendable {
             "ts", "tsx", "js", "jsx", "mjs", "json", "md", "txt", "strings",
             "css", "html", "svg", "png", "jpg", "jpeg", "gif", "webp",
             "heic", "pdf", "plist", "m4a", "mp3", "wav", "mp4", "mov"
+        ]
+        let name = path.split(separator: "/").last.map(String.init) ?? path
+        guard let dot = name.lastIndex(of: ".") else { return false }
+        return allowed.contains(name[name.index(after: dot)...].lowercased())
+    }
+
+    private static func isAllowedSkillFile(_ path: String) -> Bool {
+        let allowed: Set<String> = [
+            "ts", "tsx", "js", "jsx", "mjs", "cjs", "json", "md", "txt", "strings",
+            "css", "html", "svg", "png", "jpg", "jpeg", "gif", "webp",
+            "heic", "pdf", "plist", "m4a", "mp3", "wav", "mp4", "mov",
+            "py", "sh", "yaml", "yml", "csv", "xml", "swift"
         ]
         let name = path.split(separator: "/").last.map(String.init) ?? path
         guard let dot = name.lastIndex(of: ".") else { return false }

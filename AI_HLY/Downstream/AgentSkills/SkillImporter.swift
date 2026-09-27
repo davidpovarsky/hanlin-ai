@@ -183,7 +183,7 @@ public final class SkillImporter: @unchecked Sendable {
                 )
             }
 
-            let inspection = policy.inspect(
+            let inspection = policy.inspectSkillArchive(
                 entries: entryMetadatas,
                 centralDirectoryEntryCount: zipEntries.count,
                 archiveBytes: Int64(data.count)
@@ -300,28 +300,20 @@ public final class SkillImporter: @unchecked Sendable {
         var request = URLRequest(url: httpsURL)
         request.httpMethod = "GET"
 
-        let config = URLSessionConfiguration.ephemeral
-        let delegate = HTTPSRedirectDelegate()
-        let session = URLSession(configuration: config, delegate: delegate, delegateQueue: nil)
+        let downloader = BoundedStreamDownloader(maxBytes: Self.maxDownloadBytes)
+        let (data, response) = try await downloader.download(request: request)
 
-        let (data, response): (Data, URLResponse)
-        do {
-            (data, response) = try await session.data(for: request)
-        } catch {
-            throw SkillImportError.downloadFailed(error.localizedDescription)
+        let ext: String
+        if httpsURL.pathExtension.lowercased() == "md" {
+            ext = "md"
+        } else if let mime = (response.allHeaderFields["Content-Type"] as? String)?.lowercased(),
+                  mime.contains("text/markdown") {
+            ext = "md"
+        } else {
+            ext = "zip"
         }
 
-        if let httpResponse = response as? HTTPURLResponse {
-            guard (200...299).contains(httpResponse.statusCode) else {
-                throw SkillImportError.downloadFailed("HTTP Status \(httpResponse.statusCode)")
-            }
-        }
-
-        guard Int64(data.count) <= Self.maxDownloadBytes else {
-            throw SkillImportError.downloadExceedsLimit(Int64(data.count))
-        }
-
-        let tempFile = fileManager.temporaryDirectory.appendingPathComponent("download-\(UUID().uuidString).\(httpsURL.pathExtension.isEmpty ? "zip" : httpsURL.pathExtension)")
+        let tempFile = fileManager.temporaryDirectory.appendingPathComponent("download-\(UUID().uuidString).\(ext)")
         try data.write(to: tempFile)
         defer { try? fileManager.removeItem(at: tempFile) }
 
@@ -332,40 +324,9 @@ public final class SkillImporter: @unchecked Sendable {
 
     @MainActor
     public func install(staged: StagedSkillPackage, store: SkillStore = .shared) throws -> HanlinSkillDescriptor {
-        let targetDir = store.rootDirectoryURL.appendingPathComponent("skills", isDirectory: true).appendingPathComponent(staged.skillID.rawValue, isDirectory: true)
-
-        if fileManager.fileExists(atPath: targetDir.path) {
-            try fileManager.removeItem(at: targetDir)
-        }
-        try fileManager.createDirectory(at: targetDir.deletingLastPathComponent(), withIntermediateDirectories: true)
-        try fileManager.copyItem(at: staged.skillRootDirectoryURL, to: targetDir)
-
+        let record = try store.install(stagedPackage: staged)
         try? fileManager.removeItem(at: staged.stagingDirectoryURL)
-
-        store.setSkillEnabled(id: staged.skillID, enabled: true)
-        try store.saveCustomSkill(
-            id: staged.skillID,
-            title: staged.parsedMarkdown.name,
-            description: staged.parsedMarkdown.description,
-            instructions: staged.parsedMarkdown.body,
-            preferredToolIDs: staged.metadata.preferredToolIDs,
-            triggerHints: staged.metadata.triggerHints,
-            keywords: staged.metadata.keywords,
-            originURL: staged.originURL,
-            sha256: staged.sha256
-        )
-
-        HanlinSkillCatalog.shared.refreshFromStore()
-
-        return try HanlinSkillDescriptor(
-            id: staged.skillID,
-            title: staged.parsedMarkdown.name,
-            summary: staged.parsedMarkdown.description,
-            instructions: .inline(staged.parsedMarkdown.body),
-            keywords: staged.metadata.keywords,
-            triggerHints: staged.metadata.triggerHints,
-            preferredToolIDs: staged.metadata.preferredToolIDs
-        )
+        return record.descriptor
     }
 
     // MARK: - Private Helpers
@@ -435,7 +396,32 @@ public final class SkillImporter: @unchecked Sendable {
     }
 }
 
-private final class HTTPSRedirectDelegate: NSObject, URLSessionTaskDelegate, Sendable {
+private final class BoundedStreamDownloader: NSObject, URLSessionDataDelegate, @unchecked Sendable {
+    private let maxBytes: Int64
+    private var receivedBytes: Int64 = 0
+    private var accumulatedData = Data()
+    private var continuation: CheckedContinuation<(Data, HTTPURLResponse), Error>?
+    private var response: HTTPURLResponse?
+    private let lock = NSLock()
+    private var isResumed = false
+
+    init(maxBytes: Int64) {
+        self.maxBytes = maxBytes
+    }
+
+    func download(request: URLRequest) async throws -> (Data, HTTPURLResponse) {
+        try await withCheckedThrowingContinuation { cont in
+            self.lock.lock()
+            self.continuation = cont
+            self.lock.unlock()
+
+            let config = URLSessionConfiguration.ephemeral
+            let session = URLSession(configuration: config, delegate: self, delegateQueue: nil)
+            let task = session.dataTask(with: request)
+            task.resume()
+        }
+    }
+
     func urlSession(
         _ session: URLSession,
         task: URLSessionTask,
@@ -445,8 +431,94 @@ private final class HTTPSRedirectDelegate: NSObject, URLSessionTaskDelegate, Sen
     ) {
         guard let scheme = request.url?.scheme?.lowercased(), scheme == "https" else {
             completionHandler(nil)
+            task.cancel()
+            resume(throwing: SkillImportError.nonHTTPSURLForbidden)
             return
         }
         completionHandler(request)
+    }
+
+    func urlSession(
+        _ session: URLSession,
+        dataTask: URLSessionDataTask,
+        didReceive response: URLResponse,
+        completionHandler: @escaping @Sendable (URLSession.ResponseDisposition) -> Void
+    ) {
+        guard let http = response as? HTTPURLResponse else {
+            completionHandler(.cancel)
+            resume(throwing: SkillImportError.downloadFailed("Non-HTTP response"))
+            return
+        }
+        self.response = http
+
+        guard (200...299).contains(http.statusCode) else {
+            completionHandler(.cancel)
+            resume(throwing: SkillImportError.downloadFailed("HTTP Status \(http.statusCode)"))
+            return
+        }
+
+        if http.expectedContentLength > maxBytes {
+            completionHandler(.cancel)
+            resume(throwing: SkillImportError.downloadExceedsLimit(http.expectedContentLength))
+            return
+        }
+
+        completionHandler(.allow)
+    }
+
+    func urlSession(
+        _ session: URLSession,
+        dataTask: URLSessionDataTask,
+        didReceive data: Data
+    ) {
+        lock.lock()
+        receivedBytes += Int64(data.count)
+        if receivedBytes > maxBytes {
+            dataTask.cancel()
+            let bytes = receivedBytes
+            lock.unlock()
+            resume(throwing: SkillImportError.downloadExceedsLimit(bytes))
+            return
+        }
+        accumulatedData.append(data)
+        lock.unlock()
+    }
+
+    func urlSession(
+        _ session: URLSession,
+        task: URLSessionTask,
+        didCompleteWithError error: Error?
+    ) {
+        if let error {
+            resume(throwing: SkillImportError.downloadFailed(error.localizedDescription))
+        } else {
+            lock.lock()
+            let data = accumulatedData
+            let resp = response
+            lock.unlock()
+            if let resp {
+                resume(returning: (data, resp))
+            } else {
+                resume(throwing: SkillImportError.downloadFailed("Missing response"))
+            }
+        }
+    }
+
+    private func resume(returning value: (Data, HTTPURLResponse)) {
+        lock.lock()
+        defer { lock.unlock() }
+        guard !isResumed else { return }
+        isResumed = true
+        continuation?.resume(returning: value)
+        continuation = nil
+    }
+
+    private func resume(throwing error: Error) {
+        lock.lock()
+        defer { lock.unlock() }
+        guard !isResumed else { return }
+        isResumed = true
+        continuation?.resume(throwing: error)
+        continuation = nil
     }
 }

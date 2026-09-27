@@ -2,12 +2,19 @@ import SwiftUI
 import UniformTypeIdentifiers
 import HanlinPlatformContracts
 
+enum ImportStep {
+    case input
+    case preview(StagedSkillPackage)
+}
+
 @MainActor
 struct SkillImportView: View {
+    let initialTab: Int
     let onImported: () -> Void
 
     @Environment(\.dismiss) private var dismiss
 
+    @State private var step: ImportStep = .input
     @State private var selectedTab: Int = 0
     @State private var urlString: String = ""
     @State private var isProcessing: Bool = false
@@ -15,48 +22,34 @@ struct SkillImportView: View {
     @State private var successMessage: String? = nil
     @State private var showFileImporter: Bool = false
 
+    init(initialTab: Int = 0, onImported: @escaping () -> Void = {}) {
+        self.initialTab = initialTab
+        self.onImported = onImported
+        _selectedTab = State(initialValue: initialTab)
+    }
+
     var body: some View {
         NavigationStack {
             VStack(spacing: 0) {
-                Picker("", selection: $selectedTab) {
-                    Text(SkillL10n.string("Import ZIP Archive")).tag(0)
-                        .accessibilityIdentifier("hanlin-skill-import-tab-zip")
-                    Text(SkillL10n.string("Install from HTTPS URL")).tag(1)
-                        .accessibilityIdentifier("hanlin-skill-import-tab-url")
+                switch step {
+                case .input:
+                    inputView
+                case .preview(let staged):
+                    previewView(staged)
                 }
-                .pickerStyle(.segmented)
-                .padding()
-
-                if let err = errorMessage {
-                    Text(err)
-                        .foregroundColor(.red)
-                        .font(.footnote)
-                        .padding(.horizontal)
-                        .multilineTextAlignment(.center)
-                }
-
-                if let succ = successMessage {
-                    Text(succ)
-                        .foregroundColor(.green)
-                        .font(.footnote)
-                        .padding(.horizontal)
-                        .multilineTextAlignment(.center)
-                }
-
-                if selectedTab == 0 {
-                    zipImportSection
-                } else {
-                    urlImportSection
-                }
-
-                Spacer()
             }
-            .navigationTitle(SkillL10n.string("Import Skill"))
+            .navigationTitle(navTitle)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
                     Button(SkillL10n.string("Cancel")) {
-                        dismiss()
+                        switch step {
+                        case .input:
+                            dismiss()
+                        case .preview(let staged):
+                            try? FileManager.default.removeItem(at: staged.stagingDirectoryURL)
+                            step = .input
+                        }
                     }
                     .accessibilityIdentifier("hanlin-skill-import-cancel-button")
                 }
@@ -67,6 +60,163 @@ struct SkillImportView: View {
                 allowsMultipleSelection: false
             ) { result in
                 handleFileImportResult(result)
+            }
+        }
+    }
+
+    private var navTitle: String {
+        switch step {
+        case .input:
+            return SkillL10n.string("Import Skill")
+        case .preview:
+            return SkillL10n.string("Skill Preview")
+        }
+    }
+
+    private var inputView: some View {
+        VStack(spacing: 0) {
+            Picker("", selection: $selectedTab) {
+                Text(SkillL10n.string("Import ZIP Archive")).tag(0)
+                    .accessibilityIdentifier("hanlin-skill-import-tab-zip")
+                Text(SkillL10n.string("Install from HTTPS URL")).tag(1)
+                    .accessibilityIdentifier("hanlin-skill-import-tab-url")
+            }
+            .pickerStyle(.segmented)
+            .padding()
+
+            if let err = errorMessage {
+                Text(err)
+                    .foregroundColor(.red)
+                    .font(.footnote)
+                    .padding(.horizontal)
+                    .multilineTextAlignment(.center)
+            }
+
+            if let succ = successMessage {
+                Text(succ)
+                    .foregroundColor(.green)
+                    .font(.footnote)
+                    .padding(.horizontal)
+                    .multilineTextAlignment(.center)
+            }
+
+            if selectedTab == 0 {
+                zipImportSection
+            } else {
+                urlImportSection
+            }
+
+            Spacer()
+        }
+    }
+
+    private func previewView(_ staged: StagedSkillPackage) -> some View {
+        List {
+            Section(header: Text("Skill Metadata")) {
+                VStack(alignment: .leading, spacing: 6) {
+                    HStack {
+                        Text(staged.parsedMarkdown.name)
+                            .font(.headline)
+                        Spacer()
+                        Text(staged.skillID.rawValue)
+                            .font(.caption)
+                            .padding(.horizontal, 6)
+                            .padding(.vertical, 2)
+                            .background(Color.secondary.opacity(0.15))
+                            .cornerRadius(4)
+                    }
+
+                    if !staged.parsedMarkdown.description.isEmpty {
+                        Text(staged.parsedMarkdown.description)
+                            .font(.subheadline)
+                            .foregroundColor(.secondary)
+                    }
+                }
+                .padding(.vertical, 4)
+            }
+
+            if !staged.metadata.preferredToolIDs.isEmpty {
+                Section(header: Text("Preferred Tools")) {
+                    ForEach(staged.metadata.preferredToolIDs, id: \.self) { tool in
+                        HStack {
+                            Image(systemName: "wrench.and.screwdriver")
+                                .font(.caption)
+                                .foregroundColor(.secondary)
+                            Text(tool)
+                                .font(.system(.subheadline, design: .monospaced))
+                        }
+                    }
+                }
+            }
+
+            if !staged.metadata.triggerHints.isEmpty {
+                Section(header: Text("Trigger Hints")) {
+                    ForEach(staged.metadata.triggerHints, id: \.self) { hint in
+                        Text(hint)
+                            .font(.footnote)
+                    }
+                }
+            }
+
+            Section(header: Text("Included Resources (\(staged.resources.count))")) {
+                if staged.resources.isEmpty {
+                    Text("No additional resources.")
+                        .font(.footnote)
+                        .foregroundColor(.secondary)
+                } else {
+                    ForEach(staged.resources) { res in
+                        HStack {
+                            VStack(alignment: .leading, spacing: 2) {
+                                Text(res.relativePath)
+                                    .font(.system(.footnote, design: .monospaced))
+                                Text(ByteCountFormatter.string(fromByteCount: res.byteCount, countStyle: .file))
+                                    .font(.caption2)
+                                    .foregroundColor(.secondary)
+                            }
+                            Spacer()
+                            if res.isBinary {
+                                Text("Binary")
+                                    .font(.caption2)
+                                    .foregroundColor(.secondary)
+                            }
+                        }
+                    }
+                }
+            }
+
+            Section {
+                VStack(spacing: 12) {
+                    if let err = errorMessage {
+                        Text(err)
+                            .foregroundColor(.red)
+                            .font(.footnote)
+                            .multilineTextAlignment(.center)
+                    }
+
+                    if isProcessing {
+                        ProgressView(SkillL10n.string("Installing..."))
+                    } else {
+                        Button {
+                            installStaged(staged)
+                        } label: {
+                            Text(SkillL10n.string("Install Skill"))
+                                .frame(maxWidth: .infinity)
+                                .padding(.vertical, 8)
+                        }
+                        .buttonStyle(.borderedProminent)
+                        .accessibilityIdentifier("hanlin-skill-import-confirm-install")
+
+                        Button(role: .cancel) {
+                            try? FileManager.default.removeItem(at: staged.stagingDirectoryURL)
+                            step = .input
+                        } label: {
+                            Text(SkillL10n.string("Cancel"))
+                                .frame(maxWidth: .infinity)
+                        }
+                        .accessibilityIdentifier("hanlin-skill-import-preview-cancel")
+                    }
+                }
+                .padding(.vertical, 8)
             }
         }
     }
@@ -97,7 +247,7 @@ struct SkillImportView: View {
             .padding(.horizontal, 40)
 
             if isProcessing {
-                ProgressView(SkillL10n.string("Installing..."))
+                ProgressView(SkillL10n.string("Inspecting..."))
             }
         }
     }
@@ -124,9 +274,9 @@ struct SkillImportView: View {
             .padding(.horizontal)
 
             Button {
-                downloadAndInstall()
+                downloadAndInspect()
             } label: {
-                Label(SkillL10n.string("Download & Install"), systemImage: "arrow.down.circle")
+                Label(SkillL10n.string("Download & Inspect"), systemImage: "arrow.down.circle")
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 8)
             }
@@ -136,7 +286,7 @@ struct SkillImportView: View {
             .padding(.horizontal, 40)
 
             if isProcessing {
-                ProgressView(SkillL10n.string("Installing..."))
+                ProgressView(SkillL10n.string("Downloading & Inspecting..."))
             }
         }
     }
@@ -156,12 +306,9 @@ struct SkillImportView: View {
 
             Task {
                 do {
-                    let descriptor = try SkillImporter.shared.importSkill(fromArchiveAt: fileURL)
-                    successMessage = "Successfully imported skill '\(descriptor.title.preferredValue())' [\(descriptor.id.rawValue)]."
+                    let staged = try SkillImporter.shared.stageAndInspect(fileURL: fileURL)
                     isProcessing = false
-                    onImported()
-                    try? await Task.sleep(nanoseconds: 800_000_000)
-                    dismiss()
+                    step = .preview(staged)
                 } catch {
                     errorMessage = error.localizedDescription
                     isProcessing = false
@@ -173,7 +320,7 @@ struct SkillImportView: View {
         }
     }
 
-    private func downloadAndInstall() {
+    private func downloadAndInspect() {
         let trimmed = urlString.trimmingCharacters(in: .whitespacesAndNewlines)
         guard let url = URL(string: trimmed), url.scheme?.lowercased() == "https" else {
             errorMessage = "Please enter a valid HTTPS URL."
@@ -186,11 +333,26 @@ struct SkillImportView: View {
 
         Task {
             do {
-                let descriptor = try await SkillImporter.shared.installFromHTTPSURL(url)
-                successMessage = "Successfully downloaded and installed skill '\(descriptor.title.preferredValue())' [\(descriptor.id.rawValue)]."
+                let staged = try await SkillImporter.shared.downloadAndStage(from: url)
+                isProcessing = false
+                step = .preview(staged)
+            } catch {
+                errorMessage = error.localizedDescription
+                isProcessing = false
+            }
+        }
+    }
+
+    private func installStaged(_ staged: StagedSkillPackage) {
+        isProcessing = true
+        errorMessage = nil
+        Task {
+            do {
+                let descriptor = try SkillImporter.shared.install(staged: staged)
+                successMessage = "Successfully installed skill '\(descriptor.title.preferredValue())' [\(descriptor.id.rawValue)]."
                 isProcessing = false
                 onImported()
-                try? await Task.sleep(nanoseconds: 800_000_000)
+                try? await Task.sleep(nanoseconds: 600_000_000)
                 dismiss()
             } catch {
                 errorMessage = error.localizedDescription
