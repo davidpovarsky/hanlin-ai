@@ -442,9 +442,8 @@ final class HanlinScriptUIProductionE2ETests: XCTestCase {
     }
 
     private func findPackageCard(named packageName: String) -> XCUIElement {
-        closeAddSheetIfNeeded()
         let cardById = app.buttons["hanlin-package-card-\(packageName)"].firstMatch
-        if cardById.waitForExistence(timeout: 5) { return cardById }
+        if cardById.waitForExistence(timeout: 3) { return cardById }
 
         let predicate = NSPredicate(
             format: "(label CONTAINS[c] %@ OR identifier CONTAINS[c] %@) AND elementType != %d",
@@ -453,7 +452,7 @@ final class HanlinScriptUIProductionE2ETests: XCTestCase {
             XCUIElement.ElementType.navigationBar.rawValue
         )
         let element = app.descendants(matching: .any).matching(predicate).firstMatch
-        if element.waitForExistence(timeout: 3) {
+        if element.waitForExistence(timeout: 2) {
             return element
         }
         app.swipeDown()
@@ -464,6 +463,26 @@ final class HanlinScriptUIProductionE2ETests: XCTestCase {
             app.swipeUp()
             if element.waitForExistence(timeout: 2) {
                 return element
+            }
+        }
+        if !app.navigationBars["Add Apps"].exists && appsAddButton.waitForExistence(timeout: 2) {
+            appsAddButton.tap()
+            _ = app.navigationBars["Add Apps"].waitForExistence(timeout: 4)
+            let inSheet = app.descendants(matching: .any).matching(predicate).firstMatch
+            if inSheet.waitForExistence(timeout: 3) {
+                return inSheet
+            }
+            for _ in 1...3 {
+                app.swipeUp()
+                if inSheet.waitForExistence(timeout: 2) {
+                    return inSheet
+                }
+            }
+            closeAddSheetIfNeeded()
+        } else if app.navigationBars["Add Apps"].exists {
+            let inSheet = app.descendants(matching: .any).matching(predicate).firstMatch
+            if inSheet.waitForExistence(timeout: 2) {
+                return inSheet
             }
         }
         return cardById.exists ? cardById : element
@@ -553,31 +572,47 @@ final class HanlinScriptUIProductionE2ETests: XCTestCase {
     }
 
     private func closeImportSurfaces() {
-        for _ in 0..<5 {
-            if !app.navigationBars["Script Package"].exists && !app.navigationBars["Add Apps"].exists {
-                return
-            }
-            let done = app.buttons["Done"].firstMatch
-            if done.waitForExistence(timeout: 2) && done.isHittable {
-                done.tap()
-            } else {
-                let back = app.navigationBars.buttons.element(boundBy: 0)
-                if back.waitForExistence(timeout: 1) && back.isHittable {
-                    back.tap()
+        for _ in 1...6 {
+            let doneButtons = [
+                app.navigationBars["Script Package"].buttons["Done"].firstMatch,
+                app.navigationBars["Add Apps"].buttons["Done"].firstMatch,
+                app.navigationBars.buttons["Done"].firstMatch,
+                app.buttons["Done"].firstMatch,
+            ]
+            var tappedDone = false
+            for done in doneButtons {
+                if done.waitForExistence(timeout: 2) && done.isHittable {
+                    done.tap()
+                    tappedDone = true
+                    _ = waitUntil(timeout: 2) { !done.exists }
+                    break
                 }
             }
-            if waitUntil(timeout: 3, condition: {
-                !app.navigationBars["Script Package"].exists && !app.navigationBars["Add Apps"].exists
-            }) {
-                return
+            if !tappedDone {
+                if !app.navigationBars["Script Package"].exists && !app.navigationBars["Add Apps"].exists && appsAddButton.exists {
+                    break
+                }
+                let backButtons = [
+                    app.navigationBars["Script Package"].buttons.element(boundBy: 0),
+                    app.navigationBars.buttons.element(boundBy: 0),
+                ]
+                for back in backButtons {
+                    if back.waitForExistence(timeout: 1) && back.isHittable {
+                        back.tap()
+                        tappedDone = true
+                        _ = waitUntil(timeout: 2) { !back.exists }
+                        break
+                    }
+                }
+                if !tappedDone { break }
             }
         }
-        XCTAssertTrue(
-            waitUntil(timeout: 5) {
-                !app.navigationBars["Script Package"].exists && !app.navigationBars["Add Apps"].exists
-            },
-            "Import surfaces failed to dismiss"
-        )
+        _ = waitUntil(timeout: 5) {
+            !self.app.navigationBars["Script Package"].exists &&
+            !self.app.navigationBars["Add Apps"].exists &&
+            !self.app.buttons["hanlin-package-install"].exists
+        }
+        ensureAppsAddButton(timeout: 10)
     }
 
     @discardableResult

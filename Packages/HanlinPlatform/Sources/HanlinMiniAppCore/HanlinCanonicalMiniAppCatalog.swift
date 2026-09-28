@@ -73,6 +73,8 @@ public struct HanlinCanonicalMiniAppCatalog: Sendable {
                 return .nativeScript
             case .hanlinExpo:
                 return .expo
+            case .scriptingJSC:
+                return .scriptingJSC
             default:
                 return nil
             }
@@ -140,6 +142,13 @@ public struct HanlinMiniAppLaunchPlan: Hashable, Sendable {
             }
             guard runtime == .hanlinExpo else {
                 throw HanlinMiniAppCatalogError.unsupportedScriptRuntime(descriptor.id, runtime)
+            }
+        }
+        if engine == .scriptingJSC {
+            if let runtime = entryPoint.runtimeProfile {
+                guard runtime == .scriptingJSC else {
+                    throw HanlinMiniAppCatalogError.unsupportedScriptRuntime(descriptor.id, runtime)
+                }
             }
         }
         self.appID = descriptor.id
