@@ -322,16 +322,22 @@ final class HanlinScriptUIProductionE2ETests: XCTestCase {
     private func closeAddSheetIfNeeded() {
         for _ in 1...3 {
             guard app.navigationBars["Add Apps"].exists else { return }
-            let doneButtons = [
-                app.navigationBars["Add Apps"].buttons["Done"].firstMatch,
-                app.navigationBars.buttons["Done"].firstMatch,
-                app.buttons["Done"].firstMatch,
-            ]
-            for done in doneButtons {
-                if done.waitForExistence(timeout: 1) && done.isHittable {
-                    done.tap()
-                    _ = waitUntil(timeout: 2) { !done.exists }
-                    break
+            let addDone = app.buttons["hanlin-apps-add-done"].firstMatch
+            if addDone.waitForExistence(timeout: 2) && addDone.isHittable {
+                addDone.tap()
+                _ = waitUntil(timeout: 2) { !addDone.exists }
+            } else {
+                let doneButtons = [
+                    app.navigationBars["Add Apps"].buttons["Done"].firstMatch,
+                    app.navigationBars.buttons["Done"].firstMatch,
+                    app.buttons["Done"].firstMatch,
+                ]
+                for done in doneButtons {
+                    if done.waitForExistence(timeout: 1) && done.isHittable {
+                        done.tap()
+                        _ = waitUntil(timeout: 2) { !done.exists }
+                        break
+                    }
                 }
             }
             if waitUntil(timeout: 2, condition: { !app.navigationBars["Add Apps"].exists }) {
@@ -544,7 +550,7 @@ final class HanlinScriptUIProductionE2ETests: XCTestCase {
 
     private func openPackageDetails(named packageName: String) {
         let packageCard = findPackageCard(named: packageName)
-        XCTAssertTrue(packageCard.waitForExistence(timeout: 10))
+        XCTAssertTrue(packageCard.waitForExistence(timeout: 10), "Package card \(packageName) not found for details")
         if !packageCard.isHittable {
             app.swipeDown()
             _ = waitUntil(timeout: 2) { packageCard.isHittable }
@@ -558,20 +564,39 @@ final class HanlinScriptUIProductionE2ETests: XCTestCase {
         } else {
             packageCard.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).press(forDuration: 1.5)
         }
-        let infoButton = app.buttons["Package Information"].firstMatch
-        if infoButton.waitForExistence(timeout: 5) {
-            infoButton.tap()
+
+        let infoPredicate = NSPredicate(format: "identifier == 'hanlin-package-information-menu-item' OR label CONTAINS 'Package Information' OR identifier CONTAINS 'Package Information'")
+        let infoButton = app.descendants(matching: .any).matching(infoPredicate).firstMatch
+        if !infoButton.waitForExistence(timeout: 3) {
+            if packageCard.isHittable {
+                packageCard.press(forDuration: 2.0)
+            } else {
+                packageCard.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).press(forDuration: 2.0)
+            }
         }
+        XCTAssertTrue(infoButton.waitForExistence(timeout: 5), "Package Information context menu item missing for \(packageName)")
+        infoButton.tap()
+        XCTAssertTrue(app.buttons["Uninstall"].waitForExistence(timeout: 8), "Package details failed to open")
     }
 
     private func closeDetails() {
-        let done = app.buttons["Done"].firstMatch
-        if done.waitForExistence(timeout: 3) && done.isHittable {
-            done.tap()
+        let detailsDone = app.buttons["hanlin-package-details-done"].firstMatch
+        if detailsDone.waitForExistence(timeout: 3) && detailsDone.isHittable {
+            detailsDone.tap()
         } else {
-            app.swipeDown()
+            let hittableDone = app.buttons.matching(identifier: "hanlin-package-details-done").firstMatch.exists
+                ? app.buttons["hanlin-package-details-done"].firstMatch
+                : app.buttons.matching(identifier: "Done").allElementsBoundByIndex.first(where: { $0.isHittable })
+            if let hittableDone, hittableDone.waitForExistence(timeout: 2) && hittableDone.isHittable {
+                hittableDone.tap()
+            } else {
+                app.swipeDown()
+            }
         }
-        _ = waitUntil(timeout: 5) { !app.buttons["Uninstall"].exists && !app.switches["Enabled"].exists }
+        XCTAssertTrue(
+            waitUntil(timeout: 5) { !app.buttons["Uninstall"].exists && !app.switches["Enabled"].exists },
+            "Details sheet failed to dismiss"
+        )
         closeAddSheetIfNeeded()
     }
 
@@ -603,6 +628,8 @@ final class HanlinScriptUIProductionE2ETests: XCTestCase {
     private func closeImportSurfaces() {
         for _ in 1...6 {
             let doneButtons = [
+                app.buttons["hanlin-package-details-done"].firstMatch,
+                app.buttons["hanlin-apps-add-done"].firstMatch,
                 app.navigationBars["Script Package"].buttons["Done"].firstMatch,
                 app.navigationBars["Add Apps"].buttons["Done"].firstMatch,
                 app.navigationBars.buttons["Done"].firstMatch,

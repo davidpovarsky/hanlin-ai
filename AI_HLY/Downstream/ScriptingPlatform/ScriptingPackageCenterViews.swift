@@ -216,6 +216,7 @@ struct ScriptingInstalledPackageDetailView: View {
                 Button("Done") {
                     dismiss()
                 }
+                .accessibilityIdentifier("hanlin-package-details-done")
             }
         }
     }

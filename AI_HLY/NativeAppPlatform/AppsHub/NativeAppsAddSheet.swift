@@ -114,6 +114,7 @@ struct NativeAppsAddSheet: View {
                                 } label: {
                                     Label("Package Information", systemImage: "info.circle")
                                 }
+                                .accessibilityIdentifier("hanlin-package-information-menu-item")
                             }
                         }
                     }
@@ -132,6 +133,7 @@ struct NativeAppsAddSheet: View {
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
                     Button("Done") { dismiss() }
+                        .accessibilityIdentifier("hanlin-apps-add-done")
                 }
             }
             .sheet(item: Binding(
