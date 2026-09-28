@@ -442,8 +442,9 @@ final class HanlinScriptUIProductionE2ETests: XCTestCase {
     }
 
     private func findPackageCard(named packageName: String) -> XCUIElement {
+        closeAddSheetIfNeeded()
         let cardById = app.buttons["hanlin-package-card-\(packageName)"].firstMatch
-        if cardById.exists { return cardById }
+        if cardById.waitForExistence(timeout: 5) { return cardById }
 
         let predicate = NSPredicate(
             format: "(label CONTAINS[c] %@ OR identifier CONTAINS[c] %@) AND elementType != %d",
@@ -452,37 +453,17 @@ final class HanlinScriptUIProductionE2ETests: XCTestCase {
             XCUIElement.ElementType.navigationBar.rawValue
         )
         let element = app.descendants(matching: .any).matching(predicate).firstMatch
-        if element.waitForExistence(timeout: 2) {
+        if element.waitForExistence(timeout: 3) {
             return element
         }
         app.swipeDown()
         if element.waitForExistence(timeout: 2) {
             return element
         }
-        for _ in 1...5 {
+        for _ in 1...3 {
             app.swipeUp()
             if element.waitForExistence(timeout: 2) {
                 return element
-            }
-        }
-        if !app.navigationBars["Add Apps"].exists && appsAddButton.waitForExistence(timeout: 3) {
-            appsAddButton.tap()
-            _ = app.navigationBars["Add Apps"].waitForExistence(timeout: 5)
-            let inSheet = app.descendants(matching: .any).matching(predicate).firstMatch
-            if inSheet.waitForExistence(timeout: 3) {
-                return inSheet
-            }
-            for _ in 1...3 {
-                app.swipeUp()
-                if inSheet.waitForExistence(timeout: 2) {
-                    return inSheet
-                }
-            }
-            closeAddSheetIfNeeded()
-        } else if app.navigationBars["Add Apps"].exists {
-            let inSheet = app.descendants(matching: .any).matching(predicate).firstMatch
-            if inSheet.waitForExistence(timeout: 2) {
-                return inSheet
             }
         }
         return cardById.exists ? cardById : element
@@ -543,6 +524,7 @@ final class HanlinScriptUIProductionE2ETests: XCTestCase {
             app.swipeDown()
         }
         _ = waitUntil(timeout: 5) { !app.buttons["Uninstall"].exists && !app.switches["Enabled"].exists }
+        closeAddSheetIfNeeded()
     }
 
     private func ensurePackageUninstalled(named packageName: String) {
