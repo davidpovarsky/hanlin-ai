@@ -149,6 +149,7 @@ final class HanlinScriptUIProductionE2ETests: XCTestCase {
         toggleSwitch(reenableToggle, targetValue: "1")
         XCTAssertTrue(waitUntil(timeout: 5) { (reenableToggle.value as? String) == "1" }, "Package failed to re-enable")
         closeDetails()
+        closeAddSheetIfNeeded()
 
         // Verify open works again
         launchPackage(named: validPackageName)
@@ -319,11 +320,22 @@ final class HanlinScriptUIProductionE2ETests: XCTestCase {
     }
 
     private func closeAddSheetIfNeeded() {
-        if app.navigationBars["Add Apps"].exists {
-            let done = app.buttons["Done"].firstMatch
-            if done.waitForExistence(timeout: 2) && done.isHittable {
-                done.tap()
-                _ = waitUntil(timeout: 3) { !app.navigationBars["Add Apps"].exists }
+        for _ in 1...3 {
+            guard app.navigationBars["Add Apps"].exists else { return }
+            let doneButtons = [
+                app.navigationBars["Add Apps"].buttons["Done"].firstMatch,
+                app.navigationBars.buttons["Done"].firstMatch,
+                app.buttons["Done"].firstMatch,
+            ]
+            for done in doneButtons {
+                if done.waitForExistence(timeout: 1) && done.isHittable {
+                    done.tap()
+                    _ = waitUntil(timeout: 2) { !done.exists }
+                    break
+                }
+            }
+            if waitUntil(timeout: 2, condition: { !app.navigationBars["Add Apps"].exists }) {
+                return
             }
         }
     }
@@ -490,6 +502,10 @@ final class HanlinScriptUIProductionE2ETests: XCTestCase {
 
     private func tapPackageCard(_ packageCard: XCUIElement) {
         if !packageCard.isHittable {
+            app.swipeDown()
+            _ = waitUntil(timeout: 2) { packageCard.isHittable }
+        }
+        if !packageCard.isHittable {
             app.swipeUp()
             _ = waitUntil(timeout: 2) { packageCard.isHittable }
         }
@@ -501,11 +517,20 @@ final class HanlinScriptUIProductionE2ETests: XCTestCase {
     }
 
     private func launchPackage(named packageName: String) {
-        let packageCard = findPackageCard(named: packageName)
-        XCTAssertTrue(packageCard.waitForExistence(timeout: 15), "Package \(packageName) unavailable for launch")
-        tapPackageCard(packageCard)
-        if app.navigationBars["Add Apps"].exists {
-            _ = waitUntil(timeout: 4) { !app.navigationBars["Add Apps"].exists }
+        let closeBtn = app.buttons["hanlin-script-app-close"].firstMatch
+        if closeBtn.exists { return }
+
+        for _ in 1...3 {
+            let packageCard = findPackageCard(named: packageName)
+            XCTAssertTrue(packageCard.waitForExistence(timeout: 15), "Package \(packageName) unavailable for launch")
+            tapPackageCard(packageCard)
+            if app.navigationBars["Add Apps"].exists {
+                _ = waitUntil(timeout: 4) { !app.navigationBars["Add Apps"].exists }
+            }
+            if closeBtn.waitForExistence(timeout: 5) || !app.navigationBars["Add Apps"].exists {
+                return
+            }
+            closeAddSheetIfNeeded()
         }
     }
 
@@ -520,6 +545,10 @@ final class HanlinScriptUIProductionE2ETests: XCTestCase {
     private func openPackageDetails(named packageName: String) {
         let packageCard = findPackageCard(named: packageName)
         XCTAssertTrue(packageCard.waitForExistence(timeout: 10))
+        if !packageCard.isHittable {
+            app.swipeDown()
+            _ = waitUntil(timeout: 2) { packageCard.isHittable }
+        }
         if !packageCard.isHittable {
             app.swipeUp()
             _ = waitUntil(timeout: 2) { packageCard.isHittable }
