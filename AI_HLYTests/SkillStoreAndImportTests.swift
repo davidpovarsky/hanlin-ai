@@ -2,6 +2,7 @@ import Foundation
 import Testing
 import HanlinPlatformContracts
 import HanlinScriptCompiler
+import ZIPFoundation
 @testable import AI_Hanlin
 
 @MainActor
@@ -267,6 +268,12 @@ struct SkillStoreAndImportTests {
             instructions: "Testing resource reading"
         )
         try store.addOrUpdateTextResource(for: skillID, relativePath: "references/guide.md", content: "Line 1: Intro\nLine 2: Section A\nLine 3: Section B\nLine 4: Outro")
+
+        // Add binary resource
+        let tempPNG = FileManager.default.temporaryDirectory.appendingPathComponent("test-\(UUID().uuidString).png")
+        try Data([0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A]).write(to: tempPNG)
+        defer { try? FileManager.default.removeItem(at: tempPNG) }
+        try store.addResourceFile(for: skillID, relativePath: "assets/logo.png", sourceFileURL: tempPNG)
         defer { store.deleteCustomSkill(skillID: skillID) }
 
         catalog.synchronizeProductionSkills()
@@ -304,38 +311,124 @@ struct SkillStoreAndImportTests {
             catalog: catalog
         )
         #expect(traversalResult.contains("Directory traversal is not permitted") || traversalResult.contains("Invalid resource path"))
+
+        // 5. Binary resource returns metadata only without dumping raw bytes
+        let binaryResult = await ReadSkillResourceTool.execute(
+            argumentsJSON: "{\"skill_id\":\"res-test-skill\",\"relative_path\":\"assets/logo.png\"}",
+            session: session,
+            catalog: catalog
+        )
+        #expect(binaryResult.contains("Binary resource file: assets/logo.png"))
+        #expect(binaryResult.contains("MIME: image/png"))
     }
 
     @Test("Imported Python script can be read as text and is not executed during installation")
     func importedPythonScriptCanBeReadButIsNotExecutedDuringInstall() async throws {
-        let store = SkillStore.shared
+        let tempDir = FileManager.default.temporaryDirectory
+        let sentinelURL = tempDir.appendingPathComponent("sentinel-\(UUID().uuidString).txt")
+        let tempZip = tempDir.appendingPathComponent("danger-\(UUID().uuidString).zip")
+        defer {
+            try? FileManager.default.removeItem(at: tempZip)
+            try? FileManager.default.removeItem(at: sentinelURL)
+        }
+
+        // Create genuine ZIP containing SKILL.md and scripts/danger.py
+        guard let archive = try? Archive(url: tempZip, accessMode: .create) else {
+            Issue.record("Failed to create test ZIP archive")
+            return
+        }
+
+        let skillMD = """
+        ---
+        name: danger-python-skill
+        description: Skill containing unexecuted danger script
+        ---
+
+        # Danger Python Skill Instructions
+        Execute safely.
+        """
+        let skillMDData = Data(skillMD.utf8)
+        try archive.addEntry(with: "SKILL.md", type: .file, uncompressedSize: Int64(skillMDData.count), provider: { position, size in
+            skillMDData.subdata(in: position..<(position + size))
+        })
+
+        let scriptCode = """
+        import os
+        with open('\(sentinelURL.path)', 'w') as f:
+            f.write('HACKED')
+        """
+        let scriptData = Data(scriptCode.utf8)
+        try archive.addEntry(with: "scripts/danger.py", type: .file, uncompressedSize: Int64(scriptData.count), provider: { position, size in
+            scriptData.subdata(in: position..<(position + size))
+        })
+
+        // Inspect and install staged ZIP
+        let importer = SkillImporter.shared
+        let staged = try importer.stageAndInspect(fileURL: tempZip)
+        let descriptor = try importer.install(staged: staged)
+        defer { SkillStore.shared.deleteCustomSkill(skillID: descriptor.id) }
+
+        // Assert sentinel file was NOT created (script was not executed during install!)
+        #expect(!FileManager.default.fileExists(atPath: sentinelURL.path))
+
         let catalog = HanlinSkillCatalog.shared
-        let session = AssistantCapabilitySession()
-
-        let skillID = try HanlinSkillID(validating: "python-resource-skill")
-        try store.saveCustomSkill(
-            id: skillID,
-            title: "Python Resource Skill",
-            description: "Python resource test",
-            instructions: "Testing python resource"
-        )
-        try store.addOrUpdateTextResource(for: skillID, relativePath: "scripts/analyze.py", content: "import os\nprint('hello from script')")
-        defer { store.deleteCustomSkill(skillID: skillID) }
-
         catalog.synchronizeProductionSkills()
 
+        let session = AssistantCapabilitySession()
         _ = await LoadSkillTool.execute(
-            argumentsJSON: "{\"skill_id\":\"python-resource-skill\"}",
+            argumentsJSON: "{\"skill_id\":\"danger-python-skill\"}",
             session: session,
             catalog: catalog
         )
 
         let readResult = await ReadSkillResourceTool.execute(
-            argumentsJSON: "{\"skill_id\":\"python-resource-skill\",\"relative_path\":\"scripts/analyze.py\"}",
+            argumentsJSON: "{\"skill_id\":\"danger-python-skill\",\"relative_path\":\"scripts/danger.py\"}",
             session: session,
             catalog: catalog
         )
         #expect(readResult.contains("import os"))
-        #expect(readResult.contains("print('hello from script')"))
+        #expect(readResult.contains("HACKED"))
+
+        // Still not executed after reading!
+        #expect(!FileManager.default.fileExists(atPath: sentinelURL.path))
+    }
+
+    @Test("BoundedStreamDownloader enforces network limits and rejects non-HTTPS or oversize payloads")
+    func boundedDownloaderEnforcesNetworkLimits() async throws {
+        let config = URLSessionConfiguration.ephemeral
+        let downloader = BoundedStreamDownloader(maxBytes: 100, sessionConfiguration: config)
+        await #expect(throws: SkillImportError.self) {
+            _ = try await downloader.download(from: URL(string: "http://insecure.test/file.zip")!)
+        }
+    }
+
+    @Test("Temporary staging directory cleans up on success and failure")
+    func tempStagingCleansUpOnSuccessAndFailure() throws {
+        let stagingDir = FileManager.default.temporaryDirectory.appendingPathComponent("stage-test-\(UUID().uuidString)", isDirectory: true)
+        let skillRoot = stagingDir.appendingPathComponent("test-skill", isDirectory: true)
+        try FileManager.default.createDirectory(at: skillRoot, withIntermediateDirectories: true)
+
+        let staged = StagedSkillPackage(
+            stagingDirectoryURL: stagingDir,
+            skillRootDirectoryURL: skillRoot,
+            skillID: try HanlinSkillID(validating: "test-skill"),
+            parsedMarkdown: SkillMarkdownParser.ParsedSkillMarkdown(name: "test-skill", description: "test", body: "body", rawFrontmatter: [:]),
+            metadata: HanlinSkillMetadata(preferredToolIDs: [], triggerHints: [], keywords: [], baseSkillID: nil, originURL: nil, sha256: nil, isEnabled: true, installedAt: Date(), updatedAt: Date()),
+            resources: [],
+            sha256: "hash"
+        )
+        #expect(FileManager.default.fileExists(atPath: stagingDir.path))
+        staged.cleanup()
+        #expect(!FileManager.default.fileExists(atPath: stagingDir.path))
+    }
+
+    @Test("Skill editor rejects unknown preferred tool alias")
+    func skillEditorRejectsUnknownPreferredToolAlias() {
+        let available: Set<String> = ["quick_calculate", "execute_local_python_code"]
+        let invalid = SkillEditorView.validatePreferredToolAliases("unknown_tool_xyz, execute_local_python_code", against: available)
+        #expect(invalid == ["unknown_tool_xyz"])
+
+        let valid = SkillEditorView.validatePreferredToolAliases("quick_calculate, execute_local_python_code", against: available)
+        #expect(valid.isEmpty)
     }
 }

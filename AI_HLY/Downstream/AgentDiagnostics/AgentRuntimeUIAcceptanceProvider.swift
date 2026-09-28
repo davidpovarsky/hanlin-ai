@@ -4,6 +4,7 @@ import HanlinMiniAppCore
 import HanlinPlatformContracts
 import SwiftData
 import SwiftUI
+import ZIPFoundation
 
 enum AgentRuntimeUIAcceptanceProvider {
     static let environmentKey = "HANLIN_AGENT_RUNTIME_UI_ACCEPTANCE"
@@ -115,6 +116,7 @@ enum AgentRuntimeUIAcceptanceProvider {
                 }
             }
             try context.save()
+            URLProtocol.registerClass(AgentRuntimeUIAcceptanceURLProtocol.self)
             AgentRuntimeUIAcceptanceURLProtocol.reset()
         } catch {
             NativeToolTraceLogger.shared.log(
@@ -135,6 +137,7 @@ enum AgentRuntimeUIAcceptanceProvider {
 private final class AgentRuntimeUIAcceptanceURLProtocol: URLProtocol, @unchecked Sendable {
     private static let lock = NSLock()
     private nonisolated(unsafe) static var responseIndex = 0
+    private var isStopped = false
 
     static func reset() {
         lock.lock()
@@ -143,12 +146,59 @@ private final class AgentRuntimeUIAcceptanceURLProtocol: URLProtocol, @unchecked
     }
 
     override class func canInit(with request: URLRequest) -> Bool {
-        AgentRuntimeUIAcceptanceProvider.isEnabled && request.url?.host == "agent.acceptance"
+        AgentRuntimeUIAcceptanceProvider.isEnabled && (request.url?.host == "agent.acceptance" || request.url?.host == "skills.acceptance")
     }
 
     override class func canonicalRequest(for request: URLRequest) -> URLRequest { request }
 
     override func startLoading() {
+        if request.url?.host == "skills.acceptance" {
+            handleSkillsDownload()
+            return
+        }
+
+        let bodyData = Self.extractBodyData(from: request)
+        let bodyString = String(decoding: bodyData, as: UTF8.self)
+
+        // 1. Delayed Run A for stop cancellation test
+        if bodyString.contains("START_DELAYED_RUN_A") {
+            for _ in 0..<50 {
+                if isStopped { return }
+                Thread.sleep(forTimeInterval: 0.1)
+            }
+            if isStopped { return }
+            emitFinalAnswer("RUN_A_UNEXPECTED_COMPLETION")
+            return
+        }
+
+        // 2. Run B immediately completes
+        if bodyString.contains("START_RUN_B") {
+            emitFinalAnswer("RUN_B_COMPLETE")
+            return
+        }
+
+        // 3. Next turn skill loading test
+        if bodyString.contains("ui-next-turn-skill") || bodyString.contains("NEXT_TURN_SKILL") {
+            if bodyString.contains("tool_calls") || bodyString.contains("NEXT_TURN_SKILL") {
+                emitFinalAnswer("NEXT_TURN_SKILL_MARKER: Skill loaded successfully!")
+            } else {
+                emitToolCall(id: "ui-next-turn-load", name: "load_skill", arguments: #"{"skill_id":"ui-next-turn-skill"}"#)
+            }
+            return
+        }
+
+        // 4. Calculate 6*7 without user nudge
+        if bodyString.contains("6*7") || bodyString.contains("6 * 7") || bodyString.contains("compute 123 * 456") {
+            if bodyString.contains("42") {
+                emitFinalAnswer("42 / LOCAL_PYTHON_COMPLETE")
+            } else if bodyString.contains("tool_call_id") || bodyString.contains("\"role\":\"tool\"") {
+                emitToolCall(id: "ui-python-call", name: "execute_local_python_code", arguments: #"{"source":"print(6 * 7)"}"#)
+            } else {
+                emitToolCall(id: "ui-load-code-call", name: "load_skill", arguments: #"{"skill_id":"code"}"#)
+            }
+            return
+        }
+
         Self.lock.lock()
         let index = Self.responseIndex
         Self.responseIndex += 1
@@ -263,7 +313,45 @@ private final class AgentRuntimeUIAcceptanceURLProtocol: URLProtocol, @unchecked
             ]
         }
 
-        let encoded = try! JSONSerialization.data(withJSONObject: payload, options: [.sortedKeys])
+        emitPayload(payload)
+    }
+
+    override func stopLoading() {
+        isStopped = true
+    }
+
+    private func emitToolCall(id: String, name: String, arguments: String) {
+        let payload: [String: Any] = [
+            "choices": [[
+                "delta": [
+                    "tool_calls": [[
+                        "index": 0,
+                        "id": id,
+                        "type": "function",
+                        "function": [
+                            "name": name,
+                            "arguments": arguments
+                        ]
+                    ]]
+                ],
+                "finish_reason": "tool_calls"
+            ]]
+        ]
+        emitPayload(payload)
+    }
+
+    private func emitFinalAnswer(_ text: String) {
+        let payload: [String: Any] = [
+            "choices": [[
+                "delta": ["content": text],
+                "finish_reason": "stop"
+            ]]
+        ]
+        emitPayload(payload)
+    }
+
+    private func emitPayload(_ payload: [String: Any]) {
+        guard let encoded = try? JSONSerialization.data(withJSONObject: payload, options: [.sortedKeys]) else { return }
         let body = Data("data: \(String(decoding: encoded, as: UTF8.self))\n\ndata: [DONE]\n\n".utf8)
         let response = HTTPURLResponse(
             url: request.url!,
@@ -276,5 +364,56 @@ private final class AgentRuntimeUIAcceptanceURLProtocol: URLProtocol, @unchecked
         client?.urlProtocolDidFinishLoading(self)
     }
 
-    override func stopLoading() {}
+    private func handleSkillsDownload() {
+        let tempZip = FileManager.default.temporaryDirectory.appendingPathComponent("url-skill-\(UUID().uuidString).zip")
+        if let archive = try? Archive(url: tempZip, accessMode: .create) {
+            let skillMD = """
+            ---
+            name: ui-url-skill
+            description: Deterministic skill downloaded from URL.
+            ---
+
+            # URL Skill Instructions
+            Loaded from URL.
+            """
+            let skillMDData = Data(skillMD.utf8)
+            try? archive.addEntry(with: "SKILL.md", type: .file, uncompressedSize: Int64(skillMDData.count), provider: { position, size in
+                skillMDData.subdata(in: position..<(position + size))
+            })
+            let refData = Data("URL Guide Content\n".utf8)
+            try? archive.addEntry(with: "references/url-guide.md", type: .file, uncompressedSize: Int64(refData.count), provider: { position, size in
+                refData.subdata(in: position..<(position + size))
+            })
+        }
+        let zipData = (try? Data(contentsOf: tempZip)) ?? Data()
+        try? FileManager.default.removeItem(at: tempZip)
+
+        let response = HTTPURLResponse(
+            url: request.url!,
+            statusCode: 200,
+            httpVersion: "HTTP/1.1",
+            headerFields: [
+                "Content-Type": "application/zip",
+                "Content-Length": "\(zipData.count)"
+            ]
+        )!
+        client?.urlProtocol(self, didReceive: response, cacheStoragePolicy: .notAllowed)
+        client?.urlProtocol(self, didLoad: zipData)
+        client?.urlProtocolDidFinishLoading(self)
+    }
+
+    private static func extractBodyData(from request: URLRequest) -> Data {
+        if let body = request.httpBody { return body }
+        guard let stream = request.httpBodyStream else { return Data() }
+        stream.open()
+        defer { stream.close() }
+        var data = Data()
+        var buffer = [UInt8](repeating: 0, count: 4_096)
+        while true {
+            let count = stream.read(&buffer, maxLength: buffer.count)
+            guard count > 0 else { break }
+            data.append(contentsOf: buffer.prefix(count))
+        }
+        return data
+    }
 }

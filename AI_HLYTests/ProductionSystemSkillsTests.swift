@@ -2,6 +2,7 @@ import Foundation
 import Testing
 import HanlinPlatformContracts
 import HanlinMiniAppCore
+import HanlinScriptCompiler
 @testable import AI_Hanlin
 
 @MainActor
@@ -59,6 +60,7 @@ struct ProductionSystemSkillsTests {
         for skill in skills {
             for toolID in skill.preferredToolIDs {
                 #expect(!toolID.isEmpty)
+                #expect(catalogEntries.contains(toolID), "Skill '\(skill.id.rawValue)' advertises preferredToolID '\(toolID)' which is not registered in NativeToolCatalog!")
             }
         }
     }
@@ -80,13 +82,31 @@ struct ProductionSystemSkillsTests {
     }
 
     @Test("Canonical tools remain discoverable by exact alias")
-    func canonicalToolsRemainDiscoverableByExactAlias() throws {
+    func canonicalToolsRemainDiscoverableByExactAlias() async throws {
         NativeToolCatalog.shared.ensureBuiltinsRegistered()
-        #expect(NativeToolCatalog.shared.entry(named: "quick_calculate") != nil)
-        #expect(NativeToolCatalog.shared.entry(named: "execute_local_python_code") != nil)
-        #expect(NativeToolCatalog.shared.entry(named: "execute_javascript_code") != nil)
-        #expect(NativeToolCatalog.shared.entry(named: "execute_typescript_code") != nil)
-        #expect(NativeToolCatalog.shared.entry(named: "execute_shell_command") != nil)
+        let canonicalAliases = [
+            "quick_calculate",
+            "execute_local_python_code",
+            "execute_javascript_code",
+            "execute_typescript_code",
+            "execute_shell_command"
+        ]
+
+        let session = AssistantCapabilitySession()
+        let prepared = try await AssistantToolBridge.prepare(scope: .nativeOnly)
+
+        for alias in canonicalAliases {
+            let searchJson = "{\"query\":\"\(alias)\",\"limit\":5}"
+            let result = ToolSearchTool.execute(
+                argumentsJSON: searchJson,
+                session: session,
+                searchProvider: { q, l in
+                    prepared.search(query: q, limit: l, preferredAliases: session.activeSkillToolHints)
+                }
+            )
+            #expect(result.contains(alias), "ToolSearchTool failed to discover canonical alias '\(alias)'")
+            #expect(session.exposedToolAliases.contains(alias), "ToolSearchTool did not expose alias '\(alias)' in session")
+        }
     }
 
     @Test("Catalog collision requires explicit override")
@@ -126,17 +146,178 @@ struct ProductionSystemSkillsTests {
 
     @Test("Package skill refresh tracks current generation")
     func packageSkillRefreshTracksCurrentGeneration() async throws {
+        let tempDir = FileManager.default.temporaryDirectory.appending(path: "PackageGenTest-\(UUID().uuidString)", directoryHint: .isDirectory)
+        try FileManager.default.createDirectory(at: tempDir, withIntermediateDirectories: true)
+        defer { try? FileManager.default.removeItem(at: tempDir) }
+
+        let source = tempDir.appending(path: "Source", directoryHint: .isDirectory)
+        try FileManager.default.createDirectory(at: source.appending(path: "references"), withIntermediateDirectories: true)
+        try Data(#"{"name":"Gen Skill Package","version":"1.0.0","entry":"index.tsx","runInApp":true,"skills":[{"id":"gen-skill","title":"Gen Skill","summary":"Gen summary","instructions":{"resource":"references/doc.md"}}]}"#.utf8)
+            .write(to: source.appending(path: "script.json"), options: .atomic)
+        try Data(#"import { Text } from "scripting""#.utf8).write(to: source.appending(path: "index.tsx"), options: .atomic)
+        try Data("GEN 1 DOC CONTENT".utf8).write(to: source.appending(path: "references/doc.md"), options: .atomic)
+
+        let archive = tempDir.appending(path: "gen-skill.scripting", directoryHint: .notDirectory)
+        try HanlinScriptingPackageExporter().exportPackage(at: source, to: archive)
+
+        let platformRoot = tempDir.appending(path: "Platform", directoryHint: .isDirectory)
+        let platform = HanlinScriptingPlatform(rootOverride: platformRoot)
+        await platform.importPackage(from: archive)
+        let preview = try #require(platform.preview)
+        #expect(preview.canInstall)
+        await platform.installPreview()
+        let installed = try #require(platform.installedPackages.first)
+        let installedID = installed.record.installedPackageID
+
         let catalog = HanlinSkillCatalog.shared
+        catalog.synchronizeProductionSkills(scriptingPlatform: platform)
+
+        let resolvedGen1 = try #require(catalog.resolve(rawID: "gen-skill"))
+        let instructions1 = await catalog.loadInstructions(for: resolvedGen1)
+        #expect(instructions1 == "GEN 1 DOC CONTENT")
+
+        // Update to Generation 2
+        try Data("GEN 2 UPDATED CONTENT".utf8).write(to: source.appending(path: "references/doc.md"), options: .atomic)
+        let archive2 = tempDir.appending(path: "gen-skill-v2.scripting", directoryHint: .notDirectory)
+        try HanlinScriptingPackageExporter().exportPackage(at: source, to: archive2)
+        await platform.importPackage(from: archive2)
+        await platform.installPreview()
+
+        catalog.synchronizeProductionSkills(scriptingPlatform: platform)
+        let resolvedGen2 = try #require(catalog.resolve(rawID: "gen-skill"))
+        let instructions2 = await catalog.loadInstructions(for: resolvedGen2)
+        #expect(instructions2 == "GEN 2 UPDATED CONTENT")
+
+        // Rollback to Generation 1
+        await platform.rollback(installedID, to: 1)
+        catalog.synchronizeProductionSkills(scriptingPlatform: platform)
+        let resolvedRollback = try #require(catalog.resolve(rawID: "gen-skill"))
+        let instructionsRollback = await catalog.loadInstructions(for: resolvedRollback)
+        #expect(instructionsRollback == "GEN 1 DOC CONTENT")
+
+        // Clean up
         catalog.synchronizeProductionSkills()
-        let initialSkills = catalog.allSkills()
-        #expect(!initialSkills.isEmpty)
     }
 
     @Test("Package disable and uninstall remove skill immediately")
-    func packageDisableAndUninstallRemoveSkillImmediately() throws {
+    func packageDisableAndUninstallRemoveSkillImmediately() async throws {
+        let tempDir = FileManager.default.temporaryDirectory.appending(path: "PackageLifecycleTest-\(UUID().uuidString)", directoryHint: .isDirectory)
+        try FileManager.default.createDirectory(at: tempDir, withIntermediateDirectories: true)
+        defer { try? FileManager.default.removeItem(at: tempDir) }
+
+        let source = tempDir.appending(path: "Source", directoryHint: .isDirectory)
+        try FileManager.default.createDirectory(at: source.appending(path: "references"), withIntermediateDirectories: true)
+        try Data(#"{"name":"Lifecycle Skill Package","version":"1.0.0","entry":"index.tsx","runInApp":true,"skills":[{"id":"lifecycle-skill","title":"Lifecycle Skill","summary":"Lifecycle summary","instructions":{"resource":"references/doc.md"}}]}"#.utf8)
+            .write(to: source.appending(path: "script.json"), options: .atomic)
+        try Data(#"import { Text } from "scripting""#.utf8).write(to: source.appending(path: "index.tsx"), options: .atomic)
+        try Data("LIFECYCLE DOC CONTENT".utf8).write(to: source.appending(path: "references/doc.md"), options: .atomic)
+
+        let archive = tempDir.appending(path: "lifecycle-skill.scripting", directoryHint: .notDirectory)
+        try HanlinScriptingPackageExporter().exportPackage(at: source, to: archive)
+
+        let platformRoot = tempDir.appending(path: "Platform", directoryHint: .isDirectory)
+        let platform = HanlinScriptingPlatform(rootOverride: platformRoot)
+        await platform.importPackage(from: archive)
+        let preview = try #require(platform.preview)
+        #expect(preview.canInstall)
+        await platform.installPreview()
+        let installed = try #require(platform.installedPackages.first)
+        let installedID = installed.record.installedPackageID
+
         let catalog = HanlinSkillCatalog.shared
+        catalog.synchronizeProductionSkills(scriptingPlatform: platform)
+
+        // 1. Skill resolves when package is installed and enabled
+        let resolved = try #require(catalog.resolve(rawID: "lifecycle-skill"))
+        #expect(resolved.id.rawValue == "lifecycle-skill")
+        let resURL = catalog.resolveResourceURL(skillID: resolved.id, relativePath: "references/doc.md")
+        #expect(resURL != nil)
+
+        // 2. Disable package -> skill disappears immediately from catalog
+        await platform.setPackageEnabled(installedID, enabled: false)
+        catalog.synchronizeProductionSkills(scriptingPlatform: platform)
+        #expect(catalog.resolve(rawID: "lifecycle-skill") == nil)
+        #expect(catalog.resolveResourceURL(skillID: resolved.id, relativePath: "references/doc.md") == nil)
+
+        // 3. Re-enable package -> skill reappears immediately in catalog
+        await platform.setPackageEnabled(installedID, enabled: true)
+        catalog.synchronizeProductionSkills(scriptingPlatform: platform)
+        #expect(catalog.resolve(rawID: "lifecycle-skill") != nil)
+        #expect(catalog.resolveResourceURL(skillID: resolved.id, relativePath: "references/doc.md") != nil)
+
+        // 4. Uninstall package -> skill disappears and resource resolver fails
+        await platform.uninstall(installedID)
+        catalog.synchronizeProductionSkills(scriptingPlatform: platform)
+        #expect(catalog.resolve(rawID: "lifecycle-skill") == nil)
+        #expect(catalog.resolveResourceURL(skillID: resolved.id, relativePath: "references/doc.md") == nil)
+
+        // Clean up
         catalog.synchronizeProductionSkills()
-        let count = catalog.allSkills().count
-        #expect(count > 0)
+    }
+
+    @Test("Same tier unrelated sources cannot silently shadow each other")
+    func sameTierUnrelatedSourcesCannotSilentlyShadow() throws {
+        let catalog = HanlinSkillCatalog.shared
+        catalog.reset()
+
+        let skillID = try HanlinSkillID(validating: "shadow-test-skill")
+        let descA = try HanlinSkillDescriptor(
+            id: skillID,
+            title: "Source A Skill",
+            summary: "Registered by Source A",
+            instructions: .inline("Instructions A")
+        )
+        let sourceA = SkillSourceIdentity(kind: .installedPackage, identifier: "pkg-source-a")
+        catalog.register(skill: descA, tier: .installedPackage, isExplicitOverride: false, sourceIdentity: sourceA)
+        #expect(catalog.resolve(id: skillID)?.title.preferredValue() == "Source A Skill")
+
+        // Unrelated source B tries to register same skill at same tier -> REJECTED
+        let descB = try HanlinSkillDescriptor(
+            id: skillID,
+            title: "Source B Rogue Skill",
+            summary: "Registered by Source B",
+            instructions: .inline("Instructions B")
+        )
+        let sourceB = SkillSourceIdentity(kind: .installedPackage, identifier: "pkg-source-b")
+        catalog.register(skill: descB, tier: .installedPackage, isExplicitOverride: false, sourceIdentity: sourceB)
+        #expect(catalog.resolve(id: skillID)?.title.preferredValue() == "Source A Skill")
+
+        // Same source A updates skill -> ACCEPTED
+        let descAUpdated = try HanlinSkillDescriptor(
+            id: skillID,
+            title: "Source A Updated Skill",
+            summary: "Registered by Source A Updated",
+            instructions: .inline("Instructions A Updated")
+        )
+        catalog.register(skill: descAUpdated, tier: .installedPackage, isExplicitOverride: false, sourceIdentity: sourceA)
+        #expect(catalog.resolve(id: skillID)?.title.preferredValue() == "Source A Updated Skill")
+
+        // Explicit override -> ACCEPTED
+        let descOverride = try HanlinSkillDescriptor(
+            id: skillID,
+            title: "Source B Explicit Override",
+            summary: "Override by Source B",
+            instructions: .inline("Instructions Override")
+        )
+        catalog.register(skill: descOverride, tier: .installedPackage, isExplicitOverride: true, sourceIdentity: sourceB)
+        #expect(catalog.resolve(id: skillID)?.title.preferredValue() == "Source B Explicit Override")
+
+        // Restore
+        catalog.synchronizeProductionSkills()
+    }
+
+    @Test("Store refresh preserves disabled production domains")
+    func storeRefreshPreservesDisabledProductionDomains() throws {
+        let catalog = HanlinSkillCatalog.shared
+        catalog.synchronizeProductionSkills(codeEnabled: false)
+        #expect(catalog.resolve(rawID: "code") == nil)
+
+        // Store refresh must retain codeEnabled: false!
+        SkillStore.shared.refreshFromStore()
+        #expect(catalog.resolve(rawID: "code") == nil)
+
+        // Restore
+        catalog.synchronizeProductionSkills(codeEnabled: true)
+        #expect(catalog.resolve(rawID: "code") != nil)
     }
 }

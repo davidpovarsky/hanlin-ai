@@ -1,6 +1,7 @@
 import SwiftUI
 import UniformTypeIdentifiers
 import HanlinPlatformContracts
+import ZIPFoundation
 
 enum ImportStep {
     case input
@@ -184,6 +185,22 @@ struct SkillImportView: View {
                 }
             }
 
+            Section(header: Text("Package Origin & Integrity")) {
+                if let origin = staged.originURL {
+                    LabeledContent("Origin URL", value: origin)
+                        .accessibilityIdentifier("hanlin-skill-import-origin-url")
+                }
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("SHA-256")
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                    Text(staged.sha256)
+                        .font(.system(.caption2, design: .monospaced))
+                        .foregroundColor(.primary)
+                }
+                .accessibilityIdentifier("hanlin-skill-import-sha256")
+            }
+
             Section {
                 VStack(spacing: 12) {
                     if let err = errorMessage {
@@ -245,6 +262,20 @@ struct SkillImportView: View {
             .disabled(isProcessing)
             .accessibilityIdentifier("hanlin-skill-import-select-file-button")
             .padding(.horizontal, 40)
+
+            #if targetEnvironment(simulator) || DEBUG
+            Button {
+                loadTestFixtureZip()
+            } label: {
+                Label("Load Test Fixture ZIP", systemImage: "shippingbox")
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 8)
+            }
+            .buttonStyle(.bordered)
+            .disabled(isProcessing)
+            .accessibilityIdentifier("hanlin-skill-import-fixture-button")
+            .padding(.horizontal, 40)
+            #endif
 
             if isProcessing {
                 ProgressView(SkillL10n.string("Inspecting..."))
@@ -334,6 +365,50 @@ struct SkillImportView: View {
         Task {
             do {
                 let staged = try await SkillImporter.shared.downloadAndStage(from: url)
+                isProcessing = false
+                step = .preview(staged)
+            } catch {
+                errorMessage = error.localizedDescription
+                isProcessing = false
+            }
+        }
+    }
+
+    private func loadTestFixtureZip() {
+        isProcessing = true
+        errorMessage = nil
+        Task {
+            do {
+                let tempDir = FileManager.default.temporaryDirectory
+                let tempZip = tempDir.appendingPathComponent("ui-import-skill-\(UUID().uuidString).zip")
+                guard let archive = try? Archive(url: tempZip, accessMode: .create) else {
+                    errorMessage = "Failed to create test fixture zip."
+                    isProcessing = false
+                    return
+                }
+                let skillMD = """
+                ---
+                name: ui-import-skill
+                description: Deterministic UI imported skill for acceptance testing.
+                ---
+
+                # UI Import Skill Instructions
+                Execute tools as needed.
+                """
+                let skillMDData = Data(skillMD.utf8)
+                try archive.addEntry(with: "SKILL.md", type: .file, uncompressedSize: Int64(skillMDData.count), provider: { position, size in
+                    skillMDData.subdata(in: position..<(position + size))
+                })
+                let refData = Data("Reference documentation content.\n".utf8)
+                try archive.addEntry(with: "references/guide.md", type: .file, uncompressedSize: Int64(refData.count), provider: { position, size in
+                    refData.subdata(in: position..<(position + size))
+                })
+                let scriptData = Data("print('test script')\n".utf8)
+                try archive.addEntry(with: "scripts/run.py", type: .file, uncompressedSize: Int64(scriptData.count), provider: { position, size in
+                    scriptData.subdata(in: position..<(position + size))
+                })
+
+                let staged = try SkillImporter.shared.stageAndInspect(fileURL: tempZip)
                 isProcessing = false
                 step = .preview(staged)
             } catch {

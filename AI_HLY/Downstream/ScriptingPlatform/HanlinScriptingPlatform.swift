@@ -163,11 +163,18 @@ final class HanlinScriptingPlatform {
     }
 
     public func resolveResourceURL(packageID: HanlinPackageID, relativePath: String) -> URL? {
-        guard let package = installedPackages.first(where: { $0.record.packageID == packageID }),
+        guard let package = installedPackages.first(where: { $0.record.packageID == packageID && $0.enabled }),
               let storeRoot = store?.root else {
             return nil
         }
-        let clean = relativePath.trimmingCharacters(in: CharacterSet(charactersIn: "/\\"))
+        let clean = relativePath.replacingOccurrences(of: "\\", with: "/").trimmingCharacters(in: CharacterSet(charactersIn: "/ "))
+        guard !clean.isEmpty, !clean.contains("\0"), !clean.hasPrefix("/") else {
+            return nil
+        }
+        let components = clean.split(separator: "/")
+        guard !components.contains(".."), !components.contains(".") else {
+            return nil
+        }
         let generation = package.record.activeGeneration
         let packageDir = package.record.installedPackageID.rawValue
         let candidate = storeRoot

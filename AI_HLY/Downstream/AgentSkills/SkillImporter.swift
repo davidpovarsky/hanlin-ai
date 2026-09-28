@@ -64,6 +64,10 @@ public struct StagedSkillPackage: Sendable {
         self.sha256 = sha256
         self.originURL = originURL
     }
+
+    public func cleanup() {
+        try? FileManager.default.removeItem(at: stagingDirectoryURL)
+    }
 }
 
 public final class SkillImporter: @unchecked Sendable {
@@ -102,163 +106,34 @@ public final class SkillImporter: @unchecked Sendable {
         let stagingDir = fileManager.temporaryDirectory.appendingPathComponent("skill-stage-\(UUID().uuidString)", isDirectory: true)
         try fileManager.createDirectory(at: stagingDir, withIntermediateDirectories: true)
 
-        let data = try Data(contentsOf: fileURL, options: .mappedIfSafe)
-        guard Int64(data.count) <= Self.maxDownloadBytes else {
-            throw SkillImportError.downloadExceedsLimit(Int64(data.count))
-        }
-
-        let sha256 = SHA256.hash(data: data).map { String(format: "%02x", $0) }.joined()
-
-        if ext == "md" {
-            guard let content = String(data: data, encoding: .utf8) else {
-                throw SkillImportError.invalidFrontmatter("File is not valid UTF-8 text.")
-            }
-            let parsed: SkillMarkdownParser.ParsedSkillMarkdown
-            do {
-                parsed = try SkillMarkdownParser.parse(content)
-            } catch {
-                throw SkillImportError.invalidFrontmatter(error.localizedDescription)
+        do {
+            let data = try Data(contentsOf: fileURL, options: .mappedIfSafe)
+            guard Int64(data.count) <= Self.maxDownloadBytes else {
+                throw SkillImportError.downloadExceedsLimit(Int64(data.count))
             }
 
-            guard let skillID = try? HanlinSkillID(validating: parsed.name) else {
-                throw SkillImportError.invalidFrontmatter("Skill name '\(parsed.name)' is not a valid skill identifier.")
-            }
+            let sha256 = SHA256.hash(data: data).map { String(format: "%02x", $0) }.joined()
 
-            let skillRoot = stagingDir.appendingPathComponent(skillID.rawValue, isDirectory: true)
-            try fileManager.createDirectory(at: skillRoot, withIntermediateDirectories: true)
-            try data.write(to: skillRoot.appendingPathComponent("SKILL.md"))
-
-            let meta = HanlinSkillMetadata(
-                preferredToolIDs: [],
-                triggerHints: [],
-                keywords: [],
-                baseSkillID: nil,
-                originURL: originURL,
-                sha256: sha256,
-                isEnabled: true,
-                installedAt: Date(),
-                updatedAt: Date()
-            )
-            let metaData = try JSONEncoder().encode(meta)
-            try metaData.write(to: skillRoot.appendingPathComponent("hanlin.json"))
-
-            return StagedSkillPackage(
-                stagingDirectoryURL: stagingDir,
-                skillRootDirectoryURL: skillRoot,
-                skillID: skillID,
-                parsedMarkdown: parsed,
-                metadata: meta,
-                resources: [],
-                sha256: sha256,
-                originURL: originURL
-            )
-        } else {
-            // ZIP handling
-            let stagedArchiveURL = stagingDir.appendingPathComponent("archive.zip")
-            try data.write(to: stagedArchiveURL)
-
-            let extractedRoot = stagingDir.appendingPathComponent("extracted", isDirectory: true)
-            try fileManager.createDirectory(at: extractedRoot, withIntermediateDirectories: true)
-
-            guard let archive = try? Archive(url: stagedArchiveURL, accessMode: .read) else {
-                throw SkillImportError.archiveInspectionFailed(["Unable to open zip archive."])
-            }
-
-            let policy = HanlinArchivePolicy(limits: HanlinArchiveLimits(
-                maximumArchiveBytes: Self.maxDownloadBytes,
-                maximumFiles: 1_024,
-                maximumDirectories: 256,
-                maximumDepth: 16,
-                maximumUncompressedBytes: 64 * 1_048_576,
-                maximumCompressionRatio: 100
-            ))
-
-            let zipEntries = Array(archive)
-            let entryMetadatas = zipEntries.map { entry in
-                HanlinArchiveEntryMetadata(
-                    path: entry.path,
-                    kind: Self.mapEntryKind(entry.type),
-                    compressedBytes: Int64(entry.compressedSize),
-                    uncompressedBytes: Int64(entry.uncompressedSize)
-                )
-            }
-
-            let inspection = policy.inspectSkillArchive(
-                entries: entryMetadatas,
-                centralDirectoryEntryCount: zipEntries.count,
-                archiveBytes: Int64(data.count)
-            )
-
-            guard inspection.isInstallable else {
-                throw SkillImportError.archiveInspectionFailed(inspection.findings.map(\.message))
-            }
-
-            // Locate SKILL.md entries
-            let ignored = Set(inspection.ignoredEntries)
-            let validFiles = zipEntries.filter { entry in
-                !ignored.contains(entry.path) && entry.type != .directory
-            }
-
-            let skillMarkdownEntries = validFiles.filter { entry in
-                let norm = entry.path.replacingOccurrences(of: "\\", with: "/")
-                let filename = (norm as NSString).lastPathComponent
-                return filename == "SKILL.md"
-            }
-
-            guard !skillMarkdownEntries.isEmpty else {
-                throw SkillImportError.missingSkillMarkdown
-            }
-            guard skillMarkdownEntries.count == 1 else {
-                throw SkillImportError.multipleSkillMarkdownFiles(skillMarkdownEntries.map(\.path))
-            }
-
-            // Extract all non-ignored entries safely
-            for entry in zipEntries where !ignored.contains(entry.path) {
-                guard let normalized = HanlinArchivePolicy.normalizedRelativePath(entry.path) else {
-                    throw SkillImportError.extractionEscapedRoot(entry.path)
+            if ext == "md" {
+                guard let content = String(data: data, encoding: .utf8) else {
+                    throw SkillImportError.invalidFrontmatter("File is not valid UTF-8 text.")
                 }
-                let dest = extractedRoot.appendingPathComponent(normalized)
-                guard Self.isContained(dest, in: extractedRoot) else {
-                    throw SkillImportError.extractionEscapedRoot(entry.path)
+                let parsed: SkillMarkdownParser.ParsedSkillMarkdown
+                do {
+                    parsed = try SkillMarkdownParser.parse(content)
+                } catch {
+                    throw SkillImportError.invalidFrontmatter(error.localizedDescription)
                 }
-                if entry.type == .directory {
-                    try fileManager.createDirectory(at: dest, withIntermediateDirectories: true)
-                } else {
-                    try fileManager.createDirectory(at: dest.deletingLastPathComponent(), withIntermediateDirectories: true)
-                    _ = try archive.extract(entry, to: dest, allowUncontainedSymlinks: false)
+
+                guard let skillID = try? HanlinSkillID(validating: parsed.name) else {
+                    throw SkillImportError.invalidFrontmatter("Skill name '\(parsed.name)' is not a valid skill identifier.")
                 }
-            }
 
-            // Find skill root: either wrapper directory containing SKILL.md or extractedRoot
-            let skillMDEntry = skillMarkdownEntries[0]
-            let normSkillMDPath = skillMDEntry.path.replacingOccurrences(of: "\\", with: "/")
-            let skillMDDest = extractedRoot.appendingPathComponent(normSkillMDPath)
-            let skillRoot = skillMDDest.deletingLastPathComponent()
+                let skillRoot = stagingDir.appendingPathComponent(skillID.rawValue, isDirectory: true)
+                try fileManager.createDirectory(at: skillRoot, withIntermediateDirectories: true)
+                try data.write(to: skillRoot.appendingPathComponent("SKILL.md"))
 
-            guard let content = try? String(contentsOf: skillMDDest, encoding: .utf8) else {
-                throw SkillImportError.invalidFrontmatter("SKILL.md is not readable or not valid UTF-8.")
-            }
-
-            let parsed: SkillMarkdownParser.ParsedSkillMarkdown
-            do {
-                parsed = try SkillMarkdownParser.parse(content)
-            } catch {
-                throw SkillImportError.invalidFrontmatter(error.localizedDescription)
-            }
-
-            guard let skillID = try? HanlinSkillID(validating: parsed.name) else {
-                throw SkillImportError.invalidFrontmatter("Skill name '\(parsed.name)' in frontmatter is not a valid identifier.")
-            }
-
-            let hanlinJSONURL = skillRoot.appendingPathComponent("hanlin.json")
-            var meta: HanlinSkillMetadata
-            if let metaData = try? Data(contentsOf: hanlinJSONURL),
-               let parsedMeta = try? JSONDecoder().decode(HanlinSkillMetadata.self, from: metaData) {
-                meta = parsedMeta
-                meta.originURL = originURL
-                meta.sha256 = sha256
-            } else {
-                meta = HanlinSkillMetadata(
+                let meta = HanlinSkillMetadata(
                     preferredToolIDs: [],
                     triggerHints: [],
                     keywords: [],
@@ -269,30 +144,164 @@ public final class SkillImporter: @unchecked Sendable {
                     installedAt: Date(),
                     updatedAt: Date()
                 )
-                if let encoded = try? JSONEncoder().encode(meta) {
-                    try? encoded.write(to: hanlinJSONURL)
+                let metaData = try JSONEncoder().encode(meta)
+                try metaData.write(to: skillRoot.appendingPathComponent("hanlin.json"))
+
+                return StagedSkillPackage(
+                    stagingDirectoryURL: stagingDir,
+                    skillRootDirectoryURL: skillRoot,
+                    skillID: skillID,
+                    parsedMarkdown: parsed,
+                    metadata: meta,
+                    resources: [],
+                    sha256: sha256,
+                    originURL: originURL
+                )
+            } else {
+                // ZIP handling
+                let stagedArchiveURL = stagingDir.appendingPathComponent("archive.zip")
+                try data.write(to: stagedArchiveURL)
+
+                let extractedRoot = stagingDir.appendingPathComponent("extracted", isDirectory: true)
+                try fileManager.createDirectory(at: extractedRoot, withIntermediateDirectories: true)
+
+                guard let archive = try? Archive(url: stagedArchiveURL, accessMode: .read) else {
+                    throw SkillImportError.archiveInspectionFailed(["Unable to open zip archive."])
                 }
+
+                let policy = HanlinArchivePolicy(limits: HanlinArchiveLimits(
+                    maximumArchiveBytes: Self.maxDownloadBytes,
+                    maximumFiles: 1_024,
+                    maximumDirectories: 256,
+                    maximumDepth: 16,
+                    maximumUncompressedBytes: 64 * 1_048_576,
+                    maximumCompressionRatio: 100
+                ))
+
+                let zipEntries = Array(archive)
+                let entryMetadatas = zipEntries.map { entry in
+                    HanlinArchiveEntryMetadata(
+                        path: entry.path,
+                        kind: Self.mapEntryKind(entry.type),
+                        compressedBytes: Int64(entry.compressedSize),
+                        uncompressedBytes: Int64(entry.uncompressedSize)
+                    )
+                }
+
+                let inspection = policy.inspectSkillArchive(
+                    entries: entryMetadatas,
+                    centralDirectoryEntryCount: zipEntries.count,
+                    archiveBytes: Int64(data.count)
+                )
+
+                guard inspection.isInstallable else {
+                    throw SkillImportError.archiveInspectionFailed(inspection.findings.map(\.message))
+                }
+
+                // Locate SKILL.md entries
+                let ignored = Set(inspection.ignoredEntries)
+                let validFiles = zipEntries.filter { entry in
+                    !ignored.contains(entry.path) && entry.type != .directory
+                }
+
+                let skillMarkdownEntries = validFiles.filter { entry in
+                    let norm = entry.path.replacingOccurrences(of: "\\", with: "/")
+                    let filename = (norm as NSString).lastPathComponent
+                    return filename == "SKILL.md"
+                }
+
+                guard !skillMarkdownEntries.isEmpty else {
+                    throw SkillImportError.missingSkillMarkdown
+                }
+                guard skillMarkdownEntries.count == 1 else {
+                    throw SkillImportError.multipleSkillMarkdownFiles(skillMarkdownEntries.map(\.path))
+                }
+
+                // Extract all non-ignored entries safely
+                for entry in zipEntries where !ignored.contains(entry.path) {
+                    guard let normalized = HanlinArchivePolicy.normalizedRelativePath(entry.path) else {
+                        throw SkillImportError.extractionEscapedRoot(entry.path)
+                    }
+                    let dest = extractedRoot.appendingPathComponent(normalized)
+                    guard Self.isContained(dest, in: extractedRoot) else {
+                        throw SkillImportError.extractionEscapedRoot(entry.path)
+                    }
+                    if entry.type == .directory {
+                        try fileManager.createDirectory(at: dest, withIntermediateDirectories: true)
+                    } else {
+                        try fileManager.createDirectory(at: dest.deletingLastPathComponent(), withIntermediateDirectories: true)
+                        _ = try archive.extract(entry, to: dest, allowUncontainedSymlinks: false)
+                    }
+                }
+
+                // Find skill root: either wrapper directory containing SKILL.md or extractedRoot
+                let skillMDEntry = skillMarkdownEntries[0]
+                let normSkillMDPath = skillMDEntry.path.replacingOccurrences(of: "\\", with: "/")
+                let skillMDDest = extractedRoot.appendingPathComponent(normSkillMDPath)
+                let skillRoot = skillMDDest.deletingLastPathComponent()
+
+                guard let content = try? String(contentsOf: skillMDDest, encoding: .utf8) else {
+                    throw SkillImportError.invalidFrontmatter("SKILL.md is not readable or not valid UTF-8.")
+                }
+
+                let parsed: SkillMarkdownParser.ParsedSkillMarkdown
+                do {
+                    parsed = try SkillMarkdownParser.parse(content)
+                } catch {
+                    throw SkillImportError.invalidFrontmatter(error.localizedDescription)
+                }
+
+                guard let skillID = try? HanlinSkillID(validating: parsed.name) else {
+                    throw SkillImportError.invalidFrontmatter("Skill name '\(parsed.name)' in frontmatter is not a valid identifier.")
+                }
+
+                let hanlinJSONURL = skillRoot.appendingPathComponent("hanlin.json")
+                var meta: HanlinSkillMetadata
+                if let metaData = try? Data(contentsOf: hanlinJSONURL),
+                   let parsedMeta = try? JSONDecoder().decode(HanlinSkillMetadata.self, from: metaData) {
+                    meta = parsedMeta
+                    meta.originURL = originURL
+                    meta.sha256 = sha256
+                } else {
+                    meta = HanlinSkillMetadata(
+                        preferredToolIDs: [],
+                        triggerHints: [],
+                        keywords: [],
+                        baseSkillID: nil,
+                        originURL: originURL,
+                        sha256: sha256,
+                        isEnabled: true,
+                        installedAt: Date(),
+                        updatedAt: Date()
+                    )
+                    if let encoded = try? JSONEncoder().encode(meta) {
+                        try? encoded.write(to: hanlinJSONURL)
+                    }
+                }
+
+                // List resources
+                let resources = Self.scanResources(in: skillRoot)
+
+                return StagedSkillPackage(
+                    stagingDirectoryURL: stagingDir,
+                    skillRootDirectoryURL: skillRoot,
+                    skillID: skillID,
+                    parsedMarkdown: parsed,
+                    metadata: meta,
+                    resources: resources,
+                    sha256: sha256,
+                    originURL: originURL
+                )
             }
-
-            // List resources
-            let resources = Self.scanResources(in: skillRoot)
-
-            return StagedSkillPackage(
-                stagingDirectoryURL: stagingDir,
-                skillRootDirectoryURL: skillRoot,
-                skillID: skillID,
-                parsedMarkdown: parsed,
-                metadata: meta,
-                resources: resources,
-                sha256: sha256,
-                originURL: originURL
-            )
+        } catch {
+            try? fileManager.removeItem(at: stagingDir)
+            throw error
         }
     }
 
     // MARK: - Download from HTTPS URL
 
-    public func downloadAndStage(from httpsURL: URL) async throws -> StagedSkillPackage {
+    public func downloadAndStage(from httpsURL: URL, sessionConfiguration: URLSessionConfiguration? = nil) async throws -> StagedSkillPackage {
         guard let scheme = httpsURL.scheme?.lowercased(), scheme == "https" else {
             throw SkillImportError.nonHTTPSURLForbidden
         }
@@ -300,7 +309,8 @@ public final class SkillImporter: @unchecked Sendable {
         var request = URLRequest(url: httpsURL)
         request.httpMethod = "GET"
 
-        let downloader = BoundedStreamDownloader(maxBytes: Self.maxDownloadBytes)
+        let config = sessionConfiguration ?? URLSessionConfiguration.ephemeral
+        let downloader = BoundedStreamDownloader(maxBytes: Self.maxDownloadBytes, sessionConfiguration: config)
         let (data, response) = try await downloader.download(request: request)
 
         let ext: String
@@ -396,8 +406,9 @@ public final class SkillImporter: @unchecked Sendable {
     }
 }
 
-private final class BoundedStreamDownloader: NSObject, URLSessionDataDelegate, @unchecked Sendable {
-    private let maxBytes: Int64
+final class BoundedStreamDownloader: NSObject, URLSessionDataDelegate, @unchecked Sendable {
+    public let maxBytes: Int64
+    private let sessionConfiguration: URLSessionConfiguration
     private var receivedBytes: Int64 = 0
     private var accumulatedData = Data()
     private var continuation: CheckedContinuation<(Data, HTTPURLResponse), Error>?
@@ -405,18 +416,22 @@ private final class BoundedStreamDownloader: NSObject, URLSessionDataDelegate, @
     private let lock = NSLock()
     private var isResumed = false
 
-    init(maxBytes: Int64) {
+    init(maxBytes: Int64 = SkillImporter.maxDownloadBytes, sessionConfiguration: URLSessionConfiguration = .ephemeral) {
         self.maxBytes = maxBytes
+        self.sessionConfiguration = sessionConfiguration
     }
 
     func download(request: URLRequest) async throws -> (Data, HTTPURLResponse) {
-        try await withCheckedThrowingContinuation { cont in
+        guard let scheme = request.url?.scheme?.lowercased(), scheme == "https" else {
+            throw SkillImportError.nonHTTPSURLForbidden
+        }
+
+        return try await withCheckedThrowingContinuation { cont in
             self.lock.lock()
             self.continuation = cont
             self.lock.unlock()
 
-            let config = URLSessionConfiguration.ephemeral
-            let session = URLSession(configuration: config, delegate: self, delegateQueue: nil)
+            let session = URLSession(configuration: self.sessionConfiguration, delegate: self, delegateQueue: nil)
             let task = session.dataTask(with: request)
             task.resume()
         }

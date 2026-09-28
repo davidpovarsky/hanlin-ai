@@ -345,6 +345,23 @@ public final class SkillStore {
         HanlinSkillCatalog.shared.refreshFromStore()
     }
 
+    public func addResourceFile(for skillID: HanlinSkillID, relativePath: String, sourceFileURL: URL) throws {
+        guard let base = directoryURL(for: skillID) else {
+            throw SkillImportError.stagingFailed("Skill '\(skillID.rawValue)' directory not found.")
+        }
+        let clean = relativePath.replacingOccurrences(of: "\\", with: "/").trimmingCharacters(in: CharacterSet(charactersIn: "/ "))
+        guard !clean.isEmpty, !clean.contains(".."), !clean.contains("\0"), !clean.hasPrefix("/") else {
+            throw SkillImportError.stagingFailed("Invalid resource path '\(relativePath)'.")
+        }
+        let fileURL = base.appendingPathComponent(clean)
+        try fileManager.createDirectory(at: fileURL.deletingLastPathComponent(), withIntermediateDirectories: true)
+        if fileManager.fileExists(atPath: fileURL.path) {
+            try fileManager.removeItem(at: fileURL)
+        }
+        try fileManager.copyItem(at: sourceFileURL, to: fileURL)
+        HanlinSkillCatalog.shared.refreshFromStore()
+    }
+
     public func deleteResource(for skillID: HanlinSkillID, relativePath: String) throws {
         guard let url = safeResourceURL(for: skillID, relativePath: relativePath) else {
             throw SkillImportError.stagingFailed("Resource '\(relativePath)' not found.")

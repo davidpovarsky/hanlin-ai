@@ -21,6 +21,10 @@ struct SkillDetailView: View {
     @State private var newResourceContent: String = ""
     @State private var addResourceError: String? = nil
     @State private var binaryMetadataResource: SkillResourceFile?
+    @State private var editingResource: SkillResourceFile? = nil
+    @State private var editingResourceContent: String = ""
+    @State private var editResourceError: String? = nil
+    @State private var showFileImporter: Bool = false
 
     @Environment(\.dismiss) private var dismiss
 
@@ -32,6 +36,7 @@ struct SkillDetailView: View {
             instructionsSection
             preferredToolsSection
             resourcesSection
+            sourceMetadataSection
             actionsSection
         }
         .navigationTitle(descriptor?.title.preferredValue() ?? skillID.rawValue)
@@ -45,11 +50,21 @@ struct SkillDetailView: View {
         .sheet(item: $previewResource) { res in
             resourcePreviewSheet(res)
         }
+        .sheet(item: $editingResource) { res in
+            editResourceSheet(res)
+        }
         .sheet(isPresented: $showAddResource) {
             addResourceSheet
         }
         .sheet(item: $binaryMetadataResource) { res in
             binaryMetadataSheet(res)
+        }
+        .fileImporter(
+            isPresented: $showFileImporter,
+            allowedContentTypes: [.item],
+            allowsMultipleSelection: false
+        ) { result in
+            handleFileImport(result)
         }
         .confirmationDialog(
             SkillL10n.string("Delete Skill"),
@@ -151,16 +166,36 @@ struct SkillDetailView: View {
             Text(SkillL10n.string("Resources"))
             Spacer()
             if isCustomOrImported {
-                Button {
-                    newResourcePath = ""
-                    newResourceContent = ""
-                    addResourceError = nil
-                    showAddResource = true
-                } label: {
-                    Image(systemName: "plus")
-                        .font(.caption)
+                HStack(spacing: 12) {
+                    Button {
+                        showFileImporter = true
+                    } label: {
+                        Image(systemName: "square.and.arrow.down")
+                            .font(.caption)
+                    }
+                    .accessibilityIdentifier("hanlin-skill-detail-import-resource-button")
+
+                    #if targetEnvironment(simulator) || DEBUG
+                    Button {
+                        importFixtureResource()
+                    } label: {
+                        Image(systemName: "doc.badge.plus")
+                            .font(.caption)
+                    }
+                    .accessibilityIdentifier("hanlin-skill-detail-import-fixture-resource-button")
+                    #endif
+
+                    Button {
+                        newResourcePath = ""
+                        newResourceContent = ""
+                        addResourceError = nil
+                        showAddResource = true
+                    } label: {
+                        Image(systemName: "plus")
+                            .font(.caption)
+                    }
+                    .accessibilityIdentifier("hanlin-skill-detail-add-resource-button")
                 }
-                .accessibilityIdentifier("hanlin-skill-detail-add-resource-button")
             }
         }) {
             if resources.isEmpty {
@@ -187,6 +222,15 @@ struct SkillDetailView: View {
                             .buttonStyle(.bordered)
                             .font(.caption)
                             .accessibilityIdentifier("hanlin-skill-detail-view-resource-\(res.relativePath)")
+
+                            if isCustomOrImported {
+                                Button("Edit") {
+                                    startEditingResource(res)
+                                }
+                                .buttonStyle(.bordered)
+                                .font(.caption)
+                                .accessibilityIdentifier("hanlin-skill-detail-edit-resource-\(res.relativePath)")
+                            }
                         } else {
                             Button {
                                 binaryMetadataResource = res
@@ -215,6 +259,31 @@ struct SkillDetailView: View {
                         }
                     }
                 }
+            }
+        }
+    }
+
+    @ViewBuilder
+    private var sourceMetadataSection: some View {
+        if let rec = record, (rec.originURL != nil || rec.sha256 != nil) {
+            Section(header: Text("Package Origin & Integrity")) {
+                if let origin = rec.originURL {
+                    LabeledContent("Origin URL", value: origin)
+                        .accessibilityIdentifier("hanlin-skill-detail-origin-url")
+                }
+                if let sha = rec.sha256 {
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text("SHA-256")
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                        Text(sha)
+                            .font(.system(.caption2, design: .monospaced))
+                            .foregroundColor(.primary)
+                    }
+                    .accessibilityIdentifier("hanlin-skill-detail-sha256")
+                }
+                LabeledContent("Installed", value: rec.installedAt.formatted(date: .abbreviated, time: .shortened))
+                LabeledContent("Updated", value: rec.updatedAt.formatted(date: .abbreviated, time: .shortened))
             }
         }
     }
@@ -417,6 +486,94 @@ struct SkillDetailView: View {
                     }
                 }
             }
+        }
+    }
+
+    private func editResourceSheet(_ res: SkillResourceFile) -> some View {
+        NavigationStack {
+            Form {
+                if let err = editResourceError {
+                    Section {
+                        Text(err)
+                            .foregroundColor(.red)
+                            .font(.footnote)
+                    }
+                }
+
+                Section(header: Text(res.relativePath)) {
+                    TextEditor(text: $editingResourceContent)
+                        .frame(minHeight: 220)
+                        .font(.system(.body, design: .monospaced))
+                        .accessibilityIdentifier("hanlin-skill-detail-edit-resource-content")
+                }
+            }
+            .navigationTitle("Edit Resource")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button("Cancel") {
+                        editingResource = nil
+                    }
+                    .accessibilityIdentifier("hanlin-skill-detail-edit-resource-cancel")
+                }
+                ToolbarItem(placement: .confirmationAction) {
+                    Button("Save") {
+                        saveEditedResource(res)
+                    }
+                    .bold()
+                    .accessibilityIdentifier("hanlin-skill-detail-save-edit-resource-button")
+                }
+            }
+        }
+    }
+
+    private func startEditingResource(_ res: SkillResourceFile) {
+        if let url = SkillStore.shared.safeResourceURL(for: skillID, relativePath: res.relativePath),
+           let content = try? String(contentsOf: url, encoding: .utf8) {
+            editingResourceContent = content
+        } else {
+            editingResourceContent = ""
+        }
+        editResourceError = nil
+        editingResource = res
+    }
+
+    private func saveEditedResource(_ res: SkillResourceFile) {
+        do {
+            try SkillStore.shared.addOrUpdateTextResource(for: skillID, relativePath: res.relativePath, content: editingResourceContent)
+            editingResource = nil
+            loadSkillData()
+        } catch {
+            editResourceError = error.localizedDescription
+        }
+    }
+
+    private func importFixtureResource() {
+        let fixturePath = "references/fixture.txt"
+        let fixtureContent = "Deterministic fixture resource content for UI acceptance."
+        do {
+            try SkillStore.shared.addOrUpdateTextResource(for: skillID, relativePath: fixturePath, content: fixtureContent)
+            loadSkillData()
+        } catch {
+            print("Failed to import fixture resource: \(error)")
+        }
+    }
+
+    private func handleFileImport(_ result: Result<[URL], Error>) {
+        switch result {
+        case .success(let urls):
+            guard let fileURL = urls.first else { return }
+            let accessed = fileURL.startAccessingSecurityScopedResource()
+            defer { if accessed { fileURL.stopAccessingSecurityScopedResource() } }
+            let relative = "references/\(fileURL.lastPathComponent)"
+            do {
+                try SkillStore.shared.addResourceFile(for: skillID, relativePath: relative, sourceFileURL: fileURL)
+                loadSkillData()
+            } catch {
+                print("Failed to import resource file: \(error)")
+            }
+        case .failure(let error):
+            print("File import failed: \(error)")
         }
     }
 

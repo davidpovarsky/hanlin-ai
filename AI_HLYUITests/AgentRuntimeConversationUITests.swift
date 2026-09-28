@@ -79,6 +79,14 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         app.launchEnvironment["HANLIN_AGENT_RUNTIME_UI_ACCEPTANCE"] = "1"
         app.launch()
 
+        // 1. Initial State: Python runtime is OFF in Runtime Center
+        openRuntimeCenter(in: app)
+        let initialPythonToggle = toggleSwitch(for: "localPython", in: app)
+        if !initialPythonToggle.waitForExistence(timeout: 5) { app.swipeUp() }
+        XCTAssertTrue(initialPythonToggle.waitForExistence(timeout: 10), "Python toggle card was missing in Runtime Center")
+        XCTAssertFalse(isToggleOn(initialPythonToggle), "Python toggle should initially be OFF on fresh process")
+
+        // 2. Open Chat and send prompt
         openChat(in: app)
         let input = app.textFields["hanlin-chat-input"].firstMatch
         if !input.waitForExistence(timeout: 5) {
@@ -90,16 +98,31 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         }
         XCTAssertTrue(input.waitForExistence(timeout: 20), "The real chat input did not appear.")
         input.tap()
-        input.typeText("Execute Python code to compute 123 * 456.")
+        input.typeText("Use Python to calculate 6*7 and tell me the result.")
 
         let send = app.buttons["hanlin-chat-send"].firstMatch
         XCTAssertTrue(send.waitForExistence(timeout: 10))
         send.tap()
 
+        // 3. Final answer renders in the same user turn without extra user nudge
         let finalAnswer = app.staticTexts.matching(
-            NSPredicate(format: "label CONTAINS 'AGENT_UI_ACCEPTANCE_COMPLETE'")
+            NSPredicate(format: "label CONTAINS 'LOCAL_PYTHON_COMPLETE'")
         ).firstMatch
-        XCTAssertTrue(finalAnswer.waitForExistence(timeout: 45), "Final answer was not rendered in the same user turn.")
+        XCTAssertTrue(finalAnswer.waitForExistence(timeout: 45), "Final answer LOCAL_PYTHON_COMPLETE was not rendered in the same user turn.")
+        XCTAssertTrue(finalAnswer.label.contains("42"), "Calculated result 42 was not rendered.")
+
+        // Verify tool activity is present and no remote python was invoked
+        let remoteActivity = app.staticTexts.matching(NSPredicate(format: "label CONTAINS 'execute_remote_python_code'")).firstMatch
+        XCTAssertFalse(remoteActivity.exists, "Remote Python must not be invoked when local python is supported")
+
+        // 4. Runtime Center reactively shows Python toggle ON after execution
+        openRuntimeCenter(in: app)
+        let postPythonToggle = toggleSwitch(for: "localPython", in: app)
+        if !postPythonToggle.waitForExistence(timeout: 5) { app.swipeUp() }
+        XCTAssertTrue(
+            waitForToggle(postPythonToggle, toBe: true, timeout: 20),
+            "Python runtime should auto-start on agent execution and Runtime Center must show Python ON"
+        )
     }
 
     func testStopThenNewMessageHasNoGhostOldRun() throws {
@@ -120,24 +143,35 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         }
         XCTAssertTrue(input.waitForExistence(timeout: 20), "The real chat input did not appear.")
         input.tap()
-        input.typeText("First message to cancel.")
+        input.typeText("START_DELAYED_RUN_A")
 
         let send = app.buttons["hanlin-chat-send"].firstMatch
         XCTAssertTrue(send.waitForExistence(timeout: 10))
         send.tap()
 
+        // 1. Assert stop button appears while Run A is delayed and tap Stop
         let stopButton = app.buttons["hanlin-chat-stop"].firstMatch
-        if stopButton.waitForExistence(timeout: 3) && stopButton.isHittable {
-            stopButton.tap()
-        }
+        XCTAssertTrue(stopButton.waitForExistence(timeout: 10), "Stop button did not appear during delayed run A")
+        stopButton.tap()
 
-        if input.waitForExistence(timeout: 5) {
-            input.tap()
-            input.typeText("Second message after stop.")
-            if send.waitForExistence(timeout: 5) && send.isHittable {
-                send.tap()
-            }
-        }
+        // 2. Input becomes available again for Run B
+        XCTAssertTrue(input.waitForExistence(timeout: 10), "Input field did not become ready after stopping run A")
+        input.tap()
+        input.typeText("START_RUN_B")
+        XCTAssertTrue(send.waitForExistence(timeout: 5))
+        send.tap()
+
+        // 3. Run B finishes cleanly
+        let runBAnswer = app.staticTexts.matching(
+            NSPredicate(format: "label CONTAINS 'RUN_B_COMPLETE'")
+        ).firstMatch
+        XCTAssertTrue(runBAnswer.waitForExistence(timeout: 30), "Run B did not complete with RUN_B_COMPLETE")
+
+        // 4. Wait past Run A delay and assert no ghost text appeared from Run A
+        let runAAnswer = app.staticTexts.matching(
+            NSPredicate(format: "label CONTAINS 'RUN_A_DELAYED_COMPLETE'")
+        ).firstMatch
+        XCTAssertFalse(runAAnswer.exists, "Run A ghost answer should not appear after being cancelled")
     }
 
     // MARK: - Navigation & Toggle Helpers

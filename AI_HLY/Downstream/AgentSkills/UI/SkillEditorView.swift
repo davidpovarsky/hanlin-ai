@@ -122,8 +122,29 @@ struct SkillEditorView: View {
         return nil
     }
 
+    static func validatePreferredToolAliases(_ aliasesString: String, against availableAliases: Set<String>) -> [String] {
+        let tools = aliasesString
+            .split(separator: ",")
+            .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
+            .filter { !$0.isEmpty }
+        return tools.filter { !availableAliases.contains($0) }
+    }
+
+    private var unknownToolAliases: [String] {
+        let availableNames = Set(availableCanonicalTools.map(\.name))
+        return Self.validatePreferredToolAliases(preferredToolsText, against: availableNames)
+    }
+
+    private var toolValidationError: String? {
+        let unknown = unknownToolAliases
+        if !unknown.isEmpty {
+            return "Unknown canonical tool(s): \(unknown.joined(separator: ", ")). Please select or enter valid canonical tools."
+        }
+        return nil
+    }
+
     private var isFormValid: Bool {
-        idValidationError == nil && titleValidationError == nil
+        idValidationError == nil && titleValidationError == nil && toolValidationError == nil
     }
 
     var body: some View {
@@ -220,6 +241,12 @@ struct SkillEditorView: View {
                             .onChange(of: preferredToolsText) { _, newText in
                                 syncToolsFromText(newText)
                             }
+                        if let err = toolValidationError {
+                            Text(err)
+                                .foregroundColor(.red)
+                                .font(.caption)
+                                .accessibilityIdentifier("hanlin-skill-editor-tools-error")
+                        }
                     }
                 }
 
@@ -279,6 +306,10 @@ struct SkillEditorView: View {
 
     private func save() {
         errorMessage = nil
+        if let err = toolValidationError {
+            errorMessage = err
+            return
+        }
         let trimmedID = rawID.trimmingCharacters(in: .whitespacesAndNewlines)
         guard let skillID = try? HanlinSkillID(validating: trimmedID) else {
             errorMessage = "Invalid Skill ID '\(trimmedID)'. Use lowercase alphanumeric, dashes or underscores."

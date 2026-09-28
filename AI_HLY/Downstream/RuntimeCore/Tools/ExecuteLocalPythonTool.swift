@@ -47,6 +47,7 @@ struct ExecuteLocalPythonTool: NativeTool {
                 environment: environment,
                 limits: try RuntimeToolSupport.limits(arguments)
             )
+            RuntimeAvailabilityStore.shared.setAvailable(true, for: .localPython)
             return RuntimeToolSupport.result(
                 result,
                 title: "Local Python",

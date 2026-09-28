@@ -76,16 +76,92 @@ private final class ScriptedAgentURLProtocol: URLProtocol, @unchecked Sendable {
         }
         return data
     }
+private final class ControllableDelayedTool: NativeTool, @unchecked Sendable {
+    let name = "controllable_delayed_tool"
+    private static let lock = NSLock()
+    private nonisolated(unsafe) static var toolStartedContinuation: CheckedContinuation<Void, Never>?
+    private nonisolated(unsafe) static var gateContinuation: CheckedContinuation<Void, Never>?
+
+    static func reset() {
+        lock.lock()
+        defer { lock.unlock() }
+        toolStartedContinuation = nil
+        gateContinuation = nil
+    }
+
+    static func waitForToolStarted() async {
+        await withCheckedContinuation { cont in
+            lock.lock()
+            toolStartedContinuation = cont
+            lock.unlock()
+        }
+    }
+
+    static func releaseGate() {
+        lock.lock()
+        let cont = gateContinuation
+        gateContinuation = nil
+        lock.unlock()
+        cont?.resume()
+    }
+
+    var catalogEntry: NativeToolCatalogEntry {
+        .init(
+            name: name,
+            title: "Controllable Delayed Tool",
+            summary: "Gate-controlled delay for acceptance testing",
+            categories: ["test"],
+            keywords: ["delayed"],
+            examples: [],
+            systemImage: "clock",
+            presentationProfile: .generic(toolName: name)
+        )
+    }
+
+    func openAIToolSchema() -> [String: Any] {
+        NativeToolSchema.function(
+            name: name,
+            description: "A tool that waits on a gate before completing.",
+            parameters: NativeToolSchema.object(properties: [:])
+        )
+    }
+
+    func execute(argumentsJSON: String, context: NativeToolExecutionContext) async -> NativeToolResult {
+        Self.lock.lock()
+        let started = Self.toolStartedContinuation
+        Self.toolStartedContinuation = nil
+        Self.lock.unlock()
+        started?.resume()
+
+        await withCheckedContinuation { cont in
+            Self.lock.lock()
+            Self.gateContinuation = cont
+            Self.lock.unlock()
+        }
+
+        return NativeToolResult(
+            callID: context.callID,
+            toolName: name,
+            resultForModel: "delayed_tool_finished",
+            resultForUser: "Delayed tool finished",
+            title: "Delayed Tool",
+            systemImage: "clock",
+            semanticOutcome: .succeeded
+        )
+    }
 }
 
 @MainActor
 @Suite("Deterministic Agent Runtime Conversation Acceptance", .serialized)
 struct AgentRuntimeConversationAcceptanceTests {
+    private nonisolated(unsafe) static var lastRunDiagnostics: AgentDiagnosticsSession?
+
     private struct ConversationResult {
         var answer: String
         var events: [AgentEvent]
         var requests: [Data]
         var diagnostics: AgentDiagnosticsSession
+        var localPythonAvailableAfterExecution: Bool?
     }
 
     @Test("Conversation A runs the complete runtime chain through the production loop")
@@ -204,91 +280,272 @@ struct AgentRuntimeConversationAcceptanceTests {
         let result = try await runConversation(
             responses: [
                 toolCall("call-load-code", "load_skill", ["skill_id": "code"]),
-                toolCall("call-exec-python", "execute_local_python_code", ["source": "print(123 * 456)"]),
-                finalAnswer("Calculated result: 56088.")
-            ]
+                toolCall("call-exec-python", "execute_local_python_code", ["source": "print(6 * 7)"]),
+                finalAnswer("42 / LOCAL_PYTHON_COMPLETE")
+            ],
+            overrideRuntimes: [.localPython: false]
         )
 
-        #expect(result.answer.contains("56088"))
+        // Assert round 0 request body does NOT contain execute_local_python_code
+        let round0Body = String(decoding: result.requests[0], as: UTF8.self)
+        #expect(!round0Body.contains("execute_local_python_code"))
+        #expect(!round0Body.contains("execute_remote_python_code"))
+
+        // Round 1 request body DOES contain execute_local_python_code (and not execute_remote_python_code)
+        #expect(result.requests.count >= 2)
+        let round1Body = String(decoding: result.requests[1], as: UTF8.self)
+        #expect(round1Body.contains("execute_local_python_code"))
+        #expect(!round1Body.contains("execute_remote_python_code"))
+
+        // Round 2 request body contains tool result 42 with matching call id
+        #expect(result.requests.count >= 3)
+        let round2Body = String(decoding: result.requests[2], as: UTF8.self)
+        #expect(round2Body.contains("42"))
+        #expect(round2Body.contains("call-exec-python"))
+
+        // Assert runtime became available after execution
+        #expect(result.localPythonAvailableAfterExecution == true)
+
+        #expect(result.answer.contains("42") && result.answer.contains("LOCAL_PYTHON_COMPLETE"))
         #expect(result.diagnostics.status == "completed")
         #expect(result.diagnostics.efficiency.failedToolCount == 0)
         #expect(result.diagnostics.efficiency.succeededToolCount == 2)
-
-        // Verify that round 2 advertised execute_local_python_code and not execute_remote_python_code
-        if result.requests.count >= 2 {
-            let round2Body = String(decoding: result.requests[1], as: UTF8.self)
-            #expect(round2Body.contains("execute_local_python_code"))
-            #expect(!round2Body.contains("execute_remote_python_code"))
-        }
     }
 
     @Test("Production tool failure renders error card and recovers in same turn")
     func productionToolFailureRecoversAndAnswersSameTurn() async throws {
         let result = try await runConversation(
             responses: [
-                toolCall("call-bad-shell", "execute_shell_command", ["program": "not_an_approved_program_binary", "arguments": []]),
-                finalAnswer("Recovered from tool failure.")
+                toolCall("call-load-code", "load_skill", ["skill_id": "code"]),
+                toolCall("call-invalid-1", "execute_shell_command", ["program": "not_an_approved_program_binary", "arguments": []]),
+                toolCall("call-valid-2", "execute_local_python_code", ["source": "print(40 + 2)"]),
+                finalAnswer("TOOL_RECOVERY_COMPLETE")
             ]
         )
 
-        #expect(result.answer.contains("Recovered from tool failure."))
+        #expect(result.answer.contains("TOOL_RECOVERY_COMPLETE"))
         #expect(result.diagnostics.status == "completed")
         #expect(result.diagnostics.efficiency.failedToolCount == 1)
+        #expect(result.diagnostics.efficiency.succeededToolCount == 2)
 
         let calls = result.diagnostics.rounds.flatMap(\.toolCalls)
-        #expect(calls.count == 1)
-        #expect(calls.first?.resultPresentationSuppressed == false)
+        #expect(calls.count == 3)
+        #expect(calls[0].name == "load_skill" && calls[0].outcome == NativeToolExecutionOutcome.succeeded.rawValue)
+        #expect(calls[1].id == "call-invalid-1")
+        #expect(calls[1].resultPresentationSuppressed == false)
+        #expect(calls[1].outcome != NativeToolExecutionOutcome.succeeded.rawValue)
+        #expect(calls[2].id == "call-valid-2" && calls[2].outcome == NativeToolExecutionOutcome.succeeded.rawValue)
+
+        // Verify request 2 (continuation after invalid call) contains error info
+        #expect(result.requests.count >= 4)
+        let req2Text = String(decoding: result.requests[2], as: UTF8.self)
+        #expect(req2Text.contains("call-invalid-1"))
+
+        // Verify request 3 (continuation after valid call) contains 42 and call-valid-2
+        let req3Text = String(decoding: result.requests[3], as: UTF8.self)
+        #expect(req3Text.contains("42"))
+        #expect(req3Text.contains("call-valid-2"))
     }
 
     @Test("Cancellation during agent run cancels coordinator and marks run cancelled")
     func cancelDuringAgentWorkStopsAllLaterToolExecution() async throws {
-        let runID = UUID()
-        let recorder = try #require(await AgentDiagnosticsRecorder.start(
-            runID: runID,
-            groupID: UUID(),
-            providerID: "TEST",
-            modelID: "test"
-        ))
-        await AgentRunLifecycleCoordinator.shared.beginRun(runID: runID, recorder: recorder)
-        #expect(AgentRunLifecycleCoordinator.shared.isCurrentRun(runID))
+        ControllableDelayedTool.reset()
+        let delayedTool = ControllableDelayedTool()
+        NativeToolCatalog.shared.register(delayedTool)
+        if let entry = NativeToolCatalog.shared.entry(named: delayedTool.name) {
+            NativeToolCatalog.shared.setEnabled(true, for: entry)
+        }
 
-        await AgentRunLifecycleCoordinator.shared.cancelRun(runID: runID)
-        #expect(!AgentRunLifecycleCoordinator.shared.isCurrentRun(runID))
+        ScriptedAgentURLProtocol.configure(responses: [
+            toolCall("del-1", "controllable_delayed_tool", [:]),
+            finalAnswer("LATE_ANSWER_SHOULD_NOT_APPEAR")
+        ])
+        let configuration = URLSessionConfiguration.ephemeral
+        configuration.protocolClasses = [ScriptedAgentURLProtocol.self]
 
-        let snapshot = await recorder.session
+        let container = try makeContainer()
+        let context = container.mainContext
+        context.insert(AllModels(name: "acceptance-model", displayName: "Acceptance Model", position: 0, company: "ACCEPTANCE", supportsTextGen: true, supportsToolUse: true))
+        context.insert(APIKeys(name: "Acceptance", company: "ACCEPTANCE", key: "acceptance-fixture-key", requestURL: "https://agent.acceptance/v1/chat/completions", apiType: .openAI))
+        try context.save()
+
+        let session = AssistantCapabilitySession()
+        session.exposeTools(aliases: [delayedTool.name])
+
+        let manager = APIManager(
+            context: context,
+            chatEngineFactory: { HanlinChatEngine(sessionConfiguration: configuration) }
+        )
+
+        let runTask = Task { @MainActor () -> (String, [AgentEvent], Error?) in
+            var text = ""
+            var evts: [AgentEvent] = []
+            do {
+                let stream = try await manager.sendStreamRequest(
+                    messages: [RequestMessage(role: "user", text: "Run delayed tool.", modelName: "acceptance-model", modelDisplayName: "Acceptance Model")],
+                    modelName: "acceptance-model",
+                    groupID: UUID(),
+                    runID: UUID(),
+                    ifSearch: false,
+                    ifKnowledge: false,
+                    ifToolUse: true,
+                    assistantToolScope: .nativeOnly,
+                    ifThink: false,
+                    ifAudio: false,
+                    ifPlanning: false,
+                    thinkingLength: 0,
+                    isObservation: false,
+                    temperature: 0,
+                    topP: 1,
+                    maxTokens: 1024,
+                    canvasData: CanvasData(),
+                    capabilitySession: session
+                )
+                for try await item in stream {
+                    text += item.content ?? ""
+                    evts.append(contentsOf: item.agentEvents)
+                }
+                return (text, evts, nil)
+            } catch {
+                return (text, evts, error)
+            }
+        }
+
+        // Wait until tool starts executing
+        await ControllableDelayedTool.waitForToolStarted()
+
+        // Cancel the current request while tool is mid-execution!
+        manager.cancelCurrentRequest()
+
+        // Release gate after cancellation
+        ControllableDelayedTool.releaseGate()
+
+        let (text, _, _) = await runTask.value
+
+        // Assert NO late text arrived from finalAnswer
+        #expect(!text.contains("LATE_ANSWER_SHOULD_NOT_APPEAR"))
+
+        let snapshot = try #require(await manager.diagnosticsSnapshot())
         #expect(snapshot.status == "cancelled")
         #expect(snapshot.isComplete)
     }
 
     @Test("Starting a new run cancels old run without ghost work")
     func startingNewRunCancelsOldRunWithoutGhostWork() async throws {
-        let runID1 = UUID()
-        let recorder1 = try #require(await AgentDiagnosticsRecorder.start(
-            runID: runID1,
+        ControllableDelayedTool.reset()
+        let delayedTool = ControllableDelayedTool()
+        NativeToolCatalog.shared.register(delayedTool)
+        if let entry = NativeToolCatalog.shared.entry(named: delayedTool.name) {
+            NativeToolCatalog.shared.setEnabled(true, for: entry)
+        }
+
+        ScriptedAgentURLProtocol.configure(responses: [
+            toolCall("del-run-a", "controllable_delayed_tool", [:]),
+            finalAnswer("RUN_A_LATE_TEXT")
+        ])
+        let configuration = URLSessionConfiguration.ephemeral
+        configuration.protocolClasses = [ScriptedAgentURLProtocol.self]
+
+        let container = try makeContainer()
+        let context = container.mainContext
+        context.insert(AllModels(name: "acceptance-model", displayName: "Acceptance Model", position: 0, company: "ACCEPTANCE", supportsTextGen: true, supportsToolUse: true))
+        context.insert(APIKeys(name: "Acceptance", company: "ACCEPTANCE", key: "acceptance-fixture-key", requestURL: "https://agent.acceptance/v1/chat/completions", apiType: .openAI))
+        try context.save()
+
+        let sessionA = AssistantCapabilitySession()
+        sessionA.exposeTools(aliases: [delayedTool.name])
+
+        let manager = APIManager(
+            context: context,
+            chatEngineFactory: { HanlinChatEngine(sessionConfiguration: configuration) }
+        )
+
+        let runAID = UUID()
+        let runATask = Task { @MainActor () -> (String, Error?) in
+            var text = ""
+            do {
+                let stream = try await manager.sendStreamRequest(
+                    messages: [RequestMessage(role: "user", text: "Start Run A", modelName: "acceptance-model", modelDisplayName: "Acceptance Model")],
+                    modelName: "acceptance-model",
+                    groupID: UUID(),
+                    runID: runAID,
+                    ifSearch: false,
+                    ifKnowledge: false,
+                    ifToolUse: true,
+                    assistantToolScope: .nativeOnly,
+                    ifThink: false,
+                    ifAudio: false,
+                    ifPlanning: false,
+                    thinkingLength: 0,
+                    isObservation: false,
+                    temperature: 0,
+                    topP: 1,
+                    maxTokens: 1024,
+                    canvasData: CanvasData(),
+                    capabilitySession: sessionA
+                )
+                for try await item in stream {
+                    text += item.content ?? ""
+                }
+                return (text, nil)
+            } catch {
+                return (text, error)
+            }
+        }
+
+        // Wait until Run A's tool starts executing
+        await ControllableDelayedTool.waitForToolStarted()
+        #expect(AgentRunLifecycleCoordinator.shared.isCurrentRun(runAID))
+
+        // Before A finishes, configure Run B responses and start Run B on the SAME APIManager!
+        ScriptedAgentURLProtocol.configure(responses: [
+            toolCall("run-b-calc", "quick_calculate", ["expression": "6 * 7"]),
+            finalAnswer("RUN_B_COMPLETE")
+        ])
+
+        let runBID = UUID()
+        let sessionB = AssistantCapabilitySession()
+        var runBText = ""
+        let streamB = try await manager.sendStreamRequest(
+            messages: [RequestMessage(role: "user", text: "Start Run B", modelName: "acceptance-model", modelDisplayName: "Acceptance Model")],
+            modelName: "acceptance-model",
             groupID: UUID(),
-            providerID: "TEST",
-            modelID: "test"
-        ))
-        await AgentRunLifecycleCoordinator.shared.beginRun(runID: runID1, recorder: recorder1)
-        #expect(AgentRunLifecycleCoordinator.shared.isCurrentRun(runID1))
+            runID: runBID,
+            ifSearch: false,
+            ifKnowledge: false,
+            ifToolUse: true,
+            assistantToolScope: .nativeOnly,
+            ifThink: false,
+            ifAudio: false,
+            ifPlanning: false,
+            thinkingLength: 0,
+            isObservation: false,
+            temperature: 0,
+            topP: 1,
+            maxTokens: 1024,
+            canvasData: CanvasData(),
+            capabilitySession: sessionB
+        )
+        for try await item in streamB {
+            runBText += item.content ?? ""
+        }
 
-        let runID2 = UUID()
-        let recorder2 = try #require(await AgentDiagnosticsRecorder.start(
-            runID: runID2,
-            groupID: UUID(),
-            providerID: "TEST",
-            modelID: "test"
-        ))
-        await AgentRunLifecycleCoordinator.shared.beginRun(runID: runID2, recorder: recorder2)
+        // Run B completed!
+        #expect(runBText.contains("RUN_B_COMPLETE"))
+        #expect(!AgentRunLifecycleCoordinator.shared.isCurrentRun(runAID))
 
-        #expect(!AgentRunLifecycleCoordinator.shared.isCurrentRun(runID1))
-        #expect(AgentRunLifecycleCoordinator.shared.isCurrentRun(runID2))
+        // Release Run A's delayed tool gate
+        ControllableDelayedTool.releaseGate()
+        let (runAText, _) = await runATask.value
 
-        let snapshot1 = await recorder1.session
-        #expect(snapshot1.status == "cancelled")
+        // Assert Run A was cancelled and its text was NOT part of Run B
+        #expect(!runBText.contains("RUN_A_LATE_TEXT"))
+        #expect(!runAText.contains("RUN_A_LATE_TEXT"))
 
-        AgentRunLifecycleCoordinator.shared.finishRun(runID: runID2)
-        #expect(!AgentRunLifecycleCoordinator.shared.isCurrentRun(runID2))
+        let diagB = try #require(await manager.diagnosticsSnapshot())
+        #expect(diagB.status == "completed")
+        #expect(diagB.isComplete)
+        #expect(diagB.efficiency.toolCallCount == 1) // only Run B's quick_calculate, no ghost calls
     }
 
     @Test("Terminal diagnostics are immutable and reject late mutations across all mutation methods")
@@ -331,8 +588,11 @@ struct AgentRuntimeConversationAcceptanceTests {
 
         let snapshot2 = await recorder.session
         #expect(snapshot2.isComplete)
-        #expect(snapshot2.status == "completed")
-        #expect(snapshot2.rounds.count == 1)
+        #expect(snapshot2.status == snapshot1.status)
+        #expect(snapshot2.completedAt == snapshot1.completedAt)
+        #expect(snapshot2.rounds.count == snapshot1.rounds.count)
+        #expect(snapshot2.efficiency.toolCallCount == snapshot1.efficiency.toolCallCount)
+        #expect(snapshot2.efficiency.failedToolCount == snapshot1.efficiency.failedToolCount)
         #expect(snapshot2.rounds[0].response.visibleContent == nil)
         #expect(snapshot2.rounds[0].toolCalls.isEmpty)
         #expect(snapshot2.lastUpdatedAt == snapshot1.completedAt)
@@ -341,8 +601,13 @@ struct AgentRuntimeConversationAcceptanceTests {
     @Test("Unexpected SDK stream end without terminal event marks diagnostics as failed and throws error")
     func unexpectedSDKStreamEndIsFailureNotCompleted() async throws {
         let unclosedSSE = "data: {\"choices\":[{\"delta\":{\"content\":\"partial answer\"}}]}\n\n"
-        await #expect(throws: Error.self) {
+        do {
             _ = try await runConversation(responses: [unclosedSSE])
+            Issue.record("Expected stream failure from unexpected unclosed SSE")
+        } catch {
+            let diagnostics = try #require(Self.lastRunDiagnostics)
+            #expect(diagnostics.status == "failed")
+            #expect(diagnostics.isComplete)
         }
     }
 
@@ -350,17 +615,20 @@ struct AgentRuntimeConversationAcceptanceTests {
     func roundOrderUsesExactSDKStepNumbers() async throws {
         let result = try await runConversation(
             responses: [
-                toolCall("step-0-call", "quick_calculate", ["expression": "2 + 2"]),
+                toolCall("step-0-call", "load_skill", ["skill_id": "code"]),
+                toolCall("step-1-call", "execute_local_python_code", ["source": "print(2 + 2)"]),
                 finalAnswer("Answer is 4.")
             ]
         )
 
         let rounds = result.diagnostics.rounds
-        #expect(rounds.count == 2)
+        #expect(rounds.count == 3)
         #expect(rounds[0].index == 0)
         #expect(rounds[0].trigger == "initialUserRequest")
         #expect(rounds[1].index == 1)
         #expect(rounds[1].trigger == "continueAfterToolResult")
+        #expect(rounds[2].index == 2)
+        #expect(rounds[2].trigger == "continueAfterToolResult")
     }
 
     @Test("Diagnostics capture actual continuation request body and headers")
@@ -380,11 +648,16 @@ struct AgentRuntimeConversationAcceptanceTests {
         #expect(rounds[1].request.contentHash.count == 64)
         if result.requests.count >= 2 {
             let req2Text = String(decoding: result.requests[1], as: UTF8.self)
-            #expect(req2Text.contains("100") || req2Text.contains("calc-1"))
+            #expect(req2Text.contains("100"))
+            #expect(req2Text.contains("calc-1"))
+            #expect(!req2Text.contains("acceptance-fixture-key"))
         }
     }
 
-    private func runConversation(responses: [String]) async throws -> ConversationResult {
+    private func runConversation(
+        responses: [String],
+        overrideRuntimes: [RuntimeKind: Bool]? = nil
+    ) async throws -> ConversationResult {
         ScriptedAgentURLProtocol.configure(responses: responses)
         let configuration = URLSessionConfiguration.ephemeral
         configuration.protocolClasses = [ScriptedAgentURLProtocol.self]
@@ -411,13 +684,20 @@ struct AgentRuntimeConversationAcceptanceTests {
         let availability = RuntimeAvailabilityStore.shared
         let runtimeKinds: [RuntimeKind] = [.localPython, .javaScriptCore, .node, .typeScript, .shell]
         let originalAvailability = Dictionary(uniqueKeysWithValues: runtimeKinds.map { ($0, availability.isAvailable($0)) })
-        for kind in runtimeKinds { availability.setAvailable(true, for: kind) }
+        for kind in runtimeKinds {
+            if let custom = overrideRuntimes?[kind] {
+                availability.setAvailable(custom, for: kind)
+            } else {
+                availability.setAvailable(true, for: kind)
+            }
+        }
 
         let catalog = NativeToolCatalog.shared
         catalog.ensureBuiltinsRegistered()
         let shellEntry = try #require(catalog.entry(named: "execute_shell_command"))
         let shellWasEnabled = catalog.isEnabled(shellEntry)
         catalog.setEnabled(true, for: shellEntry)
+        var capturedPythonAvailable: Bool?
         defer {
             catalog.setEnabled(shellWasEnabled, for: shellEntry)
             for kind in runtimeKinds {
@@ -429,49 +709,57 @@ struct AgentRuntimeConversationAcceptanceTests {
             context: context,
             chatEngineFactory: { HanlinChatEngine(sessionConfiguration: configuration) }
         )
-        let stream = try await manager.sendStreamRequest(
-            messages: [RequestMessage(
-                role: "user",
-                text: "Run the deterministic runtime acceptance conversation.",
+        do {
+            let stream = try await manager.sendStreamRequest(
+                messages: [RequestMessage(
+                    role: "user",
+                    text: "Run the deterministic runtime acceptance conversation.",
+                    modelName: "acceptance-model",
+                    modelDisplayName: "Acceptance Model"
+                )],
                 modelName: "acceptance-model",
-                modelDisplayName: "Acceptance Model"
-            )],
-            modelName: "acceptance-model",
-            groupID: UUID(),
-            runID: UUID(),
-            ifSearch: false,
-            ifKnowledge: false,
-            ifToolUse: true,
-            assistantToolScope: .nativeOnly,
-            ifThink: false,
-            ifAudio: false,
-            ifPlanning: false,
-            thinkingLength: 0,
-            isObservation: false,
-            temperature: 0,
-            topP: 1,
-            maxTokens: 1_024,
-            canvasData: CanvasData(),
-            selectedURLs: nil,
-            selectedPromptsContent: nil,
-            systemMessage: "Deterministic acceptance fixture.",
-            selectedImageSize: "1024x1024",
-            imageReversePrompt: ""
-        )
+                groupID: UUID(),
+                runID: UUID(),
+                ifSearch: false,
+                ifKnowledge: false,
+                ifToolUse: true,
+                assistantToolScope: .nativeOnly,
+                ifThink: false,
+                ifAudio: false,
+                ifPlanning: false,
+                thinkingLength: 0,
+                isObservation: false,
+                temperature: 0,
+                topP: 1,
+                maxTokens: 1_024,
+                canvasData: CanvasData(),
+                selectedURLs: nil,
+                selectedPromptsContent: nil,
+                systemMessage: "Deterministic acceptance fixture.",
+                selectedImageSize: "1024x1024",
+                imageReversePrompt: ""
+            )
 
-        var answer = ""
-        var events: [AgentEvent] = []
-        for try await item in stream {
-            answer += item.content ?? ""
-            events.append(contentsOf: item.agentEvents)
+            var answer = ""
+            var events: [AgentEvent] = []
+            for try await item in stream {
+                answer += item.content ?? ""
+                events.append(contentsOf: item.agentEvents)
+            }
+            capturedPythonAvailable = availability.isAvailable(.localPython)
+            let diagnostics = try #require(await manager.diagnosticsSnapshot())
+            Self.lastRunDiagnostics = diagnostics
+            return ConversationResult(
+                answer: answer,
+                events: events,
+                requests: ScriptedAgentURLProtocol.bodies(),
+                diagnostics: diagnostics,
+                localPythonAvailableAfterExecution: capturedPythonAvailable
+            )
+        } catch {
+            Self.lastRunDiagnostics = await manager.diagnosticsSnapshot()
+            throw error
         }
-        let diagnostics = try #require(await manager.diagnosticsSnapshot())
-        return ConversationResult(
-            answer: answer,
-            events: events,
-            requests: ScriptedAgentURLProtocol.bodies(),
-            diagnostics: diagnostics
-        )
     }
 
     private func makeContainer() throws -> ModelContainer {
