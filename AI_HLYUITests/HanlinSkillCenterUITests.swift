@@ -376,18 +376,17 @@ final class HanlinSkillCenterUITests: XCTestCase {
         XCTAssertTrue(deleteResBtn.waitForExistence(timeout: 5), "Delete resource button not found")
         tapElement(deleteResBtn)
         let confirm = app.buttons["Delete"].firstMatch
-        XCTAssertTrue(confirm.waitForExistence(timeout: 3), "Delete resource confirm button not found")
+        XCTAssertTrue(confirm.waitForExistence(timeout: 5), "Delete resource confirm button not found")
         tapElement(confirm)
+        XCTAssertFalse(deleteResBtn.waitForExistence(timeout: 5), "Resource should be deleted")
 
         // Clean up skill
         let deleteSkill = app.buttons["hanlin-skill-detail-delete-button"].firstMatch
-        if deleteSkill.waitForExistence(timeout: 5) {
-            tapElement(deleteSkill)
-            let confirmDelete = app.buttons["Delete"].firstMatch
-            if confirmDelete.waitForExistence(timeout: 3) {
-                tapElement(confirmDelete)
-            }
-        }
+        XCTAssertTrue(deleteSkill.waitForExistence(timeout: 5), "Delete skill button not found")
+        tapElement(deleteSkill)
+        let confirmDelete = app.buttons["Delete"].firstMatch
+        XCTAssertTrue(confirmDelete.waitForExistence(timeout: 5), "Delete skill confirm button not found")
+        tapElement(confirmDelete)
     }
 
     // MARK: - Navigation Helpers

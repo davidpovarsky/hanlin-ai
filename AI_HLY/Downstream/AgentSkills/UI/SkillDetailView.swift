@@ -15,6 +15,7 @@ struct SkillDetailView: View {
 
     @State private var showEditor: Bool = false
     @State private var showDeleteConfirm: Bool = false
+    @State private var resourceToDelete: String? = nil
     @State private var previewResource: SkillResourceFile?
     @State private var showAddResource: Bool = false
     @State private var newResourcePath: String = ""
@@ -77,6 +78,26 @@ struct SkillDetailView: View {
             Button(SkillL10n.string("Cancel"), role: .cancel) {}
         } message: {
             Text(SkillL10n.string("Are you sure you want to delete this skill?"))
+        }
+        .confirmationDialog(
+            "Delete Resource",
+            isPresented: Binding(
+                get: { resourceToDelete != nil },
+                set: { if !$0 { resourceToDelete = nil } }
+            ),
+            titleVisibility: .visible
+        ) {
+            Button(SkillL10n.string("Delete"), role: .destructive) {
+                if let path = resourceToDelete {
+                    deleteResource(path)
+                    resourceToDelete = nil
+                }
+            }
+            Button(SkillL10n.string("Cancel"), role: .cancel) {
+                resourceToDelete = nil
+            }
+        } message: {
+            Text("Are you sure you want to delete this resource?")
         }
     }
 
@@ -248,7 +269,7 @@ struct SkillDetailView: View {
 
                         if isCustomOrImported {
                             Button(role: .destructive) {
-                                deleteResource(res.relativePath)
+                                resourceToDelete = res.relativePath
                             } label: {
                                 Image(systemName: "trash")
                                     .font(.caption)
