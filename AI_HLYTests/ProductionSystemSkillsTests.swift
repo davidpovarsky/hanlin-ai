@@ -234,13 +234,13 @@ struct ProductionSystemSkillsTests {
         #expect(resURL != nil)
 
         // 2. Disable package -> skill disappears immediately from catalog
-        await platform.setPackageEnabled(installedID, enabled: false)
+        await platform.setEnabled(false, for: installedID)
         catalog.synchronizeProductionSkills(scriptingPlatform: platform)
         #expect(catalog.resolve(rawID: "lifecycle-skill") == nil)
         #expect(catalog.resolveResourceURL(skillID: resolved.id, relativePath: "references/doc.md") == nil)
 
         // 3. Re-enable package -> skill reappears immediately in catalog
-        await platform.setPackageEnabled(installedID, enabled: true)
+        await platform.setEnabled(true, for: installedID)
         catalog.synchronizeProductionSkills(scriptingPlatform: platform)
         #expect(catalog.resolve(rawID: "lifecycle-skill") != nil)
         #expect(catalog.resolveResourceURL(skillID: resolved.id, relativePath: "references/doc.md") != nil)
@@ -313,7 +313,7 @@ struct ProductionSystemSkillsTests {
         #expect(catalog.resolve(rawID: "code") == nil)
 
         // Store refresh must retain codeEnabled: false!
-        SkillStore.shared.refreshFromStore()
+        catalog.refreshFromStore()
         #expect(catalog.resolve(rawID: "code") == nil)
 
         // Restore

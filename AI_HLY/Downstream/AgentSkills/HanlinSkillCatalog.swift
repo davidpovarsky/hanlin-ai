@@ -412,3 +412,5 @@ public final class HanlinSkillCatalog {
         }
     }
 }
+
+public typealias SkillSourceIdentity = HanlinSkillCatalog.SkillSourceIdentity

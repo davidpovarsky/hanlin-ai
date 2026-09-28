@@ -78,33 +78,55 @@ private final class ScriptedAgentURLProtocol: URLProtocol, @unchecked Sendable {
     }
 }
 
-private final class ControllableDelayedTool: NativeTool, @unchecked Sendable {
-    let name = "controllable_delayed_tool"
-    private static let lock = NSLock()
-    private nonisolated(unsafe) static var toolStartedContinuation: CheckedContinuation<Void, Never>?
-    private nonisolated(unsafe) static var gateContinuation: CheckedContinuation<Void, Never>?
+private actor ControllableGate {
+    static let shared = ControllableGate()
 
-    static func reset() {
-        lock.lock()
-        defer { lock.unlock() }
+    private var toolStartedContinuation: CheckedContinuation<Void, Never>?
+    private var gateContinuation: CheckedContinuation<Void, Never>?
+
+    func reset() {
         toolStartedContinuation = nil
         gateContinuation = nil
     }
 
-    static func waitForToolStarted() async {
+    func waitForToolStarted() async {
         await withCheckedContinuation { cont in
-            lock.lock()
             toolStartedContinuation = cont
-            lock.unlock()
         }
     }
 
-    static func releaseGate() {
-        lock.lock()
+    func recordToolStarted() {
+        let started = toolStartedContinuation
+        toolStartedContinuation = nil
+        started?.resume()
+    }
+
+    func waitForGate() async {
+        await withCheckedContinuation { cont in
+            gateContinuation = cont
+        }
+    }
+
+    func releaseGate() {
         let cont = gateContinuation
         gateContinuation = nil
-        lock.unlock()
         cont?.resume()
+    }
+}
+
+private final class ControllableDelayedTool: NativeTool, @unchecked Sendable {
+    let name = "controllable_delayed_tool"
+
+    static func reset() async {
+        await ControllableGate.shared.reset()
+    }
+
+    static func waitForToolStarted() async {
+        await ControllableGate.shared.waitForToolStarted()
+    }
+
+    static func releaseGate() async {
+        await ControllableGate.shared.releaseGate()
     }
 
     var catalogEntry: NativeToolCatalogEntry {
@@ -129,26 +151,13 @@ private final class ControllableDelayedTool: NativeTool, @unchecked Sendable {
     }
 
     func execute(argumentsJSON: String, context: NativeToolExecutionContext) async -> NativeToolResult {
-        Self.lock.lock()
-        let started = Self.toolStartedContinuation
-        Self.toolStartedContinuation = nil
-        Self.lock.unlock()
-        started?.resume()
-
-        await withCheckedContinuation { cont in
-            Self.lock.lock()
-            Self.gateContinuation = cont
-            Self.lock.unlock()
-        }
+        await ControllableGate.shared.recordToolStarted()
+        await ControllableGate.shared.waitForGate()
 
         return NativeToolResult(
-            callID: context.callID,
-            toolName: name,
-            resultForModel: "delayed_tool_finished",
-            resultForUser: "Delayed tool finished",
-            title: "Delayed Tool",
-            systemImage: "clock",
-            semanticOutcome: .succeeded
+            modelText: "delayed_tool_finished",
+            userText: "Delayed tool finished",
+            outcome: .succeeded
         )
     }
 }
@@ -332,11 +341,11 @@ struct AgentRuntimeConversationAcceptanceTests {
 
         let calls = result.diagnostics.rounds.flatMap(\.toolCalls)
         #expect(calls.count == 3)
-        #expect(calls[0].name == "load_skill" && calls[0].outcome == NativeToolExecutionOutcome.succeeded.rawValue)
-        #expect(calls[1].id == "call-invalid-1")
+        #expect(calls[0].toolName == "load_skill" && calls[0].status == "succeeded")
+        #expect(calls[1].callID == "call-invalid-1")
         #expect(calls[1].resultPresentationSuppressed == false)
-        #expect(calls[1].outcome != NativeToolExecutionOutcome.succeeded.rawValue)
-        #expect(calls[2].id == "call-valid-2" && calls[2].outcome == NativeToolExecutionOutcome.succeeded.rawValue)
+        #expect(calls[1].status != "succeeded")
+        #expect(calls[2].callID == "call-valid-2" && calls[2].status == "succeeded")
 
         // Verify request 2 (continuation after invalid call) contains error info
         #expect(result.requests.count >= 4)
@@ -351,7 +360,7 @@ struct AgentRuntimeConversationAcceptanceTests {
 
     @Test("Cancellation during agent run cancels coordinator and marks run cancelled")
     func cancelDuringAgentWorkStopsAllLaterToolExecution() async throws {
-        ControllableDelayedTool.reset()
+        await ControllableDelayedTool.reset()
         let delayedTool = ControllableDelayedTool()
         NativeToolCatalog.shared.register(delayedTool)
         if let entry = NativeToolCatalog.shared.entry(named: delayedTool.name) {
@@ -401,7 +410,11 @@ struct AgentRuntimeConversationAcceptanceTests {
                     topP: 1,
                     maxTokens: 1024,
                     canvasData: CanvasData(),
-                    capabilitySession: session
+                    selectedURLs: nil,
+                    selectedPromptsContent: nil,
+                    systemMessage: "Deterministic acceptance fixture.",
+                    selectedImageSize: "1024x1024",
+                    imageReversePrompt: ""
                 )
                 for try await item in stream {
                     text += item.content ?? ""
@@ -420,7 +433,7 @@ struct AgentRuntimeConversationAcceptanceTests {
         manager.cancelCurrentRequest()
 
         // Release gate after cancellation
-        ControllableDelayedTool.releaseGate()
+        await ControllableDelayedTool.releaseGate()
 
         let (text, _, _) = await runTask.value
 
@@ -434,7 +447,7 @@ struct AgentRuntimeConversationAcceptanceTests {
 
     @Test("Starting a new run cancels old run without ghost work")
     func startingNewRunCancelsOldRunWithoutGhostWork() async throws {
-        ControllableDelayedTool.reset()
+        await ControllableDelayedTool.reset()
         let delayedTool = ControllableDelayedTool()
         NativeToolCatalog.shared.register(delayedTool)
         if let entry = NativeToolCatalog.shared.entry(named: delayedTool.name) {
@@ -484,7 +497,11 @@ struct AgentRuntimeConversationAcceptanceTests {
                     topP: 1,
                     maxTokens: 1024,
                     canvasData: CanvasData(),
-                    capabilitySession: sessionA
+                    selectedURLs: nil,
+                    selectedPromptsContent: nil,
+                    systemMessage: "Deterministic acceptance fixture.",
+                    selectedImageSize: "1024x1024",
+                    imageReversePrompt: ""
                 )
                 for try await item in stream {
                     text += item.content ?? ""
@@ -526,7 +543,11 @@ struct AgentRuntimeConversationAcceptanceTests {
             topP: 1,
             maxTokens: 1024,
             canvasData: CanvasData(),
-            capabilitySession: sessionB
+            selectedURLs: nil,
+            selectedPromptsContent: nil,
+            systemMessage: "Deterministic acceptance fixture.",
+            selectedImageSize: "1024x1024",
+            imageReversePrompt: ""
         )
         for try await item in streamB {
             runBText += item.content ?? ""
@@ -537,7 +558,7 @@ struct AgentRuntimeConversationAcceptanceTests {
         #expect(!AgentRunLifecycleCoordinator.shared.isCurrentRun(runAID))
 
         // Release Run A's delayed tool gate
-        ControllableDelayedTool.releaseGate()
+        await ControllableDelayedTool.releaseGate()
         let (runAText, _) = await runATask.value
 
         // Assert Run A was cancelled and its text was NOT part of Run B

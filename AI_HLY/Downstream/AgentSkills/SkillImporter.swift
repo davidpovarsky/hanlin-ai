@@ -421,6 +421,10 @@ final class BoundedStreamDownloader: NSObject, URLSessionDataDelegate, @unchecke
         self.sessionConfiguration = sessionConfiguration
     }
 
+    func download(from url: URL) async throws -> (Data, HTTPURLResponse) {
+        try await download(request: URLRequest(url: url))
+    }
+
     func download(request: URLRequest) async throws -> (Data, HTTPURLResponse) {
         guard let scheme = request.url?.scheme?.lowercased(), scheme == "https" else {
             throw SkillImportError.nonHTTPSURLForbidden
