@@ -348,7 +348,7 @@ struct SkillStoreAndImportTests {
         Execute safely.
         """
         let skillMDData = Data(skillMD.utf8)
-        try archive.addEntry(with: "SKILL.md", type: .file, uncompressedSize: Int64(skillMDData.count), provider: { position, size in
+        try archive.addEntry(with: "SKILL.md", type: .file, uncompressedSize: UInt32(skillMDData.count), provider: { position, size in
             skillMDData.subdata(in: position..<(position + size))
         })
 
@@ -358,7 +358,7 @@ struct SkillStoreAndImportTests {
             f.write('HACKED')
         """
         let scriptData = Data(scriptCode.utf8)
-        try archive.addEntry(with: "scripts/danger.py", type: .file, uncompressedSize: Int64(scriptData.count), provider: { position, size in
+        try archive.addEntry(with: "scripts/danger.py", type: .file, uncompressedSize: UInt32(scriptData.count), provider: { position, size in
             scriptData.subdata(in: position..<(position + size))
         })
 

@@ -377,11 +377,11 @@ private final class AgentRuntimeUIAcceptanceURLProtocol: URLProtocol, @unchecked
             Loaded from URL.
             """
             let skillMDData = Data(skillMD.utf8)
-            try? archive.addEntry(with: "SKILL.md", type: .file, uncompressedSize: Int64(skillMDData.count), provider: { position, size in
+            try? archive.addEntry(with: "SKILL.md", type: .file, uncompressedSize: UInt32(skillMDData.count), provider: { position, size in
                 skillMDData.subdata(in: position..<(position + size))
             })
             let refData = Data("URL Guide Content\n".utf8)
-            try? archive.addEntry(with: "references/url-guide.md", type: .file, uncompressedSize: Int64(refData.count), provider: { position, size in
+            try? archive.addEntry(with: "references/url-guide.md", type: .file, uncompressedSize: UInt32(refData.count), provider: { position, size in
                 refData.subdata(in: position..<(position + size))
             })
         }

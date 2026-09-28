@@ -396,15 +396,15 @@ struct SkillImportView: View {
                 Execute tools as needed.
                 """
                 let skillMDData = Data(skillMD.utf8)
-                try archive.addEntry(with: "SKILL.md", type: .file, uncompressedSize: Int64(skillMDData.count), provider: { position, size in
+                try archive.addEntry(with: "SKILL.md", type: .file, uncompressedSize: UInt32(skillMDData.count), provider: { position, size in
                     skillMDData.subdata(in: position..<(position + size))
                 })
                 let refData = Data("Reference documentation content.\n".utf8)
-                try archive.addEntry(with: "references/guide.md", type: .file, uncompressedSize: Int64(refData.count), provider: { position, size in
+                try archive.addEntry(with: "references/guide.md", type: .file, uncompressedSize: UInt32(refData.count), provider: { position, size in
                     refData.subdata(in: position..<(position + size))
                 })
                 let scriptData = Data("print('test script')\n".utf8)
-                try archive.addEntry(with: "scripts/run.py", type: .file, uncompressedSize: Int64(scriptData.count), provider: { position, size in
+                try archive.addEntry(with: "scripts/run.py", type: .file, uncompressedSize: UInt32(scriptData.count), provider: { position, size in
                     scriptData.subdata(in: position..<(position + size))
                 })
 

@@ -74,8 +74,8 @@ public final class HanlinSkillCatalog {
         let tier: SkillPrecedenceTier
         let isExplicitOverride: Bool
         let sourceIdentity: SkillSourceIdentity?
-        let loader: (@Sendable () async -> String)?
-        let resourceResolver: (@Sendable (String) -> URL?)?
+        let loader: (@MainActor @Sendable () async -> String)?
+        let resourceResolver: (@MainActor @Sendable (String) -> URL?)?
     }
 
     private var skillEntries: [HanlinSkillID: SkillEntry] = [:]
@@ -89,8 +89,8 @@ public final class HanlinSkillCatalog {
         tier: SkillPrecedenceTier = .userCustom,
         isExplicitOverride: Bool = false,
         sourceIdentity: SkillSourceIdentity? = nil,
-        instructionLoader: (@Sendable () async -> String)? = nil,
-        resourceResolver: (@Sendable (String) -> URL?)? = nil
+        instructionLoader: (@MainActor @Sendable () async -> String)? = nil,
+        resourceResolver: (@MainActor @Sendable (String) -> URL?)? = nil
     ) {
         if let existing = skillEntries[skill.id] {
             // Collision rule: userCustom cannot overwrite built-in or package skill without explicit override
@@ -125,8 +125,8 @@ public final class HanlinSkillCatalog {
         tier: SkillPrecedenceTier = .userCustom,
         isExplicitOverride: Bool = false,
         sourceIdentity: SkillSourceIdentity? = nil,
-        instructionLoader: (@Sendable () async -> String)? = nil,
-        resourceResolver: (@Sendable (String) -> URL?)? = nil
+        instructionLoader: (@MainActor @Sendable () async -> String)? = nil,
+        resourceResolver: (@MainActor @Sendable (String) -> URL?)? = nil
     ) {
         register(
             skill: descriptor,
@@ -140,14 +140,14 @@ public final class HanlinSkillCatalog {
 
     /// Registers all skills declared in an app descriptor.
     public func register(app: HanlinAppDescriptor, tier: SkillPrecedenceTier = .compiledMiniApp) {
-        let sourceID = SkillSourceIdentity(kind: .compiledMiniApp, identifier: app.appID.rawValue)
+        let sourceID = SkillSourceIdentity(kind: .compiledMiniApp, identifier: app.id.rawValue)
         for skill in app.skills {
             register(skill: skill, tier: tier, sourceIdentity: sourceID)
         }
     }
 
     /// Synchronizes skills with a given domain configuration.
-    public func synchronizeProductionSkills(configuration: SkillDomainConfiguration, scriptingPlatform: HanlinScriptingPlatform = .shared) {
+    func synchronizeProductionSkills(configuration: SkillDomainConfiguration, scriptingPlatform: HanlinScriptingPlatform? = nil) {
         self.currentDomainConfiguration = configuration
         skillEntries.removeAll()
 
@@ -174,7 +174,7 @@ public final class HanlinSkillCatalog {
         // 2. Compiled Swift Mini Apps
         BuiltinCanonicalRegistrations.ensureRegistered()
         for provider in HanlinCompiledMiniAppRegistry.shared.allProviders() {
-            let appID = provider.descriptor.appID.rawValue
+            let appID = provider.descriptor.id.rawValue
             let sourceID = SkillSourceIdentity(kind: .compiledMiniApp, identifier: appID)
             for skill in provider.descriptor.skills {
                 register(
@@ -197,8 +197,8 @@ public final class HanlinSkillCatalog {
         }
 
         // 3. Installed scripting packages (ScriptUI, NativeScript, Expo)
-        let platform = scriptingPlatform
-        for package in platform.installedPackages where package.enabled {
+        let resolvedPlatform = scriptingPlatform ?? HanlinScriptingPlatform.shared
+        for package in resolvedPlatform.installedPackages where package.enabled {
             guard let desc = try? package.appDescriptor() else { continue }
             let packageID = package.record.packageID
             let sourceID = SkillSourceIdentity(kind: .installedPackage, identifier: packageID.rawValue)
@@ -207,13 +207,15 @@ public final class HanlinSkillCatalog {
                     skill: skill,
                     tier: .installedPackage,
                     sourceIdentity: sourceID,
-                    instructionLoader: { [weak platform] in
-                        guard let currentPlatform = platform ?? HanlinScriptingPlatform.shared,
-                              let currentPackage = await currentPlatform.installedPackages.first(where: { $0.record.packageID == packageID && $0.enabled }) else {
+                    instructionLoader: { [weak resolvedPlatform] in
+                        guard let currentPlatform = resolvedPlatform else {
+                            return ""
+                        }
+                        guard let currentPackage = currentPlatform.installedPackages.first(where: { $0.record.packageID == packageID && $0.enabled }) else {
                             return ""
                         }
                         if case .resource(let path) = skill.instructions {
-                            if let artifactURL = await currentPlatform.activeArtifactURL(for: currentPackage) {
+                            if let artifactURL = currentPlatform.activeArtifactURL(for: currentPackage) {
                                 let candidateURL = artifactURL.appending(path: path)
                                 if let content = try? String(contentsOf: candidateURL, encoding: .utf8) {
                                     return content
@@ -223,7 +225,7 @@ public final class HanlinSkillCatalog {
                                     return content
                                 }
                             }
-                            if let resURL = await currentPlatform.resolveResourceURL(packageID: packageID, relativePath: path),
+                            if let resURL = currentPlatform.resolveResourceURL(packageID: packageID, relativePath: path),
                                let content = try? String(contentsOf: resURL, encoding: .utf8) {
                                 return content
                             }
@@ -234,9 +236,11 @@ public final class HanlinSkillCatalog {
                         }
                         return "# \(skill.title.preferredValue())\n\n\(skill.summary.preferredValue())"
                     },
-                    resourceResolver: { [weak platform] relPath in
-                        guard let currentPlatform = platform ?? HanlinScriptingPlatform.shared,
-                              let currentPackage = currentPlatform.installedPackages.first(where: { $0.record.packageID == packageID && $0.enabled }) else {
+                    resourceResolver: { [weak resolvedPlatform] relPath in
+                        guard let currentPlatform = resolvedPlatform else {
+                            return nil
+                        }
+                        guard let currentPackage = currentPlatform.installedPackages.first(where: { $0.record.packageID == packageID && $0.enabled }) else {
                             return nil
                         }
                         let clean = relPath.replacingOccurrences(of: "\\", with: "/").trimmingCharacters(in: CharacterSet(charactersIn: "/ "))
@@ -316,7 +320,7 @@ public final class HanlinSkillCatalog {
     }
 
     /// Synchronizes skills from built-in system providers, compiled Mini Apps, installed packages, and SkillStore.
-    public func synchronizeProductionSkills(
+    func synchronizeProductionSkills(
         memoryEnabled: Bool = true,
         mapEnabled: Bool = true,
         calendarEnabled: Bool = true,
@@ -326,7 +330,7 @@ public final class HanlinSkillCatalog {
         healthEnabled: Bool = true,
         weatherEnabled: Bool = true,
         canvasEnabled: Bool = true,
-        scriptingPlatform: HanlinScriptingPlatform = .shared
+        scriptingPlatform: HanlinScriptingPlatform? = nil
     ) {
         let config = SkillDomainConfiguration(
             memoryEnabled: memoryEnabled,
