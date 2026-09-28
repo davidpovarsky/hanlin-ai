@@ -122,6 +122,24 @@ struct SkillEditorView: View {
         return nil
     }
 
+    static let knownSystemToolNames: Set<String> = [
+        "save_memory", "retrieve_memory", "update_memory",
+        "search_calendar_and_reminders", "write_system_event",
+        "query_location", "get_current_location", "search_nearby_locations", "get_route",
+        "query_weather",
+        "search_online", "read_web_page", "search_arxiv_papers", "extract_remote_file_content",
+        "search_knowledge_bag", "create_knowledge_document",
+        "create_canvas", "edit_canvas",
+        "create_web_view", "execute_remote_python_code", "execute_python_code",
+        "fetch_step_details", "fetch_energy_details", "fetch_nutrition_details", "make_nutrition_data"
+    ]
+
+    private var allAvailableToolNames: Set<String> {
+        var names = Set(availableCanonicalTools.map(\.name))
+        names.formUnion(Self.knownSystemToolNames)
+        return names
+    }
+
     static func validatePreferredToolAliases(_ aliasesString: String, against availableAliases: Set<String>) -> [String] {
         let tools = aliasesString
             .split(separator: ",")
@@ -131,8 +149,7 @@ struct SkillEditorView: View {
     }
 
     private var unknownToolAliases: [String] {
-        let availableNames = Set(availableCanonicalTools.map(\.name))
-        return Self.validatePreferredToolAliases(preferredToolsText, against: availableNames)
+        Self.validatePreferredToolAliases(preferredToolsText, against: allAvailableToolNames)
     }
 
     private var toolValidationError: String? {
@@ -195,7 +212,7 @@ struct SkillEditorView: View {
                     TextEditor(text: $instructions)
                         .frame(minHeight: 180)
                         .font(.body)
-                        .accessibilityIdentifier("hanlin-skill-editor-body-input")
+                        .accessibilityIdentifier("hanlin-skill-editor-instructions-input")
                 }
 
                 Section(header: Text(SkillL10n.string("Preferred Canonical Tools"))) {
@@ -328,6 +345,7 @@ struct SkillEditorView: View {
         }
 
         let trimmedSummary = summary.trimmingCharacters(in: .whitespacesAndNewlines)
+        let effectiveSummary = trimmedSummary.isEmpty ? trimmedTitle : trimmedSummary
         let trimmedInstructions = instructions.trimmingCharacters(in: .whitespacesAndNewlines)
 
         let tools = Array(selectedTools).sorted()
@@ -348,7 +366,7 @@ struct SkillEditorView: View {
                 try SkillStore.shared.saveCustomSkill(
                     id: skillID,
                     title: trimmedTitle,
-                    description: trimmedSummary,
+                    description: effectiveSummary,
                     instructions: trimmedInstructions,
                     preferredToolIDs: tools,
                     triggerHints: hints,
@@ -358,7 +376,7 @@ struct SkillEditorView: View {
                 try SkillStore.shared.createOrUpdateOverride(
                     for: baseSkill,
                     newTitle: trimmedTitle,
-                    newDescription: trimmedSummary,
+                    newDescription: effectiveSummary,
                     newInstructions: trimmedInstructions,
                     preferredToolIDs: tools,
                     triggerHints: hints,

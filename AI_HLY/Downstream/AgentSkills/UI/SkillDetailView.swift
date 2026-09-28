@@ -437,14 +437,14 @@ struct SkillDetailView: View {
                     TextField("references/guide.md", text: $newResourcePath)
                         .autocorrectionDisabled()
                         .textInputAutocapitalization(.never)
-                        .accessibilityIdentifier("hanlin-skill-detail-new-resource-path")
+                        .accessibilityIdentifier("hanlin-skill-resource-path-input")
                 }
 
                 Section(header: Text("Content")) {
                     TextEditor(text: $newResourceContent)
                         .frame(minHeight: 180)
                         .font(.system(.body, design: .monospaced))
-                        .accessibilityIdentifier("hanlin-skill-detail-new-resource-content")
+                        .accessibilityIdentifier("hanlin-skill-resource-content-input")
                 }
             }
             .navigationTitle("Add Resource")
@@ -461,7 +461,7 @@ struct SkillDetailView: View {
                     }
                     .bold()
                     .disabled(newResourcePath.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
-                    .accessibilityIdentifier("hanlin-skill-detail-save-resource-button")
+                    .accessibilityIdentifier("hanlin-skill-resource-save-button")
                 }
             }
         }
@@ -504,7 +504,7 @@ struct SkillDetailView: View {
                     TextEditor(text: $editingResourceContent)
                         .frame(minHeight: 220)
                         .font(.system(.body, design: .monospaced))
-                        .accessibilityIdentifier("hanlin-skill-detail-edit-resource-content")
+                        .accessibilityIdentifier("hanlin-skill-resource-edit-content-input")
                 }
             }
             .navigationTitle("Edit Resource")

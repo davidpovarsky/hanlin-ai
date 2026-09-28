@@ -169,9 +169,7 @@ public enum SkillMarkdownParser {
         guard let name = frontmatter["name"], !name.isEmpty else {
             throw ParseError.missingRequiredField("name")
         }
-        guard let desc = frontmatter["description"], !desc.isEmpty else {
-            throw ParseError.missingRequiredField("description")
-        }
+        let desc = frontmatter["description"] ?? ""
 
         let bodyStartIndex = closeIdx + 1
         let body: String

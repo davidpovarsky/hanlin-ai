@@ -251,7 +251,8 @@ public final class SkillStore {
         let dir = skillsDirectoryURL.appendingPathComponent(id.rawValue, isDirectory: true)
         try fileManager.createDirectory(at: dir, withIntermediateDirectories: true)
 
-        let skillMD = SkillMarkdownParser.serialize(name: title, description: description, body: instructions)
+        let effectiveDesc = description.isEmpty ? title : description
+        let skillMD = SkillMarkdownParser.serialize(name: title, description: effectiveDesc, body: instructions)
         let skillMDURL = dir.appendingPathComponent("SKILL.md")
         try skillMD.data(using: .utf8)?.write(to: skillMDURL, options: .atomic)
 

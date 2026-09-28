@@ -113,7 +113,7 @@ final class HanlinScriptUIProductionE2ETests: XCTestCase {
 
         // Launch must be guarded when required capability is missing
         let packageCardWithoutCap = findPackageCard(named: validPackageName)
-        packageCardWithoutCap.tap()
+        tapPackageCard(packageCardWithoutCap)
         let closeBtnAfterDenied = app.buttons["hanlin-script-app-close"].firstMatch
         XCTAssertFalse(closeBtnAfterDenied.waitForExistence(timeout: 3), "Package unexpectedly launched with revoked required capability")
 
@@ -138,7 +138,7 @@ final class HanlinScriptUIProductionE2ETests: XCTestCase {
 
         // Tap disabled package -> launch guard rejects or does not open application container
         let disabledCard = findPackageCard(named: validPackageName)
-        disabledCard.tap()
+        tapPackageCard(disabledCard)
         let closeButton = app.buttons["hanlin-script-app-close"].firstMatch
         XCTAssertFalse(closeButton.waitForExistence(timeout: 3), "Disabled package unexpectedly launched")
 
@@ -488,9 +488,7 @@ final class HanlinScriptUIProductionE2ETests: XCTestCase {
         return cardById.exists ? cardById : element
     }
 
-    private func launchPackage(named packageName: String) {
-        let packageCard = findPackageCard(named: packageName)
-        XCTAssertTrue(packageCard.waitForExistence(timeout: 15), "Package \(packageName) unavailable for launch")
+    private func tapPackageCard(_ packageCard: XCUIElement) {
         if !packageCard.isHittable {
             app.swipeUp()
             _ = waitUntil(timeout: 2) { packageCard.isHittable }
@@ -500,6 +498,12 @@ final class HanlinScriptUIProductionE2ETests: XCTestCase {
         } else {
             packageCard.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
         }
+    }
+
+    private func launchPackage(named packageName: String) {
+        let packageCard = findPackageCard(named: packageName)
+        XCTAssertTrue(packageCard.waitForExistence(timeout: 15), "Package \(packageName) unavailable for launch")
+        tapPackageCard(packageCard)
         if app.navigationBars["Add Apps"].exists {
             _ = waitUntil(timeout: 4) { !app.navigationBars["Add Apps"].exists }
         }

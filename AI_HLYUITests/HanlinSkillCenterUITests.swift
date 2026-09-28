@@ -8,6 +8,7 @@ final class HanlinSkillCenterUITests: XCTestCase {
         continueAfterFailure = false
         app.launchArguments += ["-AppleLanguages", "(en)", "-AppleLocale", "en_US"]
         app.launchEnvironment["HANLIN_UNIT_TEST_HOST"] = "0"
+        app.launchEnvironment["HANLIN_AGENT_SKILLS_EMBEDDED_ACCEPTANCE"] = "1"
         app.launch()
     }
 
@@ -85,10 +86,9 @@ final class HanlinSkillCenterUITests: XCTestCase {
         }
 
         let bodyInput = app.textViews["hanlin-skill-editor-instructions-input"].firstMatch
-        if bodyInput.waitForExistence(timeout: 3) {
-            tapElement(bodyInput)
-            bodyInput.typeText("Instructions for test-ui-skill")
-        }
+        XCTAssertTrue(bodyInput.waitForExistence(timeout: 5), "Instructions input not found")
+        tapElement(bodyInput)
+        bodyInput.typeText("Instructions for test-ui-skill")
 
         let saveButton = app.buttons["hanlin-skill-editor-save-button"].firstMatch
         XCTAssertTrue(saveButton.waitForExistence(timeout: 5), "Save button not found in editor")
@@ -154,10 +154,9 @@ final class HanlinSkillCenterUITests: XCTestCase {
         }
 
         let instructionsField = app.textViews["hanlin-skill-editor-instructions-input"].firstMatch
-        if instructionsField.waitForExistence(timeout: 5) {
-            tapElement(instructionsField)
-            instructionsField.typeText("\nUI_OVERRIDE_MARKER")
-        }
+        XCTAssertTrue(instructionsField.waitForExistence(timeout: 5), "Instructions input not found in editor")
+        tapElement(instructionsField)
+        instructionsField.typeText("\nUI_OVERRIDE_MARKER")
 
         let saveButton = app.buttons["hanlin-skill-editor-save-button"].firstMatch
         XCTAssertTrue(saveButton.waitForExistence(timeout: 5), "Save button not found in editor")
@@ -165,6 +164,7 @@ final class HanlinSkillCenterUITests: XCTestCase {
 
         // Verify override indicator or Reset button exists
         let resetButton = app.buttons["hanlin-skill-detail-reset-button"].firstMatch
+        if !resetButton.waitForExistence(timeout: 5) { app.swipeUp() }
         XCTAssertTrue(resetButton.waitForExistence(timeout: 10), "Reset button not found after customizing skill")
 
         // Reset to default
@@ -274,10 +274,9 @@ final class HanlinSkillCenterUITests: XCTestCase {
         nameInput.typeText("UI Next Turn Skill")
 
         let instructionsField = app.textViews["hanlin-skill-editor-instructions-input"].firstMatch
-        if instructionsField.waitForExistence(timeout: 5) {
-            tapElement(instructionsField)
-            instructionsField.typeText("NEXT_TURN_SKILL_MARKER")
-        }
+        XCTAssertTrue(instructionsField.waitForExistence(timeout: 5), "Instructions input not found")
+        tapElement(instructionsField)
+        instructionsField.typeText("NEXT_TURN_SKILL_MARKER")
 
         let saveButton = app.buttons["hanlin-skill-editor-save-button"].firstMatch
         XCTAssertTrue(saveButton.waitForExistence(timeout: 5), "Save button not found")
@@ -320,6 +319,12 @@ final class HanlinSkillCenterUITests: XCTestCase {
         tapElement(nameInput)
         nameInput.typeText("Resource CRUD Skill")
 
+        let descInput = app.textFields["hanlin-skill-editor-desc-input"].firstMatch
+        if descInput.waitForExistence(timeout: 3) {
+            tapElement(descInput)
+            descInput.typeText("Resource CRUD Skill Description")
+        }
+
         let saveButton = app.buttons["hanlin-skill-editor-save-button"].firstMatch
         XCTAssertTrue(saveButton.waitForExistence(timeout: 5), "Save button not found")
         tapElement(saveButton)
@@ -351,42 +356,36 @@ final class HanlinSkillCenterUITests: XCTestCase {
 
         // 2. Import fixture resource
         let importFixtureBtn = app.buttons["hanlin-skill-detail-import-fixture-resource-button"].firstMatch
-        if importFixtureBtn.waitForExistence(timeout: 5) {
-            tapElement(importFixtureBtn)
-        }
+        XCTAssertTrue(importFixtureBtn.waitForExistence(timeout: 5), "Import fixture resource button not found")
+        tapElement(importFixtureBtn)
 
         // 3. Edit text resource
         let editResBtn = app.buttons["hanlin-skill-detail-edit-resource-references/doc.md"].firstMatch
-        if editResBtn.waitForExistence(timeout: 5) {
-            tapElement(editResBtn)
-            let editContent = app.textViews["hanlin-skill-resource-edit-content-input"].firstMatch
-            if editContent.waitForExistence(timeout: 5) {
-                tapElement(editContent)
-                editContent.typeText("\nUpdated Extra Line")
-            }
-            let saveEditBtn = app.buttons["hanlin-skill-detail-save-edit-resource-button"].firstMatch
-            if saveEditBtn.waitForExistence(timeout: 5) {
-                tapElement(saveEditBtn)
-            }
-        }
+        XCTAssertTrue(editResBtn.waitForExistence(timeout: 5), "Edit resource button not found")
+        tapElement(editResBtn)
+        let editContent = app.textViews["hanlin-skill-resource-edit-content-input"].firstMatch
+        XCTAssertTrue(editContent.waitForExistence(timeout: 5), "Edit resource content input not found")
+        tapElement(editContent)
+        editContent.typeText("\nUpdated Extra Line")
+        let saveEditBtn = app.buttons["hanlin-skill-detail-save-edit-resource-button"].firstMatch
+        XCTAssertTrue(saveEditBtn.waitForExistence(timeout: 5), "Save edit resource button not found")
+        tapElement(saveEditBtn)
 
         // 4. Delete resource
         let deleteResBtn = app.buttons["hanlin-skill-detail-delete-resource-references/doc.md"].firstMatch
-        if deleteResBtn.waitForExistence(timeout: 5) {
-            tapElement(deleteResBtn)
-            let confirm = app.buttons["Delete"].firstMatch
-            if confirm.waitForExistence(timeout: 3) {
-                tapElement(confirm)
-            }
-        }
+        XCTAssertTrue(deleteResBtn.waitForExistence(timeout: 5), "Delete resource button not found")
+        tapElement(deleteResBtn)
+        let confirm = app.buttons["Delete"].firstMatch
+        XCTAssertTrue(confirm.waitForExistence(timeout: 3), "Delete resource confirm button not found")
+        tapElement(confirm)
 
         // Clean up skill
         let deleteSkill = app.buttons["hanlin-skill-detail-delete-button"].firstMatch
         if deleteSkill.waitForExistence(timeout: 5) {
             tapElement(deleteSkill)
-            let confirm = app.buttons["Delete"].firstMatch
-            if confirm.waitForExistence(timeout: 3) {
-                tapElement(confirm)
+            let confirmDelete = app.buttons["Delete"].firstMatch
+            if confirmDelete.waitForExistence(timeout: 3) {
+                tapElement(confirmDelete)
             }
         }
     }
@@ -404,29 +403,15 @@ final class HanlinSkillCenterUITests: XCTestCase {
     }
 
     private func openChat() {
-        let identifier = "hanlin-home-tab"
-        let labels = ["Chats", "Messages", "Home", "列表"]
-        var candidates: [XCUIElement] = [
-            app.tabBars.buttons[identifier].firstMatch,
-            app.buttons[identifier].firstMatch,
-            app.tabs[identifier].firstMatch
-        ]
-        for label in labels {
-            candidates.append(app.tabBars.buttons[label].firstMatch)
-            candidates.append(app.buttons[label].firstMatch)
-            candidates.append(app.tabs[label].firstMatch)
-        }
-        for candidate in candidates {
-            if candidate.waitForExistence(timeout: 2) && candidate.isHittable {
-                candidate.tap()
-                return
+        _ = selectTab(identifier: "hanlin-home-tab", labels: ["Chats", "Messages", "Home", "列表"])
+
+        let input = app.textFields["hanlin-chat-input"].firstMatch
+        if !input.waitForExistence(timeout: 5) {
+            let chatPredicate = NSPredicate(format: "label CONTAINS 'Agent Acceptance Chat' OR identifier CONTAINS 'Agent Acceptance Chat'")
+            let seededChat = app.descendants(matching: .any).matching(chatPredicate).firstMatch
+            if seededChat.waitForExistence(timeout: 15) {
+                tapElement(seededChat)
             }
-        }
-        let labelClauses = labels.map { "label CONTAINS '\($0)'" }
-        let format = (["identifier == '\(identifier)'"] + labelClauses).joined(separator: " OR ")
-        let fallback = app.descendants(matching: .any).matching(NSPredicate(format: format)).firstMatch
-        if fallback.waitForExistence(timeout: 5) {
-            tapElement(fallback)
         }
     }
 
@@ -438,9 +423,7 @@ final class HanlinSkillCenterUITests: XCTestCase {
         }
     }
 
-    private func selectSettingsTab() -> Bool {
-        let identifier = "hanlin-settings-tab"
-        let labels = ["Settings", "设置"]
+    private func selectTab(identifier: String, labels: [String] = []) -> Bool {
         var candidates: [XCUIElement] = [
             app.tabBars.buttons[identifier].firstMatch,
             app.buttons[identifier].firstMatch,
@@ -452,42 +435,41 @@ final class HanlinSkillCenterUITests: XCTestCase {
             candidates.append(app.tabs[label].firstMatch)
         }
 
-        for candidate in candidates {
-            if candidate.waitForExistence(timeout: 2) && candidate.isHittable {
-                candidate.tap()
-                return true
+        func findCandidate() -> Bool {
+            for candidate in candidates {
+                if candidate.waitForExistence(timeout: 2) && candidate.isHittable {
+                    candidate.tap()
+                    return true
+                }
             }
+            return false
+        }
+
+        if findCandidate() { return true }
+
+        let prevPage = app.buttons["Previous Page"].firstMatch
+        if prevPage.waitForExistence(timeout: 2) && prevPage.isHittable {
+            prevPage.tap()
+            if findCandidate() { return true }
         }
 
         let nextPage = app.buttons["Next Page"].firstMatch
         if nextPage.waitForExistence(timeout: 2) && nextPage.isHittable {
             nextPage.tap()
-            for candidate in candidates {
-                if candidate.waitForExistence(timeout: 3) && candidate.isHittable {
-                    candidate.tap()
-                    return true
-                }
-            }
-        }
-
-        let prevPage = app.buttons["Previous Page"].firstMatch
-        if prevPage.waitForExistence(timeout: 2) && prevPage.isHittable {
-            prevPage.tap()
-            for candidate in candidates {
-                if candidate.waitForExistence(timeout: 3) && candidate.isHittable {
-                    candidate.tap()
-                    return true
-                }
-            }
+            if findCandidate() { return true }
         }
 
         let labelClauses = labels.map { "label CONTAINS '\($0)'" }
         let format = (["identifier == '\(identifier)'"] + labelClauses).joined(separator: " OR ")
         let fallback = app.descendants(matching: .any).matching(NSPredicate(format: format)).firstMatch
-        if fallback.waitForExistence(timeout: 5) {
+        if fallback.waitForExistence(timeout: 5) && fallback.isHittable {
             tapElement(fallback)
             return true
         }
         return false
+    }
+
+    private func selectSettingsTab() -> Bool {
+        selectTab(identifier: "hanlin-settings-tab", labels: ["Settings", "设置"])
     }
 }

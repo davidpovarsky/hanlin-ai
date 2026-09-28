@@ -118,6 +118,7 @@ struct SkillImportView: View {
                     HStack {
                         Text(staged.parsedMarkdown.name)
                             .font(.headline)
+                            .accessibilityIdentifier("hanlin-skill-import-preview-title")
                         Spacer()
                         Text(staged.skillID.rawValue)
                             .font(.caption)
@@ -221,7 +222,7 @@ struct SkillImportView: View {
                                 .padding(.vertical, 8)
                         }
                         .buttonStyle(.borderedProminent)
-                        .accessibilityIdentifier("hanlin-skill-import-confirm-install")
+                        .accessibilityIdentifier("hanlin-skill-import-install-button")
 
                         Button(role: .cancel) {
                             try? FileManager.default.removeItem(at: staged.stagingDirectoryURL)
@@ -362,7 +363,7 @@ struct SkillImportView: View {
         errorMessage = nil
         successMessage = nil
 
-        Task {
+        Task { @MainActor in
             do {
                 let staged = try await SkillImporter.shared.downloadAndStage(from: url)
                 isProcessing = false
@@ -377,7 +378,7 @@ struct SkillImportView: View {
     private func loadTestFixtureZip() {
         isProcessing = true
         errorMessage = nil
-        Task {
+        Task { @MainActor in
             do {
                 let tempDir = FileManager.default.temporaryDirectory
                 let tempZip = tempDir.appendingPathComponent("ui-import-skill-\(UUID().uuidString).zip")
@@ -421,7 +422,7 @@ struct SkillImportView: View {
     private func installStaged(_ staged: StagedSkillPackage) {
         isProcessing = true
         errorMessage = nil
-        Task {
+        Task { @MainActor in
             do {
                 let descriptor = try SkillImporter.shared.install(staged: staged)
                 successMessage = "Successfully installed skill '\(descriptor.title.preferredValue())' [\(descriptor.id.rawValue)]."
