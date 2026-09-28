@@ -403,6 +403,33 @@ final class HanlinSkillCenterUITests: XCTestCase {
         tapElement(skillCenterLink)
     }
 
+    private func openChat() {
+        let identifier = "hanlin-home-tab"
+        let labels = ["Chats", "Messages", "Home", "列表"]
+        var candidates: [XCUIElement] = [
+            app.tabBars.buttons[identifier].firstMatch,
+            app.buttons[identifier].firstMatch,
+            app.tabs[identifier].firstMatch
+        ]
+        for label in labels {
+            candidates.append(app.tabBars.buttons[label].firstMatch)
+            candidates.append(app.buttons[label].firstMatch)
+            candidates.append(app.tabs[label].firstMatch)
+        }
+        for candidate in candidates {
+            if candidate.waitForExistence(timeout: 2) && candidate.isHittable {
+                candidate.tap()
+                return
+            }
+        }
+        let labelClauses = labels.map { "label CONTAINS '\($0)'" }
+        let format = (["identifier == '\(identifier)'"] + labelClauses).joined(separator: " OR ")
+        let fallback = app.descendants(matching: .any).matching(NSPredicate(format: format)).firstMatch
+        if fallback.waitForExistence(timeout: 5) {
+            tapElement(fallback)
+        }
+    }
+
     private func tapElement(_ element: XCUIElement) {
         if element.isHittable {
             element.tap()
