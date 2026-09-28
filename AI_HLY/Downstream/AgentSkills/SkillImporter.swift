@@ -309,7 +309,7 @@ public final class SkillImporter: @unchecked Sendable {
         var request = URLRequest(url: httpsURL)
         request.httpMethod = "GET"
 
-        let config = sessionConfiguration ?? URLSessionConfiguration.ephemeral
+        let config = sessionConfiguration ?? AgentRuntimeUIAcceptanceProvider.makeSessionConfiguration()
         let downloader = BoundedStreamDownloader(maxBytes: Self.maxDownloadBytes, sessionConfiguration: config)
         let (data, response) = try await downloader.download(request: request)
 

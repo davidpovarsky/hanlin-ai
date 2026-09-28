@@ -520,7 +520,15 @@ final class HanlinScriptUIProductionE2ETests: XCTestCase {
     private func openPackageDetails(named packageName: String) {
         let packageCard = findPackageCard(named: packageName)
         XCTAssertTrue(packageCard.waitForExistence(timeout: 10))
-        packageCard.press(forDuration: 1.5)
+        if !packageCard.isHittable {
+            app.swipeUp()
+            _ = waitUntil(timeout: 2) { packageCard.isHittable }
+        }
+        if packageCard.isHittable {
+            packageCard.press(forDuration: 1.5)
+        } else {
+            packageCard.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).press(forDuration: 1.5)
+        }
         let infoButton = app.buttons["Package Information"].firstMatch
         if infoButton.waitForExistence(timeout: 5) {
             infoButton.tap()

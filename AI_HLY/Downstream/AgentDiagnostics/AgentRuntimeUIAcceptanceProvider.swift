@@ -126,15 +126,22 @@ enum AgentRuntimeUIAcceptanceProvider {
         }
     }
 
+    static func makeSessionConfiguration() -> URLSessionConfiguration {
+        let configuration = URLSessionConfiguration.ephemeral
+        if isEnabled {
+            configuration.protocolClasses = [AgentRuntimeUIAcceptanceURLProtocol.self]
+        }
+        return configuration
+    }
+
     static func makeChatEngine() -> HanlinChatEngine {
         guard isEnabled else { return HanlinChatEngine() }
-        let configuration = URLSessionConfiguration.ephemeral
-        configuration.protocolClasses = [AgentRuntimeUIAcceptanceURLProtocol.self]
+        let configuration = makeSessionConfiguration()
         return HanlinChatEngine(sessionConfiguration: configuration)
     }
 }
 
-private final class AgentRuntimeUIAcceptanceURLProtocol: URLProtocol, @unchecked Sendable {
+final class AgentRuntimeUIAcceptanceURLProtocol: URLProtocol, @unchecked Sendable {
     private static let lock = NSLock()
     private nonisolated(unsafe) static var responseIndex = 0
     private var isStopped = false

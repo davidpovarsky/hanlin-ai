@@ -81,7 +81,9 @@ public final class HanlinSkillCatalog {
     private var skillEntries: [HanlinSkillID: SkillEntry] = [:]
     public private(set) var currentDomainConfiguration: SkillDomainConfiguration = SkillDomainConfiguration()
 
-    public init() {}
+    public init() {
+        synchronizeProductionSkills(configuration: currentDomainConfiguration)
+    }
 
     /// Registers a skill with tier and optional custom instruction loader and resource resolver.
     public func register(
@@ -317,6 +319,21 @@ public final class HanlinSkillCatalog {
         if !configuration.canvasEnabled, let id = try? HanlinSkillID(validating: "canvas") {
             skillEntries.removeValue(forKey: id)
         }
+
+        #if targetEnvironment(simulator)
+        if AgentRuntimeUIAcceptanceProvider.isSkillsEnabled {
+            if let skillID = try? HanlinSkillID(validating: "acceptance_skill"),
+               let descriptor = try? HanlinSkillDescriptor(
+                   id: skillID,
+                   title: "Acceptance Skill",
+                   summary: "Demonstrates agent skills and embedded result UI",
+                   instructions: .inline("Always show embedded results for acceptance testing."),
+                   preferredToolIDs: ["create_web_view"]
+               ) {
+                register(skill: descriptor)
+            }
+        }
+        #endif
     }
 
     /// Synchronizes skills from built-in system providers, compiled Mini Apps, installed packages, and SkillStore.

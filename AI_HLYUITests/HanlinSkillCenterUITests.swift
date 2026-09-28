@@ -401,7 +401,19 @@ final class HanlinSkillCenterUITests: XCTestCase {
         tapElement(skillCenterLink)
     }
 
+    private func navigateBackToSettingsRoot() {
+        while !app.navigationBars["Settings"].exists && !app.navigationBars["设置"].exists && app.navigationBars.buttons.count > 0 {
+            let backButton = app.navigationBars.buttons.element(boundBy: 0)
+            if backButton.waitForExistence(timeout: 2) && backButton.isHittable {
+                backButton.tap()
+            } else {
+                break
+            }
+        }
+    }
+
     private func openChat() {
+        navigateBackToSettingsRoot()
         _ = selectTab(identifier: "hanlin-home-tab", labels: ["Chats", "Messages", "Home", "列表"])
 
         let input = app.textFields["hanlin-chat-input"].firstMatch
