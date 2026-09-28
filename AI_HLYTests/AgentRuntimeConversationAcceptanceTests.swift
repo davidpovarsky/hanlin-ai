@@ -76,6 +76,8 @@ private final class ScriptedAgentURLProtocol: URLProtocol, @unchecked Sendable {
         }
         return data
     }
+}
+
 private final class ControllableDelayedTool: NativeTool, @unchecked Sendable {
     let name = "controllable_delayed_tool"
     private static let lock = NSLock()
