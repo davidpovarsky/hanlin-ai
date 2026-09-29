@@ -17,10 +17,9 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         XCTAssertFalse(isToggleOn(initialPythonToggle), "Python toggle should initially be OFF on fresh process")
 
         let toolPerm = app.switches["hanlin-tool-permission-execute_local_python_code"].firstMatch
-        if !toolPerm.exists { app.swipeUp() }
-        if toolPerm.exists {
-            XCTAssertTrue(isToggleOn(toolPerm), "Assistant Python permission should be ON")
-        }
+        if !toolPerm.waitForExistence(timeout: 5) { app.swipeUp() }
+        XCTAssertTrue(toolPerm.waitForExistence(timeout: 10), "Assistant Python permission switch was missing in Runtime Center")
+        XCTAssertTrue(isToggleOn(toolPerm), "Assistant Python permission should unconditionally be ON")
 
         // 2. Switch to Chat and prompt the Agent to execute Python
         openChat(in: app)
@@ -79,14 +78,19 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         app.launchEnvironment["HANLIN_AGENT_RUNTIME_UI_ACCEPTANCE"] = "1"
         app.launch()
 
-        // 1. Initial State: Python runtime is OFF in Runtime Center
+        // 1. Initial State: Python runtime is OFF in Runtime Center + Assistant Python permission is ON
         openRuntimeCenter(in: app)
         let initialPythonToggle = toggleSwitch(for: "localPython", in: app)
         if !initialPythonToggle.waitForExistence(timeout: 5) { app.swipeUp() }
         XCTAssertTrue(initialPythonToggle.waitForExistence(timeout: 10), "Python toggle card was missing in Runtime Center")
         XCTAssertFalse(isToggleOn(initialPythonToggle), "Python toggle should initially be OFF on fresh process")
 
-        // 2. Open Chat and send prompt
+        let toolPerm = app.switches["hanlin-tool-permission-execute_local_python_code"].firstMatch
+        if !toolPerm.waitForExistence(timeout: 5) { app.swipeUp() }
+        XCTAssertTrue(toolPerm.waitForExistence(timeout: 10), "Assistant Python permission switch was missing in Runtime Center")
+        XCTAssertTrue(isToggleOn(toolPerm), "Assistant Python permission should unconditionally be ON")
+
+        // 2. Open Chat and send prompt (single user turn, no second nudge required)
         openChat(in: app)
         let input = app.textFields["hanlin-chat-input"].firstMatch
         if !input.waitForExistence(timeout: 5) {
@@ -167,11 +171,26 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         ).firstMatch
         XCTAssertTrue(runBAnswer.waitForExistence(timeout: 30), "Run B did not complete with RUN_B_COMPLETE")
 
-        // 4. Wait past Run A delay and assert no ghost text appeared from Run A
-        let runAAnswer = app.staticTexts.matching(
-            NSPredicate(format: "label CONTAINS 'RUN_A_DELAYED_COMPLETE'")
+        // 4. Wait beyond deterministic Run A delay interval (~1.5s)
+        Thread.sleep(forTimeInterval: 2.0)
+
+        // 5. Assert RUN_A_LATE_GHOST does not exist, RUN_B_COMPLETE exists exactly once, no stale Stop, no stuck Thinking
+        let runAGhost = app.staticTexts.matching(
+            NSPredicate(format: "label CONTAINS 'RUN_A_LATE_GHOST'")
         ).firstMatch
-        XCTAssertFalse(runAAnswer.exists, "Run A ghost answer should not appear after being cancelled")
+        XCTAssertFalse(runAGhost.exists, "Run A late ghost answer RUN_A_LATE_GHOST must not appear after being cancelled")
+
+        let runBMatches = app.staticTexts.matching(
+            NSPredicate(format: "label CONTAINS 'RUN_B_COMPLETE'")
+        )
+        XCTAssertEqual(runBMatches.count, 1, "RUN_B_COMPLETE must exist exactly once")
+
+        XCTAssertFalse(stopButton.exists, "Stop button should not remain active after run completion")
+
+        let stuckProcessing = app.staticTexts.matching(
+            NSPredicate(format: "label == 'Thinking' OR label == 'Thinking…' OR label == 'Processing'")
+        ).firstMatch
+        XCTAssertFalse(stuckProcessing.exists, "Chat should not be stuck in Thinking or Processing state")
     }
 
     // MARK: - Navigation & Toggle Helpers

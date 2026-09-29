@@ -169,12 +169,12 @@ final class AgentRuntimeUIAcceptanceURLProtocol: URLProtocol, @unchecked Sendabl
 
         // 1. Delayed Run A for stop cancellation test
         if bodyString.contains("START_DELAYED_RUN_A") {
-            for _ in 0..<50 {
+            for _ in 0..<15 {
                 if isStopped { return }
                 Thread.sleep(forTimeInterval: 0.1)
             }
             if isStopped { return }
-            emitFinalAnswer("RUN_A_UNEXPECTED_COMPLETION")
+            emitFinalAnswer("RUN_A_LATE_GHOST")
             return
         }
 
@@ -186,8 +186,13 @@ final class AgentRuntimeUIAcceptanceURLProtocol: URLProtocol, @unchecked Sendabl
 
         // 3. Next turn skill loading test
         if bodyString.contains("ui-next-turn-skill") || bodyString.contains("NEXT_TURN_SKILL") {
-            if bodyString.contains("tool_calls") || bodyString.contains("NEXT_TURN_SKILL") {
-                emitFinalAnswer("NEXT_TURN_SKILL_MARKER: Skill loaded successfully!")
+            let isContinuation = bodyString.contains("\"role\":\"tool\"") || bodyString.contains("\"role\": \"tool\"")
+            if isContinuation {
+                if bodyString.contains("NEXT_TURN_SKILL_MARKER") {
+                    emitFinalAnswer("NEXT_TURN_SKILL_MARKER: Skill loaded successfully!")
+                } else {
+                    emitFinalAnswer("NEXT_TURN_SKILL_LOAD_FAILED")
+                }
             } else {
                 emitToolCall(id: "ui-next-turn-load", name: "load_skill", arguments: #"{"skill_id":"ui-next-turn-skill"}"#)
             }

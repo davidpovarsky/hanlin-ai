@@ -8,10 +8,12 @@ private final class ScriptedAgentURLProtocol: URLProtocol, @unchecked Sendable {
     private static let lock = NSLock()
     private nonisolated(unsafe) static var responses: [Data] = []
     private nonisolated(unsafe) static var capturedBodies: [Data] = []
+    private nonisolated(unsafe) static var providerRequestID: String = "acceptance-request"
 
-    static func configure(responses: [String]) {
+    static func configure(responses: [String], providerRequestID: String = "acceptance-request") {
         lock.lock()
         self.responses = responses.map { Data($0.utf8) }
+        self.providerRequestID = providerRequestID
         capturedBodies = []
         lock.unlock()
     }
@@ -34,6 +36,7 @@ private final class ScriptedAgentURLProtocol: URLProtocol, @unchecked Sendable {
         Self.lock.lock()
         Self.capturedBodies.append(Self.bodyData(from: request))
         let responseData = Self.responses.isEmpty ? nil : Self.responses.removeFirst()
+        let reqID = Self.providerRequestID
         Self.lock.unlock()
 
         guard let responseData else {
@@ -52,7 +55,7 @@ private final class ScriptedAgentURLProtocol: URLProtocol, @unchecked Sendable {
             httpVersion: "HTTP/1.1",
             headerFields: [
                 "Content-Type": "text/event-stream",
-                "x-request-id": "acceptance-request"
+                "x-request-id": reqID
             ]
         )!
         client?.urlProtocol(self, didReceive: response, cacheStoragePolicy: .notAllowed)
@@ -288,6 +291,19 @@ struct AgentRuntimeConversationAcceptanceTests {
 
     @Test("Production code skill loads local python and completes in the same user turn without extra nudge")
     func productionCodeSkillLocalPythonCompletesSameUserTurn() async throws {
+        let catalog = NativeToolCatalog.shared
+        catalog.ensureBuiltinsRegistered()
+        let pythonEntry = try #require(catalog.entry(named: "execute_local_python_code"))
+
+        // execute_local_python_code permission ON before send
+        catalog.setEnabled(true, for: pythonEntry)
+        #expect(catalog.isEnabled(pythonEntry))
+
+        // localPython initially OFF before send
+        let availability = RuntimeAvailabilityStore.shared
+        availability.setAvailable(false, for: .localPython)
+        #expect(!availability.isAvailable(.localPython))
+
         let result = try await runConversation(
             responses: [
                 toolCall("call-load-code", "load_skill", ["skill_id": "code"]),
@@ -297,28 +313,41 @@ struct AgentRuntimeConversationAcceptanceTests {
             overrideRuntimes: [.localPython: false]
         )
 
-        // Assert round 0 request body does NOT contain execute_local_python_code
+        // Round 0: load_skill/meta controls available; execute_local_python_code and execute_remote_python_code NOT exposed
         let round0Body = String(decoding: result.requests[0], as: UTF8.self)
+        #expect(round0Body.contains("load_skill"))
         #expect(!round0Body.contains("execute_local_python_code"))
         #expect(!round0Body.contains("execute_remote_python_code"))
 
-        // Round 1 request body DOES contain execute_local_python_code (and not execute_remote_python_code)
+        // After load_skill (Round 1): execute_local_python_code exposed; execute_remote_python_code NOT exposed
         #expect(result.requests.count >= 2)
         let round1Body = String(decoding: result.requests[1], as: UTF8.self)
         #expect(round1Body.contains("execute_local_python_code"))
         #expect(!round1Body.contains("execute_remote_python_code"))
 
-        // Round 2 request body contains tool result 42 with matching call id
+        // Local Python execution: exactly ONE call, call ID = call-exec-python, result = 42, runtime becomes ON
+        let pythonCalls = result.diagnostics.rounds.flatMap(\.toolCalls).filter { $0.toolName == "execute_local_python_code" }
+        #expect(pythonCalls.count == 1)
+        let pyCall = try #require(pythonCalls.first)
+        #expect(pyCall.callID == "call-exec-python")
+        #expect(pyCall.status == "succeeded")
+        #expect(pyCall.resultForModel?.contains("42") == true)
+        #expect(pyCall.runtimeKind == RuntimeKind.localPython.rawValue || pyCall.canonicalLogicalToolID == "execute_local_python_code")
+        #expect(result.localPythonAvailableAfterExecution == true)
+        #expect(availability.isAvailable(.localPython))
+
+        // Continuation (Round 2 request): assistant tool call contains call-exec-python; role=tool result contains call-exec-python and 42
         #expect(result.requests.count >= 3)
         let round2Body = String(decoding: result.requests[2], as: UTF8.self)
-        #expect(round2Body.contains("42"))
+        #expect(round2Body.contains("role") && round2Body.contains("tool"))
         #expect(round2Body.contains("call-exec-python"))
+        #expect(round2Body.contains("42"))
 
-        // Assert runtime became available after execution
-        #expect(result.localPythonAvailableAfterExecution == true)
-
+        // Terminal: final contains "42 / LOCAL_PYTHON_COMPLETE", same run, one user message, exactly one terminal completion, no mutations
         #expect(result.answer.contains("42") && result.answer.contains("LOCAL_PYTHON_COMPLETE"))
         #expect(result.diagnostics.status == "completed")
+        #expect(result.diagnostics.isComplete)
+        #expect(result.diagnostics.completedAt != nil)
         #expect(result.diagnostics.efficiency.failedToolCount == 0)
         #expect(result.diagnostics.efficiency.succeededToolCount == 2)
     }
@@ -432,17 +461,27 @@ struct AgentRuntimeConversationAcceptanceTests {
         // Cancel the current request while tool is mid-execution!
         manager.cancelCurrentRequest()
 
+        let snapshotBeforeGate = try #require(await manager.diagnosticsSnapshot())
+
         // Release gate after cancellation
         await ControllableDelayedTool.releaseGate()
 
-        let (text, _, _) = await runTask.value
+        let (text, finalEvts, _) = await runTask.value
 
         // Assert NO late text arrived from finalAnswer
         #expect(!text.contains("LATE_ANSWER_SHOULD_NOT_APPEAR"))
 
-        let snapshot = try #require(await manager.diagnosticsSnapshot())
-        #expect(snapshot.status == "cancelled")
-        #expect(snapshot.isComplete)
+        let snapshotAfterGate = try #require(await manager.diagnosticsSnapshot())
+        #expect(snapshotAfterGate.status == "cancelled")
+        #expect(snapshotAfterGate.isComplete)
+        #expect(snapshotAfterGate == snapshotBeforeGate)
+        #expect(snapshotAfterGate.rounds.count == snapshotBeforeGate.rounds.count)
+        #expect(!finalEvts.contains { event in
+            if case .toolExecutionCompleted(let tool, _) = event {
+                return tool == "finalAnswer"
+            }
+            return false
+        })
     }
 
     @Test("Starting a new run cancels old run without ghost work")
@@ -557,6 +596,10 @@ struct AgentRuntimeConversationAcceptanceTests {
         #expect(runBText.contains("RUN_B_COMPLETE"))
         #expect(!AgentRunLifecycleCoordinator.shared.isCurrentRun(runAID))
 
+        let diagBBeforeRelease = try #require(await manager.diagnosticsSnapshot())
+        #expect(diagBBeforeRelease.status == "completed")
+        #expect(diagBBeforeRelease.isComplete)
+
         // Release Run A's delayed tool gate
         await ControllableDelayedTool.releaseGate()
         let (runAText, _) = await runATask.value
@@ -565,10 +608,11 @@ struct AgentRuntimeConversationAcceptanceTests {
         #expect(!runBText.contains("RUN_A_LATE_TEXT"))
         #expect(!runAText.contains("RUN_A_LATE_TEXT"))
 
-        let diagB = try #require(await manager.diagnosticsSnapshot())
-        #expect(diagB.status == "completed")
-        #expect(diagB.isComplete)
-        #expect(diagB.efficiency.toolCallCount == 1) // only Run B's quick_calculate, no ghost calls
+        let diagBAfterRelease = try #require(await manager.diagnosticsSnapshot())
+        #expect(diagBAfterRelease == diagBBeforeRelease) // Run B diagnostics remain final after A gate is released!
+        #expect(diagBAfterRelease.status == "completed")
+        #expect(diagBAfterRelease.isComplete)
+        #expect(diagBAfterRelease.efficiency.toolCallCount == 1) // only Run B's quick_calculate, no ghost calls
     }
 
     @Test("Terminal diagnostics are immutable and reject late mutations across all mutation methods")
@@ -593,7 +637,7 @@ struct AgentRuntimeConversationAcceptanceTests {
         #expect(snapshot1.status == "completed")
         #expect(snapshot1.completedAt != nil)
 
-        // Attempt mutations after completion
+        // Attempt mutations after completion across all recorder methods
         _ = await recorder.beginRound(index: 1, trigger: "late", requestData: Data())
         await recorder.recordModelRequest(roundID: roundID, requestData: Data("late-model-req".utf8))
         await recorder.responseStarted(roundID: roundID, httpStatus: 200, providerRequestID: "late-id")
@@ -610,28 +654,42 @@ struct AgentRuntimeConversationAcceptanceTests {
         await recorder.complete(status: "failed", error: "late error")
 
         let snapshot2 = await recorder.session
-        #expect(snapshot2.isComplete)
-        #expect(snapshot2.status == snapshot1.status)
-        #expect(snapshot2.completedAt == snapshot1.completedAt)
-        #expect(snapshot2.rounds.count == snapshot1.rounds.count)
-        #expect(snapshot2.efficiency.toolCallCount == snapshot1.efficiency.toolCallCount)
-        #expect(snapshot2.efficiency.failedToolCount == snapshot1.efficiency.failedToolCount)
-        #expect(snapshot2.rounds[0].response.visibleContent == nil)
-        #expect(snapshot2.rounds[0].toolCalls.isEmpty)
-        #expect(snapshot2.lastUpdatedAt == snapshot1.completedAt)
+        #expect(snapshot1 == snapshot2)
+
+        // JSON serialization equality check guarantees bit-for-bit full session immutability
+        let encoder = JSONEncoder()
+        encoder.outputFormatting = [.sortedKeys]
+        let json1 = try encoder.encode(snapshot1)
+        let json2 = try encoder.encode(snapshot2)
+        #expect(json1 == json2)
     }
 
     @Test("Unexpected SDK stream end without terminal event marks diagnostics as failed and throws error")
     func unexpectedSDKStreamEndIsFailureNotCompleted() async throws {
         let unclosedSSE = "data: {\"choices\":[{\"delta\":{\"content\":\"partial answer\"}}]}\n\n"
+        var thrownError: Error?
         do {
             _ = try await runConversation(responses: [unclosedSSE])
             Issue.record("Expected stream failure from unexpected unclosed SSE")
         } catch {
-            let diagnostics = try #require(Self.lastRunDiagnostics)
-            #expect(diagnostics.status == "failed")
-            #expect(diagnostics.isComplete)
+            thrownError = error
         }
+
+        #expect(thrownError != nil)
+        let diagnostics = try #require(Self.lastRunDiagnostics)
+        #expect(diagnostics.status == "failed")
+        #expect(diagnostics.isComplete == true)
+        #expect(diagnostics.status != "completed")
+        #expect(diagnostics.status != "succeeded")
+        #expect(diagnostics.completedAt != nil)
+        #expect(diagnostics.error != nil && !diagnostics.error!.isEmpty)
+
+        // No later terminal mutation
+        let snapshot1 = diagnostics
+        let recorder = AgentDiagnosticsRecorder.current(runID: diagnostics.runID)
+        await recorder?.complete(status: "completed")
+        let snapshot2 = await recorder?.session ?? snapshot1
+        #expect(snapshot1 == snapshot2)
     }
 
     @Test("Round order uses exact SDK step numbers starting at zero")
@@ -656,32 +714,74 @@ struct AgentRuntimeConversationAcceptanceTests {
 
     @Test("Diagnostics capture actual continuation request body and headers")
     func diagnosticsCaptureActualContinuationRequest() async throws {
+        let secretKey = "SUPER_SECRET_DIAGNOSTICS_KEY"
+        let reqID = "diagnostics-request-123"
+        let callID = "diag-call-123"
+
         let result = try await runConversation(
             responses: [
-                toolCall("calc-1", "quick_calculate", ["expression": "10 * 10"]),
+                toolCall(callID, "quick_calculate", ["expression": "10 * 10"]),
                 finalAnswer("100")
-            ]
+            ],
+            apiKey: secretKey,
+            providerRequestID: reqID
         )
 
         let rounds = result.diagnostics.rounds
         #expect(rounds.count == 2)
-        #expect(rounds[0].request.byteCount > 0)
+
+        // Request byte counts > 4
+        #expect(rounds[0].request.byteCount > 4)
+        #expect(rounds[1].request.byteCount > 4)
+
+        // Valid SHA-256 hashes (64 hex characters)
         #expect(rounds[0].request.contentHash.count == 64)
-        #expect(rounds[1].request.byteCount > 0)
         #expect(rounds[1].request.contentHash.count == 64)
-        if result.requests.count >= 2 {
-            let req2Text = String(decoding: result.requests[1], as: UTF8.self)
-            #expect(req2Text.contains("100"))
-            #expect(req2Text.contains("calc-1"))
-            #expect(!req2Text.contains("acceptance-fixture-key"))
+        #expect(rounds[0].request.contentHash != rounds[1].request.contentHash)
+
+        // HTTP status & provider request ID
+        #expect(rounds[0].response.httpStatus == 200)
+        #expect(rounds[0].response.providerRequestID == reqID)
+        #expect(rounds[1].response.httpStatus == 200)
+        #expect(rounds[1].response.providerRequestID == reqID)
+
+        // Assistant continuation contains diag-call-123
+        let calls = rounds.flatMap(\.toolCalls)
+        #expect(calls.contains { $0.callID == callID })
+
+        // Continuation request contains role=tool, matching tool_call_id diag-call-123, and actual tool result (100)
+        #expect(result.requests.count >= 2)
+        let continuationReq = String(decoding: result.requests[1], as: UTF8.self)
+        #expect(continuationReq.contains("role") && continuationReq.contains("tool"))
+        #expect(continuationReq.contains(callID))
+        #expect(continuationReq.contains("100"))
+
+        // Assert diagnostics DO NOT contain secret key or raw auth header
+        let diagnosticsJSON = String(decoding: (try? JSONEncoder().encode(result.diagnostics)) ?? Data(), as: UTF8.self)
+        #expect(!diagnosticsJSON.contains(secretKey))
+        #expect(!diagnosticsJSON.contains("Bearer \(secretKey)"))
+        #expect(!continuationReq.contains(secretKey))
+
+        // Check sanitizedHeaders in diagnostics requests
+        for round in rounds {
+            if let headers = round.request.sanitizedHeaders {
+                for (k, v) in headers {
+                    #expect(!v.contains(secretKey))
+                    if k.lowercased() == "authorization" {
+                        #expect(v == "[REDACTED]")
+                    }
+                }
+            }
         }
     }
 
     private func runConversation(
         responses: [String],
-        overrideRuntimes: [RuntimeKind: Bool]? = nil
+        overrideRuntimes: [RuntimeKind: Bool]? = nil,
+        apiKey: String = "acceptance-fixture-key",
+        providerRequestID: String = "acceptance-request"
     ) async throws -> ConversationResult {
-        ScriptedAgentURLProtocol.configure(responses: responses)
+        ScriptedAgentURLProtocol.configure(responses: responses, providerRequestID: providerRequestID)
         let configuration = URLSessionConfiguration.ephemeral
         configuration.protocolClasses = [ScriptedAgentURLProtocol.self]
 
@@ -698,7 +798,7 @@ struct AgentRuntimeConversationAcceptanceTests {
         context.insert(APIKeys(
             name: "Acceptance",
             company: "ACCEPTANCE",
-            key: "acceptance-fixture-key",
+            key: apiKey,
             requestURL: "https://agent.acceptance/v1/chat/completions",
             apiType: .openAI
         ))

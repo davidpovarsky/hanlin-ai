@@ -159,11 +159,22 @@ actor AgentDiagnosticsRecorder {
         let sanitizedJSON = AgentDiagnosticsRedactor.sanitizedJSONString(from: requestObject, pretty: true)
         let metadataOnly = session.level != .fullLocalDebug
         let requestText = metadataOnly ? nil : sanitizedJSON
+        let sanitizedHeaders = httpHeaders.map { headers in
+            headers.reduce(into: [String: String]()) { dict, item in
+                let lower = item.key.lowercased()
+                if lower.contains("auth") || lower.contains("key") || lower.contains("token") || lower.contains("cookie") || lower.contains("secret") {
+                    dict[item.key] = "<redacted>"
+                } else {
+                    dict[item.key] = AgentDiagnosticsRedactor.sanitize(item.value)
+                }
+            }
+        }
         let request = AgentDiagnosticsModelRequest(
             sanitizedJSON: requestText,
             byteCount: sanitizedJSON.utf8.count,
             contentHash: Self.sha256(sanitizedJSON),
-            composition: Self.composition(from: requestObject)
+            composition: Self.composition(from: requestObject),
+            sanitizedHeaders: sanitizedHeaders
         )
 
         updateRound(roundID) { round in

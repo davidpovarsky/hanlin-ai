@@ -1,6 +1,6 @@
 import Foundation
 
-struct AgentDiagnosticsSession: Codable, Identifiable, Sendable {
+struct AgentDiagnosticsSession: Codable, Identifiable, Sendable, Equatable {
     static let currentSchemaVersion = 2
 
     var schemaVersion = currentSchemaVersion
@@ -23,7 +23,7 @@ struct AgentDiagnosticsSession: Codable, Identifiable, Sendable {
     var efficiency: AgentEfficiencyReport
 }
 
-struct AgentDiagnosticsRound: Codable, Identifiable, Sendable {
+struct AgentDiagnosticsRound: Codable, Identifiable, Sendable, Equatable {
     var id: UUID
     var index: Int
     var startedAt: Date
@@ -42,14 +42,15 @@ struct AgentDiagnosticsRound: Codable, Identifiable, Sendable {
     var meaningfulStreamEventCount: Int? = nil
 }
 
-struct AgentDiagnosticsModelRequest: Codable, Sendable {
+struct AgentDiagnosticsModelRequest: Codable, Sendable, Equatable {
     var sanitizedJSON: String?
     var byteCount: Int
     var contentHash: String
     var composition: AgentPromptCompositionMetrics
+    var sanitizedHeaders: [String: String]? = nil
 }
 
-struct AgentDiagnosticsModelResponse: Codable, Sendable {
+struct AgentDiagnosticsModelResponse: Codable, Sendable, Equatable {
     var httpStatus: Int?
     var providerRequestID: String?
     var visibleContent: String?
@@ -61,7 +62,7 @@ struct AgentDiagnosticsModelResponse: Codable, Sendable {
     var totalLatency: TimeInterval?
 }
 
-struct AgentDiagnosticsToolCall: Codable, Identifiable, Sendable {
+struct AgentDiagnosticsToolCall: Codable, Identifiable, Sendable, Equatable {
     var id: String { callID }
     var callID: String
     var toolName: String

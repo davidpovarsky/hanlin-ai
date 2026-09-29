@@ -160,7 +160,9 @@ GROUPS = (
             AcceptanceCase("skills.archive.allows-without-script-json", "archivePolicyAllowsSkillWithoutScriptJSON"),
             AcceptanceCase("skills.archive.security-rejections", "archivePolicyRejectsSecurityThreats", "rejection"),
             AcceptanceCase("skills.resource.contract-and-bounds", "resourceReadingContract"),
+            AcceptanceCase("skills.resource.symlink-escape-rejection", "resourceReadingSymlinkEscapeRejected", "rejection"),
             AcceptanceCase("skills.resource.python-read-not-executed", "importedPythonScriptCanBeReadButIsNotExecutedDuringInstall"),
+            AcceptanceCase("skills.downloader.network-limits", "boundedDownloaderEnforcesNetworkLimits", "rejection"),
         ),
     ),
     AcceptanceGroup(

@@ -57,6 +57,15 @@ final class HanlinSkillCenterUITests: XCTestCase {
         }
     }
 
+    private func replaceText(in element: XCUIElement, with newText: String) {
+        tapElement(element)
+        if let existing = element.value as? String, !existing.isEmpty {
+            let deleteString = String(repeating: XCUIKeyboardKey.delete.rawValue, count: existing.count + 5)
+            element.typeText(deleteString)
+        }
+        element.typeText(newText)
+    }
+
     func testCreateEditDisableDeleteCustomSkill() throws {
         openSkillCenter()
 
@@ -65,9 +74,8 @@ final class HanlinSkillCenterUITests: XCTestCase {
         tapElement(createButton)
 
         let menuNew = app.buttons["hanlin-skill-center-menu-new-skill"].firstMatch
-        if menuNew.waitForExistence(timeout: 3) {
-            tapElement(menuNew)
-        }
+        XCTAssertTrue(menuNew.waitForExistence(timeout: 5), "New skill menu option not found")
+        tapElement(menuNew)
 
         let idInput = app.textFields["hanlin-skill-editor-id-input"].firstMatch
         XCTAssertTrue(idInput.waitForExistence(timeout: 10), "Skill ID input field not found")
@@ -80,10 +88,9 @@ final class HanlinSkillCenterUITests: XCTestCase {
         nameInput.typeText("Test UI Skill")
 
         let descInput = app.textFields["hanlin-skill-editor-desc-input"].firstMatch
-        if descInput.waitForExistence(timeout: 3) {
-            tapElement(descInput)
-            descInput.typeText("UI created test skill")
-        }
+        XCTAssertTrue(descInput.waitForExistence(timeout: 5), "Skill description input field not found")
+        tapElement(descInput)
+        descInput.typeText("UI created test skill")
 
         let bodyInput = app.textViews["hanlin-skill-editor-instructions-input"].firstMatch
         XCTAssertTrue(bodyInput.waitForExistence(timeout: 5), "Instructions input not found")
@@ -94,27 +101,69 @@ final class HanlinSkillCenterUITests: XCTestCase {
         XCTAssertTrue(saveButton.waitForExistence(timeout: 5), "Save button not found in editor")
         tapElement(saveButton)
 
-        // Verify row exists in list
+        // 1. Verify row exists in list
         let createdRow = app.descendants(matching: .any)["hanlin-skill-center-skill-row-test-ui-skill"].firstMatch
         if !createdRow.waitForExistence(timeout: 5) { app.swipeUp() }
         XCTAssertTrue(createdRow.waitForExistence(timeout: 10), "Created skill row not found in list")
+
+        // 2. Open detail
         tapElement(createdRow)
 
-        // Detail view: toggle enable/disable
+        // 3. Disable
         let enableToggle = app.descendants(matching: .any)["hanlin-skill-detail-enable-toggle"].firstMatch
         XCTAssertTrue(enableToggle.waitForExistence(timeout: 10), "Enable toggle not found in detail view")
+        XCTAssertTrue(isToggleOn(enableToggle), "Skill should initially be enabled")
         tapElement(enableToggle)
+        XCTAssertFalse(isToggleOn(enableToggle), "Skill should be toggled off")
 
-        // Edit custom skill
+        // 4. Leave and reopen to assert disabled persisted
+        let backButton = app.navigationBars.buttons.firstMatch
+        XCTAssertTrue(backButton.waitForExistence(timeout: 5), "Back button not found")
+        tapElement(backButton)
+
+        XCTAssertTrue(createdRow.waitForExistence(timeout: 10), "Created skill row not found after navigating back")
+        tapElement(createdRow)
+
+        let reopenedToggle = app.descendants(matching: .any)["hanlin-skill-detail-enable-toggle"].firstMatch
+        XCTAssertTrue(reopenedToggle.waitForExistence(timeout: 10), "Enable toggle not found on reopen")
+        XCTAssertFalse(isToggleOn(reopenedToggle), "Disabled state should persist across navigation")
+
+        // 5. Re-enable
+        tapElement(reopenedToggle)
+        XCTAssertTrue(isToggleOn(reopenedToggle), "Skill should be re-enabled")
+
+        // 6. Edit
         let editButton = app.buttons["hanlin-skill-detail-edit-button"].firstMatch
         XCTAssertTrue(editButton.waitForExistence(timeout: 5), "Edit button not found in detail view")
         tapElement(editButton)
+
+        let editNameInput = app.textFields["hanlin-skill-editor-name-input"].firstMatch
+        XCTAssertTrue(editNameInput.waitForExistence(timeout: 5), "Name input not found in edit mode")
+        replaceText(in: editNameInput, with: "Test UI Skill Edited")
+
+        let editInstructionsInput = app.textViews["hanlin-skill-editor-instructions-input"].firstMatch
+        XCTAssertTrue(editInstructionsInput.waitForExistence(timeout: 5), "Instructions input not found in edit mode")
+        replaceText(in: editInstructionsInput, with: "EDITED_UI_SKILL_INSTRUCTIONS")
 
         let editSaveButton = app.buttons["hanlin-skill-editor-save-button"].firstMatch
         XCTAssertTrue(editSaveButton.waitForExistence(timeout: 5), "Save button not found in edit mode")
         tapElement(editSaveButton)
 
-        // Delete custom skill
+        // 7. Leave and reopen, assert edited title and instructions visible/persisted
+        let backAfterEdit = app.navigationBars.buttons.firstMatch
+        XCTAssertTrue(backAfterEdit.waitForExistence(timeout: 5), "Back button not found after edit")
+        tapElement(backAfterEdit)
+
+        XCTAssertTrue(createdRow.waitForExistence(timeout: 10), "Skill row not found after editing")
+        tapElement(createdRow)
+
+        let editedTitle = app.staticTexts.matching(NSPredicate(format: "label CONTAINS 'Test UI Skill Edited'")).firstMatch
+        XCTAssertTrue(editedTitle.waitForExistence(timeout: 10), "Edited title was not visible in detail view")
+
+        let editedInstructions = app.staticTexts.matching(NSPredicate(format: "label CONTAINS 'EDITED_UI_SKILL_INSTRUCTIONS'")).firstMatch
+        XCTAssertTrue(editedInstructions.waitForExistence(timeout: 10), "Edited instructions were not visible in detail view")
+
+        // 8. Delete
         let deleteButton = app.buttons["hanlin-skill-detail-delete-button"].firstMatch
         XCTAssertTrue(deleteButton.waitForExistence(timeout: 5), "Delete button not found in detail view")
         tapElement(deleteButton)
@@ -123,7 +172,7 @@ final class HanlinSkillCenterUITests: XCTestCase {
         XCTAssertTrue(confirmDelete.waitForExistence(timeout: 5), "Delete confirmation button not found")
         tapElement(confirmDelete)
 
-        // Verify row is deleted and no longer in list
+        // 9. Assert row absent
         XCTAssertFalse(createdRow.waitForExistence(timeout: 5), "Skill row should no longer exist after deletion")
     }
 
@@ -135,17 +184,17 @@ final class HanlinSkillCenterUITests: XCTestCase {
         XCTAssertTrue(codeRow.waitForExistence(timeout: 10), "Code skill row not found")
         tapElement(codeRow)
 
-        let overrideButton = app.buttons["hanlin-skill-detail-override-button"].firstMatch
-        let editButton = app.buttons["hanlin-skill-detail-edit-button"].firstMatch
+        // 1. Clear pre-existing override if fixture contamination exists
         let initialResetButton = app.buttons["hanlin-skill-detail-reset-button"].firstMatch
-
         if initialResetButton.waitForExistence(timeout: 2) {
-            // Already has an override, reset first
             tapElement(initialResetButton)
             let confirm = app.buttons["Reset"].firstMatch
             if confirm.waitForExistence(timeout: 2) { tapElement(confirm) }
         }
 
+        // 2. Create override
+        let overrideButton = app.buttons["hanlin-skill-detail-override-button"].firstMatch
+        let editButton = app.buttons["hanlin-skill-detail-edit-button"].firstMatch
         XCTAssertTrue(overrideButton.waitForExistence(timeout: 5) || editButton.waitForExistence(timeout: 5), "Neither override nor edit button found")
         if overrideButton.exists {
             tapElement(overrideButton)
@@ -162,24 +211,45 @@ final class HanlinSkillCenterUITests: XCTestCase {
         XCTAssertTrue(saveButton.waitForExistence(timeout: 5), "Save button not found in editor")
         tapElement(saveButton)
 
-        // Verify override indicator or Reset button exists
-        let resetButton = app.buttons["hanlin-skill-detail-reset-button"].firstMatch
-        if !resetButton.waitForExistence(timeout: 5) { app.swipeUp() }
-        XCTAssertTrue(resetButton.waitForExistence(timeout: 10), "Reset button not found after customizing skill")
-
-        // Reset to default
-        tapElement(resetButton)
-        let confirmReset = app.buttons["Reset"].firstMatch
-        if confirmReset.waitForExistence(timeout: 3) {
-            tapElement(confirmReset)
-        }
-
-        // Verify override is gone and override button is back
-        XCTAssertTrue(overrideButton.waitForExistence(timeout: 10), "Override button should be visible after reset to default")
-
+        // 3. Leave and reopen to assert UI_OVERRIDE_MARKER is actually persisted
         let backButton = app.navigationBars.buttons.firstMatch
-        if backButton.exists && backButton.isHittable {
-            backButton.tap()
+        XCTAssertTrue(backButton.waitForExistence(timeout: 5), "Back button not found")
+        tapElement(backButton)
+
+        XCTAssertTrue(codeRow.waitForExistence(timeout: 10), "Code skill row not found after override")
+        tapElement(codeRow)
+
+        let markerText = app.staticTexts.matching(NSPredicate(format: "label CONTAINS 'UI_OVERRIDE_MARKER'")).firstMatch
+        XCTAssertTrue(markerText.waitForExistence(timeout: 10), "UI_OVERRIDE_MARKER was not persisted in instructions")
+
+        let activeResetButton = app.buttons["hanlin-skill-detail-reset-button"].firstMatch
+        XCTAssertTrue(activeResetButton.waitForExistence(timeout: 10), "Reset button not found after customizing skill")
+
+        // 4. Reset override
+        tapElement(activeResetButton)
+        let confirmReset = app.buttons["Reset"].firstMatch
+        XCTAssertTrue(confirmReset.waitForExistence(timeout: 3), "Reset confirmation button not found")
+        tapElement(confirmReset)
+
+        // 5. Leave and reopen to assert override is removed
+        let backAfterReset = app.navigationBars.buttons.firstMatch
+        XCTAssertTrue(backAfterReset.waitForExistence(timeout: 5), "Back button not found after reset")
+        tapElement(backAfterReset)
+
+        XCTAssertTrue(codeRow.waitForExistence(timeout: 10), "Code skill row not found after reset")
+        tapElement(codeRow)
+
+        XCTAssertFalse(markerText.waitForExistence(timeout: 3), "UI_OVERRIDE_MARKER should be gone after reset")
+
+        let baseInstructions = app.staticTexts.matching(NSPredicate(format: "label CONTAINS 'execute_local_python_code'")).firstMatch
+        XCTAssertTrue(baseInstructions.waitForExistence(timeout: 10), "Base instructions should be restored after reset")
+
+        let restoredOverrideButton = app.buttons["hanlin-skill-detail-override-button"].firstMatch
+        XCTAssertTrue(restoredOverrideButton.waitForExistence(timeout: 10), "Override button should be visible again after reset to default")
+
+        let finalBack = app.navigationBars.buttons.firstMatch
+        if finalBack.exists && finalBack.isHittable {
+            finalBack.tap()
         }
     }
 
@@ -293,9 +363,12 @@ final class HanlinSkillCenterUITests: XCTestCase {
         XCTAssertTrue(send.waitForExistence(timeout: 5), "Chat send button not found")
         tapElement(send)
 
-        // Verify final answer contains NEXT_TURN_SKILL_MARKER
+        // Verify final answer contains NEXT_TURN_SKILL_MARKER and does NOT contain failure marker
         let answer = app.staticTexts.matching(NSPredicate(format: "label CONTAINS 'NEXT_TURN_SKILL_MARKER'")).firstMatch
         XCTAssertTrue(answer.waitForExistence(timeout: 45), "Final answer did not contain NEXT_TURN_SKILL_MARKER")
+
+        let failureAnswer = app.staticTexts.matching(NSPredicate(format: "label CONTAINS 'NEXT_TURN_SKILL_LOAD_FAILED'")).firstMatch
+        XCTAssertFalse(failureAnswer.exists, "NEXT_TURN_SKILL_LOAD_FAILED should not appear")
     }
 
     func testSkillResourceAddImportEditDelete() throws {

@@ -51,16 +51,17 @@ struct ProductionSystemSkillsTests {
     }
 
     @Test("Production system skill aliases resolve against actual canonical authority")
-    func productionSystemSkillAliasesResolveAgainstActualCanonicalAuthority() throws {
+    func productionSystemSkillAliasesResolveAgainstActualCanonicalAuthority() async throws {
         NativeToolCatalog.shared.ensureBuiltinsRegistered()
-        let catalogEntries = Set(NativeToolCatalog.shared.allEntries().map(\.name))
+        let prepared = try await AssistantToolBridge.prepare(scope: .nativeOnly)
         let skills = SystemSkillsProvider.systemSkills()
         #expect(!skills.isEmpty)
 
         for skill in skills {
             for toolID in skill.preferredToolIDs {
                 #expect(!toolID.isEmpty)
-                #expect(catalogEntries.contains(toolID), "Skill '\(skill.id.rawValue)' advertises preferredToolID '\(toolID)' which is not registered in NativeToolCatalog!")
+                let resolution = prepared.authority.resolution(alias: toolID)
+                #expect(resolution != nil, "Skill '\(skill.id.rawValue)' advertises preferredToolID '\(toolID)' which does not resolve in prepared authority!")
             }
         }
     }
@@ -156,6 +157,7 @@ struct ProductionSystemSkillsTests {
             .write(to: source.appending(path: "script.json"), options: .atomic)
         try Data(#"import { Text } from "scripting""#.utf8).write(to: source.appending(path: "index.tsx"), options: .atomic)
         try Data("GEN 1 DOC CONTENT".utf8).write(to: source.appending(path: "references/doc.md"), options: .atomic)
+        try Data("GEN_1_RESOURCE".utf8).write(to: source.appending(path: "references/resource.txt"), options: .atomic)
 
         let archive = tempDir.appending(path: "gen-skill.scripting", directoryHint: .notDirectory)
         try HanlinScriptingPackageExporter().exportPackage(at: source, to: archive)
@@ -176,8 +178,18 @@ struct ProductionSystemSkillsTests {
         let instructions1 = await catalog.loadInstructions(for: resolvedGen1)
         #expect(instructions1 == "GEN 1 DOC CONTENT")
 
+        // 1. Initial package resource = GEN_1_RESOURCE
+        let res1URL = try #require(catalog.resolveResourceURL(skillID: resolvedGen1.id, relativePath: "references/resource.txt"))
+        let res1Text = try String(contentsOf: res1URL, encoding: .utf8)
+        #expect(res1Text == "GEN_1_RESOURCE")
+
+        // Traversal rejection: ../outside.txt must not resolve
+        #expect(catalog.resolveResourceURL(skillID: resolvedGen1.id, relativePath: "../outside.txt") == nil)
+        #expect(catalog.resolveResourceURL(skillID: resolvedGen1.id, relativePath: "references/../../outside.txt") == nil)
+
         // Update to Generation 2
         try Data("GEN 2 UPDATED CONTENT".utf8).write(to: source.appending(path: "references/doc.md"), options: .atomic)
+        try Data("GEN_2_RESOURCE".utf8).write(to: source.appending(path: "references/resource.txt"), options: .atomic)
         let archive2 = tempDir.appending(path: "gen-skill-v2.scripting", directoryHint: .notDirectory)
         try HanlinScriptingPackageExporter().exportPackage(at: source, to: archive2)
         await platform.importPackage(from: archive2)
@@ -188,12 +200,22 @@ struct ProductionSystemSkillsTests {
         let instructions2 = await catalog.loadInstructions(for: resolvedGen2)
         #expect(instructions2 == "GEN 2 UPDATED CONTENT")
 
+        // 2. After update: resource = GEN_2_RESOURCE
+        let res2URL = try #require(catalog.resolveResourceURL(skillID: resolvedGen2.id, relativePath: "references/resource.txt"))
+        let res2Text = try String(contentsOf: res2URL, encoding: .utf8)
+        #expect(res2Text == "GEN_2_RESOURCE")
+
         // Rollback to Generation 1
         await platform.rollback(installedID, to: 1)
         catalog.synchronizeProductionSkills(scriptingPlatform: platform)
         let resolvedRollback = try #require(catalog.resolve(rawID: "gen-skill"))
         let instructionsRollback = await catalog.loadInstructions(for: resolvedRollback)
         #expect(instructionsRollback == "GEN 1 DOC CONTENT")
+
+        // 3. After rollback: resource = GEN_1_RESOURCE
+        let resRollbackURL = try #require(catalog.resolveResourceURL(skillID: resolvedRollback.id, relativePath: "references/resource.txt"))
+        let resRollbackText = try String(contentsOf: resRollbackURL, encoding: .utf8)
+        #expect(resRollbackText == "GEN_1_RESOURCE")
 
         // Clean up
         catalog.synchronizeProductionSkills()
@@ -227,25 +249,28 @@ struct ProductionSystemSkillsTests {
         let catalog = HanlinSkillCatalog.shared
         catalog.synchronizeProductionSkills(scriptingPlatform: platform)
 
-        // 1. Skill resolves when package is installed and enabled
+        // 1. Skill resolves when package is installed and enabled (resource readable)
         let resolved = try #require(catalog.resolve(rawID: "lifecycle-skill"))
         #expect(resolved.id.rawValue == "lifecycle-skill")
-        let resURL = catalog.resolveResourceURL(skillID: resolved.id, relativePath: "references/doc.md")
-        #expect(resURL != nil)
+        let resURL = try #require(catalog.resolveResourceURL(skillID: resolved.id, relativePath: "references/doc.md"))
+        let content = try String(contentsOf: resURL, encoding: .utf8)
+        #expect(content == "LIFECYCLE DOC CONTENT")
 
-        // 2. Disable package -> skill disappears immediately from catalog
+        // 2. Disable package -> skill disappears immediately from catalog (resource unavailable)
         await platform.setEnabled(false, for: installedID)
         catalog.synchronizeProductionSkills(scriptingPlatform: platform)
         #expect(catalog.resolve(rawID: "lifecycle-skill") == nil)
         #expect(catalog.resolveResourceURL(skillID: resolved.id, relativePath: "references/doc.md") == nil)
 
-        // 3. Re-enable package -> skill reappears immediately in catalog
+        // 3. Re-enable package -> skill reappears immediately in catalog (resource readable)
         await platform.setEnabled(true, for: installedID)
         catalog.synchronizeProductionSkills(scriptingPlatform: platform)
         #expect(catalog.resolve(rawID: "lifecycle-skill") != nil)
-        #expect(catalog.resolveResourceURL(skillID: resolved.id, relativePath: "references/doc.md") != nil)
+        let reenabledURL = try #require(catalog.resolveResourceURL(skillID: resolved.id, relativePath: "references/doc.md"))
+        let reenabledContent = try String(contentsOf: reenabledURL, encoding: .utf8)
+        #expect(reenabledContent == "LIFECYCLE DOC CONTENT")
 
-        // 4. Uninstall package -> skill disappears and resource resolver fails
+        // 4. Uninstall package -> skill disappears and resource resolver fails (resource unavailable)
         await platform.uninstall(installedID)
         catalog.synchronizeProductionSkills(scriptingPlatform: platform)
         #expect(catalog.resolve(rawID: "lifecycle-skill") == nil)
