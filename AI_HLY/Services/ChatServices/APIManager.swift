@@ -2514,8 +2514,7 @@ class APIManager {
                             }
                         )
 
-                        if assistantToolScope == .nativeOnly ||
-                           (AgentRuntimeUIAcceptanceProvider.isEnabled && !AgentRuntimeUIAcceptanceProvider.isSkillsEnabled) ||
+                        if (AgentRuntimeUIAcceptanceProvider.isEnabled && !AgentRuntimeUIAcceptanceProvider.isSkillsEnabled) ||
                            HanlinSkillCatalog.shared.allSkills().isEmpty {
                             if let prepared = preparedAssistantTools {
                                 session.exposeTools(aliases: Array(prepared.authority.schemasByAlias.keys).sorted())
@@ -4005,8 +4004,10 @@ default:
                         usage: tokenUsage,
                         meaningfulEventCount: meaningfulCount
                     )
+                    if toolAdapter.currentRoundID == stepID {
+                        toolAdapter.currentRoundID = nil
+                    }
                 }
-                toolAdapter.currentRoundID = nil
 
             case .finished(let reason, let usage):
                 if reason == "other" || reason == "error" || reason == "failed" || reason == "unknown" || reason.isEmpty {
