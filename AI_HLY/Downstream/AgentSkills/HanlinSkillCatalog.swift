@@ -4,7 +4,7 @@ import HanlinPlatformContracts
 
 @MainActor
 public final class HanlinSkillCatalog {
-    public static let shared = HanlinSkillCatalog()
+    public static let shared = HanlinSkillCatalog(loadProductionSkills: true)
 
     public enum SkillPrecedenceTier: Int, Comparable, Sendable {
         case system = 0
@@ -81,8 +81,10 @@ public final class HanlinSkillCatalog {
     private var skillEntries: [HanlinSkillID: SkillEntry] = [:]
     public private(set) var currentDomainConfiguration: SkillDomainConfiguration = SkillDomainConfiguration()
 
-    public init() {
-        synchronizeProductionSkills(configuration: currentDomainConfiguration)
+    public init(loadProductionSkills: Bool = false) {
+        if loadProductionSkills {
+            synchronizeProductionSkills(configuration: currentDomainConfiguration)
+        }
     }
 
     /// Registers a skill with tier and optional custom instruction loader and resource resolver.
@@ -391,18 +393,12 @@ public final class HanlinSkillCatalog {
 
     /// All registered skills for catalog discovery.
     public func allSkills() -> [HanlinSkillDescriptor] {
-        if skillEntries.isEmpty {
-            synchronizeProductionSkills(configuration: currentDomainConfiguration)
-        }
-        return Array(skillEntries.values.map(\.descriptor).sorted(by: { $0.id.rawValue < $1.id.rawValue }))
+        Array(skillEntries.values.map(\.descriptor).sorted(by: { $0.id.rawValue < $1.id.rawValue }))
     }
 
     /// Resolves a skill descriptor by ID.
     public func resolve(id: HanlinSkillID) -> HanlinSkillDescriptor? {
-        if skillEntries.isEmpty {
-            synchronizeProductionSkills(configuration: currentDomainConfiguration)
-        }
-        return skillEntries[id]?.descriptor
+        skillEntries[id]?.descriptor
     }
 
     /// Resolves a skill descriptor by raw string ID.
