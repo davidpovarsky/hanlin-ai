@@ -2,6 +2,15 @@ import CryptoKit
 import Foundation
 
 actor AgentDiagnosticsRecorder {
+    private static let registryLock = NSLock()
+    private nonisolated(unsafe) static var recentRecorders: [UUID: AgentDiagnosticsRecorder] = [:]
+
+    static func current(runID: UUID) -> AgentDiagnosticsRecorder? {
+        registryLock.lock()
+        defer { registryLock.unlock() }
+        return recentRecorders[runID]
+    }
+
     private(set) var session: AgentDiagnosticsSession
     private let directoryURL: URL
     private let jsonURL: URL
@@ -26,6 +35,12 @@ actor AgentDiagnosticsRecorder {
             directoryURL: directory,
             level: AgentDiagnosticsConfiguration.level
         )
+        registryLock.lock()
+        recentRecorders[runID] = recorder
+        if recentRecorders.count > 50 {
+            recentRecorders.remove(at: recentRecorders.startIndex)
+        }
+        registryLock.unlock()
         await recorder.persist()
         await recorder.cleanupRetention()
         let sessionPath = (await recorder.fileURLs()).json.path
@@ -61,6 +76,7 @@ actor AgentDiagnosticsRecorder {
             buildNumber: bundle.object(forInfoDictionaryKey: "CFBundleVersion") as? String,
             status: "running",
             isComplete: false,
+            error: nil,
             level: level,
             rounds: [],
             totals: .unavailable,
@@ -442,7 +458,11 @@ actor AgentDiagnosticsRecorder {
         session.lastUpdatedAt = terminalDate
         session.status = normalizedStatus
         session.isComplete = true
-        if let error { session.efficiency.warnings.append(AgentDiagnosticsRedactor.sanitize(error)) }
+        if let error {
+            let sanitized = AgentDiagnosticsRedactor.sanitize(error)
+            session.error = sanitized
+            session.efficiency.warnings.append(sanitized)
+        }
         updateDerivedValues()
         await persist()
 

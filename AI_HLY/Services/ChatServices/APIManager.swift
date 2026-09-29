@@ -123,6 +123,10 @@ class APIManager {
     func diagnosticsSnapshot() async -> AgentDiagnosticsSession? {
         await agentDiagnosticsRecorder?.session
     }
+
+    var currentRecorder: AgentDiagnosticsRecorder? {
+        agentDiagnosticsRecorder
+    }
     
     // 解析参数
     func extractValue(from jsonString: String, forKey key: String) -> String? {

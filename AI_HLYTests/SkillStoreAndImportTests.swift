@@ -505,7 +505,7 @@ struct SkillStoreAndImportTests {
         #expect(unloadedResult.contains("is not currently loaded"))
 
         // 2. Load the skill
-        let loadResult = await LoadSkillTool.execute(
+        _ = await LoadSkillTool.execute(
             argumentsJSON: "{\"skill_id\":\"res-test-skill\"}",
             session: session,
             catalog: catalog

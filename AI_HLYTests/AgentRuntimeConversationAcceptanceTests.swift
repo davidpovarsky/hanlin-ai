@@ -562,7 +562,6 @@ struct AgentRuntimeConversationAcceptanceTests {
         ])
 
         let runBID = UUID()
-        let sessionB = AssistantCapabilitySession()
         var runBText = ""
         let streamB = try await manager.sendStreamRequest(
             messages: [RequestMessage(role: "user", text: "Start Run B", modelName: "acceptance-model", modelDisplayName: "Acceptance Model")],
@@ -683,12 +682,13 @@ struct AgentRuntimeConversationAcceptanceTests {
         #expect(diagnostics.status != "succeeded")
         #expect(diagnostics.completedAt != nil)
         #expect(diagnostics.error != nil && !diagnostics.error!.isEmpty)
+        #expect(diagnostics.error?.contains("Stream ended unexpectedly") == true)
 
         // No later terminal mutation
         let snapshot1 = diagnostics
-        let recorder = AgentDiagnosticsRecorder.current(runID: diagnostics.runID)
-        await recorder?.complete(status: "completed")
-        let snapshot2 = await recorder?.session ?? snapshot1
+        let recorder = try #require(AgentDiagnosticsRecorder.current(runID: diagnostics.runID))
+        await recorder.complete(status: "completed")
+        let snapshot2 = await recorder.session
         #expect(snapshot1 == snapshot2)
     }
 

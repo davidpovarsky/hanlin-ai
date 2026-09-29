@@ -17,6 +17,7 @@ struct AgentDiagnosticsSession: Codable, Identifiable, Sendable, Equatable {
     var buildNumber: String?
     var status: String
     var isComplete: Bool
+    var error: String? = nil
     var level: AgentDiagnosticsLevel
     var rounds: [AgentDiagnosticsRound]
     var totals: AgentTokenUsage
