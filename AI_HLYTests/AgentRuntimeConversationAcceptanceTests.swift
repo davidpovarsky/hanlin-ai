@@ -389,7 +389,9 @@ struct AgentRuntimeConversationAcceptanceTests {
     func cancelDuringAgentWorkStopsAllLaterToolExecution() async throws {
         await ControllableDelayedTool.reset()
         let delayedTool = ControllableDelayedTool()
-        NativeToolCatalog.shared.register(delayedTool)
+        if NativeToolCatalog.shared.entry(named: delayedTool.name) == nil {
+            NativeToolCatalog.shared.register(delayedTool)
+        }
         if let entry = NativeToolCatalog.shared.entry(named: delayedTool.name) {
             NativeToolCatalog.shared.setEnabled(true, for: entry)
         }
@@ -487,7 +489,9 @@ struct AgentRuntimeConversationAcceptanceTests {
     func startingNewRunCancelsOldRunWithoutGhostWork() async throws {
         await ControllableDelayedTool.reset()
         let delayedTool = ControllableDelayedTool()
-        NativeToolCatalog.shared.register(delayedTool)
+        if NativeToolCatalog.shared.entry(named: delayedTool.name) == nil {
+            NativeToolCatalog.shared.register(delayedTool)
+        }
         if let entry = NativeToolCatalog.shared.entry(named: delayedTool.name) {
             NativeToolCatalog.shared.setEnabled(true, for: entry)
         }
