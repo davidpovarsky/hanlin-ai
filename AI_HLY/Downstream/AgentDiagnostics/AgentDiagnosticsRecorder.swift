@@ -1,14 +1,25 @@
 import CryptoKit
 import Foundation
 
-actor AgentDiagnosticsRecorder {
-    private static let registryLock = NSLock()
-    private nonisolated(unsafe) static var recentRecorders: [UUID: AgentDiagnosticsRecorder] = [:]
+private actor AgentDiagnosticsRegistry {
+    static let shared = AgentDiagnosticsRegistry()
+    private var recentRecorders: [UUID: AgentDiagnosticsRecorder] = [:]
 
-    static func current(runID: UUID) -> AgentDiagnosticsRecorder? {
-        registryLock.lock()
-        defer { registryLock.unlock() }
-        return recentRecorders[runID]
+    func register(_ recorder: AgentDiagnosticsRecorder, for runID: UUID) {
+        recentRecorders[runID] = recorder
+        if recentRecorders.count > 50 {
+            recentRecorders.remove(at: recentRecorders.startIndex)
+        }
+    }
+
+    func recorder(for runID: UUID) -> AgentDiagnosticsRecorder? {
+        recentRecorders[runID]
+    }
+}
+
+actor AgentDiagnosticsRecorder {
+    static func current(runID: UUID) async -> AgentDiagnosticsRecorder? {
+        await AgentDiagnosticsRegistry.shared.recorder(for: runID)
     }
 
     private(set) var session: AgentDiagnosticsSession
@@ -35,12 +46,7 @@ actor AgentDiagnosticsRecorder {
             directoryURL: directory,
             level: AgentDiagnosticsConfiguration.level
         )
-        registryLock.lock()
-        recentRecorders[runID] = recorder
-        if recentRecorders.count > 50 {
-            recentRecorders.remove(at: recentRecorders.startIndex)
-        }
-        registryLock.unlock()
+        await AgentDiagnosticsRegistry.shared.register(recorder, for: runID)
         await recorder.persist()
         await recorder.cleanupRetention()
         let sessionPath = (await recorder.fileURLs()).json.path

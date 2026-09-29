@@ -686,7 +686,7 @@ struct AgentRuntimeConversationAcceptanceTests {
 
         // No later terminal mutation
         let snapshot1 = diagnostics
-        let recorder = try #require(AgentDiagnosticsRecorder.current(runID: diagnostics.runID))
+        let recorder = try #require(await AgentDiagnosticsRecorder.current(runID: diagnostics.runID))
         await recorder.complete(status: "completed")
         let snapshot2 = await recorder.session
         #expect(snapshot1 == snapshot2)
