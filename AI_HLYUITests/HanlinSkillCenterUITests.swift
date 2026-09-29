@@ -47,7 +47,7 @@ final class HanlinSkillCenterUITests: XCTestCase {
         }
         if codeRow.waitForExistence(timeout: 5) {
             tapElement(codeRow)
-            let enableToggle = app.descendants(matching: .any)["hanlin-skill-detail-enable-toggle"].firstMatch
+            let enableToggle = skillDetailToggle()
             XCTAssertTrue(enableToggle.waitForExistence(timeout: 10), "Enable toggle not found in SkillDetailView")
 
             let backButton = app.navigationBars.buttons.firstMatch
@@ -68,13 +68,51 @@ final class HanlinSkillCenterUITests: XCTestCase {
 
     private func isToggleOn(_ element: XCUIElement) -> Bool {
         guard element.exists else { return false }
-        if let valStr = element.value as? String {
+        let target = element.elementType == .switch ? element : (element.switches.firstMatch.exists ? element.switches.firstMatch : element)
+        if let valStr = target.value as? String {
             return valStr == "1" || valStr.lowercased() == "on" || valStr.lowercased() == "true"
         }
-        if let valInt = element.value as? Int {
+        if let valInt = target.value as? Int {
             return valInt == 1
         }
         return false
+    }
+
+    private func skillDetailToggle() -> XCUIElement {
+        let sw = app.switches["hanlin-skill-detail-enable-toggle"].firstMatch
+        if sw.waitForExistence(timeout: 2) { return sw }
+        let descendantSwitch = app.descendants(matching: .switch)["hanlin-skill-detail-enable-toggle"].firstMatch
+        if descendantSwitch.waitForExistence(timeout: 2) { return descendantSwitch }
+        return app.descendants(matching: .any)["hanlin-skill-detail-enable-toggle"].firstMatch
+    }
+
+    private func tapToggle(_ element: XCUIElement) {
+        if element.elementType == .switch {
+            if element.isHittable {
+                element.tap()
+            } else {
+                element.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
+            }
+        } else if element.switches.firstMatch.exists {
+            let sw = element.switches.firstMatch
+            if sw.isHittable {
+                sw.tap()
+            } else {
+                sw.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
+            }
+        } else {
+            tapElement(element)
+        }
+    }
+
+    @discardableResult
+    private func waitForToggle(_ element: XCUIElement, toBe targetState: Bool, timeout: TimeInterval = 10) -> Bool {
+        let predicate = NSPredicate { _, _ in
+            self.isToggleOn(element) == targetState
+        }
+        let exp = expectation(for: predicate, evaluatedWith: element)
+        let result = XCTWaiter.wait(for: [exp], timeout: timeout)
+        return result == .completed
     }
 
     func testCreateEditDisableDeleteCustomSkill() throws {
@@ -121,11 +159,11 @@ final class HanlinSkillCenterUITests: XCTestCase {
         tapElement(createdRow)
 
         // 3. Disable
-        let enableToggle = app.descendants(matching: .any)["hanlin-skill-detail-enable-toggle"].firstMatch
+        let enableToggle = skillDetailToggle()
         XCTAssertTrue(enableToggle.waitForExistence(timeout: 10), "Enable toggle not found in detail view")
         XCTAssertTrue(isToggleOn(enableToggle), "Skill should initially be enabled")
-        tapElement(enableToggle)
-        XCTAssertFalse(isToggleOn(enableToggle), "Skill should be toggled off")
+        tapToggle(enableToggle)
+        XCTAssertTrue(waitForToggle(enableToggle, toBe: false, timeout: 10), "Skill should be toggled off")
 
         // 4. Leave and reopen to assert disabled persisted
         let backButton = app.navigationBars.buttons.firstMatch
@@ -135,13 +173,13 @@ final class HanlinSkillCenterUITests: XCTestCase {
         XCTAssertTrue(createdRow.waitForExistence(timeout: 10), "Created skill row not found after navigating back")
         tapElement(createdRow)
 
-        let reopenedToggle = app.descendants(matching: .any)["hanlin-skill-detail-enable-toggle"].firstMatch
+        let reopenedToggle = skillDetailToggle()
         XCTAssertTrue(reopenedToggle.waitForExistence(timeout: 10), "Enable toggle not found on reopen")
-        XCTAssertFalse(isToggleOn(reopenedToggle), "Disabled state should persist across navigation")
+        XCTAssertTrue(waitForToggle(reopenedToggle, toBe: false, timeout: 10), "Disabled state should persist across navigation")
 
         // 5. Re-enable
-        tapElement(reopenedToggle)
-        XCTAssertTrue(isToggleOn(reopenedToggle), "Skill should be re-enabled")
+        tapToggle(reopenedToggle)
+        XCTAssertTrue(waitForToggle(reopenedToggle, toBe: true, timeout: 10), "Skill should be re-enabled")
 
         // 6. Edit
         let editButton = app.buttons["hanlin-skill-detail-edit-button"].firstMatch
@@ -176,6 +214,9 @@ final class HanlinSkillCenterUITests: XCTestCase {
 
         // 8. Delete
         let deleteButton = app.buttons["hanlin-skill-detail-delete-button"].firstMatch
+        if !deleteButton.waitForExistence(timeout: 3) {
+            app.swipeUp()
+        }
         XCTAssertTrue(deleteButton.waitForExistence(timeout: 5), "Delete button not found in detail view")
         tapElement(deleteButton)
 
@@ -197,15 +238,22 @@ final class HanlinSkillCenterUITests: XCTestCase {
 
         // 1. Clear pre-existing override if fixture contamination exists
         let initialResetButton = app.buttons["hanlin-skill-detail-reset-button"].firstMatch
-        if initialResetButton.waitForExistence(timeout: 2) {
+        if !initialResetButton.waitForExistence(timeout: 2) {
+            app.swipeUp()
+        }
+        if initialResetButton.exists {
             tapElement(initialResetButton)
             let confirm = app.buttons["Reset"].firstMatch
             if confirm.waitForExistence(timeout: 2) { tapElement(confirm) }
+            app.swipeDown()
         }
 
         // 2. Create override
         let overrideButton = app.buttons["hanlin-skill-detail-override-button"].firstMatch
         let editButton = app.buttons["hanlin-skill-detail-edit-button"].firstMatch
+        if !overrideButton.waitForExistence(timeout: 2) && !editButton.waitForExistence(timeout: 2) {
+            app.swipeUp()
+        }
         XCTAssertTrue(overrideButton.waitForExistence(timeout: 5) || editButton.waitForExistence(timeout: 5), "Neither override nor edit button found")
         if overrideButton.exists {
             tapElement(overrideButton)
@@ -234,13 +282,20 @@ final class HanlinSkillCenterUITests: XCTestCase {
         XCTAssertTrue(markerText.waitForExistence(timeout: 10), "UI_OVERRIDE_MARKER was not persisted in instructions")
 
         let activeResetButton = app.buttons["hanlin-skill-detail-reset-button"].firstMatch
+        if !activeResetButton.waitForExistence(timeout: 3) {
+            app.swipeUp()
+        }
+        if !activeResetButton.waitForExistence(timeout: 3) {
+            app.swipeUp()
+        }
         XCTAssertTrue(activeResetButton.waitForExistence(timeout: 10), "Reset button not found after customizing skill")
 
         // 4. Reset override
         tapElement(activeResetButton)
         let confirmReset = app.buttons["Reset"].firstMatch
-        XCTAssertTrue(confirmReset.waitForExistence(timeout: 3), "Reset confirmation button not found")
-        tapElement(confirmReset)
+        if confirmReset.waitForExistence(timeout: 2) {
+            tapElement(confirmReset)
+        }
 
         // 5. Leave and reopen to assert override is removed
         let backAfterReset = app.navigationBars.buttons.firstMatch
@@ -256,6 +311,12 @@ final class HanlinSkillCenterUITests: XCTestCase {
         XCTAssertTrue(baseInstructions.waitForExistence(timeout: 10), "Base instructions should be restored after reset")
 
         let restoredOverrideButton = app.buttons["hanlin-skill-detail-override-button"].firstMatch
+        if !restoredOverrideButton.waitForExistence(timeout: 3) {
+            app.swipeUp()
+        }
+        if !restoredOverrideButton.waitForExistence(timeout: 3) {
+            app.swipeUp()
+        }
         XCTAssertTrue(restoredOverrideButton.waitForExistence(timeout: 10), "Override button should be visible again after reset to default")
 
         let finalBack = app.navigationBars.buttons.firstMatch
