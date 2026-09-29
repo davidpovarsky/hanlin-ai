@@ -128,15 +128,20 @@ struct SkillDetailView: View {
 
     private var statusSection: some View {
         Section {
-            Toggle(SkillL10n.string("Enabled"), isOn: Binding(
-                get: { isEnabled },
-                set: { newValue in
-                    isEnabled = newValue
-                    SkillStore.shared.setSkillEnabled(id: skillID, enabled: newValue)
-                    loadSkillData()
-                }
-            ))
-            .accessibilityIdentifier("hanlin-skill-detail-enable-toggle")
+            HStack {
+                Text(SkillL10n.string("Enabled"))
+                Spacer()
+                Toggle("", isOn: Binding(
+                    get: { isEnabled },
+                    set: { newValue in
+                        isEnabled = newValue
+                        SkillStore.shared.setSkillEnabled(id: skillID, enabled: newValue)
+                        loadSkillData()
+                    }
+                ))
+                .labelsHidden()
+                .accessibilityIdentifier("hanlin-skill-detail-enable-toggle")
+            }
         }
     }
 

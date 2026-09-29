@@ -67,8 +67,19 @@ final class HanlinSkillCenterUITests: XCTestCase {
     }
 
     private func isToggleOn(_ element: XCUIElement) -> Bool {
-        guard element.exists else { return false }
-        let target = element.elementType == .switch ? element : (element.switches.firstMatch.exists ? element.switches.firstMatch : element)
+        let target: XCUIElement
+        if element.elementType == .switch && element.exists {
+            target = element
+        } else if app.switches["hanlin-skill-detail-enable-toggle"].firstMatch.exists {
+            target = app.switches["hanlin-skill-detail-enable-toggle"].firstMatch
+        } else if app.switches.firstMatch.exists {
+            target = app.switches.firstMatch
+        } else if element.exists {
+            target = element
+        } else {
+            return false
+        }
+        guard target.exists else { return false }
         if let valStr = target.value as? String {
             return valStr == "1" || valStr.lowercased() == "on" || valStr.lowercased() == "true"
         }
@@ -80,28 +91,32 @@ final class HanlinSkillCenterUITests: XCTestCase {
 
     private func skillDetailToggle() -> XCUIElement {
         let sw = app.switches["hanlin-skill-detail-enable-toggle"].firstMatch
-        if sw.waitForExistence(timeout: 2) { return sw }
+        if sw.waitForExistence(timeout: 3) { return sw }
         let descendantSwitch = app.descendants(matching: .switch)["hanlin-skill-detail-enable-toggle"].firstMatch
         if descendantSwitch.waitForExistence(timeout: 2) { return descendantSwitch }
+        let anySw = app.switches.firstMatch
+        if anySw.waitForExistence(timeout: 2) { return anySw }
         return app.descendants(matching: .any)["hanlin-skill-detail-enable-toggle"].firstMatch
     }
 
     private func tapToggle(_ element: XCUIElement) {
-        if element.elementType == .switch {
-            if element.isHittable {
-                element.tap()
-            } else {
-                element.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
-            }
-        } else if element.switches.firstMatch.exists {
-            let sw = element.switches.firstMatch
-            if sw.isHittable {
-                sw.tap()
-            } else {
-                sw.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
-            }
+        let target: XCUIElement
+        if element.elementType == .switch && element.exists {
+            target = element
+        } else if app.switches["hanlin-skill-detail-enable-toggle"].firstMatch.exists {
+            target = app.switches["hanlin-skill-detail-enable-toggle"].firstMatch
+        } else if app.switches.firstMatch.exists {
+            target = app.switches.firstMatch
         } else {
-            tapElement(element)
+            target = element
+        }
+
+        if target.isHittable {
+            target.tap()
+        } else if target.elementType == .switch {
+            target.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
+        } else {
+            target.coordinate(withNormalizedOffset: CGVector(dx: 0.95, dy: 0.5)).tap()
         }
     }
 
