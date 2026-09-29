@@ -66,6 +66,17 @@ final class HanlinSkillCenterUITests: XCTestCase {
         element.typeText(newText)
     }
 
+    private func isToggleOn(_ element: XCUIElement) -> Bool {
+        guard element.exists else { return false }
+        if let valStr = element.value as? String {
+            return valStr == "1" || valStr.lowercased() == "on" || valStr.lowercased() == "true"
+        }
+        if let valInt = element.value as? Int {
+            return valInt == 1
+        }
+        return false
+    }
+
     func testCreateEditDisableDeleteCustomSkill() throws {
         openSkillCenter()
 
