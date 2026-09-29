@@ -53,7 +53,8 @@ struct ProductionSystemSkillsTests {
     @Test("Production system skill aliases resolve against actual canonical authority")
     func productionSystemSkillAliasesResolveAgainstActualCanonicalAuthority() async throws {
         NativeToolCatalog.shared.ensureBuiltinsRegistered()
-        let prepared = try await AssistantToolBridge.prepare(scope: .nativeOnly)
+        let legacySources = LegacyToolCanonicalAdapter.sources()
+        let prepared = try await AssistantToolBridge.prepare(scope: .nativeOnly, legacySources: legacySources)
         let skills = SystemSkillsProvider.systemSkills()
         #expect(!skills.isEmpty)
 

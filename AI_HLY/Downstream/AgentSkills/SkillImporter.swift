@@ -413,6 +413,7 @@ final class BoundedStreamDownloader: NSObject, URLSessionDataDelegate, @unchecke
     private var accumulatedData = Data()
     private var continuation: CheckedContinuation<(Data, HTTPURLResponse), Error>?
     private var response: HTTPURLResponse?
+    private var currentSession: URLSession?
     private let lock = NSLock()
     private var isResumed = false
 
@@ -433,9 +434,15 @@ final class BoundedStreamDownloader: NSObject, URLSessionDataDelegate, @unchecke
         return try await withCheckedThrowingContinuation { cont in
             self.lock.lock()
             self.continuation = cont
-            self.lock.unlock()
+            self.receivedBytes = 0
+            self.accumulatedData = Data()
+            self.response = nil
+            self.isResumed = false
 
             let session = URLSession(configuration: self.sessionConfiguration, delegate: self, delegateQueue: nil)
+            self.currentSession = session
+            self.lock.unlock()
+
             let task = session.dataTask(with: request)
             task.resume()
         }
@@ -528,6 +535,8 @@ final class BoundedStreamDownloader: NSObject, URLSessionDataDelegate, @unchecke
         defer { lock.unlock() }
         guard !isResumed else { return }
         isResumed = true
+        currentSession?.finishTasksAndInvalidate()
+        currentSession = nil
         continuation?.resume(returning: value)
         continuation = nil
     }
@@ -537,6 +546,8 @@ final class BoundedStreamDownloader: NSObject, URLSessionDataDelegate, @unchecke
         defer { lock.unlock() }
         guard !isResumed else { return }
         isResumed = true
+        currentSession?.invalidateAndCancel()
+        currentSession = nil
         continuation?.resume(throwing: error)
         continuation = nil
     }

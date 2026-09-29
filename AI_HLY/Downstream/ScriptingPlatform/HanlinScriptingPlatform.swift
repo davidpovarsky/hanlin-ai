@@ -177,10 +177,15 @@ final class HanlinScriptingPlatform {
         }
         let generation = package.record.activeGeneration
         let packageDir = package.record.installedPackageID.rawValue
-        let candidate = storeRoot
-            .appending(path: "packages/\(packageDir)/generations/\(generation)/\(clean)")
+        let genRoot = storeRoot
+            .appending(path: "packages/\(packageDir)/generations/\(generation)")
+        let candidate = genRoot.appending(path: clean)
         if FileManager.default.fileExists(atPath: candidate.path(percentEncoded: false)) {
             return candidate
+        }
+        let sourceCandidate = genRoot.appending(path: "source/\(clean)")
+        if FileManager.default.fileExists(atPath: sourceCandidate.path(percentEncoded: false)) {
+            return sourceCandidate
         }
         return nil
     }

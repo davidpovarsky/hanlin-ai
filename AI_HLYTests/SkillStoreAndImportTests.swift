@@ -551,7 +551,7 @@ struct SkillStoreAndImportTests {
         #expect(pageResult.contains("Line 100: data row content"))
         #expect(!pageResult.contains("Line 50: data row content"))
         #expect(!pageResult.contains("Line 101: data row content"))
-        #expect(pageResult.contains("Showing lines 51 - 100 of 300"))
+        #expect(pageResult.contains("lines 51-100 of 300"))
     }
 
     @Test("SkillStore and ReadSkillResourceTool reject symlink escaping root")
