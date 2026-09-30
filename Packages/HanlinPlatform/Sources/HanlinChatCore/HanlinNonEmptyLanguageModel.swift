@@ -77,6 +77,7 @@ final class HanlinNonEmptyLanguageModel: LanguageModelV3, @unchecked Sendable {
                         }
 
                         buffer.removeAll()
+                        try Task.checkCancellation()
                         current = try await base.doStream(options: options).stream
                     }
                 } catch is CancellationError {

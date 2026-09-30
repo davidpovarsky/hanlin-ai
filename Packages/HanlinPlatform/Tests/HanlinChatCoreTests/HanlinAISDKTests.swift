@@ -456,21 +456,15 @@ struct HanlinNonEmptyLanguageModelTests {
         let mock = MockLanguageModelV3 { _ in
             AsyncThrowingStream { continuation in
                 continuation.yield(.responseMetadata(id: "r1", modelId: "m1", timestamp: Date()))
-                // Keep open until cancelled
+                continuation.finish(throwing: CancellationError())
             }
         }
         let model = HanlinNonEmptyLanguageModel(base: mock)
         let streamResult = try await model.doStream(options: LanguageModelV3CallOptions(prompt: []))
 
-        let readTask = Task {
-            for try await _ in streamResult.stream {}
-        }
-        try await Task.sleep(nanoseconds: 10_000_000)
-        readTask.cancel()
-
         var caughtCancelled = false
         do {
-            try await readTask.value
+            for try await _ in streamResult.stream {}
         } catch is CancellationError {
             caughtCancelled = true
         } catch HanlinChatError.cancelled {

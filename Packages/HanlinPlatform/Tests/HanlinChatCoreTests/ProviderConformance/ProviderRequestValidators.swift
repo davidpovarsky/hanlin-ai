@@ -645,7 +645,8 @@ public enum ProviderRequestValidators {
             }
 
             for exp in expectedCalls {
-                guard let match = functionCalls.first(where: { ($0["name"] as? String) == exp.name }) else {
+                let matchingCalls = functionCalls.filter { ($0["name"] as? String) == exp.name }
+                guard !matchingCalls.isEmpty else {
                     throw ConformanceProtocolError(
                         category: .TOOL_RESULT_CONTINUATION,
                         ownership: .swiftAISDKDependency,
@@ -654,13 +655,14 @@ public enum ProviderRequestValidators {
                     )
                 }
                 if let expectedSig = expectation.expectedThoughtSignature {
-                    let sig = match["thoughtSignature"] as? String
-                    if sig != expectedSig {
+                    let hasMatchingSig = matchingCalls.contains { ($0["thoughtSignature"] as? String) == expectedSig }
+                    if !hasMatchingSig {
+                        let observedSigs = matchingCalls.compactMap { $0["thoughtSignature"] as? String }
                         throw ConformanceProtocolError(
                             category: .SIGNATURE_STATE,
                             ownership: .swiftAISDKDependency,
                             round: round,
-                            message: "Google functionCall for '\(exp.name)' expected thoughtSignature '\(expectedSig)', observed '\(sig ?? "nil")'."
+                            message: "Google functionCall for '\(exp.name)' expected thoughtSignature '\(expectedSig)', observed '\(observedSigs)'."
                         )
                     }
                 }

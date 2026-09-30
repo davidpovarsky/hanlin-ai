@@ -521,3 +521,60 @@ public enum ProductionConformanceFixtures {
         return Data(sse.utf8)
     }
 }
+
+// MARK: - Conformance Failure Classification & Protocol Error
+
+public enum ConformanceFailureCategory: String, CaseIterable, Sendable, Codable {
+    case ROUTING
+    case REQUEST_SERIALIZATION
+    case TOOL_SCHEMA
+    case TOOL_CALL_PARSE
+    case TOOL_RESULT_CONTINUATION
+    case REASONING_STATE
+    case SIGNATURE_STATE
+    case STREAM_PARSER
+    case FINISH_REASON
+    case EMPTY_RESPONSE
+    case RETRY
+    case TOOL_EXECUTION
+    case DYNAMIC_TOOL_EXPOSURE
+    case CANCELLATION
+    case RUN_OWNERSHIP
+    case DIAGNOSTICS
+    case DIRECT_CHAT_PATH
+    case SDK_DEPENDENCY
+    case TEST_HARNESS
+    case MODEL_NONCOMPLIANCE
+}
+
+public enum FailureOwnership: String, CaseIterable, Sendable, Codable {
+    case hanlinAIProduction = "hanlin-ai production"
+    case swiftAISDKDependency = "swift-ai-sdk dependency"
+    case testHarness = "test harness"
+    case providerModelBehavior = "provider/model behavior"
+    case unknown = "unknown"
+}
+
+public struct ConformanceProtocolError: Error, CustomStringConvertible, Sendable {
+    public let category: ConformanceFailureCategory
+    public let ownership: FailureOwnership
+    public let round: Int
+    public let message: String
+
+    public init(
+        category: ConformanceFailureCategory = .TEST_HARNESS,
+        ownership: FailureOwnership = .testHarness,
+        round: Int = 0,
+        message: String
+    ) {
+        self.category = category
+        self.ownership = ownership
+        self.round = round
+        self.message = message
+    }
+
+    public var description: String {
+        "[\(category.rawValue) / \(ownership.rawValue) / Round \(round)] \(message)"
+    }
+}
+

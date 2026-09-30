@@ -794,7 +794,7 @@ struct ProviderConformanceScenarioTests {
                 "properties": ["step": ["type": "integer"]]
             ]),
             execute: { args, callID in
-                HanlinAISDKToolExecutionOutput(modelText: "Result for step_tool (\(callID))")
+                HanlinAISDKToolExecutionOutput(modelText: "Result for \(callID) Result for step_tool")
             }
         )
     }

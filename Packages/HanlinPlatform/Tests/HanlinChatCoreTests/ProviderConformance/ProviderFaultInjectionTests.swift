@@ -131,14 +131,18 @@ struct ProviderFaultInjectionTests {
 
     // MARK: - F02: HTTP 200 Finish-Only No Semantic Content
 
-    @Test("F02: HTTP 200 with finish_reason='other' and 0 text/tools is characterized")
+    @Test("F02: HTTP 200 with finish_reason='other' and 0 text/tools is retried then throws emptyProviderResponse")
     func testF02FinishOnlyOtherCharacterization() async throws {
         let emulator = StatefulProviderEmulator(
             profile: .openAINativeChat,
             scenarioName: "F02_FinishOnlyOther",
-            roundExpectations: [0: RoundExpectation()],
+            roundExpectations: [
+                0: RoundExpectation(),
+                1: RoundExpectation()
+            ],
             roundResponses: [
-                0: .sseChunks(ProviderResponseFixtures.openAIFinishOnlyChunks(finishReason: "other"))
+                0: .sseChunks(ProviderResponseFixtures.openAIFinishOnlyChunks(finishReason: "other")),
+                1: .sseChunks(ProviderResponseFixtures.openAIFinishOnlyChunks(finishReason: "other"))
             ]
         )
         let engine = try Self.makeEngine(profile: .openAINativeChat, emulator: emulator)
@@ -150,15 +154,23 @@ struct ProviderFaultInjectionTests {
             prepareStep: { _ in HanlinAISDKStepPreparation(activeToolAliases: []) }
         )
 
+        var didThrowEmptyResponse = false
         var textCollected = ""
-        var finishEventReason: String?
-        for try await event in stream {
-            if case .textDelta(let text) = event { textCollected += text }
-            if case .finished(let reason, _) = event { finishEventReason = reason }
+        do {
+            for try await event in stream {
+                if case .textDelta(let text) = event { textCollected += text }
+            }
+        } catch let error as HanlinAISDKError {
+            if case .emptyProviderResponse(let attempts) = error {
+                didThrowEmptyResponse = true
+                #expect(attempts == 2)
+            }
+        } catch {
         }
 
         #expect(textCollected.isEmpty, "Observed behavior: No text was produced.")
-        #expect(finishEventReason == "other", "Characterization: raw/normalized finish reason 'other' surfaced in finished event.")
+        #expect(didThrowEmptyResponse, "Both attempts finish-only must throw emptyProviderResponse(attempts: 2).")
+        #expect(emulator.requestCount == 2, "Wrapper must retry once before throwing emptyProviderResponse.")
     }
 
     // MARK: - F03: Abrupt Close Before Terminal Event Across Profiles (Section 17)

@@ -929,7 +929,7 @@ struct ProductionProviderConformanceTests {
             let directChatRoute: String = key.apiType.rawValue
 
             #expect(!company.isEmpty)
-            #expect(!key.requestURL.isEmpty)
+            #expect(key.requestURL?.isEmpty == false)
             #expect(allAPITypes.contains(key.apiType))
             #expect(!agentRoute.isEmpty)
             #expect(!directChatRoute.isEmpty)
