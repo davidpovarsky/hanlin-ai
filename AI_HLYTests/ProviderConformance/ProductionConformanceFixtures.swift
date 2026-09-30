@@ -210,24 +210,26 @@ public enum ProductionConformanceFixtures {
         return [chunk, term, "data: [DONE]\n\n"]
     }
 
-    public static let richOpaqueReasoningDetailsJSON: [[String: Any]] = [
+    public static var richOpaqueReasoningDetailsJSON: [[String: Any]] {
         [
-            "type": "reasoning.text",
-            "text": "opaque-a",
-            "signature": "sig-A",
-            "provider_blob": [
-                "encrypted": "ENC-AAA",
-                "index": 7,
-                "valid": true,
-                "nullable": NSNull()
+            [
+                "type": "reasoning.text",
+                "text": "opaque-a",
+                "signature": "sig-A",
+                "provider_blob": [
+                    "encrypted": "ENC-AAA",
+                    "index": 7,
+                    "valid": true,
+                    "nullable": NSNull()
+                ]
+            ],
+            [
+                "type": "provider.custom",
+                "signature": "sig-B",
+                "payload": ["x", 3, false, ["nested": "value"]]
             ]
-        ],
-        [
-            "type": "provider.custom",
-            "signature": "sig-B",
-            "payload": ["x", 3, false, ["nested": "value"]]
         ]
-    ]
+    }
 
     public static func areJSONEqual(_ lhs: Any?, _ rhs: Any?) -> Bool {
         guard let lhs, let rhs else { return lhs == nil && rhs == nil }

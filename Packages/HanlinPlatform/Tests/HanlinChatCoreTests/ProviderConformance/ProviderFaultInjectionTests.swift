@@ -386,37 +386,12 @@ struct ProviderFaultInjectionTests {
     // MARK: - F08: HTTP Error Codes Across Profiles (Section 17)
 
     @Test("F08: HTTP error codes 400, 401, 429, 500, 503 abort stream without tool execution", arguments: [
-        // OpenAI Native
-        (ProviderConformanceProfile.openAINativeChat, 400),
-        (ProviderConformanceProfile.openAINativeChat, 401),
-        (ProviderConformanceProfile.openAINativeChat, 429),
-        (ProviderConformanceProfile.openAINativeChat, 500),
-        (ProviderConformanceProfile.openAINativeChat, 503),
-        // OpenAI Compatible Plain
-        (ProviderConformanceProfile.openAICompatiblePlain, 400),
-        (ProviderConformanceProfile.openAICompatiblePlain, 401),
-        (ProviderConformanceProfile.openAICompatiblePlain, 429),
-        (ProviderConformanceProfile.openAICompatiblePlain, 500),
-        (ProviderConformanceProfile.openAICompatiblePlain, 503),
-        // OpenRouter Reasoning Details
-        (ProviderConformanceProfile.openRouterReasoningDetails, 400),
-        (ProviderConformanceProfile.openRouterReasoningDetails, 401),
-        (ProviderConformanceProfile.openRouterReasoningDetails, 429),
-        (ProviderConformanceProfile.openRouterReasoningDetails, 500),
-        (ProviderConformanceProfile.openRouterReasoningDetails, 503),
-        // Anthropic Native
-        (ProviderConformanceProfile.anthropicNative, 400),
-        (ProviderConformanceProfile.anthropicNative, 401),
-        (ProviderConformanceProfile.anthropicNative, 429),
-        (ProviderConformanceProfile.anthropicNative, 500),
-        (ProviderConformanceProfile.anthropicNative, 503),
-        // Google Native
-        (ProviderConformanceProfile.googleNative, 400),
-        (ProviderConformanceProfile.googleNative, 401),
-        (ProviderConformanceProfile.googleNative, 429),
-        (ProviderConformanceProfile.googleNative, 500),
-        (ProviderConformanceProfile.googleNative, 503)
-    ])
+        ProviderConformanceProfile.openAINativeChat,
+        ProviderConformanceProfile.openAICompatiblePlain,
+        ProviderConformanceProfile.openRouterReasoningDetails,
+        ProviderConformanceProfile.anthropicNative,
+        ProviderConformanceProfile.googleNative
+    ], [400, 401, 429, 500, 503])
     func testF08HTTPErrorCodes(profile: ProviderConformanceProfile, statusCode: Int) async throws {
         let ledger = ToolExecutionLedger()
         let tool = HanlinAISDKToolDefinition(
