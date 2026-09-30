@@ -4013,7 +4013,6 @@ default:
                 if reason == "other" || reason == "error" || reason == "failed" || reason == "unknown" || reason.isEmpty {
                     await self.agentDiagnosticsRecorder?.complete(status: "failed", error: "Stream ended unexpectedly without terminal event: \(reason)")
                     let error = HanlinChatError.networkFailure("Stream ended unexpectedly without terminal event")
-                    continuation.finish(throwing: error)
                     throw error
                 }
                 await self.agentDiagnosticsRecorder?.complete(status: "completed")
@@ -4030,7 +4029,6 @@ default:
 
         await self.agentDiagnosticsRecorder?.complete(status: "failed", error: "Stream ended unexpectedly without terminal event")
         let error = HanlinChatError.networkFailure("Stream ended unexpectedly without terminal event")
-        continuation.finish(throwing: error)
         throw error
     }
 }

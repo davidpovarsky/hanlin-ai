@@ -372,14 +372,14 @@ struct ProviderLongHorizonTests {
             for try await _ in stream {}
         } catch let err as ConformanceProtocolError {
             if err.category == .REASONING_STATE {
-                // PROVEN: Pinned swift-ai-sdk drops reasoning_details and fails preservation!
                 didFailPreservation = true
             }
         } catch {
             // Other error
         }
 
-        #expect(didFailPreservation, "CRITICAL FINDING REPRODUCED: Pinned swift-ai-sdk drops OpenRouter reasoning_details during stream decode and fails to round-trip it in continuation request.")
+        #expect(!didFailPreservation, "OpenRouter reasoning_details must be preserved during stream decode and round-trip in continuation request.")
+        #expect(emulator.requestCount == 2)
     }
 
     // MARK: - P12B: Structured SDK History (Section 7)

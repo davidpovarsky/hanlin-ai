@@ -156,42 +156,24 @@ struct HanlinAISDKProviderFactoryTests {
 @Suite("HanlinNonEmptyLanguageModel Retry Tests")
 struct HanlinNonEmptyLanguageModelTests {
 
-    @Test("Retries once on empty stream and succeeds when second stream yields text")
-    func testRetryOnceOnEmptyStream() async throws {
-        let mock = MockLanguageModelV3 { attempt in
-            AsyncThrowingStream(LanguageModelV3StreamPart.self) { (continuation: AsyncThrowingStream<LanguageModelV3StreamPart, Error>.Continuation) in
-                if attempt == 1 {
-                    // Empty stream (no meaningful chunks)
-                    continuation.finish()
-                } else {
-                    continuation.yield(.textDelta(id: "t1", delta: "Hello world", providerMetadata: nil))
-                    continuation.finish()
-                }
-            }
-        }
-
-        let model = HanlinNonEmptyLanguageModel(base: mock)
-        let streamResult = try await model.doStream(options: LanguageModelV3CallOptions(prompt: []))
-
-        var textChunks: [String] = []
-        for try await part in streamResult.stream {
-            if case .textDelta(_, let text, _) = part {
-                textChunks.append(text)
-            }
-        }
-
-        #expect(mock.callCount == 2)
-        #expect(textChunks == ["Hello world"])
+    private static func mockFinish(reason: LanguageModelV3FinishReason.Unified = .other) -> LanguageModelV3StreamPart {
+        .finish(
+            finishReason: LanguageModelV3FinishReason(unified: reason, raw: reason.rawValue),
+            usage: LanguageModelV3Usage(
+                inputTokens: .init(total: 10),
+                outputTokens: .init(total: 5)
+            ),
+            providerMetadata: nil
+        )
     }
 
-    @Test("Throws emptyProviderResponse when two consecutive streams are empty")
-    func testThrowsAfterTwoEmptyStreams() async throws {
+    @Test("E01: truly empty stream -> retry -> empty -> emptyProviderResponse(2)")
+    func testE01TrulyEmptyStream() async throws {
         let mock = MockLanguageModelV3 { _ in
-            AsyncThrowingStream(LanguageModelV3StreamPart.self) { (continuation: AsyncThrowingStream<LanguageModelV3StreamPart, Error>.Continuation) in
+            AsyncThrowingStream { continuation in
                 continuation.finish()
             }
         }
-
         let model = HanlinNonEmptyLanguageModel(base: mock)
         let streamResult = try await model.doStream(options: LanguageModelV3CallOptions(prompt: []))
 
@@ -203,27 +185,167 @@ struct HanlinNonEmptyLanguageModelTests {
                 #expect(attempts == 2)
                 didThrowExpectedError = true
             }
-        } catch {
-            // Unexpected error
         }
-
         #expect(didThrowExpectedError)
         #expect(mock.callCount == 2)
     }
 
-    @Test("Tool call in first stream is meaningful and prevents retrying")
-    func testToolCallIsMeaningful() async throws {
-        let mock = MockLanguageModelV3 { _ in
-            AsyncThrowingStream(LanguageModelV3StreamPart.self) { (continuation: AsyncThrowingStream<LanguageModelV3StreamPart, Error>.Continuation) in
-                continuation.yield(.toolCall(LanguageModelV3ToolCall(
-                    toolCallId: "call_1",
-                    toolName: "test_tool",
-                    input: "{\"arg\":\"val\"}"
-                )))
-                continuation.finish()
+    @Test("E02: finish(other)-only -> retry -> empty -> error")
+    func testE02FinishOtherOnly() async throws {
+        let mock = MockLanguageModelV3 { attempt in
+            AsyncThrowingStream { continuation in
+                if attempt == 1 {
+                    continuation.yield(Self.mockFinish(reason: .other))
+                    continuation.finish()
+                } else {
+                    continuation.finish()
+                }
             }
         }
+        let model = HanlinNonEmptyLanguageModel(base: mock)
+        let streamResult = try await model.doStream(options: LanguageModelV3CallOptions(prompt: []))
 
+        var didThrow = false
+        do {
+            for try await _ in streamResult.stream {}
+        } catch let error as HanlinAISDKError {
+            if case .emptyProviderResponse(let attempts) = error {
+                #expect(attempts == 2)
+                didThrow = true
+            }
+        }
+        #expect(didThrow)
+        #expect(mock.callCount == 2)
+    }
+
+    @Test("E03: metadata + finish(other) only -> retry")
+    func testE03MetadataPlusFinishOtherOnly() async throws {
+        let mock = MockLanguageModelV3 { attempt in
+            AsyncThrowingStream { continuation in
+                if attempt == 1 {
+                    continuation.yield(.responseMetadata(id: "r1", modelId: "m1", timestamp: Date()))
+                    continuation.yield(Self.mockFinish(reason: .other))
+                    continuation.finish()
+                } else {
+                    continuation.yield(.textDelta(id: "t1", delta: "Success after retry", providerMetadata: nil))
+                    continuation.yield(Self.mockFinish(reason: .stop))
+                    continuation.finish()
+                }
+            }
+        }
+        let model = HanlinNonEmptyLanguageModel(base: mock)
+        let streamResult = try await model.doStream(options: LanguageModelV3CallOptions(prompt: []))
+
+        var texts: [String] = []
+        for try await part in streamResult.stream {
+            if case .textDelta(_, let text, _) = part {
+                texts.append(text)
+            }
+        }
+        #expect(texts == ["Success after retry"])
+        #expect(mock.callCount == 2)
+    }
+
+    @Test("E04: usage-only + finish only -> retry")
+    func testE04UsageOnlyPlusFinishOnly() async throws {
+        let mock = MockLanguageModelV3 { attempt in
+            AsyncThrowingStream { continuation in
+                if attempt == 1 {
+                    continuation.yield(Self.mockFinish(reason: .other))
+                    continuation.finish()
+                } else {
+                    continuation.yield(.textDelta(id: "t1", delta: "Text 2", providerMetadata: nil))
+                    continuation.finish()
+                }
+            }
+        }
+        let model = HanlinNonEmptyLanguageModel(base: mock)
+        let streamResult = try await model.doStream(options: LanguageModelV3CallOptions(prompt: []))
+
+        var texts: [String] = []
+        for try await part in streamResult.stream {
+            if case .textDelta(_, let text, _) = part {
+                texts.append(text)
+            }
+        }
+        #expect(texts == ["Text 2"])
+        #expect(mock.callCount == 2)
+    }
+
+    @Test("E05: empty deltas + finish only -> retry")
+    func testE05EmptyDeltasPlusFinishOnly() async throws {
+        let mock = MockLanguageModelV3 { attempt in
+            AsyncThrowingStream { continuation in
+                if attempt == 1 {
+                    continuation.yield(.textDelta(id: "t0", delta: "", providerMetadata: nil))
+                    continuation.yield(.reasoningDelta(id: "r0", delta: "", providerMetadata: nil))
+                    continuation.yield(Self.mockFinish(reason: .other))
+                    continuation.finish()
+                } else {
+                    continuation.yield(.textDelta(id: "t1", delta: "Recovered", providerMetadata: nil))
+                    continuation.finish()
+                }
+            }
+        }
+        let model = HanlinNonEmptyLanguageModel(base: mock)
+        let streamResult = try await model.doStream(options: LanguageModelV3CallOptions(prompt: []))
+
+        var texts: [String] = []
+        for try await part in streamResult.stream {
+            if case .textDelta(_, let text, _) = part {
+                texts.append(text)
+            }
+        }
+        #expect(texts == ["Recovered"])
+        #expect(mock.callCount == 2)
+    }
+
+    @Test("E06: first attempt empty, second attempt valid text -> exactly one visible completion")
+    func testE06FirstAttemptEmptySecondAttemptValidText() async throws {
+        let mock = MockLanguageModelV3 { attempt in
+            AsyncThrowingStream { continuation in
+                if attempt == 1 {
+                    continuation.finish()
+                } else {
+                    continuation.yield(.textStart(id: "t1", providerMetadata: nil))
+                    continuation.yield(.textDelta(id: "t1", delta: "Single text completion", providerMetadata: nil))
+                    continuation.yield(.textEnd(id: "t1", providerMetadata: nil))
+                    continuation.yield(Self.mockFinish(reason: .stop))
+                    continuation.finish()
+                }
+            }
+        }
+        let model = HanlinNonEmptyLanguageModel(base: mock)
+        let streamResult = try await model.doStream(options: LanguageModelV3CallOptions(prompt: []))
+
+        var texts: [String] = []
+        for try await part in streamResult.stream {
+            if case .textDelta(_, let text, _) = part {
+                texts.append(text)
+            }
+        }
+        #expect(texts == ["Single text completion"])
+        #expect(mock.callCount == 2)
+    }
+
+    @Test("E07: first attempt finish-only, second attempt valid tool call -> tool executes exactly once")
+    func testE07FirstAttemptFinishOnlySecondAttemptValidToolCall() async throws {
+        let mock = MockLanguageModelV3 { attempt in
+            AsyncThrowingStream { continuation in
+                if attempt == 1 {
+                    continuation.yield(Self.mockFinish(reason: .other))
+                    continuation.finish()
+                } else {
+                    continuation.yield(.toolCall(LanguageModelV3ToolCall(
+                        toolCallId: "call_e07",
+                        toolName: "fetch_data",
+                        input: "{\"id\":1}"
+                    )))
+                    continuation.yield(Self.mockFinish(reason: .toolCalls))
+                    continuation.finish()
+                }
+            }
+        }
         let model = HanlinNonEmptyLanguageModel(base: mock)
         let streamResult = try await model.doStream(options: LanguageModelV3CallOptions(prompt: []))
 
@@ -233,9 +355,131 @@ struct HanlinNonEmptyLanguageModelTests {
                 toolCallIds.append(call.toolCallId)
             }
         }
+        #expect(toolCallIds == ["call_e07"])
+        #expect(mock.callCount == 2)
+    }
 
+    @Test("E08: normal text -> no retry")
+    func testE08NormalTextNoRetry() async throws {
+        let mock = MockLanguageModelV3 { _ in
+            AsyncThrowingStream { continuation in
+                continuation.yield(.textDelta(id: "t1", delta: "Immediate response", providerMetadata: nil))
+                continuation.yield(Self.mockFinish(reason: .stop))
+                continuation.finish()
+            }
+        }
+        let model = HanlinNonEmptyLanguageModel(base: mock)
+        let streamResult = try await model.doStream(options: LanguageModelV3CallOptions(prompt: []))
+
+        var texts: [String] = []
+        for try await part in streamResult.stream {
+            if case .textDelta(_, let text, _) = part {
+                texts.append(text)
+            }
+        }
+        #expect(texts == ["Immediate response"])
         #expect(mock.callCount == 1)
-        #expect(toolCallIds == ["call_1"])
+    }
+
+    @Test("E09: reasoning-only nonempty -> no retry")
+    func testE09ReasoningOnlyNonEmptyNoRetry() async throws {
+        let mock = MockLanguageModelV3 { _ in
+            AsyncThrowingStream { continuation in
+                continuation.yield(.reasoningStart(id: "r1", providerMetadata: nil))
+                continuation.yield(.reasoningDelta(id: "r1", delta: "Deep reasoning step", providerMetadata: nil))
+                continuation.yield(.reasoningEnd(id: "r1", providerMetadata: nil))
+                continuation.yield(Self.mockFinish(reason: .stop))
+                continuation.finish()
+            }
+        }
+        let model = HanlinNonEmptyLanguageModel(base: mock)
+        let streamResult = try await model.doStream(options: LanguageModelV3CallOptions(prompt: []))
+
+        var reasonings: [String] = []
+        for try await part in streamResult.stream {
+            if case .reasoningDelta(_, let text, _) = part {
+                reasonings.append(text)
+            }
+        }
+        #expect(reasonings == ["Deep reasoning step"])
+        #expect(mock.callCount == 1)
+    }
+
+    @Test("E10: valid tool call -> no retry")
+    func testE10ValidToolCallNoRetry() async throws {
+        let mock = MockLanguageModelV3 { _ in
+            AsyncThrowingStream { continuation in
+                continuation.yield(.toolCall(LanguageModelV3ToolCall(
+                    toolCallId: "call_immediate",
+                    toolName: "calculator",
+                    input: "{}"
+                )))
+                continuation.finish()
+            }
+        }
+        let model = HanlinNonEmptyLanguageModel(base: mock)
+        let streamResult = try await model.doStream(options: LanguageModelV3CallOptions(prompt: []))
+
+        var toolCalls: [String] = []
+        for try await part in streamResult.stream {
+            if case .toolCall(let call) = part {
+                toolCalls.append(call.toolCallId)
+            }
+        }
+        #expect(toolCalls == ["call_immediate"])
+        #expect(mock.callCount == 1)
+    }
+
+    @Test("E11: abrupt transport error -> no retry")
+    func testE11AbruptTransportErrorNoRetry() async throws {
+        let mock = MockLanguageModelV3 { _ in
+            AsyncThrowingStream { continuation in
+                continuation.yield(.textDelta(id: "t1", delta: "Partial text", providerMetadata: nil))
+                continuation.finish(throwing: URLError(.networkConnectionLost))
+            }
+        }
+        let model = HanlinNonEmptyLanguageModel(base: mock)
+        let streamResult = try await model.doStream(options: LanguageModelV3CallOptions(prompt: []))
+
+        var didThrow = false
+        do {
+            for try await _ in streamResult.stream {}
+        } catch {
+            didThrow = true
+        }
+        #expect(didThrow)
+        #expect(mock.callCount == 1)
+    }
+
+    @Test("E12: cancellation during first attempt -> cancelled, no retry")
+    func testE12CancellationDuringFirstAttemptNoRetry() async throws {
+        let mock = MockLanguageModelV3 { _ in
+            AsyncThrowingStream { continuation in
+                continuation.yield(.responseMetadata(id: "r1", modelId: "m1", timestamp: Date()))
+                // Keep open until cancelled
+            }
+        }
+        let model = HanlinNonEmptyLanguageModel(base: mock)
+        let streamResult = try await model.doStream(options: LanguageModelV3CallOptions(prompt: []))
+
+        let readTask = Task {
+            for try await _ in streamResult.stream {}
+        }
+        try await Task.sleep(nanoseconds: 10_000_000)
+        readTask.cancel()
+
+        var caughtCancelled = false
+        do {
+            try await readTask.value
+        } catch is CancellationError {
+            caughtCancelled = true
+        } catch HanlinChatError.cancelled {
+            caughtCancelled = true
+        } catch {
+            // Other error
+        }
+        #expect(caughtCancelled)
+        #expect(mock.callCount == 1)
     }
 }
 

@@ -40,18 +40,43 @@ final class HanlinNonEmptyLanguageModel: LanguageModelV3, @unchecked Sendable {
                     var current = first
                     while attempt < 2 {
                         attempt += 1
-                        var meaningful = false
+                        var buffer: [LanguageModelV3StreamPart] = []
+                        var hasEmittedSemanticEvent = false
+
                         for try await part in current {
-                            if Self.isMeaningful(part) { meaningful = true }
-                            continuation.yield(part)
+                            try Task.checkCancellation()
+                            if hasEmittedSemanticEvent {
+                                continuation.yield(part)
+                            } else if Self.isSemantic(part) {
+                                hasEmittedSemanticEvent = true
+                                for buffered in buffer {
+                                    continuation.yield(buffered)
+                                }
+                                buffer.removeAll()
+                                continuation.yield(part)
+                            } else if case .error = part {
+                                for buffered in buffer {
+                                    continuation.yield(buffered)
+                                }
+                                buffer.removeAll()
+                                continuation.yield(part)
+                                continuation.finish()
+                                return
+                            } else {
+                                buffer.append(part)
+                            }
                         }
-                        if meaningful {
+
+                        if hasEmittedSemanticEvent {
                             continuation.finish()
                             return
                         }
+
                         guard attempt < 2 else {
                             throw HanlinAISDKError.emptyProviderResponse(attempts: attempt)
                         }
+
+                        buffer.removeAll()
                         current = try await base.doStream(options: options).stream
                     }
                 } catch is CancellationError {
@@ -64,12 +89,14 @@ final class HanlinNonEmptyLanguageModel: LanguageModelV3, @unchecked Sendable {
         }
     }
 
-    private static func isMeaningful(_ part: LanguageModelV3StreamPart) -> Bool {
+    private static func isSemantic(_ part: LanguageModelV3StreamPart) -> Bool {
         switch part {
         case .textDelta(_, let text, _), .reasoningDelta(_, let text, _):
             return !text.isEmpty
-        case .toolCall, .toolInputStart, .toolInputDelta, .finish:
+        case .toolInputStart, .toolCall, .toolResult, .custom, .file, .source, .toolApprovalRequest:
             return true
+        case .toolInputDelta(_, let delta, _):
+            return !delta.isEmpty
         default:
             return false
         }
