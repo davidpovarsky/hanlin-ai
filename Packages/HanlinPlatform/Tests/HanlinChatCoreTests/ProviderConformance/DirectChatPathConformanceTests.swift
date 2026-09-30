@@ -92,8 +92,30 @@ struct DirectChatPathConformanceTests {
         let line = "data: {\"candidates\":[{\"content\":{\"parts\":[{\"text\":\"Hello from Gemini\"}]},\"finishReason\":\"STOP\"}]}"
         let event = parser.parse(line: line)
         #expect(event?.content == "Hello from Gemini")
-        #expect(event?.finishReason == "STOP")
+        #expect(event?.finishReason == "stop")
         #expect(event?.isDone == true)
+    }
+
+    @Test("Gemini direct finish reason normalization matrix", arguments: [
+        ("STOP", "stop"),
+        ("MAX_TOKENS", "length"),
+        ("MALFORMED_FUNCTION_CALL", "malformed_function_call"),
+        ("SAFETY", "safety"),
+        ("BLOCKLIST", "blocklist"),
+        ("PROHIBITED_CONTENT", "prohibited_content"),
+        ("SPII", "spii"),
+        ("RECITATION", "recitation"),
+        ("OTHER", "other"),
+        ("FINISH_REASON_UNSPECIFIED", "finish_reason_unspecified")
+    ])
+    func testGeminiFinishReasonMatrix(rawReason: String, expectedNormalized: String) {
+        let parser = HanlinChatStreamParser(apiType: "gemini")
+        let line = "data: {\"candidates\":[{\"content\":{\"parts\":[{\"text\":\"Hello from Gemini\"}]},\"finishReason\":\"\(rawReason)\"}]}"
+        let event = parser.parse(line: line)
+        #expect(event?.finishReason == expectedNormalized)
+        if rawReason == "STOP" {
+            #expect(event?.isDone == true)
+        }
     }
 
     // MARK: - Request Builder Parity

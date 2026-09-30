@@ -11,24 +11,90 @@ import Testing
 @Suite("Provider Fault Injection & Finish Reason Tests")
 struct ProviderFaultInjectionTests {
 
-    private static func makeEngine(emulator: StatefulProviderEmulator) throws -> HanlinAISDKAgentEngine {
-        let config = HanlinChatModelConfiguration(
-            modelID: "gpt-4o",
-            company: "OpenAI",
-            apiType: "openai",
-            endpoint: "https://api.openai.com/v1/chat/completions",
-            credential: "test-openai-key"
-        )
+    private static func makeEngine(
+        profile: ProviderConformanceProfile = .openAINativeChat,
+        emulator: StatefulProviderEmulator
+    ) throws -> HanlinAISDKAgentEngine {
+        let config: HanlinChatModelConfiguration
+        switch profile {
+        case .openAINativeChat:
+            config = HanlinChatModelConfiguration(
+                modelID: "gpt-4o",
+                company: "OpenAI",
+                apiType: "openai",
+                endpoint: "https://api.openai.com/v1/chat/completions",
+                credential: "test-openai-key"
+            )
+        case .openAICompatiblePlain:
+            config = HanlinChatModelConfiguration(
+                modelID: "llama-3-70b",
+                company: "CustomProvider",
+                apiType: "openai",
+                endpoint: "https://api.custom.org/v1/chat/completions",
+                credential: "test-custom-key"
+            )
+        case .openAICompatibleReasoningContent:
+            config = HanlinChatModelConfiguration(
+                modelID: "deepseek-reasoner",
+                company: "DeepSeek",
+                apiType: "openai",
+                endpoint: "https://api.deepseek.com/v1/chat/completions",
+                credential: "test-deepseek-key",
+                supportsReasoning: true
+            )
+        case .openAICompatibleReasoning:
+            config = HanlinChatModelConfiguration(
+                modelID: "qwen-qwq-32b",
+                company: "Qwen",
+                apiType: "openai",
+                endpoint: "https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions",
+                credential: "test-qwen-key",
+                supportsReasoning: true
+            )
+        case .openRouterReasoningDetails:
+            config = HanlinChatModelConfiguration(
+                modelID: "nvidia/llama-3.1-nemotron-70b-instruct",
+                company: "OpenRouter",
+                apiType: "openai",
+                endpoint: "https://openrouter.ai/api/v1/chat/completions",
+                credential: "sk-or-v1-testkey",
+                supportsReasoning: true
+            )
+        case .anthropicNative:
+            config = HanlinChatModelConfiguration(
+                modelID: "claude-3-5-sonnet-20241022",
+                company: "Anthropic",
+                apiType: "anthropic",
+                endpoint: "https://api.anthropic.com/v1/messages",
+                credential: "sk-ant-testkey",
+                supportsReasoning: true
+            )
+        case .googleNative:
+            config = HanlinChatModelConfiguration(
+                modelID: "gemini-2.0-flash-exp",
+                company: "Google",
+                apiType: "gemini",
+                endpoint: "https://generativelanguage.googleapis.com/v1beta/chat/completions",
+                credential: "AIza-testkey",
+                supportsReasoning: true
+            )
+        }
         return try HanlinAISDKAgentEngine(configuration: config, fetch: emulator.makeFetchFunction())
     }
 
-    // MARK: - F01: Empty Provider Stream
+    // MARK: - F01: Empty Provider Stream Across Profiles (Section 17)
 
-    @Test("F01: Empty provider stream retries once and throws emptyProviderResponse after 2 empty streams")
-    func testF01EmptyProviderStream() async throws {
+    @Test("F01: Empty provider stream retries once and throws emptyProviderResponse after 2 empty streams", arguments: [
+        ProviderConformanceProfile.openAINativeChat,
+        ProviderConformanceProfile.openAICompatiblePlain,
+        ProviderConformanceProfile.openRouterReasoningDetails,
+        ProviderConformanceProfile.anthropicNative,
+        ProviderConformanceProfile.googleNative
+    ])
+    func testF01EmptyProviderStream(profile: ProviderConformanceProfile) async throws {
         let emulator = StatefulProviderEmulator(
-            profile: .openAINativeChat,
-            scenarioName: "F01_EmptyStream",
+            profile: profile,
+            scenarioName: "F01_EmptyStream_\(profile.rawValue)",
             roundExpectations: [
                 0: RoundExpectation(),
                 1: RoundExpectation()
@@ -38,7 +104,7 @@ struct ProviderFaultInjectionTests {
                 1: .emptyStream
             ]
         )
-        let engine = try Self.makeEngine(emulator: emulator)
+        let engine = try Self.makeEngine(profile: profile, emulator: emulator)
 
         let stream = try await engine.stream(
             messages: [.init(role: .user, text: "Ping")],
@@ -75,7 +141,7 @@ struct ProviderFaultInjectionTests {
                 0: .sseChunks(ProviderResponseFixtures.openAIFinishOnlyChunks(finishReason: "other"))
             ]
         )
-        let engine = try Self.makeEngine(emulator: emulator)
+        let engine = try Self.makeEngine(profile: .openAINativeChat, emulator: emulator)
 
         let stream = try await engine.stream(
             messages: [.init(role: .user, text: "Ping")],
@@ -95,20 +161,35 @@ struct ProviderFaultInjectionTests {
         #expect(finishEventReason == "other", "Characterization: raw/normalized finish reason 'other' surfaced in finished event.")
     }
 
-    // MARK: - F03: Abrupt Close Before Terminal Event
+    // MARK: - F03: Abrupt Close Before Terminal Event Across Profiles (Section 17)
 
-    @Test("F03: Abrupt stream close mid-text terminates with transport error and no completed event")
-    func testF03AbruptCloseMidStream() async throws {
-        let partialChunk = "data: {\"id\":\"c1\",\"choices\":[{\"index\":0,\"delta\":{\"content\":\"Partial incomplete\"},\"finish_reason\":null}]}\n\n"
+    @Test("F03: Abrupt stream close mid-text terminates with transport error and no completed event", arguments: [
+        ProviderConformanceProfile.openAINativeChat,
+        ProviderConformanceProfile.openAICompatiblePlain,
+        ProviderConformanceProfile.openRouterReasoningDetails,
+        ProviderConformanceProfile.anthropicNative,
+        ProviderConformanceProfile.googleNative
+    ])
+    func testF03AbruptCloseMidStream(profile: ProviderConformanceProfile) async throws {
+        let partialChunk: String
+        switch profile {
+        case .openAINativeChat, .openAICompatiblePlain, .openRouterReasoningDetails, .openAICompatibleReasoningContent, .openAICompatibleReasoning:
+            partialChunk = "data: {\"id\":\"c1\",\"choices\":[{\"index\":0,\"delta\":{\"content\":\"Partial incomplete\"},\"finish_reason\":null}]}\n\n"
+        case .anthropicNative:
+            partialChunk = "event: content_block_delta\ndata: {\"type\":\"content_block_delta\",\"index\":0,\"delta\":{\"type\":\"text_delta\",\"text\":\"Partial incomplete\"}}\n\n"
+        case .googleNative:
+            partialChunk = "data: {\"candidates\":[{\"content\":{\"parts\":[{\"text\":\"Partial incomplete\"}],\"role\":\"model\"}}]}\n\n"
+        }
+
         let emulator = StatefulProviderEmulator(
-            profile: .openAINativeChat,
-            scenarioName: "F03_AbruptClose",
+            profile: profile,
+            scenarioName: "F03_AbruptClose_\(profile.rawValue)",
             roundExpectations: [0: RoundExpectation()],
             roundResponses: [
                 0: .abruptCloseAfter(chunks: [partialChunk])
             ]
         )
-        let engine = try Self.makeEngine(emulator: emulator)
+        let engine = try Self.makeEngine(profile: profile, emulator: emulator)
 
         let stream = try await engine.stream(
             messages: [.init(role: .user, text: "Ping")],
@@ -131,7 +212,7 @@ struct ProviderFaultInjectionTests {
         #expect(!completedReceived, "Must not emit a false completed finished event.")
     }
 
-    // MARK: - F04: [DONE] / Terminal Ordering Variations
+    // MARK: - F04: [DONE] / Terminal Ordering Variations (OpenAI SSE Specific)
 
     @Test("F04: Stream ending after finish without explicit [DONE] still terminates cleanly")
     func testF04StreamWithoutDoneMarker() async throws {
@@ -145,7 +226,7 @@ struct ProviderFaultInjectionTests {
             roundExpectations: [0: RoundExpectation()],
             roundResponses: [0: .sseChunks(chunks)]
         )
-        let engine = try Self.makeEngine(emulator: emulator)
+        let engine = try Self.makeEngine(profile: .openAINativeChat, emulator: emulator)
 
         let stream = try await engine.stream(
             messages: [.init(role: .user, text: "Ping")],
@@ -183,7 +264,7 @@ struct ProviderFaultInjectionTests {
             roundExpectations: [0: RoundExpectation()],
             roundResponses: [0: .sseChunks(chunks)]
         )
-        let engine = try Self.makeEngine(emulator: emulator)
+        let engine = try Self.makeEngine(profile: .openAINativeChat, emulator: emulator)
 
         let stream = try await engine.stream(
             messages: [.init(role: .user, text: "Ping")],
@@ -215,7 +296,7 @@ struct ProviderFaultInjectionTests {
             roundExpectations: [0: RoundExpectation()],
             roundResponses: [0: .sseChunks(chunks)]
         )
-        let engine = try Self.makeEngine(emulator: emulator)
+        let engine = try Self.makeEngine(profile: .openAINativeChat, emulator: emulator)
 
         let stream = try await engine.stream(
             messages: [.init(role: .user, text: "Ping")],
@@ -251,7 +332,7 @@ struct ProviderFaultInjectionTests {
             roundExpectations: [0: RoundExpectation()],
             roundResponses: [0: .sseChunks(chunks)]
         )
-        let engine = try Self.makeEngine(emulator: emulator)
+        let engine = try Self.makeEngine(profile: .openAINativeChat, emulator: emulator)
 
         let stream = try await engine.stream(
             messages: [.init(role: .user, text: "Ping")],
@@ -268,10 +349,24 @@ struct ProviderFaultInjectionTests {
         #expect(text == "EchoEcho")
     }
 
-    // MARK: - F08: HTTP Error Codes
+    // MARK: - F08: HTTP Error Codes Across Profiles (Section 17)
 
-    @Test("F08: HTTP error codes 400, 401, 429, 500 abort stream without tool execution", arguments: [400, 401, 429, 500, 503])
-    func testF08HTTPErrorCodes(statusCode: Int) async throws {
+    @Test("F08: HTTP error codes 400, 401, 429, 500 abort stream without tool execution", arguments: [
+        (ProviderConformanceProfile.openAINativeChat, 400),
+        (ProviderConformanceProfile.openAINativeChat, 401),
+        (ProviderConformanceProfile.openAINativeChat, 429),
+        (ProviderConformanceProfile.openAINativeChat, 500),
+        (ProviderConformanceProfile.openAINativeChat, 503),
+        (ProviderConformanceProfile.anthropicNative, 400),
+        (ProviderConformanceProfile.anthropicNative, 401),
+        (ProviderConformanceProfile.anthropicNative, 429),
+        (ProviderConformanceProfile.anthropicNative, 500),
+        (ProviderConformanceProfile.googleNative, 400),
+        (ProviderConformanceProfile.googleNative, 401),
+        (ProviderConformanceProfile.googleNative, 429),
+        (ProviderConformanceProfile.googleNative, 500)
+    ])
+    func testF08HTTPErrorCodes(profile: ProviderConformanceProfile, statusCode: Int) async throws {
         let ledger = ToolExecutionLedger()
         let tool = HanlinAISDKToolDefinition(
             name: "should_not_run",
@@ -285,13 +380,13 @@ struct ProviderFaultInjectionTests {
 
         let errorBody = "{\"error\":{\"message\":\"HTTP error \(statusCode)\",\"type\":\"api_error\"}}".data(using: .utf8)
         let emulator = StatefulProviderEmulator(
-            profile: .openAINativeChat,
-            scenarioName: "F08_HTTPError_\(statusCode)",
+            profile: profile,
+            scenarioName: "F08_HTTPError_\(profile.rawValue)_\(statusCode)",
             roundExpectations: [0: RoundExpectation()],
             roundResponses: [0: .httpError(statusCode: statusCode, body: errorBody)],
             ledger: ledger
         )
-        let engine = try Self.makeEngine(emulator: emulator)
+        let engine = try Self.makeEngine(profile: profile, emulator: emulator)
 
         let stream = try await engine.stream(
             messages: [.init(role: .user, text: "Ping")],
@@ -307,13 +402,13 @@ struct ProviderFaultInjectionTests {
             didThrow = true
         }
 
-        #expect(didThrow, "HTTP \(statusCode) must cause stream to throw.")
+        #expect(didThrow, "HTTP \(statusCode) on \(profile.rawValue) must cause stream to throw.")
         #expect(ledger.allRecords.isEmpty, "No tool must execute when HTTP request failed.")
     }
 
-    // MARK: - Section 11: Finish-Reason Contract Tests
+    // MARK: - Section 18: Finish-Reason Matrices (OpenAI, Anthropic, Google)
 
-    @Test("Section 11: OpenAI finish_reason mapping table", arguments: [
+    @Test("Section 18: OpenAI finish_reason mapping table", arguments: [
         ("stop", "stop"),
         ("length", "length"),
         ("content_filter", "content-filter"),
@@ -329,11 +424,11 @@ struct ProviderFaultInjectionTests {
         ]
         let emulator = StatefulProviderEmulator(
             profile: .openAINativeChat,
-            scenarioName: "FinishReason_\(rawReason)",
+            scenarioName: "FinishReason_OpenAI_\(rawReason)",
             roundExpectations: [0: RoundExpectation()],
             roundResponses: [0: .sseChunks(chunks)]
         )
-        let engine = try Self.makeEngine(emulator: emulator)
+        let engine = try Self.makeEngine(profile: .openAINativeChat, emulator: emulator)
 
         let stream = try await engine.stream(
             messages: [.init(role: .user, text: "Ping")],
@@ -349,7 +444,82 @@ struct ProviderFaultInjectionTests {
             }
         }
 
-        // HanlinAISDKAgentEngine surfaces rawReason ?? reason.rawValue
+        #expect(finishedReason == rawReason || finishedReason == expectedUnified)
+    }
+
+    @Test("Section 18: Anthropic finish_reason mapping table", arguments: [
+        ("end_turn", "stop"),
+        ("stop_sequence", "stop"),
+        ("tool_use", "tool-calls"),
+        ("max_tokens", "length"),
+        ("model_context_window_exceeded", "length"),
+        ("refusal", "content-filter"),
+        ("pause_turn", "other"),
+        ("unrecognized_reason", "other")
+    ])
+    func testAnthropicFinishReasonTable(rawReason: String, expectedUnified: String) async throws {
+        let chunks = ProviderResponseFixtures.anthropicTextChunks(text: "Text", stopReason: rawReason)
+        let emulator = StatefulProviderEmulator(
+            profile: .anthropicNative,
+            scenarioName: "FinishReason_Anthropic_\(rawReason)",
+            roundExpectations: [0: RoundExpectation()],
+            roundResponses: [0: .sseChunks(chunks)]
+        )
+        let engine = try Self.makeEngine(profile: .anthropicNative, emulator: emulator)
+
+        let stream = try await engine.stream(
+            messages: [.init(role: .user, text: "Ping")],
+            baseSystemPrompt: nil,
+            tools: [],
+            prepareStep: { _ in HanlinAISDKStepPreparation(activeToolAliases: []) }
+        )
+
+        var finishedReason: String?
+        for try await event in stream {
+            if case .finished(let reason, _) = event {
+                finishedReason = reason
+            }
+        }
+
+        #expect(finishedReason == rawReason || finishedReason == expectedUnified)
+    }
+
+    @Test("Section 18: Google finish_reason mapping table", arguments: [
+        ("STOP", "stop"),
+        ("MAX_TOKENS", "length"),
+        ("MALFORMED_FUNCTION_CALL", "other"),
+        ("SAFETY", "content-filter"),
+        ("BLOCKLIST", "content-filter"),
+        ("PROHIBITED_CONTENT", "content-filter"),
+        ("SPII", "content-filter"),
+        ("RECITATION", "other"),
+        ("OTHER", "other"),
+        ("FINISH_REASON_UNSPECIFIED", "other")
+    ])
+    func testGoogleFinishReasonTable(rawReason: String, expectedUnified: String) async throws {
+        let chunks = ProviderResponseFixtures.googleTextChunks(text: "Text", finishReason: rawReason)
+        let emulator = StatefulProviderEmulator(
+            profile: .googleNative,
+            scenarioName: "FinishReason_Google_\(rawReason)",
+            roundExpectations: [0: RoundExpectation()],
+            roundResponses: [0: .sseChunks(chunks)]
+        )
+        let engine = try Self.makeEngine(profile: .googleNative, emulator: emulator)
+
+        let stream = try await engine.stream(
+            messages: [.init(role: .user, text: "Ping")],
+            baseSystemPrompt: nil,
+            tools: [],
+            prepareStep: { _ in HanlinAISDKStepPreparation(activeToolAliases: []) }
+        )
+
+        var finishedReason: String?
+        for try await event in stream {
+            if case .finished(let reason, _) = event {
+                finishedReason = reason
+            }
+        }
+
         #expect(finishedReason == rawReason || finishedReason == expectedUnified)
     }
 }

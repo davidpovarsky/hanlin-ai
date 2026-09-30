@@ -16,7 +16,8 @@
     "logo_3_0.png",
     "package-lock.json",
     "Scripts/Audit/**",
-    "Vendor/**"
+    "Vendor/**",
+    "provider-conformance-summary.json"
   ],
   "components": {
     "ci_router": {

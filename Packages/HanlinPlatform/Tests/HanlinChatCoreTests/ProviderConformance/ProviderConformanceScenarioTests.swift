@@ -650,11 +650,143 @@ struct ProviderConformanceScenarioTests {
         #expect(emulator.requestCount == 2)
     }
 
-    // MARK: - S10: Reasoning + Tool + Reasoning + Tool
+    // MARK: - Multi-Assistant Tool Call Validator Regression (Section 3)
 
-    @Test("S10: Reasoning + tool continuation across multiple turns for reasoning profiles")
-    func testS10ReasoningToolLoop() async throws {
-        let tool = HanlinAISDKToolDefinition(
+    @Test("Validate multi-assistant tool call regression in harness validator")
+    func testMultiAssistantToolCallValidatorRegression() throws {
+        try ProviderRequestValidators.validateMultiAssistantToolCallRegression()
+    }
+
+    // MARK: - S09: Dynamic Multi-Skill Tool Exposure (Section 10)
+
+    @Test("S09: Multi-Skill exposure enforces monotonic visibility across rounds")
+    func testS09MultiSkillExposure() async throws {
+        let loadedSkills = ManagedAtomicArray<String>()
+        let ledger = ToolExecutionLedger()
+
+        let loadSkillTool = HanlinAISDKToolDefinition(
+            name: "load_skill",
+            description: "Loads an on-demand skill",
+            inputSchemaData: try JSONSerialization.data(withJSONObject: [
+                "type": "object",
+                "properties": ["skill": ["type": "string"]]
+            ]),
+            execute: { args, callID in
+                ledger.recordStart(toolName: "load_skill", callID: callID, arguments: args)
+                if args.contains("code") {
+                    loadedSkills.append("code")
+                } else if args.contains("web") {
+                    loadedSkills.append("web")
+                }
+                ledger.recordCompletion(callID: callID, resultText: "skill loaded")
+                return HanlinAISDKToolExecutionOutput(modelText: "skill loaded successfully")
+            }
+        )
+
+        let pythonTool = HanlinAISDKToolDefinition(
+            name: "execute_python",
+            description: "Executes Python code",
+            inputSchemaData: try JSONSerialization.data(withJSONObject: ["type": "object"]),
+            execute: { args, callID in
+                ledger.recordStart(toolName: "execute_python", callID: callID, arguments: args)
+                ledger.recordCompletion(callID: callID, resultText: "python_ok")
+                return HanlinAISDKToolExecutionOutput(modelText: "python_ok")
+            }
+        )
+
+        let searchTool = HanlinAISDKToolDefinition(
+            name: "web_search",
+            description: "Searches the web",
+            inputSchemaData: try JSONSerialization.data(withJSONObject: ["type": "object"]),
+            execute: { args, callID in
+                ledger.recordStart(toolName: "web_search", callID: callID, arguments: args)
+                ledger.recordCompletion(callID: callID, resultText: "search_ok")
+                return HanlinAISDKToolExecutionOutput(modelText: "search_ok")
+            }
+        )
+
+        let allTools = [loadSkillTool, pythonTool, searchTool]
+
+        let emulator = StatefulProviderEmulator(
+            profile: .openAINativeChat,
+            scenarioName: "S09_MultiSkillExposure",
+            roundExpectations: [
+                0: RoundExpectation(
+                    expectedToolsAdvertised: ["load_skill"],
+                    forbiddenSubstrings: ["execute_python", "web_search"]
+                ),
+                1: RoundExpectation(
+                    expectedAssistantToolCalls: [ExpectedToolCall(id: "call-load-code", name: "load_skill")],
+                    expectedToolResults: [ExpectedToolResult(callID: "call-load-code", name: "load_skill", expectedSubstring: "skill loaded successfully")],
+                    expectedToolsAdvertised: ["load_skill", "execute_python"],
+                    forbiddenSubstrings: ["web_search"]
+                ),
+                2: RoundExpectation(
+                    expectedAssistantToolCalls: [ExpectedToolCall(id: "call-load-web", name: "load_skill")],
+                    expectedToolResults: [ExpectedToolResult(callID: "call-load-web", name: "load_skill", expectedSubstring: "skill loaded successfully")],
+                    expectedToolsAdvertised: ["load_skill", "execute_python", "web_search"]
+                ),
+                3: RoundExpectation(
+                    expectedAssistantToolCalls: [
+                        ExpectedToolCall(id: "call-run-py", name: "execute_python"),
+                        ExpectedToolCall(id: "call-run-search", name: "web_search")
+                    ],
+                    expectedToolResults: [
+                        ExpectedToolResult(callID: "call-run-py", name: "execute_python", expectedSubstring: "python_ok"),
+                        ExpectedToolResult(callID: "call-run-search", name: "web_search", expectedSubstring: "search_ok")
+                    ]
+                )
+            ],
+            roundResponses: [
+                0: .sseChunks(ProviderResponseFixtures.openAIChatToolCallChunks(
+                    calls: [(id: "call-load-code", name: "load_skill", arguments: "{\"skill\":\"code\"}")],
+                    id: "c-s09-0"
+                )),
+                1: .sseChunks(ProviderResponseFixtures.openAIChatToolCallChunks(
+                    calls: [(id: "call-load-web", name: "load_skill", arguments: "{\"skill\":\"web\"}")],
+                    id: "c-s09-1"
+                )),
+                2: .sseChunks(ProviderResponseFixtures.openAIChatToolCallChunks(
+                    calls: [
+                        (id: "call-run-py", name: "execute_python", arguments: "{}"),
+                        (id: "call-run-search", name: "web_search", arguments: "{}")
+                    ],
+                    id: "c-s09-2"
+                )),
+                3: .sseChunks(ProviderResponseFixtures.openAIChatTextChunks(text: "Both skills loaded and executed.", id: "c-s09-3"))
+            ],
+            ledger: ledger
+        )
+
+        let engine = try Self.makeEngine(profile: .openAINativeChat, emulator: emulator)
+
+        let stream = try await engine.stream(
+            messages: [.init(role: .user, text: "Execute multi-skill workflow")],
+            baseSystemPrompt: "Assistant",
+            tools: allTools,
+            prepareStep: { _ in
+                let current = loadedSkills.all
+                var active = ["load_skill"]
+                if current.contains("code") { active.append("execute_python") }
+                if current.contains("web") { active.append("web_search") }
+                return HanlinAISDKStepPreparation(activeToolAliases: active)
+            }
+        )
+
+        var finalAns = ""
+        for try await event in stream {
+            if case .textDelta(let text) = event { finalAns += text }
+        }
+
+        #expect(finalAns.contains("Both skills loaded and executed"))
+        #expect(emulator.requestCount == 4)
+        try ledger.assertSingleExecutions()
+    }
+
+    // MARK: - S10: Reasoning + Tool Loops Across Profiles (Section 11)
+
+    private static func makeStepTool() throws -> HanlinAISDKToolDefinition {
+        HanlinAISDKToolDefinition(
             name: "step_tool",
             description: "Step tool",
             inputSchemaData: try JSONSerialization.data(withJSONObject: [
@@ -665,10 +797,14 @@ struct ProviderConformanceScenarioTests {
                 HanlinAISDKToolExecutionOutput(modelText: "Result for \(callID)")
             }
         )
+    }
 
+    @Test("S10 R1: OpenAI-compatible reasoning_content multi-turn reasoning tool loop")
+    func testS10R1OpenAICompatibleReasoningContent() async throws {
+        let tool = try Self.makeStepTool()
         let emulator = StatefulProviderEmulator(
             profile: .openAICompatibleReasoningContent,
-            scenarioName: "S10_ReasoningToolLoop",
+            scenarioName: "S10_R1_ReasoningContent",
             roundExpectations: [
                 0: RoundExpectation(),
                 1: RoundExpectation(
@@ -684,19 +820,18 @@ struct ProviderConformanceScenarioTests {
                 0: .sseChunks(ProviderResponseFixtures.openAIReasoningAndToolCallChunks(
                     reasoningContent: "First I will calculate step 1",
                     calls: [(id: "call-s1", name: "step_tool", arguments: "{\"step\":1}")],
-                    id: "c1"
+                    id: "c-r1-1"
                 )),
                 1: .sseChunks(ProviderResponseFixtures.openAIReasoningAndToolCallChunks(
                     reasoningContent: "Now I will proceed to step 2",
                     calls: [(id: "call-s2", name: "step_tool", arguments: "{\"step\":2}")],
-                    id: "c2"
+                    id: "c-r1-2"
                 )),
-                2: .sseChunks(ProviderResponseFixtures.openAIChatTextChunks(text: "Both steps finished with reasoning.", id: "c3"))
+                2: .sseChunks(ProviderResponseFixtures.openAIChatTextChunks(text: "Both steps finished with reasoning.", id: "c-r1-3"))
             ]
         )
 
         let engine = try Self.makeEngine(profile: .openAICompatibleReasoningContent, emulator: emulator)
-
         let stream = try await engine.stream(
             messages: [.init(role: .user, text: "Execute multi-step reasoning task")],
             baseSystemPrompt: "Reasoning assistant",
@@ -708,9 +843,432 @@ struct ProviderConformanceScenarioTests {
         for try await event in stream {
             if case .textDelta(let text) = event { finalAns += text }
         }
-
         #expect(finalAns.contains("Both steps finished with reasoning"))
         #expect(emulator.requestCount == 3)
+    }
+
+    @Test("S10 R2: OpenAI-compatible reasoning field multi-turn reasoning tool loop")
+    func testS10R2OpenAICompatibleReasoning() async throws {
+        let tool = try Self.makeStepTool()
+        let emulator = StatefulProviderEmulator(
+            profile: .openAICompatibleReasoning,
+            scenarioName: "S10_R2_ReasoningField",
+            roundExpectations: [
+                0: RoundExpectation(),
+                1: RoundExpectation(
+                    expectedAssistantToolCalls: [ExpectedToolCall(id: "call-s1", name: "step_tool")],
+                    expectedPreservedReasoning: "First step analysis"
+                ),
+                2: RoundExpectation(
+                    expectedAssistantToolCalls: [ExpectedToolCall(id: "call-s2", name: "step_tool")],
+                    expectedPreservedReasoning: "Second step analysis"
+                )
+            ],
+            roundResponses: [
+                0: .sseChunks(ProviderResponseFixtures.openAIReasoningAndToolCallChunks(
+                    reasoningField: "First step analysis",
+                    calls: [(id: "call-s1", name: "step_tool", arguments: "{\"step\":1}")],
+                    id: "c-r2-1"
+                )),
+                1: .sseChunks(ProviderResponseFixtures.openAIReasoningAndToolCallChunks(
+                    reasoningField: "Second step analysis",
+                    calls: [(id: "call-s2", name: "step_tool", arguments: "{\"step\":2}")],
+                    id: "c-r2-2"
+                )),
+                2: .sseChunks(ProviderResponseFixtures.openAIChatTextChunks(text: "Both steps finished with reasoning.", id: "c-r2-3"))
+            ]
+        )
+
+        let engine = try Self.makeEngine(profile: .openAICompatibleReasoning, emulator: emulator)
+        let stream = try await engine.stream(
+            messages: [.init(role: .user, text: "Execute multi-step reasoning task")],
+            baseSystemPrompt: "Reasoning assistant",
+            tools: [tool],
+            prepareStep: { _ in HanlinAISDKStepPreparation(activeToolAliases: ["step_tool"]) }
+        )
+
+        var finalAns = ""
+        for try await event in stream {
+            if case .textDelta(let text) = event { finalAns += text }
+        }
+        #expect(finalAns.contains("Both steps finished with reasoning"))
+        #expect(emulator.requestCount == 3)
+    }
+
+    @Test("S10 R3: OpenRouter reasoning_details multi-turn reasoning tool loop")
+    func testS10R3OpenRouterReasoningDetails() async throws {
+        let tool = try Self.makeStepTool()
+        let details1: [[String: Any]] = [["type": "reasoning.text", "text": "Plan: step 1", "signature": "sig-or-1"]]
+        let details2: [[String: Any]] = [["type": "reasoning.text", "text": "Plan: step 2", "signature": "sig-or-2"]]
+
+        let emulator = StatefulProviderEmulator(
+            profile: .openRouterReasoningDetails,
+            scenarioName: "S10_R3_OpenRouterDetails",
+            roundExpectations: [
+                0: RoundExpectation(),
+                1: RoundExpectation(
+                    expectedAssistantToolCalls: [ExpectedToolCall(id: "call-s1", name: "step_tool")],
+                    expectedReasoningDetailsPresent: true
+                ),
+                2: RoundExpectation(
+                    expectedAssistantToolCalls: [ExpectedToolCall(id: "call-s2", name: "step_tool")],
+                    expectedReasoningDetailsPresent: true
+                )
+            ],
+            roundResponses: [
+                0: .sseChunks(ProviderResponseFixtures.openAIReasoningAndToolCallChunks(
+                    reasoningContent: "Plan: step 1",
+                    reasoningDetails: details1,
+                    calls: [(id: "call-s1", name: "step_tool", arguments: "{\"step\":1}")],
+                    id: "c-r3-1"
+                )),
+                1: .sseChunks(ProviderResponseFixtures.openAIReasoningAndToolCallChunks(
+                    reasoningContent: "Plan: step 2",
+                    reasoningDetails: details2,
+                    calls: [(id: "call-s2", name: "step_tool", arguments: "{\"step\":2}")],
+                    id: "c-r3-2"
+                )),
+                2: .sseChunks(ProviderResponseFixtures.openAIChatTextChunks(text: "Both steps finished with reasoning.", id: "c-r3-3"))
+            ]
+        )
+
+        let engine = try Self.makeEngine(profile: .openRouterReasoningDetails, emulator: emulator)
+        let stream = try await engine.stream(
+            messages: [.init(role: .user, text: "Execute multi-step reasoning task")],
+            baseSystemPrompt: "Reasoning assistant",
+            tools: [tool],
+            prepareStep: { _ in HanlinAISDKStepPreparation(activeToolAliases: ["step_tool"]) }
+        )
+
+        var finalAns = ""
+        var didFailPreservation = false
+        do {
+            for try await event in stream {
+                if case .textDelta(let text) = event { finalAns += text }
+            }
+        } catch let err as ConformanceProtocolError {
+            if err.category == .REASONING_STATE {
+                didFailPreservation = true
+            }
+        }
+
+        #expect(didFailPreservation || finalAns.contains("Both steps finished with reasoning"),
+                "OpenRouter reasoning_details must either prove defect (Phase A) or pass completely (Phase B).")
+    }
+
+    @Test("S10 R4: Google native thoughtSignature multi-turn reasoning tool loop")
+    func testS10R4GoogleNativeThoughtSignature() async throws {
+        let tool = try Self.makeStepTool()
+        let emulator = StatefulProviderEmulator(
+            profile: .googleNative,
+            scenarioName: "S10_R4_GoogleThoughtSignature",
+            roundExpectations: [
+                0: RoundExpectation(),
+                1: RoundExpectation(
+                    expectedAssistantToolCalls: [ExpectedToolCall(id: "step_tool", name: "step_tool")],
+                    expectedToolResults: [ExpectedToolResult(callID: "step_tool", name: "step_tool", expectedSubstring: "Result for step_tool")],
+                    expectedThoughtSignature: "sig-g-1"
+                ),
+                2: RoundExpectation(
+                    expectedAssistantToolCalls: [ExpectedToolCall(id: "step_tool", name: "step_tool")],
+                    expectedToolResults: [ExpectedToolResult(callID: "step_tool", name: "step_tool", expectedSubstring: "Result for step_tool")],
+                    expectedThoughtSignature: "sig-g-2"
+                )
+            ],
+            roundResponses: [
+                0: .sseChunks(ProviderResponseFixtures.googleFunctionCallChunks(
+                    calls: [(name: "step_tool", args: ["step": 1], thoughtSignature: "sig-g-1")]
+                )),
+                1: .sseChunks(ProviderResponseFixtures.googleFunctionCallChunks(
+                    calls: [(name: "step_tool", args: ["step": 2], thoughtSignature: "sig-g-2")]
+                )),
+                2: .sseChunks(ProviderResponseFixtures.googleTextChunks(text: "Both steps finished with reasoning."))
+            ]
+        )
+
+        let engine = try Self.makeEngine(profile: .googleNative, emulator: emulator)
+        let stream = try await engine.stream(
+            messages: [.init(role: .user, text: "Execute multi-step reasoning task")],
+            baseSystemPrompt: "Reasoning assistant",
+            tools: [tool],
+            prepareStep: { _ in HanlinAISDKStepPreparation(activeToolAliases: ["step_tool"]) }
+        )
+
+        var finalAns = ""
+        for try await event in stream {
+            if case .textDelta(let text) = event { finalAns += text }
+        }
+        #expect(finalAns.contains("Both steps finished with reasoning"))
+        #expect(emulator.requestCount == 3)
+    }
+
+    @Test("S10 R5: Anthropic native thinking signature multi-turn reasoning tool loop")
+    func testS10R5AnthropicNativeThinkingSignature() async throws {
+        let tool = try Self.makeStepTool()
+        let emulator = StatefulProviderEmulator(
+            profile: .anthropicNative,
+            scenarioName: "S10_R5_AnthropicThinkingSignature",
+            roundExpectations: [
+                0: RoundExpectation(),
+                1: RoundExpectation(
+                    expectedAssistantToolCalls: [ExpectedToolCall(id: "call-s1", name: "step_tool")],
+                    expectedToolResults: [ExpectedToolResult(callID: "call-s1", name: "step_tool", expectedSubstring: "Result for call-s1")],
+                    expectedPreservedReasoning: "First I will calculate step 1",
+                    expectedThoughtSignature: "sig-a-1"
+                ),
+                2: RoundExpectation(
+                    expectedAssistantToolCalls: [ExpectedToolCall(id: "call-s2", name: "step_tool")],
+                    expectedToolResults: [ExpectedToolResult(callID: "call-s2", name: "step_tool", expectedSubstring: "Result for call-s2")],
+                    expectedPreservedReasoning: "Now I will proceed to step 2",
+                    expectedThoughtSignature: "sig-a-2"
+                )
+            ],
+            roundResponses: [
+                0: .sseChunks(ProviderResponseFixtures.anthropicThinkingAndToolUseChunks(
+                    thinking: "First I will calculate step 1",
+                    signature: "sig-a-1",
+                    calls: [(id: "call-s1", name: "step_tool", arguments: "{\"step\":1}")],
+                    id: "c-r5-1"
+                )),
+                1: .sseChunks(ProviderResponseFixtures.anthropicThinkingAndToolUseChunks(
+                    thinking: "Now I will proceed to step 2",
+                    signature: "sig-a-2",
+                    calls: [(id: "call-s2", name: "step_tool", arguments: "{\"step\":2}")],
+                    id: "c-r5-2"
+                )),
+                2: .sseChunks(ProviderResponseFixtures.anthropicTextChunks(text: "Both steps finished with reasoning.", id: "c-r5-3"))
+            ]
+        )
+
+        let engine = try Self.makeEngine(profile: .anthropicNative, emulator: emulator)
+        let stream = try await engine.stream(
+            messages: [.init(role: .user, text: "Execute multi-step reasoning task")],
+            baseSystemPrompt: "Reasoning assistant",
+            tools: [tool],
+            prepareStep: { _ in HanlinAISDKStepPreparation(activeToolAliases: ["step_tool"]) }
+        )
+
+        var finalAns = ""
+        for try await event in stream {
+            if case .textDelta(let text) = event { finalAns += text }
+        }
+        #expect(finalAns.contains("Both steps finished with reasoning"))
+        #expect(emulator.requestCount == 3)
+    }
+
+    @Test("S10: Reasoning + tool continuation across multiple turns for reasoning profiles")
+    func testS10ReasoningToolLoop() async throws {
+        try await testS10R1OpenAICompatibleReasoningContent()
+    }
+
+    // MARK: - Anthropic Native State Tests (Section 16)
+
+    @Test("Anthropic Native: Thinking signature round-trip across multi-tool turns")
+    func testAnthropicNativeThinkingSignatureRoundTrip() async throws {
+        try await testS10R5AnthropicNativeThinkingSignature()
+    }
+
+    @Test("Anthropic Native: Parallel tool use and tool results")
+    func testAnthropicParallelToolUse() async throws {
+        let ledger = ToolExecutionLedger()
+        let toolA = HanlinAISDKToolDefinition(
+            name: "tool_alpha",
+            description: "Alpha",
+            inputSchemaData: try JSONSerialization.data(withJSONObject: ["type": "object"]),
+            execute: { args, callID in
+                ledger.recordStart(toolName: "tool_alpha", callID: callID, arguments: args)
+                ledger.recordCompletion(callID: callID, resultText: "alpha-ok")
+                return HanlinAISDKToolExecutionOutput(modelText: "alpha-ok")
+            }
+        )
+        let toolB = HanlinAISDKToolDefinition(
+            name: "tool_beta",
+            description: "Beta",
+            inputSchemaData: try JSONSerialization.data(withJSONObject: ["type": "object"]),
+            execute: { args, callID in
+                ledger.recordStart(toolName: "tool_beta", callID: callID, arguments: args)
+                ledger.recordCompletion(callID: callID, resultText: "beta-ok")
+                return HanlinAISDKToolExecutionOutput(modelText: "beta-ok")
+            }
+        )
+
+        let emulator = StatefulProviderEmulator(
+            profile: .anthropicNative,
+            scenarioName: "AnthropicParallelToolUse",
+            roundExpectations: [
+                0: RoundExpectation(),
+                1: RoundExpectation(
+                    expectedAssistantToolCalls: [
+                        ExpectedToolCall(id: "call-ant-a", name: "tool_alpha"),
+                        ExpectedToolCall(id: "call-ant-b", name: "tool_beta")
+                    ],
+                    expectedToolResults: [
+                        ExpectedToolResult(callID: "call-ant-a", name: "tool_alpha", expectedSubstring: "alpha-ok"),
+                        ExpectedToolResult(callID: "call-ant-b", name: "tool_beta", expectedSubstring: "beta-ok")
+                    ]
+                )
+            ],
+            roundResponses: [
+                0: .sseChunks(ProviderResponseFixtures.anthropicToolUseChunks(calls: [
+                    (id: "call-ant-a", name: "tool_alpha", arguments: "{}"),
+                    (id: "call-ant-b", name: "tool_beta", arguments: "{}")
+                ])),
+                1: .sseChunks(ProviderResponseFixtures.anthropicTextChunks(text: "Both Anthropic tools succeeded."))
+            ],
+            ledger: ledger
+        )
+
+        let engine = try Self.makeEngine(profile: .anthropicNative, emulator: emulator)
+        let stream = try await engine.stream(
+            messages: [.init(role: .user, text: "Run parallel tools")],
+            baseSystemPrompt: "Assistant",
+            tools: [toolA, toolB],
+            prepareStep: { _ in HanlinAISDKStepPreparation(activeToolAliases: ["tool_alpha", "tool_beta"]) }
+        )
+
+        var finalAns = ""
+        for try await event in stream {
+            if case .textDelta(let text) = event { finalAns += text }
+        }
+
+        #expect(finalAns.contains("Both Anthropic tools succeeded"))
+        #expect(emulator.requestCount == 2)
+        try ledger.assertSingleExecutions()
+    }
+
+    @Test("Anthropic Native: Tool result error is properly flagged and recovered")
+    func testAnthropicToolResultError() async throws {
+        let failingTool = HanlinAISDKToolDefinition(
+            name: "failing_tool",
+            description: "Failing tool",
+            inputSchemaData: try JSONSerialization.data(withJSONObject: ["type": "object"]),
+            execute: { _, callID in
+                HanlinAISDKToolExecutionOutput(modelText: "Specific failure message", isError: true)
+            }
+        )
+
+        let emulator = StatefulProviderEmulator(
+            profile: .anthropicNative,
+            scenarioName: "AnthropicToolResultError",
+            roundExpectations: [
+                0: RoundExpectation(),
+                1: RoundExpectation(
+                    expectedAssistantToolCalls: [ExpectedToolCall(id: "call-err-1", name: "failing_tool")],
+                    expectedToolResults: [ExpectedToolResult(callID: "call-err-1", name: "failing_tool", expectedSubstring: "Specific failure message", isError: true)]
+                )
+            ],
+            roundResponses: [
+                0: .sseChunks(ProviderResponseFixtures.anthropicToolUseChunks(
+                    calls: [(id: "call-err-1", name: "failing_tool", arguments: "{}")],
+                    id: "c-ant-err"
+                )),
+                1: .sseChunks(ProviderResponseFixtures.anthropicTextChunks(text: "Recovered from Anthropic tool error.", id: "c-ant-rec"))
+            ]
+        )
+
+        let engine = try Self.makeEngine(profile: .anthropicNative, emulator: emulator)
+        let stream = try await engine.stream(
+            messages: [.init(role: .user, text: "Test tool error")],
+            baseSystemPrompt: "Assistant",
+            tools: [failingTool],
+            prepareStep: { _ in HanlinAISDKStepPreparation(activeToolAliases: ["failing_tool"]) }
+        )
+
+        var finalAns = ""
+        for try await event in stream {
+            if case .textDelta(let text) = event { finalAns += text }
+        }
+
+        #expect(finalAns.contains("Recovered from Anthropic tool error"))
+        #expect(emulator.requestCount == 2)
+    }
+
+    // MARK: - Google Native Thought Signature Tests (Section 15)
+
+    @Test("Google Native: Sequential thoughtSignature preserved exactly across requests")
+    func testGoogleSequentialThoughtSignature() async throws {
+        try await testS10R4GoogleNativeThoughtSignature()
+    }
+
+    @Test("Google Native: Parallel thoughtSignature placement on first functionCall part only")
+    func testGoogleParallelThoughtSignaturePlacement() async throws {
+        let toolA = HanlinAISDKToolDefinition(
+            name: "tool_alpha",
+            description: "Alpha",
+            inputSchemaData: try JSONSerialization.data(withJSONObject: ["type": "object"]),
+            execute: { _, _ in HanlinAISDKToolExecutionOutput(modelText: "alpha-ok") }
+        )
+        let toolB = HanlinAISDKToolDefinition(
+            name: "tool_beta",
+            description: "Beta",
+            inputSchemaData: try JSONSerialization.data(withJSONObject: ["type": "object"]),
+            execute: { _, _ in HanlinAISDKToolExecutionOutput(modelText: "beta-ok") }
+        )
+
+        let emulator = StatefulProviderEmulator(
+            profile: .googleNative,
+            scenarioName: "GoogleParallelThoughtSignaturePlacement",
+            roundExpectations: [
+                0: RoundExpectation(),
+                1: RoundExpectation(
+                    expectedAssistantToolCalls: [
+                        ExpectedToolCall(id: "tool_alpha", name: "tool_alpha"),
+                        ExpectedToolCall(id: "tool_beta", name: "tool_beta")
+                    ],
+                    expectedToolResults: [
+                        ExpectedToolResult(callID: "tool_alpha", name: "tool_alpha", expectedSubstring: "alpha-ok"),
+                        ExpectedToolResult(callID: "tool_beta", name: "tool_beta", expectedSubstring: "beta-ok")
+                    ],
+                    customValidator: { req, round, profile in
+                        let body = ProviderRequestValidators.extractBody(from: req)
+                        let json = try JSONSerialization.jsonObject(with: body) as? [String: Any]
+                        let contents = json?["contents"] as? [[String: Any]] ?? []
+                        let modelMsgs = contents.filter { ($0["role"] as? String) == "model" }
+                        for msg in modelMsgs {
+                            let parts = msg["parts"] as? [[String: Any]] ?? []
+                            for p in parts {
+                                if let fc = p["functionCall"] as? [String: Any],
+                                   (fc["name"] as? String) == "tool_beta" {
+                                    // Sibling call tool_beta MUST NOT have a synthesized thoughtSignature!
+                                    let sig = p["thoughtSignature"] as? String
+                                    if sig != nil {
+                                        throw ConformanceProtocolError(
+                                            category: .SIGNATURE_STATE,
+                                            ownership: .swiftAISDKDependency,
+                                            round: round,
+                                            message: "Sibling functionCall 'tool_beta' had unexpected synthesized thoughtSignature '\(sig!)'."
+                                        )
+                                    }
+                                }
+                            }
+                        }
+                    }
+                )
+            ],
+            roundResponses: [
+                0: .sseChunks(ProviderResponseFixtures.googleFunctionCallChunks(calls: [
+                    (name: "tool_alpha", args: [:], thoughtSignature: "sig-first-only"),
+                    (name: "tool_beta", args: [:], thoughtSignature: nil)
+                ])),
+                1: .sseChunks(ProviderResponseFixtures.googleTextChunks(text: "Google parallel placement validated."))
+            ]
+        )
+
+        let engine = try Self.makeEngine(profile: .googleNative, emulator: emulator)
+        let stream = try await engine.stream(
+            messages: [.init(role: .user, text: "Run parallel Google tools")],
+            baseSystemPrompt: "Assistant",
+            tools: [toolA, toolB],
+            prepareStep: { _ in HanlinAISDKStepPreparation(activeToolAliases: ["tool_alpha", "tool_beta"]) }
+        )
+
+        var finalAns = ""
+        for try await event in stream {
+            if case .textDelta(let text) = event { finalAns += text }
+        }
+
+        #expect(finalAns.contains("Google parallel placement validated"))
+        #expect(emulator.requestCount == 2)
     }
 
     // MARK: - S14: Large Tool Result
@@ -789,7 +1347,7 @@ struct ProviderConformanceScenarioTests {
                 0: RoundExpectation(),
                 1: RoundExpectation(
                     expectedAssistantToolCalls: [ExpectedToolCall(id: "call-empty-1", name: "noop_tool")],
-                    expectedToolResults: [ExpectedToolResult(callID: "call-empty-1", name: "noop_tool", expectedSubstring: "")]
+                    expectedToolResults: [ExpectedToolResult(callID: "call-empty-1", name: "noop_tool", expectedContent: .exact(""))]
                 )
             ],
             roundResponses: [

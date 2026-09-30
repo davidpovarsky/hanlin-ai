@@ -7,13 +7,23 @@ public final class ProductionConformanceURLProtocol: URLProtocol, @unchecked Sen
     public typealias RequestValidator = @Sendable (Int, URLRequest, Data) throws -> Void
 
     private static let lock = NSLock()
+    private nonisolated(unsafe) static var isConfigured: Bool = false
     private nonisolated(unsafe) static var scriptedResponses: [Data] = []
     private nonisolated(unsafe) static var validators: [Int: RequestValidator] = [:]
     private nonisolated(unsafe) static var capturedRequests: [URLRequest] = []
     private nonisolated(unsafe) static var capturedBodies: [Data] = []
+    private nonisolated(unsafe) static var recordedValidationErrors: [Error] = []
     private nonisolated(unsafe) static var errorForNextRound: URLError?
     private nonisolated(unsafe) static var httpStatusCodeForNextRound: Int = 200
     private nonisolated(unsafe) static var preResponseHook: (@Sendable (Int) async -> Void)?
+
+    private static let interceptedHosts: Set<String> = [
+        ProductionConformanceFixtures.testHost,
+        "api.openai.com",
+        "openrouter.ai",
+        "api.anthropic.com",
+        "generativelanguage.googleapis.com"
+    ]
 
     public static func configure(
         responses: [Data],
@@ -21,11 +31,27 @@ public final class ProductionConformanceURLProtocol: URLProtocol, @unchecked Sen
         preResponseHook: (@Sendable (Int) async -> Void)? = nil
     ) {
         lock.lock()
+        isConfigured = true
         scriptedResponses = responses
         self.validators = validators
         self.preResponseHook = preResponseHook
         capturedRequests = []
         capturedBodies = []
+        recordedValidationErrors = []
+        errorForNextRound = nil
+        httpStatusCodeForNextRound = 200
+        lock.unlock()
+    }
+
+    public static func reset() {
+        lock.lock()
+        isConfigured = false
+        scriptedResponses = []
+        validators = [:]
+        preResponseHook = nil
+        capturedRequests = []
+        capturedBodies = []
+        recordedValidationErrors = []
         errorForNextRound = nil
         httpStatusCodeForNextRound = 200
         lock.unlock()
@@ -55,8 +81,15 @@ public final class ProductionConformanceURLProtocol: URLProtocol, @unchecked Sen
         return capturedRequests
     }
 
+    public static func validationErrors() -> [Error] {
+        lock.lock()
+        defer { lock.unlock() }
+        return recordedValidationErrors
+    }
+
     public override class func canInit(with request: URLRequest) -> Bool {
-        request.url?.host == ProductionConformanceFixtures.testHost
+        guard let host = request.url?.host else { return false }
+        return interceptedHosts.contains(host) || isConfigured
     }
 
     public override class func canonicalRequest(for request: URLRequest) -> URLRequest {
@@ -89,6 +122,9 @@ public final class ProductionConformanceURLProtocol: URLProtocol, @unchecked Sen
                 do {
                     try validator(roundIndex, self.request, bodyData)
                 } catch {
+                    Self.lock.lock()
+                    Self.recordedValidationErrors.append(error)
+                    Self.lock.unlock()
                     self.client?.urlProtocol(
                         self,
                         didFailWithError: URLError(.badServerResponse, userInfo: [

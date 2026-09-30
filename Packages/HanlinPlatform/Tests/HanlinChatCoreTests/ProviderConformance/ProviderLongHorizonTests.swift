@@ -381,4 +381,64 @@ struct ProviderLongHorizonTests {
 
         #expect(didFailPreservation, "CRITICAL FINDING REPRODUCED: Pinned swift-ai-sdk drops OpenRouter reasoning_details during stream decode and fails to round-trip it in continuation request.")
     }
+
+    // MARK: - P12B: Structured SDK History (Section 7)
+
+    @Test("P12B: Structured assistant tool-call and tool-result history survives into next provider model request")
+    func testP12BStructuredSDKHistory() async throws {
+        let calcTool = HanlinAISDKToolDefinition(
+            name: "calculate",
+            description: "Calculator",
+            inputSchemaData: try JSONSerialization.data(withJSONObject: [
+                "type": "object",
+                "properties": ["expr": ["type": "string"]]
+            ]),
+            execute: { args, callID in
+                HanlinAISDKToolExecutionOutput(modelText: "100")
+            }
+        )
+
+        let emulator = StatefulProviderEmulator(
+            profile: .openAINativeChat,
+            scenarioName: "P12B_StructuredSDKHistory",
+            roundExpectations: [
+                0: RoundExpectation(),
+                1: RoundExpectation(
+                    expectedAssistantToolCalls: [ExpectedToolCall(id: "call-calc-1", name: "calculate")],
+                    expectedToolResults: [ExpectedToolResult(callID: "call-calc-1", name: "calculate", expectedContent: .exact("100"))]
+                )
+            ],
+            roundResponses: [
+                0: .sseChunks(ProviderResponseFixtures.openAIChatToolCallChunks(
+                    calls: [(id: "call-calc-1", name: "calculate", arguments: "{\"expr\":\"50+50\"}")],
+                    id: "c-p12b-1"
+                )),
+                1: .sseChunks(ProviderResponseFixtures.openAIChatTextChunks(text: "Result is 100.", id: "c-p12b-2"))
+            ]
+        )
+
+        let config = HanlinChatModelConfiguration(
+            modelID: "gpt-4o",
+            company: "OpenAI",
+            apiType: "openai",
+            endpoint: "https://api.openai.com/v1/chat/completions",
+            credential: "test-openai-key"
+        )
+        let engine = try HanlinAISDKAgentEngine(configuration: config, fetch: emulator.makeFetchFunction())
+
+        let stream = try await engine.stream(
+            messages: [.init(role: .user, text: "Calculate 50 + 50")],
+            baseSystemPrompt: "Assistant",
+            tools: [calcTool],
+            prepareStep: { _ in HanlinAISDKStepPreparation(activeToolAliases: ["calculate"]) }
+        )
+
+        var finalAns = ""
+        for try await event in stream {
+            if case .textDelta(let delta) = event { finalAns += delta }
+        }
+
+        #expect(finalAns.contains("Result is 100"))
+        #expect(emulator.requestCount == 2)
+    }
 }

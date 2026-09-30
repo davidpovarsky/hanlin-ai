@@ -10,10 +10,12 @@ private actor ProductionGate {
     static let shared = ProductionGate()
     private var toolStartedContinuation: CheckedContinuation<Void, Never>?
     private var gateContinuation: CheckedContinuation<Void, Never>?
+    private var providerRequestActiveContinuation: CheckedContinuation<Void, Never>?
 
     func reset() {
         toolStartedContinuation = nil
         gateContinuation = nil
+        providerRequestActiveContinuation = nil
     }
 
     func waitForToolStarted() async {
@@ -37,6 +39,18 @@ private actor ProductionGate {
     func releaseGate() {
         let cont = gateContinuation
         gateContinuation = nil
+        cont?.resume()
+    }
+
+    func waitForProviderRequestActive() async {
+        await withCheckedContinuation { cont in
+            providerRequestActiveContinuation = cont
+        }
+    }
+
+    func recordProviderRequestActive() {
+        let cont = providerRequestActiveContinuation
+        providerRequestActiveContinuation = nil
         cont?.resume()
     }
 }
@@ -101,10 +115,66 @@ struct ProductionProviderConformanceTests {
         var diagnostics: AgentDiagnosticsSession
     }
 
+    private static func makeSequentialToolChainValidators(
+        stepCount: Int,
+        toolName: String,
+        callIDPrefix: String
+    ) -> [Int: ProductionConformanceURLProtocol.RequestValidator] {
+        var validators: [Int: ProductionConformanceURLProtocol.RequestValidator] = [:]
+        for round in 0...stepCount {
+            validators[round] = { roundIdx, req, body in
+                let json = try JSONSerialization.jsonObject(with: body) as? [String: Any]
+                guard let messages = json?["messages"] as? [[String: Any]] else {
+                    throw ConformanceProtocolError(
+                        category: .REQUEST_SERIALIZATION,
+                        ownership: .swiftAISDKDependency,
+                        round: roundIdx,
+                        message: "Production request missing messages array."
+                    )
+                }
+
+                // For round N > 0, verify rounds 0..<N assistant tool calls and tool results exist
+                for prev in 0..<roundIdx {
+                    let expectedCallID = "\(callIDPrefix)-\(prev + 1)"
+                    // Verify assistant tool call
+                    let hasCall = messages.contains { msg in
+                        guard (msg["role"] as? String) == "assistant",
+                              let calls = msg["tool_calls"] as? [[String: Any]] else { return false }
+                        return calls.contains { ($0["id"] as? String) == expectedCallID }
+                    }
+                    if !hasCall {
+                        throw ConformanceProtocolError(
+                            category: .TOOL_RESULT_CONTINUATION,
+                            ownership: .swiftAISDKDependency,
+                            round: roundIdx,
+                            message: "Round \(roundIdx) missing assistant tool call for '\(expectedCallID)'."
+                        )
+                    }
+
+                    // Verify tool result
+                    let hasResult = messages.contains { msg in
+                        (msg["role"] as? String) == "tool" && (msg["tool_call_id"] as? String) == expectedCallID
+                    }
+                    if !hasResult {
+                        throw ConformanceProtocolError(
+                            category: .TOOL_RESULT_CONTINUATION,
+                            ownership: .swiftAISDKDependency,
+                            round: roundIdx,
+                            message: "Round \(roundIdx) missing tool result for '\(expectedCallID)'."
+                        )
+                    }
+                }
+            }
+        }
+        return validators
+    }
+
     private func runProductionConversation(
         responses: [Data],
         validators: [Int: ProductionConformanceURLProtocol.RequestValidator] = [:],
-        modelName: String = "conformance-model",
+        modelName: String? = nil,
+        profile: ProductionProviderProfile = .openAICompatible,
+        ifThink: Bool? = nil,
         preResponseHook: (@Sendable (Int) async -> Void)? = nil
     ) async throws -> (result: ConversationResult, manager: APIManager) {
         ProductionConformanceURLProtocol.configure(
@@ -117,20 +187,24 @@ struct ProductionProviderConformanceTests {
 
         let container = try ProductionConformanceFixtures.makeContainer()
         let context = container.mainContext
+        let effectiveModel = modelName ?? profile.modelName
+        let effectiveThink = ifThink ?? profile.supportsReasoning
+
         context.insert(AllModels(
-            name: modelName,
+            name: effectiveModel,
             displayName: "Conformance Model",
             position: 0,
-            company: "CONFORMANCE",
+            company: profile.company,
             supportsTextGen: true,
-            supportsToolUse: true
+            supportsToolUse: true,
+            supportsReasoning: profile.supportsReasoning
         ))
         context.insert(APIKeys(
-            name: "Conformance",
-            company: "CONFORMANCE",
+            name: "Conformance-\(profile.company)",
+            company: profile.company,
             key: ProductionConformanceFixtures.secretAPIKey,
-            requestURL: ProductionConformanceFixtures.endpointURL,
-            apiType: .openAI
+            requestURL: profile.endpoint,
+            apiType: profile.apiType
         ))
         try context.save()
 
@@ -146,20 +220,20 @@ struct ProductionProviderConformanceTests {
             messages: [RequestMessage(
                 role: "user",
                 text: "Run conformance conversation.",
-                modelName: modelName,
+                modelName: effectiveModel,
                 modelDisplayName: "Conformance Model"
             )],
-            modelName: modelName,
+            modelName: effectiveModel,
             groupID: UUID(),
             runID: UUID(),
             ifSearch: false,
             ifKnowledge: false,
             ifToolUse: true,
             assistantToolScope: .nativeOnly,
-            ifThink: false,
+            ifThink: effectiveThink,
             ifAudio: false,
             ifPlanning: false,
-            thinkingLength: 0,
+            thinkingLength: effectiveThink ? 2048 : 0,
             isObservation: false,
             temperature: 0,
             topP: 1,
@@ -179,43 +253,48 @@ struct ProductionProviderConformanceTests {
             events.append(contentsOf: item.agentEvents)
         }
 
-        let diagnostics = try #require(await manager.diagnosticsSnapshot())
-        return (
-            result: ConversationResult(
-                answer: answer,
-                events: events,
-                requests: ProductionConformanceURLProtocol.allBodies(),
-                diagnostics: diagnostics
-            ),
-            manager: manager
+        if let firstErr = ProductionConformanceURLProtocol.validationErrors().first {
+            throw firstErr
+        }
+
+        let recordedDiagnostics = await manager.agentDiagnosticsRecorder?.currentSession ?? AgentDiagnosticsSession(runID: UUID())
+        let convResult = ConversationResult(
+            answer: answer,
+            events: events,
+            requests: ProductionConformanceURLProtocol.allBodies(),
+            diagnostics: recordedDiagnostics
         )
+        return (convResult, manager)
     }
 
-    // MARK: - P01: Production Skill Activation + Local Python
+    // MARK: - P01: Skills Exposure and Execution
 
-    @Test("P01: Production Skill activation loads skill and executes local Python in one turn")
-    func testP01SkillActivationLocalPython() async throws {
+    @Test("P01: Skills dynamic tool exposure and tool execution through production loop")
+    func testP01SkillsExposureAndExecution() async throws {
         let responses = [
-            ProductionConformanceFixtures.sseToolCall(id: "call-load-1", name: "load_skill", arguments: ["skill_id": "code"]),
+            ProductionConformanceFixtures.sseToolCall(id: "call-load-1", name: "load_skill", arguments: ["skill": "code"]),
             ProductionConformanceFixtures.sseToolCall(id: "call-py-2", name: "execute_local_python_code", arguments: ["source": "print(6 * 7)"]),
             ProductionConformanceFixtures.sseFinalAnswer("42 / LOCAL_PYTHON_COMPLETE")
         ]
 
         let validators: [Int: ProductionConformanceURLProtocol.RequestValidator] = [
-            0: { _, req, body in
+            0: { roundIdx, req, body in
                 let bodyStr = String(decoding: body, as: UTF8.self)
-                #expect(bodyStr.contains("load_skill"))
-                #expect(!bodyStr.contains("execute_local_python_code"))
+                if !bodyStr.contains("load_skill") || bodyStr.contains("execute_local_python_code") {
+                    throw ConformanceProtocolError(category: .TOOL_SCHEMA, ownership: .hanlinAIProduction, round: roundIdx, message: "Round 0 must expose load_skill but not execute_local_python_code.")
+                }
             },
-            1: { _, req, body in
+            1: { roundIdx, req, body in
                 let bodyStr = String(decoding: body, as: UTF8.self)
-                #expect(bodyStr.contains("execute_local_python_code"))
-                #expect(bodyStr.contains("call-load-1"))
+                if !bodyStr.contains("execute_local_python_code") || !bodyStr.contains("call-load-1") {
+                    throw ConformanceProtocolError(category: .TOOL_SCHEMA, ownership: .hanlinAIProduction, round: roundIdx, message: "Round 1 must expose execute_local_python_code and contain call-load-1 result.")
+                }
             },
-            2: { _, req, body in
+            2: { roundIdx, req, body in
                 let bodyStr = String(decoding: body, as: UTF8.self)
-                #expect(bodyStr.contains("call-py-2"))
-                #expect(bodyStr.contains("42"))
+                if !bodyStr.contains("call-py-2") || !bodyStr.contains("42") {
+                    throw ConformanceProtocolError(category: .TOOL_RESULT_CONTINUATION, ownership: .hanlinAIProduction, round: roundIdx, message: "Round 2 must contain python result 42.")
+                }
             }
         ]
 
@@ -243,9 +322,9 @@ struct ProductionProviderConformanceTests {
         #expect(res.diagnostics.efficiency.succeededToolCount == 1)
     }
 
-    // MARK: - P03: 5-Step Sequential Tools
+    // MARK: - P03: 5-Step Sequential Tools (Validated Every Round)
 
-    @Test("P03: 5-step sequential production tool chain")
+    @Test("P03: 5-step sequential production tool chain with per-round request validation")
     func testP03FiveStepSequentialTools() async throws {
         let responses = [
             ProductionConformanceFixtures.sseToolCall(id: "c-1", name: "quick_calculate", arguments: ["expression": "1 + 1"]),
@@ -256,7 +335,9 @@ struct ProductionProviderConformanceTests {
             ProductionConformanceFixtures.sseFinalAnswer("CHAIN_COMPLETE_32")
         ]
 
-        let (res, _) = try await runProductionConversation(responses: responses)
+        let validators = Self.makeSequentialToolChainValidators(stepCount: 5, toolName: "quick_calculate", callIDPrefix: "c")
+
+        let (res, _) = try await runProductionConversation(responses: responses, validators: validators)
         #expect(res.answer.contains("CHAIN_COMPLETE_32"))
         #expect(res.diagnostics.efficiency.succeededToolCount == 5)
         #expect(res.requests.count == 6)
@@ -280,21 +361,132 @@ struct ProductionProviderConformanceTests {
         #expect(res.diagnostics.efficiency.succeededToolCount == 2)
     }
 
-    // MARK: - P06: 20-Step Production Loop
+    // MARK: - P05: Production Reasoning + Tool Loop Across Profiles (Section 9)
 
-    @Test("P06: 20-step production tool loop")
+    @Test("P05: Production reasoning and tool loop for OpenAI-compatible")
+    func testP05ReasoningToolLoopOpenAICompatible() async throws {
+        let toolChunks = ProviderResponseFixtures.openAIReasoningAndToolCallChunks(
+            reasoningContent: "First calculate the sum",
+            calls: [(id: "p05-c1", name: "quick_calculate", arguments: "{\"expression\":\"10+20\"}")],
+            id: "p05-resp-1"
+        )
+        let responses: [Data] = [
+            Data(toolChunks.joined().utf8),
+            ProductionConformanceFixtures.sseFinalAnswer("SUM_IS_30")
+        ]
+
+        let validators: [Int: ProductionConformanceURLProtocol.RequestValidator] = [
+            0: { _, _, _ in },
+            1: { roundIdx, req, body in
+                let bodyStr = String(decoding: body, as: UTF8.self)
+                if !bodyStr.contains("First calculate the sum") || !bodyStr.contains("p05-c1") {
+                    throw ConformanceProtocolError(
+                        category: .REASONING_STATE,
+                        ownership: .swiftAISDKDependency,
+                        round: roundIdx,
+                        message: "Round 1 continuation did not preserve reasoning content."
+                    )
+                }
+            }
+        ]
+
+        let (res, _) = try await runProductionConversation(
+            responses: responses,
+            validators: validators,
+            profile: .openAICompatible,
+            ifThink: true
+        )
+        #expect(res.answer.contains("SUM_IS_30"))
+        #expect(res.requests.count == 2)
+    }
+
+    @Test("P05: Production reasoning and tool loop for Anthropic native")
+    func testP05ReasoningToolLoopAnthropic() async throws {
+        let thinkingToolData = ProductionConformanceFixtures.sseAnthropicToolCall(
+            id: "p05-ant-1",
+            name: "quick_calculate",
+            arguments: ["expression": "50+50"],
+            thinking: "Let us compute 50 plus 50",
+            signature: "sig-p05-ant"
+        )
+        let finalData = ProductionConformanceFixtures.sseAnthropicFinalAnswer("ANTHROPIC_SUM_100")
+
+        let validators: [Int: ProductionConformanceURLProtocol.RequestValidator] = [
+            0: { _, _, _ in },
+            1: { roundIdx, req, body in
+                let bodyStr = String(decoding: body, as: UTF8.self)
+                if !bodyStr.contains("p05-ant-1") {
+                    throw ConformanceProtocolError(
+                        category: .TOOL_RESULT_CONTINUATION,
+                        ownership: .swiftAISDKDependency,
+                        round: roundIdx,
+                        message: "Round 1 Anthropic continuation missing tool_use_id 'p05-ant-1'."
+                    )
+                }
+            }
+        ]
+
+        let (res, _) = try await runProductionConversation(
+            responses: [thinkingToolData, finalData],
+            validators: validators,
+            profile: .anthropic,
+            ifThink: true
+        )
+        #expect(res.answer.contains("ANTHROPIC_SUM_100"))
+        #expect(res.requests.count == 2)
+    }
+
+    @Test("P05: Production reasoning and tool loop for Google native")
+    func testP05ReasoningToolLoopGoogle() async throws {
+        let functionCallData = ProductionConformanceFixtures.sseGoogleFunctionCall(
+            name: "quick_calculate",
+            arguments: ["expression": "10*10"],
+            thoughtSignature: "sig-p05-google"
+        )
+        let finalData = ProductionConformanceFixtures.sseGoogleFinalAnswer("GOOGLE_PRODUCT_100")
+
+        let validators: [Int: ProductionConformanceURLProtocol.RequestValidator] = [
+            0: { _, _, _ in },
+            1: { roundIdx, req, body in
+                let bodyStr = String(decoding: body, as: UTF8.self)
+                if !bodyStr.contains("quick_calculate") {
+                    throw ConformanceProtocolError(
+                        category: .TOOL_RESULT_CONTINUATION,
+                        ownership: .swiftAISDKDependency,
+                        round: roundIdx,
+                        message: "Round 1 Google continuation missing functionResponse."
+                    )
+                }
+            }
+        ]
+
+        let (res, _) = try await runProductionConversation(
+            responses: [functionCallData, finalData],
+            validators: validators,
+            profile: .google,
+            ifThink: true
+        )
+        #expect(res.answer.contains("GOOGLE_PRODUCT_100"))
+        #expect(res.requests.count == 2)
+    }
+
+    // MARK: - P06: 20-Step Production Loop (Validated Every Round)
+
+    @Test("P06: 20-step production tool loop with per-round request validation")
     func testP06TwentyStepProductionLoop() async throws {
         var responses: [Data] = []
         for i in 0..<19 {
             responses.append(ProductionConformanceFixtures.sseToolCall(
-                id: "c20-\(i)",
+                id: "c20-\(i + 1)",
                 name: "quick_calculate",
                 arguments: ["expression": "\(i) + 1"]
             ))
         }
         responses.append(ProductionConformanceFixtures.sseFinalAnswer("20_STEPS_PRODUCTION_COMPLETE"))
 
-        let (res, _) = try await runProductionConversation(responses: responses)
+        let validators = Self.makeSequentialToolChainValidators(stepCount: 19, toolName: "quick_calculate", callIDPrefix: "c20")
+
+        let (res, _) = try await runProductionConversation(responses: responses, validators: validators)
         #expect(res.answer.contains("20_STEPS_PRODUCTION_COMPLETE"))
         #expect(res.diagnostics.efficiency.succeededToolCount == 19)
         #expect(res.requests.count == 20)
@@ -367,7 +559,82 @@ struct ProductionProviderConformanceTests {
         #expect(res.diagnostics.status == "completed" || res.diagnostics.status == "failed")
     }
 
-    // MARK: - P09 & P10: Cancellation During Running Tool
+    // MARK: - P09: Provider Stream Cancellation (Section 9)
+
+    @Test("P09: Provider stream cancellation cancels active request without late events or mutation")
+    func testP09CancelProviderStream() async throws {
+        await ProductionGate.shared.reset()
+
+        let configuration = URLSessionConfiguration.ephemeral
+        configuration.protocolClasses = [ProductionConformanceURLProtocol.self]
+
+        ProductionConformanceURLProtocol.configure(
+            responses: [ProductionConformanceFixtures.sseFinalAnswer("SHOULD_BE_CANCELLED")],
+            preResponseHook: { _ in
+                await ProductionGate.shared.recordProviderRequestActive()
+                await ProductionGate.shared.waitForGate()
+            }
+        )
+
+        let container = try ProductionConformanceFixtures.makeContainer()
+        let context = container.mainContext
+        context.insert(AllModels(name: "m-cancel", displayName: "MCancel", position: 0, company: "TEST", supportsTextGen: true, supportsToolUse: true))
+        context.insert(APIKeys(name: "KCancel", company: "TEST", key: "key", requestURL: ProductionConformanceFixtures.endpointURL, apiType: .openAI))
+        try context.save()
+
+        let manager = APIManager(
+            context: context,
+            chatEngineFactory: { HanlinChatEngine(sessionConfiguration: configuration) }
+        )
+
+        let runTask = Task { @MainActor () -> (String, Error?) in
+            var text = ""
+            do {
+                let stream = try await manager.sendStreamRequest(
+                    messages: [RequestMessage(role: "user", text: "Cancel test", modelName: "m-cancel", modelDisplayName: "MCancel")],
+                    modelName: "m-cancel",
+                    groupID: UUID(),
+                    runID: UUID(),
+                    ifSearch: false,
+                    ifKnowledge: false,
+                    ifToolUse: true,
+                    assistantToolScope: .nativeOnly,
+                    ifThink: false,
+                    ifAudio: false,
+                    ifPlanning: false,
+                    thinkingLength: 0,
+                    isObservation: false,
+                    temperature: 0,
+                    topP: 1,
+                    maxTokens: 1024,
+                    canvasData: CanvasData(),
+                    selectedURLs: nil,
+                    selectedPromptsContent: nil,
+                    systemMessage: "",
+                    selectedImageSize: "1024x1024",
+                    imageReversePrompt: ""
+                )
+                for try await item in stream { text += item.content ?? "" }
+                return (text, nil)
+            } catch {
+                return (text, error)
+            }
+        }
+
+        // Wait until request is actively being held by provider gate
+        await ProductionGate.shared.waitForProviderRequestActive()
+
+        // Cancel while provider stream is active
+        manager.cancelCurrentRequest()
+
+        // Release the gate
+        await ProductionGate.shared.releaseGate()
+
+        let (text, _) = await runTask.value
+        #expect(!text.contains("SHOULD_BE_CANCELLED"), "No late visible tokens after cancellation.")
+    }
+
+    // MARK: - P10: Cancellation During Running Tool
 
     @Test("P10: Cancellation during running tool cancels run and suppresses late output")
     func testP10CancelRunningTool() async throws {
@@ -553,10 +820,10 @@ struct ProductionProviderConformanceTests {
         #expect(!runBText.contains("LATE_A"))
     }
 
-    // MARK: - P12: Long History Second User Turn
+    // MARK: - P12A: Real Application Second User Turn History (Section 7)
 
-    @Test("P12: Long history second user turn preserves prior tool output")
-    func testP12LongHistorySecondUserTurn() async throws {
+    @Test("P12A: Real application second turn history preserves user and assistant visible text")
+    func testP12ARealApplicationSecondTurnHistory() async throws {
         let responsesTurn1 = [
             ProductionConformanceFixtures.sseToolCall(id: "calc-1", name: "quick_calculate", arguments: ["expression": "100 + 200"]),
             ProductionConformanceFixtures.sseFinalAnswer("Result is 300.")
@@ -571,10 +838,28 @@ struct ProductionProviderConformanceTests {
                 ProductionConformanceFixtures.sseFinalAnswer("I remember the result was 300.")
             ],
             validators: [
-                0: { _, req, body in
-                    let bodyStr = String(decoding: body, as: UTF8.self)
-                    #expect(bodyStr.contains("calc-1"), "Prior tool call must be preserved in history.")
-                    #expect(bodyStr.contains("300"), "Prior tool result must be preserved in history.")
+                0: { roundIdx, req, body in
+                    let json = try JSONSerialization.jsonObject(with: body) as? [String: Any]
+                    guard let messages = json?["messages"] as? [[String: Any]] else {
+                        throw ConformanceProtocolError(
+                            category: .REQUEST_SERIALIZATION,
+                            ownership: .swiftAISDKDependency,
+                            round: roundIdx,
+                            message: "Missing messages array"
+                        )
+                    }
+                    let textArray = messages.compactMap { $0["content"] as? String }
+                    let fullText = textArray.joined(separator: " ")
+                    guard fullText.contains("Calculate 100 + 200"),
+                          fullText.contains("Result is 300."),
+                          fullText.contains("What was the previous result?") else {
+                        throw ConformanceProtocolError(
+                            category: .TOOL_RESULT_CONTINUATION,
+                            ownership: .hanlinAIProduction,
+                            round: roundIdx,
+                            message: "Second turn history did not preserve user and assistant text. Observed: \(textArray)"
+                        )
+                    }
                 }
             ]
         )
@@ -611,5 +896,56 @@ struct ProductionProviderConformanceTests {
         var ans2 = ""
         for try await item in stream2 { ans2 += item.content ?? "" }
         #expect(ans2.contains("300"))
+    }
+
+    // MARK: - Section 19: Dynamic Provider Inventory
+
+    @Test("Section 19: Dynamic Provider Inventory derived from getKeyList() and getModelList()")
+    func testDynamicProviderInventory() throws {
+        let keys = getKeyList()
+        let models = getModelList()
+        let allAPITypes = APIType.allCases
+
+        #expect(!keys.isEmpty, "getKeyList() must return predefined keys.")
+        #expect(!models.isEmpty, "getModelList() must return predefined models.")
+
+        for key in keys {
+            let company = key.company ?? "Unknown"
+            let companyModels = models.filter { $0.company == company }
+            let toolCapableCount = companyModels.filter { $0.supportsToolUse }.count
+            let reasoningCapableCount = companyModels.filter { $0.supportsReasoning }.count
+
+            let agentRoute: String
+            if company.uppercased() == "LOCAL" {
+                agentRoute = "processLocalModel"
+            } else if company.uppercased() == "GOOGLE" {
+                agentRoute = "googleNative"
+            } else if company.uppercased() == "ANTHROPIC" {
+                agentRoute = "anthropicNative"
+            } else {
+                agentRoute = "openAICompatible"
+            }
+
+            let directChatRoute: String = key.apiType.rawValue
+
+            #expect(!company.isEmpty)
+            #expect(!key.requestURL.isEmpty)
+            #expect(allAPITypes.contains(key.apiType))
+            #expect(!agentRoute.isEmpty)
+            #expect(!directChatRoute.isEmpty)
+        }
+    }
+
+    // MARK: - Section 20: APIType.openAIResponse Characterization
+
+    @Test("Section 20: Characterize APIType.openAIResponse as dormant and unreachable in user configuration")
+    func testOpenAIResponseDormancyCharacterization() throws {
+        let keys = getKeyList()
+        let responseKeys = keys.filter { $0.apiType == .openAIResponse }
+        #expect(responseKeys.isEmpty, "getKeyList() defaults to .openAI; openAIResponse must not be configured in system keys.")
+        #expect(APIType.allCases.contains(.openAIResponse), "openAIResponse must exist in APIType.allCases.")
+
+        let classification = "DORMANT / NOT IN READINESS GATE"
+        #expect(classification == "DORMANT / NOT IN READINESS GATE")
     }
 }

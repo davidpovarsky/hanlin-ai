@@ -3,6 +3,67 @@ import HanlinChatCore
 import SwiftData
 @testable import AI_Hanlin
 
+public enum ProductionProviderProfile: String, CaseIterable, Sendable {
+    case openAINative
+    case openAICompatible
+    case openRouter
+    case anthropic
+    case google
+
+    public var company: String {
+        switch self {
+        case .openAINative: return "OPENAI"
+        case .openAICompatible: return "CONFORMANCE"
+        case .openRouter: return "OPENROUTER"
+        case .anthropic: return "ANTHROPIC"
+        case .google: return "GOOGLE"
+        }
+    }
+
+    public var apiType: APIType {
+        switch self {
+        case .openAINative, .openAICompatible, .openRouter:
+            return .openAI
+        case .anthropic:
+            return .anthropic
+        case .google:
+            return .gemini
+        }
+    }
+
+    public var endpoint: String {
+        switch self {
+        case .openAINative:
+            return "https://api.openai.com/v1/chat/completions"
+        case .openAICompatible:
+            return "https://conformance.provider/v1/chat/completions"
+        case .openRouter:
+            return "https://openrouter.ai/api/v1/chat/completions"
+        case .anthropic:
+            return "https://api.anthropic.com/v1/messages"
+        case .google:
+            return "https://generativelanguage.googleapis.com/v1beta/chat/completions"
+        }
+    }
+
+    public var modelName: String {
+        switch self {
+        case .openAINative: return "gpt-4o"
+        case .openAICompatible: return "conformance-model"
+        case .openRouter: return "nvidia/llama-3.1-nemotron-70b-instruct"
+        case .anthropic: return "claude-3-5-sonnet-20241022"
+        case .google: return "gemini-2.0-flash-exp"
+        }
+    }
+
+    public var supportsReasoning: Bool {
+        switch self {
+        case .openAINative, .openAICompatible: return false
+        case .openRouter, .anthropic, .google: return true
+        }
+    }
+}
+
 public enum ProductionConformanceFixtures {
     public static let secretAPIKey = "CONFORMANCE_SECRET_DO_NOT_LEAK"
     public static let testHost = "conformance.provider"
@@ -26,6 +87,8 @@ public enum ProductionConformanceFixtures {
             configurations: configuration
         )
     }
+
+    // MARK: - OpenAI-Compatible Fixtures
 
     public static func sseToolCall(
         id: String,
@@ -94,6 +157,75 @@ public enum ProductionConformanceFixtures {
             ]]
         ])
     }
+
+    public static func sseOpenRouterReasoningAndTool(
+        reasoningContent: String,
+        reasoningDetails: [[String: Any]],
+        callID: String,
+        toolName: String,
+        arguments: [String: Any]
+    ) -> Data {
+        let argsData = try! JSONSerialization.data(withJSONObject: arguments, options: [.sortedKeys])
+        let argsJSON = String(decoding: argsData, as: UTF8.self)
+        let chunks = ProviderResponseFixtures.openAIReasoningAndToolCallChunks(
+            reasoningContent: reasoningContent,
+            reasoningDetails: reasoningDetails,
+            calls: [(id: callID, name: toolName, arguments: argsJSON)],
+            id: "or-reason-tool-1"
+        )
+        return Data(chunks.joined().utf8)
+    }
+
+    // MARK: - Anthropic Native Fixtures
+
+    public static func sseAnthropicToolCall(
+        id: String,
+        name: String,
+        arguments: [String: Any],
+        thinking: String? = nil,
+        signature: String? = nil
+    ) -> Data {
+        let argsData = try! JSONSerialization.data(withJSONObject: arguments, options: [.sortedKeys])
+        let argsJSON = String(decoding: argsData, as: UTF8.self)
+        if let thinking, let signature {
+            let chunks = ProviderResponseFixtures.anthropicThinkingAndToolUseChunks(
+                thinking: thinking,
+                signature: signature,
+                calls: [(id: id, name: name, arguments: argsJSON)]
+            )
+            return Data(chunks.joined().utf8)
+        } else {
+            let chunks = ProviderResponseFixtures.anthropicToolUseChunks(
+                calls: [(id: id, name: name, arguments: argsJSON)]
+            )
+            return Data(chunks.joined().utf8)
+        }
+    }
+
+    public static func sseAnthropicFinalAnswer(_ text: String) -> Data {
+        let chunks = ProviderResponseFixtures.anthropicTextChunks(text: text)
+        return Data(chunks.joined().utf8)
+    }
+
+    // MARK: - Google Native Fixtures
+
+    public static func sseGoogleFunctionCall(
+        name: String,
+        arguments: [String: Any],
+        thoughtSignature: String? = nil
+    ) -> Data {
+        let chunks = ProviderResponseFixtures.googleFunctionCallChunks(
+            calls: [(name: name, args: arguments, thoughtSignature: thoughtSignature)]
+        )
+        return Data(chunks.joined().utf8)
+    }
+
+    public static func sseGoogleFinalAnswer(_ text: String) -> Data {
+        let chunks = ProviderResponseFixtures.googleTextChunks(text: text)
+        return Data(chunks.joined().utf8)
+    }
+
+    // MARK: - Helpers
 
     public static func sseData(_ payload: [String: Any]) -> Data {
         let data = try! JSONSerialization.data(withJSONObject: payload, options: [.sortedKeys])

@@ -138,24 +138,47 @@ public struct ExpectedToolCall: Sendable {
     }
 }
 
+public enum ExpectedToolResultContent: Sendable, Equatable {
+    case present
+    case exact(String)
+    case contains(String)
+}
+
 public struct ExpectedToolResult: Sendable {
     public let callID: String
     public let name: String?
-    public let expectedSubstring: String?
+    public let expectedContent: ExpectedToolResultContent?
     public let isError: Bool
+
+    public var expectedSubstring: String? {
+        switch expectedContent {
+        case .contains(let s), .exact(let s):
+            return s
+        case .present, .none:
+            return nil
+        }
+    }
 
     public init(
         callID: String,
         name: String? = nil,
         expectedSubstring: String? = nil,
+        expectedContent: ExpectedToolResultContent? = nil,
         isError: Bool = false
     ) {
         self.callID = callID
         self.name = name
-        self.expectedSubstring = expectedSubstring
+        if let expectedContent {
+            self.expectedContent = expectedContent
+        } else if let expectedSubstring {
+            self.expectedContent = .contains(expectedSubstring)
+        } else {
+            self.expectedContent = nil
+        }
         self.isError = isError
     }
 }
+
 
 public struct RoundExpectation: Sendable {
     public var httpMethod: String

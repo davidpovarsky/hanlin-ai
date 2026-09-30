@@ -251,6 +251,92 @@ public enum ProviderResponseFixtures {
         return chunks
     }
 
+    public static func anthropicThinkingAndToolUseChunks(
+        thinking: String,
+        signature: String,
+        calls: [(id: String, name: String, arguments: String)],
+        id: String = "msg-anthropic-think-tool-1",
+        stopReason: String = "tool_use"
+    ) -> [String] {
+        var chunks: [String] = []
+        chunks.append(sseAnthropic([
+            "type": "message_start",
+            "message": [
+                "id": id,
+                "type": "message",
+                "role": "assistant",
+                "model": "claude-3-5-sonnet-20241022",
+                "content": [],
+                "stop_reason": NSNull()
+            ]
+        ]))
+
+        // Block 0: thinking block
+        chunks.append(sseAnthropic([
+            "type": "content_block_start",
+            "index": 0,
+            "content_block": [
+                "type": "thinking",
+                "thinking": ""
+            ]
+        ]))
+        chunks.append(sseAnthropic([
+            "type": "content_block_delta",
+            "index": 0,
+            "delta": [
+                "type": "thinking_delta",
+                "thinking": thinking
+            ]
+        ]))
+        chunks.append(sseAnthropic([
+            "type": "content_block_delta",
+            "index": 0,
+            "delta": [
+                "type": "signature_delta",
+                "signature": signature
+            ]
+        ]))
+        chunks.append(sseAnthropic([
+            "type": "content_block_stop",
+            "index": 0
+        ]))
+
+        // Subsequent blocks: tool_use
+        for (idx, call) in calls.enumerated() {
+            let blockIndex = idx + 1
+            chunks.append(sseAnthropic([
+                "type": "content_block_start",
+                "index": blockIndex,
+                "content_block": [
+                    "type": "tool_use",
+                    "id": call.id,
+                    "name": call.name,
+                    "input": [:]
+                ]
+            ]))
+            chunks.append(sseAnthropic([
+                "type": "content_block_delta",
+                "index": blockIndex,
+                "delta": [
+                    "type": "input_json_delta",
+                    "partial_json": call.arguments
+                ]
+            ]))
+            chunks.append(sseAnthropic([
+                "type": "content_block_stop",
+                "index": blockIndex
+            ]))
+        }
+
+        chunks.append(sseAnthropic([
+            "type": "message_delta",
+            "delta": ["stop_reason": stopReason, "stop_sequence": NSNull()],
+            "usage": ["output_tokens": 30]
+        ]))
+        chunks.append(sseAnthropic(["type": "message_stop"]))
+        return chunks
+    }
+
     // MARK: - Google Native Fixtures
 
     public static func googleTextChunks(
