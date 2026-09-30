@@ -196,8 +196,8 @@ struct ProductionProviderConformanceTests {
             position: 0,
             company: profile.company,
             supportsTextGen: true,
-            supportsToolUse: true,
-            supportsReasoning: profile.supportsReasoning
+            supportsReasoning: profile.supportsReasoning,
+            supportsToolUse: true
         ))
         context.insert(APIKeys(
             name: "Conformance-\(profile.company)",
@@ -257,7 +257,7 @@ struct ProductionProviderConformanceTests {
             throw firstErr
         }
 
-        let recordedDiagnostics = await manager.agentDiagnosticsRecorder?.currentSession ?? AgentDiagnosticsSession(runID: UUID())
+        let recordedDiagnostics = try #require(await manager.diagnosticsSnapshot())
         let convResult = ConversationResult(
             answer: answer,
             events: events,
