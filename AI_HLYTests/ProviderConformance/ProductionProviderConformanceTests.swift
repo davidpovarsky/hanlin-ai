@@ -113,6 +113,7 @@ struct ProductionProviderConformanceTests {
         var events: [AgentEvent]
         var requests: [Data]
         var diagnostics: AgentDiagnosticsSession
+        var container: ModelContainer?
     }
 
     private static func makeSequentialToolChainValidators(
@@ -262,7 +263,8 @@ struct ProductionProviderConformanceTests {
             answer: answer,
             events: events,
             requests: ProductionConformanceURLProtocol.allBodies(),
-            diagnostics: recordedDiagnostics
+            diagnostics: recordedDiagnostics,
+            container: container
         )
         return (convResult, manager)
     }
@@ -272,7 +274,7 @@ struct ProductionProviderConformanceTests {
     @Test("P01: Skills dynamic tool exposure and tool execution through production loop")
     func testP01SkillsExposureAndExecution() async throws {
         let responses = [
-            ProductionConformanceFixtures.sseToolCall(id: "call-load-1", name: "load_skill", arguments: ["skill": "code"]),
+            ProductionConformanceFixtures.sseToolCall(id: "call-load-1", name: "load_skill", arguments: ["skill_id": "code"]),
             ProductionConformanceFixtures.sseToolCall(id: "call-py-2", name: "execute_local_python_code", arguments: ["source": "print(6 * 7)"]),
             ProductionConformanceFixtures.sseFinalAnswer("42 / LOCAL_PYTHON_COMPLETE")
         ]
@@ -551,12 +553,18 @@ struct ProductionProviderConformanceTests {
     @Test("P08: Provider HTTP 200 with finish_reason='other' and 0 content is characterized")
     func testP08FinishOtherNoContent() async throws {
         let responses = [
+            ProductionConformanceFixtures.sseFinishOnly(finishReason: "other"),
             ProductionConformanceFixtures.sseFinishOnly(finishReason: "other")
         ]
 
-        let (res, _) = try await runProductionConversation(responses: responses)
-        #expect(res.answer.isEmpty, "Characterization finding: 0 content was produced.")
-        #expect(res.diagnostics.status == "completed" || res.diagnostics.status == "failed")
+        var didThrow = false
+        do {
+            let (res, _) = try await runProductionConversation(responses: responses)
+            #expect(res.answer.isEmpty, "Characterization finding: 0 content was produced.")
+        } catch {
+            didThrow = true
+        }
+        #expect(didThrow, "Wrapper retries once then throws emptyProviderResponse.")
     }
 
     // MARK: - P09: Provider Stream Cancellation (Section 9)
@@ -895,6 +903,9 @@ struct ProductionProviderConformanceTests {
 
         var ans2 = ""
         for try await item in stream2 { ans2 += item.content ?? "" }
+        if let firstErr = ProductionConformanceURLProtocol.validationErrors().first {
+            throw firstErr
+        }
         #expect(ans2.contains("300"))
     }
 
