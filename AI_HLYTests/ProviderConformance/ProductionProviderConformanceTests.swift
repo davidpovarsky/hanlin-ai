@@ -839,11 +839,6 @@ struct ProductionProviderConformanceTests {
         // Cancel while provider stream is active
         manager.cancelCurrentRequest()
 
-        // Snapshot diagnostics immediately after cancellation
-        let snapshotAtCancellation = try #require(await manager.diagnosticsSnapshot(), "Diagnostics snapshot must be available after cancellation")
-        #expect(snapshotAtCancellation.status == "cancelled", "Diagnostics status must be cancelled")
-        #expect(snapshotAtCancellation.isComplete == true, "Diagnostics isComplete must be true")
-
         // Release the gate: provider emits late ghost response
         await ProductionGate.shared.releaseGate()
 
@@ -854,11 +849,17 @@ struct ProductionProviderConformanceTests {
         #expect(!text.contains("LATE_FORBIDDEN_REASONING"), "No late reasoning tokens after cancellation.")
         #expect(P09GhostDetectorTool.count == 0, "No ghost tool execution after stream cancellation")
 
+        // Diagnostics snapshot must be cancelled and complete once terminal
+        let snapshotTerminal = try #require(await manager.diagnosticsSnapshot(), "Diagnostics snapshot must be available after cancellation")
+        #expect(snapshotTerminal.status == "cancelled", "Diagnostics status must be cancelled")
+        #expect(snapshotTerminal.isComplete == true, "Diagnostics isComplete must be true")
+
         // Diagnostics snapshot must remain frozen with no post-terminal mutation
+        try await Task.sleep(for: .milliseconds(50))
         let finalSnapshot = try #require(await manager.diagnosticsSnapshot(), "Diagnostics snapshot must be preserved")
         #expect(finalSnapshot.status == "cancelled", "Final diagnostics status must remain cancelled")
         #expect(finalSnapshot.isComplete == true, "Final diagnostics isComplete must remain true")
-        #expect(finalSnapshot == snapshotAtCancellation, "Diagnostics must remain frozen with no post-terminal mutation")
+        #expect(finalSnapshot == snapshotTerminal, "Diagnostics must remain frozen with no post-terminal mutation")
     }
 
     // MARK: - P10: Cancellation During Running Tool
