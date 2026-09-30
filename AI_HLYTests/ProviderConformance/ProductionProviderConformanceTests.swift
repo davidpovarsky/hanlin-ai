@@ -102,6 +102,56 @@ private final class ProductionDelayedTool: NativeTool, @unchecked Sendable {
     }
 }
 
+private final class P09GhostDetectorTool: NativeTool, @unchecked Sendable {
+    let name = "p09_ghost_detector_tool"
+    private static let lock = NSLock()
+    private static var _count = 0
+
+    static func reset() {
+        lock.lock()
+        _count = 0
+        lock.unlock()
+    }
+
+    static var count: Int {
+        lock.lock()
+        defer { lock.unlock() }
+        return _count
+    }
+
+    var catalogEntry: NativeToolCatalogEntry {
+        .init(
+            name: name,
+            title: "P09 Ghost Detector Tool",
+            summary: "Detects unauthorized tool execution after cancellation",
+            categories: ["test"],
+            keywords: ["ghost"],
+            examples: [],
+            systemImage: "exclamationmark.triangle",
+            presentationProfile: .generic(toolName: name)
+        )
+    }
+
+    func openAIToolSchema() -> [String: Any] {
+        NativeToolSchema.function(
+            name: name,
+            description: "Ghost tool that must never execute after cancellation.",
+            parameters: NativeToolSchema.object(properties: [:])
+        )
+    }
+
+    func execute(argumentsJSON: String, context: NativeToolExecutionContext) async -> NativeToolResult {
+        Self.lock.lock()
+        Self._count += 1
+        Self.lock.unlock()
+        return NativeToolResult(
+            modelText: "ghost_executed",
+            userText: "Ghost executed",
+            outcome: .failed
+        )
+    }
+}
+
 // MARK: - Production Path Conformance Test Suite (Section 14)
 
 @MainActor
@@ -267,6 +317,58 @@ struct ProductionProviderConformanceTests {
             container: container
         )
         return (convResult, manager)
+    }
+
+    // MARK: - OpenAI Native Production Route Smoke Test
+
+    @Test("OpenAI native production route: smoke with tool call continuation and terminal success")
+    func testOpenAINativeProductionAPIManagerSmoke() async throws {
+        let toolResponses: [Data] = [
+            ProductionConformanceFixtures.sseToolCall(
+                id: "call-openai-smoke-1",
+                name: "quick_calculate",
+                arguments: ["expression": "2 + 2"]
+            ),
+            ProductionConformanceFixtures.sseFinalAnswer("4")
+        ]
+
+        let validators: [Int: ProductionConformanceURLProtocol.RequestValidator] = [
+            0: { roundIdx, req, body in
+                #expect(req.url?.absoluteString == "https://api.openai.com/v1/chat/completions")
+                let bodyStr = String(decoding: body, as: UTF8.self)
+                if !bodyStr.contains("quick_calculate") {
+                    throw ConformanceProtocolError(
+                        category: .TOOL_SCHEMA,
+                        ownership: .swiftAISDKDependency,
+                        round: roundIdx,
+                        message: "Round 0 must expose quick_calculate schema"
+                    )
+                }
+            },
+            1: { roundIdx, req, body in
+                let bodyStr = String(decoding: body, as: UTF8.self)
+                if !bodyStr.contains("call-openai-smoke-1") || !bodyStr.contains("4") {
+                    throw ConformanceProtocolError(
+                        category: .TOOL_RESULT_CONTINUATION,
+                        ownership: .swiftAISDKDependency,
+                        round: roundIdx,
+                        message: "Round 1 must contain tool call call-openai-smoke-1 and result 4"
+                    )
+                }
+            }
+        ]
+
+        let (res, _) = try await runProductionConversation(
+            responses: toolResponses,
+            validators: validators,
+            profile: .openAINative,
+            ifThink: false
+        )
+
+        #expect(res.answer == "4")
+        #expect(res.diagnostics.status == "completed")
+        #expect(res.diagnostics.efficiency.toolCallCount == 1)
+        #expect(res.requests.count == 2)
     }
 
     // MARK: - P01: Skills Exposure and Execution
@@ -472,6 +574,95 @@ struct ProductionProviderConformanceTests {
         #expect(res.requests.count == 2)
     }
 
+    @Test("P05: Production reasoning and tool loop for OpenRouter with exact structural equality")
+    func testP05ReasoningToolLoopOpenRouter() async throws {
+        let toolChunks = ProductionConformanceFixtures.openAIReasoningAndToolCallChunks(
+            reasoningContent: "Calculating product for OpenRouter",
+            reasoningDetails: ProductionConformanceFixtures.richOpaqueReasoningDetailsJSON,
+            calls: [(id: "p05-or-1", name: "quick_calculate", arguments: "{\"expression\":\"3 * 3\"}")],
+            id: "p05-or-resp-1"
+        )
+        let responses: [Data] = [
+            Data(toolChunks.joined().utf8),
+            ProductionConformanceFixtures.sseFinalAnswer("PRODUCT_IS_9")
+        ]
+
+        let validators: [Int: ProductionConformanceURLProtocol.RequestValidator] = [
+            0: { roundIdx, req, _ in
+                #expect(req.url?.absoluteString == "https://openrouter.ai/api/v1/chat/completions")
+            },
+            1: { roundIdx, req, body in
+                let json = try JSONSerialization.jsonObject(with: body) as? [String: Any]
+                guard let messages = json?["messages"] as? [[String: Any]] else {
+                    throw ConformanceProtocolError(
+                        category: .REQUEST_SERIALIZATION,
+                        ownership: .swiftAISDKDependency,
+                        round: roundIdx,
+                        message: "Missing messages in OpenRouter round 1 request"
+                    )
+                }
+                guard let assistantMsg = messages.first(where: { ($0["role"] as? String) == "assistant" }) else {
+                    throw ConformanceProtocolError(
+                        category: .TOOL_RESULT_CONTINUATION,
+                        ownership: .swiftAISDKDependency,
+                        round: roundIdx,
+                        message: "Missing assistant message in OpenRouter round 1 continuation"
+                    )
+                }
+                guard let actualDetails = assistantMsg["reasoning_details"] else {
+                    throw ConformanceProtocolError(
+                        category: .TOOL_RESULT_CONTINUATION,
+                        ownership: .swiftAISDKDependency,
+                        round: roundIdx,
+                        message: "OpenRouter assistant message missing reasoning_details"
+                    )
+                }
+                if !ProductionConformanceFixtures.areJSONEqual(actualDetails, ProductionConformanceFixtures.richOpaqueReasoningDetailsJSON) {
+                    throw ConformanceProtocolError(
+                        category: .TOOL_RESULT_CONTINUATION,
+                        ownership: .swiftAISDKDependency,
+                        round: roundIdx,
+                        message: "OpenRouter reasoning_details does not match exact structural equality"
+                    )
+                }
+                if let toolCalls = assistantMsg["tool_calls"] as? [[String: Any]] {
+                    for call in toolCalls {
+                        if call["reasoning_details"] != nil {
+                            throw ConformanceProtocolError(
+                                category: .TOOL_RESULT_CONTINUATION,
+                                ownership: .swiftAISDKDependency,
+                                round: roundIdx,
+                                message: "OpenRouter reasoning_details must NOT be inside tool_calls"
+                            )
+                        }
+                    }
+                }
+                let hasResult = messages.contains { msg in
+                    (msg["role"] as? String) == "tool" && (msg["tool_call_id"] as? String) == "p05-or-1"
+                }
+                if !hasResult {
+                    throw ConformanceProtocolError(
+                        category: .TOOL_RESULT_CONTINUATION,
+                        ownership: .swiftAISDKDependency,
+                        round: roundIdx,
+                        message: "Missing tool result for p05-or-1 in OpenRouter continuation"
+                    )
+                }
+            }
+        ]
+
+        let (res, _) = try await runProductionConversation(
+            responses: responses,
+            validators: validators,
+            profile: .openRouter,
+            ifThink: true
+        )
+        #expect(res.answer.contains("PRODUCT_IS_9"))
+        #expect(res.requests.count == 2)
+        #expect(res.diagnostics.status == "completed")
+        #expect(res.diagnostics.efficiency.toolCallCount == 1)
+    }
+
     // MARK: - P06: 20-Step Production Loop (Validated Every Round)
 
     @Test("P06: 20-step production tool loop with per-round request validation")
@@ -572,12 +763,21 @@ struct ProductionProviderConformanceTests {
     @Test("P09: Provider stream cancellation cancels active request without late events or mutation")
     func testP09CancelProviderStream() async throws {
         await ProductionGate.shared.reset()
+        P09GhostDetectorTool.reset()
+
+        let ghostTool = P09GhostDetectorTool()
+        if NativeToolCatalog.shared.entry(named: ghostTool.name) == nil {
+            NativeToolCatalog.shared.register(ghostTool)
+        }
+        if let entry = NativeToolCatalog.shared.entry(named: ghostTool.name) {
+            NativeToolCatalog.shared.setEnabled(true, for: entry)
+        }
 
         let configuration = URLSessionConfiguration.ephemeral
         configuration.protocolClasses = [ProductionConformanceURLProtocol.self]
 
         ProductionConformanceURLProtocol.configure(
-            responses: [ProductionConformanceFixtures.sseFinalAnswer("SHOULD_BE_CANCELLED")],
+            responses: [ProductionConformanceFixtures.sseLateGhostResponse()],
             preResponseHook: { _ in
                 await ProductionGate.shared.recordProviderRequestActive()
                 await ProductionGate.shared.waitForGate()
@@ -635,11 +835,26 @@ struct ProductionProviderConformanceTests {
         // Cancel while provider stream is active
         manager.cancelCurrentRequest()
 
-        // Release the gate
+        // Snapshot diagnostics immediately after cancellation
+        let snapshotAtCancellation = try #require(await manager.diagnosticsSnapshot(), "Diagnostics snapshot must be available after cancellation")
+        #expect(snapshotAtCancellation.status == "cancelled", "Diagnostics status must be cancelled")
+        #expect(snapshotAtCancellation.isComplete == true, "Diagnostics isComplete must be true")
+
+        // Release the gate: provider emits late ghost response
         await ProductionGate.shared.releaseGate()
 
         let (text, _) = await runTask.value
-        #expect(!text.contains("SHOULD_BE_CANCELLED"), "No late visible tokens after cancellation.")
+
+        // Verify late ghost text and late ghost tool calls are suppressed
+        #expect(!text.contains("LATE_FORBIDDEN_GHOST_TEXT"), "No late visible tokens after cancellation.")
+        #expect(!text.contains("LATE_FORBIDDEN_REASONING"), "No late reasoning tokens after cancellation.")
+        #expect(P09GhostDetectorTool.count == 0, "No ghost tool execution after stream cancellation")
+
+        // Diagnostics snapshot must remain frozen with no post-terminal mutation
+        let finalSnapshot = try #require(await manager.diagnosticsSnapshot(), "Diagnostics snapshot must be preserved")
+        #expect(finalSnapshot.status == "cancelled", "Final diagnostics status must remain cancelled")
+        #expect(finalSnapshot.isComplete == true, "Final diagnostics isComplete must remain true")
+        #expect(finalSnapshot == snapshotAtCancellation, "Diagnostics must remain frozen with no post-terminal mutation")
     }
 
     // MARK: - P10: Cancellation During Running Tool

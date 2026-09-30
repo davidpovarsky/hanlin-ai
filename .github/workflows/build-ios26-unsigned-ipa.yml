@@ -2418,6 +2418,58 @@ jobs:
           if-no-files-found: error
           retention-days: 14
 
+  verify-provider-conformance:
+    name: Verify provider conformance test summary
+    needs:
+      - plan-affected-validation
+      - validate-hanlin-platform-phase1
+      - full-app-simulator-smoke
+    if: always() && !cancelled() && !inputs.testflight_upload && (needs.plan-affected-validation.outputs.run_phase1 == 'true' || needs.plan-affected-validation.outputs.run_simulator_job == 'true')
+    runs-on: macos-26
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Download Phase 1 validation logs
+        uses: actions/download-artifact@v4
+        continue-on-error: true
+        with:
+          name: phase1-validation-logs
+          path: logs/phase1-validation-logs
+
+      - name: Download simulator test logs
+        uses: actions/download-artifact@v4
+        continue-on-error: true
+        with:
+          name: AI_Hanlin-iOS26-simulator-smoke-logs
+          path: logs/simulator-smoke-logs
+
+      - name: Generate provider conformance summary
+        id: summary
+        run: |
+          set -euo pipefail
+          python3 Scripts/CI/generate_provider_conformance_summary.py \
+            --log-dir logs/phase1-validation-logs \
+            --log-dir logs/simulator-smoke-logs \
+            --output provider-conformance-summary.json \
+            --gate
+
+      - name: Upload provider conformance summary artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: provider-conformance-summary
+          path: provider-conformance-summary.json
+          if-no-files-found: error
+          retention-days: 30
+
   upload-chavrusachat-to-testflight:
     if: ${{ inputs.testflight_upload }}
     uses: ./.github/workflows/testflight.yml

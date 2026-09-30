@@ -392,7 +392,7 @@ public enum ProviderRequestValidators {
         }
 
         // OpenRouter reasoning_details check
-        if expectation.expectedReasoningDetailsPresent == true {
+        if expectation.expectedReasoningDetails != nil || expectation.expectedReasoningDetailsPresent == true {
             let assistantMsgs = messages.filter { ($0["role"] as? String) == "assistant" }
             let found = assistantMsgs.contains { $0["reasoning_details"] != nil }
             if !found {
@@ -402,6 +402,48 @@ public enum ProviderRequestValidators {
                     round: round,
                     message: "Missing preserved provider reasoning_details on assistant message."
                 )
+            }
+
+            // Verify reasoning_details is top-level and NOT inside tool_calls
+            for msg in assistantMsgs {
+                if let toolCalls = msg["tool_calls"] as? [[String: Any]] {
+                    for tool in toolCalls {
+                        if tool["reasoning_details"] != nil {
+                            throw ConformanceProtocolError(
+                                category: .REASONING_STATE,
+                                ownership: .swiftAISDKDependency,
+                                round: round,
+                                message: "reasoning_details was improperly nested inside tool_calls."
+                            )
+                        }
+                    }
+                }
+            }
+
+            // Exact structural equality check if expectedReasoningDetails is specified
+            if let expected = expectation.expectedReasoningDetails {
+                var exactMatch = false
+                for msg in assistantMsgs {
+                    guard let rawDetails = msg["reasoning_details"] else { continue }
+                    do {
+                        let data = try JSONSerialization.data(withJSONObject: rawDetails)
+                        let decoded = try JSONDecoder().decode(JSONValue.self, from: data)
+                        if decoded == expected {
+                            exactMatch = true
+                            break
+                        }
+                    } catch {
+                        continue
+                    }
+                }
+                if !exactMatch {
+                    throw ConformanceProtocolError(
+                        category: .REASONING_STATE,
+                        ownership: .swiftAISDKDependency,
+                        round: round,
+                        message: "Preserved reasoning_details failed exact structural equality check with expected value."
+                    )
+                }
             }
         }
     }

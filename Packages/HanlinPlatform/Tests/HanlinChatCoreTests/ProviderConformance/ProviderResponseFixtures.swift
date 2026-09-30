@@ -79,6 +79,35 @@ public enum ProviderResponseFixtures {
         return [first, terminal, "data: [DONE]\n\n"]
     }
 
+    public static let richOpaqueReasoningDetailsJSONValue: JSONValue = .array([
+        .object([
+            "type": .string("reasoning.text"),
+            "text": .string("opaque-a"),
+            "signature": .string("sig-A"),
+            "provider_blob": .object([
+                "encrypted": .string("ENC-AAA"),
+                "index": .number(7),
+                "valid": .bool(true),
+                "nullable": .null
+            ])
+        ]),
+        .object([
+            "type": .string("provider.custom"),
+            "signature": .string("sig-B"),
+            "payload": .array([
+                .string("x"),
+                .number(3),
+                .bool(false),
+                .object(["nested": .string("value")])
+            ])
+        ])
+    ])
+
+    public static var richOpaqueReasoningDetailsObject: [Any] {
+        let data = try! JSONEncoder().encode(richOpaqueReasoningDetailsJSONValue)
+        return try! JSONSerialization.jsonObject(with: data) as! [Any]
+    }
+
     public static func openAIReasoningAndToolCallChunks(
         reasoningContent: String? = nil,
         reasoningField: String? = nil,

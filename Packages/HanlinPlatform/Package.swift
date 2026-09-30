@@ -65,7 +65,7 @@ let package = Package(
     dependencies: [
         .package(
             url: "https://github.com/davidpovarsky/swift-ai-sdk.git",
-            revision: "ec4cdfcfc3ab14ffe8befb256baf5790d326232e"
+            revision: "43ebcfa12f3bc30e3bbd8c83a54a01a3ea3ec49c"
         ),
         .package(
             url: "https://github.com/weichsel/ZIPFoundation.git",

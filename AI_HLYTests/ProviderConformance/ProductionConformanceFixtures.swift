@@ -210,6 +210,83 @@ public enum ProductionConformanceFixtures {
         return [chunk, term, "data: [DONE]\n\n"]
     }
 
+    public static let richOpaqueReasoningDetailsJSON: [[String: Any]] = [
+        [
+            "type": "reasoning.text",
+            "text": "opaque-a",
+            "signature": "sig-A",
+            "provider_blob": [
+                "encrypted": "ENC-AAA",
+                "index": 7,
+                "valid": true,
+                "nullable": NSNull()
+            ]
+        ],
+        [
+            "type": "provider.custom",
+            "signature": "sig-B",
+            "payload": ["x", 3, false, ["nested": "value"]]
+        ]
+    ]
+
+    public static func areJSONEqual(_ lhs: Any?, _ rhs: Any?) -> Bool {
+        guard let lhs, let rhs else { return lhs == nil && rhs == nil }
+        guard let lData = try? JSONSerialization.data(withJSONObject: lhs),
+              let rData = try? JSONSerialization.data(withJSONObject: rhs) else {
+            return false
+        }
+        guard let lObj = try? JSONSerialization.jsonObject(with: lData),
+              let rObj = try? JSONSerialization.jsonObject(with: rData) else {
+            return false
+        }
+        return areObjectsEqual(lObj, rObj)
+    }
+
+    private static func areObjectsEqual(_ lhs: Any, _ rhs: Any) -> Bool {
+        if let lDict = lhs as? [String: Any], let rDict = rhs as? [String: Any] {
+            guard lDict.count == rDict.count else { return false }
+            for (key, lVal) in lDict {
+                guard let rVal = rDict[key], areObjectsEqual(lVal, rVal) else { return false }
+            }
+            return true
+        }
+        if let lArr = lhs as? [Any], let rArr = rhs as? [Any] {
+            guard lArr.count == rArr.count else { return false }
+            for i in 0..<lArr.count {
+                guard areObjectsEqual(lArr[i], rArr[i]) else { return false }
+            }
+            return true
+        }
+        if lhs is NSNull && rhs is NSNull { return true }
+        if let lStr = lhs as? String, let rStr = rhs as? String { return lStr == rStr }
+        if let lNum = lhs as? NSNumber, let rNum = rhs as? NSNumber {
+            if CFGetTypeID(lNum) == CFBooleanGetTypeID() || CFGetTypeID(rNum) == CFBooleanGetTypeID() {
+                return (CFGetTypeID(lNum) == CFBooleanGetTypeID()) == (CFGetTypeID(rNum) == CFBooleanGetTypeID()) && lNum.boolValue == rNum.boolValue
+            }
+            return lNum == rNum
+        }
+        return false
+    }
+
+    public static func sseLateGhostResponse(
+        toolCallID: String = "ghost-call-1",
+        toolName: String = "p09_ghost_detector_tool"
+    ) -> Data {
+        let textChunk = sseData([
+            "choices": [[
+                "delta": ["role": "assistant", "content": "LATE_FORBIDDEN_GHOST_TEXT"],
+                "finish_reason": NSNull()
+            ]]
+        ])
+        let toolChunk = sseToolCall(id: toolCallID, name: toolName, arguments: [:])
+        let finishChunk = sseFinalAnswer("LATE_FORBIDDEN_FINAL_ANSWER")
+        var combined = Data()
+        combined.append(textChunk)
+        combined.append(toolChunk)
+        combined.append(finishChunk)
+        return combined
+    }
+
     public static func sseOpenRouterReasoningAndTool(
         reasoningContent: String,
         reasoningDetails: [[String: Any]],

@@ -898,8 +898,8 @@ struct ProviderConformanceScenarioTests {
     @Test("S10 R3: OpenRouter reasoning_details multi-turn reasoning tool loop")
     func testS10R3OpenRouterReasoningDetails() async throws {
         let tool = try Self.makeStepTool()
-        let details1: [[String: Any]] = [["type": "reasoning.text", "text": "Plan: step 1", "signature": "sig-or-1"]]
-        let details2: [[String: Any]] = [["type": "reasoning.text", "text": "Plan: step 2", "signature": "sig-or-2"]]
+        let details = ProviderResponseFixtures.richOpaqueReasoningDetailsObject
+        let expectedJSONValue = ProviderResponseFixtures.richOpaqueReasoningDetailsJSONValue
 
         let emulator = StatefulProviderEmulator(
             profile: .openRouterReasoningDetails,
@@ -908,23 +908,25 @@ struct ProviderConformanceScenarioTests {
                 0: RoundExpectation(),
                 1: RoundExpectation(
                     expectedAssistantToolCalls: [ExpectedToolCall(id: "call-s1", name: "step_tool")],
-                    expectedReasoningDetailsPresent: true
+                    expectedReasoningDetailsPresent: true,
+                    expectedReasoningDetails: expectedJSONValue
                 ),
                 2: RoundExpectation(
                     expectedAssistantToolCalls: [ExpectedToolCall(id: "call-s2", name: "step_tool")],
-                    expectedReasoningDetailsPresent: true
+                    expectedReasoningDetailsPresent: true,
+                    expectedReasoningDetails: expectedJSONValue
                 )
             ],
             roundResponses: [
                 0: .sseChunks(ProviderResponseFixtures.openAIReasoningAndToolCallChunks(
                     reasoningContent: "Plan: step 1",
-                    reasoningDetails: details1,
+                    reasoningDetails: details,
                     calls: [(id: "call-s1", name: "step_tool", arguments: "{\"step\":1}")],
                     id: "c-r3-1"
                 )),
                 1: .sseChunks(ProviderResponseFixtures.openAIReasoningAndToolCallChunks(
                     reasoningContent: "Plan: step 2",
-                    reasoningDetails: details2,
+                    reasoningDetails: details,
                     calls: [(id: "call-s2", name: "step_tool", arguments: "{\"step\":2}")],
                     id: "c-r3-2"
                 )),
@@ -952,8 +954,8 @@ struct ProviderConformanceScenarioTests {
             }
         }
 
-        #expect(didFailPreservation || finalAns.contains("Both steps finished with reasoning"),
-                "OpenRouter reasoning_details must either prove defect (Phase A) or pass completely (Phase B).")
+        #expect(!didFailPreservation && finalAns.contains("Both steps finished with reasoning"),
+                "OpenRouter reasoning_details must pass exact structural equality and round-trip preservation completely.")
     }
 
     @Test("S10 R4: Google native thoughtSignature multi-turn reasoning tool loop")

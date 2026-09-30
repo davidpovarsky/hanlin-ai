@@ -191,6 +191,7 @@ public struct RoundExpectation: Sendable {
     public var expectedToolResults: [ExpectedToolResult]?
     public var expectedPreservedReasoning: String?
     public var expectedReasoningDetailsPresent: Bool?
+    public var expectedReasoningDetails: JSONValue?
     public var expectedThoughtSignature: String?
     public var customValidator: (@Sendable (URLRequest, Int, ProviderConformanceProfile) throws -> Void)?
 
@@ -205,6 +206,7 @@ public struct RoundExpectation: Sendable {
         expectedToolResults: [ExpectedToolResult]? = nil,
         expectedPreservedReasoning: String? = nil,
         expectedReasoningDetailsPresent: Bool? = nil,
+        expectedReasoningDetails: JSONValue? = nil,
         expectedThoughtSignature: String? = nil,
         customValidator: (@Sendable (URLRequest, Int, ProviderConformanceProfile) throws -> Void)? = nil
     ) {
@@ -218,6 +220,7 @@ public struct RoundExpectation: Sendable {
         self.expectedToolResults = expectedToolResults
         self.expectedPreservedReasoning = expectedPreservedReasoning
         self.expectedReasoningDetailsPresent = expectedReasoningDetailsPresent
+        self.expectedReasoningDetails = expectedReasoningDetails
         self.expectedThoughtSignature = expectedThoughtSignature
         self.customValidator = customValidator
     }

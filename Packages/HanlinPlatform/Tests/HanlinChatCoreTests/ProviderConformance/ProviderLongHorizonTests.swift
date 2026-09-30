@@ -313,13 +313,8 @@ struct ProviderLongHorizonTests {
         // Round 1: Model request sent to OpenRouter
         // We verify whether reasoning_details is preserved or dropped by the pinned swift-ai-sdk adapter.
 
-        let reasoningDetailsJSON: [[String: Any]] = [
-            [
-                "type": "reasoning.text",
-                "text": "Plan: I need to load the code skill first to execute python.",
-                "signature": "opaque_openrouter_nemotron_sig_12345"
-            ]
-        ]
+        let reasoningDetailsJSON = ProviderResponseFixtures.richOpaqueReasoningDetailsObject
+        let expectedJSONValue = ProviderResponseFixtures.richOpaqueReasoningDetailsJSONValue
 
         let emulator = StatefulProviderEmulator(
             profile: .openRouterReasoningDetails,
@@ -328,8 +323,9 @@ struct ProviderLongHorizonTests {
                 0: RoundExpectation(),
                 1: RoundExpectation(
                     expectedAssistantToolCalls: [ExpectedToolCall(id: "call-load-code", name: "load_skill")],
-                    // We expect reasoning_details to be preserved:
-                    expectedReasoningDetailsPresent: true
+                    // We expect reasoning_details to be preserved with exact structural equality:
+                    expectedReasoningDetailsPresent: true,
+                    expectedReasoningDetails: expectedJSONValue
                 )
             ],
             roundResponses: [

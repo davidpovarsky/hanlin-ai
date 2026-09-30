@@ -225,20 +225,30 @@ struct ProviderFaultInjectionTests {
     }
 
     // MARK: - F04: [DONE] / Terminal Ordering Variations (OpenAI SSE Specific)
+    // Note: F04-F07 test wire-format variations of the OpenAI chat completions SSE protocol
+    // (such as omissions of [DONE], empty delta frames, usage-only chunks, and duplicated deltas).
+    // These tests cover openAINativeChat, openAICompatiblePlain, and openRouterReasoningDetails.
+    // They are N/A for anthropicNative (which uses Anthropic's typed event SSE stream: message_start,
+    // content_block_delta, message_delta, message_stop) and googleNative (which uses Gemini's
+    // candidates[].content.parts[] SSE stream protocol).
 
-    @Test("F04: Stream ending after finish without explicit [DONE] still terminates cleanly")
-    func testF04StreamWithoutDoneMarker() async throws {
+    @Test("F04: Stream ending after finish without explicit [DONE] still terminates cleanly", arguments: [
+        ProviderConformanceProfile.openAINativeChat,
+        ProviderConformanceProfile.openAICompatiblePlain,
+        ProviderConformanceProfile.openRouterReasoningDetails
+    ])
+    func testF04StreamWithoutDoneMarker(profile: ProviderConformanceProfile) async throws {
         let chunks = [
             "data: {\"id\":\"c1\",\"choices\":[{\"index\":0,\"delta\":{\"content\":\"Hello world\"},\"finish_reason\":null}]}\n\n",
             "data: {\"id\":\"c1\",\"choices\":[{\"index\":0,\"delta\":{},\"finish_reason\":\"stop\"}]}\n\n"
         ]
         let emulator = StatefulProviderEmulator(
-            profile: .openAINativeChat,
-            scenarioName: "F04_NoDoneMarker",
+            profile: profile,
+            scenarioName: "F04_NoDoneMarker_\(profile.rawValue)",
             roundExpectations: [0: RoundExpectation()],
             roundResponses: [0: .sseChunks(chunks)]
         )
-        let engine = try Self.makeEngine(profile: .openAINativeChat, emulator: emulator)
+        let engine = try Self.makeEngine(profile: profile, emulator: emulator)
 
         let stream = try await engine.stream(
             messages: [.init(role: .user, text: "Ping")],
@@ -260,8 +270,12 @@ struct ProviderFaultInjectionTests {
 
     // MARK: - F05: Empty Delta Noise
 
-    @Test("F05: Empty delta noise does not corrupt parser or yield empty text events")
-    func testF05EmptyDeltaNoise() async throws {
+    @Test("F05: Empty delta noise does not corrupt parser or yield empty text events", arguments: [
+        ProviderConformanceProfile.openAINativeChat,
+        ProviderConformanceProfile.openAICompatiblePlain,
+        ProviderConformanceProfile.openRouterReasoningDetails
+    ])
+    func testF05EmptyDeltaNoise(profile: ProviderConformanceProfile) async throws {
         let chunks = [
             "data: {\"id\":\"c1\",\"choices\":[{\"index\":0,\"delta\":{},\"finish_reason\":null}]}\n\n",
             "data: {\"id\":\"c1\",\"choices\":[{\"index\":0,\"delta\":{\"content\":\"Useful \"},\"finish_reason\":null}]}\n\n",
@@ -271,12 +285,12 @@ struct ProviderFaultInjectionTests {
             "data: [DONE]\n\n"
         ]
         let emulator = StatefulProviderEmulator(
-            profile: .openAINativeChat,
-            scenarioName: "F05_EmptyDeltaNoise",
+            profile: profile,
+            scenarioName: "F05_EmptyDeltaNoise_\(profile.rawValue)",
             roundExpectations: [0: RoundExpectation()],
             roundResponses: [0: .sseChunks(chunks)]
         )
-        let engine = try Self.makeEngine(profile: .openAINativeChat, emulator: emulator)
+        let engine = try Self.makeEngine(profile: profile, emulator: emulator)
 
         let stream = try await engine.stream(
             messages: [.init(role: .user, text: "Ping")],
@@ -295,20 +309,24 @@ struct ProviderFaultInjectionTests {
 
     // MARK: - F06: Usage-Only Final Chunk
 
-    @Test("F06: Final usage-only chunk is processed for token usage and not treated as text")
-    func testF06UsageOnlyFinalChunk() async throws {
+    @Test("F06: Final usage-only chunk is processed for token usage and not treated as text", arguments: [
+        ProviderConformanceProfile.openAINativeChat,
+        ProviderConformanceProfile.openAICompatiblePlain,
+        ProviderConformanceProfile.openRouterReasoningDetails
+    ])
+    func testF06UsageOnlyFinalChunk(profile: ProviderConformanceProfile) async throws {
         let chunks = [
             "data: {\"id\":\"c1\",\"choices\":[{\"index\":0,\"delta\":{\"content\":\"Answer\"},\"finish_reason\":\"stop\"}]}\n\n",
             ProviderResponseFixtures.openAIUsageOnlyChunk(promptTokens: 12, completionTokens: 8),
             "data: [DONE]\n\n"
         ]
         let emulator = StatefulProviderEmulator(
-            profile: .openAINativeChat,
-            scenarioName: "F06_UsageOnlyChunk",
+            profile: profile,
+            scenarioName: "F06_UsageOnlyChunk_\(profile.rawValue)",
             roundExpectations: [0: RoundExpectation()],
             roundResponses: [0: .sseChunks(chunks)]
         )
-        let engine = try Self.makeEngine(profile: .openAINativeChat, emulator: emulator)
+        let engine = try Self.makeEngine(profile: profile, emulator: emulator)
 
         let stream = try await engine.stream(
             messages: [.init(role: .user, text: "Ping")],
@@ -330,8 +348,12 @@ struct ProviderFaultInjectionTests {
 
     // MARK: - F07: Duplicate Provider Chunk
 
-    @Test("F07: Duplicate content chunk delta does not abort parser")
-    func testF07DuplicateChunk() async throws {
+    @Test("F07: Duplicate content chunk delta does not abort parser", arguments: [
+        ProviderConformanceProfile.openAINativeChat,
+        ProviderConformanceProfile.openAICompatiblePlain,
+        ProviderConformanceProfile.openRouterReasoningDetails
+    ])
+    func testF07DuplicateChunk(profile: ProviderConformanceProfile) async throws {
         let chunks = [
             "data: {\"id\":\"c1\",\"choices\":[{\"index\":0,\"delta\":{\"content\":\"Echo\"},\"finish_reason\":null}]}\n\n",
             "data: {\"id\":\"c1\",\"choices\":[{\"index\":0,\"delta\":{\"content\":\"Echo\"},\"finish_reason\":null}]}\n\n",
@@ -339,12 +361,12 @@ struct ProviderFaultInjectionTests {
             "data: [DONE]\n\n"
         ]
         let emulator = StatefulProviderEmulator(
-            profile: .openAINativeChat,
-            scenarioName: "F07_DuplicateChunk",
+            profile: profile,
+            scenarioName: "F07_DuplicateChunk_\(profile.rawValue)",
             roundExpectations: [0: RoundExpectation()],
             roundResponses: [0: .sseChunks(chunks)]
         )
-        let engine = try Self.makeEngine(profile: .openAINativeChat, emulator: emulator)
+        let engine = try Self.makeEngine(profile: profile, emulator: emulator)
 
         let stream = try await engine.stream(
             messages: [.init(role: .user, text: "Ping")],
@@ -363,20 +385,37 @@ struct ProviderFaultInjectionTests {
 
     // MARK: - F08: HTTP Error Codes Across Profiles (Section 17)
 
-    @Test("F08: HTTP error codes 400, 401, 429, 500 abort stream without tool execution", arguments: [
+    @Test("F08: HTTP error codes 400, 401, 429, 500, 503 abort stream without tool execution", arguments: [
+        // OpenAI Native
         (ProviderConformanceProfile.openAINativeChat, 400),
         (ProviderConformanceProfile.openAINativeChat, 401),
         (ProviderConformanceProfile.openAINativeChat, 429),
         (ProviderConformanceProfile.openAINativeChat, 500),
         (ProviderConformanceProfile.openAINativeChat, 503),
+        // OpenAI Compatible Plain
+        (ProviderConformanceProfile.openAICompatiblePlain, 400),
+        (ProviderConformanceProfile.openAICompatiblePlain, 401),
+        (ProviderConformanceProfile.openAICompatiblePlain, 429),
+        (ProviderConformanceProfile.openAICompatiblePlain, 500),
+        (ProviderConformanceProfile.openAICompatiblePlain, 503),
+        // OpenRouter Reasoning Details
+        (ProviderConformanceProfile.openRouterReasoningDetails, 400),
+        (ProviderConformanceProfile.openRouterReasoningDetails, 401),
+        (ProviderConformanceProfile.openRouterReasoningDetails, 429),
+        (ProviderConformanceProfile.openRouterReasoningDetails, 500),
+        (ProviderConformanceProfile.openRouterReasoningDetails, 503),
+        // Anthropic Native
         (ProviderConformanceProfile.anthropicNative, 400),
         (ProviderConformanceProfile.anthropicNative, 401),
         (ProviderConformanceProfile.anthropicNative, 429),
         (ProviderConformanceProfile.anthropicNative, 500),
+        (ProviderConformanceProfile.anthropicNative, 503),
+        // Google Native
         (ProviderConformanceProfile.googleNative, 400),
         (ProviderConformanceProfile.googleNative, 401),
         (ProviderConformanceProfile.googleNative, 429),
-        (ProviderConformanceProfile.googleNative, 500)
+        (ProviderConformanceProfile.googleNative, 500),
+        (ProviderConformanceProfile.googleNative, 503)
     ])
     func testF08HTTPErrorCodes(profile: ProviderConformanceProfile, statusCode: Int) async throws {
         let ledger = ToolExecutionLedger()
@@ -424,6 +463,74 @@ struct ProviderFaultInjectionTests {
 
         #expect(didThrow, "HTTP \(statusCode) on \(profile.rawValue) must cause stream to throw.")
         #expect(ledger.allRecords.isEmpty, "No tool must execute when HTTP request failed.")
+    }
+
+    // MARK: - F09: Malformed JSON Payload Across Profiles
+
+    @Test("F09: Malformed JSON payload in SSE stream aborts stream without tool execution or completed event", arguments: [
+        ProviderConformanceProfile.openAINativeChat,
+        ProviderConformanceProfile.openAICompatiblePlain,
+        ProviderConformanceProfile.openRouterReasoningDetails,
+        ProviderConformanceProfile.anthropicNative,
+        ProviderConformanceProfile.googleNative
+    ])
+    func testF09MalformedJSONPayload(profile: ProviderConformanceProfile) async throws {
+        let ledger = ToolExecutionLedger()
+        let tool = HanlinAISDKToolDefinition(
+            name: "should_not_run",
+            description: "Noop",
+            inputSchemaData: try JSONSerialization.data(withJSONObject: ["type": "object"]),
+            execute: { args, callID in
+                ledger.recordStart(toolName: "should_not_run", callID: callID, arguments: args)
+                return HanlinAISDKToolExecutionOutput(modelText: "oops")
+            }
+        )
+
+        let malformedChunks: [String]
+        switch profile {
+        case .anthropicNative:
+            malformedChunks = [
+                "event: content_block_start\ndata: {unquoted_broken_json\n\n"
+            ]
+        case .googleNative:
+            malformedChunks = [
+                "data: [{\"candidates\": {malformed_syntax\n\n"
+            ]
+        default:
+            malformedChunks = [
+                "data: {\"choices\": [{\"delta\": {unquoted_broken_json\n\n"
+            ]
+        }
+
+        let emulator = StatefulProviderEmulator(
+            profile: profile,
+            scenarioName: "F09_MalformedJSON_\(profile.rawValue)",
+            roundExpectations: [0: RoundExpectation()],
+            roundResponses: [0: .sseChunks(malformedChunks)],
+            ledger: ledger
+        )
+        let engine = try Self.makeEngine(profile: profile, emulator: emulator)
+
+        let stream = try await engine.stream(
+            messages: [.init(role: .user, text: "Ping")],
+            baseSystemPrompt: nil,
+            tools: [tool],
+            prepareStep: { _ in HanlinAISDKStepPreparation(activeToolAliases: ["should_not_run"]) }
+        )
+
+        var didThrow = false
+        var completedReceived = false
+        do {
+            for try await event in stream {
+                if case .finished = event { completedReceived = true }
+            }
+        } catch {
+            didThrow = true
+        }
+
+        #expect(didThrow, "Malformed JSON on \(profile.rawValue) must cause stream to abort with error.")
+        #expect(!completedReceived, "Must not emit a false completed event on malformed JSON.")
+        #expect(ledger.allRecords.isEmpty, "No tool must execute when stream payload was malformed.")
     }
 
     // MARK: - Section 18: Finish-Reason Matrices (OpenAI, Anthropic, Google)
