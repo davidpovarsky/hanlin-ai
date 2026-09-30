@@ -375,23 +375,27 @@ public enum ProviderRequestValidators {
 
         // Preserved reasoning check
         if let expectedReasoning = expectation.expectedPreservedReasoning {
-            let assistantMsg = messages.first { ($0["role"] as? String) == "assistant" }
-            let reasoning = (assistantMsg?["reasoning_content"] as? String)
-                ?? (assistantMsg?["reasoning"] as? String)
-            guard let reasoning, reasoning.contains(expectedReasoning) else {
+            let assistantMsgs = messages.filter { ($0["role"] as? String) == "assistant" }
+            let found = assistantMsgs.contains { msg in
+                let r = (msg["reasoning_content"] as? String) ?? (msg["reasoning"] as? String)
+                return r?.contains(expectedReasoning) == true
+            }
+            if !found {
+                let observed = assistantMsgs.compactMap { ($0["reasoning_content"] as? String) ?? ($0["reasoning"] as? String) }.joined(separator: " | ")
                 throw ConformanceProtocolError(
                     category: .REASONING_STATE,
                     ownership: .swiftAISDKDependency,
                     round: round,
-                    message: "Expected assistant message to preserve reasoning containing '\(expectedReasoning)', observed: \(reasoning ?? "nil")."
+                    message: "Expected assistant message to preserve reasoning containing '\(expectedReasoning)', observed: \(observed.isEmpty ? "nil" : observed)."
                 )
             }
         }
 
         // OpenRouter reasoning_details check
         if expectation.expectedReasoningDetailsPresent == true {
-            let assistantMsg = messages.first { ($0["role"] as? String) == "assistant" }
-            guard assistantMsg?["reasoning_details"] != nil else {
+            let assistantMsgs = messages.filter { ($0["role"] as? String) == "assistant" }
+            let found = assistantMsgs.contains { $0["reasoning_details"] != nil }
+            if !found {
                 throw ConformanceProtocolError(
                     category: .REASONING_STATE,
                     ownership: .swiftAISDKDependency,

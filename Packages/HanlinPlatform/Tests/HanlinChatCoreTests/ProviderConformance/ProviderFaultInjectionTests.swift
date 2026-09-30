@@ -382,8 +382,16 @@ struct ProviderFaultInjectionTests {
         let emulator = StatefulProviderEmulator(
             profile: profile,
             scenarioName: "F08_HTTPError_\(profile.rawValue)_\(statusCode)",
-            roundExpectations: [0: RoundExpectation()],
-            roundResponses: [0: .httpError(statusCode: statusCode, body: errorBody)],
+            roundExpectations: [
+                0: RoundExpectation(),
+                1: RoundExpectation(),
+                2: RoundExpectation()
+            ],
+            roundResponses: [
+                0: .httpError(statusCode: statusCode, body: errorBody),
+                1: .httpError(statusCode: statusCode, body: errorBody),
+                2: .httpError(statusCode: statusCode, body: errorBody)
+            ],
             ledger: ledger
         )
         let engine = try Self.makeEngine(profile: profile, emulator: emulator)

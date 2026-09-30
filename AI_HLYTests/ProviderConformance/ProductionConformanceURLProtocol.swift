@@ -30,61 +30,55 @@ public final class ProductionConformanceURLProtocol: URLProtocol, @unchecked Sen
         validators: [Int: RequestValidator] = [:],
         preResponseHook: (@Sendable (Int) async -> Void)? = nil
     ) {
-        lock.lock()
-        isConfigured = true
-        scriptedResponses = responses
-        self.validators = validators
-        self.preResponseHook = preResponseHook
-        capturedRequests = []
-        capturedBodies = []
-        recordedValidationErrors = []
-        errorForNextRound = nil
-        httpStatusCodeForNextRound = 200
-        lock.unlock()
+        lock.withLock {
+            isConfigured = true
+            scriptedResponses = responses
+            self.validators = validators
+            self.preResponseHook = preResponseHook
+            capturedRequests = []
+            capturedBodies = []
+            recordedValidationErrors = []
+            errorForNextRound = nil
+            httpStatusCodeForNextRound = 200
+        }
     }
 
     public static func reset() {
-        lock.lock()
-        isConfigured = false
-        scriptedResponses = []
-        validators = [:]
-        preResponseHook = nil
-        capturedRequests = []
-        capturedBodies = []
-        recordedValidationErrors = []
-        errorForNextRound = nil
-        httpStatusCodeForNextRound = 200
-        lock.unlock()
+        lock.withLock {
+            isConfigured = false
+            scriptedResponses = []
+            validators = [:]
+            preResponseHook = nil
+            capturedRequests = []
+            capturedBodies = []
+            recordedValidationErrors = []
+            errorForNextRound = nil
+            httpStatusCodeForNextRound = 200
+        }
     }
 
     public static func injectErrorForNextRound(_ error: URLError) {
-        lock.lock()
-        errorForNextRound = error
-        lock.unlock()
+        lock.withLock {
+            errorForNextRound = error
+        }
     }
 
     public static func injectHTTPStatusForNextRound(_ code: Int) {
-        lock.lock()
-        httpStatusCodeForNextRound = code
-        lock.unlock()
+        lock.withLock {
+            httpStatusCodeForNextRound = code
+        }
     }
 
     public static func allBodies() -> [Data] {
-        lock.lock()
-        defer { lock.unlock() }
-        return capturedBodies
+        lock.withLock { capturedBodies }
     }
 
     public static func allRequests() -> [URLRequest] {
-        lock.lock()
-        defer { lock.unlock() }
-        return capturedRequests
+        lock.withLock { capturedRequests }
     }
 
     public static func validationErrors() -> [Error] {
-        lock.lock()
-        defer { lock.unlock() }
-        return recordedValidationErrors
+        lock.withLock { recordedValidationErrors }
     }
 
     public override class func canInit(with request: URLRequest) -> Bool {
@@ -99,18 +93,19 @@ public final class ProductionConformanceURLProtocol: URLProtocol, @unchecked Sen
     public override func startLoading() {
         let bodyData = Self.extractBodyData(from: request)
 
-        Self.lock.lock()
-        let roundIndex = Self.capturedRequests.count
-        Self.capturedRequests.append(request)
-        Self.capturedBodies.append(bodyData)
-        let validator = Self.validators[roundIndex]
-        let nextResponseData = Self.scriptedResponses.isEmpty ? nil : Self.scriptedResponses.removeFirst()
-        let nextError = Self.errorForNextRound
-        Self.errorForNextRound = nil
-        let statusCode = Self.httpStatusCodeForNextRound
-        Self.httpStatusCodeForNextRound = 200
-        let hook = Self.preResponseHook
-        Self.lock.unlock()
+        let (roundIndex, validator, nextResponseData, nextError, statusCode, hook): (Int, RequestValidator?, Data?, URLError?, Int, (@Sendable (Int) async -> Void)?) = Self.lock.withLock {
+            let idx = Self.capturedRequests.count
+            Self.capturedRequests.append(request)
+            Self.capturedBodies.append(bodyData)
+            let v = Self.validators[idx]
+            let res = Self.scriptedResponses.isEmpty ? nil : Self.scriptedResponses.removeFirst()
+            let err = Self.errorForNextRound
+            Self.errorForNextRound = nil
+            let code = Self.httpStatusCodeForNextRound
+            Self.httpStatusCodeForNextRound = 200
+            let h = Self.preResponseHook
+            return (idx, v, res, err, code, h)
+        }
 
         Task {
             if let hook {
@@ -122,9 +117,9 @@ public final class ProductionConformanceURLProtocol: URLProtocol, @unchecked Sen
                 do {
                     try validator(roundIndex, self.request, bodyData)
                 } catch {
-                    Self.lock.lock()
-                    Self.recordedValidationErrors.append(error)
-                    Self.lock.unlock()
+                    Self.lock.withLock {
+                        Self.recordedValidationErrors.append(error)
+                    }
                     self.client?.urlProtocol(
                         self,
                         didFailWithError: URLError(.badServerResponse, userInfo: [
