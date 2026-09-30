@@ -107,6 +107,12 @@ private final class P09GhostDetectorTool: NativeTool, @unchecked Sendable {
     private static let lock = NSLock()
     private static var _count = 0
 
+    private static func incrementCount() {
+        lock.lock()
+        _count += 1
+        lock.unlock()
+    }
+
     static func reset() {
         lock.lock()
         _count = 0
@@ -141,9 +147,7 @@ private final class P09GhostDetectorTool: NativeTool, @unchecked Sendable {
     }
 
     func execute(argumentsJSON: String, context: NativeToolExecutionContext) async -> NativeToolResult {
-        Self.lock.lock()
-        Self._count += 1
-        Self.lock.unlock()
+        Self.incrementCount()
         return NativeToolResult(
             modelText: "ghost_executed",
             userText: "Ghost executed",
