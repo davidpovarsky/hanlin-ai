@@ -30,6 +30,7 @@ DEFAULT_SEARCH_LOG_DIRS = [
 DEFAULT_LOG_PATTERNS = [
     "05-swift-test.log",
     "08-downstream-unit-tests.log",
+    "*test*.log",
     "xcodebuild.log"
 ]
 
@@ -54,10 +55,7 @@ def get_git_commit_sha(repo_root: Path) -> str:
 def scan_test_definitions(repo_root: Path):
     tests = []
     suite_pattern = re.compile(r'@Suite(?:\([^)]*\))?\s*struct\s+(\w+)')
-    test_decl_pattern = re.compile(
-        r'(@Test(?:\(\s*(?:"([^"]+)")?[^)]*\))?\s*)?'
-        r'func\s+(test\w+)\s*\('
-    )
+    func_pattern = re.compile(r'func\s+(test\w+)\s*\(')
 
     for rel_dir in CONFORMANCE_TEST_DIRS:
         abs_dir = repo_root / rel_dir
@@ -73,9 +71,20 @@ def scan_test_definitions(repo_root: Path):
                     if sm:
                         current_suite = sm.group(1)
 
-                    for tm in test_decl_pattern.finditer(content):
-                        display_name = tm.group(2)
-                        func_name = tm.group(3)
+                    for fm in func_pattern.finditer(content):
+                        func_name = fm.group(1)
+                        func_start = fm.start()
+                        lookback_start = max(0, func_start - 2000)
+                        prefix = content[lookback_start:func_start]
+                        last_delim = max(prefix.rfind("func "), prefix.rfind("}\n"))
+                        if last_delim != -1:
+                            prefix = prefix[last_delim:]
+
+                        display_name = None
+                        test_attr_m = re.search(r'@Test\s*\(\s*"([^"]+)"', prefix)
+                        if test_attr_m:
+                            display_name = test_attr_m.group(1)
+
                         tests.append({
                             "suite": current_suite,
                             "function": func_name,
@@ -177,6 +186,17 @@ def match_test_status(test, passed_set, failed_set, failure_messages):
             if display == f or display.startswith(f) or f.startswith(display):
                 return "FAIL", failure_messages.get(f, "Test failed")
 
+    # Tag-based matching if display name has a recognizable scenario prefix like S01:, F08:, P09:
+    if display and ":" in display:
+        tag = display.split(":", 1)[0].strip()
+        if re.match(r'^(?:S\d\d?|F\d\d?|P\d\d?[A-Z]?)$', tag):
+            for f in failed_set:
+                if f.startswith(tag + ":") or f.startswith(tag + " "):
+                    return "FAIL", failure_messages.get(f, "Test failed")
+            for p in passed_set:
+                if p.startswith(tag + ":") or p.startswith(tag + " "):
+                    return "PASS", None
+
     return "NOT_RUN", None
 
 
@@ -187,9 +207,13 @@ def classify_scenario_and_profile(test):
     profile = "allApplicable"
 
     # Scenario matching
-    for tag in ["S01", "S02", "S03", "S04", "S05", "S06", "S07", "S08", "S09", "S10",
-                "F01", "F02", "F03", "F04", "F05", "F06", "F07", "F08", "F09",
-                "P01", "P02", "P03", "P04", "P05", "P06", "P07", "P08", "P09", "P10"]:
+    for tag in [
+        "S01", "S02", "S03", "S04", "S05", "S06", "S07", "S08", "S09", "S10",
+        "S11", "S12", "S13", "S14", "S15", "S16",
+        "F01", "F02", "F03", "F04", "F05", "F06", "F07", "F08", "F09",
+        "P01", "P02", "P03", "P04", "P05", "P06", "P07", "P08", "P09", "P10",
+        "P11", "P12A", "P12B", "P12"
+    ]:
         if tag in func or tag in display:
             scenario = tag
             break
