@@ -158,6 +158,58 @@ public enum ProductionConformanceFixtures {
         ])
     }
 
+    // MARK: - OpenAI / OpenRouter Fixtures
+
+    public static func openAIReasoningAndToolCallChunks(
+        reasoningContent: String? = nil,
+        reasoningField: String? = nil,
+        reasoningDetails: [Any]? = nil,
+        calls: [(id: String, name: String, arguments: String)],
+        id: String = "chatcmpl-reason-tool-1"
+    ) -> [String] {
+        var delta: [String: Any] = ["role": "assistant"]
+        if let reasoningContent {
+            delta["reasoning_content"] = reasoningContent
+        }
+        if let reasoningField {
+            delta["reasoning"] = reasoningField
+        }
+        if let reasoningDetails {
+            delta["reasoning_details"] = reasoningDetails
+        }
+
+        var toolDeltas: [[String: Any]] = []
+        for (idx, call) in calls.enumerated() {
+            toolDeltas.append([
+                "index": idx,
+                "id": call.id,
+                "type": "function",
+                "function": ["name": call.name, "arguments": call.arguments]
+            ])
+        }
+        delta["tool_calls"] = toolDeltas
+
+        let chunkData = try! JSONSerialization.data(withJSONObject: [
+            "id": id,
+            "choices": [[
+                "index": 0,
+                "delta": delta,
+                "finish_reason": NSNull()
+            ]]
+        ])
+        let chunk = "data: \(String(decoding: chunkData, as: UTF8.self))\n\n"
+        let termData = try! JSONSerialization.data(withJSONObject: [
+            "id": id,
+            "choices": [[
+                "index": 0,
+                "delta": [:],
+                "finish_reason": "tool_calls"
+            ]]
+        ])
+        let term = "data: \(String(decoding: termData, as: UTF8.self))\n\n"
+        return [chunk, term, "data: [DONE]\n\n"]
+    }
+
     public static func sseOpenRouterReasoningAndTool(
         reasoningContent: String,
         reasoningDetails: [[String: Any]],
@@ -167,7 +219,7 @@ public enum ProductionConformanceFixtures {
     ) -> Data {
         let argsData = try! JSONSerialization.data(withJSONObject: arguments, options: [.sortedKeys])
         let argsJSON = String(decoding: argsData, as: UTF8.self)
-        let chunks = ProviderResponseFixtures.openAIReasoningAndToolCallChunks(
+        let chunks = openAIReasoningAndToolCallChunks(
             reasoningContent: reasoningContent,
             reasoningDetails: reasoningDetails,
             calls: [(id: callID, name: toolName, arguments: argsJSON)],
@@ -177,6 +229,189 @@ public enum ProductionConformanceFixtures {
     }
 
     // MARK: - Anthropic Native Fixtures
+
+    public static func anthropicToolUseChunks(
+        calls: [(id: String, name: String, arguments: String)],
+        id: String = "msg-anthropic-tool-1",
+        stopReason: String = "tool_use"
+    ) -> [String] {
+        var chunks: [String] = []
+        func appendEvent(_ payload: [String: Any]) {
+            let json = try! JSONSerialization.data(withJSONObject: payload)
+            chunks.append("event: \(payload["type"] as? String ?? "message")\ndata: \(String(decoding: json, as: UTF8.self))\n\n")
+        }
+        appendEvent([
+            "type": "message_start",
+            "message": [
+                "id": id,
+                "type": "message",
+                "role": "assistant",
+                "model": "claude-3-5-sonnet-20241022",
+                "content": [],
+                "stop_reason": NSNull()
+            ]
+        ])
+        for (idx, call) in calls.enumerated() {
+            appendEvent([
+                "type": "content_block_start",
+                "index": idx,
+                "content_block": [
+                    "type": "tool_use",
+                    "id": call.id,
+                    "name": call.name,
+                    "input": [:]
+                ]
+            ])
+            appendEvent([
+                "type": "content_block_delta",
+                "index": idx,
+                "delta": [
+                    "type": "input_json_delta",
+                    "partial_json": call.arguments
+                ]
+            ])
+            appendEvent([
+                "type": "content_block_stop",
+                "index": idx
+            ])
+        }
+        appendEvent([
+            "type": "message_delta",
+            "delta": ["stop_reason": stopReason, "stop_sequence": NSNull()],
+            "usage": ["output_tokens": 25]
+        ])
+        appendEvent(["type": "message_stop"])
+        return chunks
+    }
+
+    public static func anthropicThinkingAndToolUseChunks(
+        thinking: String,
+        signature: String,
+        calls: [(id: String, name: String, arguments: String)],
+        id: String = "msg-anthropic-think-tool-1",
+        stopReason: String = "tool_use"
+    ) -> [String] {
+        var chunks: [String] = []
+        func appendEvent(_ payload: [String: Any]) {
+            let json = try! JSONSerialization.data(withJSONObject: payload)
+            chunks.append("event: \(payload["type"] as? String ?? "message")\ndata: \(String(decoding: json, as: UTF8.self))\n\n")
+        }
+        appendEvent([
+            "type": "message_start",
+            "message": [
+                "id": id,
+                "type": "message",
+                "role": "assistant",
+                "model": "claude-3-5-sonnet-20241022",
+                "content": [],
+                "stop_reason": NSNull()
+            ]
+        ])
+        appendEvent([
+            "type": "content_block_start",
+            "index": 0,
+            "content_block": [
+                "type": "thinking",
+                "thinking": ""
+            ]
+        ])
+        appendEvent([
+            "type": "content_block_delta",
+            "index": 0,
+            "delta": [
+                "type": "thinking_delta",
+                "thinking": thinking
+            ]
+        ])
+        appendEvent([
+            "type": "content_block_delta",
+            "index": 0,
+            "delta": [
+                "type": "signature_delta",
+                "signature": signature
+            ]
+        ])
+        appendEvent([
+            "type": "content_block_stop",
+            "index": 0
+        ])
+        for (idx, call) in calls.enumerated() {
+            let blockIndex = idx + 1
+            appendEvent([
+                "type": "content_block_start",
+                "index": blockIndex,
+                "content_block": [
+                    "type": "tool_use",
+                    "id": call.id,
+                    "name": call.name,
+                    "input": [:]
+                ]
+            ])
+            appendEvent([
+                "type": "content_block_delta",
+                "index": blockIndex,
+                "delta": [
+                    "type": "input_json_delta",
+                    "partial_json": call.arguments
+                ]
+            ])
+            appendEvent([
+                "type": "content_block_stop",
+                "index": blockIndex
+            ])
+        }
+        appendEvent([
+            "type": "message_delta",
+            "delta": ["stop_reason": stopReason, "stop_sequence": NSNull()],
+            "usage": ["output_tokens": 25]
+        ])
+        appendEvent(["type": "message_stop"])
+        return chunks
+    }
+
+    public static func anthropicTextChunks(
+        text: String,
+        id: String = "msg-anthropic-text-1",
+        stopReason: String = "end_turn"
+    ) -> [String] {
+        var chunks: [String] = []
+        func appendEvent(_ payload: [String: Any]) {
+            let json = try! JSONSerialization.data(withJSONObject: payload)
+            chunks.append("event: \(payload["type"] as? String ?? "message")\ndata: \(String(decoding: json, as: UTF8.self))\n\n")
+        }
+        appendEvent([
+            "type": "message_start",
+            "message": [
+                "id": id,
+                "type": "message",
+                "role": "assistant",
+                "model": "claude-3-5-sonnet-20241022",
+                "content": [],
+                "stop_reason": NSNull()
+            ]
+        ])
+        appendEvent([
+            "type": "content_block_start",
+            "index": 0,
+            "content_block": ["type": "text", "text": ""]
+        ])
+        appendEvent([
+            "type": "content_block_delta",
+            "index": 0,
+            "delta": ["type": "text_delta", "text": text]
+        ])
+        appendEvent([
+            "type": "content_block_stop",
+            "index": 0
+        ])
+        appendEvent([
+            "type": "message_delta",
+            "delta": ["stop_reason": stopReason, "stop_sequence": NSNull()],
+            "usage": ["output_tokens": 15]
+        ])
+        appendEvent(["type": "message_stop"])
+        return chunks
+    }
 
     public static func sseAnthropicToolCall(
         id: String,
@@ -188,14 +423,14 @@ public enum ProductionConformanceFixtures {
         let argsData = try! JSONSerialization.data(withJSONObject: arguments, options: [.sortedKeys])
         let argsJSON = String(decoding: argsData, as: UTF8.self)
         if let thinking, let signature {
-            let chunks = ProviderResponseFixtures.anthropicThinkingAndToolUseChunks(
+            let chunks = anthropicThinkingAndToolUseChunks(
                 thinking: thinking,
                 signature: signature,
                 calls: [(id: id, name: name, arguments: argsJSON)]
             )
             return Data(chunks.joined().utf8)
         } else {
-            let chunks = ProviderResponseFixtures.anthropicToolUseChunks(
+            let chunks = anthropicToolUseChunks(
                 calls: [(id: id, name: name, arguments: argsJSON)]
             )
             return Data(chunks.joined().utf8)
@@ -203,25 +438,78 @@ public enum ProductionConformanceFixtures {
     }
 
     public static func sseAnthropicFinalAnswer(_ text: String) -> Data {
-        let chunks = ProviderResponseFixtures.anthropicTextChunks(text: text)
+        let chunks = anthropicTextChunks(text: text)
         return Data(chunks.joined().utf8)
     }
 
     // MARK: - Google Native Fixtures
+
+    public static func googleFunctionCallChunks(
+        calls: [(name: String, args: [String: Any], thoughtSignature: String?)],
+        finishReason: String = "STOP"
+    ) -> [String] {
+        var parts: [[String: Any]] = []
+        for call in calls {
+            var part: [String: Any] = [
+                "functionCall": [
+                    "name": call.name,
+                    "args": call.args
+                ]
+            ]
+            if let sig = call.thoughtSignature {
+                part["thoughtSignature"] = sig
+            }
+            parts.append(part)
+        }
+        let chunkData = try! JSONSerialization.data(withJSONObject: [
+            "candidates": [[
+                "content": [
+                    "role": "model",
+                    "parts": parts
+                ],
+                "finishReason": finishReason
+            ]],
+            "usageMetadata": [
+                "promptTokenCount": 8,
+                "candidatesTokenCount": 14
+            ]
+        ])
+        return ["data: \(String(decoding: chunkData, as: UTF8.self))\n\n"]
+    }
+
+    public static func googleTextChunks(
+        text: String,
+        finishReason: String = "STOP"
+    ) -> [String] {
+        let chunkData = try! JSONSerialization.data(withJSONObject: [
+            "candidates": [[
+                "content": [
+                    "role": "model",
+                    "parts": [["text": text]]
+                ],
+                "finishReason": finishReason
+            ]],
+            "usageMetadata": [
+                "promptTokenCount": 8,
+                "candidatesTokenCount": 10
+            ]
+        ])
+        return ["data: \(String(decoding: chunkData, as: UTF8.self))\n\n"]
+    }
 
     public static func sseGoogleFunctionCall(
         name: String,
         arguments: [String: Any],
         thoughtSignature: String? = nil
     ) -> Data {
-        let chunks = ProviderResponseFixtures.googleFunctionCallChunks(
+        let chunks = googleFunctionCallChunks(
             calls: [(name: name, args: arguments, thoughtSignature: thoughtSignature)]
         )
         return Data(chunks.joined().utf8)
     }
 
     public static func sseGoogleFinalAnswer(_ text: String) -> Data {
-        let chunks = ProviderResponseFixtures.googleTextChunks(text: text)
+        let chunks = googleTextChunks(text: text)
         return Data(chunks.joined().utf8)
     }
 

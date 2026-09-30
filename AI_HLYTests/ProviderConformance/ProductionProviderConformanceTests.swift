@@ -365,7 +365,7 @@ struct ProductionProviderConformanceTests {
 
     @Test("P05: Production reasoning and tool loop for OpenAI-compatible")
     func testP05ReasoningToolLoopOpenAICompatible() async throws {
-        let toolChunks = ProviderResponseFixtures.openAIReasoningAndToolCallChunks(
+        let toolChunks = ProductionConformanceFixtures.openAIReasoningAndToolCallChunks(
             reasoningContent: "First calculate the sum",
             calls: [(id: "p05-c1", name: "quick_calculate", arguments: "{\"expression\":\"10+20\"}")],
             id: "p05-resp-1"

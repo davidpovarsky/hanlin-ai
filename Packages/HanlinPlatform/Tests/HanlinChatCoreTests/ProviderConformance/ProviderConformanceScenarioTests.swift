@@ -712,19 +712,19 @@ struct ProviderConformanceScenarioTests {
             scenarioName: "S09_MultiSkillExposure",
             roundExpectations: [
                 0: RoundExpectation(
-                    expectedToolsAdvertised: ["load_skill"],
-                    forbiddenSubstrings: ["execute_python", "web_search"]
+                    forbiddenSubstrings: ["execute_python", "web_search"],
+                    expectedToolsAdvertised: ["load_skill"]
                 ),
                 1: RoundExpectation(
-                    expectedAssistantToolCalls: [ExpectedToolCall(id: "call-load-code", name: "load_skill")],
-                    expectedToolResults: [ExpectedToolResult(callID: "call-load-code", name: "load_skill", expectedSubstring: "skill loaded successfully")],
+                    forbiddenSubstrings: ["web_search"],
                     expectedToolsAdvertised: ["load_skill", "execute_python"],
-                    forbiddenSubstrings: ["web_search"]
+                    expectedAssistantToolCalls: [ExpectedToolCall(id: "call-load-code", name: "load_skill")],
+                    expectedToolResults: [ExpectedToolResult(callID: "call-load-code", name: "load_skill", expectedSubstring: "skill loaded successfully")]
                 ),
                 2: RoundExpectation(
+                    expectedToolsAdvertised: ["load_skill", "execute_python", "web_search"],
                     expectedAssistantToolCalls: [ExpectedToolCall(id: "call-load-web", name: "load_skill")],
-                    expectedToolResults: [ExpectedToolResult(callID: "call-load-web", name: "load_skill", expectedSubstring: "skill loaded successfully")],
-                    expectedToolsAdvertised: ["load_skill", "execute_python", "web_search"]
+                    expectedToolResults: [ExpectedToolResult(callID: "call-load-web", name: "load_skill", expectedSubstring: "skill loaded successfully")]
                 ),
                 3: RoundExpectation(
                     expectedAssistantToolCalls: [
@@ -761,10 +761,10 @@ struct ProviderConformanceScenarioTests {
         let engine = try Self.makeEngine(profile: .openAINativeChat, emulator: emulator)
 
         let stream = try await engine.stream(
-            messages: [.init(role: .user, text: "Execute multi-skill workflow")],
+            messages: [HanlinAISDKMessage(role: .user, text: "Execute multi-skill workflow")],
             baseSystemPrompt: "Assistant",
             tools: allTools,
-            prepareStep: { _ in
+            prepareStep: { (_: Int) -> HanlinAISDKStepPreparation in
                 let current = loadedSkills.all
                 var active = ["load_skill"]
                 if current.contains("code") { active.append("execute_python") }
