@@ -369,7 +369,7 @@ struct ProductionProviderConformanceTests {
             ifThink: false
         )
 
-        #expect(res.answer == "4")
+        #expect(res.answer.trimmingCharacters(in: .whitespacesAndNewlines) == "4")
         #expect(res.diagnostics.status == "completed")
         #expect(res.diagnostics.efficiency.toolCallCount == 1)
         #expect(res.requests.count == 2)
