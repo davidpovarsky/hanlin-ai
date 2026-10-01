@@ -117,21 +117,27 @@ def parse_test_logs(log_paths):
             continue
         try:
             with open(log_path, "r", encoding="utf-8", errors="replace") as f:
-                for line in f:
-                    # Swift Testing pass
-                    m = swift_test_pass_pattern.search(line)
-                    if m:
-                        name = m.group(1) or m.group(2)
-                        passed_tests.add(name.strip())
-                        continue
+                content = f.read()
 
-                    # Swift Testing fail
-                    m = swift_test_fail_pattern.search(line)
-                    if m:
-                        name = m.group(1) or m.group(2)
-                        failed_tests.add(name.strip())
-                        failure_messages[name.strip()] = line.strip()
-                        continue
+            # Strip interleaved OS log lines like:
+            # 2026-10-01 00:17:25.633451+0000 AI_Hanlin[...] ...
+            content = re.sub(r'\d{4}-\d{2}-\d{2}\s+\d{2}:\d{2}:\d{2}\.\d+[+-]\d{4}\s+[^\n]*\n?', '', content)
+
+            for line in content.splitlines():
+                # Swift Testing pass
+                m = swift_test_pass_pattern.search(line)
+                if m:
+                    name = m.group(1) or m.group(2)
+                    passed_tests.add(name.strip())
+                    continue
+
+                # Swift Testing fail
+                m = swift_test_fail_pattern.search(line)
+                if m:
+                    name = m.group(1) or m.group(2)
+                    failed_tests.add(name.strip())
+                    failure_messages[name.strip()] = line.strip()
+                    continue
 
                     # XCTest pass
                     m = xctest_pass_pattern.search(line)

@@ -340,12 +340,12 @@ struct ProductionProviderConformanceTests {
             0: { roundIdx, req, body in
                 #expect(req.url?.absoluteString == "https://api.openai.com/v1/chat/completions")
                 let bodyStr = String(decoding: body, as: UTF8.self)
-                if !bodyStr.contains("quick_calculate") {
+                if !bodyStr.contains("tools") || !bodyStr.contains("load_skill") {
                     throw ConformanceProtocolError(
                         category: .TOOL_SCHEMA,
                         ownership: .swiftAISDKDependency,
                         round: roundIdx,
-                        message: "Round 0 must expose quick_calculate schema"
+                        message: "Round 0 must expose tool schemas"
                     )
                 }
             },
