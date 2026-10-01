@@ -2,7 +2,12 @@
 """
 generate_provider_conformance_summary.py
 Generates machine-checkable provider conformance summary artifact conforming to Section 24.
-Parses actual executed test logs to determine PASS / FAIL / NOT_RUN status with full provenance.
+Parses actual executed test logs to determine PASS / FAIL / NOT_RUN / EVIDENCE_ERROR status with full provenance.
+Enforces fail-safe exact identity matching:
+- Canonical function identity (e.g. from aka 'funcName()' or funcName())
+- Exact complete display name equality ONLY when unambiguous across source definitions
+- Rejects prefix, substring, and scenario-tag fallbacks
+- Fails closed on ambiguous evidence or missing execution
 """
 
 import argparse
@@ -33,6 +38,20 @@ DEFAULT_LOG_PATTERNS = [
     "*test*.log",
     "xcodebuild.log"
 ]
+
+
+class TestExecutionRecord:
+    def __init__(self, function_name=None, display_name=None, suite_name=None, status="PASS", cases=None, message=""):
+        self.function_name = function_name
+        self.display_name = display_name
+        self.suite_name = suite_name
+        self.status = status  # "PASS" or "FAIL"
+        self.cases = cases  # Optional[int] for parameterized tests
+        self.message = message
+
+    def __repr__(self):
+        return (f"TestExecutionRecord(fn={self.function_name!r}, dn={self.display_name!r}, "
+                f"suite={self.suite_name!r}, status={self.status}, cases={self.cases})")
 
 
 def get_git_commit_sha(repo_root: Path) -> str:
@@ -95,21 +114,31 @@ def scan_test_definitions(repo_root: Path):
 
 
 def parse_test_logs(log_paths):
-    passed_tests = set()
-    failed_tests = set()
-    failure_messages = {}
+    records = []
 
+    # Swift Testing pass
     swift_test_pass_pattern = re.compile(
-        r'✔\s+Test\s+(?:"([^"]+)"|(\w+)(?:\(\))?)(?:\s+with\s+\d+\s+test\s+cases)?\s+passed\s+after'
+        r"✔\s+Test\s+(?:\"(?P<display>[^\"]+)\"|(?P<raw_func>\w+)(?:\(\))?)"
+        r"(?:\s+\(aka\s+'(?P<aka_func>\w+)(?:\(\))?'\))?"
+        r"(?:\s+with\s+(?P<cases>\d+)\s+test\s+cases)?"
+        r"\s+passed(?:\s+after\b.*)?",
+        re.UNICODE
     )
+    # Swift Testing fail
     swift_test_fail_pattern = re.compile(
-        r'✘\s+Test\s+(?:"([^"]+)"|(\w+)(?:\(\))?)\s+failed\s+after'
+        r"✘\s+Test\s+(?:\"(?P<display>[^\"]+)\"|(?P<raw_func>\w+)(?:\(\))?)"
+        r"(?:\s+\(aka\s+'(?P<aka_func>\w+)(?:\(\))?'\))?"
+        r"(?:\s+with\s+(?P<cases>\d+)\s+test\s+cases)?"
+        r"\s+failed(?:\s+after\b.*)?",
+        re.UNICODE
     )
+    # XCTest pass
     xctest_pass_pattern = re.compile(
-        r"Test\s+[Cc]ase\s+'(?:-\[(\w+)\s+(\w+)\]|([^']+))'\s+passed"
+        r"Test\s+[Cc]ase\s+'(?:-\[(?P<oc_suite>\w+)\s+(?P<oc_func>\w+)\]|(?P<swift_suite>\w+)\.(?P<swift_func>\w+)|(?P<bare_func>\w+))'\s+passed"
     )
+    # XCTest fail
     xctest_fail_pattern = re.compile(
-        r"Test\s+[Cc]ase\s+'(?:-\[(\w+)\s+(\w+)\]|([^']+))'\s+failed"
+        r"Test\s+[Cc]ase\s+'(?:-\[(?P<oc_suite>\w+)\s+(?P<oc_func>\w+)\]|(?P<swift_suite>\w+)\.(?P<swift_func>\w+)|(?P<bare_func>\w+))'\s+failed"
     )
 
     for log_path in log_paths:
@@ -119,91 +148,129 @@ def parse_test_logs(log_paths):
             with open(log_path, "r", encoding="utf-8", errors="replace") as f:
                 content = f.read()
 
-            # Strip interleaved OS log lines like:
-            # 2026-10-01 00:17:25.633451+0000 AI_Hanlin[...] ...
+            # Strip interleaved OS log lines
             content = re.sub(r'\d{4}-\d{2}-\d{2}\s+\d{2}:\d{2}:\d{2}\.\d+[+-]\d{4}\s+[^\n]*\n?', '', content)
 
             for line in content.splitlines():
                 # Swift Testing pass
                 m = swift_test_pass_pattern.search(line)
                 if m:
-                    name = m.group(1) or m.group(2)
-                    passed_tests.add(name.strip())
+                    aka = m.group("aka_func")
+                    raw = m.group("raw_func")
+                    disp = m.group("display")
+                    cases = int(m.group("cases")) if m.group("cases") else None
+                    func = aka or raw
+                    records.append(TestExecutionRecord(
+                        function_name=func,
+                        display_name=disp.strip() if disp else None,
+                        status="PASS",
+                        cases=cases,
+                        message=line.strip()
+                    ))
                     continue
 
                 # Swift Testing fail
                 m = swift_test_fail_pattern.search(line)
                 if m:
-                    name = m.group(1) or m.group(2)
-                    failed_tests.add(name.strip())
-                    failure_messages[name.strip()] = line.strip()
+                    aka = m.group("aka_func")
+                    raw = m.group("raw_func")
+                    disp = m.group("display")
+                    cases = int(m.group("cases")) if m.group("cases") else None
+                    func = aka or raw
+                    records.append(TestExecutionRecord(
+                        function_name=func,
+                        display_name=disp.strip() if disp else None,
+                        status="FAIL",
+                        cases=cases,
+                        message=line.strip()
+                    ))
                     continue
 
-                    # XCTest pass
-                    m = xctest_pass_pattern.search(line)
-                    if m:
-                        if m.group(2):
-                            passed_tests.add(m.group(2).strip())
-                            passed_tests.add(f"{m.group(1)}.{m.group(2)}".strip())
-                        elif m.group(3):
-                            passed_tests.add(m.group(3).strip())
-                        continue
+                # XCTest pass
+                m = xctest_pass_pattern.search(line)
+                if m:
+                    suite = m.group("oc_suite") or m.group("swift_suite")
+                    func = m.group("oc_func") or m.group("swift_func") or m.group("bare_func")
+                    records.append(TestExecutionRecord(
+                        function_name=func,
+                        suite_name=suite,
+                        status="PASS",
+                        message=line.strip()
+                    ))
+                    continue
 
-                    # XCTest fail
-                    m = xctest_fail_pattern.search(line)
-                    if m:
-                        if m.group(2):
-                            fn = m.group(2).strip()
-                            failed_tests.add(fn)
-                            failure_messages[fn] = line.strip()
-                        elif m.group(3):
-                            fn = m.group(3).strip()
-                            failed_tests.add(fn)
-                            failure_messages[fn] = line.strip()
-                        continue
+                # XCTest fail
+                m = xctest_fail_pattern.search(line)
+                if m:
+                    suite = m.group("oc_suite") or m.group("swift_suite")
+                    func = m.group("oc_func") or m.group("swift_func") or m.group("bare_func")
+                    records.append(TestExecutionRecord(
+                        function_name=func,
+                        suite_name=suite,
+                        status="FAIL",
+                        message=line.strip()
+                    ))
+                    continue
         except Exception as e:
             print(f"Warning: Failed to parse log {log_path}: {e}", file=sys.stderr)
 
-    return passed_tests, failed_tests, failure_messages
+    return records
 
 
-def match_test_status(test, passed_set, failed_set, failure_messages):
-    func = test["function"]
-    display = test.get("displayName")
-    suite = test["suite"]
-    full_ident = f"{suite}.{func}"
+def match_test_status(test, execution_records, tests_by_display):
+    """
+    Matches an individual source test against execution records with fail-safe exact identity.
+    Returns: (status: str, error_message: Optional[str], parameterized_cases: Optional[int])
+    Status is one of: PASS, FAIL, NOT_RUN, EVIDENCE_ERROR.
+    """
+    target_func = test["function"]
+    target_display = test.get("displayName")
+    target_suite = test.get("suite")
 
-    # Check for failures first
-    for candidate in [func, display, full_ident]:
-        if candidate and candidate in failed_set:
-            return "FAIL", failure_messages.get(candidate, "Test failed during execution")
+    matching_records = []
+    has_ambiguity = False
 
-    # Check for passes
-    for candidate in [func, display, full_ident]:
-        if candidate and candidate in passed_set:
-            return "PASS", None
+    for rec in execution_records:
+        # Case 1: Exact canonical function name available
+        if rec.function_name:
+            if rec.function_name == target_func:
+                if rec.suite_name and target_suite and rec.suite_name != target_suite:
+                    continue  # Suite mismatch
+                matching_records.append(rec)
+            else:
+                # Record explicitly names a different function. It CANNOT match this test.
+                continue
 
-    # Substring / fuzzy match on display name if present
-    if display:
-        for p in passed_set:
-            if display == p or display.startswith(p) or p.startswith(display):
-                return "PASS", None
-        for f in failed_set:
-            if display == f or display.startswith(f) or f.startswith(display):
-                return "FAIL", failure_messages.get(f, "Test failed")
+        # Case 2: No function name on record, but display name available
+        elif rec.display_name and target_display:
+            # Exact complete display name equality required
+            if rec.display_name == target_display:
+                # Check for ambiguity among source definitions
+                candidates = tests_by_display.get(target_display, [])
+                if len(candidates) > 1:
+                    has_ambiguity = True
+                else:
+                    matching_records.append(rec)
+            # Prefix, substring, or fuzzy matches are strictly forbidden
 
-    # Tag-based matching if display name has a recognizable scenario prefix like S01:, F08:, P09:
-    if display and ":" in display:
-        tag = display.split(":", 1)[0].strip()
-        if re.match(r'^(?:S\d\d?|F\d\d?|P\d\d?[A-Z]?)$', tag):
-            for f in failed_set:
-                if f.startswith(tag + ":") or f.startswith(tag + " "):
-                    return "FAIL", failure_messages.get(f, "Test failed")
-            for p in passed_set:
-                if p.startswith(tag + ":") or p.startswith(tag + " "):
-                    return "PASS", None
+    if has_ambiguity and not matching_records:
+        return "EVIDENCE_ERROR", f"Ambiguous display name '{target_display}' matches multiple source tests without canonical function identity", None
 
-    return "NOT_RUN", None
+    if not matching_records:
+        return "NOT_RUN", None, None
+
+    # Check for FAIL first
+    failing_records = [r for r in matching_records if r.status == "FAIL"]
+    if failing_records:
+        return "FAIL", failing_records[0].message, None
+
+    # Check for PASS
+    passing_records = [r for r in matching_records if r.status == "PASS"]
+    if passing_records:
+        cases = max((r.cases for r in passing_records if r.cases is not None), default=None)
+        return "PASS", None, cases
+
+    return "NOT_RUN", None, None
 
 
 def classify_scenario_and_profile(test):
@@ -260,11 +327,18 @@ def main():
     parser.add_argument("--log-dir", action="append", default=[], help="Directory to search for test logs")
     parser.add_argument("--log-file", action="append", default=[], help="Specific test log file to parse")
     parser.add_argument("--output", type=str, default="provider-conformance-summary.json", help="Output JSON path")
-    parser.add_argument("--gate", action="store_true", help="Exit with code 1 if any test is NOT_RUN or FAIL")
+    parser.add_argument("--gate", action="store_true", help="Exit with code 1 if any test is NOT_RUN or FAIL or EVIDENCE_ERROR")
     args = parser.parse_args()
 
     repo_root = Path(args.repo_root).resolve() if args.repo_root else Path(__file__).resolve().parent.parent.parent
     tests = scan_test_definitions(repo_root)
+
+    # Index tests by display name for ambiguity detection
+    tests_by_display = {}
+    for t in tests:
+        dn = t.get("displayName")
+        if dn:
+            tests_by_display.setdefault(dn, []).append(t)
 
     # Collect log files
     log_paths = []
@@ -287,21 +361,27 @@ def main():
     # De-duplicate log paths
     log_paths = sorted(list(set(log_paths)))
 
-    passed_set, failed_set, failure_messages = parse_test_logs(log_paths)
+    execution_records = parse_test_logs(log_paths)
 
     results = []
     passed_count = 0
     failed_count = 0
     not_run_count = 0
+    evidence_error_count = 0
+    total_parameterized_cases = 0
 
     for t in tests:
-        status, err_msg = match_test_status(t, passed_set, failed_set, failure_messages)
+        status, err_msg, cases = match_test_status(t, execution_records, tests_by_display)
         scenario, profile = classify_scenario_and_profile(t)
 
         if status == "PASS":
             passed_count += 1
+            if cases is not None:
+                total_parameterized_cases += cases
         elif status == "FAIL":
             failed_count += 1
+        elif status == "EVIDENCE_ERROR":
+            evidence_error_count += 1
         else:
             not_run_count += 1
 
@@ -312,7 +392,8 @@ def main():
             "sourceFile": t["file"],
             "status": status,
             "round": None,
-            "failureCategory": ("TEST_FAILURE" if status == "FAIL" else None),
+            "parameterizedCases": cases,
+            "failureCategory": ("TEST_FAILURE" if status == "FAIL" else ("EVIDENCE_ERROR" if status == "EVIDENCE_ERROR" else None)),
             "failureMessage": err_msg,
             "ownership": ("swiftAISDKDependency" if "AISDK" in t["suite"] else "hanlinAIProduction") if status == "FAIL" else None
         })
@@ -327,10 +408,13 @@ def main():
 
     summary = {
         "provenance": provenance,
+        "sourceTestFunctionCount": len(results),
         "totalTests": len(results),
         "passedCount": passed_count,
         "failedCount": failed_count,
         "notRunCount": not_run_count,
+        "evidenceErrorCount": evidence_error_count,
+        "parameterizedCaseCount": total_parameterized_cases,
         "results": results
     }
 
@@ -342,10 +426,12 @@ def main():
     print(f"Provider Conformance Summary generated: {output_path}")
     print(f"  Provenance Commit: {provenance['commitSha']}")
     print(f"  Logs Parsed ({len(log_paths)}): {', '.join([str(p.name) for p in log_paths]) if log_paths else 'None'}")
-    print(f"  Total: {len(results)} | PASS: {passed_count} | FAIL: {failed_count} | NOT_RUN: {not_run_count}")
+    print(f"  Conformance Test Functions: {len(results)} | PASS: {passed_count} | FAIL: {failed_count} | NOT_RUN: {not_run_count} | EVIDENCE_ERROR: {evidence_error_count}")
+    if total_parameterized_cases > 0:
+        print(f"  Parameterized Cases Counted: {total_parameterized_cases}")
 
-    if args.gate and (failed_count > 0 or not_run_count > 0):
-        print(f"GATE FAILED: Conformance summary has {failed_count} failures and {not_run_count} unexecuted tests.", file=sys.stderr)
+    if args.gate and (failed_count > 0 or not_run_count > 0 or evidence_error_count > 0):
+        print(f"GATE FAILED: Conformance summary has {failed_count} failures, {not_run_count} unexecuted tests, and {evidence_error_count} evidence errors.", file=sys.stderr)
         sys.exit(1)
 
 

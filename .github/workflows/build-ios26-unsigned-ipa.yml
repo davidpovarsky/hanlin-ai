@@ -2455,6 +2455,7 @@ jobs:
         id: summary
         run: |
           set -euo pipefail
+          python3 -m unittest Scripts/CI/test_generate_provider_conformance_summary.py
           python3 Scripts/CI/generate_provider_conformance_summary.py \
             --log-dir logs/phase1-validation-logs \
             --log-dir logs/simulator-smoke-logs \
