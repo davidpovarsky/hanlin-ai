@@ -100,6 +100,7 @@ public enum ProductionConformanceFixtures {
         let argumentsJSON = String(decoding: argumentsData, as: UTF8.self)
         let payload: [String: Any] = [
             "choices": [[
+                "index": 0,
                 "delta": [
                     "role": "assistant",
                     "tool_calls": [[
@@ -130,6 +131,7 @@ public enum ProductionConformanceFixtures {
         }
         let payload: [String: Any] = [
             "choices": [[
+                "index": 0,
                 "delta": [
                     "role": "assistant",
                     "tool_calls": toolDeltas
@@ -143,6 +145,7 @@ public enum ProductionConformanceFixtures {
     public static func sseFinalAnswer(_ text: String) -> Data {
         sseData([
             "choices": [[
+                "index": 0,
                 "delta": ["role": "assistant", "content": text],
                 "finish_reason": "stop"
             ]]
@@ -152,6 +155,7 @@ public enum ProductionConformanceFixtures {
     public static func sseFinishOnly(finishReason: String = "other") -> Data {
         sseData([
             "choices": [[
+                "index": 0,
                 "delta": [:],
                 "finish_reason": finishReason
             ]]
@@ -276,6 +280,7 @@ public enum ProductionConformanceFixtures {
     ) -> Data {
         let textChunk = sseData([
             "choices": [[
+                "index": 0,
                 "delta": ["role": "assistant", "content": "LATE_FORBIDDEN_GHOST_TEXT"],
                 "finish_reason": NSNull()
             ]]
