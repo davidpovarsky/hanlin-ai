@@ -10,17 +10,18 @@ Read `PROJECT_AGENT_GUIDANCE.md` if it exists. It contains repository-specific a
 - Validate only what changed unless broader validation is genuinely required or explicitly requested.
 - Never print, commit, or expose secrets, signing keys, tokens, certificates, or private credentials.
 
-## Forks and upstream-friendly changes
+## Independent-fork development policy
 
-When a repository is a fork, mirror, vendor copy, or derivative of an upstream project, optimize custom work for easy future upstream syncs.
+Hanlin is an independently maintained derivative of CherryHQ/hanlin-ai. Upstream mergeability is no longer a primary architecture constraint.
 
-- Identify upstream-owned code and keep it as untouched as practical.
-- Put custom features and integrations in separate modules, packages, directories, services, adapters, extensions, wrappers, configuration, or other clearly downstream-owned layers.
-- Modify upstream files only for the narrow connection points that are actually necessary: imports, registration, dependency injection, routing/navigation, lifecycle hooks, manifests/entitlements, or a small extension hook.
-- Keep unavoidable upstream edits minimal, localized, obvious, and free of unrelated formatting or refactoring.
-- Do not move, rename, duplicate, broadly rewrite, or mix custom business logic into upstream-owned files when a bridge or additive layer is sufficient.
-- When syncing upstream, inspect upstream changes before resolving conflicts; do not blindly choose ours/theirs.
-- For substantial work, report which upstream files were touched, which downstream files were added, and any remaining merge risk.
+- Future upstream changes may be cherry-picked selectively after review; mergeability is not a design constraint.
+- Direct edits and deletions in former upstream files are allowed and encouraged when they reduce duplicate implementation, remove obsolete paths, or improve Hanlin's architecture.
+- Keep modules clean, avoid giant files, and separate domain responsibilities for Hanlin's own long-term maintainability.
+- Prefer one authoritative implementation path over wrappers kept only for historical ownership boundaries.
+- Do not duplicate files merely to claim downstream separation.
+- Do not preserve dead or legacy code merely because it originated from upstream.
+- Report large architectural deletions and migrations with tests and parity evidence, not “upstream touchpoints”.
+- Preserve attribution and license history required by the original project license.
 
 ## Apple native-first development
 

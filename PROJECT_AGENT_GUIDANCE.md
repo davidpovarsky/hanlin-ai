@@ -105,68 +105,21 @@ Never state that an API is current, available, non-deprecated, or accepted by Xc
 - Preserve native behavior, accessibility, Dynamic Type, localization, right-to-left layout, keyboard navigation, pointer interaction, multitasking, and window resizing where relevant.
 - Do not create wrappers around old UIKit APIs when a modern native SwiftUI solution exists.
 
-## 7. Fork and upstream-friendly architecture
+## 7. Independent-fork repository policy
 
-When this repository is a fork, mirror, clone, vendor copy, or derivative of an upstream project, optimize every customization for easy future upstream merges.
+Hanlin is an independently maintained derivative of CherryHQ/hanlin-ai. Upstream mergeability is no longer a primary architecture constraint.
 
-### Required approach
+### Policy rules
 
-- First identify the upstream repository, upstream branch, and existing divergence when that information is available.
-- Keep custom features, integrations, branding, platform adaptations, and behavior changes in clearly separated layers, modules, targets, directories, extensions, adapters, configuration files, or packages.
-- Prefer additive changes over invasive edits.
-- Prefer composition, dependency injection, protocols, extension points, adapters, wrappers, subclasses where appropriate, build settings, feature flags, and configuration over copying or rewriting upstream implementations.
-- Reuse existing official extension points before adding new ones.
-- Keep custom assets, localization, scripts, workflows, and documentation outside upstream-owned directories whenever practical.
-- Use clear naming for downstream code, such as `Downstream`, `Custom`, `AppOverrides`, `Integrations`, or a project-specific namespace.
-- Document each unavoidable upstream-file modification and why it is required.
-
-### Changes to upstream-owned files
-
-Modify original upstream files only when required for:
-
-- an entry point;
-- dependency registration;
-- routing or navigation connection;
-- lifecycle integration;
-- exposing a narrow extension hook;
-- build configuration;
-- entitlement or manifest connection;
-- importing or invoking the separate downstream layer.
-
-Such edits must be:
-
-- minimal;
-- localized;
-- easy to identify;
-- free of unrelated formatting changes;
-- free of broad refactoring;
-- documented with the downstream component they connect.
-
-Do not:
-
-- duplicate large upstream files merely to customize small behavior;
-- move or rename upstream files without necessity;
-- reformat untouched upstream code;
-- mix custom business logic deeply into upstream classes or views;
-- replace upstream architecture when a small bridge or adapter is sufficient;
-- delete upstream behavior unless explicitly requested.
-
-### Upstream merge review
-
-For substantial changes, report:
-
-- which files are upstream-owned;
-- which files are newly added downstream files;
-- every unavoidable modification to an upstream file;
-- how the design reduces future merge conflicts;
-- any remaining merge risk.
-
-When an upstream update is being merged:
-
-- compare upstream changes before resolving conflicts;
-- preserve downstream behavior through its separated layer;
-- do not automatically choose “ours” or “theirs” for substantive conflicts;
-- rerun modernization and verification checks only when explicitly requested.
+- Hanlin is an independently maintained fork.
+- Future upstream changes may be cherry-picked selectively after review; upstream mergeability is not a design constraint.
+- Direct edits and deletions in former upstream files are allowed when they reduce duplicate implementation, remove obsolete paths, or improve Hanlin's architecture.
+- Keep modules clean, avoid oversized files, and separate domain responsibilities for Hanlin's own long-term maintainability.
+- Prefer one authoritative implementation path over wrappers kept only for historical ownership boundaries.
+- Do not duplicate files merely to claim downstream separation.
+- Do not preserve dead or legacy code merely because it originated from upstream.
+- Report large architectural deletions and migrations with tests and parity evidence, not “upstream touchpoints”.
+- Preserve attribution and license history required by the original project license.
 
 ## 8. Normal editing mode
 
