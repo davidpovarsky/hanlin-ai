@@ -4,7 +4,7 @@ import PackageDescription
 
 let package = Package(
     name: "HanlinExpoRuntime",
-    platforms: [.iOS(.v27)],
+    platforms: [.iOS("27.0")],
     products: [
         .library(
             name: "HanlinExpoRuntime",
