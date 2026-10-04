@@ -9,6 +9,11 @@ public final class HanlinGeneratedSlotProps: UIBaseViewProps {
 
 public struct HanlinGeneratedSlotView: ExpoSwiftUI.View {
     @ObservedObject public var props: HanlinGeneratedSlotProps
+
+    public init(props: HanlinGeneratedSlotProps) {
+        self.props = props
+    }
+
     public var body: some View { Children() }
 }
 
@@ -17,6 +22,10 @@ public final class HanlinGeneratedDefaultDocumentGroupLaunchActionsProps: UIBase
 
 public struct HanlinGeneratedDefaultDocumentGroupLaunchActionsView: ExpoSwiftUI.View {
     @ObservedObject public var props: HanlinGeneratedDefaultDocumentGroupLaunchActionsProps
+
+    public init(props: HanlinGeneratedDefaultDocumentGroupLaunchActionsProps) {
+        self.props = props
+    }
 
     public var body: some View {
         SwiftUI.DefaultDocumentGroupLaunchActions()
@@ -29,6 +38,10 @@ public final class HanlinGeneratedEditButtonProps: UIBaseViewProps {
 public struct HanlinGeneratedEditButtonView: ExpoSwiftUI.View {
     @ObservedObject public var props: HanlinGeneratedEditButtonProps
 
+    public init(props: HanlinGeneratedEditButtonProps) {
+        self.props = props
+    }
+
     public var body: some View {
         SwiftUI.EditButton()
     }
@@ -39,6 +52,10 @@ public final class HanlinGeneratedGroupBoxProps: UIBaseViewProps {
 
 public struct HanlinGeneratedGroupBoxView: ExpoSwiftUI.View {
     @ObservedObject public var props: HanlinGeneratedGroupBoxProps
+
+    public init(props: HanlinGeneratedGroupBoxProps) {
+        self.props = props
+    }
 
     public var body: some View {
         SwiftUI.GroupBox() {
@@ -58,6 +75,10 @@ public final class HanlinGeneratedEmptyViewProps: UIBaseViewProps {
 
 public struct HanlinGeneratedEmptyViewView: ExpoSwiftUI.View {
     @ObservedObject public var props: HanlinGeneratedEmptyViewProps
+
+    public init(props: HanlinGeneratedEmptyViewProps) {
+        self.props = props
+    }
 
     public var body: some View {
         SwiftUI.EmptyView()

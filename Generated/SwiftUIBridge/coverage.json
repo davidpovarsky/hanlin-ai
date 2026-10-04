@@ -60,22 +60,22 @@
   },
   "sdkIdentity" : "xcode-27.0-ios-27.0-arm64e-apple-ios",
   "sdkMetadata" : {
-    "developerDir" : "/Applications/Xcode_27_Release_Candidate.app/Contents/Developer",
+    "developerDir" : "/Applications/Xcode_27.0.0.app/Contents/Developer",
     "modules" : {
       "SwiftUI" : {
         "artifactFile" : "SwiftUI.swiftinterface",
         "sha256" : "6118439a36ebb4940814e899c98226d644ea5da4a248ef3ac40c261af58b79f4",
-        "sourceFile" : "/Applications/Xcode_27_Release_Candidate.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS27.0.sdk/System/Library/Frameworks/SwiftUI.framework/Modules/SwiftUI.swiftmodule/arm64e-apple-ios.swiftinterface"
+        "sourceFile" : "/Applications/Xcode_27.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS27.0.sdk/System/Library/Frameworks/SwiftUI.framework/Modules/SwiftUI.swiftmodule/arm64e-apple-ios.swiftinterface"
       },
       "SwiftUICore" : {
         "artifactFile" : "SwiftUICore.swiftinterface",
         "sha256" : "ca92d0688011574dd711f23d227b013c25160c88eab55adc9a736b8150e0e9cf",
-        "sourceFile" : "/Applications/Xcode_27_Release_Candidate.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS27.0.sdk/System/Library/Frameworks/SwiftUICore.framework/Modules/SwiftUICore.swiftmodule/arm64e-apple-ios.swiftinterface"
+        "sourceFile" : "/Applications/Xcode_27.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS27.0.sdk/System/Library/Frameworks/SwiftUICore.framework/Modules/SwiftUICore.swiftmodule/arm64e-apple-ios.swiftinterface"
       }
     },
     "schemaVersion" : 1,
     "sdk" : "iphoneos",
-    "sdkRoot" : "/Applications/Xcode_27_Release_Candidate.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS27.0.sdk",
+    "sdkRoot" : "/Applications/Xcode_27.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS27.0.sdk",
     "sdkVersion" : "27.0",
     "target" : "arm64e-apple-ios",
     "xcodeVersion" : "Xcode 27.0\nBuild version 27A266a"

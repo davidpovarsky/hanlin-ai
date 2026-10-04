@@ -246,6 +246,22 @@ public enum HanlinGeneratedCoordinateSpaceValue: String, Enumerable {
     }
 }
 
+public enum HanlinGeneratedFontDesignValue: String, Enumerable {
+    case `default`
+    case monospaced
+    case rounded
+    case serif
+
+    var swiftUIValue: Font.Design {
+        switch self {
+        case .`default`: .`default`
+        case .monospaced: .monospaced
+        case .rounded: .rounded
+        case .serif: .serif
+        }
+    }
+}
+
 public enum HanlinGeneratedLayoutDirectionBehaviorValue: String, Enumerable {
     case fixed
     case mirrors
@@ -1151,12 +1167,12 @@ public struct HanlinGeneratedEdgesIgnoringSafeAreaModifier: ViewModifier, Record
 }
 
 public struct HanlinGeneratedFontDesignModifier: ViewModifier, Record {
-    @Field public var design: Font.Design? = nil
+    @Field public var design: HanlinGeneratedFontDesignValue? = nil
 
     public init() {}
 
     public func body(content: Content) -> some View {
-        content.fontDesign(design)
+        content.fontDesign(design?.swiftUIValue)
     }
 }
 

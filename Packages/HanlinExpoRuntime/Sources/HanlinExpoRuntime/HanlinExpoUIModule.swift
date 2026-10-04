@@ -117,6 +117,10 @@ private extension HanlinLazyGridProps {
 public struct HanlinLazyVGridView: ExpoSwiftUI.View {
     @ObservedObject public var props: HanlinLazyGridProps
 
+    public init(props: HanlinLazyGridProps) {
+        self.props = props
+    }
+
     public var body: some View {
         LazyVGrid(columns: props.resolvedTracks, spacing: props.spacing, pinnedViews: props.pinnedViews) {
             Children()
@@ -126,6 +130,10 @@ public struct HanlinLazyVGridView: ExpoSwiftUI.View {
 
 public struct HanlinLazyHGridView: ExpoSwiftUI.View {
     @ObservedObject public var props: HanlinLazyGridProps
+
+    public init(props: HanlinLazyGridProps) {
+        self.props = props
+    }
 
     public var body: some View {
         LazyHGrid(rows: props.resolvedTracks, spacing: props.spacing, pinnedViews: props.pinnedViews) {
@@ -155,6 +163,10 @@ public final class HanlinViewThatFitsProps: UIBaseViewProps {
 public struct HanlinViewThatFitsView: ExpoSwiftUI.View {
     @ObservedObject public var props: HanlinViewThatFitsProps
 
+    public init(props: HanlinViewThatFitsProps) {
+        self.props = props
+    }
+
     public var body: some View {
         ViewThatFits(in: props.axes.axisSet) {
             Children()
@@ -168,6 +180,11 @@ public final class HanlinSlotProps: UIBaseViewProps {
 
 public struct HanlinSlotView: ExpoSwiftUI.View {
     @ObservedObject public var props: HanlinSlotProps
+
+    public init(props: HanlinSlotProps) {
+        self.props = props
+    }
+
     public var body: some View { Children() }
 }
 
@@ -363,6 +380,10 @@ public struct HanlinFocusedView: ExpoSwiftUI.View {
     @ObservedObject public var props: HanlinFocusedProps
     @FocusState private var focused: Bool
 
+    public init(props: HanlinFocusedProps) {
+        self.props = props
+    }
+
     public var body: some View {
         hanlinNamedSlot(props, "content")
             .focused($focused)
@@ -393,6 +414,10 @@ public final class HanlinSafeAreaInsetProps: UIBaseViewProps {
 public struct HanlinSafeAreaInsetView: ExpoSwiftUI.View {
     @ObservedObject public var props: HanlinSafeAreaInsetProps
 
+    public init(props: HanlinSafeAreaInsetProps) {
+        self.props = props
+    }
+
     @ViewBuilder public var body: some View {
         switch props.edge {
         case .top:
@@ -418,6 +443,10 @@ public final class HanlinAsyncImageProps: UIBaseViewProps {
 
 public struct HanlinAsyncImageView: ExpoSwiftUI.View {
     @ObservedObject public var props: HanlinAsyncImageProps
+
+    public init(props: HanlinAsyncImageProps) {
+        self.props = props
+    }
 
     public var body: some View {
         AsyncImage(url: props.url.flatMap(URL.init(string:)), scale: props.scale) { phase in

@@ -8,8 +8,8 @@
 - Xcode: `Xcode 27.0 / Build version 27A266a`
 - SDK: `iphoneos 27.0`
 - Target: `arm64e-apple-ios`
-- SwiftUI interface: `/Applications/Xcode_27_Release_Candidate.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS27.0.sdk/System/Library/Frameworks/SwiftUI.framework/Modules/SwiftUI.swiftmodule/arm64e-apple-ios.swiftinterface` (`6118439a36ebb4940814e899c98226d644ea5da4a248ef3ac40c261af58b79f4`)
-- SwiftUICore interface: `/Applications/Xcode_27_Release_Candidate.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS27.0.sdk/System/Library/Frameworks/SwiftUICore.framework/Modules/SwiftUICore.swiftmodule/arm64e-apple-ios.swiftinterface` (`ca92d0688011574dd711f23d227b013c25160c88eab55adc9a736b8150e0e9cf`)
+- SwiftUI interface: `/Applications/Xcode_27.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS27.0.sdk/System/Library/Frameworks/SwiftUI.framework/Modules/SwiftUI.swiftmodule/arm64e-apple-ios.swiftinterface` (`6118439a36ebb4940814e899c98226d644ea5da4a248ef3ac40c261af58b79f4`)
+- SwiftUICore interface: `/Applications/Xcode_27.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS27.0.sdk/System/Library/Frameworks/SwiftUICore.framework/Modules/SwiftUICore.swiftmodule/arm64e-apple-ios.swiftinterface` (`ca92d0688011574dd711f23d227b013c25160c88eab55adc9a736b8150e0e9cf`)
 
 | Classification | Count |
 | --- | ---: |

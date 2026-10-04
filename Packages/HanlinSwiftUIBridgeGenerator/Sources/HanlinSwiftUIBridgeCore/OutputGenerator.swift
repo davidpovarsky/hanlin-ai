@@ -395,6 +395,11 @@ public enum HanlinSwiftUIOutputGenerator {
                 "",
                 "public struct HanlinGeneratedSlotView: ExpoSwiftUI.View {",
                 "    @ObservedObject public var props: HanlinGeneratedSlotProps",
+                "",
+                "    public init(props: HanlinGeneratedSlotProps) {",
+                "        self.props = props",
+                "    }",
+                "",
                 "    public var body: some View { Children() }",
                 "}",
                 "",
@@ -444,6 +449,10 @@ public enum HanlinSwiftUIOutputGenerator {
             lines.append("")
             lines.append("public struct \(viewName): ExpoSwiftUI.View {")
             lines.append("    @ObservedObject public var props: \(propsName)")
+            lines.append("")
+            lines.append("    public init(props: \(propsName)) {")
+            lines.append("        self.props = props")
+            lines.append("    }")
             lines.append("")
             lines.append("    public var body: some View {")
             let arguments = valueParameters.map { parameter in
@@ -703,8 +712,7 @@ public enum HanlinSwiftUIOutputGenerator {
         for type: String,
         enums: [String: HanlinSwiftUIDeclaration]
     ) -> HanlinSwiftUIDeclaration? {
-        let normalized = type
-            .replacingOccurrences(of: "Swift.", with: "")
+        let normalized = normalizedSwiftType(type)
             .replacingOccurrences(of: "?", with: "")
             .trimmingCharacters(in: .whitespacesAndNewlines)
         if let exact = enums[normalized], exact.optionSetCases.isEmpty { return exact }
