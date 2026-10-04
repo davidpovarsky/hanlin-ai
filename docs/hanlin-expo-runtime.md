@@ -25,12 +25,12 @@ flowchart TD
         Session["HanlinExpoSession"]
         Delegate["HanlinExpoReactNativeFactoryDelegate"]
         Factory["RCTReactNativeFactory & Hermes VM"]
-        ModifierReg["ViewModifierRegistry (navigationBarTitleDisplayMode)"]
+        ModifierReg["Generated + reviewed ViewModifierRegistry adapters"]
         HostedVC["HanlinHostedViewController"]
     end
 
     subgraph AppleUI [SwiftUI-Backed Native Expo UI Layer]
-        ExpoUI["@expo/ui/swift-ui Engine"]
+        ExpoUI["@expo/ui + @hanlin/expo-ui Engine"]
         SplitView["SwiftUI NavigationSplitView"]
         Sidebar["SwiftUI List & Buttons"]
         Detail["SwiftUI NavigationStack & Detail"]
@@ -55,10 +55,36 @@ flowchart TD
 ```
 
 ### Key Architectural Invariants:
-1. **Zero Host Recompilation**: The host app (`AI_Hanlin`) does not compile MiniApp JavaScript into its binary. The JS bundle is resolved dynamically from the installed package directory at runtime.
+1. **No Host Recompilation for Installed Bridge Capabilities**: The host app (`AI_Hanlin`) does not compile MiniApp JavaScript into its binary. The JS bundle is resolved dynamically from the installed package directory. Adding a new native SwiftUI bridge capability or regenerating for a new Apple SDK requires one host build; MiniApps using the capability surface already installed in that host do not.
 2. **Dynamic Package / Session Switching**: Swapping from MiniApp A to MiniApp B instantiates an isolated `HanlinExpoSession` pointing to the selected package's bundle path; the host application remains alive without recompilation.
 3. **SwiftUI-Backed Components via Expo UI**: The `@expo/ui/swift-ui` components tested in the probe (including `NavigationSplitView`, `NavigationStack`, `List`, `Toolbar`, `Button`, `Toggle`, and `BottomSheet`) are backed by genuine Apple SwiftUI view structs and modifiers. React Native, Hermes, and Expo UI provide the underlying runtime host, event bridging, and state management.
 4. **Session Teardown Lifecycle**: Dismissing an active Expo MiniApp triggers explicit teardown in `HanlinExpoSession.shutdown()`, removing the hosted view, clearing `reactHost` references, releasing factory/delegate resources, destroying the Expo app context, and unregistering custom modifiers.
+
+### Generated SwiftUI capability pipeline
+
+The production bridge follows one reproducible path:
+
+```text
+stable Xcode 27 iPhoneOS SwiftUI + SwiftUICore interfaces
+  -> SwiftSyntax inventory and per-signature classification
+  -> generated native SwiftUI wrappers + typed TypeScript
+  -> @hanlin/expo-ui 1.0.0 (bridge capability contract 3.0.0)
+  -> dynamic TSX MiniApp
+  -> real SwiftUI views in the prebuilt Hanlin host
+```
+
+The complete device interfaces are local generation inputs and are not committed. The checked-in
+inventory identifies `xcode-27.0-ios-27.0-arm64e-apple-ios`, and coverage records the input hashes,
+generated versus reviewed/manual adapters, and every unsupported, superseded, deprecated, private,
+SPI, or host-lifecycle-only signature. Generation is deterministic and has a check mode; see
+`Tools/SwiftUIBridge/README.md` for the exact commands and unresolved-signature policy.
+
+`@expo/ui` remains the native Expo SwiftUI foundation. `@hanlin/expo-ui` re-exports the supported
+surface, adds the generated module and reviewed semantic adapters, and routes capability-gated
+runtime/file operations to `HanlinHostServices`. The native module resolves the provider from the
+concrete Expo `AppContext`, so JavaScript never supplies a session identifier. Packages may omit
+`hanlinExpo.bridgeVersion`; when present, versions through `3.0.0` are accepted and newer contracts
+are rejected before launch.
 
 ---
 

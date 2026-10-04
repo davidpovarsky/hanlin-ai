@@ -9,7 +9,7 @@ permissions:
 jobs:
   validate-expo-runtime:
     name: Compile and test Hanlin Expo runtime on macOS
-    runs-on: macos-26
+    runs-on: xcode-27
     timeout-minutes: 60
 
     env:
@@ -27,14 +27,14 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Select stable Xcode 26
+      - name: Select stable Xcode 27
         id: toolchain
         shell: bash
         run: |
           set -euxo pipefail
           mkdir -p "$LOG_DIR" build
-          selected_xcode="$(find /Applications -maxdepth 1 -type d -name 'Xcode_26*.app' -print \
-            | grep -E '/Xcode_26([._][0-9]+)*\.app$' \
+          selected_xcode="$(find /Applications -maxdepth 1 -type d -name 'Xcode_27*.app' -print \
+            | grep -E '/Xcode_27([._][0-9]+)*\.app$' \
             | sort -V \
             | tail -1)"
           test -n "$selected_xcode"
@@ -42,6 +42,7 @@ jobs:
           xcodebuild -version | tee "$LOG_DIR/01-xcode-version.log"
           swift --version | tee -a "$LOG_DIR/01-xcode-version.log"
           xcrun --sdk iphonesimulator --show-sdk-version | tee "$LOG_DIR/01-sdk-version.log"
+          xcodebuild -showsdks | grep -E 'iphonesimulator27|iOS Simulator 27'
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
@@ -99,6 +100,13 @@ jobs:
         run: |
           set -euxo pipefail
           swift package --package-path Packages/HanlinExpoRuntime resolve
+
+      - name: Run focused HanlinScriptAnalyzerTests
+        shell: bash
+        run: |
+          set -euxo pipefail
+          swift test --package-path Packages/HanlinPlatform --filter HanlinScriptAnalyzerTests \
+            2>&1 | tee "$LOG_DIR/04-analyzer-tests.log"
 
       - name: Resolve Swift Package dependencies
         shell: bash
@@ -164,13 +172,13 @@ jobs:
           ))
           candidates = []
           for runtime, devices in payload.get("devices", {}).items():
-              if "iOS-26" not in runtime:
+              if "iOS-27" not in runtime:
                   continue
               for device in devices:
                   if device.get("isAvailable") and "iPad" in device.get("name", ""):
                       candidates.append((runtime, device["name"], device["udid"]))
           if not candidates:
-              raise SystemExit("No available iOS 26 iPad simulator was found")
+              raise SystemExit("No available iOS 27 iPad simulator was found")
           runtime, name, udid = sorted(candidates, reverse=True)[0]
           print(f"{udid}\t{name}\t{runtime}")
           PY
@@ -218,6 +226,7 @@ jobs:
             -parallel-testing-enabled NO \
             -only-testing:AI_HLYUITests/HanlinExpoProductionE2ETests/testProductionExpoSwiftUIProbeEndToEnd \
             -only-testing:AI_HLYUITests/HanlinExpoProductionE2ETests/testProductionExpoDynamicPackageSwitching \
+            -only-testing:AI_HLYUITests/HanlinExpoProductionE2ETests/testProductionExpoLifecycleAndUninstall \
             -resultBundlePath "build/ExpoE2EResults.xcresult" \
             2>&1 | tee "$LOG_DIR/07-expo-e2e-tests.log"
 

@@ -70,6 +70,8 @@ async function buildMalformed() {
 }
 
 async function main() {
+  console.log('[HanlinExpo] Running semantic TypeScript project check before Metro...');
+  execSync('npm run typecheck:probe', { cwd: scriptRoot, stdio: 'inherit' });
   const zipA = await buildVariant('A');
   const zipB = await buildVariant('B');
   await buildMalformed();

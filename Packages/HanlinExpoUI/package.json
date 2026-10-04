@@ -1,0 +1,18 @@
+{
+  "name": "@hanlin/expo-ui",
+  "version": "1.0.0",
+  "private": true,
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "exports": {
+    ".": "./src/index.ts",
+    "./modifiers": "./src/modifiers.ts",
+    "./bridge-manifest": "./src/generated/bridge-manifest.ts"
+  },
+  "peerDependencies": {
+    "@expo/ui": "58.0.3",
+    "expo": "58.0.0-preview.3",
+    "react": "19.2.3",
+    "react-native": "0.88.0-rc.0"
+  }
+}

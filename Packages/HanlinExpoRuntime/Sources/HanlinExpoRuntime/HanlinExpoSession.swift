@@ -47,6 +47,8 @@ public final class HanlinExpoModulesProvider: ModulesProvider {
     public override func getModuleClasses() -> [ExpoModuleTupleType] {
         return [
             (module: ExpoUIModule.self, name: "ExpoUI"),
+            (module: HanlinExpoUIModule.self, name: "HanlinExpoUI"),
+            (module: HanlinGeneratedExpoUIModule.self, name: "HanlinGeneratedExpoUI"),
             (module: ExpoBrownfieldModule.self, name: "ExpoBrownfieldModule"),
             (module: ExpoBrownfieldStateModule.self, name: "ExpoBrownfieldStateModule"),
             (module: HanlinHostServicesModule.self, name: "HanlinHostServices")
@@ -120,6 +122,14 @@ public final class HanlinExpoSession {
 
         guard packageJSON["hanlinRuntime"] as? String == "hanlin-expo" else {
             throw HanlinExpoError.unsupportedRuntimeVersion("package.json does not declare hanlinRuntime: hanlin-expo")
+        }
+
+        if let contract = packageJSON["hanlinExpo"] as? [String: Any],
+           let requiredBridgeVersion = contract["bridgeVersion"] as? String,
+           !HanlinExpoBridgeMetadata.supports(requiredBridgeVersion: requiredBridgeVersion) {
+            throw HanlinExpoError.unsupportedRuntimeVersion(
+                "This package requires Hanlin Expo UI bridge \(requiredBridgeVersion), but the host provides \(HanlinExpoBridgeMetadata.bridgeVersion)."
+            )
         }
 
         let entryFileName = (packageJSON["main"] as? String) ?? "bundle.js"

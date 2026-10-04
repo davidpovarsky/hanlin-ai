@@ -14,6 +14,35 @@ public final class HanlinHostServicesModule: Module, @unchecked Sendable {
         let moduleAppContext = appContext
         Name("HanlinHostServices")
 
+        AsyncFunction("hasCapability") { [weak self, weak moduleAppContext] (capability: String) -> Bool in
+            NSLog("%@", "HANLIN_EXPO_HOSTSERVICES_INVOKE method=hasCapability capability=\(capability)")
+            let context = self?.appContext ?? moduleAppContext
+            let provider = (context != nil ? HanlinExpoHostServicesBridge.provider(forAppContext: context!) : nil)
+                ?? HanlinExpoHostServicesBridge.currentProvider
+            guard let provider else {
+                NSLog("%@", "HANLIN_EXPO_HOSTSERVICES_ERROR method=hasCapability: missing provider")
+                throw Self.missingProviderError()
+            }
+            return provider.hasCapability(capability)
+        }
+
+        AsyncFunction("invoke") { [weak self, weak moduleAppContext] (operation: String, payloadJSON: String) -> String in
+            NSLog("%@", "HANLIN_EXPO_HOSTSERVICES_INVOKE method=invoke operation=\(operation)")
+            let context = self?.appContext ?? moduleAppContext
+            let provider = (context != nil ? HanlinExpoHostServicesBridge.provider(forAppContext: context!) : nil)
+                ?? HanlinExpoHostServicesBridge.currentProvider
+            guard let provider else {
+                NSLog("%@", "HANLIN_EXPO_HOSTSERVICES_ERROR method=invoke: missing provider")
+                throw Self.missingProviderError()
+            }
+            do {
+                return try await provider.invoke(operation: operation, payloadJSON: payloadJSON)
+            } catch {
+                NSLog("%@", "HANLIN_EXPO_HOSTSERVICES_ERROR method=invoke operation=\(operation): \(error)")
+                throw error
+            }
+        }
+
         AsyncFunction("executeRuntime") { [weak self, weak moduleAppContext] (kind: String, source: String) -> String in
             NSLog("%@", "HANLIN_EXPO_HOSTSERVICES_INVOKE method=executeRuntime kind=\(kind)")
             let context = self?.appContext ?? moduleAppContext

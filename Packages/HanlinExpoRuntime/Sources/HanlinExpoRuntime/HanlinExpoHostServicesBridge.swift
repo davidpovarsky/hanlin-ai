@@ -1,6 +1,8 @@
 import Foundation
 
 public protocol HanlinExpoHostServicesProvider: AnyObject, Sendable {
+    func hasCapability(_ capability: String) -> Bool
+    func invoke(operation: String, payloadJSON: String) async throws -> String
     func executeRuntime(kind: String, source: String) async throws -> String
     func executeNode(source: String) async throws -> String
     func executePython(source: String) async throws -> String
