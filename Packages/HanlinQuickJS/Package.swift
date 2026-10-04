@@ -5,7 +5,7 @@ import PackageDescription
 let package = Package(
     name: "HanlinQuickJS",
     platforms: [
-        .iOS(.v26),
+        .iOS("27.0"),
         .macOS(.v26)
     ],
     products: [

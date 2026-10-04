@@ -166,7 +166,7 @@ jobs:
     needs: plan-affected-validation
     if: ${{ needs.plan-affected-validation.outputs.run_phase1 == 'true' }}
     name: Validate baseline, contracts, tests, and iOS compilation
-    runs-on: macos-26
+    runs-on: xcode-27
     timeout-minutes: 60
 
     env:
@@ -179,14 +179,14 @@ jobs:
       LOG_DIR: phase1-validation-logs
 
     steps:
-      - name: Select newest stable Xcode 26 and print environment
+      - name: Select newest stable Xcode and print environment
         id: phase1-toolchain
         run: |
           set -euxo pipefail
           mkdir -p "$RUNNER_TEMP/$LOG_DIR"
           {
-            selected_xcode="$(find /Applications -maxdepth 1 -type d -name 'Xcode_26*.app' -print \
-              | grep -E '/Xcode_26([._][0-9]+)*\.app$' \
+            selected_xcode="$(find /Applications -maxdepth 1 -type d -name 'Xcode_27*.app' -o -name 'Xcode_26*.app' -print \
+              | grep -E '/Xcode_2[67]([._][0-9]+)*\.app$' \
               | sort -V \
               | tail -1)"
             test -n "$selected_xcode"
@@ -196,8 +196,8 @@ jobs:
             xcode-select -p
             swift --version
             xcodebuild -showsdks
-            xcodebuild -showsdks | grep -E 'iphoneos26|iOS 26'
-            xcodebuild -showsdks | grep -E 'iphonesimulator26|iOS Simulator 26'
+            xcodebuild -showsdks | grep -E 'iphoneos2[67]|iOS 2[67]'
+            xcodebuild -showsdks | grep -E 'iphonesimulator2[67]|iOS Simulator 2[67]'
           } 2>&1 | tee "$RUNNER_TEMP/$LOG_DIR/00-environment.log"
           xcode_version="$(xcodebuild -version | sed -n '1s/^Xcode //p')"
           xcode_build="$(xcodebuild -version | sed -n '2s/^Build version //p')"
@@ -578,7 +578,7 @@ jobs:
     needs: plan-affected-validation
     if: ${{ needs.plan-affected-validation.outputs.run_device_build == 'true' }}
     name: Build unsigned IPA with Xcode 26
-    runs-on: macos-26
+    runs-on: xcode-27
     timeout-minutes: 60
 
     env:
@@ -660,40 +660,24 @@ jobs:
             find . -maxdepth 3 -type f | sort | sed -n '1,400{s#^\./##;p;}'
           } 2>&1 | tee "$LOG_DIR/01-environment.log"
 
-      - name: Select Xcode 26
+      - name: Select Xcode 27 or 26
         id: app-toolchain
         run: |
           set -euxo pipefail
 
           {
-            echo "Trying to select the newest available Xcode 26..."
+            echo "Trying to select the newest available Xcode..."
 
-            if [ -d "/Applications/Xcode_26.6.app" ]; then
-              sudo xcode-select -s /Applications/Xcode_26.6.app/Contents/Developer
-              echo "Selected Xcode 26.6"
-            elif [ -d "/Applications/Xcode_26.5.app" ]; then
-              sudo xcode-select -s /Applications/Xcode_26.5.app/Contents/Developer
-              echo "Selected Xcode 26.5"
-            elif [ -d "/Applications/Xcode_26.4.1.app" ]; then
-              sudo xcode-select -s /Applications/Xcode_26.4.1.app/Contents/Developer
-              echo "Selected Xcode 26.4.1"
-            elif [ -d "/Applications/Xcode_26.4.app" ]; then
-              sudo xcode-select -s /Applications/Xcode_26.4.app/Contents/Developer
-              echo "Selected Xcode 26.4"
-            elif [ -d "/Applications/Xcode_26.3.app" ]; then
-              sudo xcode-select -s /Applications/Xcode_26.3.app/Contents/Developer
-              echo "Selected Xcode 26.3"
-            elif [ -d "/Applications/Xcode_26.2.app" ]; then
-              sudo xcode-select -s /Applications/Xcode_26.2.app/Contents/Developer
-              echo "Selected Xcode 26.2"
-            elif [ -d "/Applications/Xcode_26.1.1.app" ]; then
-              sudo xcode-select -s /Applications/Xcode_26.1.1.app/Contents/Developer
-              echo "Selected Xcode 26.1.1"
-            elif [ -d "/Applications/Xcode_26.0.1.app" ]; then
-              sudo xcode-select -s /Applications/Xcode_26.0.1.app/Contents/Developer
-              echo "Selected Xcode 26.0.1"
+            selected_xcode="$(find /Applications -maxdepth 1 -type d -name 'Xcode_27*.app' -o -name 'Xcode_26*.app' -print \
+              | grep -E '/Xcode_2[67]([._][0-9]+)*\.app$' \
+              | sort -V \
+              | tail -1)"
+
+            if [ -n "$selected_xcode" ]; then
+              sudo xcode-select -s "$selected_xcode/Contents/Developer"
+              echo "Selected $selected_xcode"
             else
-              echo "ERROR: No Xcode 26 installation found on this runner."
+              echo "ERROR: No Xcode 27 or 26 installation found on this runner."
               echo "Available Xcodes:"
               ls -la /Applications | grep -E "Xcode" || true
               exit 1
@@ -713,8 +697,8 @@ jobs:
 
             echo
             echo "===== iOS SDK check ====="
-            xcodebuild -showsdks | grep -E "iphoneos26|iOS 26" || {
-              echo "ERROR: Xcode 26 selected, but iOS 26 SDK was not found."
+            xcodebuild -showsdks | grep -E "iphoneos2[67]|iOS 2[67]" || {
+              echo "ERROR: Xcode selected, but iOS SDK was not found."
               exit 1
             }
           } 2>&1 | tee "$LOG_DIR/02-select-xcode26.log"
@@ -1336,7 +1320,7 @@ jobs:
     needs: plan-affected-validation
     if: ${{ needs.plan-affected-validation.outputs.run_simulator_job == 'true' }}
     name: Launch full app on iPad Simulator
-    runs-on: macos-26
+    runs-on: xcode-27
     timeout-minutes: 90
 
     env:
@@ -1420,13 +1404,13 @@ jobs:
             echo "Skipping heavy NativeScript E2E fixture generation and preflight for non-NativeScript run."
           fi
 
-      - name: Prepare simulator logs and select stable Xcode 26
+      - name: Prepare simulator logs and select stable Xcode
         id: simulator-toolchain
         run: |
           set -euxo pipefail
           mkdir -p "$LOG_DIR" build
-          selected_xcode="$(find /Applications -maxdepth 1 -type d -name 'Xcode_26*.app' -print \
-            | grep -E '/Xcode_26([._][0-9]+)*\.app$' \
+          selected_xcode="$(find /Applications -maxdepth 1 -type d -name 'Xcode_27*.app' -o -name 'Xcode_26*.app' -print \
+            | grep -E '/Xcode_2[67]([._][0-9]+)*\.app$' \
             | sort -V \
             | tail -1)"
           test -n "$selected_xcode"
@@ -1437,7 +1421,7 @@ jobs:
             xcodebuild -version
             xcodebuild -showsdks
           } 2>&1 | tee "$LOG_DIR/01-environment.log"
-          xcodebuild -showsdks | grep -E 'iphonesimulator26|iOS Simulator 26'
+          xcodebuild -showsdks | grep -E 'iphonesimulator2[67]|iOS Simulator 2[67]'
           echo "xcode-version=$(xcodebuild -version | sed -n '1s/^Xcode //p')" >> "$GITHUB_OUTPUT"
           echo "xcode-build=$(xcodebuild -version | sed -n '2s/^Build version //p')" >> "$GITHUB_OUTPUT"
           echo "runner-arch=$(uname -m)" >> "$GITHUB_OUTPUT"
@@ -1770,13 +1754,13 @@ jobs:
           ))
           candidates = []
           for runtime, devices in payload.get("devices", {}).items():
-              if "iOS-26" not in runtime:
+              if not any(v in runtime for v in ["iOS-27", "iOS-26"]):
                   continue
               for device in devices:
                   if device.get("isAvailable") and "iPad" in device.get("name", ""):
                       candidates.append((runtime, device["name"], device["udid"]))
           if not candidates:
-              raise SystemExit("No available iOS 26 iPad simulator was found")
+              raise SystemExit("No available iPad simulator was found")
           runtime, name, udid = sorted(candidates, reverse=True)[0]
           print(f"{udid}\t{name}\t{runtime}")
           PY
@@ -2425,7 +2409,7 @@ jobs:
       - validate-hanlin-platform-phase1
       - full-app-simulator-smoke
     if: always() && !cancelled() && !inputs.testflight_upload && (needs.plan-affected-validation.outputs.run_phase1 == 'true' || needs.plan-affected-validation.outputs.run_simulator_job == 'true')
-    runs-on: macos-26
+    runs-on: xcode-27
     timeout-minutes: 15
 
     steps:

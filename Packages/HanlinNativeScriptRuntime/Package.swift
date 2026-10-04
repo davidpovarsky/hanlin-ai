@@ -4,7 +4,7 @@ import PackageDescription
 
 let package = Package(
     name: "HanlinNativeScriptRuntime",
-    platforms: [.iOS(.v26)],
+    platforms: [.iOS("27.0")],
     products: [
         .library(
             name: "HanlinNativeScriptRuntime",

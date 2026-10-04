@@ -6,7 +6,7 @@ let package = Package(
     name: "HanlinPlatform",
     platforms: [
         .macOS(.v26),
-        .iOS(.v26)
+        .iOS("27.0")
     ],
     products: [
         .library(
