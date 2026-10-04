@@ -1,6 +1,6 @@
 # Hanlin Expo / React Native SwiftUI Dynamic Runtime Guide
 
-This document specifies the architecture, operational contracts, performance metrics, and development guidelines for the **Hanlin Expo / React Native SwiftUI Runtime** (`hanlinExpo`), enabling dynamically installed MiniApps (`.hanlinExpo`) to render Apple SwiftUI components using Expo UI (`@expo/ui/swift-ui`) and Hermes on iOS 26+.
+This document specifies the architecture, operational contracts, performance metrics, and development guidelines for the **Hanlin Expo / React Native SwiftUI Runtime** (`hanlinExpo`), enabling dynamically installed MiniApps (`.hanlinExpo`) to render Apple SwiftUI components using Expo UI (`@expo/ui/swift-ui`) and Hermes on iOS 27+.
 
 ---
 
@@ -239,7 +239,7 @@ The host integration embeds prebuilt binary XCFrameworks into `HanlinExpoRuntime
 
 Physical-device memory, FPS, and startup-latency benchmarks have not yet been collected.
 
-Prior spike closure verification (run `35473839956` on the isolated spike branch) verified isolated functionality. For the unified product baseline on `codex/integrate-expo-runtime` (and subsequently `codex/translation-widget-miniapps`), automated CI verification runs via `.github/workflows/validate-expo-runtime-spike.yml` on an iPad mini (A17 Pro) iOS 26.5 Simulator (Xcode 26.6, macOS 26 runner). This suite verifies end-to-end package resolution, dynamic bundle loading, SwiftUI view hierarchy composition, SF Symbol toolbar interaction, bottom sheet presentation, toggle state mutation, dynamic package switching, and clean relaunch without host recompilation.
+Prior spike closure verification (run `35473839956` on the isolated spike branch) verified isolated functionality with Xcode 26. The current iOS 27 bridge uses the repository's existing manual `.github/workflows/validate-expo-runtime-spike.yml` workflow, selecting stable Xcode 27 and an iOS 27 iPad Simulator. Its focused scope compiles the host and Expo bridge, then exercises package resolution, dynamic bundle loading, SwiftUI composition, dynamic package switching, lifecycle, and uninstall behavior without broad repository validation.
 
 ---
 

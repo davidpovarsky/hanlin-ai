@@ -46,6 +46,7 @@ private final class InventoryVisitor: SyntaxVisitor {
     var declarations: [HanlinSwiftUIDeclaration] = []
     private var typeScope: [String] = []
     private var viewExtensionAvailability: [[String]] = []
+    private var viewExtensionIsConstrained: [Bool] = []
     private var typeExtensionDepths: [Int] = []
     private var typeExtensionAvailability: [[String]] = []
 
@@ -136,6 +137,7 @@ private final class InventoryVisitor: SyntaxVisitor {
         let extended = normalizedQualifiedName(node.extendedType.trimmedDescription)
         if extended == "View" || extended.hasSuffix(".View") {
             viewExtensionAvailability.append(availability(node.attributes))
+            viewExtensionIsConstrained.append(node.genericWhereClause != nil)
             typeExtensionDepths.append(0)
             typeExtensionAvailability.append([])
             return .visitChildren
@@ -152,6 +154,7 @@ private final class InventoryVisitor: SyntaxVisitor {
         let extended = normalizedQualifiedName(node.extendedType.trimmedDescription)
         if extended == "View" || extended.hasSuffix(".View") {
             viewExtensionAvailability.removeLast()
+            viewExtensionIsConstrained.removeLast()
         }
         let depth = typeExtensionDepths.removeLast()
         if depth > 0 { typeScope.removeLast(depth) }
@@ -162,22 +165,30 @@ private final class InventoryVisitor: SyntaxVisitor {
         guard !viewExtensionAvailability.isEmpty, typeScope.isEmpty, isPublic(node.modifiers) else {
             return .visitChildren
         }
-        let signature = makeSignature(
+        let inheritedAvailability = viewExtensionAvailability.flatMap { $0 }
+        var signature = makeSignature(
             node.signature,
             generics: node.genericParameterClause?.parameters.map(\.name.text) ?? [],
             attributes: node.attributes
         )
+        signature.availability = inheritedAvailability + signature.availability
+        signature.attributes = inheritedAvailability + signature.attributes
+        signature.isDeprecated = signature.isDeprecated || isDeprecatedOnIOS(inheritedAvailability)
+        signature.isUnavailable = signature.isUnavailable || isUnavailableOnIOS(inheritedAvailability)
+        if viewExtensionIsConstrained.contains(true), !signature.genericParameters.contains("Self") {
+            signature.genericParameters.append("Self")
+        }
         declarations.append(.init(
             module: module,
             symbol: node.name.text,
             kind: .modifier,
             sourceModule: module,
             genericParameters: signature.genericParameters,
-            availability: viewExtensionAvailability.flatMap { $0 } + availability(node.attributes),
-            attributes: attributeList(node.attributes),
+            availability: signature.availability,
+            attributes: inheritedAvailability + attributeList(node.attributes),
             signatures: [signature],
-            isDeprecated: isDeprecatedOnIOS(node.attributes),
-            isUnavailable: isUnavailableOnIOS(node.attributes),
+            isDeprecated: signature.isDeprecated,
+            isUnavailable: signature.isUnavailable,
             sdkVisibility: sdkVisibility(symbol: node.name.text, attributes: node.attributes)
         ))
         return .skipChildren
@@ -230,18 +241,23 @@ private final class InventoryVisitor: SyntaxVisitor {
         let conformances = inheritance?.inheritedTypes.map {
             normalizedQualifiedName($0.type.trimmedDescription)
         } ?? []
-        let enumCases = members.flatMap { member -> [String] in
+        let enumElements = members.flatMap { member -> [EnumCaseElementSyntax] in
             guard let declaration = member.decl.as(EnumCaseDeclSyntax.self) else {
                 return []
             }
-            return declaration.elements.map(\.name.text)
+            return Array(declaration.elements)
         }
+        let enumCases = enumElements.contains(where: { $0.parameterClause != nil })
+            ? []
+            : enumElements.map(\.name.text)
         let optionSetCases: [String]
         if conformances.contains(where: { $0 == "OptionSet" || $0.hasSuffix(".OptionSet") }) {
             optionSetCases = members.flatMap { member -> [String] in
                 guard let declaration = member.decl.as(VariableDeclSyntax.self),
                       isPublic(declaration.modifiers),
-                      declaration.modifiers.contains(where: { $0.name.text == "static" }) else {
+                      declaration.modifiers.contains(where: { $0.name.text == "static" }),
+                      !isUnavailableOnIOS(declaration.attributes),
+                      !isDeprecatedOnIOS(declaration.attributes) else {
                     return []
                 }
                 return declaration.bindings.compactMap { binding in
@@ -349,19 +365,29 @@ private final class InventoryVisitor: SyntaxVisitor {
     }
 
     private func isUnavailableOnIOS(_ attributes: AttributeListSyntax) -> Bool {
-        targetAvailability(attributes).contains { text in
-            text.contains("unavailable")
-        }
+        isUnavailableOnIOS(availability(attributes))
     }
 
     private func isDeprecatedOnIOS(_ attributes: AttributeListSyntax) -> Bool {
-        targetAvailability(attributes).contains { text in
-            text.contains("deprecated") && !text.contains("deprecated: 100000")
+        isDeprecatedOnIOS(availability(attributes))
+    }
+
+    private func isUnavailableOnIOS(_ availability: [String]) -> Bool {
+        targetAvailability(availability).contains { $0.contains("unavailable") }
+    }
+
+    private func isDeprecatedOnIOS(_ availability: [String]) -> Bool {
+        targetAvailability(availability).contains {
+            $0.contains("deprecated") && !$0.contains("deprecated: 100000")
         }
     }
 
     private func targetAvailability(_ attributes: AttributeListSyntax) -> [String] {
-        availability(attributes).filter { text in
+        targetAvailability(availability(attributes))
+    }
+
+    private func targetAvailability(_ availability: [String]) -> [String] {
+        availability.filter { text in
             text.hasPrefix("@available(iOS,") || text.hasPrefix("@available(*,")
         }
     }

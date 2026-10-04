@@ -40,12 +40,6 @@ export const backgroundExtensionEffect = (): ModifierConfig =>
 export const defersSystemGestures = (edges: ('all' | 'bottom' | 'horizontal' | 'leading' | 'top' | 'trailing' | 'vertical')[]): ModifierConfig =>
   createModifier('defersSystemGestures', { edges: edges });
 
-export const dialogPreventsAppTermination = (prevents: boolean): ModifierConfig =>
-  createModifier('dialogPreventsAppTermination', { prevents: prevents });
-
-export const digitalCrownAccessory = (visibility: 'automatic' | 'visible' | 'hidden'): ModifierConfig =>
-  createModifier('digitalCrownAccessory', { visibility: visibility });
-
 export const disableAutocorrection = (disable: boolean): ModifierConfig =>
   createModifier('disableAutocorrection', { disable: disable });
 
@@ -54,9 +48,6 @@ export const documentLaunchSubtitle = (subtitle: string): ModifierConfig =>
 
 export const documentLaunchTitle = (title: string): ModifierConfig =>
   createModifier('documentLaunchTitle', { title: title });
-
-export const equatable = (): ModifierConfig =>
-  createModifier('equatable', {  });
 
 export const fileDialogBrowserOptions = (options: ('displayFileExtensions' | 'enumeratePackages' | 'includeHiddenFiles')[]): ModifierConfig =>
   createModifier('fileDialogBrowserOptions', { options: options });
@@ -85,9 +76,6 @@ export const flipsForRightToLeftLayoutDirection = (enabled: boolean): ModifierCo
 export const focusEffectDisabled = (disabled?: boolean): ModifierConfig =>
   createModifier('focusEffectDisabled', { disabled: disabled });
 
-export const focusSection = (): ModifierConfig =>
-  createModifier('focusSection', {  });
-
 export const focusable = (isFocusable?: boolean): ModifierConfig =>
   createModifier('focusable', { isFocusable: isFocusable });
 
@@ -109,13 +97,10 @@ export const labelReservedIconWidth = (value: number): ModifierConfig =>
 export const labelsVisibility = (visibility: 'automatic' | 'visible' | 'hidden'): ModifierConfig =>
   createModifier('labelsVisibility', { visibility: visibility });
 
-export const listRowHoverEffectDisabled = (disabled?: boolean): ModifierConfig =>
-  createModifier('listRowHoverEffectDisabled', { disabled: disabled });
-
 export const listSectionIndexVisibility = (visibility: 'automatic' | 'visible' | 'hidden'): ModifierConfig =>
   createModifier('listSectionIndexVisibility', { visibility: visibility });
 
-export const listSectionSeparator = (visibility: 'automatic' | 'visible' | 'hidden', edges?: ('all' | 'bottom' | 'horizontal' | 'leading' | 'top' | 'trailing' | 'vertical')[]): ModifierConfig =>
+export const listSectionSeparator = (visibility: 'automatic' | 'visible' | 'hidden', edges?: ('all' | 'bottom' | 'top')[]): ModifierConfig =>
   createModifier('listSectionSeparator', { visibility: visibility, edges: edges });
 
 export const navigationBarBackButtonHidden = (hidesBackButton?: boolean): ModifierConfig =>
@@ -139,14 +124,8 @@ export const navigationSubtitle = (subtitle: string): ModifierConfig =>
 export const persistentSystemOverlays = (visibility: 'automatic' | 'visible' | 'hidden'): ModifierConfig =>
   createModifier('persistentSystemOverlays', { visibility: visibility });
 
-export const pointerVisibility = (visibility: 'automatic' | 'visible' | 'hidden'): ModifierConfig =>
-  createModifier('pointerVisibility', { visibility: visibility });
-
 export const presentationCornerRadius = (cornerRadius: number): ModifierConfig =>
   createModifier('presentationCornerRadius', { cornerRadius: cornerRadius });
-
-export const presentationPreventsAppTermination = (prevents: boolean): ModifierConfig =>
-  createModifier('presentationPreventsAppTermination', { prevents: prevents });
 
 export const previewDisplayName = (value: string): ModifierConfig =>
   createModifier('previewDisplayName', { value: value });
@@ -196,26 +175,14 @@ export const symbolEffectsRemoved = (isEnabled?: boolean): ModifierConfig =>
 export const tableColumnHeaders = (visibility: 'automatic' | 'visible' | 'hidden'): ModifierConfig =>
   createModifier('tableColumnHeaders', { visibility: visibility });
 
-export const textInputCompletion = (completion: string): ModifierConfig =>
-  createModifier('textInputCompletion', { completion: completion });
-
-export const textInputFormattingControlVisibility = (visibility: 'automatic' | 'visible' | 'hidden', placement: ('accessoryBar' | 'all' | 'contextMenu' | 'default' | 'fontPanel' | 'inputAssistant')[]): ModifierConfig =>
+export const textInputFormattingControlVisibility = (visibility: 'automatic' | 'visible' | 'hidden', placement: ('all' | 'contextMenu' | 'default' | 'inputAssistant')[]): ModifierConfig =>
   createModifier('textInputFormattingControlVisibility', { visibility: visibility, placement: placement });
 
 export const textSelectionAffinity = (affinity: 'automatic' | 'upstream' | 'downstream'): ModifierConfig =>
   createModifier('textSelectionAffinity', { affinity: affinity });
 
-export const toolbarItemHidden = (hidden?: boolean): ModifierConfig =>
-  createModifier('toolbarItemHidden', { hidden: hidden });
-
 export const typeSelectEquivalent = (text: string): ModifierConfig =>
   createModifier('typeSelectEquivalent', { text: text });
-
-export const windowResizeAnchor = (anchor: { x: number; y: number }): ModifierConfig =>
-  createModifier('windowResizeAnchor', { anchor: anchor });
-
-export const windowToolbarFullScreenVisibility = (visibility: 'automatic' | 'visible' | 'hidden'): ModifierConfig =>
-  createModifier('windowToolbarFullScreenVisibility', { visibility: visibility });
 
 export const writingToolsAffordanceVisibility = (visibility: 'automatic' | 'visible' | 'hidden'): ModifierConfig =>
   createModifier('writingToolsAffordanceVisibility', { visibility: visibility });
@@ -244,9 +211,6 @@ export const compositingGroup = (): ModifierConfig =>
 export const containerCornerOffset = (edges: ('all' | 'bottom' | 'horizontal' | 'leading' | 'top' | 'trailing' | 'vertical')[], sizeToFit?: boolean): ModifierConfig =>
   createModifier('containerCornerOffset', { edges: edges, sizeToFit: sizeToFit });
 
-export const coordinateSpace = (name: 'global' | 'local' | 'named'): ModifierConfig =>
-  createModifier('coordinateSpace', { name: name });
-
 export const drawingGroup = (opaque?: boolean, colorMode?: 'nonLinear' | 'linear' | 'extendedLinear'): ModifierConfig =>
   createModifier('drawingGroup', { opaque: opaque, colorMode: colorMode });
 
@@ -259,14 +223,8 @@ export const fontDesign = (design: '`default`' | 'serif' | 'rounded' | 'monospac
 export const hoverEffectDisabled = (disabled?: boolean): ModifierConfig =>
   createModifier('hoverEffectDisabled', { disabled: disabled });
 
-export const hoverEffectGroup = (): ModifierConfig =>
-  createModifier('hoverEffectGroup', {  });
-
 export const ignoresSafeArea = (regions?: ('all' | 'container' | 'keyboard')[], edges?: ('all' | 'bottom' | 'horizontal' | 'leading' | 'top' | 'trailing' | 'vertical')[]): ModifierConfig =>
   createModifier('ignoresSafeArea', { regions: regions, edges: edges });
-
-export const layoutDirectionBehavior = (behavior: 'fixed' | 'mirrors'): ModifierConfig =>
-  createModifier('layoutDirectionBehavior', { behavior: behavior });
 
 export const monospaced = (isActive?: boolean): ModifierConfig =>
   createModifier('monospaced', { isActive: isActive });
@@ -300,9 +258,6 @@ export const speechAnnouncementsQueued = (value?: boolean): ModifierConfig =>
 
 export const speechSpellsOutCharacters = (value?: boolean): ModifierConfig =>
   createModifier('speechSpellsOutCharacters', { value: value });
-
-export const symbolColorRenderingMode = (mode: 'nonLinear' | 'linear' | 'extendedLinear'): ModifierConfig =>
-  createModifier('symbolColorRenderingMode', { mode: mode });
 
 export const tracking = (tracking: number): ModifierConfig =>
   createModifier('tracking', { tracking: tracking });

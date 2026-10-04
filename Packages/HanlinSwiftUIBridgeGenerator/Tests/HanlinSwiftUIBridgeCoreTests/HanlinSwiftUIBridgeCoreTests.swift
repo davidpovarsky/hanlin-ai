@@ -72,6 +72,11 @@ struct HanlinSwiftUIBridgeCoreTests {
         #expect(byName["mixedAvailability"]?.first?.signatures.map(\.status).contains(.deprecated) == true)
         #expect(byName["mixedAvailability"]?.first?.signatures.map(\.status).contains(.directGenerated) == true)
         #expect(byName["Axis.Set"]?.first?.optionSetCases == ["horizontal", "vertical"])
+        #expect(byName["CoordinateSpace"]?.first?.enumCases.isEmpty == true)
+        #expect(byName["desktopOnlyModifier"]?.first?.signatures.first?.status == .unavailable)
+        #expect(byName["desktopOnlyModifier"]?.first?.exportedToHanlin == false)
+        #expect(byName["equatable"]?.first?.signatures.first?.status == .needsInvestigation)
+        #expect(byName["symbolColorRenderingMode"]?.first?.signatures.first?.status == .needsInvestigation)
     }
 
     @Test("Generation is deterministic and Swift/TypeScript symbols stay consistent")
@@ -107,6 +112,11 @@ struct HanlinSwiftUIBridgeCoreTests {
         #expect(typeScript.contains("navigationBarTitleDisplayMode"))
         #expect(swift.contains("HanlinGeneratedAxisSetValue"))
         #expect(swift.contains("values.reduce(into: Axis.Set())"))
+        #expect(swift.contains("SwiftUI.Text(message)") == false)
+        #expect(swift.contains("message.map(SwiftUI.Text.init)"))
+        #expect(!swift.contains("desktopOnlyModifier"))
+        #expect(!swift.contains("HanlinGeneratedEquatableModifier"))
+        #expect(!swift.contains("HanlinGeneratedSymbolColorRenderingModeModifier"))
         #expect(typeScript.contains("axes?: ('horizontal' | 'vertical')[]"))
         #expect(typeScript.contains("optional: number | undefined, required: number"))
         #expect(swiftViews.contains("HanlinGeneratedGroupView"))

@@ -652,7 +652,12 @@ public enum HanlinSwiftUIOutputGenerator {
             return optionSetNativeValue(parameter, declaration: declaration, reference: parameter.localName)
         }
         if let structural = structuralValueName(parameter.type) {
-            return structuralNativeValue(structural, reference: parameter.localName, defaultValue: parameter.defaultValue)
+            return structuralNativeValue(
+                structural,
+                reference: parameter.localName,
+                defaultValue: parameter.defaultValue,
+                isOptional: isOptional(parameter.type)
+            )
         }
         guard enumDeclaration(for: parameter.type, enums: enums) != nil else { return parameter.localName }
         return parameter.type.trimmingCharacters(in: .whitespaces).hasSuffix("?")
@@ -682,7 +687,7 @@ public enum HanlinSwiftUIOutputGenerator {
             return "(\(values))[]"
         }
         if let enumDeclaration = inventory.declarations.first(where: {
-            !$0.enumCases.isEmpty && ($0.symbol == normalized || normalized.hasSuffix($0.symbol))
+            !$0.enumCases.isEmpty && typeMatches(normalized, symbol: $0.symbol)
         }) {
             return enumDeclaration.enumCases.map { "'\($0)'" }.joined(separator: " | ")
         }
@@ -716,7 +721,9 @@ public enum HanlinSwiftUIOutputGenerator {
             .replacingOccurrences(of: "?", with: "")
             .trimmingCharacters(in: .whitespacesAndNewlines)
         if let exact = enums[normalized], exact.optionSetCases.isEmpty { return exact }
-        guard let key = enums.keys.sorted().first(where: { normalized.hasSuffix($0) && enums[$0]?.optionSetCases.isEmpty == true }) else { return nil }
+        guard let key = enums.keys.sorted().first(where: {
+            typeMatches(normalized, symbol: $0) && enums[$0]?.optionSetCases.isEmpty == true
+        }) else { return nil }
         return enums[key]
     }
 
@@ -732,7 +739,7 @@ public enum HanlinSwiftUIOutputGenerator {
             .trimmingCharacters(in: .whitespacesAndNewlines)
         if let exact = declarations[normalized], !exact.optionSetCases.isEmpty { return exact }
         guard let key = declarations.keys.sorted().first(where: {
-            normalized.hasSuffix($0) && declarations[$0]?.optionSetCases.isEmpty == false
+            typeMatches(normalized, symbol: $0) && declarations[$0]?.optionSetCases.isEmpty == false
         }) else { return nil }
         return declarations[key]
     }
@@ -741,7 +748,12 @@ public enum HanlinSwiftUIOutputGenerator {
         let normalized = normalizedSwiftType(type)
             .replacingOccurrences(of: "?", with: "")
             .trimmingCharacters(in: .whitespacesAndNewlines)
-        return normalized == symbol || normalized.hasSuffix(symbol)
+        let normalizedSymbol = normalizedSwiftType(symbol)
+            .replacingOccurrences(of: "?", with: "")
+            .trimmingCharacters(in: .whitespacesAndNewlines)
+        return normalized == normalizedSymbol
+            || normalized.hasSuffix(".\(normalizedSymbol)")
+            || normalizedSymbol.hasSuffix(".\(normalized)")
     }
 
     private static func viewFieldType(
@@ -797,7 +809,12 @@ public enum HanlinSwiftUIOutputGenerator {
             return optionSetNativeValue(parameter, declaration: declaration, reference: "props.\(parameter.localName)")
         }
         if let structural = structuralValueName(parameter.type) {
-            return structuralNativeValue(structural, reference: "props.\(parameter.localName)", defaultValue: parameter.defaultValue)
+            return structuralNativeValue(
+                structural,
+                reference: "props.\(parameter.localName)",
+                defaultValue: parameter.defaultValue,
+                isOptional: isOptional(parameter.type)
+            )
         }
         guard enumDeclaration(for: parameter.type, enums: enums) != nil else { return "props.\(parameter.localName)" }
         return parameter.type.trimmingCharacters(in: .whitespaces).hasSuffix("?")
@@ -831,7 +848,8 @@ public enum HanlinSwiftUIOutputGenerator {
     private static func structuralNativeValue(
         _ structural: String,
         reference: String,
-        defaultValue: String?
+        defaultValue: String?,
+        isOptional: Bool
     ) -> String {
         let converted: String
         let optionalConverted: String
@@ -849,8 +867,8 @@ public enum HanlinSwiftUIOutputGenerator {
             converted = "\(reference).swiftUIValue"
             optionalConverted = "\(reference)?.swiftUIValue"
         }
-        guard let defaultValue else { return converted }
-        return "\(optionalConverted) ?? \(defaultValue)"
+        if let defaultValue { return "\(optionalConverted) ?? \(defaultValue)" }
+        return isOptional ? optionalConverted : converted
     }
 
     private static func optionSetNativeValue(

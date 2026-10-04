@@ -488,7 +488,7 @@ public enum HanlinSwiftUIClassifier {
         if normalized.hasPrefix("Array<") && normalized.hasSuffix(">") {
             return isPrimitiveCollectionElement(String(normalized.dropFirst("Array<".count).dropLast()))
         }
-        if enums[normalized] != nil || enums.keys.contains(where: { normalized.hasSuffix($0) || $0.hasSuffix(normalized) }) {
+        if enums.keys.contains(where: { typeMatches(normalized, symbol: $0) }) {
             return true
         }
         return false
@@ -507,7 +507,8 @@ public enum HanlinSwiftUIClassifier {
         _ signature: HanlinSwiftUISignature,
         enums: [String: [String]]
     ) -> Bool {
-        !signature.isAsync
+        signature.genericParameters.isEmpty
+            && !signature.isAsync
             && !signature.isThrowing
             && signature.parameters.allSatisfy {
                 !$0.isBinding && !$0.isClosure && !$0.isViewBuilder && isSerializable($0.type, enums: enums)
@@ -557,8 +558,16 @@ public enum HanlinSwiftUIClassifier {
             guard let value = bindingValue(parameter.type) else { return false }
             let normalized = normalizedType(value)
             return supported.contains(normalized)
-                || enums.keys.contains(where: { normalized == $0 || normalized.hasSuffix($0) || $0.hasSuffix(normalized) })
+                || enums.keys.contains(where: { typeMatches(normalized, symbol: $0) })
         }
+    }
+
+    private static func typeMatches(_ type: String, symbol: String) -> Bool {
+        let normalized = normalizedType(type).replacingOccurrences(of: "?", with: "")
+        let normalizedSymbol = normalizedType(symbol).replacingOccurrences(of: "?", with: "")
+        return normalized == normalizedSymbol
+            || normalized.hasSuffix(".\(normalizedSymbol)")
+            || normalizedSymbol.hasSuffix(".\(normalized)")
     }
 
     private static func classifyReviewedExpoSignature(

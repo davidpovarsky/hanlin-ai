@@ -14,27 +14,27 @@
 | Classification | Count |
 | --- | ---: |
 | expo-upstream | 194 |
-| generated | 106 |
+| generated | 91 |
 | manual | 13 |
-| unsupported | 69 |
+| unsupported | 59 |
 | internal-private | 347 |
 | deprecated | 0 |
 | superseded | 1 |
-| unavailable | 143 |
+| unavailable | 178 |
 | host-lifecycle-only | 6 |
 | companion-framework | 0 |
-| needs-investigation | 187 |
+| needs-investigation | 177 |
 
 ## SDK inventory
 
 | Metric | Count |
 | --- | ---: |
 | declarations.deprecated | 7 |
-| declarations.exported | 313 |
+| declarations.exported | 298 |
 | declarations.public | 1603 |
 | declarations.spi | 0 |
 | declarations.total | 1950 |
-| declarations.unavailable | 163 |
+| declarations.unavailable | 199 |
 | declarations.underscored | 347 |
 | kind.modifier | 513 |
 | kind.protocol | 137 |
@@ -45,30 +45,30 @@
 
 | Classification | Count |
 | --- | ---: |
-| exported-symbols | 313 |
+| exported-symbols | 298 |
 | host-lifecycle-only | 6 |
 | internal-private | 347 |
-| needs-investigation | 187 |
-| partial | 220 |
-| sdk-only-symbols | 1637 |
+| needs-investigation | 177 |
+| partial | 218 |
+| sdk-only-symbols | 1652 |
 | superseded | 1 |
-| supported | 93 |
-| unavailable | 143 |
-| unsupported | 69 |
+| supported | 80 |
+| unavailable | 178 |
+| unsupported | 59 |
 
 ## Derived aggregate status
 
 | Aggregate | Count |
 | --- | ---: |
-| full | 93 |
-| partial | 197 |
-| unsupported | 70 |
+| full | 80 |
+| partial | 194 |
+| unsupported | 60 |
 | internal-private | 347 |
 | deprecated | 0 |
 | superseded | 1 |
-| unavailable | 143 |
+| unavailable | 178 |
 | lifecycle-only | 6 |
-| needs-investigation | 209 |
+| needs-investigation | 200 |
 
 ## Signature coverage
 
@@ -77,13 +77,13 @@
 | View symbols discovered | 141 |
 | Expo view symbols present | 47 |
 | View initializers discovered | 614 |
-| View initializers covered | 90 |
-| View initializers uncovered | 469 |
+| View initializers covered | 88 |
+| View initializers uncovered | 471 |
 | Modifier symbols discovered | 513 |
 | Expo modifier symbols present | 147 |
-| Modifier overloads discovered | 958 |
-| Modifier overloads covered | 205 |
-| Modifier overloads uncovered | 684 |
+| Modifier overloads discovered | 960 |
+| Modifier overloads covered | 188 |
+| Modifier overloads uncovered | 651 |
 
 ## Symbols
 
@@ -442,7 +442,7 @@
 | SwiftUI | `accessibilityLabel` | modifier | public | partial | yes | T2 | expo-upstream | partial | unknown |  | @expo/ui 58.0.3 exports this symbol, but Apple overload parity has not been verified. |
 | SwiftUI | `accessibilityLabeledPair` | modifier | public | unsupported | no | T1 | unsupported | unsupported | - |  | Every discovered signature uses semantics that cannot be bridged safely. |
 | SwiftUI | `accessibilityLinkedGroup` | modifier | public | unsupported | no | T1 | unsupported | unsupported | - |  | Every discovered signature uses semantics that cannot be bridged safely. |
-| SwiftUI | `accessibilityQuickAction` | modifier | public | needs-investigation | no | T3 | needs-investigation | needs-investigation | - |  | No discovered signature currently has a safe generated or shared bridge surface. |
+| SwiftUI | `accessibilityQuickAction` | modifier | public | unavailable | no | - | unavailable | unavailable | - |  | The current iOS SDK marks this declaration unavailable. |
 | SwiftUI | `accessibilityRemoveTraits` | modifier | public | partial | yes | T1 | expo-upstream | partial | unknown |  | @expo/ui 58.0.3 exports this symbol, but Apple overload parity has not been verified. |
 | SwiftUI | `accessibilityRepresentation` | modifier | public | needs-investigation | no | T2 | needs-investigation | needs-investigation | - |  | No discovered signature currently has a safe generated or shared bridge surface. |
 | SwiftUI | `accessibilityRespondsToUserInteraction` | modifier | public | supported | yes | T1 | generated | full | - |  | All discovered signatures map to generated or shared typed bridge surfaces. |
@@ -457,7 +457,7 @@
 | SwiftUI | `actionSheet` | modifier | public | needs-investigation | no | T3 | needs-investigation | needs-investigation | - |  | No discovered signature currently has a safe generated or shared bridge surface. |
 | SwiftUI | `alert` | modifier | public | partial | yes | T3 | expo-upstream | partial | partial |  | The reviewed Expo Alert component provides native SwiftUI alert presentation with typed actions. |
 | SwiftUI | `allowsWindowActivationEvents` | modifier | public | supported | yes | T1 | generated | full | - |  | All discovered signatures map to generated or shared typed bridge surfaces. |
-| SwiftUI | `alternatingRowBackgrounds` | modifier | public | needs-investigation | no | T1 | needs-investigation | needs-investigation | - |  | No discovered signature currently has a safe generated or shared bridge surface. |
+| SwiftUI | `alternatingRowBackgrounds` | modifier | public | unavailable | no | - | unavailable | unavailable | - |  | The current iOS SDK marks this declaration unavailable. |
 | SwiftUI | `assistiveAccessNavigationIcon` | modifier | public | partial | yes | T1 | generated | partial | - |  | At least one signature is covered, but unresolved overloads remain visible below. |
 | SwiftUI | `asyncImageURLSession` | modifier | public | needs-investigation | no | T1 | needs-investigation | needs-investigation | - |  | No discovered signature currently has a safe generated or shared bridge surface. |
 | SwiftUI | `autocapitalization` | modifier | public | needs-investigation | no | T1 | needs-investigation | needs-investigation | - |  | No discovered signature currently has a safe generated or shared bridge surface. |
@@ -486,11 +486,11 @@
 | SwiftUI | `defersSystemGestures` | modifier | public | supported | yes | T1 | generated | full | - |  | All discovered signatures map to generated or shared typed bridge surfaces. |
 | SwiftUI | `deleteDisabled` | modifier | public | partial | yes | T1 | expo-upstream | partial | unknown |  | @expo/ui 58.0.3 exports this symbol, but Apple overload parity has not been verified. |
 | SwiftUI | `dialogIcon` | modifier | public | needs-investigation | no | T1 | needs-investigation | needs-investigation | - |  | No discovered signature currently has a safe generated or shared bridge surface. |
-| SwiftUI | `dialogPreventsAppTermination` | modifier | public | supported | yes | T1 | generated | full | - |  | All discovered signatures map to generated or shared typed bridge surfaces. |
-| SwiftUI | `dialogSeverity` | modifier | public | needs-investigation | no | T1 | needs-investigation | needs-investigation | - |  | No discovered signature currently has a safe generated or shared bridge surface. |
+| SwiftUI | `dialogPreventsAppTermination` | modifier | public | unavailable | no | - | unavailable | unavailable | - |  | The current iOS SDK marks this declaration unavailable. |
+| SwiftUI | `dialogSeverity` | modifier | public | unavailable | no | - | unavailable | unavailable | - |  | The current iOS SDK marks this declaration unavailable. |
 | SwiftUI | `dialogSuppressionToggle` | modifier | public | needs-investigation | no | T3 | needs-investigation | needs-investigation | - |  | No discovered signature currently has a safe generated or shared bridge surface. |
-| SwiftUI | `digitalCrownAccessory` | modifier | public | partial | yes | T2 | generated | partial | - |  | At least one signature is covered, but unresolved overloads remain visible below. |
-| SwiftUI | `digitalCrownRotation` | modifier | public | needs-investigation | no | T3 | needs-investigation | unsupported | - |  | No discovered signature currently has a safe generated or shared bridge surface. |
+| SwiftUI | `digitalCrownAccessory` | modifier | public | unavailable | no | - | unavailable | unavailable | - |  | The current iOS SDK marks this declaration unavailable. |
+| SwiftUI | `digitalCrownRotation` | modifier | public | unavailable | no | - | unavailable | unavailable | - |  | The current iOS SDK marks this declaration unavailable. |
 | SwiftUI | `disableAutocorrection` | modifier | public | supported | yes | T1 | generated | full | - |  | All discovered signatures map to generated or shared typed bridge surfaces. |
 | SwiftUI | `disclosureGroupStyle` | modifier | public | unsupported | no | T1 | unsupported | unsupported | - |  | Every discovered signature uses semantics that cannot be bridged safely. |
 | SwiftUI | `dismissalConfirmationDialog` | modifier | public | needs-investigation | no | T2 | needs-investigation | needs-investigation | - |  | No discovered signature currently has a safe generated or shared bridge surface. |
@@ -505,9 +505,9 @@
 | SwiftUI | `dropConfiguration` | modifier | public | unsupported | no | T4 | unsupported | unsupported | - |  | Every discovered signature uses semantics that cannot be bridged safely. |
 | SwiftUI | `dropDestination` | modifier | public | needs-investigation | no | T4 | needs-investigation | needs-investigation | - |  | No discovered signature currently has a safe generated or shared bridge surface. |
 | SwiftUI | `dropPreviewsFormation` | modifier | public | unavailable | no | - | unavailable | unavailable | - |  | The current iOS SDK marks this declaration unavailable. |
-| SwiftUI | `equatable` | modifier | public | supported | yes | T1 | generated | full | - |  | All discovered signatures map to generated or shared typed bridge surfaces. |
+| SwiftUI | `equatable` | modifier | public | needs-investigation | no | T1 | needs-investigation | needs-investigation | - |  | No discovered signature currently has a safe generated or shared bridge surface. |
 | SwiftUI | `exportableToServices` | modifier | public | unavailable | no | - | unavailable | unavailable | - |  | The current iOS SDK marks this declaration unavailable. |
-| SwiftUI | `exportsItemProviders` | modifier | public | unsupported | no | T4 | unsupported | unsupported | - |  | Every discovered signature uses semantics that cannot be bridged safely. |
+| SwiftUI | `exportsItemProviders` | modifier | public | unavailable | no | - | unavailable | unavailable | - |  | The current iOS SDK marks this declaration unavailable. |
 | SwiftUI | `fileDialogBrowserOptions` | modifier | public | supported | yes | T1 | generated | full | - |  | All discovered signatures map to generated or shared typed bridge surfaces. |
 | SwiftUI | `fileDialogConfirmationLabel` | modifier | public | partial | yes | T1 | generated | partial | - |  | At least one signature is covered, but unresolved overloads remain visible below. |
 | SwiftUI | `fileDialogCustomizationID` | modifier | public | supported | yes | T1 | generated | full | - |  | All discovered signatures map to generated or shared typed bridge surfaces. |
@@ -523,8 +523,8 @@
 | SwiftUI | `findNavigator` | modifier | public | needs-investigation | no | T3 | needs-investigation | needs-investigation | - |  | No discovered signature currently has a safe generated or shared bridge surface. |
 | SwiftUI | `flipsForRightToLeftLayoutDirection` | modifier | public | supported | yes | T1 | generated | full | - |  | All discovered signatures map to generated or shared typed bridge surfaces. |
 | SwiftUI | `focusEffectDisabled` | modifier | public | supported | yes | T1 | generated | full | - |  | All discovered signatures map to generated or shared typed bridge surfaces. |
-| SwiftUI | `focusScope` | modifier | public | needs-investigation | no | T1 | needs-investigation | needs-investigation | - |  | No discovered signature currently has a safe generated or shared bridge surface. |
-| SwiftUI | `focusSection` | modifier | public | supported | yes | T1 | generated | full | - |  | All discovered signatures map to generated or shared typed bridge surfaces. |
+| SwiftUI | `focusScope` | modifier | public | unavailable | no | - | unavailable | unavailable | - |  | The current iOS SDK marks this declaration unavailable. |
+| SwiftUI | `focusSection` | modifier | public | unavailable | no | - | unavailable | unavailable | - |  | The current iOS SDK marks this declaration unavailable. |
 | SwiftUI | `focusable` | modifier | public | partial | yes | T4 | generated | partial | - |  | At least one signature is covered, but unresolved overloads remain visible below. |
 | SwiftUI | `focused` | modifier | public | partial | yes | T1 | manual | partial | - |  | Uses a controlled FocusState Bool adapter with focus change events. |
 | SwiftUI | `focusedObject` | modifier | public | needs-investigation | no | T1 | needs-investigation | needs-investigation | - |  | No discovered signature currently has a safe generated or shared bridge surface. |
@@ -534,7 +534,7 @@
 | SwiftUI | `formStyle` | modifier | public | unsupported | no | T1 | unsupported | unsupported | - |  | Every discovered signature uses semantics that cannot be bridged safely. |
 | SwiftUI | `fullScreenCover` | modifier | public | partial | yes | T3 | manual | partial | - |  | Uses a controlled Bool presentation adapter with content and presented-content slots. |
 | SwiftUI | `gaugeStyle` | modifier | public | partial | yes | T1 | expo-upstream | partial | unknown |  | @expo/ui 58.0.3 exports this symbol, but Apple overload parity has not been verified. |
-| SwiftUI | `gesture` | modifier | public | unsupported | no | T1 | unsupported | unsupported | - |  | Every discovered signature uses semantics that cannot be bridged safely. |
+| SwiftUI | `gesture` | modifier | public | needs-investigation | no | T1 | needs-investigation | unsupported | - |  | No discovered signature currently has a safe generated or shared bridge surface. |
 | SwiftUI | `gridCellAnchor` | modifier | public | partial | yes | T1 | expo-upstream | partial | unknown |  | @expo/ui 58.0.3 exports this symbol, but Apple overload parity has not been verified. |
 | SwiftUI | `gridCellColumns` | modifier | public | partial | yes | T1 | expo-upstream | partial | unknown |  | @expo/ui 58.0.3 exports this symbol, but Apple overload parity has not been verified. |
 | SwiftUI | `gridCellUnsizedAxes` | modifier | public | partial | yes | T1 | expo-upstream | partial | unknown |  | @expo/ui 58.0.3 exports this symbol, but Apple overload parity has not been verified. |
@@ -545,9 +545,9 @@
 | SwiftUI | `help` | modifier | public | partial | yes | T1 | generated | partial | - |  | At least one signature is covered, but unresolved overloads remain visible below. |
 | SwiftUI | `hidden` | modifier | public | partial | yes | T1 | expo-upstream | partial | unknown |  | @expo/ui 58.0.3 exports this symbol, but Apple overload parity has not been verified. |
 | SwiftUI | `horizontalRadioGroupLayout` | modifier | public | unavailable | no | - | unavailable | unavailable | - |  | The current iOS SDK marks this declaration unavailable. |
-| SwiftUI | `immersiveEnvironmentPicker` | modifier | public | needs-investigation | no | T2 | needs-investigation | needs-investigation | - |  | No discovered signature currently has a safe generated or shared bridge surface. |
+| SwiftUI | `immersiveEnvironmentPicker` | modifier | public | unavailable | no | - | unavailable | unavailable | - |  | The current iOS SDK marks this declaration unavailable. |
 | SwiftUI | `importableFromServices` | modifier | public | unavailable | no | - | unavailable | unavailable | - |  | The current iOS SDK marks this declaration unavailable. |
-| SwiftUI | `importsItemProviders` | modifier | public | unsupported | no | T4 | unsupported | unsupported | - |  | Every discovered signature uses semantics that cannot be bridged safely. |
+| SwiftUI | `importsItemProviders` | modifier | public | unavailable | no | - | unavailable | unavailable | - |  | The current iOS SDK marks this declaration unavailable. |
 | SwiftUI | `indexViewStyle` | modifier | public | partial | yes | T1 | expo-upstream | partial | unknown |  | @expo/ui 58.0.3 exports this symbol, but Apple overload parity has not been verified. |
 | SwiftUI | `inspector` | modifier | public | supported | yes | T3 | manual | full | - |  | Uses a controlled Bool inspector adapter with content and inspector slots. |
 | SwiftUI | `inspectorColumnWidth` | modifier | public | supported | yes | T1 | generated | full | - |  | All discovered signatures map to generated or shared typed bridge surfaces. |
@@ -565,8 +565,8 @@
 | SwiftUI | `labelsVisibility` | modifier | public | supported | yes | T1 | generated | full | - |  | All discovered signatures map to generated or shared typed bridge surfaces. |
 | SwiftUI | `listItemTint` | modifier | public | needs-investigation | no | T1 | needs-investigation | needs-investigation | - |  | No discovered signature currently has a safe generated or shared bridge surface. |
 | SwiftUI | `listRowBackground` | modifier | public | partial | yes | T1 | expo-upstream | partial | unknown |  | @expo/ui 58.0.3 exports this symbol, but Apple overload parity has not been verified. |
-| SwiftUI | `listRowHoverEffect` | modifier | public | needs-investigation | no | T1 | needs-investigation | needs-investigation | - |  | No discovered signature currently has a safe generated or shared bridge surface. |
-| SwiftUI | `listRowHoverEffectDisabled` | modifier | public | supported | yes | T1 | generated | full | - |  | All discovered signatures map to generated or shared typed bridge surfaces. |
+| SwiftUI | `listRowHoverEffect` | modifier | public | unavailable | no | - | unavailable | unavailable | - |  | The current iOS SDK marks this declaration unavailable. |
+| SwiftUI | `listRowHoverEffectDisabled` | modifier | public | unavailable | no | - | unavailable | unavailable | - |  | The current iOS SDK marks this declaration unavailable. |
 | SwiftUI | `listRowInsets` | modifier | public | partial | yes | T1 | expo-upstream | partial | unknown |  | @expo/ui 58.0.3 exports this symbol, but Apple overload parity has not been verified. |
 | SwiftUI | `listRowPlatterColor` | modifier | public | unavailable | no | - | unavailable | unavailable | - |  | The current iOS SDK marks this declaration unavailable. |
 | SwiftUI | `listRowSeparator` | modifier | public | partial | yes | T1 | expo-upstream | partial | unknown |  | @expo/ui 58.0.3 exports this symbol, but Apple overload parity has not been verified. |
@@ -580,11 +580,11 @@
 | SwiftUI | `listStyle` | modifier | public | partial | yes | T1 | expo-upstream | partial | unknown |  | @expo/ui 58.0.3 exports this symbol, but Apple overload parity has not been verified. |
 | SwiftUI | `matchedTransitionSource` | modifier | public | unsupported | no | T4 | unsupported | unsupported | - |  | Every discovered signature uses semantics that cannot be bridged safely. |
 | SwiftUI | `menuActionDismissBehavior` | modifier | public | partial | yes | T1 | expo-upstream | partial | unknown |  | @expo/ui 58.0.3 exports this symbol, but Apple overload parity has not been verified. |
-| SwiftUI | `menuButtonStyle` | modifier | public | unsupported | no | T1 | unsupported | unsupported | - |  | Every discovered signature uses semantics that cannot be bridged safely. |
+| SwiftUI | `menuButtonStyle` | modifier | public | unavailable | no | - | unavailable | unavailable | - |  | The current iOS SDK marks this declaration unavailable. |
 | SwiftUI | `menuIndicator` | modifier | public | partial | yes | T1 | expo-upstream | partial | unknown |  | @expo/ui 58.0.3 exports this symbol, but Apple overload parity has not been verified. |
 | SwiftUI | `menuOrder` | modifier | public | partial | yes | T1 | expo-upstream | partial | unknown |  | @expo/ui 58.0.3 exports this symbol, but Apple overload parity has not been verified. |
 | SwiftUI | `menuStyle` | modifier | public | partial | yes | T1 | expo-upstream | partial | unknown |  | @expo/ui 58.0.3 exports this symbol, but Apple overload parity has not been verified. |
-| SwiftUI | `modifierKeyAlternate` | modifier | public | needs-investigation | no | T2 | needs-investigation | needs-investigation | - |  | No discovered signature currently has a safe generated or shared bridge surface. |
+| SwiftUI | `modifierKeyAlternate` | modifier | public | unavailable | no | - | unavailable | unavailable | - |  | The current iOS SDK marks this declaration unavailable. |
 | SwiftUI | `moveDisabled` | modifier | public | partial | yes | T1 | expo-upstream | partial | unknown |  | @expo/ui 58.0.3 exports this symbol, but Apple overload parity has not been verified. |
 | SwiftUI | `navigationBarBackButtonHidden` | modifier | public | supported | yes | T1 | generated | full | - |  | All discovered signatures map to generated or shared typed bridge surfaces. |
 | SwiftUI | `navigationBarHidden` | modifier | public | supported | yes | T1 | generated | full | - |  | All discovered signatures map to generated or shared typed bridge surfaces. |
@@ -600,11 +600,11 @@
 | SwiftUI | `navigationTitle` | modifier | public | partial | yes | T3 | expo-upstream | partial | unknown |  | @expo/ui 58.0.3 exports this symbol, but Apple overload parity has not been verified. |
 | SwiftUI | `navigationTransition` | modifier | public | unsupported | no | T1 | unsupported | unsupported | - |  | Every discovered signature uses semantics that cannot be bridged safely. |
 | SwiftUI | `navigationViewStyle` | modifier | public | unsupported | no | T1 | unsupported | unsupported | - |  | Every discovered signature uses semantics that cannot be bridged safely. |
-| SwiftUI | `onCommand` | modifier | public | unsupported | no | T4 | unsupported | unsupported | - |  | Every discovered signature uses semantics that cannot be bridged safely. |
+| SwiftUI | `onCommand` | modifier | public | unavailable | no | - | unavailable | unavailable | - |  | The current iOS SDK marks this declaration unavailable. |
 | SwiftUI | `onContinueUserActivity` | modifier | public | needs-investigation | no | T4 | needs-investigation | needs-investigation | - |  | No discovered signature currently has a safe generated or shared bridge surface. |
 | SwiftUI | `onContinuousHover` | modifier | public | needs-investigation | no | T4 | needs-investigation | needs-investigation | - |  | No discovered signature currently has a safe generated or shared bridge surface. |
-| SwiftUI | `onCopyCommand` | modifier | public | unsupported | no | T4 | unsupported | unsupported | - |  | Every discovered signature uses semantics that cannot be bridged safely. |
-| SwiftUI | `onCutCommand` | modifier | public | unsupported | no | T4 | unsupported | unsupported | - |  | Every discovered signature uses semantics that cannot be bridged safely. |
+| SwiftUI | `onCopyCommand` | modifier | public | unavailable | no | - | unavailable | unavailable | - |  | The current iOS SDK marks this declaration unavailable. |
+| SwiftUI | `onCutCommand` | modifier | public | unavailable | no | - | unavailable | unavailable | - |  | The current iOS SDK marks this declaration unavailable. |
 | SwiftUI | `onDeleteCommand` | modifier | public | unavailable | no | - | unavailable | unavailable | - |  | The current iOS SDK marks this declaration unavailable. |
 | SwiftUI | `onDrag` | modifier | public | unsupported | no | T4 | unsupported | unsupported | - |  | Every discovered signature uses semantics that cannot be bridged safely. |
 | SwiftUI | `onDragSessionUpdated` | modifier | public | needs-investigation | no | T4 | needs-investigation | needs-investigation | - |  | No discovered signature currently has a safe generated or shared bridge surface. |
@@ -615,11 +615,11 @@
 | SwiftUI | `onInteractiveResizeChange` | modifier | public | needs-investigation | no | T4 | needs-investigation | needs-investigation | - |  | No discovered signature currently has a safe generated or shared bridge surface. |
 | SwiftUI | `onKeyPress` | modifier | public | unsupported | no | T4 | unsupported | unsupported | - |  | Every discovered signature uses semantics that cannot be bridged safely. |
 | SwiftUI | `onLongPressGesture` | modifier | public | partial | yes | T4 | expo-upstream | needs-investigation | partial |  | The installed Expo surface was reviewed; matched semantic signatures are covered and unmatched Apple overloads remain explicit. |
-| SwiftUI | `onLongTouchGesture` | modifier | public | unsupported | no | T4 | unsupported | unsupported | - |  | Every discovered signature uses semantics that cannot be bridged safely. |
-| SwiftUI | `onModifierKeysChanged` | modifier | public | needs-investigation | no | T4 | needs-investigation | needs-investigation | - |  | No discovered signature currently has a safe generated or shared bridge surface. |
+| SwiftUI | `onLongTouchGesture` | modifier | public | unavailable | no | - | unavailable | unavailable | - |  | The current iOS SDK marks this declaration unavailable. |
+| SwiftUI | `onModifierKeysChanged` | modifier | public | unavailable | no | - | unavailable | unavailable | - |  | The current iOS SDK marks this declaration unavailable. |
 | SwiftUI | `onMoveCommand` | modifier | public | unavailable | no | - | unavailable | unavailable | - |  | The current iOS SDK marks this declaration unavailable. |
 | SwiftUI | `onOpenURL` | modifier | public | needs-investigation | no | T4 | needs-investigation | needs-investigation | - |  | No discovered signature currently has a safe generated or shared bridge surface. |
-| SwiftUI | `onPasteCommand` | modifier | public | needs-investigation | no | T4 | needs-investigation | needs-investigation | - |  | No discovered signature currently has a safe generated or shared bridge surface. |
+| SwiftUI | `onPasteCommand` | modifier | public | unavailable | no | - | unavailable | unavailable | - |  | The current iOS SDK marks this declaration unavailable. |
 | SwiftUI | `onPencilDoubleTap` | modifier | public | needs-investigation | no | T4 | needs-investigation | needs-investigation | - |  | No discovered signature currently has a safe generated or shared bridge surface. |
 | SwiftUI | `onPencilSqueeze` | modifier | public | needs-investigation | no | T4 | needs-investigation | needs-investigation | - |  | No discovered signature currently has a safe generated or shared bridge surface. |
 | SwiftUI | `onPlayPauseCommand` | modifier | public | unavailable | no | - | unavailable | unavailable | - |  | The current iOS SDK marks this declaration unavailable. |
@@ -629,7 +629,7 @@
 | SwiftUI | `onScrollTargetVisibilityChange` | modifier | public | needs-investigation | no | T4 | needs-investigation | needs-investigation | - |  | No discovered signature currently has a safe generated or shared bridge surface. |
 | SwiftUI | `onScrollVisibilityChange` | modifier | public | needs-investigation | no | T4 | needs-investigation | needs-investigation | - |  | No discovered signature currently has a safe generated or shared bridge surface. |
 | SwiftUI | `onSubmit` | modifier | public | supported | yes | T4 | expo-upstream | full | verified |  | The installed Expo TypeScript/native surface was reviewed and covers every discovered semantic signature. |
-| SwiftUI | `onTapGesture` | modifier | public | partial | yes | T4 | expo-upstream | partial | partial |  | The installed Expo surface was reviewed; matched semantic signatures are covered and unmatched Apple overloads remain explicit. |
+| SwiftUI | `onTapGesture` | modifier | public | partial | yes | T4 | expo-upstream | needs-investigation | partial |  | The installed Expo surface was reviewed; matched semantic signatures are covered and unmatched Apple overloads remain explicit. |
 | SwiftUI | `onVolumeViewpointChange` | modifier | public | unavailable | no | - | unavailable | unavailable | - |  | The current iOS SDK marks this declaration unavailable. |
 | SwiftUI | `ornament` | modifier | public | unavailable | no | - | unavailable | unavailable | - |  | The current iOS SDK marks this declaration unavailable. |
 | SwiftUI | `pageCommand` | modifier | public | unavailable | no | - | unavailable | unavailable | - |  | The current iOS SDK marks this declaration unavailable. |
@@ -637,9 +637,9 @@
 | SwiftUI | `pasteDestination` | modifier | public | unsupported | no | T4 | unsupported | unsupported | - |  | Every discovered signature uses semantics that cannot be bridged safely. |
 | SwiftUI | `persistentSystemOverlays` | modifier | public | supported | yes | T1 | generated | full | - |  | All discovered signatures map to generated or shared typed bridge surfaces. |
 | SwiftUI | `pickerStyle` | modifier | public | partial | yes | T1 | expo-upstream | partial | unknown |  | @expo/ui 58.0.3 exports this symbol, but Apple overload parity has not been verified. |
-| SwiftUI | `pointerVisibility` | modifier | public | supported | yes | T1 | generated | full | - |  | All discovered signatures map to generated or shared typed bridge surfaces. |
+| SwiftUI | `pointerVisibility` | modifier | public | unavailable | no | - | unavailable | unavailable | - |  | The current iOS SDK marks this declaration unavailable. |
 | SwiftUI | `popover` | modifier | public | partial | yes | T3 | manual | partial | - |  | Uses a controlled Bool presentation adapter with content and presented-content slots. |
-| SwiftUI | `prefersDefaultFocus` | modifier | public | needs-investigation | no | T1 | needs-investigation | needs-investigation | - |  | No discovered signature currently has a safe generated or shared bridge surface. |
+| SwiftUI | `prefersDefaultFocus` | modifier | public | unavailable | no | - | unavailable | unavailable | - |  | The current iOS SDK marks this declaration unavailable. |
 | SwiftUI | `presentationBackground` | modifier | public | partial | yes | T2 | expo-upstream | partial | unknown |  | @expo/ui 58.0.3 exports this symbol, but Apple overload parity has not been verified. |
 | SwiftUI | `presentationBackgroundInteraction` | modifier | public | partial | yes | T1 | expo-upstream | partial | unknown |  | @expo/ui 58.0.3 exports this symbol, but Apple overload parity has not been verified. |
 | SwiftUI | `presentationCompactAdaptation` | modifier | public | needs-investigation | no | T1 | needs-investigation | needs-investigation | - |  | No discovered signature currently has a safe generated or shared bridge surface. |
@@ -648,10 +648,10 @@
 | SwiftUI | `presentationDetents` | modifier | public | partial | yes | T3 | expo-upstream | partial | unknown |  | @expo/ui 58.0.3 exports this symbol, but Apple overload parity has not been verified. |
 | SwiftUI | `presentationDragIndicator` | modifier | public | partial | yes | T1 | expo-upstream | partial | unknown |  | @expo/ui 58.0.3 exports this symbol, but Apple overload parity has not been verified. |
 | SwiftUI | `presentationPlacement` | modifier | public | needs-investigation | no | T1 | needs-investigation | needs-investigation | - |  | No discovered signature currently has a safe generated or shared bridge surface. |
-| SwiftUI | `presentationPreventsAppTermination` | modifier | public | supported | yes | T1 | generated | full | - |  | All discovered signatures map to generated or shared typed bridge surfaces. |
+| SwiftUI | `presentationPreventsAppTermination` | modifier | public | unavailable | no | - | unavailable | unavailable | - |  | The current iOS SDK marks this declaration unavailable. |
 | SwiftUI | `presentationSizing` | modifier | public | partial | yes | T1 | expo-upstream | partial | unknown |  | @expo/ui 58.0.3 exports this symbol, but Apple overload parity has not been verified. |
-| SwiftUI | `presentedWindowStyle` | modifier | public | unsupported | no | T1 | unsupported | unsupported | - |  | Every discovered signature uses semantics that cannot be bridged safely. |
-| SwiftUI | `presentedWindowToolbarStyle` | modifier | public | unsupported | no | T1 | unsupported | unsupported | - |  | Every discovered signature uses semantics that cannot be bridged safely. |
+| SwiftUI | `presentedWindowStyle` | modifier | public | unavailable | no | - | unavailable | unavailable | - |  | The current iOS SDK marks this declaration unavailable. |
+| SwiftUI | `presentedWindowToolbarStyle` | modifier | public | unavailable | no | - | unavailable | unavailable | - |  | The current iOS SDK marks this declaration unavailable. |
 | SwiftUI | `previewContext` | modifier | public | unsupported | no | T1 | unsupported | unsupported | - |  | Every discovered signature uses semantics that cannot be bridged safely. |
 | SwiftUI | `previewDevice` | modifier | public | needs-investigation | no | T1 | needs-investigation | needs-investigation | - |  | No discovered signature currently has a safe generated or shared bridge surface. |
 | SwiftUI | `previewDisplayName` | modifier | public | supported | yes | T1 | generated | full | - |  | All discovered signatures map to generated or shared typed bridge surfaces. |
@@ -720,9 +720,9 @@
 | SwiftUI | `textEditorStyle` | modifier | public | unsupported | no | T1 | unsupported | unsupported | - |  | Every discovered signature uses semantics that cannot be bridged safely. |
 | SwiftUI | `textFieldStyle` | modifier | public | partial | yes | T1 | expo-upstream | partial | unknown |  | @expo/ui 58.0.3 exports this symbol, but Apple overload parity has not been verified. |
 | SwiftUI | `textInputAutocapitalization` | modifier | public | partial | yes | T1 | expo-upstream | partial | unknown |  | @expo/ui 58.0.3 exports this symbol, but Apple overload parity has not been verified. |
-| SwiftUI | `textInputCompletion` | modifier | public | supported | yes | T1 | generated | full | - |  | All discovered signatures map to generated or shared typed bridge surfaces. |
+| SwiftUI | `textInputCompletion` | modifier | public | unavailable | no | - | unavailable | unavailable | - |  | The current iOS SDK marks this declaration unavailable. |
 | SwiftUI | `textInputFormattingControlVisibility` | modifier | public | supported | yes | T1 | generated | full | - |  | All discovered signatures map to generated or shared typed bridge surfaces. |
-| SwiftUI | `textInputSuggestions` | modifier | public | needs-investigation | no | T2 | needs-investigation | needs-investigation | - |  | No discovered signature currently has a safe generated or shared bridge surface. |
+| SwiftUI | `textInputSuggestions` | modifier | public | unavailable | no | - | unavailable | unavailable | - |  | The current iOS SDK marks this declaration unavailable. |
 | SwiftUI | `textSelection` | modifier | public | partial | yes | T1 | expo-upstream | partial | unknown |  | @expo/ui 58.0.3 exports this symbol, but Apple overload parity has not been verified. |
 | SwiftUI | `textSelectionAffinity` | modifier | public | supported | yes | T1 | generated | full | - |  | All discovered signatures map to generated or shared typed bridge surfaces. |
 | SwiftUI | `toggleStyle` | modifier | public | partial | yes | T1 | expo-upstream | partial | unknown |  | @expo/ui 58.0.3 exports this symbol, but Apple overload parity has not been verified. |
@@ -731,7 +731,7 @@
 | SwiftUI | `toolbarBackgroundVisibility` | modifier | public | needs-investigation | no | T1 | needs-investigation | needs-investigation | - |  | No discovered signature currently has a safe generated or shared bridge surface. |
 | SwiftUI | `toolbarColorScheme` | modifier | public | needs-investigation | no | T1 | needs-investigation | needs-investigation | - |  | No discovered signature currently has a safe generated or shared bridge surface. |
 | SwiftUI | `toolbarForegroundStyle` | modifier | public | unavailable | no | - | unavailable | unavailable | - |  | The current iOS SDK marks this declaration unavailable. |
-| SwiftUI | `toolbarItemHidden` | modifier | public | supported | yes | T1 | generated | full | - |  | All discovered signatures map to generated or shared typed bridge surfaces. |
+| SwiftUI | `toolbarItemHidden` | modifier | public | unavailable | no | - | unavailable | unavailable | - |  | The current iOS SDK marks this declaration unavailable. |
 | SwiftUI | `toolbarMinimizationBehavior` | modifier | public | needs-investigation | no | T1 | needs-investigation | needs-investigation | - |  | No discovered signature currently has a safe generated or shared bridge surface. |
 | SwiftUI | `toolbarMinimizationRestoration` | modifier | public | needs-investigation | no | T1 | needs-investigation | needs-investigation | - |  | No discovered signature currently has a safe generated or shared bridge surface. |
 | SwiftUI | `toolbarMinimizationSafeAreaAdjustment` | modifier | public | needs-investigation | no | T1 | needs-investigation | needs-investigation | - |  | No discovered signature currently has a safe generated or shared bridge surface. |
@@ -746,12 +746,12 @@
 | SwiftUI | `touchBarItemPrincipal` | modifier | public | unavailable | no | - | unavailable | unavailable | - |  | The current iOS SDK marks this declaration unavailable. |
 | SwiftUI | `typeSelectEquivalent` | modifier | public | partial | yes | T1 | generated | partial | - |  | At least one signature is covered, but unresolved overloads remain visible below. |
 | SwiftUI | `userActivity` | modifier | public | needs-investigation | no | T4 | needs-investigation | needs-investigation | - |  | No discovered signature currently has a safe generated or shared bridge surface. |
-| SwiftUI | `windowDismissBehavior` | modifier | public | needs-investigation | no | T1 | needs-investigation | needs-investigation | - |  | No discovered signature currently has a safe generated or shared bridge surface. |
-| SwiftUI | `windowFullScreenBehavior` | modifier | public | needs-investigation | no | T1 | needs-investigation | needs-investigation | - |  | No discovered signature currently has a safe generated or shared bridge surface. |
-| SwiftUI | `windowMinimizeBehavior` | modifier | public | needs-investigation | no | T1 | needs-investigation | needs-investigation | - |  | No discovered signature currently has a safe generated or shared bridge surface. |
-| SwiftUI | `windowResizeAnchor` | modifier | public | supported | yes | T1 | generated | full | - |  | All discovered signatures map to generated or shared typed bridge surfaces. |
-| SwiftUI | `windowResizeBehavior` | modifier | public | needs-investigation | no | T1 | needs-investigation | needs-investigation | - |  | No discovered signature currently has a safe generated or shared bridge surface. |
-| SwiftUI | `windowToolbarFullScreenVisibility` | modifier | public | supported | yes | T1 | generated | full | - |  | All discovered signatures map to generated or shared typed bridge surfaces. |
+| SwiftUI | `windowDismissBehavior` | modifier | public | unavailable | no | - | unavailable | unavailable | - |  | The current iOS SDK marks this declaration unavailable. |
+| SwiftUI | `windowFullScreenBehavior` | modifier | public | unavailable | no | - | unavailable | unavailable | - |  | The current iOS SDK marks this declaration unavailable. |
+| SwiftUI | `windowMinimizeBehavior` | modifier | public | unavailable | no | - | unavailable | unavailable | - |  | The current iOS SDK marks this declaration unavailable. |
+| SwiftUI | `windowResizeAnchor` | modifier | public | unavailable | no | - | unavailable | unavailable | - |  | The current iOS SDK marks this declaration unavailable. |
+| SwiftUI | `windowResizeBehavior` | modifier | public | unavailable | no | - | unavailable | unavailable | - |  | The current iOS SDK marks this declaration unavailable. |
+| SwiftUI | `windowToolbarFullScreenVisibility` | modifier | public | needs-investigation | no | T1 | needs-investigation | needs-investigation | - |  | No discovered signature currently has a safe generated or shared bridge surface. |
 | SwiftUI | `writingToolsAffordanceVisibility` | modifier | public | supported | yes | T1 | generated | full | - |  | All discovered signatures map to generated or shared typed bridge surfaces. |
 | SwiftUI | `writingToolsBehavior` | modifier | public | needs-investigation | no | T1 | needs-investigation | needs-investigation | - |  | No discovered signature currently has a safe generated or shared bridge surface. |
 | SwiftUICore | `Alignment3D` | type | public | unavailable | no | - | unavailable | unavailable | - |  | The current iOS SDK marks this declaration unavailable. |
@@ -1043,7 +1043,7 @@
 | SwiftUICore | `contentTransition` | modifier | public | partial | yes | T1 | expo-upstream | partial | unknown |  | @expo/ui 58.0.3 exports this symbol, but Apple overload parity has not been verified. |
 | SwiftUICore | `contrast` | modifier | public | partial | yes | T1 | expo-upstream | partial | unknown |  | @expo/ui 58.0.3 exports this symbol, but Apple overload parity has not been verified. |
 | SwiftUICore | `controlSize` | modifier | public | partial | yes | T1 | expo-upstream | partial | unknown |  | @expo/ui 58.0.3 exports this symbol, but Apple overload parity has not been verified. |
-| SwiftUICore | `coordinateSpace` | modifier | public | partial | yes | T1 | generated | partial | - |  | At least one signature is covered, but unresolved overloads remain visible below. |
+| SwiftUICore | `coordinateSpace` | modifier | public | needs-investigation | no | T1 | needs-investigation | needs-investigation | - |  | No discovered signature currently has a safe generated or shared bridge surface. |
 | SwiftUICore | `cornerRadius` | modifier | public | partial | yes | T1 | expo-upstream | partial | unknown |  | @expo/ui 58.0.3 exports this symbol, but Apple overload parity has not been verified. |
 | SwiftUICore | `defaultHoverEffect` | modifier | public | needs-investigation | no | T1 | needs-investigation | needs-investigation | - |  | No discovered signature currently has a safe generated or shared bridge surface. |
 | SwiftUICore | `disabled` | modifier | public | partial | yes | T1 | expo-upstream | partial | unknown |  | @expo/ui 58.0.3 exports this symbol, but Apple overload parity has not been verified. |
@@ -1072,16 +1072,16 @@
 | SwiftUICore | `highPriorityGesture` | modifier | public | unsupported | no | T1 | unsupported | unsupported | - |  | Every discovered signature uses semantics that cannot be bridged safely. |
 | SwiftUICore | `hoverEffect` | modifier | public | needs-investigation | no | T4 | needs-investigation | needs-investigation | - |  | No discovered signature currently has a safe generated or shared bridge surface. |
 | SwiftUICore | `hoverEffectDisabled` | modifier | public | supported | yes | T1 | generated | full | - |  | All discovered signatures map to generated or shared typed bridge surfaces. |
-| SwiftUICore | `hoverEffectGroup` | modifier | public | partial | yes | T1 | generated | partial | - |  | At least one signature is covered, but unresolved overloads remain visible below. |
+| SwiftUICore | `hoverEffectGroup` | modifier | public | unavailable | no | - | unavailable | unavailable | - |  | The current iOS SDK marks this declaration unavailable. |
 | SwiftUICore | `hueRotation` | modifier | public | partial | yes | T1 | expo-upstream | partial | unknown |  | @expo/ui 58.0.3 exports this symbol, but Apple overload parity has not been verified. |
 | SwiftUICore | `id` | modifier | public | partial | yes | T1 | expo-upstream | partial | unknown |  | @expo/ui 58.0.3 exports this symbol, but Apple overload parity has not been verified. |
-| SwiftUICore | `ignoresSafeArea` | modifier | public | supported | yes | T1 | generated | full | - |  | All discovered signatures map to generated or shared typed bridge surfaces. |
+| SwiftUICore | `ignoresSafeArea` | modifier | public | partial | yes | T1 | generated | partial | - |  | At least one signature is covered, but unresolved overloads remain visible below. |
 | SwiftUICore | `imageScale` | modifier | public | partial | yes | T1 | expo-upstream | partial | unknown |  | @expo/ui 58.0.3 exports this symbol, but Apple overload parity has not been verified. |
 | SwiftUICore | `italic` | modifier | public | partial | yes | T1 | expo-upstream | partial | unknown |  | @expo/ui 58.0.3 exports this symbol, but Apple overload parity has not been verified. |
 | SwiftUICore | `kerning` | modifier | public | partial | yes | T1 | expo-upstream | partial | unknown |  | @expo/ui 58.0.3 exports this symbol, but Apple overload parity has not been verified. |
 | SwiftUICore | `keyframeAnimator` | modifier | public | unsupported | no | T4 | unsupported | unsupported | - |  | Every discovered signature uses semantics that cannot be bridged safely. |
 | SwiftUICore | `layerEffect` | modifier | public | needs-investigation | no | T1 | needs-investigation | needs-investigation | - |  | No discovered signature currently has a safe generated or shared bridge surface. |
-| SwiftUICore | `layoutDirectionBehavior` | modifier | public | supported | yes | T1 | generated | full | - |  | All discovered signatures map to generated or shared typed bridge surfaces. |
+| SwiftUICore | `layoutDirectionBehavior` | modifier | public | needs-investigation | no | T1 | needs-investigation | needs-investigation | - |  | No discovered signature currently has a safe generated or shared bridge surface. |
 | SwiftUICore | `layoutPriority` | modifier | public | partial | yes | T1 | expo-upstream | partial | unknown |  | @expo/ui 58.0.3 exports this symbol, but Apple overload parity has not been verified. |
 | SwiftUICore | `layoutValue` | modifier | public | unsupported | no | T1 | unsupported | unsupported | - |  | Every discovered signature uses semantics that cannot be bridged safely. |
 | SwiftUICore | `lineHeight` | modifier | public | partial | yes | T1 | expo-upstream | partial | unknown |  | @expo/ui 58.0.3 exports this symbol, but Apple overload parity has not been verified. |
@@ -1130,7 +1130,7 @@
 | SwiftUICore | `speechAnnouncementsQueued` | modifier | public | supported | yes | T1 | generated | full | - |  | All discovered signatures map to generated or shared typed bridge surfaces. |
 | SwiftUICore | `speechSpellsOutCharacters` | modifier | public | supported | yes | T1 | generated | full | - |  | All discovered signatures map to generated or shared typed bridge surfaces. |
 | SwiftUICore | `strikethrough` | modifier | public | partial | yes | T1 | expo-upstream | partial | unknown |  | @expo/ui 58.0.3 exports this symbol, but Apple overload parity has not been verified. |
-| SwiftUICore | `symbolColorRenderingMode` | modifier | public | supported | yes | T1 | generated | full | - |  | All discovered signatures map to generated or shared typed bridge surfaces. |
+| SwiftUICore | `symbolColorRenderingMode` | modifier | public | needs-investigation | no | T1 | needs-investigation | needs-investigation | - |  | No discovered signature currently has a safe generated or shared bridge surface. |
 | SwiftUICore | `symbolEffect` | modifier | public | partial | yes | T1 | expo-upstream | partial | unknown |  | @expo/ui 58.0.3 exports this symbol, but Apple overload parity has not been verified. |
 | SwiftUICore | `symbolRenderingMode` | modifier | public | needs-investigation | no | T1 | needs-investigation | needs-investigation | - |  | No discovered signature currently has a safe generated or shared bridge surface. |
 | SwiftUICore | `symbolVariableValueMode` | modifier | public | needs-investigation | no | T1 | needs-investigation | needs-investigation | - |  | No discovered signature currently has a safe generated or shared bridge surface. |
@@ -1839,9 +1839,9 @@ Aggregate: `partial`
 Aggregate: `partial`
 
 - `init(sidebar sidebar: () -> Sidebar, content content: () -> Content, detail detail: () -> Detail)` → **covered-by-shared-TS-surface** (`multi-slot-view-builder`): Matched to the reviewed installed Expo TypeScript/native semantic surface.
-- `init(columnVisibility columnVisibility: SwiftUICore.Binding<SwiftUI.NavigationSplitViewVisibility>, sidebar sidebar: () -> Sidebar, content content: () -> Content, detail detail: () -> Detail)` → **covered-by-shared-TS-surface** (`controlled-binding-adapter`): Matched to the reviewed installed Expo TypeScript/native semantic surface.
+- `init(columnVisibility columnVisibility: SwiftUICore.Binding<SwiftUI.NavigationSplitViewVisibility>, sidebar sidebar: () -> Sidebar, content content: () -> Content, detail detail: () -> Detail)` → **needs-investigation** (`expo-overload-parity-unverified`): This Apple overload contains generic, closure, binding, or value semantics not matched by the reviewed Expo surface.
 - `init(sidebar sidebar: () -> Sidebar, detail detail: () -> Detail)` → **covered-by-shared-TS-surface** (`multi-slot-view-builder`): Matched to the reviewed installed Expo TypeScript/native semantic surface.
-- `init(columnVisibility columnVisibility: SwiftUICore.Binding<SwiftUI.NavigationSplitViewVisibility>, sidebar sidebar: () -> Sidebar, detail detail: () -> Detail)` → **covered-by-shared-TS-surface** (`controlled-binding-adapter`): Matched to the reviewed installed Expo TypeScript/native semantic surface.
+- `init(columnVisibility columnVisibility: SwiftUICore.Binding<SwiftUI.NavigationSplitViewVisibility>, sidebar sidebar: () -> Sidebar, detail detail: () -> Detail)` → **needs-investigation** (`expo-overload-parity-unverified`): This Apple overload contains generic, closure, binding, or value semantics not matched by the reviewed Expo surface.
 - `init(preferredCompactColumn preferredCompactColumn: SwiftUICore.Binding<SwiftUI.NavigationSplitViewColumn>, sidebar sidebar: () -> Sidebar, content content: () -> Content, detail detail: () -> Detail)` → **needs-investigation** (`expo-overload-parity-unverified`): This Apple overload contains generic, closure, binding, or value semantics not matched by the reviewed Expo surface.
 - `init(columnVisibility columnVisibility: SwiftUICore.Binding<SwiftUI.NavigationSplitViewVisibility>, preferredCompactColumn preferredCompactColumn: SwiftUICore.Binding<SwiftUI.NavigationSplitViewColumn>, sidebar sidebar: () -> Sidebar, content content: () -> Content, detail detail: () -> Detail)` → **needs-investigation** (`expo-overload-parity-unverified`): This Apple overload contains generic, closure, binding, or value semantics not matched by the reviewed Expo surface.
 - `init(preferredCompactColumn preferredCompactColumn: SwiftUICore.Binding<SwiftUI.NavigationSplitViewColumn>, sidebar sidebar: () -> Sidebar, detail detail: () -> Detail)` → **needs-investigation** (`expo-overload-parity-unverified`): This Apple overload contains generic, closure, binding, or value semantics not matched by the reviewed Expo surface.
@@ -2918,10 +2918,10 @@ Aggregate: `unsupported`
 
 ### SwiftUI.accessibilityQuickAction
 
-Aggregate: `needs-investigation`
+Aggregate: `unavailable`
 
-- `func(style style: Style, content content: () -> Content)` → **unsupported** (`non-serializable-generic-semantics`): The signature depends on arbitrary generic, key-path, protocol, or associated-type semantics.
-- `func(style style: Style, isActive isActive: SwiftUICore.Binding<Swift.Bool>, content content: () -> Content)` → **needs-investigation** (`controlled-binding-template`): A controlled/uncontrolled React binding template is available for the value family, but this symbol still needs a native semantic adapter.
+- `func(style style: Style, content content: () -> Content)` → **unavailable** (`unavailable`): The current iOS SDK marks this declaration unavailable.
+- `func(style style: Style, isActive isActive: SwiftUICore.Binding<Swift.Bool>, content content: () -> Content)` → **unavailable** (`unavailable`): The current iOS SDK marks this declaration unavailable.
 
 ### SwiftUI.accessibilityRemoveTraits
 
@@ -3071,9 +3071,9 @@ Aggregate: `full`
 
 ### SwiftUI.alternatingRowBackgrounds
 
-Aggregate: `needs-investigation`
+Aggregate: `unavailable`
 
-- `func(behavior: SwiftUI.AlternatingRowBackgroundBehavior)` → **needs-investigation** (`missing-value-serialization`): At least one value type has no safe typed React serialization rule yet.
+- `func(behavior: SwiftUI.AlternatingRowBackgroundBehavior)` → **unavailable** (`unavailable`): The current iOS SDK marks this declaration unavailable.
 
 ### SwiftUI.assistiveAccessNavigationIcon
 
@@ -3282,15 +3282,15 @@ Aggregate: `needs-investigation`
 
 ### SwiftUI.dialogPreventsAppTermination
 
-Aggregate: `full`
+Aggregate: `unavailable`
 
-- `func(prevents: Swift.Bool?)` → **direct-generated** (`mechanical-value`): The signature uses mechanically serializable values and supported content slots.
+- `func(prevents: Swift.Bool?)` → **unavailable** (`unavailable`): The current iOS SDK marks this declaration unavailable.
 
 ### SwiftUI.dialogSeverity
 
-Aggregate: `needs-investigation`
+Aggregate: `unavailable`
 
-- `func(severity: SwiftUI.DialogSeverity)` → **needs-investigation** (`missing-value-serialization`): At least one value type has no safe typed React serialization rule yet.
+- `func(severity: SwiftUI.DialogSeverity)` → **unavailable** (`unavailable`): The current iOS SDK marks this declaration unavailable.
 
 ### SwiftUI.dialogSuppressionToggle
 
@@ -3304,20 +3304,20 @@ Aggregate: `needs-investigation`
 
 ### SwiftUI.digitalCrownAccessory
 
-Aggregate: `partial`
+Aggregate: `unavailable`
 
-- `func(content content: @escaping () -> Content)` → **needs-investigation** (`missing-value-serialization`): At least one value type has no safe typed React serialization rule yet.
-- `func(visibility: SwiftUICore.Visibility)` → **direct-generated** (`mechanical-value`): The signature uses mechanically serializable values and supported content slots.
+- `func(content content: @escaping () -> Content)` → **unavailable** (`unavailable`): The current iOS SDK marks this declaration unavailable.
+- `func(visibility: SwiftUICore.Visibility)` → **unavailable** (`unavailable`): The current iOS SDK marks this declaration unavailable.
 
 ### SwiftUI.digitalCrownRotation
 
-Aggregate: `unsupported`
+Aggregate: `unavailable`
 
-- `func(binding: SwiftUICore.Binding<V>, from minValue: V, through maxValue: V, by stride: V.Stride?, sensitivity sensitivity: SwiftUI.DigitalCrownRotationalSensitivity, isContinuous isContinuous: Swift.Bool, isHapticFeedbackEnabled isHapticFeedbackEnabled: Swift.Bool)` → **unavailable** (`unavailable`): The current iOS SDK marks this overload unavailable.
-- `func(binding: SwiftUICore.Binding<V>)` → **unavailable** (`unavailable`): The current iOS SDK marks this overload unavailable.
-- `func(detent detent: SwiftUICore.Binding<V>, from minValue: V, through maxValue: V, by stride: V.Stride, sensitivity sensitivity: SwiftUI.DigitalCrownRotationalSensitivity, isContinuous isContinuous: Swift.Bool, isHapticFeedbackEnabled isHapticFeedbackEnabled: Swift.Bool, onChange onChange: @escaping (SwiftUI.DigitalCrownEvent) -> Swift.Void, onIdle onIdle: @escaping () -> Swift.Void)` → **unsupported** (`non-serializable-binding`): The binding value is generic or non-serializable and cannot use the shared controlled binding template.
-- `func(binding: SwiftUICore.Binding<V>, from minValue: V, through maxValue: V, sensitivity sensitivity: SwiftUI.DigitalCrownRotationalSensitivity, isContinuous isContinuous: Swift.Bool, isHapticFeedbackEnabled isHapticFeedbackEnabled: Swift.Bool, onChange onChange: @escaping (SwiftUI.DigitalCrownEvent) -> Swift.Void, onIdle onIdle: @escaping () -> Swift.Void)` → **unsupported** (`non-serializable-binding`): The binding value is generic or non-serializable and cannot use the shared controlled binding template.
-- `func(binding: SwiftUICore.Binding<V>, onChange onChange: @escaping (SwiftUI.DigitalCrownEvent) -> Swift.Void, onIdle onIdle: @escaping () -> Swift.Void)` → **unsupported** (`non-serializable-binding`): The binding value is generic or non-serializable and cannot use the shared controlled binding template.
+- `func(binding: SwiftUICore.Binding<V>, from minValue: V, through maxValue: V, by stride: V.Stride?, sensitivity sensitivity: SwiftUI.DigitalCrownRotationalSensitivity, isContinuous isContinuous: Swift.Bool, isHapticFeedbackEnabled isHapticFeedbackEnabled: Swift.Bool)` → **unavailable** (`unavailable`): The current iOS SDK marks this declaration unavailable.
+- `func(binding: SwiftUICore.Binding<V>)` → **unavailable** (`unavailable`): The current iOS SDK marks this declaration unavailable.
+- `func(detent detent: SwiftUICore.Binding<V>, from minValue: V, through maxValue: V, by stride: V.Stride, sensitivity sensitivity: SwiftUI.DigitalCrownRotationalSensitivity, isContinuous isContinuous: Swift.Bool, isHapticFeedbackEnabled isHapticFeedbackEnabled: Swift.Bool, onChange onChange: @escaping (SwiftUI.DigitalCrownEvent) -> Swift.Void, onIdle onIdle: @escaping () -> Swift.Void)` → **unavailable** (`unavailable`): The current iOS SDK marks this declaration unavailable.
+- `func(binding: SwiftUICore.Binding<V>, from minValue: V, through maxValue: V, sensitivity sensitivity: SwiftUI.DigitalCrownRotationalSensitivity, isContinuous isContinuous: Swift.Bool, isHapticFeedbackEnabled isHapticFeedbackEnabled: Swift.Bool, onChange onChange: @escaping (SwiftUI.DigitalCrownEvent) -> Swift.Void, onIdle onIdle: @escaping () -> Swift.Void)` → **unavailable** (`unavailable`): The current iOS SDK marks this declaration unavailable.
+- `func(binding: SwiftUICore.Binding<V>, onChange onChange: @escaping (SwiftUI.DigitalCrownEvent) -> Swift.Void, onIdle onIdle: @escaping () -> Swift.Void)` → **unavailable** (`unavailable`): The current iOS SDK marks this declaration unavailable.
 
 ### SwiftUI.disableAutocorrection
 
@@ -3428,9 +3428,9 @@ Aggregate: `unavailable`
 
 ### SwiftUI.equatable
 
-Aggregate: `full`
+Aggregate: `needs-investigation`
 
-- `func()` → **direct-generated** (`mechanical-value`): The signature uses mechanically serializable values and supported content slots.
+- `func()` → **needs-investigation** (`missing-value-serialization`): At least one value type has no safe typed React serialization rule yet.
 
 ### SwiftUI.exportableToServices
 
@@ -3441,10 +3441,10 @@ Aggregate: `unavailable`
 
 ### SwiftUI.exportsItemProviders
 
-Aggregate: `unsupported`
+Aggregate: `unavailable`
 
-- `func(contentTypes: [UniformTypeIdentifiers.UTType], onExport onExport: @escaping () -> [Foundation.NSItemProvider])` → **unsupported** (`non-bridgeable-generic-closure`): The closure carries arbitrary generic or return-value semantics and is not serializable.
-- `func(contentTypes: [UniformTypeIdentifiers.UTType], onExport onExport: @escaping () -> [Foundation.NSItemProvider], onEdit onEdit: @escaping ([Foundation.NSItemProvider]) -> Swift.Bool)` → **unsupported** (`non-bridgeable-generic-closure`): The closure carries arbitrary generic or return-value semantics and is not serializable.
+- `func(contentTypes: [UniformTypeIdentifiers.UTType], onExport onExport: @escaping () -> [Foundation.NSItemProvider])` → **unavailable** (`unavailable`): The current iOS SDK marks this declaration unavailable.
+- `func(contentTypes: [UniformTypeIdentifiers.UTType], onExport onExport: @escaping () -> [Foundation.NSItemProvider], onEdit onEdit: @escaping ([Foundation.NSItemProvider]) -> Swift.Bool)` → **unavailable** (`unavailable`): The current iOS SDK marks this declaration unavailable.
 
 ### SwiftUI.fileDialogBrowserOptions
 
@@ -3561,15 +3561,15 @@ Aggregate: `full`
 
 ### SwiftUI.focusScope
 
-Aggregate: `needs-investigation`
+Aggregate: `unavailable`
 
-- `func(namespace: SwiftUICore.Namespace.ID)` → **needs-investigation** (`missing-value-serialization`): At least one value type has no safe typed React serialization rule yet.
+- `func(namespace: SwiftUICore.Namespace.ID)` → **unavailable** (`unavailable`): The current iOS SDK marks this declaration unavailable.
 
 ### SwiftUI.focusSection
 
-Aggregate: `full`
+Aggregate: `unavailable`
 
-- `func()` → **direct-generated** (`mechanical-value`): The signature uses mechanically serializable values and supported content slots.
+- `func()` → **unavailable** (`unavailable`): The current iOS SDK marks this declaration unavailable.
 
 ### SwiftUI.focusable
 
@@ -3639,7 +3639,7 @@ Aggregate: `partial`
 
 Aggregate: `unsupported`
 
-- `func(representable: some NSGestureRecognizerRepresentable)` → **unsupported** (`non-serializable-generic-semantics`): The signature depends on arbitrary generic, key-path, protocol, or associated-type semantics.
+- `func(representable: some NSGestureRecognizerRepresentable)` → **unavailable** (`unavailable`): The current iOS SDK marks this overload unavailable.
 - `func(representable: some UIGestureRecognizerRepresentable)` → **unsupported** (`non-serializable-generic-semantics`): The signature depends on arbitrary generic, key-path, protocol, or associated-type semantics.
 
 ### SwiftUI.gridCellAnchor
@@ -3707,9 +3707,9 @@ Aggregate: `unavailable`
 
 ### SwiftUI.immersiveEnvironmentPicker
 
-Aggregate: `needs-investigation`
+Aggregate: `unavailable`
 
-- `func(content content: () -> Content)` → **needs-investigation** (`missing-value-serialization`): At least one value type has no safe typed React serialization rule yet.
+- `func(content content: () -> Content)` → **unavailable** (`unavailable`): The current iOS SDK marks this declaration unavailable.
 
 ### SwiftUI.importableFromServices
 
@@ -3719,9 +3719,9 @@ Aggregate: `unavailable`
 
 ### SwiftUI.importsItemProviders
 
-Aggregate: `unsupported`
+Aggregate: `unavailable`
 
-- `func(contentTypes: [UniformTypeIdentifiers.UTType], onImport onImport: @escaping ([Foundation.NSItemProvider]) -> Swift.Bool)` → **unsupported** (`non-bridgeable-generic-closure`): The closure carries arbitrary generic or return-value semantics and is not serializable.
+- `func(contentTypes: [UniformTypeIdentifiers.UTType], onImport onImport: @escaping ([Foundation.NSItemProvider]) -> Swift.Bool)` → **unavailable** (`unavailable`): The current iOS SDK marks this declaration unavailable.
 
 ### SwiftUI.indexViewStyle
 
@@ -3832,15 +3832,15 @@ Aggregate: `partial`
 
 ### SwiftUI.listRowHoverEffect
 
-Aggregate: `needs-investigation`
+Aggregate: `unavailable`
 
-- `func(effect: SwiftUICore.HoverEffect?)` → **needs-investigation** (`missing-value-serialization`): At least one value type has no safe typed React serialization rule yet.
+- `func(effect: SwiftUICore.HoverEffect?)` → **unavailable** (`unavailable`): The current iOS SDK marks this declaration unavailable.
 
 ### SwiftUI.listRowHoverEffectDisabled
 
-Aggregate: `full`
+Aggregate: `unavailable`
 
-- `func(disabled: Swift.Bool)` → **direct-generated** (`mechanical-value`): The signature uses mechanically serializable values and supported content slots.
+- `func(disabled: Swift.Bool)` → **unavailable** (`unavailable`): The current iOS SDK marks this declaration unavailable.
 
 ### SwiftUI.listRowInsets
 
@@ -3925,9 +3925,9 @@ Aggregate: `partial`
 
 ### SwiftUI.menuButtonStyle
 
-Aggregate: `unsupported`
+Aggregate: `unavailable`
 
-- `func(style: S)` → **unsupported** (`non-serializable-generic-semantics`): The signature depends on arbitrary generic, key-path, protocol, or associated-type semantics.
+- `func(style: S)` → **unavailable** (`unavailable`): The current iOS SDK marks this declaration unavailable.
 
 ### SwiftUI.menuIndicator
 
@@ -3949,9 +3949,9 @@ Aggregate: `partial`
 
 ### SwiftUI.modifierKeyAlternate
 
-Aggregate: `needs-investigation`
+Aggregate: `unavailable`
 
-- `func(modifiers: SwiftUICore.EventModifiers, alternate: () -> V)` → **needs-investigation** (`missing-value-serialization`): At least one value type has no safe typed React serialization rule yet.
+- `func(modifiers: SwiftUICore.EventModifiers, alternate: () -> V)` → **unavailable** (`unavailable`): The current iOS SDK marks this declaration unavailable.
 
 ### SwiftUI.moveDisabled
 
@@ -4068,9 +4068,9 @@ Aggregate: `unsupported`
 
 ### SwiftUI.onCommand
 
-Aggregate: `unsupported`
+Aggregate: `unavailable`
 
-- `func(selector: ObjectiveC.Selector, perform action: (() -> Swift.Void)?)` → **unsupported** (`non-bridgeable-generic-closure`): The closure carries arbitrary generic or return-value semantics and is not serializable.
+- `func(selector: ObjectiveC.Selector, perform action: (() -> Swift.Void)?)` → **unavailable** (`unavailable`): The current iOS SDK marks this declaration unavailable.
 
 ### SwiftUI.onContinueUserActivity
 
@@ -4087,15 +4087,15 @@ Aggregate: `needs-investigation`
 
 ### SwiftUI.onCopyCommand
 
-Aggregate: `unsupported`
+Aggregate: `unavailable`
 
-- `func(perform payloadAction: (() -> [Foundation.NSItemProvider])?)` → **unsupported** (`non-bridgeable-generic-closure`): The closure carries arbitrary generic or return-value semantics and is not serializable.
+- `func(perform payloadAction: (() -> [Foundation.NSItemProvider])?)` → **unavailable** (`unavailable`): The current iOS SDK marks this declaration unavailable.
 
 ### SwiftUI.onCutCommand
 
-Aggregate: `unsupported`
+Aggregate: `unavailable`
 
-- `func(perform payloadAction: (() -> [Foundation.NSItemProvider])?)` → **unsupported** (`non-bridgeable-generic-closure`): The closure carries arbitrary generic or return-value semantics and is not serializable.
+- `func(perform payloadAction: (() -> [Foundation.NSItemProvider])?)` → **unavailable** (`unavailable`): The current iOS SDK marks this declaration unavailable.
 
 ### SwiftUI.onDeleteCommand
 
@@ -4173,15 +4173,15 @@ Aggregate: `needs-investigation`
 
 ### SwiftUI.onLongTouchGesture
 
-Aggregate: `unsupported`
+Aggregate: `unavailable`
 
-- `func(minimumDuration minimumDuration: Swift.Double, perform action: @escaping () -> Swift.Void, onTouchingChanged onTouchingChanged: ((Swift.Bool) -> Swift.Void)?)` → **unsupported** (`non-bridgeable-generic-closure`): The closure carries arbitrary generic or return-value semantics and is not serializable.
+- `func(minimumDuration minimumDuration: Swift.Double, perform action: @escaping () -> Swift.Void, onTouchingChanged onTouchingChanged: ((Swift.Bool) -> Swift.Void)?)` → **unavailable** (`unavailable`): The current iOS SDK marks this declaration unavailable.
 
 ### SwiftUI.onModifierKeysChanged
 
-Aggregate: `needs-investigation`
+Aggregate: `unavailable`
 
-- `func(mask mask: SwiftUICore.EventModifiers, initial initial: Swift.Bool, action: @escaping (_ old: SwiftUICore.EventModifiers, _ new: SwiftUICore.EventModifiers) -> Swift.Void)` → **needs-investigation** (`event-callback-template`): The closure is an event callback shape, but this symbol still needs event payload and lifecycle mapping.
+- `func(mask mask: SwiftUICore.EventModifiers, initial initial: Swift.Bool, action: @escaping (_ old: SwiftUICore.EventModifiers, _ new: SwiftUICore.EventModifiers) -> Swift.Void)` → **unavailable** (`unavailable`): The current iOS SDK marks this declaration unavailable.
 
 ### SwiftUI.onMoveCommand
 
@@ -4197,12 +4197,12 @@ Aggregate: `needs-investigation`
 
 ### SwiftUI.onPasteCommand
 
-Aggregate: `needs-investigation`
+Aggregate: `unavailable`
 
-- `func(of supportedContentTypes: [UniformTypeIdentifiers.UTType], perform payloadAction: @escaping ([Foundation.NSItemProvider]) -> Swift.Void)` → **needs-investigation** (`event-callback-template`): The closure is an event callback shape, but this symbol still needs event payload and lifecycle mapping.
-- `func(of supportedContentTypes: [UniformTypeIdentifiers.UTType], validator validator: @escaping ([Foundation.NSItemProvider]) -> Payload?, perform payloadAction: @escaping (Payload) -> Swift.Void)` → **unsupported** (`non-bridgeable-generic-closure`): The closure carries arbitrary generic or return-value semantics and is not serializable.
-- `func(of supportedTypes: [Swift.String], perform payloadAction: @escaping ([Foundation.NSItemProvider]) -> Swift.Void)` → **needs-investigation** (`event-callback-template`): The closure is an event callback shape, but this symbol still needs event payload and lifecycle mapping.
-- `func(of supportedTypes: [Swift.String], validator validator: @escaping ([Foundation.NSItemProvider]) -> Payload?, perform payloadAction: @escaping (Payload) -> Swift.Void)` → **unsupported** (`non-bridgeable-generic-closure`): The closure carries arbitrary generic or return-value semantics and is not serializable.
+- `func(of supportedContentTypes: [UniformTypeIdentifiers.UTType], perform payloadAction: @escaping ([Foundation.NSItemProvider]) -> Swift.Void)` → **unavailable** (`unavailable`): The current iOS SDK marks this declaration unavailable.
+- `func(of supportedContentTypes: [UniformTypeIdentifiers.UTType], validator validator: @escaping ([Foundation.NSItemProvider]) -> Payload?, perform payloadAction: @escaping (Payload) -> Swift.Void)` → **unavailable** (`unavailable`): The current iOS SDK marks this declaration unavailable.
+- `func(of supportedTypes: [Swift.String], perform payloadAction: @escaping ([Foundation.NSItemProvider]) -> Swift.Void)` → **unavailable** (`unavailable`): The current iOS SDK marks this declaration unavailable.
+- `func(of supportedTypes: [Swift.String], validator validator: @escaping ([Foundation.NSItemProvider]) -> Payload?, perform payloadAction: @escaping (Payload) -> Swift.Void)` → **unavailable** (`unavailable`): The current iOS SDK marks this declaration unavailable.
 
 ### SwiftUI.onPencilDoubleTap
 
@@ -4261,9 +4261,9 @@ Aggregate: `full`
 
 ### SwiftUI.onTapGesture
 
-Aggregate: `partial`
+Aggregate: `needs-investigation`
 
-- `func(count count: Swift.Int, coordinateSpace coordinateSpace: SwiftUICore.CoordinateSpace, perform action: @escaping (CoreFoundation.CGPoint) -> Swift.Void)` → **covered-by-shared-TS-surface** (`event-callback-template`): Matched to the reviewed installed Expo TypeScript/native semantic surface.
+- `func(count count: Swift.Int, coordinateSpace coordinateSpace: SwiftUICore.CoordinateSpace, perform action: @escaping (CoreFoundation.CGPoint) -> Swift.Void)` → **needs-investigation** (`expo-overload-parity-unverified`): This Apple overload contains generic, closure, binding, or value semantics not matched by the reviewed Expo surface.
 - `func(count count: Swift.Int, coordinateSpace coordinateSpace: some CoordinateSpaceProtocol, perform action: @escaping (CoreFoundation.CGPoint) -> Swift.Void)` → **needs-investigation** (`expo-overload-parity-unverified`): This Apple overload contains generic, closure, binding, or value semantics not matched by the reviewed Expo surface.
 - `func(count count: Swift.Int, coordinateSpace coordinateSpace: some CoordinateSpaceProtocol, inputKinds inputKinds: SwiftUICore.GestureInputKinds, perform action: @escaping (CoreFoundation.CGPoint) -> Swift.Void)` → **needs-investigation** (`expo-overload-parity-unverified`): This Apple overload contains generic, closure, binding, or value semantics not matched by the reviewed Expo surface.
 
@@ -4311,9 +4311,9 @@ Aggregate: `partial`
 
 ### SwiftUI.pointerVisibility
 
-Aggregate: `full`
+Aggregate: `unavailable`
 
-- `func(visibility: SwiftUICore.Visibility)` → **direct-generated** (`mechanical-value`): The signature uses mechanically serializable values and supported content slots.
+- `func(visibility: SwiftUICore.Visibility)` → **unavailable** (`unavailable`): The current iOS SDK marks this declaration unavailable.
 
 ### SwiftUI.popover
 
@@ -4324,9 +4324,9 @@ Aggregate: `partial`
 
 ### SwiftUI.prefersDefaultFocus
 
-Aggregate: `needs-investigation`
+Aggregate: `unavailable`
 
-- `func(prefersDefaultFocus: Swift.Bool, in namespace: SwiftUICore.Namespace.ID)` → **needs-investigation** (`missing-value-serialization`): At least one value type has no safe typed React serialization rule yet.
+- `func(prefersDefaultFocus: Swift.Bool, in namespace: SwiftUICore.Namespace.ID)` → **unavailable** (`unavailable`): The current iOS SDK marks this declaration unavailable.
 
 ### SwiftUI.presentationBackground
 
@@ -4381,9 +4381,9 @@ Aggregate: `needs-investigation`
 
 ### SwiftUI.presentationPreventsAppTermination
 
-Aggregate: `full`
+Aggregate: `unavailable`
 
-- `func(prevents: Swift.Bool?)` → **direct-generated** (`mechanical-value`): The signature uses mechanically serializable values and supported content slots.
+- `func(prevents: Swift.Bool?)` → **unavailable** (`unavailable`): The current iOS SDK marks this declaration unavailable.
 
 ### SwiftUI.presentationSizing
 
@@ -4393,15 +4393,15 @@ Aggregate: `partial`
 
 ### SwiftUI.presentedWindowStyle
 
-Aggregate: `unsupported`
+Aggregate: `unavailable`
 
-- `func(style: S)` → **unsupported** (`non-serializable-generic-semantics`): The signature depends on arbitrary generic, key-path, protocol, or associated-type semantics.
+- `func(style: S)` → **unavailable** (`unavailable`): The current iOS SDK marks this declaration unavailable.
 
 ### SwiftUI.presentedWindowToolbarStyle
 
-Aggregate: `unsupported`
+Aggregate: `unavailable`
 
-- `func(style: S)` → **unsupported** (`non-serializable-generic-semantics`): The signature depends on arbitrary generic, key-path, protocol, or associated-type semantics.
+- `func(style: S)` → **unavailable** (`unavailable`): The current iOS SDK marks this declaration unavailable.
 
 ### SwiftUI.previewContext
 
@@ -4870,9 +4870,9 @@ Aggregate: `partial`
 
 ### SwiftUI.textInputCompletion
 
-Aggregate: `full`
+Aggregate: `unavailable`
 
-- `func(completion: Swift.String)` → **direct-generated** (`mechanical-value`): The signature uses mechanically serializable values and supported content slots.
+- `func(completion: Swift.String)` → **unavailable** (`unavailable`): The current iOS SDK marks this declaration unavailable.
 
 ### SwiftUI.textInputFormattingControlVisibility
 
@@ -4882,11 +4882,11 @@ Aggregate: `full`
 
 ### SwiftUI.textInputSuggestions
 
-Aggregate: `needs-investigation`
+Aggregate: `unavailable`
 
-- `func(suggestions: () -> S)` → **needs-investigation** (`missing-value-serialization`): At least one value type has no safe typed React serialization rule yet.
-- `func(data: Data, id id: Swift.KeyPath<Data.Element, ID>, content content: @escaping (Data.Element) -> Content)` → **unsupported** (`non-serializable-generic-semantics`): The signature depends on arbitrary generic, key-path, protocol, or associated-type semantics.
-- `func(data: Data, content content: @escaping (Data.Element) -> Content)` → **unsupported** (`non-serializable-generic-semantics`): The signature depends on arbitrary generic, key-path, protocol, or associated-type semantics.
+- `func(suggestions: () -> S)` → **unavailable** (`unavailable`): The current iOS SDK marks this declaration unavailable.
+- `func(data: Data, id id: Swift.KeyPath<Data.Element, ID>, content content: @escaping (Data.Element) -> Content)` → **unavailable** (`unavailable`): The current iOS SDK marks this declaration unavailable.
+- `func(data: Data, content content: @escaping (Data.Element) -> Content)` → **unavailable** (`unavailable`): The current iOS SDK marks this declaration unavailable.
 
 ### SwiftUI.textSelection
 
@@ -4943,9 +4943,9 @@ Aggregate: `unavailable`
 
 ### SwiftUI.toolbarItemHidden
 
-Aggregate: `full`
+Aggregate: `unavailable`
 
-- `func(hidden: Swift.Bool)` → **direct-generated** (`mechanical-value`): The signature uses mechanically serializable values and supported content slots.
+- `func(hidden: Swift.Bool)` → **unavailable** (`unavailable`): The current iOS SDK marks this declaration unavailable.
 
 ### SwiftUI.toolbarMinimizationBehavior
 
@@ -5038,39 +5038,39 @@ Aggregate: `needs-investigation`
 
 ### SwiftUI.windowDismissBehavior
 
-Aggregate: `needs-investigation`
+Aggregate: `unavailable`
 
-- `func(behavior: SwiftUI.WindowInteractionBehavior)` → **needs-investigation** (`missing-value-serialization`): At least one value type has no safe typed React serialization rule yet.
+- `func(behavior: SwiftUI.WindowInteractionBehavior)` → **unavailable** (`unavailable`): The current iOS SDK marks this declaration unavailable.
 
 ### SwiftUI.windowFullScreenBehavior
 
-Aggregate: `needs-investigation`
+Aggregate: `unavailable`
 
-- `func(behavior: SwiftUI.WindowInteractionBehavior)` → **needs-investigation** (`missing-value-serialization`): At least one value type has no safe typed React serialization rule yet.
+- `func(behavior: SwiftUI.WindowInteractionBehavior)` → **unavailable** (`unavailable`): The current iOS SDK marks this declaration unavailable.
 
 ### SwiftUI.windowMinimizeBehavior
 
-Aggregate: `needs-investigation`
+Aggregate: `unavailable`
 
-- `func(behavior: SwiftUI.WindowInteractionBehavior)` → **needs-investigation** (`missing-value-serialization`): At least one value type has no safe typed React serialization rule yet.
+- `func(behavior: SwiftUI.WindowInteractionBehavior)` → **unavailable** (`unavailable`): The current iOS SDK marks this declaration unavailable.
 
 ### SwiftUI.windowResizeAnchor
 
-Aggregate: `full`
+Aggregate: `unavailable`
 
-- `func(anchor: SwiftUICore.UnitPoint?)` → **direct-generated** (`mechanical-value`): The signature uses mechanically serializable values and supported content slots.
+- `func(anchor: SwiftUICore.UnitPoint?)` → **unavailable** (`unavailable`): The current iOS SDK marks this declaration unavailable.
 
 ### SwiftUI.windowResizeBehavior
 
-Aggregate: `needs-investigation`
+Aggregate: `unavailable`
 
-- `func(behavior: SwiftUI.WindowInteractionBehavior)` → **needs-investigation** (`missing-value-serialization`): At least one value type has no safe typed React serialization rule yet.
+- `func(behavior: SwiftUI.WindowInteractionBehavior)` → **unavailable** (`unavailable`): The current iOS SDK marks this declaration unavailable.
 
 ### SwiftUI.windowToolbarFullScreenVisibility
 
-Aggregate: `full`
+Aggregate: `needs-investigation`
 
-- `func(visibility: SwiftUI.WindowToolbarFullScreenVisibility)` → **direct-generated** (`mechanical-value`): The signature uses mechanically serializable values and supported content slots.
+- `func(visibility: SwiftUI.WindowToolbarFullScreenVisibility)` → **needs-investigation** (`missing-value-serialization`): At least one value type has no safe typed React serialization rule yet.
 
 ### SwiftUI.writingToolsAffordanceVisibility
 
@@ -5950,11 +5950,13 @@ Aggregate: `internal-private`
 Aggregate: `internal-private`
 
 - `func(view view: SwiftUICore._GraphValue<Self>, inputs inputs: SwiftUICore._ViewInputs)` → **internal-private** (`internal-private`): The SDK declaration is underscored/internal; it remains inventoried but is not exported by default.
+- `func(view view: SwiftUICore._GraphValue<Self>, inputs inputs: SwiftUICore._ViewInputs)` → **internal-private** (`internal-private`): The SDK declaration is underscored/internal; it remains inventoried but is not exported by default.
 
 ### SwiftUICore._makeViewList
 
 Aggregate: `internal-private`
 
+- `func(view view: SwiftUICore._GraphValue<Self>, inputs inputs: SwiftUICore._ViewListInputs)` → **internal-private** (`internal-private`): The SDK declaration is underscored/internal; it remains inventoried but is not exported by default.
 - `func(view view: SwiftUICore._GraphValue<Self>, inputs inputs: SwiftUICore._ViewListInputs)` → **internal-private** (`internal-private`): The SDK declaration is underscored/internal; it remains inventoried but is not exported by default.
 
 ### SwiftUICore._onBindingChange
@@ -6238,10 +6240,10 @@ Aggregate: `partial`
 
 ### SwiftUICore.coordinateSpace
 
-Aggregate: `partial`
+Aggregate: `needs-investigation`
 
 - `func(name name: T)` → **unsupported** (`non-serializable-generic-semantics`): The signature depends on arbitrary generic, key-path, protocol, or associated-type semantics.
-- `func(name: SwiftUICore.NamedCoordinateSpace)` → **direct-generated** (`mechanical-value`): The signature uses mechanically serializable values and supported content slots.
+- `func(name: SwiftUICore.NamedCoordinateSpace)` → **needs-investigation** (`missing-value-serialization`): At least one value type has no safe typed React serialization rule yet.
 
 ### SwiftUICore.cornerRadius
 
@@ -6416,10 +6418,10 @@ Aggregate: `unsupported`
 Aggregate: `needs-investigation`
 
 - `func(effect: some CustomHoverEffect, isEnabled isEnabled: Swift.Bool)` → **unsupported** (`non-serializable-generic-semantics`): The signature depends on arbitrary generic, key-path, protocol, or associated-type semantics.
-- `func(effect: some CustomHoverEffect, in group: SwiftUICore.HoverEffectGroup?, isEnabled isEnabled: Swift.Bool)` → **unsupported** (`non-serializable-generic-semantics`): The signature depends on arbitrary generic, key-path, protocol, or associated-type semantics.
+- `func(effect: some CustomHoverEffect, in group: SwiftUICore.HoverEffectGroup?, isEnabled isEnabled: Swift.Bool)` → **unavailable** (`unavailable`): The current iOS SDK marks this overload unavailable.
 - `func(effect: SwiftUICore.HoverEffect)` → **needs-investigation** (`missing-value-serialization`): At least one value type has no safe typed React serialization rule yet.
 - `func(effect: SwiftUICore.HoverEffect, isEnabled isEnabled: Swift.Bool)` → **needs-investigation** (`missing-value-serialization`): At least one value type has no safe typed React serialization rule yet.
-- `func(in group: SwiftUICore.HoverEffectGroup?, isEnabled isEnabled: Swift.Bool, body body: @escaping (SwiftUICore.EmptyHoverEffectContent, Swift.Bool, SwiftUICore.GeometryProxy) -> some HoverEffectContent)` → **unsupported** (`non-bridgeable-generic-closure`): The closure carries arbitrary generic or return-value semantics and is not serializable.
+- `func(in group: SwiftUICore.HoverEffectGroup?, isEnabled isEnabled: Swift.Bool, body body: @escaping (SwiftUICore.EmptyHoverEffectContent, Swift.Bool, SwiftUICore.GeometryProxy) -> some HoverEffectContent)` → **unavailable** (`unavailable`): The current iOS SDK marks this overload unavailable.
 
 ### SwiftUICore.hoverEffectDisabled
 
@@ -6429,11 +6431,11 @@ Aggregate: `full`
 
 ### SwiftUICore.hoverEffectGroup
 
-Aggregate: `partial`
+Aggregate: `unavailable`
 
-- `func(id id: Swift.String?, in namespace: SwiftUICore.Namespace.SwiftUICore.ID, behavior behavior: SwiftUICore.HoverEffectGroup.SwiftUICore.Behavior)` → **needs-investigation** (`missing-value-serialization`): At least one value type has no safe typed React serialization rule yet.
-- `func(group: SwiftUICore.HoverEffectGroup?)` → **needs-investigation** (`missing-value-serialization`): At least one value type has no safe typed React serialization rule yet.
-- `func()` → **direct-generated** (`mechanical-value`): The signature uses mechanically serializable values and supported content slots.
+- `func(id id: Swift.String?, in namespace: SwiftUICore.Namespace.SwiftUICore.ID, behavior behavior: SwiftUICore.HoverEffectGroup.SwiftUICore.Behavior)` → **unavailable** (`unavailable`): The current iOS SDK marks this declaration unavailable.
+- `func(group: SwiftUICore.HoverEffectGroup?)` → **unavailable** (`unavailable`): The current iOS SDK marks this declaration unavailable.
+- `func()` → **unavailable** (`unavailable`): The current iOS SDK marks this declaration unavailable.
 
 ### SwiftUICore.hueRotation
 
@@ -6449,10 +6451,10 @@ Aggregate: `partial`
 
 ### SwiftUICore.ignoresSafeArea
 
-Aggregate: `full`
+Aggregate: `partial`
 
 - `func(regions: SwiftUICore.SafeAreaRegions, edges edges: SwiftUICore.Edge.SwiftUICore.Set)` → **direct-generated** (`mechanical-value`): The signature uses mechanically serializable values and supported content slots.
-- `func(regions: SwiftUICore.SafeAreaRegions, edges edges: SwiftUICore.Edge.SwiftUICore.Set, alignment alignment: SwiftUICore.Alignment?)` → **direct-generated** (`mechanical-value`): The signature uses mechanically serializable values and supported content slots.
+- `func(regions: SwiftUICore.SafeAreaRegions, edges edges: SwiftUICore.Edge.SwiftUICore.Set, alignment alignment: SwiftUICore.Alignment?)` → **needs-investigation** (`missing-value-serialization`): At least one value type has no safe typed React serialization rule yet.
 
 ### SwiftUICore.imageScale
 
@@ -6487,9 +6489,9 @@ Aggregate: `needs-investigation`
 
 ### SwiftUICore.layoutDirectionBehavior
 
-Aggregate: `full`
+Aggregate: `needs-investigation`
 
-- `func(behavior: SwiftUICore.LayoutDirectionBehavior)` → **direct-generated** (`mechanical-value`): The signature uses mechanically serializable values and supported content slots.
+- `func(behavior: SwiftUICore.LayoutDirectionBehavior)` → **needs-investigation** (`missing-value-serialization`): At least one value type has no safe typed React serialization rule yet.
 
 ### SwiftUICore.layoutPriority
 
@@ -6808,9 +6810,9 @@ Aggregate: `partial`
 
 ### SwiftUICore.symbolColorRenderingMode
 
-Aggregate: `full`
+Aggregate: `needs-investigation`
 
-- `func(mode: SwiftUICore.SymbolColorRenderingMode?)` → **direct-generated** (`mechanical-value`): The signature uses mechanically serializable values and supported content slots.
+- `func(mode: SwiftUICore.SymbolColorRenderingMode?)` → **needs-investigation** (`missing-value-serialization`): At least one value type has no safe typed React serialization rule yet.
 
 ### SwiftUICore.symbolEffect
 

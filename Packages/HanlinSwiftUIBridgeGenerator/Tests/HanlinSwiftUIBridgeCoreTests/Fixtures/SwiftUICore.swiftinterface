@@ -9,8 +9,24 @@ public enum Axis {
     public init(rawValue: Swift.Int8)
     public static let horizontal: Axis.Set
     public static let vertical: Axis.Set
+    @available(iOS, unavailable)
+    public static let desktopOnly: Axis.Set
   }
 }
+
+public enum CoordinateSpace {
+  case global
+  case local
+  case named(Swift.AnyHashable)
+}
+
+public enum ColorRenderingMode {
+  case extendedLinear
+  case linear
+  case nonLinear
+}
+
+public struct SymbolColorRenderingMode {}
 
 public struct NavigationStack<Root>: View {
   public init(@ViewBuilder root: () -> Root)
@@ -90,6 +106,18 @@ extension View {
   public func mixedAvailability(_ value: String) -> some View
   public func mixedAvailability(_ value: Int) -> some View
   public func optionalThenRequired(_ optional: Int = 1, required: Int) -> some View
+  public func fileDialogMessage(_ message: Text?) -> some View
+  public func symbolColorRenderingMode(_ mode: SymbolColorRenderingMode?) -> some View
+}
+
+@available(macOS 13.0, *)
+@available(iOS, unavailable)
+extension View {
+  public func desktopOnlyModifier(_ enabled: Bool = true) -> some View
+}
+
+extension View where Self: Equatable {
+  public func equatable() -> some View
 }
 
 extension SwiftUICore::View {
