@@ -263,14 +263,16 @@ public struct HanlinSearchableView: ExpoSwiftUI.View {
                     isPresented: $presented,
                     placement: props.placement.value,
                     prompt: Text(prompt)
-                ) { hanlinNamedSlot(props, "suggestions") }
+                )
+                .searchSuggestions { hanlinNamedSlot(props, "suggestions") }
         } else {
             hanlinNamedSlot(props, "content")
                 .searchable(
                     text: $text,
                     isPresented: $presented,
                     placement: props.placement.value
-                ) { hanlinNamedSlot(props, "suggestions") }
+                )
+                .searchSuggestions { hanlinNamedSlot(props, "suggestions") }
         }
     }
 }
