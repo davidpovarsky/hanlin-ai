@@ -1,0 +1,1311 @@
+{
+  "tools": [
+    {
+      "logicalID": "meta.load_skill",
+      "alias": "load_skill",
+      "provider": "HanlinSkillCatalog",
+      "sourceKind": "meta",
+      "schema": {
+        "type": "function",
+        "function": {
+          "name": "load_skill",
+          "description": "Load a Skill and expose its instructions and tools to the conversation.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "skill_id": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "skill_id"
+            ]
+          }
+        }
+      },
+      "executor": "LoadSkillTool",
+      "settingState": "enabledByDefault",
+      "runtimeAvailability": "always",
+      "skillIDs": [
+        "system.core"
+      ],
+      "discoveryStatus": "alwaysVisible",
+      "invocationStatus": "production",
+      "testIDs": [
+        "DISC-01",
+        "DISC-02",
+        "DISC-05",
+        "DISC-14",
+        "E2E-G"
+      ]
+    },
+    {
+      "logicalID": "meta.read_skill_resource",
+      "alias": "read_skill_resource",
+      "provider": "HanlinSkillCatalog",
+      "sourceKind": "meta",
+      "schema": {
+        "type": "function",
+        "function": {
+          "name": "read_skill_resource",
+          "description": "Read a resource file associated with a loaded Skill.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "skill_id": {
+                "type": "string"
+              },
+              "relative_path": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "skill_id",
+              "relative_path"
+            ]
+          }
+        }
+      },
+      "executor": "ReadSkillResourceTool",
+      "settingState": "enabledByDefault",
+      "runtimeAvailability": "always",
+      "skillIDs": [
+        "system.core"
+      ],
+      "discoveryStatus": "alwaysVisible",
+      "invocationStatus": "production",
+      "testIDs": [
+        "META-15",
+        "DISC-01"
+      ]
+    },
+    {
+      "logicalID": "meta.tool_search",
+      "alias": "tool_search",
+      "provider": "HanlinSkillIndex",
+      "sourceKind": "meta",
+      "schema": {
+        "type": "function",
+        "function": {
+          "name": "tool_search",
+          "description": "Search for available tools and skills by keyword.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "query": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "query"
+            ]
+          }
+        }
+      },
+      "executor": "ToolSearchTool",
+      "settingState": "enabledByDefault",
+      "runtimeAvailability": "always",
+      "skillIDs": [
+        "system.core"
+      ],
+      "discoveryStatus": "alwaysVisible",
+      "invocationStatus": "production",
+      "testIDs": [
+        "DISC-07",
+        "DISC-08",
+        "DISC-09",
+        "DISC-10",
+        "E2E-C"
+      ]
+    },
+    {
+      "logicalID": "meta.read_tool_result",
+      "alias": "read_tool_result",
+      "provider": "ToolResultStore",
+      "sourceKind": "meta",
+      "schema": {
+        "type": "function",
+        "function": {
+          "name": "read_tool_result",
+          "description": "Retrieve the full text of a long tool output using its reference token.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "reference": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "reference"
+            ]
+          }
+        }
+      },
+      "executor": "ReadToolResultTool",
+      "settingState": "enabledByDefault",
+      "runtimeAvailability": "always",
+      "skillIDs": [
+        "system.core"
+      ],
+      "discoveryStatus": "alwaysVisible",
+      "invocationStatus": "production",
+      "testIDs": [
+        "F07",
+        "E2E-F"
+      ]
+    },
+    {
+      "logicalID": "meta.list_tools",
+      "alias": "list_tools",
+      "provider": "NativeToolCatalog",
+      "sourceKind": "meta",
+      "schema": {
+        "type": "function",
+        "function": {
+          "name": "list_tools",
+          "description": "Enumerate available tools across all runtimes with pagination and capability status.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "page": {
+                "type": "integer"
+              },
+              "pageSize": {
+                "type": "integer"
+              }
+            }
+          }
+        }
+      },
+      "executor": "ListToolsTool",
+      "settingState": "enabledByDefault",
+      "runtimeAvailability": "always",
+      "skillIDs": [
+        "system.audit"
+      ],
+      "discoveryStatus": "progressive",
+      "invocationStatus": "production",
+      "testIDs": [
+        "TOOLS-01",
+        "TOOLS-02"
+      ]
+    },
+    {
+      "logicalID": "meta.get_runtime_capabilities",
+      "alias": "get_runtime_capabilities",
+      "provider": "AppRuntimeCore",
+      "sourceKind": "meta",
+      "schema": {
+        "type": "function",
+        "function": {
+          "name": "get_runtime_capabilities",
+          "description": "Query actual live execution environments and reported versions.",
+          "parameters": {
+            "type": "object",
+            "properties": {}
+          }
+        }
+      },
+      "executor": "GetRuntimeCapabilitiesTool",
+      "settingState": "enabledByDefault",
+      "runtimeAvailability": "always",
+      "skillIDs": [
+        "system.audit",
+        "code"
+      ],
+      "discoveryStatus": "progressive",
+      "invocationStatus": "production",
+      "testIDs": [
+        "TOOLS-03",
+        "TOOLS-04"
+      ]
+    },
+    {
+      "logicalID": "runtime.manage_runtime_packages",
+      "alias": "manage_runtime_packages",
+      "provider": "AppRuntimeCore",
+      "sourceKind": "native",
+      "schema": {
+        "type": "function",
+        "function": {
+          "name": "manage_runtime_packages",
+          "description": "Manage packages for embedded Node and Python runtimes (list, preview, install, probe, uninstall).",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "runtime": {
+                "type": "string",
+                "enum": [
+                  "node",
+                  "python"
+                ]
+              },
+              "action": {
+                "type": "string",
+                "enum": [
+                  "list",
+                  "preview",
+                  "install",
+                  "probe",
+                  "uninstall"
+                ]
+              },
+              "package_spec": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "runtime",
+              "action"
+            ]
+          }
+        }
+      },
+      "executor": "ManageRuntimePackagesTool",
+      "settingState": "enabledByDefault",
+      "runtimeAvailability": "always",
+      "skillIDs": [
+        "code",
+        "packages"
+      ],
+      "discoveryStatus": "progressive",
+      "invocationStatus": "production",
+      "testIDs": [
+        "PKGT-01",
+        "PKGT-02",
+        "PKGT-03",
+        "PKGT-04",
+        "PKGT-05",
+        "PKGT-06",
+        "E2E-B",
+        "E2E-H"
+      ]
+    },
+    {
+      "logicalID": "native.quick_calculate",
+      "alias": "quick_calculate",
+      "provider": "NativeToolCatalog",
+      "sourceKind": "native",
+      "schema": {
+        "type": "function",
+        "function": {
+          "name": "quick_calculate",
+          "description": "Evaluate simple mathematical expressions.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "expression": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "expression"
+            ]
+          }
+        }
+      },
+      "executor": "QuickCalculateTool",
+      "settingState": "enabledByDefault",
+      "runtimeAvailability": "always",
+      "skillIDs": [
+        "math"
+      ],
+      "discoveryStatus": "progressive",
+      "invocationStatus": "production",
+      "testIDs": [
+        "AUD-05",
+        "SDKAI-17"
+      ]
+    },
+    {
+      "logicalID": "runtime.execute_local_python_code",
+      "alias": "execute_local_python_code",
+      "provider": "PythonRuntimeService",
+      "sourceKind": "native",
+      "schema": {
+        "type": "function",
+        "function": {
+          "name": "execute_local_python_code",
+          "description": "Run Python code inside embedded CPython runtime.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "code"
+            ]
+          }
+        }
+      },
+      "executor": "ExecuteLocalPythonTool",
+      "settingState": "enabledByDefault",
+      "runtimeAvailability": "always",
+      "skillIDs": [
+        "code"
+      ],
+      "discoveryStatus": "progressive",
+      "invocationStatus": "production",
+      "testIDs": [
+        "ENV-02",
+        "FS-01",
+        "PKGT-04",
+        "E2E-B",
+        "E2E-H"
+      ]
+    },
+    {
+      "logicalID": "runtime.execute_javascript_code",
+      "alias": "execute_javascript_code",
+      "provider": "NodeRuntimeService",
+      "sourceKind": "native",
+      "schema": {
+        "type": "function",
+        "function": {
+          "name": "execute_javascript_code",
+          "description": "Execute JavaScript code using embedded Node.js or JavaScriptCore.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string"
+              },
+              "runtime": {
+                "type": "string",
+                "enum": [
+                  "auto",
+                  "node",
+                  "jscore"
+                ]
+              }
+            },
+            "required": [
+              "code"
+            ]
+          }
+        }
+      },
+      "executor": "ExecuteJavaScriptTool",
+      "settingState": "enabledByDefault",
+      "runtimeAvailability": "always",
+      "skillIDs": [
+        "code"
+      ],
+      "discoveryStatus": "progressive",
+      "invocationStatus": "production",
+      "testIDs": [
+        "JS-01",
+        "JS-02",
+        "JS-03",
+        "JS-04",
+        "JS-05",
+        "JS-06",
+        "JS-07",
+        "E2E-B",
+        "E2E-H"
+      ]
+    },
+    {
+      "logicalID": "runtime.execute_typescript_code",
+      "alias": "execute_typescript_code",
+      "provider": "TypeScriptRuntimeService",
+      "sourceKind": "native",
+      "schema": {
+        "type": "function",
+        "function": {
+          "name": "execute_typescript_code",
+          "description": "Compile and run TypeScript code using embedded compiler and Node.js.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "source": {
+                "type": "string"
+              },
+              "compile_only": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "source"
+            ]
+          }
+        }
+      },
+      "executor": "ExecuteTypeScriptTool",
+      "settingState": "enabledByDefault",
+      "runtimeAvailability": "always",
+      "skillIDs": [
+        "code"
+      ],
+      "discoveryStatus": "progressive",
+      "invocationStatus": "production",
+      "testIDs": [
+        "JS-08",
+        "JS-09",
+        "JS-10",
+        "E2E-H"
+      ]
+    },
+    {
+      "logicalID": "runtime.execute_shell_command",
+      "alias": "execute_shell_command",
+      "provider": "ShellRuntimeService",
+      "sourceKind": "native",
+      "schema": {
+        "type": "function",
+        "function": {
+          "name": "execute_shell_command",
+          "description": "Run shell commands in ios_system terminal runtime.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "program": {
+                "type": "string"
+              },
+              "arguments": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "command": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "executor": "ExecuteShellCommandTool",
+      "settingState": "enabledByDefault",
+      "runtimeAvailability": "always",
+      "skillIDs": [
+        "code",
+        "shell"
+      ],
+      "discoveryStatus": "progressive",
+      "invocationStatus": "production",
+      "testIDs": [
+        "SH-01..22",
+        "CMD-01..23",
+        "E2E-B",
+        "E2E-H"
+      ]
+    },
+    {
+      "logicalID": "nativeapp.sefaria_search",
+      "alias": "sefaria_search",
+      "provider": "NativeAppSefaria",
+      "sourceKind": "nativeApp",
+      "schema": {
+        "type": "function",
+        "function": {
+          "name": "sefaria_search",
+          "description": "Search Jewish texts and commentary in Sefaria library.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "query": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "query"
+            ]
+          }
+        }
+      },
+      "executor": "NativeAppSefariaSearchTool",
+      "settingState": "userControllable",
+      "runtimeAvailability": "always",
+      "skillIDs": [
+        "sefaria"
+      ],
+      "discoveryStatus": "progressive",
+      "invocationStatus": "production",
+      "testIDs": [
+        "APPENG-08",
+        "AUD-05"
+      ]
+    },
+    {
+      "logicalID": "nativeapp.sefaria_get_source",
+      "alias": "sefaria_get_source",
+      "provider": "NativeAppSefaria",
+      "sourceKind": "nativeApp",
+      "schema": {
+        "type": "function",
+        "function": {
+          "name": "sefaria_get_source",
+          "description": "Fetch text of a specific Jewish source by reference string.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "ref": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "ref"
+            ]
+          }
+        }
+      },
+      "executor": "NativeAppSefariaGetSourceTool",
+      "settingState": "userControllable",
+      "runtimeAvailability": "always",
+      "skillIDs": [
+        "sefaria"
+      ],
+      "discoveryStatus": "progressive",
+      "invocationStatus": "production",
+      "testIDs": [
+        "APPENG-08",
+        "AUD-05"
+      ]
+    },
+    {
+      "logicalID": "nativeapp.wikipedia_search",
+      "alias": "wikipedia_search",
+      "provider": "NativeAppWikipedia",
+      "sourceKind": "nativeApp",
+      "schema": {
+        "type": "function",
+        "function": {
+          "name": "wikipedia_search",
+          "description": "Search Wikipedia articles.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "query": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "query"
+            ]
+          }
+        }
+      },
+      "executor": "NativeAppWikipediaSearchTool",
+      "settingState": "userControllable",
+      "runtimeAvailability": "always",
+      "skillIDs": [
+        "wikipedia"
+      ],
+      "discoveryStatus": "progressive",
+      "invocationStatus": "production",
+      "testIDs": [
+        "APPENG-08",
+        "AUD-05"
+      ]
+    },
+    {
+      "logicalID": "nativeapp.wikipedia_get_summary",
+      "alias": "wikipedia_get_summary",
+      "provider": "NativeAppWikipedia",
+      "sourceKind": "nativeApp",
+      "schema": {
+        "type": "function",
+        "function": {
+          "name": "wikipedia_get_summary",
+          "description": "Retrieve summary of a Wikipedia article by title.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "title": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "title"
+            ]
+          }
+        }
+      },
+      "executor": "NativeAppWikipediaGetSummaryTool",
+      "settingState": "userControllable",
+      "runtimeAvailability": "always",
+      "skillIDs": [
+        "wikipedia"
+      ],
+      "discoveryStatus": "progressive",
+      "invocationStatus": "production",
+      "testIDs": [
+        "APPENG-08",
+        "AUD-05"
+      ]
+    },
+    {
+      "logicalID": "nativeapp.text_analyze",
+      "alias": "text_analyze",
+      "provider": "NativeAppTextStudio",
+      "sourceKind": "nativeApp",
+      "schema": {
+        "type": "function",
+        "function": {
+          "name": "text_analyze",
+          "description": "Perform linguistic and statistical analysis on text.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "text": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "text"
+            ]
+          }
+        }
+      },
+      "executor": "NativeAppTextStudioAnalyzeTool",
+      "settingState": "userControllable",
+      "runtimeAvailability": "always",
+      "skillIDs": [
+        "text_studio"
+      ],
+      "discoveryStatus": "progressive",
+      "invocationStatus": "production",
+      "testIDs": [
+        "APPENG-08",
+        "AUD-05"
+      ]
+    },
+    {
+      "logicalID": "nativeapp.text_transform",
+      "alias": "text_transform",
+      "provider": "NativeAppTextStudio",
+      "sourceKind": "nativeApp",
+      "schema": {
+        "type": "function",
+        "function": {
+          "name": "text_transform",
+          "description": "Transform text format (case, transliteration, normalization).",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "text": {
+                "type": "string"
+              },
+              "operation": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "text",
+              "operation"
+            ]
+          }
+        }
+      },
+      "executor": "NativeAppTextStudioTransformTool",
+      "settingState": "userControllable",
+      "runtimeAvailability": "always",
+      "skillIDs": [
+        "text_studio"
+      ],
+      "discoveryStatus": "progressive",
+      "invocationStatus": "production",
+      "testIDs": [
+        "APPENG-08",
+        "AUD-05"
+      ]
+    },
+    {
+      "logicalID": "system.save_memory",
+      "alias": "save_memory",
+      "provider": "ChatTools",
+      "sourceKind": "legacy",
+      "schema": {
+        "type": "function",
+        "function": {
+          "name": "save_memory",
+          "description": "Save fact in memory"
+        }
+      },
+      "executor": "ChatToolsExecutor",
+      "settingState": "userControllable",
+      "runtimeAvailability": "always",
+      "skillIDs": [
+        "memory"
+      ],
+      "discoveryStatus": "progressive",
+      "invocationStatus": "production",
+      "testIDs": [
+        "F05"
+      ]
+    },
+    {
+      "logicalID": "system.retrieve_memory",
+      "alias": "retrieve_memory",
+      "provider": "ChatTools",
+      "sourceKind": "legacy",
+      "schema": {
+        "type": "function",
+        "function": {
+          "name": "retrieve_memory",
+          "description": "Fetch stored memory"
+        }
+      },
+      "executor": "ChatToolsExecutor",
+      "settingState": "userControllable",
+      "runtimeAvailability": "always",
+      "skillIDs": [
+        "memory"
+      ],
+      "discoveryStatus": "progressive",
+      "invocationStatus": "production",
+      "testIDs": [
+        "F05"
+      ]
+    },
+    {
+      "logicalID": "system.update_memory",
+      "alias": "update_memory",
+      "provider": "ChatTools",
+      "sourceKind": "legacy",
+      "schema": {
+        "type": "function",
+        "function": {
+          "name": "update_memory",
+          "description": "Update memory"
+        }
+      },
+      "executor": "ChatToolsExecutor",
+      "settingState": "userControllable",
+      "runtimeAvailability": "always",
+      "skillIDs": [
+        "memory"
+      ],
+      "discoveryStatus": "progressive",
+      "invocationStatus": "production",
+      "testIDs": [
+        "F05"
+      ]
+    },
+    {
+      "logicalID": "system.search_calendar_and_reminders",
+      "alias": "search_calendar_and_reminders",
+      "provider": "ChatTools",
+      "sourceKind": "legacy",
+      "schema": {
+        "type": "function",
+        "function": {
+          "name": "search_calendar_and_reminders",
+          "description": "Search calendar and reminders"
+        }
+      },
+      "executor": "ChatToolsExecutor",
+      "settingState": "userControllable",
+      "runtimeAvailability": "always",
+      "skillIDs": [
+        "calendar"
+      ],
+      "discoveryStatus": "progressive",
+      "invocationStatus": "production",
+      "testIDs": [
+        "CHAT-11",
+        "E2E-D"
+      ]
+    },
+    {
+      "logicalID": "system.write_system_event",
+      "alias": "write_system_event",
+      "provider": "ChatTools",
+      "sourceKind": "legacy",
+      "schema": {
+        "type": "function",
+        "function": {
+          "name": "write_system_event",
+          "description": "Create calendar event or reminder"
+        }
+      },
+      "executor": "ChatToolsExecutor",
+      "settingState": "userControllable",
+      "runtimeAvailability": "always",
+      "skillIDs": [
+        "calendar"
+      ],
+      "discoveryStatus": "progressive",
+      "invocationStatus": "production",
+      "testIDs": [
+        "CHAT-11",
+        "E2E-D"
+      ]
+    },
+    {
+      "logicalID": "system.query_location",
+      "alias": "query_location",
+      "provider": "ChatTools",
+      "sourceKind": "legacy",
+      "schema": {
+        "type": "function",
+        "function": {
+          "name": "query_location",
+          "description": "Geocode place name"
+        }
+      },
+      "executor": "ChatToolsExecutor",
+      "settingState": "userControllable",
+      "runtimeAvailability": "always",
+      "skillIDs": [
+        "maps"
+      ],
+      "discoveryStatus": "progressive",
+      "invocationStatus": "production",
+      "testIDs": [
+        "CHAT-10",
+        "F05"
+      ]
+    },
+    {
+      "logicalID": "system.get_current_location",
+      "alias": "get_current_location",
+      "provider": "ChatTools",
+      "sourceKind": "legacy",
+      "schema": {
+        "type": "function",
+        "function": {
+          "name": "get_current_location",
+          "description": "Get device location"
+        }
+      },
+      "executor": "ChatToolsExecutor",
+      "settingState": "userControllable",
+      "runtimeAvailability": "always",
+      "skillIDs": [
+        "maps"
+      ],
+      "discoveryStatus": "progressive",
+      "invocationStatus": "production",
+      "testIDs": [
+        "CHAT-10",
+        "E2E-D"
+      ]
+    },
+    {
+      "logicalID": "system.search_nearby_locations",
+      "alias": "search_nearby_locations",
+      "provider": "ChatTools",
+      "sourceKind": "legacy",
+      "schema": {
+        "type": "function",
+        "function": {
+          "name": "search_nearby_locations",
+          "description": "Search POIs near coordinate"
+        }
+      },
+      "executor": "ChatToolsExecutor",
+      "settingState": "userControllable",
+      "runtimeAvailability": "always",
+      "skillIDs": [
+        "maps"
+      ],
+      "discoveryStatus": "progressive",
+      "invocationStatus": "production",
+      "testIDs": [
+        "CHAT-10",
+        "F05"
+      ]
+    },
+    {
+      "logicalID": "system.get_route",
+      "alias": "get_route",
+      "provider": "ChatTools",
+      "sourceKind": "legacy",
+      "schema": {
+        "type": "function",
+        "function": {
+          "name": "get_route",
+          "description": "Plan route between coordinates"
+        }
+      },
+      "executor": "ChatToolsExecutor",
+      "settingState": "userControllable",
+      "runtimeAvailability": "always",
+      "skillIDs": [
+        "maps"
+      ],
+      "discoveryStatus": "progressive",
+      "invocationStatus": "production",
+      "testIDs": [
+        "CHAT-10",
+        "F05"
+      ]
+    },
+    {
+      "logicalID": "system.query_weather",
+      "alias": "query_weather",
+      "provider": "ChatTools",
+      "sourceKind": "legacy",
+      "schema": {
+        "type": "function",
+        "function": {
+          "name": "query_weather",
+          "description": "Fetch weather forecast"
+        }
+      },
+      "executor": "ChatToolsExecutor",
+      "settingState": "userControllable",
+      "runtimeAvailability": "always",
+      "skillIDs": [
+        "weather"
+      ],
+      "discoveryStatus": "progressive",
+      "invocationStatus": "production",
+      "testIDs": [
+        "F05"
+      ]
+    },
+    {
+      "logicalID": "system.search_online",
+      "alias": "search_online",
+      "provider": "ChatTools",
+      "sourceKind": "legacy",
+      "schema": {
+        "type": "function",
+        "function": {
+          "name": "search_online",
+          "description": "Web search"
+        }
+      },
+      "executor": "ChatToolsExecutor",
+      "settingState": "userControllable",
+      "runtimeAvailability": "always",
+      "skillIDs": [
+        "web"
+      ],
+      "discoveryStatus": "progressive",
+      "invocationStatus": "production",
+      "testIDs": [
+        "CHAT-41",
+        "F03"
+      ]
+    },
+    {
+      "logicalID": "system.read_web_page",
+      "alias": "read_web_page",
+      "provider": "ChatTools",
+      "sourceKind": "legacy",
+      "schema": {
+        "type": "function",
+        "function": {
+          "name": "read_web_page",
+          "description": "Extract content from web URL"
+        }
+      },
+      "executor": "ChatToolsExecutor",
+      "settingState": "userControllable",
+      "runtimeAvailability": "always",
+      "skillIDs": [
+        "web"
+      ],
+      "discoveryStatus": "progressive",
+      "invocationStatus": "production",
+      "testIDs": [
+        "DEP-03",
+        "F03"
+      ]
+    },
+    {
+      "logicalID": "system.search_arxiv_papers",
+      "alias": "search_arxiv_papers",
+      "provider": "ChatTools",
+      "sourceKind": "legacy",
+      "schema": {
+        "type": "function",
+        "function": {
+          "name": "search_arxiv_papers",
+          "description": "Search arXiv papers"
+        }
+      },
+      "executor": "ChatToolsExecutor",
+      "settingState": "userControllable",
+      "runtimeAvailability": "always",
+      "skillIDs": [
+        "web",
+        "research"
+      ],
+      "discoveryStatus": "progressive",
+      "invocationStatus": "production",
+      "testIDs": [
+        "F03"
+      ]
+    },
+    {
+      "logicalID": "system.extract_remote_file_content",
+      "alias": "extract_remote_file_content",
+      "provider": "ChatTools",
+      "sourceKind": "legacy",
+      "schema": {
+        "type": "function",
+        "function": {
+          "name": "extract_remote_file_content",
+          "description": "Extract plain text from remote document"
+        }
+      },
+      "executor": "ChatToolsExecutor",
+      "settingState": "userControllable",
+      "runtimeAvailability": "always",
+      "skillIDs": [
+        "web",
+        "documents"
+      ],
+      "discoveryStatus": "progressive",
+      "invocationStatus": "production",
+      "testIDs": [
+        "DEP-01",
+        "F03"
+      ]
+    },
+    {
+      "logicalID": "system.search_knowledge_bag",
+      "alias": "search_knowledge_bag",
+      "provider": "ChatTools",
+      "sourceKind": "legacy",
+      "schema": {
+        "type": "function",
+        "function": {
+          "name": "search_knowledge_bag",
+          "description": "Search personal knowledge notes"
+        }
+      },
+      "executor": "ChatToolsExecutor",
+      "settingState": "userControllable",
+      "runtimeAvailability": "always",
+      "skillIDs": [
+        "knowledge"
+      ],
+      "discoveryStatus": "progressive",
+      "invocationStatus": "production",
+      "testIDs": [
+        "CHAT-40",
+        "F05"
+      ]
+    },
+    {
+      "logicalID": "system.create_knowledge_document",
+      "alias": "create_knowledge_document",
+      "provider": "ChatTools",
+      "sourceKind": "legacy",
+      "schema": {
+        "type": "function",
+        "function": {
+          "name": "create_knowledge_document",
+          "description": "Create document in knowledge store"
+        }
+      },
+      "executor": "ChatToolsExecutor",
+      "settingState": "userControllable",
+      "runtimeAvailability": "always",
+      "skillIDs": [
+        "knowledge"
+      ],
+      "discoveryStatus": "progressive",
+      "invocationStatus": "production",
+      "testIDs": [
+        "CHAT-40",
+        "F05"
+      ]
+    },
+    {
+      "logicalID": "system.create_canvas",
+      "alias": "create_canvas",
+      "provider": "ChatTools",
+      "sourceKind": "legacy",
+      "schema": {
+        "type": "function",
+        "function": {
+          "name": "create_canvas",
+          "description": "Create new visual canvas"
+        }
+      },
+      "executor": "ChatToolsExecutor",
+      "settingState": "userControllable",
+      "runtimeAvailability": "always",
+      "skillIDs": [
+        "canvas"
+      ],
+      "discoveryStatus": "progressive",
+      "invocationStatus": "production",
+      "testIDs": [
+        "CHAT-13",
+        "CHAT-46"
+      ]
+    },
+    {
+      "logicalID": "system.edit_canvas",
+      "alias": "edit_canvas",
+      "provider": "ChatTools",
+      "sourceKind": "legacy",
+      "schema": {
+        "type": "function",
+        "function": {
+          "name": "edit_canvas",
+          "description": "Edit canvas content via regex replacements"
+        }
+      },
+      "executor": "ChatToolsExecutor",
+      "settingState": "userControllable",
+      "runtimeAvailability": "always",
+      "skillIDs": [
+        "canvas"
+      ],
+      "discoveryStatus": "progressive",
+      "invocationStatus": "production",
+      "testIDs": [
+        "CHAT-13"
+      ]
+    },
+    {
+      "logicalID": "system.create_web_view",
+      "alias": "create_web_view",
+      "provider": "ChatTools",
+      "sourceKind": "legacy",
+      "schema": {
+        "type": "function",
+        "function": {
+          "name": "create_web_view",
+          "description": "Render interactive HTML preview"
+        }
+      },
+      "executor": "ChatToolsExecutor",
+      "settingState": "userControllable",
+      "runtimeAvailability": "always",
+      "skillIDs": [
+        "web",
+        "code"
+      ],
+      "discoveryStatus": "progressive",
+      "invocationStatus": "production",
+      "testIDs": [
+        "CHAT-14"
+      ]
+    },
+    {
+      "logicalID": "system.execute_remote_python_code",
+      "alias": "execute_remote_python_code",
+      "provider": "ChatTools",
+      "sourceKind": "legacy",
+      "schema": {
+        "type": "function",
+        "function": {
+          "name": "execute_remote_python_code",
+          "description": "Execute Python in remote sandbox"
+        }
+      },
+      "executor": "ChatToolsExecutor",
+      "settingState": "userControllable",
+      "runtimeAvailability": "always",
+      "skillIDs": [
+        "code"
+      ],
+      "discoveryStatus": "progressive",
+      "invocationStatus": "production",
+      "testIDs": [
+        "CHAT-15"
+      ]
+    },
+    {
+      "logicalID": "system.fetch_step_details",
+      "alias": "fetch_step_details",
+      "provider": "ChatTools",
+      "sourceKind": "legacy",
+      "schema": {
+        "type": "function",
+        "function": {
+          "name": "fetch_step_details",
+          "description": "Query HealthKit step counts"
+        }
+      },
+      "executor": "ChatToolsExecutor",
+      "settingState": "userControllable",
+      "runtimeAvailability": "always",
+      "skillIDs": [
+        "health"
+      ],
+      "discoveryStatus": "progressive",
+      "invocationStatus": "production",
+      "testIDs": [
+        "CHAT-12",
+        "E2E-D"
+      ]
+    },
+    {
+      "logicalID": "system.fetch_energy_details",
+      "alias": "fetch_energy_details",
+      "provider": "ChatTools",
+      "sourceKind": "legacy",
+      "schema": {
+        "type": "function",
+        "function": {
+          "name": "fetch_energy_details",
+          "description": "Query HealthKit active energy"
+        }
+      },
+      "executor": "ChatToolsExecutor",
+      "settingState": "userControllable",
+      "runtimeAvailability": "always",
+      "skillIDs": [
+        "health"
+      ],
+      "discoveryStatus": "progressive",
+      "invocationStatus": "production",
+      "testIDs": [
+        "CHAT-12",
+        "E2E-D"
+      ]
+    },
+    {
+      "logicalID": "system.fetch_nutrition_details",
+      "alias": "fetch_nutrition_details",
+      "provider": "ChatTools",
+      "sourceKind": "legacy",
+      "schema": {
+        "type": "function",
+        "function": {
+          "name": "fetch_nutrition_details",
+          "description": "Query HealthKit nutrition data"
+        }
+      },
+      "executor": "ChatToolsExecutor",
+      "settingState": "userControllable",
+      "runtimeAvailability": "always",
+      "skillIDs": [
+        "health"
+      ],
+      "discoveryStatus": "progressive",
+      "invocationStatus": "production",
+      "testIDs": [
+        "CHAT-12",
+        "E2E-D"
+      ]
+    },
+    {
+      "logicalID": "system.make_nutrition_data",
+      "alias": "make_nutrition_data",
+      "provider": "ChatTools",
+      "sourceKind": "legacy",
+      "schema": {
+        "type": "function",
+        "function": {
+          "name": "make_nutrition_data",
+          "description": "Generate nutrition card"
+        }
+      },
+      "executor": "ChatToolsExecutor",
+      "settingState": "userControllable",
+      "runtimeAvailability": "always",
+      "skillIDs": [
+        "health"
+      ],
+      "discoveryStatus": "progressive",
+      "invocationStatus": "production",
+      "testIDs": [
+        "CHAT-12"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,319 @@
+{
+  "restrictions": [
+    {
+      "id": "RESTRICT-01",
+      "path": "AI_HLY/Downstream/AgentSkills/SkillImporter.swift",
+      "symbol": "SkillImporter.stageAndInspect",
+      "lineAtBaseline": 221,
+      "productionCallers": [
+        "SkillImporter.stageAndInspect(fileURL:originURL:)"
+      ],
+      "condition": "HanlinArchivePolicy.normalizedRelativePath fails or isContained fails due to trailing slash / private/var symlink aliasing",
+      "effect": "Throws extractionEscapedRoot error, aborting valid Skill ZIP import",
+      "classification": "PathNormalizationBug",
+      "decision": "removed",
+      "reason": "False escape error caused by Foundation /var vs /private/var normalization and trailing slash differences in staging URL",
+      "replacementBehavior": "Use standardizedFileURL and robust canonical relative path containment resolution matching HanlinPackageCenter",
+      "requirementIDs": [
+        "R02"
+      ],
+      "testIDs": [
+        "ZIP-01",
+        "ZIP-02",
+        "ZIP-03",
+        "ZIP-04",
+        "ZIP-05",
+        "ZIP-06"
+      ],
+      "evidence": "SkillImporter.swift:221-233, 344-348"
+    },
+    {
+      "id": "RESTRICT-02",
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinArchivePolicy.swift",
+      "symbol": "HanlinArchivePolicy.isAllowedSkillFile",
+      "lineAtBaseline": 474,
+      "productionCallers": [
+        "HanlinArchivePolicy.inspect(entries:...)"
+      ],
+      "condition": "File extension is not in hardcoded set (e.g. .xlsx, .docx, .wasm, .bin, .ttf, or LICENSE)",
+      "effect": "Throws unsupportedFileType error, rejecting skill packs containing documentation, assets or data",
+      "classification": "ApplicationPolicy",
+      "decision": "removed",
+      "reason": "Skills are bundles of instructions and assets, not executable binaries; asset files must not be rejected",
+      "replacementBehavior": "Remove extension allowlist from Skill import policy; allow all valid archive entries that resolve inside target directory",
+      "requirementIDs": [
+        "R02"
+      ],
+      "testIDs": [
+        "ZIP-07"
+      ],
+      "evidence": "HanlinArchivePolicy.swift:474-483"
+    },
+    {
+      "id": "RESTRICT-03",
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinArchivePolicy.swift",
+      "symbol": "HanlinArchiveLimits",
+      "lineAtBaseline": 39,
+      "productionCallers": [
+        "SkillImporter.stageAndInspect",
+        "HanlinArchivePolicy.inspect"
+      ],
+      "condition": "Archive exceeds 25MB, 1024 files, 256 directories, depth 16, expanded 64MB, or ratio 100",
+      "effect": "Rejects archive with limitsExceeded error",
+      "classification": "ArbitraryClamp",
+      "decision": "relaxed",
+      "reason": "Hardcoded low limits block legitimate rich skill packs and data archives",
+      "replacementBehavior": "Relax limits with streaming extraction and user cancellation rather than arbitrary hard cutoff",
+      "requirementIDs": [
+        "R02",
+        "R18"
+      ],
+      "testIDs": [
+        "ZIP-08",
+        "ZIP-09",
+        "ZIP-10"
+      ],
+      "evidence": "HanlinArchivePolicy.swift:39-55"
+    },
+    {
+      "id": "RESTRICT-04",
+      "path": "AI_HLY/Downstream/AgentSkills/SkillImporter.swift",
+      "symbol": "SkillImporter.stageAndInspect / SkillStore.loadDescriptor",
+      "lineAtBaseline": 261,
+      "productionCallers": [
+        "SkillImporter.stageAndInspect",
+        "SkillStore.descriptor(for:)"
+      ],
+      "condition": "JSONDecoder() default date decoding encounters ISO-8601 strings in hanlin.json",
+      "effect": "Silent decode failure causing preferredToolIDs and triggerHints to be overwritten with empty arrays",
+      "classification": "CodecMismatch",
+      "decision": "removed",
+      "reason": "Naive JSONDecoder expects Double timestamp; hanlin.json uses ISO-8601 strings",
+      "replacementBehavior": "Implement flexible date decoding supporting ISO-8601 (with fractional seconds), Foundation epoch numbers, and optional dates",
+      "requirementIDs": [
+        "R03"
+      ],
+      "testIDs": [
+        "META-01",
+        "META-02",
+        "META-03",
+        "META-04",
+        "META-05"
+      ],
+      "evidence": "SkillImporter.swift:261, SkillStore.swift:446"
+    },
+    {
+      "id": "RESTRICT-05",
+      "path": "AI_HLY/Downstream/AgentSkills/HanlinAISDKToolAdapter.swift",
+      "symbol": "HanlinAISDKToolAdapter.prepareStep",
+      "lineAtBaseline": 120,
+      "productionCallers": [
+        "HanlinAISDKToolAdapter.prepareStep"
+      ],
+      "condition": "Total schema bytes for exposed tools exceeds 4KB",
+      "effect": "Hard cap truncates preferredToolIDs schema exposure to model",
+      "classification": "ArbitraryClamp",
+      "decision": "removed",
+      "reason": "When a skill is explicitly loaded, all its available preferred tools should be exposed without an artificial 4KB clamp",
+      "replacementBehavior": "Expose all valid active tools for loaded skill; paginate discovery if provider token limits require it",
+      "requirementIDs": [
+        "R05"
+      ],
+      "testIDs": [
+        "DISC-02",
+        "DISC-03"
+      ],
+      "evidence": "HanlinAISDKToolAdapter.swift:120"
+    },
+    {
+      "id": "RESTRICT-06",
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/host.mjs",
+      "symbol": "rejectUnsafeSource",
+      "lineAtBaseline": 496,
+      "productionCallers": [
+        "host.mjs:executeHandler"
+      ],
+      "condition": "Source code or comments match regex: child_process, cluster, docker, sudo, curl | sh",
+      "effect": "Throws 'This script requests an unavailable process API' error before execution",
+      "classification": "StringScanningSecurity",
+      "decision": "removed",
+      "reason": "String scanners falsely reject benign code, comments, documentation, and valid imports",
+      "replacementBehavior": "Remove rejectUnsafeSource; let runtime execute code and report platformUnsupported if an unavailable system syscall is invoked",
+      "requirementIDs": [
+        "R12"
+      ],
+      "testIDs": [
+        "JS-04",
+        "JS-05"
+      ],
+      "evidence": "host.mjs:496-499"
+    },
+    {
+      "id": "RESTRICT-07",
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/package-installer.mjs",
+      "symbol": "rejectUnsupported",
+      "lineAtBaseline": 306,
+      "productionCallers": [
+        "package-installer.mjs:installPackage",
+        "package-installer.mjs:previewPackage"
+      ],
+      "condition": "Manifest inspection or compatibility findings contain 'unsupported' severity (binding.gyp, child_process, optional native deps)",
+      "effect": "Aborts package installation with PackageCompatibilityError",
+      "classification": "GuessworkCompatibilityVeto",
+      "decision": "removed",
+      "reason": "Blocks installation of valid packages that have unused native files, optional dependencies, or comments",
+      "replacementBehavior": "Convert compatibility inspection into informational diagnostics rather than a blocking veto",
+      "requirementIDs": [
+        "R14"
+      ],
+      "testIDs": [
+        "PKGT-03",
+        "PKGT-05",
+        "MCP-02"
+      ],
+      "evidence": "package-installer.mjs:306-310"
+    },
+    {
+      "id": "RESTRICT-08",
+      "path": "Packages/IOSSystemLite/Sources/IOSSystemLite/IOSSystemRunner.swift",
+      "symbol": "IOSSystemRunner.linkedCommands / initializeRegistration",
+      "lineAtBaseline": 73,
+      "productionCallers": [
+        "IOSSystemRunner.execute",
+        "IOSSystemRunner.availableCommands"
+      ],
+      "condition": "Command is not in exact 23-command list or extraCommandsDictionary is not empty",
+      "effect": "Throws command_not_registered or 'The command is not linked or allowed'",
+      "classification": "HardcodedAllowlist",
+      "decision": "removed",
+      "reason": "Artificially restricts ios_system to 23 commands and bans extra dictionary registrations",
+      "replacementBehavior": "Query actual registered and executable commands dynamically from ios_system dictionary",
+      "requirementIDs": [
+        "R11"
+      ],
+      "testIDs": [
+        "SH-01",
+        "SH-02",
+        "CMD-01..23"
+      ],
+      "evidence": "IOSSystemRunner.swift:73-77, 195-202"
+    },
+    {
+      "id": "RESTRICT-09",
+      "path": "AI_HLY/Downstream/RuntimeCore/Tools/ExecuteShellCommandTool.swift",
+      "symbol": "ExecuteShellCommandTool.execute",
+      "lineAtBaseline": 16,
+      "productionCallers": [
+        "ExecuteShellCommandTool.execute"
+      ],
+      "condition": "Command uses shell syntax (pipes, redirection, chaining) or curl uses HTTP or allow_network is false",
+      "effect": "Rejects command or throws capability error",
+      "classification": "ApplicationPolicy",
+      "decision": "relaxed",
+      "reason": "Structured argv and raw command syntax are distinct; curl should work over HTTP/LAN without internal approval gate",
+      "replacementBehavior": "Support program+arguments (argv mode) and command string (ios_system parser mode) with real capabilities",
+      "requirementIDs": [
+        "R11",
+        "R16"
+      ],
+      "testIDs": [
+        "SH-04..16"
+      ],
+      "evidence": "ExecuteShellCommandTool.swift:16-21, 55-80"
+    },
+    {
+      "id": "RESTRICT-10",
+      "path": "AI_HLY/Downstream/RuntimeCore/Python/PythonPackageManager.swift",
+      "symbol": "PythonPackageManager.inspectAndExtract / downloadAndVerify",
+      "lineAtBaseline": 368,
+      "productionCallers": [
+        "PythonPackageManager.install"
+      ],
+      "condition": "Wheel size > 100MB, dependencies > 64, wheel contains .pth/.wasm, or wheel is not py3-none-any",
+      "effect": "Throws RuntimeCoreError.runtimeFailure, aborting installation",
+      "classification": "ArbitraryClampAndFilenameScan",
+      "decision": "relaxed",
+      "reason": "Blocks pure Python wheels with assets (.wasm/.pth data) and projects with deep dependency trees",
+      "replacementBehavior": "Support ABI/platform matching, streaming extraction, cancellation, and sdist build fallback",
+      "requirementIDs": [
+        "R15"
+      ],
+      "testIDs": [
+        "PKGT-04",
+        "PKGT-05",
+        "ENV-02"
+      ],
+      "evidence": "PythonPackageManager.swift:280, 368, 418"
+    },
+    {
+      "id": "RESTRICT-11",
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/host.mjs",
+      "symbol": "host.mjs clientsRoot check",
+      "lineAtBaseline": 297,
+      "productionCallers": [
+        "host.mjs:executeHandler"
+      ],
+      "condition": "workspace is outside clientsRoot directory",
+      "effect": "Throws 'Execution workspace is outside RuntimeCore clients'",
+      "classification": "PathIsolationRestriction",
+      "decision": "removed",
+      "reason": "Prevents unified agent context where Python, Node, and shell work in the same shared workspace directory",
+      "replacementBehavior": "Allow any valid path accessible to the app process sandbox / user selected security-scoped bookmark",
+      "requirementIDs": [
+        "R09"
+      ],
+      "testIDs": [
+        "FS-01",
+        "FS-02",
+        "FS-03"
+      ],
+      "evidence": "host.mjs:297"
+    },
+    {
+      "id": "RESTRICT-12",
+      "path": "AI_HLY/Downstream/AgentSkills/ReadSkillResourceTool.swift",
+      "symbol": "ReadSkillResourceTool.execute",
+      "lineAtBaseline": 60,
+      "productionCallers": [
+        "ReadSkillResourceTool.execute"
+      ],
+      "condition": "Filename contains '..' as a substring (e.g. release..notes.md)",
+      "effect": "Rejects resource read with path traversal error",
+      "classification": "NaivePathSanitization",
+      "decision": "removed",
+      "reason": "String contains('..') confuses benign filenames containing double dots with directory traversal",
+      "replacementBehavior": "Use path component decomposition and standardized URL containment checks instead of substring matching",
+      "requirementIDs": [
+        "R04"
+      ],
+      "testIDs": [
+        "META-15"
+      ],
+      "evidence": "ReadSkillResourceTool.swift:60"
+    },
+    {
+      "id": "RESTRICT-13",
+      "path": "AI_HLY/Services/ChatServices/APIManager.swift",
+      "symbol": "APIManager.processToolCallsRecursive",
+      "lineAtBaseline": 1100,
+      "productionCallers": [
+        "APIManager.sendChatStreamMessage"
+      ],
+      "condition": "Legacy request pipeline handles model tool calls via custom recursion loop",
+      "effect": "Creates a parallel unmaintained tool execution path competing with Swift AI SDK",
+      "classification": "LegacyParallelArchitecture",
+      "decision": "removed",
+      "reason": "Swift AI SDK engine (HanlinAISDKAgentEngine) must be the single authoritative agent loop",
+      "replacementBehavior": "Consolidate remote agent/tool execution onto HanlinAISDKAgentEngine; remove legacy APIManager tool recursion",
+      "requirementIDs": [
+        "R27",
+        "R43"
+      ],
+      "testIDs": [
+        "SDKAI-06..13",
+        "E2E-G"
+      ],
+      "evidence": "APIManager.swift, APIManager+LegacyTools.swift"
+    }
+  ]
+}
