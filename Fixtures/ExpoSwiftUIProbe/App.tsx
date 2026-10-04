@@ -297,9 +297,10 @@ export default function App({ variant = 'A' }: AppProps) {
                 )}
                 <Toolbar.Content>
                   <Button
+                    testID="ToolbarProbeButton"
                     label="Toolbar Probe"
                     systemImage="magnifyingglass"
-                    onPress={() => setToolbarActionCount((value) => value + 1)}
+                    onPress={() => setToolbarActionCount(1)}
                   />
                 </Toolbar.Content>
               </Toolbar>

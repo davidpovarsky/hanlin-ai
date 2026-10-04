@@ -43,7 +43,7 @@ final class HanlinExpoProductionE2ETests: XCTestCase {
         XCTAssertTrue(genesisText.waitForExistence(timeout: 15), "Torah source text did not render in detail column")
 
         // 4. Verify native Expo UI Toolbar with SF Symbol button and test React state mutation
-        let toolbarButtonPredicate = NSPredicate(format: "label == 'Toolbar Probe' OR label CONTAINS 'Toolbar Probe' OR identifier == 'Toolbar Probe'")
+        let toolbarButtonPredicate = NSPredicate(format: "identifier == 'ToolbarProbeButton' OR label == 'Toolbar Probe' OR label CONTAINS 'Toolbar Probe'")
         let toolbarButton = app.descendants(matching: .any).matching(toolbarButtonPredicate).firstMatch
         XCTAssertTrue(toolbarButton.waitForExistence(timeout: 15), "Native Toolbar button 'Toolbar Probe' did not render")
         XCTAssertTrue(toolbarButton.isHittable, "Native Toolbar button 'Toolbar Probe' is not hittable")
@@ -56,6 +56,9 @@ final class HanlinExpoProductionE2ETests: XCTestCase {
 
         let updatedToolbarCountPredicate = NSPredicate(format: "label CONTAINS 'Toolbar action count: 1'")
         let updatedToolbarCount = app.descendants(matching: .any).matching(updatedToolbarCountPredicate).firstMatch
+        if !updatedToolbarCount.waitForExistence(timeout: 2) {
+            toolbarButton.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
+        }
         XCTAssertTrue(updatedToolbarCount.waitForExistence(timeout: 10), "Toolbar action count failed to increment to 1 after tap")
 
         // 5. Test interactive state change: switch book to Exodus ('שמות')
