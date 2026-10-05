@@ -1,0 +1,202 @@
+TAP version 13
+# Subtest: runtime probe retries opaque Worker exits and loader diagnostics from stderr
+ok 1 - runtime probe retries opaque Worker exits and loader diagnostics from stderr
+  ---
+  duration_ms: 3.9034
+  type: 'test'
+  ...
+# Subtest: unused client stdio and cross-spawn code do not reject the selected server path
+ok 2 - unused client stdio and cross-spawn code do not reject the selected server path
+  ---
+  duration_ms: 1135.1306
+  type: 'test'
+  ...
+# Subtest: direct-blocked may import child_process without executing it
+ok 3 - direct-blocked may import child_process without executing it
+  ---
+  duration_ms: 1317.5169
+  type: 'test'
+  ...
+# Subtest: esm-import-only may import child_process without executing it
+ok 4 - esm-import-only may import child_process without executing it
+  ---
+  duration_ms: 2344.9929
+  type: 'test'
+  ...
+# Subtest: transitive-blocked may import child_process without executing it
+ok 5 - transitive-blocked may import child_process without executing it
+  ---
+  duration_ms: 2153.0096
+  type: 'test'
+  ...
+# Subtest: commonjs-blocked may import child_process without executing it
+ok 6 - commonjs-blocked may import child_process without executing it
+  ---
+  duration_ms: 1719.1423
+  type: 'test'
+  ...
+# Subtest: dynamic-blocked may import child_process without executing it
+ok 7 - dynamic-blocked may import child_process without executing it
+  ---
+  duration_ms: 1246.1154
+  type: 'test'
+  ...
+# Subtest: get-builtin-blocked may import child_process without executing it
+ok 8 - get-builtin-blocked may import child_process without executing it
+  ---
+  duration_ms: 1000.9989
+  type: 'test'
+  ...
+# Subtest: spawn-call is rejected when subprocess execution is attempted
+ok 9 - spawn-call is rejected when subprocess execution is attempted
+  ---
+  duration_ms: 1097.44
+  type: 'test'
+  ...
+# Subtest: exec-call is rejected when subprocess execution is attempted
+ok 10 - exec-call is rejected when subprocess execution is attempted
+  ---
+  duration_ms: 1519.4375
+  type: 'test'
+  ...
+# Subtest: exec-file-call is rejected when subprocess execution is attempted
+ok 11 - exec-file-call is rejected when subprocess execution is attempted
+  ---
+  duration_ms: 1196.7165
+  type: 'test'
+  ...
+# Subtest: fork-call is rejected when subprocess execution is attempted
+ok 12 - fork-call is rejected when subprocess execution is attempted
+  ---
+  duration_ms: 1045.613
+  type: 'test'
+  ...
+# Subtest: spawn-sync-call is rejected when subprocess execution is attempted
+ok 13 - spawn-sync-call is rejected when subprocess execution is attempted
+  ---
+  duration_ms: 1075.4398
+  type: 'test'
+  ...
+# Subtest: exec-sync-call is rejected when subprocess execution is attempted
+ok 14 - exec-sync-call is rejected when subprocess execution is attempted
+  ---
+  duration_ms: 1047.2474
+  type: 'test'
+  ...
+# Subtest: exec-file-sync-call is rejected when subprocess execution is attempted
+ok 15 - exec-file-sync-call is rejected when subprocess execution is attempted
+  ---
+  duration_ms: 936.3321
+  type: 'test'
+  ...
+# Subtest: child-process-bypass is rejected when subprocess execution is attempted
+ok 16 - child-process-bypass is rejected when subprocess execution is attempted
+  ---
+  duration_ms: 797.9138
+  type: 'test'
+  ...
+# Subtest: fork-child-call is rejected when subprocess execution is attempted
+ok 17 - fork-child-call is rejected when subprocess execution is attempted
+  ---
+  duration_ms: 1026.1738
+  type: 'test'
+  ...
+# Subtest: commonjs-spawn-call is rejected when subprocess execution is attempted
+ok 18 - commonjs-spawn-call is rejected when subprocess execution is attempted
+  ---
+  duration_ms: 945.049
+  type: 'test'
+  ...
+# Subtest: get-builtin-call is rejected when subprocess execution is attempted
+ok 19 - get-builtin-call is rejected when subprocess execution is attempted
+  ---
+  duration_ms: 947.0913
+  type: 'test'
+  ...
+# Subtest: transitive-call is rejected when subprocess execution is attempted
+ok 20 - transitive-call is rejected when subprocess execution is attempted
+  ---
+  duration_ms: 910.7641
+  type: 'test'
+  ...
+# Subtest: cluster-blocked is rejected by the Worker runtime policy
+ok 21 - cluster-blocked is rejected by the Worker runtime policy
+  ---
+  duration_ms: 943.3293
+  type: 'test'
+  ...
+# Subtest: binding-blocked is rejected by the Worker runtime policy
+ok 22 - binding-blocked is rejected by the Worker runtime policy
+  ---
+  duration_ms: 1104.6438
+  type: 'test'
+  ...
+# Subtest: process-wrap-blocked is rejected by the Worker runtime policy
+ok 23 - process-wrap-blocked is rejected by the Worker runtime policy
+  ---
+  duration_ms: 1027.0207
+  type: 'test'
+  ...
+# Subtest: unreachable native build material is inventory, not an execution-path rejection
+ok 24 - unreachable native build material is inventory, not an execution-path rejection
+  ---
+  duration_ms: 1558.3084
+  type: 'test'
+  ...
+# Subtest: bounded concurrent archive scanning preserves serial safety results
+ok 25 - bounded concurrent archive scanning preserves serial safety results
+  ---
+  duration_ms: 21.6489
+  type: 'test'
+  ...
+# Subtest: only the selected reachable TypeScript entry is compiled by the Worker loader
+ok 26 - only the selected reachable TypeScript entry is compiled by the Worker loader
+  ---
+  duration_ms: 1741.3955
+  type: 'test'
+  ...
+# Subtest: a native addon actually resolved by the selected entry is rejected
+ok 27 - a native addon actually resolved by the selected entry is rejected
+  ---
+  duration_ms: 1371.4713
+  type: 'test'
+  ...
+# Subtest: archive safety rejects a symlink that escapes packageRoot
+ok 28 - archive safety rejects a symlink that escapes packageRoot
+  ---
+  duration_ms: 27.1669
+  type: 'test'
+  ...
+# Subtest: canonical parent aliases do not make a contained entry point appear to escape
+ok 29 - canonical parent aliases do not make a contained entry point appear to escape
+  ---
+  duration_ms: 1084.9247
+  type: 'test'
+  ...
+# Subtest: execution-path analysis requires an explicit selected entry point
+ok 30 - execution-path analysis requires an explicit selected entry point
+  ---
+  duration_ms: 2.3705
+  type: 'test'
+  ...
+# Subtest: runtime probe bounds forced shutdown after MCP protocol success
+ok 31 - runtime probe bounds forced shutdown after MCP protocol success
+  ---
+  duration_ms: 1900.8732
+  type: 'test'
+  ...
+# Subtest: the production installer rejects executed child_process and preserves the prior package
+ok 32 - the production installer rejects executed child_process and preserves the prior package
+  ---
+  duration_ms: 1616.8418
+  type: 'test'
+  ...
+1..32
+# tests 32
+# suites 0
+# pass 32
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 37091.8115

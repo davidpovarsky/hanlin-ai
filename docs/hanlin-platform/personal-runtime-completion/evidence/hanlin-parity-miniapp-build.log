@@ -1,0 +1,57 @@
+Fetching https://github.com/davidpovarsky/swift-ai-sdk.git
+[1/13291] Fetching swift-ai-sdk
+Fetched https://github.com/davidpovarsky/swift-ai-sdk.git from cache (2.72s)
+Fetching https://github.com/apple/swift-argument-parser
+Fetching https://github.com/weichsel/ZIPFoundation.git
+[1/6471] Fetching zipfoundation
+[66/25523] Fetching zipfoundation, swift-argument-parser
+Fetched https://github.com/apple/swift-argument-parser from cache (3.37s)
+Fetched https://github.com/weichsel/ZIPFoundation.git from cache (3.38s)
+Computing version for https://github.com/weichsel/ZIPFoundation.git
+Computed https://github.com/weichsel/ZIPFoundation.git at 0.9.19 (6.01s)
+Computing version for https://github.com/apple/swift-argument-parser
+Computed https://github.com/apple/swift-argument-parser at 1.8.2 (2.16s)
+Creating working copy for https://github.com/davidpovarsky/swift-ai-sdk.git
+Working copy of https://github.com/davidpovarsky/swift-ai-sdk.git resolved at 43ebcfaae67ca2c47ea1ce940d66b581e60ca7f6
+Creating working copy for https://github.com/apple/swift-argument-parser
+Working copy of https://github.com/apple/swift-argument-parser resolved at 1.8.2
+Creating working copy for https://github.com/weichsel/ZIPFoundation.git
+Working copy of https://github.com/weichsel/ZIPFoundation.git resolved at 0.9.19
+warning: failed to retrieve search paths with pkg-config; maybe pkg-config is not installed
+warning: couldn't find pc file for zlib
+warning: couldn't find pc file for zlib
+[1/1] Compiling plugin GenerateManual
+[2/2] Compiling plugin GenerateDoccReference
+Building for debugging...
+[2/7] Write sources
+[5/7] Copying HanlinAppManifest.schema.json
+[6/7] Write swift-version-2807070033DA82CF.txt
+[8/26] Compiling HanlinPlatformContracts HanlinCatalogContracts.swift
+[9/26] Compiling HanlinPlatformContracts HanlinContractError.swift
+[10/26] Compiling HanlinPlatformContracts HanlinPermissionContracts.swift
+[11/26] Compiling HanlinPlatformContracts HanlinPresentationContracts.swift
+[12/26] Emitting module HanlinPlatformContracts
+[13/26] Compiling HanlinPlatformContracts HanlinSessionContracts.swift
+[14/26] Compiling HanlinPlatformContracts HanlinSkillContracts.swift
+[15/26] Compiling HanlinPlatformContracts HanlinManifestSchema.swift
+[16/26] Compiling HanlinPlatformContracts HanlinMiniAppContracts.swift
+[17/26] Compiling HanlinPlatformContracts HanlinRuntimeProfiles.swift
+[18/26] Compiling HanlinPlatformContracts HanlinScriptContracts.swift
+[19/27] Compiling HanlinPlatformContracts HanlinVersions.swift
+[20/27] Compiling HanlinPlatformContracts HanlinDescriptors.swift
+[21/27] Compiling HanlinPlatformContracts HanlinExposureContracts.swift
+[22/27] Compiling HanlinPlatformContracts HanlinIdentifiers.swift
+[23/27] Compiling HanlinPlatformContracts HanlinJSONSchemaDocument.swift
+[24/27] Compiling HanlinPlatformContracts HanlinToolContracts.swift
+[25/27] Compiling HanlinPlatformContracts HanlinValue.swift
+[26/27] Compiling HanlinPlatformContracts HanlinWireProtocol.swift
+[27/27] Compiling HanlinPlatformContracts resource_bundle_accessor.swift
+[29/34] Compiling HanlinMiniAppCore HanlinCompiledMiniAppProvider.swift
+[30/34] Compiling HanlinMiniAppCore HanlinCanonicalMiniAppCatalog.swift
+[31/34] Emitting module HanlinMiniAppCore
+[32/34] Compiling HanlinMiniAppCore HanlinMiniAppDataStore.swift
+[33/34] Compiling HanlinMiniAppCore HanlinMiniAppRequestBroker.swift
+[34/34] Compiling HanlinMiniAppCore HanlinSQLiteService.swift
+[36/37] Emitting module HanlinParityMiniApp
+[37/37] Compiling HanlinParityMiniApp SwiftParityMiniApp.swift
+Build complete! (227.55s)

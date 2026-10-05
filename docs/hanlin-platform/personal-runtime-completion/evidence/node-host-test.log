@@ -1,0 +1,52 @@
+TAP version 13
+# Subtest: worker stdin and stdout remain isolated for multiple servers
+ok 1 - worker stdin and stdout remain isolated for multiple servers
+  ---
+  duration_ms: 1413.4905
+  type: 'test'
+  ...
+# Subtest: lifecycle scripts require approval while incompatible engines remain rejected
+ok 2 - lifecycle scripts require approval while incompatible engines remain rejected
+  ---
+  duration_ms: 3.3141
+  type: 'test'
+  ...
+# Subtest: integrity mismatch fails closed
+ok 3 - integrity mismatch fails closed
+  ---
+  duration_ms: 4.5253
+  type: 'test'
+  ...
+# Subtest: install cancellation aborts work
+ok 4 - install cancellation aborts work
+  ---
+  duration_ms: 1.2463
+  type: 'test'
+  ...
+# Subtest: multiple package bins are listed and an explicit path preserves its bin name
+ok 5 - multiple package bins are listed and an explicit path preserves its bin name
+  ---
+  duration_ms: 2.9789
+  type: 'test'
+  ...
+# Subtest: replacement rollback restores the prior server and commit removes its backup
+ok 6 - replacement rollback restores the prior server and commit removes its backup
+  ---
+  duration_ms: 49.2561
+  type: 'test'
+  ...
+# Subtest: host redirects npm state before preview and install modules initialize
+ok 7 - host redirects npm state before preview and install modules initialize
+  ---
+  duration_ms: 14224.546
+  type: 'test'
+  ...
+1..7
+# tests 7
+# suites 0
+# pass 7
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 16984.3916

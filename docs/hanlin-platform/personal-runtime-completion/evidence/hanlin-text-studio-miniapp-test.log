@@ -1,0 +1,90 @@
+Fetching https://github.com/davidpovarsky/swift-ai-sdk.git from cache
+Fetched https://github.com/davidpovarsky/swift-ai-sdk.git from cache (0.96s)
+Fetching https://github.com/apple/swift-argument-parser from cache
+Fetching https://github.com/weichsel/ZIPFoundation.git from cache
+Fetched https://github.com/apple/swift-argument-parser from cache (1.43s)
+Fetched https://github.com/weichsel/ZIPFoundation.git from cache (1.44s)
+Computing version for https://github.com/weichsel/ZIPFoundation.git
+Computed https://github.com/weichsel/ZIPFoundation.git at 0.9.19 (4.88s)
+Computing version for https://github.com/apple/swift-argument-parser
+Computed https://github.com/apple/swift-argument-parser at 1.8.2 (2.10s)
+Creating working copy for https://github.com/apple/swift-argument-parser
+Working copy of https://github.com/apple/swift-argument-parser resolved at 1.8.2
+Creating working copy for https://github.com/davidpovarsky/swift-ai-sdk.git
+Working copy of https://github.com/davidpovarsky/swift-ai-sdk.git resolved at 43ebcfaae67ca2c47ea1ce940d66b581e60ca7f6
+Creating working copy for https://github.com/weichsel/ZIPFoundation.git
+Working copy of https://github.com/weichsel/ZIPFoundation.git resolved at 0.9.19
+warning: failed to retrieve search paths with pkg-config; maybe pkg-config is not installed
+warning: couldn't find pc file for zlib
+warning: couldn't find pc file for zlib
+[1/1] Compiling plugin GenerateManual
+[2/2] Compiling plugin GenerateDoccReference
+Building for debugging...
+[2/20] Copying HanlinAppManifest.schema.json
+[3/20] Write sources
+[7/20] Write swift-version-2807070033DA82CF.txt
+[9/39] Compiling HanlinPlatformContracts HanlinDescriptors.swift
+[10/39] Compiling HanlinPlatformContracts HanlinExposureContracts.swift
+[11/39] Emitting module HanlinPlatformContracts
+[12/39] Compiling HanlinPlatformContracts HanlinIdentifiers.swift
+[13/39] Compiling HanlinPlatformContracts HanlinJSONSchemaDocument.swift
+[14/39] Compiling HanlinPlatformContracts HanlinManifestSchema.swift
+[15/39] Compiling HanlinPlatformContracts HanlinMiniAppContracts.swift
+[16/40] Compiling HanlinPlatformContracts HanlinCatalogContracts.swift
+[17/40] Compiling HanlinPlatformContracts HanlinContractError.swift
+[18/40] Compiling HanlinPlatformContracts HanlinRuntimeProfiles.swift
+[19/40] Compiling HanlinPlatformContracts HanlinScriptContracts.swift
+[20/40] Compiling HanlinPlatformContracts HanlinPermissionContracts.swift
+[21/40] Compiling HanlinPlatformContracts HanlinPresentationContracts.swift
+[22/40] Compiling HanlinPlatformContracts HanlinToolContracts.swift
+[23/40] Compiling HanlinPlatformContracts HanlinSessionContracts.swift
+[24/40] Compiling HanlinPlatformContracts HanlinSkillContracts.swift
+[25/40] Compiling HanlinPlatformContracts HanlinVersions.swift
+[26/40] Compiling HanlinPlatformContracts HanlinWireProtocol.swift
+[27/40] Compiling HanlinPlatformContracts HanlinValue.swift
+[28/40] Compiling HanlinPlatformContracts resource_bundle_accessor.swift
+[29/47] Wrapping AST for HanlinPlatformContracts for debugging
+[31/47] Compiling HanlinMiniAppCore HanlinCanonicalMiniAppCatalog.swift
+[32/47] Compiling HanlinMiniAppCore HanlinMiniAppRequestBroker.swift
+[33/47] Emitting module HanlinMiniAppCore
+[34/47] Compiling HanlinMiniAppCore HanlinSQLiteService.swift
+[35/47] Compiling HanlinMiniAppCore HanlinCompiledMiniAppProvider.swift
+[36/47] Compiling HanlinMiniAppCore HanlinMiniAppDataStore.swift
+[37/54] Wrapping AST for HanlinMiniAppCore for debugging
+[39/55] Compiling HanlinTextStudioMiniApp NativeAppTextStudioViews.swift
+[40/55] Compiling HanlinTextStudioMiniApp TextStudioMiniApp.swift
+[41/55] Emitting module HanlinTextStudioMiniApp
+[42/55] Compiling HanlinTextStudioMiniApp NativeAppTextStudioService.swift
+[43/55] Compiling HanlinTextStudioMiniApp NativeAppTextStudioProtocols.swift
+[44/55] Compiling HanlinTextStudioMiniApp NativeAppTextStudioModels.swift
+[45/55] Compiling HanlinTextStudioMiniApp NativeAppTextStudioStore.swift
+[46/58] Wrapping AST for HanlinTextStudioMiniApp for debugging
+[48/58] Emitting module HanlinTextStudioMiniAppTests
+[49/58] Compiling HanlinTextStudioMiniAppTests TextStudioMiniAppTests.swift
+[50/59] C:\Users\DAVID\Code\hanlin-agent-skills-embedded-results\Packages\HanlinTextStudioMiniApp\.build\x86_64-unknown-windows-msvc\debug\HanlinTextStudioMiniAppPackageDiscoveredTests.derived\all-discovered-tests.swift
+[51/59] Write sources
+[52/62] Wrapping AST for HanlinTextStudioMiniAppTests for debugging
+[54/62] Compiling HanlinTextStudioMiniAppPackageDiscoveredTests HanlinTextStudioMiniAppTests.swift
+[55/62] Compiling HanlinTextStudioMiniAppPackageDiscoveredTests all-discovered-tests.swift
+[56/62] Emitting module HanlinTextStudioMiniAppPackageDiscoveredTests
+[57/63] C:\Users\DAVID\Code\hanlin-agent-skills-embedded-results\Packages\HanlinTextStudioMiniApp\.build\x86_64-unknown-windows-msvc\debug\HanlinTextStudioMiniAppPackageTests.derived\runner.swift
+[58/63] Write sources
+[59/65] Wrapping AST for HanlinTextStudioMiniAppPackageDiscoveredTests for debugging
+[61/65] Emitting module HanlinTextStudioMiniAppPackageTests
+[62/65] Compiling HanlinTextStudioMiniAppPackageTests runner.swift
+[63/66] Wrapping AST for HanlinTextStudioMiniAppPackageTests for debugging
+[64/66] Write Objects.LinkFileList
+[65/66] Linking HanlinTextStudioMiniAppPackageTests.xctest
+Build complete! (221.46s)
+Test Suite 'All tests' started at 2026-10-05 08:27:43.956
+Test Suite 'debug.xctest' started at 2026-10-05 08:27:43.992
+Test Suite 'debug.xctest' passed at 2026-10-05 08:27:43.992
+	 Executed 0 tests, with 0 failures (0 unexpected) in 0.0 (0.0) seconds
+Test Suite 'All tests' passed at 2026-10-05 08:27:43.992
+	 Executed 0 tests, with 0 failures (0 unexpected) in 0.0 (0.0) seconds
+◊ Test run started.
+→ Testing Library Version: 6.3.3 (48d727cc1cf4eda)
+→ Target Platform: x86_64-unknown-windows-msvc
+◊ Test "Text Studio Mini App exposes a valid canonical descriptor and provider" started.
+√ Test "Text Studio Mini App exposes a valid canonical descriptor and provider" passed after 0.004 seconds.
+√ Test run with 1 test in 0 suites passed after 0.005 seconds.

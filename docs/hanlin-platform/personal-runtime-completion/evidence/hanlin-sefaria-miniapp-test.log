@@ -1,0 +1,90 @@
+Fetching https://github.com/davidpovarsky/swift-ai-sdk.git from cache
+Fetched https://github.com/davidpovarsky/swift-ai-sdk.git from cache (1.42s)
+Fetching https://github.com/apple/swift-argument-parser from cache
+Fetching https://github.com/weichsel/ZIPFoundation.git from cache
+Fetched https://github.com/weichsel/ZIPFoundation.git from cache (1.27s)
+Fetched https://github.com/apple/swift-argument-parser from cache (1.29s)
+Computing version for https://github.com/weichsel/ZIPFoundation.git
+Computed https://github.com/weichsel/ZIPFoundation.git at 0.9.19 (3.55s)
+Computing version for https://github.com/apple/swift-argument-parser
+Computed https://github.com/apple/swift-argument-parser at 1.8.2 (1.74s)
+Creating working copy for https://github.com/davidpovarsky/swift-ai-sdk.git
+Working copy of https://github.com/davidpovarsky/swift-ai-sdk.git resolved at 43ebcfaae67ca2c47ea1ce940d66b581e60ca7f6
+Creating working copy for https://github.com/apple/swift-argument-parser
+Working copy of https://github.com/apple/swift-argument-parser resolved at 1.8.2
+Creating working copy for https://github.com/weichsel/ZIPFoundation.git
+Working copy of https://github.com/weichsel/ZIPFoundation.git resolved at 0.9.19
+warning: failed to retrieve search paths with pkg-config; maybe pkg-config is not installed
+warning: couldn't find pc file for zlib
+warning: couldn't find pc file for zlib
+[1/1] Compiling plugin GenerateManual
+[2/2] Compiling plugin GenerateDoccReference
+Building for debugging...
+[2/20] Write sources
+[6/20] Copying HanlinAppManifest.schema.json
+[7/20] Write swift-version-2807070033DA82CF.txt
+[9/39] Compiling HanlinPlatformContracts HanlinRuntimeProfiles.swift
+[10/39] Compiling HanlinPlatformContracts HanlinScriptContracts.swift
+[11/39] Compiling HanlinPlatformContracts HanlinSessionContracts.swift
+[12/39] Compiling HanlinPlatformContracts HanlinSkillContracts.swift
+[13/40] Emitting module HanlinPlatformContracts
+[14/40] Compiling HanlinPlatformContracts HanlinIdentifiers.swift
+[15/40] Compiling HanlinPlatformContracts HanlinJSONSchemaDocument.swift
+[16/40] Compiling HanlinPlatformContracts HanlinPermissionContracts.swift
+[17/40] Compiling HanlinPlatformContracts HanlinPresentationContracts.swift
+[18/40] Compiling HanlinPlatformContracts HanlinCatalogContracts.swift
+[19/40] Compiling HanlinPlatformContracts HanlinContractError.swift
+[20/40] Compiling HanlinPlatformContracts HanlinDescriptors.swift
+[21/40] Compiling HanlinPlatformContracts HanlinExposureContracts.swift
+[22/40] Compiling HanlinPlatformContracts HanlinManifestSchema.swift
+[23/40] Compiling HanlinPlatformContracts HanlinMiniAppContracts.swift
+[24/40] Compiling HanlinPlatformContracts HanlinVersions.swift
+[25/40] Compiling HanlinPlatformContracts HanlinWireProtocol.swift
+[26/40] Compiling HanlinPlatformContracts HanlinToolContracts.swift
+[27/40] Compiling HanlinPlatformContracts HanlinValue.swift
+[28/40] Compiling HanlinPlatformContracts resource_bundle_accessor.swift
+[29/47] Wrapping AST for HanlinPlatformContracts for debugging
+[31/47] Compiling HanlinMiniAppCore HanlinSQLiteService.swift
+[32/47] Emitting module HanlinMiniAppCore
+[33/47] Compiling HanlinMiniAppCore HanlinCompiledMiniAppProvider.swift
+[34/47] Compiling HanlinMiniAppCore HanlinCanonicalMiniAppCatalog.swift
+[35/47] Compiling HanlinMiniAppCore HanlinMiniAppDataStore.swift
+[36/47] Compiling HanlinMiniAppCore HanlinMiniAppRequestBroker.swift
+[37/52] Wrapping AST for HanlinMiniAppCore for debugging
+[39/55] Compiling HanlinSefariaMiniApp NativeAppSefariaViews.swift
+[40/55] Compiling HanlinSefariaMiniApp SefariaMiniApp.swift
+[41/55] Compiling HanlinSefariaMiniApp NativeAppSefariaServices.swift
+[42/55] Compiling HanlinSefariaMiniApp NativeAppSefariaStore.swift
+[43/55] Compiling HanlinSefariaMiniApp NativeAppSefariaModels.swift
+[44/55] Emitting module HanlinSefariaMiniApp
+[45/55] Compiling HanlinSefariaMiniApp NativeAppSefariaClient.swift
+[46/58] Wrapping AST for HanlinSefariaMiniApp for debugging
+[48/58] Emitting module HanlinSefariaMiniAppTests
+[49/58] Compiling HanlinSefariaMiniAppTests SefariaMiniAppTests.swift
+[50/59] C:\Users\DAVID\Code\hanlin-agent-skills-embedded-results\Packages\HanlinSefariaMiniApp\.build\x86_64-unknown-windows-msvc\debug\HanlinSefariaMiniAppPackageDiscoveredTests.derived\all-discovered-tests.swift
+[51/59] Write sources
+[52/62] Wrapping AST for HanlinSefariaMiniAppTests for debugging
+[54/62] Compiling HanlinSefariaMiniAppPackageDiscoveredTests HanlinSefariaMiniAppTests.swift
+[55/62] Emitting module HanlinSefariaMiniAppPackageDiscoveredTests
+[56/62] Compiling HanlinSefariaMiniAppPackageDiscoveredTests all-discovered-tests.swift
+[57/63] C:\Users\DAVID\Code\hanlin-agent-skills-embedded-results\Packages\HanlinSefariaMiniApp\.build\x86_64-unknown-windows-msvc\debug\HanlinSefariaMiniAppPackageTests.derived\runner.swift
+[58/63] Write sources
+[59/65] Wrapping AST for HanlinSefariaMiniAppPackageDiscoveredTests for debugging
+[61/65] Compiling HanlinSefariaMiniAppPackageTests runner.swift
+[62/65] Emitting module HanlinSefariaMiniAppPackageTests
+[63/66] Wrapping AST for HanlinSefariaMiniAppPackageTests for debugging
+[64/66] Write Objects.LinkFileList
+[65/66] Linking HanlinSefariaMiniAppPackageTests.xctest
+Build complete! (255.58s)
+Test Suite 'All tests' started at 2026-10-05 08:23:48.489
+Test Suite 'debug.xctest' started at 2026-10-05 08:23:48.541
+Test Suite 'debug.xctest' passed at 2026-10-05 08:23:48.541
+	 Executed 0 tests, with 0 failures (0 unexpected) in 0.0 (0.0) seconds
+Test Suite 'All tests' passed at 2026-10-05 08:23:48.541
+	 Executed 0 tests, with 0 failures (0 unexpected) in 0.0 (0.0) seconds
+◊ Test run started.
+→ Testing Library Version: 6.3.3 (48d727cc1cf4eda)
+→ Target Platform: x86_64-unknown-windows-msvc
+◊ Test "Sefaria Mini App exposes a valid canonical descriptor and provider" started.
+√ Test "Sefaria Mini App exposes a valid canonical descriptor and provider" passed after 0.005 seconds.
+√ Test run with 1 test in 0 suites passed after 0.006 seconds.

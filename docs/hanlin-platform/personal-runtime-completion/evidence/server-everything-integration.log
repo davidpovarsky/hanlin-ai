@@ -1,0 +1,17 @@
+TAP version 13
+# Subtest: pinned server-everything follows only its stdio server execution path
+ok 1 - pinned server-everything follows only its stdio server execution path
+  ---
+  duration_ms: 24539.6717
+  type: 'test'
+  ...
+# {"entryPoint":"dist/index.js","treeFileCount":4460,"reachableModuleCount":282,"resolvedModuleCount":689,"runtimeProbeDuration":4925,"runtimeProbeToolCount":13,"clientStdioLoaded":false,"crossSpawnLoaded":false,"childProcessResolved":false}
+1..1
+# tests 1
+# suites 0
+# pass 1
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 25626.5627
