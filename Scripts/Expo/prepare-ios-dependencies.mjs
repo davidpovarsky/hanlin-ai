@@ -131,6 +131,98 @@ async function prepare() {
     }
     await stageModularHeaders();
 
+    async function patchModuleMaps() {
+      console.log('[HanlinExpo] Aligning Clang modulemaps across xcframeworks...');
+
+      // 1. Expand module ReactCommon in ReactNativeHeaders.xcframework to include all ReactCommon headers
+      const rnHeadersRoot = resolve(artifactsRoot, 'ReactNativeHeaders.xcframework');
+      if (existsSync(rnHeadersRoot)) {
+        const slices = await readdir(rnHeadersRoot, { withFileTypes: true });
+        for (const slice of slices) {
+          if (!slice.isDirectory()) continue;
+          const mapPath = resolve(rnHeadersRoot, slice.name, 'Headers', 'module.modulemap');
+          if (existsSync(mapPath)) {
+            let content = await readFile(mapPath, 'utf8');
+            const oldReactCommon = /module ReactCommon \{[\s\S]*?\}/;
+            const newReactCommon = `module ReactCommon {
+  header "ReactCommon/CallInvoker.h"
+  header "ReactCommon/RuntimeExecutor.h"
+  header "ReactCommon/TurboModule.h"
+  header "ReactCommon/TurboModuleBinding.h"
+  header "ReactCommon/RCTTurboModule.h"
+  header "ReactCommon/RCTTurboModuleManager.h"
+  header "ReactCommon/RCTPerformanceLoggerUtils.h"
+  header "ReactCommon/RCTTurboModuleWithJSIBindings.h"
+  header "ReactCommon/RCTHost.h"
+  header "ReactCommon/RCTInstance.h"
+  export *
+}`;
+            if (content.match(oldReactCommon) && !content.includes('CallInvoker.h')) {
+              content = content.replace(oldReactCommon, newReactCommon);
+              await writeFile(mapPath, content, 'utf8');
+              console.log(`[HanlinExpo] Patched ReactCommon in ${slice.name}/Headers/module.modulemap`);
+            }
+          }
+        }
+      }
+
+      // 2. Add use declarations to React.xcframework module.modulemap
+      const reactRoot = resolve(artifactsRoot, 'React.xcframework');
+      if (existsSync(reactRoot)) {
+        const slices = await readdir(reactRoot, { withFileTypes: true });
+        for (const slice of slices) {
+          if (!slice.isDirectory()) continue;
+          const mapPath = resolve(reactRoot, slice.name, 'React.framework', 'Modules', 'module.modulemap');
+          if (existsSync(mapPath)) {
+            let content = await readFile(mapPath, 'utf8');
+            if (!content.includes('use yoga')) {
+              content = content.replace(
+                'framework module React {',
+                `framework module React {
+  use yoga
+  use RCTDeprecation
+  use ReactCommon
+  use ReactNativeHeaders_react
+  use CoreModules`
+              );
+              await writeFile(mapPath, content, 'utf8');
+              console.log(`[HanlinExpo] Added use declarations to React in ${slice.name}`);
+            }
+          }
+        }
+      }
+
+      // 3. Add use declarations to Expo modulemaps
+      const expoFws = ['ExpoModulesCore.xcframework', 'ExpoModulesWorklets.xcframework', 'ExpoUI.xcframework'];
+      for (const fw of expoFws) {
+        const fwRoot = resolve(artifactsRoot, fw);
+        if (existsSync(fwRoot)) {
+          const slices = await readdir(fwRoot, { withFileTypes: true });
+          for (const slice of slices) {
+            if (!slice.isDirectory()) continue;
+            const fwName = fw.replace('.xcframework', '.framework');
+            const mapPath = resolve(fwRoot, slice.name, fwName, 'Modules', 'module.modulemap');
+            if (existsSync(mapPath)) {
+              let content = await readFile(mapPath, 'utf8');
+              if (content.includes('use React') && !content.includes('use ReactCommon')) {
+                content = content.replace(
+                  'use React',
+                  `use React
+    use ReactCommon
+    use yoga
+    use RCTDeprecation
+    use ReactNativeHeaders_react`
+                );
+                await writeFile(mapPath, content, 'utf8');
+                console.log(`[HanlinExpo] Added modular use declarations to ${fw} in ${slice.name}`);
+              }
+            }
+          }
+        }
+      }
+    }
+    await patchModuleMaps();
+
     if (process.platform === 'darwin') {
       console.log('[HanlinExpo] Building ExpoModulesJSI.xcframework for iOS device and simulator on macOS...');
       const expoModulesJSIRoot = resolve(scriptRoot, 'node_modules', 'expo-modules-jsi');
@@ -258,7 +350,7 @@ async function prepare() {
     if (process.platform === 'darwin') {
       const artifactEntries = await readdir(artifactsRoot, { withFileTypes: true });
       for (const entry of artifactEntries) {
-        if (entry.isDirectory() && entry.name.endsWith('.xcframework') && entry.name !== 'React.xcframework') {
+        if (entry.isDirectory() && entry.name.endsWith('.xcframework')) {
           const fwPath = resolve(artifactsRoot, entry.name);
           try {
             let innerFws = [];
