@@ -160,32 +160,7 @@ async function prepare() {
         }
       }
 
-      // 2. Add use declarations to React.xcframework module.modulemap
-      const reactRoot = resolve(artifactsRoot, 'React.xcframework');
-      if (existsSync(reactRoot)) {
-        const slices = await readdir(reactRoot, { withFileTypes: true });
-        for (const slice of slices) {
-          if (!slice.isDirectory()) continue;
-          const mapPath = resolve(reactRoot, slice.name, 'React.framework', 'Modules', 'module.modulemap');
-          if (existsSync(mapPath)) {
-            let content = await readFile(mapPath, 'utf8');
-            if (!content.includes('use yoga')) {
-              content = content.replace(
-                'framework module React {',
-                `framework module React {
-  use yoga
-  use RCTDeprecation
-  use ReactCommon
-  use CoreModules`
-              );
-              await writeFile(mapPath, content, 'utf8');
-              console.log(`[HanlinExpo] Added use declarations to React in ${slice.name}`);
-            }
-          }
-        }
-      }
-
-      // 3. Add use declarations to Expo modulemaps
+      // 2. Add use declarations to Expo modulemaps
       const expoFws = ['ExpoModulesCore.xcframework', 'ExpoModulesWorklets.xcframework', 'ExpoUI.xcframework'];
       for (const fw of expoFws) {
         const fwRoot = resolve(artifactsRoot, fw);
@@ -304,19 +279,7 @@ async function prepare() {
         }
       }
 
-      // Also stage react/cxxstableapi into React.xcframework as fallback
-      const reactRootFw = resolve(artifactsRoot, 'React.xcframework');
-      if (existsSync(reactRootFw)) {
-        const slices = await readdir(reactRootFw, { withFileTypes: true });
-        for (const s of slices) {
-          if (!s.isDirectory()) continue;
-          const srcReact = resolve(artifactsRoot, 'ReactNativeHeaders.xcframework', slice, 'Headers', 'react');
-          const dstReact = resolve(reactRootFw, s.name, 'React.framework', 'Headers', 'react');
-          if (existsSync(srcReact)) {
-            await cp(srcReact, dstReact, { recursive: true });
-          }
-        }
-      }
+
 
       console.log(`[HanlinExpo] Created ${count} modular frameworks from ReactNativeHeaders modulemap.`);
 
@@ -458,7 +421,7 @@ async function prepare() {
     if (process.platform === 'darwin') {
       const artifactEntries = await readdir(artifactsRoot, { withFileTypes: true });
       for (const entry of artifactEntries) {
-        if (entry.isDirectory() && entry.name.endsWith('.xcframework')) {
+        if (entry.isDirectory() && entry.name.endsWith('.xcframework') && entry.name !== 'React.xcframework' && entry.name !== 'ReactNativeHeaders.xcframework') {
           const fwPath = resolve(artifactsRoot, entry.name);
           try {
             let innerFws = [];
@@ -472,8 +435,6 @@ async function prepare() {
               try { execSync(`codesign --force --deep --sign - "${inner}"`, { stdio: 'ignore' }); } catch (_) {}
             }
 
-            try { execSync(`codesign --remove-signature "${fwPath}"`, { stdio: 'ignore' }); } catch (_) {}
-            execSync(`codesign --force --deep --sign - "${fwPath}"`, { stdio: 'ignore' });
             console.log(`[HanlinExpo] Ad-hoc re-signed ${entry.name}`);
           } catch (e) {
             console.log(`[HanlinExpo] Re-signing notice for ${entry.name}: ${e.message}`);
