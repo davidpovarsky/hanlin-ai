@@ -3,4 +3,6 @@
 // This template file can be safely committed to git
 
 HANLIN_API_KEY = YOUR_HANLIN_API_KEY_HERE
-HANLIN_OPEN_API_KEY = YOUR_HANLIN_OPEN_API_KEY_HERE
+HANLIN_OPEN_API_KEY = YOUR_HANLIN_OPEN_API_KEY_HERE
+HEADER_SEARCH_PATHS = $(inherited) "$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders" "$(BUILT_PRODUCTS_DIR)/Python.framework/Headers"
+
