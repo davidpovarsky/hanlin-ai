@@ -799,10 +799,12 @@ jobs:
           HANLIN_API_KEY =
           HANLIN_OPEN_API_KEY =
           SWIFT_ENABLE_EXPLICIT_MODULES = NO
-          HEADER_SEARCH_PATHS = $(inherited) "$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders" "$(SRCROOT)/Artifacts/ReactModularHeaders" "$(BUILT_PRODUCTS_DIR)/Python.framework/Headers"
+          HEADER_SEARCH_PATHS = $(inherited) "$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders" "$(SRCROOT)/Artifacts/ReactModularHeaders" "$(BUILT_PRODUCTS_DIR)/React.framework/Headers" "$(BUILT_PRODUCTS_DIR)/ExpoModulesCore.framework/Headers" "$(BUILT_PRODUCTS_DIR)/Python.framework/Headers"
+          CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES
+          CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = NO
           WARNING_CFLAGS = $(inherited) -Wno-quoted-include-in-framework-header -Wno-non-modular-include-in-framework-module
           OTHER_CFLAGS = $(inherited) -Wno-quoted-include-in-framework-header -Wno-non-modular-include-in-framework-module
-          OTHER_SWIFT_FLAGS = $(inherited) -Xcc -Wno-quoted-include-in-framework-header -Xcc -Wno-non-modular-include-in-framework-module
+          OTHER_SWIFT_FLAGS = $(inherited) -Xcc -Wno-quoted-include-in-framework-header -Xcc -Wno-non-modular-include-in-framework-module -Xcc -I$(BUILT_PRODUCTS_DIR)/React.framework/Headers -Xcc -I$(BUILT_PRODUCTS_DIR)/ExpoModulesCore.framework/Headers
           EOF
 
             echo
@@ -1040,9 +1042,12 @@ jobs:
               -skipPackagePluginValidation \
               -skipMacroValidation \
               SWIFT_ENABLE_EXPLICIT_MODULES=NO \
-              HEADER_SEARCH_PATHS='$(inherited) $(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders $(SRCROOT)/Artifacts/ReactModularHeaders $(BUILT_PRODUCTS_DIR)/Python.framework/Headers' \
+              HEADER_SEARCH_PATHS='$(inherited) $(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders $(SRCROOT)/Artifacts/ReactModularHeaders $(BUILT_PRODUCTS_DIR)/React.framework/Headers $(BUILT_PRODUCTS_DIR)/ExpoModulesCore.framework/Headers $(BUILT_PRODUCTS_DIR)/Python.framework/Headers' \
+              CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES=YES \
+              CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER=NO \
               WARNING_CFLAGS='$(inherited) -Wno-quoted-include-in-framework-header -Wno-non-modular-include-in-framework-module' \
               OTHER_CFLAGS='$(inherited) -Wno-quoted-include-in-framework-header -Wno-non-modular-include-in-framework-module' \
+              OTHER_SWIFT_FLAGS='$(inherited) -Xcc -Wno-quoted-include-in-framework-header -Xcc -Wno-non-modular-include-in-framework-module -Xcc -I$(BUILT_PRODUCTS_DIR)/React.framework/Headers -Xcc -I$(BUILT_PRODUCTS_DIR)/ExpoModulesCore.framework/Headers' \
               IPHONEOS_DEPLOYMENT_TARGET="$IOS_DEPLOYMENT_TARGET" \
               CODE_SIGNING_ALLOWED=NO \
               CODE_SIGNING_REQUIRED=NO \
@@ -1078,9 +1083,12 @@ jobs:
             -skipPackagePluginValidation \
             -skipMacroValidation \
             SWIFT_ENABLE_EXPLICIT_MODULES=NO \
-            HEADER_SEARCH_PATHS='$(inherited) $(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders $(SRCROOT)/Artifacts/ReactModularHeaders $(BUILT_PRODUCTS_DIR)/Python.framework/Headers' \
+            HEADER_SEARCH_PATHS='$(inherited) $(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders $(SRCROOT)/Artifacts/ReactModularHeaders $(BUILT_PRODUCTS_DIR)/React.framework/Headers $(BUILT_PRODUCTS_DIR)/ExpoModulesCore.framework/Headers $(BUILT_PRODUCTS_DIR)/Python.framework/Headers' \
+            CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES=YES \
+            CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER=NO \
             WARNING_CFLAGS='$(inherited) -Wno-quoted-include-in-framework-header -Wno-non-modular-include-in-framework-module' \
             OTHER_CFLAGS='$(inherited) -Wno-quoted-include-in-framework-header -Wno-non-modular-include-in-framework-module' \
+            OTHER_SWIFT_FLAGS='$(inherited) -Xcc -Wno-quoted-include-in-framework-header -Xcc -Wno-non-modular-include-in-framework-module -Xcc -I$(BUILT_PRODUCTS_DIR)/React.framework/Headers -Xcc -I$(BUILT_PRODUCTS_DIR)/ExpoModulesCore.framework/Headers' \
             IPHONEOS_DEPLOYMENT_TARGET="$IOS_DEPLOYMENT_TARGET" \
             CODE_SIGNING_ALLOWED=NO \
             CODE_SIGNING_REQUIRED=NO \
@@ -1529,10 +1537,12 @@ jobs:
           HANLIN_API_KEY =
           HANLIN_OPEN_API_KEY =
           SWIFT_ENABLE_EXPLICIT_MODULES = NO
-          HEADER_SEARCH_PATHS = $(inherited) "$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders" "$(SRCROOT)/Artifacts/ReactModularHeaders" "$(BUILT_PRODUCTS_DIR)/Python.framework/Headers"
+          HEADER_SEARCH_PATHS = $(inherited) "$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders" "$(SRCROOT)/Artifacts/ReactModularHeaders" "$(BUILT_PRODUCTS_DIR)/React.framework/Headers" "$(BUILT_PRODUCTS_DIR)/ExpoModulesCore.framework/Headers" "$(BUILT_PRODUCTS_DIR)/Python.framework/Headers"
+          CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES
+          CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = NO
           WARNING_CFLAGS = $(inherited) -Wno-quoted-include-in-framework-header -Wno-non-modular-include-in-framework-module
           OTHER_CFLAGS = $(inherited) -Wno-quoted-include-in-framework-header -Wno-non-modular-include-in-framework-module
-          OTHER_SWIFT_FLAGS = $(inherited) -Xcc -Wno-quoted-include-in-framework-header -Xcc -Wno-non-modular-include-in-framework-module
+          OTHER_SWIFT_FLAGS = $(inherited) -Xcc -Wno-quoted-include-in-framework-header -Xcc -Wno-non-modular-include-in-framework-module -Xcc -I$(BUILT_PRODUCTS_DIR)/React.framework/Headers -Xcc -I$(BUILT_PRODUCTS_DIR)/ExpoModulesCore.framework/Headers
           EOF
 
       - name: Prepare verified embedded RuntimeCore
@@ -1660,9 +1670,12 @@ jobs:
             -skipPackagePluginValidation \
             -skipMacroValidation \
             SWIFT_ENABLE_EXPLICIT_MODULES=NO \
-            HEADER_SEARCH_PATHS='$(inherited) $(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders $(SRCROOT)/Artifacts/ReactModularHeaders $(BUILT_PRODUCTS_DIR)/Python.framework/Headers' \
+            HEADER_SEARCH_PATHS='$(inherited) $(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders $(SRCROOT)/Artifacts/ReactModularHeaders $(BUILT_PRODUCTS_DIR)/React.framework/Headers $(BUILT_PRODUCTS_DIR)/ExpoModulesCore.framework/Headers $(BUILT_PRODUCTS_DIR)/Python.framework/Headers' \
+            CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES=YES \
+            CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER=NO \
             WARNING_CFLAGS='$(inherited) -Wno-quoted-include-in-framework-header -Wno-non-modular-include-in-framework-module' \
             OTHER_CFLAGS='$(inherited) -Wno-quoted-include-in-framework-header -Wno-non-modular-include-in-framework-module' \
+            OTHER_SWIFT_FLAGS='$(inherited) -Xcc -Wno-quoted-include-in-framework-header -Xcc -Wno-non-modular-include-in-framework-module -Xcc -I$(BUILT_PRODUCTS_DIR)/React.framework/Headers -Xcc -I$(BUILT_PRODUCTS_DIR)/ExpoModulesCore.framework/Headers' \
             ENABLE_TESTABILITY=YES \
             IPHONEOS_DEPLOYMENT_TARGET="$IOS_DEPLOYMENT_TARGET" \
             ARCHS=arm64 \
@@ -1720,9 +1733,12 @@ jobs:
             -skipPackagePluginValidation \
             -skipMacroValidation \
             SWIFT_ENABLE_EXPLICIT_MODULES=NO \
-            HEADER_SEARCH_PATHS='$(inherited) $(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders $(SRCROOT)/Artifacts/ReactModularHeaders $(BUILT_PRODUCTS_DIR)/Python.framework/Headers' \
+            HEADER_SEARCH_PATHS='$(inherited) $(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders $(SRCROOT)/Artifacts/ReactModularHeaders $(BUILT_PRODUCTS_DIR)/React.framework/Headers $(BUILT_PRODUCTS_DIR)/ExpoModulesCore.framework/Headers $(BUILT_PRODUCTS_DIR)/Python.framework/Headers' \
+            CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES=YES \
+            CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER=NO \
             WARNING_CFLAGS='$(inherited) -Wno-quoted-include-in-framework-header -Wno-non-modular-include-in-framework-module' \
             OTHER_CFLAGS='$(inherited) -Wno-quoted-include-in-framework-header -Wno-non-modular-include-in-framework-module' \
+            OTHER_SWIFT_FLAGS='$(inherited) -Xcc -Wno-quoted-include-in-framework-header -Xcc -Wno-non-modular-include-in-framework-module -Xcc -I$(BUILT_PRODUCTS_DIR)/React.framework/Headers -Xcc -I$(BUILT_PRODUCTS_DIR)/ExpoModulesCore.framework/Headers' \
             ENABLE_TESTABILITY=YES \
             IPHONEOS_DEPLOYMENT_TARGET="$IOS_DEPLOYMENT_TARGET" \
             ARCHS=arm64 \
