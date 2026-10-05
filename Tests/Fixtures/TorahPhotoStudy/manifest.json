@@ -1,0 +1,1145 @@
+{
+  "version": 1,
+  "totalFixtures": 60,
+  "calibrationCount": 20,
+  "holdoutCount": 40,
+  "physicalCameraCount": 33,
+  "negativeAndAmbiguousCount": 17,
+  "fixtures": [
+    {
+      "fixtureID": "FIX-001",
+      "title": "Berakhot 2a",
+      "imageSHA256": "c54b0de672fbcb1aa7674d09b6e188fff9dcf13058da1b2f16dea04323901b45",
+      "acquisition": "physical_camera",
+      "scriptCategory": "clean_square_print",
+      "split": "calibration",
+      "expectedOutcome": "unique",
+      "expectedTranscription": "מאימתי קורין את שמע בערבין משעה שהכהנים נכנסים לאכול בתרומתן",
+      "expectedSourceRole": "primary_work",
+      "allowedLocators": [
+        "otzaria:bavli:Berakhot:canonical_ref:Berakhot 2a"
+      ],
+      "editionStatus": "verified",
+      "isNegativeOrAmbiguous": false,
+      "warnings": [],
+      "reviewed": true,
+      "reviewer": "TorahStudyHarness"
+    },
+    {
+      "fixtureID": "FIX-002",
+      "title": "Berakhot 2b",
+      "imageSHA256": "a32acb8d3ee3fcb8ef11fe60ffdfbf9b7078e4692fc9b9e8a457104cfcef7d65",
+      "acquisition": "physical_camera",
+      "scriptCategory": "clean_square_print",
+      "split": "calibration",
+      "expectedOutcome": "unique",
+      "expectedTranscription": "תנא היכא קאי דקתני מאימתי ותו מאי שנא דתני בערבין ברישא",
+      "expectedSourceRole": "primary_work",
+      "allowedLocators": [
+        "otzaria:bavli:Berakhot:canonical_ref:Berakhot 2b"
+      ],
+      "editionStatus": "verified",
+      "isNegativeOrAmbiguous": false,
+      "warnings": [],
+      "reviewed": true,
+      "reviewer": "TorahStudyHarness"
+    },
+    {
+      "fixtureID": "FIX-003",
+      "title": "Shabbat 2a",
+      "imageSHA256": "deb1c502546277e0d720efc3dadf19e26e9c9b34eb34a661636f50be84f72269",
+      "acquisition": "physical_camera",
+      "scriptCategory": "clean_square_print",
+      "split": "calibration",
+      "expectedOutcome": "unique",
+      "expectedTranscription": "יציאות השבת שתים שהן ארבע בפנים ושתים שהן ארבע בחוץ",
+      "expectedSourceRole": "primary_work",
+      "allowedLocators": [
+        "otzaria:bavli:Shabbat:canonical_ref:Shabbat 2a"
+      ],
+      "editionStatus": "verified",
+      "isNegativeOrAmbiguous": false,
+      "warnings": [],
+      "reviewed": true,
+      "reviewer": "TorahStudyHarness"
+    },
+    {
+      "fixtureID": "FIX-004",
+      "title": "Eruvin 2a",
+      "imageSHA256": "ad05387b116c8b0f84da51e832ee31c22cde6345844f1fd32f738486558ea276",
+      "acquisition": "physical_camera",
+      "scriptCategory": "clean_square_print",
+      "split": "calibration",
+      "expectedOutcome": "unique",
+      "expectedTranscription": "מבוי שהוא גבוה למעלה מעשרים אמה ימעט רבי יהודה אומר אינו צריך",
+      "expectedSourceRole": "primary_work",
+      "allowedLocators": [
+        "otzaria:bavli:Eruvin:canonical_ref:Eruvin 2a"
+      ],
+      "editionStatus": "verified",
+      "isNegativeOrAmbiguous": false,
+      "warnings": [],
+      "reviewed": true,
+      "reviewer": "TorahStudyHarness"
+    },
+    {
+      "fixtureID": "FIX-005",
+      "title": "Pesachim 2a",
+      "imageSHA256": "638ff0b21f3fe5db47ea73c89163d3ec0e3f69b84f6fe2c2f9dd150a751dc7f2",
+      "acquisition": "physical_camera",
+      "scriptCategory": "clean_square_print",
+      "split": "calibration",
+      "expectedOutcome": "unique",
+      "expectedTranscription": "אור לארבעה עשר בודקין את החמץ לאור הנר",
+      "expectedSourceRole": "primary_work",
+      "allowedLocators": [
+        "otzaria:bavli:Pesachim:canonical_ref:Pesachim 2a"
+      ],
+      "editionStatus": "verified",
+      "isNegativeOrAmbiguous": false,
+      "warnings": [],
+      "reviewed": true,
+      "reviewer": "TorahStudyHarness"
+    },
+    {
+      "fixtureID": "FIX-006",
+      "title": "Yoma 2a",
+      "imageSHA256": "64ba50276a37e694e317430d43ecdabba0b140ae858f15ca0ca6c60dddbcea96",
+      "acquisition": "physical_camera",
+      "scriptCategory": "clean_square_print",
+      "split": "calibration",
+      "expectedOutcome": "unique",
+      "expectedTranscription": "שבעת ימים קודם יום הכפורים מפרישין כהן גדול מביתו ללשכת פרהדרין",
+      "expectedSourceRole": "primary_work",
+      "allowedLocators": [
+        "otzaria:bavli:Yoma:canonical_ref:Yoma 2a"
+      ],
+      "editionStatus": "verified",
+      "isNegativeOrAmbiguous": false,
+      "warnings": [],
+      "reviewed": true,
+      "reviewer": "TorahStudyHarness"
+    },
+    {
+      "fixtureID": "FIX-007",
+      "title": "Sukkah 2a",
+      "imageSHA256": "cb54e3e4074be63263d0b41f2de99e967d22c638dad2f76c5d91ac7469e8223e",
+      "acquisition": "physical_camera",
+      "scriptCategory": "clean_square_print",
+      "split": "calibration",
+      "expectedOutcome": "unique",
+      "expectedTranscription": "סוכה שהיא גבוהה למעלה מעשרים אמה פסולה ורבי יהודה מכשיר",
+      "expectedSourceRole": "primary_work",
+      "allowedLocators": [
+        "otzaria:bavli:Sukkah:canonical_ref:Sukkah 2a"
+      ],
+      "editionStatus": "verified",
+      "isNegativeOrAmbiguous": false,
+      "warnings": [],
+      "reviewed": true,
+      "reviewer": "TorahStudyHarness"
+    },
+    {
+      "fixtureID": "FIX-008",
+      "title": "Rosh Hashanah 2a",
+      "imageSHA256": "9dced1e2f6f59846df99b36e663a0e880d50f196a098e4ff56338b53955200b3",
+      "acquisition": "physical_camera",
+      "scriptCategory": "clean_square_print",
+      "split": "calibration",
+      "expectedOutcome": "unique",
+      "expectedTranscription": "ארבעה ראשי שנים הם באחד בניסן ראש השנה למלכים ולרגלים",
+      "expectedSourceRole": "primary_work",
+      "allowedLocators": [
+        "otzaria:bavli:RoshHashanah:canonical_ref:Rosh Hashanah 2a"
+      ],
+      "editionStatus": "verified",
+      "isNegativeOrAmbiguous": false,
+      "warnings": [],
+      "reviewed": true,
+      "reviewer": "TorahStudyHarness"
+    },
+    {
+      "fixtureID": "FIX-009",
+      "title": "Megillah 2a",
+      "imageSHA256": "ef397e47418d9884c8dd266567ce3360a0b111ee580264ecb5cd0460da7e4f55",
+      "acquisition": "physical_camera",
+      "scriptCategory": "clean_square_print",
+      "split": "calibration",
+      "expectedOutcome": "unique",
+      "expectedTranscription": "מגילה נקראת בי\"א בי\"ב בי\"ג בי\"ד בט\"ו לא פחות ולא יותר",
+      "expectedSourceRole": "primary_work",
+      "allowedLocators": [
+        "otzaria:bavli:Megillah:canonical_ref:Megillah 2a"
+      ],
+      "editionStatus": "verified",
+      "isNegativeOrAmbiguous": false,
+      "warnings": [],
+      "reviewed": true,
+      "reviewer": "TorahStudyHarness"
+    },
+    {
+      "fixtureID": "FIX-010",
+      "title": "Chagigah 2a",
+      "imageSHA256": "5ebbb0556aa54e10a76e7e8afeaa9bb5e8f0a67407344d473427257e72e19f5e",
+      "acquisition": "physical_camera",
+      "scriptCategory": "clean_square_print",
+      "split": "calibration",
+      "expectedOutcome": "unique",
+      "expectedTranscription": "הכל חייבין בראייה חוץ מחרש שוטה וקטן וטומטום ואנדרוגינוס",
+      "expectedSourceRole": "primary_work",
+      "allowedLocators": [
+        "otzaria:bavli:Chagigah:canonical_ref:Chagigah 2a"
+      ],
+      "editionStatus": "verified",
+      "isNegativeOrAmbiguous": false,
+      "warnings": [],
+      "reviewed": true,
+      "reviewer": "TorahStudyHarness"
+    },
+    {
+      "fixtureID": "FIX-011",
+      "title": "Gittin 2a",
+      "imageSHA256": "6acd4b5ebec8fdbc8bceff390f803d3a3284bca0a8566607a835f429a38ef96b",
+      "acquisition": "physical_camera",
+      "scriptCategory": "clean_square_print",
+      "split": "holdout",
+      "expectedOutcome": "unique",
+      "expectedTranscription": "המביא גט ממדינת הים צריך שיאמר בפני נכתב ובפני נחתם",
+      "expectedSourceRole": "primary_work",
+      "allowedLocators": [
+        "otzaria:bavli:Gittin:canonical_ref:Gittin 2a"
+      ],
+      "editionStatus": "verified",
+      "isNegativeOrAmbiguous": false,
+      "warnings": [],
+      "reviewed": true,
+      "reviewer": "TorahStudyHarness"
+    },
+    {
+      "fixtureID": "FIX-012",
+      "title": "Kiddushin 2a",
+      "imageSHA256": "816593ee494fd900de98adc2b613f9203e1357eafdda4056cc5e5b0e7cfa4ba3",
+      "acquisition": "physical_camera",
+      "scriptCategory": "clean_square_print",
+      "split": "holdout",
+      "expectedOutcome": "unique",
+      "expectedTranscription": "האשה נקנית בשלש דרכים וקונה את עצמה בשתי דרכים",
+      "expectedSourceRole": "primary_work",
+      "allowedLocators": [
+        "otzaria:bavli:Kiddushin:canonical_ref:Kiddushin 2a"
+      ],
+      "editionStatus": "verified",
+      "isNegativeOrAmbiguous": false,
+      "warnings": [],
+      "reviewed": true,
+      "reviewer": "TorahStudyHarness"
+    },
+    {
+      "fixtureID": "FIX-013",
+      "title": "Bava Kamma 2a",
+      "imageSHA256": "7255c6335327c578c12661d176a5c9b5621d58cc9289d693b7e73bc55ecd615f",
+      "acquisition": "physical_camera",
+      "scriptCategory": "clean_square_print",
+      "split": "holdout",
+      "expectedOutcome": "unique",
+      "expectedTranscription": "ארבעה אבות נזיקין השור והבור והמבעה וההבער",
+      "expectedSourceRole": "primary_work",
+      "allowedLocators": [
+        "otzaria:bavli:BavaKamma:canonical_ref:Bava Kamma 2a"
+      ],
+      "editionStatus": "verified",
+      "isNegativeOrAmbiguous": false,
+      "warnings": [],
+      "reviewed": true,
+      "reviewer": "TorahStudyHarness"
+    },
+    {
+      "fixtureID": "FIX-014",
+      "title": "Bava Metzia 2a",
+      "imageSHA256": "a9b6cae9c8f98ca99c8e43da82c959e045fe8f4451af4ffdddc7c6b465e4c99d",
+      "acquisition": "physical_camera",
+      "scriptCategory": "clean_square_print",
+      "split": "holdout",
+      "expectedOutcome": "unique",
+      "expectedTranscription": "שנים אוחזין בטלית זה אומר אני מצאתיה וזה אומר אני מצאתיה",
+      "expectedSourceRole": "primary_work",
+      "allowedLocators": [
+        "otzaria:bavli:BavaMetzia:canonical_ref:Bava Metzia 2a"
+      ],
+      "editionStatus": "verified",
+      "isNegativeOrAmbiguous": false,
+      "warnings": [],
+      "reviewed": true,
+      "reviewer": "TorahStudyHarness"
+    },
+    {
+      "fixtureID": "FIX-015",
+      "title": "Bava Batra 2a",
+      "imageSHA256": "97f0464802448e51524438b032fc212545b5853b171a12a7fa0f4aa3f36a65e7",
+      "acquisition": "physical_camera",
+      "scriptCategory": "clean_square_print",
+      "split": "holdout",
+      "expectedOutcome": "unique",
+      "expectedTranscription": "השותפין שרצו לעשות מחיצה בחצר בונין את הכותל באמצע",
+      "expectedSourceRole": "primary_work",
+      "allowedLocators": [
+        "otzaria:bavli:BavaBatra:canonical_ref:Bava Batra 2a"
+      ],
+      "editionStatus": "verified",
+      "isNegativeOrAmbiguous": false,
+      "warnings": [],
+      "reviewed": true,
+      "reviewer": "TorahStudyHarness"
+    },
+    {
+      "fixtureID": "FIX-016",
+      "title": "Sanhedrin 2a",
+      "imageSHA256": "6e18de7a0030d1ced8378369aa664dc84e7423f2934c850e3c17e043aa67e87e",
+      "acquisition": "physical_camera",
+      "scriptCategory": "clean_square_print",
+      "split": "holdout",
+      "expectedOutcome": "unique",
+      "expectedTranscription": "דיני ממונות בשלשה גזילות וחבלות בשלשה נזק וחצי נזק בשלשה",
+      "expectedSourceRole": "primary_work",
+      "allowedLocators": [
+        "otzaria:bavli:Sanhedrin:canonical_ref:Sanhedrin 2a"
+      ],
+      "editionStatus": "verified",
+      "isNegativeOrAmbiguous": false,
+      "warnings": [],
+      "reviewed": true,
+      "reviewer": "TorahStudyHarness"
+    },
+    {
+      "fixtureID": "FIX-017",
+      "title": "Rashi Berakhot 2a",
+      "imageSHA256": "4131318b7609fc84a6a504088a3d6b0658b4f9c2c41f0af7d973adc1d8b2b7b1",
+      "acquisition": "scan",
+      "scriptCategory": "rashi_script",
+      "split": "calibration",
+      "expectedOutcome": "unique",
+      "expectedTranscription": "משעה שהכהנים נכנסים - שנטמאו וטבלו והעריב שמשן",
+      "expectedSourceRole": "commentary",
+      "allowedLocators": [
+        "otzaria:bavli:Rashi_Berakhot:canonical_ref:Berakhot 2a:1"
+      ],
+      "editionStatus": "verified",
+      "isNegativeOrAmbiguous": false,
+      "warnings": [],
+      "reviewed": true,
+      "reviewer": "TorahStudyHarness"
+    },
+    {
+      "fixtureID": "FIX-018",
+      "title": "Rashi Shabbat 2a",
+      "imageSHA256": "18a8cd5d3535ac43a1b755509a562fdf4bc7ad1e3029c2a8ac2c2f4d123ccff8",
+      "acquisition": "scan",
+      "scriptCategory": "rashi_script",
+      "split": "calibration",
+      "expectedOutcome": "unique",
+      "expectedTranscription": "יציאות השבת - הוצאות שבת קרי להו יציאות",
+      "expectedSourceRole": "commentary",
+      "allowedLocators": [
+        "otzaria:bavli:Rashi_Shabbat:canonical_ref:Shabbat 2a:1"
+      ],
+      "editionStatus": "verified",
+      "isNegativeOrAmbiguous": false,
+      "warnings": [],
+      "reviewed": true,
+      "reviewer": "TorahStudyHarness"
+    },
+    {
+      "fixtureID": "FIX-019",
+      "title": "Rashi Pesachim 2a",
+      "imageSHA256": "93312ae86d0226a1f20ec390e16ae31ede8f22f473ea20cf3c0e3b44022d1388",
+      "acquisition": "scan",
+      "scriptCategory": "rashi_script",
+      "split": "calibration",
+      "expectedOutcome": "unique",
+      "expectedTranscription": "אור לארבעה עשר - לילי ארבעה עשר קרי אור",
+      "expectedSourceRole": "commentary",
+      "allowedLocators": [
+        "otzaria:bavli:Rashi_Pesachim:canonical_ref:Pesachim 2a:1"
+      ],
+      "editionStatus": "verified",
+      "isNegativeOrAmbiguous": false,
+      "warnings": [],
+      "reviewed": true,
+      "reviewer": "TorahStudyHarness"
+    },
+    {
+      "fixtureID": "FIX-020",
+      "title": "Rashi Bava Metzia 2a",
+      "imageSHA256": "3dae4ad85679f256dd0f967071b4f7281106d7ae409f5868bb016e26334ca732",
+      "acquisition": "scan",
+      "scriptCategory": "rashi_script",
+      "split": "calibration",
+      "expectedOutcome": "unique",
+      "expectedTranscription": "שנים אוחזין בטלית - בטלית של הפקר מיירי",
+      "expectedSourceRole": "commentary",
+      "allowedLocators": [
+        "otzaria:bavli:Rashi_BavaMetzia:canonical_ref:Bava Metzia 2a:1"
+      ],
+      "editionStatus": "verified",
+      "isNegativeOrAmbiguous": false,
+      "warnings": [],
+      "reviewed": true,
+      "reviewer": "TorahStudyHarness"
+    },
+    {
+      "fixtureID": "FIX-021",
+      "title": "Rashi Bava Batra 2a",
+      "imageSHA256": "c87fcfb2e01dbf63b148beddc4da5b10c2043d7614e1c637db6198de713f0a6e",
+      "acquisition": "scan",
+      "scriptCategory": "rashi_script",
+      "split": "calibration",
+      "expectedOutcome": "unique",
+      "expectedTranscription": "גבל בעלמא - חצר שאין בה דין חלוקה",
+      "expectedSourceRole": "commentary",
+      "allowedLocators": [
+        "otzaria:bavli:Rashi_BavaBatra:canonical_ref:Bava Batra 2a:1"
+      ],
+      "editionStatus": "verified",
+      "isNegativeOrAmbiguous": false,
+      "warnings": [],
+      "reviewed": true,
+      "reviewer": "TorahStudyHarness"
+    },
+    {
+      "fixtureID": "FIX-022",
+      "title": "Rashi Sanhedrin 2a",
+      "imageSHA256": "2b01a456d458ac2bafa5f4508b0ceb33af07828de985b8431f1d18abaac0b183",
+      "acquisition": "scan",
+      "scriptCategory": "rashi_script",
+      "split": "holdout",
+      "expectedOutcome": "unique",
+      "expectedTranscription": "דיני ממונות - הודאות והלואות",
+      "expectedSourceRole": "commentary",
+      "allowedLocators": [
+        "otzaria:bavli:Rashi_Sanhedrin:canonical_ref:Sanhedrin 2a:1"
+      ],
+      "editionStatus": "verified",
+      "isNegativeOrAmbiguous": false,
+      "warnings": [],
+      "reviewed": true,
+      "reviewer": "TorahStudyHarness"
+    },
+    {
+      "fixtureID": "FIX-023",
+      "title": "Rashi Gittin 2a",
+      "imageSHA256": "8686dfb71ca4ef6f9e8ba0f8eccbb4f5db67ba5d6c2834dbc20340c7d90da37e",
+      "acquisition": "scan",
+      "scriptCategory": "rashi_script",
+      "split": "holdout",
+      "expectedOutcome": "unique",
+      "expectedTranscription": "ממדינת הים - לפי שאין בקיאין לשמה",
+      "expectedSourceRole": "commentary",
+      "allowedLocators": [
+        "otzaria:bavli:Rashi_Gittin:canonical_ref:Gittin 2a:1"
+      ],
+      "editionStatus": "verified",
+      "isNegativeOrAmbiguous": false,
+      "warnings": [],
+      "reviewed": true,
+      "reviewer": "TorahStudyHarness"
+    },
+    {
+      "fixtureID": "FIX-024",
+      "title": "Rashi Kiddushin 2a",
+      "imageSHA256": "3c8d1b502fe2e83b9feff8a624624cddeae037c3502c3c1720e9fe51362cd49e",
+      "acquisition": "scan",
+      "scriptCategory": "rashi_script",
+      "split": "holdout",
+      "expectedOutcome": "unique",
+      "expectedTranscription": "בשלש דרכים - בכסף בשטר ובביאה",
+      "expectedSourceRole": "commentary",
+      "allowedLocators": [
+        "otzaria:bavli:Rashi_Kiddushin:canonical_ref:Kiddushin 2a:1"
+      ],
+      "editionStatus": "verified",
+      "isNegativeOrAmbiguous": false,
+      "warnings": [],
+      "reviewed": true,
+      "reviewer": "TorahStudyHarness"
+    },
+    {
+      "fixtureID": "FIX-025",
+      "title": "Rashi Sukkah 2a",
+      "imageSHA256": "f57344b63a67754ecded11f9ce03b62022a48fd53f95273f52127b02b62193d7",
+      "acquisition": "scan",
+      "scriptCategory": "rashi_script",
+      "split": "holdout",
+      "expectedOutcome": "unique",
+      "expectedTranscription": "למעלה מעשרים אמה - דלא שלטא בה עינא",
+      "expectedSourceRole": "commentary",
+      "allowedLocators": [
+        "otzaria:bavli:Rashi_Sukkah:canonical_ref:Sukkah 2a:1"
+      ],
+      "editionStatus": "verified",
+      "isNegativeOrAmbiguous": false,
+      "warnings": [],
+      "reviewed": true,
+      "reviewer": "TorahStudyHarness"
+    },
+    {
+      "fixtureID": "FIX-026",
+      "title": "Rashi Megillah 2a",
+      "imageSHA256": "a8b25012ea704ebfbc705871afb4db7d30ec91797dc55f6caca1e9338394bfaf",
+      "acquisition": "scan",
+      "scriptCategory": "rashi_script",
+      "split": "holdout",
+      "expectedOutcome": "unique",
+      "expectedTranscription": "בכרכים המוקפין חומה מימות יהושע בן נון",
+      "expectedSourceRole": "commentary",
+      "allowedLocators": [
+        "otzaria:bavli:Rashi_Megillah:canonical_ref:Megillah 2a:1"
+      ],
+      "editionStatus": "verified",
+      "isNegativeOrAmbiguous": false,
+      "warnings": [],
+      "reviewed": true,
+      "reviewer": "TorahStudyHarness"
+    },
+    {
+      "fixtureID": "FIX-027",
+      "title": "Genesis 1:1",
+      "imageSHA256": "1afb44a6ffd882ac96122a7148001210ee98a010ea28d4ffc7341dc80ecf2ccd",
+      "acquisition": "scan",
+      "scriptCategory": "tanakh_vocalized",
+      "split": "calibration",
+      "expectedOutcome": "unique",
+      "expectedTranscription": "בְּרֵאשִׁ֖ית בָּרָ֣א אֱלֹהִ֑ים אֵ֥ת הַשָּׁמַ֖יִם וְאֵ֥ת הָאָֽרֶץ׃",
+      "expectedSourceRole": "primary_work",
+      "allowedLocators": [
+        "sefaria:tanakh:Genesis 1:1"
+      ],
+      "editionStatus": "verified",
+      "isNegativeOrAmbiguous": false,
+      "warnings": [],
+      "reviewed": true,
+      "reviewer": "TorahStudyHarness"
+    },
+    {
+      "fixtureID": "FIX-028",
+      "title": "Genesis 1:2",
+      "imageSHA256": "e0f8082e4329e2ae906f5df6ac50578ebd8db004a3eb9bcf959e7ca21b6e68d3",
+      "acquisition": "scan",
+      "scriptCategory": "tanakh_vocalized",
+      "split": "calibration",
+      "expectedOutcome": "unique",
+      "expectedTranscription": "וְהָאָ֗רֶץ הָיְתָ֥ה תֹ֙הוּ֙ וָבֹ֔הוּ וְחֹ֖שֶׁךְ עַל־פְּנֵ֣י תְה֑וֹם",
+      "expectedSourceRole": "primary_work",
+      "allowedLocators": [
+        "sefaria:tanakh:Genesis 1:2"
+      ],
+      "editionStatus": "verified",
+      "isNegativeOrAmbiguous": false,
+      "warnings": [],
+      "reviewed": true,
+      "reviewer": "TorahStudyHarness"
+    },
+    {
+      "fixtureID": "FIX-029",
+      "title": "Genesis 1:3",
+      "imageSHA256": "a0acb1f4b5d9939a2441ec089fec1cb44b633e991dfdd96349d0bfe7e9fe27f6",
+      "acquisition": "scan",
+      "scriptCategory": "tanakh_vocalized",
+      "split": "calibration",
+      "expectedOutcome": "unique",
+      "expectedTranscription": "וַיֹּ֥אמֶר אֱלֹהִ֖ים יְהִ֣י א֑וֹר וַֽיְהִי־אֽוֹר׃",
+      "expectedSourceRole": "primary_work",
+      "allowedLocators": [
+        "sefaria:tanakh:Genesis 1:3"
+      ],
+      "editionStatus": "verified",
+      "isNegativeOrAmbiguous": false,
+      "warnings": [],
+      "reviewed": true,
+      "reviewer": "TorahStudyHarness"
+    },
+    {
+      "fixtureID": "FIX-030",
+      "title": "Exodus 20:1",
+      "imageSHA256": "962e78212469a683f0ec729fe24e6c9b686287d1ff30767f93a79cf90686281e",
+      "acquisition": "scan",
+      "scriptCategory": "tanakh_vocalized",
+      "split": "calibration",
+      "expectedOutcome": "unique",
+      "expectedTranscription": "וַיְדַבֵּ֣ר אֱלֹהִ֔ים אֵ֛ת כׇּל־הַדְּבָרִ֥ים הָאֵ֖לֶּה לֵאמֹֽר׃",
+      "expectedSourceRole": "primary_work",
+      "allowedLocators": [
+        "sefaria:tanakh:Exodus 20:1"
+      ],
+      "editionStatus": "verified",
+      "isNegativeOrAmbiguous": false,
+      "warnings": [],
+      "reviewed": true,
+      "reviewer": "TorahStudyHarness"
+    },
+    {
+      "fixtureID": "FIX-031",
+      "title": "Exodus 20:2",
+      "imageSHA256": "1e7e475e78fda19e7ea1c5115fb13e6916287e722a02d918d65cd336d3fbce4f",
+      "acquisition": "scan",
+      "scriptCategory": "tanakh_vocalized",
+      "split": "calibration",
+      "expectedOutcome": "unique",
+      "expectedTranscription": "אָֽנֹכִ֖י֙ יְהֹוָ֣ה אֱלֹהֶ֑֔יךָ אֲשֶׁ֧ר הוֹצֵאתִ֛יךָ מֵאֶ֥רֶץ מִצְרַ֖יִם",
+      "expectedSourceRole": "primary_work",
+      "allowedLocators": [
+        "sefaria:tanakh:Exodus 20:2"
+      ],
+      "editionStatus": "verified",
+      "isNegativeOrAmbiguous": false,
+      "warnings": [],
+      "reviewed": true,
+      "reviewer": "TorahStudyHarness"
+    },
+    {
+      "fixtureID": "FIX-032",
+      "title": "Deuteronomy 6:4",
+      "imageSHA256": "d95fa6745f638c60c227508627755e0e7cc61250132e41b225ea150e86de279d",
+      "acquisition": "scan",
+      "scriptCategory": "tanakh_vocalized",
+      "split": "holdout",
+      "expectedOutcome": "unique",
+      "expectedTranscription": "שְׁמַ֖ע יִשְׂרָאֵ֑ל יְהֹוָ֥ה אֱלֹהֵ֖ינוּ יְהֹוָ֥ה ׀ אֶחָֽד׃",
+      "expectedSourceRole": "primary_work",
+      "allowedLocators": [
+        "sefaria:tanakh:Deuteronomy 6:4"
+      ],
+      "editionStatus": "verified",
+      "isNegativeOrAmbiguous": false,
+      "warnings": [],
+      "reviewed": true,
+      "reviewer": "TorahStudyHarness"
+    },
+    {
+      "fixtureID": "FIX-033",
+      "title": "Deuteronomy 6:5",
+      "imageSHA256": "ff3f9f4a390283ba49bd4760a6b36c60e5b8b9c6311f9a263547adaa9b700cb7",
+      "acquisition": "scan",
+      "scriptCategory": "tanakh_vocalized",
+      "split": "holdout",
+      "expectedOutcome": "unique",
+      "expectedTranscription": "וְאָ֣הַבְתָּ֔ אֵ֖ת יְהֹוָ֣ה אֱלֹהֶ֑יךָ בְּכׇל־לְבָבְךָ֥ וּבְכׇל־נַפְשְׁךָ֖",
+      "expectedSourceRole": "primary_work",
+      "allowedLocators": [
+        "sefaria:tanakh:Deuteronomy 6:5"
+      ],
+      "editionStatus": "verified",
+      "isNegativeOrAmbiguous": false,
+      "warnings": [],
+      "reviewed": true,
+      "reviewer": "TorahStudyHarness"
+    },
+    {
+      "fixtureID": "FIX-034",
+      "title": "Leviticus 19:18",
+      "imageSHA256": "92f5b382e405bd70da87ff7efa521d96d9a434f76dc6e8ec368890c20b21e8e4",
+      "acquisition": "scan",
+      "scriptCategory": "tanakh_vocalized",
+      "split": "holdout",
+      "expectedOutcome": "unique",
+      "expectedTranscription": "לֹֽא־תִקֹּ֤ם וְלֹֽא־תִטֹּר֙ אֶת־בְּנֵ֣י עַמֶּ֔ךָ וְאָהַבְתָּ֥ לְרֵעֲךָ֖ כָּמ֑וֹךָ",
+      "expectedSourceRole": "primary_work",
+      "allowedLocators": [
+        "sefaria:tanakh:Leviticus 19:18"
+      ],
+      "editionStatus": "verified",
+      "isNegativeOrAmbiguous": false,
+      "warnings": [],
+      "reviewed": true,
+      "reviewer": "TorahStudyHarness"
+    },
+    {
+      "fixtureID": "FIX-035",
+      "title": "Psalm 23:1",
+      "imageSHA256": "e1ee475247d96273dd345158c5a05dfc6452f98a487b97ad1bebd53def64a8f1",
+      "acquisition": "scan",
+      "scriptCategory": "tanakh_vocalized",
+      "split": "holdout",
+      "expectedOutcome": "unique",
+      "expectedTranscription": "מִזְמ֥וֹר לְדָוִ֑ד יְהֹוָ֥ה רֹ֝עִ֗י לֹ֣א אֶחְסָֽר׃",
+      "expectedSourceRole": "primary_work",
+      "allowedLocators": [
+        "sefaria:tanakh:Psalms 23:1"
+      ],
+      "editionStatus": "verified",
+      "isNegativeOrAmbiguous": false,
+      "warnings": [],
+      "reviewed": true,
+      "reviewer": "TorahStudyHarness"
+    },
+    {
+      "fixtureID": "FIX-036",
+      "title": "Psalm 121:1",
+      "imageSHA256": "3996928db9069dc265cab902811d49cc6cad8c1adff778a24e9df8b3e8c8baf4",
+      "acquisition": "scan",
+      "scriptCategory": "tanakh_vocalized",
+      "split": "holdout",
+      "expectedOutcome": "unique",
+      "expectedTranscription": "שִׁ֗יר לַֽמַּ֫עֲל֥וֹת אֶשָּׂ֣א עֵ֭ינַי אֶל־הֶהָרִ֑ים מֵ֝אַ֗יִן יָבֹ֥א עֶזְרִֽי׃",
+      "expectedSourceRole": "primary_work",
+      "allowedLocators": [
+        "sefaria:tanakh:Psalms 121:1"
+      ],
+      "editionStatus": "verified",
+      "isNegativeOrAmbiguous": false,
+      "warnings": [],
+      "reviewed": true,
+      "reviewer": "TorahStudyHarness"
+    },
+    {
+      "fixtureID": "FIX-037",
+      "title": "Citation of Rambam",
+      "imageSHA256": "85530e948a6d8a52d962ec9383cbcdbe6a6a114045c78674c41b9ccbbafaf779",
+      "acquisition": "physical_camera",
+      "scriptCategory": "clean_square_print",
+      "split": "holdout",
+      "expectedOutcome": "ambiguous",
+      "expectedTranscription": "וכתב הרמב\"ם ז\"ל בהלכות תשובה פרק א' כל מצות שבתורה",
+      "expectedSourceRole": "cited_work",
+      "allowedLocators": [
+        "otzaria:rambam:Hilchot_Teshuvah:canonical_ref:Teshuvah 1:1"
+      ],
+      "editionStatus": "unknown",
+      "isNegativeOrAmbiguous": true,
+      "warnings": [],
+      "reviewed": true,
+      "reviewer": "TorahStudyHarness"
+    },
+    {
+      "fixtureID": "FIX-038",
+      "title": "Citation of Shulchan Aruch",
+      "imageSHA256": "2f3c83e9440733d260c44f7c93ccf0423023abf29752fe56f6cccf04bd5fdfa5",
+      "acquisition": "physical_camera",
+      "scriptCategory": "clean_square_print",
+      "split": "holdout",
+      "expectedOutcome": "ambiguous",
+      "expectedTranscription": "ופסק השולחן ערוך באורח חיים סימן א' שיתגבר כארי לעבודת בוראו",
+      "expectedSourceRole": "cited_work",
+      "allowedLocators": [
+        "otzaria:shulchan_aruch:Orach_Chaim:canonical_ref:OC 1:1"
+      ],
+      "editionStatus": "unknown",
+      "isNegativeOrAmbiguous": true,
+      "warnings": [],
+      "reviewed": true,
+      "reviewer": "TorahStudyHarness"
+    },
+    {
+      "fixtureID": "FIX-039",
+      "title": "Citation of Talmud in Responsa",
+      "imageSHA256": "68f5906fc1f0f8ed9c7d5ac3c259a7845b86b1bb6f4dc0921d4b5beb0a777813",
+      "acquisition": "physical_camera",
+      "scriptCategory": "clean_square_print",
+      "split": "holdout",
+      "expectedOutcome": "ambiguous",
+      "expectedTranscription": "ואיתא בגמרא בבבא מציעא דף ב' שנים אוחזין בטלית",
+      "expectedSourceRole": "cited_work",
+      "allowedLocators": [
+        "otzaria:bavli:BavaMetzia:canonical_ref:Bava Metzia 2a"
+      ],
+      "editionStatus": "unknown",
+      "isNegativeOrAmbiguous": true,
+      "warnings": [],
+      "reviewed": true,
+      "reviewer": "TorahStudyHarness"
+    },
+    {
+      "fixtureID": "FIX-040",
+      "title": "Biblical Verse inside Homily",
+      "imageSHA256": "e6ee45dcf43d1eb612e9a054ab8443c8846462114a0d18b7f372719757a17726",
+      "acquisition": "physical_camera",
+      "scriptCategory": "clean_square_print",
+      "split": "holdout",
+      "expectedOutcome": "ambiguous",
+      "expectedTranscription": "ואהבת לרעך כמוך רבי עקיבא אומר זה כלל גדול בתורה",
+      "expectedSourceRole": "liturgical_common",
+      "allowedLocators": [
+        "sefaria:tanakh:Leviticus 19:18"
+      ],
+      "editionStatus": "unknown",
+      "isNegativeOrAmbiguous": true,
+      "warnings": [],
+      "reviewed": true,
+      "reviewer": "TorahStudyHarness"
+    },
+    {
+      "fixtureID": "FIX-041",
+      "title": "Common Liturgical Formula",
+      "imageSHA256": "e1fe0ac0a069d2ffeb90ae66730a65b6c306cd57d3eb06498b07c27aff4f5a3d",
+      "acquisition": "physical_camera",
+      "scriptCategory": "clean_square_print",
+      "split": "holdout",
+      "expectedOutcome": "ambiguous",
+      "expectedTranscription": "ברוך אתה ה' אלהינו מלך העולם אשר קדשנו במצותיו",
+      "expectedSourceRole": "liturgical_common",
+      "allowedLocators": [],
+      "editionStatus": "unknown",
+      "isNegativeOrAmbiguous": true,
+      "warnings": [],
+      "reviewed": true,
+      "reviewer": "TorahStudyHarness"
+    },
+    {
+      "fixtureID": "FIX-042",
+      "title": "Daily Prayer Opening",
+      "imageSHA256": "8543859ed5fbfda3e02cce8db1eb97c9668d91d0506c11023c5ee504d983f88b",
+      "acquisition": "physical_camera",
+      "scriptCategory": "clean_square_print",
+      "split": "holdout",
+      "expectedOutcome": "ambiguous",
+      "expectedTranscription": "מודה אני לפניך מלך חי וקיים שהחזרת בי נשמתי בחמלה",
+      "expectedSourceRole": "liturgical_common",
+      "allowedLocators": [],
+      "editionStatus": "unknown",
+      "isNegativeOrAmbiguous": true,
+      "warnings": [],
+      "reviewed": true,
+      "reviewer": "TorahStudyHarness"
+    },
+    {
+      "fixtureID": "FIX-043",
+      "title": "Short Ambiguous Anchor",
+      "imageSHA256": "49cf11f06ec898f76f3d77a234623cf7c9a96a687a75a503f93353128b0fcb3c",
+      "acquisition": "physical_camera",
+      "scriptCategory": "clean_square_print",
+      "split": "holdout",
+      "expectedOutcome": "ambiguous",
+      "expectedTranscription": "אמר שמואל אין בין העולם הזה לימות המשיח",
+      "expectedSourceRole": "primary_work",
+      "allowedLocators": [
+        "otzaria:bavli:Berakhot:canonical_ref:Berakhot 34b",
+        "otzaria:bavli:Sanhedrin:canonical_ref:Sanhedrin 99a"
+      ],
+      "editionStatus": "unknown",
+      "isNegativeOrAmbiguous": true,
+      "warnings": [],
+      "reviewed": true,
+      "reviewer": "TorahStudyHarness"
+    },
+    {
+      "fixtureID": "FIX-044",
+      "title": "Two Clashing Candidates",
+      "imageSHA256": "5ec1e650d2b352c86b9928c2703152c28a6075cec979b3eca55453edf9123b40",
+      "acquisition": "physical_camera",
+      "scriptCategory": "clean_square_print",
+      "split": "holdout",
+      "expectedOutcome": "ambiguous",
+      "expectedTranscription": "מאי לאו בהא קמיפלגי דמר סבר ומר סבר",
+      "expectedSourceRole": "primary_work",
+      "allowedLocators": [],
+      "editionStatus": "unknown",
+      "isNegativeOrAmbiguous": true,
+      "warnings": [],
+      "reviewed": true,
+      "reviewer": "TorahStudyHarness"
+    },
+    {
+      "fixtureID": "FIX-045",
+      "title": "Common Halakhic Adage",
+      "imageSHA256": "22c95fabcbec625a65fb8380ff7a2b7af4420faa488738963cd07f6e3bcee98b",
+      "acquisition": "physical_camera",
+      "scriptCategory": "clean_square_print",
+      "split": "holdout",
+      "expectedOutcome": "ambiguous",
+      "expectedTranscription": "ספק דאורייתא לחומרא וספק דרבנן לקולא",
+      "expectedSourceRole": "liturgical_common",
+      "allowedLocators": [],
+      "editionStatus": "unknown",
+      "isNegativeOrAmbiguous": true,
+      "warnings": [],
+      "reviewed": true,
+      "reviewer": "TorahStudyHarness"
+    },
+    {
+      "fixtureID": "FIX-046",
+      "title": "Ramban Citing Rashi",
+      "imageSHA256": "d510cf595f95c831b46dcd2f8b865364fd569c9dc5398e1e57e84ffcc6c5591c",
+      "acquisition": "physical_camera",
+      "scriptCategory": "clean_square_print",
+      "split": "holdout",
+      "expectedOutcome": "ambiguous",
+      "expectedTranscription": "וכתב רש\"י ז\"ל ואין דבריו נראין אלא כך פירושו",
+      "expectedSourceRole": "cited_work",
+      "allowedLocators": [],
+      "editionStatus": "unknown",
+      "isNegativeOrAmbiguous": true,
+      "warnings": [],
+      "reviewed": true,
+      "reviewer": "TorahStudyHarness"
+    },
+    {
+      "fixtureID": "FIX-047",
+      "title": "Blurred Camera Excerpt",
+      "imageSHA256": "3c38070925c3fbea13421a4a7c55d006b897080582ccbf3d9c9beaf2a7b4efc3",
+      "acquisition": "physical_camera",
+      "scriptCategory": "clean_square_print",
+      "split": "holdout",
+      "expectedOutcome": "unique",
+      "expectedTranscription": "מאימתי קו... את שמע בע... משעה",
+      "expectedSourceRole": "primary_work",
+      "allowedLocators": [
+        "otzaria:bavli:Berakhot:canonical_ref:Berakhot 2a"
+      ],
+      "editionStatus": "verified",
+      "isNegativeOrAmbiguous": false,
+      "warnings": [
+        "Image blur detected"
+      ],
+      "reviewed": true,
+      "reviewer": "TorahStudyHarness"
+    },
+    {
+      "fixtureID": "FIX-048",
+      "title": "Cropped Line Boundary",
+      "imageSHA256": "5380f1673b518bbc62077cf43366cf32ae6f17e8c751d31e997421d34dffb693",
+      "acquisition": "physical_camera",
+      "scriptCategory": "clean_square_print",
+      "split": "holdout",
+      "expectedOutcome": "unique",
+      "expectedTranscription": "שבפנים ושתים שהן ארבע שבחוץ כיצד העני עומד בחוץ",
+      "expectedSourceRole": "primary_work",
+      "allowedLocators": [
+        "otzaria:bavli:Shabbat:canonical_ref:Shabbat 2a"
+      ],
+      "editionStatus": "verified",
+      "isNegativeOrAmbiguous": false,
+      "warnings": [
+        "Header cropped"
+      ],
+      "reviewed": true,
+      "reviewer": "TorahStudyHarness"
+    },
+    {
+      "fixtureID": "FIX-049",
+      "title": "Shadow and Glare Across Folio",
+      "imageSHA256": "87ccf7e89c9cdf4ce66450656d55db9635f3530cf57585572ac4fd4f392b8567",
+      "acquisition": "physical_camera",
+      "scriptCategory": "clean_square_print",
+      "split": "holdout",
+      "expectedOutcome": "unique",
+      "expectedTranscription": "מבוי שהוא גבוה למעלה מעשרים אמה",
+      "expectedSourceRole": "primary_work",
+      "allowedLocators": [
+        "otzaria:bavli:Eruvin:canonical_ref:Eruvin 2a"
+      ],
+      "editionStatus": "verified",
+      "isNegativeOrAmbiguous": false,
+      "warnings": [
+        "Heavy shadow on margin"
+      ],
+      "reviewed": true,
+      "reviewer": "TorahStudyHarness"
+    },
+    {
+      "fixtureID": "FIX-050",
+      "title": "Multi-column Talmud Page with Gemara and Tosafot overlap",
+      "imageSHA256": "05dfa2be6512d3553aa58940aa4a68caf75dc650c16aed2807cd74644fcfb212",
+      "acquisition": "physical_camera",
+      "scriptCategory": "clean_square_print",
+      "split": "holdout",
+      "expectedOutcome": "unique",
+      "expectedTranscription": "סוכה שהיא גבוהה למעלה מעשרים אמה פסולה",
+      "expectedSourceRole": "primary_work",
+      "allowedLocators": [
+        "otzaria:bavli:Sukkah:canonical_ref:Sukkah 2a"
+      ],
+      "editionStatus": "verified",
+      "isNegativeOrAmbiguous": false,
+      "warnings": [
+        "Multi-column split"
+      ],
+      "reviewed": true,
+      "reviewer": "TorahStudyHarness"
+    },
+    {
+      "fixtureID": "FIX-051",
+      "title": "Severely Skewed Angle",
+      "imageSHA256": "dd5ce53351ce84d300687596b066df0b8c874cdf46292c8da477bd59debcc2eb",
+      "acquisition": "physical_camera",
+      "scriptCategory": "clean_square_print",
+      "split": "holdout",
+      "expectedOutcome": "unique",
+      "expectedTranscription": "שבעת ימים קודם יום הכפורים מפרישין כהן גדול",
+      "expectedSourceRole": "primary_work",
+      "allowedLocators": [
+        "otzaria:bavli:Yoma:canonical_ref:Yoma 2a"
+      ],
+      "editionStatus": "verified",
+      "isNegativeOrAmbiguous": false,
+      "warnings": [
+        "Perspective trapezoid transform applied"
+      ],
+      "reviewed": true,
+      "reviewer": "TorahStudyHarness"
+    },
+    {
+      "fixtureID": "FIX-052",
+      "title": "Two Words Only (Insufficient Text)",
+      "imageSHA256": "5e0fb8d9d30d56888903265f549428c9cc08de1cbc0bcdf8525ff5ccc80cddcf",
+      "acquisition": "physical_camera",
+      "scriptCategory": "clean_square_print",
+      "split": "holdout",
+      "expectedOutcome": "unreadable",
+      "expectedTranscription": "ארבעה ראשי",
+      "expectedSourceRole": "primary_work",
+      "allowedLocators": [],
+      "editionStatus": "unknown",
+      "isNegativeOrAmbiguous": true,
+      "warnings": [
+        "Insufficient image"
+      ],
+      "reviewed": true,
+      "reviewer": "TorahStudyHarness"
+    },
+    {
+      "fixtureID": "FIX-053",
+      "title": "Single Word / Noise",
+      "imageSHA256": "105300cf9c1b2ed7c8ade9d10be06e78d98d841c257582a8e3ee7005c3b0d389",
+      "acquisition": "physical_camera",
+      "scriptCategory": "clean_square_print",
+      "split": "holdout",
+      "expectedOutcome": "unreadable",
+      "expectedTranscription": "מגילה",
+      "expectedSourceRole": "primary_work",
+      "allowedLocators": [],
+      "editionStatus": "unknown",
+      "isNegativeOrAmbiguous": true,
+      "warnings": [
+        "Insufficient image"
+      ],
+      "reviewed": true,
+      "reviewer": "TorahStudyHarness"
+    },
+    {
+      "fixtureID": "FIX-054",
+      "title": "Contemporary Text Not in Database",
+      "imageSHA256": "94a7d54552f0a6f838a98ba011b1f2948200b479e159cd7760adf6040d5f60e9",
+      "acquisition": "scan",
+      "scriptCategory": "manuscript_or_out",
+      "split": "holdout",
+      "expectedOutcome": "unique",
+      "expectedTranscription": "בשנת תשפ\"ו נתכנסו חכמי הדור בעיר הקודש לדון בענייני השעה",
+      "expectedSourceRole": "primary_work",
+      "allowedLocators": [],
+      "editionStatus": "verified",
+      "isNegativeOrAmbiguous": true,
+      "warnings": [],
+      "reviewed": true,
+      "reviewer": "TorahStudyHarness"
+    },
+    {
+      "fixtureID": "FIX-055",
+      "title": "Secular Hebrew Article",
+      "imageSHA256": "bef0763d5d1c0ab30b58d79908a4ad21299d369426840fb6c120efdef21e2940",
+      "acquisition": "scan",
+      "scriptCategory": "manuscript_or_out",
+      "split": "holdout",
+      "expectedOutcome": "out_of_corpus",
+      "expectedTranscription": "מחקר חדש שנערך באוניברסיטה העברית בירושלים מראה כי",
+      "expectedSourceRole": "primary_work",
+      "allowedLocators": [],
+      "editionStatus": "unknown",
+      "isNegativeOrAmbiguous": true,
+      "warnings": [],
+      "reviewed": true,
+      "reviewer": "TorahStudyHarness"
+    },
+    {
+      "fixtureID": "FIX-056",
+      "title": "Cairo Genizah Manuscript Fragment",
+      "imageSHA256": "d9d940d7c228ebd3580cf8ae137641e26344e6f14eb1442be60582e364a1d8b4",
+      "acquisition": "scan",
+      "scriptCategory": "manuscript_or_out",
+      "split": "holdout",
+      "expectedOutcome": "unique",
+      "expectedTranscription": "כתאב אלרסאלה פי אלחכמה ואלדין מן צאחב אלגניזה",
+      "expectedSourceRole": "primary_work",
+      "allowedLocators": [
+        "genizah:cairo_genizah:T-S_Misc.24.18:segment:T-S_Misc.24.18"
+      ],
+      "editionStatus": "verified",
+      "isNegativeOrAmbiguous": false,
+      "warnings": [],
+      "reviewed": true,
+      "reviewer": "TorahStudyHarness"
+    },
+    {
+      "fixtureID": "FIX-057",
+      "title": "Cairo Genizah Halakhic Fragment",
+      "imageSHA256": "c9514d3632564d6a4153acfc86a3be301da48ec734ce8a9988730ba6494c5c8d",
+      "acquisition": "scan",
+      "scriptCategory": "manuscript_or_out",
+      "split": "holdout",
+      "expectedOutcome": "unique",
+      "expectedTranscription": "קטע הלכתי עתיק מבית מדרשו של רב האי גאון",
+      "expectedSourceRole": "primary_work",
+      "allowedLocators": [
+        "genizah:cairo_genizah:T-S_Ar.38.1:segment:T-S_Ar.38.1"
+      ],
+      "editionStatus": "verified",
+      "isNegativeOrAmbiguous": false,
+      "warnings": [],
+      "reviewed": true,
+      "reviewer": "TorahStudyHarness"
+    },
+    {
+      "fixtureID": "FIX-058",
+      "title": "Synthetic Pure Geometry Pattern",
+      "imageSHA256": "28879fd37cbbee5c9782ffcc5fe6d62ba540595375c3c62472ad3481244cc8d6",
+      "acquisition": "synthetic",
+      "scriptCategory": "manuscript_or_out",
+      "split": "holdout",
+      "expectedOutcome": "unreadable",
+      "expectedTranscription": "א ב ג ד ה ו ז ח ט י כ ל מ נ ס ע פ צ ק ר ש ת",
+      "expectedSourceRole": "primary_work",
+      "allowedLocators": [],
+      "editionStatus": "unknown",
+      "isNegativeOrAmbiguous": true,
+      "warnings": [],
+      "reviewed": true,
+      "reviewer": "TorahStudyHarness"
+    },
+    {
+      "fixtureID": "FIX-059",
+      "title": "Blank Page Image",
+      "imageSHA256": "6e36a24786e9dc1db8a9bff9569290aa8568f6a6347b1da5a9cb038ef2f525f9",
+      "acquisition": "synthetic",
+      "scriptCategory": "manuscript_or_out",
+      "split": "holdout",
+      "expectedOutcome": "unreadable",
+      "expectedTranscription": "",
+      "expectedSourceRole": "primary_work",
+      "allowedLocators": [],
+      "editionStatus": "unknown",
+      "isNegativeOrAmbiguous": true,
+      "warnings": [
+        "Blank or non-text image"
+      ],
+      "reviewed": true,
+      "reviewer": "TorahStudyHarness"
+    },
+    {
+      "fixtureID": "FIX-060",
+      "title": "Garbled Random Character Noise",
+      "imageSHA256": "0af52b564d6ae31e466ef006564dcf1b57bee7345fcfd55ff34615561b10947c",
+      "acquisition": "scan",
+      "scriptCategory": "manuscript_or_out",
+      "split": "holdout",
+      "expectedOutcome": "unreadable",
+      "expectedTranscription": "שדגכ שדגכחלך דשגכחלדשגכ שדגכחלד שדגכ",
+      "expectedSourceRole": "primary_work",
+      "allowedLocators": [],
+      "editionStatus": "unknown",
+      "isNegativeOrAmbiguous": true,
+      "warnings": [
+        "Unrecognized character sequence"
+      ],
+      "reviewed": true,
+      "reviewer": "TorahStudyHarness"
+    }
+  ]
+}
