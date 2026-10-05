@@ -463,6 +463,24 @@ void hash_combine_optionals(std::size_t &seed, const std::optional<Ts> &...optio
               await writeFile(full, content, 'utf8');
               console.log(`[HanlinExpo] Sanitized hash_combine.h for C++17 compatibility: ${full}`);
             }
+          } else if (ent.isFile() && ent.name === 'react_native_assert.h') {
+            let content = await readFile(full, 'utf8');
+            if (content.includes('#include <glog/logging.h>') && !content.includes('__has_include(<glog/logging.h>)')) {
+              content = content.replace(
+                '#include <glog/logging.h>',
+                '#if __has_include(<glog/logging.h>)\n#include <glog/logging.h>\n#else\n#define GLOG_NO_ABBREVIATED_SEVERITIES\n#endif'
+              );
+              content = content.replace(
+                '#define react_native_assert(cond)',
+                '#if !__has_include(<glog/logging.h>)\n#define react_native_assert(cond) assert(cond)\n#else\n#define react_native_assert(cond)'
+              );
+              content = content.replace(
+                /  \}\r?\n\r?\n#endif \/\/ platforms besides __ANDROID__/,
+                '  }\n#endif\n\n#endif // platforms besides __ANDROID__'
+              );
+              await writeFile(full, content, 'utf8');
+              console.log(`[HanlinExpo] Sanitized react_native_assert.h for optional glog: ${full}`);
+            }
           } else if (ent.isFile() && ent.name.endsWith('.h')) {
             let content = await readFile(full, 'utf8');
             if (content.includes('<jsinspector-modern/')) {
@@ -478,6 +496,12 @@ void hash_combine_optionals(std::size_t &seed, const std::optional<Ts> &...optio
       await sanitizeHeaders(resolve(artifactsRoot, 'ReactNativeHeaders.xcframework'));
       if (existsSync(resolve(artifactsRoot, 'ReactModularHeaders'))) {
         await sanitizeHeaders(resolve(artifactsRoot, 'ReactModularHeaders'));
+      }
+      if (existsSync(resolve(artifactsRoot, 'ReactNativeDependencies.xcframework'))) {
+        await sanitizeHeaders(resolve(artifactsRoot, 'ReactNativeDependencies.xcframework'));
+      }
+      if (existsSync(resolve(artifactsRoot, 'ExpoModulesCore.xcframework'))) {
+        await sanitizeHeaders(resolve(artifactsRoot, 'ExpoModulesCore.xcframework'));
       }
 
       // Remove stale code signatures and re-sign ad-hoc if on darwin/codesign is available

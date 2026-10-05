@@ -93,6 +93,24 @@ function patchAll(dir) {
         writeFileSync(full, content, 'utf8');
         console.log('Successfully patched hash_combine.h at:', full);
       }
+    } else if (ent.name === 'react_native_assert.h') {
+      let content = readFileSync(full, 'utf8');
+      if (content.includes('#include <glog/logging.h>') && !content.includes('__has_include(<glog/logging.h>)')) {
+        content = content.replace(
+          '#include <glog/logging.h>',
+          '#if __has_include(<glog/logging.h>)\n#include <glog/logging.h>\n#else\n#define GLOG_NO_ABBREVIATED_SEVERITIES\n#endif'
+        );
+        content = content.replace(
+          '#define react_native_assert(cond)',
+          '#if !__has_include(<glog/logging.h>)\n#define react_native_assert(cond) assert(cond)\n#else\n#define react_native_assert(cond)'
+        );
+        content = content.replace(
+          /  \}\r?\n\r?\n#endif \/\/ platforms besides __ANDROID__/,
+          '  }\n#endif\n\n#endif // platforms besides __ANDROID__'
+        );
+        writeFileSync(full, content, 'utf8');
+        console.log('Successfully patched react_native_assert.h at:', full);
+      }
     }
   }
 }
