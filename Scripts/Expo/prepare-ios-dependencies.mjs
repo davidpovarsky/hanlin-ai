@@ -84,40 +84,68 @@ async function prepare() {
     console.log('[HanlinExpo] All dependencies staged successfully.');
 
     async function stageModularHeaders() {
-      console.log('[HanlinExpo] Staging modular React and Cxx headers in ReactModularHeaders...');
+      console.log('[HanlinExpo] Staging modular React and Cxx headers in frameworks and ReactModularHeaders...');
       const modularHeadersRoot = resolve(artifactsRoot, 'ReactModularHeaders');
       await rm(modularHeadersRoot, { recursive: true, force: true });
       await mkdir(modularHeadersRoot, { recursive: true });
 
       const slices = ['ios-arm64_x86_64-simulator', 'ios-arm64'];
+      const rnDepsHeaders = resolve(artifactsRoot, 'ReactNativeDependencies.xcframework', 'Headers');
+
       for (const slice of slices) {
         const rnHeaders = resolve(artifactsRoot, 'ReactNativeHeaders.xcframework', slice, 'Headers');
+        const reactHeaders = resolve(artifactsRoot, 'React.xcframework', slice, 'React.framework', 'Headers');
+        const expoHeaders = resolve(artifactsRoot, 'ExpoModulesCore.xcframework', slice, 'ExpoModulesCore.framework', 'Headers');
+
         if (existsSync(rnHeaders)) {
           const entries = await readdir(rnHeaders, { withFileTypes: true });
           for (const entry of entries) {
             if (entry.name.endsWith('.modulemap')) continue;
             const src = resolve(rnHeaders, entry.name);
-            const dst = resolve(modularHeadersRoot, entry.name);
-            if (!existsSync(dst)) {
-              await cp(src, dst, { recursive: true });
+            if (existsSync(reactHeaders)) {
+              const dstReact = resolve(reactHeaders, entry.name);
+              if (!existsSync(dstReact)) {
+                await cp(src, dstReact, { recursive: true });
+              }
+            }
+            if (existsSync(expoHeaders)) {
+              const dstExpo = resolve(expoHeaders, entry.name);
+              if (!existsSync(dstExpo)) {
+                await cp(src, dstExpo, { recursive: true });
+              }
+            }
+            const dstMod = resolve(modularHeadersRoot, entry.name);
+            if (!existsSync(dstMod)) {
+              await cp(src, dstMod, { recursive: true });
+            }
+          }
+        }
+
+        if (existsSync(rnDepsHeaders)) {
+          const depEntries = await readdir(rnDepsHeaders, { withFileTypes: true });
+          for (const entry of depEntries) {
+            if (entry.name.endsWith('.modulemap')) continue;
+            const src = resolve(rnDepsHeaders, entry.name);
+            if (existsSync(reactHeaders)) {
+              const dstReact = resolve(reactHeaders, entry.name);
+              if (!existsSync(dstReact)) {
+                await cp(src, dstReact, { recursive: true });
+              }
+            }
+            if (existsSync(expoHeaders)) {
+              const dstExpo = resolve(expoHeaders, entry.name);
+              if (!existsSync(dstExpo)) {
+                await cp(src, dstExpo, { recursive: true });
+              }
+            }
+            const dstMod = resolve(modularHeadersRoot, entry.name);
+            if (!existsSync(dstMod)) {
+              await cp(src, dstMod, { recursive: true });
             }
           }
         }
       }
-
-      const rnDepsHeaders = resolve(artifactsRoot, 'ReactNativeDependencies.xcframework', 'Headers');
-      if (existsSync(rnDepsHeaders)) {
-        const depEntries = await readdir(rnDepsHeaders, { withFileTypes: true });
-        for (const entry of depEntries) {
-          if (entry.name.endsWith('.modulemap')) continue;
-          const src = resolve(rnDepsHeaders, entry.name);
-          const dst = resolve(modularHeadersRoot, entry.name);
-          if (!existsSync(dst)) {
-            await cp(src, dst, { recursive: true });
-          }
-        }
-      }
-      console.log('[HanlinExpo] Modular headers staged successfully in ReactModularHeaders.');
+      console.log('[HanlinExpo] Modular headers staged successfully.');
     }
     await stageModularHeaders();
 
@@ -246,12 +274,29 @@ async function prepare() {
     await cleanSwiftInterfaces(artifactsRoot);
 
     if (process.platform === 'darwin') {
-      const jsiPath = resolve(artifactsRoot, 'ExpoModulesJSI.xcframework');
-      if (existsSync(jsiPath)) {
-        try {
-          execSync(`codesign --force --deep --sign - "${jsiPath}"`, { stdio: 'ignore' });
-          console.log('[HanlinExpo] Ad-hoc re-signed ExpoModulesJSI.xcframework');
-        } catch (_) {}
+      const artifactEntries = await readdir(artifactsRoot, { withFileTypes: true });
+      for (const entry of artifactEntries) {
+        if (entry.isDirectory() && entry.name.endsWith('.xcframework')) {
+          const fwPath = resolve(artifactsRoot, entry.name);
+          try {
+            let innerFws = [];
+            try {
+              const findOutput = execSync(`find "${fwPath}" -type d -name "*.framework"`, { encoding: 'utf8' });
+              innerFws = findOutput.trim().split('\n').filter(Boolean);
+            } catch (_) {}
+
+            for (const inner of innerFws) {
+              try { execSync(`codesign --remove-signature "${inner}"`, { stdio: 'ignore' }); } catch (_) {}
+              try { execSync(`codesign --force --deep --sign - "${inner}"`, { stdio: 'ignore' }); } catch (_) {}
+            }
+
+            try { execSync(`codesign --remove-signature "${fwPath}"`, { stdio: 'ignore' }); } catch (_) {}
+            execSync(`codesign --force --deep --sign - "${fwPath}"`, { stdio: 'ignore' });
+            console.log(`[HanlinExpo] Ad-hoc re-signed ${entry.name}`);
+          } catch (e) {
+            console.log(`[HanlinExpo] Re-signing notice for ${entry.name}: ${e.message}`);
+          }
+        }
       }
     }
   } finally {
