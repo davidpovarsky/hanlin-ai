@@ -30,6 +30,9 @@ let package = Package(
             linkerSettings: [
                 .linkedFramework("UIKit"),
                 .linkedFramework("SwiftUI")
+            ],
+            swiftSettings: [
+                .interoperabilityMode(.Cxx)
             ]
         ),
         .binaryTarget(name: "ReactNativeHeaders", path: "Artifacts/ReactNativeHeaders.xcframework"),

@@ -1,5 +1,5 @@
 import { createHash } from 'node:crypto';
-import { access, chmod, cp, mkdir, readFile, rm, writeFile } from 'node:fs/promises';
+import { access, chmod, cp, mkdir, readFile, readdir, rm, writeFile } from 'node:fs/promises';
 import { createWriteStream, existsSync } from 'node:fs';
 import { basename, resolve } from 'node:path';
 import { execSync } from 'node:child_process';
@@ -154,8 +154,14 @@ async function prepare() {
               'CLANG_COVERAGE_MAPPING=NO \\',
               'CLANG_COVERAGE_MAPPING=NO \\\n    CODE_SIGNING_REQUIRED=NO \\\n    CODE_SIGNING_ALLOWED=NO \\\n    CODE_SIGN_IDENTITY="" \\'
             );
-            await writeFile(buildScript, scriptContent, 'utf8');
           }
+          if (scriptContent.includes('/^extension __ObjC\\./')) {
+            scriptContent = scriptContent.replace(
+              '/^extension __ObjC\\./',
+              '/^extension __ObjC/'
+            );
+          }
+          await writeFile(buildScript, scriptContent, 'utf8');
           await chmod(buildScript, 0o755);
         }
         if (existsSync(generateScript)) {
@@ -181,6 +187,25 @@ async function prepare() {
         }
       }
     }
+
+    async function cleanSwiftInterfaces(dir) {
+      if (!existsSync(dir)) return;
+      const entries = await readdir(dir, { withFileTypes: true });
+      for (const entry of entries) {
+        const fullPath = resolve(dir, entry.name);
+        if (entry.isDirectory()) {
+          await cleanSwiftInterfaces(fullPath);
+        } else if (entry.name.endsWith('.swiftinterface')) {
+          const content = await readFile(fullPath, 'utf8');
+          const cleaned = content.replace(/^extension\s+__ObjC[\s\S]*?^}[^\S\r\n]*\r?\n?/gm, '');
+          if (cleaned !== content) {
+            await writeFile(fullPath, cleaned, 'utf8');
+            console.log(`[HanlinExpo] Stripped unresolved __ObjC extension from ${entry.name}`);
+          }
+        }
+      }
+    }
+    await cleanSwiftInterfaces(artifactsRoot);
   } finally {
     await rm(tempDir, { recursive: true, force: true });
   }

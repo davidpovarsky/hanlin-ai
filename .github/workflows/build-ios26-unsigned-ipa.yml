@@ -607,6 +607,51 @@ jobs:
           cache: npm
           cache-dependency-path: AI_HLY/Downstream/RuntimeCore/Node/Host/package-lock.json
 
+      - name: Select Xcode 27 or 26
+        id: app-toolchain
+        run: |
+          set -euxo pipefail
+
+          {
+            echo "Trying to select the newest available Xcode..."
+
+            selected_xcode="$(find /Applications -maxdepth 1 -type d \( -name 'Xcode_2*.app' -o -name 'Xcode*.app' \) -print \
+              | sort -V \
+              | tail -1)"
+            if [ -z "$selected_xcode" ]; then
+              dev_dir="$(xcode-select -p 2>/dev/null || echo '/Applications/Xcode.app/Contents/Developer')"
+              selected_xcode="$(dirname "$(dirname "$dev_dir")")"
+            fi
+            if [ -d "$selected_xcode/Contents/Developer" ]; then
+              sudo xcode-select -s "$selected_xcode/Contents/Developer"
+              echo "Selected $selected_xcode"
+            else
+              echo "Using default xcode-select: $(xcode-select -p)"
+            fi
+
+            echo
+            echo "===== Selected developer dir ====="
+            xcode-select -p
+
+            echo
+            echo "===== Selected Xcode version ====="
+            xcodebuild -version
+
+            echo
+            echo "===== SDKs after selection ====="
+            xcodebuild -showsdks
+
+            echo
+            echo "===== iOS SDK check ====="
+            xcodebuild -showsdks | grep -E "iphoneos2[67]|iOS 2[67]" || {
+              echo "ERROR: Xcode selected, but iOS SDK was not found."
+              exit 1
+            }
+          } 2>&1 | tee "$LOG_DIR/02-select-xcode26.log"
+          xcode_version="$(xcodebuild -version | sed -n '1s/^Xcode //p')"
+          xcode_build="$(xcodebuild -version | sed -n '2s/^Build version //p')"
+          runner_arch="$(uname -m)"
+
       - name: Prepare pinned NativeScript iOS dependency closure
         run: |
           set -euxo pipefail
@@ -663,51 +708,6 @@ jobs:
             echo "===== Top-level files ====="
             find . -maxdepth 3 -type f | sort | sed -n '1,400{s#^\./##;p;}'
           } 2>&1 | tee "$LOG_DIR/01-environment.log"
-
-      - name: Select Xcode 27 or 26
-        id: app-toolchain
-        run: |
-          set -euxo pipefail
-
-          {
-            echo "Trying to select the newest available Xcode..."
-
-            selected_xcode="$(find /Applications -maxdepth 1 -type d \( -name 'Xcode_2*.app' -o -name 'Xcode*.app' \) -print \
-              | sort -V \
-              | tail -1)"
-            if [ -z "$selected_xcode" ]; then
-              dev_dir="$(xcode-select -p 2>/dev/null || echo '/Applications/Xcode.app/Contents/Developer')"
-              selected_xcode="$(dirname "$(dirname "$dev_dir")")"
-            fi
-            if [ -d "$selected_xcode/Contents/Developer" ]; then
-              sudo xcode-select -s "$selected_xcode/Contents/Developer"
-              echo "Selected $selected_xcode"
-            else
-              echo "Using default xcode-select: $(xcode-select -p)"
-            fi
-
-            echo
-            echo "===== Selected developer dir ====="
-            xcode-select -p
-
-            echo
-            echo "===== Selected Xcode version ====="
-            xcodebuild -version
-
-            echo
-            echo "===== SDKs after selection ====="
-            xcodebuild -showsdks
-
-            echo
-            echo "===== iOS SDK check ====="
-            xcodebuild -showsdks | grep -E "iphoneos2[67]|iOS 2[67]" || {
-              echo "ERROR: Xcode selected, but iOS SDK was not found."
-              exit 1
-            }
-          } 2>&1 | tee "$LOG_DIR/02-select-xcode26.log"
-          xcode_version="$(xcodebuild -version | sed -n '1s/^Xcode //p')"
-          xcode_build="$(xcodebuild -version | sed -n '2s/^Build version //p')"
-          runner_arch="$(uname -m)"
           iphoneos_sdk="$(xcrun --sdk iphoneos --show-sdk-version)"
           echo "xcode-version=$xcode_version" >> "$GITHUB_OUTPUT"
           echo "xcode-build=$xcode_build" >> "$GITHUB_OUTPUT"
@@ -1367,6 +1367,33 @@ jobs:
           cache: npm
           cache-dependency-path: AI_HLY/Downstream/RuntimeCore/Node/Host/package-lock.json
 
+      - name: Prepare simulator logs and select stable Xcode
+        id: simulator-toolchain
+        run: |
+          set -euxo pipefail
+          mkdir -p "$LOG_DIR" build
+          selected_xcode="$(find /Applications -maxdepth 1 -type d \( -name 'Xcode_2*.app' -o -name 'Xcode*.app' \) -print \
+            | sort -V \
+            | tail -1)"
+          if [ -z "$selected_xcode" ]; then
+            dev_dir="$(xcode-select -p 2>/dev/null || echo '/Applications/Xcode.app/Contents/Developer')"
+            selected_xcode="$(dirname "$(dirname "$dev_dir")")"
+          fi
+          if [ -d "$selected_xcode/Contents/Developer" ]; then
+            sudo xcode-select -s "$selected_xcode/Contents/Developer"
+          fi
+          {
+            sw_vers
+            xcode-select -p
+            xcodebuild -version
+            xcodebuild -showsdks
+          } 2>&1 | tee "$LOG_DIR/01-environment.log"
+          xcodebuild -showsdks | grep -E 'iphonesimulator|iOS Simulator' || true
+          echo "xcode-version=$(xcodebuild -version | sed -n '1s/^Xcode //p')" >> "$GITHUB_OUTPUT"
+          echo "xcode-build=$(xcodebuild -version | sed -n '2s/^Build version //p')" >> "$GITHUB_OUTPUT"
+          echo "runner-arch=$(uname -m)" >> "$GITHUB_OUTPUT"
+          echo "simulator-sdk=$(xcrun --sdk iphonesimulator --show-sdk-version)" >> "$GITHUB_OUTPUT"
+
       - name: Prepare pinned NativeScript iOS dependency closure
         run: |
           set -euxo pipefail
@@ -1409,33 +1436,6 @@ jobs:
           else
             echo "Skipping heavy NativeScript E2E fixture generation and preflight for non-NativeScript run."
           fi
-
-      - name: Prepare simulator logs and select stable Xcode
-        id: simulator-toolchain
-        run: |
-          set -euxo pipefail
-          mkdir -p "$LOG_DIR" build
-          selected_xcode="$(find /Applications -maxdepth 1 -type d \( -name 'Xcode_2*.app' -o -name 'Xcode*.app' \) -print \
-            | sort -V \
-            | tail -1)"
-          if [ -z "$selected_xcode" ]; then
-            dev_dir="$(xcode-select -p 2>/dev/null || echo '/Applications/Xcode.app/Contents/Developer')"
-            selected_xcode="$(dirname "$(dirname "$dev_dir")")"
-          fi
-          if [ -d "$selected_xcode/Contents/Developer" ]; then
-            sudo xcode-select -s "$selected_xcode/Contents/Developer"
-          fi
-          {
-            sw_vers
-            xcode-select -p
-            xcodebuild -version
-            xcodebuild -showsdks
-          } 2>&1 | tee "$LOG_DIR/01-environment.log"
-          xcodebuild -showsdks | grep -E 'iphonesimulator|iOS Simulator' || true
-          echo "xcode-version=$(xcodebuild -version | sed -n '1s/^Xcode //p')" >> "$GITHUB_OUTPUT"
-          echo "xcode-build=$(xcodebuild -version | sed -n '2s/^Build version //p')" >> "$GITHUB_OUTPUT"
-          echo "runner-arch=$(uname -m)" >> "$GITHUB_OUTPUT"
-          echo "simulator-sdk=$(xcrun --sdk iphonesimulator --show-sdk-version)" >> "$GITHUB_OUTPUT"
 
       - name: Restore simulator cloned Swift package dependencies
         id: simulator-sourcepackages-cache
