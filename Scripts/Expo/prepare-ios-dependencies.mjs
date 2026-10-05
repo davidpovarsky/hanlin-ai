@@ -236,6 +236,9 @@ async function prepare() {
         const moduleMapLines = [
           `framework module ${modName} {`
         ];
+        if (modName === 'ReactCommon') {
+          moduleMapLines.push('    use jsi');
+        }
         for (const h of headerMatches) {
           moduleMapLines.push(`    header "${basename(h)}"`);
         }
@@ -245,6 +248,36 @@ async function prepare() {
 
         await writeFile(resolve(modulesDir, 'module.modulemap'), moduleMapLines.join('\n'), 'utf8');
         count++;
+      }
+
+      // Create modular jsi.framework in ModularFrameworks to satisfy #include <jsi/jsi.h>
+      const jsiSourceDir = resolve(rnHeaders, 'jsi');
+      if (existsSync(jsiSourceDir)) {
+        const jsiFwDir = resolve(modularFwsRoot, 'jsi.framework');
+        const jsiHeadersDir = resolve(jsiFwDir, 'Headers');
+        const jsiModulesDir = resolve(jsiFwDir, 'Modules');
+        await mkdir(jsiHeadersDir, { recursive: true });
+        await mkdir(jsiModulesDir, { recursive: true });
+
+        const jsiFiles = await readdir(jsiSourceDir, { withFileTypes: true });
+        const jsiHeaders = [];
+        for (const file of jsiFiles) {
+          if (file.isFile() && file.name.endsWith('.h') && file.name !== 'JSIDynamic.h') {
+            await cp(resolve(jsiSourceDir, file.name), resolve(jsiHeadersDir, file.name));
+            jsiHeaders.push(file.name);
+          }
+        }
+
+        const jsiMap = [
+          'framework module jsi {',
+          ...jsiHeaders.map(h => `    header "${h}"`),
+          '    export *',
+          '}',
+          ''
+        ].join('\n');
+        await writeFile(resolve(jsiModulesDir, 'module.modulemap'), jsiMap, 'utf8');
+        count++;
+        console.log('[HanlinExpo] Created modular jsi.framework in ModularFrameworks.');
       }
 
       // Strip dummy cxxstableapi guards that reference non-existent react.framework headers
