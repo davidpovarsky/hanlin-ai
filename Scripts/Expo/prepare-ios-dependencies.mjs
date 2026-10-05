@@ -405,7 +405,7 @@ async function prepare() {
     if (process.platform === 'darwin') {
       const artifactEntries = await readdir(artifactsRoot, { withFileTypes: true });
       for (const entry of artifactEntries) {
-        if (entry.isDirectory() && entry.name.endsWith('.xcframework') && entry.name !== 'React.xcframework' && entry.name !== 'ReactNativeHeaders.xcframework') {
+        if (entry.isDirectory() && entry.name.endsWith('.xcframework') && entry.name.startsWith('Expo')) {
           const fwPath = resolve(artifactsRoot, entry.name);
           try {
             let innerFws = [];
