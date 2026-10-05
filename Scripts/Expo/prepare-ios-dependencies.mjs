@@ -83,6 +83,50 @@ async function prepare() {
     }
     console.log('[HanlinExpo] All dependencies staged successfully.');
 
+    async function stageModularHeaders() {
+      console.log('[HanlinExpo] Staging modular headers for ExpoModulesCore and React frameworks...');
+      const slices = ['ios-arm64_x86_64-simulator', 'ios-arm64'];
+      const rnDepsHeaders = resolve(artifactsRoot, 'ReactNativeDependencies.xcframework', 'Headers');
+
+      for (const slice of slices) {
+        const rnHeaders = resolve(artifactsRoot, 'ReactNativeHeaders.xcframework', slice, 'Headers');
+        const reactHeaders = resolve(artifactsRoot, 'React.xcframework', slice, 'React.framework', 'Headers');
+        const expoHeaders = resolve(artifactsRoot, 'ExpoModulesCore.xcframework', slice, 'ExpoModulesCore.framework', 'Headers');
+
+        if (existsSync(rnHeaders)) {
+          const entries = await readdir(rnHeaders, { withFileTypes: true });
+          for (const entry of entries) {
+            const src = resolve(rnHeaders, entry.name);
+            if (existsSync(reactHeaders)) {
+              const dstReact = resolve(reactHeaders, entry.name);
+              if (!existsSync(dstReact)) {
+                await cp(src, dstReact, { recursive: true });
+              }
+            }
+            if (existsSync(expoHeaders)) {
+              const dstExpo = resolve(expoHeaders, entry.name);
+              if (!existsSync(dstExpo)) {
+                await cp(src, dstExpo, { recursive: true });
+              }
+            }
+          }
+        }
+
+        if (existsSync(rnDepsHeaders) && existsSync(expoHeaders)) {
+          const depEntries = await readdir(rnDepsHeaders, { withFileTypes: true });
+          for (const entry of depEntries) {
+            const src = resolve(rnDepsHeaders, entry.name);
+            const dstExpo = resolve(expoHeaders, entry.name);
+            if (!existsSync(dstExpo)) {
+              await cp(src, dstExpo, { recursive: true });
+            }
+          }
+        }
+      }
+      console.log('[HanlinExpo] Modular headers staged successfully.');
+    }
+    await stageModularHeaders();
+
     if (process.platform === 'darwin') {
       console.log('[HanlinExpo] Building ExpoModulesJSI.xcframework for iOS device and simulator on macOS...');
       const expoModulesJSIRoot = resolve(scriptRoot, 'node_modules', 'expo-modules-jsi');
