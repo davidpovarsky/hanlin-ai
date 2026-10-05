@@ -138,7 +138,6 @@ async function prepare() {
       await mkdir(modularFwsRoot, { recursive: true });
 
       const slices = ['ios-arm64_x86_64-simulator', 'ios-arm64'];
-      const rnDepsHeaders = resolve(artifactsRoot, 'ReactNativeDependencies.xcframework', 'Headers');
       const stagedFrameworks = new Set();
 
       async function createFramework(fwName, sourceHeadersDir) {
@@ -168,15 +167,6 @@ async function prepare() {
             if (entry.isDirectory()) {
               await createFramework(entry.name, resolve(rnHeaders, entry.name));
             }
-          }
-        }
-      }
-
-      if (existsSync(rnDepsHeaders)) {
-        const depEntries = await readdir(rnDepsHeaders, { withFileTypes: true });
-        for (const entry of depEntries) {
-          if (entry.isDirectory()) {
-            await createFramework(entry.name, resolve(rnDepsHeaders, entry.name));
           }
         }
       }
