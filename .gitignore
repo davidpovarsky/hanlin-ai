@@ -160,6 +160,7 @@ local.properties
 scratch/
 
 # CI diagnostic scratch files (never committed)
+Packages/HanlinExpoRuntime/Packages/
 smoke_logs/
 build_errors.txt
 compile_errors.txt

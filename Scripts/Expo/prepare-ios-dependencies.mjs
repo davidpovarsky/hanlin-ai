@@ -84,7 +84,7 @@ async function prepare() {
     console.log('[HanlinExpo] All dependencies staged successfully.');
 
     async function stageModularHeaders() {
-      console.log('[HanlinExpo] Staging modular React and Cxx headers in frameworks and ReactModularHeaders...');
+      console.log('[HanlinExpo] Staging modular React and Cxx headers in ReactModularHeaders...');
       const modularHeadersRoot = resolve(artifactsRoot, 'ReactModularHeaders');
       await rm(modularHeadersRoot, { recursive: true, force: true });
       await mkdir(modularHeadersRoot, { recursive: true });
@@ -94,54 +94,28 @@ async function prepare() {
 
       for (const slice of slices) {
         const rnHeaders = resolve(artifactsRoot, 'ReactNativeHeaders.xcframework', slice, 'Headers');
-        const reactHeaders = resolve(artifactsRoot, 'React.xcframework', slice, 'React.framework', 'Headers');
-        const expoHeaders = resolve(artifactsRoot, 'ExpoModulesCore.xcframework', slice, 'ExpoModulesCore.framework', 'Headers');
 
         if (existsSync(rnHeaders)) {
           const entries = await readdir(rnHeaders, { withFileTypes: true });
           for (const entry of entries) {
             if (entry.name.endsWith('.modulemap')) continue;
             const src = resolve(rnHeaders, entry.name);
-            if (existsSync(reactHeaders)) {
-              const dstReact = resolve(reactHeaders, entry.name);
-              if (!existsSync(dstReact)) {
-                await cp(src, dstReact, { recursive: true });
-              }
-            }
-            if (existsSync(expoHeaders)) {
-              const dstExpo = resolve(expoHeaders, entry.name);
-              if (!existsSync(dstExpo)) {
-                await cp(src, dstExpo, { recursive: true });
-              }
-            }
             const dstMod = resolve(modularHeadersRoot, entry.name);
             if (!existsSync(dstMod)) {
               await cp(src, dstMod, { recursive: true });
             }
           }
         }
+      }
 
-        if (existsSync(rnDepsHeaders)) {
-          const depEntries = await readdir(rnDepsHeaders, { withFileTypes: true });
-          for (const entry of depEntries) {
-            if (entry.name.endsWith('.modulemap')) continue;
-            const src = resolve(rnDepsHeaders, entry.name);
-            if (existsSync(reactHeaders)) {
-              const dstReact = resolve(reactHeaders, entry.name);
-              if (!existsSync(dstReact)) {
-                await cp(src, dstReact, { recursive: true });
-              }
-            }
-            if (existsSync(expoHeaders)) {
-              const dstExpo = resolve(expoHeaders, entry.name);
-              if (!existsSync(dstExpo)) {
-                await cp(src, dstExpo, { recursive: true });
-              }
-            }
-            const dstMod = resolve(modularHeadersRoot, entry.name);
-            if (!existsSync(dstMod)) {
-              await cp(src, dstMod, { recursive: true });
-            }
+      if (existsSync(rnDepsHeaders)) {
+        const depEntries = await readdir(rnDepsHeaders, { withFileTypes: true });
+        for (const entry of depEntries) {
+          if (entry.name.endsWith('.modulemap')) continue;
+          const src = resolve(rnDepsHeaders, entry.name);
+          const dstMod = resolve(modularHeadersRoot, entry.name);
+          if (!existsSync(dstMod)) {
+            await cp(src, dstMod, { recursive: true });
           }
         }
       }
@@ -284,7 +258,7 @@ async function prepare() {
     if (process.platform === 'darwin') {
       const artifactEntries = await readdir(artifactsRoot, { withFileTypes: true });
       for (const entry of artifactEntries) {
-        if (entry.isDirectory() && entry.name.endsWith('.xcframework')) {
+        if (entry.isDirectory() && entry.name.endsWith('.xcframework') && entry.name !== 'React.xcframework') {
           const fwPath = resolve(artifactsRoot, entry.name);
           try {
             let innerFws = [];
