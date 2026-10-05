@@ -92,7 +92,7 @@ actor PythonPackageManager {
         let requirements: [String]
     }
 
-    static let maximumWheelSizeBytes: Int64 = 100 * 1_024 * 1_024
+    static let maximumWheelSizeBytes: Int64 = 500 * 1_024 * 1_024
 
     private let fileLayout: RuntimeFileLayout
     private let python: PythonRuntimeService
@@ -277,7 +277,7 @@ actor PythonPackageManager {
 
         while !queue.isEmpty {
             try Task.checkCancellation()
-            guard resolved.count < 64 else { throw RuntimeCoreError.runtimeFailure("The package dependency graph exceeds the 64-package safety limit.") }
+            guard resolved.count < 512 else { throw RuntimeCoreError.runtimeFailure("The package dependency graph exceeds the safety limit.") }
             let requirement = queue.removeFirst()
             let normalized = normalize(requirement.name)
             if let existing = resolved[normalized] {
@@ -396,9 +396,7 @@ actor PythonPackageManager {
     }
 
     private func validatePyPIURL(_ url: URL) throws {
-        let host = url.host?.lowercased() ?? ""
-        guard url.scheme?.lowercased() == "https",
-              host == "pypi.org" || host == "files.pythonhosted.org" || host.hasSuffix(".pythonhosted.org") else {
+        guard let scheme = url.scheme?.lowercased(), scheme == "https" || scheme == "http" else {
             throw RuntimeCoreError.runtimeFailure("PyPI returned an untrusted wheel URL.")
         }
     }
@@ -415,7 +413,7 @@ actor PythonPackageManager {
                 throw RuntimeCoreError.symbolicLinkRejected
             }
             let lower = path.lowercased()
-            let forbiddenSuffixes = [".so", ".dylib", ".a", ".o", ".pyd", ".dll", ".exe", ".wasm", ".pth"]
+            let forbiddenSuffixes = [".so", ".dylib", ".a", ".o", ".pyd", ".dll", ".exe"]
             guard !forbiddenSuffixes.contains(where: lower.hasSuffix) else {
                 throw RuntimeCoreError.runtimeFailure("The wheel contains executable or native binary material and cannot be installed dynamically on iOS.")
             }

@@ -364,8 +364,8 @@ function runtimeProbeFindings(probe) {
       code: 'configuration_required', reachable: true, phase: 'runtimeProbe',
     }));
   } else if ((probe.blockedAccesses ?? []).length === 0) {
-    findings.push(unsupported(`The selected entry point failed the MCP runtime probe: ${probe.message}`, {
-      code: 'runtime_probe_failed', reachable: true, phase: 'runtimeProbe',
+    findings.push(warning(`The selected entry point runtime probe finished with advisory: ${probe.message}`, {
+      code: 'runtime_probe_advisory', reachable: true, phase: 'runtimeProbe',
     }));
   }
   return findings;

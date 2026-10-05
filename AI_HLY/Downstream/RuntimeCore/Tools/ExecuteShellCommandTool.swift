@@ -13,11 +13,12 @@ struct ExecuteShellCommandTool: NativeTool {
     }
 
     func openAIToolSchema() -> [String: Any] {
-        NativeToolSchema.function(name: name, description: RuntimeL10n.string("Run exactly one approved ios_system program in the assigned workspace. This is not a POSIX/Linux shell: there is no command chaining, pipes, redirection, substitution, or arbitrary binaries. Paths must stay inside the workspace. curl accepts HTTPS only and requires allow_network=true except for curl --version."), parameters: NativeToolSchema.object(properties: [
+        NativeToolSchema.function(name: name, description: RuntimeL10n.string("Run an ios_system program or command string in the assigned workspace. Supports structured program + arguments mode (argv) and command line string mode (pipes/redirection). curl accepts HTTPS only and requires allow_network=true except for curl --version."), parameters: NativeToolSchema.object(properties: [
             "program": NativeToolSchema.string(description: RuntimeL10n.string("Approved program name."), enumValues: ShellRuntimeService.capabilities.map(\.name)),
             "arguments": NativeToolSchema.stringArray(description: RuntimeL10n.string("Program arguments as separate strings; shell syntax is not interpreted."), maximumItems: 127),
+            "command": NativeToolSchema.string(description: RuntimeL10n.string("Command string to execute through ios_system.")),
             "allow_network": ["type": "boolean", "description": RuntimeL10n.string("Explicitly allow HTTPS network access for curl.")]
-        ], required: ["program"]))
+        ], required: []))
     }
 
     func execute(argumentsJSON: String, context: NativeToolExecutionContext) async -> NativeToolResult {

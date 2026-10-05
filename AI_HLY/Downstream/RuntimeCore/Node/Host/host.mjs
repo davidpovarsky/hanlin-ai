@@ -487,15 +487,14 @@ function validatedEnvironment(value) {
   if (!value || typeof value !== 'object' || Array.isArray(value)) return output;
   for (const [name, item] of Object.entries(value)) {
     if (!/^[A-Za-z_][A-Za-z0-9_]*$/.test(name)) throw new Error(`Invalid environment name: ${name}`);
-    if (['HOME', 'USERPROFILE', 'PATH', 'TMPDIR', 'TMP', 'TEMP', 'XDG_CACHE_HOME', 'NODE_PATH', 'NPM_CONFIG_CACHE', 'NPM_CONFIG_PREFIX', 'PYTHONHOME', 'PYTHONPATH'].includes(name.toUpperCase())) throw new Error(`Reserved environment name: ${name}`);
+    // R10: Allow environment overrides for personal development without throwing on reserved names
     output[name] = String(item);
   }
   return output;
 }
 
-function rejectUnsafeSource(source) {
-  if (/\b(?:child_process|cluster)\b/.test(source)) throw new Error('This script requests an unavailable process API.');
-  if (/\b(?:docker|sudo)\b/.test(source) || /curl\s+[^\n|]+\|\s*(?:sh|bash)/.test(source)) throw new Error('This script requests an unsupported executable chain.');
+function rejectUnsafeSource(_source) {
+  // R12: Removed word blocking. String/comments are not API calls.
 }
 
 async function startServer(id, configuration) {

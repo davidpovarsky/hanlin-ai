@@ -148,13 +148,41 @@ actor ShellRuntimeService {
         allowNetwork: Bool,
         limits: RuntimeExecutionLimits = RuntimeExecutionLimits()
     ) throws -> RuntimeExecutionResult {
-        try execute(
-            tokens: Self.tokenize(command),
-            workspace: workspace,
-            environment: environment,
-            allowNetwork: allowNetwork,
-            limits: limits
-        )
+        try fileLayout.prepareIfNeeded()
+        let scopedWorkspace = try fileLayout.validatedDescendant(workspace, of: fileLayout.clients, allowRoot: false)
+        for key in environment.keys { _ = try RuntimePolicy.validateEnvironmentName(key) }
+
+        let started = ContinuousClock.now
+        snapshotValue.state = .executing
+        snapshotValue.activeExecutionCount += 1
+        defer {
+            snapshotValue.activeExecutionCount = max(0, snapshotValue.activeExecutionCount - 1)
+            if snapshotValue.state == .executing { snapshotValue.state = .ready }
+        }
+
+        do {
+            let output = try IOSSystemRunner.executeCommand(
+                command: command,
+                workspace: scopedWorkspace,
+                environment: environment
+            )
+            let duration = started.duration(to: .now)
+            let milliseconds = duration.components.seconds * 1_000
+                + Int64(duration.components.attoseconds / 1_000_000_000_000_000)
+            return RuntimeExecutionResult(
+                executionID: UUID(),
+                stdout: String(decoding: output.stdout.utf8.prefix(limits.maximumOutputBytes), as: UTF8.self),
+                stderr: String(decoding: output.stderr.utf8.prefix(max(0, limits.maximumOutputBytes - min(output.stdout.utf8.count, limits.maximumOutputBytes))), as: UTF8.self),
+                value: nil,
+                exitCode: Int(output.exitCode),
+                durationMilliseconds: milliseconds,
+                didTimeOut: false,
+                wasCancelled: false,
+                outputWasTruncated: (output.stdout.utf8.count + output.stderr.utf8.count) > limits.maximumOutputBytes
+            )
+        } catch {
+            throw error
+        }
     }
 
     func execute(

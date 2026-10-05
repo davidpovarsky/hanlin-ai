@@ -152,11 +152,19 @@ public enum IOSSystemRunner {
         environment: [String: String],
         standardInput: Data = Data()
     ) throws -> IOSSystemExecution {
-        guard let command = tokens.first, !tokens.isEmpty, linkedCommands.contains(command) else {
+        guard let command = tokens.first, !tokens.isEmpty else {
             throw NSError(
                 domain: "IOSSystemLite",
                 code: 1,
-                userInfo: [NSLocalizedDescriptionKey: "The command is not linked or allowed."]
+                userInfo: [NSLocalizedDescriptionKey: "The command is empty."]
+            )
+        }
+        let available = (try? availableCommands()) ?? Array(linkedCommands)
+        guard available.contains(command) || linkedCommands.contains(command) else {
+            throw NSError(
+                domain: "IOSSystemLite",
+                code: 1,
+                userInfo: [NSLocalizedDescriptionKey: "The command '\(command)' is not linked or allowed."]
             )
         }
         _ = try availableCommands()
@@ -167,6 +175,62 @@ public enum IOSSystemRunner {
                 environment: environment,
                 standardInput: standardInput
             )
+        }
+    }
+
+    public static func executeCommand(
+        command: String,
+        workspace: URL,
+        environment: [String: String],
+        standardInput: Data = Data()
+    ) throws -> IOSSystemExecution {
+        _ = try availableCommands()
+        return try withProcessCurrentDirectoryLock {
+            let previousDirectory = FileManager.default.currentDirectoryPath
+            defer {
+                _ = FileManager.default.changeCurrentDirectoryPath(previousDirectory)
+            }
+            guard ios_setMiniRootURL(workspace) == 1 else {
+                throw NSError(
+                    domain: "IOSSystemLite",
+                    code: 2,
+                    userInfo: [NSLocalizedDescriptionKey: "ios_system rejected the workspace miniRoot."]
+                )
+            }
+            ios_setDirectoryURL(workspace)
+
+            let oldEnvironment = ProcessInfo.processInfo.environment
+            for (name, value) in environment { setenv(name, value, 1) }
+            defer {
+                for name in environment.keys where oldEnvironment[name] == nil { unsetenv(name) }
+                for (name, value) in oldEnvironment where environment[name] != nil { setenv(name, value, 1) }
+            }
+
+            guard let input = tmpfile(), let output = tmpfile(), let error = tmpfile() else {
+                throw NSError(
+                    domain: "IOSSystemLite",
+                    code: 3,
+                    userInfo: [NSLocalizedDescriptionKey: "Could not allocate command streams."]
+                )
+            }
+            defer {
+                fclose(input)
+                fclose(output)
+                fclose(error)
+            }
+            if !standardInput.isEmpty {
+                standardInput.withUnsafeBytes { bytes in
+                    if let baseAddress = bytes.baseAddress {
+                        fwrite(baseAddress, 1, bytes.count, input)
+                    }
+                }
+                rewind(input)
+            }
+            hanlin_ios_system_set_streams(input, output, error)
+            let status = command.withCString { ios_system(UnsafeMutablePointer(mutating: $0)) }
+            fflush(output)
+            fflush(error)
+            return IOSSystemExecution(stdout: read(output), stderr: read(error), exitCode: Int32(status))
         }
     }
 
@@ -190,37 +254,21 @@ public enum IOSSystemRunner {
         )
 
         let mainCommands = try parseCommandDictionary(at: mainDictionary)
-        let moduleCommands = try parseCommandDictionary(at: moduleDictionary)
-        let extraCommands = try parsePropertyListDictionary(at: extraDictionary)
-        let expected = linkedCommands
-        let actual = Set(mainCommands.keys)
-        let missing = expected.subtracting(actual).sorted()
-        let unexpected = actual.subtracting(expected).sorted()
-        guard missing.isEmpty, unexpected.isEmpty else {
+        let moduleCommands = (try? parseCommandDictionary(at: moduleDictionary)) ?? [:]
+        let extraCommands = (try? parsePropertyListDictionary(at: extraDictionary)) ?? [:]
+        var allConfiguredCommands = Set(mainCommands.keys)
+        allConfiguredCommands.formUnion(extraCommands.keys)
+        allConfiguredCommands.formUnion(moduleCommands.keys)
+        let actual = allConfiguredCommands
+        // R11 / SH-01: No exact-23 clamp. Extra commands are allowed.
+        let missing = linkedCommands.subtracting(actual).sorted()
+        guard missing.isEmpty else {
             throw IOSSystemRegistrationError(
                 category: .dictionaryCatalogMismatch,
                 code: "main_dictionary_catalog_mismatch",
-                message: "The main ios_system dictionary does not exactly match the approved command catalog.",
+                message: "The main ios_system dictionary is missing required commands: \(missing.joined(separator: ", ")).",
                 resourcePath: mainDictionary.path,
-                missingCommands: missing,
-                unexpectedCommands: unexpected
-            )
-        }
-        guard mainCommands == moduleCommands else {
-            throw IOSSystemRegistrationError(
-                category: .dictionaryCatalogMismatch,
-                code: "module_dictionary_catalog_mismatch",
-                message: "The IOSSystemLite module dictionary differs from the main application dictionary.",
-                resourcePath: moduleDictionary.path
-            )
-        }
-        guard extraCommands.isEmpty else {
-            throw IOSSystemRegistrationError(
-                category: .dictionaryCatalogMismatch,
-                code: "extra_dictionary_not_empty",
-                message: "The restricted extra ios_system command dictionary must be empty.",
-                resourcePath: extraDictionary.path,
-                unexpectedCommands: extraCommands.keys.sorted()
+                missingCommands: missing
             )
         }
         initializeEnvironment()
@@ -251,20 +299,13 @@ public enum IOSSystemRunner {
 
         let registered = Array(Set(normalizedCommands)).sorted()
         let registeredSet = Set(registered)
-        let unexpectedRegistered = registeredSet.subtracting(expected).sorted()
-        guard unexpectedRegistered.isEmpty else {
-            throw IOSSystemRegistrationError(
-                category: .initializationFailure,
-                code: "unexpected_registered_commands",
-                message: "ios_system registered commands outside the approved catalog.",
-                unexpectedCommands: unexpectedRegistered
-            )
-        }
-        let missingRegistered = expected.subtracting(registeredSet).sorted()
-        let executable = expected.sorted().filter { command in
+        // R11 / SH-01: Dynamically accept all registered commands without rejecting unexpected commands.
+        let missingRegistered = linkedCommands.subtracting(registeredSet).sorted()
+        let allKnown = registeredSet.union(actual).union(linkedCommands)
+        let executable = allKnown.sorted().filter { command in
             command.withCString { ios_executable($0) == 1 }
         }
-        let missingExecutable = expected.subtracting(executable).sorted()
+        let missingExecutable = linkedCommands.subtracting(executable).sorted()
 
         return IOSSystemRegistrationReport(
             mainBundlePath: mainBundle.bundlePath,

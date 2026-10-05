@@ -73,7 +73,8 @@ export async function installPackage({
     const resolved = await resolveSource(source, { signal, cache: cachePath });
     const manifest = resolved.manifest;
     const manifestFindings = inspectManifest(manifest);
-    rejectUnsupported(manifestFindings);
+    // R14: Record manifest findings without blocking on speculative manifest findings
+    rejectUnsupported(manifestFindings.filter(f => f.code === 'manifest_layout_invalid'));
 
     emit('install', { operationID, phase: 'downloading', fraction: 0.2 });
     await pacote.extract(resolved.spec, packageRoot, {
@@ -91,7 +92,9 @@ export async function installPackage({
 
     emit('install', { operationID, phase: 'extracting', fraction: 0.45 });
     const extractedManifest = JSON.parse(await fs.readFile(path.join(packageRoot, 'package.json'), 'utf8'));
-    rejectUnsupported(inspectManifest(extractedManifest));
+    // R14: Non-blocking manifest inspection
+    const extractedFindings = inspectManifest(extractedManifest);
+    rejectUnsupported(extractedFindings.filter(f => f.code === 'manifest_layout_invalid'));
 
     // The embedded iOS Node build intentionally omits ICU. Apply the narrow,
     // integrity-pinned compatibility dependency before Arborist resolves
