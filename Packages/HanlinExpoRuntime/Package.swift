@@ -27,12 +27,12 @@ let package = Package(
                 "ExpoBrownfield"
             ],
             path: "Sources/HanlinExpoRuntime",
+            swiftSettings: [
+                .interoperabilityMode(.Cxx)
+            ],
             linkerSettings: [
                 .linkedFramework("UIKit"),
                 .linkedFramework("SwiftUI")
-            ],
-            swiftSettings: [
-                .interoperabilityMode(.Cxx)
             ]
         ),
         .binaryTarget(name: "ReactNativeHeaders", path: "Artifacts/ReactNativeHeaders.xcframework"),
