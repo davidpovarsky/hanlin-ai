@@ -34,7 +34,8 @@ let package = Package(
                     "-Xcc", "-Wno-non-modular-include-in-framework-module",
                     "-Xcc", "-FArtifacts/ModularFrameworks",
                     "-Xcc", "-FPackages/HanlinExpoRuntime/Artifacts/ModularFrameworks",
-                    "-Xcc", "-IArtifacts/ReactModularHeaders"
+                    "-Xcc", "-IArtifacts/ReactModularHeaders",
+                    "-Xcc", "-IPackages/HanlinExpoRuntime/Artifacts/ReactModularHeaders"
                 ])
             ],
             linkerSettings: [
