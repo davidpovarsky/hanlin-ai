@@ -344,6 +344,7 @@ async function prepare() {
       }
       for (const s of allSlices) {
         await cleanHeaderModulemaps(resolve(artifactsRoot, 'React.xcframework', s, 'React.framework', 'Headers'));
+        await cleanHeaderModulemaps(resolve(artifactsRoot, 'ReactNativeHeaders.xcframework', s, 'Headers'));
       }
 
       // Remove stale code signatures and re-sign ad-hoc if on darwin/codesign is available
