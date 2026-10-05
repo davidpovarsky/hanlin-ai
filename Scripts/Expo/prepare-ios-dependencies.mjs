@@ -137,41 +137,63 @@ async function prepare() {
       await rm(modularFwsRoot, { recursive: true, force: true });
       await mkdir(modularFwsRoot, { recursive: true });
 
-      const slices = ['ios-arm64_x86_64-simulator', 'ios-arm64'];
-      const stagedFrameworks = new Set();
+      const slice = 'ios-arm64_x86_64-simulator';
+      const rnHeaders = resolve(artifactsRoot, 'ReactNativeHeaders.xcframework', slice, 'Headers');
+      const mapPath = resolve(rnHeaders, 'module.modulemap');
 
-      async function createFramework(fwName, sourceHeadersDir) {
-        if (fwName.toLowerCase() === 'react') {
-          return;
+      if (!existsSync(mapPath)) {
+        console.warn('[HanlinExpo] Warning: ReactNativeHeaders module.modulemap not found');
+        return;
+      }
+
+      const content = await readFile(mapPath, 'utf8');
+      const moduleRegex = /module\s+([A-Za-z0-9_]+)\s*\{([^}]+)\}/g;
+      let m;
+      let count = 0;
+
+      while ((m = moduleRegex.exec(content)) !== null) {
+        const modName = m[1];
+        if (modName === 'ReactNativeHeaders_react') {
+          continue;
         }
-        const fwDir = resolve(modularFwsRoot, `${fwName}.framework`);
+        const body = m[2];
+        const headerMatches = [...body.matchAll(/header\s+"([^"]+)"/g)].map(x => x[1]);
+
+        if (headerMatches.length === 0) continue;
+
+        const fwDir = resolve(modularFwsRoot, `${modName}.framework`);
         const headersDir = resolve(fwDir, 'Headers');
         const modulesDir = resolve(fwDir, 'Modules');
 
         await mkdir(headersDir, { recursive: true });
         await mkdir(modulesDir, { recursive: true });
 
-        await cp(sourceHeadersDir, headersDir, { recursive: true });
-
-        const validModuleName = fwName.replace(/[^A-Za-z0-9_]/g, '_');
-        const moduleMapContent = `framework module ${validModuleName} {\n    umbrella "Headers"\n    export *\n    module * { export * }\n}\n`;
-        await writeFile(resolve(modulesDir, 'module.modulemap'), moduleMapContent, 'utf8');
-        stagedFrameworks.add(fwName);
-      }
-
-      for (const slice of slices) {
-        const rnHeaders = resolve(artifactsRoot, 'ReactNativeHeaders.xcframework', slice, 'Headers');
-        if (existsSync(rnHeaders)) {
-          const entries = await readdir(rnHeaders, { withFileTypes: true });
-          for (const entry of entries) {
-            if (entry.isDirectory()) {
-              await createFramework(entry.name, resolve(rnHeaders, entry.name));
-            }
+        // Copy each header explicitly declared in the module
+        for (const h of headerMatches) {
+          const srcFile = resolve(rnHeaders, h);
+          const fileName = basename(h);
+          const dstFile = resolve(headersDir, fileName);
+          if (existsSync(srcFile)) {
+            await cp(srcFile, dstFile);
           }
         }
+
+        // Write exact modulemap matching React Native declarations
+        const moduleMapLines = [
+          `framework module ${modName} {`
+        ];
+        for (const h of headerMatches) {
+          moduleMapLines.push(`    header "${basename(h)}"`);
+        }
+        moduleMapLines.push('    export *');
+        moduleMapLines.push('}');
+        moduleMapLines.push('');
+
+        await writeFile(resolve(modulesDir, 'module.modulemap'), moduleMapLines.join('\n'), 'utf8');
+        count++;
       }
 
-      console.log(`[HanlinExpo] Created ${stagedFrameworks.size} modular frameworks in ModularFrameworks.`);
+      console.log(`[HanlinExpo] Created ${count} modular frameworks from ReactNativeHeaders modulemap.`);
 
       // Ensure nested fallback directory exists for $(SRCROOT)/Packages/HanlinExpoRuntime evaluation
       const nestedFallbackDir = resolve(artifactsRoot, '..', 'Packages', 'HanlinExpoRuntime');
