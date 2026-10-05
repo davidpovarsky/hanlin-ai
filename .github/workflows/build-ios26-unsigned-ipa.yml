@@ -78,7 +78,7 @@ jobs:
   plan-affected-validation:
     if: ${{ !inputs.testflight_upload }}
     name: Plan affected validation and tests
-    runs-on: ubuntu-latest
+    runs-on: xcode-27
     timeout-minutes: 10
     outputs:
       run_full_validation: ${{ steps.plan.outputs.run_full_validation }}
