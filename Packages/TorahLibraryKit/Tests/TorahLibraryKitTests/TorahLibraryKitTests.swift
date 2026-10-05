@@ -165,4 +165,62 @@ struct TorahLibraryKitTests {
         #expect(parsed?.highlightText == "מאימתי קורין את שמע")
         #expect(parsed?.requestID == "req_001")
     }
+
+    @Test("Resolver discovers source from corpus using OCR text only with no expected title or ref")
+    func testResolverDiscoversSourceFromCorpusUsingOCRTextOnly() async {
+        let library = MockTorahLibraryProvider(providerID: "seforim_corpus", displayName: "Torah Library")
+        
+        library.register(
+            source: StudySource(
+                locator: SourceLocator(providerID: "seforim_corpus", corpusID: "bavli", workKey: "Berakhot", positionKind: .canonicalRef, positionValue: "Berakhot 2a"),
+                primaryText: "מאימתי קורין את שמע בערבין משעה שהכהנים נכנסים לאכול בתרומתן עד סוף האשמורה הראשונה דברי רבי אליעזר",
+                versionMetadata: VersionMetadata(versionTitle: "Talmud Bavli", language: "he"),
+                licenseMetadata: LicenseMetadata(licenseName: "Public Domain")
+            ),
+            title: "תלמוד בבלי מסכת ברכות דף ב עמוד א"
+        )
+        
+        library.register(
+            source: StudySource(
+                locator: SourceLocator(providerID: "seforim_corpus", corpusID: "mishnah", workKey: "Peah", positionKind: .canonicalRef, positionValue: "Peah 1:1"),
+                primaryText: "אלו דברים שאין להם שיעור הפאה והבכורים והראיון וגמילות חסדים ותלמוד תורה",
+                versionMetadata: VersionMetadata(versionTitle: "Mishnah", language: "he"),
+                licenseMetadata: LicenseMetadata(licenseName: "Public Domain")
+            ),
+            title: "משנה מסכת פאה פרק א משנה א"
+        )
+
+        library.register(
+            source: StudySource(
+                locator: SourceLocator(providerID: "seforim_corpus", corpusID: "rambam", workKey: "Hilchot_Deot", positionKind: .canonicalRef, positionValue: "Deot 1:1"),
+                primaryText: "דעות הרבה יש לכל אחד ואחד מבני אדם וזו משונה מזו ורחוקה ממנה ביותר",
+                versionMetadata: VersionMetadata(versionTitle: "Mishneh Torah", language: "he"),
+                licenseMetadata: LicenseMetadata(licenseName: "Public Domain")
+            ),
+            title: "משנה תורה הלכות דעות פרק א"
+        )
+        
+        let ocrInput = OCREvidence(
+            imageHash: "img_sha256_unlabeled_0987",
+            imageWidth: 1200,
+            imageHeight: 1600,
+            providerID: "apple_vision_local",
+            modelRevision: "v3",
+            rawText: "הפאה והבכורים והראיון וגמילות חסדים ותלמוד תורה",
+            lines: [
+                OCRLine(lineID: "l1", rawText: "הפאה והבכורים והראיון", boundingBox: .full),
+                OCRLine(lineID: "l2", rawText: "וגמילות חסדים ותלמוד תורה", boundingBox: .full)
+            ]
+        )
+        
+        let resolver = TorahSourceResolver(searchEngines: [library])
+        let result = await resolver.resolve(evidence: ocrInput)
+        
+        #expect(result.status == .verified)
+        #expect(result.selectedCandidate != nil)
+        #expect(result.selectedCandidate?.locator.workKey == "Peah")
+        #expect(result.selectedCandidate?.locator.positionValue == "Peah 1:1")
+        #expect(result.selectedCandidate?.workTitle == "משנה מסכת פאה פרק א משנה א")
+        #expect((result.selectedCandidate?.scoreComponents.lexicalCoverage ?? 0) >= 0.8)
+    }
 }

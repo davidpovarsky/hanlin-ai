@@ -77,7 +77,6 @@ public final class SefariaLibraryProvider: TorahLibraryProvider, @unchecked Send
             return nil
         }
 
-        let ref = (obj["ref"] as? String) ?? locator.positionValue
         let heRef = obj["heRef"] as? String
         var heText = ""
         if let heArray = obj["he"] as? [String] {
@@ -184,3 +183,25 @@ public final class SefariaLibraryProvider: TorahLibraryProvider, @unchecked Send
         #endif
     }
 }
+
+extension SefariaLibraryProvider: TorahLibrarySearchEngine {
+    public func search(anchors: [String], limit: Int) async throws -> [TorahSearchHit] {
+        var allHits: [TorahSearchHit] = []
+        for anchor in anchors {
+            let hits = try await self.search(query: anchor, limit: limit)
+            for hit in hits {
+                if !allHits.contains(where: { $0.locator.persistenceKey == hit.locator.persistenceKey }) {
+                    allHits.append(hit)
+                }
+            }
+            if allHits.count >= limit { break }
+        }
+        return allHits
+    }
+
+    public func fetchSection(locator: SourceLocator) async throws -> String? {
+        let sec = try await self.getSection(locator: locator)
+        return sec?.primaryText
+    }
+}
+

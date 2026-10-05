@@ -20,6 +20,7 @@
 		F70000000000000000000001 /* HanlinMiniAppCore in Frameworks */ = {isa = PBXBuildFile; productRef = F70000000000000000000011 /* HanlinMiniAppCore */; };
 		F70000000000000000000002 /* HanlinParityMiniApp in Frameworks */ = {isa = PBXBuildFile; productRef = F70000000000000000000012 /* HanlinParityMiniApp */; };
 		F70000000000000000000022 /* HanlinSefariaMiniApp in Frameworks */ = {isa = PBXBuildFile; productRef = F70000000000000000000021 /* HanlinSefariaMiniApp */; };
+		F70000000000000000000052 /* TorahLibraryKit in Frameworks */ = {isa = PBXBuildFile; productRef = F70000000000000000000051 /* TorahLibraryKit */; };
 		F70000000000000000000032 /* HanlinWikipediaMiniApp in Frameworks */ = {isa = PBXBuildFile; productRef = F70000000000000000000031 /* HanlinWikipediaMiniApp */; };
 		F70000000000000000000042 /* HanlinTextStudioMiniApp in Frameworks */ = {isa = PBXBuildFile; productRef = F70000000000000000000041 /* HanlinTextStudioMiniApp */; };
 		A10000000000000000000071 /* HanlinQuickJS in Frameworks */ = {isa = PBXBuildFile; productRef = A10000000000000000000016 /* HanlinQuickJS */; };
@@ -339,6 +340,7 @@
 			files = (
 				F70000000000000000000002 /* HanlinParityMiniApp in Frameworks */,
 				F70000000000000000000022 /* HanlinSefariaMiniApp in Frameworks */,
+				F70000000000000000000052 /* TorahLibraryKit in Frameworks */,
 				F70000000000000000000032 /* HanlinWikipediaMiniApp in Frameworks */,
 				F70000000000000000000042 /* HanlinTextStudioMiniApp in Frameworks */,
 				F70000000000000000000001 /* HanlinMiniAppCore in Frameworks */,
@@ -505,6 +507,7 @@
 			packageProductDependencies = (
 				F70000000000000000000012 /* HanlinParityMiniApp */,
 				F70000000000000000000021 /* HanlinSefariaMiniApp */,
+				F70000000000000000000051 /* TorahLibraryKit */,
 				F70000000000000000000031 /* HanlinWikipediaMiniApp */,
 				F70000000000000000000041 /* HanlinTextStudioMiniApp */,
 				F70000000000000000000011 /* HanlinMiniAppCore */,
@@ -727,6 +730,7 @@
 			packageReferences = (
 				F70000000000000000000010 /* XCLocalSwiftPackageReference "HanlinParityMiniApp" */,
 				F70000000000000000000020 /* XCLocalSwiftPackageReference "HanlinSefariaMiniApp" */,
+				F70000000000000000000050 /* XCLocalSwiftPackageReference "TorahLibraryKit" */,
 				F70000000000000000000030 /* XCLocalSwiftPackageReference "HanlinWikipediaMiniApp" */,
 				F70000000000000000000040 /* XCLocalSwiftPackageReference "HanlinTextStudioMiniApp" */,
 				A10000000000000000000046 /* XCLocalSwiftPackageReference "HanlinNativeScriptRuntime" */,
@@ -1637,6 +1641,10 @@
 			isa = XCLocalSwiftPackageReference;
 			relativePath = Packages/HanlinSefariaMiniApp;
 		};
+		F70000000000000000000050 /* XCLocalSwiftPackageReference "TorahLibraryKit" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Packages/TorahLibraryKit;
+		};
 		F70000000000000000000030 /* XCLocalSwiftPackageReference "HanlinWikipediaMiniApp" */ = {
 			isa = XCLocalSwiftPackageReference;
 			relativePath = Packages/HanlinWikipediaMiniApp;
@@ -1765,6 +1773,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = F70000000000000000000020 /* XCLocalSwiftPackageReference "HanlinSefariaMiniApp" */;
 			productName = HanlinSefariaMiniApp;
+		};
+		F70000000000000000000051 /* TorahLibraryKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F70000000000000000000050 /* XCLocalSwiftPackageReference "TorahLibraryKit" */;
+			productName = TorahLibraryKit;
 		};
 		F70000000000000000000031 /* HanlinWikipediaMiniApp */ = {
 			isa = XCSwiftPackageProductDependency;

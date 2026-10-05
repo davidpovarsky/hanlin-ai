@@ -1,5 +1,6 @@
 import Foundation
 import HanlinPlatformContracts
+import TorahLibraryKit
 
 // MARK: - In-Memory Evidence Store
 public actor TorahEvidenceStore {
@@ -197,51 +198,67 @@ public struct TorahIdentifyExcerptTool: NativeTool {
                     HanlinHostServiceError.invalidArguments("Transcription text is empty."),
                     title: "Empty Transcription"
                 )
+            let evidenceLines = rawText.components(separatedBy: "\n").filter { !$0.isEmpty }.map {
+                OCRLine(lineID: UUID().uuidString.prefix(6).description, rawText: $0, boundingBox: .full)
             }
-
-            // Normalization and matching
-            let isQuotation = trimmed.contains("וכתב") || trimmed.contains("וז\"ל") || trimmed.contains("שנאמר")
-            let isCommon = trimmed.contains("ואהבת לרעך") || trimmed.contains("ברוך אתה ה'")
-
-            let status = isCommon ? "ambiguous" : (isQuotation ? "ambiguous" : "verified")
-            let role = isCommon ? "liturgical_common" : (isQuotation ? "cited_work" : "primary_work")
-
-            let candidatePayload: [String: Any] = [
-                "work_title": "ברכות דף ב עמוד א",
-                "locator": [
-                    "provider_id": "otzaria",
-                    "corpus_id": "bavli",
-                    "work_key": "Berakhot",
-                    "position_kind": "canonical_ref",
-                    "position_value": "Berakhot 2a"
-                ],
-                "matched_text": "מאימתי קורין את שמע בערבין משעה שהכהנים נכנסים לאכול בתרומתן",
-                "score": 0.94,
-                "role": role,
-                "ambiguity_reasons": isQuotation ? ["The excerpt contains an introductory citation formula."] : []
-            ]
-
-            let modelText = """
-            Identification Status: \(status)
-            Top Candidate: ברכות דף ב עמוד א (Berakhot 2a)
-            Locator: otzaria:bavli:Berakhot:canonical_ref:Berakhot 2a
-            Role: \(role)
-            Confidence: 94%
-            """
-
-            let block = NativeUIBlock(
-                type: .card,
-                title: "Source Identified: ברכות דף ב.",
-                subtitle: "Status: \(status.capitalized)",
-                body: "Matched: מאימתי קורין את שמע בערבין...\nLocator: Berakhot 2a",
-                systemImage: "book.pages"
+            let ocrEvidence = OCREvidence(
+                evidenceID: (arguments["evidence_id"] as? String) ?? "ev_\(UUID().uuidString.prefix(8))",
+                rawText: rawText,
+                lines: evidenceLines
             )
 
-            return NativeToolResult(
-                modelText: modelText,
-                userText: "Identified passage in Berakhot 2a (Status: \(status)).",
-                uiBlocks: [block]
-            )
+            let sefariaEngine = SefariaLibraryProvider()
+            let resolver = TorahSourceResolver(searchEngines: [sefariaEngine])
+            let identification = await resolver.resolve(evidence: ocrEvidence)
+
+            let statusStr = identification.status.rawValue
+            if let top = identification.selectedCandidate {
+                let roleStr = top.sourceRole.rawValue
+                let scorePct = Int(top.overallScore * 100)
+                let modelText = """
+                Identification Status: \(statusStr)
+                Top Candidate: \(top.workTitle)
+                Locator: \(top.locator.persistenceKey)
+                Role: \(roleStr)
+                Confidence: \(scorePct)%
+                Lexical Coverage: \(Int(top.scoreComponents.lexicalCoverage * 100))%
+                Sequence Order: \(Int(top.scoreComponents.sequenceOrderScore * 100))%
+                """
+
+                let block = NativeUIBlock(
+                    type: .card,
+                    title: "Source Identified: \(top.workTitle)",
+                    subtitle: "Status: \(statusStr.capitalized)",
+                    body: "Matched: \(top.matchedSourceText.prefix(120))...\nLocator: \(top.locator.positionValue)",
+                    systemImage: "book.pages"
+                )
+
+                return NativeToolResult(
+                    modelText: modelText,
+                    userText: "Identified passage in \(top.workTitle) (Status: \(statusStr)).",
+                    uiBlocks: [block]
+                )
+            } else {
+                let modelText = """
+                Identification Status: \(statusStr)
+                No matching passage found in enabled libraries.
+                Warnings: \(identification.warnings.joined(separator: "; "))
+                """
+
+                let block = NativeUIBlock(
+                    type: .card,
+                    title: "Source Not Identified",
+                    subtitle: "Status: \(statusStr.capitalized)",
+                    body: identification.warnings.joined(separator: "\n"),
+                    systemImage: "exclamationmark.triangle"
+                )
+
+                return NativeToolResult(
+                    modelText: modelText,
+                    userText: "Could not identify source from excerpt (Status: \(statusStr)).",
+                    uiBlocks: [block]
+                )
+            }
         } catch {
             return RuntimeToolSupport.failure(error, title: "Torah identification failed")
         }
@@ -296,22 +313,24 @@ public struct TorahSearchTextTool: NativeTool {
             let query = try NativeToolJSON.strictRequiredString(arguments, "query")
             let limit = try NativeToolJSON.strictInt(arguments, "limit", default: 10, range: 1...50)
 
-            let modelText = """
-            Found 1 hit for: "\(query)"
-            - ברכות דף ב עמוד א (Berakhot 2a) [otzaria:bavli:Berakhot:canonical_ref:Berakhot 2a]
-              Snippet: מאימתי קורין את שמע בערבין משעה שהכהנים נכנסים...
-            """
+            let hits = (try? await SefariaLibraryProvider().search(query: query, limit: limit)) ?? []
+            if hits.isEmpty {
+                let modelText = "No hits found for: \"\(query)\" in enabled libraries."
+                return NativeToolResult(modelText: modelText, userText: "No results found for \"\(query)\".")
+            }
 
+            let hitLines = hits.map { "- \($0.workTitle) [\($0.locator.persistenceKey)]\n  Snippet: \($0.textSnippet.prefix(120))..." }
+            let modelText = "Found \(hits.count) hits for \"\(query)\":\n" + hitLines.joined(separator: "\n")
             let block = NativeUIBlock(
                 type: .searchResults,
-                title: "Search Results",
+                title: "Search Results (\(hits.count))",
                 subtitle: query,
-                body: "Found 1 matching source for \"\(query)\"."
+                body: hitLines.joined(separator: "\n\n")
             )
 
             return NativeToolResult(
                 modelText: modelText,
-                userText: "Found 1 result for \"\(query)\".",
+                userText: "Found \(hits.count) results for \"\(query)\".",
                 uiBlocks: [block]
             )
         } catch {
@@ -364,12 +383,28 @@ public struct TorahGetSectionTool: NativeTool {
             )
             let locStr = try NativeToolJSON.strictRequiredString(arguments, "locator")
 
-            let text = "מאימתי קורין את שמע בערבין משעה שהכהנים נכנסים לאכול בתרומתן עד סוף האשמורה הראשונה דברי רבי אליעזר וחכמים אומרים עד חצות"
+            let locator: SourceLocator
+            if let parsed = SourceLocator.parse(persistenceKey: locStr) {
+                locator = parsed
+            } else {
+                locator = SourceLocator(
+                    providerID: "sefaria",
+                    corpusID: "canonical",
+                    workKey: locStr,
+                    positionKind: .canonicalRef,
+                    positionValue: locStr
+                )
+            }
+
+            let studySource = try? await SefariaLibraryProvider().getSection(locator: locator)
+            let text = studySource?.primaryText ?? "Section text not available offline."
+            let version = studySource?.versionMetadata?.versionTitle ?? "Standard Canonical Edition"
+
             let modelText = """
             Locator: \(locStr)
             Primary Text:
             \(text)
-            Version: Standard Canonical Talmud Bavli Edition (Public Domain)
+            Version: \(version)
             """
 
             let block = NativeUIBlock(
@@ -435,28 +470,45 @@ public struct TorahGetLinksTool: NativeTool {
                 allowedKeys: ["locator", "type"]
             )
             let locStr = try NativeToolJSON.strictRequiredString(arguments, "locator")
+            let filterType = arguments["type"] as? String
 
-            let links = [
-                "רש״י על ברכות ב. (Rashi on Berakhot 2a:1) — 'מאימתי קורין וכו': משעה שהכהנים נכנסים שנטמאו וטבלו והעריב שמשן והגיע עתם לאכול בתרומה'",
-                "תוספות על ברכות ב. (Tosafot on Berakhot 2a:1) — 'מאימתי קורין: תנא היכא קאי דקתני מאימתי...'"
-            ]
+            let locator: SourceLocator
+            if let parsed = SourceLocator.parse(persistenceKey: locStr) {
+                locator = parsed
+            } else {
+                locator = SourceLocator(
+                    providerID: "sefaria",
+                    corpusID: "canonical",
+                    workKey: locStr,
+                    positionKind: .canonicalRef,
+                    positionValue: locStr
+                )
+            }
+
+            let linkedSources = (try? await SefariaLibraryProvider().getLinks(locator: locator, type: filterType)) ?? []
+            let linkStrings: [String]
+            if !linkedSources.isEmpty {
+                linkStrings = linkedSources.map { "- \($0.sourceTitle) (\($0.category)): \($0.primaryText.prefix(120))..." }
+            } else {
+                linkStrings = ["No linked commentaries returned from provider."]
+            }
 
             let modelText = """
             Linked Commentaries for \(locStr):
-            \(links.joined(separator: "\n\n"))
+            \(linkStrings.joined(separator: "\n\n"))
             """
 
             let block = NativeUIBlock(
                 type: .card,
-                title: "Linked Commentaries (\(links.count))",
+                title: "Linked Commentaries (\(linkedSources.count))",
                 subtitle: locStr,
-                body: links.joined(separator: "\n\n"),
+                body: linkStrings.joined(separator: "\n\n"),
                 systemImage: "link"
             )
 
             return NativeToolResult(
                 modelText: modelText,
-                userText: "Fetched \(links.count) commentaries for \(locStr).",
+                userText: "Fetched \(linkedSources.count) commentaries for \(locStr).",
                 uiBlocks: [block]
             )
         } catch {
@@ -579,9 +631,28 @@ public struct TorahOpenSourceTool: NativeTool {
             let target = (arguments["target"] as? String) ?? "hanlin"
             let highlight = arguments["highlight"] as? String
 
-            let deepLinkURLString = target == "maktabah"
-                ? "maktabah://study?action=open&provider=otzaria&corpus=bavli&work=Berakhot&pos_kind=canonical_ref&pos_val=Berakhot%202a"
-                : "hanlin://study?action=open&locator=\(locStr.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? locStr)"
+            let locator: SourceLocator
+            if let parsed = SourceLocator.parse(persistenceKey: locStr) {
+                locator = parsed
+            } else {
+                locator = SourceLocator(
+                    providerID: "otzaria",
+                    corpusID: "canonical",
+                    workKey: locStr,
+                    positionKind: .canonicalRef,
+                    positionValue: locStr
+                )
+            }
+
+            let link = TorahStudyDeepLink(
+                action: .open,
+                locator: locator,
+                workTitle: locator.workKey,
+                highlightText: highlight
+            )
+
+            let scheme = target == "maktabah" ? "maktabah" : "hanlin"
+            let deepLinkURLString = link.url(scheme: scheme)?.absoluteString ?? "\(scheme)://study?action=open&locator=\(locStr)"
 
             let actionTitle = target == "maktabah" ? "Open in Maktabah" : "Open in Hanlin"
             let block = NativeUIBlock(

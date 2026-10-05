@@ -22,7 +22,13 @@
     "capability-invariants.md",
     "Scripts/*.mjs",
     "Scripts/**/*.mjs",
-    "**/Package.resolved"
+    "**/Package.resolved",
+    "baseline-manifest.json",
+    "requirements-traceability.json",
+    "test-results.jsonl",
+    "Scripts/Acceptance/**",
+    "Tests/Fixtures/**",
+    "Skills/**"
   ],
   "components": {
     "ci_router": {
@@ -507,10 +513,14 @@
         "AI_HLY/Downstream/Scripting/**",
         "AI_HLY/Downstream/ChatPresentation/**",
         "AI_HLY/Downstream/ChatCore/**",
-        "AI_HLY/Downstream/SystemIntegrations/**"
+        "AI_HLY/Downstream/SystemIntegrations/**",
+        "AI_HLY/Downstream/TorahStudy/**",
+        "Packages/TorahLibraryKit/**"
       ],
       "direct_validation_groups": [
-        "app_unit_tests"
+        "app_unit_tests",
+        "device_build",
+        "ipa_packaging"
       ],
       "unit_suites": [
         "AI_HLYTests/AgentSkillsExposureTests",
