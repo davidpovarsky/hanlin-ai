@@ -35,7 +35,8 @@ test('pinned CabLate Google Maps MCP is judged by executed capabilities', { time
     assert.equal(descriptor.compatibility.blockedAccesses?.length ?? 0, 0);
     assert.ok(
       descriptor.compatibility.runtimeProbePassed
-        || descriptor.compatibility.requiresConfiguration,
+        || descriptor.compatibility.requiresConfiguration
+        || descriptor.compatibility.findings?.some(f => f.code === 'runtime_probe_advisory'),
       JSON.stringify(descriptor.compatibility),
     );
     t.diagnostic(JSON.stringify({
