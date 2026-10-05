@@ -788,6 +788,7 @@ jobs:
 
           HANLIN_API_KEY =
           HANLIN_OPEN_API_KEY =
+          SWIFT_ENABLE_EXPLICIT_MODULES = NO
           EOF
 
             echo
@@ -1024,6 +1025,7 @@ jobs:
               -showBuildTimingSummary \
               -skipPackagePluginValidation \
               -skipMacroValidation \
+              SWIFT_ENABLE_EXPLICIT_MODULES=NO \
               IPHONEOS_DEPLOYMENT_TARGET="$IOS_DEPLOYMENT_TARGET" \
               CODE_SIGNING_ALLOWED=NO \
               CODE_SIGNING_REQUIRED=NO \
@@ -1058,6 +1060,7 @@ jobs:
             -showBuildTimingSummary \
             -skipPackagePluginValidation \
             -skipMacroValidation \
+            SWIFT_ENABLE_EXPLICIT_MODULES=NO \
             IPHONEOS_DEPLOYMENT_TARGET="$IOS_DEPLOYMENT_TARGET" \
             CODE_SIGNING_ALLOWED=NO \
             CODE_SIGNING_REQUIRED=NO \
@@ -1500,6 +1503,7 @@ jobs:
 
           HANLIN_API_KEY =
           HANLIN_OPEN_API_KEY =
+          SWIFT_ENABLE_EXPLICIT_MODULES = NO
           EOF
 
       - name: Prepare verified embedded RuntimeCore
@@ -1626,6 +1630,7 @@ jobs:
             -showBuildTimingSummary \
             -skipPackagePluginValidation \
             -skipMacroValidation \
+            SWIFT_ENABLE_EXPLICIT_MODULES=NO \
             ENABLE_TESTABILITY=YES \
             IPHONEOS_DEPLOYMENT_TARGET="$IOS_DEPLOYMENT_TARGET" \
             ARCHS=arm64 \
@@ -1682,6 +1687,7 @@ jobs:
             -showBuildTimingSummary \
             -skipPackagePluginValidation \
             -skipMacroValidation \
+            SWIFT_ENABLE_EXPLICIT_MODULES=NO \
             ENABLE_TESTABILITY=YES \
             IPHONEOS_DEPLOYMENT_TARGET="$IOS_DEPLOYMENT_TARGET" \
             ARCHS=arm64 \
