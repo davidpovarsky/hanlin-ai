@@ -35,7 +35,11 @@ let package = Package(
                     "-Xcc", "-FArtifacts/ModularFrameworks",
                     "-Xcc", "-FPackages/HanlinExpoRuntime/Artifacts/ModularFrameworks",
                     "-Xcc", "-IArtifacts/ReactModularHeaders",
-                    "-Xcc", "-IPackages/HanlinExpoRuntime/Artifacts/ReactModularHeaders"
+                    "-Xcc", "-IPackages/HanlinExpoRuntime/Artifacts/ReactModularHeaders",
+                    "-Xcc", "-IArtifacts/ModularFrameworks/react.framework/Headers",
+                    "-Xcc", "-IPackages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers",
+                    "-Xcc", "-IArtifacts/ModularFrameworks/react.framework/Headers/react",
+                    "-Xcc", "-IPackages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react"
                 ])
             ],
             linkerSettings: [

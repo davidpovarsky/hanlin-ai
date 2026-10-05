@@ -303,8 +303,24 @@ async function prepare() {
       if (!existsSync(reactCapFwDir)) {
         await cp(reactFwDir, reactCapFwDir, { recursive: true });
       }
+
+      // Also enrich React.xcframework itself with rnReactSource across all slices so when Xcode/SPM copies it, the headers are present!
+      const allSlices = ['ios-arm64_x86_64-simulator', 'ios-arm64', 'ios-arm64_x86_64-maccatalyst'];
+      for (const s of allSlices) {
+        const targetHeaders = resolve(artifactsRoot, 'React.xcframework', s, 'React.framework', 'Headers');
+        if (existsSync(targetHeaders)) {
+          if (existsSync(rnReactSource)) {
+            await cp(rnReactSource, targetHeaders, { recursive: true });
+            const nested = resolve(targetHeaders, 'react');
+            if (!existsSync(nested)) {
+              await cp(rnReactSource, nested, { recursive: true });
+            }
+          }
+        }
+      }
+
       count++;
-      console.log('[HanlinExpo] Created unified non-modular react.framework in ModularFrameworks.');
+      console.log('[HanlinExpo] Created unified non-modular react.framework in ModularFrameworks and enriched React.xcframework.');
 
       // Strip dummy cxxstableapi guards that reference non-existent react.framework headers
       for (const fw of await readdir(modularFwsRoot, { withFileTypes: true })) {
