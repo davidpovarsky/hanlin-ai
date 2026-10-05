@@ -31,7 +31,10 @@ let package = Package(
                 .interoperabilityMode(.Cxx),
                 .unsafeFlags([
                     "-Xcc", "-Wno-quoted-include-in-framework-header",
-                    "-Xcc", "-Wno-non-modular-include-in-framework-module"
+                    "-Xcc", "-Wno-non-modular-include-in-framework-module",
+                    "-Xcc", "-FArtifacts/ModularFrameworks",
+                    "-Xcc", "-FPackages/HanlinExpoRuntime/Artifacts/ModularFrameworks",
+                    "-Xcc", "-IArtifacts/ReactModularHeaders"
                 ])
             ],
             linkerSettings: [
