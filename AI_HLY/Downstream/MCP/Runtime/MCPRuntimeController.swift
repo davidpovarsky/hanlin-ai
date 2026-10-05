@@ -1,4 +1,5 @@
 import Foundation
+import MCP
 
 actor MCPRuntimeController {
     private let runtime: NodeRuntimeService
@@ -347,26 +348,34 @@ actor MCPRuntimeController {
     ) async throws -> MCPClientSession {
         var pendingSession: MCPClientSession?
         do {
-            let prepared = try await prepareServerForStart(server)
-            let activeServer = prepared.descriptor
-            let connection = try await runtime.ensureRunning()
-            var secretValues: [String: String] = [:]
-            for variable in activeServer.environment {
-                if let reference = variable.secretReference {
-                    let secret = try await secrets.value(reference: reference)
-                    secretValues[reference] = secret
+            let activeServer: MCPServerDescriptor
+            let transport: any Transport
+
+            if server.serverKind == .remoteHTTP, let endpoint = server.endpointURL {
+                activeServer = server
+                transport = HTTPClientTransport(endpoint: endpoint)
+            } else {
+                let prepared = try await prepareServerForStart(server)
+                activeServer = prepared.descriptor
+                let connection = try await runtime.ensureRunning()
+                var secretValues: [String: String] = [:]
+                for variable in activeServer.environment {
+                    if let reference = variable.secretReference {
+                        let secret = try await secrets.value(reference: reference)
+                        secretValues[reference] = secret
+                    }
                 }
+                let inheritedEnvironment = try await runtimeEnvironment.resolved(
+                    scopes: [.shared, .node, .mcpServer(activeServer.id)]
+                )
+                let configuration = MCPServerConfiguration.make(
+                    descriptor: activeServer,
+                    resolvedPaths: prepared.paths,
+                    secrets: secretValues,
+                    environment: inheritedEnvironment
+                )
+                transport = EmbeddedNodeMCPTransport(server: configuration, connection: connection)
             }
-            let inheritedEnvironment = try await runtimeEnvironment.resolved(
-                scopes: [.shared, .node, .mcpServer(activeServer.id)]
-            )
-            let configuration = MCPServerConfiguration.make(
-                descriptor: activeServer,
-                resolvedPaths: prepared.paths,
-                secrets: secretValues,
-                environment: inheritedEnvironment
-            )
-            let transport = EmbeddedNodeMCPTransport(server: configuration, connection: connection)
             let session = MCPClientSession(server: activeServer, transport: transport)
             pendingSession = session
 
@@ -484,7 +493,7 @@ actor MCPRuntimeController {
 
     private func installPendingResources(
         session: MCPClientSession,
-        transport: EmbeddedNodeMCPTransport,
+        transport: (any Transport)?,
         serverID: UUID,
         generation: UInt64,
         operationID: UUID

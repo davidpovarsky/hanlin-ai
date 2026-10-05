@@ -1,4 +1,5 @@
 import Foundation
+import MCP
 
 enum MCPActivationReason: String, Sendable {
     case chatToolSchema
@@ -19,7 +20,7 @@ struct MCPServerRuntimeSlot {
     var generation: UInt64 = 0
     var phase: MCPServerRuntimeState = .stopped
     var session: MCPClientSession?
-    var transport: EmbeddedNodeMCPTransport?
+    var transport: (any Transport)?
     var toolChangeTask: Task<Void, Never>?
     var terminationTask: Task<Void, Never>?
     var lifecycleTask: Task<MCPClientSession?, Error>?

@@ -35,7 +35,14 @@ struct MCPServerDescriptor: Codable, Hashable, Sendable, Identifiable {
     var isGloballyEnabled: Bool
     var isEnabledForNewChats: Bool
     var autoStart: Bool
-    var compatibility: MCPCompatibilityReport
+    enum ServerKind: String, Codable, Hashable, Sendable {
+        case localPackage = "local_package"
+        case remoteHTTP = "remote_http"
+    }
+
+    var serverKind: ServerKind
+    var endpointURL: URL?
+    var customHeaders: [String: String]?
     var installedSize: Int64
     var cachedToolCount: Int
 
@@ -50,21 +57,24 @@ struct MCPServerDescriptor: Codable, Hashable, Sendable, Identifiable {
         displayName: String,
         packageName: String,
         requestedVersion: String? = nil,
-        resolvedVersion: String,
-        entryPoint: String,
+        resolvedVersion: String = "1.0.0",
+        entryPoint: String = "",
         entryPointRelativePath: String? = nil,
         binName: String? = nil,
         entryPointOptions: [MCPEntryPointOption]? = nil,
         arguments: [String] = [],
         environment: [MCPEnvironmentVariable] = [],
-        packageRoot: String,
+        packageRoot: String = "",
         integrity: String? = nil,
         installedAt: Date = .now,
         updatedAt: Date = .now,
         isGloballyEnabled: Bool = true,
         isEnabledForNewChats: Bool = true,
         autoStart: Bool = false,
-        compatibility: MCPCompatibilityReport,
+        compatibility: MCPCompatibilityReport = .pendingProbe,
+        serverKind: ServerKind = .localPackage,
+        endpointURL: URL? = nil,
+        customHeaders: [String: String]? = nil,
         installedSize: Int64 = 0,
         cachedToolCount: Int = 0
     ) {
@@ -88,8 +98,28 @@ struct MCPServerDescriptor: Codable, Hashable, Sendable, Identifiable {
         self.isEnabledForNewChats = isEnabledForNewChats
         self.autoStart = autoStart
         self.compatibility = compatibility
+        self.serverKind = serverKind
+        self.endpointURL = endpointURL
+        self.customHeaders = customHeaders
         self.installedSize = installedSize
         self.cachedToolCount = cachedToolCount
+    }
+
+    static func yochaiPreset(apiKey: String? = nil) -> MCPServerDescriptor {
+        var env: [MCPEnvironmentVariable] = []
+        if let key = apiKey, !key.isEmpty {
+            env.append(MCPEnvironmentVariable(name: "x-api-key", value: key, secretReference: "yochai_api_key"))
+        }
+        return MCPServerDescriptor(
+            id: UUID(uuidString: "70C4A110-0000-0000-0000-000000000001")!,
+            slug: "yochai-remote",
+            displayName: "Yochai Knowledge Graph",
+            packageName: "yochai-remote",
+            environment: env,
+            serverKind: .remoteHTTP,
+            endpointURL: URL(string: "https://yochai-kg-gateway-production.up.railway.app/mcp"),
+            customHeaders: apiKey != nil ? ["x-api-key": apiKey!] : nil
+        )
     }
 
     private enum CodingKeys: String, CodingKey {
@@ -113,6 +143,9 @@ struct MCPServerDescriptor: Codable, Hashable, Sendable, Identifiable {
         case isEnabledForNewChats
         case autoStart
         case compatibility
+        case serverKind
+        case endpointURL
+        case customHeaders
         case installedSize
         case cachedToolCount
     }
@@ -123,9 +156,14 @@ struct MCPServerDescriptor: Codable, Hashable, Sendable, Identifiable {
         // These values identify installed code and must never be fabricated when
         // persisted data is damaged.
         id = try values.decode(UUID.self, forKey: .id)
-        packageName = try values.decode(String.self, forKey: .packageName)
-        resolvedVersion = try values.decode(String.self, forKey: .resolvedVersion)
-        entryPoint = try values.decode(String.self, forKey: .entryPoint)
+        let decodedKind = try values.decodeIfPresent(ServerKind.self, forKey: .serverKind) ?? .localPackage
+        serverKind = decodedKind
+        endpointURL = try values.decodeIfPresent(URL.self, forKey: .endpointURL)
+        customHeaders = try values.decodeIfPresent([String: String].self, forKey: .customHeaders)
+
+        packageName = try values.decodeIfPresent(String.self, forKey: .packageName) ?? (decodedKind == .remoteHTTP ? "remote-mcp" : "")
+        resolvedVersion = try values.decodeIfPresent(String.self, forKey: .resolvedVersion) ?? "1.0.0"
+        entryPoint = try values.decodeIfPresent(String.self, forKey: .entryPoint) ?? ""
         entryPointRelativePath = try values.decodeIfPresent(
             String.self,
             forKey: .entryPointRelativePath
@@ -139,7 +177,7 @@ struct MCPServerDescriptor: Codable, Hashable, Sendable, Identifiable {
         arguments = try values.decodeIfPresent([String].self, forKey: .arguments) ?? []
         environment = try values.decodeIfPresent([MCPEnvironmentVariable].self, forKey: .environment) ?? []
         packageRoot = try values.decodeIfPresent(String.self, forKey: .packageRoot)
-            ?? URL(fileURLWithPath: entryPoint).deletingLastPathComponent().path
+            ?? (entryPoint.isEmpty ? "" : URL(fileURLWithPath: entryPoint).deletingLastPathComponent().path)
         integrity = try values.decodeIfPresent(String.self, forKey: .integrity)
         installedAt = try values.decodeIfPresent(Date.self, forKey: .installedAt) ?? .distantPast
         updatedAt = try values.decodeIfPresent(Date.self, forKey: .updatedAt) ?? installedAt
