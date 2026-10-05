@@ -3,5 +3,4 @@
 // This template file can be safely committed to git
 
 HANLIN_API_KEY = YOUR_HANLIN_API_KEY_HERE
-HANLIN_OPEN_API_KEY = YOUR_HANLIN_OPEN_API_KEY_HERE
-HEADER_SEARCH_PATHS = $(inherited) "$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ReactNativeHeaders.xcframework/ios-arm64_x86_64-simulator/Headers" "$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ReactNativeHeaders.xcframework/ios-arm64/Headers" "$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers"
+HANLIN_OPEN_API_KEY = YOUR_HANLIN_OPEN_API_KEY_HERE

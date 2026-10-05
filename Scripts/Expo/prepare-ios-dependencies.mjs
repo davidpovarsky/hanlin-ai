@@ -95,6 +95,7 @@ async function prepare() {
         if (existsSync(rnHeaders)) {
           const entries = await readdir(rnHeaders, { withFileTypes: true });
           for (const entry of entries) {
+            if (entry.name.endsWith('.modulemap')) continue;
             const src = resolve(rnHeaders, entry.name);
             if (existsSync(expoHeaders)) {
               const dstExpo = resolve(expoHeaders, entry.name);

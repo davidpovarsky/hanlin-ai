@@ -799,7 +799,6 @@ jobs:
           HANLIN_API_KEY =
           HANLIN_OPEN_API_KEY =
           SWIFT_ENABLE_EXPLICIT_MODULES = NO
-          HEADER_SEARCH_PATHS = $(inherited) "$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ReactNativeHeaders.xcframework/ios-arm64_x86_64-simulator/Headers" "$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ReactNativeHeaders.xcframework/ios-arm64/Headers" "$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers"
           EOF
 
             echo
@@ -1037,7 +1036,6 @@ jobs:
               -skipPackagePluginValidation \
               -skipMacroValidation \
               SWIFT_ENABLE_EXPLICIT_MODULES=NO \
-              HEADER_SEARCH_PATHS='$(inherited) $(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ReactNativeHeaders.xcframework/ios-arm64/Headers $(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers $(BUILT_PRODUCTS_DIR)/Python.framework/Headers' \
               IPHONEOS_DEPLOYMENT_TARGET="$IOS_DEPLOYMENT_TARGET" \
               CODE_SIGNING_ALLOWED=NO \
               CODE_SIGNING_REQUIRED=NO \
@@ -1521,7 +1519,6 @@ jobs:
           HANLIN_API_KEY =
           HANLIN_OPEN_API_KEY =
           SWIFT_ENABLE_EXPLICIT_MODULES = NO
-          HEADER_SEARCH_PATHS = $(inherited) "$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ReactNativeHeaders.xcframework/ios-arm64_x86_64-simulator/Headers" "$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ReactNativeHeaders.xcframework/ios-arm64/Headers" "$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers"
           EOF
 
       - name: Prepare verified embedded RuntimeCore
@@ -1649,7 +1646,6 @@ jobs:
             -skipPackagePluginValidation \
             -skipMacroValidation \
             SWIFT_ENABLE_EXPLICIT_MODULES=NO \
-            HEADER_SEARCH_PATHS='$(inherited) $(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ReactNativeHeaders.xcframework/ios-arm64_x86_64-simulator/Headers $(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers $(BUILT_PRODUCTS_DIR)/Python.framework/Headers' \
             ENABLE_TESTABILITY=YES \
             IPHONEOS_DEPLOYMENT_TARGET="$IOS_DEPLOYMENT_TARGET" \
             ARCHS=arm64 \
