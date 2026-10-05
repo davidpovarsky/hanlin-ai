@@ -377,6 +377,92 @@ async function prepare() {
               content = content.replace(/<jsinspector-modern\/([^>]+)>/g, '"$1"');
               await writeFile(full, content, 'utf8');
             }
+          } else if (ent.isFile() && ent.name === 'hash_combine.h') {
+            let content = await readFile(full, 'utf8');
+            if (content.includes('concept Hashable') && !content.includes('__cpp_concepts')) {
+              const compat = `#if defined(__cpp_concepts) && __cpp_concepts >= 201907L
+template <typename T>
+concept Hashable = !std::is_same_v<T, const char *> && (requires(T a) {
+  { std::hash<T>{}(a) } -> std::convertible_to<std::size_t>;
+});
+
+template <Hashable T, Hashable... Rest>
+void hash_combine(std::size_t &seed, const T &v, const Rest &...rest)
+{
+  seed ^= std::hash<T>{}(v) + 0x9e3779b9 + (seed << 6) + (seed >> 2);
+  (hash_combine(seed, rest), ...);
+}
+
+template <Hashable T, Hashable... Args>
+std::size_t hash_combine(const T &v, const Args &...args)
+{
+  std::size_t seed = 0;
+  hash_combine<T, Args...>(seed, v, args...);
+  return seed;
+}
+
+template <Hashable... Ts>
+  requires(sizeof...(Ts) <= 32)
+void hash_combine_optionals(std::size_t &seed, const std::optional<Ts> &...optionals)
+{
+  std::uint32_t presence = 0;
+  std::uint32_t bit = 1;
+  ((presence |= optionals.has_value() ? bit : 0u, bit <<= 1), ...);
+  std::size_t optionalsSeed = presence;
+
+  auto combineIfEngaged = [&optionalsSeed](const auto &optional) {
+    if (optional.has_value()) {
+      hash_combine(optionalsSeed, *optional);
+    }
+  };
+  (combineIfEngaged(optionals), ...);
+  hash_combine(seed, optionalsSeed);
+}
+#else
+template <typename T, typename... Rest>
+void hash_combine(std::size_t &seed, const T &v, const Rest &...rest)
+{
+  seed ^= std::hash<T>{}(v) + 0x9e3779b9 + (seed << 6) + (seed >> 2);
+  if constexpr (sizeof...(rest) > 0) {
+    hash_combine(seed, rest...);
+  }
+}
+
+template <typename T, typename... Args>
+std::size_t hash_combine(const T &v, const Args &...args)
+{
+  std::size_t seed = 0;
+  hash_combine(seed, v, args...);
+  return seed;
+}
+
+template <typename... Ts>
+void hash_combine_optionals(std::size_t &seed, const std::optional<Ts> &...optionals)
+{
+  static_assert(sizeof...(Ts) <= 32, "Ts count must be <= 32");
+  std::uint32_t presence = 0;
+  std::uint32_t bit = 1;
+  ((presence |= optionals.has_value() ? bit : 0u, bit <<= 1), ...);
+  std::size_t optionalsSeed = presence;
+
+  auto combineIfEngaged = [&optionalsSeed](const auto &optional) {
+    if (optional.has_value()) {
+      hash_combine(optionalsSeed, *optional);
+    }
+  };
+  (combineIfEngaged(optionals), ...);
+  hash_combine(seed, optionalsSeed);
+}
+#endif
+
+} // namespace facebook::react`;
+              content = content.replace(
+                /template <typename T>\s*concept Hashable[\s\S]*?\}\s*\/\/\s*namespace facebook::react/,
+                compat
+              );
+              await writeFile(full, content, 'utf8');
+              console.log(`[HanlinExpo] Sanitized hash_combine.h for C++17 compatibility: ${full}`);
+            }
           } else if (ent.isFile() && ent.name.endsWith('.h')) {
             let content = await readFile(full, 'utf8');
             if (content.includes('<jsinspector-modern/')) {
