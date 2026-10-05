@@ -90,19 +90,12 @@ async function prepare() {
 
       for (const slice of slices) {
         const rnHeaders = resolve(artifactsRoot, 'ReactNativeHeaders.xcframework', slice, 'Headers');
-        const reactHeaders = resolve(artifactsRoot, 'React.xcframework', slice, 'React.framework', 'Headers');
         const expoHeaders = resolve(artifactsRoot, 'ExpoModulesCore.xcframework', slice, 'ExpoModulesCore.framework', 'Headers');
 
         if (existsSync(rnHeaders)) {
           const entries = await readdir(rnHeaders, { withFileTypes: true });
           for (const entry of entries) {
             const src = resolve(rnHeaders, entry.name);
-            if (existsSync(reactHeaders)) {
-              const dstReact = resolve(reactHeaders, entry.name);
-              if (!existsSync(dstReact)) {
-                await cp(src, dstReact, { recursive: true });
-              }
-            }
             if (existsSync(expoHeaders)) {
               const dstExpo = resolve(expoHeaders, entry.name);
               if (!existsSync(dstExpo)) {
@@ -250,6 +243,19 @@ async function prepare() {
       }
     }
     await cleanSwiftInterfaces(artifactsRoot);
+
+    if (process.platform === 'darwin') {
+      const artifactEntries = await readdir(artifactsRoot, { withFileTypes: true });
+      for (const entry of artifactEntries) {
+        if (entry.isDirectory() && entry.name.endsWith('.xcframework') && entry.name !== 'React.xcframework') {
+          const fwPath = resolve(artifactsRoot, entry.name);
+          try {
+            execSync(`codesign --force --deep --sign - "${fwPath}"`, { stdio: 'ignore' });
+            console.log(`[HanlinExpo] Ad-hoc re-signed ${entry.name}`);
+          } catch (_) {}
+        }
+      }
+    }
   } finally {
     await rm(tempDir, { recursive: true, force: true });
   }
