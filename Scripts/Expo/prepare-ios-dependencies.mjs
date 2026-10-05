@@ -134,7 +134,7 @@ async function prepare() {
     async function patchModuleMaps() {
       console.log('[HanlinExpo] Aligning Clang modulemaps across xcframeworks...');
 
-      // 1. Expand module ReactCommon in ReactNativeHeaders.xcframework to include all ReactCommon headers
+      // 1. Expand module ReactCommon in ReactNativeHeaders.xcframework to include non-cyclic CallInvoker and RuntimeExecutor headers
       const rnHeadersRoot = resolve(artifactsRoot, 'ReactNativeHeaders.xcframework');
       if (existsSync(rnHeadersRoot)) {
         const slices = await readdir(rnHeadersRoot, { withFileTypes: true });
@@ -149,16 +149,9 @@ async function prepare() {
   header "ReactCommon/SchedulerPriority.h"
   header "ReactCommon/RuntimeExecutor.h"
   header "ReactCommon/RuntimeExecutorSyncUIThreadUtils.h"
-  header "ReactCommon/TurboModule.h"
-  header "ReactCommon/TurboModuleBinding.h"
-  header "ReactCommon/RCTTurboModule.h"
-  header "ReactCommon/RCTTurboModuleManager.h"
-  header "ReactCommon/RCTPerformanceLoggerUtils.h"
-  header "ReactCommon/RCTTurboModuleWithJSIBindings.h"
-  header "ReactCommon/TurboModuleWithJSIBindings.h"
   export *
 }`;
-            if (content.match(oldReactCommon) && !content.includes('SchedulerPriority.h')) {
+            if (content.match(oldReactCommon)) {
               content = content.replace(oldReactCommon, newReactCommon);
               await writeFile(mapPath, content, 'utf8');
               console.log(`[HanlinExpo] Patched ReactCommon in ${slice.name}/Headers/module.modulemap`);
@@ -259,9 +252,9 @@ async function prepare() {
         await mkdir(headersDir, { recursive: true });
         await mkdir(modulesDir, { recursive: true });
 
-        // Copy all headers from the module directory if present (except yoga which has C++20 internals)
+        // Copy all headers from the module directory if present (except yoga and ReactCommon to avoid internal C++ leaks/cycles)
         const modSourceDir = resolve(rnHeaders, modName);
-        if (existsSync(modSourceDir) && modName !== 'yoga') {
+        if (existsSync(modSourceDir) && modName !== 'yoga' && modName !== 'ReactCommon') {
           const allHeaders = await readdir(modSourceDir, { withFileTypes: true });
           for (const ent of allHeaders) {
             if (ent.isFile() && ent.name.endsWith('.h')) {
@@ -293,6 +286,36 @@ async function prepare() {
 
         await writeFile(resolve(modulesDir, 'module.modulemap'), moduleMapLines.join('\n'), 'utf8');
         count++;
+      }
+
+      // Strip dummy cxxstableapi guards that reference non-existent react.framework headers
+      for (const fw of await readdir(modularFwsRoot, { withFileTypes: true })) {
+        if (!fw.isDirectory()) continue;
+        const hDir = resolve(modularFwsRoot, fw.name, 'Headers');
+        if (!existsSync(hDir)) continue;
+        for (const hFile of await readdir(hDir, { withFileTypes: true })) {
+          if (!hFile.isFile() || !hFile.name.endsWith('.h')) continue;
+          const fullPath = resolve(hDir, hFile.name);
+          let hContent = await readFile(fullPath, 'utf8');
+          if (hContent.includes('cxxstableapi/')) {
+            hContent = hContent.replace(/^[ \t]*#include[ \t]+<react\/cxxstableapi\/[^>]+>[ \t]*\r?\n?/gm, '');
+            await writeFile(fullPath, hContent, 'utf8');
+          }
+        }
+      }
+
+      // Also stage react/cxxstableapi into React.xcframework as fallback
+      const reactRootFw = resolve(artifactsRoot, 'React.xcframework');
+      if (existsSync(reactRootFw)) {
+        const slices = await readdir(reactRootFw, { withFileTypes: true });
+        for (const s of slices) {
+          if (!s.isDirectory()) continue;
+          const srcReact = resolve(artifactsRoot, 'ReactNativeHeaders.xcframework', slice, 'Headers', 'react');
+          const dstReact = resolve(reactRootFw, s.name, 'React.framework', 'Headers', 'react');
+          if (existsSync(srcReact)) {
+            await cp(srcReact, dstReact, { recursive: true });
+          }
+        }
       }
 
       console.log(`[HanlinExpo] Created ${count} modular frameworks from ReactNativeHeaders modulemap.`);
