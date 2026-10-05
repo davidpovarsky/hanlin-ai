@@ -330,6 +330,22 @@ async function prepare() {
         }
       }
 
+      // Ensure no stray module.modulemap is left inside any Headers directory (prevents module redefinitions)
+      const cleanHeaderModulemaps = async (dir) => {
+        if (!existsSync(dir)) return;
+        const stray = resolve(dir, 'module.modulemap');
+        if (existsSync(stray)) {
+          await rm(stray, { force: true });
+        }
+      };
+      await cleanHeaderModulemaps(reactHeadersDir);
+      if (existsSync(resolve(reactCapFwDir, 'Headers'))) {
+        await cleanHeaderModulemaps(resolve(reactCapFwDir, 'Headers'));
+      }
+      for (const s of allSlices) {
+        await cleanHeaderModulemaps(resolve(artifactsRoot, 'React.xcframework', s, 'React.framework', 'Headers'));
+      }
+
       // Remove stale code signatures and re-sign ad-hoc if on darwin/codesign is available
       const reactXcf = resolve(artifactsRoot, 'React.xcframework');
       if (existsSync(reactXcf)) {
