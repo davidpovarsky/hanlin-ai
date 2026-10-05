@@ -683,6 +683,14 @@ def plan_affected_validation(
                 prereq_queue.append(p)
 
     # Apply operator overrides that suppress specific validation stages
+    if target_group and not full_validation:
+        if target_group != "simulator_targeted_ui":
+            selected_groups.pop("simulator_targeted_ui", None)
+        if target_group != "app_unit_tests":
+            selected_groups.pop("app_unit_tests", None)
+        if target_group != "simulator_scripting_acceptance":
+            selected_groups.pop("simulator_scripting_acceptance", None)
+
     if manual_modes.get("simulator_e2e_only") and not full_validation:
         if target_group not in ("device_build", "ipa_packaging"):
             selected_groups.pop("device_build", None)
