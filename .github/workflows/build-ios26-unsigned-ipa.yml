@@ -1011,6 +1011,32 @@ jobs:
             done
           fi
 
+          resign_xcframework() {
+            local xcf="$1"
+            if [ -d "$xcf" ]; then
+              echo "Re-signing $xcf..."
+              find "$xcf" -name "_CodeSignature" -exec rm -rf {} + 2>/dev/null || true
+              for fw in "$xcf"/*/*.framework; do
+                if [ -d "$fw" ]; then
+                  codesign --force --sign - --timestamp=none "$fw" 2>/dev/null || true
+                fi
+              done
+              codesign --force --sign - --timestamp=none "$xcf" 2>/dev/null || true
+              codesign --verify -vvvv "$xcf" 2>&1 || true
+            fi
+          }
+
+          resign_xcframework "Packages/HanlinExpoRuntime/Artifacts/React.xcframework"
+          if [ -d "$CLONED_PACKAGES_PATH/checkouts" ]; then
+            for checkout in "$CLONED_PACKAGES_PATH/checkouts"/*; do
+              if [ -d "$checkout" ]; then
+                for base in "$checkout/Packages/HanlinExpoRuntime/Artifacts" "$checkout/Artifacts"; do
+                  resign_xcframework "$base/React.xcframework"
+                done
+              fi
+            done
+          fi
+
       - name: Restore unchanged Xcode build input metadata
         run: |
           set -euxo pipefail
@@ -1672,6 +1698,32 @@ jobs:
                       cp -R Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/* "$ck_dest/" || true
                     fi
                   done
+                done
+              fi
+            done
+          fi
+
+          resign_xcframework() {
+            local xcf="$1"
+            if [ -d "$xcf" ]; then
+              echo "Re-signing $xcf..."
+              find "$xcf" -name "_CodeSignature" -exec rm -rf {} + 2>/dev/null || true
+              for fw in "$xcf"/*/*.framework; do
+                if [ -d "$fw" ]; then
+                  codesign --force --sign - --timestamp=none "$fw" 2>/dev/null || true
+                fi
+              done
+              codesign --force --sign - --timestamp=none "$xcf" 2>/dev/null || true
+              codesign --verify -vvvv "$xcf" 2>&1 || true
+            fi
+          }
+
+          resign_xcframework "Packages/HanlinExpoRuntime/Artifacts/React.xcframework"
+          if [ -d "$CLONED_PACKAGES_PATH/checkouts" ]; then
+            for checkout in "$CLONED_PACKAGES_PATH/checkouts"/*; do
+              if [ -d "$checkout" ]; then
+                for base in "$checkout/Packages/HanlinExpoRuntime/Artifacts" "$checkout/Artifacts"; do
+                  resign_xcframework "$base/React.xcframework"
                 done
               fi
             done

@@ -319,6 +319,40 @@ async function prepare() {
         }
       }
 
+      // Remove stale code signatures and re-sign ad-hoc if on darwin/codesign is available
+      const reactXcf = resolve(artifactsRoot, 'React.xcframework');
+      if (existsSync(reactXcf)) {
+        const removeCodeSig = async (dir) => {
+          if (!existsSync(dir)) return;
+          const entries = await readdir(dir, { withFileTypes: true });
+          for (const ent of entries) {
+            const fullPath = resolve(dir, ent.name);
+            if (ent.isDirectory()) {
+              if (ent.name === '_CodeSignature') {
+                await rm(fullPath, { recursive: true, force: true });
+              } else {
+                await removeCodeSig(fullPath);
+              }
+            }
+          }
+        };
+        await removeCodeSig(reactXcf);
+        if (process.platform === 'darwin') {
+          try {
+            for (const s of allSlices) {
+              const fw = resolve(reactXcf, s, 'React.framework');
+              if (existsSync(fw)) {
+                execSync(`codesign --force --sign - --timestamp=none "${fw}"`, { stdio: 'ignore' });
+              }
+            }
+            execSync(`codesign --force --sign - --timestamp=none "${reactXcf}"`, { stdio: 'ignore' });
+            console.log('[HanlinExpo] Re-signed React.xcframework ad-hoc.');
+          } catch (signErr) {
+            console.warn('[HanlinExpo] Warning: ad-hoc codesign failed:', signErr.message);
+          }
+        }
+      }
+
       count++;
       console.log('[HanlinExpo] Created unified non-modular react.framework in ModularFrameworks and enriched React.xcframework.');
 
