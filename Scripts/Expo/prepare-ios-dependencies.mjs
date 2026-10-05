@@ -134,33 +134,7 @@ async function prepare() {
     async function patchModuleMaps() {
       console.log('[HanlinExpo] Aligning Clang modulemaps across xcframeworks...');
 
-      // 1. Expand module ReactCommon in ReactNativeHeaders.xcframework to include non-cyclic CallInvoker and RuntimeExecutor headers
-      const rnHeadersRoot = resolve(artifactsRoot, 'ReactNativeHeaders.xcframework');
-      if (existsSync(rnHeadersRoot)) {
-        const slices = await readdir(rnHeadersRoot, { withFileTypes: true });
-        for (const slice of slices) {
-          if (!slice.isDirectory()) continue;
-          const mapPath = resolve(rnHeadersRoot, slice.name, 'Headers', 'module.modulemap');
-          if (existsSync(mapPath)) {
-            let content = await readFile(mapPath, 'utf8');
-            const oldReactCommon = /module ReactCommon \{[\s\S]*?\}/;
-            const newReactCommon = `module ReactCommon {
-  header "ReactCommon/CallInvoker.h"
-  header "ReactCommon/SchedulerPriority.h"
-  header "ReactCommon/RuntimeExecutor.h"
-  header "ReactCommon/RuntimeExecutorSyncUIThreadUtils.h"
-  export *
-}`;
-            if (content.match(oldReactCommon)) {
-              content = content.replace(oldReactCommon, newReactCommon);
-              await writeFile(mapPath, content, 'utf8');
-              console.log(`[HanlinExpo] Patched ReactCommon in ${slice.name}/Headers/module.modulemap`);
-            }
-          }
-        }
-      }
-
-      // 2. Add use declarations to Expo modulemaps
+      // Add use declarations to Expo modulemaps
       const expoFws = ['ExpoModulesCore.xcframework', 'ExpoModulesWorklets.xcframework', 'ExpoUI.xcframework'];
       for (const fw of expoFws) {
         const fwRoot = resolve(artifactsRoot, fw);
@@ -205,7 +179,17 @@ async function prepare() {
         return;
       }
 
-      const content = await readFile(mapPath, 'utf8');
+      let content = await readFile(mapPath, 'utf8');
+      content = content.replace(
+        /module ReactCommon \{[\s\S]*?\}/,
+        `module ReactCommon {
+  header "ReactCommon/CallInvoker.h"
+  header "ReactCommon/SchedulerPriority.h"
+  header "ReactCommon/RuntimeExecutor.h"
+  header "ReactCommon/RuntimeExecutorSyncUIThreadUtils.h"
+  export *
+}`
+      );
       const moduleRegex = /module\s+([A-Za-z0-9_]+)\s*\{([^}]+)\}/g;
       let m;
       let count = 0;
