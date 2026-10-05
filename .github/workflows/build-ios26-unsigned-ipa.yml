@@ -1735,6 +1735,15 @@ jobs:
             find "$CLONED_PACKAGES_PATH/checkouts" -name "module.modulemap" -path "*/Headers/*" -delete 2>/dev/null || true
           fi
 
+          # Sanitize React-umbrella.h and jsinspector-modern headers across artifacts and checkouts
+          for base_scan in Packages/HanlinExpoRuntime/Artifacts "$CLONED_PACKAGES_PATH/checkouts"; do
+            if [ -d "$base_scan" ]; then
+              find "$base_scan" -name "React-umbrella.h" -exec sed -i '' '/RCTInspectorNetworkHelper\.h/d' {} + 2>/dev/null || true
+              find "$base_scan" -name "RCTInspectorNetworkHelper.h" -exec sed -i '' 's|<jsinspector-modern/\([^>]*\)>|"jsinspector-modern/\1"|g' {} + 2>/dev/null || true
+              find "$base_scan" -path "*/jsinspector-modern/*" -name "*.h" -exec sed -i '' 's|<jsinspector-modern/\([^>]*\)>|"\1"|g' {} + 2>/dev/null || true
+            fi
+          done
+
           resign_xcframework() {
             local xcf="$1"
             if [ -d "$xcf" ]; then
@@ -1824,6 +1833,13 @@ jobs:
             cp -R "$rn_react_source" "$pkg_products_fw/" || true
           fi
           rm -f "$build_products_fw/module.modulemap" "$pkg_products_fw/module.modulemap" 2>/dev/null || true
+          for fw_dir in "$build_products_fw" "$pkg_products_fw"; do
+            if [ -d "$fw_dir" ]; then
+              find "$fw_dir" -name "React-umbrella.h" -exec sed -i '' '/RCTInspectorNetworkHelper\.h/d' {} + 2>/dev/null || true
+              find "$fw_dir" -name "RCTInspectorNetworkHelper.h" -exec sed -i '' 's|<jsinspector-modern/\([^>]*\)>|"jsinspector-modern/\1"|g' {} + 2>/dev/null || true
+              find "$fw_dir" -path "*/jsinspector-modern/*" -name "*.h" -exec sed -i '' 's|<jsinspector-modern/\([^>]*\)>|"\1"|g' {} + 2>/dev/null || true
+            fi
+          done
 
           started_at="$(date +%s)"
           repo_root="$PWD"

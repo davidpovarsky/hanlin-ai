@@ -347,6 +347,53 @@ async function prepare() {
         await cleanHeaderModulemaps(resolve(artifactsRoot, 'ReactNativeHeaders.xcframework', s, 'Headers'));
       }
 
+      // Sanitize headers to prevent modular framework include failures:
+      // 1. Remove RCTInspectorNetworkHelper.h from React-umbrella.h (CDP debugger internals shouldn't pollute Swift module)
+      // 2. Change angled <jsinspector-modern/...> includes to quotes to satisfy framework modular include rules
+      const sanitizeHeaders = async (targetDir) => {
+        if (!existsSync(targetDir)) return;
+        const entries = await readdir(targetDir, { withFileTypes: true });
+        for (const ent of entries) {
+          const full = resolve(targetDir, ent.name);
+          if (ent.isDirectory()) {
+            await sanitizeHeaders(full);
+          } else if (ent.isFile() && ent.name === 'React-umbrella.h') {
+            let content = await readFile(full, 'utf8');
+            if (content.includes('RCTInspectorNetworkHelper.h')) {
+              content = content.replace(/^[ \t]*#import[ \t]+<React\/RCTInspectorNetworkHelper\.h>[ \t]*\r?\n?/gm, '// #import <React/RCTInspectorNetworkHelper.h>\n');
+              await writeFile(full, content, 'utf8');
+              console.log(`[HanlinExpo] Sanitized React-umbrella.h: ${full}`);
+            }
+          } else if (ent.isFile() && ent.name === 'RCTInspectorNetworkHelper.h') {
+            let content = await readFile(full, 'utf8');
+            if (content.includes('<jsinspector-modern/')) {
+              content = content.replace(/<jsinspector-modern\/([^>]+)>/g, '"jsinspector-modern/$1"');
+              await writeFile(full, content, 'utf8');
+              console.log(`[HanlinExpo] Sanitized RCTInspectorNetworkHelper.h: ${full}`);
+            }
+          } else if (ent.isFile() && ent.name.endsWith('.h') && full.includes('jsinspector-modern')) {
+            let content = await readFile(full, 'utf8');
+            if (content.includes('<jsinspector-modern/')) {
+              content = content.replace(/<jsinspector-modern\/([^>]+)>/g, '"$1"');
+              await writeFile(full, content, 'utf8');
+            }
+          } else if (ent.isFile() && ent.name.endsWith('.h')) {
+            let content = await readFile(full, 'utf8');
+            if (content.includes('<jsinspector-modern/')) {
+              content = content.replace(/<jsinspector-modern\/([^>]+)>/g, '"jsinspector-modern/$1"');
+              await writeFile(full, content, 'utf8');
+            }
+          }
+        }
+      };
+
+      await sanitizeHeaders(modularFwsRoot);
+      await sanitizeHeaders(resolve(artifactsRoot, 'React.xcframework'));
+      await sanitizeHeaders(resolve(artifactsRoot, 'ReactNativeHeaders.xcframework'));
+      if (existsSync(resolve(artifactsRoot, 'ReactModularHeaders'))) {
+        await sanitizeHeaders(resolve(artifactsRoot, 'ReactModularHeaders'));
+      }
+
       // Remove stale code signatures and re-sign ad-hoc if on darwin/codesign is available
       const removeCodeSig = async (dir) => {
         if (!existsSync(dir)) return;
