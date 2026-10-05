@@ -285,6 +285,9 @@ async function prepare() {
       const reactHeadersDir = resolve(reactFwDir, 'Headers');
       await mkdir(reactHeadersDir, { recursive: true });
 
+      if (existsSync(rnHeaders)) {
+        await cp(rnHeaders, reactHeadersDir, { recursive: true });
+      }
       const rnReactSource = resolve(rnHeaders, 'react');
       if (existsSync(rnReactSource)) {
         await cp(rnReactSource, reactHeadersDir, { recursive: true });
@@ -304,16 +307,24 @@ async function prepare() {
         await cp(reactFwDir, reactCapFwDir, { recursive: true });
       }
 
-      // Also enrich React.xcframework itself with rnReactSource across all slices so when Xcode/SPM copies it, the headers are present!
+      // Also enrich React.xcframework itself with all headers from ReactNativeHeaders across all slices
       const allSlices = ['ios-arm64_x86_64-simulator', 'ios-arm64', 'ios-arm64_x86_64-maccatalyst'];
       for (const s of allSlices) {
         const targetHeaders = resolve(artifactsRoot, 'React.xcframework', s, 'React.framework', 'Headers');
+        const sliceRnHeaders = resolve(artifactsRoot, 'ReactNativeHeaders.xcframework', s, 'Headers');
         if (existsSync(targetHeaders)) {
-          if (existsSync(rnReactSource)) {
-            await cp(rnReactSource, targetHeaders, { recursive: true });
+          if (existsSync(sliceRnHeaders)) {
+            await cp(sliceRnHeaders, targetHeaders, { recursive: true });
+          }
+          if (existsSync(rnHeaders)) {
+            await cp(rnHeaders, targetHeaders, { recursive: true });
+          }
+          const sliceReactSource = existsSync(sliceRnHeaders) ? resolve(sliceRnHeaders, 'react') : rnReactSource;
+          if (existsSync(sliceReactSource)) {
+            await cp(sliceReactSource, targetHeaders, { recursive: true });
             const nested = resolve(targetHeaders, 'react');
             if (!existsSync(nested)) {
-              await cp(rnReactSource, nested, { recursive: true });
+              await cp(sliceReactSource, nested, { recursive: true });
             }
           }
         }
