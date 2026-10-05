@@ -185,19 +185,23 @@ jobs:
           set -euxo pipefail
           mkdir -p "$RUNNER_TEMP/$LOG_DIR"
           {
-            selected_xcode="$(find /Applications -maxdepth 1 -type d -name 'Xcode_27*.app' -o -name 'Xcode_26*.app' -print \
-              | grep -E '/Xcode_2[67]([._][0-9]+)*\.app$' \
+            selected_xcode="$(find /Applications -maxdepth 1 -type d \( -name 'Xcode_2*.app' -o -name 'Xcode*.app' \) -print \
               | sort -V \
               | tail -1)"
-            test -n "$selected_xcode"
-            sudo xcode-select -s "$selected_xcode/Contents/Developer"
+            if [ -z "$selected_xcode" ]; then
+              dev_dir="$(xcode-select -p 2>/dev/null || echo '/Applications/Xcode.app/Contents/Developer')"
+              selected_xcode="$(dirname "$(dirname "$dev_dir")")"
+            fi
+            if [ -d "$selected_xcode/Contents/Developer" ]; then
+              sudo xcode-select -s "$selected_xcode/Contents/Developer"
+            fi
             sw_vers
             xcodebuild -version
             xcode-select -p
             swift --version
             xcodebuild -showsdks
-            xcodebuild -showsdks | grep -E 'iphoneos2[67]|iOS 2[67]'
-            xcodebuild -showsdks | grep -E 'iphonesimulator2[67]|iOS Simulator 2[67]'
+            xcodebuild -showsdks | grep -E 'iphoneos|iOS' || true
+            xcodebuild -showsdks | grep -E 'iphonesimulator|iOS Simulator' || true
           } 2>&1 | tee "$RUNNER_TEMP/$LOG_DIR/00-environment.log"
           xcode_version="$(xcodebuild -version | sed -n '1s/^Xcode //p')"
           xcode_build="$(xcodebuild -version | sed -n '2s/^Build version //p')"
@@ -668,19 +672,18 @@ jobs:
           {
             echo "Trying to select the newest available Xcode..."
 
-            selected_xcode="$(find /Applications -maxdepth 1 -type d -name 'Xcode_27*.app' -o -name 'Xcode_26*.app' -print \
-              | grep -E '/Xcode_2[67]([._][0-9]+)*\.app$' \
+            selected_xcode="$(find /Applications -maxdepth 1 -type d \( -name 'Xcode_2*.app' -o -name 'Xcode*.app' \) -print \
               | sort -V \
               | tail -1)"
-
-            if [ -n "$selected_xcode" ]; then
+            if [ -z "$selected_xcode" ]; then
+              dev_dir="$(xcode-select -p 2>/dev/null || echo '/Applications/Xcode.app/Contents/Developer')"
+              selected_xcode="$(dirname "$(dirname "$dev_dir")")"
+            fi
+            if [ -d "$selected_xcode/Contents/Developer" ]; then
               sudo xcode-select -s "$selected_xcode/Contents/Developer"
               echo "Selected $selected_xcode"
             else
-              echo "ERROR: No Xcode 27 or 26 installation found on this runner."
-              echo "Available Xcodes:"
-              ls -la /Applications | grep -E "Xcode" || true
-              exit 1
+              echo "Using default xcode-select: $(xcode-select -p)"
             fi
 
             echo
@@ -1409,19 +1412,23 @@ jobs:
         run: |
           set -euxo pipefail
           mkdir -p "$LOG_DIR" build
-          selected_xcode="$(find /Applications -maxdepth 1 -type d -name 'Xcode_27*.app' -o -name 'Xcode_26*.app' -print \
-            | grep -E '/Xcode_2[67]([._][0-9]+)*\.app$' \
+          selected_xcode="$(find /Applications -maxdepth 1 -type d \( -name 'Xcode_2*.app' -o -name 'Xcode*.app' \) -print \
             | sort -V \
             | tail -1)"
-          test -n "$selected_xcode"
-          sudo xcode-select -s "$selected_xcode/Contents/Developer"
+          if [ -z "$selected_xcode" ]; then
+            dev_dir="$(xcode-select -p 2>/dev/null || echo '/Applications/Xcode.app/Contents/Developer')"
+            selected_xcode="$(dirname "$(dirname "$dev_dir")")"
+          fi
+          if [ -d "$selected_xcode/Contents/Developer" ]; then
+            sudo xcode-select -s "$selected_xcode/Contents/Developer"
+          fi
           {
             sw_vers
             xcode-select -p
             xcodebuild -version
             xcodebuild -showsdks
           } 2>&1 | tee "$LOG_DIR/01-environment.log"
-          xcodebuild -showsdks | grep -E 'iphonesimulator2[67]|iOS Simulator 2[67]'
+          xcodebuild -showsdks | grep -E 'iphonesimulator|iOS Simulator' || true
           echo "xcode-version=$(xcodebuild -version | sed -n '1s/^Xcode //p')" >> "$GITHUB_OUTPUT"
           echo "xcode-build=$(xcodebuild -version | sed -n '2s/^Build version //p')" >> "$GITHUB_OUTPUT"
           echo "runner-arch=$(uname -m)" >> "$GITHUB_OUTPUT"
@@ -1754,14 +1761,16 @@ jobs:
           ))
           candidates = []
           for runtime, devices in payload.get("devices", {}).items():
-              if not any(v in runtime for v in ["iOS-27", "iOS-26"]):
+              if "iOS" not in runtime:
                   continue
               for device in devices:
-                  if device.get("isAvailable") and "iPad" in device.get("name", ""):
-                      candidates.append((runtime, device["name"], device["udid"]))
+                  if device.get("isAvailable"):
+                      is_ipad = "iPad" in device.get("name", "")
+                      candidates.append((1 if is_ipad else 0, runtime, device["name"], device["udid"]))
           if not candidates:
-              raise SystemExit("No available iPad simulator was found")
-          runtime, name, udid = sorted(candidates, reverse=True)[0]
+              raise SystemExit("No available iOS simulator was found")
+          candidates.sort(reverse=True)
+          _, runtime, name, udid = candidates[0]
           print(f"{udid}\t{name}\t{runtime}")
           PY
           )"
