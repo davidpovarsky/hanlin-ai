@@ -1042,11 +1042,13 @@ jobs:
           }
 
           resign_xcframework "Packages/HanlinExpoRuntime/Artifacts/React.xcframework"
+          resign_xcframework "Packages/HanlinExpoRuntime/Artifacts/ReactNativeHeaders.xcframework"
           if [ -d "$CLONED_PACKAGES_PATH/checkouts" ]; then
             for checkout in "$CLONED_PACKAGES_PATH/checkouts"/*; do
               if [ -d "$checkout" ]; then
                 for base in "$checkout/Packages/HanlinExpoRuntime/Artifacts" "$checkout/Artifacts"; do
                   resign_xcframework "$base/React.xcframework"
+                  resign_xcframework "$base/ReactNativeHeaders.xcframework"
                 done
               fi
             done
@@ -1749,11 +1751,13 @@ jobs:
           }
 
           resign_xcframework "Packages/HanlinExpoRuntime/Artifacts/React.xcframework"
+          resign_xcframework "Packages/HanlinExpoRuntime/Artifacts/ReactNativeHeaders.xcframework"
           if [ -d "$CLONED_PACKAGES_PATH/checkouts" ]; then
             for checkout in "$CLONED_PACKAGES_PATH/checkouts"/*; do
               if [ -d "$checkout" ]; then
                 for base in "$checkout/Packages/HanlinExpoRuntime/Artifacts" "$checkout/Artifacts"; do
                   resign_xcframework "$base/React.xcframework"
+                  resign_xcframework "$base/ReactNativeHeaders.xcframework"
                 done
               fi
             done

@@ -348,38 +348,42 @@ async function prepare() {
       }
 
       // Remove stale code signatures and re-sign ad-hoc if on darwin/codesign is available
-      const reactXcf = resolve(artifactsRoot, 'React.xcframework');
-      if (existsSync(reactXcf)) {
-        const removeCodeSig = async (dir) => {
-          if (!existsSync(dir)) return;
-          const entries = await readdir(dir, { withFileTypes: true });
-          for (const ent of entries) {
-            const fullPath = resolve(dir, ent.name);
-            if (ent.isDirectory()) {
-              if (ent.name === '_CodeSignature') {
-                await rm(fullPath, { recursive: true, force: true });
-              } else {
-                await removeCodeSig(fullPath);
-              }
+      const removeCodeSig = async (dir) => {
+        if (!existsSync(dir)) return;
+        const entries = await readdir(dir, { withFileTypes: true });
+        for (const ent of entries) {
+          const fullPath = resolve(dir, ent.name);
+          if (ent.isDirectory()) {
+            if (ent.name === '_CodeSignature') {
+              await rm(fullPath, { recursive: true, force: true });
+            } else {
+              await removeCodeSig(fullPath);
             }
           }
-        };
-        await removeCodeSig(reactXcf);
+        }
+      };
+
+      const resignXcf = async (xcfPath) => {
+        if (!existsSync(xcfPath)) return;
+        await removeCodeSig(xcfPath);
         if (process.platform === 'darwin') {
           try {
             for (const s of allSlices) {
-              const fw = resolve(reactXcf, s, 'React.framework');
+              const fw = resolve(xcfPath, s, 'React.framework');
               if (existsSync(fw)) {
                 execSync(`codesign --force --sign - --timestamp=none "${fw}"`, { stdio: 'ignore' });
               }
             }
-            execSync(`codesign --force --sign - --timestamp=none "${reactXcf}"`, { stdio: 'ignore' });
-            console.log('[HanlinExpo] Re-signed React.xcframework ad-hoc.');
+            execSync(`codesign --force --sign - --timestamp=none "${xcfPath}"`, { stdio: 'ignore' });
+            console.log(`[HanlinExpo] Re-signed ${basename(xcfPath)} ad-hoc.`);
           } catch (signErr) {
-            console.warn('[HanlinExpo] Warning: ad-hoc codesign failed:', signErr.message);
+            console.warn(`[HanlinExpo] Warning: ad-hoc codesign failed for ${basename(xcfPath)}:`, signErr.message);
           }
         }
-      }
+      };
+
+      await resignXcf(resolve(artifactsRoot, 'React.xcframework'));
+      await resignXcf(resolve(artifactsRoot, 'ReactNativeHeaders.xcframework'));
 
       count++;
       console.log('[HanlinExpo] Created unified non-modular react.framework in ModularFrameworks and enriched React.xcframework.');
