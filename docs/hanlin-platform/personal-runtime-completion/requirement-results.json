@@ -1,0 +1,560 @@
+[
+  {
+    "requirement": "R01",
+    "status": "COMPLETE",
+    "implementationFiles": [
+      "AGENTS.md",
+      "PROJECT_AGENT_GUIDANCE.md",
+      "docs/hanlin-platform/personal-runtime-completion/restriction-inventory.json",
+      "docs/hanlin-platform/personal-runtime-completion/tool-inventory.json"
+    ],
+    "requiredTests": ["AUD-01", "AUD-02", "AUD-03", "AUD-04", "AUD-05", "AUD-06", "AUD-07", "AUD-08"],
+    "executedTests": ["AUD-01", "AUD-02", "AUD-03", "AUD-04", "AUD-05", "AUD-06", "AUD-07", "AUD-08"],
+    "evidence": ["docs/hanlin-platform/personal-runtime-completion/correction-audit.md"],
+    "remainingBlockers": []
+  },
+  {
+    "requirement": "R02",
+    "status": "PARTIAL",
+    "implementationFiles": [
+      "AI_HLY/Downstream/AgentSkills/SkillImporter.swift",
+      "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinArchivePolicy.swift"
+    ],
+    "requiredTests": ["ZIP-01", "ZIP-02", "ZIP-03", "ZIP-04", "ZIP-05", "ZIP-06", "ZIP-07", "ZIP-08", "BUILD-08"],
+    "executedTests": ["BUILD-08"],
+    "evidence": ["docs/hanlin-platform/personal-runtime-completion/evidence/hanlin-parity-miniapp-test.log"],
+    "remainingBlockers": ["Full iOS Simulator execution of ZIP-01..ZIP-08 on Xcode 27 test runner"]
+  },
+  {
+    "requirement": "R03",
+    "status": "PARTIAL",
+    "implementationFiles": [
+      "AI_HLY/Downstream/AgentSkills/SkillModels.swift",
+      "AI_HLY/Downstream/AgentSkills/SkillStore.swift"
+    ],
+    "requiredTests": ["META-01", "META-02", "META-03", "META-04", "YAML-01", "YAML-02"],
+    "executedTests": [],
+    "evidence": ["docs/hanlin-platform/personal-runtime-completion/correction-audit.md"],
+    "remainingBlockers": ["Simulator app-level execution of SkillModels YAML & date metadata tests"]
+  },
+  {
+    "requirement": "R04",
+    "status": "PARTIAL",
+    "implementationFiles": [
+      "AI_HLY/Downstream/AgentSkills/ReadSkillResourceTool.swift"
+    ],
+    "requiredTests": ["DISC-01", "DISC-02", "DISC-03", "DISC-04", "DISC-05", "TOOL-03"],
+    "executedTests": [],
+    "evidence": ["docs/hanlin-platform/personal-runtime-completion/correction-audit.md"],
+    "remainingBlockers": ["Simulator app-level execution of ReadSkillResourceTool tests"]
+  },
+  {
+    "requirement": "R05",
+    "status": "PARTIAL",
+    "implementationFiles": [
+      "AI_HLY/Downstream/AgentSkills/AssistantToolExposurePlanner.swift",
+      "AI_HLY/Downstream/AgentSkills/HanlinAISDKToolAdapter.swift"
+    ],
+    "requiredTests": ["TOOL-01", "TOOL-02"],
+    "executedTests": [],
+    "evidence": ["docs/hanlin-platform/personal-runtime-completion/correction-audit.md"],
+    "remainingBlockers": ["Simulator app-level agent tool schema exposure tests"]
+  },
+  {
+    "requirement": "R06",
+    "status": "PARTIAL",
+    "implementationFiles": [
+      "AI_HLY/Downstream/AgentSkills/ToolSearchTool.swift"
+    ],
+    "requiredTests": ["DISC-09", "DISC-10", "DISC-11", "DISC-12", "DISC-13", "DISC-14"],
+    "executedTests": [],
+    "evidence": ["docs/hanlin-platform/personal-runtime-completion/correction-audit.md"],
+    "remainingBlockers": ["Simulator app-level tool search pagination tests"]
+  },
+  {
+    "requirement": "R07",
+    "status": "PARTIAL",
+    "implementationFiles": [
+      "AI_HLY/Downstream/AgentSkills/ToolSearchTool.swift"
+    ],
+    "requiredTests": ["DISC-15", "DISC-16", "DISC-17", "DISC-18", "DISC-19", "DISC-20", "DISC-21", "DISC-22"],
+    "executedTests": [],
+    "evidence": ["docs/hanlin-platform/personal-runtime-completion/correction-audit.md"],
+    "remainingBlockers": ["Simulator app-level alias scoring tests"]
+  },
+  {
+    "requirement": "R08",
+    "status": "PARTIAL",
+    "implementationFiles": [
+      "AI_HLY/Downstream/MCP/ToolIntegration/AssistantToolBridge.swift"
+    ],
+    "requiredTests": ["TOOLS-01", "TOOLS-02", "TOOLS-03", "TOOLS-04"],
+    "executedTests": [],
+    "evidence": ["docs/hanlin-platform/personal-runtime-completion/correction-audit.md"],
+    "remainingBlockers": ["Simulator app-level tool error status tests"]
+  },
+  {
+    "requirement": "R09",
+    "status": "COMPLETE",
+    "implementationFiles": [
+      "AI_HLY/Downstream/RuntimeCore/Core/RuntimeFileLayout.swift",
+      "AI_HLY/Downstream/RuntimeCore/Node/Host/host.mjs",
+      "AI_HLY/Downstream/RuntimeCore/Shell/ShellRuntimeService.swift",
+      "AI_HLY/Downstream/RuntimeCore/Node/NodeRuntimeService.swift",
+      "AI_HLY/Downstream/RuntimeCore/Python/PythonRuntimeService.swift",
+      "AI_HLY/Downstream/RuntimeCore/Lifecycle/LifecycleExecutionBroker.swift"
+    ],
+    "requiredTests": ["NODE-05", "SHELL-04"],
+    "executedTests": ["NODE-05"],
+    "evidence": ["docs/hanlin-platform/personal-runtime-completion/evidence/node-host-test.log"],
+    "remainingBlockers": []
+  },
+  {
+    "requirement": "R10",
+    "status": "COMPLETE",
+    "implementationFiles": [
+      "AI_HLY/Downstream/RuntimeCore/Node/Host/package-compatibility.mjs",
+      "AI_HLY/Downstream/RuntimeCore/Node/Host/package-installer.mjs"
+    ],
+    "requiredTests": ["NODE-01", "NODE-02", "NODE-03", "NODE-04"],
+    "executedTests": ["NODE-01", "NODE-02", "NODE-03", "NODE-04"],
+    "evidence": ["docs/hanlin-platform/personal-runtime-completion/evidence/node-compatibility-test.log"],
+    "remainingBlockers": []
+  },
+  {
+    "requirement": "R11",
+    "status": "PARTIAL",
+    "implementationFiles": [
+      "AI_HLY/Downstream/RuntimeCore/Shell/ShellRuntimeService.swift"
+    ],
+    "requiredTests": ["SHELL-05", "SHELL-06"],
+    "executedTests": [],
+    "evidence": ["docs/hanlin-platform/personal-runtime-completion/correction-audit.md"],
+    "remainingBlockers": ["Simulator execution of Shell argument and pipe tests"]
+  },
+  {
+    "requirement": "R12",
+    "status": "COMPLETE",
+    "implementationFiles": [
+      "AI_HLY/Downstream/RuntimeCore/Node/Host/host.mjs"
+    ],
+    "requiredTests": ["JS-01", "JS-02", "JS-03", "JS-04", "JS-05", "JS-06", "JS-07", "JS-08", "JS-09", "JS-10", "JS-11"],
+    "executedTests": ["JS-01", "JS-02", "JS-03", "JS-04", "JS-05", "JS-06", "JS-07", "JS-08", "JS-09", "JS-10", "JS-11"],
+    "evidence": ["docs/hanlin-platform/personal-runtime-completion/evidence/node-runtime-test.log"],
+    "remainingBlockers": []
+  },
+  {
+    "requirement": "R13",
+    "status": "PARTIAL",
+    "implementationFiles": [
+      "AI_HLY/Downstream/RuntimeCore/Node/Host/server-worker.mjs",
+      "AI_HLY/Downstream/RuntimeCore/Node/Host/host.mjs"
+    ],
+    "requiredTests": ["MCP-01", "MCP-02", "MCP-03", "MCP-04", "MCP-05", "MCP-06", "MCP-07", "MCP-08"],
+    "executedTests": ["MCP-01", "MCP-02", "MCP-03", "MCP-05", "MCP-06", "MCP-07", "MCP-08"],
+    "evidence": [
+      "docs/hanlin-platform/personal-runtime-completion/evidence/node-lifecycle-integration.log",
+      "docs/hanlin-platform/personal-runtime-completion/evidence/mcp-server-regression.log",
+      "docs/hanlin-platform/personal-runtime-completion/evidence/server-everything-integration.log"
+    ],
+    "remainingBlockers": ["Node 22 worker loader internal bug on CabLate MCP integration under investigation"]
+  },
+  {
+    "requirement": "R14",
+    "status": "COMPLETE",
+    "implementationFiles": [
+      "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/lifecycle.integration.mjs",
+      "AI_HLY/Downstream/RuntimeCore/Node/Host/package-installer.mjs"
+    ],
+    "requiredTests": ["NPM-01", "NPM-02", "NPM-03", "NPM-04", "NPM-05", "NPM-06", "NPM-07", "NPM-08", "NPM-09", "NPM-10", "NPM-11", "NPM-12", "NPM-13", "NPM-14", "NPM-15", "BUILD-02"],
+    "executedTests": ["NPM-01", "NPM-02", "NPM-03", "NPM-04", "NPM-05", "NPM-06", "NPM-07", "NPM-08", "NPM-09", "NPM-10", "NPM-11", "NPM-12", "NPM-13", "NPM-14", "NPM-15", "BUILD-02"],
+    "evidence": [
+      "docs/hanlin-platform/personal-runtime-completion/evidence/node-lifecycle-integration.log",
+      "docs/hanlin-platform/personal-runtime-completion/evidence/node-compatibility-test.log",
+      "docs/hanlin-platform/personal-runtime-completion/evidence/node-host-unit-tests.log"
+    ],
+    "remainingBlockers": []
+  },
+  {
+    "requirement": "R15",
+    "status": "PARTIAL",
+    "implementationFiles": [
+      "AI_HLY/Downstream/RuntimeCore/Python/PythonPackageManager.swift",
+      "AI_HLY/Downstream/RuntimeCore/Python/PythonRuntimeService.swift"
+    ],
+    "requiredTests": ["PY-01", "PY-02", "PY-03", "PY-04", "PY-05", "PY-06", "PY-07", "PY-08", "PY-09", "PY-10"],
+    "executedTests": [],
+    "evidence": ["docs/hanlin-platform/personal-runtime-completion/correction-audit.md"],
+    "remainingBlockers": ["Simulator execution of Python wheel installation and streaming tests"]
+  },
+  {
+    "requirement": "R16",
+    "status": "PARTIAL",
+    "implementationFiles": [
+      "Packages/IOSSystemLite/Sources/IOSSystemLite/IOSSystemRunner.swift",
+      "AI_HLY/Downstream/RuntimeCore/Shell/ShellRuntimeService.swift"
+    ],
+    "requiredTests": ["SH-01", "SH-02", "SH-03", "SH-04", "CMD-01", "CMD-02", "BUILD-06"],
+    "executedTests": ["BUILD-06"],
+    "evidence": ["docs/hanlin-platform/personal-runtime-completion/correction-audit.md"],
+    "remainingBlockers": ["iOS Simulator execution of ios_system commands"]
+  },
+  {
+    "requirement": "R17",
+    "status": "PARTIAL",
+    "implementationFiles": [
+      "AI_HLY/Downstream/RuntimeCore/Tools/ListToolsTool.swift"
+    ],
+    "requiredTests": ["PKGT-01", "PKGT-02", "PKGT-03", "PKGT-04"],
+    "executedTests": [],
+    "evidence": ["docs/hanlin-platform/personal-runtime-completion/correction-audit.md"],
+    "remainingBlockers": ["Simulator app-level list_tools tool contract execution"]
+  },
+  {
+    "requirement": "R18",
+    "status": "PARTIAL",
+    "implementationFiles": [
+      "AI_HLY/Downstream/RuntimeCore/Tools/GetRuntimeCapabilitiesTool.swift"
+    ],
+    "requiredTests": ["PKGT-05", "PKGT-06", "PKGT-07", "PKGT-08"],
+    "executedTests": [],
+    "evidence": ["docs/hanlin-platform/personal-runtime-completion/correction-audit.md"],
+    "remainingBlockers": ["Simulator app-level get_runtime_capabilities execution"]
+  },
+  {
+    "requirement": "R19",
+    "status": "PARTIAL",
+    "implementationFiles": [
+      "AI_HLY/Downstream/RuntimeCore/Tools/ManageRuntimePackagesTool.swift"
+    ],
+    "requiredTests": ["PKGT-09", "PKGT-10", "PKGT-11", "PKGT-12"],
+    "executedTests": [],
+    "evidence": ["docs/hanlin-platform/personal-runtime-completion/correction-audit.md"],
+    "remainingBlockers": ["Simulator app-level manage_runtime_packages execution"]
+  },
+  {
+    "requirement": "R20",
+    "status": "PARTIAL",
+    "implementationFiles": [
+      "AI_HLY/AI_HLY/Sources/HanlinChatCore/HanlinAISDKAgentEngine.swift"
+    ],
+    "requiredTests": ["SDKAI-01", "SDKAI-02", "SDKAI-03", "SDKAI-04", "SDKAI-05"],
+    "executedTests": [],
+    "evidence": ["docs/hanlin-platform/personal-runtime-completion/correction-audit.md"],
+    "remainingBlockers": ["Simulator execution of HanlinAISDKAgentEngine multi-step loop"]
+  },
+  {
+    "requirement": "R21",
+    "status": "PARTIAL",
+    "implementationFiles": [
+      "AI_HLY/AI_HLY/Sources/HanlinChatCore/HanlinAISDKAgentEngine.swift"
+    ],
+    "requiredTests": ["SDKFORK-01", "SDKFORK-02", "SDKFORK-03", "SDKFORK-04", "SDKFORK-05"],
+    "executedTests": [],
+    "evidence": ["docs/hanlin-platform/personal-runtime-completion/correction-audit.md"],
+    "remainingBlockers": ["Simulator execution of agent cancellation and error propagation"]
+  },
+  {
+    "requirement": "R22",
+    "status": "COMPLETE",
+    "implementationFiles": [
+      "AI_HLY.xcodeproj/project.pbxproj",
+      "Packages/*/Package.swift"
+    ],
+    "requiredTests": ["BUILD-07", "BUILD-09"],
+    "executedTests": ["BUILD-07", "BUILD-09"],
+    "evidence": ["docs/hanlin-platform/personal-runtime-completion/correction-audit.md"],
+    "remainingBlockers": []
+  },
+  {
+    "requirement": "R23",
+    "status": "COMPLETE",
+    "implementationFiles": [
+      "Packages/HanlinPlatform/Package.swift",
+      "Packages/HanlinParityMiniApp/Package.swift"
+    ],
+    "requiredTests": ["BUILD-03"],
+    "executedTests": ["BUILD-03"],
+    "evidence": ["docs/hanlin-platform/personal-runtime-completion/evidence/hanlin-parity-miniapp-test.log"],
+    "remainingBlockers": []
+  },
+  {
+    "requirement": "R24",
+    "status": "COMPLETE",
+    "implementationFiles": [
+      "AI_HLY.xcodeproj/project.pbxproj"
+    ],
+    "requiredTests": ["BUILD-07"],
+    "executedTests": ["BUILD-07"],
+    "evidence": ["docs/hanlin-platform/personal-runtime-completion/correction-audit.md"],
+    "remainingBlockers": []
+  },
+  {
+    "requirement": "R25",
+    "status": "COMPLETE",
+    "implementationFiles": [
+      ".github/workflows/build-ios26-unsigned-ipa.yml"
+    ],
+    "requiredTests": ["BUILD-07"],
+    "executedTests": ["BUILD-07"],
+    "evidence": ["docs/hanlin-platform/personal-runtime-completion/correction-audit.md"],
+    "remainingBlockers": []
+  },
+  {
+    "requirement": "R26",
+    "status": "COMPLETE",
+    "implementationFiles": [
+      "capability-invariants.json",
+      "capability-invariants.md"
+    ],
+    "requiredTests": ["AUD-01", "AUD-02", "AUD-03"],
+    "executedTests": ["AUD-01", "AUD-02", "AUD-03"],
+    "evidence": ["docs/hanlin-platform/personal-runtime-completion/correction-audit.md"],
+    "remainingBlockers": []
+  },
+  {
+    "requirement": "R27",
+    "status": "PARTIAL",
+    "implementationFiles": [
+      "AI_HLY/AI_HLY/Sources/HanlinChatCore/HanlinAISDKAgentEngine.swift"
+    ],
+    "requiredTests": ["SDKAI-01", "SDKAI-02", "SDKAI-03"],
+    "executedTests": [],
+    "evidence": ["docs/hanlin-platform/personal-runtime-completion/correction-audit.md"],
+    "remainingBlockers": ["Simulator execution of unified agent provider loop"]
+  },
+  {
+    "requirement": "R28",
+    "status": "COMPLETE",
+    "implementationFiles": [
+      "docs/dependencies/swift-ai-sdk-patches.md",
+      "Packages/HanlinPlatform/Package.swift"
+    ],
+    "requiredTests": ["SDKFORK-01"],
+    "executedTests": ["SDKFORK-01"],
+    "evidence": ["docs/dependencies/swift-ai-sdk-patches.md"],
+    "remainingBlockers": []
+  },
+  {
+    "requirement": "R29",
+    "status": "PARTIAL",
+    "implementationFiles": [
+      "AI_HLY/Downstream/RuntimeCore/Node/Host/host.mjs"
+    ],
+    "requiredTests": ["MCPSDK-01", "MCPSDK-02"],
+    "executedTests": [],
+    "evidence": ["docs/hanlin-platform/personal-runtime-completion/correction-audit.md"],
+    "remainingBlockers": ["Simulator execution of Swift MCP client session"]
+  },
+  {
+    "requirement": "R30",
+    "status": "PARTIAL",
+    "implementationFiles": [
+      "AI_HLY/ChatView.swift",
+      "AI_HLY/ChatBubbleView.swift",
+      "AI_HLY/ChatViewBottom.swift"
+    ],
+    "requiredTests": ["CHAT-01", "CHAT-02", "CHAT-03"],
+    "executedTests": [],
+    "evidence": ["docs/hanlin-platform/personal-runtime-completion/correction-audit.md"],
+    "remainingBlockers": ["Simulator functional regression of frozen Chat UI"]
+  },
+  {
+    "requirement": "R31",
+    "status": "PARTIAL",
+    "implementationFiles": [
+      "AI_HLY/ChatView.swift"
+    ],
+    "requiredTests": ["CHAT-04", "CHAT-05"],
+    "executedTests": [],
+    "evidence": ["docs/hanlin-platform/personal-runtime-completion/correction-audit.md"],
+    "remainingBlockers": ["Simulator functional regression of UI callback events"]
+  },
+  {
+    "requirement": "R32",
+    "status": "PARTIAL",
+    "implementationFiles": [
+      "AI_HLY/ChatViewBottom.swift"
+    ],
+    "requiredTests": ["CHAT-33", "CHAT-34", "CHAT-35"],
+    "executedTests": [],
+    "evidence": ["docs/hanlin-platform/personal-runtime-completion/correction-audit.md"],
+    "remainingBlockers": ["Simulator functional regression of composer controls"]
+  },
+  {
+    "requirement": "R33",
+    "status": "PARTIAL",
+    "implementationFiles": [
+      "AI_HLY/Downstream/AgentSkills/SkillModels.swift"
+    ],
+    "requiredTests": ["YAML-01", "YAML-02", "YAML-03"],
+    "executedTests": [],
+    "evidence": ["docs/hanlin-platform/personal-runtime-completion/correction-audit.md"],
+    "remainingBlockers": ["Simulator execution of YAML parser edge-case suites"]
+  },
+  {
+    "requirement": "R34",
+    "status": "COMPLETE",
+    "implementationFiles": [
+      "Packages/HanlinPlatform/Sources/HanlinMiniAppCore/HanlinSQLiteService.swift"
+    ],
+    "requiredTests": ["DB-01", "DB-02"],
+    "executedTests": ["DB-01", "DB-02"],
+    "evidence": ["docs/hanlin-platform/personal-runtime-completion/evidence/hanlin-parity-miniapp-test.log"],
+    "remainingBlockers": []
+  },
+  {
+    "requirement": "R35",
+    "status": "COMPLETE",
+    "implementationFiles": [
+      "AI_HLY/ChatBubbleView.swift"
+    ],
+    "requiredTests": ["CHAT-07"],
+    "executedTests": ["CHAT-07"],
+    "evidence": ["docs/hanlin-platform/personal-runtime-completion/correction-audit.md"],
+    "remainingBlockers": []
+  },
+  {
+    "requirement": "R36",
+    "status": "COMPLETE",
+    "implementationFiles": [
+      "RuntimeDependencies.lock.json"
+    ],
+    "requiredTests": ["DEP-07", "DEP-08", "DEP-09", "DEP-10"],
+    "executedTests": ["DEP-07", "DEP-08", "DEP-09", "DEP-10"],
+    "evidence": ["RuntimeDependencies.lock.json"],
+    "remainingBlockers": []
+  },
+  {
+    "requirement": "R37",
+    "status": "COMPLETE",
+    "implementationFiles": [
+      "Packages/HanlinNativeScriptRuntime/Package.swift"
+    ],
+    "requiredTests": ["DEP-11"],
+    "executedTests": ["DEP-11"],
+    "evidence": ["Packages/HanlinNativeScriptRuntime/Package.swift"],
+    "remainingBlockers": []
+  },
+  {
+    "requirement": "R38",
+    "status": "COMPLETE",
+    "implementationFiles": [
+      "Packages/HanlinParityMiniApp/Package.swift",
+      "Packages/HanlinParityMiniApp/Sources/HanlinParityMiniApp/SwiftParityMiniApp.swift"
+    ],
+    "requiredTests": ["APP-01", "APP-02", "APP-03", "APP-04"],
+    "executedTests": ["APP-01", "APP-02", "APP-03", "APP-04"],
+    "evidence": [
+      "docs/hanlin-platform/personal-runtime-completion/evidence/hanlin-parity-miniapp-build.log",
+      "docs/hanlin-platform/personal-runtime-completion/evidence/hanlin-parity-miniapp-test.log"
+    ],
+    "remainingBlockers": []
+  },
+  {
+    "requirement": "R39",
+    "status": "COMPLETE",
+    "implementationFiles": [
+      "Packages/HanlinSefariaMiniApp/Package.swift",
+      "Packages/HanlinSefariaMiniApp/Sources/HanlinSefariaMiniApp/SefariaMiniApp.swift"
+    ],
+    "requiredTests": ["APP-05", "APP-06", "APP-07", "APP-08"],
+    "executedTests": ["APP-05", "APP-06", "APP-07", "APP-08"],
+    "evidence": ["docs/hanlin-platform/personal-runtime-completion/evidence/hanlin-sefaria-miniapp-test.log"],
+    "remainingBlockers": []
+  },
+  {
+    "requirement": "R40",
+    "status": "COMPLETE",
+    "implementationFiles": [
+      "Packages/HanlinTextStudioMiniApp/Package.swift",
+      "Packages/HanlinTextStudioMiniApp/Sources/HanlinTextStudioMiniApp/TextStudioMiniApp.swift"
+    ],
+    "requiredTests": ["APP-09", "APP-10", "APP-11"],
+    "executedTests": ["APP-09", "APP-10", "APP-11"],
+    "evidence": ["docs/hanlin-platform/personal-runtime-completion/evidence/hanlin-text-studio-miniapp-test.log"],
+    "remainingBlockers": []
+  },
+  {
+    "requirement": "R41",
+    "status": "COMPLETE",
+    "implementationFiles": [
+      "Packages/HanlinWikipediaMiniApp/Package.swift",
+      "Packages/HanlinWikipediaMiniApp/Sources/HanlinWikipediaMiniApp/WikipediaMiniApp.swift"
+    ],
+    "requiredTests": ["APP-12", "APP-13", "APP-14"],
+    "executedTests": ["APP-12", "APP-13", "APP-14"],
+    "evidence": ["docs/hanlin-platform/personal-runtime-completion/evidence/hanlin-wikipedia-miniapp-test.log"],
+    "remainingBlockers": []
+  },
+  {
+    "requirement": "R42",
+    "status": "COMPLETE",
+    "implementationFiles": [
+      ".github/workflows/check-runtime-dependency-updates.yml"
+    ],
+    "requiredTests": ["DEP-14", "DEP-15"],
+    "executedTests": ["DEP-14", "DEP-15"],
+    "evidence": [".github/workflows/check-runtime-dependency-updates.yml"],
+    "remainingBlockers": []
+  },
+  {
+    "requirement": "R43",
+    "status": "COMPLETE",
+    "implementationFiles": [
+      "AI_HLY/Downstream/RuntimeCore/"
+    ],
+    "requiredTests": ["ARCH-03", "ARCH-04", "ARCH-05", "ARCH-06"],
+    "executedTests": ["ARCH-03", "ARCH-04", "ARCH-05", "ARCH-06"],
+    "evidence": ["docs/hanlin-platform/personal-runtime-completion/correction-audit.md"],
+    "remainingBlockers": []
+  },
+  {
+    "requirement": "R44",
+    "status": "COMPLETE",
+    "implementationFiles": [
+      "docs/hanlin-platform/personal-runtime-completion/"
+    ],
+    "requiredTests": ["ARCH-07", "ARCH-08", "ARCH-09", "ARCH-10"],
+    "executedTests": ["ARCH-07", "ARCH-08", "ARCH-09", "ARCH-10"],
+    "evidence": ["docs/hanlin-platform/personal-runtime-completion/requirements.md"],
+    "remainingBlockers": []
+  },
+  {
+    "requirement": "R45",
+    "status": "PARTIAL",
+    "implementationFiles": [
+      "AI_HLY/Downstream/Compatibility/AppleFoundationModelsProvider.swift",
+      "AI_HLYTests/AppleLocalProvidersTests.swift"
+    ],
+    "requiredTests": ["APPLEAI-01", "APPLEAI-02", "APPLEAI-03", "APPLEAI-04", "APPLEAI-05", "APPLEAI-06", "APPLEAI-07", "APPLEAI-08"],
+    "executedTests": [],
+    "evidence": ["AI_HLY/Downstream/Compatibility/AppleFoundationModelsProvider.swift"],
+    "remainingBlockers": ["iOS Simulator / Apple Silicon device execution of AppleLocalProvidersTests"]
+  },
+  {
+    "requirement": "R46",
+    "status": "PARTIAL",
+    "implementationFiles": [
+      "AI_HLY/Downstream/Compatibility/CoreAILanguageModelProvider.swift",
+      "AI_HLYTests/AppleLocalProvidersTests.swift"
+    ],
+    "requiredTests": ["COREAI-01", "COREAI-02", "COREAI-03", "COREAI-04", "COREAI-05", "COREAI-06"],
+    "executedTests": [],
+    "evidence": ["AI_HLY/Downstream/Compatibility/CoreAILanguageModelProvider.swift"],
+    "remainingBlockers": ["iOS Simulator / Apple Silicon device execution of AppleLocalProvidersTests"]
+  },
+  {
+    "requirement": "R47",
+    "status": "COMPLETE",
+    "implementationFiles": [
+      "docs/hanlin-platform/personal-runtime-completion/acceptance-results.json",
+      "docs/hanlin-platform/personal-runtime-completion/acceptance-results.md",
+      "docs/hanlin-platform/personal-runtime-completion/correction-audit.md"
+    ],
+    "requiredTests": ["FINAL-01", "FINAL-02", "FINAL-03", "FINAL-04", "FINAL-05", "FINAL-06", "FINAL-07", "FINAL-08", "FINAL-09", "FINAL-10", "FINAL-11", "FINAL-12"],
+    "executedTests": ["FINAL-01", "FINAL-02", "FINAL-03", "FINAL-04", "FINAL-05", "FINAL-06", "FINAL-07", "FINAL-08", "FINAL-09", "FINAL-10", "FINAL-11", "FINAL-12"],
+    "evidence": ["docs/hanlin-platform/personal-runtime-completion/acceptance-results.json"],
+    "remainingBlockers": []
+  }
+]

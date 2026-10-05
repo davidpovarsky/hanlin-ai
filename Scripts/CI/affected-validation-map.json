@@ -17,7 +17,12 @@
     "package-lock.json",
     "Scripts/Audit/**",
     "Vendor/**",
-    "provider-conformance-summary.json"
+    "provider-conformance-summary.json",
+    "capability-invariants.json",
+    "capability-invariants.md",
+    "Scripts/*.mjs",
+    "Scripts/**/*.mjs",
+    "**/Package.resolved"
   ],
   "components": {
     "ci_router": {
@@ -93,6 +98,19 @@
       ],
       "consumers": []
     },
+    "apple_local_providers_tests": {
+      "description": "Apple Foundation Models and Core AI local provider tests",
+      "patterns": [
+        "AI_HLYTests/AppleLocalProvidersTests.swift"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/AppleLocalProvidersTests"
+      ],
+      "consumers": []
+    },
     "agent_runtime_conversation_ui_tests": {
       "description": "Agent runtime conversation UI tests",
       "patterns": [
@@ -130,6 +148,19 @@
       ],
       "ui_suites": [
         "AI_HLYUITests/HanlinExpoProductionE2ETests"
+      ],
+      "consumers": []
+    },
+    "swiftui_bridge_generator": {
+      "description": "SwiftUI Bridge Generator, tools, and HanlinExpoUI package",
+      "patterns": [
+        "Generated/SwiftUIBridge/**",
+        "Packages/HanlinExpoUI/**",
+        "Packages/HanlinSwiftUIBridgeGenerator/**",
+        "Tools/SwiftUIBridge/**"
+      ],
+      "direct_validation_groups": [
+        "simulator_targeted_ui"
       ],
       "consumers": []
     },
