@@ -28,7 +28,11 @@ let package = Package(
             ],
             path: "Sources/HanlinExpoRuntime",
             swiftSettings: [
-                .interoperabilityMode(.Cxx)
+                .interoperabilityMode(.Cxx),
+                .unsafeFlags([
+                    "-Xcc", "-Wno-quoted-include-in-framework-header",
+                    "-Xcc", "-Wno-non-modular-include-in-framework-module"
+                ])
             ],
             linkerSettings: [
                 .linkedFramework("UIKit"),

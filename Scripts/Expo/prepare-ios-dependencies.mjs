@@ -145,7 +145,15 @@ async function prepare() {
           }
         }
       }
-      console.log('[HanlinExpo] Modular headers staged successfully.');
+
+      // Ensure nested fallback directory exists for $(SRCROOT)/Packages/HanlinExpoRuntime evaluation
+      const nestedFallbackDir = resolve(artifactsRoot, '..', 'Packages', 'HanlinExpoRuntime');
+      await mkdir(nestedFallbackDir, { recursive: true });
+      const nestedFallbackArtifacts = resolve(nestedFallbackDir, 'Artifacts');
+      await rm(nestedFallbackArtifacts, { recursive: true, force: true });
+      await mkdir(nestedFallbackArtifacts, { recursive: true });
+      await cp(modularHeadersRoot, resolve(nestedFallbackArtifacts, 'ReactModularHeaders'), { recursive: true });
+      console.log('[HanlinExpo] Modular headers and nested fallback staged successfully.');
     }
     await stageModularHeaders();
 
