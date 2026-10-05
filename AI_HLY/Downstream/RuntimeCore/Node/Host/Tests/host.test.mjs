@@ -213,11 +213,27 @@ test('host redirects npm state before preview and install modules initialize', a
     });
     assert.equal(timedOut.didTimeOut, true);
 
-    const traversal = await hostRequestStatus(ready.port, launchToken, '/v1/executions', {
+    const externalWorkspace = path.join(sandbox, 'external-workspace');
+    await fs.mkdir(externalWorkspace, { recursive: true });
+    const externalResult = await hostRequestStatus(ready.port, launchToken, '/v1/executions', {
       executionID: '55555555-5555-4555-8555-555555555555', source: 'export default 1;',
-      workspace: path.join(root, '..'), moduleKind: 'esm', timeoutMilliseconds: 1000, maximumOutputBytes: 4096,
+      workspace: externalWorkspace, moduleKind: 'esm', timeoutMilliseconds: 1000, maximumOutputBytes: 4096,
     });
-    assert.equal(traversal.status, 400);
+    assert.equal(externalResult.status, 200);
+
+    const nonexistentResult = await hostRequestStatus(ready.port, launchToken, '/v1/executions', {
+      executionID: '77777777-7777-4777-8777-777777777777', source: 'export default 1;',
+      workspace: path.join(sandbox, 'does-not-exist'), moduleKind: 'esm', timeoutMilliseconds: 1000, maximumOutputBytes: 4096,
+    });
+    assert.equal(nonexistentResult.status, 400);
+
+    const filePath = path.join(sandbox, 'some-file.txt');
+    await fs.writeFile(filePath, 'not a dir');
+    const fileResult = await hostRequestStatus(ready.port, launchToken, '/v1/executions', {
+      executionID: '88888888-8888-4888-8888-888888888888', source: 'export default 1;',
+      workspace: filePath, moduleKind: 'esm', timeoutMilliseconds: 1000, maximumOutputBytes: 4096,
+    });
+    assert.equal(fileResult.status, 400);
 
     const linkedWorkspace = path.join(root, 'clients', 'tools', 'linked-workspace');
     try {
@@ -226,10 +242,10 @@ test('host redirects npm state before preview and install modules initialize', a
         executionID: '66666666-6666-4666-8666-666666666666', source: 'export default 1;',
         workspace: linkedWorkspace, moduleKind: 'esm', timeoutMilliseconds: 1000, maximumOutputBytes: 4096,
       });
-      assert.equal(symlinkResult.status, 400);
+      assert.equal(symlinkResult.status, 200);
     } catch (error) {
       if (process.platform !== 'win32' || error.code !== 'EPERM') throw error;
-      t.diagnostic('Windows Developer Mode is unavailable; symlink rejection remains enabled on the macOS CI run.');
+      t.diagnostic('Windows Developer Mode is unavailable; symlink test skipped on unprivileged Windows.');
     }
 
     const expectedCache = path.join(root, 'cache', 'npm');

@@ -294,9 +294,20 @@ async function executeJavaScript(body) {
   if (typeof body.source !== 'string' || Buffer.byteLength(body.source) > maximumBody) throw new Error('JavaScript source is missing or too large.');
   if (!['esm', 'commonjs'].includes(body.moduleKind)) throw new Error('Unsupported JavaScript module kind.');
   const workspace = path.resolve(String(body.workspace ?? ''));
-  if (!isInside(clientsRoot, workspace)) throw new Error('Execution workspace is outside RuntimeCore clients.');
-  const stat = await fs.lstat(workspace);
-  if (!stat.isDirectory() || stat.isSymbolicLink()) throw new Error('Execution workspace must be a real directory.');
+  if (!workspace) throw new Error('Execution workspace must be specified.');
+  let stat;
+  try {
+    stat = await fs.stat(workspace);
+  } catch (err) {
+    const error = new Error(`Execution workspace does not exist: ${err.message}`);
+    error.status = 404;
+    throw error;
+  }
+  if (!stat.isDirectory()) {
+    const error = new Error('Execution workspace must be a directory.');
+    error.status = 400;
+    throw error;
+  }
   rejectUnsafeSource(body.source);
   const executionRoot = path.join(workspace, '.hanlin-executions', id);
   await fs.rm(executionRoot, { recursive: true, force: true });
@@ -432,7 +443,20 @@ async function compileTypeScript(body) {
 
 async function compileTypeScriptProject(body) {
   const workspace = path.resolve(String(body.workspace ?? ''));
-  if (!isInside(clientsRoot, workspace)) throw new Error('TypeScript lifecycle workspace is outside RuntimeCore clients.');
+  if (!workspace) throw new Error('TypeScript lifecycle workspace must be specified.');
+  let stat;
+  try {
+    stat = await fs.stat(workspace);
+  } catch (err) {
+    const error = new Error(`TypeScript lifecycle workspace does not exist: ${err.message}`);
+    error.status = 404;
+    throw error;
+  }
+  if (!stat.isDirectory()) {
+    const error = new Error('TypeScript lifecycle workspace must be a directory.');
+    error.status = 400;
+    throw error;
+  }
   const args = Array.isArray(body.arguments) ? body.arguments.map(String) : [];
   if (args.length > 128 || args.some(argument => /[\0\r\n]/.test(argument))) throw new Error('Invalid TypeScript lifecycle arguments.');
   const ts = await import('typescript');

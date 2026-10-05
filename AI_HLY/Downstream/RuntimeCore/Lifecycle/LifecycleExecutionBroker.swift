@@ -82,7 +82,7 @@ actor LifecycleExecutionBroker {
                 throw RuntimeCoreError.invalidRequest("Lifecycle execution requires explicit approval for this exact package version, integrity, and script hash.")
             }
         }
-        let workspace = try fileLayout.validatedDescendant(packageRoot, of: fileLayout.clients, allowRoot: false)
+        let workspace = try fileLayout.validatedWorkspace(packageRoot)
         for action in plan.actions {
             try Task.checkCancellation()
             switch action.kind {

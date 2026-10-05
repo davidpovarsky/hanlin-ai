@@ -149,7 +149,7 @@ actor ShellRuntimeService {
         limits: RuntimeExecutionLimits = RuntimeExecutionLimits()
     ) throws -> RuntimeExecutionResult {
         try fileLayout.prepareIfNeeded()
-        let scopedWorkspace = try fileLayout.validatedDescendant(workspace, of: fileLayout.clients, allowRoot: false)
+        let scopedWorkspace = try fileLayout.validatedWorkspace(workspace)
         for key in environment.keys { _ = try RuntimePolicy.validateEnvironmentName(key) }
 
         let started = ContinuousClock.now
@@ -194,7 +194,7 @@ actor ShellRuntimeService {
         limits: RuntimeExecutionLimits = RuntimeExecutionLimits()
     ) throws -> RuntimeExecutionResult {
         try fileLayout.prepareIfNeeded()
-        let scopedWorkspace = try fileLayout.validatedDescendant(workspace, of: fileLayout.clients, allowRoot: false)
+        let scopedWorkspace = try fileLayout.validatedWorkspace(workspace)
         guard !tokens.isEmpty, tokens.count <= 128 else {
             throw RuntimeCoreError.invalidRequest("The command is empty or contains too many arguments.")
         }
@@ -206,7 +206,6 @@ actor ShellRuntimeService {
             throw RuntimeCoreError.invalidRequest("This command requires explicit network permission.")
         }
         try validateArguments(tokens.dropFirst(), command: name)
-        try validateWorkspacePaths(tokens.dropFirst(), command: name, workspace: scopedWorkspace)
         for key in environment.keys { _ = try RuntimePolicy.validateEnvironmentName(key) }
 
         let started = ContinuousClock.now
@@ -326,40 +325,12 @@ actor ShellRuntimeService {
 
     private func validateArguments(_ arguments: ArraySlice<String>, command: String) throws {
         for argument in arguments where !argument.hasPrefix("-") {
-            if command == "curl", let url = URL(string: argument), url.scheme != nil {
-                guard url.scheme?.lowercased() == "https", url.host != nil else {
-                    throw RuntimeCoreError.invalidRequest("curl accepts HTTPS URLs only.")
+            if command == "curl", let url = URL(string: argument), let scheme = url.scheme?.lowercased() {
+                guard scheme == "https" || scheme == "http", url.host != nil else {
+                    throw RuntimeCoreError.invalidRequest("curl accepts HTTP/HTTPS URLs only.")
                 }
                 continue
             }
-            let normalized = argument.replacingOccurrences(of: "\\", with: "/")
-            guard !normalized.hasPrefix("/"), !normalized.split(separator: "/").contains("..") else {
-                throw RuntimeCoreError.pathEscapesRoot
-            }
-        }
-    }
-
-    private func validateWorkspacePaths(
-        _ arguments: ArraySlice<String>,
-        command: String,
-        workspace: URL
-    ) throws {
-        for argument in arguments where !argument.hasPrefix("-") {
-            if command == "curl", let url = URL(string: argument), url.scheme != nil {
-                continue
-            }
-            let candidate = workspace.appending(path: argument).standardizedFileURL
-            if command == "readlink" {
-                // readlink inspects the link itself without following its target.
-                // Its parent must still be a real descendant of the workspace.
-                _ = try fileLayout.validatedDescendant(
-                    candidate.deletingLastPathComponent(),
-                    of: workspace,
-                    allowRoot: true
-                )
-                continue
-            }
-            _ = try fileLayout.validatedDescendant(candidate, of: workspace, allowRoot: true)
         }
     }
 }

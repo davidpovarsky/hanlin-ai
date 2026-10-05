@@ -37,7 +37,7 @@ actor PythonRuntimeService {
 
     func execute(_ request: RuntimeExecutionRequest) throws -> RuntimeExecutionResult {
         if snapshotValue.state != .ready { _ = try prepare() }
-        let workspace = try fileLayout.validatedDescendant(request.workspace, of: fileLayout.clients, allowRoot: false)
+        let workspace = try fileLayout.validatedWorkspace(request.workspace)
         try FileManager.default.createDirectory(at: workspace, withIntermediateDirectories: true)
         let started = ContinuousClock.now
         snapshotValue.state = .executing

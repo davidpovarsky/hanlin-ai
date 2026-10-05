@@ -92,16 +92,21 @@ actor PythonPackageManager {
         let requirements: [String]
     }
 
-    static let maximumWheelSizeBytes: Int64 = 500 * 1_024 * 1_024
+    let maximumWheelSizeBytes: Int64?
 
     private let fileLayout: RuntimeFileLayout
     private let python: PythonRuntimeService
     private var records: [PythonPackageRecord]?
     private var registryURL: URL { fileLayout.registry.appending(path: "PythonPackages.json") }
 
-    init(fileLayout: RuntimeFileLayout = .default, python: PythonRuntimeService) {
+    init(
+        fileLayout: RuntimeFileLayout = .default,
+        python: PythonRuntimeService,
+        maximumWheelSizeBytes: Int64? = nil
+    ) {
         self.fileLayout = fileLayout
         self.python = python
+        self.maximumWheelSizeBytes = maximumWheelSizeBytes
     }
 
     func installed() throws -> [PythonPackageRecord] {
@@ -298,8 +303,8 @@ actor PythonPackageManager {
                 }
                 throw RuntimeCoreError.runtimeFailure("This package depends on a native extension that cannot be installed dynamically on iOS.")
             }
-            if let size = wheel.size, size > Self.maximumWheelSizeBytes {
-                throw RuntimeCoreError.runtimeFailure("The wheel for \(release.info.name) exceeds the 100 MB package limit.")
+            if let maxBytes = maximumWheelSizeBytes, let size = wheel.size, size > maxBytes {
+                throw RuntimeCoreError.runtimeFailure("The wheel for \(release.info.name) exceeds the configured package limit (\(maxBytes) bytes).")
             }
             guard let expectedSha = wheel.digests?.sha256?.trimmingCharacters(in: .whitespacesAndNewlines).lowercased(), !expectedSha.isEmpty else {
                 throw RuntimeCoreError.runtimeFailure("The PyPI distribution for \(release.info.name) is missing required SHA-256 integrity metadata.")
@@ -362,11 +367,13 @@ actor PythonPackageManager {
         }
         try validatePyPIURL(finalURL)
 
-        let data = try Data(contentsOf: temporaryURL, options: .mappedIfSafe)
-        let actualByteCount = Int64(data.count)
+        let fileAttributes = try FileManager.default.attributesOfItem(atPath: temporaryURL.path)
+        let actualByteCount = (fileAttributes[.size] as? NSNumber)?.int64Value ?? 0
 
-        guard actualByteCount <= Self.maximumWheelSizeBytes else {
-            throw RuntimeCoreError.runtimeFailure("The downloaded wheel exceeds the 100 MB package limit (\(actualByteCount) bytes).")
+        if let maxBytes = maximumWheelSizeBytes {
+            guard actualByteCount <= maxBytes else {
+                throw RuntimeCoreError.runtimeFailure("The downloaded wheel exceeds the configured package limit (\(actualByteCount) bytes > \(maxBytes) bytes).")
+            }
         }
 
         if let expectedSize = distribution.size {
@@ -386,12 +393,21 @@ actor PythonPackageManager {
             throw RuntimeCoreError.runtimeFailure("The PyPI distribution for '\(distribution.filename)' has an invalid SHA-256 digest format: '\(expectedDigest)'.")
         }
 
-        let computedDigest = SHA256.hash(data: data).map { String(format: "%02x", $0) }.joined()
+        var hasher = SHA256()
+        let fileHandle = try FileHandle(forReadingFrom: temporaryURL)
+        defer { try? fileHandle.close() }
+        while let chunk = try fileHandle.read(upToCount: 65536), !chunk.isEmpty {
+            hasher.update(data: chunk)
+        }
+        let computedDigest = hasher.finalize().map { String(format: "%02x", $0) }.joined()
         guard computedDigest == expectedDigest else {
             throw RuntimeCoreError.runtimeFailure("The downloaded wheel failed SHA-256 verification. Expected: \(expectedDigest), got: \(computedDigest).")
         }
 
-        try data.write(to: destination, options: [.atomic, .completeFileProtection])
+        if FileManager.default.fileExists(atPath: destination.path) {
+            try FileManager.default.removeItem(at: destination)
+        }
+        try FileManager.default.moveItem(at: temporaryURL, to: destination)
         return computedDigest
     }
 

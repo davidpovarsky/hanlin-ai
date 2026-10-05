@@ -172,7 +172,7 @@ actor NodeRuntimeService {
     }
 
     func executeJavaScript(_ request: RuntimeExecutionRequest, moduleKind: String = "esm") async throws -> RuntimeExecutionResult {
-        let workspace = try fileLayout.validatedDescendant(request.workspace, of: fileLayout.clients, allowRoot: false)
+        let workspace = try fileLayout.validatedWorkspace(request.workspace)
         let host = try await ensureRunning()
         snapshotValue.state = .executing
         snapshotValue.activeExecutionCount += 1
@@ -233,7 +233,7 @@ actor NodeRuntimeService {
     }
 
     func compileTypeScriptProject(workspace: URL, arguments: [String]) async throws -> TypeScriptProjectCompilationResult {
-        let scopedWorkspace = try fileLayout.validatedDescendant(workspace, of: fileLayout.clients, allowRoot: false)
+        let scopedWorkspace = try fileLayout.validatedWorkspace(workspace)
         let host = try await ensureRunning()
         let body = try JSONSerialization.data(withJSONObject: [
             "workspace": scopedWorkspace.path,

@@ -71,6 +71,19 @@ struct RuntimeFileLayout: Sendable {
         return try validatedDescendant(workspace, of: clientRoot, allowRoot: false)
     }
 
+    func validatedWorkspace(_ candidate: URL) throws -> URL {
+        guard candidate.isFileURL else { throw RuntimeCoreError.invalidPath }
+        let standardized = candidate.standardizedFileURL.resolvingSymlinksInPath()
+        var isDir: ObjCBool = false
+        guard FileManager.default.fileExists(atPath: standardized.path, isDirectory: &isDir) else {
+            throw RuntimeCoreError.invalidPath
+        }
+        guard isDir.boolValue else {
+            throw RuntimeCoreError.invalidPath
+        }
+        return standardized
+    }
+
     func validatedDescendant(_ candidate: URL, of allowedRoot: URL, allowRoot: Bool = false) throws -> URL {
         guard candidate.isFileURL, allowedRoot.isFileURL else { throw RuntimeCoreError.invalidPath }
         let rootURL = allowedRoot.standardizedFileURL.resolvingSymlinksInPath()
