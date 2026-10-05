@@ -1,0 +1,90 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Torah Photo Study Baseline Manifest",
+  "generatedAt": "2026-10-05T23:24:00Z",
+  "repositories": {
+    "hanlin": {
+      "repository": "davidpovarsky/hanlin-ai",
+      "baseBranch": "codex/agent-skills-embedded-results",
+      "baseSHA": "da8b729bc4ab477375499e192fcb6b2cb1af3755",
+      "workBranch": "feat/torah-photo-study",
+      "workSHA": "e6e222beecbb87be8a98059f143c7b3ddb297bcf",
+      "upstreamPolicy": "independent_fork"
+    },
+    "maktabah": {
+      "repository": "davidpovarsky/Maktabah",
+      "baseBranch": "fix/maktabah-search-detail-unification",
+      "baseSHA": "d2fe534f7dfd8bf14a183c93b9926dd394fb4d9f",
+      "workBranch": "feat/torah-photo-study-bridge",
+      "workSHA": "9df51ca0b74a387cf3d3b73ebf18c8188172c72b",
+      "upstreamPolicy": "minimal_change_adapters"
+    },
+    "torahInspectorKit": {
+      "repository": "davidpovarsky/TorahInspectorKit",
+      "pinnedSHA": "b8f71e084bcaa1c60a8e3583034328830aa27fb5",
+      "modules": ["TorahInspectorCore", "TorahInspectorUI"]
+    },
+    "torahLibraryKit": {
+      "type": "shared_package",
+      "path": "Packages/TorahLibraryKit",
+      "platforms": ["iOS 17+", "macOS 14+"],
+      "swiftVersion": "6.0"
+    }
+  },
+  "toolchain": {
+    "swift": {
+      "version": "6.3.3",
+      "platform": "windows-x86_64",
+      "darwinAuthority": "Xcode 16.x / iOS SDK 18.x"
+    },
+    "python": {
+      "hostVersion": "3.12.x",
+      "embeddedRuntime": "CPython 3.11 / PythonKit iOS adapter"
+    },
+    "nodeAndJS": {
+      "embeddedEngine": "QuickJS / JavaScriptCore",
+      "hostEngine": "Node.js 22 LTS"
+    },
+    "rust": {
+      "engine": "Tantivy 0.22",
+      "target": "aarch64-apple-ios"
+    }
+  },
+  "targetsAndSchemes": {
+    "hanlin": {
+      "target": "AI_HLY",
+      "scheme": "AI_HLY",
+      "bundleIdentifier": "com.davidpovarsky.hanlin",
+      "entitlements": {
+        "com.apple.security.application-groups": ["group.com.davidpovarsky.itorah"],
+        "cameraUsageDescription": "צילום דפי ספרים לזיהוי ולימוד מועשר",
+        "photoLibraryUsageDescription": "בחירת תמונות מתוך הגלריה לזיהוי ולימוד"
+      }
+    },
+    "maktabah": {
+      "target": "Maktabah-iOS",
+      "scheme": "Maktabah-iOS",
+      "bundleIdentifier": "com.davidpovarsky.maktabah",
+      "entitlements": {
+        "com.apple.security.application-groups": ["group.com.davidpovarsky.itorah"],
+        "urlSchemes": ["maktabah", "itorah"]
+      }
+    }
+  },
+  "featureFlags": {
+    "torah_photo_study_enabled": true,
+    "execute_skill_resource_enabled": true,
+    "remote_mcp_enabled": true,
+    "yochai_preset_enabled": true,
+    "app_group_shared_storage_enabled": true,
+    "inline_instruction_loading_fixed": true
+  },
+  "storageAndIndexes": {
+    "appGroup": "group.com.davidpovarsky.itorah",
+    "sqliteCatalog": "seforim.db",
+    "otzariaLibraryDir": "Otzaria/",
+    "manifestFile": "manifest.json",
+    "tantivyIndexDir": "Otzaria/tantivy_index/",
+    "zayitIndexDir": "Otzaria/zayit_index/"
+  }
+}
