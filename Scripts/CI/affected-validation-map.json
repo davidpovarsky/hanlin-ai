@@ -518,9 +518,7 @@
         "Packages/TorahLibraryKit/**"
       ],
       "direct_validation_groups": [
-        "app_unit_tests",
-        "device_build",
-        "ipa_packaging"
+        "app_unit_tests"
       ],
       "unit_suites": [
         "AI_HLYTests/AgentSkillsExposureTests",

@@ -136,9 +136,34 @@ def main():
             print(f"  [ERROR] {e}")
         print("\nGATE STATUS: FAILED")
         sys.exit(1)
-    else:
-        print("\nGATE STATUS: PASSED (All records valid and schema-compliant)")
+
+    print("=" * 60)
+    print("Release Gate Evaluation")
+    print("=" * 60)
+
+    # 1. EVIDENCE_SCHEMA_VALID
+    schema_valid = len(errors) == 0
+    print(f"EVIDENCE_SCHEMA_VALID:   {'PASSED' if schema_valid else 'FAILED'}")
+
+    # 2. PARTIAL_ACCEPTANCE
+    deterministic_fail = any(r[1].get("status") == "FAIL" and r[1].get("tier") in ["T1", "T2"] for r in records)
+    any_fail = counts["FAIL"] > 0
+    partial_passed = schema_valid and not any_fail and counts["PASS"] >= 60
+    print(f"PARTIAL_ACCEPTANCE:      {'PASSED' if partial_passed else 'FAILED'}")
+
+    # 3. RELEASE_GATE_PASSED
+    if schema_valid and not any_fail and counts["BLOCKED"] == 0:
+        print("RELEASE_GATE_PASSED:     PASSED")
         sys.exit(0)
+    elif schema_valid and not any_fail and counts["BLOCKED"] > 0:
+        print(f"RELEASE_GATE_PASSED:     BLOCKED ({counts['BLOCKED']} tests blocked on physical iPad / remote credentials; 0 FAIL)")
+        if args.allow_blocked:
+            sys.exit(0)
+        else:
+            sys.exit(2)
+    else:
+        print("RELEASE_GATE_PASSED:     FAILED")
+        sys.exit(1)
 
 
 if __name__ == "__main__":
