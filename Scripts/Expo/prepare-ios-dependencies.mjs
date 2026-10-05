@@ -280,6 +280,34 @@ async function prepare() {
         console.log('[HanlinExpo] Created modular jsi.framework in ModularFrameworks.');
       }
 
+      // Create modular react.framework in ModularFrameworks providing unified react/ and React headers
+      const reactFwDir = resolve(modularFwsRoot, 'react.framework');
+      const reactHeadersDir = resolve(reactFwDir, 'Headers');
+      const reactModulesDir = resolve(reactFwDir, 'Modules');
+      await mkdir(reactHeadersDir, { recursive: true });
+      await mkdir(reactModulesDir, { recursive: true });
+
+      const rnReactSource = resolve(rnHeaders, 'react');
+      if (existsSync(rnReactSource)) {
+        await cp(rnReactSource, reactHeadersDir, { recursive: true });
+        const nestedReact = resolve(reactHeadersDir, 'react');
+        if (!existsSync(nestedReact)) {
+          await cp(rnReactSource, nestedReact, { recursive: true });
+        }
+      }
+
+      const reactFwSource = resolve(artifactsRoot, 'React.xcframework', slice, 'React.framework', 'Headers');
+      if (existsSync(reactFwSource)) {
+        await cp(reactFwSource, reactHeadersDir, { recursive: true });
+      }
+
+      const reactMapSource = resolve(artifactsRoot, 'React.xcframework', slice, 'React.framework', 'Modules', 'module.modulemap');
+      if (existsSync(reactMapSource)) {
+        await cp(reactMapSource, resolve(reactModulesDir, 'module.modulemap'));
+      }
+      count++;
+      console.log('[HanlinExpo] Created modular react.framework in ModularFrameworks.');
+
       // Strip dummy cxxstableapi guards that reference non-existent react.framework headers
       for (const fw of await readdir(modularFwsRoot, { withFileTypes: true })) {
         if (!fw.isDirectory()) continue;
