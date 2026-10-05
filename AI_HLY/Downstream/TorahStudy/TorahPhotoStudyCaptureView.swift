@@ -1,6 +1,7 @@
 import SwiftUI
 import PhotosUI
 import UniformTypeIdentifiers
+import TorahLibraryKit
 
 public struct TorahPhotoStudyCaptureView: View {
     @Environment(\.dismiss) private var dismiss
@@ -55,6 +56,11 @@ public struct TorahPhotoStudyCaptureView: View {
             }
             .sheet(isPresented: $showPhotoPicker) {
                 PhotoPicker(selectedImage: $selectedImage)
+            }
+            .sheet(isPresented: $showCamera) {
+                #if canImport(UIKit)
+                CameraPicker(selectedImage: $selectedImage)
+                #endif
             }
             .sheet(isPresented: $isEditingTranscription) {
                 transcriptionEditorSheet
@@ -170,9 +176,14 @@ public struct TorahPhotoStudyCaptureView: View {
     }
 
     private var bottomActionToolbar: some View {
-        HStack(spacing: 16) {
+        HStack(spacing: 12) {
             Button(action: { showPhotoPicker = true }) {
-                Label(String(localized: "החלף תמונה"), systemImage: "photo")
+                Label(String(localized: "גלריה"), systemImage: "photo")
+            }
+            .buttonStyle(.bordered)
+
+            Button(action: { showCamera = true }) {
+                Label(String(localized: "צלם"), systemImage: "camera")
             }
             .buttonStyle(.bordered)
 
@@ -211,46 +222,152 @@ public struct TorahPhotoStudyCaptureView: View {
     }
 
     private func processIdentification() {
-        guard selectedImage != nil else { return }
+        #if canImport(UIKit)
+        guard let image = selectedImage else { return }
+        guard let imageData = image.jpegData(compressionQuality: 0.9) ?? image.pngData() else { return }
         isProcessing = true
+        identificationStatus = nil
+        identifiedBookTitle = nil
+        identifiedLocator = nil
 
         Task {
-            // Emulate OCR and identify excerpt
-            try? await Task.sleep(nanoseconds: 500_000_000)
-            await MainActor.run {
-                ocrText = "מאימתי קורין את שמע בערבין משעה שהכהנים נכנסים לאכול בתרומתן"
-                identifiedBookTitle = "ברכות דף ב עמוד א"
-                identifiedLocator = "otzaria:bavli:Berakhot:canonical_ref:Berakhot 2a"
-                identificationStatus = "מאומת"
-                isProcessing = false
+            do {
+                let region = (
+                    x: Double(cropRect.origin.x),
+                    y: Double(cropRect.origin.y),
+                    width: Double(cropRect.size.width),
+                    height: Double(cropRect.size.height)
+                )
+                let ocrResult = try await TorahOCRService.performLocalOCR(imageData: imageData, region: region)
+                let lines = ocrResult.lines.enumerated().map { (idx, item) in
+                    OCRLine(
+                        lineID: "l\(idx + 1)",
+                        rawText: item.text,
+                        boundingBox: OCRBoundingBox(x: item.box.x, y: item.box.y, width: item.box.width, height: item.box.height)
+                    )
+                }
+
+                let evidence = OCREvidence(
+                    imageHash: "img_\(UUID().uuidString.prefix(8))",
+                    imageWidth: Double(image.size.width),
+                    imageHeight: Double(image.size.height),
+                    providerID: "apple_vision_local",
+                    modelRevision: "v3",
+                    rawText: ocrResult.rawText,
+                    lines: lines
+                )
+
+                let result = await TorahLibraryCoordinator.shared.identifyExcerpt(evidence: evidence)
+                await MainActor.run {
+                    ocrText = ocrResult.rawText
+                    if let top = result.selectedCandidate {
+                        identifiedBookTitle = top.workTitle
+                        identifiedLocator = top.locator.persistenceKey
+                        identificationStatus = result.status == .verified ? "מאומת" : "זוהה (סבירות נמוכה/חלופית)"
+                    } else {
+                        identificationStatus = "לא נמצא מקור מתאים בספריה"
+                    }
+                    isProcessing = false
+                }
+            } catch {
+                await MainActor.run {
+                    identificationStatus = "שגיאה בפענוח: \(error.localizedDescription)"
+                    isProcessing = false
+                }
             }
         }
+        #endif
     }
 
     private func processIdentificationWithText(_ text: String) {
+        let trimmed = text.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !trimmed.isEmpty else { return }
         isProcessing = true
+
         Task {
-            try? await Task.sleep(nanoseconds: 300_000_000)
+            let lines = trimmed.components(separatedBy: "\n").filter { !$0.isEmpty }.enumerated().map { (idx, line) in
+                OCRLine(lineID: "l\(idx + 1)", rawText: line, boundingBox: .full)
+            }
+            let evidence = OCREvidence(
+                imageHash: "img_user_edited_\(UUID().uuidString.prefix(8))",
+                imageWidth: 1024,
+                imageHeight: 1400,
+                providerID: "user_corrected",
+                modelRevision: "v1",
+                rawText: trimmed,
+                lines: lines
+            )
+            let result = await TorahLibraryCoordinator.shared.identifyExcerpt(evidence: evidence)
             await MainActor.run {
-                identifiedBookTitle = "ברכות דף ב עמוד א"
-                identifiedLocator = "otzaria:bavli:Berakhot:canonical_ref:Berakhot 2a"
-                identificationStatus = "מאומת (לאחר תיקון)"
+                if let top = result.selectedCandidate {
+                    identifiedBookTitle = top.workTitle
+                    identifiedLocator = top.locator.persistenceKey
+                    identificationStatus = result.status == .verified ? "מאומת (לאחר תיקון)" : "זוהה (לאחר תיקון)"
+                } else {
+                    identificationStatus = "לא נמצא מקור מתאים עבור הטקסט המתוקן"
+                }
                 isProcessing = false
             }
         }
     }
 
     private func openHere() {
-        // Navigates reader in Hanlin
+        guard let locStr = identifiedLocator,
+              let locator = SourceLocator.parse(persistenceKey: locStr) else { return }
+        let link = TorahStudyDeepLink(action: .open, locator: locator, workTitle: identifiedBookTitle, highlightText: ocrText)
+        guard let url = link.url(scheme: "hanlin") else { return }
+        #if canImport(UIKit)
+        UIApplication.shared.open(url)
+        #endif
     }
 
     private func openInMaktabah() {
-        guard let url = URL(string: "maktabah://study?action=open&provider=otzaria&corpus=bavli&work=Berakhot&pos_kind=canonical_ref&pos_val=Berakhot%202a") else { return }
+        guard let locStr = identifiedLocator,
+              let locator = SourceLocator.parse(persistenceKey: locStr) else { return }
+        let link = TorahStudyDeepLink(action: .open, locator: locator, workTitle: identifiedBookTitle, highlightText: ocrText)
+        guard let url = link.url(scheme: "maktabah") else { return }
         #if canImport(UIKit)
         UIApplication.shared.open(url)
         #endif
     }
 }
+
+#if canImport(UIKit)
+struct CameraPicker: UIViewControllerRepresentable {
+    @Binding var selectedImage: UIImage?
+
+    func makeUIViewController(context: Context) -> UIImagePickerController {
+        let picker = UIImagePickerController()
+        if UIImagePickerController.isSourceTypeAvailable(.camera) {
+            picker.sourceType = .camera
+        }
+        picker.delegate = context.coordinator
+        return picker
+    }
+
+    func updateUIViewController(_ uiViewController: UIImagePickerController, context: Context) {}
+
+    func makeCoordinator() -> Coordinator {
+        Coordinator(self)
+    }
+
+    class Coordinator: NSObject, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+        let parent: CameraPicker
+        init(_ parent: CameraPicker) { self.parent = parent }
+
+        func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+            picker.dismiss(animated: true)
+            if let image = info[.originalImage] as? UIImage {
+                self.parent.selectedImage = image
+            }
+        }
+
+        func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+            picker.dismiss(animated: true)
+        }
+    }
+}
+#endif
 
 struct PhotoPicker: UIViewControllerRepresentable {
     @Binding var selectedImage: UIImage?

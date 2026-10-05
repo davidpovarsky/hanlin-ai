@@ -124,6 +124,18 @@ public actor TorahSourceResolver {
         // Sort descending by score
         scoredCandidates.sort { $0.overallScore > $1.overallScore }
 
+        // Deduplicate candidates that point to the exact same passage from different engines
+        var uniqueCandidates: [ExcerptCandidate] = []
+        var seenKeys = Set<String>()
+        for candidate in scoredCandidates {
+            let key = "\(candidate.locator.corpusID):\(candidate.locator.workKey):\(candidate.locator.positionValue)"
+            if !seenKeys.contains(key) {
+                seenKeys.insert(key)
+                uniqueCandidates.append(candidate)
+            }
+        }
+        scoredCandidates = uniqueCandidates
+
         guard let top = scoredCandidates.first, top.overallScore >= 0.50 else {
             return IdentificationResult(
                 status: .notFound,

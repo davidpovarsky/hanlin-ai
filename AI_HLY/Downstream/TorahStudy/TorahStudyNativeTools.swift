@@ -74,26 +74,60 @@ public struct TorahOCRExcerptTool: NativeTool {
             let evidenceID = "ocr_\(UUID().uuidString.prefix(8))"
             let createdAt = ISO8601DateFormatter().string(from: Date())
 
-            // Try to resolve attachment handle or test fixture
-            var rawText = ""
-            var linesData: [[String: Any]] = []
+            // Resolve real image data from attachment_handle
+            let imageData: Data
+            if FileManager.default.fileExists(atPath: handle) {
+                imageData = try Data(contentsOf: URL(fileURLWithPath: handle))
+            } else if let url = URL(string: handle), url.isFileURL, FileManager.default.fileExists(atPath: url.path) {
+                imageData = try Data(contentsOf: url)
+            } else if let appSupport = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first {
+                let candidate = appSupport.appendingPathComponent("Attachments").appendingPathComponent(handle)
+                if FileManager.default.fileExists(atPath: candidate.path) {
+                    imageData = try Data(contentsOf: candidate)
+                } else {
+                    return RuntimeToolSupport.failure(
+                        HanlinHostServiceError.invalidArguments("Unable to resolve image attachment handle '\(handle)': file not found."),
+                        title: "Attachment Not Found"
+                    )
+                }
+            } else {
+                return RuntimeToolSupport.failure(
+                    HanlinHostServiceError.invalidArguments("Unable to resolve image attachment handle '\(handle)': file not found."),
+                    title: "Attachment Not Found"
+                )
+            }
 
+            var regionTuple: (x: Double, y: Double, width: Double, height: Double)? = nil
             if let regionDict = arguments["region"] as? [String: Any],
                let x = regionDict["x"] as? Double,
                let y = regionDict["y"] as? Double,
                let w = regionDict["width"] as? Double,
                let h = regionDict["height"] as? Double {
-                // Region bounded
-                _ = (x, y, w, h)
+                regionTuple = (x: x, y: y, width: w, height: h)
             }
 
-            // In test environment or attachment resolution
-            let linesPayload: [[String: Any]] = [
-                ["line_id": "l1", "text": "מאימתי קורין את שמע בערבין", "confidence": 0.98],
-                ["line_id": "l2", "text": "משעה שהכהנים נכנסים לאכול בתרומתן", "confidence": 0.95]
-            ]
-            rawText = linesPayload.compactMap { $0["text"] as? String }.joined(separator: "\n")
-            linesData = linesPayload
+            let ocrResult = try await TorahOCRService.performLocalOCR(imageData: imageData, region: regionTuple)
+            let rawText = ocrResult.rawText
+            let linesData: [[String: Any]] = ocrResult.lines.enumerated().map { (idx, item) in
+                [
+                    "line_id": "l\(idx + 1)",
+                    "text": item.text,
+                    "confidence": item.confidence,
+                    "bounding_box": [
+                        "x": item.box.x,
+                        "y": item.box.y,
+                        "width": item.box.width,
+                        "height": item.box.height
+                    ]
+                ]
+            }
+
+            guard !rawText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
+                return RuntimeToolSupport.failure(
+                    HanlinHostServiceError.invalidArguments("Local OCR produced empty text for attachment '\(handle)'."),
+                    title: "OCR Produced No Text"
+                )
+            }
 
             let evidenceDict: [String: Any] = [
                 "evidence_id": evidenceID,
@@ -198,18 +232,23 @@ public struct TorahIdentifyExcerptTool: NativeTool {
                     HanlinHostServiceError.invalidArguments("Transcription text is empty."),
                     title: "Empty Transcription"
                 )
+            }
+
             let evidenceLines = rawText.components(separatedBy: "\n").filter { !$0.isEmpty }.map {
                 OCRLine(lineID: UUID().uuidString.prefix(6).description, rawText: $0, boundingBox: .full)
             }
             let ocrEvidence = OCREvidence(
                 evidenceID: (arguments["evidence_id"] as? String) ?? "ev_\(UUID().uuidString.prefix(8))",
+                imageHash: "img_\(UUID().uuidString.prefix(8))",
+                imageWidth: 1024,
+                imageHeight: 1400,
+                providerID: "apple_vision_local",
+                modelRevision: "v3",
                 rawText: rawText,
                 lines: evidenceLines
             )
 
-            let sefariaEngine = SefariaLibraryProvider()
-            let resolver = TorahSourceResolver(searchEngines: [sefariaEngine])
-            let identification = await resolver.resolve(evidence: ocrEvidence)
+            let identification = await TorahLibraryCoordinator.shared.identifyExcerpt(evidence: ocrEvidence)
 
             let statusStr = identification.status.rawValue
             if let top = identification.selectedCandidate {
@@ -313,7 +352,9 @@ public struct TorahSearchTextTool: NativeTool {
             let query = try NativeToolJSON.strictRequiredString(arguments, "query")
             let limit = try NativeToolJSON.strictInt(arguments, "limit", default: 10, range: 1...50)
 
-            let hits = (try? await SefariaLibraryProvider().search(query: query, limit: limit)) ?? []
+            let providersList = (arguments["providers"] as? [String]) ?? []
+            let mode = (arguments["mode"] as? String) ?? "exact"
+            let hits = (try? await TorahLibraryCoordinator.shared.search(query: query, providers: providersList, mode: mode, limit: limit)) ?? []
             if hits.isEmpty {
                 let modelText = "No hits found for: \"\(query)\" in enabled libraries."
                 return NativeToolResult(modelText: modelText, userText: "No results found for \"\(query)\".")
@@ -396,7 +437,7 @@ public struct TorahGetSectionTool: NativeTool {
                 )
             }
 
-            let studySource = try? await SefariaLibraryProvider().getSection(locator: locator)
+            let studySource = try? await TorahLibraryCoordinator.shared.getSection(locator: locator)
             let text = studySource?.primaryText ?? "Section text not available offline."
             let version = studySource?.versionMetadata?.versionTitle ?? "Standard Canonical Edition"
 
@@ -485,7 +526,7 @@ public struct TorahGetLinksTool: NativeTool {
                 )
             }
 
-            let linkedSources = (try? await SefariaLibraryProvider().getLinks(locator: locator, type: filterType)) ?? []
+            let linkedSources = (try? await TorahLibraryCoordinator.shared.getLinks(locator: locator, type: filterType)) ?? []
             let linkStrings: [String]
             if !linkedSources.isEmpty {
                 linkStrings = linkedSources.map { "- \($0.sourceTitle) (\($0.category)): \($0.primaryText.prefix(120))..." }
@@ -561,20 +602,43 @@ public struct TorahGetTopicsTool: NativeTool {
             )
             let locStr = try NativeToolJSON.strictRequiredString(arguments, "locator")
 
-            let topics = ["קריאת שמע (Shema)", "זמני תפילה (Prayer Times)", "טהרת כהנים (Priestly Purity)"]
-            let modelText = "Topics for \(locStr):\n- " + topics.joined(separator: "\n- ")
+            let locator: SourceLocator
+            if let parsed = SourceLocator.parse(persistenceKey: locStr) {
+                locator = parsed
+            } else {
+                locator = SourceLocator(
+                    providerID: "otzaria",
+                    corpusID: "canonical",
+                    workKey: locStr,
+                    positionKind: .canonicalRef,
+                    positionValue: locStr
+                )
+            }
+
+            let topicObjects = (try? await TorahLibraryCoordinator.shared.getTopics(locator: locator)) ?? []
+            let topicNames = topicObjects.map { $0.topicTitle }
+
+            let modelText: String
+            let bodyText: String
+            if !topicNames.isEmpty {
+                modelText = "Topics for \(locStr):\n- " + topicNames.joined(separator: "\n- ")
+                bodyText = topicNames.joined(separator: ", ")
+            } else {
+                modelText = "No thematic topics currently indexed for: \(locStr)."
+                bodyText = "No thematic topics available for this passage."
+            }
 
             let block = NativeUIBlock(
                 type: .card,
-                title: "Associated Topics",
+                title: "Associated Topics (\(topicNames.count))",
                 subtitle: locStr,
-                body: topics.joined(separator: ", "),
+                body: bodyText,
                 systemImage: "tag"
             )
 
             return NativeToolResult(
                 modelText: modelText,
-                userText: "Retrieved \(topics.count) topics for \(locStr).",
+                userText: topicNames.isEmpty ? "No topics found for \(locStr)." : "Retrieved \(topicNames.count) topics for \(locStr).",
                 uiBlocks: [block]
             )
         } catch {

@@ -166,8 +166,8 @@ struct TorahLibraryKitTests {
         #expect(parsed?.requestID == "req_001")
     }
 
-    @Test("Resolver discovers source from corpus using OCR text only with no expected title or ref")
-    func testResolverDiscoversSourceFromCorpusUsingOCRTextOnly() async {
+    @Test("Resolver selects correct candidate from mock corpus")
+    func testResolverSelectsCorrectCandidateFromMockCorpus() async {
         let library = MockTorahLibraryProvider(providerID: "seforim_corpus", displayName: "Torah Library")
         
         library.register(
@@ -221,6 +221,56 @@ struct TorahLibraryKitTests {
         #expect(result.selectedCandidate?.locator.workKey == "Peah")
         #expect(result.selectedCandidate?.locator.positionValue == "Peah 1:1")
         #expect(result.selectedCandidate?.workTitle == "משנה מסכת פאה פרק א משנה א")
+        #expect((result.selectedCandidate?.scoreComponents.lexicalCoverage ?? 0) >= 0.8)
+    }
+
+    @Test("Resolver discovers source from actual Otzaria SQLite corpus file using OCR text only")
+    func testResolverDiscoversSourceFromRealOtzariaCorpus() async throws {
+        var dbPath = ""
+        let possiblePaths = [
+            OtzariaLibraryProvider.fileSystemPath(for: URL(fileURLWithPath: #file).deletingLastPathComponent().deletingLastPathComponent().appendingPathComponent("Fixtures/TorahPhotoStudy/test_seforim.db")),
+            OtzariaLibraryProvider.fileSystemPath(for: URL(fileURLWithPath: #file).deletingLastPathComponent().deletingLastPathComponent().deletingLastPathComponent().deletingLastPathComponent().deletingLastPathComponent().appendingPathComponent("Tests/Fixtures/TorahPhotoStudy/test_seforim.db")),
+            "C:/Users/DAVID/Code/hanlin-torah-photo-study/Tests/Fixtures/TorahPhotoStudy/test_seforim.db"
+        ]
+        for p in possiblePaths {
+            if FileManager.default.fileExists(atPath: p) {
+                dbPath = p
+                break
+            }
+        }
+        #expect(!dbPath.isEmpty, "Actual SQLite database file must exist at one of candidate paths")
+        let dbURL = URL(fileURLWithPath: dbPath)
+
+        let otzariaProvider = OtzariaLibraryProvider(databaseURL: dbURL)
+        #expect(otzariaProvider.isAvailable)
+
+        let ocrInput = OCREvidence(
+            imageHash: "img_real_sqlite_pirkei_avot_01",
+            imageWidth: 1024,
+            imageHeight: 1400,
+            providerID: "apple_vision_local",
+            modelRevision: "v3",
+            rawText: "משה קיבל תורה מסיני ומסרה ליהושע ויהושע לזקנים",
+            lines: [
+                OCRLine(lineID: "l1", rawText: "משה קיבל תורה מסיני", boundingBox: .full),
+                OCRLine(lineID: "l2", rawText: "ומסרה ליהושע ויהושע לזקנים", boundingBox: .full)
+            ]
+        )
+
+        let coordinator = TorahLibraryCoordinator(
+            otzariaProvider: otzariaProvider,
+            zayitProvider: ZayitLibraryProvider(databaseURL: dbURL)
+        )
+
+        let result = await coordinator.identifyExcerpt(evidence: ocrInput, allowRemoteFallback: false)
+
+        #expect(result.status == .verified)
+        #expect(result.selectedCandidate != nil)
+        #expect(result.selectedCandidate?.locator.providerID == "otzaria")
+        #expect(result.selectedCandidate?.workTitle.contains("אבות") == true)
+        
+        let section = try await coordinator.getSection(locator: result.selectedCandidate!.locator)
+        #expect(section.primaryText.contains("משה קיבל תורה מסיני"))
         #expect((result.selectedCandidate?.scoreComponents.lexicalCoverage ?? 0) >= 0.8)
     }
 }
