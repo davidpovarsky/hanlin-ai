@@ -1,0 +1,26 @@
+name: torah-photo-study
+display_name: "Torah Photo Study"
+description: "Study photographed Hebrew and rabbinic book excerpts with source identification and enrichment."
+instructions: "Follow instructions in SKILL.md. Use only installed canonical Torah tools."
+tools:
+  - type: function
+    function:
+      name: torah_ocr_excerpt
+  - type: function
+    function:
+      name: torah_identify_excerpt
+  - type: function
+    function:
+      name: torah_search_text
+  - type: function
+    function:
+      name: torah_get_section
+  - type: function
+    function:
+      name: torah_get_links
+  - type: function
+    function:
+      name: torah_get_topics
+  - type: function
+    function:
+      name: torah_open_source
