@@ -131,81 +131,6 @@ async function prepare() {
     }
     await stageModularHeaders();
 
-    async function stageModularFrameworks() {
-      console.log('[HanlinExpo] Staging modular header frameworks in ModularFrameworks...');
-      const modularFwsRoot = resolve(artifactsRoot, 'ModularFrameworks');
-      await rm(modularFwsRoot, { recursive: true, force: true });
-      await mkdir(modularFwsRoot, { recursive: true });
-
-      const slice = 'ios-arm64_x86_64-simulator';
-      const rnHeaders = resolve(artifactsRoot, 'ReactNativeHeaders.xcframework', slice, 'Headers');
-      const mapPath = resolve(rnHeaders, 'module.modulemap');
-
-      if (!existsSync(mapPath)) {
-        console.warn('[HanlinExpo] Warning: ReactNativeHeaders module.modulemap not found');
-        return;
-      }
-
-      const content = await readFile(mapPath, 'utf8');
-      const moduleRegex = /module\s+([A-Za-z0-9_]+)\s*\{([^}]+)\}/g;
-      let m;
-      let count = 0;
-
-      while ((m = moduleRegex.exec(content)) !== null) {
-        const modName = m[1];
-        if (modName === 'ReactNativeHeaders_react') {
-          continue;
-        }
-        const body = m[2];
-        const headerMatches = [...body.matchAll(/header\s+"([^"]+)"/g)].map(x => x[1]);
-
-        if (headerMatches.length === 0) continue;
-
-        const fwDir = resolve(modularFwsRoot, `${modName}.framework`);
-        const headersDir = resolve(fwDir, 'Headers');
-        const modulesDir = resolve(fwDir, 'Modules');
-
-        await mkdir(headersDir, { recursive: true });
-        await mkdir(modulesDir, { recursive: true });
-
-        // Copy each header explicitly declared in the module
-        for (const h of headerMatches) {
-          const srcFile = resolve(rnHeaders, h);
-          const fileName = basename(h);
-          const dstFile = resolve(headersDir, fileName);
-          if (existsSync(srcFile)) {
-            await cp(srcFile, dstFile);
-          }
-        }
-
-        // Write exact modulemap matching React Native declarations
-        const moduleMapLines = [
-          `framework module ${modName} {`
-        ];
-        for (const h of headerMatches) {
-          moduleMapLines.push(`    header "${basename(h)}"`);
-        }
-        moduleMapLines.push('    export *');
-        moduleMapLines.push('}');
-        moduleMapLines.push('');
-
-        await writeFile(resolve(modulesDir, 'module.modulemap'), moduleMapLines.join('\n'), 'utf8');
-        count++;
-      }
-
-      console.log(`[HanlinExpo] Created ${count} modular frameworks from ReactNativeHeaders modulemap.`);
-
-      // Ensure nested fallback directory exists for $(SRCROOT)/Packages/HanlinExpoRuntime evaluation
-      const nestedFallbackDir = resolve(artifactsRoot, '..', 'Packages', 'HanlinExpoRuntime');
-      await mkdir(nestedFallbackDir, { recursive: true });
-      const nestedFallbackArtifacts = resolve(nestedFallbackDir, 'Artifacts');
-      await rm(resolve(nestedFallbackArtifacts, 'ModularFrameworks'), { recursive: true, force: true });
-      await mkdir(nestedFallbackArtifacts, { recursive: true });
-      await cp(modularFwsRoot, resolve(nestedFallbackArtifacts, 'ModularFrameworks'), { recursive: true });
-      console.log('[HanlinExpo] ModularFrameworks nested fallback staged successfully.');
-    }
-    await stageModularFrameworks();
-
     async function patchModuleMaps() {
       console.log('[HanlinExpo] Aligning Clang modulemaps across xcframeworks...');
 
@@ -221,18 +146,19 @@ async function prepare() {
             const oldReactCommon = /module ReactCommon \{[\s\S]*?\}/;
             const newReactCommon = `module ReactCommon {
   header "ReactCommon/CallInvoker.h"
+  header "ReactCommon/SchedulerPriority.h"
   header "ReactCommon/RuntimeExecutor.h"
+  header "ReactCommon/RuntimeExecutorSyncUIThreadUtils.h"
   header "ReactCommon/TurboModule.h"
   header "ReactCommon/TurboModuleBinding.h"
   header "ReactCommon/RCTTurboModule.h"
   header "ReactCommon/RCTTurboModuleManager.h"
   header "ReactCommon/RCTPerformanceLoggerUtils.h"
   header "ReactCommon/RCTTurboModuleWithJSIBindings.h"
-  header "ReactCommon/RCTHost.h"
-  header "ReactCommon/RCTInstance.h"
+  header "ReactCommon/TurboModuleWithJSIBindings.h"
   export *
 }`;
-            if (content.match(oldReactCommon) && !content.includes('CallInvoker.h')) {
+            if (content.match(oldReactCommon) && !content.includes('SchedulerPriority.h')) {
               content = content.replace(oldReactCommon, newReactCommon);
               await writeFile(mapPath, content, 'utf8');
               console.log(`[HanlinExpo] Patched ReactCommon in ${slice.name}/Headers/module.modulemap`);
@@ -295,6 +221,92 @@ async function prepare() {
       }
     }
     await patchModuleMaps();
+
+    async function stageModularFrameworks() {
+      console.log('[HanlinExpo] Staging modular header frameworks in ModularFrameworks...');
+      const modularFwsRoot = resolve(artifactsRoot, 'ModularFrameworks');
+      await rm(modularFwsRoot, { recursive: true, force: true });
+      await mkdir(modularFwsRoot, { recursive: true });
+
+      const slice = 'ios-arm64_x86_64-simulator';
+      const rnHeaders = resolve(artifactsRoot, 'ReactNativeHeaders.xcframework', slice, 'Headers');
+      const mapPath = resolve(rnHeaders, 'module.modulemap');
+
+      if (!existsSync(mapPath)) {
+        console.warn('[HanlinExpo] Warning: ReactNativeHeaders module.modulemap not found');
+        return;
+      }
+
+      const content = await readFile(mapPath, 'utf8');
+      const moduleRegex = /module\s+([A-Za-z0-9_]+)\s*\{([^}]+)\}/g;
+      let m;
+      let count = 0;
+
+      while ((m = moduleRegex.exec(content)) !== null) {
+        const modName = m[1];
+        if (modName === 'ReactNativeHeaders_react') {
+          continue;
+        }
+        const body = m[2];
+        const headerMatches = [...body.matchAll(/header\s+"([^"]+)"/g)].map(x => x[1]);
+
+        if (headerMatches.length === 0) continue;
+
+        const fwDir = resolve(modularFwsRoot, `${modName}.framework`);
+        const headersDir = resolve(fwDir, 'Headers');
+        const modulesDir = resolve(fwDir, 'Modules');
+
+        await mkdir(headersDir, { recursive: true });
+        await mkdir(modulesDir, { recursive: true });
+
+        // Copy all headers from the module directory if present (except yoga which has C++20 internals)
+        const modSourceDir = resolve(rnHeaders, modName);
+        if (existsSync(modSourceDir) && modName !== 'yoga') {
+          const allHeaders = await readdir(modSourceDir, { withFileTypes: true });
+          for (const ent of allHeaders) {
+            if (ent.isFile() && ent.name.endsWith('.h')) {
+              await cp(resolve(modSourceDir, ent.name), resolve(headersDir, ent.name));
+            }
+          }
+        }
+
+        // Copy each header explicitly declared in the module
+        for (const h of headerMatches) {
+          const srcFile = resolve(rnHeaders, h);
+          const fileName = basename(h);
+          const dstFile = resolve(headersDir, fileName);
+          if (existsSync(srcFile)) {
+            await cp(srcFile, dstFile);
+          }
+        }
+
+        // Write exact modulemap matching React Native declarations
+        const moduleMapLines = [
+          `framework module ${modName} {`
+        ];
+        for (const h of headerMatches) {
+          moduleMapLines.push(`    header "${basename(h)}"`);
+        }
+        moduleMapLines.push('    export *');
+        moduleMapLines.push('}');
+        moduleMapLines.push('');
+
+        await writeFile(resolve(modulesDir, 'module.modulemap'), moduleMapLines.join('\n'), 'utf8');
+        count++;
+      }
+
+      console.log(`[HanlinExpo] Created ${count} modular frameworks from ReactNativeHeaders modulemap.`);
+
+      // Ensure nested fallback directory exists for $(SRCROOT)/Packages/HanlinExpoRuntime evaluation
+      const nestedFallbackDir = resolve(artifactsRoot, '..', 'Packages', 'HanlinExpoRuntime');
+      await mkdir(nestedFallbackDir, { recursive: true });
+      const nestedFallbackArtifacts = resolve(nestedFallbackDir, 'Artifacts');
+      await rm(resolve(nestedFallbackArtifacts, 'ModularFrameworks'), { recursive: true, force: true });
+      await mkdir(nestedFallbackArtifacts, { recursive: true });
+      await cp(modularFwsRoot, resolve(nestedFallbackArtifacts, 'ModularFrameworks'), { recursive: true });
+      console.log('[HanlinExpo] ModularFrameworks nested fallback staged successfully.');
+    }
+    await stageModularFrameworks();
 
     if (process.platform === 'darwin') {
       console.log('[HanlinExpo] Building ExpoModulesJSI.xcframework for iOS device and simulator on macOS...');
