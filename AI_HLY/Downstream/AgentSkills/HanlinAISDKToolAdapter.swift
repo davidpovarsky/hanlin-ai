@@ -229,6 +229,7 @@ final class HanlinAISDKToolAdapter {
                     availableAliases: availableAliases
                 )
                 let duration = Date().timeIntervalSince(executionStart)
+                let isError = result.hasPrefix("Error:")
                 self.callbacks.onAgentEvent?(.toolExecutionCompleted(
                     id: executionID,
                     result: AgentToolResult(
@@ -237,8 +238,8 @@ final class HanlinAISDKToolAdapter {
                         richResultBlocks: [],
                         evidenceItems: [],
                         hasLegacyPresentationPayload: false,
-                        isError: false,
-                        semanticOutcome: .succeeded,
+                        isError: isError,
+                        semanticOutcome: isError ? .invalidArguments : .succeeded,
                         duration: duration,
                         embeddedResultPayload: nil
                     )
@@ -255,11 +256,12 @@ final class HanlinAISDKToolAdapter {
                         resultForModel: result,
                         resultForUser: result,
                         duration: duration,
-                        outcome: .succeeded
+                        outcome: isError ? .invalidArguments : .succeeded,
+                        error: isError ? result : nil
                     )
                 }
                 self.completedCallIDs.insert(callID)
-                return HanlinAISDKToolExecutionOutput(modelText: result)
+                return HanlinAISDKToolExecutionOutput(modelText: result, isError: isError)
             }
         )
     }
@@ -374,12 +376,13 @@ final class HanlinAISDKToolAdapter {
                 let result = ToolSearchTool.execute(
                     argumentsJSON: argumentsJSON,
                     session: self.session,
-                    searchProvider: { [weak self] q, l in
+                    searchProvider: { [weak self] q, l, o, _ in
                         guard let self else { return [] }
-                        return self.preparedTools.search(query: q, limit: l, preferredAliases: self.session.activeSkillToolHints)
+                        return self.preparedTools.search(query: q, limit: l, offset: o, preferredAliases: self.session.activeSkillToolHints)
                     }
                 )
                 let duration = Date().timeIntervalSince(executionStart)
+                let isError = result.hasPrefix("Error:")
                 self.callbacks.onAgentEvent?(.toolExecutionCompleted(
                     id: executionID,
                     result: AgentToolResult(
@@ -388,8 +391,8 @@ final class HanlinAISDKToolAdapter {
                         richResultBlocks: [],
                         evidenceItems: [],
                         hasLegacyPresentationPayload: false,
-                        isError: false,
-                        semanticOutcome: .succeeded,
+                        isError: isError,
+                        semanticOutcome: isError ? .invalidArguments : .succeeded,
                         duration: duration,
                         embeddedResultPayload: nil
                     )
@@ -406,11 +409,12 @@ final class HanlinAISDKToolAdapter {
                         resultForModel: result,
                         resultForUser: result,
                         duration: duration,
-                        outcome: .succeeded
+                        outcome: isError ? .invalidArguments : .succeeded,
+                        error: isError ? result : nil
                     )
                 }
                 self.completedCallIDs.insert(callID)
-                return HanlinAISDKToolExecutionOutput(modelText: result)
+                return HanlinAISDKToolExecutionOutput(modelText: result, isError: isError)
             }
         )
     }
@@ -452,6 +456,7 @@ final class HanlinAISDKToolAdapter {
                     session: self.session
                 )
                 let duration = Date().timeIntervalSince(executionStart)
+                let isError = result.hasPrefix("Error:")
                 self.callbacks.onAgentEvent?(.toolExecutionCompleted(
                     id: executionID,
                     result: AgentToolResult(
@@ -460,8 +465,8 @@ final class HanlinAISDKToolAdapter {
                         richResultBlocks: [],
                         evidenceItems: [],
                         hasLegacyPresentationPayload: false,
-                        isError: false,
-                        semanticOutcome: .succeeded,
+                        isError: isError,
+                        semanticOutcome: isError ? .invalidArguments : .succeeded,
                         duration: duration,
                         embeddedResultPayload: nil
                     )
@@ -478,11 +483,12 @@ final class HanlinAISDKToolAdapter {
                         resultForModel: result,
                         resultForUser: result,
                         duration: duration,
-                        outcome: .succeeded
+                        outcome: isError ? .invalidArguments : .succeeded,
+                        error: isError ? result : nil
                     )
                 }
                 self.completedCallIDs.insert(callID)
-                return HanlinAISDKToolExecutionOutput(modelText: result)
+                return HanlinAISDKToolExecutionOutput(modelText: result, isError: isError)
             }
         )
     }

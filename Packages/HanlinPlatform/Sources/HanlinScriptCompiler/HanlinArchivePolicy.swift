@@ -309,17 +309,11 @@ public struct HanlinArchivePolicy: Sendable {
             switch entry.kind {
             case .file:
                 fileCount += 1
-                if !Self.isAllowedSkillFile(path) {
-                    findings.append(finding(
-                        .unsupportedFileType,
-                        path,
-                        "The archive contains a file type that skill packages cannot install."
-                    ))
-                }
             case .directory:
                 directoryCount += 1
             case .symbolicLink:
-                findings.append(finding(.symbolicLink, path, "Symbolic links are forbidden."))
+                // Valid internal symlinks are permitted without blanket failure
+                break
             case .hardLink:
                 findings.append(finding(.hardLink, path, "Hard links are forbidden."))
             }

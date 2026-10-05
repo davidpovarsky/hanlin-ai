@@ -6,7 +6,7 @@ import Foundation
 public struct AssistantToolExposurePlanner: Sendable {
     /// Maximum serialized schema byte budget for directly exposed tools upon loading a skill.
     /// Tools exceeding this budget remain deferred to `tool_search`.
-    public static let defaultSchemaByteBudget: Int = 4096
+    public static let defaultSchemaByteBudget: Int = Int.max
 
     public let maxSchemaBytes: Int
 
@@ -50,7 +50,8 @@ public struct AssistantToolExposurePlanner: Sendable {
                 continue
             }
             let bytes = schemaSizes[alias] ?? 600
-            if currentBytes + bytes <= maxSchemaBytes {
+            // DISC-02 / DISC-03: No starvation for single tool exceeding budget, and default allows all preferred tools.
+            if maxSchemaBytes == Int.max || currentBytes + bytes <= maxSchemaBytes || (exposed.isEmpty && currentBytes == 0) {
                 exposed.append(alias)
                 currentBytes += bytes
             } else {

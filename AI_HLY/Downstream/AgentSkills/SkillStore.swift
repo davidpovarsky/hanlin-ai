@@ -55,7 +55,7 @@ public final class SkillStore {
         try? fileManager.createDirectory(at: overridesDirectoryURL, withIntermediateDirectories: true)
 
         if let data = try? Data(contentsOf: stateFileURL),
-           let loaded = try? JSONDecoder().decode(StoreState.self, from: data) {
+           let loaded = try? HanlinSkillMetadata.decoder().decode(StoreState.self, from: data) {
             self.cachedState = loaded
         } else {
             self.cachedState = StoreState()
@@ -65,8 +65,7 @@ public final class SkillStore {
     // MARK: - State Persistence
 
     private func saveState() {
-        let encoder = JSONEncoder()
-        encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
+        let encoder = HanlinSkillMetadata.encoder()
         if let data = try? encoder.encode(cachedState) {
             try? data.write(to: stateFileURL, options: .atomic)
         }
@@ -252,7 +251,7 @@ public final class SkillStore {
         try fileManager.createDirectory(at: dir, withIntermediateDirectories: true)
 
         let effectiveDesc = description.isEmpty ? title : description
-        let skillMD = SkillMarkdownParser.serialize(name: title, description: effectiveDesc, body: instructions)
+        let skillMD = SkillMarkdownParser.serialize(name: id.rawValue, title: title, description: effectiveDesc, body: instructions)
         let skillMDURL = dir.appendingPathComponent("SKILL.md")
         try skillMD.data(using: .utf8)?.write(to: skillMDURL, options: .atomic)
 
@@ -269,8 +268,7 @@ public final class SkillStore {
             updatedAt: Date()
         )
         let metaURL = dir.appendingPathComponent("hanlin.json")
-        let encoder = JSONEncoder()
-        encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
+        let encoder = HanlinSkillMetadata.encoder()
         let metaData = try encoder.encode(meta)
         try metaData.write(to: metaURL, options: .atomic)
 
@@ -337,7 +335,7 @@ public final class SkillStore {
             throw SkillImportError.stagingFailed("Skill '\(skillID.rawValue)' directory not found.")
         }
         let clean = relativePath.replacingOccurrences(of: "\\", with: "/").trimmingCharacters(in: CharacterSet(charactersIn: "/ "))
-        guard !clean.isEmpty, !clean.contains(".."), !clean.contains("\0"), !clean.hasPrefix("/") else {
+        guard !clean.isEmpty, !clean.split(separator: "/").contains(".."), !clean.contains("\0"), !clean.hasPrefix("/") else {
             throw SkillImportError.stagingFailed("Invalid resource path '\(relativePath)'.")
         }
         let fileURL = base.appendingPathComponent(clean)
@@ -351,7 +349,7 @@ public final class SkillStore {
             throw SkillImportError.stagingFailed("Skill '\(skillID.rawValue)' directory not found.")
         }
         let clean = relativePath.replacingOccurrences(of: "\\", with: "/").trimmingCharacters(in: CharacterSet(charactersIn: "/ "))
-        guard !clean.isEmpty, !clean.contains(".."), !clean.contains("\0"), !clean.hasPrefix("/") else {
+        guard !clean.isEmpty, !clean.split(separator: "/").contains(".."), !clean.contains("\0"), !clean.hasPrefix("/") else {
             throw SkillImportError.stagingFailed("Invalid resource path '\(relativePath)'.")
         }
         let fileURL = base.appendingPathComponent(clean)
@@ -385,7 +383,7 @@ public final class SkillStore {
 
         let title = newTitle ?? baseSkill.title.preferredValue()
         let desc = newDescription ?? baseSkill.summary.preferredValue()
-        let skillMD = SkillMarkdownParser.serialize(name: title, description: desc, body: newInstructions)
+        let skillMD = SkillMarkdownParser.serialize(name: baseSkill.id.rawValue, title: title, description: desc, body: newInstructions)
         let skillMDURL = dir.appendingPathComponent("SKILL.md")
         try skillMD.data(using: .utf8)?.write(to: skillMDURL, options: .atomic)
 
@@ -405,8 +403,7 @@ public final class SkillStore {
             updatedAt: Date()
         )
         let metaURL = dir.appendingPathComponent("hanlin.json")
-        let encoder = JSONEncoder()
-        encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
+        let encoder = HanlinSkillMetadata.encoder()
         let metaData = try encoder.encode(meta)
         try metaData.write(to: metaURL, options: .atomic)
 
@@ -443,7 +440,7 @@ public final class SkillStore {
         let metaFile = dir.appendingPathComponent("hanlin.json", isDirectory: false)
         let meta: HanlinSkillMetadata?
         if let metaData = try? Data(contentsOf: metaFile) {
-            meta = try? JSONDecoder().decode(HanlinSkillMetadata.self, from: metaData)
+            meta = try? HanlinSkillMetadata.decoder().decode(HanlinSkillMetadata.self, from: metaData)
         } else {
             meta = cachedState.metadataBySkillID[skillID.rawValue]
         }

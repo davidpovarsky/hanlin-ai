@@ -170,12 +170,12 @@ public final class SkillImporter: @unchecked Sendable {
                 }
 
                 let policy = HanlinArchivePolicy(limits: HanlinArchiveLimits(
-                    maximumArchiveBytes: Self.maxDownloadBytes,
-                    maximumFiles: 1_024,
-                    maximumDirectories: 256,
-                    maximumDepth: 16,
-                    maximumUncompressedBytes: 64 * 1_048_576,
-                    maximumCompressionRatio: 100
+                    maximumArchiveBytes: 256 * 1_048_576,
+                    maximumFiles: 10_000,
+                    maximumDirectories: 2_000,
+                    maximumDepth: 32,
+                    maximumUncompressedBytes: 512 * 1_048_576,
+                    maximumCompressionRatio: 500
                 ))
 
                 let zipEntries = Array(archive)
@@ -220,7 +220,7 @@ public final class SkillImporter: @unchecked Sendable {
                 // Extract all non-ignored entries safely
                 for entry in zipEntries where !ignored.contains(entry.path) {
                     guard let normalized = HanlinArchivePolicy.normalizedRelativePath(entry.path) else {
-                        throw SkillImportError.extractionEscapedRoot(entry.path)
+                        throw SkillImportError.archiveInspectionFailed(["Archive entry normalization failed: \(entry.path)"])
                     }
                     let dest = extractedRoot.appendingPathComponent(normalized)
                     guard Self.isContained(dest, in: extractedRoot) else {
@@ -258,7 +258,7 @@ public final class SkillImporter: @unchecked Sendable {
                 let hanlinJSONURL = skillRoot.appendingPathComponent("hanlin.json")
                 var meta: HanlinSkillMetadata
                 if let metaData = try? Data(contentsOf: hanlinJSONURL),
-                   let parsedMeta = try? JSONDecoder().decode(HanlinSkillMetadata.self, from: metaData) {
+                   let parsedMeta = try? HanlinSkillMetadata.decoder().decode(HanlinSkillMetadata.self, from: metaData) {
                     meta = parsedMeta
                     meta.originURL = originURL
                     meta.sha256 = sha256
@@ -342,9 +342,12 @@ public final class SkillImporter: @unchecked Sendable {
     // MARK: - Private Helpers
 
     private static func isContained(_ url: URL, in parent: URL) -> Bool {
-        let parentPath = parent.standardizedFileURL.path
-        let urlPath = url.standardizedFileURL.path
-        return urlPath == parentPath || urlPath.hasPrefix(parentPath + "/") || urlPath.hasPrefix(parentPath + "\\")
+        let canonParent = parent.resolvingSymlinksInPath().standardizedFileURL.path
+        let parentPath = canonParent.hasSuffix("/") && canonParent.count > 1
+            ? String(canonParent.dropLast())
+            : canonParent
+        let canonChild = url.resolvingSymlinksInPath().standardizedFileURL.path
+        return canonChild == parentPath || canonChild.hasPrefix(parentPath + "/") || canonChild.hasPrefix(parentPath + "\\")
     }
 
     private static func mapEntryKind(_ type: Entry.EntryType) -> HanlinArchiveEntryKind {

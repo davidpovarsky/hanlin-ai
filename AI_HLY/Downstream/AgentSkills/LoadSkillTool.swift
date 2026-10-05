@@ -47,14 +47,17 @@ public enum LoadSkillTool {
             return "Error: Skill '\(args.skill_id)' not found. Available skills: [\(available)]."
         }
 
-        if session.isSkillLoaded(descriptor.id) {
-            let candidateAliases: [String]
-            if let available = availableAliases {
-                candidateAliases = descriptor.preferredToolIDs.filter { available.contains($0) }
-            } else {
-                candidateAliases = descriptor.preferredToolIDs
-            }
+        let candidateAliases: [String]
+        let unavailableAliases: [String]
+        if let available = availableAliases {
+            candidateAliases = descriptor.preferredToolIDs.filter { available.contains($0) }
+            unavailableAliases = descriptor.preferredToolIDs.filter { !available.contains($0) }
+        } else {
+            candidateAliases = descriptor.preferredToolIDs
+            unavailableAliases = []
+        }
 
+        if session.isSkillLoaded(descriptor.id) {
             let decision = planner.plan(
                 candidateAliases: candidateAliases,
                 schemaSizes: schemaSizes,
@@ -69,6 +72,9 @@ public enum LoadSkillTool {
             if !decision.exposedAliases.isEmpty {
                 response += "\n\nNewly exposed tools:\n" + decision.exposedAliases.map { "- `\($0)`" }.joined(separator: "\n")
             }
+            if !unavailableAliases.isEmpty {
+                response += "\n\nUnavailable or disabled tools:\n" + unavailableAliases.map { "- `\($0)` (disabled)" }.joined(separator: "\n")
+            }
             let allExposed = session.exposedToolAliases.sorted()
             if !allExposed.isEmpty {
                 response += "\n\nCurrently exposed tools:\n" + allExposed.map { "- `\($0)`" }.joined(separator: "\n")
@@ -80,15 +86,8 @@ public enum LoadSkillTool {
         session.recordSkillLoaded(
             id: descriptor.id,
             instructionText: instructions,
-            preferredToolIDs: descriptor.preferredToolIDs
+            preferredToolIDs: candidateAliases
         )
-
-        let candidateAliases: [String]
-        if let available = availableAliases {
-            candidateAliases = descriptor.preferredToolIDs.filter { available.contains($0) }
-        } else {
-            candidateAliases = descriptor.preferredToolIDs
-        }
 
         let decision = planner.plan(
             candidateAliases: candidateAliases,
@@ -109,6 +108,12 @@ public enum LoadSkillTool {
             response += "The following tools are now exposed and ready to call:\n"
             for alias in decision.exposedAliases {
                 response += "- `\(alias)`\n"
+            }
+        }
+        if !unavailableAliases.isEmpty {
+            response += "\nPreferred tools currently disabled or unavailable:\n"
+            for alias in unavailableAliases {
+                response += "- `\(alias)` (disabled)\n"
             }
         }
         if !decision.deferredAliases.isEmpty {

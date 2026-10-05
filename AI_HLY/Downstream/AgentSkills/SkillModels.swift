@@ -21,6 +21,18 @@ public struct HanlinSkillMetadata: Codable, Hashable, Sendable {
     public var installedAt: Date
     public var updatedAt: Date
 
+    public enum CodingKeys: String, CodingKey {
+        case preferredToolIDs
+        case triggerHints
+        case keywords
+        case baseSkillID
+        case originURL
+        case sha256
+        case isEnabled
+        case installedAt
+        case updatedAt
+    }
+
     public init(
         preferredToolIDs: [String] = [],
         triggerHints: [String] = [],
@@ -41,6 +53,98 @@ public struct HanlinSkillMetadata: Codable, Hashable, Sendable {
         self.isEnabled = isEnabled
         self.installedAt = installedAt
         self.updatedAt = updatedAt
+    }
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.preferredToolIDs = (try? container.decodeIfPresent([String].self, forKey: .preferredToolIDs)) ?? []
+        self.triggerHints = (try? container.decodeIfPresent([String].self, forKey: .triggerHints)) ?? []
+        self.keywords = (try? container.decodeIfPresent([String].self, forKey: .keywords)) ?? []
+        self.baseSkillID = try? container.decodeIfPresent(String.self, forKey: .baseSkillID)
+        self.originURL = try? container.decodeIfPresent(String.self, forKey: .originURL)
+        self.sha256 = try? container.decodeIfPresent(String.self, forKey: .sha256)
+        self.isEnabled = (try? container.decodeIfPresent(Bool.self, forKey: .isEnabled)) ?? true
+        self.installedAt = Self.decodeFlexibleDate(from: container, key: .installedAt) ?? Date()
+        self.updatedAt = Self.decodeFlexibleDate(from: container, key: .updatedAt) ?? Date()
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(preferredToolIDs, forKey: .preferredToolIDs)
+        try container.encode(triggerHints, forKey: .triggerHints)
+        try container.encode(keywords, forKey: .keywords)
+        try container.encodeIfPresent(baseSkillID, forKey: .baseSkillID)
+        try container.encodeIfPresent(originURL, forKey: .originURL)
+        try container.encodeIfPresent(sha256, forKey: .sha256)
+        try container.encode(isEnabled, forKey: .isEnabled)
+
+        let formatter = ISO8601DateFormatter()
+        formatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
+        try container.encode(formatter.string(from: installedAt), forKey: .installedAt)
+        try container.encode(formatter.string(from: updatedAt), forKey: .updatedAt)
+    }
+
+    public static func decodeFlexibleDate(from container: KeyedDecodingContainer<CodingKeys>, key: CodingKeys) -> Date? {
+        if let str = try? container.decodeIfPresent(String.self, forKey: key) {
+            let f1 = ISO8601DateFormatter()
+            f1.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
+            if let d = f1.date(from: str) { return d }
+            let f2 = ISO8601DateFormatter()
+            f2.formatOptions = [.withInternetDateTime]
+            if let d = f2.date(from: str) { return d }
+            let df = DateFormatter()
+            df.locale = Locale(identifier: "en_US_POSIX")
+            df.timeZone = TimeZone(secondsFromGMT: 0)
+            df.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+            if let d = df.date(from: str) { return d }
+        }
+        if let dbl = try? container.decodeIfPresent(Double.self, forKey: key) {
+            if dbl > 100_000_000 {
+                return Date(timeIntervalSince1970: dbl)
+            } else {
+                return Date(timeIntervalSinceReferenceDate: dbl)
+            }
+        }
+        if let date = try? container.decodeIfPresent(Date.self, forKey: key) {
+            return date
+        }
+        return nil
+    }
+
+    public static func decoder() -> JSONDecoder {
+        let dec = JSONDecoder()
+        dec.dateDecodingStrategy = .custom { decoder in
+            let c = try decoder.singleValueContainer()
+            if let s = try? c.decode(String.self) {
+                let f1 = ISO8601DateFormatter()
+                f1.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
+                if let d = f1.date(from: s) { return d }
+                let f2 = ISO8601DateFormatter()
+                f2.formatOptions = [.withInternetDateTime]
+                if let d = f2.date(from: s) { return d }
+                let df = DateFormatter()
+                df.locale = Locale(identifier: "en_US_POSIX")
+                df.timeZone = TimeZone(secondsFromGMT: 0)
+                df.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+                if let d = df.date(from: s) { return d }
+            }
+            if let dbl = try? c.decode(Double.self) {
+                if dbl > 100_000_000 {
+                    return Date(timeIntervalSince1970: dbl)
+                } else {
+                    return Date(timeIntervalSinceReferenceDate: dbl)
+                }
+            }
+            return Date()
+        }
+        return dec
+    }
+
+    public static func encoder() -> JSONEncoder {
+        let enc = JSONEncoder()
+        enc.outputFormatting = [.prettyPrinted, .sortedKeys]
+        enc.dateEncodingStrategy = .iso8601
+        return enc
     }
 }
 
@@ -132,7 +236,12 @@ public enum SkillMarkdownParser {
     }
 
     public static func parse(_ content: String) throws -> ParsedSkillMarkdown {
-        let lines = content.components(separatedBy: .newlines)
+        var cleanContent = content
+        if cleanContent.hasPrefix("\u{FEFF}") {
+            cleanContent.removeFirst()
+        }
+        cleanContent = cleanContent.replacingOccurrences(of: "\r\n", with: "\n").replacingOccurrences(of: "\r", with: "\n")
+        let lines = cleanContent.components(separatedBy: "\n")
         guard let firstLine = lines.first?.trimmingCharacters(in: .whitespaces),
               firstLine == "---" else {
             throw ParseError.missingFrontmatter
@@ -151,20 +260,56 @@ public enum SkillMarkdownParser {
         }
 
         var frontmatter: [String: String] = [:]
+        var currentKey: String?
+        var multilineMode: Character?
+        var multilineBuffer: [String] = []
+
+        func flushMultiline() {
+            guard let key = currentKey else { return }
+            if multilineMode == ">" {
+                frontmatter[key] = multilineBuffer.joined(separator: " ").trimmingCharacters(in: .whitespaces)
+            } else if multilineMode == "|" {
+                frontmatter[key] = multilineBuffer.joined(separator: "\n").trimmingCharacters(in: .newlines)
+            }
+            multilineMode = nil
+            multilineBuffer = []
+            currentKey = nil
+        }
+
         for i in 1..<closeIdx {
-            let line = lines[i].trimmingCharacters(in: .whitespaces)
-            if line.isEmpty || line.hasPrefix("#") { continue }
-            guard let colonIdx = line.firstIndex(of: ":") else {
+            let rawLine = lines[i]
+            let trimmed = rawLine.trimmingCharacters(in: .whitespaces)
+            if trimmed.isEmpty || trimmed.hasPrefix("#") { continue }
+
+            if rawLine.hasPrefix("  ") || rawLine.hasPrefix("\t") {
+                if multilineMode != nil {
+                    multilineBuffer.append(trimmed)
+                    continue
+                }
+            } else {
+                flushMultiline()
+            }
+
+            guard let colonIdx = trimmed.firstIndex(of: ":") else {
                 continue
             }
-            let key = String(line[..<colonIdx]).trimmingCharacters(in: .whitespaces)
-            var value = String(line[line.index(after: colonIdx)...]).trimmingCharacters(in: .whitespaces)
-            if (value.hasPrefix("\"") && value.hasSuffix("\"")) ||
-               (value.hasPrefix("'") && value.hasSuffix("'")) {
+            let key = String(trimmed[..<colonIdx]).trimmingCharacters(in: .whitespaces)
+            var value = String(trimmed[trimmed.index(after: colonIdx)...]).trimmingCharacters(in: .whitespaces)
+
+            if value == ">" || value == "|" {
+                currentKey = key
+                multilineMode = value.first
+                multilineBuffer = []
+                continue
+            }
+
+            if (value.hasPrefix("\"") && value.hasSuffix("\"") && value.count >= 2) ||
+               (value.hasPrefix("'") && value.hasSuffix("'") && value.count >= 2) {
                 value = String(value.dropFirst().dropLast())
             }
             frontmatter[key] = value
         }
+        flushMultiline()
 
         guard let name = frontmatter["name"], !name.isEmpty else {
             throw ParseError.missingRequiredField("name")
@@ -187,14 +332,12 @@ public enum SkillMarkdownParser {
         )
     }
 
-    public static func serialize(name: String, description: String, body: String) -> String {
-        """
-        ---
-        name: \(name)
-        description: \(description)
-        ---
-
-        \(body)
-        """
+    public static func serialize(name: String, title: String? = nil, description: String, body: String) -> String {
+        var header = "---\nname: \(name)\n"
+        if let title = title, !title.isEmpty, title != name {
+            header += "title: \(title)\n"
+        }
+        header += "description: \(description)\n---\n\n\(body)"
+        return header
     }
 }
