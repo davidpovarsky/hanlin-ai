@@ -67,12 +67,14 @@ public actor HanlinAISDKAgentEngine {
         messages: [HanlinAISDKMessage],
         baseSystemPrompt: String?,
         tools definitions: [HanlinAISDKToolDefinition],
+        maxSteps: Int? = nil,
         prepareStep: @escaping @MainActor @Sendable () -> HanlinAISDKStepPreparation
     ) throws -> AsyncThrowingStream<HanlinAISDKStreamEvent, Error> {
         try stream(
             messages: messages,
             baseSystemPrompt: baseSystemPrompt,
             tools: definitions,
+            maxSteps: maxSteps,
             prepareStep: { (_: Int) in prepareStep() }
         )
     }
@@ -81,12 +83,14 @@ public actor HanlinAISDKAgentEngine {
         messages: [HanlinAISDKMessage],
         baseSystemPrompt: String?,
         tools definitions: [HanlinAISDKToolDefinition],
+        maxSteps: Int? = nil,
         prepareStep: @escaping @MainActor @Sendable () async -> HanlinAISDKStepPreparation
     ) throws -> AsyncThrowingStream<HanlinAISDKStreamEvent, Error> {
         try stream(
             messages: messages,
             baseSystemPrompt: baseSystemPrompt,
             tools: definitions,
+            maxSteps: maxSteps,
             prepareStep: { (_: Int) async in await prepareStep() }
         )
     }
@@ -95,6 +99,7 @@ public actor HanlinAISDKAgentEngine {
         messages: [HanlinAISDKMessage],
         baseSystemPrompt: String?,
         tools definitions: [HanlinAISDKToolDefinition],
+        maxSteps: Int? = nil,
         prepareStep: @escaping StepPreparation
     ) throws -> AsyncThrowingStream<HanlinAISDKStreamEvent, Error> {
         let modelMessages = try Self.modelMessages(from: messages)
@@ -109,6 +114,9 @@ public actor HanlinAISDKAgentEngine {
             topP: configuration.topP == HanlinChatGenerationDefaults.topP ? nil : configuration.topP,
             maxRetries: 2
         )
+
+        let limit = maxSteps ?? 40
+        let stopConditions: [StopCondition] = (limit > 0) ? [stepCountIs(limit)] : []
 
         return AsyncThrowingStream { continuation in
             let stopper = StreamStopper()
@@ -132,7 +140,7 @@ public actor HanlinAISDKAgentEngine {
                                 )
                             )
                         },
-                        stopWhen: [stepCountIs(32)],
+                        stopWhen: stopConditions,
                         settings: settings
                     )
 
