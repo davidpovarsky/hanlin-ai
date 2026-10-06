@@ -213,28 +213,6 @@ async function prepare() {
 
         const modSourceDir = resolve(rnHeaders, modName);
 
-        // Handle yoga framework with full recursive headers and umbrella modulemap
-        if (modName === 'yoga') {
-          if (existsSync(modSourceDir)) {
-            await cp(modSourceDir, headersDir, { recursive: true });
-            const nestedYoga = resolve(headersDir, 'yoga');
-            if (!existsSync(nestedYoga)) {
-              await cp(modSourceDir, nestedYoga, { recursive: true });
-            }
-          }
-          const yogaMap = [
-            'framework module yoga {',
-            '    umbrella "Headers"',
-            '    export *',
-            '}',
-            ''
-          ].join('\n');
-          await writeFile(resolve(modulesDir, 'module.modulemap'), yogaMap, 'utf8');
-          count++;
-          console.log('[HanlinExpo] Created modular yoga.framework with umbrella Headers in ModularFrameworks.');
-          continue;
-        }
-
         // Copy all headers from the module directory if present (except ReactCommon to avoid internal C++ leaks/cycles)
         if (existsSync(modSourceDir) && modName !== 'ReactCommon') {
           const allHeaders = await readdir(modSourceDir, { withFileTypes: true });
@@ -531,20 +509,39 @@ struct dynamic {
             let content = await readFile(fullPath, 'utf8');
             let modified = false;
             if (content.includes('concept Hashable')) {
-              content = content.replace(/template\s*<\s*typename\s+T\s*>\s*concept\s+Hashable[\s\S]*?\);/g, '// concept Hashable disabled for C++17 compatibility');
+              content = content.replace(/template\s*<\s*typename\s+T\s*>\s*concept\s+Hashable[\s\S]*?\);\s*\r?\n?/g, '// concept Hashable disabled for C++17 compatibility\n');
               modified = true;
             }
             if (content.includes('Hashable')) {
               content = content.replace(/\bHashable\b/g, 'typename');
               modified = true;
             }
-            if (content.includes('requires(')) {
+            if (content.includes('requires(') || content.includes('requires (')) {
+              content = content.replace(/\s*requires\s*\([\s\S]*?<=\s*\d+\)/g, '');
               content = content.replace(/\s*requires\s*\([^)]*\)/g, '');
               modified = true;
             }
             if (modified) {
               await writeFile(fullPath, content, 'utf8');
               console.log(`[HanlinExpo] Neutralized C++20 concepts in ${fullPath}`);
+            }
+          } else if (entry.name === 'YogaStylableProps.h') {
+            let content = await readFile(fullPath, 'utf8');
+            if (content.includes('#include <yoga/style/Style.h>')) {
+              content = content.replace(/^[ \t]*#include[ \t]+<yoga\/style\/Style\.h>[ \t]*\r?\n?/gm, `
+#if __has_include(<yoga/style/Style.h>)
+#include <yoga/style/Style.h>
+#else
+namespace yoga {
+struct Style {
+  struct Length { constexpr Length() = default; };
+  constexpr Style() = default;
+};
+}
+#endif
+`);
+              await writeFile(fullPath, content, 'utf8');
+              console.log(`[HanlinExpo] Patched YogaStylableProps.h in ${fullPath}`);
             }
           } else if (entry.name === 'RCTComponentViewProtocol.h') {
             let content = await readFile(fullPath, 'utf8');
@@ -665,9 +662,25 @@ $1
               modified = true;
             }
             if (content.includes('concept Hashable')) {
-              content = content.replace(/template\s*<\s*typename\s+T\s*>\s*concept\s+Hashable[\s\S]*?\);/g, '// concept Hashable disabled for C++17 compatibility');
+              content = content.replace(/template\s*<\s*typename\s+T\s*>\s*concept\s+Hashable[\s\S]*?\);\s*\r?\n?/g, '// concept Hashable disabled for C++17 compatibility\n');
               content = content.replace(/\bHashable\b/g, 'typename');
+              content = content.replace(/\s*requires\s*\([\s\S]*?<=\s*\d+\)/g, '');
               content = content.replace(/\s*requires\s*\([^)]*\)/g, '');
+              modified = true;
+            }
+            if (content.includes('#include <yoga/style/Style.h>')) {
+              content = content.replace(/^[ \t]*#include[ \t]+<yoga\/style\/Style\.h>[ \t]*\r?\n?/gm, `
+#if __has_include(<yoga/style/Style.h>)
+#include <yoga/style/Style.h>
+#else
+namespace yoga {
+struct Style {
+  struct Length { constexpr Length() = default; };
+  constexpr Style() = default;
+};
+}
+#endif
+`);
               modified = true;
             }
             if (entry.name === 'RCTComponentViewProtocol.h' && !content.includes('#pragma once') && !content.includes('#ifndef RCTComponentViewProtocol_h')) {
