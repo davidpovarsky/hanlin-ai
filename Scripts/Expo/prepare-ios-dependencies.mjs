@@ -211,9 +211,31 @@ async function prepare() {
         await mkdir(headersDir, { recursive: true });
         await mkdir(modulesDir, { recursive: true });
 
-        // Copy all headers from the module directory if present (except yoga and ReactCommon to avoid internal C++ leaks/cycles)
+        // Handle yoga framework with full recursive headers and umbrella modulemap
+        if (modName === 'yoga') {
+          if (existsSync(modSourceDir)) {
+            await cp(modSourceDir, headersDir, { recursive: true });
+            const nestedYoga = resolve(headersDir, 'yoga');
+            if (!existsSync(nestedYoga)) {
+              await cp(modSourceDir, nestedYoga, { recursive: true });
+            }
+          }
+          const yogaMap = [
+            'framework module yoga {',
+            '    umbrella "Headers"',
+            '    export *',
+            '}',
+            ''
+          ].join('\n');
+          await writeFile(resolve(modulesDir, 'module.modulemap'), yogaMap, 'utf8');
+          count++;
+          console.log('[HanlinExpo] Created modular yoga.framework with umbrella Headers in ModularFrameworks.');
+          continue;
+        }
+
+        // Copy all headers from the module directory if present (except ReactCommon to avoid internal C++ leaks/cycles)
         const modSourceDir = resolve(rnHeaders, modName);
-        if (existsSync(modSourceDir) && modName !== 'yoga' && modName !== 'ReactCommon') {
+        if (existsSync(modSourceDir) && modName !== 'ReactCommon') {
           const allHeaders = await readdir(modSourceDir, { withFileTypes: true });
           for (const ent of allHeaders) {
             if (ent.isFile() && ent.name.endsWith('.h')) {
@@ -506,12 +528,29 @@ struct dynamic {
             await patchCppHeaders(fullPath);
           } else if (entry.name === 'hash_combine.h') {
             let content = await readFile(fullPath, 'utf8');
+            let modified = false;
             if (content.includes('concept Hashable')) {
-              content = content.replace(/template\s*<\s*typename\s+T\s*>\s*concept\s+Hashable\s*=\s*[\s\S]*?\);/g, '// concept Hashable disabled for C++17/interop compatibility');
-              content = content.replace(/template\s*<\s*Hashable\s+T\s*,\s*Hashable\.\.\.\s*Rest\s*>/g, 'template <typename T, typename... Rest>');
-              content = content.replace(/template\s*<\s*Hashable\s+T\s*,\s*Hashable\.\.\.\s*Args\s*>/g, 'template <typename T, typename... Args>');
+              content = content.replace(/template\s*<\s*typename\s+T\s*>\s*concept\s+Hashable[\s\S]*?\);/g, '// concept Hashable disabled for C++17 compatibility');
+              modified = true;
+            }
+            if (content.includes('Hashable')) {
+              content = content.replace(/\bHashable\b/g, 'typename');
+              modified = true;
+            }
+            if (content.includes('requires(')) {
+              content = content.replace(/\s*requires\s*\([^)]*\)/g, '');
+              modified = true;
+            }
+            if (modified) {
               await writeFile(fullPath, content, 'utf8');
-              console.log(`[HanlinExpo] Neutralized C++20 concept in ${fullPath}`);
+              console.log(`[HanlinExpo] Neutralized C++20 concepts in ${fullPath}`);
+            }
+          } else if (entry.name === 'RCTComponentViewProtocol.h') {
+            let content = await readFile(fullPath, 'utf8');
+            if (!content.includes('#pragma once') && !content.includes('#ifndef RCTComponentViewProtocol_h')) {
+              content = '#pragma once\n' + content;
+              await writeFile(fullPath, content, 'utf8');
+              console.log(`[HanlinExpo] Added #pragma once to ${fullPath}`);
             }
           } else if (entry.name === 'RawProps.h') {
             let content = await readFile(fullPath, 'utf8');
@@ -622,6 +661,16 @@ concept RawPropsFilterable = requires(RawProps &rawProps) {
 $1
 #endif
 `);
+              modified = true;
+            }
+            if (content.includes('concept Hashable')) {
+              content = content.replace(/template\s*<\s*typename\s+T\s*>\s*concept\s+Hashable[\s\S]*?\);/g, '// concept Hashable disabled for C++17 compatibility');
+              content = content.replace(/\bHashable\b/g, 'typename');
+              content = content.replace(/\s*requires\s*\([^)]*\)/g, '');
+              modified = true;
+            }
+            if (entry.name === 'RCTComponentViewProtocol.h' && !content.includes('#pragma once') && !content.includes('#ifndef RCTComponentViewProtocol_h')) {
+              content = '#pragma once\n' + content;
               modified = true;
             }
             if (content.includes('#include <folly/dynamic.h>')) {
