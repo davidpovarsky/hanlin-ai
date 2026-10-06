@@ -404,20 +404,6 @@ async function prepare() {
             console.log(`[HanlinExpo] Neutralized non-modular jsinspector import in ${hlp}`);
           }
         }
-        const rend = resolve(dir, 'renderer');
-        if (existsSync(rend)) {
-          await rm(rend, { recursive: true, force: true });
-          console.log(`[HanlinExpo] Removed non-modular renderer from ${dir}`);
-        }
-        const reactRend = resolve(dir, 'react', 'renderer');
-        if (existsSync(reactRend)) {
-          await rm(reactRend, { recursive: true, force: true });
-          console.log(`[HanlinExpo] Removed non-modular react/renderer from ${dir}`);
-        }
-        const rawProps = resolve(dir, 'RawProps.h');
-        if (existsSync(rawProps)) {
-          await rm(rawProps, { force: true });
-        }
       };
       await sanitizeHeaders(resolve(artifactsRoot, 'ReactModularHeaders'));
       await sanitizeHeaders(reactHeadersDir);
@@ -429,25 +415,7 @@ async function prepare() {
         await sanitizeHeaders(resolve(artifactsRoot, 'ReactNativeHeaders.xcframework', s, 'Headers'));
       }
 
-      // Recursively remove any remaining non-modular renderer directories across artifactsRoot
-      const removeRendererDirs = async (dir) => {
-        if (!existsSync(dir)) return;
-        const entries = await readdir(dir, { withFileTypes: true });
-        for (const entry of entries) {
-          const fullPath = resolve(dir, entry.name);
-          if (entry.isDirectory()) {
-            if (entry.name === 'renderer') {
-              await rm(fullPath, { recursive: true, force: true });
-              console.log(`[HanlinExpo] Removed non-modular renderer directory: ${fullPath}`);
-            } else {
-              await removeRendererDirs(fullPath);
-            }
-          }
-        }
-      };
-      await removeRendererDirs(artifactsRoot);
-
-      // 1. Neutralize C++20 concepts and features (hash_combine.h, fnv1a.h) across all staged artifacts
+      // 1. Neutralize C++20 concepts and features (hash_combine.h, fnv1a.h, RawProps.h) across all staged artifacts
       const patchCppHeaders = async (dir) => {
         if (!existsSync(dir)) return;
         const entries = await readdir(dir, { withFileTypes: true });
@@ -463,6 +431,13 @@ async function prepare() {
               content = content.replace(/template\s*<\s*Hashable\s+T\s*,\s*Hashable\.\.\.\s*Args\s*>/g, 'template <typename T, typename... Args>');
               await writeFile(fullPath, content, 'utf8');
               console.log(`[HanlinExpo] Neutralized C++20 concept in ${fullPath}`);
+            }
+          } else if (entry.name === 'RawProps.h') {
+            let content = await readFile(fullPath, 'utf8');
+            if (content.includes('concept RawPropsFilterable')) {
+              content = content.replace(/template\s*<\s*typename\s+T\s*>\s*concept\s+RawPropsFilterable\s*=\s*[\s\S]*?\);/g, '// concept RawPropsFilterable disabled for C++17 compatibility');
+              await writeFile(fullPath, content, 'utf8');
+              console.log(`[HanlinExpo] Neutralized C++20 RawPropsFilterable concept in ${fullPath}`);
             }
           } else if (entry.name === 'fnv1a.h') {
             let content = await readFile(fullPath, 'utf8');
