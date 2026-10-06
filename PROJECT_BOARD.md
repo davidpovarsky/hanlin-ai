@@ -14,7 +14,7 @@ Potential improvements, features, optimizations, or architectural ideas.
 
 ## Discoveries & Tips
 
-Useful technical discoveries, undocumented behavior, shortcuts, implementation tricks, platform behavior, or reusable knowledge discovered while working.
+- **Modular React Cxx Header Compilation in Swift Frameworks**: When compiling modular frameworks imported into Swift (such as `ExpoModulesCore`), Clang builds underlying C++ modular headers under Objective-C++/C++17 by default unless `-std=c++20` is explicitly enforced across all targets. Any C++20 `concept` declarations (e.g., `RawPropsFilterable` in `RawProps.h`, `DeclaresOwnSetProp`/`HasSetProp`/`HasIteratorSetterCtor` in `Props.h`) must be guarded with `#if defined(__cpp_concepts)`. In addition, `folly::dynamic` stubs used in isolated module contexts must supply range iterators (`begin()`, `end()`), item key checks (`isString()`, `getString()`), and value-casting operators to satisfy `RawValue.h`.
 
 ## Experiments / Investigations
 

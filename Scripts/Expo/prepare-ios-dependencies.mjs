@@ -426,13 +426,30 @@ async function prepare() {
 #include <string>
 #include <string_view>
 #include <utility>
+#include <type_traits>
 #ifndef FOLLY_DYNAMIC_DEFINED
 #define FOLLY_DYNAMIC_DEFINED
 namespace folly {
 struct dynamic_item_pair {
-  struct key_type { std::string_view getString() const { return {}; } } first;
+  struct key_type {
+    bool isString() const { return true; }
+    std::string_view getString() const { return {}; }
+    std::string string() const { return {}; }
+    operator std::string() const { return {}; }
+  } first;
   struct val_wrapper {
     template <typename T> operator T() const { return T{}; }
+    template <typename T> operator T&() const { static T t{}; return t; }
+    template <typename T> operator const T&() const { static T t{}; return t; }
+    bool isNull() const { return false; }
+    bool isBool() const { return false; }
+    bool isNumber() const { return false; }
+    bool isString() const { return false; }
+    bool isArray() const { return false; }
+    bool isObject() const { return false; }
+    std::string getString() const { return {}; }
+    int64_t asInt() const { return 0; }
+    double asDouble() const { return 0.0; }
   } second;
 };
 struct dynamic {
@@ -447,7 +464,10 @@ struct dynamic {
   dynamic& operator=(const dynamic&) = default;
   dynamic& operator=(dynamic&&) = default;
   items_type items() const { return {}; }
+  const dynamic* begin() const { return nullptr; }
+  const dynamic* end() const { return nullptr; }
   static dynamic object() { return dynamic{}; }
+  bool empty() const { return true; }
   bool isNull() const { return false; }
   bool isBool() const { return false; }
   bool isNumber() const { return false; }
@@ -459,6 +479,18 @@ struct dynamic {
   double asDouble() const { return 0.0; }
   std::string getString() const { return {}; }
   size_t size() const { return 0; }
+  const dynamic& operator[](size_t) const { static dynamic d; return d; }
+  dynamic& operator[](size_t) { static dynamic d; return d; }
+  template <typename K>
+  const dynamic& operator[](const K&) const { static dynamic d; return d; }
+  template <typename K>
+  dynamic& operator[](const K&) { static dynamic d; return d; }
+  template <typename K>
+  const dynamic* get_ptr(const K&) const { return nullptr; }
+  template <typename K>
+  dynamic* get_ptr(const K&) { return nullptr; }
+  template <typename T, typename std::enable_if<!std::is_same<typename std::decay<T>::type, dynamic>::value, int>::type = 0>
+  operator T() const { return T{}; }
 };
 }
 #endif
@@ -485,7 +517,14 @@ struct dynamic {
             let content = await readFile(fullPath, 'utf8');
             let modified = false;
             if (content.includes('concept RawPropsFilterable')) {
-              content = content.replace(/template\s*<\s*typename\s+T\s*>\s*concept\s+RawPropsFilterable\s*=\s*[\s\S]*?\);/g, '// concept RawPropsFilterable disabled for C++17 compatibility');
+              content = content.replace(/template\s*<\s*typename\s+T\s*>\s*concept\s+RawPropsFilterable[\s\S]*?\};/g, `
+#if defined(__cpp_concepts)
+template <typename T>
+concept RawPropsFilterable = requires(RawProps &rawProps) {
+  { T::filterRawProps(rawProps) } -> std::same_as<void>;
+};
+#endif
+`);
               modified = true;
             }
             if (content.includes('#include <folly/dynamic.h>')) {
@@ -499,6 +538,33 @@ struct dynamic {
             if (modified) {
               await writeFile(fullPath, content, 'utf8');
               console.log(`[HanlinExpo] Patched RawProps.h in ${fullPath}`);
+            }
+          } else if (entry.name === 'Props.h') {
+            let content = await readFile(fullPath, 'utf8');
+            let modified = false;
+            if (content.includes('concept DeclaresOwnSetProp') || content.includes('concept HasSetProp') || content.includes('concept HasIteratorSetterCtor')) {
+              content = content.replace(/(template\s*<\s*typename\s+T\s*>\s*concept\s+DeclaresOwnSetProp[\s\S]*?concept\s+HasIteratorSetterCtor\s*=[^;]+;)/g, `
+#if defined(__cpp_concepts)
+$1
+#endif
+`);
+              modified = true;
+            }
+            if (content.includes('#include <folly/dynamic.h>')) {
+              content = content.replace(/^[ \t]*#include[ \t]+<folly\/dynamic\.h>[ \t]*\r?\n?/gm, follyStub);
+              modified = true;
+            }
+            if (content.includes('#include <jsi/JSIDynamic.h>')) {
+              content = content.replace(/^[ \t]*#include[ \t]+<jsi\/JSIDynamic\.h>[ \t]*\r?\n?/gm, `
+#if __has_include(<jsi/JSIDynamic.h>)
+#include <jsi/JSIDynamic.h>
+#endif
+`);
+              modified = true;
+            }
+            if (modified) {
+              await writeFile(fullPath, content, 'utf8');
+              console.log(`[HanlinExpo] Patched Props.h in ${fullPath}`);
             }
           } else if (entry.name === 'RawValue.h') {
             let content = await readFile(fullPath, 'utf8');
@@ -539,6 +605,25 @@ struct dynamic {
           } else if (entry.name.endsWith('.h')) {
             let content = await readFile(fullPath, 'utf8');
             let modified = false;
+            if (content.includes('concept RawPropsFilterable')) {
+              content = content.replace(/template\s*<\s*typename\s+T\s*>\s*concept\s+RawPropsFilterable[\s\S]*?\};/g, `
+#if defined(__cpp_concepts)
+template <typename T>
+concept RawPropsFilterable = requires(RawProps &rawProps) {
+  { T::filterRawProps(rawProps) } -> std::same_as<void>;
+};
+#endif
+`);
+              modified = true;
+            }
+            if (content.includes('concept DeclaresOwnSetProp')) {
+              content = content.replace(/(template\s*<\s*typename\s+T\s*>\s*concept\s+DeclaresOwnSetProp[\s\S]*?concept\s+HasIteratorSetterCtor\s*=[^;]+;)/g, `
+#if defined(__cpp_concepts)
+$1
+#endif
+`);
+              modified = true;
+            }
             if (content.includes('#include <folly/dynamic.h>')) {
               content = content.replace(/^[ \t]*#include[ \t]+<folly\/dynamic\.h>[ \t]*\r?\n?/gm, follyStub);
               modified = true;
