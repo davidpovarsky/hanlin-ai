@@ -443,7 +443,7 @@ async function prepare() {
       };
       await patchCppHeaders(artifactsRoot);
 
-      // 2. Strip internal C++ Fabric headers from ExpoModulesCore_umbrella.h
+      // 2. Strip internal C++ Fabric headers and EXHostWrapper from ExpoModulesCore_umbrella.h
       const patchExpoUmbrellas = async (dir) => {
         if (!existsSync(dir)) return;
         const entries = await readdir(dir, { withFileTypes: true });
@@ -451,7 +451,7 @@ async function prepare() {
           const fullPath = resolve(dir, entry.name);
           if (entry.isDirectory()) {
             await patchExpoUmbrellas(fullPath);
-          } else if (entry.name === 'ExpoModulesCore_umbrella.h') {
+          } else if (entry.name.includes('umbrella.h')) {
             let content = await readFile(fullPath, 'utf8');
             const fabricHeaders = [
               'ContentOriginRegistry.h',
@@ -459,11 +459,12 @@ async function prepare() {
               'ExpoViewShadowNode.h',
               'ExpoViewEventEmitter.h',
               'ExpoViewProps.h',
-              'ExpoViewState.h'
+              'ExpoViewState.h',
+              'EXHostWrapper.h'
             ];
             let modified = false;
             for (const fh of fabricHeaders) {
-              const regex = new RegExp(`^[ \\t]*#import[ \\t]+["<]${fh}[">][ \\t]*\\r?\\n?`, 'gm');
+              const regex = new RegExp(`^[ \\t]*#import[ \\t]+["<](?:[^">/]+/)?${fh}[">][ \\t]*\\r?\\n?`, 'gm');
               const stripped = content.replace(regex, '');
               if (stripped !== content) {
                 content = stripped;
@@ -479,7 +480,7 @@ async function prepare() {
       };
       await patchExpoUmbrellas(artifactsRoot);
 
-      // 3. Neutralize non-modular glog include in react_native_assert.h and other headers across all staged artifacts
+      // 3. Neutralize non-modular glog include in react_native_assert.h, forward-declare RCTHost in EXHostWrapper.h, and patch headers across all staged artifacts
       const patchGlogIncludes = async (dir) => {
         if (!existsSync(dir)) return;
         const entries = await readdir(dir, { withFileTypes: true });
@@ -495,12 +496,30 @@ async function prepare() {
               await writeFile(fullPath, content, 'utf8');
               console.log(`[HanlinExpo] Neutralized glog include in ${fullPath}`);
             }
+          } else if (entry.name === 'EXHostWrapper.h') {
+            let content = await readFile(fullPath, 'utf8');
+            if (content.includes('ReactCommon/RCTHost.h') || content.includes('RCTHost.h')) {
+              content = content.replace(/^[ \t]*#import[ \t]+["<](?:ReactCommon\/)?RCTHost\.h[">][ \t]*\r?\n?/gm, '@class RCTHost;\n');
+              content = content.replace(/^[ \t]*#include[ \t]+["<](?:ReactCommon\/)?RCTHost\.h[">][ \t]*\r?\n?/gm, '@class RCTHost;\n');
+              await writeFile(fullPath, content, 'utf8');
+              console.log(`[HanlinExpo] Patched RCTHost import in ${fullPath}`);
+            }
           } else if (entry.name.endsWith('.h')) {
             let content = await readFile(fullPath, 'utf8');
+            let modified = false;
             if (content.includes('glog/logging.h')) {
               content = content.replace(/^[ \t]*#include[ \t]+<glog\/logging\.h>[ \t]*\r?\n?/gm, '// #include <glog/logging.h>\n');
-              await writeFile(fullPath, content, 'utf8');
+              modified = true;
               console.log(`[HanlinExpo] Neutralized glog include in ${fullPath}`);
+            }
+            if (content.includes('ReactCommon/RCTHost.h')) {
+              content = content.replace(/^[ \t]*#import[ \t]+["<](?:ReactCommon\/)?RCTHost\.h[">][ \t]*\r?\n?/gm, '@class RCTHost;\n');
+              content = content.replace(/^[ \t]*#include[ \t]+["<](?:ReactCommon\/)?RCTHost\.h[">][ \t]*\r?\n?/gm, '@class RCTHost;\n');
+              modified = true;
+              console.log(`[HanlinExpo] Neutralized ReactCommon/RCTHost.h in ${fullPath}`);
+            }
+            if (modified) {
+              await writeFile(fullPath, content, 'utf8');
             }
           }
         }
