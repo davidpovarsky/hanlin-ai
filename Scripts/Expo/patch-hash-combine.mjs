@@ -124,6 +124,7 @@ function patchAll(dir) {
       }
     } else if (ent.name === 'RawProps.h') {
       let content = readFileSync(full, 'utf8');
+      let changed = false;
       if (content.includes('#include <folly/dynamic.h>') && !content.includes('__has_include(<folly/dynamic.h>)')) {
         content = content.replace(
           '#include <folly/dynamic.h>',
@@ -133,6 +134,14 @@ function patchAll(dir) {
 #include <folly/json/dynamic.h>
 #endif`
         );
+        changed = true;
+      }
+      if (content.includes('JSIDynamic.h')) {
+        content = content.replace(/^[ \t]*#include[ \t]+<jsi\/JSIDynamic\.h>[ \t]*\r?\n?/gm, '')
+          .replace(/^[ \t]*#if[ \t]+__has_include\(<jsi\/JSIDynamic\.h>\)[\s\S]*?#endif[ \t]*\r?\n?/gm, '');
+        changed = true;
+      }
+      if (changed) {
         writeFileSync(full, content, 'utf8');
         console.log('Sanitized RawProps.h at:', full);
       }
