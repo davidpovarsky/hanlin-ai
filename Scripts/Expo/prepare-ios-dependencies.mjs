@@ -419,7 +419,7 @@ async function prepare() {
           await rm(rawProps, { force: true });
         }
       };
-      await sanitizeHeaders(modularHeadersRoot);
+      await sanitizeHeaders(resolve(artifactsRoot, 'ReactModularHeaders'));
       await sanitizeHeaders(reactHeadersDir);
       if (existsSync(resolve(reactCapFwDir, 'Headers'))) {
         await sanitizeHeaders(resolve(reactCapFwDir, 'Headers'));
