@@ -616,6 +616,7 @@ jobs:
         id: app-toolchain
         run: |
           set -euxo pipefail
+          mkdir -p "$LOG_DIR"
 
           {
             echo "Trying to select the newest available Xcode..."
