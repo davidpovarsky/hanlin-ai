@@ -262,7 +262,7 @@ async function prepare() {
         const jsiFiles = await readdir(jsiSourceDir, { withFileTypes: true });
         const jsiHeaders = [];
         for (const file of jsiFiles) {
-          if (file.isFile() && file.name.endsWith('.h') && file.name !== 'JSIDynamic.h') {
+          if (file.isFile() && file.name.endsWith('.h')) {
             await cp(resolve(jsiSourceDir, file.name), resolve(jsiHeadersDir, file.name));
             jsiHeaders.push(file.name);
           }
@@ -500,6 +500,35 @@ struct dynamic {
               await writeFile(fullPath, content, 'utf8');
               console.log(`[HanlinExpo] Patched RawProps.h in ${fullPath}`);
             }
+          } else if (entry.name === 'RawValue.h') {
+            let content = await readFile(fullPath, 'utf8');
+            let modified = false;
+            if (content.includes('#include <folly/dynamic.h>')) {
+              content = content.replace(/^[ \t]*#include[ \t]+<folly\/dynamic\.h>[ \t]*\r?\n?/gm, follyStub);
+              modified = true;
+            }
+            if (content.includes('#include <jsi/JSIDynamic.h>')) {
+              content = content.replace(/^[ \t]*#include[ \t]+<jsi\/JSIDynamic\.h>[ \t]*\r?\n?/gm, `
+#if __has_include(<jsi/JSIDynamic.h>)
+#include <jsi/JSIDynamic.h>
+#endif
+`);
+              modified = true;
+            }
+            if (content.includes('jsi::dynamicFromValue(*runtime, value)')) {
+              content = content.replace('return jsi::dynamicFromValue(*runtime, value);', `
+#if __has_include(<jsi/JSIDynamic.h>)
+      return jsi::dynamicFromValue(*runtime, value);
+#else
+      return folly::dynamic{};
+#endif
+`);
+              modified = true;
+            }
+            if (modified) {
+              await writeFile(fullPath, content, 'utf8');
+              console.log(`[HanlinExpo] Patched RawValue.h in ${fullPath}`);
+            }
           } else if (entry.name === 'fnv1a.h') {
             let content = await readFile(fullPath, 'utf8');
             if (content.includes('std::identity')) {
@@ -509,10 +538,22 @@ struct dynamic {
             }
           } else if (entry.name.endsWith('.h')) {
             let content = await readFile(fullPath, 'utf8');
+            let modified = false;
             if (content.includes('#include <folly/dynamic.h>')) {
               content = content.replace(/^[ \t]*#include[ \t]+<folly\/dynamic\.h>[ \t]*\r?\n?/gm, follyStub);
+              modified = true;
+            }
+            if (content.includes('#include <jsi/JSIDynamic.h>')) {
+              content = content.replace(/^[ \t]*#include[ \t]+<jsi\/JSIDynamic\.h>[ \t]*\r?\n?/gm, `
+#if __has_include(<jsi/JSIDynamic.h>)
+#include <jsi/JSIDynamic.h>
+#endif
+`);
+              modified = true;
+            }
+            if (modified) {
               await writeFile(fullPath, content, 'utf8');
-              console.log(`[HanlinExpo] Patched folly/dynamic.h include in ${fullPath}`);
+              console.log(`[HanlinExpo] Patched includes in ${fullPath}`);
             }
           }
         }
