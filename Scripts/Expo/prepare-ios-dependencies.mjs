@@ -211,6 +211,8 @@ async function prepare() {
         await mkdir(headersDir, { recursive: true });
         await mkdir(modulesDir, { recursive: true });
 
+        const modSourceDir = resolve(rnHeaders, modName);
+
         // Handle yoga framework with full recursive headers and umbrella modulemap
         if (modName === 'yoga') {
           if (existsSync(modSourceDir)) {
@@ -234,7 +236,6 @@ async function prepare() {
         }
 
         // Copy all headers from the module directory if present (except ReactCommon to avoid internal C++ leaks/cycles)
-        const modSourceDir = resolve(rnHeaders, modName);
         if (existsSync(modSourceDir) && modName !== 'ReactCommon') {
           const allHeaders = await readdir(modSourceDir, { withFileTypes: true });
           for (const ent of allHeaders) {
