@@ -414,14 +414,14 @@ async function prepare() {
         await sanitizeHeaders(resolve(artifactsRoot, 'ReactNativeHeaders.xcframework', s, 'Headers'));
       }
 
-      // 1. Neutralize C++20 concepts in hash_combine.h across all staged artifacts
-      const patchHashCombine = async (dir) => {
+      // 1. Neutralize C++20 concepts and features (hash_combine.h, fnv1a.h) across all staged artifacts
+      const patchCppHeaders = async (dir) => {
         if (!existsSync(dir)) return;
         const entries = await readdir(dir, { withFileTypes: true });
         for (const entry of entries) {
           const fullPath = resolve(dir, entry.name);
           if (entry.isDirectory()) {
-            await patchHashCombine(fullPath);
+            await patchCppHeaders(fullPath);
           } else if (entry.name === 'hash_combine.h') {
             let content = await readFile(fullPath, 'utf8');
             if (content.includes('concept Hashable')) {
@@ -431,12 +431,19 @@ async function prepare() {
               await writeFile(fullPath, content, 'utf8');
               console.log(`[HanlinExpo] Neutralized C++20 concept in ${fullPath}`);
             }
+          } else if (entry.name === 'fnv1a.h') {
+            let content = await readFile(fullPath, 'utf8');
+            if (content.includes('std::identity')) {
+              content = content.replace(/std::identity/g, 'std::__identity');
+              await writeFile(fullPath, content, 'utf8');
+              console.log(`[HanlinExpo] Patched std::identity in ${fullPath}`);
+            }
           }
         }
       };
-      await patchHashCombine(artifactsRoot);
+      await patchCppHeaders(artifactsRoot);
 
-      // 2. Strip internal C++ ContentOriginRegistry.h from ExpoModulesCore_umbrella.h
+      // 2. Strip internal C++ Fabric headers from ExpoModulesCore_umbrella.h
       const patchExpoUmbrellas = async (dir) => {
         if (!existsSync(dir)) return;
         const entries = await readdir(dir, { withFileTypes: true });
@@ -446,10 +453,26 @@ async function prepare() {
             await patchExpoUmbrellas(fullPath);
           } else if (entry.name === 'ExpoModulesCore_umbrella.h') {
             let content = await readFile(fullPath, 'utf8');
-            const stripped = content.replace(/^[ \t]*#import[ \t]+["<]ContentOriginRegistry\.h[">][ \t]*\r?\n?/gm, '');
-            if (stripped !== content) {
-              await writeFile(fullPath, stripped, 'utf8');
-              console.log(`[HanlinExpo] Stripped ContentOriginRegistry.h from ${fullPath}`);
+            const fabricHeaders = [
+              'ContentOriginRegistry.h',
+              'ExpoViewComponentDescriptor.h',
+              'ExpoViewShadowNode.h',
+              'ExpoViewEventEmitter.h',
+              'ExpoViewProps.h',
+              'ExpoViewState.h'
+            ];
+            let modified = false;
+            for (const fh of fabricHeaders) {
+              const regex = new RegExp(`^[ \\t]*#import[ \\t]+["<]${fh}[">][ \\t]*\\r?\\n?`, 'gm');
+              const stripped = content.replace(regex, '');
+              if (stripped !== content) {
+                content = stripped;
+                modified = true;
+                console.log(`[HanlinExpo] Stripped ${fh} from ${fullPath}`);
+              }
+            }
+            if (modified) {
+              await writeFile(fullPath, content, 'utf8');
             }
           }
         }
