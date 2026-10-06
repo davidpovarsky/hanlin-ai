@@ -1030,25 +1030,30 @@ jobs:
             local xcf="$1"
             if [ -d "$xcf" ]; then
               echo "Re-signing $xcf..."
+              find "$xcf" -name "._*" -delete 2>/dev/null || true
               find "$xcf" -name "_CodeSignature" -exec rm -rf {} + 2>/dev/null || true
-              for fw in "$xcf"/*/*.framework; do
-                if [ -d "$fw" ]; then
-                  codesign --force --sign - --timestamp=none "$fw" 2>/dev/null || true
-                fi
-              done
+              find "$xcf" -name "*.framework" -type d -exec codesign --force --sign - --timestamp=none {} + 2>/dev/null || true
               codesign --force --sign - --timestamp=none "$xcf" 2>/dev/null || true
               codesign --verify -vvvv "$xcf" 2>&1 || true
             fi
           }
 
-          resign_xcframework "Packages/HanlinExpoRuntime/Artifacts/React.xcframework"
-          resign_xcframework "Packages/HanlinExpoRuntime/Artifacts/ReactNativeHeaders.xcframework"
+          for xcf in Packages/HanlinExpoRuntime/Artifacts/*.xcframework; do
+            if [ -d "$xcf" ]; then
+              resign_xcframework "$xcf"
+            fi
+          done
           if [ -d "$CLONED_PACKAGES_PATH/checkouts" ]; then
             for checkout in "$CLONED_PACKAGES_PATH/checkouts"/*; do
               if [ -d "$checkout" ]; then
                 for base in "$checkout/Packages/HanlinExpoRuntime/Artifacts" "$checkout/Artifacts"; do
-                  resign_xcframework "$base/React.xcframework"
-                  resign_xcframework "$base/ReactNativeHeaders.xcframework"
+                  if [ -d "$base" ]; then
+                    for xcf in "$base"/*.xcframework; do
+                      if [ -d "$xcf" ]; then
+                        resign_xcframework "$xcf"
+                      fi
+                    done
+                  fi
                 done
               fi
             done
@@ -1881,6 +1886,34 @@ jobs:
           find "$DERIVED_DATA_PATH" -name "ExpoModulesCore_umbrella.h" -exec sed -i '' '/ExpoViewComponentDescriptor\.h/d;/ExpoViewEventEmitter\.h/d;/ExpoViewProps\.h/d;/ExpoViewShadowNode\.h/d;/ExpoViewState\.h/d;/SwiftUIViewProps\.h/d;/EXHostWrapper\.h/d;/TestingSyncJSCallInvoker\.h/d' {} + 2>/dev/null || true
           find "$DERIVED_DATA_PATH" -name "EXHostWrapper.h" -exec sed -i '' 's|#import <ReactCommon/RCTHost\.h>|#if __has_include(<ReactCommon/RCTHost.h>)\'$'\n''#import <ReactCommon/RCTHost.h>\'$'\n''#elif __has_include("ReactCommon/RCTHost.h")\'$'\n''#import "ReactCommon/RCTHost.h"\'$'\n''#else\'$'\n''@class RCTHost;\'$'\n''#endif|g' {} + 2>/dev/null || true
           node Scripts/Expo/patch-hash-combine.mjs "$DERIVED_DATA_PATH" Packages/HanlinExpoRuntime/Artifacts "$CLONED_PACKAGES_PATH"
+
+          # Re-sign all xcframeworks so builtin-process-xcframework signature verification succeeds
+          for xcf in Packages/HanlinExpoRuntime/Artifacts/*.xcframework; do
+            if [ -d "$xcf" ]; then
+              find "$xcf" -name "._*" -delete 2>/dev/null || true
+              find "$xcf" -name "_CodeSignature" -exec rm -rf {} + 2>/dev/null || true
+              find "$xcf" -name "*.framework" -type d -exec codesign --force --sign - --timestamp=none {} + 2>/dev/null || true
+              codesign --force --sign - --timestamp=none "$xcf" 2>/dev/null || true
+            fi
+          done
+          if [ -d "$CLONED_PACKAGES_PATH/checkouts" ]; then
+            for checkout in "$CLONED_PACKAGES_PATH/checkouts"/*; do
+              if [ -d "$checkout" ]; then
+                for base in "$checkout/Packages/HanlinExpoRuntime/Artifacts" "$checkout/Artifacts"; do
+                  if [ -d "$base" ]; then
+                    for xcf in "$base"/*.xcframework; do
+                      if [ -d "$xcf" ]; then
+                        find "$xcf" -name "._*" -delete 2>/dev/null || true
+                        find "$xcf" -name "_CodeSignature" -exec rm -rf {} + 2>/dev/null || true
+                        find "$xcf" -name "*.framework" -type d -exec codesign --force --sign - --timestamp=none {} + 2>/dev/null || true
+                        codesign --force --sign - --timestamp=none "$xcf" 2>/dev/null || true
+                      fi
+                    done
+                  fi
+                done
+              fi
+            done
+          fi
 
           started_at="$(date +%s)"
           repo_root="$PWD"

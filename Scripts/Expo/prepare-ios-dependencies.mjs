@@ -401,7 +401,7 @@ async function prepare() {
             }
           } else if (ent.isFile() && ent.name === 'EXHostWrapper.h') {
             let content = await readFile(full, 'utf8');
-            if (content.includes('#import <ReactCommon/RCTHost.h>')) {
+            if (content.includes('#import <ReactCommon/RCTHost.h>') && !content.includes('@class RCTHost;')) {
               const replacement = `#if __has_include(<ReactCommon/RCTHost.h>)
 #import <ReactCommon/RCTHost.h>
 #elif __has_include("ReactCommon/RCTHost.h")
@@ -417,7 +417,7 @@ async function prepare() {
             }
           } else if (ent.isFile() && ent.name === 'TestingSyncJSCallInvoker.h') {
             let content = await readFile(full, 'utf8');
-            if (content.includes('#include <ReactCommon/CallInvoker.h>')) {
+            if (content.includes('#include <ReactCommon/CallInvoker.h>') && !content.includes('__has_include(<ReactCommon/CallInvoker.h>)')) {
               const replacement = `#if __has_include(<ReactCommon/CallInvoker.h>)
 #include <ReactCommon/CallInvoker.h>
 #elif __has_include("ReactCommon/CallInvoker.h")
