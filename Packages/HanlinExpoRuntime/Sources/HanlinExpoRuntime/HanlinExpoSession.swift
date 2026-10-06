@@ -10,14 +10,38 @@ import UIKit
 @_silgen_name("jsrt_create_hermes_factory")
 private func hanlin_create_hermes_factory() -> JSRuntimeFactoryRef
 
+private typealias HostDidInitRuntimeFn = @convention(c) (AnyObject, Selector, AnyObject, UnsafeMutableRawPointer) -> Void
+
+private let hostDidInitRuntimeIMP: HostDidInitRuntimeFn = { selfObj, _cmd, host, runtime in
+    NSLog("%@", "HANLIN_EXPO_HOST_DID_INITIALIZE_RUNTIME runtime=\(runtime)")
+    if let delegate = selfObj as? HanlinExpoReactNativeFactoryDelegate {
+        delegate.handleHostDidInitializeRuntime(runtime)
+    }
+}
+
 private final class HanlinExpoReactNativeFactoryDelegate: RCTDefaultReactNativeFactoryDelegate, @unchecked Sendable {
     private let targetBundleURL: URL
     private let appContext: AppContext
+    private static var didRegisterRuntimeCallback = false
+
+    private static func registerRuntimeCallbackIfNeeded() {
+        guard !didRegisterRuntimeCallback else { return }
+        didRegisterRuntimeCallback = true
+        let sel = NSSelectorFromString("host:didInitializeRuntime:")
+        let imp = unsafeBitCast(hostDidInitRuntimeIMP, to: IMP.self)
+        let types = "v@:@@"
+        if !class_addMethod(HanlinExpoReactNativeFactoryDelegate.self, sel, imp, types) {
+            if let method = class_getInstanceMethod(HanlinExpoReactNativeFactoryDelegate.self, sel) {
+                method_setImplementation(method, imp)
+            }
+        }
+    }
 
     init(bundleURL: URL, appContext: AppContext) {
         self.targetBundleURL = bundleURL
         self.appContext = appContext
         super.init()
+        Self.registerRuntimeCallbackIfNeeded()
     }
 
     nonisolated override func bundleURL() -> URL? {
@@ -32,8 +56,7 @@ private final class HanlinExpoReactNativeFactoryDelegate: RCTDefaultReactNativeF
         return hanlin_create_hermes_factory()
     }
 
-    @objc(host:didInitializeRuntime:)
-    nonisolated func host(_ host: AnyObject, didInitializeRuntime runtime: UnsafeMutableRawPointer) {
+    fileprivate func handleHostDidInitializeRuntime(_ runtime: UnsafeMutableRawPointer) {
         NSLog("%@", "HANLIN_EXPO_HOST_DID_INITIALIZE_RUNTIME runtime=\(runtime)")
         appContext.setRuntime(runtime, scheduler: nil, dispatch: nil)
         NSLog("%@", "HANLIN_EXPO_SET_RUNTIME_DONE")
