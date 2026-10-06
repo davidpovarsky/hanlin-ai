@@ -302,13 +302,43 @@ async function prepare() {
         await cp(reactFwSource, reactHeadersDir, { recursive: true });
       }
 
+      // Copy ReactNativeDependencies headers (glog, folly, fmt, fast_float, double-conversion, etc.)
+      const allSlices = ['ios-arm64_x86_64-simulator', 'ios-arm64', 'ios-arm64_x86_64-maccatalyst'];
+      const depSources = [
+        resolve(artifactsRoot, 'ReactNativeDependencies.xcframework', 'Headers'),
+        ...allSlices.map(s => resolve(artifactsRoot, 'ReactNativeDependencies.xcframework', s, 'Headers'))
+      ];
+
+      const copyDeps = async (destDir) => {
+        for (const depSrc of depSources) {
+          if (existsSync(depSrc)) {
+            const entries = await readdir(depSrc, { withFileTypes: true });
+            for (const ent of entries) {
+              if (ent.name.endsWith('.modulemap')) continue;
+              const src = resolve(depSrc, ent.name);
+              const dst = resolve(destDir, ent.name);
+              await cp(src, dst, { recursive: true });
+            }
+          }
+        }
+        if (existsSync(resolve(destDir, 'double-conversion')) && !existsSync(resolve(destDir, 'DoubleConversion'))) {
+          await cp(resolve(destDir, 'double-conversion'), resolve(destDir, 'DoubleConversion'), { recursive: true });
+        }
+        if (existsSync(resolve(destDir, 'folly')) && !existsSync(resolve(destDir, 'RCT-Folly', 'folly'))) {
+          await cp(resolve(destDir, 'folly'), resolve(destDir, 'RCT-Folly', 'folly'), { recursive: true });
+        }
+      };
+
+      await copyDeps(reactHeadersDir);
+
       const reactCapFwDir = resolve(modularFwsRoot, 'React.framework');
       if (!existsSync(reactCapFwDir)) {
         await cp(reactFwDir, reactCapFwDir, { recursive: true });
+      } else {
+        await copyDeps(resolve(reactCapFwDir, 'Headers'));
       }
 
-      // Also enrich React.xcframework itself with all headers from ReactNativeHeaders across all slices
-      const allSlices = ['ios-arm64_x86_64-simulator', 'ios-arm64', 'ios-arm64_x86_64-maccatalyst'];
+      // Also enrich React.xcframework itself with all headers from ReactNativeHeaders and ReactNativeDependencies across all slices
       for (const s of allSlices) {
         const targetHeaders = resolve(artifactsRoot, 'React.xcframework', s, 'React.framework', 'Headers');
         const sliceRnHeaders = resolve(artifactsRoot, 'ReactNativeHeaders.xcframework', s, 'Headers');
@@ -327,6 +357,7 @@ async function prepare() {
               await cp(sliceReactSource, nested, { recursive: true });
             }
           }
+          await copyDeps(targetHeaders);
         }
       }
 

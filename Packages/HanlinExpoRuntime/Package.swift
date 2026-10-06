@@ -43,7 +43,9 @@ let package = Package(
                     "-Xcc", "-IArtifacts/ReactNativeHeaders.xcframework/ios-arm64_x86_64-simulator/Headers",
                     "-Xcc", "-IPackages/HanlinExpoRuntime/Artifacts/ReactNativeHeaders.xcframework/ios-arm64_x86_64-simulator/Headers",
                     "-Xcc", "-IArtifacts/ReactNativeHeaders.xcframework/ios-arm64/Headers",
-                    "-Xcc", "-IPackages/HanlinExpoRuntime/Artifacts/ReactNativeHeaders.xcframework/ios-arm64/Headers"
+                    "-Xcc", "-IPackages/HanlinExpoRuntime/Artifacts/ReactNativeHeaders.xcframework/ios-arm64/Headers",
+                    "-Xcc", "-IArtifacts/ReactNativeDependencies.xcframework/Headers",
+                    "-Xcc", "-IPackages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers"
                 ])
             ],
             linkerSettings: [
