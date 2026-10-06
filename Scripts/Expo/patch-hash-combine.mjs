@@ -145,6 +145,35 @@ function patchAll(dir) {
         writeFileSync(full, content, 'utf8');
         console.log('Sanitized RawProps.h at:', full);
       }
+    } else if (ent.name === 'ExpoFabricViewObjC.h') {
+      let content = readFileSync(full, 'utf8');
+      if (content.includes('RCTViewComponentView.h') || content.includes('#ifdef __cplusplus')) {
+        content = content.replace(
+          /#ifdef __cplusplus[\s\S]*?#endif \/\/ __cplusplus/m,
+          `#if TARGET_OS_OSX
+#import <React/RCTUIKit.h>
+@interface ExpoFabricViewObjC : RCTUIView
+#else
+@interface ExpoFabricViewObjC : UIView
+#endif
+
+/*
+ * Called for mounting (attaching) a child component view inside \`self\` component view.
+ * Declared in main interface (not category) so Swift subclasses can override.
+ */
+- (void)mountChildComponentView:(nonnull UIView *)childComponentView index:(NSInteger)index;
+
+/*
+ * Called for unmounting (detaching) a child component view from \`self\` component view.
+ * Declared in main interface (not category) so Swift subclasses can override.
+ */
+- (void)unmountChildComponentView:(nonnull UIView *)childComponentView index:(NSInteger)index;
+
+@end`
+        );
+        writeFileSync(full, content, 'utf8');
+        console.log('Sanitized ExpoFabricViewObjC.h at:', full);
+      }
     } else if (ent.name === 'EXHostWrapper.h') {
       let content = readFileSync(full, 'utf8');
       if (content.includes('#import <ReactCommon/RCTHost.h>') && !content.includes('@class RCTHost;')) {
