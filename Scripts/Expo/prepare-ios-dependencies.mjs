@@ -347,6 +347,42 @@ async function prepare() {
         await cleanHeaderModulemaps(resolve(artifactsRoot, 'ReactNativeHeaders.xcframework', s, 'Headers'));
       }
 
+      // Sanitize headers to prevent Clang module errors with non-modular C++ jsinspector-modern and cmark-gfm utf8.h collision
+      const sanitizeHeaders = async (dir) => {
+        if (!existsSync(dir)) return;
+        const u = resolve(dir, 'jsinspector-modern', 'Utf8.h');
+        if (existsSync(u)) {
+          await rm(u, { force: true });
+          console.log(`[HanlinExpo] Removed colliding Utf8.h from ${dir}`);
+        }
+        const umb = resolve(dir, 'React-umbrella.h');
+        if (existsSync(umb)) {
+          let content = await readFile(umb, 'utf8');
+          const stripped = content.replace(/^[ \t]*#import[ \t]+<React\/RCTInspectorNetworkHelper\.h>[ \t]*\r?\n?/gm, '');
+          if (stripped !== content) {
+            await writeFile(umb, stripped, 'utf8');
+            console.log(`[HanlinExpo] Stripped RCTInspectorNetworkHelper.h from ${umb}`);
+          }
+        }
+        const hlp = resolve(dir, 'RCTInspectorNetworkHelper.h');
+        if (existsSync(hlp)) {
+          let content = await readFile(hlp, 'utf8');
+          const stripped = content.replace(/^[ \t]*#import[ \t]+<jsinspector-modern\/ReactCdp\.h>[ \t]*\r?\n?/gm, '// #import <jsinspector-modern/ReactCdp.h>\n');
+          if (stripped !== content) {
+            await writeFile(hlp, stripped, 'utf8');
+            console.log(`[HanlinExpo] Neutralized non-modular jsinspector import in ${hlp}`);
+          }
+        }
+      };
+      await sanitizeHeaders(reactHeadersDir);
+      if (existsSync(resolve(reactCapFwDir, 'Headers'))) {
+        await sanitizeHeaders(resolve(reactCapFwDir, 'Headers'));
+      }
+      for (const s of allSlices) {
+        await sanitizeHeaders(resolve(artifactsRoot, 'React.xcframework', s, 'React.framework', 'Headers'));
+        await sanitizeHeaders(resolve(artifactsRoot, 'ReactNativeHeaders.xcframework', s, 'Headers'));
+      }
+
       // Remove stale code signatures and re-sign ad-hoc if on darwin/codesign is available
       const reactXcf = resolve(artifactsRoot, 'React.xcframework');
       if (existsSync(reactXcf)) {
