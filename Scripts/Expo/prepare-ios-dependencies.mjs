@@ -375,12 +375,35 @@ async function prepare() {
             if (ent.name === 'folly') {
               const jsonDyn = resolve(full, 'json', 'dynamic.h');
               const dyn = resolve(full, 'dynamic.h');
-              if (existsSync(jsonDyn)) {
-                await writeFile(dyn, await readFile(jsonDyn, 'utf8'), 'utf8');
-              } else if (existsSync(dyn)) {
+              const forwardToDyn = `#pragma once
+#if __has_include(<folly/dynamic.h>)
+#include <folly/dynamic.h>
+#elif __has_include("folly/dynamic.h")
+#include "folly/dynamic.h"
+#elif __has_include("../dynamic.h")
+#include "../dynamic.h"
+#endif
+`;
+              const forwardToJsonDyn = `#pragma once
+#if __has_include(<folly/json/dynamic.h>)
+#include <folly/json/dynamic.h>
+#elif __has_include("folly/json/dynamic.h")
+#include "folly/json/dynamic.h"
+#elif __has_include("json/dynamic.h")
+#include "json/dynamic.h"
+#endif
+`;
+              if (existsSync(jsonDyn) && !existsSync(dyn)) {
+                await writeFile(dyn, forwardToJsonDyn, 'utf8');
+              } else if (existsSync(dyn) && !existsSync(jsonDyn)) {
                 const jsonDir = resolve(full, 'json');
                 await mkdir(jsonDir, { recursive: true });
-                await writeFile(resolve(jsonDir, 'dynamic.h'), await readFile(dyn, 'utf8'), 'utf8');
+                await writeFile(resolve(jsonDir, 'dynamic.h'), forwardToDyn, 'utf8');
+              } else if (existsSync(dyn) && existsSync(jsonDyn)) {
+                const dynContent = await readFile(dyn, 'utf8');
+                if (dynContent.length > 500) {
+                  await writeFile(dyn, forwardToJsonDyn, 'utf8');
+                }
               }
             }
             await sanitizeHeaders(full);
@@ -467,19 +490,36 @@ async function prepare() {
             }
           } else if (ent.isFile() && ent.name === 'EXHostWrapper.h') {
             let content = await readFile(full, 'utf8');
-            if (content.includes('#import <ReactCommon/RCTHost.h>') && !content.includes('@class RCTHost;')) {
-              const replacement = `#if __has_include(<ReactCommon/RCTHost.h>)
-#import <ReactCommon/RCTHost.h>
-#elif __has_include("ReactCommon/RCTHost.h")
-#import "ReactCommon/RCTHost.h"
-#elif __has_include(<React/RCTHost.h>)
-#import <React/RCTHost.h>
-#else
-@class RCTHost;
-#endif`;
-              content = content.replace('#import <ReactCommon/RCTHost.h>', replacement);
+            let changed = false;
+            if (!content.includes('@class RCTHost;')) {
+              content = content.replace('#import <ExpoModulesCore/Platform.h>', '#import <ExpoModulesCore/Platform.h>\n\n@class RCTHost;');
+              changed = true;
+            }
+            if (content.includes('RCTHost.h')) {
+              content = content.replace(/#ifdef __cplusplus[\s\S]*?#endif \/\/ __cplusplus/m, '');
+              content = content.replace(/#if __has_include\([\s\S]*?#endif/gm, '');
+              content = content.replace(/^[ \t]*#import[ \t]+[<"][^>"]*RCTHost\.h[>"][ \t]*\r?\n?/gm, '');
+              changed = true;
+            }
+            if (changed) {
               await writeFile(full, content, 'utf8');
               console.log(`[HanlinExpo] Sanitized EXHostWrapper.h: ${full}`);
+            }
+          } else if (ent.isFile() && ent.name === 'TraceEvent.h') {
+            let content = await readFile(full, 'utf8');
+            if (content.includes('"tracing/TracingCategory.h"') && !content.includes('__has_include("tracing/TracingCategory.h")')) {
+              content = content.replace(
+                '#include "tracing/TracingCategory.h"',
+                `#if __has_include("TracingCategory.h")
+#include "TracingCategory.h"
+#elif __has_include("tracing/TracingCategory.h")
+#include "tracing/TracingCategory.h"
+#elif __has_include(<jsinspector-modern/tracing/TracingCategory.h>)
+#include <jsinspector-modern/tracing/TracingCategory.h>
+#endif`
+              );
+              await writeFile(full, content, 'utf8');
+              console.log(`[HanlinExpo] Sanitized TraceEvent.h: ${full}`);
             }
           } else if (ent.isFile() && ent.name === 'TestingSyncJSCallInvoker.h') {
             let content = await readFile(full, 'utf8');

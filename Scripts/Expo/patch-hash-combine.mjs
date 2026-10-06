@@ -85,14 +85,38 @@ function patchAll(dir) {
       if (ent.name === 'folly') {
         const jsonDyn = join(full, 'json', 'dynamic.h');
         const dyn = join(full, 'dynamic.h');
-        if (existsSync(jsonDyn)) {
-          writeFileSync(dyn, readFileSync(jsonDyn, 'utf8'), 'utf8');
-          console.log('Copied full folly/json/dynamic.h to:', dyn);
-        } else if (existsSync(dyn)) {
+        const forwardToDyn = `#pragma once
+#if __has_include(<folly/dynamic.h>)
+#include <folly/dynamic.h>
+#elif __has_include("folly/dynamic.h")
+#include "folly/dynamic.h"
+#elif __has_include("../dynamic.h")
+#include "../dynamic.h"
+#endif
+`;
+        const forwardToJsonDyn = `#pragma once
+#if __has_include(<folly/json/dynamic.h>)
+#include <folly/json/dynamic.h>
+#elif __has_include("folly/json/dynamic.h")
+#include "folly/json/dynamic.h"
+#elif __has_include("json/dynamic.h")
+#include "json/dynamic.h"
+#endif
+`;
+        if (existsSync(jsonDyn) && !existsSync(dyn)) {
+          writeFileSync(dyn, forwardToJsonDyn, 'utf8');
+          console.log('Created forwarding folly/dynamic.h -> folly/json/dynamic.h');
+        } else if (existsSync(dyn) && !existsSync(jsonDyn)) {
           const jsonDir = join(full, 'json');
           if (!existsSync(jsonDir)) mkdirSync(jsonDir, { recursive: true });
-          writeFileSync(jsonDyn, readFileSync(dyn, 'utf8'), 'utf8');
-          console.log('Copied full folly/dynamic.h to:', jsonDyn);
+          writeFileSync(jsonDyn, forwardToDyn, 'utf8');
+          console.log('Created forwarding folly/json/dynamic.h -> folly/dynamic.h');
+        } else if (existsSync(dyn) && existsSync(jsonDyn)) {
+          const dynContent = readFileSync(dyn, 'utf8');
+          if (dynContent.length > 500) {
+            writeFileSync(dyn, forwardToJsonDyn, 'utf8');
+            console.log('Normalized forwarding folly/dynamic.h -> folly/json/dynamic.h');
+          }
         }
       }
       patchAll(full);
@@ -179,19 +203,36 @@ function patchAll(dir) {
       }
     } else if (ent.name === 'EXHostWrapper.h') {
       let content = readFileSync(full, 'utf8');
-      if (content.includes('#import <ReactCommon/RCTHost.h>') && !content.includes('@class RCTHost;')) {
-        const replacement = `#if __has_include(<ReactCommon/RCTHost.h>)
-#import <ReactCommon/RCTHost.h>
-#elif __has_include("ReactCommon/RCTHost.h")
-#import "ReactCommon/RCTHost.h"
-#elif __has_include(<React/RCTHost.h>)
-#import <React/RCTHost.h>
-#else
-@class RCTHost;
-#endif`;
-        content = content.replace('#import <ReactCommon/RCTHost.h>', replacement);
+      let changed = false;
+      if (!content.includes('@class RCTHost;')) {
+        content = content.replace('#import <ExpoModulesCore/Platform.h>', '#import <ExpoModulesCore/Platform.h>\n\n@class RCTHost;');
+        changed = true;
+      }
+      if (content.includes('RCTHost.h')) {
+        content = content.replace(/#ifdef __cplusplus[\s\S]*?#endif \/\/ __cplusplus/m, '');
+        content = content.replace(/#if __has_include\([\s\S]*?#endif/gm, '');
+        content = content.replace(/^[ \t]*#import[ \t]+[<"][^>"]*RCTHost\.h[>"][ \t]*\r?\n?/gm, '');
+        changed = true;
+      }
+      if (changed) {
         writeFileSync(full, content, 'utf8');
         console.log('Sanitized EXHostWrapper.h at:', full);
+      }
+    } else if (ent.name === 'TraceEvent.h') {
+      let content = readFileSync(full, 'utf8');
+      if (content.includes('"tracing/TracingCategory.h"') && !content.includes('__has_include("tracing/TracingCategory.h")')) {
+        content = content.replace(
+          '#include "tracing/TracingCategory.h"',
+          `#if __has_include("TracingCategory.h")
+#include "TracingCategory.h"
+#elif __has_include("tracing/TracingCategory.h")
+#include "tracing/TracingCategory.h"
+#elif __has_include(<jsinspector-modern/tracing/TracingCategory.h>)
+#include <jsinspector-modern/tracing/TracingCategory.h>
+#endif`
+        );
+        writeFileSync(full, content, 'utf8');
+        console.log('Sanitized TraceEvent.h at:', full);
       }
     } else if (ent.name === 'TestingSyncJSCallInvoker.h') {
       let content = readFileSync(full, 'utf8');

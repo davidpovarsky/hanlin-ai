@@ -1749,7 +1749,7 @@ jobs:
               find "$base_scan" -name "React-umbrella.h" -exec sed -i '' '/RCTInspectorNetworkHelper\.h/d' {} + 2>/dev/null || true
               find "$base_scan" -name "ExpoModulesCore_umbrella.h" -exec sed -i '' '/ExpoViewComponentDescriptor\.h/d;/ExpoViewEventEmitter\.h/d;/ExpoViewProps\.h/d;/ExpoViewShadowNode\.h/d;/ExpoViewState\.h/d;/SwiftUIViewProps\.h/d;/TestingSyncJSCallInvoker\.h/d' {} + 2>/dev/null || true
               find "$base_scan" -name "ExpoModulesCore.h" -exec sed -i '' '/SwiftUIViewProps\.h/d' {} + 2>/dev/null || true
-              find "$base_scan" -name "EXHostWrapper.h" -exec sed -i '' 's|#import <ReactCommon/RCTHost\.h>|#if __has_include(<ReactCommon/RCTHost.h>)\'$'\n''#import <ReactCommon/RCTHost.h>\'$'\n''#elif __has_include("ReactCommon/RCTHost.h")\'$'\n''#import "ReactCommon/RCTHost.h"\'$'\n''#else\'$'\n''@class RCTHost;\'$'\n''#endif|g' {} + 2>/dev/null || true
+              find "$base_scan" -name "EXHostWrapper.h" -exec sed -i '' 's|#import <ReactCommon/RCTHost\.h>|@class RCTHost;|g; s|#import <React/RCTHost\.h>|@class RCTHost;|g' {} + 2>/dev/null || true
               find "$base_scan" -name "RawProps.h" -exec sed -i '' '/JSIDynamic\.h/d; s|#include <folly/dynamic\.h>|#if __has_include(<folly/dynamic.h>)\'$'\n''#include <folly/dynamic.h>\'$'\n''#elif __has_include(<folly/json/dynamic.h>)\'$'\n''#include <folly/json/dynamic.h>\'$'\n''#endif|g' {} + 2>/dev/null || true
               find "$base_scan" -name "ExpoFabricViewObjC.h" -exec sed -i '' '/RCTViewComponentView\.h/d; s/ExpoFabricViewObjC : RCTViewComponentView/ExpoFabricViewObjC : UIView/g' {} + 2>/dev/null || true
               find "$base_scan" -name "*.h" -exec sed -i '' 's|#include <jsi/JSIDynamic\.h>|#if __has_include(<jsi/JSIDynamic.h>)\'$'\n''#include <jsi/JSIDynamic.h>\'$'\n''#endif|g' {} + 2>/dev/null || true
@@ -1757,9 +1757,7 @@ jobs:
               find "$base_scan" -path "*/jsinspector-modern/*" -name "*.h" -exec sed -i '' 's|<jsinspector-modern/\([^>]*\)>|"\1"|g' {} + 2>/dev/null || true
               find "$base_scan" -path "*/folly/json/dynamic.h" | while read -r jdyn; do
                 ddyn="$(dirname "$(dirname "$jdyn")")/dynamic.h"
-                if [ ! -f "$ddyn" ]; then
-                  cp -f "$jdyn" "$ddyn" 2>/dev/null || true
-                fi
+                printf '#pragma once\n#if __has_include(<folly/json/dynamic.h>)\n#include <folly/json/dynamic.h>\n#elif __has_include("folly/json/dynamic.h")\n#include "folly/json/dynamic.h"\n#elif __has_include("json/dynamic.h")\n#include "json/dynamic.h"\n#endif\n' > "$ddyn" 2>/dev/null || true
               done
             fi
           done
@@ -1894,7 +1892,7 @@ jobs:
             rm -f "$dst_hdr/module.modulemap" 2>/dev/null || true
             find "$dst_hdr" -name "React-umbrella.h" -exec sed -i '' '/RCTInspectorNetworkHelper\.h/d' {} + 2>/dev/null || true
             find "$dst_hdr" -name "ExpoModulesCore_umbrella.h" -exec sed -i '' '/ExpoViewComponentDescriptor\.h/d;/ExpoViewEventEmitter\.h/d;/ExpoViewProps\.h/d;/ExpoViewShadowNode\.h/d;/ExpoViewState\.h/d;/SwiftUIViewProps\.h/d;/TestingSyncJSCallInvoker\.h/d' {} + 2>/dev/null || true
-            find "$dst_hdr" -name "EXHostWrapper.h" -exec sed -i '' 's|#import <ReactCommon/RCTHost\.h>|#if __has_include(<ReactCommon/RCTHost.h>)\'$'\n''#import <ReactCommon/RCTHost.h>\'$'\n''#elif __has_include("ReactCommon/RCTHost.h")\'$'\n''#import "ReactCommon/RCTHost.h"\'$'\n''#else\'$'\n''@class RCTHost;\'$'\n''#endif|g' {} + 2>/dev/null || true
+            find "$dst_hdr" -name "EXHostWrapper.h" -exec sed -i '' 's|#import <ReactCommon/RCTHost\.h>|@class RCTHost;|g; s|#import <React/RCTHost\.h>|@class RCTHost;|g' {} + 2>/dev/null || true
             find "$dst_hdr" -name "RCTInspectorNetworkHelper.h" -exec sed -i '' 's|<jsinspector-modern/\([^>]*\)>|"jsinspector-modern/\1"|g' {} + 2>/dev/null || true
             find "$dst_hdr" -path "*/jsinspector-modern/*" -name "*.h" -exec sed -i '' 's|<jsinspector-modern/\([^>]*\)>|"\1"|g' {} + 2>/dev/null || true
             find "$dst_hdr" -name "*.h" -exec sed -i '' 's|#include <folly/dynamic\.h>|#if __has_include(<folly/dynamic.h>)\'$'\n''#include <folly/dynamic.h>\'$'\n''#elif __has_include(<folly/json/dynamic.h>)\'$'\n''#include <folly/json/dynamic.h>\'$'\n''#endif|g' {} + 2>/dev/null || true
@@ -1903,19 +1901,19 @@ jobs:
           done
           find "$DERIVED_DATA_PATH" -name "ExpoModulesCore_umbrella.h" -exec sed -i '' '/ExpoViewComponentDescriptor\.h/d;/ExpoViewEventEmitter\.h/d;/ExpoViewProps\.h/d;/ExpoViewShadowNode\.h/d;/ExpoViewState\.h/d;/SwiftUIViewProps\.h/d;/TestingSyncJSCallInvoker\.h/d' {} + 2>/dev/null || true
           find "$DERIVED_DATA_PATH" -name "ExpoModulesCore.h" -exec sed -i '' '/SwiftUIViewProps\.h/d' {} + 2>/dev/null || true
-          find "$DERIVED_DATA_PATH" -name "EXHostWrapper.h" -exec sed -i '' 's|#import <ReactCommon/RCTHost\.h>|#if __has_include(<ReactCommon/RCTHost.h>)\'$'\n''#import <ReactCommon/RCTHost.h>\'$'\n''#elif __has_include("ReactCommon/RCTHost.h")\'$'\n''#import "ReactCommon/RCTHost.h"\'$'\n''#else\'$'\n''@class RCTHost;\'$'\n''#endif|g' {} + 2>/dev/null || true
+          find "$DERIVED_DATA_PATH" -name "EXHostWrapper.h" -exec sed -i '' 's|#import <ReactCommon/RCTHost\.h>|@class RCTHost;|g; s|#import <React/RCTHost\.h>|@class RCTHost;|g' {} + 2>/dev/null || true
           find "$DERIVED_DATA_PATH" -name "RawProps.h" -exec sed -i '' '/JSIDynamic\.h/d; s|#include <folly/dynamic\.h>|#if __has_include(<folly/dynamic.h>)\'$'\n''#include <folly/dynamic.h>\'$'\n''#elif __has_include(<folly/json/dynamic.h>)\'$'\n''#include <folly/json/dynamic.h>\'$'\n''#endif|g' {} + 2>/dev/null || true
           find "$DERIVED_DATA_PATH" -name "ExpoFabricViewObjC.h" -exec sed -i '' '/RCTViewComponentView\.h/d; s/ExpoFabricViewObjC : RCTViewComponentView/ExpoFabricViewObjC : UIView/g' {} + 2>/dev/null || true
           find "$DERIVED_DATA_PATH" -name "*.h" -exec sed -i '' 's|#include <jsi/JSIDynamic\.h>|#if __has_include(<jsi/JSIDynamic.h>)\'$'\n''#include <jsi/JSIDynamic.h>\'$'\n''#endif|g' {} + 2>/dev/null || true
           find "$DERIVED_DATA_PATH" -path "*/react.framework/Headers" -type d | while read -r rf; do
             mkdir -p "$rf/folly" "$rf/folly/json"
-            cp -f "Packages/HanlinExpoRuntime/Artifacts/ReactNativeHeaders.xcframework/ios-arm64_x86_64-simulator/Headers/folly/dynamic.h" "$rf/folly/dynamic.h" 2>/dev/null || true
             cp -f "Packages/HanlinExpoRuntime/Artifacts/ReactNativeHeaders.xcframework/ios-arm64_x86_64-simulator/Headers/folly/dynamic.h" "$rf/folly/json/dynamic.h" 2>/dev/null || true
+            printf '#pragma once\n#if __has_include(<folly/json/dynamic.h>)\n#include <folly/json/dynamic.h>\n#elif __has_include("folly/json/dynamic.h")\n#include "folly/json/dynamic.h"\n#elif __has_include("json/dynamic.h")\n#include "json/dynamic.h"\n#endif\n' > "$rf/folly/dynamic.h" 2>/dev/null || true
           done
           find "$DERIVED_DATA_PATH" -path "*/React.framework/Headers" -type d | while read -r rf; do
             mkdir -p "$rf/folly" "$rf/folly/json"
-            cp -f "Packages/HanlinExpoRuntime/Artifacts/ReactNativeHeaders.xcframework/ios-arm64_x86_64-simulator/Headers/folly/dynamic.h" "$rf/folly/dynamic.h" 2>/dev/null || true
             cp -f "Packages/HanlinExpoRuntime/Artifacts/ReactNativeHeaders.xcframework/ios-arm64_x86_64-simulator/Headers/folly/dynamic.h" "$rf/folly/json/dynamic.h" 2>/dev/null || true
+            printf '#pragma once\n#if __has_include(<folly/json/dynamic.h>)\n#include <folly/json/dynamic.h>\n#elif __has_include("folly/json/dynamic.h")\n#include "folly/json/dynamic.h"\n#elif __has_include("json/dynamic.h")\n#include "json/dynamic.h"\n#endif\n' > "$rf/folly/dynamic.h" 2>/dev/null || true
           done
           node Scripts/Expo/patch-hash-combine.mjs "$DERIVED_DATA_PATH" Packages/HanlinExpoRuntime/Artifacts "$CLONED_PACKAGES_PATH"
 
