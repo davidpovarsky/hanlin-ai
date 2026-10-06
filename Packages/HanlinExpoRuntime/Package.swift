@@ -41,9 +41,7 @@ let package = Package(
                     "-Xcc", "-IArtifacts/ModularFrameworks/react.framework/Headers/react",
                     "-Xcc", "-IPackages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react",
                     "-Xcc", "-IArtifacts/ReactNativeHeaders.xcframework/ios-arm64_x86_64-simulator/Headers",
-                    "-Xcc", "-IPackages/HanlinExpoRuntime/Artifacts/ReactNativeHeaders.xcframework/ios-arm64_x86_64-simulator/Headers",
-                    "-Xcc", "-IArtifacts/ReactNativeHeaders.xcframework/ios-arm64_x86_64-simulator/Headers/jsinspector-modern",
-                    "-Xcc", "-IPackages/HanlinExpoRuntime/Artifacts/ReactNativeHeaders.xcframework/ios-arm64_x86_64-simulator/Headers/jsinspector-modern"
+                    "-Xcc", "-IPackages/HanlinExpoRuntime/Artifacts/ReactNativeHeaders.xcframework/ios-arm64_x86_64-simulator/Headers"
                 ])
             ],
             linkerSettings: [
