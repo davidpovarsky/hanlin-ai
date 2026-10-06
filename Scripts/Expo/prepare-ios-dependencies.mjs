@@ -404,7 +404,22 @@ async function prepare() {
             console.log(`[HanlinExpo] Neutralized non-modular jsinspector import in ${hlp}`);
           }
         }
+        const rend = resolve(dir, 'renderer');
+        if (existsSync(rend)) {
+          await rm(rend, { recursive: true, force: true });
+          console.log(`[HanlinExpo] Removed non-modular renderer from ${dir}`);
+        }
+        const reactRend = resolve(dir, 'react', 'renderer');
+        if (existsSync(reactRend)) {
+          await rm(reactRend, { recursive: true, force: true });
+          console.log(`[HanlinExpo] Removed non-modular react/renderer from ${dir}`);
+        }
+        const rawProps = resolve(dir, 'RawProps.h');
+        if (existsSync(rawProps)) {
+          await rm(rawProps, { force: true });
+        }
       };
+      await sanitizeHeaders(modularHeadersRoot);
       await sanitizeHeaders(reactHeadersDir);
       if (existsSync(resolve(reactCapFwDir, 'Headers'))) {
         await sanitizeHeaders(resolve(reactCapFwDir, 'Headers'));
@@ -413,6 +428,24 @@ async function prepare() {
         await sanitizeHeaders(resolve(artifactsRoot, 'React.xcframework', s, 'React.framework', 'Headers'));
         await sanitizeHeaders(resolve(artifactsRoot, 'ReactNativeHeaders.xcframework', s, 'Headers'));
       }
+
+      // Recursively remove any remaining non-modular renderer directories across artifactsRoot
+      const removeRendererDirs = async (dir) => {
+        if (!existsSync(dir)) return;
+        const entries = await readdir(dir, { withFileTypes: true });
+        for (const entry of entries) {
+          const fullPath = resolve(dir, entry.name);
+          if (entry.isDirectory()) {
+            if (entry.name === 'renderer') {
+              await rm(fullPath, { recursive: true, force: true });
+              console.log(`[HanlinExpo] Removed non-modular renderer directory: ${fullPath}`);
+            } else {
+              await removeRendererDirs(fullPath);
+            }
+          }
+        }
+      };
+      await removeRendererDirs(artifactsRoot);
 
       // 1. Neutralize C++20 concepts and features (hash_combine.h, fnv1a.h) across all staged artifacts
       const patchCppHeaders = async (dir) => {
