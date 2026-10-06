@@ -10,9 +10,7 @@ import UIKit
 @_silgen_name("jsrt_create_hermes_factory")
 private func hanlin_create_hermes_factory() -> JSRuntimeFactoryRef
 
-private typealias HostDidInitRuntimeFn = @convention(c) (AnyObject, Selector, AnyObject, UnsafeMutableRawPointer) -> Void
-
-private let hostDidInitRuntimeIMP: HostDidInitRuntimeFn = { selfObj, _cmd, host, runtime in
+private func hostDidInitRuntimeCallback(selfObj: AnyObject, _cmd: Selector, host: AnyObject, runtime: UnsafeMutableRawPointer) {
     NSLog("%@", "HANLIN_EXPO_HOST_DID_INITIALIZE_RUNTIME runtime=\(runtime)")
     if let delegate = selfObj as? HanlinExpoReactNativeFactoryDelegate {
         delegate.handleHostDidInitializeRuntime(runtime)
@@ -28,7 +26,8 @@ private final class HanlinExpoReactNativeFactoryDelegate: RCTDefaultReactNativeF
         guard !didRegisterRuntimeCallback else { return }
         didRegisterRuntimeCallback = true
         let sel = NSSelectorFromString("host:didInitializeRuntime:")
-        let imp = unsafeBitCast(hostDidInitRuntimeIMP, to: IMP.self)
+        let fn: @convention(c) (AnyObject, Selector, AnyObject, UnsafeMutableRawPointer) -> Void = hostDidInitRuntimeCallback
+        let imp = unsafeBitCast(fn, to: IMP.self)
         let types = "v@:@@"
         if !class_addMethod(HanlinExpoReactNativeFactoryDelegate.self, sel, imp, types) {
             if let method = class_getInstanceMethod(HanlinExpoReactNativeFactoryDelegate.self, sel) {
