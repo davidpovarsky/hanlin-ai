@@ -662,6 +662,11 @@ jobs:
           xcode_version="$(xcodebuild -version | sed -n '1s/^Xcode //p')"
           xcode_build="$(xcodebuild -version | sed -n '2s/^Build version //p')"
           runner_arch="$(uname -m)"
+          iphoneos_sdk="$(xcrun --sdk iphoneos --show-sdk-version)"
+          echo "xcode-version=$xcode_version" >> "$GITHUB_OUTPUT"
+          echo "xcode-build=$xcode_build" >> "$GITHUB_OUTPUT"
+          echo "runner-arch=$runner_arch" >> "$GITHUB_OUTPUT"
+          echo "iphoneos-sdk=$iphoneos_sdk" >> "$GITHUB_OUTPUT"
 
       - name: Prepare pinned NativeScript iOS dependency closure
         run: |
@@ -719,11 +724,6 @@ jobs:
             echo "===== Top-level files ====="
             find . -maxdepth 3 -type f | sort | sed -n '1,400{s#^\./##;p;}'
           } 2>&1 | tee "$LOG_DIR/01-environment.log"
-          iphoneos_sdk="$(xcrun --sdk iphoneos --show-sdk-version)"
-          echo "xcode-version=$xcode_version" >> "$GITHUB_OUTPUT"
-          echo "xcode-build=$xcode_build" >> "$GITHUB_OUTPUT"
-          echo "runner-arch=$runner_arch" >> "$GITHUB_OUTPUT"
-          echo "iphoneos-sdk=$iphoneos_sdk" >> "$GITHUB_OUTPUT"
 
       - name: Restore cloned Swift package dependencies
         id: app-sourcepackages-cache

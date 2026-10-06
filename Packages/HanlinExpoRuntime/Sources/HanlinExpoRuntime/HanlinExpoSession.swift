@@ -19,7 +19,7 @@ private func hostDidInitRuntimeCallback(selfObj: AnyObject, _cmd: Selector, host
 
 private final class HanlinExpoReactNativeFactoryDelegate: RCTDefaultReactNativeFactoryDelegate, @unchecked Sendable {
     private let targetBundleURL: URL
-    private let appContext: AppContext
+    nonisolated(unsafe) private let appContext: AppContext
     private static var didRegisterRuntimeCallback = false
 
     private static func registerRuntimeCallbackIfNeeded() {
@@ -55,7 +55,7 @@ private final class HanlinExpoReactNativeFactoryDelegate: RCTDefaultReactNativeF
         return hanlin_create_hermes_factory()
     }
 
-    fileprivate func handleHostDidInitializeRuntime(_ runtime: UnsafeMutableRawPointer) {
+    nonisolated fileprivate func handleHostDidInitializeRuntime(_ runtime: UnsafeMutableRawPointer) {
         NSLog("%@", "HANLIN_EXPO_HOST_DID_INITIALIZE_RUNTIME runtime=\(runtime)")
         appContext.setRuntime(runtime, scheduler: nil, dispatch: nil)
         NSLog("%@", "HANLIN_EXPO_SET_RUNTIME_DONE")
