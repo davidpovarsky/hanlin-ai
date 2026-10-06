@@ -383,6 +383,48 @@ async function prepare() {
         await sanitizeHeaders(resolve(artifactsRoot, 'ReactNativeHeaders.xcframework', s, 'Headers'));
       }
 
+      // 1. Neutralize C++20 concepts in hash_combine.h across all staged artifacts
+      const patchHashCombine = async (dir) => {
+        if (!existsSync(dir)) return;
+        const entries = await readdir(dir, { withFileTypes: true });
+        for (const entry of entries) {
+          const fullPath = resolve(dir, entry.name);
+          if (entry.isDirectory()) {
+            await patchHashCombine(fullPath);
+          } else if (entry.name === 'hash_combine.h') {
+            let content = await readFile(fullPath, 'utf8');
+            if (content.includes('concept Hashable')) {
+              content = content.replace(/template\s*<\s*typename\s+T\s*>\s*concept\s+Hashable\s*=\s*[\s\S]*?\);/g, '// concept Hashable disabled for C++17/interop compatibility');
+              content = content.replace(/template\s*<\s*Hashable\s+T\s*,\s*Hashable\.\.\.\s*Rest\s*>/g, 'template <typename T, typename... Rest>');
+              content = content.replace(/template\s*<\s*Hashable\s+T\s*,\s*Hashable\.\.\.\s*Args\s*>/g, 'template <typename T, typename... Args>');
+              await writeFile(fullPath, content, 'utf8');
+              console.log(`[HanlinExpo] Neutralized C++20 concept in ${fullPath}`);
+            }
+          }
+        }
+      };
+      await patchHashCombine(artifactsRoot);
+
+      // 2. Strip internal C++ ContentOriginRegistry.h from ExpoModulesCore_umbrella.h
+      const patchExpoUmbrellas = async (dir) => {
+        if (!existsSync(dir)) return;
+        const entries = await readdir(dir, { withFileTypes: true });
+        for (const entry of entries) {
+          const fullPath = resolve(dir, entry.name);
+          if (entry.isDirectory()) {
+            await patchExpoUmbrellas(fullPath);
+          } else if (entry.name === 'ExpoModulesCore_umbrella.h') {
+            let content = await readFile(fullPath, 'utf8');
+            const stripped = content.replace(/^[ \t]*#import[ \t]+["<]ContentOriginRegistry\.h[">][ \t]*\r?\n?/gm, '');
+            if (stripped !== content) {
+              await writeFile(fullPath, stripped, 'utf8');
+              console.log(`[HanlinExpo] Stripped ContentOriginRegistry.h from ${fullPath}`);
+            }
+          }
+        }
+      };
+      await patchExpoUmbrellas(artifactsRoot);
+
       // Remove stale code signatures and re-sign ad-hoc if on darwin/codesign is available
       const reactXcf = resolve(artifactsRoot, 'React.xcframework');
       if (existsSync(reactXcf)) {
