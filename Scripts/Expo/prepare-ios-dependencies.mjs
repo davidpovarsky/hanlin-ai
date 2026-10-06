@@ -587,11 +587,24 @@ template <typename CharTransformT = fnv1a_identity>
         await removeCodeSig(xcfPath);
         if (process.platform === 'darwin') {
           try {
-            for (const s of allSlices) {
-              const fw = resolve(xcfPath, s, 'React.framework');
-              if (existsSync(fw)) {
-                execSync(`codesign --force --sign - --timestamp=none "${fw}"`, { stdio: 'ignore' });
+            const fws = [];
+            const findFrameworks = async (p) => {
+              if (!existsSync(p)) return;
+              const entries = await readdir(p, { withFileTypes: true });
+              for (const ent of entries) {
+                const sub = resolve(p, ent.name);
+                if (ent.isDirectory()) {
+                  if (ent.name.endsWith('.framework')) {
+                    fws.push(sub);
+                  } else {
+                    await findFrameworks(sub);
+                  }
+                }
               }
+            };
+            await findFrameworks(xcfPath);
+            for (const fw of fws) {
+              execSync(`codesign --force --sign - --timestamp=none "${fw}"`, { stdio: 'ignore' });
             }
             execSync(`codesign --force --sign - --timestamp=none "${xcfPath}"`, { stdio: 'ignore' });
             console.log(`[HanlinExpo] Re-signed ${basename(xcfPath)} ad-hoc.`);
@@ -601,8 +614,12 @@ template <typename CharTransformT = fnv1a_identity>
         }
       };
 
-      await resignXcf(resolve(artifactsRoot, 'React.xcframework'));
-      await resignXcf(resolve(artifactsRoot, 'ReactNativeHeaders.xcframework'));
+      const xcfEntries = await readdir(artifactsRoot, { withFileTypes: true });
+      for (const ent of xcfEntries) {
+        if (ent.isDirectory() && ent.name.endsWith('.xcframework')) {
+          await resignXcf(resolve(artifactsRoot, ent.name));
+        }
+      }
 
       count++;
       console.log('[HanlinExpo] Created unified non-modular react.framework in ModularFrameworks and enriched React.xcframework.');

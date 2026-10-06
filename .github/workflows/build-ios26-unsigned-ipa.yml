@@ -1753,24 +1753,28 @@ jobs:
             if [ -d "$xcf" ]; then
               echo "Re-signing $xcf..."
               find "$xcf" -name "_CodeSignature" -exec rm -rf {} + 2>/dev/null || true
-              for fw in "$xcf"/*/*.framework; do
-                if [ -d "$fw" ]; then
-                  codesign --force --sign - --timestamp=none "$fw" 2>/dev/null || true
-                fi
-              done
+              find "$xcf" -name "*.framework" -type d -exec codesign --force --sign - --timestamp=none {} + 2>/dev/null || true
               codesign --force --sign - --timestamp=none "$xcf" 2>/dev/null || true
               codesign --verify -vvvv "$xcf" 2>&1 || true
             fi
           }
 
-          resign_xcframework "Packages/HanlinExpoRuntime/Artifacts/React.xcframework"
-          resign_xcframework "Packages/HanlinExpoRuntime/Artifacts/ReactNativeHeaders.xcframework"
+          for xcf in Packages/HanlinExpoRuntime/Artifacts/*.xcframework; do
+            if [ -d "$xcf" ]; then
+              resign_xcframework "$xcf"
+            fi
+          done
           if [ -d "$CLONED_PACKAGES_PATH/checkouts" ]; then
             for checkout in "$CLONED_PACKAGES_PATH/checkouts"/*; do
               if [ -d "$checkout" ]; then
                 for base in "$checkout/Packages/HanlinExpoRuntime/Artifacts" "$checkout/Artifacts"; do
-                  resign_xcframework "$base/React.xcframework"
-                  resign_xcframework "$base/ReactNativeHeaders.xcframework"
+                  if [ -d "$base" ]; then
+                    for xcf in "$base"/*.xcframework; do
+                      if [ -d "$xcf" ]; then
+                        resign_xcframework "$xcf"
+                      fi
+                    done
+                  fi
                 done
               fi
             done
