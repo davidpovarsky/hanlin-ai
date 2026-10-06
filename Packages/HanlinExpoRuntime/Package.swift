@@ -30,7 +30,6 @@ let package = Package(
             swiftSettings: [
                 .interoperabilityMode(.Cxx),
                 .unsafeFlags([
-                    "-Xcc", "-std=gnu++20",
                     "-Xcc", "-Wno-quoted-include-in-framework-header",
                     "-Xcc", "-Wno-non-modular-include-in-framework-module",
                     "-Xcc", "-FArtifacts/ModularFrameworks",
