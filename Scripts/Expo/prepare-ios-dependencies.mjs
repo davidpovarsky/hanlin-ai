@@ -415,7 +415,56 @@ async function prepare() {
         await sanitizeHeaders(resolve(artifactsRoot, 'ReactNativeHeaders.xcframework', s, 'Headers'));
       }
 
-      // 1. Neutralize C++20 concepts and features (hash_combine.h, fnv1a.h, RawProps.h) across all staged artifacts
+      // 1. Neutralize C++20 concepts and features (hash_combine.h, fnv1a.h, RawProps.h) and provide safe fallback for folly/dynamic.h across all staged artifacts
+      const follyStub = `#if __has_include(<folly/dynamic.h>)
+#include <folly/dynamic.h>
+#elif __has_include(<RCT-Folly/folly/dynamic.h>)
+#include <RCT-Folly/folly/dynamic.h>
+#else
+#include <cstddef>
+#include <cstdint>
+#include <string>
+#include <string_view>
+#include <utility>
+#ifndef FOLLY_DYNAMIC_DEFINED
+#define FOLLY_DYNAMIC_DEFINED
+namespace folly {
+struct dynamic_item_pair {
+  struct key_type { std::string_view getString() const { return {}; } } first;
+  struct val_wrapper {
+    template <typename T> operator T() const { return T{}; }
+  } second;
+};
+struct dynamic {
+  struct items_type {
+    const dynamic_item_pair* begin() const { return nullptr; }
+    const dynamic_item_pair* end() const { return nullptr; }
+  };
+  dynamic() = default;
+  dynamic(std::nullptr_t) {}
+  dynamic(const dynamic&) = default;
+  dynamic(dynamic&&) = default;
+  dynamic& operator=(const dynamic&) = default;
+  dynamic& operator=(dynamic&&) = default;
+  items_type items() const { return {}; }
+  static dynamic object() { return dynamic{}; }
+  bool isNull() const { return false; }
+  bool isBool() const { return false; }
+  bool isNumber() const { return false; }
+  bool isString() const { return false; }
+  bool isArray() const { return false; }
+  bool isObject() const { return false; }
+  bool getBool() const { return false; }
+  int64_t asInt() const { return 0; }
+  double asDouble() const { return 0.0; }
+  std::string getString() const { return {}; }
+  size_t size() const { return 0; }
+};
+}
+#endif
+#endif
+`;
+
       const patchCppHeaders = async (dir) => {
         if (!existsSync(dir)) return;
         const entries = await readdir(dir, { withFileTypes: true });
@@ -434,10 +483,22 @@ async function prepare() {
             }
           } else if (entry.name === 'RawProps.h') {
             let content = await readFile(fullPath, 'utf8');
+            let modified = false;
             if (content.includes('concept RawPropsFilterable')) {
               content = content.replace(/template\s*<\s*typename\s+T\s*>\s*concept\s+RawPropsFilterable\s*=\s*[\s\S]*?\);/g, '// concept RawPropsFilterable disabled for C++17 compatibility');
+              modified = true;
+            }
+            if (content.includes('#include <folly/dynamic.h>')) {
+              content = content.replace(/^[ \t]*#include[ \t]+<folly\/dynamic\.h>[ \t]*\r?\n?/gm, follyStub);
+              modified = true;
+            }
+            if (content.includes('#include <jsi/JSIDynamic.h>')) {
+              content = content.replace(/^[ \t]*#include[ \t]+<jsi\/JSIDynamic\.h>[ \t]*\r?\n?/gm, '// #include <jsi/JSIDynamic.h>\n');
+              modified = true;
+            }
+            if (modified) {
               await writeFile(fullPath, content, 'utf8');
-              console.log(`[HanlinExpo] Neutralized C++20 RawPropsFilterable concept in ${fullPath}`);
+              console.log(`[HanlinExpo] Patched RawProps.h in ${fullPath}`);
             }
           } else if (entry.name === 'fnv1a.h') {
             let content = await readFile(fullPath, 'utf8');
@@ -445,6 +506,13 @@ async function prepare() {
               content = content.replace(/std::identity/g, 'std::__identity');
               await writeFile(fullPath, content, 'utf8');
               console.log(`[HanlinExpo] Patched std::identity in ${fullPath}`);
+            }
+          } else if (entry.name.endsWith('.h')) {
+            let content = await readFile(fullPath, 'utf8');
+            if (content.includes('#include <folly/dynamic.h>')) {
+              content = content.replace(/^[ \t]*#include[ \t]+<folly\/dynamic\.h>[ \t]*\r?\n?/gm, follyStub);
+              await writeFile(fullPath, content, 'utf8');
+              console.log(`[HanlinExpo] Patched folly/dynamic.h include in ${fullPath}`);
             }
           }
         }
