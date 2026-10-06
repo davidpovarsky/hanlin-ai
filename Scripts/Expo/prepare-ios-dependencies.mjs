@@ -613,10 +613,12 @@ template <typename CharTransformT = fnv1a_identity>
 #include <folly/dynamic.h>
 #elif __has_include(<folly/json/dynamic.h>)
 #include <folly/json/dynamic.h>
-#else
-#include <folly/dynamic.h>
 #endif`;
               content = content.replace(/#include <folly\/dynamic\.h>/g, replacement);
+              changed = true;
+            }
+            if (content.includes('#else\n#include <folly/dynamic.h>\n#endif') || content.includes('#else\r\n#include <folly/dynamic.h>\r\n#endif')) {
+              content = content.replace(/^[ \t]*#else[ \t]*\r?\n[ \t]*#include[ \t]+<folly\/dynamic\.h>[ \t]*\r?\n/gm, '');
               changed = true;
             }
             if (content.includes('#include <jsi/JSIDynamic.h>') && !content.includes('__has_include(<jsi/JSIDynamic.h>)')) {

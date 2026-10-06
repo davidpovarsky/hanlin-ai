@@ -1841,16 +1841,23 @@ jobs:
             fi
           fi
 
-          build_products_fw="$DERIVED_DATA_PATH/Build/Products/${CONFIGURATION}-iphonesimulator/React.framework/Headers"
-          build_products_fw_lower="$DERIVED_DATA_PATH/Build/Products/${CONFIGURATION}-iphonesimulator/react.framework/Headers"
-          pkg_products_fw="$DERIVED_DATA_PATH/Build/Products/${CONFIGURATION}-iphonesimulator/PackageFrameworks/React.framework/Headers"
-          pkg_products_fw_lower="$DERIVED_DATA_PATH/Build/Products/${CONFIGURATION}-iphonesimulator/PackageFrameworks/react.framework/Headers"
-          mkdir -p "$build_products_fw" "$build_products_fw_lower" "$pkg_products_fw" "$pkg_products_fw_lower"
+          dst_hdrs=()
+          for cfg in "Debug" "Release" "$CONFIGURATION"; do
+            dst_hdrs+=(
+              "$DERIVED_DATA_PATH/Build/Products/${cfg}-iphonesimulator/React.framework/Headers"
+              "$DERIVED_DATA_PATH/Build/Products/${cfg}-iphonesimulator/react.framework/Headers"
+              "$DERIVED_DATA_PATH/Build/Products/${cfg}-iphonesimulator/PackageFrameworks/React.framework/Headers"
+              "$DERIVED_DATA_PATH/Build/Products/${cfg}-iphonesimulator/PackageFrameworks/react.framework/Headers"
+            )
+          done
+          for d in "${dst_hdrs[@]}"; do
+            mkdir -p "$d"
+          done
           rn_all_headers="Packages/HanlinExpoRuntime/Artifacts/ReactNativeHeaders.xcframework/ios-arm64_x86_64-simulator/Headers"
           rn_dependencies="Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers"
           react_xcf="Packages/HanlinExpoRuntime/Artifacts/React.xcframework/ios-arm64_x86_64-simulator/React.framework/Headers"
           react_modular="Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders"
-          for dst_hdr in "$build_products_fw" "$build_products_fw_lower" "$pkg_products_fw" "$pkg_products_fw_lower"; do
+          for dst_hdr in "${dst_hdrs[@]}"; do
             if [ -d "$rn_all_headers" ]; then
               cp -R "$rn_all_headers/"* "$dst_hdr/" || true
             fi
@@ -1889,7 +1896,7 @@ jobs:
             find "$dst_hdr" -name "EXHostWrapper.h" -exec sed -i '' 's|#import <ReactCommon/RCTHost\.h>|#if __has_include(<ReactCommon/RCTHost.h>)\'$'\n''#import <ReactCommon/RCTHost.h>\'$'\n''#elif __has_include("ReactCommon/RCTHost.h")\'$'\n''#import "ReactCommon/RCTHost.h"\'$'\n''#else\'$'\n''@class RCTHost;\'$'\n''#endif|g' {} + 2>/dev/null || true
             find "$dst_hdr" -name "RCTInspectorNetworkHelper.h" -exec sed -i '' 's|<jsinspector-modern/\([^>]*\)>|"jsinspector-modern/\1"|g' {} + 2>/dev/null || true
             find "$dst_hdr" -path "*/jsinspector-modern/*" -name "*.h" -exec sed -i '' 's|<jsinspector-modern/\([^>]*\)>|"\1"|g' {} + 2>/dev/null || true
-            find "$dst_hdr" -name "*.h" -exec sed -i '' 's|#include <folly/dynamic\.h>|#if __has_include(<folly/dynamic.h>)\'$'\n''#include <folly/dynamic.h>\'$'\n''#elif __has_include(<folly/json/dynamic.h>)\'$'\n''#include <folly/json/dynamic.h>\'$'\n''#else\'$'\n''#include <folly/dynamic.h>\'$'\n''#endif|g' {} + 2>/dev/null || true
+            find "$dst_hdr" -name "*.h" -exec sed -i '' 's|#include <folly/dynamic\.h>|#if __has_include(<folly/dynamic.h>)\'$'\n''#include <folly/dynamic.h>\'$'\n''#elif __has_include(<folly/json/dynamic.h>)\'$'\n''#include <folly/json/dynamic.h>\'$'\n''#endif|g' {} + 2>/dev/null || true
             find "$dst_hdr" -name "*.h" -exec sed -i '' 's|#include <jsi/JSIDynamic\.h>|#if __has_include(<jsi/JSIDynamic.h>)\'$'\n''#include <jsi/JSIDynamic.h>\'$'\n''#endif|g' {} + 2>/dev/null || true
           done
           find "$DERIVED_DATA_PATH" -name "ExpoModulesCore_umbrella.h" -exec sed -i '' '/ExpoViewComponentDescriptor\.h/d;/ExpoViewEventEmitter\.h/d;/ExpoViewProps\.h/d;/ExpoViewShadowNode\.h/d;/ExpoViewState\.h/d;/SwiftUIViewProps\.h/d;/EXHostWrapper\.h/d;/TestingSyncJSCallInvoker\.h/d' {} + 2>/dev/null || true
@@ -1897,6 +1904,16 @@ jobs:
           find "$DERIVED_DATA_PATH" -name "EXHostWrapper.h" -exec sed -i '' 's|#import <ReactCommon/RCTHost\.h>|#if __has_include(<ReactCommon/RCTHost.h>)\'$'\n''#import <ReactCommon/RCTHost.h>\'$'\n''#elif __has_include("ReactCommon/RCTHost.h")\'$'\n''#import "ReactCommon/RCTHost.h"\'$'\n''#else\'$'\n''@class RCTHost;\'$'\n''#endif|g' {} + 2>/dev/null || true
           find "$DERIVED_DATA_PATH" -name "RawProps.h" -exec sed -i '' '/JSIDynamic\.h/d; s|#include <folly/dynamic\.h>|#if __has_include(<folly/dynamic.h>)\'$'\n''#include <folly/dynamic.h>\'$'\n''#elif __has_include(<folly/json/dynamic.h>)\'$'\n''#include <folly/json/dynamic.h>\'$'\n''#endif|g' {} + 2>/dev/null || true
           find "$DERIVED_DATA_PATH" -name "*.h" -exec sed -i '' 's|#include <jsi/JSIDynamic\.h>|#if __has_include(<jsi/JSIDynamic.h>)\'$'\n''#include <jsi/JSIDynamic.h>\'$'\n''#endif|g' {} + 2>/dev/null || true
+          find "$DERIVED_DATA_PATH" -path "*/react.framework/Headers" -type d | while read -r rf; do
+            mkdir -p "$rf/folly" "$rf/folly/json"
+            cp -f "Packages/HanlinExpoRuntime/Artifacts/ReactNativeHeaders.xcframework/ios-arm64_x86_64-simulator/Headers/folly/dynamic.h" "$rf/folly/dynamic.h" 2>/dev/null || true
+            cp -f "Packages/HanlinExpoRuntime/Artifacts/ReactNativeHeaders.xcframework/ios-arm64_x86_64-simulator/Headers/folly/dynamic.h" "$rf/folly/json/dynamic.h" 2>/dev/null || true
+          done
+          find "$DERIVED_DATA_PATH" -path "*/React.framework/Headers" -type d | while read -r rf; do
+            mkdir -p "$rf/folly" "$rf/folly/json"
+            cp -f "Packages/HanlinExpoRuntime/Artifacts/ReactNativeHeaders.xcframework/ios-arm64_x86_64-simulator/Headers/folly/dynamic.h" "$rf/folly/dynamic.h" 2>/dev/null || true
+            cp -f "Packages/HanlinExpoRuntime/Artifacts/ReactNativeHeaders.xcframework/ios-arm64_x86_64-simulator/Headers/folly/dynamic.h" "$rf/folly/json/dynamic.h" 2>/dev/null || true
+          done
           node Scripts/Expo/patch-hash-combine.mjs "$DERIVED_DATA_PATH" Packages/HanlinExpoRuntime/Artifacts "$CLONED_PACKAGES_PATH"
 
           # Re-sign all xcframeworks so builtin-process-xcframework signature verification succeeds
