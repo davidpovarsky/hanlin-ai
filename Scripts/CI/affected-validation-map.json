@@ -28,7 +28,8 @@
     "test-results.jsonl",
     "Scripts/Acceptance/**",
     "Tests/Fixtures/**",
-    "Skills/**"
+    "Skills/**",
+    "scripts/validate-project-board.sh"
   ],
   "components": {
     "ci_router": {
