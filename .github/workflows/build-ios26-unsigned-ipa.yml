@@ -1851,6 +1851,10 @@ jobs:
               mkdir -p "$dst_hdr/folly"
               cp -f "$react_modular/folly/dynamic.h" "$dst_hdr/folly/" || true
             fi
+            if [ -f "$rn_all_headers/jsi/JSIDynamic.h" ]; then
+              mkdir -p "$dst_hdr/jsi"
+              cp -f "$rn_all_headers/jsi/JSIDynamic.h" "$dst_hdr/jsi/" || true
+            fi
             rn_react_source="Packages/HanlinExpoRuntime/Artifacts/ReactNativeHeaders.xcframework/ios-arm64_x86_64-simulator/Headers/react"
             if [ -d "$rn_react_source" ]; then
               cp -R "$rn_react_source/"* "$dst_hdr/" || true

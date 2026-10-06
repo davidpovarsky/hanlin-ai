@@ -131,6 +131,7 @@ template <typename CharTransformT = fnv1a_identity>
       }
     } else if (ent.name === 'RawProps.h') {
       let content = readFileSync(full, 'utf8');
+      let changed = false;
       if (content.includes('#include <folly/dynamic.h>') && !content.includes('__has_include(<folly/dynamic.h>)')) {
         const replacement = `#if __has_include(<folly/dynamic.h>)
 #include <folly/dynamic.h>
@@ -138,6 +139,16 @@ template <typename CharTransformT = fnv1a_identity>
 #include <folly/json/dynamic.h>
 #endif`;
         content = content.replace('#include <folly/dynamic.h>', replacement);
+        changed = true;
+      }
+      if (content.includes('#include <jsi/JSIDynamic.h>') && !content.includes('__has_include(<jsi/JSIDynamic.h>)')) {
+        const replacement = `#if __has_include(<jsi/JSIDynamic.h>)
+#include <jsi/JSIDynamic.h>
+#endif`;
+        content = content.replace('#include <jsi/JSIDynamic.h>', replacement);
+        changed = true;
+      }
+      if (changed) {
         writeFileSync(full, content, 'utf8');
         console.log('Successfully patched RawProps.h at:', full);
       }
