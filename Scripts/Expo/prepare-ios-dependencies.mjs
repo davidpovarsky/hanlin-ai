@@ -456,6 +456,38 @@ async function prepare() {
       };
       await patchExpoUmbrellas(artifactsRoot);
 
+      // 3. Neutralize non-modular glog include in react_native_assert.h and other headers across all staged artifacts
+      const patchGlogIncludes = async (dir) => {
+        if (!existsSync(dir)) return;
+        const entries = await readdir(dir, { withFileTypes: true });
+        for (const entry of entries) {
+          const fullPath = resolve(dir, entry.name);
+          if (entry.isDirectory()) {
+            await patchGlogIncludes(fullPath);
+          } else if (entry.name === 'react_native_assert.h') {
+            let content = await readFile(fullPath, 'utf8');
+            if (content.includes('glog/logging.h')) {
+              content = content.replace(/#include <glog\/logging\.h>/g, '// #include <glog/logging.h>');
+              content = content.replace(/LOG\(ERROR\)[\s\S]*?assert\(cond\);/g, 'assert(cond);');
+              await writeFile(fullPath, content, 'utf8');
+              console.log(`[HanlinExpo] Neutralized glog include in ${fullPath}`);
+            }
+          } else if (entry.name.endsWith('.h')) {
+            let content = await readFile(fullPath, 'utf8');
+            if (content.includes('glog/logging.h')) {
+              content = content.replace(/^[ \t]*#include[ \t]+<glog\/logging\.h>[ \t]*\r?\n?/gm, '// #include <glog/logging.h>\n');
+              await writeFile(fullPath, content, 'utf8');
+              console.log(`[HanlinExpo] Neutralized glog include in ${fullPath}`);
+            }
+          }
+        }
+      };
+      await patchGlogIncludes(artifactsRoot);
+      const nestedFallbackDir = resolve(artifactsRoot, '..', 'Packages', 'HanlinExpoRuntime');
+      if (existsSync(nestedFallbackDir)) {
+        await patchGlogIncludes(nestedFallbackDir);
+      }
+
       // Remove stale code signatures and re-sign ad-hoc if on darwin/codesign is available
       const reactXcf = resolve(artifactsRoot, 'React.xcframework');
       if (existsSync(reactXcf)) {
