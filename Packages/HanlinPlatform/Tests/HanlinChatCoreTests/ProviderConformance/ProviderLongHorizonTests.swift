@@ -192,7 +192,7 @@ struct ProviderLongHorizonTests {
 
         var expectations: [Int: RoundExpectation] = [:]
         var responses: [Int: ProviderResponseEmission] = [:]
-        for step in 0..<35 {
+        for step in 0...36 {
             let callID = "call-limit-\(step)"
             responses[step] = .sseChunks(ProviderResponseFixtures.openAIChatToolCallChunks(
                 calls: [(id: callID, name: "looping_tool", arguments: "{}")],

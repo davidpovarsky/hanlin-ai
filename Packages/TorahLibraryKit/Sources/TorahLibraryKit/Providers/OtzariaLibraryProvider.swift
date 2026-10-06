@@ -104,69 +104,11 @@ public final class OtzariaLibraryProvider: TorahLibraryProvider, TorahLibrarySea
             return []
         }
 
+        #if canImport(SQLite3)
+        return performNativeSQLiteSearch(anchors: anchors, limit: limit)
+        #else
         var results: [TorahSearchHit] = []
         var seenKeys = Set<String>()
-
-        #if canImport(SQLite3)
-        lock.lock()
-        defer { lock.unlock() }
-
-        guard let db = dbHandle else { return [] }
-
-        for anchor in anchors {
-            let cleanAnchor = HebrewTextNormalizer.stripNiqqud(from: anchor).trimmingCharacters(in: .whitespacesAndNewlines)
-            guard cleanAnchor.count >= 3 else { continue }
-
-            // Query lines matching anchor. Supports standard Otzaria 'name' column in book table.
-            let sql = """
-            SELECT l.bookId, b.name, l.lineIndex, l.content, l.heRef
-            FROM line l
-            JOIN book b ON l.bookId = b.id
-            WHERE l.content LIKE ?
-            LIMIT ?;
-            """
-
-            var stmt: OpaquePointer?
-            if sqlite3_prepare_v2(db, sql, -1, &stmt, nil) == SQLITE_OK {
-                let pattern = "%\(cleanAnchor)%"
-                sqlite3_bind_text(stmt, 1, (pattern as NSString).utf8String, -1, nil)
-                sqlite3_bind_int(stmt, 2, Int32(limit))
-
-                while sqlite3_step(stmt) == SQLITE_ROW {
-                    let bookId = Int(sqlite3_column_int(stmt, 0))
-                    let bookTitle = String(cString: sqlite3_column_text(stmt, 1))
-                    let lineIndex = Int(sqlite3_column_int(stmt, 2))
-                    let content = sqlite3_column_text(stmt, 3) != nil ? String(cString: sqlite3_column_text(stmt, 3)) : ""
-                    let heRef = sqlite3_column_text(stmt, 4) != nil ? String(cString: sqlite3_column_text(stmt, 4)) : "\(bookTitle) line \(lineIndex)"
-
-                    let locator = SourceLocator(
-                        providerID: providerID,
-                        corpusID: "canonical",
-                        workKey: "book:\(bookId)",
-                        positionKind: .line,
-                        positionValue: "\(lineIndex)"
-                    )
-
-                    if !seenKeys.contains(locator.persistenceKey) {
-                        seenKeys.insert(locator.persistenceKey)
-                        results.append(
-                            TorahSearchHit(
-                                locator: locator,
-                                workTitle: heRef.isEmpty ? bookTitle : "\(bookTitle) (\(heRef))",
-                                textSnippet: content,
-                                fullText: content,
-                                providerScore: 1.0
-                            )
-                        )
-                    }
-
-                    if results.count >= limit { break }
-                }
-                sqlite3_finalize(stmt)
-            }
-            if results.count >= limit { break }
-        }
-        #else
         for anchor in anchors {
             let cleanAnchor = HebrewTextNormalizer.stripNiqqud(from: anchor).trimmingCharacters(in: .whitespacesAndNewlines)
             guard cleanAnchor.count >= 3 else { continue }
@@ -222,58 +164,7 @@ public final class OtzariaLibraryProvider: TorahLibraryProvider, TorahLibrarySea
         guard isAvailable else { return nil }
 
         #if canImport(SQLite3)
-        lock.lock()
-        defer { lock.unlock() }
-
-        guard let db = dbHandle else { return nil }
-
-        // Parse bookId and lineIndex
-        let bookId: Int
-        if locator.workKey.hasPrefix("book:"),
-           let parsed = Int(locator.workKey.dropFirst("book:".count)) {
-            bookId = parsed
-        } else if let parsed = Int(locator.workKey) {
-            bookId = parsed
-        } else {
-            // Try resolving book by title
-            bookId = resolveBookId(title: locator.workKey, db: db) ?? 1
-        }
-
-        let lineIndex = Int(locator.positionValue) ?? 0
-
-        let sql = """
-        SELECT l.content, l.heRef, b.name
-        FROM line l
-        JOIN book b ON l.bookId = b.id
-        WHERE l.bookId = ? AND l.lineIndex = ?
-        LIMIT 1;
-        """
-
-        var stmt: OpaquePointer?
-        if sqlite3_prepare_v2(db, sql, -1, &stmt, nil) == SQLITE_OK {
-            sqlite3_bind_int(stmt, 1, Int32(bookId))
-            sqlite3_bind_int(stmt, 2, Int32(lineIndex))
-
-            if sqlite3_step(stmt) == SQLITE_ROW {
-                let content = sqlite3_column_text(stmt, 0) != nil ? String(cString: sqlite3_column_text(stmt, 0)) : ""
-                let heRef = sqlite3_column_text(stmt, 1) != nil ? String(cString: sqlite3_column_text(stmt, 1)) : nil
-                let bookTitle = sqlite3_column_text(stmt, 2) != nil ? String(cString: sqlite3_column_text(stmt, 2)) : locator.workKey
-                sqlite3_finalize(stmt)
-
-                return StudySource(
-                    locator: locator,
-                    primaryText: content,
-                    contextBefore: nil,
-                    contextAfter: nil,
-                    links: [],
-                    topics: [],
-                    versionMetadata: VersionMetadata(versionTitle: bookTitle, versionTitleInHebrew: heRef, language: "he"),
-                    licenseMetadata: LicenseMetadata(licenseName: "Public Domain / CC", copyrightNotice: nil),
-                    provenance: "otzaria_local_sqlite"
-                )
-            }
-            sqlite3_finalize(stmt)
-        }
+        return performNativeSQLiteGetSection(locator: locator)
         #else
         let bookId: Int
         if locator.workKey.hasPrefix("book:"),
@@ -326,6 +217,123 @@ public final class OtzariaLibraryProvider: TorahLibraryProvider, TorahLibrarySea
     }
 
     #if canImport(SQLite3)
+    private func performNativeSQLiteSearch(anchors: [String], limit: Int) -> [TorahSearchHit] {
+        lock.lock()
+        defer { lock.unlock() }
+
+        guard let db = dbHandle else { return [] }
+        var results: [TorahSearchHit] = []
+        var seenKeys = Set<String>()
+
+        for anchor in anchors {
+            let cleanAnchor = HebrewTextNormalizer.stripNiqqud(from: anchor).trimmingCharacters(in: .whitespacesAndNewlines)
+            guard cleanAnchor.count >= 3 else { continue }
+
+            let sql = """
+            SELECT l.bookId, b.name, l.lineIndex, l.content, l.heRef
+            FROM line l
+            JOIN book b ON l.bookId = b.id
+            WHERE l.content LIKE ?
+            LIMIT ?;
+            """
+
+            var stmt: OpaquePointer?
+            if sqlite3_prepare_v2(db, sql, -1, &stmt, nil) == SQLITE_OK {
+                let pattern = "%\(cleanAnchor)%"
+                sqlite3_bind_text(stmt, 1, (pattern as NSString).utf8String, -1, nil)
+                sqlite3_bind_int(stmt, 2, Int32(limit))
+
+                while sqlite3_step(stmt) == SQLITE_ROW {
+                    let bookId = Int(sqlite3_column_int(stmt, 0))
+                    let bookTitle = String(cString: sqlite3_column_text(stmt, 1))
+                    let lineIndex = Int(sqlite3_column_int(stmt, 2))
+                    let content = sqlite3_column_text(stmt, 3) != nil ? String(cString: sqlite3_column_text(stmt, 3)) : ""
+                    let heRef = sqlite3_column_text(stmt, 4) != nil ? String(cString: sqlite3_column_text(stmt, 4)) : "\(bookTitle) line \(lineIndex)"
+
+                    let locator = SourceLocator(
+                        providerID: providerID,
+                        corpusID: "canonical",
+                        workKey: "book:\(bookId)",
+                        positionKind: .line,
+                        positionValue: "\(lineIndex)"
+                    )
+
+                    if !seenKeys.contains(locator.persistenceKey) {
+                        seenKeys.insert(locator.persistenceKey)
+                        results.append(
+                            TorahSearchHit(
+                                locator: locator,
+                                workTitle: heRef.isEmpty ? bookTitle : "\(bookTitle) (\(heRef))",
+                                textSnippet: content,
+                                fullText: content,
+                                providerScore: 1.0
+                            )
+                        )
+                    }
+
+                    if results.count >= limit { break }
+                }
+                sqlite3_finalize(stmt)
+            }
+            if results.count >= limit { break }
+        }
+        return results
+    }
+
+    private func performNativeSQLiteGetSection(locator: SourceLocator) -> StudySource? {
+        lock.lock()
+        defer { lock.unlock() }
+
+        guard let db = dbHandle else { return nil }
+
+        let bookId: Int
+        if locator.workKey.hasPrefix("book:"),
+           let parsed = Int(locator.workKey.dropFirst("book:".count)) {
+            bookId = parsed
+        } else if let parsed = Int(locator.workKey) {
+            bookId = parsed
+        } else {
+            bookId = resolveBookId(title: locator.workKey, db: db) ?? 1
+        }
+
+        let lineIndex = Int(locator.positionValue) ?? 0
+
+        let sql = """
+        SELECT l.content, l.heRef, b.name
+        FROM line l
+        JOIN book b ON l.bookId = b.id
+        WHERE l.bookId = ? AND l.lineIndex = ?
+        LIMIT 1;
+        """
+
+        var stmt: OpaquePointer?
+        if sqlite3_prepare_v2(db, sql, -1, &stmt, nil) == SQLITE_OK {
+            sqlite3_bind_int(stmt, 1, Int32(bookId))
+            sqlite3_bind_int(stmt, 2, Int32(lineIndex))
+
+            if sqlite3_step(stmt) == SQLITE_ROW {
+                let content = sqlite3_column_text(stmt, 0) != nil ? String(cString: sqlite3_column_text(stmt, 0)) : ""
+                let heRef = sqlite3_column_text(stmt, 1) != nil ? String(cString: sqlite3_column_text(stmt, 1)) : nil
+                let bookTitle = sqlite3_column_text(stmt, 2) != nil ? String(cString: sqlite3_column_text(stmt, 2)) : locator.workKey
+                sqlite3_finalize(stmt)
+
+                return StudySource(
+                    locator: locator,
+                    primaryText: content,
+                    contextBefore: nil,
+                    contextAfter: nil,
+                    links: [],
+                    topics: [],
+                    versionMetadata: VersionMetadata(versionTitle: bookTitle, versionTitleInHebrew: heRef, language: "he"),
+                    licenseMetadata: LicenseMetadata(licenseName: "Public Domain / CC", copyrightNotice: nil),
+                    provenance: "otzaria_local_sqlite"
+                )
+            }
+            sqlite3_finalize(stmt)
+        }
+        return nil
+    }
+
     private func resolveBookId(title: String, db: OpaquePointer) -> Int? {
         let sql = "SELECT id FROM book WHERE name = ? OR title = ? LIMIT 1;"
         var stmt: OpaquePointer?
