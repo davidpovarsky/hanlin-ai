@@ -391,10 +391,43 @@ async function prepare() {
               .replace(/^[ \t]*#import[ \t]+"ExpoViewEventEmitter\.h"[ \t]*\r?\n?/gm, '')
               .replace(/^[ \t]*#import[ \t]+"ExpoViewProps\.h"[ \t]*\r?\n?/gm, '')
               .replace(/^[ \t]*#import[ \t]+"ExpoViewShadowNode\.h"[ \t]*\r?\n?/gm, '')
-              .replace(/^[ \t]*#import[ \t]+"ExpoViewState\.h"[ \t]*\r?\n?/gm, '');
+              .replace(/^[ \t]*#import[ \t]+"ExpoViewState\.h"[ \t]*\r?\n?/gm, '')
+              .replace(/^[ \t]*#import[ \t]+"SwiftUIViewProps\.h"[ \t]*\r?\n?/gm, '')
+              .replace(/^[ \t]*#import[ \t]+"EXHostWrapper\.h"[ \t]*\r?\n?/gm, '')
+              .replace(/^[ \t]*#import[ \t]+"TestingSyncJSCallInvoker\.h"[ \t]*\r?\n?/gm, '');
             if (filtered !== content) {
               await writeFile(full, filtered, 'utf8');
               console.log(`[HanlinExpo] Sanitized ExpoModulesCore_umbrella.h: ${full}`);
+            }
+          } else if (ent.isFile() && ent.name === 'EXHostWrapper.h') {
+            let content = await readFile(full, 'utf8');
+            if (content.includes('#import <ReactCommon/RCTHost.h>')) {
+              const replacement = `#if __has_include(<ReactCommon/RCTHost.h>)
+#import <ReactCommon/RCTHost.h>
+#elif __has_include("ReactCommon/RCTHost.h")
+#import "ReactCommon/RCTHost.h"
+#elif __has_include(<React/RCTHost.h>)
+#import <React/RCTHost.h>
+#else
+@class RCTHost;
+#endif`;
+              content = content.replace('#import <ReactCommon/RCTHost.h>', replacement);
+              await writeFile(full, content, 'utf8');
+              console.log(`[HanlinExpo] Sanitized EXHostWrapper.h: ${full}`);
+            }
+          } else if (ent.isFile() && ent.name === 'TestingSyncJSCallInvoker.h') {
+            let content = await readFile(full, 'utf8');
+            if (content.includes('#include <ReactCommon/CallInvoker.h>')) {
+              const replacement = `#if __has_include(<ReactCommon/CallInvoker.h>)
+#include <ReactCommon/CallInvoker.h>
+#elif __has_include("ReactCommon/CallInvoker.h")
+#include "ReactCommon/CallInvoker.h"
+#elif __has_include(<React/CallInvoker.h>)
+#include <React/CallInvoker.h>
+#endif`;
+              content = content.replace('#include <ReactCommon/CallInvoker.h>', replacement);
+              await writeFile(full, content, 'utf8');
+              console.log(`[HanlinExpo] Sanitized TestingSyncJSCallInvoker.h: ${full}`);
             }
           } else if (ent.isFile() && ent.name === 'React-umbrella.h') {
             let content = await readFile(full, 'utf8');

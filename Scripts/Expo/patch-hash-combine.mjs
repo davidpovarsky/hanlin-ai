@@ -103,10 +103,43 @@ function patchAll(dir) {
         .replace(/^[ \t]*#import[ \t]+"ExpoViewEventEmitter\.h"[ \t]*\r?\n?/gm, '')
         .replace(/^[ \t]*#import[ \t]+"ExpoViewProps\.h"[ \t]*\r?\n?/gm, '')
         .replace(/^[ \t]*#import[ \t]+"ExpoViewShadowNode\.h"[ \t]*\r?\n?/gm, '')
-        .replace(/^[ \t]*#import[ \t]+"ExpoViewState\.h"[ \t]*\r?\n?/gm, '');
+        .replace(/^[ \t]*#import[ \t]+"ExpoViewState\.h"[ \t]*\r?\n?/gm, '')
+        .replace(/^[ \t]*#import[ \t]+"SwiftUIViewProps\.h"[ \t]*\r?\n?/gm, '')
+        .replace(/^[ \t]*#import[ \t]+"EXHostWrapper\.h"[ \t]*\r?\n?/gm, '')
+        .replace(/^[ \t]*#import[ \t]+"TestingSyncJSCallInvoker\.h"[ \t]*\r?\n?/gm, '');
       if (filtered !== content) {
         writeFileSync(full, filtered, 'utf8');
         console.log('Sanitized ExpoModulesCore_umbrella.h at:', full);
+      }
+    } else if (ent.name === 'EXHostWrapper.h') {
+      let content = readFileSync(full, 'utf8');
+      if (content.includes('#import <ReactCommon/RCTHost.h>')) {
+        const replacement = `#if __has_include(<ReactCommon/RCTHost.h>)
+#import <ReactCommon/RCTHost.h>
+#elif __has_include("ReactCommon/RCTHost.h")
+#import "ReactCommon/RCTHost.h"
+#elif __has_include(<React/RCTHost.h>)
+#import <React/RCTHost.h>
+#else
+@class RCTHost;
+#endif`;
+        content = content.replace('#import <ReactCommon/RCTHost.h>', replacement);
+        writeFileSync(full, content, 'utf8');
+        console.log('Sanitized EXHostWrapper.h at:', full);
+      }
+    } else if (ent.name === 'TestingSyncJSCallInvoker.h') {
+      let content = readFileSync(full, 'utf8');
+      if (content.includes('#include <ReactCommon/CallInvoker.h>')) {
+        const replacement = `#if __has_include(<ReactCommon/CallInvoker.h>)
+#include <ReactCommon/CallInvoker.h>
+#elif __has_include("ReactCommon/CallInvoker.h")
+#include "ReactCommon/CallInvoker.h"
+#elif __has_include(<React/CallInvoker.h>)
+#include <React/CallInvoker.h>
+#endif`;
+        content = content.replace('#include <ReactCommon/CallInvoker.h>', replacement);
+        writeFileSync(full, content, 'utf8');
+        console.log('Sanitized TestingSyncJSCallInvoker.h at:', full);
       }
     } else if (ent.name === 'hash_combine.h') {
       let content = readFileSync(full, 'utf8');
