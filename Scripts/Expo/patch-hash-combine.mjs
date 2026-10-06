@@ -88,9 +88,26 @@ function patchAll(dir) {
         if (existsSync(jsonDyn)) {
           writeFileSync(dyn, readFileSync(jsonDyn, 'utf8'), 'utf8');
           console.log('Copied full folly/json/dynamic.h to:', dyn);
+        } else if (existsSync(dyn)) {
+          const jsonDir = join(full, 'json');
+          if (!existsSync(jsonDir)) mkdirSync(jsonDir, { recursive: true });
+          writeFileSync(jsonDyn, readFileSync(dyn, 'utf8'), 'utf8');
+          console.log('Copied full folly/dynamic.h to:', jsonDyn);
         }
       }
       patchAll(full);
+    } else if (ent.name === 'ExpoModulesCore_umbrella.h') {
+      let content = readFileSync(full, 'utf8');
+      const filtered = content
+        .replace(/^[ \t]*#import[ \t]+"ExpoViewComponentDescriptor\.h"[ \t]*\r?\n?/gm, '')
+        .replace(/^[ \t]*#import[ \t]+"ExpoViewEventEmitter\.h"[ \t]*\r?\n?/gm, '')
+        .replace(/^[ \t]*#import[ \t]+"ExpoViewProps\.h"[ \t]*\r?\n?/gm, '')
+        .replace(/^[ \t]*#import[ \t]+"ExpoViewShadowNode\.h"[ \t]*\r?\n?/gm, '')
+        .replace(/^[ \t]*#import[ \t]+"ExpoViewState\.h"[ \t]*\r?\n?/gm, '');
+      if (filtered !== content) {
+        writeFileSync(full, filtered, 'utf8');
+        console.log('Sanitized ExpoModulesCore_umbrella.h at:', full);
+      }
     } else if (ent.name === 'hash_combine.h') {
       let content = readFileSync(full, 'utf8');
       if (content.includes('concept Hashable') && !content.includes('__cpp_concepts')) {
@@ -145,6 +162,8 @@ template <typename CharTransformT = fnv1a_identity>
 #include <folly/dynamic.h>
 #elif __has_include(<folly/json/dynamic.h>)
 #include <folly/json/dynamic.h>
+#else
+#include <folly/dynamic.h>
 #endif`;
         content = content.replace(/#include <folly\/dynamic\.h>/g, replacement);
         changed = true;

@@ -377,9 +377,25 @@ async function prepare() {
               const dyn = resolve(full, 'dynamic.h');
               if (existsSync(jsonDyn)) {
                 await writeFile(dyn, await readFile(jsonDyn, 'utf8'), 'utf8');
+              } else if (existsSync(dyn)) {
+                const jsonDir = resolve(full, 'json');
+                await mkdir(jsonDir, { recursive: true });
+                await writeFile(resolve(jsonDir, 'dynamic.h'), await readFile(dyn, 'utf8'), 'utf8');
               }
             }
             await sanitizeHeaders(full);
+          } else if (ent.isFile() && ent.name === 'ExpoModulesCore_umbrella.h') {
+            let content = await readFile(full, 'utf8');
+            const filtered = content
+              .replace(/^[ \t]*#import[ \t]+"ExpoViewComponentDescriptor\.h"[ \t]*\r?\n?/gm, '')
+              .replace(/^[ \t]*#import[ \t]+"ExpoViewEventEmitter\.h"[ \t]*\r?\n?/gm, '')
+              .replace(/^[ \t]*#import[ \t]+"ExpoViewProps\.h"[ \t]*\r?\n?/gm, '')
+              .replace(/^[ \t]*#import[ \t]+"ExpoViewShadowNode\.h"[ \t]*\r?\n?/gm, '')
+              .replace(/^[ \t]*#import[ \t]+"ExpoViewState\.h"[ \t]*\r?\n?/gm, '');
+            if (filtered !== content) {
+              await writeFile(full, filtered, 'utf8');
+              console.log(`[HanlinExpo] Sanitized ExpoModulesCore_umbrella.h: ${full}`);
+            }
           } else if (ent.isFile() && ent.name === 'React-umbrella.h') {
             let content = await readFile(full, 'utf8');
             if (content.includes('RCTInspectorNetworkHelper.h')) {
@@ -530,6 +546,8 @@ template <typename CharTransformT = fnv1a_identity>
 #include <folly/dynamic.h>
 #elif __has_include(<folly/json/dynamic.h>)
 #include <folly/json/dynamic.h>
+#else
+#include <folly/dynamic.h>
 #endif`;
               content = content.replace(/#include <folly\/dynamic\.h>/g, replacement);
               changed = true;
