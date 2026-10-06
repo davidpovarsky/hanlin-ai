@@ -381,6 +381,33 @@ async function prepare() {
         }
       }
 
+      const rnHeadersXcf = resolve(artifactsRoot, 'ReactNativeHeaders.xcframework');
+      if (existsSync(rnHeadersXcf)) {
+        const removeCodeSig = async (dir) => {
+          if (!existsSync(dir)) return;
+          const entries = await readdir(dir, { withFileTypes: true });
+          for (const ent of entries) {
+            const fullPath = resolve(dir, ent.name);
+            if (ent.isDirectory()) {
+              if (ent.name === '_CodeSignature') {
+                await rm(fullPath, { recursive: true, force: true });
+              } else {
+                await removeCodeSig(fullPath);
+              }
+            }
+          }
+        };
+        await removeCodeSig(rnHeadersXcf);
+        if (process.platform === 'darwin') {
+          try {
+            execSync(`codesign --force --sign - --timestamp=none "${rnHeadersXcf}"`, { stdio: 'ignore' });
+            console.log('[HanlinExpo] Re-signed ReactNativeHeaders.xcframework ad-hoc.');
+          } catch (signErr) {
+            console.warn('[HanlinExpo] Warning: ad-hoc codesign failed for ReactNativeHeaders:', signErr.message);
+          }
+        }
+      }
+
       count++;
       console.log('[HanlinExpo] Created unified non-modular react.framework in ModularFrameworks and enriched React.xcframework.');
 
@@ -542,7 +569,7 @@ async function prepare() {
     if (process.platform === 'darwin') {
       const artifactEntries = await readdir(artifactsRoot, { withFileTypes: true });
       for (const entry of artifactEntries) {
-        if (entry.isDirectory() && entry.name.endsWith('.xcframework') && entry.name.startsWith('Expo')) {
+        if (entry.isDirectory() && entry.name.endsWith('.xcframework')) {
           const fwPath = resolve(artifactsRoot, entry.name);
           try {
             let innerFws = [];
@@ -555,6 +582,9 @@ async function prepare() {
               try { execSync(`codesign --remove-signature "${inner}"`, { stdio: 'ignore' }); } catch (_) {}
               try { execSync(`codesign --force --deep --sign - "${inner}"`, { stdio: 'ignore' }); } catch (_) {}
             }
+
+            try { execSync(`codesign --remove-signature "${fwPath}"`, { stdio: 'ignore' }); } catch (_) {}
+            try { execSync(`codesign --force --deep --sign - "${fwPath}"`, { stdio: 'ignore' }); } catch (_) {}
 
             console.log(`[HanlinExpo] Ad-hoc re-signed ${entry.name}`);
           } catch (e) {
