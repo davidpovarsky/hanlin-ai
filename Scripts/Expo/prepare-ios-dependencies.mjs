@@ -464,10 +464,19 @@ struct dynamic {
   dynamic(dynamic&&) = default;
   dynamic& operator=(const dynamic&) = default;
   dynamic& operator=(dynamic&&) = default;
+  template <typename T, typename std::enable_if<!std::is_same<typename std::decay<T>::type, dynamic>::value, int>::type = 0>
+  dynamic(T&&) {}
   items_type items() const { return {}; }
   const dynamic* begin() const { return nullptr; }
   const dynamic* end() const { return nullptr; }
   static dynamic object() { return dynamic{}; }
+  template <typename... Args>
+  static dynamic object(Args&&...) { return dynamic{}; }
+  static dynamic array() { return dynamic{}; }
+  template <typename... Args>
+  static dynamic array(Args&&...) { return dynamic{}; }
+  template <typename... Args>
+  void push_back(Args&&...) {}
   bool empty() const { return true; }
   bool isNull() const { return false; }
   bool isBool() const { return false; }
@@ -475,10 +484,14 @@ struct dynamic {
   bool isString() const { return false; }
   bool isArray() const { return false; }
   bool isObject() const { return false; }
+  bool isDouble() const { return false; }
+  bool isInt() const { return false; }
   bool getBool() const { return false; }
+  bool asBool() const { return false; }
   int64_t asInt() const { return 0; }
   double asDouble() const { return 0.0; }
   std::string getString() const { return {}; }
+  std::string asString() const { return {}; }
   size_t size() const { return 0; }
   const dynamic& operator[](size_t) const { static dynamic d; return d; }
   dynamic& operator[](size_t) { static dynamic d; return d; }
@@ -490,6 +503,12 @@ struct dynamic {
   const dynamic* get_ptr(const K&) const { return nullptr; }
   template <typename K>
   dynamic* get_ptr(const K&) { return nullptr; }
+  template <typename K>
+  const dynamic* find(const K&) const { return nullptr; }
+  template <typename K>
+  dynamic* find(const K&) { return nullptr; }
+  template <typename K>
+  size_t erase(const K&) { return 0; }
   template <typename T, typename std::enable_if<!std::is_same<typename std::decay<T>::type, dynamic>::value, int>::type = 0>
   operator T() const { return T{}; }
 };
