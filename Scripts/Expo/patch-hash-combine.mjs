@@ -82,6 +82,13 @@ function patchAll(dir) {
   for (const ent of readdirSync(dir, { withFileTypes: true })) {
     const full = join(dir, ent.name);
     if (ent.isDirectory()) {
+      if (ent.name === 'folly') {
+        const dyn = join(full, 'dynamic.h');
+        if (!existsSync(dyn)) {
+          writeFileSync(dyn, '#pragma once\n#if __has_include(<folly/json/dynamic.h>)\n#include <folly/json/dynamic.h>\n#endif\n', 'utf8');
+          console.log('Created folly/dynamic.h trampoline at:', dyn);
+        }
+      }
       patchAll(full);
     } else if (ent.name === 'hash_combine.h') {
       let content = readFileSync(full, 'utf8');
@@ -129,7 +136,7 @@ template <typename CharTransformT = fnv1a_identity>
         writeFileSync(full, content, 'utf8');
         console.log('Successfully patched fnv1a.h at:', full);
       }
-    } else if (ent.name === 'RawProps.h') {
+    } else if (ent.name.endsWith('.h')) {
       let content = readFileSync(full, 'utf8');
       let changed = false;
       if (content.includes('#include <folly/dynamic.h>') && !content.includes('__has_include(<folly/dynamic.h>)')) {
@@ -138,19 +145,19 @@ template <typename CharTransformT = fnv1a_identity>
 #elif __has_include(<folly/json/dynamic.h>)
 #include <folly/json/dynamic.h>
 #endif`;
-        content = content.replace('#include <folly/dynamic.h>', replacement);
+        content = content.replace(/#include <folly\/dynamic\.h>/g, replacement);
         changed = true;
       }
       if (content.includes('#include <jsi/JSIDynamic.h>') && !content.includes('__has_include(<jsi/JSIDynamic.h>)')) {
         const replacement = `#if __has_include(<jsi/JSIDynamic.h>)
 #include <jsi/JSIDynamic.h>
 #endif`;
-        content = content.replace('#include <jsi/JSIDynamic.h>', replacement);
+        content = content.replace(/#include <jsi\/JSIDynamic\.h>/g, replacement);
         changed = true;
       }
       if (changed) {
         writeFileSync(full, content, 'utf8');
-        console.log('Successfully patched RawProps.h at:', full);
+        console.log('Successfully patched dynamic includes at:', full);
       }
     }
   }

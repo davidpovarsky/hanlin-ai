@@ -372,6 +372,12 @@ async function prepare() {
         for (const ent of entries) {
           const full = resolve(targetDir, ent.name);
           if (ent.isDirectory()) {
+            if (ent.name === 'folly') {
+              const dyn = resolve(full, 'dynamic.h');
+              if (!existsSync(dyn)) {
+                await writeFile(dyn, '#pragma once\n#if __has_include(<folly/json/dynamic.h>)\n#include <folly/json/dynamic.h>\n#endif\n', 'utf8');
+              }
+            }
             await sanitizeHeaders(full);
           } else if (ent.isFile() && ent.name === 'React-umbrella.h') {
             let content = await readFile(full, 'utf8');
@@ -515,7 +521,7 @@ template <typename CharTransformT = fnv1a_identity>
               await writeFile(full, content, 'utf8');
               console.log(`[HanlinExpo] Sanitized fnv1a.h for C++17 compatibility: ${full}`);
             }
-          } else if (ent.isFile() && ent.name === 'RawProps.h') {
+          } else if (ent.isFile() && ent.name.endsWith('.h')) {
             let content = await readFile(full, 'utf8');
             let changed = false;
             if (content.includes('#include <folly/dynamic.h>') && !content.includes('__has_include(<folly/dynamic.h>)')) {
@@ -524,25 +530,23 @@ template <typename CharTransformT = fnv1a_identity>
 #elif __has_include(<folly/json/dynamic.h>)
 #include <folly/json/dynamic.h>
 #endif`;
-              content = content.replace('#include <folly/dynamic.h>', replacement);
+              content = content.replace(/#include <folly\/dynamic\.h>/g, replacement);
               changed = true;
             }
             if (content.includes('#include <jsi/JSIDynamic.h>') && !content.includes('__has_include(<jsi/JSIDynamic.h>)')) {
               const replacement = `#if __has_include(<jsi/JSIDynamic.h>)
 #include <jsi/JSIDynamic.h>
 #endif`;
-              content = content.replace('#include <jsi/JSIDynamic.h>', replacement);
+              content = content.replace(/#include <jsi\/JSIDynamic\.h>/g, replacement);
+              changed = true;
+            }
+            if (content.includes('<jsinspector-modern/')) {
+              content = content.replace(/<jsinspector-modern\/([^>]+)>/g, '"jsinspector-modern/$1"');
               changed = true;
             }
             if (changed) {
               await writeFile(full, content, 'utf8');
-              console.log(`[HanlinExpo] Sanitized RawProps.h: ${full}`);
-            }
-          } else if (ent.isFile() && ent.name.endsWith('.h')) {
-            let content = await readFile(full, 'utf8');
-            if (content.includes('<jsinspector-modern/')) {
-              content = content.replace(/<jsinspector-modern\/([^>]+)>/g, '"jsinspector-modern/$1"');
-              await writeFile(full, content, 'utf8');
+              console.log(`[HanlinExpo] Sanitized dynamic and inspector includes: ${full}`);
             }
           }
         }

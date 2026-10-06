@@ -1843,13 +1843,24 @@ jobs:
             if [ -d "$react_modular" ]; then
               cp -R "$react_modular/"* "$dst_hdr/" || true
             fi
+            mkdir -p "$dst_hdr/folly"
             if [ -f "$rn_dependencies/folly/dynamic.h" ]; then
-              mkdir -p "$dst_hdr/folly"
               cp -f "$rn_dependencies/folly/dynamic.h" "$dst_hdr/folly/" || true
             fi
             if [ -f "$react_modular/folly/dynamic.h" ]; then
-              mkdir -p "$dst_hdr/folly"
               cp -f "$react_modular/folly/dynamic.h" "$dst_hdr/folly/" || true
+            fi
+            if [ -f "$react_modular/folly/json/dynamic.h" ]; then
+              cp -f "$react_modular/folly/json/dynamic.h" "$dst_hdr/folly/dynamic.h" || true
+              mkdir -p "$dst_hdr/folly/json"
+              cp -f "$react_modular/folly/json/dynamic.h" "$dst_hdr/folly/json/dynamic.h" || true
+            elif [ -f "$rn_dependencies/folly/json/dynamic.h" ]; then
+              cp -f "$rn_dependencies/folly/json/dynamic.h" "$dst_hdr/folly/dynamic.h" || true
+              mkdir -p "$dst_hdr/folly/json"
+              cp -f "$rn_dependencies/folly/json/dynamic.h" "$dst_hdr/folly/json/dynamic.h" || true
+            fi
+            if [ ! -f "$dst_hdr/folly/dynamic.h" ]; then
+              printf '#pragma once\n#if __has_include(<folly/json/dynamic.h>)\n#include <folly/json/dynamic.h>\n#endif\n' > "$dst_hdr/folly/dynamic.h"
             fi
             if [ -f "$rn_all_headers/jsi/JSIDynamic.h" ]; then
               mkdir -p "$dst_hdr/jsi"
@@ -1864,6 +1875,8 @@ jobs:
             find "$dst_hdr" -name "React-umbrella.h" -exec sed -i '' '/RCTInspectorNetworkHelper\.h/d' {} + 2>/dev/null || true
             find "$dst_hdr" -name "RCTInspectorNetworkHelper.h" -exec sed -i '' 's|<jsinspector-modern/\([^>]*\)>|"jsinspector-modern/\1"|g' {} + 2>/dev/null || true
             find "$dst_hdr" -path "*/jsinspector-modern/*" -name "*.h" -exec sed -i '' 's|<jsinspector-modern/\([^>]*\)>|"\1"|g' {} + 2>/dev/null || true
+            find "$dst_hdr" -name "*.h" -exec sed -i '' 's|#include <folly/dynamic\.h>|#if __has_include(<folly/dynamic.h>)\'$'\n''#include <folly/dynamic.h>\'$'\n''#elif __has_include(<folly/json/dynamic.h>)\'$'\n''#include <folly/json/dynamic.h>\'$'\n''#endif|g' {} + 2>/dev/null || true
+            find "$dst_hdr" -name "*.h" -exec sed -i '' 's|#include <jsi/JSIDynamic\.h>|#if __has_include(<jsi/JSIDynamic.h>)\'$'\n''#include <jsi/JSIDynamic.h>\'$'\n''#endif|g' {} + 2>/dev/null || true
           done
           node Scripts/Expo/patch-hash-combine.mjs "$DERIVED_DATA_PATH" Packages/HanlinExpoRuntime/Artifacts "$CLONED_PACKAGES_PATH"
 
