@@ -22,6 +22,7 @@
     "capability-invariants.md",
     "Scripts/*.mjs",
     "Scripts/**/*.mjs",
+    "scripts/**",
     "**/Package.resolved"
   ],
   "components": {
