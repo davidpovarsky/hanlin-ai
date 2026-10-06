@@ -105,7 +105,6 @@ function patchAll(dir) {
         .replace(/^[ \t]*#import[ \t]+"ExpoViewShadowNode\.h"[ \t]*\r?\n?/gm, '')
         .replace(/^[ \t]*#import[ \t]+"ExpoViewState\.h"[ \t]*\r?\n?/gm, '')
         .replace(/^[ \t]*#import[ \t]+"SwiftUIViewProps\.h"[ \t]*\r?\n?/gm, '')
-        .replace(/^[ \t]*#import[ \t]+"ExpoFabricViewObjC\.h"[ \t]*\r?\n?/gm, '')
         .replace(/^[ \t]*#import[ \t]+"EXHostWrapper\.h"[ \t]*\r?\n?/gm, '')
         .replace(/^[ \t]*#import[ \t]+"TestingSyncJSCallInvoker\.h"[ \t]*\r?\n?/gm, '');
       if (filtered !== content) {
@@ -117,8 +116,6 @@ function patchAll(dir) {
       const filtered = content
         .replace(/^[ \t]*#import[ \t]+<ExpoModulesCore\/SwiftUIViewProps\.h>[ \t]*\r?\n?/gm, '')
         .replace(/^[ \t]*#import[ \t]+"SwiftUIViewProps\.h"[ \t]*\r?\n?/gm, '')
-        .replace(/^[ \t]*#import[ \t]+<ExpoModulesCore\/ExpoFabricViewObjC\.h>[ \t]*\r?\n?/gm, '')
-        .replace(/^[ \t]*#import[ \t]+"ExpoFabricViewObjC\.h"[ \t]*\r?\n?/gm, '')
         .replace(/^[ \t]*#import[ \t]+<ExpoModulesCore\/EXHostWrapper\.h>[ \t]*\r?\n?/gm, '')
         .replace(/^[ \t]*#import[ \t]+"EXHostWrapper\.h"[ \t]*\r?\n?/gm, '');
       if (filtered !== content) {
