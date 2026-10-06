@@ -386,26 +386,29 @@ async function prepare() {
             await sanitizeHeaders(full);
           } else if (ent.isFile() && ent.name === 'ExpoModulesCore_umbrella.h') {
             let content = await readFile(full, 'utf8');
-            const filtered = content
+            let filtered = content
               .replace(/^[ \t]*#import[ \t]+"ExpoViewComponentDescriptor\.h"[ \t]*\r?\n?/gm, '')
               .replace(/^[ \t]*#import[ \t]+"ExpoViewEventEmitter\.h"[ \t]*\r?\n?/gm, '')
               .replace(/^[ \t]*#import[ \t]+"ExpoViewProps\.h"[ \t]*\r?\n?/gm, '')
               .replace(/^[ \t]*#import[ \t]+"ExpoViewShadowNode\.h"[ \t]*\r?\n?/gm, '')
               .replace(/^[ \t]*#import[ \t]+"ExpoViewState\.h"[ \t]*\r?\n?/gm, '')
               .replace(/^[ \t]*#import[ \t]+"SwiftUIViewProps\.h"[ \t]*\r?\n?/gm, '')
-              .replace(/^[ \t]*#import[ \t]+"EXHostWrapper\.h"[ \t]*\r?\n?/gm, '')
               .replace(/^[ \t]*#import[ \t]+"TestingSyncJSCallInvoker\.h"[ \t]*\r?\n?/gm, '');
+            if (!filtered.includes('"EXHostWrapper.h"') && filtered.includes('"ExpoModulesCore.h"')) {
+              filtered = filtered.replace('#import "ExpoModulesCore.h"', '#import "EXHostWrapper.h"\n#import "ExpoModulesCore.h"');
+            }
             if (filtered !== content) {
               await writeFile(full, filtered, 'utf8');
               console.log(`[HanlinExpo] Sanitized ExpoModulesCore_umbrella.h: ${full}`);
             }
           } else if (ent.isFile() && ent.name === 'ExpoModulesCore.h') {
             let content = await readFile(full, 'utf8');
-            const filtered = content
+            let filtered = content
               .replace(/^[ \t]*#import[ \t]+<ExpoModulesCore\/SwiftUIViewProps\.h>[ \t]*\r?\n?/gm, '')
-              .replace(/^[ \t]*#import[ \t]+"SwiftUIViewProps\.h"[ \t]*\r?\n?/gm, '')
-              .replace(/^[ \t]*#import[ \t]+<ExpoModulesCore\/EXHostWrapper\.h>[ \t]*\r?\n?/gm, '')
-              .replace(/^[ \t]*#import[ \t]+"EXHostWrapper\.h"[ \t]*\r?\n?/gm, '');
+              .replace(/^[ \t]*#import[ \t]+"SwiftUIViewProps\.h"[ \t]*\r?\n?/gm, '');
+            if (!filtered.includes('EXHostWrapper.h') && filtered.includes('ExpoFabricViewObjC.h')) {
+              filtered = filtered.replace(/#import <ExpoModulesCore\/ExpoFabricViewObjC\.h>/, '#import <ExpoModulesCore/ExpoFabricViewObjC.h>\n#import <ExpoModulesCore/EXHostWrapper.h>');
+            }
             if (filtered !== content) {
               await writeFile(full, filtered, 'utf8');
               console.log(`[HanlinExpo] Sanitized ExpoModulesCore.h: ${full}`);
