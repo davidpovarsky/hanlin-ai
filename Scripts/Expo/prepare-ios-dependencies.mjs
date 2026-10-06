@@ -483,10 +483,6 @@ async function prepare() {
         }
       };
       await patchGlogIncludes(artifactsRoot);
-      const nestedFallbackDir = resolve(artifactsRoot, '..', 'Packages', 'HanlinExpoRuntime');
-      if (existsSync(nestedFallbackDir)) {
-        await patchGlogIncludes(nestedFallbackDir);
-      }
 
       // Remove stale code signatures and re-sign ad-hoc if on darwin/codesign is available
       const reactXcf = resolve(artifactsRoot, 'React.xcframework');
