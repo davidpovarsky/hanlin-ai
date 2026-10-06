@@ -150,9 +150,8 @@ public final class OtzariaLibraryProvider: TorahLibraryProvider, TorahLibrarySea
             }
             if results.count >= limit { break }
         }
-        #endif
-
         return results
+        #endif
     }
 
     public func fetchSection(locator: SourceLocator) async throws -> String? {

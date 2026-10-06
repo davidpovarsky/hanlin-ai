@@ -213,6 +213,7 @@ struct ProviderLongHorizonTests {
             messages: [.init(role: .user, text: "Loop until boundary")],
             baseSystemPrompt: nil,
             tools: [loopingTool],
+            maxSteps: 32,
             prepareStep: { _ in HanlinAISDKStepPreparation(activeToolAliases: ["looping_tool"]) }
         )
 
