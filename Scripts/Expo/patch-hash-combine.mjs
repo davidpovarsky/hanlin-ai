@@ -83,10 +83,11 @@ function patchAll(dir) {
     const full = join(dir, ent.name);
     if (ent.isDirectory()) {
       if (ent.name === 'folly') {
+        const jsonDyn = join(full, 'json', 'dynamic.h');
         const dyn = join(full, 'dynamic.h');
-        if (!existsSync(dyn)) {
-          writeFileSync(dyn, '#pragma once\n#if __has_include(<folly/json/dynamic.h>)\n#include <folly/json/dynamic.h>\n#endif\n', 'utf8');
-          console.log('Created folly/dynamic.h trampoline at:', dyn);
+        if (existsSync(jsonDyn)) {
+          writeFileSync(dyn, readFileSync(jsonDyn, 'utf8'), 'utf8');
+          console.log('Copied full folly/json/dynamic.h to:', dyn);
         }
       }
       patchAll(full);

@@ -373,9 +373,10 @@ async function prepare() {
           const full = resolve(targetDir, ent.name);
           if (ent.isDirectory()) {
             if (ent.name === 'folly') {
+              const jsonDyn = resolve(full, 'json', 'dynamic.h');
               const dyn = resolve(full, 'dynamic.h');
-              if (!existsSync(dyn)) {
-                await writeFile(dyn, '#pragma once\n#if __has_include(<folly/json/dynamic.h>)\n#include <folly/json/dynamic.h>\n#endif\n', 'utf8');
+              if (existsSync(jsonDyn)) {
+                await writeFile(dyn, await readFile(jsonDyn, 'utf8'), 'utf8');
               }
             }
             await sanitizeHeaders(full);

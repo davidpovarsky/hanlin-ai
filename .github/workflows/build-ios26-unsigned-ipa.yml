@@ -1843,25 +1843,17 @@ jobs:
             if [ -d "$react_modular" ]; then
               cp -R "$react_modular/"* "$dst_hdr/" || true
             fi
-            mkdir -p "$dst_hdr/folly"
-            if [ -f "$rn_dependencies/folly/dynamic.h" ]; then
-              cp -f "$rn_dependencies/folly/dynamic.h" "$dst_hdr/folly/" || true
-            fi
-            if [ -f "$react_modular/folly/dynamic.h" ]; then
-              cp -f "$react_modular/folly/dynamic.h" "$dst_hdr/folly/" || true
-            fi
-            if [ -f "$react_modular/folly/json/dynamic.h" ]; then
-              cp -f "$react_modular/folly/json/dynamic.h" "$dst_hdr/folly/dynamic.h" || true
-              mkdir -p "$dst_hdr/folly/json"
-              cp -f "$react_modular/folly/json/dynamic.h" "$dst_hdr/folly/json/dynamic.h" || true
-            elif [ -f "$rn_dependencies/folly/json/dynamic.h" ]; then
-              cp -f "$rn_dependencies/folly/json/dynamic.h" "$dst_hdr/folly/dynamic.h" || true
-              mkdir -p "$dst_hdr/folly/json"
-              cp -f "$rn_dependencies/folly/json/dynamic.h" "$dst_hdr/folly/json/dynamic.h" || true
-            fi
-            if [ ! -f "$dst_hdr/folly/dynamic.h" ]; then
-              printf '#pragma once\n#if __has_include(<folly/json/dynamic.h>)\n#include <folly/json/dynamic.h>\n#endif\n' > "$dst_hdr/folly/dynamic.h"
-            fi
+            mkdir -p "$dst_hdr/folly" "$dst_hdr/folly/json"
+            for base_folly in "$rn_dependencies/folly" "$react_modular/folly" "$rn_all_headers/folly"; do
+              if [ -f "$base_folly/json/dynamic.h" ]; then
+                cp -f "$base_folly/json/dynamic.h" "$dst_hdr/folly/dynamic.h" || true
+                cp -f "$base_folly/json/dynamic.h" "$dst_hdr/folly/json/dynamic.h" || true
+                break
+              elif [ -f "$base_folly/dynamic.h" ]; then
+                cp -f "$base_folly/dynamic.h" "$dst_hdr/folly/dynamic.h" || true
+                break
+              fi
+            done
             if [ -f "$rn_all_headers/jsi/JSIDynamic.h" ]; then
               mkdir -p "$dst_hdr/jsi"
               cp -f "$rn_all_headers/jsi/JSIDynamic.h" "$dst_hdr/jsi/" || true
