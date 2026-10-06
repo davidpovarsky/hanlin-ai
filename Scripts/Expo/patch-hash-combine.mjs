@@ -105,11 +105,39 @@ function patchAll(dir) {
         .replace(/^[ \t]*#import[ \t]+"ExpoViewShadowNode\.h"[ \t]*\r?\n?/gm, '')
         .replace(/^[ \t]*#import[ \t]+"ExpoViewState\.h"[ \t]*\r?\n?/gm, '')
         .replace(/^[ \t]*#import[ \t]+"SwiftUIViewProps\.h"[ \t]*\r?\n?/gm, '')
+        .replace(/^[ \t]*#import[ \t]+"ExpoFabricViewObjC\.h"[ \t]*\r?\n?/gm, '')
         .replace(/^[ \t]*#import[ \t]+"EXHostWrapper\.h"[ \t]*\r?\n?/gm, '')
         .replace(/^[ \t]*#import[ \t]+"TestingSyncJSCallInvoker\.h"[ \t]*\r?\n?/gm, '');
       if (filtered !== content) {
         writeFileSync(full, filtered, 'utf8');
         console.log('Sanitized ExpoModulesCore_umbrella.h at:', full);
+      }
+    } else if (ent.name === 'ExpoModulesCore.h') {
+      let content = readFileSync(full, 'utf8');
+      const filtered = content
+        .replace(/^[ \t]*#import[ \t]+<ExpoModulesCore\/SwiftUIViewProps\.h>[ \t]*\r?\n?/gm, '')
+        .replace(/^[ \t]*#import[ \t]+"SwiftUIViewProps\.h"[ \t]*\r?\n?/gm, '')
+        .replace(/^[ \t]*#import[ \t]+<ExpoModulesCore\/ExpoFabricViewObjC\.h>[ \t]*\r?\n?/gm, '')
+        .replace(/^[ \t]*#import[ \t]+"ExpoFabricViewObjC\.h"[ \t]*\r?\n?/gm, '')
+        .replace(/^[ \t]*#import[ \t]+<ExpoModulesCore\/EXHostWrapper\.h>[ \t]*\r?\n?/gm, '')
+        .replace(/^[ \t]*#import[ \t]+"EXHostWrapper\.h"[ \t]*\r?\n?/gm, '');
+      if (filtered !== content) {
+        writeFileSync(full, filtered, 'utf8');
+        console.log('Sanitized ExpoModulesCore.h at:', full);
+      }
+    } else if (ent.name === 'RawProps.h') {
+      let content = readFileSync(full, 'utf8');
+      if (content.includes('#include <folly/dynamic.h>') && !content.includes('__has_include(<folly/dynamic.h>)')) {
+        content = content.replace(
+          '#include <folly/dynamic.h>',
+          `#if __has_include(<folly/dynamic.h>)
+#include <folly/dynamic.h>
+#elif __has_include(<folly/json/dynamic.h>)
+#include <folly/json/dynamic.h>
+#endif`
+        );
+        writeFileSync(full, content, 'utf8');
+        console.log('Sanitized RawProps.h at:', full);
       }
     } else if (ent.name === 'EXHostWrapper.h') {
       let content = readFileSync(full, 'utf8');

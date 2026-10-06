@@ -393,11 +393,39 @@ async function prepare() {
               .replace(/^[ \t]*#import[ \t]+"ExpoViewShadowNode\.h"[ \t]*\r?\n?/gm, '')
               .replace(/^[ \t]*#import[ \t]+"ExpoViewState\.h"[ \t]*\r?\n?/gm, '')
               .replace(/^[ \t]*#import[ \t]+"SwiftUIViewProps\.h"[ \t]*\r?\n?/gm, '')
+              .replace(/^[ \t]*#import[ \t]+"ExpoFabricViewObjC\.h"[ \t]*\r?\n?/gm, '')
               .replace(/^[ \t]*#import[ \t]+"EXHostWrapper\.h"[ \t]*\r?\n?/gm, '')
               .replace(/^[ \t]*#import[ \t]+"TestingSyncJSCallInvoker\.h"[ \t]*\r?\n?/gm, '');
             if (filtered !== content) {
               await writeFile(full, filtered, 'utf8');
               console.log(`[HanlinExpo] Sanitized ExpoModulesCore_umbrella.h: ${full}`);
+            }
+          } else if (ent.isFile() && ent.name === 'ExpoModulesCore.h') {
+            let content = await readFile(full, 'utf8');
+            const filtered = content
+              .replace(/^[ \t]*#import[ \t]+<ExpoModulesCore\/SwiftUIViewProps\.h>[ \t]*\r?\n?/gm, '')
+              .replace(/^[ \t]*#import[ \t]+"SwiftUIViewProps\.h"[ \t]*\r?\n?/gm, '')
+              .replace(/^[ \t]*#import[ \t]+<ExpoModulesCore\/ExpoFabricViewObjC\.h>[ \t]*\r?\n?/gm, '')
+              .replace(/^[ \t]*#import[ \t]+"ExpoFabricViewObjC\.h"[ \t]*\r?\n?/gm, '')
+              .replace(/^[ \t]*#import[ \t]+<ExpoModulesCore\/EXHostWrapper\.h>[ \t]*\r?\n?/gm, '')
+              .replace(/^[ \t]*#import[ \t]+"EXHostWrapper\.h"[ \t]*\r?\n?/gm, '');
+            if (filtered !== content) {
+              await writeFile(full, filtered, 'utf8');
+              console.log(`[HanlinExpo] Sanitized ExpoModulesCore.h: ${full}`);
+            }
+          } else if (ent.isFile() && ent.name === 'RawProps.h') {
+            let content = await readFile(full, 'utf8');
+            if (content.includes('#include <folly/dynamic.h>') && !content.includes('__has_include(<folly/dynamic.h>)')) {
+              content = content.replace(
+                '#include <folly/dynamic.h>',
+                `#if __has_include(<folly/dynamic.h>)
+#include <folly/dynamic.h>
+#elif __has_include(<folly/json/dynamic.h>)
+#include <folly/json/dynamic.h>
+#endif`
+              );
+              await writeFile(full, content, 'utf8');
+              console.log(`[HanlinExpo] Sanitized RawProps.h: ${full}`);
             }
           } else if (ent.isFile() && ent.name === 'EXHostWrapper.h') {
             let content = await readFile(full, 'utf8');
