@@ -111,6 +111,36 @@ function patchAll(dir) {
         writeFileSync(full, content, 'utf8');
         console.log('Successfully patched react_native_assert.h at:', full);
       }
+    } else if (ent.name === 'fnv1a.h') {
+      let content = readFileSync(full, 'utf8');
+      if (content.includes('std::identity') && !content.includes('fnv1a_identity')) {
+        const replacement = `#if defined(__cpp_lib_identity) || (defined(__cplusplus) && __cplusplus >= 202002L)
+template <typename CharTransformT = std::identity>
+#else
+struct fnv1a_identity {
+  template <typename T>
+  constexpr auto&& operator()(T&& val) const noexcept {
+    return static_cast<T&&>(val);
+  }
+};
+template <typename CharTransformT = fnv1a_identity>
+#endif`;
+        content = content.replace('template <typename CharTransformT = std::identity>', replacement);
+        writeFileSync(full, content, 'utf8');
+        console.log('Successfully patched fnv1a.h at:', full);
+      }
+    } else if (ent.name === 'RawProps.h') {
+      let content = readFileSync(full, 'utf8');
+      if (content.includes('#include <folly/dynamic.h>') && !content.includes('__has_include(<folly/dynamic.h>)')) {
+        const replacement = `#if __has_include(<folly/dynamic.h>)
+#include <folly/dynamic.h>
+#elif __has_include(<folly/json/dynamic.h>)
+#include <folly/json/dynamic.h>
+#endif`;
+        content = content.replace('#include <folly/dynamic.h>', replacement);
+        writeFileSync(full, content, 'utf8');
+        console.log('Successfully patched RawProps.h at:', full);
+      }
     }
   }
 }

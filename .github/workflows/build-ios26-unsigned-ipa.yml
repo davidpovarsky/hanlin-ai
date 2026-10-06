@@ -1713,6 +1713,8 @@ jobs:
                 cp -R Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks "$checkout/Artifacts/" || true
                 cp -R Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders "$checkout/Packages/HanlinExpoRuntime/Artifacts/" || true
                 cp -R Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders "$checkout/Artifacts/" || true
+                cp -R Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework "$checkout/Packages/HanlinExpoRuntime/Artifacts/" || true
+                cp -R Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework "$checkout/Artifacts/" || true
                 for slice in ios-arm64 ios-arm64_x86_64-simulator; do
                   for base in "$checkout/Packages/HanlinExpoRuntime/Artifacts" "$checkout/Artifacts"; do
                     ck_dest="$base/React.xcframework/$slice/React.framework/Headers"
@@ -1840,6 +1842,14 @@ jobs:
             fi
             if [ -d "$react_modular" ]; then
               cp -R "$react_modular/"* "$dst_hdr/" || true
+            fi
+            if [ -f "$rn_dependencies/folly/dynamic.h" ]; then
+              mkdir -p "$dst_hdr/folly"
+              cp -f "$rn_dependencies/folly/dynamic.h" "$dst_hdr/folly/" || true
+            fi
+            if [ -f "$react_modular/folly/dynamic.h" ]; then
+              mkdir -p "$dst_hdr/folly"
+              cp -f "$react_modular/folly/dynamic.h" "$dst_hdr/folly/" || true
             fi
             rn_react_source="Packages/HanlinExpoRuntime/Artifacts/ReactNativeHeaders.xcframework/ios-arm64_x86_64-simulator/Headers/react"
             if [ -d "$rn_react_source" ]; then

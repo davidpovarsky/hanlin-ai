@@ -302,6 +302,16 @@ async function prepare() {
         await cp(reactFwSource, reactHeadersDir, { recursive: true });
       }
 
+      // Copy all headers from ReactModularHeaders and ReactNativeDependencies into react.framework
+      const reactModularSource = resolve(artifactsRoot, 'ReactModularHeaders');
+      if (existsSync(reactModularSource)) {
+        await cp(reactModularSource, reactHeadersDir, { recursive: true });
+      }
+      const rnDepsHeaders = resolve(artifactsRoot, 'ReactNativeDependencies.xcframework', 'Headers');
+      if (existsSync(rnDepsHeaders)) {
+        await cp(rnDepsHeaders, reactHeadersDir, { recursive: true });
+      }
+
       const reactCapFwDir = resolve(modularFwsRoot, 'React.framework');
       if (!existsSync(reactCapFwDir)) {
         await cp(reactFwDir, reactCapFwDir, { recursive: true });
@@ -326,6 +336,12 @@ async function prepare() {
             if (!existsSync(nested)) {
               await cp(sliceReactSource, nested, { recursive: true });
             }
+          }
+          if (existsSync(reactModularSource)) {
+            await cp(reactModularSource, targetHeaders, { recursive: true });
+          }
+          if (existsSync(rnDepsHeaders)) {
+            await cp(rnDepsHeaders, targetHeaders, { recursive: true });
           }
         }
       }
@@ -480,6 +496,36 @@ void hash_combine_optionals(std::size_t &seed, const std::optional<Ts> &...optio
               );
               await writeFile(full, content, 'utf8');
               console.log(`[HanlinExpo] Sanitized react_native_assert.h for optional glog: ${full}`);
+            }
+          } else if (ent.isFile() && ent.name === 'fnv1a.h') {
+            let content = await readFile(full, 'utf8');
+            if (content.includes('std::identity') && !content.includes('fnv1a_identity')) {
+              const replacement = `#if defined(__cpp_lib_identity) || (defined(__cplusplus) && __cplusplus >= 202002L)
+template <typename CharTransformT = std::identity>
+#else
+struct fnv1a_identity {
+  template <typename T>
+  constexpr auto&& operator()(T&& val) const noexcept {
+    return static_cast<T&&>(val);
+  }
+};
+template <typename CharTransformT = fnv1a_identity>
+#endif`;
+              content = content.replace('template <typename CharTransformT = std::identity>', replacement);
+              await writeFile(full, content, 'utf8');
+              console.log(`[HanlinExpo] Sanitized fnv1a.h for C++17 compatibility: ${full}`);
+            }
+          } else if (ent.isFile() && ent.name === 'RawProps.h') {
+            let content = await readFile(full, 'utf8');
+            if (content.includes('#include <folly/dynamic.h>') && !content.includes('__has_include(<folly/dynamic.h>)')) {
+              const replacement = `#if __has_include(<folly/dynamic.h>)
+#include <folly/dynamic.h>
+#elif __has_include(<folly/json/dynamic.h>)
+#include <folly/json/dynamic.h>
+#endif`;
+              content = content.replace('#include <folly/dynamic.h>', replacement);
+              await writeFile(full, content, 'utf8');
+              console.log(`[HanlinExpo] Sanitized RawProps.h for optional folly: ${full}`);
             }
           } else if (ent.isFile() && ent.name.endsWith('.h')) {
             let content = await readFile(full, 'utf8');

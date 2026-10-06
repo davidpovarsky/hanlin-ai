@@ -30,6 +30,7 @@ let package = Package(
             swiftSettings: [
                 .interoperabilityMode(.Cxx),
                 .unsafeFlags([
+                    "-Xcc", "-std=gnu++20",
                     "-Xcc", "-Wno-quoted-include-in-framework-header",
                     "-Xcc", "-Wno-non-modular-include-in-framework-module",
                     "-Xcc", "-FArtifacts/ModularFrameworks",
@@ -39,7 +40,9 @@ let package = Package(
                     "-Xcc", "-IArtifacts/ModularFrameworks/react.framework/Headers",
                     "-Xcc", "-IPackages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers",
                     "-Xcc", "-IArtifacts/ModularFrameworks/react.framework/Headers/react",
-                    "-Xcc", "-IPackages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react"
+                    "-Xcc", "-IPackages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react",
+                    "-Xcc", "-IArtifacts/ReactNativeDependencies.xcframework/Headers",
+                    "-Xcc", "-IPackages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers"
                 ])
             ],
             linkerSettings: [
