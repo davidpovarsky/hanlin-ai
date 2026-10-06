@@ -12,6 +12,7 @@ enum NativeToolJSON {
     enum JSONError: LocalizedError {
         case invalidUTF8
         case invalidObject
+        case missingKey(String)
         case missingRequiredString(String)
         case invalidType(key: String, expected: String)
         case unknownArguments([String])
@@ -23,6 +24,8 @@ enum NativeToolJSON {
                 return "Invalid arguments: tool arguments are not valid UTF-8 JSON."
             case .invalidObject:
                 return "Invalid arguments: tool arguments must be a JSON object."
+            case .missingKey(let key):
+                return "Invalid arguments: missing required argument '\(key)'."
             case .missingRequiredString(let key):
                 return "Invalid arguments: missing required string argument '\(key)'."
             case .invalidType(let key, let expected):
@@ -111,6 +114,35 @@ enum NativeToolJSON {
             throw JSONError.invalidValue(key: key, description: "expected \(range.lowerBound)...\(range.upperBound)")
         }
         return value
+    }
+
+    static func strictOptionalInt(
+        _ dictionary: [String: Any],
+        _ key: String,
+        range: ClosedRange<Int>? = nil
+    ) throws -> Int? {
+        guard let raw = dictionary[key] else { return nil }
+        guard let number = raw as? NSNumber,
+              CFGetTypeID(number) != CFBooleanGetTypeID() else {
+            throw JSONError.invalidType(key: key, expected: "an integer")
+        }
+        let double = number.doubleValue
+        guard double.isFinite, double.rounded() == double, let value = Int(exactly: double) else {
+            throw JSONError.invalidType(key: key, expected: "an integer")
+        }
+        if let range, !range.contains(value) {
+            throw JSONError.invalidValue(key: key, description: "expected \(range.lowerBound)...\(range.upperBound)")
+        }
+        return value
+    }
+
+    static func strictOptionalBool(_ dictionary: [String: Any], _ key: String) throws -> Bool? {
+        guard let raw = dictionary[key] else { return nil }
+        guard let number = raw as? NSNumber,
+              CFGetTypeID(number) == CFBooleanGetTypeID() else {
+            throw JSONError.invalidType(key: key, expected: "a boolean")
+        }
+        return number.boolValue
     }
 
     static func optionalString(_ dictionary: [String: Any], _ key: String) -> String? {

@@ -801,6 +801,7 @@ jobs:
           HANLIN_API_KEY =
           HANLIN_OPEN_API_KEY =
           SWIFT_ENABLE_EXPLICIT_MODULES = NO
+          SWIFT_OBJC_INTEROP_MODE = objcxx
           FRAMEWORK_SEARCH_PATHS = "$repo_root/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks" "$repo_root/Artifacts/ModularFrameworks" "\$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks" "\$(SRCROOT)/Artifacts/ModularFrameworks" \$(inherited)
           HEADER_SEARCH_PATHS = "$repo_root/Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders" "$repo_root/Artifacts/ReactModularHeaders" "$repo_root/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers" "$repo_root/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react" "\$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders" "\$(SRCROOT)/Artifacts/ReactModularHeaders" \$(inherited) "\$(BUILT_PRODUCTS_DIR)/React.framework/Headers" "\$(BUILT_PRODUCTS_DIR)/ExpoModulesCore.framework/Headers" "\$(BUILT_PRODUCTS_DIR)/Python.framework/Headers"
           CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES
@@ -1622,6 +1623,7 @@ jobs:
           HANLIN_API_KEY =
           HANLIN_OPEN_API_KEY =
           SWIFT_ENABLE_EXPLICIT_MODULES = NO
+          SWIFT_OBJC_INTEROP_MODE = objcxx
           CLANG_CXX_LANGUAGE_STANDARD = gnu++20
           FRAMEWORK_SEARCH_PATHS = "$repo_root/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks" "$repo_root/Artifacts/ModularFrameworks" "\$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks" "\$(SRCROOT)/Artifacts/ModularFrameworks" \$(inherited)
           HEADER_SEARCH_PATHS = "$repo_root/Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders" "$repo_root/Artifacts/ReactModularHeaders" "$repo_root/Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers" "$repo_root/Artifacts/ReactNativeDependencies.xcframework/Headers" "$repo_root/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers" "$repo_root/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react" "\$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders" "\$(SRCROOT)/Artifacts/ReactModularHeaders" \$(inherited) "\$(BUILT_PRODUCTS_DIR)/React.framework/Headers" "\$(BUILT_PRODUCTS_DIR)/react.framework/Headers" "\$(BUILT_PRODUCTS_DIR)/ExpoModulesCore.framework/Headers" "\$(BUILT_PRODUCTS_DIR)/Python.framework/Headers"

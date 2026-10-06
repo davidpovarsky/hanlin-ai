@@ -8,6 +8,7 @@ FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/Modula
 HEADER_SEARCH_PATHS = "$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders" "$(SRCROOT)/Artifacts/ReactModularHeaders" $(inherited) "$(BUILT_PRODUCTS_DIR)/React.framework/Headers" "$(BUILT_PRODUCTS_DIR)/ExpoModulesCore.framework/Headers" "$(BUILT_PRODUCTS_DIR)/Python.framework/Headers"
 CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES
 CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = NO
+SWIFT_OBJC_INTEROP_MODE = objcxx
 WARNING_CFLAGS = $(inherited) -Wno-quoted-include-in-framework-header -Wno-non-modular-include-in-framework-module
 OTHER_CFLAGS = $(inherited) -Wno-quoted-include-in-framework-header -Wno-non-modular-include-in-framework-module
 OTHER_SWIFT_FLAGS = -Xcc -F$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks -Xcc -F$(SRCROOT)/Artifacts/ModularFrameworks -Xcc -I$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders -Xcc -I$(SRCROOT)/Artifacts/ReactModularHeaders $(inherited) -Xcc -Wno-quoted-include-in-framework-header -Xcc -Wno-non-modular-include-in-framework-module -Xcc -I$(BUILT_PRODUCTS_DIR)/React.framework/Headers -Xcc -I$(BUILT_PRODUCTS_DIR)/ExpoModulesCore.framework/Headers

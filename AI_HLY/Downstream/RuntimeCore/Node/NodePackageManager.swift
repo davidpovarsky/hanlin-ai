@@ -38,6 +38,15 @@ struct NodePackageDetails: Codable, Identifiable, Hashable, Sendable {
     let lifecycle: LifecycleExecutionPlan?
     let packageRoot: String?
     let size: Int64?
+
+    var entryPoint: String { packageRoot ?? "index.js" }
+    var moduleKind: String { "commonjs" }
+    var entryPoints: [String] { [entryPoint] }
+    var dependencyCount: Int { dependencies.count }
+    var compatibility: (verdict: String, isCompatible: Bool) {
+        let hasUnsupported = findings?.contains(where: { $0.severity == "unsupported" }) ?? false
+        return hasUnsupported ? ("unsupported", false) : ("compatible", true)
+    }
 }
 
 private struct NodePackageInstallTransaction: Decodable, Sendable {
