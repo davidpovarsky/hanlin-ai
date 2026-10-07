@@ -4,6 +4,7 @@ on:
   workflow_dispatch:
 
 permissions:
+  actions: read
   contents: read
 
 jobs:
@@ -22,11 +23,27 @@ jobs:
       IOS_DEPLOYMENT_TARGET: "26.0"
 
     steps:
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Select stable Xcode 26
         id: toolchain
         shell: bash
@@ -43,28 +60,68 @@ jobs:
           swift --version | tee -a "$LOG_DIR/01-xcode-version.log"
           xcrun --sdk iphonesimulator --show-sdk-version | tee "$LOG_DIR/01-sdk-version.log"
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 24.5.0
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Set up Python 3.12
         uses: actions/setup-python@v5
         with:
           python-version: "3.12"
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Install Expo tooling dependencies
         shell: bash
         run: |
           set -euxo pipefail
           npm ci --prefix Scripts/Expo
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Prepare Expo iOS dependency closure
         shell: bash
         run: |
           set -euxo pipefail
           node Scripts/Expo/prepare-ios-dependencies.mjs 2>&1 | tee "$LOG_DIR/02-expo-dependencies.log"
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Prepare verified embedded RuntimeCore & host resources
         env:
           GH_TOKEN: ${{ github.token }}
@@ -75,6 +132,14 @@ jobs:
           bash Scripts/Runtime/prepare-runtime-host.sh 2>&1 | tee "$LOG_DIR/03-package-runtime-host.log"
           cp build/runtime-host/RuntimeHostResources.zip AI_HLY/RuntimeHostResources.zip
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Create CI Config.xcconfig
         shell: bash
         run: |
@@ -87,6 +152,14 @@ jobs:
           HANLIN_OPEN_API_KEY =
           EOF
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Prepare NativeScript binary dependencies for package resolution
         shell: bash
         run: |
@@ -94,12 +167,28 @@ jobs:
           npm ci --ignore-scripts --no-audit --no-fund --prefix Scripts/NativeScript
           npm run prepare:ios-dependencies --prefix Scripts/NativeScript
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Verify HanlinExpoRuntime package resolution
         shell: bash
         run: |
           set -euxo pipefail
           swift package --package-path Packages/HanlinExpoRuntime resolve
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Resolve Swift Package dependencies
         shell: bash
         run: |
@@ -113,6 +202,14 @@ jobs:
             -skipMacroValidation \
             2>&1 | tee "$LOG_DIR/04-resolve-packages.log"
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Build Hanlin application for testing
         shell: bash
         run: |
@@ -134,6 +231,14 @@ jobs:
             ONLY_ACTIVE_ARCH=YES \
             | tee "$LOG_DIR/05-build-for-testing.log"
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Boot iPad Simulator and stage fixtures
         id: stage-fixtures
         shell: bash
@@ -201,6 +306,14 @@ jobs:
 
           echo "sim-udid=$SIMULATOR_UDID" >> "$GITHUB_OUTPUT"
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Run Expo SwiftUI Production E2E Tests
         shell: bash
         run: |
@@ -221,6 +334,15 @@ jobs:
             -resultBundlePath "build/ExpoE2EResults.xcresult" \
             2>&1 | tee "$LOG_DIR/07-expo-e2e-tests.log"
 
+      - name: Live Activity · refresh
+        if: always()
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Upload Test Results and Logs
         if: always()
         uses: actions/upload-artifact@v4
