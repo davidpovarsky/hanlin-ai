@@ -1458,7 +1458,7 @@ jobs:
     if: ${{ needs.plan-affected-validation.outputs.run_simulator_job == 'true' }}
     name: Launch full app on iPad Simulator
     runs-on: xcode-27
-    timeout-minutes: 90
+    timeout-minutes: 180
 
     env:
       PROJECT_PATH: AI_HLY.xcodeproj
