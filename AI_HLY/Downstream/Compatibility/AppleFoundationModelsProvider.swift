@@ -96,8 +96,20 @@ public final class ProductionFoundationModelSessionBackend: AppleFoundationModel
         }
         let session = LanguageModelSession()
         let stream = session.streamResponse(to: prompt)
-        for try await delta in stream {
+        var previousLength = 0
+        for try await snapshot in stream {
             try Task.checkCancellation()
+            let fullText = snapshot.content
+            let delta: String
+            if fullText.count >= previousLength {
+                let startIndex = fullText.index(fullText.startIndex, offsetBy: previousLength)
+                delta = String(fullText[startIndex...])
+                previousLength = fullText.count
+            } else {
+                delta = fullText
+                previousLength = fullText.count
+            }
+            guard !delta.isEmpty else { continue }
             let shouldContinue = onDelta(delta)
             if !shouldContinue {
                 break
