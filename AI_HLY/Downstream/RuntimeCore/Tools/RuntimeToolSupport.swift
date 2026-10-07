@@ -127,7 +127,7 @@ enum RuntimeToolSupport {
         if error is CancellationError { return .cancelled }
         if let error = error as? NativeToolJSON.JSONError {
             switch error {
-            case .invalidUTF8, .invalidObject, .missingRequiredString,
+            case .invalidUTF8, .invalidObject, .missingRequiredString, .missingKey,
                  .invalidType, .unknownArguments, .invalidValue:
                 return .invalidArguments
             }
