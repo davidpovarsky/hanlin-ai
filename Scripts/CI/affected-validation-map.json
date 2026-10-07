@@ -112,6 +112,19 @@
       ],
       "consumers": []
     },
+    "master_scenario_semantic_acceptance_tests": {
+      "description": "Master scenario semantic acceptance tests",
+      "patterns": [
+        "AI_HLYTests/MasterScenarioSemanticAcceptanceTests.swift"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/MasterScenarioSemanticAcceptanceTests"
+      ],
+      "consumers": []
+    },
     "agent_runtime_conversation_ui_tests": {
       "description": "Agent runtime conversation UI tests",
       "patterns": [
