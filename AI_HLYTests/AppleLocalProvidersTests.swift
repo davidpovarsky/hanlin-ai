@@ -110,14 +110,18 @@ struct AppleLocalProvidersTests {
             Task { @MainActor in provider.backend = nil }
         }
 
-        var received: [String] = []
+        final class Accumulator: @unchecked Sendable {
+            var items: [String] = []
+            func append(_ item: String) { items.append(item) }
+        }
+        let acc = Accumulator()
         try await provider.generate(prompt: "Tell me about Swift") { delta in
-            received.append(delta)
+            acc.append(delta)
             return true
         }
 
-        #expect(received == ["Swift", " ", "Apple", " ", "Intelligence"])
-        #expect(received.joined() == "Swift Apple Intelligence")
+        #expect(acc.items == ["Swift", " ", "Apple", " ", "Intelligence"])
+        #expect(acc.items.joined() == "Swift Apple Intelligence")
     }
 
     @Test("CoreAI provider rejects non-existent model file")
