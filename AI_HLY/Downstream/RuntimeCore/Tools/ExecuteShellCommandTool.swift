@@ -105,5 +105,4 @@ struct ExecuteShellCommandTool: NativeTool {
         }
         return true
     }
-    }
 }
