@@ -727,7 +727,7 @@ struct Style {
       };
       await patchCppHeaders(artifactsRoot);
 
-      // 2. Strip internal C++ Fabric headers and EXHostWrapper from ExpoModulesCore_umbrella.h
+      // 2. Strip internal C++ Fabric headers from ExpoModulesCore_umbrella.h
       const patchExpoUmbrellas = async (dir) => {
         if (!existsSync(dir)) return;
         const entries = await readdir(dir, { withFileTypes: true });
@@ -743,8 +743,7 @@ struct Style {
               'ExpoViewShadowNode.h',
               'ExpoViewEventEmitter.h',
               'ExpoViewProps.h',
-              'ExpoViewState.h',
-              'EXHostWrapper.h'
+              'ExpoViewState.h'
             ];
             let modified = false;
             for (const fh of fabricHeaders) {
@@ -782,9 +781,16 @@ struct Style {
             }
           } else if (entry.name === 'EXHostWrapper.h') {
             let content = await readFile(fullPath, 'utf8');
+            let modified = false;
             if (content.includes('ReactCommon/RCTHost.h') || content.includes('RCTHost.h')) {
-              content = content.replace(/^[ \t]*#import[ \t]+["<](?:ReactCommon\/)?RCTHost\.h[">][ \t]*\r?\n?/gm, '@class RCTHost;\n');
-              content = content.replace(/^[ \t]*#include[ \t]+["<](?:ReactCommon\/)?RCTHost\.h[">][ \t]*\r?\n?/gm, '@class RCTHost;\n');
+              content = content.replace(/^[ \t]*#[a-z]+[ \t]+["<](?:ReactCommon\/)?RCTHost\.h[">][ \t]*\r?\n?/gm, '@class RCTHost;\n');
+              modified = true;
+            }
+            if (!content.includes('@class RCTHost;')) {
+              content = '@class RCTHost;\n' + content;
+              modified = true;
+            }
+            if (modified) {
               await writeFile(fullPath, content, 'utf8');
               console.log(`[HanlinExpo] Patched RCTHost import in ${fullPath}`);
             }
