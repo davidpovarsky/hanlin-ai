@@ -1,0 +1,60 @@
+Command line invocation:
+    /Applications/Xcode_27.app/Contents/Developer/usr/bin/xcodebuild test-without-building -project AI_HLY.xcodeproj -scheme AI_HLY -configuration Release -destination "platform=iOS Simulator,id=D2B249EB-2AC1-445A-BE5C-E80D6FBCCDF5" -derivedDataPath build/SimulatorDerivedData -clonedSourcePackagesDirPath build/SourcePackages -resultBundlePath simulator-logs/ScriptingAcceptanceResult.xcresult -skipPackagePluginValidation -skipMacroValidation "-only-testing:AI_HLYTests/HanlinScriptingAcceptanceTests"
+
+Resolve Package Graph
+
+
+Resolved source packages:
+  LLM: https://github.com/eastriverlee/LLM.swift/ @ 1.8.0
+  LaTeXSwiftUI: https://github.com/colinc86/LaTeXSwiftUI @ 1.5.0
+  HanlinTextStudioMiniApp: /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinTextStudioMiniApp @ local
+  mcp-swift-sdk: https://github.com/modelcontextprotocol/swift-sdk.git @ 0.12.1
+  swift-log: https://github.com/apple/swift-log.git @ 1.6.2
+  CoreXLSX: https://github.com/CoreOffice/CoreXLSX.git @ 0.14.2
+  SwiftDraw: https://github.com/swhitty/SwiftDraw @ 0.21.0
+  HanlinWikipediaMiniApp: /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinWikipediaMiniApp @ local
+  SwiftSoup: https://github.com/scinfu/SwiftSoup.git @ 2.8.7
+  swift-argument-parser: https://github.com/apple/swift-argument-parser @ 1.8.2
+  ZIPFoundation: https://github.com/weichsel/ZIPFoundation @ 0.9.19
+  swift-atomics: https://github.com/apple/swift-atomics.git @ 1.3.0
+  XMLCoder: https://github.com/maxdesiatov/XMLCoder.git @ 0.14.0
+  HanlinPlatform: /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform @ local
+  HTMLEntities: https://github.com/Kitura/swift-html-entities @ 4.0.1
+  NativeScriptSDK: https://github.com/NativeScript/ios-spm.git @ 9.1.0
+  HanlinSefariaMiniApp: /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinSefariaMiniApp @ local
+  MathJaxSwift: https://github.com/colinc86/MathJaxSwift @ 3.4.0
+  IOSSystemLite: /Users/runner/work/hanlin-ai/hanlin-ai/Packages/IOSSystemLite @ local
+  HanlinNativeScriptRuntime: /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinNativeScriptRuntime @ local
+  HanlinQuickJS: /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinQuickJS @ local
+  NetworkImage: https://github.com/gonzalezreal/NetworkImage @ 6.0.1
+  EventSource: https://github.com/mattt/eventsource.git @ 1.1.0
+  swift-system: https://github.com/apple/swift-system.git @ 1.4.0
+  cmark-gfm: https://github.com/swiftlang/swift-cmark @ 0.6.0
+  swift-collections: https://github.com/apple/swift-collections.git @ 1.3.0
+  HanlinParityMiniApp: /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinParityMiniApp @ local
+  RichTextKit: https://github.com/danielsaidi/RichTextKit.git @ 1.2.0
+  swift-markdown-ui: https://github.com/gonzalezreal/MarkdownUI.git @ 2.4.1
+  SWCompression: https://github.com/tsolomko/SWCompression.git @ 4.9.0
+  SwiftAISDK: https://github.com/davidpovarsky/swift-ai-sdk.git @ 43ebcfa
+  swift-nio: https://github.com/apple/swift-nio.git @ 2.94.0
+  HanlinExpoRuntime: /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinExpoRuntime @ local
+  BitByteData: https://github.com/tsolomko/BitByteData @ 2.1.0
+
+Writing result bundle at path:
+	/Users/runner/work/hanlin-ai/hanlin-ai/simulator-logs/ScriptingAcceptanceResult.xcresult
+
+2026-10-07 08:42:44.173 xcodebuild[43773:359319] [MT] IDETestOperationsObserverDebug: 168.908 elapsed -- Testing started completed.
+2026-10-07 08:42:44.173 xcodebuild[43773:359319] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-10-07 08:42:44.173 xcodebuild[43773:359319] [MT] IDETestOperationsObserverDebug: 168.908 sec, +168.908 sec -- end
+
+Test session results, code coverage, and logs:
+	/Users/runner/work/hanlin-ai/hanlin-ai/simulator-logs/ScriptingAcceptanceResult.xcresult
+
+** TEST EXECUTE SUCCEEDED **
+
+Testing started
+Test suite 'HanlinScriptingAcceptanceTests' started on 'Clone 1 of iPad mini (A17 Pro) - AI_Hanlin (52922)'
+Test case 'HanlinScriptingAcceptanceTests/structuredAssistantToolResult()' passed on 'Clone 1 of iPad mini (A17 Pro) - AI_Hanlin (52922)' (0.018 seconds)
+Test case 'HanlinScriptingAcceptanceTests/executableVerticalSlice()' passed on 'Clone 1 of iPad mini (A17 Pro) - AI_Hanlin (52922)' (0.351 seconds)
+Test case 'HanlinScriptingAcceptanceTests/malformedPackageIsUnavailable()' passed on 'Clone 1 of iPad mini (A17 Pro) - AI_Hanlin (52922)' (0.002 seconds)
+Test case 'HanlinScriptingAcceptanceTests/integrityTamperingIsUnavailable()' passed on 'Clone 1 of iPad mini (A17 Pro) - AI_Hanlin (52922)' (0.014 seconds)
