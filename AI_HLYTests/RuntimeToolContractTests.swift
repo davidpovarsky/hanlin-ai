@@ -111,8 +111,8 @@ struct RuntimeToolContractTests {
         )
         try assertParameters(
             ExecuteShellCommandTool().openAIToolSchema(),
-            properties: ["program", "arguments", "allow_network"],
-            required: ["program"]
+            properties: ["program", "arguments", "command", "allow_network"],
+            required: []
         )
     }
 

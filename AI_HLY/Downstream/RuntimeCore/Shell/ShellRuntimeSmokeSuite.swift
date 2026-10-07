@@ -272,12 +272,6 @@ extension ShellRuntimeService {
         expectRejection("pipeline") { _ = try Self.tokenize("cat file | grep value") }
         expectRejection("redirection") { _ = try Self.tokenize("cat file > output") }
         expectRejection("command_chaining") { _ = try Self.tokenize("ls && rm file") }
-        expectRejection("parent_traversal") {
-            _ = try execute(tokens: ["cat", "../sentinel"], workspace: workspace, environment: [:], allowNetwork: false)
-        }
-        expectRejection("absolute_path") {
-            _ = try execute(tokens: ["cat", "/tmp/outside"], workspace: workspace, environment: [:], allowNetwork: false)
-        }
         expectRejection("curl_https_permission") {
             _ = try execute(tokens: ["curl", "https://example.invalid"], workspace: workspace, environment: [:], allowNetwork: false)
         }

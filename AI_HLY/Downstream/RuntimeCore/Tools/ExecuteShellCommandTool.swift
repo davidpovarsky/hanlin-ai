@@ -39,7 +39,7 @@ struct ExecuteShellCommandTool: NativeTool {
             guard (program == nil) != (legacyCommand == nil) else {
                 throw NativeToolJSON.JSONError.invalidValue(
                     key: "program",
-                    description: "provide the structured program form only"
+                    description: "provide either 'program' (structured) or 'command' (command string), not both or neither"
                 )
             }
             let argv = try NativeToolJSON.strictStringArray(arguments, "arguments")
@@ -70,7 +70,7 @@ struct ExecuteShellCommandTool: NativeTool {
                 guard argv.isEmpty else {
                     throw NativeToolJSON.JSONError.invalidValue(
                         key: "arguments",
-                        description: "arguments cannot accompany the legacy command input"
+                        description: "arguments cannot accompany the command string form"
                     )
                 }
                 result = try await AgentHostServicesAdapter.executeLegacyShell(
@@ -91,17 +91,19 @@ struct ExecuteShellCommandTool: NativeTool {
     }
 
     private func isAllowedByCatalog() async -> Bool {
-        if let hostContext,
-           hostContext.effectiveCapabilities.contains("all") ||
-           hostContext.effectiveCapabilities.contains("shell") ||
-           hostContext.effectiveCapabilities.contains("runtime.shell") ||
-           hostContext.origin == .assistantModel {
-            return true
-        }
-        return await MainActor.run {
+        let catalogEnabled = await MainActor.run {
             NativeToolCatalog.shared.ensureBuiltinsRegistered()
             guard let entry = NativeToolCatalog.shared.entry(named: name) else { return true }
             return NativeToolCatalog.shared.isEffectivelyEnabled(entry)
         }
+        guard catalogEnabled else { return false }
+        if let hostContext {
+            return hostContext.effectiveCapabilities.contains("all") ||
+                   hostContext.effectiveCapabilities.contains("shell") ||
+                   hostContext.effectiveCapabilities.contains("runtime.shell") ||
+                   hostContext.origin == .assistantModel
+        }
+        return true
+    }
     }
 }
