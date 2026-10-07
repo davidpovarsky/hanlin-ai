@@ -15,6 +15,7 @@ on:
         default: true
 
 permissions:
+  actions: read
   contents: read
 
 concurrency:
@@ -41,12 +42,28 @@ jobs:
     timeout-minutes: 120
 
     steps:
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Checkout exact source
         uses: actions/checkout@v4
         with:
           clean: true
           fetch-depth: 1
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Select newest stable Xcode 26
         shell: bash
         run: |
@@ -59,11 +76,27 @@ jobs:
           xcodebuild -version
           xcrun --sdk iphoneos --show-sdk-version
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Set up pinned Node
         uses: actions/setup-node@v4
         with:
           node-version: 24.5.0
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Compute build number and prepare folders
         shell: bash
         run: |
@@ -73,6 +106,14 @@ jobs:
           mkdir -p "$BUILD_DIR/logs"
           echo "Using CFBundleVersion $build_number"
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Prepare application build inputs
         shell: bash
         env:
@@ -97,6 +138,15 @@ jobs:
           cp build/runtime-host/RuntimeHostResources.zip AI_HLY/RuntimeHostResources.zip
           bash Scripts/Runtime/preflight-runtime-core.sh
 
+      - name: Live Activity · refresh
+        if: ${{ inputs.upload_to_testflight }}
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Restore App Store Connect API key
         if: ${{ inputs.upload_to_testflight }}
         shell: bash
@@ -118,6 +168,14 @@ jobs:
           echo "ASC_ISSUER_ID=$ASC_ISSUER_ID_VALUE" >> "$GITHUB_ENV"
           echo "ASC_KEY_PATH=$key_path" >> "$GITHUB_ENV"
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Import distribution certificate and provisioning profiles
         shell: bash
         env:
@@ -192,6 +250,14 @@ jobs:
           install_profile notification "$NOTIFICATION_BUNDLE_ID" "$NOTIFICATION_PROFILE_B64" NOTIFICATION
           echo "SIGNING_KEYCHAIN=$keychain" >> "$GITHUB_ENV"
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Resolve package dependencies
         shell: bash
         run: |
@@ -211,6 +277,14 @@ jobs:
             sleep "$delay"
           done
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Verify signing settings for every distributed target
         shell: bash
         run: |
@@ -232,6 +306,14 @@ jobs:
           check_target ChavrusaChatTranslationProvider "$TRANSLATION_BUNDLE_ID" "$TRANSLATION_PROFILE_SPECIFIER" ChavrusaChatTranslationProvider/ChavrusaChatTranslationProvider.entitlements
           check_target ChavrusaChatNotificationService "$NOTIFICATION_BUNDLE_ID" "$NOTIFICATION_PROFILE_SPECIFIER" ChavrusaChatNotificationService/ChavrusaChatNotificationService.entitlements
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Archive signed Release app
         shell: bash
         run: |
@@ -248,6 +330,14 @@ jobs:
             CURRENT_PROJECT_VERSION="$BUILD_NUMBER" \
             | tee "$BUILD_DIR/logs/archive.log"
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Export App Store Connect IPA
         shell: bash
         run: |
@@ -288,6 +378,14 @@ jobs:
           echo "IPA_PATH=$final_ipa" >> "$GITHUB_ENV"
           shasum -a 256 "$final_ipa" | tee "$final_ipa.sha256"
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Verify archive, signatures, profiles, and entitlements
         shell: bash
         run: |
@@ -344,14 +442,41 @@ jobs:
           test "$(/usr/libexec/PlistBuddy -c 'Print :com.apple.developer.weatherkit' "$main_entitlements")" = true
           echo "Signed IPA verification passed for the app and all four extensions"
 
+      - name: Live Activity · refresh
+        if: ${{ inputs.upload_to_testflight }}
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Validate with App Store Connect
         if: ${{ inputs.upload_to_testflight }}
         run: xcrun altool --validate-app -f "$IPA_PATH" -t ios --apiKey "$ASC_KEY_ID" --apiIssuer "$ASC_ISSUER_ID"
 
+      - name: Live Activity · refresh
+        if: ${{ inputs.upload_to_testflight }}
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Upload to App Store Connect and TestFlight
         if: ${{ inputs.upload_to_testflight }}
         run: xcrun altool --upload-app -f "$IPA_PATH" -t ios --apiKey "$ASC_KEY_ID" --apiIssuer "$ASC_ISSUER_ID"
 
+      - name: Live Activity · refresh
+        if: ${{ inputs.upload_to_testflight }}
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Verify uploaded build appears in TestFlight
         if: ${{ inputs.upload_to_testflight }}
         shell: bash
@@ -361,6 +486,15 @@ jobs:
           "$RUNNER_TEMP/asc-venv/bin/pip" install --quiet 'PyJWT[crypto]==2.10.1'
           "$RUNNER_TEMP/asc-venv/bin/python" Scripts/CI/verify_testflight_build.py "$BUILD_NUMBER"
 
+      - name: Live Activity · refresh
+        if: always()
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Upload signed IPA and verification logs
         if: always()
         uses: actions/upload-artifact@v4
@@ -374,6 +508,15 @@ jobs:
           if-no-files-found: warn
           retention-days: 30
 
+      - name: Live Activity · refresh
+        if: always()
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Remove temporary signing material
         if: always()
         shell: bash
