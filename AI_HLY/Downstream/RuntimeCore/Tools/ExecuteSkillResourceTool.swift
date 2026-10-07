@@ -108,7 +108,7 @@ struct ExecuteSkillResourceTool: NativeTool {
             case "py":
                 runtimeKind = .localPython
             case "js", "mjs":
-                runtimeKind = .quickJS
+                runtimeKind = .node
             case "ts":
                 runtimeKind = .typeScript
             default:

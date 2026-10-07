@@ -47,9 +47,9 @@ struct ListToolsTool: NativeTool {
                 from: argumentsJSON,
                 allowedKeys: ["offset", "limit", "include_disabled"]
             )
-            let offset = (try? NativeToolJSON.strictOptionalInt(arguments ?? [:], "offset")) ?? 0
-            let limit = min(max((try? NativeToolJSON.strictOptionalInt(arguments ?? [:], "limit")) ?? 20, 1), 100)
-            let includeDisabled = (try? NativeToolJSON.strictOptionalBool(arguments ?? [:], "include_disabled")) ?? true
+            let offset = (try? NativeToolJSON.strictInt(arguments ?? [:], "offset", default: 0)) ?? 0
+            let limit = (try? NativeToolJSON.strictInt(arguments ?? [:], "limit", default: 20, range: 1...100)) ?? 20
+            let includeDisabled = (try? NativeToolJSON.strictBool(arguments ?? [:], "include_disabled", default: true)) ?? true
 
             NativeToolCatalog.shared.ensureBuiltinsRegistered()
             let allEntries = NativeToolCatalog.shared.allEntries()
