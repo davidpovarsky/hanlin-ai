@@ -70,7 +70,7 @@ public enum ProductionConformanceFixtures {
     public static let endpointURL = "https://\(testHost)/v1/chat/completions"
 
     public static func makeContainer() throws -> ModelContainer {
-        let configuration = ModelConfiguration(isStoredInMemoryOnly: true)
+        let configuration = ModelConfiguration(isStoredInMemoryOnly: true, cloudKitDatabase: .none)
         return try ModelContainer(
             for: ChatMessages.self,
             APIKeys.self,

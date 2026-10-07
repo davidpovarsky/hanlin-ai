@@ -8,50 +8,50 @@ import Testing
 
 private actor ProductionGate {
     static let shared = ProductionGate()
-    private var toolStartedContinuation: CheckedContinuation<Void, Never>?
-    private var gateContinuation: CheckedContinuation<Void, Never>?
-    private var providerRequestActiveContinuation: CheckedContinuation<Void, Never>?
+    private var isToolStarted: Bool = false
+    private var isGateReleased: Bool = false
+    private var isProviderRequestActive: Bool = false
 
     func reset() {
-        toolStartedContinuation = nil
-        gateContinuation = nil
-        providerRequestActiveContinuation = nil
+        isToolStarted = false
+        isGateReleased = false
+        isProviderRequestActive = false
     }
 
-    func waitForToolStarted() async {
-        await withCheckedContinuation { cont in
-            toolStartedContinuation = cont
+    func waitForToolStarted(timeoutSeconds: Double = 10) async {
+        let deadline = Date().addingTimeInterval(timeoutSeconds)
+        while Date() < deadline {
+            if isToolStarted { break }
+            try? await Task.sleep(nanoseconds: 50_000_000)
         }
     }
 
     func recordToolStarted() {
-        let started = toolStartedContinuation
-        toolStartedContinuation = nil
-        started?.resume()
+        isToolStarted = true
     }
 
-    func waitForGate() async {
-        await withCheckedContinuation { cont in
-            gateContinuation = cont
+    func waitForGate(timeoutSeconds: Double = 10) async {
+        let deadline = Date().addingTimeInterval(timeoutSeconds)
+        while Date() < deadline {
+            if isGateReleased { break }
+            try? await Task.sleep(nanoseconds: 50_000_000)
         }
     }
 
     func releaseGate() {
-        let cont = gateContinuation
-        gateContinuation = nil
-        cont?.resume()
+        isGateReleased = true
     }
 
-    func waitForProviderRequestActive() async {
-        await withCheckedContinuation { cont in
-            providerRequestActiveContinuation = cont
+    func waitForProviderRequestActive(timeoutSeconds: Double = 10) async {
+        let deadline = Date().addingTimeInterval(timeoutSeconds)
+        while Date() < deadline {
+            if isProviderRequestActive { break }
+            try? await Task.sleep(nanoseconds: 50_000_000)
         }
     }
 
     func recordProviderRequestActive() {
-        let cont = providerRequestActiveContinuation
-        providerRequestActiveContinuation = nil
-        cont?.resume()
+        isProviderRequestActive = true
     }
 }
 

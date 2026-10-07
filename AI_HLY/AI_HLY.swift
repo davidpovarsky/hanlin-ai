@@ -38,8 +38,8 @@ class AppDataManager: ObservableObject {
     
     init() {
         do {
-            // 配置 CloudKit 数据库（.automatic 自动选择）
-            let config = ModelConfiguration(isStoredInMemoryOnly: false, cloudKitDatabase: .automatic)
+            let isTesting = ProcessInfo.processInfo.environment["XCTestConfigurationFilePath"] != nil || NSClassFromString("XCTestCase") != nil
+            let config = ModelConfiguration(isStoredInMemoryOnly: false, cloudKitDatabase: isTesting ? .none : .automatic)
             modelContainer = try ModelContainer(
                 for: ChatMessages.self,
                 APIKeys.self,

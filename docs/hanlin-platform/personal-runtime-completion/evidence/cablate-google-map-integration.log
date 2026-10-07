@@ -2,7 +2,7 @@ TAP version 13
 # Subtest: pinned CabLate Google Maps MCP is judged by executed capabilities
 ok 1 - pinned CabLate Google Maps MCP is judged by executed capabilities
   ---
-  duration_ms: 81891.2113
+  duration_ms: 71454.7137
   type: 'test'
   ...
 # {"packageName":"@cablate/mcp-google-map","packageVersion":"0.0.53","entryPoint":"dist/cli.js","runtimeProbePassed":false,"internalLoaderRetryCount":4,"requiresConfiguration":false,"childProcessImported":false}
@@ -14,4 +14,4 @@ ok 1 - pinned CabLate Google Maps MCP is judged by executed capabilities
 # cancelled 0
 # skipped 0
 # todo 0
-# duration_ms 83943.9991
+# duration_ms 82828.3084

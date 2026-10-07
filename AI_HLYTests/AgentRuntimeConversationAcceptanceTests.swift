@@ -84,36 +84,36 @@ private final class ScriptedAgentURLProtocol: URLProtocol, @unchecked Sendable {
 private actor ControllableGate {
     static let shared = ControllableGate()
 
-    private var toolStartedContinuation: CheckedContinuation<Void, Never>?
-    private var gateContinuation: CheckedContinuation<Void, Never>?
+    private var isToolStarted: Bool = false
+    private var isGateReleased: Bool = false
 
     func reset() {
-        toolStartedContinuation = nil
-        gateContinuation = nil
+        isToolStarted = false
+        isGateReleased = false
     }
 
-    func waitForToolStarted() async {
-        await withCheckedContinuation { cont in
-            toolStartedContinuation = cont
+    func waitForToolStarted(timeoutSeconds: Double = 10) async {
+        let deadline = Date().addingTimeInterval(timeoutSeconds)
+        while Date() < deadline {
+            if isToolStarted { break }
+            try? await Task.sleep(nanoseconds: 50_000_000)
         }
     }
 
     func recordToolStarted() {
-        let started = toolStartedContinuation
-        toolStartedContinuation = nil
-        started?.resume()
+        isToolStarted = true
     }
 
-    func waitForGate() async {
-        await withCheckedContinuation { cont in
-            gateContinuation = cont
+    func waitForGate(timeoutSeconds: Double = 10) async {
+        let deadline = Date().addingTimeInterval(timeoutSeconds)
+        while Date() < deadline {
+            if isGateReleased { break }
+            try? await Task.sleep(nanoseconds: 50_000_000)
         }
     }
 
     func releaseGate() {
-        let cont = gateContinuation
-        gateContinuation = nil
-        cont?.resume()
+        isGateReleased = true
     }
 }
 
@@ -889,7 +889,7 @@ struct AgentRuntimeConversationAcceptanceTests {
     }
 
     private func makeContainer() throws -> ModelContainer {
-        let configuration = ModelConfiguration(isStoredInMemoryOnly: true)
+        let configuration = ModelConfiguration(isStoredInMemoryOnly: true, cloudKitDatabase: .none)
         return try ModelContainer(
             for: ChatMessages.self,
             APIKeys.self,
