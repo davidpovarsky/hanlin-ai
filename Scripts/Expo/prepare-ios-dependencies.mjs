@@ -587,16 +587,33 @@ struct Style {
             let content = await readFile(fullPath, 'utf8');
             let modified = false;
             if (content.includes('requires is_jsi_v')) {
-              content = content.replace(/(requires\s+is_jsi_v<[^>]+>)/g, `
-#if defined(__cpp_concepts)
-  $1
-#endif
-`);
+              content = content.replace(
+                /template\s*<\s*typename\s+ReturnT,\s*typename\s+JSArgT\s*>\s*(?:#if\s+defined\(__cpp_concepts\)\s*)?requires\s+is_jsi_v<JSArgT>\s*(?:#endif\s*)?/g,
+                'template <typename ReturnT, typename JSArgT, typename std::enable_if_t<is_jsi_v<JSArgT>, int> = 0>\n'
+              );
+              content = content.replace(
+                /template\s*<\s*typename\s+T\s*>\s*(?:#if\s+defined\(__cpp_concepts\)\s*)?requires\s+is_jsi_v<T>\s*(?:#endif\s*)?/g,
+                'template <typename T, typename std::enable_if_t<is_jsi_v<T>, int> = 0>\n'
+              );
               modified = true;
             }
             if (modified) {
               await writeFile(fullPath, content, 'utf8');
-              console.log(`[HanlinExpo] Patched C++20 concepts in ${fullPath}`);
+              console.log(`[HanlinExpo] Patched Base.h SFINAE in ${fullPath}`);
+            }
+          } else if (entry.name === 'ScopedExecutor.h') {
+            let content = await readFile(fullPath, 'utf8');
+            let modified = false;
+            if (content.includes('tryExecuteSync')) {
+              content = content.replace(
+                /template\s*<\s*typename\s+ExecutorEnabledType\s*>\s*requires\s+std::derived_from[\s\S]*?static\s+void\s+tryExecuteSync\s*\(\s*std::weak_ptr<ExecutorEnabledType>\s+selfWeak,\s*[\s\S]*?func\s*\)/g,
+                'template <typename ExecutorEnabledType, typename Func>\nstatic void tryExecuteSync(std::weak_ptr<ExecutorEnabledType> selfWeak, Func func)'
+              );
+              modified = true;
+            }
+            if (modified) {
+              await writeFile(fullPath, content, 'utf8');
+              console.log(`[HanlinExpo] Patched ScopedExecutor.h in ${fullPath}`);
             }
           } else if (entry.name === 'EnumArray.h') {
             let content = await readFile(fullPath, 'utf8');
@@ -769,11 +786,21 @@ struct Style {
               modified = true;
             }
             if (content.includes('requires is_jsi_v')) {
-              content = content.replace(/(requires\s+is_jsi_v<[^>]+>)/g, `
-#if defined(__cpp_concepts)
-  $1
-#endif
-`);
+              content = content.replace(
+                /template\s*<\s*typename\s+ReturnT,\s*typename\s+JSArgT\s*>\s*(?:#if\s+defined\(__cpp_concepts\)\s*)?requires\s+is_jsi_v<JSArgT>\s*(?:#endif\s*)?/g,
+                'template <typename ReturnT, typename JSArgT, typename std::enable_if_t<is_jsi_v<JSArgT>, int> = 0>\n'
+              );
+              content = content.replace(
+                /template\s*<\s*typename\s+T\s*>\s*(?:#if\s+defined\(__cpp_concepts\)\s*)?requires\s+is_jsi_v<T>\s*(?:#endif\s*)?/g,
+                'template <typename T, typename std::enable_if_t<is_jsi_v<T>, int> = 0>\n'
+              );
+              modified = true;
+            }
+            if (content.includes('tryExecuteSync') && content.includes('std::derived_from')) {
+              content = content.replace(
+                /template\s*<\s*typename\s+ExecutorEnabledType\s*>\s*requires\s+std::derived_from[\s\S]*?static\s+void\s+tryExecuteSync\s*\(\s*std::weak_ptr<ExecutorEnabledType>\s+selfWeak,\s*[\s\S]*?func\s*\)/g,
+                'template <typename ExecutorEnabledType, typename Func>\nstatic void tryExecuteSync(std::weak_ptr<ExecutorEnabledType> selfWeak, Func func)'
+              );
               modified = true;
             }
             if (content.includes('requires std::is_enum_v')) {
