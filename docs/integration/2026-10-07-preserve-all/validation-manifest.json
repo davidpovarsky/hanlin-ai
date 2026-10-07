@@ -1,0 +1,110 @@
+{
+  "integrationBranch": "integration/hanlin-preserve-all-20261007",
+  "candidateCommit": "464afc6f808d904e8e8531f778c29c5f445d0f0b",
+  "mergeSTCommit": "31cfc30f83a72f7f24859045424f40dd30fa53fd",
+  "generatedAt": "2026-10-07T20:00:00+03:00",
+  "environment": {
+    "os": "Windows (PowerShell)",
+    "python": "3.12+",
+    "node": "v20+",
+    "git": "2.40+"
+  },
+  "checks": [
+    {
+      "name": "Unmerged Index Verification",
+      "command": "git ls-files -u",
+      "scope": "git-index",
+      "exitCode": 0,
+      "status": "PASSED",
+      "details": "Verified 0 unmerged files across all stages."
+    },
+    {
+      "name": "Git Conflict Markers Verification",
+      "command": "git diff --check",
+      "scope": "syntax-git",
+      "exitCode": 0,
+      "status": "PASSED",
+      "details": "Zero leftover conflict markers in working tree."
+    },
+    {
+      "name": "Expo Dependencies Script Syntax",
+      "command": "node --check Scripts/Expo/prepare-ios-dependencies.mjs",
+      "scope": "syntax-node",
+      "exitCode": 0,
+      "status": "PASSED",
+      "details": "prepare-ios-dependencies.mjs compiles without errors."
+    },
+    {
+      "name": "Acceptance Results Generator Syntax",
+      "command": "node --check Scripts/generate_acceptance_results.mjs",
+      "scope": "syntax-node",
+      "exitCode": 0,
+      "status": "PASSED",
+      "details": "generate_acceptance_results.mjs compiles cleanly."
+    },
+    {
+      "name": "Affected Validation Map Unit Tests",
+      "command": "python -m unittest Scripts/CI/Tests/test_affected_validation.py",
+      "scope": "unit-tests",
+      "exitCode": 0,
+      "status": "PASSED",
+      "details": "Ran 47 tests covering all 10 critical path patterns. All 47 passed."
+    },
+    {
+      "name": "Zero Stubs Verification",
+      "command": "python Scripts/CI/verify-zero-stubs.py",
+      "scope": "static-audit",
+      "exitCode": 0,
+      "status": "PASSED",
+      "details": "All production Torah Photo Study files verified clean of stubs, mocks, and hardcoded results."
+    },
+    {
+      "name": "Validation Planner Static Compilation",
+      "command": "python -m py_compile Scripts/CI/plan_affected_validation.py",
+      "scope": "syntax-python",
+      "exitCode": 0,
+      "status": "PASSED",
+      "details": "plan_affected_validation.py compiles cleanly."
+    },
+    {
+      "name": "Acceptance Scripts Static Compilation",
+      "command": "python -m py_compile Scripts/Acceptance/*.py",
+      "scope": "syntax-python",
+      "exitCode": 0,
+      "status": "PASSED",
+      "details": "All 6 acceptance scripts in Scripts/Acceptance/ compiled without syntax errors."
+    },
+    {
+      "name": "Postflight Merge Audit",
+      "command": "python Scripts/Audit/hanlin_merge_preflight.py --repo . --out docs/integration/2026-10-07-preserve-all/postflight --candidate HEAD",
+      "scope": "audit",
+      "exitCode": 0,
+      "status": "PASSED",
+      "details": "Candidate contains all source tips (S=true, T=true, A=true). Unambiguous candidate deviations = 0. Operational errors = 0."
+    },
+    {
+      "name": "Ancestry Verification",
+      "command": "git merge-base --is-ancestor <pin> HEAD",
+      "scope": "git-ancestry",
+      "exitCode": 0,
+      "status": "PASSED",
+      "details": "Verified all 3 pins (S: 03e7c70e, T: e8373959, A: 05a5d3c1) are ancestors of candidate HEAD."
+    },
+    {
+      "name": "Project Board Reference Check",
+      "command": "bash scripts/validate-project-board.sh",
+      "scope": "governance",
+      "exitCode": 0,
+      "status": "PASSED",
+      "details": "PROJECT_BOARD.md exists and is referenced in authoritative instruction files."
+    },
+    {
+      "name": "Physical Device / Remote Apple Hardware Testing",
+      "command": "N/A (physical iOS device required)",
+      "scope": "device-hardware",
+      "exitCode": null,
+      "status": "NOT_RUN_PHYSICAL_DEVICE",
+      "details": "Physical Apple device execution and camera hardware validation blocked in current workstation environment. Recorded honestly per Section 11/12."
+    }
+  ]
+}

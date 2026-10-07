@@ -1,0 +1,25 @@
+9c348edf3b3648cf5c14f993e86e5e2e0e161580
+.github/workflows/build-ios26-unsigned-ipa.yml
+AI_HLYTests/AppleLocalProvidersTests.swift
+PROJECT_BOARD.md
+Packages/HanlinExpoRuntime/Package.swift
+Scripts/CI/affected-validation-map.json
+Scripts/Expo/prepare-ios-dependencies.mjs
+
+Auto-merging .github/workflows/build-ios26-unsigned-ipa.yml
+CONFLICT (content): Merge conflict in .github/workflows/build-ios26-unsigned-ipa.yml
+Auto-merging AI_HLY.xcodeproj/project.pbxproj
+Auto-merging AI_HLY/Downstream/RuntimeCore/Tools/RuntimeToolSupport.swift
+Auto-merging AI_HLYTests/AppleLocalProvidersTests.swift
+CONFLICT (content): Merge conflict in AI_HLYTests/AppleLocalProvidersTests.swift
+Auto-merging Generated/SwiftUIBridge/HanlinGeneratedModifiers.swift
+Auto-merging PROJECT_BOARD.md
+CONFLICT (add/add): Merge conflict in PROJECT_BOARD.md
+Auto-merging Packages/HanlinExpoRuntime/Package.swift
+CONFLICT (content): Merge conflict in Packages/HanlinExpoRuntime/Package.swift
+Auto-merging Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/Generated/HanlinGeneratedModifiers.swift
+Auto-merging Packages/HanlinPlatform/Tests/HanlinChatCoreTests/ProviderConformance/ProviderLongHorizonTests.swift
+Auto-merging Scripts/CI/affected-validation-map.json
+CONFLICT (content): Merge conflict in Scripts/CI/affected-validation-map.json
+Auto-merging Scripts/Expo/prepare-ios-dependencies.mjs
+CONFLICT (content): Merge conflict in Scripts/Expo/prepare-ios-dependencies.mjs

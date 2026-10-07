@@ -1,0 +1,23 @@
+{
+  "auditVersion": 1,
+  "createdAtUTC": "2026-10-07T16:59:49.363559+00:00",
+  "gitVersion": "git version 2.52.0.windows.1",
+  "sourceInputs": {
+    "skills": "03e7c70e66309068ade31fd88cc26f4741f00f53",
+    "torah": "e83739594b4552bd65bfd08fae8872fd29fd57d6",
+    "adapter": "05a5d3c11aa95fef9ab3d4a86318176a0be64799"
+  },
+  "sourcePins": {
+    "skills": "03e7c70e66309068ade31fd88cc26f4741f00f53",
+    "torah": "e83739594b4552bd65bfd08fae8872fd29fd57d6",
+    "adapter": "05a5d3c11aa95fef9ab3d4a86318176a0be64799"
+  },
+  "candidate": "464afc6f808d904e8e8531f778c29c5f445d0f0b",
+  "auditIsNotBuildOrRuntimeVerification": true,
+  "pinsDifferFromDocument": {},
+  "commits": {
+    "skills": "03e7c70e66309068ade31fd88cc26f4741f00f53\n2026-10-07T18:01:46+03:00\nfix(apple): make test stream accumulator sendable in AppleLocalProvidersTests",
+    "torah": "e83739594b4552bd65bfd08fae8872fd29fd57d6\n2026-10-07T15:39:23+03:00\nci: increase full-app-simulator-smoke timeout from 90 to 180 minutes",
+    "adapter": "05a5d3c11aa95fef9ab3d4a86318176a0be64799\n2026-10-06T14:50:43Z\nchore: add living project board for agents"
+  }
+}

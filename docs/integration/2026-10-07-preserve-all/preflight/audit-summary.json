@@ -1,0 +1,66 @@
+{
+  "sourcePins": {
+    "skills": "03e7c70e66309068ade31fd88cc26f4741f00f53",
+    "torah": "e83739594b4552bd65bfd08fae8872fd29fd57d6",
+    "adapter": "05a5d3c11aa95fef9ab3d4a86318176a0be64799"
+  },
+  "candidate": null,
+  "commonBases": [
+    "6bfffeed038d0da09bb2d912ca1fe76da2dd6d7a"
+  ],
+  "pairs": [
+    {
+      "left": "skills",
+      "right": "torah",
+      "mergeBases": [
+        "e6e222b11618f4297c32ea74ef50f17c49929f8c"
+      ],
+      "leftOnlyCommits": 40,
+      "rightOnlyCommits": 51,
+      "leftChangedPaths": 51,
+      "rightChangedPaths": 78,
+      "overlapPaths": 14,
+      "sameFinalOverlapPaths": 3,
+      "differentFinalOverlapPaths": 11,
+      "mergeTreeExitCode": 1,
+      "mergeTreeStatus": "CONFLICTS"
+    },
+    {
+      "left": "skills",
+      "right": "adapter",
+      "mergeBases": [
+        "6bfffeed038d0da09bb2d912ca1fe76da2dd6d7a"
+      ],
+      "leftOnlyCommits": 59,
+      "rightOnlyCommits": 2,
+      "leftChangedPaths": 52,
+      "rightChangedPaths": 13,
+      "overlapPaths": 4,
+      "sameFinalOverlapPaths": 3,
+      "differentFinalOverlapPaths": 1,
+      "mergeTreeExitCode": 1,
+      "mergeTreeStatus": "CONFLICTS"
+    },
+    {
+      "left": "torah",
+      "right": "adapter",
+      "mergeBases": [
+        "6bfffeed038d0da09bb2d912ca1fe76da2dd6d7a"
+      ],
+      "leftOnlyCommits": 70,
+      "rightOnlyCommits": 2,
+      "leftChangedPaths": 80,
+      "rightChangedPaths": 13,
+      "overlapPaths": 4,
+      "sameFinalOverlapPaths": 3,
+      "differentFinalOverlapPaths": 1,
+      "mergeTreeExitCode": 1,
+      "mergeTreeStatus": "CONFLICTS"
+    }
+  ],
+  "candidateContainsAllSourceTips": {},
+  "unionChangedPaths": 125,
+  "unambiguousCandidateDeviations": 0,
+  "operationalErrors": [],
+  "auditExit0DoesNotMeanMergeOrBuildPassed": true
+}

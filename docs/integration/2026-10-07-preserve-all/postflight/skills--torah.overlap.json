@@ -1,0 +1,260 @@
+[
+  {
+    "path": ".github/workflows/build-ios26-unsigned-ipa.yml",
+    "base": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "e9c35620a3d5f22c0accd2ea71d56e1f4d6fc1a4"
+    },
+    "skills": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "28f6a4ca97fa11dd9ba39d3bd419085b70e3b4dd"
+    },
+    "torah": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "a7c6d9437a5793c1c679c1149109cc3d4ca4b51c"
+    },
+    "sameFinalEntry": false
+  },
+  {
+    "path": "AGENTS.md",
+    "base": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "8a6ca28eca4603891c322fc553a59d69eefd0ddc"
+    },
+    "skills": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "07234e563673e05bab105fb84e149af4a53b295d"
+    },
+    "torah": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "07234e563673e05bab105fb84e149af4a53b295d"
+    },
+    "sameFinalEntry": true
+  },
+  {
+    "path": "AI_HLY.xcodeproj/project.pbxproj",
+    "base": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "acb23548a229d4c8418f051b61d5c33eb6df80bb"
+    },
+    "skills": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "f3c40e669f29c91b9200656752926426b885c28c"
+    },
+    "torah": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "3865b4fdd5477e4ee1450b88c00421be20e3befa"
+    },
+    "sameFinalEntry": false
+  },
+  {
+    "path": "AI_HLY/Downstream/RuntimeCore/Tools/RuntimeToolSupport.swift",
+    "base": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "4f4d2184a033b9f0c9f71d7b8fc53129b1f33b1f"
+    },
+    "skills": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "fcac0bf0850533b0df656d28d445fa73ed8bf20f"
+    },
+    "torah": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "db31ddede34261ca0298253344fbf3d17dc3d3b4"
+    },
+    "sameFinalEntry": false
+  },
+  {
+    "path": "AI_HLYTests/AppleLocalProvidersTests.swift",
+    "base": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "d74103cd1fd3fc236fddf29b6f66c42b319b6e80"
+    },
+    "skills": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "6b7c2ba6e5af7a32a17305cdba6c8bceb6659de7"
+    },
+    "torah": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "d10eb669d19a876a1de34550fe62275483bbe245"
+    },
+    "sameFinalEntry": false
+  },
+  {
+    "path": "CLAUDE.md",
+    "base": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "3b64d4a1461cf462f6a6dfb59d2254dbaba26b51"
+    },
+    "skills": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "3350a8a6ac74df7661556213e1b09b8435ce6a50"
+    },
+    "torah": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "3350a8a6ac74df7661556213e1b09b8435ce6a50"
+    },
+    "sameFinalEntry": true
+  },
+  {
+    "path": "Generated/SwiftUIBridge/HanlinGeneratedModifiers.swift",
+    "base": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "8935569918cc58115ef71b78b1b429733bbce93a"
+    },
+    "skills": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "576dbe1e1304b03945524fc639135c40465f1033"
+    },
+    "torah": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "14e73e31f5040d2850aa008d85ffc0b01314ad0a"
+    },
+    "sameFinalEntry": false
+  },
+  {
+    "path": "PROJECT_BOARD.md",
+    "base": null,
+    "skills": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "a5d38da650c5763c9657b6cc2ab5411c7b34b627"
+    },
+    "torah": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "e42b00f544ca6f8a495fd0ad36f99d01e8cc70e4"
+    },
+    "sameFinalEntry": false
+  },
+  {
+    "path": "Packages/HanlinExpoRuntime/Package.swift",
+    "base": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "985d988e8d40d357a669813ced5e9489f66c7cfe"
+    },
+    "skills": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "63e75637c0408256d71a2486d5479aedca93b265"
+    },
+    "torah": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "c9098cd2b6525d04913514ed101d1d81c5c080fd"
+    },
+    "sameFinalEntry": false
+  },
+  {
+    "path": "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/Generated/HanlinGeneratedModifiers.swift",
+    "base": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "8935569918cc58115ef71b78b1b429733bbce93a"
+    },
+    "skills": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "576dbe1e1304b03945524fc639135c40465f1033"
+    },
+    "torah": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "14e73e31f5040d2850aa008d85ffc0b01314ad0a"
+    },
+    "sameFinalEntry": false
+  },
+  {
+    "path": "Packages/HanlinPlatform/Tests/HanlinChatCoreTests/ProviderConformance/ProviderLongHorizonTests.swift",
+    "base": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "821a80c9e470636d49710482efb3b74c6298559d"
+    },
+    "skills": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "a792917e9f85ac2caa7b2f078d85a91f5fea740a"
+    },
+    "torah": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "d6bf9a8c7d79ba5fc402f867886c01c1931e4bfa"
+    },
+    "sameFinalEntry": false
+  },
+  {
+    "path": "Scripts/CI/affected-validation-map.json",
+    "base": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "11d6ce196d83d4c090d40921a65bf383e0697121"
+    },
+    "skills": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "d9a0963b42e6c149d901d8efcfaed3f3ed442bd1"
+    },
+    "torah": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "01344d1261b37d4b367a4df20478824d8270160f"
+    },
+    "sameFinalEntry": false
+  },
+  {
+    "path": "Scripts/Expo/prepare-ios-dependencies.mjs",
+    "base": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "0fe0176b780f8f353001b1589779eb8a4f616862"
+    },
+    "skills": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "c6376f716d175ba065922a47e5879d69c0428e1b"
+    },
+    "torah": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "dc0700ac68e7749d83160c04fc5aaeb248b9aba3"
+    },
+    "sameFinalEntry": false
+  },
+  {
+    "path": "scripts/validate-project-board.sh",
+    "base": null,
+    "skills": {
+      "mode": "100755",
+      "type": "blob",
+      "oid": "830231a8479d23b1b6cc86c17317d73b11289f81"
+    },
+    "torah": {
+      "mode": "100755",
+      "type": "blob",
+      "oid": "830231a8479d23b1b6cc86c17317d73b11289f81"
+    },
+    "sameFinalEntry": true
+  }
+]

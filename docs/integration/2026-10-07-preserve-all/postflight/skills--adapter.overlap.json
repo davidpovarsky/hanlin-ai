@@ -1,0 +1,70 @@
+[
+  {
+    "path": "AGENTS.md",
+    "base": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "8a6ca28eca4603891c322fc553a59d69eefd0ddc"
+    },
+    "skills": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "07234e563673e05bab105fb84e149af4a53b295d"
+    },
+    "adapter": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "07234e563673e05bab105fb84e149af4a53b295d"
+    },
+    "sameFinalEntry": true
+  },
+  {
+    "path": "CLAUDE.md",
+    "base": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "3b64d4a1461cf462f6a6dfb59d2254dbaba26b51"
+    },
+    "skills": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "3350a8a6ac74df7661556213e1b09b8435ce6a50"
+    },
+    "adapter": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "3350a8a6ac74df7661556213e1b09b8435ce6a50"
+    },
+    "sameFinalEntry": true
+  },
+  {
+    "path": "PROJECT_BOARD.md",
+    "base": null,
+    "skills": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "a5d38da650c5763c9657b6cc2ab5411c7b34b627"
+    },
+    "adapter": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "720b9a33fd3eb2ee8ccf466e98ef8ce4af8f9e08"
+    },
+    "sameFinalEntry": false
+  },
+  {
+    "path": "scripts/validate-project-board.sh",
+    "base": null,
+    "skills": {
+      "mode": "100755",
+      "type": "blob",
+      "oid": "830231a8479d23b1b6cc86c17317d73b11289f81"
+    },
+    "adapter": {
+      "mode": "100755",
+      "type": "blob",
+      "oid": "830231a8479d23b1b6cc86c17317d73b11289f81"
+    },
+    "sameFinalEntry": true
+  }
+]

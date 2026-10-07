@@ -1,0 +1,2363 @@
+[
+  {
+    "path": ".github/workflows/build-ios26-unsigned-ipa.yml",
+    "base": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "c2ef205e21e8f667335b44cc8b72caf79e88a274"
+    },
+    "changedBy": {
+      "skills": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "28f6a4ca97fa11dd9ba39d3bd419085b70e3b4dd"
+      },
+      "torah": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "a7c6d9437a5793c1c679c1149109cc3d4ca4b51c"
+      }
+    },
+    "classification": "SEMANTIC_REVIEW_REQUIRED"
+  },
+  {
+    "path": ".gitignore",
+    "base": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "98cc01d344bf572466a707548331be5740230bc7"
+    },
+    "changedBy": {
+      "skills": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "6635e1b0141c6facd63f05a26bc72eadabef350e"
+      },
+      "torah": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "6635e1b0141c6facd63f05a26bc72eadabef350e"
+      }
+    },
+    "classification": "ONE_UNAMBIGUOUS_SOURCE_RESULT",
+    "expectedEntry": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "6635e1b0141c6facd63f05a26bc72eadabef350e"
+    }
+  },
+  {
+    "path": "AGENTS.md",
+    "base": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "8a6ca28eca4603891c322fc553a59d69eefd0ddc"
+    },
+    "changedBy": {
+      "skills": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "07234e563673e05bab105fb84e149af4a53b295d"
+      },
+      "torah": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "07234e563673e05bab105fb84e149af4a53b295d"
+      },
+      "adapter": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "07234e563673e05bab105fb84e149af4a53b295d"
+      }
+    },
+    "classification": "ONE_UNAMBIGUOUS_SOURCE_RESULT",
+    "expectedEntry": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "07234e563673e05bab105fb84e149af4a53b295d"
+    }
+  },
+  {
+    "path": "AI_HLY.xcodeproj/project.pbxproj",
+    "base": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "acb23548a229d4c8418f051b61d5c33eb6df80bb"
+    },
+    "changedBy": {
+      "skills": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "f3c40e669f29c91b9200656752926426b885c28c"
+      },
+      "torah": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "3865b4fdd5477e4ee1450b88c00421be20e3befa"
+      }
+    },
+    "classification": "SEMANTIC_REVIEW_REQUIRED"
+  },
+  {
+    "path": "AI_HLY/AI_HLY.swift",
+    "base": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "b0a6143f57234ffbbb482b424c0037b5bda987bd"
+    },
+    "changedBy": {
+      "skills": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "db9435520e2c1f24e3e7c9c942db225e07799bdc"
+      }
+    },
+    "classification": "ONE_UNAMBIGUOUS_SOURCE_RESULT",
+    "expectedEntry": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "db9435520e2c1f24e3e7c9c942db225e07799bdc"
+    }
+  },
+  {
+    "path": "AI_HLY/Downstream/AgentSkills/HanlinSkillCatalog.swift",
+    "base": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "4663a28eca3bc8de3097b168c8287cf4e99257b4"
+    },
+    "changedBy": {
+      "torah": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "5389acac52ce8101d7212171f9e26ca92cc77ff2"
+      }
+    },
+    "classification": "ONE_UNAMBIGUOUS_SOURCE_RESULT",
+    "expectedEntry": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "5389acac52ce8101d7212171f9e26ca92cc77ff2"
+    }
+  },
+  {
+    "path": "AI_HLY/Downstream/AgentSkills/SkillModels.swift",
+    "base": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "0975a398faf80934aece428e3729d1daaa14aff7"
+    },
+    "changedBy": {
+      "skills": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "c74e9f4603bd37b85c8def9e7e5321ebbf626740"
+      }
+    },
+    "classification": "ONE_UNAMBIGUOUS_SOURCE_RESULT",
+    "expectedEntry": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "c74e9f4603bd37b85c8def9e7e5321ebbf626740"
+    }
+  },
+  {
+    "path": "AI_HLY/Downstream/AgentSkills/SkillStore.swift",
+    "base": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "40f7250fd8da64f687a13a49f0ff604fba87d704"
+    },
+    "changedBy": {
+      "skills": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "f4af7a6f2d7c2008b13149292b6dc5c1a248efe6"
+      }
+    },
+    "classification": "ONE_UNAMBIGUOUS_SOURCE_RESULT",
+    "expectedEntry": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "f4af7a6f2d7c2008b13149292b6dc5c1a248efe6"
+    }
+  },
+  {
+    "path": "AI_HLY/Downstream/Compatibility/AppleFoundationModelsProvider.swift",
+    "base": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "60ec4506727f8a22127759fce99dbfc0f62c319e"
+    },
+    "changedBy": {
+      "skills": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "df23cf7db296258049a8fe8e764f40bd870e41f4"
+      }
+    },
+    "classification": "ONE_UNAMBIGUOUS_SOURCE_RESULT",
+    "expectedEntry": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "df23cf7db296258049a8fe8e764f40bd870e41f4"
+    }
+  },
+  {
+    "path": "AI_HLY/Downstream/Compatibility/CoreAILanguageModelProvider.swift",
+    "base": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "5b646392f49e38e2f8803c20f872a55308c159a3"
+    },
+    "changedBy": {
+      "skills": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "738237d51d0d2cf4b1a588a1dae04682871cfa4b"
+      }
+    },
+    "classification": "ONE_UNAMBIGUOUS_SOURCE_RESULT",
+    "expectedEntry": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "738237d51d0d2cf4b1a588a1dae04682871cfa4b"
+    }
+  },
+  {
+    "path": "AI_HLY/Downstream/HostServices/Core/HanlinHostServiceError.swift",
+    "base": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "478109e42d5d324d22d242f8b27b375080d3d9b9"
+    },
+    "changedBy": {
+      "torah": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "d4a3401b012e9e92866610b5cc97a11bbdc1f525"
+      }
+    },
+    "classification": "ONE_UNAMBIGUOUS_SOURCE_RESULT",
+    "expectedEntry": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "d4a3401b012e9e92866610b5cc97a11bbdc1f525"
+    }
+  },
+  {
+    "path": "AI_HLY/Downstream/MCP/Core/MCPServerDescriptor.swift",
+    "base": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "afa1628c5aa0d54752eac6f39b20d7e2749a2120"
+    },
+    "changedBy": {
+      "torah": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "e4b44ef157f81434fe5641745a4799e5e77a2e9b"
+      }
+    },
+    "classification": "ONE_UNAMBIGUOUS_SOURCE_RESULT",
+    "expectedEntry": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "e4b44ef157f81434fe5641745a4799e5e77a2e9b"
+    }
+  },
+  {
+    "path": "AI_HLY/Downstream/MCP/Runtime/MCPClientSession.swift",
+    "base": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "380ac9b782177b0d044c26158113a8152132f5e8"
+    },
+    "changedBy": {
+      "torah": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "472df304f5f132d6bc9eb66f3a09091c0022a33c"
+      }
+    },
+    "classification": "ONE_UNAMBIGUOUS_SOURCE_RESULT",
+    "expectedEntry": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "472df304f5f132d6bc9eb66f3a09091c0022a33c"
+    }
+  },
+  {
+    "path": "AI_HLY/Downstream/MCP/Runtime/MCPRuntimeController.swift",
+    "base": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "77aacdc117380142471466c0ba0adb3f74912646"
+    },
+    "changedBy": {
+      "torah": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "eb5a6d6302c21931c10ff14267a4fae7752f8a4c"
+      }
+    },
+    "classification": "ONE_UNAMBIGUOUS_SOURCE_RESULT",
+    "expectedEntry": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "eb5a6d6302c21931c10ff14267a4fae7752f8a4c"
+    }
+  },
+  {
+    "path": "AI_HLY/Downstream/MCP/Runtime/MCPServerLifecycleSlot.swift",
+    "base": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "3cc079a44d1269b31a74d769113e7c083eda955d"
+    },
+    "changedBy": {
+      "torah": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "8feb4d0a566d9576be1511db5f5537feeca4409a"
+      }
+    },
+    "classification": "ONE_UNAMBIGUOUS_SOURCE_RESULT",
+    "expectedEntry": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "8feb4d0a566d9576be1511db5f5537feeca4409a"
+    }
+  },
+  {
+    "path": "AI_HLY/Downstream/RuntimeCore/Node/NodePackageManager.swift",
+    "base": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "9a8d48dfe1194ef9dea2959b16c93a4b6c0529d9"
+    },
+    "changedBy": {
+      "skills": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "aa788312cc2c826de31cf0daabba9842edb4a206"
+      }
+    },
+    "classification": "ONE_UNAMBIGUOUS_SOURCE_RESULT",
+    "expectedEntry": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "aa788312cc2c826de31cf0daabba9842edb4a206"
+    }
+  },
+  {
+    "path": "AI_HLY/Downstream/RuntimeCore/Resources/RuntimeLocalizable.xcstrings",
+    "base": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "e7e804aa9b9f8da9cd7baac87705602e383bd71c"
+    },
+    "changedBy": {
+      "torah": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "eda13bf249e8b0913a92f21ab9ca8cd1287ad1a2"
+      }
+    },
+    "classification": "ONE_UNAMBIGUOUS_SOURCE_RESULT",
+    "expectedEntry": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "eda13bf249e8b0913a92f21ab9ca8cd1287ad1a2"
+    }
+  },
+  {
+    "path": "AI_HLY/Downstream/RuntimeCore/Shell/ShellRuntimeSmokeSuite.swift",
+    "base": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "3039bb801354be616dfaa2c0458206ac66ed53bf"
+    },
+    "changedBy": {
+      "skills": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "d10808621c285e00143f44385ff23ab20f8beb9c"
+      }
+    },
+    "classification": "ONE_UNAMBIGUOUS_SOURCE_RESULT",
+    "expectedEntry": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "d10808621c285e00143f44385ff23ab20f8beb9c"
+    }
+  },
+  {
+    "path": "AI_HLY/Downstream/RuntimeCore/Tools/ExecuteShellCommandTool.swift",
+    "base": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "0a3fb278213462459a3546b5a1538192d88bafbc"
+    },
+    "changedBy": {
+      "skills": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "cde285fd9cb52640bb8aa592e2a457ae17a34add"
+      }
+    },
+    "classification": "ONE_UNAMBIGUOUS_SOURCE_RESULT",
+    "expectedEntry": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "cde285fd9cb52640bb8aa592e2a457ae17a34add"
+    }
+  },
+  {
+    "path": "AI_HLY/Downstream/RuntimeCore/Tools/ExecuteSkillResourceTool.swift",
+    "base": null,
+    "changedBy": {
+      "torah": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "a7bae0b7c4ebd39dcebfbaefde80fe267ebea9e7"
+      }
+    },
+    "classification": "ONE_UNAMBIGUOUS_SOURCE_RESULT",
+    "expectedEntry": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "a7bae0b7c4ebd39dcebfbaefde80fe267ebea9e7"
+    }
+  },
+  {
+    "path": "AI_HLY/Downstream/RuntimeCore/Tools/ListToolsTool.swift",
+    "base": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "b6747f7524d62ac975187244b80fc0fb4af31556"
+    },
+    "changedBy": {
+      "torah": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "30d988b704df35a842648b7249f8a9ec90a580a2"
+      }
+    },
+    "classification": "ONE_UNAMBIGUOUS_SOURCE_RESULT",
+    "expectedEntry": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "30d988b704df35a842648b7249f8a9ec90a580a2"
+    }
+  },
+  {
+    "path": "AI_HLY/Downstream/RuntimeCore/Tools/ManageRuntimePackagesTool.swift",
+    "base": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "b39125fbff65a886e71e83a9e66a507e38849b99"
+    },
+    "changedBy": {
+      "torah": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "9b38d4aa19f042310a1abfa0be3d3083e53f2ce4"
+      }
+    },
+    "classification": "ONE_UNAMBIGUOUS_SOURCE_RESULT",
+    "expectedEntry": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "9b38d4aa19f042310a1abfa0be3d3083e53f2ce4"
+    }
+  },
+  {
+    "path": "AI_HLY/Downstream/RuntimeCore/Tools/NativeToolCatalog+RuntimeTools.swift",
+    "base": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "534fa90250dc33219b2c3b6bcc8fbf345f14d5ae"
+    },
+    "changedBy": {
+      "torah": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "175150d9c9f2e43a03448293b3bf390ec21fce10"
+      }
+    },
+    "classification": "ONE_UNAMBIGUOUS_SOURCE_RESULT",
+    "expectedEntry": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "175150d9c9f2e43a03448293b3bf390ec21fce10"
+    }
+  },
+  {
+    "path": "AI_HLY/Downstream/RuntimeCore/Tools/RuntimeToolSupport.swift",
+    "base": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "4f4d2184a033b9f0c9f71d7b8fc53129b1f33b1f"
+    },
+    "changedBy": {
+      "skills": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "fcac0bf0850533b0df656d28d445fa73ed8bf20f"
+      },
+      "torah": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "db31ddede34261ca0298253344fbf3d17dc3d3b4"
+      }
+    },
+    "classification": "SEMANTIC_REVIEW_REQUIRED"
+  },
+  {
+    "path": "AI_HLY/Downstream/TorahStudy/TorahOCRService.swift",
+    "base": null,
+    "changedBy": {
+      "torah": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "f149228cae121aecf9de78fafad6a49373fbdac1"
+      }
+    },
+    "classification": "ONE_UNAMBIGUOUS_SOURCE_RESULT",
+    "expectedEntry": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "f149228cae121aecf9de78fafad6a49373fbdac1"
+    }
+  },
+  {
+    "path": "AI_HLY/Downstream/TorahStudy/TorahPhotoStudyCaptureView.swift",
+    "base": null,
+    "changedBy": {
+      "torah": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "942e1b19f3c4ef3bf2250014462c79b3c8309191"
+      }
+    },
+    "classification": "ONE_UNAMBIGUOUS_SOURCE_RESULT",
+    "expectedEntry": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "942e1b19f3c4ef3bf2250014462c79b3c8309191"
+    }
+  },
+  {
+    "path": "AI_HLY/Downstream/TorahStudy/TorahStudyNativeTools.swift",
+    "base": null,
+    "changedBy": {
+      "torah": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "ed2f15077fb8ec2d4a23da302104b930150b85bc"
+      }
+    },
+    "classification": "ONE_UNAMBIGUOUS_SOURCE_RESULT",
+    "expectedEntry": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "ed2f15077fb8ec2d4a23da302104b930150b85bc"
+    }
+  },
+  {
+    "path": "AI_HLY/NativeAgentExtensions/Core/NativeToolJSON.swift",
+    "base": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "8cb1213e6cd27dc6743a542f8f925a3262307f61"
+    },
+    "changedBy": {
+      "skills": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "502a11227c93306abf523ffb0206426d9d761581"
+      }
+    },
+    "classification": "ONE_UNAMBIGUOUS_SOURCE_RESULT",
+    "expectedEntry": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "502a11227c93306abf523ffb0206426d9d761581"
+    }
+  },
+  {
+    "path": "AI_HLY/NativeAgentExtensions/ToolCatalog/NativeToolCatalog.swift",
+    "base": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "9fa00d3bb01b2fefdaa895e39303556f1479c018"
+    },
+    "changedBy": {
+      "torah": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "769ad6e6db87915c93e537df4747876eb8e32bdd"
+      }
+    },
+    "classification": "ONE_UNAMBIGUOUS_SOURCE_RESULT",
+    "expectedEntry": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "769ad6e6db87915c93e537df4747876eb8e32bdd"
+    }
+  },
+  {
+    "path": "AI_HLYTests/AgentRuntimeConversationAcceptanceTests.swift",
+    "base": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "8c2b2a428cba1d566ba9b881e669a55c94586799"
+    },
+    "changedBy": {
+      "skills": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "8c3dc011bc9a04f6402342defb60684a109c1a6b"
+      }
+    },
+    "classification": "ONE_UNAMBIGUOUS_SOURCE_RESULT",
+    "expectedEntry": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "8c3dc011bc9a04f6402342defb60684a109c1a6b"
+    }
+  },
+  {
+    "path": "AI_HLYTests/AppleLocalProvidersTests.swift",
+    "base": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "d74103cd1fd3fc236fddf29b6f66c42b319b6e80"
+    },
+    "changedBy": {
+      "skills": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "6b7c2ba6e5af7a32a17305cdba6c8bceb6659de7"
+      },
+      "torah": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "d10eb669d19a876a1de34550fe62275483bbe245"
+      }
+    },
+    "classification": "SEMANTIC_REVIEW_REQUIRED"
+  },
+  {
+    "path": "AI_HLYTests/HanlinUnifiedHostServicesAgentAcceptanceTests.swift",
+    "base": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "2f7dc36b0e7fe7cdb40b5eb7ddd3541060c0eb40"
+    },
+    "changedBy": {
+      "skills": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "90e9c2a4cb649aa5ea229d4bced9509402dd4c86"
+      }
+    },
+    "classification": "ONE_UNAMBIGUOUS_SOURCE_RESULT",
+    "expectedEntry": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "90e9c2a4cb649aa5ea229d4bced9509402dd4c86"
+    }
+  },
+  {
+    "path": "AI_HLYTests/ProviderConformance/ProductionConformanceFixtures.swift",
+    "base": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "f15d851b0b6b695599ec00ea857e21401dd9f219"
+    },
+    "changedBy": {
+      "skills": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "79cd71f6db4fbdd98d254600b5b111d46c82110f"
+      }
+    },
+    "classification": "ONE_UNAMBIGUOUS_SOURCE_RESULT",
+    "expectedEntry": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "79cd71f6db4fbdd98d254600b5b111d46c82110f"
+    }
+  },
+  {
+    "path": "AI_HLYTests/ProviderConformance/ProductionProviderConformanceTests.swift",
+    "base": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "6ebf5dc4922b4448045242c90f9bef28fbd1e49b"
+    },
+    "changedBy": {
+      "skills": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "71ebd9e3c9320cf61a44116575b030badd6fd2e5"
+      }
+    },
+    "classification": "ONE_UNAMBIGUOUS_SOURCE_RESULT",
+    "expectedEntry": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "71ebd9e3c9320cf61a44116575b030badd6fd2e5"
+    }
+  },
+  {
+    "path": "AI_HLYTests/RuntimeToolContractTests.swift",
+    "base": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "53147615948bb77761820f72ed3904415e516e88"
+    },
+    "changedBy": {
+      "skills": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "a91adf34c4315bdd47f454d1dcf62321e4c556da"
+      }
+    },
+    "classification": "ONE_UNAMBIGUOUS_SOURCE_RESULT",
+    "expectedEntry": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "a91adf34c4315bdd47f454d1dcf62321e4c556da"
+    }
+  },
+  {
+    "path": "AI_HLYTests/SkillStoreAndImportTests.swift",
+    "base": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "3c5488747f39a5cba3e916a9fda934df64208322"
+    },
+    "changedBy": {
+      "skills": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "a575e2899e34c55bb4c1df195a55ec4e07126f89"
+      }
+    },
+    "classification": "ONE_UNAMBIGUOUS_SOURCE_RESULT",
+    "expectedEntry": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "a575e2899e34c55bb4c1df195a55ec4e07126f89"
+    }
+  },
+  {
+    "path": "CLAUDE.md",
+    "base": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "3b64d4a1461cf462f6a6dfb59d2254dbaba26b51"
+    },
+    "changedBy": {
+      "skills": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "3350a8a6ac74df7661556213e1b09b8435ce6a50"
+      },
+      "torah": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "3350a8a6ac74df7661556213e1b09b8435ce6a50"
+      },
+      "adapter": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "3350a8a6ac74df7661556213e1b09b8435ce6a50"
+      }
+    },
+    "classification": "ONE_UNAMBIGUOUS_SOURCE_RESULT",
+    "expectedEntry": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "3350a8a6ac74df7661556213e1b09b8435ce6a50"
+    }
+  },
+  {
+    "path": "Config.xcconfig.template",
+    "base": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "b8dcc29e577e24c15d4870a3c2b73ea07745deb1"
+    },
+    "changedBy": {
+      "skills": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "1690dbd1e7f327c7210ec32835ea6f347fd6eee0"
+      },
+      "torah": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "88be79095e9a9b49201cc9dd22c7915403225b04"
+      }
+    },
+    "classification": "SEMANTIC_REVIEW_REQUIRED"
+  },
+  {
+    "path": "Generated/SwiftUIBridge/HanlinGeneratedModifiers.swift",
+    "base": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "8935569918cc58115ef71b78b1b429733bbce93a"
+    },
+    "changedBy": {
+      "skills": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "576dbe1e1304b03945524fc639135c40465f1033"
+      },
+      "torah": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "14e73e31f5040d2850aa008d85ffc0b01314ad0a"
+      }
+    },
+    "classification": "SEMANTIC_REVIEW_REQUIRED"
+  },
+  {
+    "path": "PROJECT_BOARD.md",
+    "base": null,
+    "changedBy": {
+      "skills": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "a5d38da650c5763c9657b6cc2ab5411c7b34b627"
+      },
+      "torah": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "e42b00f544ca6f8a495fd0ad36f99d01e8cc70e4"
+      },
+      "adapter": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "720b9a33fd3eb2ee8ccf466e98ef8ce4af8f9e08"
+      }
+    },
+    "classification": "SEMANTIC_REVIEW_REQUIRED"
+  },
+  {
+    "path": "Packages/HanlinAgentUIAdapter/Package.swift",
+    "base": null,
+    "changedBy": {
+      "adapter": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "8203dcfaec128e463021ec277c2096ce48873d54"
+      }
+    },
+    "classification": "ONE_UNAMBIGUOUS_SOURCE_RESULT",
+    "expectedEntry": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "8203dcfaec128e463021ec277c2096ce48873d54"
+    }
+  },
+  {
+    "path": "Packages/HanlinAgentUIAdapter/README.md",
+    "base": null,
+    "changedBy": {
+      "adapter": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "e5d72cb0bde948ef2045d883836cc8610dd40949"
+      }
+    },
+    "classification": "ONE_UNAMBIGUOUS_SOURCE_RESULT",
+    "expectedEntry": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "e5d72cb0bde948ef2045d883836cc8610dd40949"
+    }
+  },
+  {
+    "path": "Packages/HanlinAgentUIAdapter/Sources/HanlinAgentUIAdapter/HanlinAgentChatScreen.swift",
+    "base": null,
+    "changedBy": {
+      "adapter": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "e17c81f540544e67476ecf95fc10f2f656fec888"
+      }
+    },
+    "classification": "ONE_UNAMBIGUOUS_SOURCE_RESULT",
+    "expectedEntry": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "e17c81f540544e67476ecf95fc10f2f656fec888"
+    }
+  },
+  {
+    "path": "Packages/HanlinAgentUIAdapter/Sources/HanlinAgentUIAdapter/HanlinAgentUIAdapter.swift",
+    "base": null,
+    "changedBy": {
+      "adapter": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "e2e6c5ec9a6c7f0dc26e66679e4775bc7edbe7aa"
+      }
+    },
+    "classification": "ONE_UNAMBIGUOUS_SOURCE_RESULT",
+    "expectedEntry": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "e2e6c5ec9a6c7f0dc26e66679e4775bc7edbe7aa"
+    }
+  },
+  {
+    "path": "Packages/HanlinAgentUIAdapter/Sources/HanlinAgentUIAdapter/HanlinAgentUIRuntimeAdapter.swift",
+    "base": null,
+    "changedBy": {
+      "adapter": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "667fc992deecd5a22a737e9dc5b51babe10976b6"
+      }
+    },
+    "classification": "ONE_UNAMBIGUOUS_SOURCE_RESULT",
+    "expectedEntry": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "667fc992deecd5a22a737e9dc5b51babe10976b6"
+    }
+  },
+  {
+    "path": "Packages/HanlinAgentUIAdapter/Sources/HanlinAgentUIAdapter/HanlinEmbeddedResultSessionWrapper.swift",
+    "base": null,
+    "changedBy": {
+      "adapter": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "6eb2e7c1e42d7ec9e0fcc397a3fb2f11314bc322"
+      }
+    },
+    "classification": "ONE_UNAMBIGUOUS_SOURCE_RESULT",
+    "expectedEntry": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "6eb2e7c1e42d7ec9e0fcc397a3fb2f11314bc322"
+    }
+  },
+  {
+    "path": "Packages/HanlinAgentUIAdapter/Sources/HanlinAgentUIAdapter/HanlinHostActionsBridge.swift",
+    "base": null,
+    "changedBy": {
+      "adapter": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "ceb5a2b41407c05f95c450f883be15a7c57f7e3f"
+      }
+    },
+    "classification": "ONE_UNAMBIGUOUS_SOURCE_RESULT",
+    "expectedEntry": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "ceb5a2b41407c05f95c450f883be15a7c57f7e3f"
+    }
+  },
+  {
+    "path": "Packages/HanlinAgentUIAdapter/Sources/HanlinAgentUIAdapter/HanlinPresentationMapping.swift",
+    "base": null,
+    "changedBy": {
+      "adapter": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "7ec0a082fef19165132a431344ce36b6a1b92264"
+      }
+    },
+    "classification": "ONE_UNAMBIGUOUS_SOURCE_RESULT",
+    "expectedEntry": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "7ec0a082fef19165132a431344ce36b6a1b92264"
+    }
+  },
+  {
+    "path": "Packages/HanlinAgentUIAdapter/Tests/HanlinAgentUIAdapterTests/HanlinMappingTests.swift",
+    "base": null,
+    "changedBy": {
+      "adapter": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "edcc69ec1bceb18a704f989a13ad6eb461d9f918"
+      }
+    },
+    "classification": "ONE_UNAMBIGUOUS_SOURCE_RESULT",
+    "expectedEntry": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "edcc69ec1bceb18a704f989a13ad6eb461d9f918"
+    }
+  },
+  {
+    "path": "Packages/HanlinExpoRuntime/Package.swift",
+    "base": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "bb957b158b85f53ddfd1fd7a561f7b1a404dde14"
+    },
+    "changedBy": {
+      "skills": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "63e75637c0408256d71a2486d5479aedca93b265"
+      },
+      "torah": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "c9098cd2b6525d04913514ed101d1d81c5c080fd"
+      }
+    },
+    "classification": "SEMANTIC_REVIEW_REQUIRED"
+  },
+  {
+    "path": "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/Generated/HanlinGeneratedModifiers.swift",
+    "base": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "8935569918cc58115ef71b78b1b429733bbce93a"
+    },
+    "changedBy": {
+      "skills": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "576dbe1e1304b03945524fc639135c40465f1033"
+      },
+      "torah": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "14e73e31f5040d2850aa008d85ffc0b01314ad0a"
+      }
+    },
+    "classification": "SEMANTIC_REVIEW_REQUIRED"
+  },
+  {
+    "path": "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinExpoSession.swift",
+    "base": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "0053e5fc4d1698f22801315376d6c980d7ce5cbf"
+    },
+    "changedBy": {
+      "skills": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "8087e385f5882c49cf6f4dd1e653ed1c176ac0f0"
+      }
+    },
+    "classification": "ONE_UNAMBIGUOUS_SOURCE_RESULT",
+    "expectedEntry": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "8087e385f5882c49cf6f4dd1e653ed1c176ac0f0"
+    }
+  },
+  {
+    "path": "Packages/HanlinPlatform/Tests/HanlinChatCoreTests/ProviderConformance/ProviderLongHorizonTests.swift",
+    "base": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "821a80c9e470636d49710482efb3b74c6298559d"
+    },
+    "changedBy": {
+      "skills": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "a792917e9f85ac2caa7b2f078d85a91f5fea740a"
+      },
+      "torah": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "d6bf9a8c7d79ba5fc402f867886c01c1931e4bfa"
+      }
+    },
+    "classification": "SEMANTIC_REVIEW_REQUIRED"
+  },
+  {
+    "path": "Packages/HanlinSwiftUIBridgeGenerator/Sources/HanlinSwiftUIBridgeCore/OutputGenerator.swift",
+    "base": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "ca835619e2f58745dd081b529eecf3fa00942cf8"
+    },
+    "changedBy": {
+      "torah": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "e827a6c2355f405148450e0fbbd1676bc2743ef3"
+      }
+    },
+    "classification": "ONE_UNAMBIGUOUS_SOURCE_RESULT",
+    "expectedEntry": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "e827a6c2355f405148450e0fbbd1676bc2743ef3"
+    }
+  },
+  {
+    "path": "Packages/IOSSystemLite/Sources/IOSSystemLite/IOSSystemRunner.swift",
+    "base": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "7a2045cec942ad53bb222173e29bee018fd5c475"
+    },
+    "changedBy": {
+      "torah": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "64d693872d22bbb8c1efa24e1961edfb4ef76fab"
+      }
+    },
+    "classification": "ONE_UNAMBIGUOUS_SOURCE_RESULT",
+    "expectedEntry": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "64d693872d22bbb8c1efa24e1961edfb4ef76fab"
+    }
+  },
+  {
+    "path": "Packages/IOSSystemLite/Sources/IOSSystemStreamBridge/include/IOSSystemStreamBridge.h",
+    "base": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "497cbea6cf827c33d55b0411bf66af9e5631a4b0"
+    },
+    "changedBy": {
+      "torah": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "eb2d42d3a780617b174751f13ed5a405b556de4a"
+      }
+    },
+    "classification": "ONE_UNAMBIGUOUS_SOURCE_RESULT",
+    "expectedEntry": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "eb2d42d3a780617b174751f13ed5a405b556de4a"
+    }
+  },
+  {
+    "path": "Packages/TorahLibraryKit/Package.swift",
+    "base": null,
+    "changedBy": {
+      "torah": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "1c3c99c8cb7e0ea733be6d22ec1b1af725f2bbfb"
+      }
+    },
+    "classification": "ONE_UNAMBIGUOUS_SOURCE_RESULT",
+    "expectedEntry": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "1c3c99c8cb7e0ea733be6d22ec1b1af725f2bbfb"
+    }
+  },
+  {
+    "path": "Packages/TorahLibraryKit/Sources/TorahLibraryKit/Contracts/StudyModels.swift",
+    "base": null,
+    "changedBy": {
+      "torah": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "8548e066fa2b11d17b78d69fa57ea8622f82f14d"
+      }
+    },
+    "classification": "ONE_UNAMBIGUOUS_SOURCE_RESULT",
+    "expectedEntry": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "8548e066fa2b11d17b78d69fa57ea8622f82f14d"
+    }
+  },
+  {
+    "path": "Packages/TorahLibraryKit/Sources/TorahLibraryKit/Coordinator/TorahLibraryCoordinator.swift",
+    "base": null,
+    "changedBy": {
+      "torah": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "7b124a68f3ae435d2e0f36e7ff119428680f8fb4"
+      }
+    },
+    "classification": "ONE_UNAMBIGUOUS_SOURCE_RESULT",
+    "expectedEntry": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "7b124a68f3ae435d2e0f36e7ff119428680f8fb4"
+    }
+  },
+  {
+    "path": "Packages/TorahLibraryKit/Sources/TorahLibraryKit/Matching/TorahSourceResolver.swift",
+    "base": null,
+    "changedBy": {
+      "torah": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "e169d0965e1ab540fa397caf2a16f1d8eedee9de"
+      }
+    },
+    "classification": "ONE_UNAMBIGUOUS_SOURCE_RESULT",
+    "expectedEntry": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "e169d0965e1ab540fa397caf2a16f1d8eedee9de"
+    }
+  },
+  {
+    "path": "Packages/TorahLibraryKit/Sources/TorahLibraryKit/Matching/TorahTextAlignment.swift",
+    "base": null,
+    "changedBy": {
+      "torah": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "748b08e282c4330ca581f600b929b06ccea0813e"
+      }
+    },
+    "classification": "ONE_UNAMBIGUOUS_SOURCE_RESULT",
+    "expectedEntry": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "748b08e282c4330ca581f600b929b06ccea0813e"
+    }
+  },
+  {
+    "path": "Packages/TorahLibraryKit/Sources/TorahLibraryKit/Navigation/TorahStudyDeepLink.swift",
+    "base": null,
+    "changedBy": {
+      "torah": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "8685ab82064d289de7d3e6f5aa769f608fe30e6a"
+      }
+    },
+    "classification": "ONE_UNAMBIGUOUS_SOURCE_RESULT",
+    "expectedEntry": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "8685ab82064d289de7d3e6f5aa769f608fe30e6a"
+    }
+  },
+  {
+    "path": "Packages/TorahLibraryKit/Sources/TorahLibraryKit/Normalizer/HebrewTextNormalizer.swift",
+    "base": null,
+    "changedBy": {
+      "torah": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "d82b2e879f9534e0752934c7f2fba12e9d83d7ad"
+      }
+    },
+    "classification": "ONE_UNAMBIGUOUS_SOURCE_RESULT",
+    "expectedEntry": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "d82b2e879f9534e0752934c7f2fba12e9d83d7ad"
+    }
+  },
+  {
+    "path": "Packages/TorahLibraryKit/Sources/TorahLibraryKit/Providers/GenizahLibraryProvider.swift",
+    "base": null,
+    "changedBy": {
+      "torah": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "900a0da73bd3817c18a29df811fdb4995a59e5de"
+      }
+    },
+    "classification": "ONE_UNAMBIGUOUS_SOURCE_RESULT",
+    "expectedEntry": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "900a0da73bd3817c18a29df811fdb4995a59e5de"
+    }
+  },
+  {
+    "path": "Packages/TorahLibraryKit/Sources/TorahLibraryKit/Providers/OtzariaLibraryProvider.swift",
+    "base": null,
+    "changedBy": {
+      "torah": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "737103df223fa729855a0272379491d3e4390c60"
+      }
+    },
+    "classification": "ONE_UNAMBIGUOUS_SOURCE_RESULT",
+    "expectedEntry": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "737103df223fa729855a0272379491d3e4390c60"
+    }
+  },
+  {
+    "path": "Packages/TorahLibraryKit/Sources/TorahLibraryKit/Providers/SefariaLibraryProvider.swift",
+    "base": null,
+    "changedBy": {
+      "torah": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "df02829e05946ed16f0ac591223c0033f763f8a7"
+      }
+    },
+    "classification": "ONE_UNAMBIGUOUS_SOURCE_RESULT",
+    "expectedEntry": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "df02829e05946ed16f0ac591223c0033f763f8a7"
+    }
+  },
+  {
+    "path": "Packages/TorahLibraryKit/Sources/TorahLibraryKit/Providers/TorahLibraryProvider.swift",
+    "base": null,
+    "changedBy": {
+      "torah": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "3a79d43e321667b544746c0246d934f4b8915902"
+      }
+    },
+    "classification": "ONE_UNAMBIGUOUS_SOURCE_RESULT",
+    "expectedEntry": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "3a79d43e321667b544746c0246d934f4b8915902"
+    }
+  },
+  {
+    "path": "Packages/TorahLibraryKit/Sources/TorahLibraryKit/Providers/YochaiLibraryProvider.swift",
+    "base": null,
+    "changedBy": {
+      "torah": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "f3da103543fdc871d8fc0fbc97d4eb6bbbd372ea"
+      }
+    },
+    "classification": "ONE_UNAMBIGUOUS_SOURCE_RESULT",
+    "expectedEntry": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "f3da103543fdc871d8fc0fbc97d4eb6bbbd372ea"
+    }
+  },
+  {
+    "path": "Packages/TorahLibraryKit/Sources/TorahLibraryKit/Providers/ZayitLibraryProvider.swift",
+    "base": null,
+    "changedBy": {
+      "torah": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "f86b6e77694284f3023082f82a709338527f8a99"
+      }
+    },
+    "classification": "ONE_UNAMBIGUOUS_SOURCE_RESULT",
+    "expectedEntry": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "f86b6e77694284f3023082f82a709338527f8a99"
+    }
+  },
+  {
+    "path": "Packages/TorahLibraryKit/Sources/TorahLibraryKit/Storage/ITorahSharedStorage.swift",
+    "base": null,
+    "changedBy": {
+      "torah": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "928260ef5d2eb58cec06ac872ede7bfd92e5b3c6"
+      }
+    },
+    "classification": "ONE_UNAMBIGUOUS_SOURCE_RESULT",
+    "expectedEntry": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "928260ef5d2eb58cec06ac872ede7bfd92e5b3c6"
+    }
+  },
+  {
+    "path": "Packages/TorahLibraryKit/Tests/Fixtures/TorahPhotoStudy/test_seforim.db",
+    "base": null,
+    "changedBy": {
+      "torah": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "eb82db753209bafbdcc2d87ac97d4b9b0f47ce99"
+      }
+    },
+    "classification": "ONE_UNAMBIGUOUS_SOURCE_RESULT",
+    "expectedEntry": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "eb82db753209bafbdcc2d87ac97d4b9b0f47ce99"
+    }
+  },
+  {
+    "path": "Packages/TorahLibraryKit/Tests/TorahLibraryKitTests/TorahLibraryKitTests.swift",
+    "base": null,
+    "changedBy": {
+      "torah": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "d0624dd7dff5c4e8d7c31087f16318d4f4db2310"
+      }
+    },
+    "classification": "ONE_UNAMBIGUOUS_SOURCE_RESULT",
+    "expectedEntry": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "d0624dd7dff5c4e8d7c31087f16318d4f4db2310"
+    }
+  },
+  {
+    "path": "Scripts/Acceptance/audit-leakage.py",
+    "base": null,
+    "changedBy": {
+      "torah": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "71973ab55a70b1f3479e5bd60001f66969f669aa"
+      }
+    },
+    "classification": "ONE_UNAMBIGUOUS_SOURCE_RESULT",
+    "expectedEntry": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "71973ab55a70b1f3479e5bd60001f66969f669aa"
+    }
+  },
+  {
+    "path": "Scripts/Acceptance/generate-fixtures.py",
+    "base": null,
+    "changedBy": {
+      "torah": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "bbec38e4d573246e392bad44990d599cf52bbbed"
+      }
+    },
+    "classification": "ONE_UNAMBIGUOUS_SOURCE_RESULT",
+    "expectedEntry": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "bbec38e4d573246e392bad44990d599cf52bbbed"
+    }
+  },
+  {
+    "path": "Scripts/Acceptance/generate-test-corpus.py",
+    "base": null,
+    "changedBy": {
+      "torah": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "581deeef978476a7545f5369f3b4c831bc44eef0"
+      }
+    },
+    "classification": "ONE_UNAMBIGUOUS_SOURCE_RESULT",
+    "expectedEntry": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "581deeef978476a7545f5369f3b4c831bc44eef0"
+    }
+  },
+  {
+    "path": "Scripts/Acceptance/run-torah-photo-acceptance.py",
+    "base": null,
+    "changedBy": {
+      "torah": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "0ea132fde168ba58e383cbed2436a49df48998ff"
+      }
+    },
+    "classification": "ONE_UNAMBIGUOUS_SOURCE_RESULT",
+    "expectedEntry": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "0ea132fde168ba58e383cbed2436a49df48998ff"
+    }
+  },
+  {
+    "path": "Scripts/Acceptance/test-skill-resource-execution.py",
+    "base": null,
+    "changedBy": {
+      "torah": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "89311cd562e14916d5bed91fac797a0af817525a"
+      }
+    },
+    "classification": "ONE_UNAMBIGUOUS_SOURCE_RESULT",
+    "expectedEntry": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "89311cd562e14916d5bed91fac797a0af817525a"
+    }
+  },
+  {
+    "path": "Scripts/Acceptance/validate-torah-photo-evidence.py",
+    "base": null,
+    "changedBy": {
+      "torah": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "0e5829c04a38ef8386945d1cf00d3bda773bcecf"
+      }
+    },
+    "classification": "ONE_UNAMBIGUOUS_SOURCE_RESULT",
+    "expectedEntry": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "0e5829c04a38ef8386945d1cf00d3bda773bcecf"
+    }
+  },
+  {
+    "path": "Scripts/CI/affected-validation-map.json",
+    "base": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "11d6ce196d83d4c090d40921a65bf383e0697121"
+    },
+    "changedBy": {
+      "skills": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "d9a0963b42e6c149d901d8efcfaed3f3ed442bd1"
+      },
+      "torah": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "01344d1261b37d4b367a4df20478824d8270160f"
+      }
+    },
+    "classification": "SEMANTIC_REVIEW_REQUIRED"
+  },
+  {
+    "path": "Scripts/CI/verify-zero-stubs.py",
+    "base": null,
+    "changedBy": {
+      "torah": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "4a6f17f3ff5aff6b6c5b385d650c11b9fede82eb"
+      }
+    },
+    "classification": "ONE_UNAMBIGUOUS_SOURCE_RESULT",
+    "expectedEntry": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "4a6f17f3ff5aff6b6c5b385d650c11b9fede82eb"
+    }
+  },
+  {
+    "path": "Scripts/Expo/patch-hash-combine.mjs",
+    "base": null,
+    "changedBy": {
+      "skills": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "7e06becf2c9acac5e484934503885601b202cee4"
+      }
+    },
+    "classification": "ONE_UNAMBIGUOUS_SOURCE_RESULT",
+    "expectedEntry": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "7e06becf2c9acac5e484934503885601b202cee4"
+    }
+  },
+  {
+    "path": "Scripts/Expo/prepare-ios-dependencies.mjs",
+    "base": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "cc5825109d072e67e4c66b017551324837be3816"
+    },
+    "changedBy": {
+      "skills": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "c6376f716d175ba065922a47e5879d69c0428e1b"
+      },
+      "torah": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "dc0700ac68e7749d83160c04fc5aaeb248b9aba3"
+      }
+    },
+    "classification": "SEMANTIC_REVIEW_REQUIRED"
+  },
+  {
+    "path": "Scripts/generate_acceptance_results.mjs",
+    "base": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "82c5414aa042b906908b0710878b9e3ee5111b83"
+    },
+    "changedBy": {
+      "skills": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "daff885491b13efe4e84a65203e015cb56386d09"
+      }
+    },
+    "classification": "ONE_UNAMBIGUOUS_SOURCE_RESULT",
+    "expectedEntry": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "daff885491b13efe4e84a65203e015cb56386d09"
+    }
+  },
+  {
+    "path": "Skills/cairo-genizah-research/SKILL.md",
+    "base": null,
+    "changedBy": {
+      "torah": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "b1ce5b3e7e0d503153ee6044c803d97a64474fdb"
+      }
+    },
+    "classification": "ONE_UNAMBIGUOUS_SOURCE_RESULT",
+    "expectedEntry": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "b1ce5b3e7e0d503153ee6044c803d97a64474fdb"
+    }
+  },
+  {
+    "path": "Skills/cairo-genizah-research/scripts/browse.py",
+    "base": null,
+    "changedBy": {
+      "torah": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "18b1b8bf1384871d6a204e81878ea1862c84d540"
+      }
+    },
+    "classification": "ONE_UNAMBIGUOUS_SOURCE_RESULT",
+    "expectedEntry": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "18b1b8bf1384871d6a204e81878ea1862c84d540"
+    }
+  },
+  {
+    "path": "Skills/cairo-genizah-research/scripts/search.py",
+    "base": null,
+    "changedBy": {
+      "torah": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "bea59f8a7fb447af1a8b21c082b86e56c1929ad4"
+      }
+    },
+    "classification": "ONE_UNAMBIGUOUS_SOURCE_RESULT",
+    "expectedEntry": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "bea59f8a7fb447af1a8b21c082b86e56c1929ad4"
+    }
+  },
+  {
+    "path": "Skills/torah-photo-study/SKILL.md",
+    "base": null,
+    "changedBy": {
+      "torah": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "d843cafb521a66cac7b8912923e13d524b0b33fd"
+      }
+    },
+    "classification": "ONE_UNAMBIGUOUS_SOURCE_RESULT",
+    "expectedEntry": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "d843cafb521a66cac7b8912923e13d524b0b33fd"
+    }
+  },
+  {
+    "path": "Skills/torah-photo-study/agents/openai.yaml",
+    "base": null,
+    "changedBy": {
+      "torah": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "f6dd4015e399bc9312cea2e1ccdb1a8073e80275"
+      }
+    },
+    "classification": "ONE_UNAMBIGUOUS_SOURCE_RESULT",
+    "expectedEntry": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "f6dd4015e399bc9312cea2e1ccdb1a8073e80275"
+    }
+  },
+  {
+    "path": "Skills/torah-photo-study/hanlin.json",
+    "base": null,
+    "changedBy": {
+      "torah": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "6540f159f78464badf910e15a9703a0cedbb4ade"
+      }
+    },
+    "classification": "ONE_UNAMBIGUOUS_SOURCE_RESULT",
+    "expectedEntry": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "6540f159f78464badf910e15a9703a0cedbb4ade"
+    }
+  },
+  {
+    "path": "Skills/torah-photo-study/references/identity-and-ambiguity.md",
+    "base": null,
+    "changedBy": {
+      "torah": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "53c0b74c7eb00db1ea7a23756279b9cd9486a256"
+      }
+    },
+    "classification": "ONE_UNAMBIGUOUS_SOURCE_RESULT",
+    "expectedEntry": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "53c0b74c7eb00db1ea7a23756279b9cd9486a256"
+    }
+  },
+  {
+    "path": "Skills/torah-photo-study/references/privacy-and-providers.md",
+    "base": null,
+    "changedBy": {
+      "torah": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "1271b3557760b3427cc006e75971bb8edc51579f"
+      }
+    },
+    "classification": "ONE_UNAMBIGUOUS_SOURCE_RESULT",
+    "expectedEntry": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "1271b3557760b3427cc006e75971bb8edc51579f"
+    }
+  },
+  {
+    "path": "Skills/torah-photo-study/references/tools-and-results.md",
+    "base": null,
+    "changedBy": {
+      "torah": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "73b2fce92a214558acf5a1dde9e9896121601f88"
+      }
+    },
+    "classification": "ONE_UNAMBIGUOUS_SOURCE_RESULT",
+    "expectedEntry": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "73b2fce92a214558acf5a1dde9e9896121601f88"
+    }
+  },
+  {
+    "path": "Skills/yochai-study/SKILL.md",
+    "base": null,
+    "changedBy": {
+      "torah": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "4a5c86d457ea3b38ad3cb25283c0a475ec398b2a"
+      }
+    },
+    "classification": "ONE_UNAMBIGUOUS_SOURCE_RESULT",
+    "expectedEntry": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "4a5c86d457ea3b38ad3cb25283c0a475ec398b2a"
+    }
+  },
+  {
+    "path": "Tests/Fixtures/TorahPhotoStudy/manifest.json",
+    "base": null,
+    "changedBy": {
+      "torah": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "2a9e20506ebe7c5ab2edee37051127c2dcd31c07"
+      }
+    },
+    "classification": "ONE_UNAMBIGUOUS_SOURCE_RESULT",
+    "expectedEntry": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "2a9e20506ebe7c5ab2edee37051127c2dcd31c07"
+    }
+  },
+  {
+    "path": "Tests/Fixtures/TorahPhotoStudy/test_seforim.db",
+    "base": null,
+    "changedBy": {
+      "torah": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "eb82db753209bafbdcc2d87ac97d4b9b0f47ce99"
+      }
+    },
+    "classification": "ONE_UNAMBIGUOUS_SOURCE_RESULT",
+    "expectedEntry": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "eb82db753209bafbdcc2d87ac97d4b9b0f47ce99"
+    }
+  },
+  {
+    "path": "baseline-manifest.json",
+    "base": null,
+    "changedBy": {
+      "torah": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "4f880b1337c67c8d652a092b5a80afa1d339cee6"
+      }
+    },
+    "classification": "ONE_UNAMBIGUOUS_SOURCE_RESULT",
+    "expectedEntry": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "4f880b1337c67c8d652a092b5a80afa1d339cee6"
+    }
+  },
+  {
+    "path": "docs/hanlin-platform/personal-runtime-completion/acceptance-results.json",
+    "base": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "0c7b73bea0a6064936af3ddd2ea9707b3c649c8a"
+    },
+    "changedBy": {
+      "skills": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "542f41d16bc0adf2252250ded124878860e09377"
+      }
+    },
+    "classification": "ONE_UNAMBIGUOUS_SOURCE_RESULT",
+    "expectedEntry": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "542f41d16bc0adf2252250ded124878860e09377"
+    }
+  },
+  {
+    "path": "docs/hanlin-platform/personal-runtime-completion/acceptance-results.md",
+    "base": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "c21e9547f061e36f55424e9e870c1ddb7d86cb95"
+    },
+    "changedBy": {
+      "skills": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "1e5400172db6e3750c63880f5d7004e040177dbf"
+      }
+    },
+    "classification": "ONE_UNAMBIGUOUS_SOURCE_RESULT",
+    "expectedEntry": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "1e5400172db6e3750c63880f5d7004e040177dbf"
+    }
+  },
+  {
+    "path": "docs/hanlin-platform/personal-runtime-completion/authoritative-master-spec.md",
+    "base": null,
+    "changedBy": {
+      "skills": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "9b3d9228693a5806afd825b3244a4e0c7e7b989a"
+      }
+    },
+    "classification": "ONE_UNAMBIGUOUS_SOURCE_RESULT",
+    "expectedEntry": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "9b3d9228693a5806afd825b3244a4e0c7e7b989a"
+    }
+  },
+  {
+    "path": "docs/hanlin-platform/personal-runtime-completion/evidence/build-ios26-summary.txt",
+    "base": null,
+    "changedBy": {
+      "skills": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "da1bbed71fd353da4c37060209a9b9fd2f9b4c60"
+      }
+    },
+    "classification": "ONE_UNAMBIGUOUS_SOURCE_RESULT",
+    "expectedEntry": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "da1bbed71fd353da4c37060209a9b9fd2f9b4c60"
+    }
+  },
+  {
+    "path": "docs/hanlin-platform/personal-runtime-completion/evidence/cablate-google-map-integration.log",
+    "base": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "14b3f97378bd834472fd29d5d548fd6e50021550"
+    },
+    "changedBy": {
+      "skills": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "e5bb6523b35b889f56cfed5f63686a8de2cc943e"
+      }
+    },
+    "classification": "ONE_UNAMBIGUOUS_SOURCE_RESULT",
+    "expectedEntry": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "e5bb6523b35b889f56cfed5f63686a8de2cc943e"
+    }
+  },
+  {
+    "path": "docs/hanlin-platform/personal-runtime-completion/evidence/ipa-sha256.txt",
+    "base": null,
+    "changedBy": {
+      "skills": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "a42880a26e624cb54d12129a0ee1388bda83b477"
+      }
+    },
+    "classification": "ONE_UNAMBIGUOUS_SOURCE_RESULT",
+    "expectedEntry": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "a42880a26e624cb54d12129a0ee1388bda83b477"
+    }
+  },
+  {
+    "path": "docs/hanlin-platform/personal-runtime-completion/evidence/pass3/acceptance-results-pass3-archive.json",
+    "base": null,
+    "changedBy": {
+      "skills": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "b7d8cfa030a73e8b72267481be7b47049e960a7e"
+      }
+    },
+    "classification": "ONE_UNAMBIGUOUS_SOURCE_RESULT",
+    "expectedEntry": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "b7d8cfa030a73e8b72267481be7b47049e960a7e"
+    }
+  },
+  {
+    "path": "docs/hanlin-platform/personal-runtime-completion/evidence/pass3/acceptance-results-pass3-archive.md",
+    "base": null,
+    "changedBy": {
+      "skills": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "2b0fa2bc8c7ded9834743990bbc6c8b65f0ec441"
+      }
+    },
+    "classification": "ONE_UNAMBIGUOUS_SOURCE_RESULT",
+    "expectedEntry": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "2b0fa2bc8c7ded9834743990bbc6c8b65f0ec441"
+    }
+  },
+  {
+    "path": "docs/hanlin-platform/personal-runtime-completion/evidence/pass3/requirement-results-pass3-archive.json",
+    "base": null,
+    "changedBy": {
+      "skills": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "d276d82c34a83134195cff0ab73f6859697f97d8"
+      }
+    },
+    "classification": "ONE_UNAMBIGUOUS_SOURCE_RESULT",
+    "expectedEntry": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "d276d82c34a83134195cff0ab73f6859697f97d8"
+    }
+  },
+  {
+    "path": "docs/hanlin-platform/personal-runtime-completion/evidence/phase1-ios-device-build.log",
+    "base": null,
+    "changedBy": {
+      "skills": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "a8efbb15a8d5963d26d8710163a2715d8d76b234"
+      }
+    },
+    "classification": "ONE_UNAMBIGUOUS_SOURCE_RESULT",
+    "expectedEntry": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "a8efbb15a8d5963d26d8710163a2715d8d76b234"
+    }
+  },
+  {
+    "path": "docs/hanlin-platform/personal-runtime-completion/evidence/phase1-ios-simulator-build.log",
+    "base": null,
+    "changedBy": {
+      "skills": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "7cfbbf6ddb2746d09ac08e9576c89cf600ed65af"
+      }
+    },
+    "classification": "ONE_UNAMBIGUOUS_SOURCE_RESULT",
+    "expectedEntry": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "7cfbbf6ddb2746d09ac08e9576c89cf600ed65af"
+    }
+  },
+  {
+    "path": "docs/hanlin-platform/personal-runtime-completion/evidence/phase1-swift-test.log",
+    "base": null,
+    "changedBy": {
+      "skills": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "0fa4065618eeb6a0d398a01c3131302cdef22cad"
+      }
+    },
+    "classification": "ONE_UNAMBIGUOUS_SOURCE_RESULT",
+    "expectedEntry": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "0fa4065618eeb6a0d398a01c3131302cdef22cad"
+    }
+  },
+  {
+    "path": "docs/hanlin-platform/personal-runtime-completion/evidence/provider-conformance-summary.json",
+    "base": null,
+    "changedBy": {
+      "skills": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "705841947167502709c8c5aeb93f01c293abeef3"
+      }
+    },
+    "classification": "ONE_UNAMBIGUOUS_SOURCE_RESULT",
+    "expectedEntry": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "705841947167502709c8c5aeb93f01c293abeef3"
+    }
+  },
+  {
+    "path": "docs/hanlin-platform/personal-runtime-completion/evidence/simulator-downstream-unit-test-results.json",
+    "base": null,
+    "changedBy": {
+      "skills": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "b86f57457eda3c731bf267459251d1af1b543fc9"
+      }
+    },
+    "classification": "ONE_UNAMBIGUOUS_SOURCE_RESULT",
+    "expectedEntry": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "b86f57457eda3c731bf267459251d1af1b543fc9"
+    }
+  },
+  {
+    "path": "docs/hanlin-platform/personal-runtime-completion/evidence/simulator-downstream-unit-tests.log",
+    "base": null,
+    "changedBy": {
+      "skills": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "6cf103956bad5d287e0c91116791abdc99894c1e"
+      }
+    },
+    "classification": "ONE_UNAMBIGUOUS_SOURCE_RESULT",
+    "expectedEntry": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "6cf103956bad5d287e0c91116791abdc99894c1e"
+    }
+  },
+  {
+    "path": "docs/hanlin-platform/personal-runtime-completion/evidence/simulator-nativescript-production-ui-tests.log",
+    "base": null,
+    "changedBy": {
+      "skills": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "afae957808f1f05bff256c60fa45c60e785a2bcf"
+      }
+    },
+    "classification": "ONE_UNAMBIGUOUS_SOURCE_RESULT",
+    "expectedEntry": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "afae957808f1f05bff256c60fa45c60e785a2bcf"
+    }
+  },
+  {
+    "path": "docs/hanlin-platform/personal-runtime-completion/evidence/simulator-scripting-acceptance.log",
+    "base": null,
+    "changedBy": {
+      "skills": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "a236e551f7df3d97fc7a135acc50f5abdd7bdb04"
+      }
+    },
+    "classification": "ONE_UNAMBIGUOUS_SOURCE_RESULT",
+    "expectedEntry": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "a236e551f7df3d97fc7a135acc50f5abdd7bdb04"
+    }
+  },
+  {
+    "path": "docs/hanlin-platform/personal-runtime-completion/requirement-results.json",
+    "base": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "875f1fd98e73adabd872ab8674c06d3d336dbddd"
+    },
+    "changedBy": {
+      "skills": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "e218b40f602f7beea555ff6b1800111033eb20dc"
+      }
+    },
+    "classification": "ONE_UNAMBIGUOUS_SOURCE_RESULT",
+    "expectedEntry": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "e218b40f602f7beea555ff6b1800111033eb20dc"
+    }
+  },
+  {
+    "path": "docs/torah-photo-study/ARCHITECTURE.md",
+    "base": null,
+    "changedBy": {
+      "torah": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "c66b7fcb95f123e39792cd6b19bf8dd554c644b0"
+      }
+    },
+    "classification": "ONE_UNAMBIGUOUS_SOURCE_RESULT",
+    "expectedEntry": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "c66b7fcb95f123e39792cd6b19bf8dd554c644b0"
+    }
+  },
+  {
+    "path": "docs/torah-photo-study/BASELINE.md",
+    "base": null,
+    "changedBy": {
+      "torah": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "0e2553bb9bff9c847b6bb079c737b0fbd7c8bf73"
+      }
+    },
+    "classification": "ONE_UNAMBIGUOUS_SOURCE_RESULT",
+    "expectedEntry": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "0e2553bb9bff9c847b6bb079c737b0fbd7c8bf73"
+    }
+  },
+  {
+    "path": "docs/torah-photo-study/DEVICE_RUNBOOK.md",
+    "base": null,
+    "changedBy": {
+      "torah": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "602f6bea856144678db7a66916458acc9349f83f"
+      }
+    },
+    "classification": "ONE_UNAMBIGUOUS_SOURCE_RESULT",
+    "expectedEntry": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "602f6bea856144678db7a66916458acc9349f83f"
+    }
+  },
+  {
+    "path": "docs/torah-photo-study/KNOWN_LIMITATIONS.md",
+    "base": null,
+    "changedBy": {
+      "torah": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "1abf0e2d657cb4d6d50f1b8561720d8355227e55"
+      }
+    },
+    "classification": "ONE_UNAMBIGUOUS_SOURCE_RESULT",
+    "expectedEntry": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "1abf0e2d657cb4d6d50f1b8561720d8355227e55"
+    }
+  },
+  {
+    "path": "docs/torah-photo-study/PROVIDER_SETUP.md",
+    "base": null,
+    "changedBy": {
+      "torah": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "59e03b7ea5e2dbeec68a31424f8beadada39ad7c"
+      }
+    },
+    "classification": "ONE_UNAMBIGUOUS_SOURCE_RESULT",
+    "expectedEntry": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "59e03b7ea5e2dbeec68a31424f8beadada39ad7c"
+    }
+  },
+  {
+    "path": "docs/torah-photo-study/TEST_PLAN.md",
+    "base": null,
+    "changedBy": {
+      "torah": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "8183a1d320aba7c7a87c15d3c67eac869d6b50c0"
+      }
+    },
+    "classification": "ONE_UNAMBIGUOUS_SOURCE_RESULT",
+    "expectedEntry": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "8183a1d320aba7c7a87c15d3c67eac869d6b50c0"
+    }
+  },
+  {
+    "path": "docs/torah-photo-study/VERIFICATION.md",
+    "base": null,
+    "changedBy": {
+      "torah": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "6f135f1e426ea089e37a8f4510c10167f4ed29cd"
+      }
+    },
+    "classification": "ONE_UNAMBIGUOUS_SOURCE_RESULT",
+    "expectedEntry": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "6f135f1e426ea089e37a8f4510c10167f4ed29cd"
+    }
+  },
+  {
+    "path": "docs/torah-photo-study/test-results-report.md",
+    "base": null,
+    "changedBy": {
+      "torah": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "606676c5fd1468bd914675865247ee19f6463937"
+      }
+    },
+    "classification": "ONE_UNAMBIGUOUS_SOURCE_RESULT",
+    "expectedEntry": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "606676c5fd1468bd914675865247ee19f6463937"
+    }
+  },
+  {
+    "path": "requirements-traceability.json",
+    "base": null,
+    "changedBy": {
+      "torah": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "754cbec84d8f9e780aa51e0132704a219098546f"
+      }
+    },
+    "classification": "ONE_UNAMBIGUOUS_SOURCE_RESULT",
+    "expectedEntry": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "754cbec84d8f9e780aa51e0132704a219098546f"
+    }
+  },
+  {
+    "path": "scripts/validate-project-board.sh",
+    "base": null,
+    "changedBy": {
+      "skills": {
+        "mode": "100755",
+        "type": "blob",
+        "oid": "830231a8479d23b1b6cc86c17317d73b11289f81"
+      },
+      "torah": {
+        "mode": "100755",
+        "type": "blob",
+        "oid": "830231a8479d23b1b6cc86c17317d73b11289f81"
+      },
+      "adapter": {
+        "mode": "100755",
+        "type": "blob",
+        "oid": "830231a8479d23b1b6cc86c17317d73b11289f81"
+      }
+    },
+    "classification": "ONE_UNAMBIGUOUS_SOURCE_RESULT",
+    "expectedEntry": {
+      "mode": "100755",
+      "type": "blob",
+      "oid": "830231a8479d23b1b6cc86c17317d73b11289f81"
+    }
+  },
+  {
+    "path": "test-results.jsonl",
+    "base": null,
+    "changedBy": {
+      "torah": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "8865ec043b9f7868b8277238116f8af28c8e291f"
+      }
+    },
+    "classification": "ONE_UNAMBIGUOUS_SOURCE_RESULT",
+    "expectedEntry": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "8865ec043b9f7868b8277238116f8af28c8e291f"
+    }
+  }
+]

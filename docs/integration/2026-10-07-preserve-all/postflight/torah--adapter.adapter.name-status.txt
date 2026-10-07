@@ -1,0 +1,13 @@
+M	AGENTS.md
+M	CLAUDE.md
+A	PROJECT_BOARD.md
+A	Packages/HanlinAgentUIAdapter/Package.swift
+A	Packages/HanlinAgentUIAdapter/README.md
+A	Packages/HanlinAgentUIAdapter/Sources/HanlinAgentUIAdapter/HanlinAgentChatScreen.swift
+A	Packages/HanlinAgentUIAdapter/Sources/HanlinAgentUIAdapter/HanlinAgentUIAdapter.swift
+A	Packages/HanlinAgentUIAdapter/Sources/HanlinAgentUIAdapter/HanlinAgentUIRuntimeAdapter.swift
+A	Packages/HanlinAgentUIAdapter/Sources/HanlinAgentUIAdapter/HanlinEmbeddedResultSessionWrapper.swift
+A	Packages/HanlinAgentUIAdapter/Sources/HanlinAgentUIAdapter/HanlinHostActionsBridge.swift
+A	Packages/HanlinAgentUIAdapter/Sources/HanlinAgentUIAdapter/HanlinPresentationMapping.swift
+A	Packages/HanlinAgentUIAdapter/Tests/HanlinAgentUIAdapterTests/HanlinMappingTests.swift
+A	scripts/validate-project-board.sh
