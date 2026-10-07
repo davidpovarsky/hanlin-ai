@@ -28,6 +28,7 @@ final class NativeToolCatalog {
         didRegisterBuiltins = true
         register(QuickCalculateTool())
         registerRuntimeTools()
+        registerTorahTools()
         registerNativeAppTools()
     }
 

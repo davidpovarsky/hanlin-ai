@@ -186,7 +186,10 @@ public final class HanlinSkillCatalog {
                     tier: .compiledMiniApp,
                     sourceIdentity: sourceID,
                     instructionLoader: {
-                        if case .resource(let path) = skill.instructions {
+                        switch skill.instructions {
+                        case .inline(let text):
+                            return text
+                        case .resource(let path):
                             let providerBundle: Bundle? = (type(of: provider) as? AnyClass).map { Bundle(for: $0) }
                             if let url = providerBundle?.url(forResource: path, withExtension: nil)
                                 ?? Bundle.main.url(forResource: path, withExtension: nil),
@@ -218,7 +221,10 @@ public final class HanlinSkillCatalog {
                         guard let currentPackage = currentPlatform.installedPackages.first(where: { $0.record.packageID == packageID && $0.enabled }) else {
                             return ""
                         }
-                        if case .resource(let path) = skill.instructions {
+                        switch skill.instructions {
+                        case .inline(let text):
+                            return text
+                        case .resource(let path):
                             if let artifactURL = currentPlatform.activeArtifactURL(for: currentPackage) {
                                 let candidateURL = artifactURL.appending(path: path)
                                 if let content = try? String(contentsOf: candidateURL, encoding: .utf8) {

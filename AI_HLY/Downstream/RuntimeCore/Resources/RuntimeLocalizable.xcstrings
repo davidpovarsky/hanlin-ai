@@ -1,6 +1,50 @@
 {
   "sourceLanguage": "en",
   "strings": {
+    "Execute Skill Resource": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Execute Skill Resource"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "הפעלת משאב מיומנות"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "执行技能资源"
+          }
+        }
+      }
+    },
+    "Execute an approved script resource from a loaded skill bundle.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Execute an approved script resource from a loaded skill bundle."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "הפעל משאב סקריפט מאושר מחבילת מיומנות שנטענה."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "从已加载的技能包执行已批准的脚本资源。"
+          }
+        }
+      }
+    },
     "Approved program name.": {
       "localizations": {
         "en": {

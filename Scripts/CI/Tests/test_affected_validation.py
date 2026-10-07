@@ -657,7 +657,25 @@ class AffectedValidationPlannerTests(unittest.TestCase):
         self.assertTrue(plan.step_outputs["run_simulator_unit"])
         self.assertEqual(plan.step_outputs["simulator_unit_filter"], "AI_HLYTests/RuntimePackageAcceptanceTests")
         self.assertIn("app_unit_tests", plan.selected_groups)
-        self.assertNotIn("runtime_tooling_full_acceptance", plan.selected_groups)
+    def test_preserve_all_integration_routing_paths(self) -> None:
+        test_cases = [
+            ("Scripts/Expo/prepare-ios-dependencies.mjs", "simulator_targeted_ui"),
+            ("Packages/HanlinExpoRuntime/Package.swift", "simulator_targeted_ui"),
+            ("Packages/HanlinSwiftUIBridgeGenerator/Sources/HanlinSwiftUIBridgeCore/OutputGenerator.swift", "simulator_targeted_ui"),
+            ("Packages/IOSSystemLite/Sources/IOSSystemStreamBridge/include/IOSSystemStreamBridge.h", "ios_system"),
+            ("Packages/TorahLibraryKit/Sources/TorahLibraryKit/Contracts/StudyModels.swift", "app_unit_tests"),
+            ("AI_HLY/Downstream/TorahStudy/TorahStudyNativeTools.swift", "app_unit_tests"),
+            ("AI_HLY/Downstream/RuntimeCore/Tools/ExecuteSkillResourceTool.swift", "app_unit_tests"),
+            ("Scripts/Acceptance/test-skill-resource-execution.py", "app_unit_tests"),
+            ("Skills/torah-photo-study/hanlin.json", "app_unit_tests"),
+            ("Packages/HanlinAgentUIAdapter/Package.swift", "app_unit_tests"),
+        ]
+        for path, expected_group in test_cases:
+            with self.subTest(path=path):
+                plan = self.plan_files([path])
+                self.assertGreater(len(plan.selected_groups), 0, f"Path {path} should not produce an empty test plan")
+                self.assertIn(expected_group, plan.selected_groups, f"Path {path} should route to {expected_group}")
+                self.assertNotIn(path, plan.no_impact_files, f"Path {path} must not be classified as no impact")
 
 
 if __name__ == "__main__":

@@ -16,6 +16,7 @@ enum HanlinHostServiceError: Error, Sendable, LocalizedError {
     case unsupportedByPlatform(String)
     case quotaExceeded(String)
     case invalidRequest(String)
+    case invalidArguments(String)
     
     var errorDescription: String? {
         switch self {
@@ -47,6 +48,8 @@ enum HanlinHostServiceError: Error, Sendable, LocalizedError {
             return "Quota exceeded: \(msg)"
         case .invalidRequest(let msg):
             return "Invalid request: \(msg)"
+        case .invalidArguments(let msg):
+            return "Invalid arguments: \(msg)"
         }
     }
 }

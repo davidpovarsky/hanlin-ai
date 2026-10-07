@@ -1,0 +1,308 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Requirements Traceability Matrix — Torah Photo Study",
+  "generatedAt": "2026-10-05T23:24:30Z",
+  "suites": [
+    {
+      "suite": "BASE",
+      "title": "Baseline, Build and Distribution",
+      "implementingModules": [
+        "baseline-manifest.json",
+        "AI_HLY.xcodeproj",
+        "Packages/TorahLibraryKit/Package.swift"
+      ],
+      "requirements": [
+        {"id": "BASE-01", "tier": "T2", "status": "PASS", "description": "Isolated worktree and clean base verification"},
+        {"id": "BASE-02", "tier": "T2", "status": "PASS", "description": "Baseline diagnosis and targeted fixes"},
+        {"id": "BASE-03", "tier": "T2", "status": "PASS", "description": "Pinned dependencies and package resolution"},
+        {"id": "BASE-04", "tier": "T2", "status": "PASS", "description": "Device and simulator target consistency"},
+        {"id": "BASE-05", "tier": "T2", "status": "PASS", "description": "Package and binary manifest audit"},
+        {"id": "BASE-06", "tier": "T1", "status": "PASS", "description": "Gate rejects empty or zero-test runs"},
+        {"id": "BASE-07", "tier": "T2", "status": "PASS", "description": "Shared core revision and ABI parity"},
+        {"id": "BASE-08", "tier": "T2", "status": "PASS", "description": "Safe verification mode without unauthorized upload"}
+      ]
+    },
+    {
+      "suite": "SKL",
+      "title": "Skill Import, Instructions and Runtime Resource Execution",
+      "implementingModules": [
+        "AI_HLY/Downstream/AgentSkills/HanlinSkillCatalog.swift",
+        "AI_HLY/Downstream/RuntimeCore/Tools/ExecuteSkillResourceTool.swift",
+        "Skills/cairo-genizah-research",
+        "Skills/torah-photo-study",
+        "Skills/yochai-study"
+      ],
+      "requirements": [
+        {"id": "SKL-01", "tier": "T4+T5", "status": "BLOCKED", "description": "Import Skill zip into catalog with byte-exact payload"},
+        {"id": "SKL-02", "tier": "T2", "status": "PASS", "description": "Import standard Markdown skill without phantom scripts"},
+        {"id": "SKL-03", "tier": "T1", "status": "PASS", "description": "Zip with invalid SKILL.md entrypoint rejected"},
+        {"id": "SKL-04", "tier": "T1", "status": "PASS", "description": "Zip path traversal and malformed archives blocked"},
+        {"id": "SKL-05", "tier": "T1", "status": "PASS", "description": "File size limit and non-zip content rejected"},
+        {"id": "SKL-06", "tier": "T1", "status": "PASS", "description": "Inline instructions loaded accurately in compiled miniapps"},
+        {"id": "SKL-07", "tier": "T1", "status": "PASS", "description": "Resource scope resolution by skill identifier"},
+        {"id": "SKL-08", "tier": "T1", "status": "PASS", "description": "Uninstalled or disabled skill script execution denied"},
+        {"id": "SKL-09", "tier": "T2", "status": "PASS", "description": "Python execution with sibling imports and Hebrew arguments"},
+        {"id": "SKL-10", "tier": "T2", "status": "PASS", "description": "QuickJS execution with relative imports and structured results"},
+        {"id": "SKL-11", "tier": "T2", "status": "PASS", "description": "Pure Python dependencies managed securely"},
+        {"id": "SKL-12", "tier": "T1", "status": "PASS", "description": "Incompatible iOS native C-extension rejected with clear notice"},
+        {"id": "SKL-13", "tier": "T2", "status": "PASS", "description": "Non-zero exit, exceptions and truncated output reported gracefully"},
+        {"id": "SKL-14", "tier": "T2", "status": "PASS", "description": "Cancellation during script execution cleans up runtime"},
+        {"id": "SKL-15", "tier": "T2", "status": "PASS", "description": "Concurrent execution isolated by workspace environment"},
+        {"id": "SKL-16", "tier": "T2", "status": "PASS", "description": "Skill update and rollback consistency"}
+      ]
+    },
+    {
+      "suite": "MCP",
+      "title": "Local and Remote Model Context Protocol Client",
+      "implementingModules": [
+        "AI_HLY/Downstream/MCP/Core/MCPServerDescriptor.swift",
+        "AI_HLY/Downstream/MCP/Runtime/MCPClientSession.swift",
+        "AI_HLY/Downstream/MCP/Runtime/MCPRuntimeController.swift",
+        "AI_HLY/Downstream/MCP/Runtime/MCPServerLifecycleSlot.swift"
+      ],
+      "requirements": [
+        {"id": "MCP-01", "tier": "T2", "status": "PASS", "description": "Remote preset persistence and secret masking"},
+        {"id": "MCP-02", "tier": "T2", "status": "PASS", "description": "HTTPClientTransport connection and protocol handshake"},
+        {"id": "MCP-03", "tier": "T1", "status": "PASS", "description": "Incompatible MCP protocol profile handled with explicit error"},
+        {"id": "MCP-04", "tier": "T2", "status": "PASS", "description": "SSE chunk assembly preserves UTF-8 Hebrew characters"},
+        {"id": "MCP-05", "tier": "T2", "status": "PASS", "description": "Pagination in tools/list completely discovered"},
+        {"id": "MCP-06", "tier": "T2", "status": "PASS", "description": "Tool name disambiguation between multiple servers"},
+        {"id": "MCP-07", "tier": "T2", "status": "PASS", "description": "Tools dynamic notification refreshes catalog"},
+        {"id": "MCP-08", "tier": "T2", "status": "PASS", "description": "Authentication failure (401/403) terminates without retry storm"},
+        {"id": "MCP-09", "tier": "T2", "status": "PASS", "description": "Rate limiting (429 Retry-After) respected"},
+        {"id": "MCP-10", "tier": "T2", "status": "PASS", "description": "Network interruption handled without affecting local tools"},
+        {"id": "MCP-11", "tier": "T2", "status": "PASS", "description": "Cancellation cleans up SSE connection"},
+        {"id": "MCP-12", "tier": "T2", "status": "PASS", "description": "Backgrounding and foregrounding session restoration"},
+        {"id": "MCP-13", "tier": "T2", "status": "PASS", "description": "Registry schema migration backwards compatibility"},
+        {"id": "MCP-14", "tier": "T2", "status": "PASS", "description": "Remote-only MCP does not spawn Node.js runtime host"},
+        {"id": "MCP-15", "tier": "T2", "status": "PASS", "description": "Large MCP payloads bounded by memory limits"},
+        {"id": "MCP-16", "tier": "T3", "status": "BLOCKED", "description": "Live Yochai MCP connection with secret key (blocked pending key)"}
+      ]
+    },
+    {
+      "suite": "LIB",
+      "title": "Shared Torah Library, Locators and Deep Links",
+      "implementingModules": [
+        "Packages/TorahLibraryKit/Contracts/StudyModels.swift",
+        "Packages/TorahLibraryKit/Storage/ITorahSharedStorage.swift",
+        "Packages/TorahLibraryKit/Navigation/TorahStudyDeepLink.swift",
+        "Source/Navigation/TorahStudyDeepLink.swift",
+        "Source/Navigation/TorahStudyDeepLinkHandler.swift"
+      ],
+      "requirements": [
+        {"id": "LIB-01", "tier": "T2", "status": "PASS", "description": "Shared library index queried without duplicate download"},
+        {"id": "LIB-02", "tier": "T5", "status": "BLOCKED", "description": "Hanlin queries shared library while Maktabah closed"},
+        {"id": "LIB-03", "tier": "T2", "status": "PASS", "description": "Concurrent read access across both apps"},
+        {"id": "LIB-04", "tier": "T2", "status": "PASS", "description": "Atomic library generation updates"},
+        {"id": "LIB-05", "tier": "T2", "status": "PASS", "description": "Atomic download and promotion staging"},
+        {"id": "LIB-06", "tier": "T2", "status": "PASS", "description": "Corrupt download recovery preserves existing database"},
+        {"id": "LIB-07", "tier": "T5", "status": "BLOCKED", "description": "Missing App Group entitlement triggers clear UI warning"},
+        {"id": "LIB-08", "tier": "T5", "status": "BLOCKED", "description": "App Group shared container verified between signed binaries"},
+        {"id": "LIB-09", "tier": "T4+T5", "status": "BLOCKED", "description": "Searching background provider does not mutate active reader"},
+        {"id": "LIB-10", "tier": "T1", "status": "PASS", "description": "Bi-directional SourceLocator serialization and deep link roundtrip"},
+        {"id": "LIB-11", "tier": "T2", "status": "PASS", "description": "Zayit search mapping to Otzaria passage"},
+        {"id": "LIB-12", "tier": "T2", "status": "PASS", "description": "Offline reading with local text when network absent"},
+        {"id": "LIB-13", "tier": "T2", "status": "PASS", "description": "Complex Sefaria commentary references and section ranges"},
+        {"id": "LIB-14", "tier": "T2", "status": "PASS", "description": "Lexical search fallback when semantic vectors missing"},
+        {"id": "LIB-15", "tier": "T2", "status": "PASS", "description": "Semantic model compatibility and re-indexing checks"},
+        {"id": "LIB-16", "tier": "T2", "status": "PASS", "description": "Removed library book card flagged as unavailable"}
+      ]
+    },
+    {
+      "suite": "OCR",
+      "title": "Visual Evidence and Optical Text Recognition",
+      "implementingModules": [
+        "AI_HLY/Downstream/TorahStudy/TorahOCRService.swift",
+        "AI_HLY/Downstream/TorahStudy/TorahStudyNativeTools.swift",
+        "Packages/TorahLibraryKit/Contracts/StudyModels.swift"
+      ],
+      "requirements": [
+        {"id": "OCR-01", "tier": "T5", "status": "BLOCKED", "description": "Physical camera capture in Hanlin on device"},
+        {"id": "OCR-02", "tier": "T4+T5", "status": "BLOCKED", "description": "Identical pipeline for camera, photos and files input"},
+        {"id": "OCR-03", "tier": "T4+T5", "status": "BLOCKED", "description": "Camera permission denial gracefully handled"},
+        {"id": "OCR-04", "tier": "T2", "status": "PASS", "description": "HEIC/JPEG/PNG orientations and Hebrew bbox transform"},
+        {"id": "OCR-05", "tier": "T4+T5", "status": "BLOCKED", "description": "Crop and zoom preserve RTL line ordering"},
+        {"id": "OCR-06", "tier": "T2", "status": "PASS", "description": "Multi-column Talmud page with distinct Gemara/Rashi regions"},
+        {"id": "OCR-07", "tier": "T2", "status": "PASS", "description": "Niqqud, teamim, acronyms preserved without altering meaning"},
+        {"id": "OCR-08", "tier": "T2", "status": "PASS", "description": "Blurry/shadowed capture yields insufficientImage warning"},
+        {"id": "OCR-09", "tier": "T2", "status": "PASS", "description": "Blank or invalid image yields notText without hallucination"},
+        {"id": "OCR-10", "tier": "T2", "status": "PASS", "description": "Unsupported script reported honestly"},
+        {"id": "OCR-11", "tier": "T3", "status": "BLOCKED", "description": "HebVL remote vision endpoint verification"},
+        {"id": "OCR-12", "tier": "T1", "status": "PASS", "description": "Out-of-bounds bbox or malformed OCR output rejected"},
+        {"id": "OCR-13", "tier": "T2", "status": "PASS", "description": "Timeout during OCR cleanly aborts without hanging app"},
+        {"id": "OCR-14", "tier": "T4+T5", "status": "BLOCKED", "description": "Crop change invalidates previous OCR generation"},
+        {"id": "OCR-15", "tier": "T2", "status": "PASS", "description": "Remote OCR requires user consent before uploading bytes"},
+        {"id": "OCR-16", "tier": "T3", "status": "BLOCKED", "description": "Historical manuscripts tested in separate evaluation split"}
+      ]
+    },
+    {
+      "suite": "MAT",
+      "title": "Deterministic Text Alignment, Resolution and False-Accept Prevention",
+      "implementingModules": [
+        "Packages/TorahLibraryKit/Normalizer/HebrewTextNormalizer.swift",
+        "Packages/TorahLibraryKit/Matching/TorahTextAlignment.swift",
+        "Packages/TorahLibraryKit/Matching/TorahSourceResolver.swift"
+      ],
+      "requirements": [
+        {"id": "MAT-01", "tier": "T2", "status": "PASS", "description": "Unique passage in corpus resolves to top verified candidate"},
+        {"id": "MAT-02", "tier": "T2", "status": "PASS", "description": "Passage identified purely by excerpt text without title clues"},
+        {"id": "MAT-03", "tier": "T2", "status": "PASS", "description": "Fuzzy matching recovers text despite minor OCR letter errors"},
+        {"id": "MAT-04", "tier": "T2", "status": "PASS", "description": "Multi-line / cross-boundary sentences aligned seamlessly"},
+        {"id": "MAT-05", "tier": "T2", "status": "PASS", "description": "Conflicting negative word ('לא') blocks false acceptance"},
+        {"id": "MAT-06", "tier": "T2", "status": "PASS", "description": "Widespread verse / common liturgical text marked ambiguous"},
+        {"id": "MAT-07", "tier": "T2", "status": "PASS", "description": "Cited work distinguished from host photographed book"},
+        {"id": "MAT-08", "tier": "T2", "status": "PASS", "description": "Different editions share canonical locator without inventing page"},
+        {"id": "MAT-09", "tier": "T2", "status": "PASS", "description": "Printed page number distinguished from PDF/database page"},
+        {"id": "MAT-10", "tier": "T2", "status": "PASS", "description": "Out-of-corpus text yields notFound without hallucination"},
+        {"id": "MAT-11", "tier": "T2", "status": "PASS", "description": "Semantically related text classified as related, not verified"},
+        {"id": "MAT-12", "tier": "T2", "status": "PASS", "description": "Disjoint text anchors prevent stitching false continuous passage"},
+        {"id": "MAT-13", "tier": "T2", "status": "PASS", "description": "Conflicting OCR readings preserve raw alternatives"},
+        {"id": "MAT-14", "tier": "T3+T5", "status": "BLOCKED", "description": "Model does not fill canonical citation when visual evidence lacks"},
+        {"id": "MAT-15", "tier": "T4+T5", "status": "BLOCKED", "description": "Manual excerpt editing triggers fresh deterministic resolution"},
+        {"id": "MAT-16", "tier": "T2", "status": "PASS", "description": "Holdout split evaluated without ground-truth leakage (100% precision)"}
+      ]
+    },
+    {
+      "suite": "ENR",
+      "title": "Commentary Enrichment, Linked Sources and Genizah Research",
+      "implementingModules": [
+        "Packages/TorahLibraryKit/Providers/SefariaLibraryProvider.swift",
+        "Packages/TorahLibraryKit/Providers/YochaiLibraryProvider.swift",
+        "Packages/TorahLibraryKit/Providers/GenizahLibraryProvider.swift",
+        "Skills/cairo-genizah-research/scripts/search.py"
+      ],
+      "requirements": [
+        {"id": "ENR-01", "tier": "T2", "status": "PASS", "description": "Linked commentary fetched from verified providers"},
+        {"id": "ENR-02", "tier": "T2", "status": "PASS", "description": "Distinguishes between missing commentaries and offline service"},
+        {"id": "ENR-03", "tier": "T3", "status": "BLOCKED", "description": "Yochai anchor search to passage lookup using internal IDs"},
+        {"id": "ENR-04", "tier": "T2", "status": "PASS", "description": "Preserves original deep links when book mapping is partial"},
+        {"id": "ENR-05", "tier": "T2", "status": "PASS", "description": "Yochai concepts clearly labelled machine-derived"},
+        {"id": "ENR-06", "tier": "T3", "status": "PASS", "description": "Cairo Genizah search script runs in embedded runtime"},
+        {"id": "ENR-07", "tier": "T3", "status": "BLOCKED", "description": "Genizah fragment details retrieved with proper manuscript attribution"},
+        {"id": "ENR-08", "tier": "T2", "status": "PASS", "description": "Genizah snippet handling when high-res image unavailable"},
+        {"id": "ENR-09", "tier": "T2", "status": "PASS", "description": "Parallel text comparison scores reported with score units"},
+        {"id": "ENR-10", "tier": "T2", "status": "PASS", "description": "Rate limiting (429) and cancellation in Genizah script"},
+        {"id": "ENR-11", "tier": "T3", "status": "BLOCKED", "description": "Optional BEREL NER entity extraction"},
+        {"id": "ENR-12", "tier": "T2", "status": "PASS", "description": "OCR, commentary and agent synthesis provenance strictly separated"}
+      ]
+    },
+    {
+      "suite": "AGT",
+      "title": "Agent Conversation, Tool Calling and Execution Constraints",
+      "implementingModules": [
+        "AI_HLY/Downstream/TorahStudy/TorahStudyNativeTools.swift",
+        "Skills/torah-photo-study/SKILL.md",
+        "AI_HLY/Downstream/RuntimeCore/Tools/NativeToolCatalog+RuntimeTools.swift"
+      ],
+      "requirements": [
+        {"id": "AGT-01", "tier": "T3+T4", "status": "BLOCKED", "description": "Natural Hebrew prompt triggers OCR and library resolution via tools"},
+        {"id": "AGT-02", "tier": "T3+T4", "status": "BLOCKED", "description": "Follow-up question leverages active passage context and mentions"},
+        {"id": "AGT-03", "tier": "T2", "status": "PASS", "description": "Agent respects disabled library tools without hallucinating bypass"},
+        {"id": "AGT-04", "tier": "T3+T4", "status": "BLOCKED", "description": "Text-only chat model routes visual input via OCR tool"},
+        {"id": "AGT-05", "tier": "T3+T4", "status": "BLOCKED", "description": "Zero search results reported transparently without inventing sources"},
+        {"id": "AGT-06", "tier": "T2", "status": "PASS", "description": "Prompt injection in OCR text treated strictly as inert data"},
+        {"id": "AGT-07", "tier": "T2", "status": "PASS", "description": "Paged tool results loaded sequentially with cursor"},
+        {"id": "AGT-08", "tier": "T3", "status": "BLOCKED", "description": "Agent conversation repeated across multiple trials with traces"}
+      ]
+    },
+    {
+      "suite": "UI",
+      "title": "User Interface, Navigation and Inter-App Bridge",
+      "implementingModules": [
+        "AI_HLY/Downstream/TorahStudy/TorahPhotoStudyCaptureView.swift",
+        "Source/Navigation/TorahStudyDeepLinkHandler.swift",
+        "Source/iOS/MaktabahApp.swift"
+      ],
+      "requirements": [
+        {"id": "UI-01", "tier": "T4+T5", "status": "BLOCKED", "description": "'Open here' opens exact source in Hanlin reader"},
+        {"id": "UI-02", "tier": "T4+T5", "status": "BLOCKED", "description": "'Open in Maktabah' performs cold launch to exact passage"},
+        {"id": "UI-03", "tier": "T4+T5", "status": "BLOCKED", "description": "Navigates seamlessly when Maktabah is already running"},
+        {"id": "UI-04", "tier": "T4+T5", "status": "BLOCKED", "description": "Fallback view in Hanlin when Maktabah is not installed"},
+        {"id": "UI-05", "tier": "T1", "status": "PASS", "description": "Malformed deep links rejected safely without crash"},
+        {"id": "UI-06", "tier": "T4+T5", "status": "BLOCKED", "description": "Hebrew RTL layout with mixed English references and numerals"},
+        {"id": "UI-07", "tier": "T4+T5", "status": "BLOCKED", "description": "Dynamic Type and VoiceOver accessibility on capture and result cards"},
+        {"id": "UI-08", "tier": "T4+T5", "status": "BLOCKED", "description": "iPad Split View and portrait/landscape orientation changes"},
+        {"id": "UI-09", "tier": "T4+T5", "status": "BLOCKED", "description": "App backgrounding during OCR/search resumes cleanly"},
+        {"id": "UI-10", "tier": "T4+T5", "status": "BLOCKED", "description": "'Study with Agent' context bridge from Maktabah to Hanlin"},
+        {"id": "UI-11", "tier": "T4", "status": "BLOCKED", "description": "Copy citation or export summary with full source attribution"},
+        {"id": "UI-12", "tier": "T4+T5", "status": "BLOCKED", "description": "Navigation history and candidate switching"}
+      ]
+    },
+    {
+      "suite": "SEC",
+      "title": "Security, Sandboxing and Privacy",
+      "implementingModules": [
+        "AI_HLY/Downstream/RuntimeCore/Tools/ExecuteSkillResourceTool.swift",
+        "AI_HLY/Downstream/MCP/Core/MCPServerDescriptor.swift",
+        "Packages/TorahLibraryKit/Storage/ITorahSharedStorage.swift"
+      ],
+      "requirements": [
+        {"id": "SEC-01", "tier": "T2", "status": "PASS", "description": "Local-only processing does not transmit image or text bytes"},
+        {"id": "SEC-02", "tier": "T1", "status": "PASS", "description": "Attachment handle access restricted across conversations"},
+        {"id": "SEC-03", "tier": "T2", "status": "PASS", "description": "HTTP redirects strip credentials to unauthorized hosts"},
+        {"id": "SEC-04", "tier": "T2", "status": "PASS", "description": "Local loopback and file:// URLs rejected in external tool results"},
+        {"id": "SEC-05", "tier": "T2", "status": "PASS", "description": "Logs, transcripts and manifests sanitized of secret keys"},
+        {"id": "SEC-06", "tier": "T1", "status": "PASS", "description": "SQL/JSON injection and bidi override protections"},
+        {"id": "SEC-07", "tier": "T2", "status": "PASS", "description": "Skill uninstallation immediately revokes tool access"},
+        {"id": "SEC-08", "tier": "T2", "status": "PASS", "description": "Untrusted skill preview does not execute code"},
+        {"id": "SEC-09", "tier": "T2", "status": "PASS", "description": "Conversation deletion cleans up temporary images"},
+        {"id": "SEC-10", "tier": "T2", "status": "PASS", "description": "License attribution preserved across all bundled components"}
+      ]
+    },
+    {
+      "suite": "PERF",
+      "title": "Performance and Resource Limits",
+      "implementingModules": [
+        "Packages/TorahLibraryKit/Normalizer/HebrewTextNormalizer.swift",
+        "Packages/TorahLibraryKit/Matching/TorahTextAlignment.swift"
+      ],
+      "requirements": [
+        {"id": "PERF-01", "tier": "T5", "status": "BLOCKED", "description": "Warm recognition p95 < 5s over 30 physical iPad runs"},
+        {"id": "PERF-02", "tier": "T4+T5", "status": "BLOCKED", "description": "Cold launch with existing library does not trigger re-indexing"},
+        {"id": "PERF-03", "tier": "T4+T5", "status": "BLOCKED", "description": "50 photo/cancel cycles exhibit no monotonic memory leaks"},
+        {"id": "PERF-04", "tier": "T2", "status": "PASS", "description": "Production corpus search stays within allocated query budgets"},
+        {"id": "PERF-05", "tier": "T2", "status": "PASS", "description": "High-resolution capture gracefully scales memory usage"},
+        {"id": "PERF-06", "tier": "T2", "status": "PASS", "description": "Concurrent searches in two chats execute without starvation"},
+        {"id": "PERF-07", "tier": "T2", "status": "PASS", "description": "Cache hits invalidate properly on crop/model changes"},
+        {"id": "PERF-08", "tier": "T4+T5", "status": "BLOCKED", "description": "Low-memory warning releases non-essential caches"}
+      ]
+    },
+    {
+      "suite": "REG",
+      "title": "Non-Regression on Existing Core and Builtin Apps",
+      "implementingModules": [
+        "AI_HLY/Downstream/AgentSkills/HanlinSkillCatalog.swift",
+        "AI_HLY/Downstream/MCP/Runtime/MCPRuntimeController.swift"
+      ],
+      "requirements": [
+        {"id": "REG-01", "tier": "T1", "status": "PASS", "description": "Existing native tools and skill suite test counts preserved"},
+        {"id": "REG-02", "tier": "T2", "status": "PASS", "description": "Existing local Node MCP servers unaffected by remote MCP addition"},
+        {"id": "REG-03", "tier": "T4", "status": "BLOCKED", "description": "ScriptUI/NativeScript/Expo mini-apps continue to render"},
+        {"id": "REG-04", "tier": "T4", "status": "BLOCKED", "description": "Standard vision and text chat operate without Torah skills triggering"},
+        {"id": "REG-05", "tier": "T2", "status": "PASS", "description": "Otzaria exact/advanced/fuzzy search unchanged in existing UI"},
+        {"id": "REG-06", "tier": "T4", "status": "BLOCKED", "description": "Maktabah authors, library tree and table of contents intact"},
+        {"id": "REG-07", "tier": "T2", "status": "PASS", "description": "Package download, resume and offline reading intact"},
+        {"id": "REG-08", "tier": "T2", "status": "PASS", "description": "User history, bookmarks and notes preserved across app upgrades"}
+      ]
+    },
+    {
+      "suite": "E2E",
+      "title": "End-to-End User Journeys",
+      "implementingModules": [
+        "AI_HLY/Downstream/TorahStudy/TorahPhotoStudyCaptureView.swift",
+        "Source/Navigation/TorahStudyDeepLinkHandler.swift",
+        "Packages/TorahLibraryKit"
+      ],
+      "requirements": [
+        {"id": "E2E-01", "tier": "T5", "status": "BLOCKED", "description": "Physical printed Hebrew book capture to reader opening in both apps"},
+        {"id": "E2E-02", "tier": "T5", "status": "BLOCKED", "description": "Dense Rashi script capture with remote OCR fallback"},
+        {"id": "E2E-03", "tier": "T5", "status": "BLOCKED", "description": "Quotation in host book, ambiguity handling and user correction"},
+        {"id": "E2E-04", "tier": "T5", "status": "BLOCKED", "description": "Passage identification, linked commentaries and Yochai enrichment"},
+        {"id": "E2E-05", "tier": "T5", "status": "BLOCKED", "description": "Cairo Genizah manuscript fragment search and parallel texts"},
+        {"id": "E2E-06", "tier": "T5", "status": "BLOCKED", "description": "Concurrent dual-app access during library corpus update"},
+        {"id": "E2E-07", "tier": "T5", "status": "BLOCKED", "description": "Imported skill executing embedded Python with live HTTPS responses"},
+        {"id": "E2E-08", "tier": "T5", "status": "BLOCKED", "description": "Privacy, cancellation, dual-conversation isolation and cleanup"}
+      ]
+    }
+  ]
+}

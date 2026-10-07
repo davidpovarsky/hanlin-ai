@@ -307,18 +307,44 @@ async function prepare() {
       if (existsSync(reactModularSource)) {
         await cp(reactModularSource, reactHeadersDir, { recursive: true });
       }
-      const rnDepsHeaders = resolve(artifactsRoot, 'ReactNativeDependencies.xcframework', 'Headers');
-      if (existsSync(rnDepsHeaders)) {
-        await cp(rnDepsHeaders, reactHeadersDir, { recursive: true });
-      }
+
+      // Copy ReactNativeDependencies headers (glog, folly, fmt, fast_float, double-conversion, etc.)
+      const allSlices = ['ios-arm64_x86_64-simulator', 'ios-arm64', 'ios-arm64_x86_64-maccatalyst'];
+      const depSources = [
+        resolve(artifactsRoot, 'ReactNativeDependencies.xcframework', 'Headers'),
+        ...allSlices.map(s => resolve(artifactsRoot, 'ReactNativeDependencies.xcframework', s, 'Headers'))
+      ];
+
+      const copyDeps = async (destDir) => {
+        for (const depSrc of depSources) {
+          if (existsSync(depSrc)) {
+            const entries = await readdir(depSrc, { withFileTypes: true });
+            for (const ent of entries) {
+              if (ent.name.endsWith('.modulemap')) continue;
+              const src = resolve(depSrc, ent.name);
+              const dst = resolve(destDir, ent.name);
+              await cp(src, dst, { recursive: true });
+            }
+          }
+        }
+        if (existsSync(resolve(destDir, 'double-conversion')) && !existsSync(resolve(destDir, 'DoubleConversion'))) {
+          await cp(resolve(destDir, 'double-conversion'), resolve(destDir, 'DoubleConversion'), { recursive: true });
+        }
+        if (existsSync(resolve(destDir, 'folly')) && !existsSync(resolve(destDir, 'RCT-Folly', 'folly'))) {
+          await cp(resolve(destDir, 'folly'), resolve(destDir, 'RCT-Folly', 'folly'), { recursive: true });
+        }
+      };
+
+      await copyDeps(reactHeadersDir);
 
       const reactCapFwDir = resolve(modularFwsRoot, 'React.framework');
       if (!existsSync(reactCapFwDir)) {
         await cp(reactFwDir, reactCapFwDir, { recursive: true });
+      } else {
+        await copyDeps(resolve(reactCapFwDir, 'Headers'));
       }
 
-      // Also enrich React.xcframework itself with all headers from ReactNativeHeaders across all slices
-      const allSlices = ['ios-arm64_x86_64-simulator', 'ios-arm64', 'ios-arm64_x86_64-maccatalyst'];
+      // Also enrich React.xcframework itself with all headers from ReactNativeHeaders and ReactNativeDependencies across all slices
       for (const s of allSlices) {
         const targetHeaders = resolve(artifactsRoot, 'React.xcframework', s, 'React.framework', 'Headers');
         const sliceRnHeaders = resolve(artifactsRoot, 'ReactNativeHeaders.xcframework', s, 'Headers');
@@ -340,9 +366,7 @@ async function prepare() {
           if (existsSync(reactModularSource)) {
             await cp(reactModularSource, targetHeaders, { recursive: true });
           }
-          if (existsSync(rnDepsHeaders)) {
-            await cp(rnDepsHeaders, targetHeaders, { recursive: true });
-          }
+          await copyDeps(targetHeaders);
         }
       }
 
@@ -362,10 +386,11 @@ async function prepare() {
         await cleanHeaderModulemaps(resolve(artifactsRoot, 'React.xcframework', s, 'React.framework', 'Headers'));
         await cleanHeaderModulemaps(resolve(artifactsRoot, 'ReactNativeHeaders.xcframework', s, 'Headers'));
       }
-
       // Sanitize headers to prevent modular framework include failures:
       // 1. Remove RCTInspectorNetworkHelper.h from React-umbrella.h (CDP debugger internals shouldn't pollute Swift module)
       // 2. Change angled <jsinspector-modern/...> includes to quotes to satisfy framework modular include rules
+      // 3. Remove colliding Utf8.h and internal yoga subdirectories
+      // 4. Ensure C++17/C++20 compatibility guards across shared headers
       const sanitizeHeaders = async (targetDir) => {
         if (!existsSync(targetDir)) return;
         const entries = await readdir(targetDir, { withFileTypes: true });
@@ -405,11 +430,20 @@ async function prepare() {
                   await writeFile(dyn, forwardToJsonDyn, 'utf8');
                 }
               }
+            } else if (ent.name === 'yoga') {
+              const subdirs = ['algorithm', 'debug', 'enums', 'node', 'style', 'config', 'event'];
+              for (const sub of subdirs) {
+                const p = resolve(full, sub);
+                if (existsSync(p)) {
+                  await rm(p, { recursive: true, force: true });
+                }
+              }
             }
             await sanitizeHeaders(full);
           } else if (ent.isFile() && ent.name === 'ExpoModulesCore_umbrella.h') {
             let content = await readFile(full, 'utf8');
             let filtered = content
+              .replace(/^[ \t]*#import[ \t]+"ContentOriginRegistry\.h"[ \t]*\r?\n?/gm, '')
               .replace(/^[ \t]*#import[ \t]+"ExpoViewComponentDescriptor\.h"[ \t]*\r?\n?/gm, '')
               .replace(/^[ \t]*#import[ \t]+"ExpoViewEventEmitter\.h"[ \t]*\r?\n?/gm, '')
               .replace(/^[ \t]*#import[ \t]+"ExpoViewProps\.h"[ \t]*\r?\n?/gm, '')
@@ -439,6 +473,17 @@ async function prepare() {
           } else if (ent.isFile() && ent.name === 'RawProps.h') {
             let content = await readFile(full, 'utf8');
             let changed = false;
+            if (content.includes('concept RawPropsFilterable')) {
+              content = content.replace(/template\s*<\s*typename\s+T\s*>\s*concept\s+RawPropsFilterable[\s\S]*?\};/g, `
+#if defined(__cpp_concepts)
+template <typename T>
+concept RawPropsFilterable = requires(RawProps &rawProps) {
+  { T::filterRawProps(rawProps) } -> std::same_as<void>;
+};
+#endif
+`);
+              changed = true;
+            }
             if (content.includes('#include <folly/dynamic.h>') && !content.includes('__has_include(<folly/dynamic.h>)')) {
               content = content.replace(
                 '#include <folly/dynamic.h>',
@@ -446,6 +491,8 @@ async function prepare() {
 #include <folly/dynamic.h>
 #elif __has_include(<folly/json/dynamic.h>)
 #include <folly/json/dynamic.h>
+#elif __has_include(<RCT-Folly/folly/dynamic.h>)
+#include <RCT-Folly/folly/dynamic.h>
 #endif`
               );
               changed = true;
@@ -458,6 +505,116 @@ async function prepare() {
             if (changed) {
               await writeFile(full, content, 'utf8');
               console.log(`[HanlinExpo] Sanitized RawProps.h: ${full}`);
+            }
+          } else if (ent.isFile() && ent.name === 'Props.h') {
+            let content = await readFile(full, 'utf8');
+            let changed = false;
+            if (content.includes('concept DeclaresOwnSetProp') || content.includes('concept HasSetProp') || content.includes('concept HasIteratorSetterCtor')) {
+              content = content.replace(/(template\s*<\s*typename\s+T\s*>\s*concept\s+DeclaresOwnSetProp[\s\S]*?concept\s+HasIteratorSetterCtor\s*=[^;]+;)/g, `
+#if defined(__cpp_concepts)
+$1
+#endif
+`);
+              changed = true;
+            }
+            if (content.includes('#include <folly/dynamic.h>') && !content.includes('__has_include(<folly/dynamic.h>)')) {
+              content = content.replace(
+                '#include <folly/dynamic.h>',
+                `#if __has_include(<folly/dynamic.h>)
+#include <folly/dynamic.h>
+#elif __has_include(<folly/json/dynamic.h>)
+#include <folly/json/dynamic.h>
+#elif __has_include(<RCT-Folly/folly/dynamic.h>)
+#include <RCT-Folly/folly/dynamic.h>
+#endif`
+              );
+              changed = true;
+            }
+            if (content.includes('#include <jsi/JSIDynamic.h>') && !content.includes('__has_include(<jsi/JSIDynamic.h>)')) {
+              content = content.replace(/^[ \t]*#include[ \t]+<jsi\/JSIDynamic\.h>[ \t]*\r?\n?/gm, `
+#if __has_include(<jsi/JSIDynamic.h>)
+#include <jsi/JSIDynamic.h>
+#endif
+`);
+              changed = true;
+            }
+            if (changed) {
+              await writeFile(full, content, 'utf8');
+              console.log(`[HanlinExpo] Sanitized Props.h: ${full}`);
+            }
+          } else if (ent.isFile() && ent.name === 'RawValue.h') {
+            let content = await readFile(full, 'utf8');
+            let changed = false;
+            if (content.includes('#include <folly/dynamic.h>') && !content.includes('__has_include(<folly/dynamic.h>)')) {
+              content = content.replace(
+                '#include <folly/dynamic.h>',
+                `#if __has_include(<folly/dynamic.h>)
+#include <folly/dynamic.h>
+#elif __has_include(<folly/json/dynamic.h>)
+#include <folly/json/dynamic.h>
+#elif __has_include(<RCT-Folly/folly/dynamic.h>)
+#include <RCT-Folly/folly/dynamic.h>
+#endif`
+              );
+              changed = true;
+            }
+            if (content.includes('#include <jsi/JSIDynamic.h>') && !content.includes('__has_include(<jsi/JSIDynamic.h>)')) {
+              content = content.replace(/^[ \t]*#include[ \t]+<jsi\/JSIDynamic\.h>[ \t]*\r?\n?/gm, `
+#if __has_include(<jsi/JSIDynamic.h>)
+#include <jsi/JSIDynamic.h>
+#endif
+`);
+              changed = true;
+            }
+            if (changed) {
+              await writeFile(full, content, 'utf8');
+              console.log(`[HanlinExpo] Sanitized RawValue.h: ${full}`);
+            }
+          } else if (ent.isFile() && ent.name === 'Base.h') {
+            let content = await readFile(full, 'utf8');
+            let changed = false;
+            if (content.includes('requires is_jsi_v')) {
+              content = content.replace(
+                /template\s*<\s*typename\s+ReturnT,\s*typename\s+JSArgT\s*>\s*(?:#if\s+defined\(__cpp_concepts\)\s*)?requires\s+is_jsi_v<JSArgT>\s*(?:#endif\s*)?/g,
+                'template <typename ReturnT, typename JSArgT, typename std::enable_if_t<is_jsi_v<JSArgT>, int> = 0>\n'
+              );
+              content = content.replace(
+                /template\s*<\s*typename\s+T\s*>\s*(?:#if\s+defined\(__cpp_concepts\)\s*)?requires\s+is_jsi_v<T>\s*(?:#endif\s*)?/g,
+                'template <typename T, typename std::enable_if_t<is_jsi_v<T>, int> = 0>\n'
+              );
+              changed = true;
+            }
+            if (changed) {
+              await writeFile(full, content, 'utf8');
+              console.log(`[HanlinExpo] Sanitized Base.h SFINAE: ${full}`);
+            }
+          } else if (ent.isFile() && ent.name === 'ScopedExecutor.h') {
+            let content = await readFile(full, 'utf8');
+            if (content.includes('tryExecuteSync') && content.includes('std::derived_from')) {
+              content = content.replace(
+                /template\s*<\s*typename\s+ExecutorEnabledType\s*>\s*requires\s+std::derived_from[\s\S]*?static\s+void\s+tryExecuteSync\s*\(\s*std::weak_ptr<ExecutorEnabledType>\s+selfWeak,\s*[\s\S]*?func\s*\)/g,
+                'template <typename ExecutorEnabledType, typename Func>\nstatic void tryExecuteSync(std::weak_ptr<ExecutorEnabledType> selfWeak, Func func)'
+              );
+              await writeFile(full, content, 'utf8');
+              console.log(`[HanlinExpo] Sanitized ScopedExecutor.h: ${full}`);
+            }
+          } else if (ent.isFile() && ent.name === 'EnumArray.h') {
+            let content = await readFile(full, 'utf8');
+            if (content.includes('requires std::is_enum_v')) {
+              content = content.replace(/(\s*requires\s+std::is_enum_v[\s\S]*?std::numeric_limits<int>::max\(\)\))/g, `
+#if defined(__cpp_concepts)
+$1
+#endif
+`);
+              await writeFile(full, content, 'utf8');
+              console.log(`[HanlinExpo] Sanitized EnumArray.h: ${full}`);
+            }
+          } else if (ent.isFile() && ent.name === 'RCTComponentViewProtocol.h') {
+            let content = await readFile(full, 'utf8');
+            if (!content.includes('#pragma once') && !content.includes('#ifndef RCTComponentViewProtocol_h')) {
+              content = '#pragma once\n' + content;
+              await writeFile(full, content, 'utf8');
+              console.log(`[HanlinExpo] Sanitized RCTComponentViewProtocol.h: ${full}`);
             }
           } else if (ent.isFile() && ent.name === 'ExpoFabricViewObjC.h') {
             let content = await readFile(full, 'utf8');
@@ -498,7 +655,7 @@ async function prepare() {
             if (content.includes('RCTHost.h')) {
               content = content.replace(/#ifdef __cplusplus[\s\S]*?#endif \/\/ __cplusplus/m, '');
               content = content.replace(/#if __has_include\([\s\S]*?#endif/gm, '');
-              content = content.replace(/^[ \t]*#import[ \t]+[<"][^>"]*RCTHost\.h[>"][ \t]*\r?\n?/gm, '');
+              content = content.replace(/^[ \t]*#[a-z]+[ \t]+[<"][^>"]*RCTHost\.h[>"][ \t]*\r?\n?/gm, '');
               changed = true;
             }
             if (changed) {
@@ -544,11 +701,22 @@ async function prepare() {
             }
           } else if (ent.isFile() && ent.name === 'RCTInspectorNetworkHelper.h') {
             let content = await readFile(full, 'utf8');
+            let changed = false;
+            if (content.includes('<jsinspector-modern/ReactCdp.h>')) {
+              content = content.replace(/^[ \t]*#import[ \t]+<jsinspector-modern\/ReactCdp\.h>[ \t]*\r?\n?/gm, '// #import <jsinspector-modern/ReactCdp.h>\n');
+              changed = true;
+            }
             if (content.includes('<jsinspector-modern/')) {
               content = content.replace(/<jsinspector-modern\/([^>]+)>/g, '"jsinspector-modern/$1"');
+              changed = true;
+            }
+            if (changed) {
               await writeFile(full, content, 'utf8');
               console.log(`[HanlinExpo] Sanitized RCTInspectorNetworkHelper.h: ${full}`);
             }
+          } else if (ent.isFile() && ent.name === 'Utf8.h' && full.includes('jsinspector-modern')) {
+            await rm(full, { force: true });
+            console.log(`[HanlinExpo] Removed colliding Utf8.h: ${full}`);
           } else if (ent.isFile() && ent.name.endsWith('.h') && full.includes('jsinspector-modern')) {
             let content = await readFile(full, 'utf8');
             if (content.includes('<jsinspector-modern/')) {
@@ -575,17 +743,21 @@ template <Hashable T, Hashable... Args>
 std::size_t hash_combine(const T &v, const Args &...args)
 {
   std::size_t seed = 0;
-  hash_combine<T, Args...>(seed, v, args...);
+  hash_combine(seed, v, args...);
   return seed;
 }
 
-template <Hashable... Ts>
-  requires(sizeof...(Ts) <= 32)
-void hash_combine_optionals(std::size_t &seed, const std::optional<Ts> &...optionals)
+template <Hashable... Args>
+std::size_t hash_combine_optionals(std::size_t presence, const std::optional<Args> &...optionals)
 {
-  std::uint32_t presence = 0;
-  std::uint32_t bit = 1;
-  ((presence |= optionals.has_value() ? bit : 0u, bit <<= 1), ...);
+  std::size_t seed = 0;
+  hash_combine(seed, presence, optionals...);
+  return seed;
+}
+
+template <Hashable... Args>
+void hash_combine_optionals_in_place(std::size_t &seed, std::size_t presence, const std::optional<Args> &...optionals)
+{
   std::size_t optionalsSeed = presence;
 
   auto combineIfEngaged = [&optionalsSeed](const auto &optional) {
@@ -614,13 +786,17 @@ std::size_t hash_combine(const T &v, const Args &...args)
   return seed;
 }
 
-template <typename... Ts>
-void hash_combine_optionals(std::size_t &seed, const std::optional<Ts> &...optionals)
+template <typename... Args>
+std::size_t hash_combine_optionals(std::size_t presence, const std::optional<Args> &...optionals)
 {
-  static_assert(sizeof...(Ts) <= 32, "Ts count must be <= 32");
-  std::uint32_t presence = 0;
-  std::uint32_t bit = 1;
-  ((presence |= optionals.has_value() ? bit : 0u, bit <<= 1), ...);
+  std::size_t seed = 0;
+  hash_combine(seed, presence, optionals...);
+  return seed;
+}
+
+template <typename... Args>
+void hash_combine_optionals_in_place(std::size_t &seed, std::size_t presence, const std::optional<Args> &...optionals)
+{
   std::size_t optionalsSeed = presence;
 
   auto combineIfEngaged = [&optionalsSeed](const auto &optional) {
@@ -685,6 +861,8 @@ template <typename CharTransformT = fnv1a_identity>
 #include <folly/dynamic.h>
 #elif __has_include(<folly/json/dynamic.h>)
 #include <folly/json/dynamic.h>
+#elif __has_include(<RCT-Folly/folly/dynamic.h>)
+#include <RCT-Folly/folly/dynamic.h>
 #endif`;
               content = content.replace(/#include <folly\/dynamic\.h>/g, replacement);
               changed = true;
@@ -779,7 +957,6 @@ template <typename CharTransformT = fnv1a_identity>
           await resignXcf(resolve(artifactsRoot, ent.name));
         }
       }
-
       count++;
       console.log('[HanlinExpo] Created unified non-modular react.framework in ModularFrameworks and enriched React.xcframework.');
 
@@ -941,7 +1118,7 @@ template <typename CharTransformT = fnv1a_identity>
     if (process.platform === 'darwin') {
       const artifactEntries = await readdir(artifactsRoot, { withFileTypes: true });
       for (const entry of artifactEntries) {
-        if (entry.isDirectory() && entry.name.endsWith('.xcframework') && entry.name.startsWith('Expo')) {
+        if (entry.isDirectory() && entry.name.endsWith('.xcframework')) {
           const fwPath = resolve(artifactsRoot, entry.name);
           try {
             let innerFws = [];
@@ -954,6 +1131,9 @@ template <typename CharTransformT = fnv1a_identity>
               try { execSync(`codesign --remove-signature "${inner}"`, { stdio: 'ignore' }); } catch (_) {}
               try { execSync(`codesign --force --deep --sign - "${inner}"`, { stdio: 'ignore' }); } catch (_) {}
             }
+
+            try { execSync(`codesign --remove-signature "${fwPath}"`, { stdio: 'ignore' }); } catch (_) {}
+            try { execSync(`codesign --force --deep --sign - "${fwPath}"`, { stdio: 'ignore' }); } catch (_) {}
 
             console.log(`[HanlinExpo] Ad-hoc re-signed ${entry.name}`);
           } catch (e) {

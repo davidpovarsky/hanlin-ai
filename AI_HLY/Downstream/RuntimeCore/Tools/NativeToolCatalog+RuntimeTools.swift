@@ -7,5 +7,6 @@ extension NativeToolCatalog {
         register(ListToolsTool())
         register(GetRuntimeCapabilitiesTool())
         register(ManageRuntimePackagesTool())
+        register(ExecuteSkillResourceTool())
     }
 }

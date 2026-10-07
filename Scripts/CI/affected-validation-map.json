@@ -20,10 +20,12 @@
     "provider-conformance-summary.json",
     "capability-invariants.json",
     "capability-invariants.md",
-    "Scripts/*.mjs",
-    "Scripts/**/*.mjs",
-    "scripts/**",
-    "**/Package.resolved"
+    "Scripts/generate_acceptance_results.mjs",
+    "**/Package.resolved",
+    "baseline-manifest.json",
+    "requirements-traceability.json",
+    "test-results.jsonl",
+    "scripts/validate-project-board.sh"
   ],
   "components": {
     "ci_router": {
@@ -162,6 +164,9 @@
       ],
       "direct_validation_groups": [
         "simulator_targeted_ui"
+      ],
+      "ui_suites": [
+        "AI_HLYUITests/HanlinExpoProductionE2ETests"
       ],
       "consumers": []
     },
@@ -508,7 +513,9 @@
         "AI_HLY/Downstream/Scripting/**",
         "AI_HLY/Downstream/ChatPresentation/**",
         "AI_HLY/Downstream/ChatCore/**",
-        "AI_HLY/Downstream/SystemIntegrations/**"
+        "AI_HLY/Downstream/SystemIntegrations/**",
+        "AI_HLY/Downstream/TorahStudy/**",
+        "Packages/TorahLibraryKit/**"
       ],
       "direct_validation_groups": [
         "app_unit_tests"
@@ -904,6 +911,60 @@
       "direct_validation_groups": [
         "device_build",
         "ipa_packaging"
+      ],
+      "consumers": []
+    },
+    "skill_resource_acceptance": {
+      "description": "Acceptance test harnesses and scripts for skill resource execution and Torah study",
+      "patterns": [
+        "Scripts/Acceptance/**"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/RuntimeToolContractTests",
+        "AI_HLYTests/HanlinUnifiedHostServicesAgentAcceptanceTests"
+      ],
+      "consumers": []
+    },
+    "skills_content": {
+      "description": "Skill packages, descriptors, and embedded resources",
+      "patterns": [
+        "Skills/**"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/SkillStoreAndImportTests",
+        "AI_HLYTests/ProductionSystemSkillsTests"
+      ],
+      "consumers": []
+    },
+    "torah_fixtures": {
+      "description": "Torah photo study test fixtures and databases",
+      "patterns": [
+        "Tests/Fixtures/**"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/RuntimeToolContractTests"
+      ],
+      "consumers": []
+    },
+    "agent_ui_adapter": {
+      "description": "Hanlin AgentUI Adapter package, bridge, and mapping tests",
+      "patterns": [
+        "Packages/HanlinAgentUIAdapter/**"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/CanonicalAdapterTests"
       ],
       "consumers": []
     }

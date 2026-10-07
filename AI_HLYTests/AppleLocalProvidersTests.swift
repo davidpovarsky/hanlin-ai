@@ -1,7 +1,6 @@
 import Testing
 import Foundation
 @testable import AI_Hanlin
-
 private final class MockFoundationBackend: AppleFoundationModelSessionBackend, @unchecked Sendable {
     let chunks: [String]
     let delayNanoseconds: UInt64

@@ -438,6 +438,7 @@ public struct HanlinGeneratedDocumentLaunchSubtitleModifier: ViewModifier, Recor
 
     public init() {}
 
+    @ViewBuilder
     public func body(content: Content) -> some View {
         if #available(iOS 27.0, *) {
             content.documentLaunchSubtitle(SwiftUI.Text(subtitle))
@@ -452,6 +453,7 @@ public struct HanlinGeneratedDocumentLaunchTitleModifier: ViewModifier, Record {
 
     public init() {}
 
+    @ViewBuilder
     public func body(content: Content) -> some View {
         if #available(iOS 27.0, *) {
             content.documentLaunchTitle(SwiftUI.Text(title))
@@ -860,6 +862,7 @@ public struct HanlinGeneratedSwipeActionsContainerModifier: ViewModifier, Record
 
     public init() {}
 
+    @ViewBuilder
     public func body(content: Content) -> some View {
         if #available(iOS 27.0, *) {
             content.swipeActionsContainer()

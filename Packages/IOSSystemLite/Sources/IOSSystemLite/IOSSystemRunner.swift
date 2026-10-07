@@ -1,6 +1,5 @@
 import Foundation
 import Synchronization
-import ios_system
 import IOSSystemStreamBridge
 
 public struct IOSSystemExecution: Sendable {
@@ -386,7 +385,11 @@ public enum IOSSystemRunner {
             )
         }
         do {
-            let object = try PropertyListSerialization.propertyList(from: data, options: [], format: nil)
+            let object = try PropertyListSerialization.propertyList(
+                from: data,
+                options: PropertyListSerialization.ReadOptions(),
+                format: nil
+            )
             guard let dictionary = object as? [String: Any] else {
                 throw malformedDictionary(
                     at: url,

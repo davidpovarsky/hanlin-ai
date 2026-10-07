@@ -11,13 +11,13 @@ actor MCPClientSession {
 
     let server: MCPServerDescriptor
     private let client: Client
-    private let transport: EmbeddedNodeMCPTransport
+    private let transport: any Transport
     private let toolListChangeContinuation: AsyncStream<Void>.Continuation
     private(set) var tools: [MCPToolDescriptor] = []
     private var disconnectTask: Task<Void, Never>?
     private var disconnected = false
 
-    init(server: MCPServerDescriptor, transport: EmbeddedNodeMCPTransport) {
+    init(server: MCPServerDescriptor, transport: any Transport) {
         self.server = server
         self.transport = transport
         var continuation: AsyncStream<Void>.Continuation!

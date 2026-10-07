@@ -679,6 +679,11 @@ jobs:
           npm ci --prefix Scripts/Expo
           node Scripts/Expo/prepare-ios-dependencies.mjs
 
+      - name: Verify zero production stubs in Torah Photo Study
+        run: |
+          set -euxo pipefail
+          python3 Scripts/CI/verify-zero-stubs.py
+
       - name: Prepare log folders
         run: |
           set -euxo pipefail
@@ -724,6 +729,7 @@ jobs:
             echo "===== Top-level files ====="
             find . -maxdepth 3 -type f | sort | sed -n '1,400{s#^\./##;p;}'
           } 2>&1 | tee "$LOG_DIR/01-environment.log"
+
 
       - name: Restore cloned Swift package dependencies
         id: app-sourcepackages-cache
@@ -803,12 +809,12 @@ jobs:
           SWIFT_ENABLE_EXPLICIT_MODULES = NO
           SWIFT_OBJC_INTEROP_MODE = objcxx
           FRAMEWORK_SEARCH_PATHS = "$repo_root/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks" "$repo_root/Artifacts/ModularFrameworks" "\$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks" "\$(SRCROOT)/Artifacts/ModularFrameworks" \$(inherited)
-          HEADER_SEARCH_PATHS = "$repo_root/Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders" "$repo_root/Artifacts/ReactModularHeaders" "$repo_root/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers" "$repo_root/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react" "\$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders" "\$(SRCROOT)/Artifacts/ReactModularHeaders" \$(inherited) "\$(BUILT_PRODUCTS_DIR)/React.framework/Headers" "\$(BUILT_PRODUCTS_DIR)/ExpoModulesCore.framework/Headers" "\$(BUILT_PRODUCTS_DIR)/Python.framework/Headers"
+          HEADER_SEARCH_PATHS = "$repo_root/Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders" "$repo_root/Artifacts/ReactModularHeaders" "$repo_root/Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers" "$repo_root/Artifacts/ReactNativeDependencies.xcframework/Headers" "$repo_root/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers" "$repo_root/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react" "\$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders" "\$(SRCROOT)/Artifacts/ReactModularHeaders" "\$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers" "\$(SRCROOT)/Artifacts/ReactNativeDependencies.xcframework/Headers" \$(inherited) "\$(BUILT_PRODUCTS_DIR)/React.framework/Headers" "\$(BUILT_PRODUCTS_DIR)/ExpoModulesCore.framework/Headers" "\$(BUILT_PRODUCTS_DIR)/Python.framework/Headers"
           CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES
           CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = NO
           WARNING_CFLAGS = \$(inherited) -Wno-quoted-include-in-framework-header -Wno-non-modular-include-in-framework-module
           OTHER_CFLAGS = \$(inherited) -Wno-quoted-include-in-framework-header -Wno-non-modular-include-in-framework-module
-          OTHER_SWIFT_FLAGS = -Xcc -F"$repo_root/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks" -Xcc -F"$repo_root/Artifacts/ModularFrameworks" -Xcc -I"$repo_root/Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders" -Xcc -I"$repo_root/Artifacts/ReactModularHeaders" -Xcc -I"$repo_root/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers" -Xcc -I"$repo_root/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react" -Xcc -F"\$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks" -Xcc -F"\$(SRCROOT)/Artifacts/ModularFrameworks" \$(inherited) -Xcc -Wno-quoted-include-in-framework-header -Xcc -Wno-non-modular-include-in-framework-module -Xcc -I"\$(BUILT_PRODUCTS_DIR)/React.framework/Headers" -Xcc -I"\$(BUILT_PRODUCTS_DIR)/ExpoModulesCore.framework/Headers"
+          OTHER_SWIFT_FLAGS = -Xcc -F"$repo_root/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks" -Xcc -F"$repo_root/Artifacts/ModularFrameworks" -Xcc -I"$repo_root/Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders" -Xcc -I"$repo_root/Artifacts/ReactModularHeaders" -Xcc -I"$repo_root/Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers" -Xcc -I"$repo_root/Artifacts/ReactNativeDependencies.xcframework/Headers" -Xcc -I"$repo_root/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers" -Xcc -I"$repo_root/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react" -Xcc -F"\$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks" -Xcc -F"\$(SRCROOT)/Artifacts/ModularFrameworks" \$(inherited) -Xcc -Wno-quoted-include-in-framework-header -Xcc -Wno-non-modular-include-in-framework-module -Xcc -I"\$(BUILT_PRODUCTS_DIR)/React.framework/Headers" -Xcc -I"\$(BUILT_PRODUCTS_DIR)/ExpoModulesCore.framework/Headers"
           EOF
 
             echo
@@ -987,11 +993,15 @@ jobs:
       - name: Stage modular headers into device Swift Package checkouts
         run: |
           set -euxo pipefail
+          src_deps="Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers"
           for slice in ios-arm64 ios-arm64_x86_64-simulator; do
             dest="Packages/HanlinExpoRuntime/Artifacts/React.xcframework/$slice/React.framework/Headers"
             src_rn="Packages/HanlinExpoRuntime/Artifacts/ReactNativeHeaders.xcframework/$slice/Headers"
             if [ -d "$dest" ] && [ -d "$src_rn" ]; then
               cp -R "$src_rn"/* "$dest/" || true
+            fi
+            if [ -d "$dest" ] && [ -d "$src_deps" ]; then
+              cp -R "$src_deps"/* "$dest/" || true
             fi
             if [ -d "$dest" ] && [ -d "Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers" ]; then
               cp -R Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/* "$dest/" || true
@@ -1005,12 +1015,19 @@ jobs:
                 cp -R Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks "$checkout/Artifacts/" || true
                 cp -R Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders "$checkout/Packages/HanlinExpoRuntime/Artifacts/" || true
                 cp -R Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders "$checkout/Artifacts/" || true
+                if [ -d "Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework" ]; then
+                  cp -R Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework "$checkout/Packages/HanlinExpoRuntime/Artifacts/" || true
+                  cp -R Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework "$checkout/Artifacts/" || true
+                fi
                 for slice in ios-arm64 ios-arm64_x86_64-simulator; do
                   for base in "$checkout/Packages/HanlinExpoRuntime/Artifacts" "$checkout/Artifacts"; do
                     ck_dest="$base/React.xcframework/$slice/React.framework/Headers"
                     src_rn="Packages/HanlinExpoRuntime/Artifacts/ReactNativeHeaders.xcframework/$slice/Headers"
                     if [ -d "$ck_dest" ] && [ -d "$src_rn" ]; then
                       cp -R "$src_rn"/* "$ck_dest/" || true
+                    fi
+                    if [ -d "$ck_dest" ] && [ -d "$src_deps" ]; then
+                      cp -R "$src_deps"/* "$ck_dest/" || true
                     fi
                     if [ -d "$ck_dest" ] && [ -d "Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers" ]; then
                       cp -R Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/* "$ck_dest/" || true
@@ -1021,7 +1038,7 @@ jobs:
             done
           fi
 
-          # Crucial: Delete any stray module.modulemap copied into Headers folders to prevent module redefinition errors
+          # Clean any stray module.modulemap copied into Headers folders
           find Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks -name "module.modulemap" -path "*/Headers/*" -delete 2>/dev/null || true
           find Packages/HanlinExpoRuntime/Artifacts/React.xcframework -name "module.modulemap" -path "*/Headers/*" -delete 2>/dev/null || true
           if [ -d "$CLONED_PACKAGES_PATH/checkouts" ]; then
@@ -1125,12 +1142,13 @@ jobs:
               -skipMacroValidation \
               SWIFT_ENABLE_EXPLICIT_MODULES=NO \
               FRAMEWORK_SEARCH_PATHS="$repo_root/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks $repo_root/Artifacts/ModularFrameworks \$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks \$(SRCROOT)/Artifacts/ModularFrameworks \$(inherited)" \
-              HEADER_SEARCH_PATHS="$repo_root/Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders $repo_root/Artifacts/ReactModularHeaders $repo_root/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers $repo_root/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react \$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders \$(SRCROOT)/Artifacts/ReactModularHeaders \$(inherited) \$(BUILT_PRODUCTS_DIR)/React.framework/Headers \$(BUILT_PRODUCTS_DIR)/ExpoModulesCore.framework/Headers \$(BUILT_PRODUCTS_DIR)/Python.framework/Headers" \
+              HEADER_SEARCH_PATHS="$repo_root/Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders $repo_root/Artifacts/ReactModularHeaders $repo_root/Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers $repo_root/Artifacts/ReactNativeDependencies.xcframework/Headers $repo_root/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers $repo_root/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react $repo_root/Packages/HanlinExpoRuntime/Artifacts/ReactNativeHeaders.xcframework/ios-arm64/Headers \$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders \$(SRCROOT)/Artifacts/ReactModularHeaders \$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers \$(SRCROOT)/Artifacts/ReactNativeDependencies.xcframework/Headers \$(inherited) \$(BUILT_PRODUCTS_DIR)/React.framework/Headers \$(BUILT_PRODUCTS_DIR)/ExpoModulesCore.framework/Headers \$(BUILT_PRODUCTS_DIR)/Python.framework/Headers" \
               CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES=YES \
               CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER=NO \
               WARNING_CFLAGS='$(inherited) -Wno-quoted-include-in-framework-header -Wno-non-modular-include-in-framework-module' \
               OTHER_CFLAGS='$(inherited) -Wno-quoted-include-in-framework-header -Wno-non-modular-include-in-framework-module' \
-              OTHER_SWIFT_FLAGS="-Xcc -F$repo_root/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks -Xcc -F$repo_root/Artifacts/ModularFrameworks -Xcc -I$repo_root/Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders -Xcc -I$repo_root/Artifacts/ReactModularHeaders -Xcc -I$repo_root/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers -Xcc -I$repo_root/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react -Xcc -F\$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks -Xcc -F\$(SRCROOT)/Artifacts/ModularFrameworks \$(inherited) -Xcc -Wno-quoted-include-in-framework-header -Xcc -Wno-non-modular-include-in-framework-module -Xcc -I\$(BUILT_PRODUCTS_DIR)/React.framework/Headers -Xcc -I\$(BUILT_PRODUCTS_DIR)/React.framework/Headers/react -Xcc -I\$(BUILT_PRODUCTS_DIR)/ExpoModulesCore.framework/Headers" \
+              OTHER_SWIFT_FLAGS="-Xcc -F$repo_root/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks -Xcc -F$repo_root/Artifacts/ModularFrameworks -Xcc -I$repo_root/Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders -Xcc -I$repo_root/Artifacts/ReactModularHeaders -Xcc -I$repo_root/Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers -Xcc -I$repo_root/Artifacts/ReactNativeDependencies.xcframework/Headers -Xcc -I$repo_root/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers -Xcc -I$repo_root/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react -Xcc -I$repo_root/Packages/HanlinExpoRuntime/Artifacts/ReactNativeHeaders.xcframework/ios-arm64/Headers -Xcc -F\$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks -Xcc -F\$(SRCROOT)/Artifacts/ModularFrameworks -Xcc -I\$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers -Xcc -I\$(SRCROOT)/Artifacts/ReactNativeDependencies.xcframework/Headers \$(inherited) -Xcc -Wno-quoted-include-in-framework-header -Xcc -Wno-non-modular-include-in-framework-module -Xcc -I\$(BUILT_PRODUCTS_DIR)/React.framework/Headers -Xcc -I\$(BUILT_PRODUCTS_DIR)/React.framework/Headers/react -Xcc -I\$(BUILT_PRODUCTS_DIR)/ExpoModulesCore.framework/Headers -cxx-interoperability-mode=default" \
+              SWIFT_OBJC_INTEROP_MODE=objcxx \
               IPHONEOS_DEPLOYMENT_TARGET="$IOS_DEPLOYMENT_TARGET" \
               CODE_SIGNING_ALLOWED=NO \
               CODE_SIGNING_REQUIRED=NO \
@@ -1168,12 +1186,13 @@ jobs:
             -skipMacroValidation \
             SWIFT_ENABLE_EXPLICIT_MODULES=NO \
             FRAMEWORK_SEARCH_PATHS="$repo_root/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks $repo_root/Artifacts/ModularFrameworks \$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks \$(SRCROOT)/Artifacts/ModularFrameworks \$(inherited)" \
-            HEADER_SEARCH_PATHS="$repo_root/Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders $repo_root/Artifacts/ReactModularHeaders $repo_root/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers $repo_root/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react \$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders \$(SRCROOT)/Artifacts/ReactModularHeaders \$(inherited) \$(BUILT_PRODUCTS_DIR)/React.framework/Headers \$(BUILT_PRODUCTS_DIR)/ExpoModulesCore.framework/Headers \$(BUILT_PRODUCTS_DIR)/Python.framework/Headers" \
+            HEADER_SEARCH_PATHS="$repo_root/Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders $repo_root/Artifacts/ReactModularHeaders $repo_root/Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers $repo_root/Artifacts/ReactNativeDependencies.xcframework/Headers $repo_root/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers $repo_root/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react $repo_root/Packages/HanlinExpoRuntime/Artifacts/ReactNativeHeaders.xcframework/ios-arm64/Headers \$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders \$(SRCROOT)/Artifacts/ReactModularHeaders \$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers \$(SRCROOT)/Artifacts/ReactNativeDependencies.xcframework/Headers \$(inherited) \$(BUILT_PRODUCTS_DIR)/React.framework/Headers \$(BUILT_PRODUCTS_DIR)/ExpoModulesCore.framework/Headers \$(BUILT_PRODUCTS_DIR)/Python.framework/Headers" \
             CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES=YES \
             CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER=NO \
             WARNING_CFLAGS='$(inherited) -Wno-quoted-include-in-framework-header -Wno-non-modular-include-in-framework-module' \
             OTHER_CFLAGS='$(inherited) -Wno-quoted-include-in-framework-header -Wno-non-modular-include-in-framework-module' \
-            OTHER_SWIFT_FLAGS="-Xcc -F$repo_root/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks -Xcc -F$repo_root/Artifacts/ModularFrameworks -Xcc -I$repo_root/Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders -Xcc -I$repo_root/Artifacts/ReactModularHeaders -Xcc -I$repo_root/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers -Xcc -I$repo_root/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react -Xcc -F\$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks -Xcc -F\$(SRCROOT)/Artifacts/ModularFrameworks \$(inherited) -Xcc -Wno-quoted-include-in-framework-header -Xcc -Wno-non-modular-include-in-framework-module -Xcc -I\$(BUILT_PRODUCTS_DIR)/React.framework/Headers -Xcc -I\$(BUILT_PRODUCTS_DIR)/ExpoModulesCore.framework/Headers" \
+            OTHER_SWIFT_FLAGS="-Xcc -F$repo_root/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks -Xcc -F$repo_root/Artifacts/ModularFrameworks -Xcc -I$repo_root/Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders -Xcc -I$repo_root/Artifacts/ReactModularHeaders -Xcc -I$repo_root/Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers -Xcc -I$repo_root/Artifacts/ReactNativeDependencies.xcframework/Headers -Xcc -I$repo_root/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers -Xcc -I$repo_root/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react -Xcc -I$repo_root/Packages/HanlinExpoRuntime/Artifacts/ReactNativeHeaders.xcframework/ios-arm64/Headers -Xcc -F\$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks -Xcc -F\$(SRCROOT)/Artifacts/ModularFrameworks -Xcc -I\$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers -Xcc -I\$(SRCROOT)/Artifacts/ReactNativeDependencies.xcframework/Headers \$(inherited) -Xcc -Wno-quoted-include-in-framework-header -Xcc -Wno-non-modular-include-in-framework-module -Xcc -I\$(BUILT_PRODUCTS_DIR)/React.framework/Headers -Xcc -I\$(BUILT_PRODUCTS_DIR)/React.framework/Headers/react -Xcc -I\$(BUILT_PRODUCTS_DIR)/ExpoModulesCore.framework/Headers -cxx-interoperability-mode=default" \
+            SWIFT_OBJC_INTEROP_MODE=objcxx \
             IPHONEOS_DEPLOYMENT_TARGET="$IOS_DEPLOYMENT_TARGET" \
             CODE_SIGNING_ALLOWED=NO \
             CODE_SIGNING_REQUIRED=NO \
@@ -1440,7 +1459,7 @@ jobs:
     if: ${{ needs.plan-affected-validation.outputs.run_simulator_job == 'true' }}
     name: Launch full app on iPad Simulator
     runs-on: xcode-27
-    timeout-minutes: 90
+    timeout-minutes: 180
 
     env:
       PROJECT_PATH: AI_HLY.xcodeproj
@@ -1626,7 +1645,7 @@ jobs:
           SWIFT_OBJC_INTEROP_MODE = objcxx
           CLANG_CXX_LANGUAGE_STANDARD = gnu++20
           FRAMEWORK_SEARCH_PATHS = "$repo_root/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks" "$repo_root/Artifacts/ModularFrameworks" "\$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks" "\$(SRCROOT)/Artifacts/ModularFrameworks" \$(inherited)
-          HEADER_SEARCH_PATHS = "$repo_root/Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders" "$repo_root/Artifacts/ReactModularHeaders" "$repo_root/Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers" "$repo_root/Artifacts/ReactNativeDependencies.xcframework/Headers" "$repo_root/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers" "$repo_root/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react" "\$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders" "\$(SRCROOT)/Artifacts/ReactModularHeaders" \$(inherited) "\$(BUILT_PRODUCTS_DIR)/React.framework/Headers" "\$(BUILT_PRODUCTS_DIR)/react.framework/Headers" "\$(BUILT_PRODUCTS_DIR)/ExpoModulesCore.framework/Headers" "\$(BUILT_PRODUCTS_DIR)/Python.framework/Headers"
+          HEADER_SEARCH_PATHS = "$repo_root/Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders" "$repo_root/Artifacts/ReactModularHeaders" "$repo_root/Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers" "$repo_root/Artifacts/ReactNativeDependencies.xcframework/Headers" "$repo_root/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers" "$repo_root/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react" "\$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders" "\$(SRCROOT)/Artifacts/ReactModularHeaders" "\$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers" "\$(SRCROOT)/Artifacts/ReactNativeDependencies.xcframework/Headers" \$(inherited) "\$(BUILT_PRODUCTS_DIR)/React.framework/Headers" "\$(BUILT_PRODUCTS_DIR)/react.framework/Headers" "\$(BUILT_PRODUCTS_DIR)/ExpoModulesCore.framework/Headers" "\$(BUILT_PRODUCTS_DIR)/Python.framework/Headers"
           CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES
           CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = NO
           WARNING_CFLAGS = \$(inherited) -Wno-quoted-include-in-framework-header -Wno-non-modular-include-in-framework-module
@@ -1947,6 +1966,22 @@ jobs:
               fi
             done
           fi
+          rn_react_source="Packages/HanlinExpoRuntime/Artifacts/ReactNativeHeaders.xcframework/ios-arm64_x86_64-simulator/Headers/react"
+          if [ -d "$rn_react_source" ]; then
+            cp -R "$rn_react_source" "$build_products_fw/" || true
+            cp -R "$rn_react_source" "$pkg_products_fw/" || true
+          fi
+          rn_deps_source="Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers"
+          if [ -d "$rn_deps_source" ]; then
+            cp -R "$rn_deps_source/"* "$build_products_fw/" || true
+            cp -R "$rn_deps_source/"* "$pkg_products_fw/" || true
+          fi
+          modular_react="Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers"
+          if [ -d "$modular_react" ]; then
+            cp -R "$modular_react/"* "$build_products_fw/" || true
+            cp -R "$modular_react/"* "$pkg_products_fw/" || true
+          fi
+          rm -f "$build_products_fw/module.modulemap" "$pkg_products_fw/module.modulemap" 2>/dev/null || true
 
           started_at="$(date +%s)"
           repo_root="$PWD"
@@ -1965,12 +2000,13 @@ jobs:
             SWIFT_ENABLE_EXPLICIT_MODULES=NO \
             CLANG_CXX_LANGUAGE_STANDARD=gnu++20 \
             FRAMEWORK_SEARCH_PATHS="$repo_root/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks $repo_root/Artifacts/ModularFrameworks \$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks \$(SRCROOT)/Artifacts/ModularFrameworks \$(inherited)" \
-            HEADER_SEARCH_PATHS="$repo_root/Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders $repo_root/Artifacts/ReactModularHeaders $repo_root/Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers $repo_root/Artifacts/ReactNativeDependencies.xcframework/Headers $repo_root/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers $repo_root/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react \$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders \$(SRCROOT)/Artifacts/ReactModularHeaders \$(inherited) \$(BUILT_PRODUCTS_DIR)/React.framework/Headers \$(BUILT_PRODUCTS_DIR)/react.framework/Headers \$(BUILT_PRODUCTS_DIR)/ExpoModulesCore.framework/Headers \$(BUILT_PRODUCTS_DIR)/Python.framework/Headers" \
+            HEADER_SEARCH_PATHS="$repo_root/Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders $repo_root/Artifacts/ReactModularHeaders $repo_root/Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers $repo_root/Artifacts/ReactNativeDependencies.xcframework/Headers $repo_root/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers $repo_root/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react $repo_root/Packages/HanlinExpoRuntime/Artifacts/ReactNativeHeaders.xcframework/ios-arm64_x86_64-simulator/Headers \$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders \$(SRCROOT)/Artifacts/ReactModularHeaders \$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers \$(SRCROOT)/Artifacts/ReactNativeDependencies.xcframework/Headers \$(inherited) \$(BUILT_PRODUCTS_DIR)/React.framework/Headers \$(BUILT_PRODUCTS_DIR)/react.framework/Headers \$(BUILT_PRODUCTS_DIR)/ExpoModulesCore.framework/Headers \$(BUILT_PRODUCTS_DIR)/Python.framework/Headers" \
             CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES=YES \
             CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER=NO \
             WARNING_CFLAGS='$(inherited) -Wno-quoted-include-in-framework-header -Wno-non-modular-include-in-framework-module' \
             OTHER_CFLAGS='$(inherited) -Wno-quoted-include-in-framework-header -Wno-non-modular-include-in-framework-module' \
-            OTHER_SWIFT_FLAGS="-Xcc -F$repo_root/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks -Xcc -F$repo_root/Artifacts/ModularFrameworks -Xcc -I$repo_root/Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders -Xcc -I$repo_root/Artifacts/ReactModularHeaders -Xcc -I$repo_root/Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers -Xcc -I$repo_root/Artifacts/ReactNativeDependencies.xcframework/Headers -Xcc -I$repo_root/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers -Xcc -I$repo_root/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react -Xcc -F\$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks -Xcc -F\$(SRCROOT)/Artifacts/ModularFrameworks \$(inherited) -Xcc -Wno-quoted-include-in-framework-header -Xcc -Wno-non-modular-include-in-framework-module -Xcc -I\$(BUILT_PRODUCTS_DIR)/React.framework/Headers -Xcc -I\$(BUILT_PRODUCTS_DIR)/react.framework/Headers -Xcc -I\$(BUILT_PRODUCTS_DIR)/React.framework/Headers/react -Xcc -I\$(BUILT_PRODUCTS_DIR)/ExpoModulesCore.framework/Headers" \
+            OTHER_SWIFT_FLAGS="-Xcc -F$repo_root/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks -Xcc -F$repo_root/Artifacts/ModularFrameworks -Xcc -I$repo_root/Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders -Xcc -I$repo_root/Artifacts/ReactModularHeaders -Xcc -I$repo_root/Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers -Xcc -I$repo_root/Artifacts/ReactNativeDependencies.xcframework/Headers -Xcc -I$repo_root/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers -Xcc -I$repo_root/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react -Xcc -I$repo_root/Packages/HanlinExpoRuntime/Artifacts/ReactNativeHeaders.xcframework/ios-arm64_x86_64-simulator/Headers -Xcc -F\$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks -Xcc -F\$(SRCROOT)/Artifacts/ModularFrameworks -Xcc -I\$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers -Xcc -I\$(SRCROOT)/Artifacts/ReactNativeDependencies.xcframework/Headers \$(inherited) -Xcc -Wno-quoted-include-in-framework-header -Xcc -Wno-non-modular-include-in-framework-module -Xcc -I\$(BUILT_PRODUCTS_DIR)/React.framework/Headers -Xcc -I\$(BUILT_PRODUCTS_DIR)/react.framework/Headers -Xcc -I\$(BUILT_PRODUCTS_DIR)/React.framework/Headers/react -Xcc -I\$(BUILT_PRODUCTS_DIR)/ExpoModulesCore.framework/Headers -cxx-interoperability-mode=default" \
+            SWIFT_OBJC_INTEROP_MODE=objcxx \
             ENABLE_TESTABILITY=YES \
             IPHONEOS_DEPLOYMENT_TARGET="$IOS_DEPLOYMENT_TARGET" \
             ARCHS=arm64 \
@@ -2031,12 +2067,13 @@ jobs:
             SWIFT_ENABLE_EXPLICIT_MODULES=NO \
             CLANG_CXX_LANGUAGE_STANDARD=gnu++20 \
             FRAMEWORK_SEARCH_PATHS="$repo_root/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks $repo_root/Artifacts/ModularFrameworks \$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks \$(SRCROOT)/Artifacts/ModularFrameworks \$(inherited)" \
-            HEADER_SEARCH_PATHS="$repo_root/Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders $repo_root/Artifacts/ReactModularHeaders $repo_root/Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers $repo_root/Artifacts/ReactNativeDependencies.xcframework/Headers $repo_root/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers $repo_root/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react \$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders \$(SRCROOT)/Artifacts/ReactModularHeaders \$(inherited) \$(BUILT_PRODUCTS_DIR)/React.framework/Headers \$(BUILT_PRODUCTS_DIR)/react.framework/Headers \$(BUILT_PRODUCTS_DIR)/ExpoModulesCore.framework/Headers \$(BUILT_PRODUCTS_DIR)/Python.framework/Headers" \
+            HEADER_SEARCH_PATHS="$repo_root/Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders $repo_root/Artifacts/ReactModularHeaders $repo_root/Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers $repo_root/Artifacts/ReactNativeDependencies.xcframework/Headers $repo_root/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers $repo_root/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react $repo_root/Packages/HanlinExpoRuntime/Artifacts/ReactNativeHeaders.xcframework/ios-arm64_x86_64-simulator/Headers \$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders \$(SRCROOT)/Artifacts/ReactModularHeaders \$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers \$(SRCROOT)/Artifacts/ReactNativeDependencies.xcframework/Headers \$(inherited) \$(BUILT_PRODUCTS_DIR)/React.framework/Headers \$(BUILT_PRODUCTS_DIR)/react.framework/Headers \$(BUILT_PRODUCTS_DIR)/ExpoModulesCore.framework/Headers \$(BUILT_PRODUCTS_DIR)/Python.framework/Headers" \
             CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES=YES \
             CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER=NO \
             WARNING_CFLAGS='$(inherited) -Wno-quoted-include-in-framework-header -Wno-non-modular-include-in-framework-module' \
             OTHER_CFLAGS='$(inherited) -Wno-quoted-include-in-framework-header -Wno-non-modular-include-in-framework-module' \
-            OTHER_SWIFT_FLAGS="-Xcc -F$repo_root/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks -Xcc -F$repo_root/Artifacts/ModularFrameworks -Xcc -I$repo_root/Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders -Xcc -I$repo_root/Artifacts/ReactModularHeaders -Xcc -I$repo_root/Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers -Xcc -I$repo_root/Artifacts/ReactNativeDependencies.xcframework/Headers -Xcc -I$repo_root/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers -Xcc -I$repo_root/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react -Xcc -F\$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks -Xcc -F\$(SRCROOT)/Artifacts/ModularFrameworks \$(inherited) -Xcc -Wno-quoted-include-in-framework-header -Xcc -Wno-non-modular-include-in-framework-module -Xcc -I\$(BUILT_PRODUCTS_DIR)/React.framework/Headers -Xcc -I\$(BUILT_PRODUCTS_DIR)/react.framework/Headers -Xcc -I\$(BUILT_PRODUCTS_DIR)/React.framework/Headers/react -Xcc -I\$(BUILT_PRODUCTS_DIR)/ExpoModulesCore.framework/Headers" \
+            OTHER_SWIFT_FLAGS="-Xcc -F$repo_root/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks -Xcc -F$repo_root/Artifacts/ModularFrameworks -Xcc -I$repo_root/Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders -Xcc -I$repo_root/Artifacts/ReactModularHeaders -Xcc -I$repo_root/Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers -Xcc -I$repo_root/Artifacts/ReactNativeDependencies.xcframework/Headers -Xcc -I$repo_root/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers -Xcc -I$repo_root/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react -Xcc -I$repo_root/Packages/HanlinExpoRuntime/Artifacts/ReactNativeHeaders.xcframework/ios-arm64_x86_64-simulator/Headers -Xcc -F\$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks -Xcc -F\$(SRCROOT)/Artifacts/ModularFrameworks -Xcc -I\$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers -Xcc -I\$(SRCROOT)/Artifacts/ReactNativeDependencies.xcframework/Headers \$(inherited) -Xcc -Wno-quoted-include-in-framework-header -Xcc -Wno-non-modular-include-in-framework-module -Xcc -I\$(BUILT_PRODUCTS_DIR)/React.framework/Headers -Xcc -I\$(BUILT_PRODUCTS_DIR)/react.framework/Headers -Xcc -I\$(BUILT_PRODUCTS_DIR)/React.framework/Headers/react -Xcc -I\$(BUILT_PRODUCTS_DIR)/ExpoModulesCore.framework/Headers -cxx-interoperability-mode=default" \
+            SWIFT_OBJC_INTEROP_MODE=objcxx \
             ENABLE_TESTABILITY=YES \
             IPHONEOS_DEPLOYMENT_TARGET="$IOS_DEPLOYMENT_TARGET" \
             ARCHS=arm64 \
