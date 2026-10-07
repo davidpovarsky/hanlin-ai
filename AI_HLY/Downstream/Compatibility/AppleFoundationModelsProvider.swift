@@ -1,4 +1,7 @@
 import Foundation
+#if canImport(FoundationModels)
+import FoundationModels
+#endif
 
 /// Errors specific to Apple Foundation Models local provider execution.
 public enum AppleFoundationModelError: LocalizedError, Sendable {
@@ -50,11 +53,12 @@ public struct AppleFoundationModelCapability: Sendable {
         }
         #if canImport(FoundationModels)
         if #available(iOS 27.0, macOS 26.0, *) {
+            let systemAvailable = SystemLanguageModel.isAvailable
             return AppleFoundationModelCapability(
-                isAvailable: false,
+                isAvailable: systemAvailable,
                 supportsMultimodal: false,
                 modelIdentifier: "apple.system.language-model",
-                unavailabilityReason: "Foundation Models system weights are not preloaded on this host."
+                unavailabilityReason: systemAvailable ? nil : "SystemLanguageModel is present in SDK but on-device model weights are not loaded or device hardware is incompatible."
             )
         }
         #endif
@@ -75,6 +79,34 @@ public protocol AppleFoundationModelSessionBackend: Sendable {
         onDelta: @escaping @Sendable (String) -> Bool
     ) async throws
 }
+
+#if canImport(FoundationModels)
+/// Official production Apple Foundation Models backend executing through SystemLanguageModel and LanguageModelSession.
+@available(iOS 27.0, macOS 26.0, *)
+public final class ProductionFoundationModelSessionBackend: AppleFoundationModelSessionBackend, @unchecked Sendable {
+    public init() {}
+
+    public func generate(
+        prompt: String,
+        images: [Data],
+        onDelta: @escaping @Sendable (String) -> Bool
+    ) async throws {
+        guard SystemLanguageModel.isAvailable else {
+            throw AppleFoundationModelError.unavailable("SystemLanguageModel is not ready or weights are not loaded on this device.")
+        }
+        let model = SystemLanguageModel.default
+        let session = LanguageModelSession(model: model)
+        let stream = session.stream(prompt)
+        for try await delta in stream {
+            try Task.checkCancellation()
+            let shouldContinue = onDelta(delta)
+            if !shouldContinue {
+                break
+            }
+        }
+    }
+}
+#endif
 
 /// Thin local provider adapter for Apple Foundation Models feeding Hanlin's conversation
 /// and canonical tool architecture without creating a parallel tool loop.
@@ -110,6 +142,14 @@ public final class AppleFoundationModelsProvider: Sendable {
             try await backend.generate(prompt: prompt, images: images, onDelta: onDelta)
             return
         }
+
+        #if canImport(FoundationModels)
+        if #available(iOS 27.0, macOS 26.0, *) {
+            let productionBackend = ProductionFoundationModelSessionBackend()
+            try await productionBackend.generate(prompt: prompt, images: images, onDelta: onDelta)
+            return
+        }
+        #endif
 
         throw AppleFoundationModelError.unavailable("On-device model weights not loaded on this host.")
     }
