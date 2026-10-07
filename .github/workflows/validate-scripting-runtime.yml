@@ -10,6 +10,7 @@ on:
         type: boolean
 
 permissions:
+  actions: read
   contents: read
 
 jobs:
@@ -22,6 +23,14 @@ jobs:
       PACKAGE_PATH: Packages/HanlinPlatform
 
     steps:
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Select newest stable Xcode 26
         id: toolchain
         shell: bash
@@ -38,17 +47,41 @@ jobs:
           xcodebuild -version
           swift --version
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Check out exact validation commit
         uses: actions/checkout@v4
         with:
           clean: true
           fetch-depth: 1
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Set up pinned Node
         uses: actions/setup-node@v4
         with:
           node-version: 22.17.0
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Hash isolated runtime inputs
         id: runtime-inputs
         shell: bash
@@ -68,6 +101,15 @@ jobs:
           } | sort -z | xargs -0 shasum -a 256 | shasum -a 256 | awk '{print $1}')"
           echo "source-hash=$source_hash" >> "$GITHUB_OUTPUT"
 
+      - name: Live Activity · refresh
+        if: ${{ !inputs.force_clean_build }}
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Restore isolated SwiftPM compiler cache
         if: ${{ !inputs.force_clean_build }}
         uses: actions/cache@v4
@@ -77,6 +119,14 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-xcode-${{ steps.toolchain.outputs.build }}-scripting-v1-
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Verify generated runtime metadata
         shell: bash
         run: |
@@ -87,14 +137,38 @@ jobs:
           node Scripts/ScriptingReference/verify-compatibility-classification.mjs
           node Scripts/ScriptingReference/verify-user-provided-projects.mjs
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Test JavaScriptCore bootstrap semantics
         shell: bash
         run: node --test Scripts/ScriptingReference/Tests/*.test.mjs
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Resolve isolated package dependencies
         shell: bash
         run: swift package --package-path "$PACKAGE_PATH" resolve
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Compile runtime and extension renderers only
         shell: bash
         run: |
@@ -102,6 +176,14 @@ jobs:
           swift build --package-path "$PACKAGE_PATH" --target HanlinScriptingApplicationRuntime
           swift build --package-path "$PACKAGE_PATH" --target HanlinScriptExtensions
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Execute isolated runtime tests
         shell: bash
         run: >-
