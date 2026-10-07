@@ -1,7 +1,4 @@
 import Foundation
-#if canImport(CoreAI)
-import CoreAI
-#endif
 
 /// Errors specific to Core AI on-device model execution.
 public enum CoreAIModelError: LocalizedError, Sendable {
@@ -9,6 +6,7 @@ public enum CoreAIModelError: LocalizedError, Sendable {
     case unsupportedModelFormat(String)
     case specializationFailed(String)
     case unavailable(String)
+    case blockedDependency(String)
     case blockedInputModelFixture(String)
     case cancelled
 
@@ -22,6 +20,8 @@ public enum CoreAIModelError: LocalizedError, Sendable {
             return "Core AI model specialization failed: \(reason)"
         case .unavailable(let reason):
             return "Core AI runtime unavailable: \(reason)"
+        case .blockedDependency(let reason):
+            return "Core AI dependency blocked: \(reason)"
         case .blockedInputModelFixture(let reason):
             return "Core AI input model fixture unavailable: \(reason)"
         case .cancelled:
@@ -54,28 +54,6 @@ public protocol CoreAIModelSessionBackend: Sendable {
         onDelta: @escaping @Sendable (String) -> Bool
     ) async throws
 }
-
-#if canImport(CoreAI)
-/// Production Core AI session backend executing on-device specialized .aimodel packages.
-@available(iOS 27.0, macOS 26.0, *)
-public final class ProductionCoreAIModelSessionBackend: CoreAIModelSessionBackend, @unchecked Sendable {
-    public init() {}
-
-    public func generate(
-        descriptor: CoreAIModelDescriptor,
-        prompt: String,
-        onDelta: @escaping @Sendable (String) -> Bool
-    ) async throws {
-        guard descriptor.isSpecialized else {
-            throw CoreAIModelError.specializationFailed("Model must be specialized before generation.")
-        }
-        guard FileManager.default.fileExists(atPath: descriptor.modelPath.path) else {
-            throw CoreAIModelError.blockedInputModelFixture("Model asset at '\(descriptor.modelPath.path)' is missing.")
-        }
-        throw CoreAIModelError.unavailable("Core AI execution requires iOS 27 device with supported neural engine.")
-    }
-}
-#endif
 
 /// Provider adapter for Apple Core AI (.aimodel) runtime.
 @MainActor
@@ -110,11 +88,10 @@ public final class CoreAILanguageModelProvider: Sendable {
 
         try Task.checkCancellation()
 
-        return CoreAIModelDescriptor(
-            modelPath: modelURL,
-            modelName: modelURL.deletingPathExtension().lastPathComponent,
-            format: "aimodel",
-            isSpecialized: true
+        // Official Core AI integration requires the 'apple/coreai-models' Swift package dependency.
+        // When unpinned, truthfully report BLOCKED_DEPENDENCY.
+        throw CoreAIModelError.blockedDependency(
+            "Core AI integration is blocked: official 'apple/coreai-models' Swift package dependency is not pinned in this project closure (COREAI-01 / R46)."
         )
     }
 
@@ -136,14 +113,8 @@ public final class CoreAILanguageModelProvider: Sendable {
             return
         }
 
-        #if canImport(CoreAI)
-        if #available(iOS 27.0, macOS 26.0, *) {
-            let prod = ProductionCoreAIModelSessionBackend()
-            try await prod.generate(descriptor: descriptor, prompt: prompt, onDelta: onDelta)
-            return
-        }
-        #endif
-
-        throw CoreAIModelError.unavailable("Core AI execution requires iOS 27 device with supported neural engine.")
+        throw CoreAIModelError.blockedDependency(
+            "Core AI execution is blocked: official 'apple/coreai-models' Swift package dependency is not pinned in this project closure (COREAI-01 / R46)."
+        )
     }
 }

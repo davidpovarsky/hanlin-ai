@@ -189,24 +189,20 @@ struct AppleLocalProvidersTests {
         }
     }
 
-    @Test("CoreAI provider specializes valid container and throws unavailable on simulator generation")
-    func testCoreAIGenerateThrowsUnavailable() async throws {
+    @Test("CoreAI provider requires official dependency and reports blockedDependency on valid container")
+    func testCoreAIGenerateThrowsBlockedDependency() async throws {
         let provider = await CoreAILanguageModelProvider.shared
         let tempDir = FileManager.default.temporaryDirectory
         let validModel = tempDir.appending(path: "valid_\(UUID().uuidString).aimodel")
         try Data("mock-coreai-weights".utf8).write(to: validModel)
         defer { try? FileManager.default.removeItem(at: validModel) }
 
-        let descriptor = try await provider.loadAndSpecialize(modelURL: validModel)
-        #expect(descriptor.isSpecialized)
-        #expect(descriptor.format == "aimodel")
-
         do {
-            try await provider.generate(descriptor: descriptor, prompt: "Hello CoreAI") { _ in true }
-            Issue.record("Expected unavailable error on host")
+            _ = try await provider.loadAndSpecialize(modelURL: validModel)
+            Issue.record("Expected blockedDependency error on host")
         } catch let error as CoreAIModelError {
             switch error {
-            case .unavailable:
+            case .blockedDependency:
                 #expect(true)
             default:
                 Issue.record("Unexpected error: \(error)")
