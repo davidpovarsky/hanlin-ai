@@ -157,6 +157,7 @@ struct MasterScenarioSemanticAcceptanceTests {
     }
 
     @Test("ZIP-07: Skill import with LICENSE, assets/data.bin, sample.xlsx, source.swift, module.wasm installs without unsupportedFileType error and all bytes are accessible")
+    @MainActor
     func zip07SkillImportPreservesAllAssetFilesByteForByte() throws {
         let tempDir = FileManager.default.temporaryDirectory.appending(path: "zip07_\(UUID().uuidString)")
         try FileManager.default.createDirectory(at: tempDir, withIntermediateDirectories: true)
@@ -191,7 +192,10 @@ struct MasterScenarioSemanticAcceptanceTests {
         let descriptor = try importer.install(staged: staged)
         defer { SkillStore.shared.deleteCustomSkill(skillID: descriptor.id) }
 
-        let installedDir = SkillStore.shared.customSkillDirectory(skillID: descriptor.id)
+        guard let installedDir = SkillStore.shared.directoryURL(for: descriptor.id) else {
+            Issue.record("Installed directory not found for skill: \(descriptor.id.rawValue)")
+            return
+        }
         #expect(try String(contentsOf: installedDir.appending(path: "LICENSE"), encoding: .utf8) == license)
         #expect(try Data(contentsOf: installedDir.appending(path: "assets/data.bin")) == dataBin)
         #expect(try Data(contentsOf: installedDir.appending(path: "sample.xlsx")) == sampleXLSX)
