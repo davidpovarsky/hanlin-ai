@@ -329,12 +329,19 @@ struct SkillStoreAndImportTests {
         ]
         #expect(!policy.inspectSkillArchive(entries: traversalEntries, centralDirectoryEntryCount: 2, archiveBytes: 50).isInstallable)
 
-        // 2. Symlinks
-        let symlinkEntries = [
+        // 2. Escaping symlinks / parent traversal (ZIP-21)
+        let escapingSymlinkEntries = [
             HanlinArchiveEntryMetadata(path: "SKILL.md", kind: .file, compressedBytes: 10, uncompressedBytes: 20),
-            HanlinArchiveEntryMetadata(path: "symlink.txt", kind: .symbolicLink, compressedBytes: 10, uncompressedBytes: 20)
+            HanlinArchiveEntryMetadata(path: "../escaped_symlink.txt", kind: .symbolicLink, compressedBytes: 10, uncompressedBytes: 20)
         ]
-        #expect(!policy.inspectSkillArchive(entries: symlinkEntries, centralDirectoryEntryCount: 2, archiveBytes: 50).isInstallable)
+        #expect(!policy.inspectSkillArchive(entries: escapingSymlinkEntries, centralDirectoryEntryCount: 2, archiveBytes: 50).isInstallable)
+
+        // Valid internal symlinks are permitted without blanket failure (ZIP-12)
+        let validInternalSymlinkEntries = [
+            HanlinArchiveEntryMetadata(path: "SKILL.md", kind: .file, compressedBytes: 10, uncompressedBytes: 20),
+            HanlinArchiveEntryMetadata(path: "resources/internal_link.txt", kind: .symbolicLink, compressedBytes: 10, uncompressedBytes: 20)
+        ]
+        #expect(policy.inspectSkillArchive(entries: validInternalSymlinkEntries, centralDirectoryEntryCount: 2, archiveBytes: 50).isInstallable)
 
         // 3. Absolute path / drive prefix
         let driveEntries = [

@@ -283,6 +283,7 @@ public final class SkillStore {
         let backupDir = skillsDirectoryURL.appendingPathComponent(".backup-\(id.rawValue)-\(UUID().uuidString)", isDirectory: true)
 
         let hadExisting = fileManager.fileExists(atPath: targetDir.path)
+        let previousMeta = cachedState.metadataBySkillID[id.rawValue]
         if hadExisting {
             try fileManager.moveItem(at: targetDir, to: backupDir)
         }
@@ -326,6 +327,9 @@ public final class SkillStore {
             if hadExisting && fileManager.fileExists(atPath: backupDir.path) {
                 try? fileManager.moveItem(at: backupDir, to: targetDir)
             }
+            cachedState.metadataBySkillID[id.rawValue] = previousMeta
+            saveState()
+            HanlinSkillCatalog.shared.refreshFromStore()
             throw error
         }
     }
@@ -451,7 +455,7 @@ public final class SkillStore {
 
         return try? HanlinSkillDescriptor(
             id: skillID,
-            title: parsed.name,
+            title: parsed.displayTitle,
             summary: parsed.description,
             instructions: .inline(parsed.body),
             keywords: keywords,

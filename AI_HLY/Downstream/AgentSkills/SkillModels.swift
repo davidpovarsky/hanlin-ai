@@ -99,11 +99,7 @@ public struct HanlinSkillMetadata: Codable, Hashable, Sendable {
             if let d = df.date(from: str) { return d }
         }
         if let dbl = try? container.decodeIfPresent(Double.self, forKey: key) {
-            if dbl > 100_000_000 {
-                return Date(timeIntervalSince1970: dbl)
-            } else {
-                return Date(timeIntervalSinceReferenceDate: dbl)
-            }
+            return Date(timeIntervalSinceReferenceDate: dbl)
         }
         if let date = try? container.decodeIfPresent(Date.self, forKey: key) {
             return date
@@ -129,11 +125,7 @@ public struct HanlinSkillMetadata: Codable, Hashable, Sendable {
                 if let d = df.date(from: s) { return d }
             }
             if let dbl = try? c.decode(Double.self) {
-                if dbl > 100_000_000 {
-                    return Date(timeIntervalSince1970: dbl)
-                } else {
-                    return Date(timeIntervalSinceReferenceDate: dbl)
-                }
+                return Date(timeIntervalSinceReferenceDate: dbl)
             }
             return Date()
         }
@@ -213,9 +205,31 @@ public struct StoredSkillRecord: Identifiable, Sendable {
 public enum SkillMarkdownParser {
     public struct ParsedSkillMarkdown: Sendable {
         public let name: String
+        public let title: String?
         public let description: String
         public let body: String
         public let rawFrontmatter: [String: String]
+
+        public var displayTitle: String {
+            if let title = title?.trimmingCharacters(in: .whitespacesAndNewlines), !title.isEmpty {
+                return title
+            }
+            return name
+        }
+
+        public init(
+            name: String,
+            title: String? = nil,
+            description: String,
+            body: String,
+            rawFrontmatter: [String: String]
+        ) {
+            self.name = name
+            self.title = title
+            self.description = description
+            self.body = body
+            self.rawFrontmatter = rawFrontmatter
+        }
     }
 
     public enum ParseError: Error, LocalizedError, Hashable, Sendable {
@@ -314,6 +328,8 @@ public enum SkillMarkdownParser {
         guard let name = frontmatter["name"], !name.isEmpty else {
             throw ParseError.missingRequiredField("name")
         }
+        let rawTitle = frontmatter["title"]?.trimmingCharacters(in: .whitespacesAndNewlines)
+        let title = (rawTitle?.isEmpty == false) ? rawTitle : nil
         let desc = frontmatter["description"] ?? ""
 
         let bodyStartIndex = closeIdx + 1
@@ -326,6 +342,7 @@ public enum SkillMarkdownParser {
 
         return ParsedSkillMarkdown(
             name: name,
+            title: title,
             description: desc,
             body: body,
             rawFrontmatter: frontmatter
