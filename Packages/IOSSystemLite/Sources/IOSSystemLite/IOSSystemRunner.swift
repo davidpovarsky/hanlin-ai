@@ -1,6 +1,5 @@
 import Foundation
 import Synchronization
-import ios_system
 import IOSSystemStreamBridge
 
 public struct IOSSystemExecution: Sendable {
