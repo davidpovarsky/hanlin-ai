@@ -53,7 +53,7 @@ public struct AppleFoundationModelCapability: Sendable {
         }
         #if canImport(FoundationModels)
         if #available(iOS 27.0, macOS 26.0, *) {
-            let systemAvailable = SystemLanguageModel.isAvailable
+            let systemAvailable = SystemLanguageModel.default.isAvailable
             return AppleFoundationModelCapability(
                 isAvailable: systemAvailable,
                 supportsMultimodal: false,
@@ -91,12 +91,11 @@ public final class ProductionFoundationModelSessionBackend: AppleFoundationModel
         images: [Data],
         onDelta: @escaping @Sendable (String) -> Bool
     ) async throws {
-        guard SystemLanguageModel.isAvailable else {
+        guard SystemLanguageModel.default.isAvailable else {
             throw AppleFoundationModelError.unavailable("SystemLanguageModel is not ready or weights are not loaded on this device.")
         }
-        let model = SystemLanguageModel.default
-        let session = LanguageModelSession(model: model)
-        let stream = session.stream(prompt)
+        let session = LanguageModelSession()
+        let stream = session.streamResponse(to: prompt)
         for try await delta in stream {
             try Task.checkCancellation()
             let shouldContinue = onDelta(delta)
