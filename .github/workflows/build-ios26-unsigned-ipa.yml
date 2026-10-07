@@ -13,6 +13,7 @@ on:
       - main
 
 permissions:
+  actions: read
   contents: read
 
 jobs:
@@ -45,9 +46,25 @@ jobs:
       IOS_DEPLOYMENT_TARGET: "26.0"
 
     steps:
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Prepare log folders
         run: |
           set -euxo pipefail
@@ -55,6 +72,14 @@ jobs:
           mkdir -p build
           echo "Log folder prepared at: $LOG_DIR" | tee "$LOG_DIR/00-prepare.log"
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Show runner and Xcode environment
         run: |
           set -euxo pipefail
@@ -94,6 +119,14 @@ jobs:
             find . -maxdepth 3 -type f | sort | sed -n '1,400{s#^\./##;p;}'
           } 2>&1 | tee "$LOG_DIR/01-environment.log"
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Select Xcode 26
         run: |
           set -euxo pipefail
@@ -152,6 +185,14 @@ jobs:
             }
           } 2>&1 | tee "$LOG_DIR/02-select-xcode26.log"
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Create CI Config.xcconfig
         run: |
           set -euxo pipefail
@@ -173,6 +214,14 @@ jobs:
             cat Config.xcconfig
           } 2>&1 | tee "$LOG_DIR/03-create-config-xcconfig.log"
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Prepare verified embedded RuntimeCore
         env:
           GH_TOKEN: ${{ github.token }}
@@ -181,23 +230,55 @@ jobs:
           bash Scripts/Runtime/prepare-runtime-core.sh 2>&1 | tee "$LOG_DIR/04-prepare-runtime-core.log"
           grep -Fq "Prepared verified RuntimeCore 7d967563db0809a4efa0f07b75d6b5928379a3b6f3aafb886899a79f59512a93" "$LOG_DIR/04-prepare-runtime-core.log"
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Package current RuntimeCore host resources
         run: |
           set -euxo pipefail
           bash Scripts/Runtime/prepare-runtime-host.sh 2>&1 | tee "$LOG_DIR/04-package-runtime-host.log"
           cp build/runtime-host/RuntimeHostResources.zip AI_HLY/RuntimeHostResources.zip
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Run RuntimeCore fast preflight
         run: |
           set -euxo pipefail
           bash Scripts/Runtime/preflight-runtime-core.sh 2>&1 | tee "$LOG_DIR/04-runtime-preflight.log"
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Run RuntimeCore link-closure regression tests
         run: |
           set -euxo pipefail
           node --test Scripts/Runtime/Tests/runtime-link-dependencies.test.mjs 2>&1 | tee "$LOG_DIR/04-runtime-link-tests.log"
           python3 -m unittest Scripts/Runtime/Tests/test_validate_app_dyld_closure.py -v 2>&1 | tee "$LOG_DIR/04-dyld-scanner-tests.log"
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Verify pinned application-link archives
         run: |
           set -euxo pipefail
@@ -213,6 +294,14 @@ jobs:
           test "$(swift package compute-checksum "$archive_root/libssh2-dynamic.xcframework.zip")" = "cacfe1789b197b727119f7e32f561eaf9acc27bf38cd19975b74fce107f868a6"
           test "$(swift package compute-checksum "$archive_root/openssl-dynamic.xcframework.zip")" = "329e8317cf9bee8e138da5d032330a7a1bd2473cf44c9c083cb2f0636abb8b80"
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Validate expected project files
         run: |
           set -euxo pipefail
@@ -245,6 +334,14 @@ jobs:
             find AI_HLY -maxdepth 3 -type f | sort | sed -n '1,200p'
           } 2>&1 | tee "$LOG_DIR/04-validate-project.log"
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Inspect Xcode project
         run: |
           set -euxo pipefail
@@ -268,6 +365,14 @@ jobs:
 
           } 2>&1 | tee "$LOG_DIR/05-inspect-project.log"
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Resolve Swift Package dependencies
         run: |
           set -euxo pipefail
@@ -291,6 +396,14 @@ jobs:
             echo "Swift Package dependency resolution completed."
           } 2>&1 | tee "$LOG_DIR/06-resolve-packages.log"
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Build unsigned iOS 26 app
         run: |
           set -euxo pipefail
@@ -331,6 +444,14 @@ jobs:
             echo "Build command completed."
           } 2>&1 | tee "$LOG_DIR/07-build-step-wrapper.log"
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Locate built app
         run: |
           set -euxo pipefail
@@ -427,6 +548,14 @@ jobs:
 
           } 2>&1 | tee "$LOG_DIR/08-locate-app.log"
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Package unsigned IPA
         run: |
           set -euxo pipefail
@@ -462,6 +591,14 @@ jobs:
             echo "Unsigned IPA packaged successfully."
           } 2>&1 | tee "$LOG_DIR/09-package-ipa.log"
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Validate packaged IPA dyld closure
         run: |
           set -euxo pipefail
@@ -490,6 +627,15 @@ jobs:
           stat -f %z "$IPA_NAME" | tee "$LOG_DIR/09-ipa-size-bytes.txt"
           shasum -a 256 "$IPA_NAME" | tee "$LOG_DIR/09-ipa-sha256.txt"
 
+      - name: Live Activity · refresh
+        if: always()
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Create diagnostic summary
         if: always()
         run: |
@@ -544,6 +690,14 @@ jobs:
 
           cat "$SUMMARY_FILE"
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Upload unsigned IPA artifact
         uses: actions/upload-artifact@v4
         with:
@@ -552,6 +706,15 @@ jobs:
           if-no-files-found: error
           retention-days: 14
 
+      - name: Live Activity · refresh
+        if: always()
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Upload build logs artifact
         if: always()
         uses: actions/upload-artifact@v4
@@ -578,9 +741,25 @@ jobs:
       IOS_DEPLOYMENT_TARGET: "26.0"
 
     steps:
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Prepare simulator logs and select stable Xcode 26
         run: |
           set -euxo pipefail
@@ -599,6 +778,14 @@ jobs:
           } 2>&1 | tee "$LOG_DIR/01-environment.log"
           xcodebuild -showsdks | grep -E 'iphonesimulator26|iOS Simulator 26'
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Create CI Config.xcconfig
         run: |
           set -euxo pipefail
@@ -610,6 +797,14 @@ jobs:
           HANLIN_OPEN_API_KEY =
           EOF
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Prepare verified embedded RuntimeCore
         env:
           GH_TOKEN: ${{ github.token }}
@@ -618,17 +813,41 @@ jobs:
           bash Scripts/Runtime/prepare-runtime-core.sh 2>&1 | tee "$LOG_DIR/02-prepare-runtime-core.log"
           grep -Fq "Prepared verified RuntimeCore 7d967563db0809a4efa0f07b75d6b5928379a3b6f3aafb886899a79f59512a93" "$LOG_DIR/02-prepare-runtime-core.log"
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Package current RuntimeCore host resources
         run: |
           set -euxo pipefail
           bash Scripts/Runtime/prepare-runtime-host.sh 2>&1 | tee "$LOG_DIR/03-package-runtime-host.log"
           cp build/runtime-host/RuntimeHostResources.zip AI_HLY/RuntimeHostResources.zip
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Run RuntimeCore preflight
         run: |
           set -euxo pipefail
           bash Scripts/Runtime/preflight-runtime-core.sh 2>&1 | tee "$LOG_DIR/04-runtime-preflight.log"
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Resolve Swift Package dependencies
         run: |
           set -euxo pipefail
@@ -641,6 +860,14 @@ jobs:
             -skipMacroValidation \
             2>&1 | tee "$LOG_DIR/05-resolve-packages.log"
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Build full arm64 simulator app
         run: |
           set -euxo pipefail
@@ -661,6 +888,14 @@ jobs:
             ONLY_ACTIVE_ARCH=YES \
             clean build 2>&1 | tee "$LOG_DIR/06-xcodebuild-simulator.log"
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Locate and scan simulator app
         run: |
           set -euxo pipefail
@@ -687,6 +922,14 @@ jobs:
             --json-output "$LOG_DIR/07-simulator-dyld-closure.json" \
             --text-output "$LOG_DIR/07-simulator-dyld-closure.txt"
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Boot iPad Simulator and launch full app
         run: |
           set -euxo pipefail
@@ -803,6 +1046,15 @@ jobs:
           xcrun simctl terminate "$SIMULATOR_UDID" "$BUNDLE_ID" 2>/dev/null || true
           trap - EXIT
 
+      - name: Live Activity · refresh
+        if: always()
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Collect simulator diagnostics
         if: always()
         run: |
@@ -832,6 +1084,15 @@ jobs:
             done
           fi
 
+      - name: Live Activity · refresh
+        if: always()
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Upload simulator smoke evidence
         if: always()
         uses: actions/upload-artifact@v4
