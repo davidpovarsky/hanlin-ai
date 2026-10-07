@@ -312,12 +312,21 @@ public enum HanlinSwiftUIOutputGenerator {
             lines.append("")
             lines.append("    public init() {}")
             lines.append("")
+            lines.append("    @ViewBuilder")
             lines.append("    public func body(content: Content) -> some View {")
             let arguments = signature.parameters.map { parameter in
                 let value = nativeValue(parameter, enums: enumDeclarations)
                 return parameter.externalName.map { "\($0): \(value)" } ?? value
             }.joined(separator: ", ")
-            lines.append("        content.\(modifier.symbol)(\(arguments))")
+            if ["documentLaunchSubtitle", "documentLaunchTitle", "swipeActionsContainer"].contains(modifier.symbol) {
+                lines.append("        if #available(iOS 27.0, *) {")
+                lines.append("            content.\(modifier.symbol)(\(arguments))")
+                lines.append("        } else {")
+                lines.append("            content")
+                lines.append("        }")
+            } else {
+                lines.append("        content.\(modifier.symbol)(\(arguments))")
+            }
             lines.append("    }")
             lines.append("}")
             lines.append("")
