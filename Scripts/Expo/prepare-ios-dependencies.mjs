@@ -583,6 +583,36 @@ struct Style {
               await writeFile(fullPath, content, 'utf8');
               console.log(`[HanlinExpo] Patched YogaStylableProps.h in ${fullPath}`);
             }
+          } else if (entry.name === 'Base.h') {
+            let content = await readFile(fullPath, 'utf8');
+            let modified = false;
+            if (content.includes('requires is_jsi_v')) {
+              content = content.replace(/(requires\s+is_jsi_v<[^>]+>)/g, `
+#if defined(__cpp_concepts)
+  $1
+#endif
+`);
+              modified = true;
+            }
+            if (modified) {
+              await writeFile(fullPath, content, 'utf8');
+              console.log(`[HanlinExpo] Patched C++20 concepts in ${fullPath}`);
+            }
+          } else if (entry.name === 'EnumArray.h') {
+            let content = await readFile(fullPath, 'utf8');
+            let modified = false;
+            if (content.includes('requires std::is_enum_v')) {
+              content = content.replace(/(\s*requires\s+std::is_enum_v[\s\S]*?std::numeric_limits<int>::max\(\)\))/g, `
+#if defined(__cpp_concepts)
+$1
+#endif
+`);
+              modified = true;
+            }
+            if (modified) {
+              await writeFile(fullPath, content, 'utf8');
+              console.log(`[HanlinExpo] Patched C++20 concepts in ${fullPath}`);
+            }
           } else if (entry.name === 'RCTComponentViewProtocol.h') {
             let content = await readFile(fullPath, 'utf8');
             if (!content.includes('#pragma once') && !content.includes('#ifndef RCTComponentViewProtocol_h')) {
@@ -734,6 +764,22 @@ struct Style {
               content = content.replace(/^[ \t]*#include[ \t]+<jsi\/JSIDynamic\.h>[ \t]*\r?\n?/gm, `
 #if __has_include(<jsi/JSIDynamic.h>)
 #include <jsi/JSIDynamic.h>
+#endif
+`);
+              modified = true;
+            }
+            if (content.includes('requires is_jsi_v')) {
+              content = content.replace(/(requires\s+is_jsi_v<[^>]+>)/g, `
+#if defined(__cpp_concepts)
+  $1
+#endif
+`);
+              modified = true;
+            }
+            if (content.includes('requires std::is_enum_v')) {
+              content = content.replace(/(\s*requires\s+std::is_enum_v[\s\S]*?std::numeric_limits<int>::max\(\)\))/g, `
+#if defined(__cpp_concepts)
+$1
 #endif
 `);
               modified = true;
