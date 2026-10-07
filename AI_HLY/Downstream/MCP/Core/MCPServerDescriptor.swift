@@ -35,6 +35,7 @@ struct MCPServerDescriptor: Codable, Hashable, Sendable, Identifiable {
     var isGloballyEnabled: Bool
     var isEnabledForNewChats: Bool
     var autoStart: Bool
+    var compatibility: MCPCompatibilityReport
     enum ServerKind: String, Codable, Hashable, Sendable {
         case localPackage = "local_package"
         case remoteHTTP = "remote_http"

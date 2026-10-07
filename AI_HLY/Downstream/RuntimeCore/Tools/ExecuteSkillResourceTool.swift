@@ -1,10 +1,10 @@
 import Foundation
 import HanlinPlatformContracts
 
-public struct ExecuteSkillResourceTool: NativeTool {
-    public let name = "execute_skill_resource"
+struct ExecuteSkillResourceTool: NativeTool {
+    let name = "execute_skill_resource"
 
-    public var catalogEntry: NativeToolCatalogEntry {
+    var catalogEntry: NativeToolCatalogEntry {
         .init(
             name: name,
             title: RuntimeL10n.string("Execute Skill Resource"),
@@ -23,7 +23,7 @@ public struct ExecuteSkillResourceTool: NativeTool {
         )
     }
 
-    public func openAIToolSchema() -> [String: Any] {
+    func openAIToolSchema() -> [String: Any] {
         NativeToolSchema.function(
             name: name,
             description: "Execute a script resource (such as a Python or JavaScript helper) belonging to an active skill package. Scripts run locally within the application sandbox. Path traversal outside the skill package is prohibited.",
@@ -39,7 +39,7 @@ public struct ExecuteSkillResourceTool: NativeTool {
         )
     }
 
-    public func execute(argumentsJSON: String, context: NativeToolExecutionContext) async -> NativeToolResult {
+    func execute(argumentsJSON: String, context: NativeToolExecutionContext) async -> NativeToolResult {
         do {
             let arguments = try NativeToolJSON.validatedDictionary(
                 from: argumentsJSON,

@@ -3,24 +3,24 @@ import HanlinPlatformContracts
 import TorahLibraryKit
 
 // MARK: - In-Memory Evidence Store
-public actor TorahEvidenceStore {
-    public static let shared = TorahEvidenceStore()
+actor TorahEvidenceStore {
+    static let shared = TorahEvidenceStore()
     private var evidenceMap: [String: [String: Any]] = [:]
 
-    public func store(evidenceID: String, payload: [String: Any]) {
+    func store(evidenceID: String, payload: [String: Any]) {
         evidenceMap[evidenceID] = payload
     }
 
-    public func retrieve(evidenceID: String) -> [String: Any]? {
+    func retrieve(evidenceID: String) -> [String: Any]? {
         evidenceMap[evidenceID]
     }
 }
 
 // MARK: - 1. torah_ocr_excerpt
-public struct TorahOCRExcerptTool: NativeTool {
-    public let name = "torah_ocr_excerpt"
+struct TorahOCRExcerptTool: NativeTool {
+    let name = "torah_ocr_excerpt"
 
-    public var catalogEntry: NativeToolCatalogEntry {
+    var catalogEntry: NativeToolCatalogEntry {
         .init(
             name: name,
             title: RuntimeL10n.string("Torah OCR Excerpt"),
@@ -39,7 +39,7 @@ public struct TorahOCRExcerptTool: NativeTool {
         )
     }
 
-    public func openAIToolSchema() -> [String: Any] {
+    func openAIToolSchema() -> [String: Any] {
         NativeToolSchema.function(
             name: name,
             description: "Extract OCR transcription and geometric lines from a photographed book excerpt. Does NOT identify or guess book title from memory.",
@@ -62,7 +62,7 @@ public struct TorahOCRExcerptTool: NativeTool {
         )
     }
 
-    public func execute(argumentsJSON: String, context: NativeToolExecutionContext) async -> NativeToolResult {
+    func execute(argumentsJSON: String, context: NativeToolExecutionContext) async -> NativeToolResult {
         do {
             let arguments = try NativeToolJSON.validatedDictionary(
                 from: argumentsJSON,
@@ -170,10 +170,10 @@ public struct TorahOCRExcerptTool: NativeTool {
 }
 
 // MARK: - 2. torah_identify_excerpt
-public struct TorahIdentifyExcerptTool: NativeTool {
-    public let name = "torah_identify_excerpt"
+struct TorahIdentifyExcerptTool: NativeTool {
+    let name = "torah_identify_excerpt"
 
-    public var catalogEntry: NativeToolCatalogEntry {
+    var catalogEntry: NativeToolCatalogEntry {
         .init(
             name: name,
             title: RuntimeL10n.string("Identify Torah Excerpt"),
@@ -192,7 +192,7 @@ public struct TorahIdentifyExcerptTool: NativeTool {
         )
     }
 
-    public func openAIToolSchema() -> [String: Any] {
+    func openAIToolSchema() -> [String: Any] {
         NativeToolSchema.function(
             name: name,
             description: "Identify the work and canonical passage from OCR evidence or verified user text. Distinguishes between verified match, ambiguous text, quoted verses, and out-of-corpus works.",
@@ -205,7 +205,7 @@ public struct TorahIdentifyExcerptTool: NativeTool {
         )
     }
 
-    public func execute(argumentsJSON: String, context: NativeToolExecutionContext) async -> NativeToolResult {
+    func execute(argumentsJSON: String, context: NativeToolExecutionContext) async -> NativeToolResult {
         do {
             let arguments = try NativeToolJSON.validatedDictionary(
                 from: argumentsJSON,
@@ -305,10 +305,10 @@ public struct TorahIdentifyExcerptTool: NativeTool {
 }
 
 // MARK: - 3. torah_search_text
-public struct TorahSearchTextTool: NativeTool {
-    public let name = "torah_search_text"
+struct TorahSearchTextTool: NativeTool {
+    let name = "torah_search_text"
 
-    public var catalogEntry: NativeToolCatalogEntry {
+    var catalogEntry: NativeToolCatalogEntry {
         .init(
             name: name,
             title: RuntimeL10n.string("Search Torah Libraries"),
@@ -327,7 +327,7 @@ public struct TorahSearchTextTool: NativeTool {
         )
     }
 
-    public func openAIToolSchema() -> [String: Any] {
+    func openAIToolSchema() -> [String: Any] {
         NativeToolSchema.function(
             name: name,
             description: "Search text across enabled Torah library providers. Returns locators and matching snippets.",
@@ -343,7 +343,7 @@ public struct TorahSearchTextTool: NativeTool {
         )
     }
 
-    public func execute(argumentsJSON: String, context: NativeToolExecutionContext) async -> NativeToolResult {
+    func execute(argumentsJSON: String, context: NativeToolExecutionContext) async -> NativeToolResult {
         do {
             let arguments = try NativeToolJSON.validatedDictionary(
                 from: argumentsJSON,
@@ -381,10 +381,10 @@ public struct TorahSearchTextTool: NativeTool {
 }
 
 // MARK: - 4. torah_get_section
-public struct TorahGetSectionTool: NativeTool {
-    public let name = "torah_get_section"
+struct TorahGetSectionTool: NativeTool {
+    let name = "torah_get_section"
 
-    public var catalogEntry: NativeToolCatalogEntry {
+    var catalogEntry: NativeToolCatalogEntry {
         .init(
             name: name,
             title: RuntimeL10n.string("Get Torah Section"),
@@ -403,7 +403,7 @@ public struct TorahGetSectionTool: NativeTool {
         )
     }
 
-    public func openAIToolSchema() -> [String: Any] {
+    func openAIToolSchema() -> [String: Any] {
         NativeToolSchema.function(
             name: name,
             description: "Load the exact primary text, preceding and subsequent context for a validated SourceLocator.",
@@ -416,7 +416,7 @@ public struct TorahGetSectionTool: NativeTool {
         )
     }
 
-    public func execute(argumentsJSON: String, context: NativeToolExecutionContext) async -> NativeToolResult {
+    func execute(argumentsJSON: String, context: NativeToolExecutionContext) async -> NativeToolResult {
         do {
             let arguments = try NativeToolJSON.validatedDictionary(
                 from: argumentsJSON,
@@ -439,7 +439,7 @@ public struct TorahGetSectionTool: NativeTool {
 
             let studySource = try? await TorahLibraryCoordinator.shared.getSection(locator: locator)
             let text = studySource?.primaryText ?? "Section text not available offline."
-            let version = studySource?.versionMetadata?.versionTitle ?? "Standard Canonical Edition"
+            let version = studySource?.versionMetadata.versionTitle ?? "Standard Canonical Edition"
 
             let modelText = """
             Locator: \(locStr)
@@ -468,10 +468,10 @@ public struct TorahGetSectionTool: NativeTool {
 }
 
 // MARK: - 5. torah_get_links
-public struct TorahGetLinksTool: NativeTool {
-    public let name = "torah_get_links"
+struct TorahGetLinksTool: NativeTool {
+    let name = "torah_get_links"
 
-    public var catalogEntry: NativeToolCatalogEntry {
+    var catalogEntry: NativeToolCatalogEntry {
         .init(
             name: name,
             title: RuntimeL10n.string("Get Torah Commentaries & Links"),
@@ -490,7 +490,7 @@ public struct TorahGetLinksTool: NativeTool {
         )
     }
 
-    public func openAIToolSchema() -> [String: Any] {
+    func openAIToolSchema() -> [String: Any] {
         NativeToolSchema.function(
             name: name,
             description: "Fetch commentaries (Rashi, Tosafot, etc.) and related sources linked to this passage with full attribution.",
@@ -504,7 +504,7 @@ public struct TorahGetLinksTool: NativeTool {
         )
     }
 
-    public func execute(argumentsJSON: String, context: NativeToolExecutionContext) async -> NativeToolResult {
+    func execute(argumentsJSON: String, context: NativeToolExecutionContext) async -> NativeToolResult {
         do {
             let arguments = try NativeToolJSON.validatedDictionary(
                 from: argumentsJSON,
@@ -559,10 +559,10 @@ public struct TorahGetLinksTool: NativeTool {
 }
 
 // MARK: - 6. torah_get_topics
-public struct TorahGetTopicsTool: NativeTool {
-    public let name = "torah_get_topics"
+struct TorahGetTopicsTool: NativeTool {
+    let name = "torah_get_topics"
 
-    public var catalogEntry: NativeToolCatalogEntry {
+    var catalogEntry: NativeToolCatalogEntry {
         .init(
             name: name,
             title: RuntimeL10n.string("Get Torah Topics"),
@@ -581,7 +581,7 @@ public struct TorahGetTopicsTool: NativeTool {
         )
     }
 
-    public func openAIToolSchema() -> [String: Any] {
+    func openAIToolSchema() -> [String: Any] {
         NativeToolSchema.function(
             name: name,
             description: "Retrieve conceptual topics and subject tags for a passage.",
@@ -594,7 +594,7 @@ public struct TorahGetTopicsTool: NativeTool {
         )
     }
 
-    public func execute(argumentsJSON: String, context: NativeToolExecutionContext) async -> NativeToolResult {
+    func execute(argumentsJSON: String, context: NativeToolExecutionContext) async -> NativeToolResult {
         do {
             let arguments = try NativeToolJSON.validatedDictionary(
                 from: argumentsJSON,
@@ -648,10 +648,10 @@ public struct TorahGetTopicsTool: NativeTool {
 }
 
 // MARK: - 7. torah_open_source
-public struct TorahOpenSourceTool: NativeTool {
-    public let name = "torah_open_source"
+struct TorahOpenSourceTool: NativeTool {
+    let name = "torah_open_source"
 
-    public var catalogEntry: NativeToolCatalogEntry {
+    var catalogEntry: NativeToolCatalogEntry {
         .init(
             name: name,
             title: RuntimeL10n.string("Open Torah Source"),
@@ -670,7 +670,7 @@ public struct TorahOpenSourceTool: NativeTool {
         )
     }
 
-    public func openAIToolSchema() -> [String: Any] {
+    func openAIToolSchema() -> [String: Any] {
         NativeToolSchema.function(
             name: name,
             description: "Open a verified source passage in the local Hanlin reader ('hanlin') or launch Maktabah via deep link ('maktabah').",
@@ -685,7 +685,7 @@ public struct TorahOpenSourceTool: NativeTool {
         )
     }
 
-    public func execute(argumentsJSON: String, context: NativeToolExecutionContext) async -> NativeToolResult {
+    func execute(argumentsJSON: String, context: NativeToolExecutionContext) async -> NativeToolResult {
         do {
             let arguments = try NativeToolJSON.validatedDictionary(
                 from: argumentsJSON,
@@ -749,7 +749,7 @@ public struct TorahOpenSourceTool: NativeTool {
 
 // MARK: - Extension to register tools
 extension NativeToolCatalog {
-    public func registerTorahTools() {
+    func registerTorahTools() {
         register(TorahOCRExcerptTool())
         register(TorahIdentifyExcerptTool())
         register(TorahSearchTextTool())

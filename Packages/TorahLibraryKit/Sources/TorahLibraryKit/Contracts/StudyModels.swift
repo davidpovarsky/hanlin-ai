@@ -185,6 +185,20 @@ public struct SourceLocator: Codable, Hashable, Sendable {
     public var persistenceKey: String {
         "\(providerID):\(corpusID):\(workKey):\(positionKind.rawValue):\(positionValue)"
     }
+
+    public static func parse(persistenceKey: String) -> SourceLocator? {
+        let parts = persistenceKey.split(separator: ":", omittingEmptySubsequences: false).map(String.init)
+        guard parts.count >= 5 else { return nil }
+        guard let positionKind = PositionKind(rawValue: parts[3]) else { return nil }
+        let positionValue = parts[4...].joined(separator: ":")
+        return SourceLocator(
+            providerID: parts[0],
+            corpusID: parts[1],
+            workKey: parts[2],
+            positionKind: positionKind,
+            positionValue: positionValue
+        )
+    }
 }
 
 public enum SourceRole: String, Codable, Sendable {
@@ -364,6 +378,10 @@ public struct TorahLinkedSource: Identifiable, Hashable, Codable, Sendable {
         self.license = license
         self.provenance = provenance
     }
+
+    public var sourceTitle: String {
+        collectiveTitle ?? sourceRef
+    }
 }
 
 public struct TorahLinkedTopic: Identifiable, Hashable, Codable, Sendable {
@@ -378,6 +396,10 @@ public struct TorahLinkedTopic: Identifiable, Hashable, Codable, Sendable {
         self.titleHe = titleHe
         self.titleEn = titleEn
         self.provenance = provenance
+    }
+
+    public var topicTitle: String {
+        titleHe ?? titleEn ?? slug
     }
 }
 

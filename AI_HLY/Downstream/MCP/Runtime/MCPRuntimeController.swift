@@ -411,12 +411,14 @@ actor MCPRuntimeController {
                 generation: generation,
                 operationID: operationID
             )
-            installTerminationObserver(
-                transport: transport,
-                session: session,
-                serverID: server.id,
-                generation: generation
-            )
+            if let nodeTransport = transport as? EmbeddedNodeMCPTransport {
+                installTerminationObserver(
+                    transport: nodeTransport,
+                    session: session,
+                    serverID: server.id,
+                    generation: generation
+                )
+            }
             await MCPTraceLogger.shared.log("server_started", fields: [
                 "serverID": server.id.uuidString,
                 "generation": "\(generation)",

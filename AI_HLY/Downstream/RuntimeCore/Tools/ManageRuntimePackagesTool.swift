@@ -217,7 +217,7 @@ struct ManageRuntimePackagesTool: NativeTool {
 
                 case "uninstall":
                     guard let name = packageName, !name.isEmpty else {
-                        throw NativeToolJSON.JSONError.missingKey("package")
+                        throw NativeToolJSON.JSONError.missingRequiredString("package")
                     }
                     try await manager.uninstall(name: name)
                     resultText = "Successfully uninstalled Node package '\(name)'."
