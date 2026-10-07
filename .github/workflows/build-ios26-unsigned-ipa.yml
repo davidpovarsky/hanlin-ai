@@ -2237,7 +2237,7 @@ jobs:
               downstream_test_status="${PIPESTATUS[0]}"
               set -e
               echo "$(( $(date +%s) - started_at ))" > "$LOG_DIR/08-downstream-unit-tests-duration-seconds.txt"
-              if [ "$downstream_test_status" -ne 0 ]; then
+              if [ -d "$LOG_DIR/DownstreamTestsResult.xcresult" ]; then
                 xcrun xcresulttool get test-results tests \
                 --path "$LOG_DIR/DownstreamTestsResult.xcresult" \
                 --format json 2>&1 | tee "$LOG_DIR/08-downstream-unit-test-results.json" || true
@@ -2804,11 +2804,15 @@ jobs:
         run: |
           set -euo pipefail
           python3 -m unittest Scripts/CI/test_generate_provider_conformance_summary.py
+          gate_flags="--gate"
+          if [ "${{ inputs.fast_validation_only }}" = "true" ] || [ "${{ needs.plan-affected-validation.outputs.run_full_validation }}" != "true" ]; then
+            gate_flags="--gate --allow-unexecuted"
+          fi
           python3 Scripts/CI/generate_provider_conformance_summary.py \
             --log-dir logs/phase1-validation-logs \
             --log-dir logs/simulator-smoke-logs \
             --output provider-conformance-summary.json \
-            --gate
+            $gate_flags
 
       - name: Upload provider conformance summary artifact
         if: always()

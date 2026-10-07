@@ -345,6 +345,29 @@ class TestGateEnforcement(unittest.TestCase):
         self.assertEqual(data["failedCount"], 0)
         self.assertEqual(data["notRunCount"], 0)
 
+    def test_gate_allows_unexecuted_when_flag_passed(self):
+        """When tests are not run, --gate --allow-unexecuted must exit 0 unless there are failures."""
+        from generate_provider_conformance_summary import scan_test_definitions
+        repo_root = CI_DIR.parent.parent
+        tests = scan_test_definitions(repo_root)
+
+        # Log with only the first test passing
+        first_test = tests[0]
+        fn = first_test["function"]
+        dn = first_test.get("displayName")
+        line = f"✔ Test \"{dn}\" (aka '{fn}()') passed after 0.01 seconds." if dn else f"✔ Test {fn}() passed after 0.01 seconds."
+
+        partial_log = Path(self.temp_dir.name) / "partial_allow.log"
+        partial_log.write_text(line + "\n", encoding="utf-8")
+
+        output_file = Path(self.temp_dir.name) / "summary_allow.json"
+        res = subprocess.run(
+            [sys.executable, str(self.script_path), "--repo-root", str(repo_root), "--log-file", str(partial_log), "--output", str(output_file), "--gate", "--allow-unexecuted"],
+            capture_output=True,
+            text=True
+        )
+        self.assertEqual(res.returncode, 0, f"Gate must pass with --allow-unexecuted even if unexecuted tests exist. Stderr: {res.stderr}")
+
 
 if __name__ == "__main__":
     unittest.main()

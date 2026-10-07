@@ -328,6 +328,7 @@ def main():
     parser.add_argument("--log-file", action="append", default=[], help="Specific test log file to parse")
     parser.add_argument("--output", type=str, default="provider-conformance-summary.json", help="Output JSON path")
     parser.add_argument("--gate", action="store_true", help="Exit with code 1 if any test is NOT_RUN or FAIL or EVIDENCE_ERROR")
+    parser.add_argument("--allow-unexecuted", action="store_true", help="Allow NOT_RUN tests when gating (fail only on FAIL or EVIDENCE_ERROR)")
     args = parser.parse_args()
 
     repo_root = Path(args.repo_root).resolve() if args.repo_root else Path(__file__).resolve().parent.parent.parent
@@ -430,7 +431,8 @@ def main():
     if total_parameterized_cases > 0:
         print(f"  Parameterized Cases Counted: {total_parameterized_cases}")
 
-    if args.gate and (failed_count > 0 or not_run_count > 0 or evidence_error_count > 0):
+    gate_failed = (failed_count > 0 or evidence_error_count > 0 or (not_run_count > 0 and not args.allow_unexecuted))
+    if args.gate and gate_failed:
         print(f"GATE FAILED: Conformance summary has {failed_count} failures, {not_run_count} unexecuted tests, and {evidence_error_count} evidence errors.", file=sys.stderr)
         sys.exit(1)
 
