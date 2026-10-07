@@ -120,6 +120,18 @@ async function prepare() {
         }
       }
 
+      // Clean internal C++20 subdirectories from ReactModularHeaders/yoga (leave only public C API)
+      const yogaDir = resolve(modularHeadersRoot, 'yoga');
+      if (existsSync(yogaDir)) {
+        const subdirs = ['algorithm', 'debug', 'enums', 'node', 'style', 'config', 'event'];
+        for (const sub of subdirs) {
+          const p = resolve(yogaDir, sub);
+          if (existsSync(p)) {
+            await rm(p, { recursive: true, force: true });
+          }
+        }
+      }
+
       // Ensure nested fallback directory exists for $(SRCROOT)/Packages/HanlinExpoRuntime evaluation
       const nestedFallbackDir = resolve(artifactsRoot, '..', 'Packages', 'HanlinExpoRuntime');
       await mkdir(nestedFallbackDir, { recursive: true });
@@ -405,6 +417,16 @@ async function prepare() {
             console.log(`[HanlinExpo] Neutralized non-modular jsinspector import in ${hlp}`);
           }
         }
+        const yogaDir = resolve(dir, 'yoga');
+        if (existsSync(yogaDir)) {
+          const subdirs = ['algorithm', 'debug', 'enums', 'node', 'style', 'config', 'event'];
+          for (const sub of subdirs) {
+            const p = resolve(yogaDir, sub);
+            if (existsSync(p)) {
+              await rm(p, { recursive: true, force: true });
+            }
+          }
+        }
       };
       await sanitizeHeaders(resolve(artifactsRoot, 'ReactModularHeaders'));
       await sanitizeHeaders(reactHeadersDir);
@@ -546,11 +568,10 @@ struct dynamic {
             }
           } else if (entry.name === 'YogaStylableProps.h') {
             let content = await readFile(fullPath, 'utf8');
-            if (content.includes('#include <yoga/style/Style.h>')) {
-              content = content.replace(/^[ \t]*#include[ \t]+<yoga\/style\/Style\.h>[ \t]*\r?\n?/gm, `
-#if __has_include(<yoga/style/Style.h>)
-#include <yoga/style/Style.h>
-#else
+            if (content.includes('yoga/style/Style.h')) {
+              content = content.replace(/^[ \t]*(?:#if[ \t]+__has_include\(<yoga\/style\/Style\.h>\)[\s\S]*?#endif|#include[ \t]+<yoga\/style\/Style\.h>)[ \t]*\r?\n?/gm, `
+#ifndef YOGA_STYLE_FALLBACK_DEFINED
+#define YOGA_STYLE_FALLBACK_DEFINED
 namespace yoga {
 struct Style {
   struct Length { constexpr Length() = default; };
@@ -687,11 +708,10 @@ $1
               content = content.replace(/\s*requires\s*\([^)]*\)/g, '');
               modified = true;
             }
-            if (content.includes('#include <yoga/style/Style.h>')) {
-              content = content.replace(/^[ \t]*#include[ \t]+<yoga\/style\/Style\.h>[ \t]*\r?\n?/gm, `
-#if __has_include(<yoga/style/Style.h>)
-#include <yoga/style/Style.h>
-#else
+            if (content.includes('yoga/style/Style.h')) {
+              content = content.replace(/^[ \t]*(?:#if[ \t]+__has_include\(<yoga\/style\/Style\.h>\)[\s\S]*?#endif|#include[ \t]+<yoga\/style\/Style\.h>)[ \t]*\r?\n?/gm, `
+#ifndef YOGA_STYLE_FALLBACK_DEFINED
+#define YOGA_STYLE_FALLBACK_DEFINED
 namespace yoga {
 struct Style {
   struct Length { constexpr Length() = default; };
