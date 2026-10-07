@@ -56,18 +56,50 @@ jobs:
       python_sha256: ${{ steps.plan.outputs.python_sha256 }}
       release_exists: ${{ steps.plan.outputs.release_exists }}
     steps:
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Checkout requested revision
         uses: actions/checkout@v4
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Read pinned host Node version
         id: lock
         run: echo "node_version=$(node -p 'require("./RuntimeDependencies.lock.json").node.version')" >> "$GITHUB_OUTPUT"
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Set up pinned host Node
         uses: actions/setup-node@v4
         with:
           node-version: ${{ steps.lock.outputs.node_version }}
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Validate pins and plan release
         id: plan
         env:
@@ -155,14 +187,38 @@ jobs:
           - target: arm64-simulator
             artifact_suffix: simulator
     steps:
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Checkout requested revision
         uses: actions/checkout@v4
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Set up pinned host Node
         uses: actions/setup-node@v4
         with:
           node-version: ${{ needs.plan-runtime.outputs.node_version }}
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Select newest installed Xcode 26
         id: xcode
         run: |
@@ -174,14 +230,38 @@ jobs:
           xcodebuild -showsdks | grep -E 'iphoneos26|iOS 26'
           echo "build=$(xcodebuild -version | awk '/Build version/{print $3}')" >> "$GITHUB_OUTPUT"
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Record initial disk usage
         run: |
           df -h | tee disk-before.txt
           du -sh "$HOME/Library/Caches/HanlinNodeMobile" 2>/dev/null || true
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Install CMake and ccache
         run: brew install cmake ccache
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Configure architecture ccache
         id: cache-key
         env:
@@ -206,6 +286,14 @@ jobs:
           base="hanlin-node24-ccache-v1-${RUNNER_OS}-${RUNNER_ARCH}-${XCODE_BUILD}-${NODE_COMMIT}-${TARGET}-${lock_hash}-${script_hash}"
           echo "base=$base" >> "$GITHUB_OUTPUT"
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Restore architecture ccache
         id: cache-restore
         uses: actions/cache/restore@v4
@@ -215,6 +303,14 @@ jobs:
           restore-keys: |
             ${{ steps.cache-key.outputs.base }}-
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Verify ccache compiler wrappers
         run: |
           set -euo pipefail
@@ -228,6 +324,14 @@ jobs:
           ccache --zero-stats
           ccache --show-stats
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Prepare pinned Node source
         env:
           NODE_SOURCE_ROOT: ${{ runner.temp }}/hanlin-node-${{ matrix.target }}
@@ -238,6 +342,14 @@ jobs:
           echo "CCACHE_BASEDIR=$NODE_SOURCE_ROOT" >> "$GITHUB_ENV"
           echo "NODE_SOURCE_ROOT=$NODE_SOURCE_ROOT" >> "$GITHUB_ENV"
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Build one Node slice with heartbeat
         id: slice-build
         env:
@@ -257,6 +369,15 @@ jobs:
           echo "build_status=$status" >> "$GITHUB_OUTPUT"
           exit 0
 
+      - name: Live Activity · refresh
+        if: always()
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Preserve slice diagnostics
         if: always()
         env:
@@ -290,6 +411,15 @@ jobs:
           fi
           cat "$evidence/ccache-stats.txt"
 
+      - name: Live Activity · refresh
+        if: always()
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Save architecture ccache
         if: always()
         uses: actions/cache/save@v4
@@ -297,6 +427,15 @@ jobs:
           path: ~/Library/Caches/HanlinNodeMobile/ccache/${{ matrix.target }}
           key: ${{ steps.cache-key.outputs.base }}-${{ github.run_id }}-${{ github.run_attempt }}
 
+      - name: Live Activity · refresh
+        if: always()
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Upload complete slice evidence
         if: always()
         uses: actions/upload-artifact@v4
@@ -307,6 +446,15 @@ jobs:
           retention-days: 14
           compression-level: 0
 
+      - name: Live Activity · refresh
+        if: ${{ steps.slice-build.outputs.build_status == '0' }}
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Upload completed Node slice
         if: ${{ steps.slice-build.outputs.build_status == '0' }}
         uses: actions/upload-artifact@v4
@@ -317,12 +465,30 @@ jobs:
           retention-days: 14
           compression-level: 0
 
+      - name: Live Activity · refresh
+        if: always()
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Record final disk usage
         if: always()
         run: |
           df -h
           du -sh "$NODE_SOURCE_ROOT" "$CCACHE_DIR" build/node-slices/${{ matrix.target }} 2>/dev/null || true
 
+      - name: Live Activity · refresh
+        if: ${{ steps.slice-build.outputs.build_status != '0' }}
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Fail after preserving cache and evidence
         if: ${{ steps.slice-build.outputs.build_status != '0' }}
         run: |
@@ -338,22 +504,70 @@ jobs:
     runs-on: macos-26
     timeout-minutes: 30
     steps:
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - uses: actions/checkout@v4
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - uses: actions/setup-node@v4
         with:
           node-version: ${{ needs.plan-runtime.outputs.node_version }}
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Select newest installed Xcode 26
         run: |
           selected="$(find /Applications -maxdepth 1 -type d -name 'Xcode_26*.app' -print | sort -V | tail -1)"
           test -n "$selected"
           sudo xcode-select -s "$selected/Contents/Developer"
           xcodebuild -version
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Record initial disk usage
         run: df -h | tee python-disk-before.txt
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Prepare verified prebuilt Python runtime
         run: |
           mkdir -p build/python-logs
           bash Scripts/Runtime/prepare-python-runtime.sh 2>&1 | tee build/python-logs/prepare-python.log
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Upload Python runtime
         uses: actions/upload-artifact@v4
         with:
@@ -362,6 +576,15 @@ jobs:
           if-no-files-found: error
           retention-days: 14
           compression-level: 0
+      - name: Live Activity · refresh
+        if: always()
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Preserve Python evidence
         if: always()
         run: |
@@ -369,6 +592,15 @@ jobs:
           df -h > build/python-logs/disk-after.txt
           du -sh build/python-runtime "$RUNNER_TEMP/hanlin-python-runtime" 2>/dev/null > build/python-logs/directory-sizes.txt || true
           shasum -a 256 RuntimeDependencies.lock.json Scripts/Runtime/prepare-python-runtime.sh > build/python-logs/input-hashes.txt
+      - name: Live Activity · refresh
+        if: always()
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Upload Python logs
         if: always()
         uses: actions/upload-artifact@v4
@@ -387,16 +619,48 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - uses: actions/checkout@v4
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - uses: actions/setup-node@v4
         with:
           node-version: ${{ needs.plan-runtime.outputs.node_version }}
           cache: npm
           cache-dependency-path: AI_HLY/Downstream/RuntimeCore/Node/Host/package-lock.json
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Prepare and test shared runtime host
         run: |
           mkdir -p build/runtime-host-logs
           bash Scripts/Runtime/prepare-runtime-host.sh 2>&1 | tee build/runtime-host-logs/prepare-host.log
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Upload runtime host
         uses: actions/upload-artifact@v4
         with:
@@ -405,6 +669,15 @@ jobs:
           if-no-files-found: error
           retention-days: 14
           compression-level: 0
+      - name: Live Activity · refresh
+        if: always()
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Preserve host evidence
         if: always()
         run: |
@@ -413,6 +686,15 @@ jobs:
           npm --version > build/runtime-host-logs/npm-version.txt
           df -h > build/runtime-host-logs/disk-usage.txt
           shasum -a 256 RuntimeDependencies.lock.json Scripts/Runtime/prepare-runtime-host.sh > build/runtime-host-logs/input-hashes.txt
+      - name: Live Activity · refresh
+        if: always()
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Upload runtime host logs
         if: always()
         uses: actions/upload-artifact@v4
@@ -439,10 +721,34 @@ jobs:
     runs-on: macos-26
     timeout-minutes: 75
     steps:
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - uses: actions/checkout@v4
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - uses: actions/setup-node@v4
         with:
           node-version: ${{ needs.plan-runtime.outputs.node_version }}
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Select newest installed Xcode 26
         run: |
           selected="$(find /Applications -maxdepth 1 -type d -name 'Xcode_26*.app' -print | sort -V | tail -1)"
@@ -450,32 +756,85 @@ jobs:
           sudo xcode-select -s "$selected/Contents/Developer"
           xcodebuild -version | tee assembly-xcode-version.txt
           xcodebuild -showsdks | grep -E 'iphoneos26|iOS 26'
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Record initial disk usage
         run: df -h | tee assembly-disk-before.txt
+      - name: Live Activity · refresh
+        if: ${{ inputs.reuse_artifacts_run_id == '' }}
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Download device slice
         if: ${{ inputs.reuse_artifacts_run_id == '' }}
         uses: actions/download-artifact@v4
         with:
           name: node-mobile-device-${{ needs.plan-runtime.outputs.dependency_hash }}
           path: build/runtime-inputs/node-device
+      - name: Live Activity · refresh
+        if: ${{ inputs.reuse_artifacts_run_id == '' }}
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Download simulator slice
         if: ${{ inputs.reuse_artifacts_run_id == '' }}
         uses: actions/download-artifact@v4
         with:
           name: node-mobile-simulator-${{ needs.plan-runtime.outputs.dependency_hash }}
           path: build/runtime-inputs/node-simulator
+      - name: Live Activity · refresh
+        if: ${{ inputs.reuse_artifacts_run_id == '' }}
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Download Python runtime
         if: ${{ inputs.reuse_artifacts_run_id == '' }}
         uses: actions/download-artifact@v4
         with:
           name: python-runtime-${{ needs.plan-runtime.outputs.dependency_hash }}
           path: build/runtime-inputs/python
+      - name: Live Activity · refresh
+        if: ${{ inputs.reuse_artifacts_run_id == '' }}
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Download runtime host
         if: ${{ inputs.reuse_artifacts_run_id == '' }}
         uses: actions/download-artifact@v4
         with:
           name: runtime-host-${{ needs.plan-runtime.outputs.dependency_hash }}
           path: build/runtime-inputs/host
+      - name: Live Activity · refresh
+        if: ${{ inputs.reuse_artifacts_run_id != '' }}
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Download device slice from reusable run
         if: ${{ inputs.reuse_artifacts_run_id != '' }}
         uses: actions/download-artifact@v4
@@ -484,6 +843,15 @@ jobs:
           path: build/runtime-inputs/node-device
           github-token: ${{ github.token }}
           run-id: ${{ inputs.reuse_artifacts_run_id }}
+      - name: Live Activity · refresh
+        if: ${{ inputs.reuse_artifacts_run_id != '' }}
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Download simulator slice from reusable run
         if: ${{ inputs.reuse_artifacts_run_id != '' }}
         uses: actions/download-artifact@v4
@@ -492,6 +860,15 @@ jobs:
           path: build/runtime-inputs/node-simulator
           github-token: ${{ github.token }}
           run-id: ${{ inputs.reuse_artifacts_run_id }}
+      - name: Live Activity · refresh
+        if: ${{ inputs.reuse_artifacts_run_id != '' }}
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Download Python runtime from reusable run
         if: ${{ inputs.reuse_artifacts_run_id != '' }}
         uses: actions/download-artifact@v4
@@ -500,6 +877,15 @@ jobs:
           path: build/runtime-inputs/python
           github-token: ${{ github.token }}
           run-id: ${{ inputs.reuse_artifacts_run_id }}
+      - name: Live Activity · refresh
+        if: ${{ inputs.reuse_artifacts_run_id != '' }}
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Download runtime host from reusable run
         if: ${{ inputs.reuse_artifacts_run_id != '' }}
         uses: actions/download-artifact@v4
@@ -508,11 +894,27 @@ jobs:
           path: build/runtime-inputs/host
           github-token: ${{ github.token }}
           run-id: ${{ inputs.reuse_artifacts_run_id }}
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Assemble and smoke-test existing slices
         run: |
           set -o pipefail
           mkdir -p build/runtime-assembly-logs
           bash Scripts/Runtime/assemble-runtime-bundle.sh 2>&1 | tee build/runtime-assembly-logs/assembly-driver.log
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Verify complete runtime bundle output
         run: |
           set -euo pipefail
@@ -542,6 +944,14 @@ jobs:
             build/runtime-bundle/RuntimeManifest.json \
             build/runtime-bundle/RuntimeProvenance.json \
             build/runtime-bundle/NodeMobile-smoke.json
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Upload complete runtime bundle
         uses: actions/upload-artifact@v4
         with:
@@ -559,6 +969,15 @@ jobs:
           if-no-files-found: error
           retention-days: 14
           compression-level: 0
+      - name: Live Activity · refresh
+        if: always()
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Preserve assembly evidence
         if: always()
         run: |
@@ -571,6 +990,15 @@ jobs:
           cp assembly-xcode-version.txt build/runtime-assembly-logs/xcode-version.txt 2>/dev/null || true
           shasum -a 256 RuntimeDependencies.lock.json Scripts/Runtime/assemble-runtime-bundle.sh \
             > build/runtime-assembly-logs/input-hashes.txt
+      - name: Live Activity · refresh
+        if: always()
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Upload assembly logs
         if: always()
         uses: actions/upload-artifact@v4
@@ -589,6 +1017,17 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
+      - name: Live Activity · refresh
+        if: >-
+          ${{ (needs.plan-runtime.outputs.release_exists != 'true' || inputs.force_rebuild) &&
+              needs.assemble-runtime-bundle.result != 'success' }}
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Require successful assembly when a build was requested
         if: >-
           ${{ (needs.plan-runtime.outputs.release_exists != 'true' || inputs.force_rebuild) &&
@@ -597,6 +1036,15 @@ jobs:
           echo "Runtime assembly did not succeed; release publication is blocked." >&2
           exit 1
 
+      - name: Live Activity · refresh
+        if: ${{ needs.assemble-runtime-bundle.result == 'success' }}
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Download assembled runtime artifact
         if: ${{ needs.assemble-runtime-bundle.result == 'success' }}
         uses: actions/download-artifact@v4
@@ -604,6 +1052,14 @@ jobs:
           name: hanlin-runtime-bundle-${{ needs.plan-runtime.outputs.dependency_hash }}
           path: build/final-runtime
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Publish or reuse immutable release
         env:
           GH_TOKEN: ${{ github.token }}
