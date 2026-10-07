@@ -3,15 +3,23 @@ import HanlinPlatformContracts
 import TorahLibraryKit
 
 // MARK: - In-Memory Evidence Store
+struct TorahEvidenceRecord: Codable, Hashable, Sendable {
+    let evidenceID: String
+    let rawText: String
+    let attachmentHandle: String?
+    let providerID: String
+    let createdAt: String
+}
+
 actor TorahEvidenceStore {
     static let shared = TorahEvidenceStore()
-    private var evidenceMap: [String: [String: Any]] = [:]
+    private var evidenceMap: [String: TorahEvidenceRecord] = [:]
 
-    func store(evidenceID: String, payload: [String: Any]) {
-        evidenceMap[evidenceID] = payload
+    func store(evidenceID: String, record: TorahEvidenceRecord) {
+        evidenceMap[evidenceID] = record
     }
 
-    func retrieve(evidenceID: String) -> [String: Any]? {
+    func retrieve(evidenceID: String) -> TorahEvidenceRecord? {
         evidenceMap[evidenceID]
     }
 }
@@ -129,18 +137,15 @@ struct TorahOCRExcerptTool: NativeTool {
                 )
             }
 
-            let evidenceDict: [String: Any] = [
-                "evidence_id": evidenceID,
-                "attachment_handle": handle,
-                "provider_id": "apple_vision_local",
-                "model_revision": "apple_vision_v3",
-                "raw_text": rawText,
-                "lines": linesData,
-                "warnings": [] as [String],
-                "created_at": createdAt
-            ]
+            let evidenceRecord = TorahEvidenceRecord(
+                evidenceID: evidenceID,
+                rawText: rawText,
+                attachmentHandle: handle,
+                providerID: "apple_vision_local",
+                createdAt: createdAt
+            )
 
-            await TorahEvidenceStore.shared.store(evidenceID: evidenceID, payload: evidenceDict)
+            await TorahEvidenceStore.shared.store(evidenceID: evidenceID, record: evidenceRecord)
 
             let modelText = """
             Evidence ID: \(evidenceID)
@@ -214,9 +219,8 @@ struct TorahIdentifyExcerptTool: NativeTool {
 
             var rawText = ""
             if let evID = arguments["evidence_id"] as? String,
-               let stored = await TorahEvidenceStore.shared.retrieve(evidenceID: evID),
-               let text = stored["raw_text"] as? String {
-                rawText = text
+               let stored = await TorahEvidenceStore.shared.retrieve(evidenceID: evID) {
+                rawText = stored.rawText
             } else if let explicit = arguments["text"] as? String {
                 rawText = explicit
             } else {
