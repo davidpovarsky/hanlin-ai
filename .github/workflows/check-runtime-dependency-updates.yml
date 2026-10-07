@@ -23,12 +23,28 @@ jobs:
       GH_TOKEN: ${{ github.token }}
       HOST_ROOT: AI_HLY/Downstream/RuntimeCore/Node/Host
     steps:
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Checkout protected branch without modifying it
         uses: actions/checkout@v4
         with:
           ref: ${{ github.event.repository.default_branch }}
           fetch-depth: 0
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Set up pinned Node
         uses: actions/setup-node@v4
         with:
@@ -36,6 +52,14 @@ jobs:
           cache: npm
           cache-dependency-path: AI_HLY/Downstream/RuntimeCore/Node/Host/package-lock.json
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Resolve exact supported upstream releases
         id: update
         run: |
@@ -59,6 +83,15 @@ jobs:
             echo "changed=true" >> "$GITHUB_OUTPUT"
           fi
 
+      - name: Live Activity · refresh
+        if: steps.update.outputs.changed == 'true'
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Test updated host dependency graph
         if: steps.update.outputs.changed == 'true'
         run: |
@@ -67,6 +100,15 @@ jobs:
           npm test --prefix "$HOST_ROOT"
           node Scripts/Runtime/validate-runtime-localization.mjs
 
+      - name: Live Activity · refresh
+        if: steps.update.outputs.changed == 'true'
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Create isolated update branch
         if: steps.update.outputs.changed == 'true'
         id: branch
@@ -82,6 +124,15 @@ jobs:
           git push --set-upstream origin "$branch"
           echo "name=$branch" >> "$GITHUB_OUTPUT"
 
+      - name: Live Activity · refresh
+        if: steps.update.outputs.changed == 'true'
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Build and publish immutable candidate runtime
         if: steps.update.outputs.changed == 'true'
         id: runtime
@@ -101,6 +152,15 @@ jobs:
           gh run watch "$run_id" --interval 60 --exit-status
           echo "run_id=$run_id" >> "$GITHUB_OUTPUT"
 
+      - name: Live Activity · refresh
+        if: steps.update.outputs.changed == 'true'
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Finalize verified runtime checksums
         if: steps.update.outputs.changed == 'true'
         env:
@@ -129,6 +189,15 @@ jobs:
           git commit -m "Record verified RuntimeCore binary checksums"
           git push origin "$BRANCH"
 
+      - name: Live Activity · refresh
+        if: steps.update.outputs.changed == 'true'
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Build the candidate app and unsigned IPA
         if: steps.update.outputs.changed == 'true'
         id: app
@@ -151,6 +220,15 @@ jobs:
           echo "run_id=$run_id" >> "$GITHUB_OUTPUT"
           echo "ipa_size=$ipa_size" >> "$GITHUB_OUTPUT"
 
+      - name: Live Activity · refresh
+        if: steps.update.outputs.changed == 'true'
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Open update pull request with provenance and size evidence
         if: steps.update.outputs.changed == 'true'
         env:
