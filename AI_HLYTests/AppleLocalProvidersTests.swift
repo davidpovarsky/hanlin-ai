@@ -1,6 +1,6 @@
 import Testing
 import Foundation
-@testable import AI_HLY
+@testable import AI_Hanlin
 
 @Suite("Apple Local Model Providers Contract Tests")
 struct AppleLocalProvidersTests {
