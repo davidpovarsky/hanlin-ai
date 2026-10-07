@@ -109,8 +109,8 @@ const evidenceManifest = {
   'phase1-swift-test.log': '8a46ccbc1b8d76cf423d87d012b50a5b7676bcffac12beaad60e7042938123ec',
   'provider-conformance-summary.json': '05ac07ac1fadde78e1e0563045c86172d86e4e9f58bda6f01d0483626028711f',
   'server-everything-integration.log': '60eb0a057a29e747cdacdc870b0ffe9b124455a49e2afc3c54cb7bf66ffe03f9',
-  'simulator-downstream-unit-test-results.json': 'a016be317d9a114823d71eba5ad5b82bcc6cb19904bcf5f9d5a3693ac3282a40',
-  'simulator-downstream-unit-tests.log': '94c6ad30866d0aeb45974be6d2a9b8a17ec2741fcc64bf7d8ca2234b464e7385',
+  'simulator-downstream-unit-test-results.json': 'cc8084070fe2d0d68f69e6b37ff30ce7a6de5b7f612589c776590c1484ea5448',
+  'simulator-downstream-unit-tests.log': 'c0f865326fe6001645cf1f23ae77a8bd1cb9801be4dec80c6605bca70dd31355',
   'simulator-nativescript-production-ui-tests.log': '0a726bc8acaf4e35b0334a59f1eb961ce54f8523ba4674f52bf856ae6d952a27',
   'simulator-scripting-acceptance.log': '9eb83b675d7acbeb4c54ee262259a243f7322664974829bfb357566f6a4109ad'
 };
