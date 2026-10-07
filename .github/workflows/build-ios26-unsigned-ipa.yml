@@ -43,6 +43,7 @@ on:
       - main
 
 permissions:
+  actions: read
   contents: read
 
 jobs:
@@ -62,6 +63,14 @@ jobs:
       LOG_DIR: phase1-validation-logs
 
     steps:
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Select newest stable Xcode 26 and print environment
         id: phase1-toolchain
         run: |
@@ -93,6 +102,14 @@ jobs:
           echo "iphoneos-sdk=$iphoneos_sdk" >> "$GITHUB_OUTPUT"
           echo "simulator-sdk=$simulator_sdk" >> "$GITHUB_OUTPUT"
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Check out exact validation commit cleanly
         uses: actions/checkout@v4
         with:
@@ -100,6 +117,14 @@ jobs:
           fetch-depth: 1
           ref: ${{ github.sha }}
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Confirm clean exact checkout
         run: |
           set -euxo pipefail
@@ -107,11 +132,27 @@ jobs:
           test -z "$(git status --porcelain)"
           git rev-parse HEAD
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Set up pinned baseline Node
         uses: actions/setup-node@v4
         with:
           node-version: 24.5.0
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Prepare pinned NativeScript iOS dependency closure
         run: |
           set -euxo pipefail
@@ -121,6 +162,14 @@ jobs:
           node Scripts/NativeScript/prepare-fixture.mjs
           npm run preflight:ios-dependencies --prefix Scripts/NativeScript
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Prepare validation logs
         run: |
           set -euxo pipefail
@@ -128,6 +177,14 @@ jobs:
           mkdir -p "$absolute_log_dir" build
           echo "LOG_DIR=$absolute_log_dir" >> "$GITHUB_ENV"
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Test Xcode cache input normalization
         run: |
           set -euxo pipefail
@@ -136,6 +193,15 @@ jobs:
             -p 'test_*.py' \
             -v 2>&1 | tee "$LOG_DIR/00-xcode-cache-input-tests.log"
 
+      - name: Live Activity · refresh
+        if: ${{ !inputs.force_clean_build }}
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Restore Phase 1 SwiftPM build cache
         if: ${{ !inputs.force_clean_build }}
         id: phase1-spm-cache
@@ -146,6 +212,15 @@ jobs:
           restore-keys: |
             phase1-spm-v1-${{ runner.os }}-${{ steps.phase1-toolchain.outputs.runner-arch }}-${{ steps.phase1-toolchain.outputs.xcode-build }}-${{ hashFiles('Packages/HanlinPlatform/Package.swift') }}-
 
+      - name: Live Activity · refresh
+        if: ${{ !inputs.force_clean_build }}
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Restore Phase 1 simulator compiler cache
         if: ${{ !inputs.force_clean_build }}
         id: phase1-simulator-cache
@@ -159,6 +234,15 @@ jobs:
           restore-keys: |
             phase1-derived-v1-${{ runner.os }}-${{ steps.phase1-toolchain.outputs.runner-arch }}-${{ steps.phase1-toolchain.outputs.xcode-build }}-iphonesimulator-${{ steps.phase1-toolchain.outputs.simulator-sdk }}-debug-${{ hashFiles('Packages/HanlinPlatform/Package.swift') }}-
 
+      - name: Live Activity · refresh
+        if: ${{ !inputs.force_clean_build }}
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Restore Phase 1 device compiler cache
         if: ${{ !inputs.force_clean_build }}
         id: phase1-device-cache
@@ -172,6 +256,14 @@ jobs:
           restore-keys: |
             phase1-derived-v1-${{ runner.os }}-${{ steps.phase1-toolchain.outputs.runner-arch }}-${{ steps.phase1-toolchain.outputs.xcode-build }}-iphoneos-${{ steps.phase1-toolchain.outputs.iphoneos-sdk }}-debug-${{ hashFiles('Packages/HanlinPlatform/Package.swift') }}-
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Report Phase 1 cache mode
         run: |
           set -euo pipefail
@@ -188,6 +280,15 @@ jobs:
             echo "DeviceDerivedData=$(cache_state '${{ steps.phase1-device-cache.outputs.cache-hit }}' '${{ steps.phase1-device-cache.outputs.cache-matched-key }}')"
           } | tee "$LOG_DIR/00-cache-mode.log"
 
+      - name: Live Activity · refresh
+        if: ${{ inputs.force_clean_build }}
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Discard Phase 1 compiler state for forced clean build
         if: ${{ inputs.force_clean_build }}
         run: |
@@ -198,6 +299,14 @@ jobs:
             build/Phase1SimulatorDerivedData \
             build/Phase1DeviceDerivedData
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Verify Scripting baseline integrity and reproducibility
         run: |
           set -euxo pipefail
@@ -250,12 +359,28 @@ jobs:
             git diff --exit-code -- Reference/ScriptingCompatibility
           } 2>&1 | tee "$LOG_DIR/01-scripting-baseline.log"
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Validate JSON and internal JSON Schema references
         run: |
           set -euxo pipefail
           node Scripts/ScriptingReference/validate-json-and-schema.mjs \
             2>&1 | tee "$LOG_DIR/02-json-schema.log"
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Verify exact TypeScript 7.0.2 Scripting artifacts
         run: |
           set -euxo pipefail
@@ -263,6 +388,14 @@ jobs:
           npm test --prefix Scripts/ScriptingCompiler \
             2>&1 | tee "$LOG_DIR/02-scripting-compiler.log"
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Scripting Production Compiler Acceptance
         run: |
           set -euxo pipefail
@@ -271,24 +404,57 @@ jobs:
           npm run test:production --prefix Scripts/ScriptingCompiler \
             2>&1 | tee "$LOG_DIR/02-production-compiler-acceptance.log"
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Resolve the Phase 1 Swift package
         run: |
           set -euxo pipefail
           swift package --package-path "$PACKAGE_PATH" resolve \
             2>&1 | tee "$LOG_DIR/03-swift-package-resolve.log"
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Compile the Phase 1 Swift package
         run: |
           set -euxo pipefail
           swift build --package-path "$PACKAGE_PATH" \
             2>&1 | tee "$LOG_DIR/04-swift-build.log"
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Compile and execute all Phase 1 contract tests
         run: |
           set -euxo pipefail
           swift test --package-path "$PACKAGE_PATH" --parallel \
             2>&1 | tee "$LOG_DIR/05-swift-test.log"
 
+      - name: Live Activity · refresh
+        if: ${{ success() && !inputs.force_clean_build }}
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Save successful Phase 1 SwiftPM build cache
         if: ${{ success() && !inputs.force_clean_build }}
         uses: actions/cache/save@v6
@@ -296,6 +462,14 @@ jobs:
           path: Packages/HanlinPlatform/.build
           key: ${{ steps.phase1-spm-cache.outputs.cache-primary-key }}
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Discover the generated Xcode package scheme
         working-directory: Packages/HanlinPlatform
         run: |
@@ -324,6 +498,14 @@ jobs:
           echo "PACKAGE_XCODE_SCHEME=$package_scheme" >> "$GITHUB_ENV"
           echo "Selected generated package scheme: $package_scheme"
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Compile contracts for generic iOS Simulator
         working-directory: Packages/HanlinPlatform
         run: |
@@ -347,6 +529,15 @@ jobs:
             "${build_actions[@]}" 2>&1 | tee "$LOG_DIR/07-ios-simulator.log"
           echo "$(( $(date +%s) - started_at ))" > "$LOG_DIR/07-ios-simulator-duration-seconds.txt"
 
+      - name: Live Activity · refresh
+        if: ${{ success() && !inputs.force_clean_build }}
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Save successful Phase 1 simulator compiler cache
         if: ${{ success() && !inputs.force_clean_build }}
         uses: actions/cache/save@v6
@@ -357,6 +548,14 @@ jobs:
             build/Phase1SimulatorDerivedData/SDKStatCaches.noindex
           key: ${{ steps.phase1-simulator-cache.outputs.cache-primary-key }}
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Compile contracts for generic iOS device
         working-directory: Packages/HanlinPlatform
         run: |
@@ -380,6 +579,14 @@ jobs:
             "${build_actions[@]}" 2>&1 | tee "$LOG_DIR/08-ios-device.log"
           echo "$(( $(date +%s) - started_at ))" > "$LOG_DIR/08-ios-device-duration-seconds.txt"
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Compile the NativeScript runtime package for simulator and device
         working-directory: Packages/HanlinNativeScriptRuntime
         run: |
@@ -404,6 +611,15 @@ jobs:
               build
           done 2>&1 | tee "$LOG_DIR/08-nativescript-package.log"
 
+      - name: Live Activity · refresh
+        if: ${{ success() && !inputs.force_clean_build }}
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Save successful Phase 1 device compiler cache
         if: ${{ success() && !inputs.force_clean_build }}
         uses: actions/cache/save@v6
@@ -414,6 +630,15 @@ jobs:
             build/Phase1DeviceDerivedData/SDKStatCaches.noindex
           key: ${{ steps.phase1-device-cache.outputs.cache-primary-key }}
 
+      - name: Live Activity · refresh
+        if: always()
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Summarize compiler warnings
         if: always()
         run: |
@@ -423,6 +648,15 @@ jobs:
             grep -RIn --include='*.log' 'warning:' "$LOG_DIR" || true
           } | tee "$LOG_DIR/09-warnings.log"
 
+      - name: Live Activity · refresh
+        if: always()
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Retain Phase 1 validation evidence
         if: always()
         uses: actions/upload-artifact@v4
@@ -462,9 +696,25 @@ jobs:
       IOS_DEPLOYMENT_TARGET: "26.0"
 
     steps:
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Set up pinned RuntimeCore host Node
         uses: actions/setup-node@v4
         with:
@@ -472,6 +722,14 @@ jobs:
           cache: npm
           cache-dependency-path: AI_HLY/Downstream/RuntimeCore/Node/Host/package-lock.json
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Prepare pinned NativeScript iOS dependency closure
         run: |
           set -euxo pipefail
@@ -481,6 +739,14 @@ jobs:
           node Scripts/NativeScript/prepare-fixture.mjs
           npm run preflight:ios-dependencies --prefix Scripts/NativeScript
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Prepare log folders
         run: |
           set -euxo pipefail
@@ -488,6 +754,14 @@ jobs:
           mkdir -p build
           echo "Log folder prepared at: $LOG_DIR" | tee "$LOG_DIR/00-prepare.log"
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Show runner and Xcode environment
         run: |
           set -euxo pipefail
@@ -527,6 +801,14 @@ jobs:
             find . -maxdepth 3 -type f | sort | sed -n '1,400{s#^\./##;p;}'
           } 2>&1 | tee "$LOG_DIR/01-environment.log"
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Select Xcode 26
         id: app-toolchain
         run: |
@@ -594,6 +876,14 @@ jobs:
           echo "runner-arch=$runner_arch" >> "$GITHUB_OUTPUT"
           echo "iphoneos-sdk=$iphoneos_sdk" >> "$GITHUB_OUTPUT"
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Restore cloned Swift package dependencies
         id: app-sourcepackages-cache
         uses: actions/cache/restore@v6
@@ -603,6 +893,15 @@ jobs:
           restore-keys: |
             ios-sourcepackages-v1-${{ runner.os }}-${{ steps.app-toolchain.outputs.runner-arch }}-${{ steps.app-toolchain.outputs.xcode-build }}-
 
+      - name: Live Activity · refresh
+        if: ${{ !inputs.force_clean_build }}
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Restore compatible incremental Xcode compiler state
         if: ${{ !inputs.force_clean_build }}
         id: app-deriveddata-cache
@@ -617,6 +916,14 @@ jobs:
           restore-keys: |
             ios-derived-v2-${{ runner.os }}-${{ steps.app-toolchain.outputs.runner-arch }}-${{ steps.app-toolchain.outputs.xcode-build }}-iphoneos-${{ steps.app-toolchain.outputs.iphoneos-sdk }}-${{ env.CONFIGURATION }}-${{ hashFiles('AI_HLY.xcodeproj/project.pbxproj', 'AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved', 'Packages/HanlinPlatform/Package.swift', 'Packages/HanlinQuickJS/Package.swift', 'Packages/IOSSystemLite/Package.swift') }}-
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Report application build cache mode
         run: |
           set -euo pipefail
@@ -647,6 +954,15 @@ jobs:
             echo "iphoneos_sdk=${{ steps.app-toolchain.outputs.iphoneos-sdk }}"
           } | tee "$LOG_DIR/02-cache-mode.log"
 
+      - name: Live Activity · refresh
+        if: ${{ inputs.force_clean_build }}
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Discard application compiler state for forced clean build
         if: ${{ inputs.force_clean_build }}
         run: |
@@ -654,6 +970,14 @@ jobs:
           echo "FORCED CLEAN BUILD: dependency downloads may be reused; DerivedData will not be restored or saved."
           rm -rf "$DERIVED_DATA_PATH"
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Create CI Config.xcconfig
         run: |
           set -euxo pipefail
@@ -675,6 +999,14 @@ jobs:
             cat Config.xcconfig
           } 2>&1 | tee "$LOG_DIR/03-create-config-xcconfig.log"
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Prepare verified embedded RuntimeCore
         env:
           GH_TOKEN: ${{ github.token }}
@@ -683,6 +1015,14 @@ jobs:
           bash Scripts/Runtime/prepare-runtime-core.sh 2>&1 | tee "$LOG_DIR/04-prepare-runtime-core.log"
           grep -Fq "Prepared verified RuntimeCore 93417cff5ce62098919711e7f6d239a6501fd7a5de1621e38eb2fb5cc8c79269" "$LOG_DIR/04-prepare-runtime-core.log"
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Verify MCP host on pinned Node 24.5.0
         run: |
           set -euxo pipefail
@@ -699,6 +1039,14 @@ jobs:
           node Scripts/Runtime/validate-mcp-install-dedup.mjs \
             2>&1 | tee "$LOG_DIR/04-mcp-install-dedup.log"
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Scripting Production Compiler Acceptance
         run: |
           set -euxo pipefail
@@ -711,6 +1059,14 @@ jobs:
           rm -rf AI_HLY/Downstream/RuntimeCore/Node/Host/node_modules
           test ! -e AI_HLY/Downstream/RuntimeCore/Node/Host/node_modules
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Package current RuntimeCore host resources
         run: |
           set -euxo pipefail
@@ -720,11 +1076,27 @@ jobs:
           unzip -p AI_HLY/RuntimeHostResources.zip server-worker.mjs | grep -F 'registerHooks'
           unzip -p AI_HLY/RuntimeHostResources.zip package-compatibility.mjs | grep -F 'inspectArchiveSafety'
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Run RuntimeCore fast preflight
         run: |
           set -euxo pipefail
           bash Scripts/Runtime/preflight-runtime-core.sh 2>&1 | tee "$LOG_DIR/04-runtime-preflight.log"
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Confirm native RuntimeCore reuse
         run: |
           set -euxo pipefail
@@ -738,12 +1110,28 @@ jobs:
           fi
           echo "Reused verified native RuntimeCore; no Node, V8, or Python source compilation was detected."
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Run RuntimeCore link-closure regression tests
         run: |
           set -euxo pipefail
           node --test Scripts/Runtime/Tests/runtime-link-dependencies.test.mjs 2>&1 | tee "$LOG_DIR/04-runtime-link-tests.log"
           python3 -m unittest Scripts/Runtime/Tests/test_validate_app_dyld_closure.py -v 2>&1 | tee "$LOG_DIR/04-dyld-scanner-tests.log"
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Verify pinned application-link archives
         run: |
           set -euxo pipefail
@@ -759,6 +1147,14 @@ jobs:
           test "$(swift package compute-checksum "$archive_root/libssh2-dynamic.xcframework.zip")" = "cacfe1789b197b727119f7e32f561eaf9acc27bf38cd19975b74fce107f868a6"
           test "$(swift package compute-checksum "$archive_root/openssl-dynamic.xcframework.zip")" = "329e8317cf9bee8e138da5d032330a7a1bd2473cf44c9c083cb2f0636abb8b80"
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Validate expected project files
         run: |
           set -euxo pipefail
@@ -791,6 +1187,14 @@ jobs:
             find AI_HLY -maxdepth 3 -type f | sort | sed -n '1,200p'
           } 2>&1 | tee "$LOG_DIR/04-validate-project.log"
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Inspect Xcode project
         run: |
           set -euxo pipefail
@@ -814,6 +1218,14 @@ jobs:
 
           } 2>&1 | tee "$LOG_DIR/05-inspect-project.log"
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Resolve Swift Package dependencies
         run: |
           set -euxo pipefail
@@ -837,12 +1249,28 @@ jobs:
             echo "Swift Package dependency resolution completed."
           } 2>&1 | tee "$LOG_DIR/06-resolve-packages.log"
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Save validated cloned Swift package dependencies
         uses: actions/cache/save@v6
         with:
           path: build/SourcePackages
           key: ${{ steps.app-sourcepackages-cache.outputs.cache-primary-key }}
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Restore unchanged Xcode build input metadata
         run: |
           set -euxo pipefail
@@ -852,6 +1280,14 @@ jobs:
             --manifest "$DERIVED_DATA_PATH/CacheMetadata/xcode-build-inputs.json" \
             2>&1 | tee "$LOG_DIR/06-cache-input-restore.log"
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Capture Xcode build input metadata
         run: |
           set -euxo pipefail
@@ -870,6 +1306,14 @@ jobs:
             RuntimeDependencies.lock.json \
             2>&1 | tee "$LOG_DIR/06-cache-input-capture.log"
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Build unsigned iOS 26 app
         run: |
           set -euxo pipefail
@@ -920,6 +1364,15 @@ jobs:
             echo "Build command completed."
           } 2>&1 | tee "$LOG_DIR/07-build-step-wrapper.log"
 
+      - name: Live Activity · refresh
+        if: ${{ inputs.measure_warm_rebuild }}
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Measure same-run device no-op rebuild
         if: ${{ inputs.measure_warm_rebuild }}
         run: |
@@ -949,6 +1402,15 @@ jobs:
           echo "$duration_seconds" > "$LOG_DIR/07-warm-rebuild-duration-seconds.txt"
           echo "Same-run device no-op rebuild duration: ${duration_seconds}s"
 
+      - name: Live Activity · refresh
+        if: ${{ success() && !inputs.force_clean_build }}
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Save successful incremental Xcode compiler state
         if: ${{ success() && !inputs.force_clean_build }}
         uses: actions/cache/save@v6
@@ -960,6 +1422,14 @@ jobs:
             build/DerivedData/CacheMetadata/xcode-build-inputs.json
           key: ${{ steps.app-deriveddata-cache.outputs.cache-primary-key }}
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Locate built app
         run: |
           set -euxo pipefail
@@ -1057,6 +1527,14 @@ jobs:
 
           } 2>&1 | tee "$LOG_DIR/08-locate-app.log"
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Package unsigned IPA
         run: |
           set -euxo pipefail
@@ -1092,6 +1570,14 @@ jobs:
             echo "Unsigned IPA packaged successfully."
           } 2>&1 | tee "$LOG_DIR/09-package-ipa.log"
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Validate packaged IPA dyld closure
         run: |
           set -euxo pipefail
@@ -1120,6 +1606,15 @@ jobs:
           stat -f %z "$IPA_NAME" | tee "$LOG_DIR/09-ipa-size-bytes.txt"
           shasum -a 256 "$IPA_NAME" | tee "$LOG_DIR/09-ipa-sha256.txt"
 
+      - name: Live Activity · refresh
+        if: always()
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Create diagnostic summary
         if: always()
         run: |
@@ -1180,6 +1675,14 @@ jobs:
 
           cat "$SUMMARY_FILE"
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Upload unsigned IPA artifact
         uses: actions/upload-artifact@v4
         with:
@@ -1188,6 +1691,15 @@ jobs:
           if-no-files-found: error
           retention-days: 14
 
+      - name: Live Activity · refresh
+        if: always()
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Upload build logs artifact
         if: always()
         uses: actions/upload-artifact@v4
@@ -1214,9 +1726,25 @@ jobs:
       IOS_DEPLOYMENT_TARGET: "26.0"
 
     steps:
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Set up pinned RuntimeCore host Node
         uses: actions/setup-node@v4
         with:
@@ -1224,6 +1752,14 @@ jobs:
           cache: npm
           cache-dependency-path: AI_HLY/Downstream/RuntimeCore/Node/Host/package-lock.json
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Prepare pinned NativeScript iOS dependency closure
         run: |
           set -euxo pipefail
@@ -1254,6 +1790,14 @@ jobs:
           test -s build/NativeScriptE2E/HanlinNativeScriptMalformed.hanlinNativeScript
           npm run preflight:ios-dependencies --prefix Scripts/NativeScript
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Prepare simulator logs and select stable Xcode 26
         id: simulator-toolchain
         run: |
@@ -1277,6 +1821,14 @@ jobs:
           echo "runner-arch=$(uname -m)" >> "$GITHUB_OUTPUT"
           echo "simulator-sdk=$(xcrun --sdk iphonesimulator --show-sdk-version)" >> "$GITHUB_OUTPUT"
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Restore simulator cloned Swift package dependencies
         id: simulator-sourcepackages-cache
         uses: actions/cache/restore@v6
@@ -1286,6 +1838,15 @@ jobs:
           restore-keys: |
             ios-sourcepackages-v1-${{ runner.os }}-${{ steps.simulator-toolchain.outputs.runner-arch }}-${{ steps.simulator-toolchain.outputs.xcode-build }}-
 
+      - name: Live Activity · refresh
+        if: ${{ !inputs.force_clean_build }}
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Restore compatible simulator compiler state
         if: ${{ !inputs.force_clean_build }}
         id: simulator-deriveddata-cache
@@ -1300,6 +1861,14 @@ jobs:
           restore-keys: |
             ios-derived-v2-${{ runner.os }}-${{ steps.simulator-toolchain.outputs.runner-arch }}-${{ steps.simulator-toolchain.outputs.xcode-build }}-iphonesimulator-${{ steps.simulator-toolchain.outputs.simulator-sdk }}-${{ env.CONFIGURATION }}-${{ hashFiles('AI_HLY.xcodeproj/project.pbxproj', 'AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved', 'Packages/HanlinPlatform/Package.swift', 'Packages/HanlinQuickJS/Package.swift', 'Packages/IOSSystemLite/Package.swift') }}-
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Report simulator cache mode
         run: |
           set -euo pipefail
@@ -1327,6 +1896,15 @@ jobs:
             echo "iphonesimulator_sdk=${{ steps.simulator-toolchain.outputs.simulator-sdk }}"
           } | tee "$LOG_DIR/01-cache-mode.log"
 
+      - name: Live Activity · refresh
+        if: ${{ inputs.force_clean_build }}
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Discard simulator compiler state for forced clean build
         if: ${{ inputs.force_clean_build }}
         run: |
@@ -1334,6 +1912,14 @@ jobs:
           echo "FORCED CLEAN BUILD: discarding simulator DerivedData without discarding dependency downloads."
           rm -rf "$DERIVED_DATA_PATH"
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Create CI Config.xcconfig
         run: |
           set -euxo pipefail
@@ -1345,6 +1931,14 @@ jobs:
           HANLIN_OPEN_API_KEY =
           EOF
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Prepare verified embedded RuntimeCore
         env:
           GH_TOKEN: ${{ github.token }}
@@ -1353,17 +1947,41 @@ jobs:
           bash Scripts/Runtime/prepare-runtime-core.sh 2>&1 | tee "$LOG_DIR/02-prepare-runtime-core.log"
           grep -Fq "Prepared verified RuntimeCore 93417cff5ce62098919711e7f6d239a6501fd7a5de1621e38eb2fb5cc8c79269" "$LOG_DIR/02-prepare-runtime-core.log"
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Package current RuntimeCore host resources
         run: |
           set -euxo pipefail
           bash Scripts/Runtime/prepare-runtime-host.sh 2>&1 | tee "$LOG_DIR/03-package-runtime-host.log"
           cp build/runtime-host/RuntimeHostResources.zip AI_HLY/RuntimeHostResources.zip
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Run RuntimeCore preflight
         run: |
           set -euxo pipefail
           bash Scripts/Runtime/preflight-runtime-core.sh 2>&1 | tee "$LOG_DIR/04-runtime-preflight.log"
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Resolve Swift Package dependencies
         run: |
           set -euxo pipefail
@@ -1376,12 +1994,28 @@ jobs:
             -skipMacroValidation \
             2>&1 | tee "$LOG_DIR/05-resolve-packages.log"
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Save validated simulator Swift package dependencies
         uses: actions/cache/save@v6
         with:
           path: build/SourcePackages
           key: ${{ steps.simulator-sourcepackages-cache.outputs.cache-primary-key }}
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Restore unchanged simulator build input metadata
         run: |
           set -euxo pipefail
@@ -1391,6 +2025,14 @@ jobs:
             --manifest "$DERIVED_DATA_PATH/CacheMetadata/xcode-build-inputs.json" \
             2>&1 | tee "$LOG_DIR/05-cache-input-restore.log"
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Capture simulator build input metadata
         run: |
           set -euxo pipefail
@@ -1408,6 +2050,14 @@ jobs:
             RuntimeDependencies.lock.json \
             2>&1 | tee "$LOG_DIR/05-cache-input-capture.log"
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Build full arm64 simulator app
         run: |
           set -euxo pipefail
@@ -1451,6 +2101,15 @@ jobs:
           rm -rf build/SimulatorRuntimeApp/AI_Hanlin.app/PlugIns/AI_HLYTests.xctest
           test ! -e build/SimulatorRuntimeApp/AI_Hanlin.app/PlugIns/AI_HLYTests.xctest
 
+      - name: Live Activity · refresh
+        if: ${{ inputs.measure_warm_rebuild }}
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Measure same-run simulator no-op rebuild
         if: ${{ inputs.measure_warm_rebuild }}
         run: |
@@ -1478,6 +2137,15 @@ jobs:
           echo "$duration_seconds" > "$LOG_DIR/06-warm-rebuild-duration-seconds.txt"
           echo "Same-run simulator no-op rebuild duration: ${duration_seconds}s"
 
+      - name: Live Activity · refresh
+        if: ${{ !inputs.nativescript_poc_only }}
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Build downstream unit and production UI tests
         if: ${{ !inputs.nativescript_poc_only }}
         run: |
@@ -1505,6 +2173,15 @@ jobs:
             2>&1 | tee "$LOG_DIR/06-downstream-test-build.log"
           echo "$(( $(date +%s) - started_at ))" > "$LOG_DIR/06-downstream-test-build-duration-seconds.txt"
 
+      - name: Live Activity · refresh
+        if: ${{ success() && !inputs.force_clean_build }}
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Save successful simulator compiler state
         if: ${{ success() && !inputs.force_clean_build }}
         uses: actions/cache/save@v6
@@ -1516,6 +2193,14 @@ jobs:
             build/SimulatorDerivedData/CacheMetadata/xcode-build-inputs.json
           key: ${{ steps.simulator-deriveddata-cache.outputs.cache-primary-key }}
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Locate and scan simulator app
         run: |
           set -euxo pipefail
@@ -1549,6 +2234,14 @@ jobs:
               > "$LOG_DIR/07-simulator-dyld-closure-skipped.txt"
           fi
 
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Boot iPad Simulator and launch full app
         run: |
           set -euxo pipefail
@@ -2001,6 +2694,15 @@ jobs:
           done < "$LOG_DIR/08-mcp-new-diagnostic-reports.txt"
           trap - EXIT
 
+      - name: Live Activity · refresh
+        if: always()
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Collect simulator diagnostics
         if: always()
         run: |
@@ -2037,6 +2739,15 @@ jobs:
             done
           fi
 
+      - name: Live Activity · refresh
+        if: always()
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Upload simulator smoke evidence
         if: always()
         uses: actions/upload-artifact@v4
