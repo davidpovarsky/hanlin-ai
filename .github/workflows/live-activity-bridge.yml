@@ -8,7 +8,6 @@ on:
       - "Prepare SideStore IPA"
       - "Validate Expo Runtime Spike"
     types:
-      - requested
       - in_progress
       - completed
 
