@@ -58,9 +58,17 @@ public final class CoreAILanguageModelProvider: Sendable {
             throw CoreAIModelError.unsupportedModelFormat(modelURL.pathExtension)
         }
 
-        progressHandler?(0.5)
+        var isDir: ObjCBool = false
+        FileManager.default.fileExists(atPath: modelURL.path, isDirectory: &isDir)
+        if !isDir.boolValue {
+            let attrs = (try? FileManager.default.attributesOfItem(atPath: modelURL.path)) ?? [:]
+            let size = (attrs[.size] as? NSNumber)?.int64Value ?? 0
+            guard size > 0 else {
+                throw CoreAIModelError.specializationFailed("Model asset at '\(modelURL.path)' is empty or corrupted.")
+            }
+        }
+
         try Task.checkCancellation()
-        progressHandler?(1.0)
 
         return CoreAIModelDescriptor(
             modelPath: modelURL,
@@ -78,6 +86,10 @@ public final class CoreAILanguageModelProvider: Sendable {
         guard descriptor.isSpecialized else {
             throw CoreAIModelError.specializationFailed("Model must be specialized before generation.")
         }
+        guard !prompt.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
+            throw CoreAIModelError.specializationFailed("Prompt cannot be empty.")
+        }
+        try Task.checkCancellation()
         throw CoreAIModelError.unavailable("Core AI execution requires iOS 27 device with supported neural engine.")
     }
 }

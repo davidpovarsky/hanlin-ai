@@ -28,14 +28,33 @@ public struct AppleFoundationModelCapability: Sendable {
     public let modelIdentifier: String
     public let unavailabilityReason: String?
 
+    private static let lock = NSLock()
+    private nonisolated(unsafe) static var _overrideCapability: AppleFoundationModelCapability? = nil
+
+    public static var overrideCapability: AppleFoundationModelCapability? {
+        get {
+            lock.lock()
+            defer { lock.unlock() }
+            return _overrideCapability
+        }
+        set {
+            lock.lock()
+            _overrideCapability = newValue
+            lock.unlock()
+        }
+    }
+
     public static func current() -> AppleFoundationModelCapability {
+        if let override = overrideCapability {
+            return override
+        }
         #if canImport(FoundationModels)
         if #available(iOS 27.0, macOS 26.0, *) {
             return AppleFoundationModelCapability(
-                isAvailable: true,
-                supportsMultimodal: true,
+                isAvailable: false,
+                supportsMultimodal: false,
                 modelIdentifier: "apple.system.language-model",
-                unavailabilityReason: nil
+                unavailabilityReason: "Foundation Models system weights are not preloaded on this host."
             )
         }
         #endif
@@ -48,11 +67,22 @@ public struct AppleFoundationModelCapability: Sendable {
     }
 }
 
+/// Backend seam for Foundation Models generation.
+public protocol AppleFoundationModelSessionBackend: Sendable {
+    func generate(
+        prompt: String,
+        images: [Data],
+        onDelta: @escaping @Sendable (String) -> Bool
+    ) async throws
+}
+
 /// Thin local provider adapter for Apple Foundation Models feeding Hanlin's conversation
 /// and canonical tool architecture without creating a parallel tool loop.
 @MainActor
 public final class AppleFoundationModelsProvider: Sendable {
     public static let shared = AppleFoundationModelsProvider()
+
+    public var backend: (any AppleFoundationModelSessionBackend)? = nil
 
     public init() {}
 
@@ -72,6 +102,13 @@ public final class AppleFoundationModelsProvider: Sendable {
 
         if !images.isEmpty && !capability.supportsMultimodal {
             throw AppleFoundationModelError.unsupportedModality("Images are not supported by the current model capability.")
+        }
+
+        try Task.checkCancellation()
+
+        if let backend = self.backend {
+            try await backend.generate(prompt: prompt, images: images, onDelta: onDelta)
+            return
         }
 
         throw AppleFoundationModelError.unavailable("On-device model weights not loaded on this host.")
