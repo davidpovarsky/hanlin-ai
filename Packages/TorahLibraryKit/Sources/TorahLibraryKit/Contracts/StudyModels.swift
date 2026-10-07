@@ -382,6 +382,10 @@ public struct TorahLinkedSource: Identifiable, Hashable, Codable, Sendable {
     public var sourceTitle: String {
         collectiveTitle ?? sourceRef
     }
+
+    public var primaryText: String {
+        hebrewText ?? englishText ?? ""
+    }
 }
 
 public struct TorahLinkedTopic: Identifiable, Hashable, Codable, Sendable {

@@ -88,7 +88,7 @@ struct ManageRuntimePackagesTool: NativeTool {
 
                 case "preview":
                     guard let name = packageName, !name.isEmpty else {
-                        throw NativeToolJSON.JSONError.missingKey("package")
+                        throw NativeToolJSON.JSONError.missingRequiredString("package")
                     }
                     let preview = try await manager.preview(name: name, version: version)
                     resultText = """
@@ -102,7 +102,7 @@ struct ManageRuntimePackagesTool: NativeTool {
 
                 case "install":
                     guard let name = packageName, !name.isEmpty else {
-                        throw NativeToolJSON.JSONError.missingKey("package")
+                        throw NativeToolJSON.JSONError.missingRequiredString("package")
                     }
                     let record = try await manager.install(name: name, version: version)
                     let probe = try? await manager.probe(record)
@@ -119,7 +119,7 @@ struct ManageRuntimePackagesTool: NativeTool {
 
                 case "probe":
                     guard let name = packageName, !name.isEmpty else {
-                        throw NativeToolJSON.JSONError.missingKey("package")
+                        throw NativeToolJSON.JSONError.missingRequiredString("package")
                     }
                     guard let record = try await manager.installed().first(where: { $0.normalizedName == name.lowercased() || $0.name.lowercased() == name.lowercased() }) else {
                         resultText = "Package '\(name)' is not installed. Install it first before probing."
@@ -137,7 +137,7 @@ struct ManageRuntimePackagesTool: NativeTool {
 
                 case "uninstall":
                     guard let name = packageName, !name.isEmpty else {
-                        throw NativeToolJSON.JSONError.missingKey("package")
+                        throw NativeToolJSON.JSONError.missingRequiredString("package")
                     }
                     guard let record = try await manager.installed().first(where: { $0.normalizedName == name.lowercased() || $0.name.lowercased() == name.lowercased() }) else {
                         resultText = "Package '\(name)' is not currently installed."
@@ -161,29 +161,29 @@ struct ManageRuntimePackagesTool: NativeTool {
                     } else {
                         var lines = ["Installed Node packages (\(packages.count)):"]
                         for pkg in packages {
-                            lines.append("- `\(pkg.name)` (\(pkg.version)) — entry: `\(pkg.entryPoint)` [\(pkg.moduleKind)]")
+                            lines.append("- `\(pkg.name)` (\(pkg.version))\(pkg.summary.map { " — " + $0 } ?? "")")
                         }
                         resultText = lines.joined(separator: "\n")
                     }
 
                 case "preview":
                     guard let name = packageName, !name.isEmpty else {
-                        throw NativeToolJSON.JSONError.missingKey("package")
+                        throw NativeToolJSON.JSONError.missingRequiredString("package")
                     }
                     let preview = try await manager.preview(name: name, version: version)
+                    let findingsText = (preview.findings?.isEmpty ?? true) ? "None" : preview.findings!.map(\.message).joined(separator: "; ")
                     resultText = """
                     Node Package Preview for '\(preview.name)':
                     - Resolved Version: \(preview.version)
                     - Summary: \(preview.summary ?? "None provided")
-                    - Entry Points: \(preview.entryPoints.joined(separator: ", "))
-                    - Dependencies: \(preview.dependencyCount)
+                    - Dependencies: \(preview.dependencies.count)
                     - Node Requirement: \(preview.nodeRequirement ?? "unspecified")
-                    - Compatibility: \(preview.compatibility.verdict)
+                    - Findings: \(findingsText)
                     """
 
                 case "install":
                     guard let name = packageName, !name.isEmpty else {
-                        throw NativeToolJSON.JSONError.missingKey("package")
+                        throw NativeToolJSON.JSONError.missingRequiredString("package")
                     }
                     let record = try await manager.install(name: name, version: version)
                     let probe = try? await manager.probe(record)
@@ -193,13 +193,12 @@ struct ManageRuntimePackagesTool: NativeTool {
                     - Package: `\(record.name)`
                     - Version: \(record.version)
                     - Status: \(probeStatus)
-                    - Entry Point: `\(record.entryPoint)`
-                    - Module Kind: \(record.moduleKind)
+                    - Summary: \(record.summary ?? "None provided")
                     """
 
                 case "probe":
                     guard let name = packageName, !name.isEmpty else {
-                        throw NativeToolJSON.JSONError.missingKey("package")
+                        throw NativeToolJSON.JSONError.missingRequiredString("package")
                     }
                     guard let record = try await manager.installed().first(where: { $0.name == name }) else {
                         resultText = "Node package '\(name)' is not installed. Install it first before probing."

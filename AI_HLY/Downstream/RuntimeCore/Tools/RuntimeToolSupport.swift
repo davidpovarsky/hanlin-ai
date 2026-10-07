@@ -142,7 +142,7 @@ enum RuntimeToolSupport {
                 return .cancelled
             case .timeout:
                 return .timedOut
-            case .invalidCallerContext, .pathOutOfScope, .invalidRequest:
+            case .invalidCallerContext, .pathOutOfScope, .invalidRequest, .invalidArguments:
                 return .invalidArguments
             case .systemCapabilityUnavailable, .sqliteFailure, .unsupportedByPlatform, .quotaExceeded:
                 return .failed
