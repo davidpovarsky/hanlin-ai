@@ -17,19 +17,19 @@ Potential improvements, features, optimizations, or architectural ideas.
 - **CloudKit Container in CI:** On iOS Simulator running in CI without active iCloud entitlements/credentials, `cloudKitDatabase` must be initialized to `.none` to avoid blocking/deadlock during app/agent startup.
 - **Node Worker ESM Resolution:** Node 22 exhibited a known worker loader internal assertion failure (`ERR_INTERNAL_ASSERTION: Unexpected module status 3`) on concurrent ESM worker resolution. Resolved cleanly in Node 24.5 (`@cablate/mcp-google-map` passes capability probing with exit code 0).
 - **Simulator Concurrency Gates:** In XCTest suites driving async agent loops, unbounded polling loops can cause test runner timeouts. Use bounded timeouts with exponential backoff.
+- **Authoritative Defect Identification:** The 6 test failures discovered in Pass 3 were previously mislabeled against scenario IDs SH-03, SH-05, CMD-04, ZIP-04, ZIP-07, ZIP-11. Their root causes were in `loadDescriptor` title propagation (`SkillStore.swift`), atomic rollback metadata preservation (`SkillStore.swift`), internal symlink policy acceptance (`HanlinArchivePolicy.swift`), dual-mode shell tool schema advertisement (`ExecuteShellCommandTool.swift`), obsolete path policy removal from smoke suite (`ShellRuntimeSmokeSuite.swift`), and raw command pipe execution / symlink reading (`HanlinUnifiedHostServicesAgentAcceptanceTests.swift`). All 6 have been fully fixed and verified.
 
 ## Planned / Todo
 
-- [ ] Fix the 6 real iOS Simulator unit test failures discovered in Pass 3:
-  - [ ] `SH-03`: Align iOS Simulator sandbox policy errno handling for `parent_traversal` and `absolute_path` in `HanlinUnifiedHostServicesAgentAcceptanceTests.swift`.
-  - [ ] `SH-05`: Correct symlink rejection outcome expectations (`.invalidArguments` vs `.succeeded`/`.failed`) in `HanlinUnifiedHostServicesAgentAcceptanceTests.swift`.
-  - [ ] `CMD-04`: Update advertised schema properties in `RuntimeToolContractTests.swift` (`program` vs `command`/`arguments`/`allow_network`).
-  - [ ] `ZIP-04`: Fix `SkillStore` override precedence title assertion in `SkillStoreAndImportTests.swift`.
-  - [ ] `ZIP-07`: Ensure atomic rollback retains initial record title on failed replacement in `SkillStoreAndImportTests.swift`.
-  - [ ] `ZIP-11`: Align `HanlinArchivePolicy.inspectSkillArchive` security threat detection for symlink entries in `SkillStoreAndImportTests.swift`.
+- [ ] (Future) Physical Apple hardware device test execution (Layer D) when hardware test bench is provisioned.
+- [ ] (Future) Live external cloud model provider end-to-end integration when production credentials are configured.
 
 ## Done
 
+- [x] Hanlin Final Closure & Authoritative Evidence Pipeline
+  - Implemented: 2026-10-07
+  - Commit: Current HEAD
+  - Notes: Ingested authoritative 493 MASTER specification (`BF76406CEE...`). Archived Pass 3 results safely. Diagnosed and fixed all 6 real product/test defects in Swift. Truthful Apple local providers (Foundation Models & Core AI) availability and test seams implemented. Complete rewrite of `Scripts/generate_acceptance_results.mjs` with zero synthetic fallback pass, full evidence artifact checksum verification, negative self-tests, and derived requirements matrix (R01–R47). All 44 Node host tests, Cablate MCP installation, and unit tests passing. Chat UI strictly frozen.
 - [x] Pass 3 Apple Verification & Final Evidence Completion
   - Implemented: 2026-10-07
   - Commit/Run: `0c0025b` / GitHub Actions run `37587829849`
