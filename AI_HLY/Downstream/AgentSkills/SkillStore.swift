@@ -179,19 +179,32 @@ public final class SkillStore {
         return nil
     }
 
+    public static func normalizeRelativePath(_ relativePath: String) -> String? {
+        var clean = relativePath.replacingOccurrences(of: "\\", with: "/").trimmingCharacters(in: CharacterSet(charactersIn: " "))
+        while clean.hasPrefix("./") {
+            clean.removeFirst(2)
+        }
+        guard !clean.isEmpty, !clean.hasPrefix("/"), !clean.contains("\0") else { return nil }
+        let rawParts = clean.split(separator: "/", omittingEmptySubsequences: true)
+        var stack: [String] = []
+        for part in rawParts {
+            if part == "." {
+                continue
+            } else if part == ".." {
+                guard !stack.isEmpty else { return nil }
+                stack.removeLast()
+            } else {
+                stack.append(String(part))
+            }
+        }
+        guard !stack.isEmpty else { return nil }
+        return stack.joined(separator: "/")
+    }
+
     public func safeResourceURL(for skillID: HanlinSkillID, relativePath: String) -> URL? {
         guard let base = directoryURL(for: skillID) else { return nil }
-        let cleanRelative = relativePath.replacingOccurrences(of: "\\", with: "/").trimmingCharacters(in: CharacterSet(charactersIn: "/ "))
-        guard !cleanRelative.isEmpty,
-              !cleanRelative.hasPrefix("/"),
-              !cleanRelative.contains("\0") else {
-            return nil
-        }
-        let components = cleanRelative.split(separator: "/")
-        guard !components.contains(".."), !components.contains("."), !components.contains("") else {
-            return nil
-        }
-        let candidate = base.appendingPathComponent(cleanRelative)
+        guard let normalizedRelative = Self.normalizeRelativePath(relativePath) else { return nil }
+        let candidate = base.appendingPathComponent(normalizedRelative)
         let resolvedCandidate = candidate.standardizedFileURL.resolvingSymlinksInPath()
         let resolvedBase = base.standardizedFileURL.resolvingSymlinksInPath()
 

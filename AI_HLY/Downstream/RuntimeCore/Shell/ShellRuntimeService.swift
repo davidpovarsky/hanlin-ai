@@ -326,8 +326,8 @@ actor ShellRuntimeService {
     private func validateArguments(_ arguments: ArraySlice<String>, command: String) throws {
         for argument in arguments where !argument.hasPrefix("-") {
             if command == "curl", let url = URL(string: argument), let scheme = url.scheme?.lowercased() {
-                guard scheme == "https" || scheme == "http", url.host != nil else {
-                    throw RuntimeCoreError.invalidRequest("curl accepts HTTP/HTTPS URLs only.")
+                guard scheme == "https", url.host != nil else {
+                    throw RuntimeCoreError.invalidRequest("curl accepts HTTPS URLs only.")
                 }
                 continue
             }

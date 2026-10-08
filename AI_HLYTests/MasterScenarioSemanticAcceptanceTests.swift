@@ -1,6 +1,7 @@
 import Foundation
 import Testing
 import HanlinPlatformContracts
+import ZIPFoundation
 @testable import AI_Hanlin
 
 @Suite("Master Scenario Semantic Acceptance Tests", .serialized)
@@ -176,19 +177,37 @@ struct MasterScenarioSemanticAcceptanceTests {
         let sourceSwift = "print(\"Hello from source.swift\")"
         let moduleWASM = Data([0x00, 0x61, 0x73, 0x6D, 0x01, 0x00, 0x00, 0x00])
 
-        let skillDir = tempDir.appending(path: "multi-asset-skill")
-        let assetsDir = skillDir.appending(path: "assets")
-        try FileManager.default.createDirectory(at: assetsDir, withIntermediateDirectories: true)
+        let tempZip = tempDir.appending(path: "multi-asset-skill.zip")
+        guard let archive = Archive(url: tempZip, accessMode: .create) else {
+            Issue.record("Failed to create zip archive")
+            return
+        }
 
-        try skillMD.write(to: skillDir.appending(path: "SKILL.md"), atomically: true, encoding: .utf8)
-        try license.write(to: skillDir.appending(path: "LICENSE"), atomically: true, encoding: .utf8)
-        try dataBin.write(to: assetsDir.appending(path: "data.bin"))
-        try sampleXLSX.write(to: skillDir.appending(path: "sample.xlsx"))
-        try sourceSwift.write(to: skillDir.appending(path: "source.swift"), atomically: true, encoding: .utf8)
-        try moduleWASM.write(to: skillDir.appending(path: "module.wasm"))
+        let skillMDData = Data(skillMD.utf8)
+        let licenseData = Data(license.utf8)
+        let sourceSwiftData = Data(sourceSwift.utf8)
+
+        try archive.addEntry(with: "SKILL.md", type: .file, uncompressedSize: UInt32(skillMDData.count), provider: { pos, size in
+            skillMDData.subdata(in: pos..<(pos + size))
+        })
+        try archive.addEntry(with: "LICENSE", type: .file, uncompressedSize: UInt32(licenseData.count), provider: { pos, size in
+            licenseData.subdata(in: pos..<(pos + size))
+        })
+        try archive.addEntry(with: "assets/data.bin", type: .file, uncompressedSize: UInt32(dataBin.count), provider: { pos, size in
+            dataBin.subdata(in: pos..<(pos + size))
+        })
+        try archive.addEntry(with: "sample.xlsx", type: .file, uncompressedSize: UInt32(sampleXLSX.count), provider: { pos, size in
+            sampleXLSX.subdata(in: pos..<(pos + size))
+        })
+        try archive.addEntry(with: "source.swift", type: .file, uncompressedSize: UInt32(sourceSwiftData.count), provider: { pos, size in
+            sourceSwiftData.subdata(in: pos..<(pos + size))
+        })
+        try archive.addEntry(with: "module.wasm", type: .file, uncompressedSize: UInt32(moduleWASM.count), provider: { pos, size in
+            moduleWASM.subdata(in: pos..<(pos + size))
+        })
 
         let importer = SkillImporter.shared
-        let staged = try importer.stageAndInspect(fileURL: skillDir)
+        let staged = try importer.stageAndInspect(fileURL: tempZip)
         let descriptor = try importer.install(staged: staged)
         defer { SkillStore.shared.deleteCustomSkill(skillID: descriptor.id) }
 
@@ -204,33 +223,36 @@ struct MasterScenarioSemanticAcceptanceTests {
     }
 
     @Test("ZIP-11: Internal relative paths ./references/a.md and references/x/../a.md normalize correctly inside package without blanket rejection")
+    @MainActor
     func zip11InternalRelativePathsResolveWithoutBlanketRejection() throws {
-        let tempDir = FileManager.default.temporaryDirectory.appending(path: "zip11_\(UUID().uuidString)")
-        let pkgRoot = tempDir.appending(path: "pkg")
-        let refDir = pkgRoot.appending(path: "references")
-        let refSubDir = refDir.appending(path: "x")
-        try FileManager.default.createDirectory(at: refSubDir, withIntermediateDirectories: true)
-        defer { try? FileManager.default.removeItem(at: tempDir) }
+        let store = SkillStore.shared
+        let skillID = try HanlinSkillID(validating: "zip11-test-\(UUID().uuidString.prefix(8).lowercased())")
+        try store.saveCustomSkill(
+            id: skillID,
+            title: "ZIP-11 Test Skill",
+            description: "Test skill for relative path normalization",
+            instructions: "Test instructions"
+        )
+        defer { store.deleteCustomSkill(skillID: skillID) }
 
-        let targetFile = refDir.appending(path: "a.md")
-        try "# Reference Content".write(to: targetFile, atomically: true, encoding: .utf8)
+        try store.addOrUpdateTextResource(for: skillID, relativePath: "references/a.md", content: "# Reference Content")
 
         let path1 = "./references/a.md"
         let path2 = "references/x/../a.md"
 
-        let norm1 = NSString(string: path1).standardizingPath
-        let norm2 = NSString(string: path2).standardizingPath
+        let norm1 = SkillStore.normalizeRelativePath(path1)
+        let norm2 = SkillStore.normalizeRelativePath(path2)
 
         #expect(norm1 == "references/a.md")
         #expect(norm2 == "references/a.md")
 
-        let resolved1 = pkgRoot.appending(path: norm1).standardizedFileURL
-        let resolved2 = pkgRoot.appending(path: norm2).standardizedFileURL
+        let url1 = store.safeResourceURL(for: skillID, relativePath: path1)
+        let url2 = store.safeResourceURL(for: skillID, relativePath: path2)
 
-        #expect(resolved1.path == targetFile.standardizedFileURL.path)
-        #expect(resolved2.path == targetFile.standardizedFileURL.path)
-        #expect(FileManager.default.fileExists(atPath: resolved1.path))
-        #expect(FileManager.default.fileExists(atPath: resolved2.path))
+        #expect(url1 != nil)
+        #expect(url2 != nil)
+        #expect(url1?.standardizedFileURL.path == url2?.standardizedFileURL.path)
+        #expect(try String(contentsOf: url1!, encoding: .utf8) == "# Reference Content")
     }
 
     @Test("COREAI-06: GGUF/LLM.swift local provider streams and cancels cleanly after Core AI provider integration")
