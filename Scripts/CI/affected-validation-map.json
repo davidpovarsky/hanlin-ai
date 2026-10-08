@@ -528,6 +528,7 @@
       ],
       "unit_suites": [
         "AI_HLYTests/AgentSkillsExposureTests",
+        "AI_HLYTests/AppleLocalProvidersTests",
         "AI_HLYTests/CanonicalAdapterTests",
         "AI_HLYTests/CanonicalShadowCoordinatorTests",
         "AI_HLYTests/CanonicalToolAuthorityTests",
@@ -536,7 +537,9 @@
         "AI_HLYTests/FoundationJSONShadowAdapterTests",
         "AI_HLYTests/HanlinScriptingAssistantProviderAdapterTests",
         "AI_HLYTests/LegacyToolMigrationTests",
+        "AI_HLYTests/MasterScenarioSemanticAcceptanceTests",
         "AI_HLYTests/ProductionSystemSkillsTests",
+        "AI_HLYTests/RuntimeToolContractTests",
         "AI_HLYTests/ScriptingCanonicalAuthorityTests",
         "AI_HLYTests/SkillStoreAndImportTests"
       ],

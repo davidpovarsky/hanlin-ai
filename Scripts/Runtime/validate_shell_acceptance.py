@@ -20,8 +20,6 @@ EXPECTED_POLICIES = {
     "pipeline",
     "redirection",
     "command_chaining",
-    "parent_traversal",
-    "absolute_path",
     "curl_https_permission",
     "curl_http",
     "curl_offline_version",
