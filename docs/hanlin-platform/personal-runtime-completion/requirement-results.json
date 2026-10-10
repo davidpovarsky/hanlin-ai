@@ -1,7 +1,11 @@
 {
-  "schemaVersion": "2.0.0",
-  "generatedAt": "2026-10-07T18:54:02.913Z",
-  "commitSha": "019858de4d9e7721d45382d712d783f34c990b27",
+  "schemaVersion": "2.1.0",
+  "generatedAt": "2026-10-10T22:26:24.777Z",
+  "provenance": {
+    "implementationSHA": "9acb412e30de92f51e88ad05be43d315f85df3e4",
+    "evidenceRunSHA": "d13c29a6c1a4184c20b280cef51d3319c094b202",
+    "reportSHA": "9855d86f89730c01d9d0d2141cb7447d7b7c8cc7"
+  },
   "totalRequirements": 47,
   "requirements": [
     {
@@ -27,13 +31,15 @@
         "FINAL-12"
       ],
       "statusBreakdown": {
-        "PASSED": 18,
+        "PASSED": 17,
         "FAILED": 0,
-        "NOT_RUN_DEVICE": 0,
+        "NOT_RUN_DEVICE": 1,
         "BLOCKED_EXTERNAL": 0,
+        "BLOCKED_DEPENDENCY": 0,
+        "BLOCKED_INPUT_MODEL_FIXTURE": 0,
         "NOT_RUN": 0
       },
-      "overallStatus": "PASSED"
+      "overallStatus": "PROVEN_SIMULATOR"
     },
     {
       "requirementId": "R02",
@@ -75,10 +81,12 @@
         "FINAL-12"
       ],
       "statusBreakdown": {
-        "PASSED": 29,
+        "PASSED": 27,
         "FAILED": 0,
-        "NOT_RUN_DEVICE": 6,
+        "NOT_RUN_DEVICE": 8,
         "BLOCKED_EXTERNAL": 0,
+        "BLOCKED_DEPENDENCY": 0,
+        "BLOCKED_INPUT_MODEL_FIXTURE": 0,
         "NOT_RUN": 0
       },
       "overallStatus": "PROVEN_SIMULATOR"
@@ -115,10 +123,12 @@
         "FINAL-12"
       ],
       "statusBreakdown": {
-        "PASSED": 26,
+        "PASSED": 25,
         "FAILED": 0,
-        "NOT_RUN_DEVICE": 1,
+        "NOT_RUN_DEVICE": 2,
         "BLOCKED_EXTERNAL": 0,
+        "BLOCKED_DEPENDENCY": 0,
+        "BLOCKED_INPUT_MODEL_FIXTURE": 0,
         "NOT_RUN": 0
       },
       "overallStatus": "PROVEN_SIMULATOR"
@@ -149,10 +159,12 @@
         "FINAL-12"
       ],
       "statusBreakdown": {
-        "PASSED": 20,
+        "PASSED": 19,
         "FAILED": 0,
-        "NOT_RUN_DEVICE": 1,
+        "NOT_RUN_DEVICE": 2,
         "BLOCKED_EXTERNAL": 0,
+        "BLOCKED_DEPENDENCY": 0,
+        "BLOCKED_INPUT_MODEL_FIXTURE": 0,
         "NOT_RUN": 0
       },
       "overallStatus": "PROVEN_SIMULATOR"
@@ -204,10 +216,12 @@
         "FINAL-12"
       ],
       "statusBreakdown": {
-        "PASSED": 34,
+        "PASSED": 33,
         "FAILED": 0,
-        "NOT_RUN_DEVICE": 0,
+        "NOT_RUN_DEVICE": 1,
         "BLOCKED_EXTERNAL": 8,
+        "BLOCKED_DEPENDENCY": 0,
+        "BLOCKED_INPUT_MODEL_FIXTURE": 0,
         "NOT_RUN": 0
       },
       "overallStatus": "PROVEN_SIMULATOR"
@@ -275,10 +289,12 @@
         "FINAL-12"
       ],
       "statusBreakdown": {
-        "PASSED": 45,
+        "PASSED": 44,
         "FAILED": 0,
-        "NOT_RUN_DEVICE": 10,
+        "NOT_RUN_DEVICE": 11,
         "BLOCKED_EXTERNAL": 3,
+        "BLOCKED_DEPENDENCY": 0,
+        "BLOCKED_INPUT_MODEL_FIXTURE": 0,
         "NOT_RUN": 0
       },
       "overallStatus": "PROVEN_SIMULATOR"
@@ -306,10 +322,12 @@
         "FINAL-12"
       ],
       "statusBreakdown": {
-        "PASSED": 17,
+        "PASSED": 16,
         "FAILED": 0,
-        "NOT_RUN_DEVICE": 0,
+        "NOT_RUN_DEVICE": 1,
         "BLOCKED_EXTERNAL": 1,
+        "BLOCKED_DEPENDENCY": 0,
+        "BLOCKED_INPUT_MODEL_FIXTURE": 0,
         "NOT_RUN": 0
       },
       "overallStatus": "PROVEN_SIMULATOR"
@@ -344,10 +362,12 @@
         "FINAL-12"
       ],
       "statusBreakdown": {
-        "PASSED": 22,
+        "PASSED": 21,
         "FAILED": 0,
-        "NOT_RUN_DEVICE": 2,
+        "NOT_RUN_DEVICE": 3,
         "BLOCKED_EXTERNAL": 1,
+        "BLOCKED_DEPENDENCY": 0,
+        "BLOCKED_INPUT_MODEL_FIXTURE": 0,
         "NOT_RUN": 0
       },
       "overallStatus": "PROVEN_SIMULATOR"
@@ -382,10 +402,12 @@
         "FINAL-12"
       ],
       "statusBreakdown": {
-        "PASSED": 21,
+        "PASSED": 19,
         "FAILED": 0,
-        "NOT_RUN_DEVICE": 4,
+        "NOT_RUN_DEVICE": 6,
         "BLOCKED_EXTERNAL": 0,
+        "BLOCKED_DEPENDENCY": 0,
+        "BLOCKED_INPUT_MODEL_FIXTURE": 0,
         "NOT_RUN": 0
       },
       "overallStatus": "PROVEN_SIMULATOR"
@@ -415,13 +437,15 @@
         "FINAL-12"
       ],
       "statusBreakdown": {
-        "PASSED": 20,
+        "PASSED": 19,
         "FAILED": 0,
-        "NOT_RUN_DEVICE": 0,
+        "NOT_RUN_DEVICE": 1,
         "BLOCKED_EXTERNAL": 0,
+        "BLOCKED_DEPENDENCY": 0,
+        "BLOCKED_INPUT_MODEL_FIXTURE": 0,
         "NOT_RUN": 0
       },
-      "overallStatus": "PASSED"
+      "overallStatus": "PROVEN_SIMULATOR"
     },
     {
       "requirementId": "R11",
@@ -487,10 +511,12 @@
         "FINAL-12"
       ],
       "statusBreakdown": {
-        "PASSED": 32,
+        "PASSED": 30,
         "FAILED": 0,
-        "NOT_RUN_DEVICE": 26,
+        "NOT_RUN_DEVICE": 28,
         "BLOCKED_EXTERNAL": 1,
+        "BLOCKED_DEPENDENCY": 0,
+        "BLOCKED_INPUT_MODEL_FIXTURE": 0,
         "NOT_RUN": 0
       },
       "overallStatus": "PROVEN_SIMULATOR"
@@ -524,10 +550,12 @@
         "FINAL-12"
       ],
       "statusBreakdown": {
-        "PASSED": 23,
+        "PASSED": 19,
         "FAILED": 0,
-        "NOT_RUN_DEVICE": 0,
+        "NOT_RUN_DEVICE": 4,
         "BLOCKED_EXTERNAL": 1,
+        "BLOCKED_DEPENDENCY": 0,
+        "BLOCKED_INPUT_MODEL_FIXTURE": 0,
         "NOT_RUN": 0
       },
       "overallStatus": "PROVEN_SIMULATOR"
@@ -559,13 +587,15 @@
         "FINAL-12"
       ],
       "statusBreakdown": {
-        "PASSED": 22,
+        "PASSED": 17,
         "FAILED": 0,
-        "NOT_RUN_DEVICE": 0,
+        "NOT_RUN_DEVICE": 5,
         "BLOCKED_EXTERNAL": 0,
+        "BLOCKED_DEPENDENCY": 0,
+        "BLOCKED_INPUT_MODEL_FIXTURE": 0,
         "NOT_RUN": 0
       },
-      "overallStatus": "PASSED"
+      "overallStatus": "PROVEN_SIMULATOR"
     },
     {
       "requirementId": "R14",
@@ -600,13 +630,15 @@
         "FINAL-12"
       ],
       "statusBreakdown": {
-        "PASSED": 28,
+        "PASSED": 25,
         "FAILED": 0,
-        "NOT_RUN_DEVICE": 0,
+        "NOT_RUN_DEVICE": 3,
         "BLOCKED_EXTERNAL": 0,
+        "BLOCKED_DEPENDENCY": 0,
+        "BLOCKED_INPUT_MODEL_FIXTURE": 0,
         "NOT_RUN": 0
       },
-      "overallStatus": "PASSED"
+      "overallStatus": "PROVEN_SIMULATOR"
     },
     {
       "requirementId": "R15",
@@ -645,10 +677,12 @@
         "FINAL-12"
       ],
       "statusBreakdown": {
-        "PASSED": 29,
+        "PASSED": 28,
         "FAILED": 0,
-        "NOT_RUN_DEVICE": 3,
+        "NOT_RUN_DEVICE": 4,
         "BLOCKED_EXTERNAL": 0,
+        "BLOCKED_DEPENDENCY": 0,
+        "BLOCKED_INPUT_MODEL_FIXTURE": 0,
         "NOT_RUN": 0
       },
       "overallStatus": "PROVEN_SIMULATOR"
@@ -681,10 +715,12 @@
         "FINAL-12"
       ],
       "statusBreakdown": {
-        "PASSED": 19,
+        "PASSED": 18,
         "FAILED": 0,
-        "NOT_RUN_DEVICE": 2,
+        "NOT_RUN_DEVICE": 3,
         "BLOCKED_EXTERNAL": 2,
+        "BLOCKED_DEPENDENCY": 0,
+        "BLOCKED_INPUT_MODEL_FIXTURE": 0,
         "NOT_RUN": 0
       },
       "overallStatus": "PROVEN_SIMULATOR"
@@ -718,10 +754,12 @@
         "FINAL-12"
       ],
       "statusBreakdown": {
-        "PASSED": 22,
+        "PASSED": 21,
         "FAILED": 0,
-        "NOT_RUN_DEVICE": 2,
+        "NOT_RUN_DEVICE": 3,
         "BLOCKED_EXTERNAL": 0,
+        "BLOCKED_DEPENDENCY": 0,
+        "BLOCKED_INPUT_MODEL_FIXTURE": 0,
         "NOT_RUN": 0
       },
       "overallStatus": "PROVEN_SIMULATOR"
@@ -764,10 +802,12 @@
         "FINAL-12"
       ],
       "statusBreakdown": {
-        "PASSED": 32,
+        "PASSED": 31,
         "FAILED": 0,
-        "NOT_RUN_DEVICE": 1,
+        "NOT_RUN_DEVICE": 2,
         "BLOCKED_EXTERNAL": 0,
+        "BLOCKED_DEPENDENCY": 0,
+        "BLOCKED_INPUT_MODEL_FIXTURE": 0,
         "NOT_RUN": 0
       },
       "overallStatus": "PROVEN_SIMULATOR"
@@ -793,13 +833,15 @@
         "FINAL-12"
       ],
       "statusBreakdown": {
-        "PASSED": 16,
+        "PASSED": 15,
         "FAILED": 0,
-        "NOT_RUN_DEVICE": 0,
+        "NOT_RUN_DEVICE": 1,
         "BLOCKED_EXTERNAL": 0,
+        "BLOCKED_DEPENDENCY": 0,
+        "BLOCKED_INPUT_MODEL_FIXTURE": 0,
         "NOT_RUN": 0
       },
-      "overallStatus": "PASSED"
+      "overallStatus": "PROVEN_SIMULATOR"
     },
     {
       "requirementId": "R20",
@@ -825,10 +867,12 @@
         "FINAL-12"
       ],
       "statusBreakdown": {
-        "PASSED": 14,
+        "PASSED": 13,
         "FAILED": 0,
-        "NOT_RUN_DEVICE": 5,
+        "NOT_RUN_DEVICE": 6,
         "BLOCKED_EXTERNAL": 0,
+        "BLOCKED_DEPENDENCY": 0,
+        "BLOCKED_INPUT_MODEL_FIXTURE": 0,
         "NOT_RUN": 0
       },
       "overallStatus": "PROVEN_SIMULATOR"
@@ -856,10 +900,12 @@
         "FINAL-12"
       ],
       "statusBreakdown": {
-        "PASSED": 16,
+        "PASSED": 15,
         "FAILED": 0,
-        "NOT_RUN_DEVICE": 2,
+        "NOT_RUN_DEVICE": 3,
         "BLOCKED_EXTERNAL": 0,
+        "BLOCKED_DEPENDENCY": 0,
+        "BLOCKED_INPUT_MODEL_FIXTURE": 0,
         "NOT_RUN": 0
       },
       "overallStatus": "PROVEN_SIMULATOR"
@@ -915,10 +961,12 @@
         "FINAL-12"
       ],
       "statusBreakdown": {
-        "PASSED": 44,
+        "PASSED": 42,
         "FAILED": 0,
-        "NOT_RUN_DEVICE": 2,
+        "NOT_RUN_DEVICE": 4,
         "BLOCKED_EXTERNAL": 0,
+        "BLOCKED_DEPENDENCY": 0,
+        "BLOCKED_INPUT_MODEL_FIXTURE": 0,
         "NOT_RUN": 0
       },
       "overallStatus": "PROVEN_SIMULATOR"
@@ -1010,10 +1058,12 @@
         "FINAL-12"
       ],
       "statusBreakdown": {
-        "PASSED": 49,
+        "PASSED": 47,
         "FAILED": 0,
-        "NOT_RUN_DEVICE": 32,
+        "NOT_RUN_DEVICE": 34,
         "BLOCKED_EXTERNAL": 1,
+        "BLOCKED_DEPENDENCY": 0,
+        "BLOCKED_INPUT_MODEL_FIXTURE": 0,
         "NOT_RUN": 0
       },
       "overallStatus": "PROVEN_SIMULATOR"
@@ -1048,10 +1098,12 @@
         "FINAL-12"
       ],
       "statusBreakdown": {
-        "PASSED": 22,
+        "PASSED": 21,
         "FAILED": 0,
-        "NOT_RUN_DEVICE": 1,
+        "NOT_RUN_DEVICE": 2,
         "BLOCKED_EXTERNAL": 2,
+        "BLOCKED_DEPENDENCY": 0,
+        "BLOCKED_INPUT_MODEL_FIXTURE": 0,
         "NOT_RUN": 0
       },
       "overallStatus": "PROVEN_SIMULATOR"
@@ -1084,13 +1136,15 @@
         "FINAL-12"
       ],
       "statusBreakdown": {
-        "PASSED": 23,
+        "PASSED": 21,
         "FAILED": 0,
-        "NOT_RUN_DEVICE": 0,
+        "NOT_RUN_DEVICE": 2,
         "BLOCKED_EXTERNAL": 0,
+        "BLOCKED_DEPENDENCY": 0,
+        "BLOCKED_INPUT_MODEL_FIXTURE": 0,
         "NOT_RUN": 0
       },
-      "overallStatus": "PASSED"
+      "overallStatus": "PROVEN_SIMULATOR"
     },
     {
       "requirementId": "R26",
@@ -1113,13 +1167,15 @@
         "FINAL-12"
       ],
       "statusBreakdown": {
-        "PASSED": 16,
+        "PASSED": 14,
         "FAILED": 0,
-        "NOT_RUN_DEVICE": 0,
+        "NOT_RUN_DEVICE": 2,
         "BLOCKED_EXTERNAL": 0,
+        "BLOCKED_DEPENDENCY": 0,
+        "BLOCKED_INPUT_MODEL_FIXTURE": 0,
         "NOT_RUN": 0
       },
-      "overallStatus": "PASSED"
+      "overallStatus": "PROVEN_SIMULATOR"
     },
     {
       "requirementId": "R27",
@@ -1156,13 +1212,15 @@
         "FINAL-12"
       ],
       "statusBreakdown": {
-        "PASSED": 30,
+        "PASSED": 29,
         "FAILED": 0,
-        "NOT_RUN_DEVICE": 0,
+        "NOT_RUN_DEVICE": 1,
         "BLOCKED_EXTERNAL": 0,
+        "BLOCKED_DEPENDENCY": 0,
+        "BLOCKED_INPUT_MODEL_FIXTURE": 0,
         "NOT_RUN": 0
       },
-      "overallStatus": "PASSED"
+      "overallStatus": "PROVEN_SIMULATOR"
     },
     {
       "requirementId": "R28",
@@ -1186,13 +1244,15 @@
         "FINAL-12"
       ],
       "statusBreakdown": {
-        "PASSED": 17,
+        "PASSED": 16,
         "FAILED": 0,
-        "NOT_RUN_DEVICE": 0,
+        "NOT_RUN_DEVICE": 1,
         "BLOCKED_EXTERNAL": 0,
+        "BLOCKED_DEPENDENCY": 0,
+        "BLOCKED_INPUT_MODEL_FIXTURE": 0,
         "NOT_RUN": 0
       },
-      "overallStatus": "PASSED"
+      "overallStatus": "PROVEN_SIMULATOR"
     },
     {
       "requirementId": "R29",
@@ -1219,13 +1279,15 @@
         "FINAL-12"
       ],
       "statusBreakdown": {
-        "PASSED": 20,
+        "PASSED": 19,
         "FAILED": 0,
-        "NOT_RUN_DEVICE": 0,
+        "NOT_RUN_DEVICE": 1,
         "BLOCKED_EXTERNAL": 0,
+        "BLOCKED_DEPENDENCY": 0,
+        "BLOCKED_INPUT_MODEL_FIXTURE": 0,
         "NOT_RUN": 0
       },
-      "overallStatus": "PASSED"
+      "overallStatus": "PROVEN_SIMULATOR"
     },
     {
       "requirementId": "R30",
@@ -1283,13 +1345,15 @@
         "FINAL-12"
       ],
       "statusBreakdown": {
-        "PASSED": 51,
+        "PASSED": 48,
         "FAILED": 0,
-        "NOT_RUN_DEVICE": 0,
+        "NOT_RUN_DEVICE": 3,
         "BLOCKED_EXTERNAL": 0,
+        "BLOCKED_DEPENDENCY": 0,
+        "BLOCKED_INPUT_MODEL_FIXTURE": 0,
         "NOT_RUN": 0
       },
-      "overallStatus": "PASSED"
+      "overallStatus": "PROVEN_SIMULATOR"
     },
     {
       "requirementId": "R31",
@@ -1318,13 +1382,15 @@
         "FINAL-12"
       ],
       "statusBreakdown": {
-        "PASSED": 22,
+        "PASSED": 21,
         "FAILED": 0,
-        "NOT_RUN_DEVICE": 0,
+        "NOT_RUN_DEVICE": 1,
         "BLOCKED_EXTERNAL": 0,
+        "BLOCKED_DEPENDENCY": 0,
+        "BLOCKED_INPUT_MODEL_FIXTURE": 0,
         "NOT_RUN": 0
       },
-      "overallStatus": "PASSED"
+      "overallStatus": "PROVEN_SIMULATOR"
     },
     {
       "requirementId": "R32",
@@ -1365,13 +1431,15 @@
         "FINAL-12"
       ],
       "statusBreakdown": {
-        "PASSED": 34,
+        "PASSED": 30,
         "FAILED": 0,
-        "NOT_RUN_DEVICE": 0,
+        "NOT_RUN_DEVICE": 4,
         "BLOCKED_EXTERNAL": 0,
+        "BLOCKED_DEPENDENCY": 0,
+        "BLOCKED_INPUT_MODEL_FIXTURE": 0,
         "NOT_RUN": 0
       },
-      "overallStatus": "PASSED"
+      "overallStatus": "PROVEN_SIMULATOR"
     },
     {
       "requirementId": "R33",
@@ -1399,13 +1467,15 @@
         "FINAL-12"
       ],
       "statusBreakdown": {
-        "PASSED": 21,
+        "PASSED": 20,
         "FAILED": 0,
-        "NOT_RUN_DEVICE": 0,
+        "NOT_RUN_DEVICE": 1,
         "BLOCKED_EXTERNAL": 0,
+        "BLOCKED_DEPENDENCY": 0,
+        "BLOCKED_INPUT_MODEL_FIXTURE": 0,
         "NOT_RUN": 0
       },
-      "overallStatus": "PASSED"
+      "overallStatus": "PROVEN_SIMULATOR"
     },
     {
       "requirementId": "R34",
@@ -1431,13 +1501,15 @@
         "FINAL-12"
       ],
       "statusBreakdown": {
-        "PASSED": 19,
+        "PASSED": 18,
         "FAILED": 0,
-        "NOT_RUN_DEVICE": 0,
+        "NOT_RUN_DEVICE": 1,
         "BLOCKED_EXTERNAL": 0,
+        "BLOCKED_DEPENDENCY": 0,
+        "BLOCKED_INPUT_MODEL_FIXTURE": 0,
         "NOT_RUN": 0
       },
-      "overallStatus": "PASSED"
+      "overallStatus": "PROVEN_SIMULATOR"
     },
     {
       "requirementId": "R35",
@@ -1457,13 +1529,15 @@
         "FINAL-12"
       ],
       "statusBreakdown": {
-        "PASSED": 13,
+        "PASSED": 12,
         "FAILED": 0,
-        "NOT_RUN_DEVICE": 0,
+        "NOT_RUN_DEVICE": 1,
         "BLOCKED_EXTERNAL": 0,
+        "BLOCKED_DEPENDENCY": 0,
+        "BLOCKED_INPUT_MODEL_FIXTURE": 0,
         "NOT_RUN": 0
       },
-      "overallStatus": "PASSED"
+      "overallStatus": "PROVEN_SIMULATOR"
     },
     {
       "requirementId": "R36",
@@ -1486,13 +1560,15 @@
         "FINAL-12"
       ],
       "statusBreakdown": {
-        "PASSED": 16,
+        "PASSED": 15,
         "FAILED": 0,
-        "NOT_RUN_DEVICE": 0,
+        "NOT_RUN_DEVICE": 1,
         "BLOCKED_EXTERNAL": 0,
+        "BLOCKED_DEPENDENCY": 0,
+        "BLOCKED_INPUT_MODEL_FIXTURE": 0,
         "NOT_RUN": 0
       },
-      "overallStatus": "PASSED"
+      "overallStatus": "PROVEN_SIMULATOR"
     },
     {
       "requirementId": "R37",
@@ -1516,13 +1592,15 @@
         "FINAL-12"
       ],
       "statusBreakdown": {
-        "PASSED": 17,
+        "PASSED": 14,
         "FAILED": 0,
-        "NOT_RUN_DEVICE": 0,
+        "NOT_RUN_DEVICE": 3,
         "BLOCKED_EXTERNAL": 0,
+        "BLOCKED_DEPENDENCY": 0,
+        "BLOCKED_INPUT_MODEL_FIXTURE": 0,
         "NOT_RUN": 0
       },
-      "overallStatus": "PASSED"
+      "overallStatus": "PROVEN_SIMULATOR"
     },
     {
       "requirementId": "R38",
@@ -1545,13 +1623,15 @@
         "FINAL-12"
       ],
       "statusBreakdown": {
-        "PASSED": 16,
+        "PASSED": 15,
         "FAILED": 0,
-        "NOT_RUN_DEVICE": 0,
+        "NOT_RUN_DEVICE": 1,
         "BLOCKED_EXTERNAL": 0,
+        "BLOCKED_DEPENDENCY": 0,
+        "BLOCKED_INPUT_MODEL_FIXTURE": 0,
         "NOT_RUN": 0
       },
-      "overallStatus": "PASSED"
+      "overallStatus": "PROVEN_SIMULATOR"
     },
     {
       "requirementId": "R39",
@@ -1576,13 +1656,15 @@
         "FINAL-12"
       ],
       "statusBreakdown": {
-        "PASSED": 18,
+        "PASSED": 17,
         "FAILED": 0,
-        "NOT_RUN_DEVICE": 0,
+        "NOT_RUN_DEVICE": 1,
         "BLOCKED_EXTERNAL": 0,
+        "BLOCKED_DEPENDENCY": 0,
+        "BLOCKED_INPUT_MODEL_FIXTURE": 0,
         "NOT_RUN": 0
       },
-      "overallStatus": "PASSED"
+      "overallStatus": "PROVEN_SIMULATOR"
     },
     {
       "requirementId": "R40",
@@ -1602,13 +1684,15 @@
         "FINAL-12"
       ],
       "statusBreakdown": {
-        "PASSED": 13,
+        "PASSED": 12,
         "FAILED": 0,
-        "NOT_RUN_DEVICE": 0,
+        "NOT_RUN_DEVICE": 1,
         "BLOCKED_EXTERNAL": 0,
+        "BLOCKED_DEPENDENCY": 0,
+        "BLOCKED_INPUT_MODEL_FIXTURE": 0,
         "NOT_RUN": 0
       },
-      "overallStatus": "PASSED"
+      "overallStatus": "PROVEN_SIMULATOR"
     },
     {
       "requirementId": "R41",
@@ -1637,13 +1721,15 @@
         "FINAL-12"
       ],
       "statusBreakdown": {
-        "PASSED": 22,
+        "PASSED": 21,
         "FAILED": 0,
-        "NOT_RUN_DEVICE": 0,
+        "NOT_RUN_DEVICE": 1,
         "BLOCKED_EXTERNAL": 0,
+        "BLOCKED_DEPENDENCY": 0,
+        "BLOCKED_INPUT_MODEL_FIXTURE": 0,
         "NOT_RUN": 0
       },
-      "overallStatus": "PASSED"
+      "overallStatus": "PROVEN_SIMULATOR"
     },
     {
       "requirementId": "R42",
@@ -1666,13 +1752,15 @@
         "FINAL-12"
       ],
       "statusBreakdown": {
-        "PASSED": 16,
+        "PASSED": 15,
         "FAILED": 0,
-        "NOT_RUN_DEVICE": 0,
+        "NOT_RUN_DEVICE": 1,
         "BLOCKED_EXTERNAL": 0,
+        "BLOCKED_DEPENDENCY": 0,
+        "BLOCKED_INPUT_MODEL_FIXTURE": 0,
         "NOT_RUN": 0
       },
-      "overallStatus": "PASSED"
+      "overallStatus": "PROVEN_SIMULATOR"
     },
     {
       "requirementId": "R43",
@@ -1697,13 +1785,15 @@
         "FINAL-12"
       ],
       "statusBreakdown": {
-        "PASSED": 18,
+        "PASSED": 17,
         "FAILED": 0,
-        "NOT_RUN_DEVICE": 0,
+        "NOT_RUN_DEVICE": 1,
         "BLOCKED_EXTERNAL": 0,
+        "BLOCKED_DEPENDENCY": 0,
+        "BLOCKED_INPUT_MODEL_FIXTURE": 0,
         "NOT_RUN": 0
       },
-      "overallStatus": "PASSED"
+      "overallStatus": "PROVEN_SIMULATOR"
     },
     {
       "requirementId": "R44",
@@ -1726,13 +1816,15 @@
         "FINAL-12"
       ],
       "statusBreakdown": {
-        "PASSED": 16,
+        "PASSED": 15,
         "FAILED": 0,
-        "NOT_RUN_DEVICE": 0,
+        "NOT_RUN_DEVICE": 1,
         "BLOCKED_EXTERNAL": 0,
+        "BLOCKED_DEPENDENCY": 0,
+        "BLOCKED_INPUT_MODEL_FIXTURE": 0,
         "NOT_RUN": 0
       },
-      "overallStatus": "PASSED"
+      "overallStatus": "PROVEN_SIMULATOR"
     },
     {
       "requirementId": "R45",
@@ -1759,10 +1851,12 @@
         "FINAL-12"
       ],
       "statusBreakdown": {
-        "PASSED": 17,
+        "PASSED": 16,
         "FAILED": 0,
-        "NOT_RUN_DEVICE": 3,
+        "NOT_RUN_DEVICE": 4,
         "BLOCKED_EXTERNAL": 0,
+        "BLOCKED_DEPENDENCY": 0,
+        "BLOCKED_INPUT_MODEL_FIXTURE": 0,
         "NOT_RUN": 0
       },
       "overallStatus": "PROVEN_SIMULATOR"
@@ -1790,13 +1884,15 @@
         "FINAL-12"
       ],
       "statusBreakdown": {
-        "PASSED": 15,
+        "PASSED": 12,
         "FAILED": 0,
         "NOT_RUN_DEVICE": 3,
         "BLOCKED_EXTERNAL": 0,
+        "BLOCKED_DEPENDENCY": 2,
+        "BLOCKED_INPUT_MODEL_FIXTURE": 1,
         "NOT_RUN": 0
       },
-      "overallStatus": "PROVEN_SIMULATOR"
+      "overallStatus": "BLOCKED_DEPENDENCY"
     },
     {
       "requirementId": "R47",
@@ -1819,13 +1915,15 @@
         "FINAL-12"
       ],
       "statusBreakdown": {
-        "PASSED": 16,
+        "PASSED": 15,
         "FAILED": 0,
-        "NOT_RUN_DEVICE": 0,
+        "NOT_RUN_DEVICE": 1,
         "BLOCKED_EXTERNAL": 0,
+        "BLOCKED_DEPENDENCY": 0,
+        "BLOCKED_INPUT_MODEL_FIXTURE": 0,
         "NOT_RUN": 0
       },
-      "overallStatus": "PASSED"
+      "overallStatus": "PROVEN_SIMULATOR"
     }
   ]
 }
