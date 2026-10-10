@@ -1,54 +1,64 @@
 Command line invocation:
-    /Applications/Xcode_27.app/Contents/Developer/usr/bin/xcodebuild test-without-building -project AI_HLY.xcodeproj -scheme AI_HLY -configuration Release -destination "platform=iOS Simulator,id=C7C9EECC-EE9F-4407-8D79-E3307A01AD3F" -derivedDataPath build/SimulatorDerivedData -clonedSourcePackagesDirPath build/SourcePackages -resultBundlePath simulator-logs/DownstreamTestsResult.xcresult -skipPackagePluginValidation -skipMacroValidation -parallel-testing-enabled NO "-only-testing:AI_HLYTests/AgentSkillsExposureTests" "-only-testing:AI_HLYTests/AppleLocalProvidersTests" "-only-testing:AI_HLYTests/CanonicalAdapterTests" "-only-testing:AI_HLYTests/CanonicalShadowCoordinatorTests" "-only-testing:AI_HLYTests/CanonicalToolAuthorityTests" "-only-testing:AI_HLYTests/ChatCanonicalPresentationSurvivalTests" "-only-testing:AI_HLYTests/EmbeddedResultResolverTests" "-only-testing:AI_HLYTests/FoundationJSONShadowAdapterTests" "-only-testing:AI_HLYTests/HanlinScriptingAssistantProviderAdapterTests" "-only-testing:AI_HLYTests/LegacyToolMigrationTests" "-only-testing:AI_HLYTests/ProductionSystemSkillsTests" "-only-testing:AI_HLYTests/RuntimeToolContractTests" "-only-testing:AI_HLYTests/ScriptingCanonicalAuthorityTests" "-only-testing:AI_HLYTests/SkillStoreAndImportTests"
+    /Applications/Xcode_27.app/Contents/Developer/usr/bin/xcodebuild test-without-building -project AI_HLY.xcodeproj -scheme AI_HLY -configuration Release -destination "platform=iOS Simulator,id=D2B249EB-2AC1-445A-BE5C-E80D6FBCCDF5" -derivedDataPath build/SimulatorDerivedData -clonedSourcePackagesDirPath build/SourcePackages -resultBundlePath simulator-logs/DownstreamTestsResult.xcresult -skipPackagePluginValidation -skipMacroValidation -parallel-testing-enabled NO "-only-testing:AI_HLYTests/AgentRuntimeConversationAcceptanceTests" "-only-testing:AI_HLYTests/AgentSkillsExposureTests" "-only-testing:AI_HLYTests/AppleLocalProvidersTests" "-only-testing:AI_HLYTests/CanonicalAdapterTests" "-only-testing:AI_HLYTests/CanonicalMiniAppIntegrationTests" "-only-testing:AI_HLYTests/CanonicalShadowCoordinatorTests" "-only-testing:AI_HLYTests/CanonicalToolAuthorityTests" "-only-testing:AI_HLYTests/ChatCanonicalPresentationSurvivalTests" "-only-testing:AI_HLYTests/EmbeddedResultResolverTests" "-only-testing:AI_HLYTests/FoundationJSONShadowAdapterTests" "-only-testing:AI_HLYTests/HanlinRuntimePerformanceTests" "-only-testing:AI_HLYTests/HanlinScriptPackageProductionE2ETests" "-only-testing:AI_HLYTests/HanlinScriptingAssistantProviderAdapterTests" "-only-testing:AI_HLYTests/LegacyToolMigrationTests" "-only-testing:AI_HLYTests/MasterScenarioSemanticAcceptanceTests" "-only-testing:AI_HLYTests/ProductionProviderConformanceTests" "-only-testing:AI_HLYTests/ProductionSystemSkillsTests" "-only-testing:AI_HLYTests/RuntimePackageAcceptanceTests" "-only-testing:AI_HLYTests/RuntimeToolContractTests" "-only-testing:AI_HLYTests/ScriptingCanonicalAuthorityTests" "-only-testing:AI_HLYTests/SkillStoreAndImportTests"
 
 Resolve Package Graph
 
 
 Resolved source packages:
-  HanlinSefariaMiniApp: /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinSefariaMiniApp @ local
-  HanlinTextStudioMiniApp: /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinTextStudioMiniApp @ local
-  swift-system: https://github.com/apple/swift-system.git @ 1.4.0
-  NativeScriptSDK: https://github.com/NativeScript/ios-spm.git @ 9.1.0
-  swift-markdown-ui: https://github.com/gonzalezreal/MarkdownUI.git @ 2.4.1
-  HanlinParityMiniApp: /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinParityMiniApp @ local
-  LLM: https://github.com/eastriverlee/LLM.swift/ @ 1.8.0
-  swift-argument-parser: https://github.com/apple/swift-argument-parser @ 1.8.2
-  MathJaxSwift: https://github.com/colinc86/MathJaxSwift @ 3.4.0
-  HanlinExpoRuntime: /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinExpoRuntime @ local
   HanlinQuickJS: /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinQuickJS @ local
-  LaTeXSwiftUI: https://github.com/colinc86/LaTeXSwiftUI @ 1.5.0
-  SwiftDraw: https://github.com/swhitty/SwiftDraw @ 0.21.0
+  SWCompression: https://github.com/tsolomko/SWCompression.git @ 4.9.0
+  RichTextKit: https://github.com/danielsaidi/RichTextKit.git @ 1.2.0
   SwiftAISDK: https://github.com/davidpovarsky/swift-ai-sdk.git @ 43ebcfa
   swift-nio: https://github.com/apple/swift-nio.git @ 2.94.0
-  IOSSystemLite: /Users/runner/work/hanlin-ai/hanlin-ai/Packages/IOSSystemLite @ local
-  SWCompression: https://github.com/tsolomko/SWCompression.git @ 4.9.0
-  cmark-gfm: https://github.com/swiftlang/swift-cmark @ 0.6.0
-  NetworkImage: https://github.com/gonzalezreal/NetworkImage @ 6.0.1
-  SwiftSoup: https://github.com/scinfu/SwiftSoup.git @ 2.8.7
-  HTMLEntities: https://github.com/Kitura/swift-html-entities @ 4.0.1
-  HanlinPlatform: /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform @ local
-  swift-log: https://github.com/apple/swift-log.git @ 1.6.2
-  HanlinNativeScriptRuntime: /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinNativeScriptRuntime @ local
-  XMLCoder: https://github.com/maxdesiatov/XMLCoder.git @ 0.14.0
-  BitByteData: https://github.com/tsolomko/BitByteData @ 2.1.0
-  RichTextKit: https://github.com/danielsaidi/RichTextKit.git @ 1.2.0
-  EventSource: https://github.com/mattt/eventsource.git @ 1.1.0
-  swift-collections: https://github.com/apple/swift-collections.git @ 1.3.0
   ZIPFoundation: https://github.com/weichsel/ZIPFoundation @ 0.9.19
-  CoreXLSX: https://github.com/CoreOffice/CoreXLSX.git @ 0.14.2
   HanlinWikipediaMiniApp: /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinWikipediaMiniApp @ local
-  swift-atomics: https://github.com/apple/swift-atomics.git @ 1.3.0
+  EventSource: https://github.com/mattt/eventsource.git @ 1.1.0
+  BitByteData: https://github.com/tsolomko/BitByteData @ 2.1.0
+  HanlinTextStudioMiniApp: /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinTextStudioMiniApp @ local
+  NetworkImage: https://github.com/gonzalezreal/NetworkImage @ 6.0.1
+  HTMLEntities: https://github.com/Kitura/swift-html-entities @ 4.0.1
+  SwiftDraw: https://github.com/swhitty/SwiftDraw @ 0.21.0
   mcp-swift-sdk: https://github.com/modelcontextprotocol/swift-sdk.git @ 0.12.1
+  IOSSystemLite: /Users/runner/work/hanlin-ai/hanlin-ai/Packages/IOSSystemLite @ local
+  NativeScriptSDK: https://github.com/NativeScript/ios-spm.git @ 9.1.0
+  swift-log: https://github.com/apple/swift-log.git @ 1.6.2
+  swift-collections: https://github.com/apple/swift-collections.git @ 1.3.0
+  XMLCoder: https://github.com/maxdesiatov/XMLCoder.git @ 0.14.0
+  CoreXLSX: https://github.com/CoreOffice/CoreXLSX.git @ 0.14.2
+  SwiftSoup: https://github.com/scinfu/SwiftSoup.git @ 2.8.7
+  HanlinExpoRuntime: /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinExpoRuntime @ local
+  MathJaxSwift: https://github.com/colinc86/MathJaxSwift @ 3.4.0
+  swift-argument-parser: https://github.com/apple/swift-argument-parser @ 1.8.2
+  swift-atomics: https://github.com/apple/swift-atomics.git @ 1.3.0
+  HanlinParityMiniApp: /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinParityMiniApp @ local
+  HanlinSefariaMiniApp: /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinSefariaMiniApp @ local
+  LLM: https://github.com/eastriverlee/LLM.swift/ @ 1.8.0
+  HanlinPlatform: /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform @ local
+  cmark-gfm: https://github.com/swiftlang/swift-cmark @ 0.6.0
+  swift-markdown-ui: https://github.com/gonzalezreal/MarkdownUI.git @ 2.4.1
+  LaTeXSwiftUI: https://github.com/colinc86/LaTeXSwiftUI @ 1.5.0
+  HanlinNativeScriptRuntime: /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinNativeScriptRuntime @ local
+  swift-system: https://github.com/apple/swift-system.git @ 1.4.0
 
 Writing result bundle at path:
 	/Users/runner/work/hanlin-ai/hanlin-ai/simulator-logs/DownstreamTestsResult.xcresult
 
-objc[16534]: Class _TtC23HanlinPlatformContractsP33_9996C70B28F9E499F222D9B0E24EF10C12BundleFinder is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Release-iphonesimulator/PackageFrameworks/HanlinPlatformContracts_3F453BB42AE10567_PackageProduct.framework/HanlinPlatformContracts_3F453BB42AE10567_PackageProduct (0x107b54108) and /Users/runner/Library/Developer/CoreSimulator/Devices/C7C9EECC-EE9F-4407-8D79-E3307A01AD3F/data/Containers/Bundle/Application/BAF836B3-B186-478C-B97F-92CBF2F7A4B8/AI_Hanlin.app/AI_Hanlin (0x102d43f38). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed.
-2026-10-07 16:37:32.378373+0000 AI_Hanlin[16534:295750] [error] CoreData: warning: CDCS state transition: Disabled → Initializing (index spotlight_com.itorah.chavrusachat_CB83740C-057E-423F-A532-1A9A2FB17427)
-CoreData: warning: CDCS state transition: Disabled → Initializing (index spotlight_com.itorah.chavrusachat_CB83740C-057E-423F-A532-1A9A2FB17427)
-2026-10-07 16:37:32.415681+0000 AI_Hanlin[16534:295751] [error] CoreData: warning: CDCS OS-driven reindex (all items) requested for index spotlight_com.itorah.chavrusachat_CB83740C-057E-423F-A532-1A9A2FB17427
-CoreData: warning: CDCS OS-driven reindex (all items) requested for index spotlight_com.itorah.chavrusachat_CB83740C-057E-423F-A532-1A9A2FB17427
-2026-10-07 16:37:33.655764+0000 AI_Hanlin[16534:294510] HANLIN_EXPO_APP_DEFINES_LOADED
+objc[69883]: Class _TtC23HanlinPlatformContractsP33_9996C70B28F9E499F222D9B0E24EF10C12BundleFinder is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Release-iphonesimulator/PackageFrameworks/HanlinPlatformContracts_3F453BB42AE10567_PackageProduct.framework/HanlinPlatformContracts_3F453BB42AE10567_PackageProduct (0x10bd68108) and /Users/runner/Library/Developer/CoreSimulator/Devices/D2B249EB-2AC1-445A-BE5C-E80D6FBCCDF5/data/Containers/Bundle/Application/243ACF47-2061-4FC2-A29D-2D14E7DF3D14/AI_Hanlin.app/AI_Hanlin (0x106f340b8). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed.
+2026-10-08 23:51:47.145435+0000 AI_Hanlin[69883:418008] [error] CoreData: warning: CDCS state transition: Disabled → Initializing (index spotlight_com.itorah.chavrusachat_EB3AD6B9-9966-43C4-A15B-CFF86F4C690B)
+CoreData: warning: CDCS state transition: Disabled → Initializing (index spotlight_com.itorah.chavrusachat_EB3AD6B9-9966-43C4-A15B-CFF86F4C690B)
+2026-10-08 23:51:47.174471+0000 AI_Hanlin[69883:418006] [error] CoreData: warning: CDCS OS-driven reindex (all items) requested for index spotlight_com.itorah.chavrusachat_EB3AD6B9-9966-43C4-A15B-CFF86F4C690B
+CoreData: warning: CDCS OS-driven reindex (all items) requested for index spotlight_com.itorah.chavrusachat_EB3AD6B9-9966-43C4-A15B-CFF86F4C690B
+2026-10-08 23:51:48.101792+0000 AI_Hanlin[69883:418008] [error] CoreData: warning: CDCS storeRequiresFullReindex: fullReindex=1 reason=no framework-version metadata (index spotlight_com.itorah.chavrusachat_EB3AD6B9-9966-43C4-A15B-CFF86F4C690B)
+CoreData: warning: CDCS storeRequiresFullReindex: fullReindex=1 reason=no framework-version metadata (index spotlight_com.itorah.chavrusachat_EB3AD6B9-9966-43C4-A15B-CFF86F4C690B)
+2026-10-08 23:51:48.101986+0000 AI_Hanlin[69883:418008] [error] CoreData: warning: CDCS starting full reimport (index spotlight_com.itorah.chavrusachat_EB3AD6B9-9966-43C4-A15B-CFF86F4C690B)
+CoreData: warning: CDCS starting full reimport (index spotlight_com.itorah.chavrusachat_EB3AD6B9-9966-43C4-A15B-CFF86F4C690B)
+2026-10-08 23:51:48.102587+0000 AI_Hanlin[69883:418008] [error] CoreData: warning: CDCS full reimport baseline: allKnownItems=0 (index spotlight_com.itorah.chavrusachat_EB3AD6B9-9966-43C4-A15B-CFF86F4C690B)
+CoreData: warning: CDCS full reimport baseline: allKnownItems=0 (index spotlight_com.itorah.chavrusachat_EB3AD6B9-9966-43C4-A15B-CFF86F4C690B)
+CoreData: annotation: CDCS client state token write begin (index spotlight_com.itorah.chavrusachat_EB3AD6B9-9966-43C4-A15B-CFF86F4C690B): (null)
+CoreData: annotation: CDCS client state token write begin (index spotlight_com.itorah.chavrusachat_EB3AD6B9-9966-43C4-A15B-CFF86F4C690B): (null)
+CoreData: annotation: CDCS reimport gate ENTER (index spotlight_com.itorah.chavrusachat_EB3AD6B9-9966-43C4-A15B-CFF86F4C690B)
+CoreData: annotation: CDCS client state token write begin (index spotlight_com.itorah.chavrusachat_EB3AD6B9-9966-43C4-A15B-CFF86F4C690B): (null)
+2026-10-08 23:51:49.040543+0000 AI_Hanlin[69883:416341] HANLIN_EXPO_APP_DEFINES_LOADED
 新增系统模型：google/gemini-3-flash-preview_repeat_cherryin
 新增系统模型：qwen-flash
 新增系统模型：qwen-plus
@@ -120,6 +130,7 @@ CoreData: warning: CDCS OS-driven reindex (all items) requested for index spotli
 新增系统模型：gemini-3-flash-preview_repeat_aihubmix
 新增系统模型：gemini-3-pro_repeat_poe
 新增系统模型：qwen3-max_repeat_iflow
+CoreData: annotation: CDCS dropping save (full reimport in progress, index spotlight_com.itorah.chavrusachat_EB3AD6B9-9966-43C4-A15B-CFF86F4C690B)
 模型数据同步完成
 新增 API Key：CHERRY_IN_API_KEY
 新增 API Key：ZHIPUAI_API_KEY
@@ -150,6 +161,7 @@ CoreData: warning: CDCS OS-driven reindex (all items) requested for index spotli
 新增 API Key：N1N_API_KEY
 新增 API Key：LAN
 新增 API Key：LOCAL
+CoreData: annotation: CDCS dropping save (full reimport in progress, index spotlight_com.itorah.chavrusachat_EB3AD6B9-9966-43C4-A15B-CFF86F4C690B)
 API 密钥同步完成
 新增 SearchKey：ZHIPUAI_SEARCH_KEY
 新增 SearchKey：BOCHAAI_SEARCH_KEY
@@ -158,63 +170,283 @@ API 密钥同步完成
 新增 SearchKey：TAVILY_KEY
 新增 SearchKey：BRAVE_KEY
 新增 SearchKey：PERPLEXITY_KEY
+CoreData: annotation: CDCS dropping save (full reimport in progress, index spotlight_com.itorah.chavrusachat_EB3AD6B9-9966-43C4-A15B-CFF86F4C690B)
 SearchKeys 同步完成
 新增 ToolKey: APPLE_MAP_KEY
 新增 ToolKey: AMAP_MAP_KEY
 新增 ToolKey: GOOGLE_MAP_KEY
 新增 ToolKey: QWEATHER_KEY
 新增 ToolKey: OPENWEATHER_KEY
+CoreData: annotation: CDCS dropping save (full reimport in progress, index spotlight_com.itorah.chavrusachat_EB3AD6B9-9966-43C4-A15B-CFF86F4C690B)
 ToolKeys 同步完成
 新增默认 UserInfo
+CoreData: annotation: CDCS dropping save (full reimport in progress, index spotlight_com.itorah.chavrusachat_EB3AD6B9-9966-43C4-A15B-CFF86F4C690B)
 UserInfo 同步完成
+CoreData: annotation: CDCS dropping save (full reimport in progress, index spotlight_com.itorah.chavrusachat_EB3AD6B9-9966-43C4-A15B-CFF86F4C690B)
 PromptRepo 已插入预置数据
 孤立的 ChatMessages 清理完成
 孤立的 KnowledgeChunk 清理完成
 孤立数据清理保存成功
-2026-10-07 16:37:35.323588+0000 AI_Hanlin[16534:294510] [API] cannot add handler to 0 from 0 - dropping
-2026-10-07 16:37:35.324325+0000 AI_Hanlin[16534:294510] [API] cannot add handler to 0 from 0 - dropping
-2026-10-07 16:37:35.407996+0000 AI_Hanlin[16534:295812] [General] Failed to send CA Event for app launch measurements for ca_event_type: 0 event_name: com.apple.app_launch_measurement.FirstFramePresentationMetric
-2026-10-07 16:37:35.431181+0000 AI_Hanlin[16534:294510] [XPCErrors] non-launching port is incompatible with service identifier "com.apple.PointerUI.pointeruid.default-service"
-2026-10-07 16:37:35.527291+0000 AI_Hanlin[16534:294510] [API] cannot add handler to 0 from 0 - dropping
-2026-10-07 16:37:35.527784+0000 AI_Hanlin[16534:294510] [API] cannot add handler to 0 from 0 - dropping
-2026-10-07 16:37:35.527999+0000 AI_Hanlin[16534:294510] [API] cannot add handler to 0 from 0 - dropping
-2026-10-07 16:37:35.528169+0000 AI_Hanlin[16534:294510] [API] cannot add handler to 0 from 0 - dropping
-2026-10-07 16:37:35.528362+0000 AI_Hanlin[16534:294510] [API] cannot add handler to 0 from 0 - dropping
-2026-10-07 16:37:36.027464+0000 AI_Hanlin[16534:295812] [General] Failed to send CA Event for app launch measurements for ca_event_type: 1 event_name: com.apple.app_launch_measurement.ExtendedLaunchMetrics
-Test Suite 'Selected tests' started at 2026-10-07 16:37:40.455.
-Test Suite 'AI_HLYTests.xctest' started at 2026-10-07 16:37:40.456.
-Test Suite 'AI_HLYTests.xctest' passed at 2026-10-07 16:37:40.456.
-	 Executed 0 tests, with 0 failures (0 unexpected) in 0.000 (0.000) seconds
-Test Suite 'Selected tests' passed at 2026-10-07 16:37:40.462.
-	 Executed 0 tests, with 0 failures (0 unexpected) in 0.000 (0.007) seconds
+2026-10-08 23:51:51.805286+0000 AI_Hanlin[69883:416341] [API] cannot add handler to 0 from 0 - dropping
+2026-10-08 23:51:51.808885+0000 AI_Hanlin[69883:416341] [API] cannot add handler to 0 from 0 - dropping
+2026-10-08 23:51:51.973730+0000 AI_Hanlin[69883:416341] [XPCErrors] non-launching port is incompatible with service identifier "com.apple.PointerUI.pointeruid.default-service"
+2026-10-08 23:51:52.110562+0000 AI_Hanlin[69883:416341] [API] cannot add handler to 0 from 0 - dropping
+2026-10-08 23:51:52.111139+0000 AI_Hanlin[69883:416341] [API] cannot add handler to 0 from 0 - dropping
+2026-10-08 23:51:52.111265+0000 AI_Hanlin[69883:416341] [API] cannot add handler to 0 from 0 - dropping
+2026-10-08 23:51:52.111335+0000 AI_Hanlin[69883:416341] [API] cannot add handler to 0 from 0 - dropping
+2026-10-08 23:51:52.111558+0000 AI_Hanlin[69883:416341] [API] cannot add handler to 0 from 0 - dropping
+Test Suite 'Selected tests' started at 2026-10-08 23:51:56.795.
+Test Suite 'AI_HLYTests.xctest' started at 2026-10-08 23:51:56.802.
+Test Suite 'HanlinRuntimePerformanceTests' started at 2026-10-08 23:51:56.802.
+Test Case '-[AI_HLYTests.HanlinRuntimePerformanceTests testFlow10_InstalledPackageProviderExecutionPerformance]' started.
+HANLIN_PERF_SAMPLE: {"category":"Scripting Provider","classification":"informational","flow_name":"Installed Package Tool Execution","flow_number":10,"max":0.015951991081237793,"mean":0.0036948204040527345,"median":0.000286102294921875,"metric":"provider_execution_latency","min":8.9049339294433594e-05,"sample_count":5,"samples":[0.015951991081237793,0.0020530223846435547,0.000286102294921875,9.3936920166015625e-05,8.9049339294433594e-05],"status":"PASS","std_dev":0.0069014679548932596,"unit":"s"}
+Test Case '-[AI_HLYTests.HanlinRuntimePerformanceTests testFlow10_InstalledPackageProviderExecutionPerformance]' passed (0.231 seconds).
+Test Case '-[AI_HLYTests.HanlinRuntimePerformanceTests testFlow4_JavaScriptCoreInitializationPerformance]' started.
+/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYTests/HanlinRuntimePerformanceTests.swift:75: Test Case '-[AI_HLYTests.HanlinRuntimePerformanceTests testFlow4_JavaScriptCoreInitializationPerformance]' measured [Memory Physical, kB] average: 753.664, relative standard deviation: 41.362%, values: [229.376000, 589.824000, 868.352000, 1097.728000, 983.040000], performanceMetricID:com.apple.dt.XCTMetric_Memory.physical, baselineName: "", baselineAverage: , polarity: prefers smaller, maxPercentRegression: 10.000%, maxPercentRelativeStandardDeviation: 10.000%, maxRegression: 0.000, maxStandardDeviation: 0.000
+/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYTests/HanlinRuntimePerformanceTests.swift:75: Test Case '-[AI_HLYTests.HanlinRuntimePerformanceTests testFlow4_JavaScriptCoreInitializationPerformance]' measured [CPU Cycles, kC] average: 0.000, relative standard deviation: 0.000%, values: [0.000000, 0.000000, 0.000000, 0.000000, 0.000000], performanceMetricID:com.apple.dt.XCTMetric_CPU.cycles, baselineName: "", baselineAverage: , polarity: prefers smaller, maxPercentRegression: 10.000%, maxPercentRelativeStandardDeviation: 10.000%, maxRegression: 0.000, maxStandardDeviation: 0.000
+/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYTests/HanlinRuntimePerformanceTests.swift:75: Test Case '-[AI_HLYTests.HanlinRuntimePerformanceTests testFlow4_JavaScriptCoreInitializationPerformance]' measured [Clock Monotonic Time, s] average: 0.001, relative standard deviation: 26.221%, values: [0.001320, 0.001102, 0.000759, 0.000767, 0.001458], performanceMetricID:com.apple.dt.XCTMetric_Clock.time.monotonic, baselineName: "", baselineAverage: , polarity: prefers smaller, maxPercentRegression: 10.000%, maxPercentRelativeStandardDeviation: 10.000%, maxRegression: 0.000, maxStandardDeviation: 0.000
+/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYTests/HanlinRuntimePerformanceTests.swift:75: Test Case '-[AI_HLYTests.HanlinRuntimePerformanceTests testFlow4_JavaScriptCoreInitializationPerformance]' measured [CPU Time, s] average: 0.002, relative standard deviation: 18.004%, values: [0.002474, 0.002420, 0.001644, 0.001610, 0.002049], performanceMetricID:com.apple.dt.XCTMetric_CPU.time, baselineName: "", baselineAverage: , polarity: prefers smaller, maxPercentRegression: 10.000%, maxPercentRelativeStandardDeviation: 10.000%, maxRegression: 0.000, maxStandardDeviation: 0.000
+/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYTests/HanlinRuntimePerformanceTests.swift:75: Test Case '-[AI_HLYTests.HanlinRuntimePerformanceTests testFlow4_JavaScriptCoreInitializationPerformance]' measured [CPU Instructions Retired, kI] average: 0.000, relative standard deviation: 0.000%, values: [0.000000, 0.000000, 0.000000, 0.000000, 0.000000], performanceMetricID:com.apple.dt.XCTMetric_CPU.instructions_retired, baselineName: "", baselineAverage: , polarity: prefers smaller, maxPercentRegression: 10.000%, maxPercentRelativeStandardDeviation: 10.000%, maxRegression: 0.000, maxStandardDeviation: 0.000
+/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYTests/HanlinRuntimePerformanceTests.swift:75: Test Case '-[AI_HLYTests.HanlinRuntimePerformanceTests testFlow4_JavaScriptCoreInitializationPerformance]' measured [Memory Peak Physical, kB] average: 79886.362, relative standard deviation: 1.610%, values: [78257.792000, 78847.616000, 79715.968000, 80813.696000, 81796.736000], performanceMetricID:com.apple.dt.XCTMetric_Memory.physical_peak, baselineName: "", baselineAverage: , polarity: prefers smaller, maxPercentRegression: 10.000%, maxPercentRelativeStandardDeviation: 10.000%, maxRegression: 0.000, maxStandardDeviation: 0.000
+HANLIN_PERF_SAMPLE: {"category":"Runtime Engine","classification":"informational","flow_name":"JavaScriptCore Initialization","flow_number":4,"max":0.0014619827270507812,"mean":0.0010495185852050781,"median":0.0010989904403686523,"metric":"session_init_latency","min":0.00076305866241455078,"sample_count":6,"samples":[0.00087809562683105469,0.0013229846954345703,0.0010989904403686523,0.00076305866241455078,0.00077199935913085938,0.0014619827270507812],"status":"PASS","std_dev":0.00029523546029214617,"unit":"s"}
+Test Case '-[AI_HLYTests.HanlinRuntimePerformanceTests testFlow4_JavaScriptCoreInitializationPerformance]' passed (11.918 seconds).
+Test Case '-[AI_HLYTests.HanlinRuntimePerformanceTests testFlow5_JavaScriptCoreDeterministicExecutionPerformance]' started.
+/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYTests/HanlinRuntimePerformanceTests.swift:121: Test Case '-[AI_HLYTests.HanlinRuntimePerformanceTests testFlow5_JavaScriptCoreDeterministicExecutionPerformance]' measured [Clock Monotonic Time, s] average: 0.013, relative standard deviation: 71.383%, values: [0.005007, 0.019220, 0.011735, 0.027436, 0.001935], performanceMetricID:com.apple.dt.XCTMetric_Clock.time.monotonic, baselineName: "", baselineAverage: , polarity: prefers smaller, maxPercentRegression: 10.000%, maxPercentRelativeStandardDeviation: 10.000%, maxRegression: 0.000, maxStandardDeviation: 0.000
+/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYTests/HanlinRuntimePerformanceTests.swift:121: Test Case '-[AI_HLYTests.HanlinRuntimePerformanceTests testFlow5_JavaScriptCoreDeterministicExecutionPerformance]' measured [CPU Instructions Retired, kI] average: 0.000, relative standard deviation: 0.000%, values: [0.000000, 0.000000, 0.000000, 0.000000, 0.000000], performanceMetricID:com.apple.dt.XCTMetric_CPU.instructions_retired, baselineName: "", baselineAverage: , polarity: prefers smaller, maxPercentRegression: 10.000%, maxPercentRelativeStandardDeviation: 10.000%, maxRegression: 0.000, maxStandardDeviation: 0.000
+/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYTests/HanlinRuntimePerformanceTests.swift:121: Test Case '-[AI_HLYTests.HanlinRuntimePerformanceTests testFlow5_JavaScriptCoreDeterministicExecutionPerformance]' measured [CPU Cycles, kC] average: 0.000, relative standard deviation: 0.000%, values: [0.000000, 0.000000, 0.000000, 0.000000, 0.000000], performanceMetricID:com.apple.dt.XCTMetric_CPU.cycles, baselineName: "", baselineAverage: , polarity: prefers smaller, maxPercentRegression: 10.000%, maxPercentRelativeStandardDeviation: 10.000%, maxRegression: 0.000, maxStandardDeviation: 0.000
+/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYTests/HanlinRuntimePerformanceTests.swift:121: Test Case '-[AI_HLYTests.HanlinRuntimePerformanceTests testFlow5_JavaScriptCoreDeterministicExecutionPerformance]' measured [CPU Time, s] average: 0.009, relative standard deviation: 110.586%, values: [0.029495, 0.003469, 0.003446, 0.004747, 0.004814], performanceMetricID:com.apple.dt.XCTMetric_CPU.time, baselineName: "", baselineAverage: , polarity: prefers smaller, maxPercentRegression: 10.000%, maxPercentRelativeStandardDeviation: 10.000%, maxRegression: 0.000, maxStandardDeviation: 0.000
+HANLIN_PERF_SAMPLE: {"category":"Runtime Engine","classification":"informational","flow_name":"JavaScriptCore Deterministic Execution","flow_number":5,"max":0.027867913246154785,"mean":0.011907815933227539,"median":0.01190495491027832,"metric":"script_execution_latency","min":0.0019410848617553711,"sample_count":6,"samples":[0.0051709413528442383,0.0050560235977172852,0.019505977630615234,0.01190495491027832,0.027867913246154785,0.0019410848617553711],"status":"PASS","std_dev":0.010041165681085337,"unit":"s"}
+Test Case '-[AI_HLYTests.HanlinRuntimePerformanceTests testFlow5_JavaScriptCoreDeterministicExecutionPerformance]' passed (0.162 seconds).
+Test Case '-[AI_HLYTests.HanlinRuntimePerformanceTests testFlow6_QuickJSInitializationPerformance]' started.
+/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYTests/HanlinRuntimePerformanceTests.swift:169: Test Case '-[AI_HLYTests.HanlinRuntimePerformanceTests testFlow6_QuickJSInitializationPerformance]' measured [Memory Physical, kB] average: 0.000, relative standard deviation: 0.000%, values: [0.000000, 0.000000, 0.000000, 0.000000, 0.000000], performanceMetricID:com.apple.dt.XCTMetric_Memory.physical, baselineName: "", baselineAverage: , polarity: prefers smaller, maxPercentRegression: 10.000%, maxPercentRelativeStandardDeviation: 10.000%, maxRegression: 0.000, maxStandardDeviation: 0.000
+/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYTests/HanlinRuntimePerformanceTests.swift:169: Test Case '-[AI_HLYTests.HanlinRuntimePerformanceTests testFlow6_QuickJSInitializationPerformance]' measured [CPU Cycles, kC] average: 0.000, relative standard deviation: 0.000%, values: [0.000000, 0.000000, 0.000000, 0.000000, 0.000000], performanceMetricID:com.apple.dt.XCTMetric_CPU.cycles, baselineName: "", baselineAverage: , polarity: prefers smaller, maxPercentRegression: 10.000%, maxPercentRelativeStandardDeviation: 10.000%, maxRegression: 0.000, maxStandardDeviation: 0.000
+/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYTests/HanlinRuntimePerformanceTests.swift:169: Test Case '-[AI_HLYTests.HanlinRuntimePerformanceTests testFlow6_QuickJSInitializationPerformance]' measured [Clock Monotonic Time, s] average: 0.000, relative standard deviation: 24.616%, values: [0.000207, 0.000438, 0.000489, 0.000428, 0.000429], performanceMetricID:com.apple.dt.XCTMetric_Clock.time.monotonic, baselineName: "", baselineAverage: , polarity: prefers smaller, maxPercentRegression: 10.000%, maxPercentRelativeStandardDeviation: 10.000%, maxRegression: 0.000, maxStandardDeviation: 0.000
+/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYTests/HanlinRuntimePerformanceTests.swift:169: Test Case '-[AI_HLYTests.HanlinRuntimePerformanceTests testFlow6_QuickJSInitializationPerformance]' measured [CPU Time, s] average: 0.002, relative standard deviation: 14.743%, values: [0.001112, 0.001453, 0.001668, 0.001551, 0.001752], performanceMetricID:com.apple.dt.XCTMetric_CPU.time, baselineName: "", baselineAverage: , polarity: prefers smaller, maxPercentRegression: 10.000%, maxPercentRelativeStandardDeviation: 10.000%, maxRegression: 0.000, maxStandardDeviation: 0.000
+/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYTests/HanlinRuntimePerformanceTests.swift:169: Test Case '-[AI_HLYTests.HanlinRuntimePerformanceTests testFlow6_QuickJSInitializationPerformance]' measured [CPU Instructions Retired, kI] average: 0.000, relative standard deviation: 0.000%, values: [0.000000, 0.000000, 0.000000, 0.000000, 0.000000], performanceMetricID:com.apple.dt.XCTMetric_CPU.instructions_retired, baselineName: "", baselineAverage: , polarity: prefers smaller, maxPercentRegression: 10.000%, maxPercentRelativeStandardDeviation: 10.000%, maxRegression: 0.000, maxStandardDeviation: 0.000
+/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYTests/HanlinRuntimePerformanceTests.swift:169: Test Case '-[AI_HLYTests.HanlinRuntimePerformanceTests testFlow6_QuickJSInitializationPerformance]' measured [Memory Peak Physical, kB] average: 90776.064, relative standard deviation: 0.000%, values: [90776.064000, 90776.064000, 90776.064000, 90776.064000, 90776.064000], performanceMetricID:com.apple.dt.XCTMetric_Memory.physical_peak, baselineName: "", baselineAverage: , polarity: prefers smaller, maxPercentRegression: 10.000%, maxPercentRelativeStandardDeviation: 10.000%, maxRegression: 0.000, maxStandardDeviation: 0.000
+HANLIN_PERF_SAMPLE: {"category":"Runtime Engine","classification":"informational","flow_name":"QuickJS Initialization","flow_number":6,"max":0.00058495998382568359,"mean":0.00041435162226359051,"median":0.00042200088500976562,"metric":"session_init_latency","min":0.00017607212066650391,"sample_count":6,"samples":[0.00058495998382568359,0.00017607212066650391,0.00040197372436523438,0.00048005580902099609,0.00042200088500976562,0.00042104721069335938],"status":"PASS","std_dev":0.00013450496537680153,"unit":"s"}
+Test Case '-[AI_HLYTests.HanlinRuntimePerformanceTests testFlow6_QuickJSInitializationPerformance]' passed (0.027 seconds).
+Test Case '-[AI_HLYTests.HanlinRuntimePerformanceTests testFlow7_QuickJSDeterministicExecutionPerformance]' started.
+/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYTests/HanlinRuntimePerformanceTests.swift:215: Test Case '-[AI_HLYTests.HanlinRuntimePerformanceTests testFlow7_QuickJSDeterministicExecutionPerformance]' measured [Clock Monotonic Time, s] average: 0.022, relative standard deviation: 192.975%, values: [0.000704, 0.000707, 0.000804, 0.107491, 0.000893], performanceMetricID:com.apple.dt.XCTMetric_Clock.time.monotonic, baselineName: "", baselineAverage: , polarity: prefers smaller, maxPercentRegression: 10.000%, maxPercentRelativeStandardDeviation: 10.000%, maxRegression: 0.000, maxStandardDeviation: 0.000
+/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYTests/HanlinRuntimePerformanceTests.swift:215: Test Case '-[AI_HLYTests.HanlinRuntimePerformanceTests testFlow7_QuickJSDeterministicExecutionPerformance]' measured [CPU Instructions Retired, kI] average: 0.000, relative standard deviation: 0.000%, values: [0.000000, 0.000000, 0.000000, 0.000000, 0.000000], performanceMetricID:com.apple.dt.XCTMetric_CPU.instructions_retired, baselineName: "", baselineAverage: , polarity: prefers smaller, maxPercentRegression: 10.000%, maxPercentRelativeStandardDeviation: 10.000%, maxRegression: 0.000, maxStandardDeviation: 0.000
+/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYTests/HanlinRuntimePerformanceTests.swift:215: Test Case '-[AI_HLYTests.HanlinRuntimePerformanceTests testFlow7_QuickJSDeterministicExecutionPerformance]' measured [CPU Cycles, kC] average: 0.000, relative standard deviation: 0.000%, values: [0.000000, 0.000000, 0.000000, 0.000000, 0.000000], performanceMetricID:com.apple.dt.XCTMetric_CPU.cycles, baselineName: "", baselineAverage: , polarity: prefers smaller, maxPercentRegression: 10.000%, maxPercentRelativeStandardDeviation: 10.000%, maxRegression: 0.000, maxStandardDeviation: 0.000
+/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYTests/HanlinRuntimePerformanceTests.swift:215: Test Case '-[AI_HLYTests.HanlinRuntimePerformanceTests testFlow7_QuickJSDeterministicExecutionPerformance]' measured [CPU Time, s] average: 0.002, relative standard deviation: 31.258%, values: [0.001509, 0.001792, 0.001465, 0.003044, 0.001624], performanceMetricID:com.apple.dt.XCTMetric_CPU.time, baselineName: "", baselineAverage: , polarity: prefers smaller, maxPercentRegression: 10.000%, maxPercentRelativeStandardDeviation: 10.000%, maxRegression: 0.000, maxStandardDeviation: 0.000
+HANLIN_PERF_SAMPLE: {"category":"Runtime Engine","classification":"informational","flow_name":"QuickJS Deterministic Execution","flow_number":7,"max":0.11108601093292236,"mean":0.037232180436452232,"median":0.00089299678802490234,"metric":"script_execution_latency","min":0.00069403648376464844,"sample_count":6,"samples":[0.11108601093292236,0.00069403648376464844,0.00069904327392578125,0.00079905986785888672,0.1092219352722168,0.00089299678802490234],"status":"PASS","std_dev":0.056488100866214121,"unit":"s"}
+Test Case '-[AI_HLYTests.HanlinRuntimePerformanceTests testFlow7_QuickJSDeterministicExecutionPerformance]' passed (0.244 seconds).
+Test Case '-[AI_HLYTests.HanlinRuntimePerformanceTests testFlow8_MultiEngineRuntimeSwitchPerformance]' started.
+/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYTests/HanlinRuntimePerformanceTests.swift:274: Test Case '-[AI_HLYTests.HanlinRuntimePerformanceTests testFlow8_MultiEngineRuntimeSwitchPerformance]' measured [Clock Monotonic Time, s] average: 0.001, relative standard deviation: 8.088%, values: [0.000746, 0.000673, 0.000580, 0.000666, 0.000645], performanceMetricID:com.apple.dt.XCTMetric_Clock.time.monotonic, baselineName: "", baselineAverage: , polarity: prefers smaller, maxPercentRegression: 10.000%, maxPercentRelativeStandardDeviation: 10.000%, maxRegression: 0.000, maxStandardDeviation: 0.000
+/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYTests/HanlinRuntimePerformanceTests.swift:274: Test Case '-[AI_HLYTests.HanlinRuntimePerformanceTests testFlow8_MultiEngineRuntimeSwitchPerformance]' measured [CPU Instructions Retired, kI] average: 0.000, relative standard deviation: 0.000%, values: [0.000000, 0.000000, 0.000000, 0.000000, 0.000000], performanceMetricID:com.apple.dt.XCTMetric_CPU.instructions_retired, baselineName: "", baselineAverage: , polarity: prefers smaller, maxPercentRegression: 10.000%, maxPercentRelativeStandardDeviation: 10.000%, maxRegression: 0.000, maxStandardDeviation: 0.000
+/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYTests/HanlinRuntimePerformanceTests.swift:274: Test Case '-[AI_HLYTests.HanlinRuntimePerformanceTests testFlow8_MultiEngineRuntimeSwitchPerformance]' measured [CPU Cycles, kC] average: 0.000, relative standard deviation: 0.000%, values: [0.000000, 0.000000, 0.000000, 0.000000, 0.000000], performanceMetricID:com.apple.dt.XCTMetric_CPU.cycles, baselineName: "", baselineAverage: , polarity: prefers smaller, maxPercentRegression: 10.000%, maxPercentRelativeStandardDeviation: 10.000%, maxRegression: 0.000, maxStandardDeviation: 0.000
+/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYTests/HanlinRuntimePerformanceTests.swift:274: Test Case '-[AI_HLYTests.HanlinRuntimePerformanceTests testFlow8_MultiEngineRuntimeSwitchPerformance]' measured [CPU Time, s] average: 0.002, relative standard deviation: 8.253%, values: [0.001775, 0.001557, 0.001545, 0.001496, 0.001832], performanceMetricID:com.apple.dt.XCTMetric_CPU.time, baselineName: "", baselineAverage: , polarity: prefers smaller, maxPercentRegression: 10.000%, maxPercentRelativeStandardDeviation: 10.000%, maxRegression: 0.000, maxStandardDeviation: 0.000
+HANLIN_PERF_SAMPLE: {"category":"Runtime Engine","classification":"informational","flow_name":"Runtime Switch Cost (JSC <-> QuickJS)","flow_number":8,"max":0.0016390085220336914,"mean":0.00082417329152425134,"median":0.00066900253295898438,"metric":"sequential_switch_latency","min":0.00058102607727050781,"sample_count":6,"samples":[0.0016390085220336914,0.00074207782745361328,0.00066590309143066406,0.00058102607727050781,0.00066900253295898438,0.00064802169799804688],"status":"PASS","std_dev":0.00040248564952129841,"unit":"s"}
+Test Case '-[AI_HLYTests.HanlinRuntimePerformanceTests testFlow8_MultiEngineRuntimeSwitchPerformance]' passed (0.025 seconds).
+Test Case '-[AI_HLYTests.HanlinRuntimePerformanceTests testFlow9_DeterministicPackageStoreImportPerformance]' started.
+/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYTests/HanlinRuntimePerformanceTests.swift:317: Test Case '-[AI_HLYTests.HanlinRuntimePerformanceTests testFlow9_DeterministicPackageStoreImportPerformance]' measured [Memory Physical, kB] average: -314.573, relative standard deviation: -200.000%, values: [0.000000, 0.000000, 0.000000, -1572.864000, 0.000000], performanceMetricID:com.apple.dt.XCTMetric_Memory.physical, baselineName: "", baselineAverage: , polarity: prefers smaller, maxPercentRegression: 10.000%, maxPercentRelativeStandardDeviation: 10.000%, maxRegression: 0.000, maxStandardDeviation: 0.000
+/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYTests/HanlinRuntimePerformanceTests.swift:317: Test Case '-[AI_HLYTests.HanlinRuntimePerformanceTests testFlow9_DeterministicPackageStoreImportPerformance]' measured [CPU Cycles, kC] average: 0.000, relative standard deviation: 0.000%, values: [0.000000, 0.000000, 0.000000, 0.000000, 0.000000], performanceMetricID:com.apple.dt.XCTMetric_CPU.cycles, baselineName: "", baselineAverage: , polarity: prefers smaller, maxPercentRegression: 10.000%, maxPercentRelativeStandardDeviation: 10.000%, maxRegression: 0.000, maxStandardDeviation: 0.000
+/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYTests/HanlinRuntimePerformanceTests.swift:317: Test Case '-[AI_HLYTests.HanlinRuntimePerformanceTests testFlow9_DeterministicPackageStoreImportPerformance]' measured [Clock Monotonic Time, s] average: 0.010, relative standard deviation: 56.695%, values: [0.004224, 0.003847, 0.009892, 0.018921, 0.012730], performanceMetricID:com.apple.dt.XCTMetric_Clock.time.monotonic, baselineName: "", baselineAverage: , polarity: prefers smaller, maxPercentRegression: 10.000%, maxPercentRelativeStandardDeviation: 10.000%, maxRegression: 0.000, maxStandardDeviation: 0.000
+/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYTests/HanlinRuntimePerformanceTests.swift:317: Test Case '-[AI_HLYTests.HanlinRuntimePerformanceTests testFlow9_DeterministicPackageStoreImportPerformance]' measured [CPU Time, s] average: 0.007, relative standard deviation: 37.058%, values: [0.004538, 0.004023, 0.010996, 0.006681, 0.007026], performanceMetricID:com.apple.dt.XCTMetric_CPU.time, baselineName: "", baselineAverage: , polarity: prefers smaller, maxPercentRegression: 10.000%, maxPercentRelativeStandardDeviation: 10.000%, maxRegression: 0.000, maxStandardDeviation: 0.000
+/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYTests/HanlinRuntimePerformanceTests.swift:317: Test Case '-[AI_HLYTests.HanlinRuntimePerformanceTests testFlow9_DeterministicPackageStoreImportPerformance]' measured [CPU Instructions Retired, kI] average: 0.000, relative standard deviation: 0.000%, values: [0.000000, 0.000000, 0.000000, 0.000000, 0.000000], performanceMetricID:com.apple.dt.XCTMetric_CPU.instructions_retired, baselineName: "", baselineAverage: , polarity: prefers smaller, maxPercentRegression: 10.000%, maxPercentRelativeStandardDeviation: 10.000%, maxRegression: 0.000, maxStandardDeviation: 0.000
+/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYTests/HanlinRuntimePerformanceTests.swift:317: Test Case '-[AI_HLYTests.HanlinRuntimePerformanceTests testFlow9_DeterministicPackageStoreImportPerformance]' measured [Memory Peak Physical, kB] average: 88986.931, relative standard deviation: 0.707%, values: [89301.504000, 89301.504000, 89301.504000, 89301.504000, 87728.640000], performanceMetricID:com.apple.dt.XCTMetric_Memory.physical_peak, baselineName: "", baselineAverage: , polarity: prefers smaller, maxPercentRegression: 10.000%, maxPercentRelativeStandardDeviation: 10.000%, maxRegression: 0.000, maxStandardDeviation: 0.000
+HANLIN_PERF_SAMPLE: {"category":"Storage \/ Package","classification":"informational","flow_name":"Deterministic Package Store Import & Manifest Parse","flow_number":9,"max":0.019193053245544434,"mean":0.011273980140686035,"median":0.012922048568725586,"metric":"package_import_latency","min":0.0038969516754150391,"sample_count":6,"samples":[0.017322897911071777,0.0042809247970581055,0.0038969516754150391,0.01002800464630127,0.019193053245544434,0.012922048568725586],"status":"PASS","std_dev":0.0064326212623711937,"unit":"s"}
+Test Case '-[AI_HLYTests.HanlinRuntimePerformanceTests testFlow9_DeterministicPackageStoreImportPerformance]' passed (0.111 seconds).
+Test Case '-[AI_HLYTests.HanlinRuntimePerformanceTests testRuntimeMemoryStabilityUnderRepeatedExecutionCycles]' started.
+HANLIN_PERF_SAMPLE: {"category":"Memory \/ Stability","classification":"hard_gate","flow_name":"Memory Stability (50 Lifecycle Cycles)","flow_number":0,"max":4.203125,"mean":4.203125,"median":4.203125,"metric":"memory_growth_delta","min":4.203125,"sample_count":1,"samples":[4.203125],"status":"PASS","std_dev":0,"unit":"MB"}
+Test Case '-[AI_HLYTests.HanlinRuntimePerformanceTests testRuntimeMemoryStabilityUnderRepeatedExecutionCycles]' passed (0.385 seconds).
+Test Suite 'HanlinRuntimePerformanceTests' passed at 2026-10-08 23:52:09.919.
+	 Executed 8 tests, with 0 failures (0 unexpected) in 13.103 (13.117) seconds
+Test Suite 'AI_HLYTests.xctest' passed at 2026-10-08 23:52:09.920.
+	 Executed 8 tests, with 0 failures (0 unexpected) in 13.103 (13.118) seconds
+Test Suite 'Selected tests' passed at 2026-10-08 23:52:09.920.
+	 Executed 8 tests, with 0 failures (0 unexpected) in 13.103 (13.125) seconds
 ◇ Test run started.
 ↳ Testing Library Version: 2084
 ↳ Target Platform: arm64-apple-ios17.0-simulator
+◇ Suite "Deterministic Agent Runtime Conversation Acceptance" started.
+◇ Test "Conversation A runs the complete runtime chain through the production loop" started.
+2026-10-08 23:52:10.246466+0000 AI_Hanlin[69883:419803] [error] CoreData: warning: CDCS state transition: Disabled → Initializing (index spotlight_com.itorah.chavrusachat_51AF67A6-9C26-41C3-8E74-45574C338456)
+CoreData: warning: CDCS state transition: Disabled → Initializing (index spotlight_com.itorah.chavrusachat_51AF67A6-9C26-41C3-8E74-45574C338456)
+召回记忆关键词： Run the deterministic runtime acceptance conversation.
+2026-10-08 23:52:11.007602+0000 AI_Hanlin[69883:419803] [error] CoreData: warning: CDCS storeRequiresFullReindex: fullReindex=1 reason=no framework-version metadata (index spotlight_com.itorah.chavrusachat_51AF67A6-9C26-41C3-8E74-45574C338456)
+CoreData: warning: CDCS storeRequiresFullReindex: fullReindex=1 reason=no framework-version metadata (index spotlight_com.itorah.chavrusachat_51AF67A6-9C26-41C3-8E74-45574C338456)
+2026-10-08 23:52:11.007801+0000 AI_Hanlin[69883:419803] [error] CoreData: warning: CDCS starting full reimport (index spotlight_com.itorah.chavrusachat_51AF67A6-9C26-41C3-8E74-45574C338456)
+CoreData: warning: CDCS starting full reimport (index spotlight_com.itorah.chavrusachat_51AF67A6-9C26-41C3-8E74-45574C338456)
+2026-10-08 23:52:11.008069+0000 AI_Hanlin[69883:419803] [error] CoreData: warning: CDCS full reimport baseline: allKnownItems=0 (index spotlight_com.itorah.chavrusachat_51AF67A6-9C26-41C3-8E74-45574C338456)
+CoreData: warning: CDCS full reimport baseline: allKnownItems=0 (index spotlight_com.itorah.chavrusachat_51AF67A6-9C26-41C3-8E74-45574C338456)
+CoreData: annotation: CDCS client state token write begin (index spotlight_com.itorah.chavrusachat_51AF67A6-9C26-41C3-8E74-45574C338456): (null)
+CoreData: annotation: CDCS client state token write begin (index spotlight_com.itorah.chavrusachat_51AF67A6-9C26-41C3-8E74-45574C338456): (null)
+CoreData: annotation: CDCS reimport gate ENTER (index spotlight_com.itorah.chavrusachat_51AF67A6-9C26-41C3-8E74-45574C338456)
+CoreData: annotation: CDCS client state token write begin (index spotlight_com.itorah.chavrusachat_51AF67A6-9C26-41C3-8E74-45574C338456): (null)
+2026-10-08 23:52:22.151779+0000 AI_Hanlin[69883:416341] [BackgroundTask] Background Task 3 ("CoreData: Spotlight Indexing"), was created over 30 seconds ago. In applications running in the background, this creates a risk of termination. Remember to call UIApplication.endBackgroundTask(_:) for your task in a timely manner to avoid this.
+2026-10-08 23:52:27.068010+0000 AI_Hanlin[69883:419801] command = 'ls' pid= 0
+2026-10-08 23:52:27.068110+0000 AI_Hanlin[69883:419801] Starting command: 'ls' currentSession->isMainThread: 1
+2026-10-08 23:52:27.068378+0000 AI_Hanlin[69883:419801] After params creation, stdout 0 stderr 0
+2026-10-08 23:52:27.068441+0000 AI_Hanlin[69883:419801] After files parsing, stdout 2ebc73c8 stderr 2ebc7460
+2026-10-08 23:52:27.070635+0000 AI_Hanlin[69883:419801] After command parsing, stdout 2ebc73c8 stderr 2ebc7460
+2026-10-08 23:52:27.071079+0000 AI_Hanlin[69883:419801] params->stdout: 38 thread_stdout: 38
+2026-10-08 23:52:27.071157+0000 AI_Hanlin[69883:419801] params->stdin: 37 thread_stdin: 37
+2026-10-08 23:52:27.329967+0000 AI_Hanlin[69883:419801] 
+Num file descriptors opened = 40 limit= 1048575
+2026-10-08 23:52:27.330186+0000 AI_Hanlin[69883:419801] Starting command: ls, currentSession->isMainThread: 1
+2026-10-08 23:52:27.355686+0000 AI_Hanlin[69883:420910] Storing thread_id: 6bc87000 pid: 0 isPipeOut: 0 isPipeErr: 0 stdin 37 stdout 38 stderr 39 command= ls
+2026-10-08 23:52:27.355892+0000 AI_Hanlin[69883:420910] Storing thread_id: 6bc87000 as root_thread
+2026-10-08 23:52:27.359165+0000 AI_Hanlin[69883:420910] cleanup_function: ls thread_id 6bc87000 pid: 0 stdin 37 stdout 38 stderr 39 isPipeOut 0
+2026-10-08 23:52:27.359325+0000 AI_Hanlin[69883:420910] currentSession->commandName: ls root_thread: 6bc87000
+2026-10-08 23:52:27.359376+0000 AI_Hanlin[69883:420910] Num commands stored: 1
+2026-10-08 23:52:27.359435+0000 AI_Hanlin[69883:420910] Terminating command: ls thread_id 6bc87000 stdin 37 stdout 38 stderr 39 isPipeOut 0
+2026-10-08 23:52:27.359503+0000 AI_Hanlin[69883:420910] Current thread 6bc87000 lastthread 0 pid: 0
+2026-10-08 23:52:27.359555+0000 AI_Hanlin[69883:420910] returning from cleanup_function, session: (null)
+2026-10-08 23:52:27.359671+0000 AI_Hanlin[69883:419801] returning from ios_system, global_errno= 0
+2026-10-08 23:52:27.445603+0000 AI_Hanlin[69883:416341] [error] CoreData: warning: CDCS state transition: Initializing → FatalError (index spotlight_com.itorah.chavrusachat_51AF67A6-9C26-41C3-8E74-45574C338456)
+CoreData: warning: CDCS state transition: Initializing → FatalError (index spotlight_com.itorah.chavrusachat_51AF67A6-9C26-41C3-8E74-45574C338456)
+✔ Test "Conversation A runs the complete runtime chain through the production loop" passed after 17.298 seconds.
+◇ Test "Conversation B records one failed tool and recovers in the same completed run" started.
+2026-10-08 23:52:27.457308+0000 AI_Hanlin[69883:420846] [error] CoreData: warning: CDCS state transition: Disabled → Initializing (index spotlight_com.itorah.chavrusachat_A6C9F05B-B59F-4A79-A9B9-3527780504B8)
+CoreData: warning: CDCS state transition: Disabled → Initializing (index spotlight_com.itorah.chavrusachat_A6C9F05B-B59F-4A79-A9B9-3527780504B8)
+召回记忆关键词： Run the deterministic runtime acceptance conversation.
+2026-10-08 23:52:27.655261+0000 AI_Hanlin[69883:420926] command = 'ls' pid= 0
+2026-10-08 23:52:27.655456+0000 AI_Hanlin[69883:420926] Starting command: 'ls' currentSession->isMainThread: 1
+2026-10-08 23:52:27.655544+0000 AI_Hanlin[69883:420926] After params creation, stdout 0 stderr 0
+2026-10-08 23:52:27.655602+0000 AI_Hanlin[69883:420926] After files parsing, stdout 2ebc73c8 stderr 2ebc7460
+2026-10-08 23:52:27.656055+0000 AI_Hanlin[69883:420926] After command parsing, stdout 2ebc73c8 stderr 2ebc7460
+2026-10-08 23:52:27.656225+0000 AI_Hanlin[69883:420926] params->stdout: 38 thread_stdout: 38
+2026-10-08 23:52:27.656286+0000 AI_Hanlin[69883:420926] params->stdin: 37 thread_stdin: 37
+2026-10-08 23:52:27.903152+0000 AI_Hanlin[69883:420926] 
+Num file descriptors opened = 40 limit= 1048575
+2026-10-08 23:52:27.903566+0000 AI_Hanlin[69883:420926] Starting command: ls, currentSession->isMainThread: 1
+2026-10-08 23:52:27.907917+0000 AI_Hanlin[69883:420978] Storing thread_id: 6bf4b000 pid: 0 isPipeOut: 0 isPipeErr: 0 stdin 37 stdout 38 stderr 39 command= ls
+2026-10-08 23:52:27.908038+0000 AI_Hanlin[69883:420978] Storing thread_id: 6bf4b000 as root_thread
+2026-10-08 23:52:27.908288+0000 AI_Hanlin[69883:420978] cleanup_function: ls thread_id 6bf4b000 pid: 0 stdin 37 stdout 38 stderr 39 isPipeOut 0
+2026-10-08 23:52:27.908347+0000 AI_Hanlin[69883:420978] currentSession->commandName: ls root_thread: 6bf4b000
+2026-10-08 23:52:27.908407+0000 AI_Hanlin[69883:420978] Num commands stored: 1
+2026-10-08 23:52:27.908458+0000 AI_Hanlin[69883:420978] Terminating command: ls thread_id 6bf4b000 stdin 37 stdout 38 stderr 39 isPipeOut 0
+2026-10-08 23:52:27.908534+0000 AI_Hanlin[69883:420978] Current thread 6bf4b000 lastthread 0 pid: 0
+2026-10-08 23:52:27.908705+0000 AI_Hanlin[69883:420978] returning from cleanup_function, session: (null)
+2026-10-08 23:52:27.908820+0000 AI_Hanlin[69883:420926] returning from ios_system, global_errno= 0
+2026-10-08 23:52:27.956992+0000 AI_Hanlin[69883:416341] [error] CoreData: warning: CDCS state transition: Initializing → FatalError (index spotlight_com.itorah.chavrusachat_A6C9F05B-B59F-4A79-A9B9-3527780504B8)
+CoreData: warning: CDCS state transition: Initializing → FatalError (index spotlight_com.itorah.chavrusachat_A6C9F05B-B59F-4A79-A9B9-3527780504B8)
+✔ Test "Conversation B records one failed tool and recovers in the same completed run" passed after 0.508 seconds.
+◇ Test "Conversation C preserves every advertised runtime parameter" started.
+2026-10-08 23:52:27.964879+0000 AI_Hanlin[69883:420926] [error] CoreData: warning: CDCS state transition: Disabled → Initializing (index spotlight_com.itorah.chavrusachat_0442828E-5687-45DA-8D2D-CD01D92C421A)
+CoreData: warning: CDCS state transition: Disabled → Initializing (index spotlight_com.itorah.chavrusachat_0442828E-5687-45DA-8D2D-CD01D92C421A)
+召回记忆关键词： Run the deterministic runtime acceptance conversation.
+2026-10-08 23:52:40.291473+0000 AI_Hanlin[69883:420926] [error] CoreData: warning: CDCS storeRequiresFullReindex: fullReindex=1 reason=no framework-version metadata (index spotlight_com.itorah.chavrusachat_0442828E-5687-45DA-8D2D-CD01D92C421A)
+CoreData: warning: CDCS storeRequiresFullReindex: fullReindex=1 reason=no framework-version metadata (index spotlight_com.itorah.chavrusachat_0442828E-5687-45DA-8D2D-CD01D92C421A)
+2026-10-08 23:52:40.292262+0000 AI_Hanlin[69883:420926] [error] CoreData: warning: CDCS starting full reimport (index spotlight_com.itorah.chavrusachat_0442828E-5687-45DA-8D2D-CD01D92C421A)
+CoreData: warning: CDCS starting full reimport (index spotlight_com.itorah.chavrusachat_0442828E-5687-45DA-8D2D-CD01D92C421A)
+2026-10-08 23:52:40.293299+0000 AI_Hanlin[69883:420926] [error] CoreData: warning: CDCS full reimport baseline: allKnownItems=0 (index spotlight_com.itorah.chavrusachat_0442828E-5687-45DA-8D2D-CD01D92C421A)
+CoreData: warning: CDCS full reimport baseline: allKnownItems=0 (index spotlight_com.itorah.chavrusachat_0442828E-5687-45DA-8D2D-CD01D92C421A)
+CoreData: annotation: CDCS client state token write begin (index spotlight_com.itorah.chavrusachat_0442828E-5687-45DA-8D2D-CD01D92C421A): (null)
+CoreData: annotation: CDCS client state token write begin (index spotlight_com.itorah.chavrusachat_0442828E-5687-45DA-8D2D-CD01D92C421A): (null)
+CoreData: annotation: CDCS reimport gate ENTER (index spotlight_com.itorah.chavrusachat_0442828E-5687-45DA-8D2D-CD01D92C421A)
+CoreData: annotation: CDCS client state token write begin (index spotlight_com.itorah.chavrusachat_0442828E-5687-45DA-8D2D-CD01D92C421A): (null)
+2026-10-08 23:52:41.632595+0000 AI_Hanlin[69883:419832] command = 'curl' '--version' pid= 0
+2026-10-08 23:52:41.632737+0000 AI_Hanlin[69883:419832] Starting command: 'curl' '--version' currentSession->isMainThread: 1
+2026-10-08 23:52:41.632835+0000 AI_Hanlin[69883:419832] After params creation, stdout 0 stderr 0
+2026-10-08 23:52:41.632892+0000 AI_Hanlin[69883:419832] After files parsing, stdout 2ebc73c8 stderr 2ebc7460
+2026-10-08 23:52:41.633483+0000 AI_Hanlin[69883:419832] After command parsing, stdout 2ebc73c8 stderr 2ebc7460
+2026-10-08 23:52:41.634125+0000 AI_Hanlin[69883:419832] params->stdout: 38 thread_stdout: 38
+2026-10-08 23:52:41.634187+0000 AI_Hanlin[69883:419832] params->stdin: 37 thread_stdin: 37
+2026-10-08 23:52:41.865665+0000 AI_Hanlin[69883:419832] 
+Num file descriptors opened = 40 limit= 1048575
+2026-10-08 23:52:41.865856+0000 AI_Hanlin[69883:419832] Starting command: curl, currentSession->isMainThread: 1
+2026-10-08 23:52:41.874263+0000 AI_Hanlin[69883:422326] Storing thread_id: 6b527000 pid: 0 isPipeOut: 0 isPipeErr: 0 stdin 37 stdout 38 stderr 39 command= curl
+2026-10-08 23:52:41.874412+0000 AI_Hanlin[69883:422326] Storing thread_id: 6b527000 as root_thread
+2026-10-08 23:52:41.895799+0000 AI_Hanlin[69883:422326] cleanup_function: curl thread_id 6b527000 pid: 0 stdin 37 stdout 38 stderr 39 isPipeOut 0
+2026-10-08 23:52:41.895930+0000 AI_Hanlin[69883:422326] currentSession->commandName: curl root_thread: 6b527000
+2026-10-08 23:52:41.895978+0000 AI_Hanlin[69883:422326] Num commands stored: 1
+2026-10-08 23:52:41.896099+0000 AI_Hanlin[69883:422326] Terminating command: curl thread_id 6b527000 stdin 37 stdout 38 stderr 39 isPipeOut 0
+2026-10-08 23:52:41.896176+0000 AI_Hanlin[69883:422326] Ending a curl command.
+2026-10-08 23:52:41.896241+0000 AI_Hanlin[69883:422326] Current thread 6b527000 lastthread 0 pid: 0
+2026-10-08 23:52:41.896293+0000 AI_Hanlin[69883:422326] returning from cleanup_function, session: (null)
+2026-10-08 23:52:41.896393+0000 AI_Hanlin[69883:419832] returning from ios_system, global_errno= 0
+2026-10-08 23:52:41.952213+0000 AI_Hanlin[69883:416341] [error] CoreData: warning: CDCS state transition: Initializing → FatalError (index spotlight_com.itorah.chavrusachat_0442828E-5687-45DA-8D2D-CD01D92C421A)
+CoreData: warning: CDCS state transition: Initializing → FatalError (index spotlight_com.itorah.chavrusachat_0442828E-5687-45DA-8D2D-CD01D92C421A)
+✔ Test "Conversation C preserves every advertised runtime parameter" passed after 13.995 seconds.
+◇ Test "Malformed calls fail semantically and a later corrected call still completes" started.
+2026-10-08 23:52:41.966556+0000 AI_Hanlin[69883:420932] [error] CoreData: warning: CDCS state transition: Disabled → Initializing (index spotlight_com.itorah.chavrusachat_FAD2DB8F-6B52-47F9-9E30-0B36D0FCA60E)
+CoreData: warning: CDCS state transition: Disabled → Initializing (index spotlight_com.itorah.chavrusachat_FAD2DB8F-6B52-47F9-9E30-0B36D0FCA60E)
+召回记忆关键词： Run the deterministic runtime acceptance conversation.
+2026-10-08 23:52:42.438928+0000 AI_Hanlin[69883:416341] [error] CoreData: warning: CDCS state transition: Initializing → FatalError (index spotlight_com.itorah.chavrusachat_FAD2DB8F-6B52-47F9-9E30-0B36D0FCA60E)
+CoreData: warning: CDCS state transition: Initializing → FatalError (index spotlight_com.itorah.chavrusachat_FAD2DB8F-6B52-47F9-9E30-0B36D0FCA60E)
+✔ Test "Malformed calls fail semantically and a later corrected call still completes" passed after 0.485 seconds.
+◇ Test "Production code skill loads local python and completes in the same user turn without extra nudge" started.
+2026-10-08 23:52:42.455112+0000 AI_Hanlin[69883:421022] [error] CoreData: warning: CDCS state transition: Disabled → Initializing (index spotlight_com.itorah.chavrusachat_4B487C8F-7040-412C-AC61-A4508FD87E8B)
+CoreData: warning: CDCS state transition: Disabled → Initializing (index spotlight_com.itorah.chavrusachat_4B487C8F-7040-412C-AC61-A4508FD87E8B)
+召回记忆关键词： Run the deterministic runtime acceptance conversation.
+2026-10-08 23:52:42.629288+0000 AI_Hanlin[69883:416341] [error] CoreData: warning: CDCS state transition: Initializing → FatalError (index spotlight_com.itorah.chavrusachat_4B487C8F-7040-412C-AC61-A4508FD87E8B)
+CoreData: warning: CDCS state transition: Initializing → FatalError (index spotlight_com.itorah.chavrusachat_4B487C8F-7040-412C-AC61-A4508FD87E8B)
+✔ Test "Production code skill loads local python and completes in the same user turn without extra nudge" passed after 0.191 seconds.
+◇ Test "Production tool failure renders error card and recovers in same turn" started.
+2026-10-08 23:52:42.638903+0000 AI_Hanlin[69883:422154] [error] CoreData: warning: CDCS state transition: Disabled → Initializing (index spotlight_com.itorah.chavrusachat_B04CCBB2-4D6D-434B-9885-044A473FC4F8)
+CoreData: warning: CDCS state transition: Disabled → Initializing (index spotlight_com.itorah.chavrusachat_B04CCBB2-4D6D-434B-9885-044A473FC4F8)
+召回记忆关键词： Run the deterministic runtime acceptance conversation.
+2026-10-08 23:52:42.832941+0000 AI_Hanlin[69883:416341] [error] CoreData: warning: CDCS state transition: Initializing → FatalError (index spotlight_com.itorah.chavrusachat_B04CCBB2-4D6D-434B-9885-044A473FC4F8)
+CoreData: warning: CDCS state transition: Initializing → FatalError (index spotlight_com.itorah.chavrusachat_B04CCBB2-4D6D-434B-9885-044A473FC4F8)
+✔ Test "Production tool failure renders error card and recovers in same turn" passed after 0.203 seconds.
+◇ Test "Cancellation during agent run cancels coordinator and marks run cancelled" started.
+2026-10-08 23:52:42.843055+0000 AI_Hanlin[69883:422328] [error] CoreData: warning: CDCS state transition: Disabled → Initializing (index spotlight_com.itorah.chavrusachat_096AFCAC-AE0C-4F37-87F9-8611F9B31FAD)
+CoreData: warning: CDCS state transition: Disabled → Initializing (index spotlight_com.itorah.chavrusachat_096AFCAC-AE0C-4F37-87F9-8611F9B31FAD)
+召回记忆关键词： Run delayed tool.
+2026-10-08 23:52:42.907249+0000 AI_Hanlin[69883:416341] [error] CoreData: warning: CDCS state transition: Initializing → FatalError (index spotlight_com.itorah.chavrusachat_096AFCAC-AE0C-4F37-87F9-8611F9B31FAD)
+CoreData: warning: CDCS state transition: Initializing → FatalError (index spotlight_com.itorah.chavrusachat_096AFCAC-AE0C-4F37-87F9-8611F9B31FAD)
+✔ Test "Cancellation during agent run cancels coordinator and marks run cancelled" passed after 0.073 seconds.
+◇ Test "Starting a new run cancels old run without ghost work" started.
+2026-10-08 23:52:42.920195+0000 AI_Hanlin[69883:422331] [error] CoreData: warning: CDCS state transition: Disabled → Initializing (index spotlight_com.itorah.chavrusachat_1AE3B407-2948-4B6B-9DE2-BAF6289DE69E)
+CoreData: warning: CDCS state transition: Disabled → Initializing (index spotlight_com.itorah.chavrusachat_1AE3B407-2948-4B6B-9DE2-BAF6289DE69E)
+召回记忆关键词： Start Run A
+召回记忆关键词： Start Run B
+2026-10-08 23:52:43.125979+0000 AI_Hanlin[69883:416341] [error] CoreData: warning: CDCS state transition: Initializing → FatalError (index spotlight_com.itorah.chavrusachat_1AE3B407-2948-4B6B-9DE2-BAF6289DE69E)
+CoreData: warning: CDCS state transition: Initializing → FatalError (index spotlight_com.itorah.chavrusachat_1AE3B407-2948-4B6B-9DE2-BAF6289DE69E)
+✔ Test "Starting a new run cancels old run without ghost work" passed after 0.217 seconds.
+◇ Test "Terminal diagnostics are immutable and reject late mutations across all mutation methods" started.
+✔ Test "Terminal diagnostics are immutable and reject late mutations across all mutation methods" passed after 0.016 seconds.
+◇ Test "Unexpected SDK stream end without terminal event marks diagnostics as failed and throws error" started.
+2026-10-08 23:52:43.149650+0000 AI_Hanlin[69883:422335] [error] CoreData: warning: CDCS state transition: Disabled → Initializing (index spotlight_com.itorah.chavrusachat_1114CCBF-9ED5-400D-8CE7-470D841AD723)
+CoreData: warning: CDCS state transition: Disabled → Initializing (index spotlight_com.itorah.chavrusachat_1114CCBF-9ED5-400D-8CE7-470D841AD723)
+召回记忆关键词： Run the deterministic runtime acceptance conversation.
+2026-10-08 23:52:43.187888+0000 AI_Hanlin[69883:416341] [error] CoreData: warning: CDCS state transition: Initializing → FatalError (index spotlight_com.itorah.chavrusachat_1114CCBF-9ED5-400D-8CE7-470D841AD723)
+CoreData: warning: CDCS state transition: Initializing → FatalError (index spotlight_com.itorah.chavrusachat_1114CCBF-9ED5-400D-8CE7-470D841AD723)
+✔ Test "Unexpected SDK stream end without terminal event marks diagnostics as failed and throws error" passed after 0.046 seconds.
+◇ Test "Round order uses exact SDK step numbers starting at zero" started.
+2026-10-08 23:52:43.205657+0000 AI_Hanlin[69883:420932] [error] CoreData: warning: CDCS state transition: Disabled → Initializing (index spotlight_com.itorah.chavrusachat_91E7CF52-EE99-4226-A2B9-66DA18ABFF39)
+CoreData: warning: CDCS state transition: Disabled → Initializing (index spotlight_com.itorah.chavrusachat_91E7CF52-EE99-4226-A2B9-66DA18ABFF39)
+召回记忆关键词： Run the deterministic runtime acceptance conversation.
+2026-10-08 23:52:43.362252+0000 AI_Hanlin[69883:416341] [error] CoreData: warning: CDCS state transition: Initializing → FatalError (index spotlight_com.itorah.chavrusachat_91E7CF52-EE99-4226-A2B9-66DA18ABFF39)
+CoreData: warning: CDCS state transition: Initializing → FatalError (index spotlight_com.itorah.chavrusachat_91E7CF52-EE99-4226-A2B9-66DA18ABFF39)
+✔ Test "Round order uses exact SDK step numbers starting at zero" passed after 0.172 seconds.
+◇ Test "Diagnostics capture actual continuation request body and headers" started.
+2026-10-08 23:52:43.369823+0000 AI_Hanlin[69883:422339] [error] CoreData: warning: CDCS state transition: Disabled → Initializing (index spotlight_com.itorah.chavrusachat_69BB4961-BAFB-4176-8C35-C6A62295973E)
+CoreData: warning: CDCS state transition: Disabled → Initializing (index spotlight_com.itorah.chavrusachat_69BB4961-BAFB-4176-8C35-C6A62295973E)
+召回记忆关键词： Run the deterministic runtime acceptance conversation.
+2026-10-08 23:52:43.449933+0000 AI_Hanlin[69883:416341] [error] CoreData: warning: CDCS state transition: Initializing → FatalError (index spotlight_com.itorah.chavrusachat_69BB4961-BAFB-4176-8C35-C6A62295973E)
+CoreData: warning: CDCS state transition: Initializing → FatalError (index spotlight_com.itorah.chavrusachat_69BB4961-BAFB-4176-8C35-C6A62295973E)
+✔ Test "Diagnostics capture actual continuation request body and headers" passed after 0.088 seconds.
+✔ Suite "Deterministic Agent Runtime Conversation Acceptance" passed after 33.304 seconds.
 ◇ Suite "Agent Skills and Deferred Tool Exposure Tests" started.
 ◇ Test "Skill Catalog registration and instruction resolution" started.
-✔ Test "Skill Catalog registration and instruction resolution" passed after 0.018 seconds.
+✔ Test "Skill Catalog registration and instruction resolution" passed after 0.001 seconds.
 ◇ Test "Skill Index prompt generation produces compact markdown index" started.
 ✔ Test "Skill Index prompt generation produces compact markdown index" passed after 0.001 seconds.
 ◇ Test "Tool exposure planner enforces byte budget and defers overflow tools" started.
-✔ Test "Tool exposure planner enforces byte budget and defers overflow tools" passed after 0.002 seconds.
+✔ Test "Tool exposure planner enforces byte budget and defers overflow tools" passed after 0.001 seconds.
 ◇ Test "AssistantCapabilitySession isolates turns and manages tool exposure" started.
-✔ Test "AssistantCapabilitySession isolates turns and manages tool exposure" passed after 0.003 seconds.
+✔ Test "AssistantCapabilitySession isolates turns and manages tool exposure" passed after 0.001 seconds.
 ◇ Test "LoadSkillTool execution loads instructions, exposes tools and reports deferred" started.
-✔ Test "LoadSkillTool execution loads instructions, exposes tools and reports deferred" passed after 0.002 seconds.
+✔ Test "LoadSkillTool execution loads instructions, exposes tools and reports deferred" passed after 0.001 seconds.
 ◇ Test "ToolSearchTool searches metadata, exposes matching tools and formats response" started.
-✔ Test "ToolSearchTool searches metadata, exposes matching tools and formats response" passed after 0.002 seconds.
+✔ Test "ToolSearchTool searches metadata, exposes matching tools and formats response" passed after 0.003 seconds.
 ◇ Test "ReadToolResultTool supports offset and limit pagination over BoundedToolResultStore" started.
-✔ Test "ReadToolResultTool supports offset and limit pagination over BoundedToolResultStore" passed after 0.004 seconds.
+✔ Test "ReadToolResultTool supports offset and limit pagination over BoundedToolResultStore" passed after 0.002 seconds.
 ◇ Test "Production Skill catalog synchronizes system and canonical skills without acceptance bootstrap" started.
-✔ Test "Production Skill catalog synchronizes system and canonical skills without acceptance bootstrap" passed after 0.100 seconds.
+✔ Test "Production Skill catalog synchronizes system and canonical skills without acceptance bootstrap" passed after 0.001 seconds.
 ◇ Test "LoadSkill propagates instructions and tool hints into session context" started.
 ✔ Test "LoadSkill propagates instructions and tool hints into session context" passed after 0.001 seconds.
 ◇ Test "Full SDK flow: load_skill -> active tools change -> canonical tool call -> native continuation -> final answer" started.
-✔ Test "Full SDK flow: load_skill -> active tools change -> canonical tool call -> native continuation -> final answer" passed after 0.091 seconds.
-✔ Suite "Agent Skills and Deferred Tool Exposure Tests" passed after 0.231 seconds.
+✔ Test "Full SDK flow: load_skill -> active tools change -> canonical tool call -> native continuation -> final answer" passed after 0.025 seconds.
+✔ Suite "Agent Skills and Deferred Tool Exposure Tests" passed after 0.037 seconds.
 ◇ Suite "Apple Local Model Providers Contract Tests" started.
 ◇ Test "AppleFoundationModelCapability reports typed state without crashing" started.
-✔ Test "AppleFoundationModelCapability reports typed state without crashing" passed after 0.001 seconds.
+✔ Test "AppleFoundationModelCapability reports typed state without crashing" passed after 0.126 seconds.
 ◇ Test "AppleFoundationModelsProvider throws typed unavailable on non-compatible host" started.
 ✔ Test "AppleFoundationModelsProvider throws typed unavailable on non-compatible host" passed after 0.001 seconds.
 ◇ Test "AppleFoundationModelsProvider rejects images when model does not support multimodal" started.
@@ -224,19 +456,19 @@ Test Suite 'Selected tests' passed at 2026-10-07 16:37:40.462.
 ◇ Test "CoreAI provider rejects non-existent model file" started.
 ✔ Test "CoreAI provider rejects non-existent model file" passed after 0.001 seconds.
 ◇ Test "CoreAI provider rejects invalid file format" started.
-✔ Test "CoreAI provider rejects invalid file format" passed after 0.001 seconds.
+✔ Test "CoreAI provider rejects invalid file format" passed after 0.002 seconds.
 ◇ Test "CoreAI provider rejects empty model file container" started.
 ✔ Test "CoreAI provider rejects empty model file container" passed after 0.001 seconds.
-◇ Test "CoreAI provider specializes valid container and throws unavailable on simulator generation" started.
-✔ Test "CoreAI provider specializes valid container and throws unavailable on simulator generation" passed after 0.001 seconds.
-✔ Suite "Apple Local Model Providers Contract Tests" passed after 0.069 seconds.
+◇ Test "CoreAI provider requires official dependency and reports blockedDependency on valid container" started.
+✔ Test "CoreAI provider requires official dependency and reports blockedDependency on valid container" passed after 0.004 seconds.
+✔ Suite "Apple Local Model Providers Contract Tests" passed after 0.138 seconds.
 ◇ Suite "Canonical downstream adapters" started.
 ◇ Test "Native app projection is stable and rejects invalid identity" started.
-✔ Test "Native app projection is stable and rejects invalid identity" passed after 0.039 seconds.
+✔ Test "Native app projection is stable and rejects invalid identity" passed after 0.043 seconds.
 ◇ Test "ChatCard entry point projects to canonical embeddedResult" started.
 ✔ Test "ChatCard entry point projects to canonical embeddedResult" passed after 0.001 seconds.
 ◇ Test "Built-in canonical registrations validate cleanly and discover" started.
-✔ Test "Built-in canonical registrations validate cleanly and discover" passed after 0.006 seconds.
+✔ Test "Built-in canonical registrations validate cleanly and discover" passed after 0.008 seconds.
 ◇ Test "NativeBuiltinRuntimeBinding resolves canonical tool IDs and card handlers" started.
 ✔ Test "NativeBuiltinRuntimeBinding resolves canonical tool IDs and card handlers" passed after 0.001 seconds.
 ◇ Test "Native app modules derive manifest and capabilities from canonical descriptor" started.
@@ -248,69 +480,93 @@ Test Suite 'Selected tests' passed at 2026-10-07 16:37:40.462.
 ◇ Test "Registry-level capability aggregation preserves diagnostics from canonical modules" started.
 ✔ Test "Registry-level capability aggregation preserves diagnostics from canonical modules" passed after 0.001 seconds.
 ◇ Test "Supported capabilities project normally with domain, reason, and optionality" started.
-✔ Test "Supported capabilities project normally with domain, reason, and optionality" passed after 0.004 seconds.
+✔ Test "Supported capabilities project normally with domain, reason, and optionality" passed after 0.001 seconds.
 ◇ Test "Canonical capability projection is non-lossy and partitions declarations without silent drops" started.
 ✔ Test "Canonical capability projection is non-lossy and partitions declarations without silent drops" passed after 0.001 seconds.
 ◇ Test "Native tool projection preserves qualified identity and rejects schema mismatch" started.
-✔ Test "Native tool projection preserves qualified identity and rejects schema mismatch" passed after 0.012 seconds.
+✔ Test "Native tool projection preserves qualified identity and rejects schema mismatch" passed after 0.019 seconds.
 ◇ Test "MCP projections preserve provider, tool, schema, alias, and runtime state" started.
 ✔ Test "MCP projections preserve provider, tool, schema, alias, and runtime state" passed after 0.001 seconds.
 ◇ Test "MCP projection rejects duplicate secret names and malformed schemas" started.
-✔ Test "MCP projection rejects duplicate secret names and malformed schemas" passed after 0.010 seconds.
+✔ Test "MCP projection rejects duplicate secret names and malformed schemas" passed after 0.015 seconds.
 ◇ Test "RuntimeCore projection is deterministic and does not invent integer provenance" started.
-✔ Test "RuntimeCore projection is deterministic and does not invent integer provenance" passed after 0.004 seconds.
-✔ Suite "Canonical downstream adapters" passed after 0.084 seconds.
+✔ Test "RuntimeCore projection is deterministic and does not invent integer provenance" passed after 0.006 seconds.
+✔ Suite "Canonical downstream adapters" passed after 0.101 seconds.
+◇ Suite "Canonical Mini App production integration" started.
+◇ Test "Compiled package exposure registry derives Widget and App Intent from canonical descriptor" started.
+✔ Test "Compiled package exposure registry derives Widget and App Intent from canonical descriptor" passed after 0.001 seconds.
+◇ Test "HanlinScript replacement keeps stable canonical data identity" started.
+✔ Test "HanlinScript replacement keeps stable canonical data identity" passed after 0.004 seconds.
+◇ Test "Canonical catalog discovers Swift built-in parity app and groups engines accurately" started.
+✔ Test "Canonical catalog discovers Swift built-in parity app and groups engines accurately" passed after 0.001 seconds.
+◇ Test "Native services bridge exposes Python version and executes JavaScript returning 42" started.
+✔ Test "Native services bridge exposes Python version and executes JavaScript returning 42" passed after 0.071 seconds.
+◇ Test "Inter-app request broker allows authorized cross-engine request flow and enforces bidirectional capabilities" started.
+✔ Test "Inter-app request broker allows authorized cross-engine request flow and enforces bidirectional capabilities" passed after 0.020 seconds.
+◇ Test "Caller identity spoofing is rejected by host-bound broker" started.
+✔ Test "Caller identity spoofing is rejected by host-bound broker" passed after 0.001 seconds.
+◇ Test "Private storage rejects path traversal and escapes from container root" started.
+✔ Test "Private storage rejects path traversal and escapes from container root" passed after 0.022 seconds.
+◇ Test "Per-entrypoint isolation on hybrid package prevents runtime leakage across sibling entrypoints" started.
+✔ Test "Per-entrypoint isolation on hybrid package prevents runtime leakage across sibling entrypoints" passed after 0.001 seconds.
+◇ Test "All 4 compiled mini app providers are registered and provide canonical descriptors" started.
+✔ Test "All 4 compiled mini app providers are registered and provide canonical descriptors" passed after 0.001 seconds.
+◇ Test "Per-entrypoint resolution with hybrid descriptors maps foreground and background engines" started.
+✔ Test "Per-entrypoint resolution with hybrid descriptors maps foreground and background engines" passed after 0.001 seconds.
+◇ Test "HanlinNativeServicesBridge enforces active container isolation and capability gating" started.
+✔ Test "HanlinNativeServicesBridge enforces active container isolation and capability gating" passed after 0.016 seconds.
+✔ Suite "Canonical Mini App production integration" passed after 0.150 seconds.
 ◇ Suite "Canonical shadow coordinator" started.
 ◇ Test "Pure comparison reports pass, warning, mismatch, and deterministic order" started.
 ✔ Test "Pure comparison reports pass, warning, mismatch, and deterministic order" passed after 0.001 seconds.
 ◇ Test "Skipped domains are explicit and summary equality is timestamp-free" started.
 ✔ Test "Skipped domains are explicit and summary equality is timestamp-free" passed after 0.001 seconds.
 ◇ Test "All observable adapter domains project without execution or network access" started.
-✔ Test "All observable adapter domains project without execution or network access" passed after 0.027 seconds.
+✔ Test "All observable adapter domains project without execution or network access" passed after 0.007 seconds.
 ◇ Test "Combined tool parity rejects collisions, missing targets, and orphan routes" started.
 ✔ Test "Combined tool parity rejects collisions, missing targets, and orphan routes" passed after 0.001 seconds.
 ◇ Test "Structured diagnostics exclude source secrets and arbitrary payloads" started.
-✔ Test "Structured diagnostics exclude source secrets and arbitrary payloads" passed after 0.007 seconds.
-✔ Suite "Canonical shadow coordinator" passed after 0.036 seconds.
+✔ Test "Structured diagnostics exclude source secrets and arbitrary payloads" passed after 0.011 seconds.
+✔ Suite "Canonical shadow coordinator" passed after 0.021 seconds.
 ◇ Suite "Canonical Native and MCP tool authority" started.
 ◇ Test "Builds one canonical catalog with closed backend routes" started.
 ✔ Test "Builds one canonical catalog with closed backend routes" passed after 0.001 seconds.
 ◇ Test "Supports empty, Native-only, and MCP-only catalogs" started.
 ✔ Test "Supports empty, Native-only, and MCP-only catalogs" passed after 0.001 seconds.
 ◇ Test "Catalog and aliases are deterministic across discovery order" started.
-✔ Test "Catalog and aliases are deterministic across discovery order" passed after 0.002 seconds.
+✔ Test "Catalog and aliases are deterministic across discovery order" passed after 0.001 seconds.
 ◇ Test "Native keeps a colliding alias and MCP receives a stable suffix" started.
 ✔ Test "Native keeps a colliding alias and MCP receives a stable suffix" passed after 0.001 seconds.
 ◇ Test "Rejects duplicate logical tools and invalid model schemas" started.
-✔ Test "Rejects duplicate logical tools and invalid model schemas" passed after 0.016 seconds.
+✔ Test "Rejects duplicate logical tools and invalid model schemas" passed after 0.018 seconds.
 ◇ Test "Preserves model schema content except for canonical alias allocation" started.
-✔ Test "Preserves model schema content except for canonical alias allocation" passed after 0.078 seconds.
+✔ Test "Preserves model schema content except for canonical alias allocation" passed after 0.001 seconds.
 ◇ Test "Matches the legacy model-facing schemas when no collision exists" started.
 ✔ Test "Matches the legacy model-facing schemas when no collision exists" passed after 0.001 seconds.
 ◇ Test "Backend route index rejects missing, orphaned, duplicate, stale, and wrong-provider routes" started.
-✔ Test "Backend route index rejects missing, orphaned, duplicate, stale, and wrong-provider routes" passed after 0.001 seconds.
+✔ Test "Backend route index rejects missing, orphaned, duplicate, stale, and wrong-provider routes" passed after 0.021 seconds.
 ◇ Test "Canonical dispatch invokes exactly one selected backend and no fallback" started.
 ✔ Test "Canonical dispatch invokes exactly one selected backend and no fallback" passed after 0.001 seconds.
 ◇ Test "Canonical dispatch preserves an execution error exactly once" started.
-✔ Test "Canonical dispatch preserves an execution error exactly once" passed after 0.007 seconds.
+✔ Test "Canonical dispatch preserves an execution error exactly once" passed after 0.001 seconds.
 ◇ Test "Display labels and discovery aliases do not define logical identity" started.
 ✔ Test "Display labels and discovery aliases do not define logical identity" passed after 0.001 seconds.
-✔ Suite "Canonical Native and MCP tool authority" passed after 0.125 seconds.
+✔ Suite "Canonical Native and MCP tool authority" passed after 0.051 seconds.
 ◇ Suite "Chat canonical presentation survival" started.
 ◇ Test "Failed activity preserves the semantic terminal title" started.
-✔ Test "Failed activity preserves the semantic terminal title" passed after 0.003 seconds.
+✔ Test "Failed activity preserves the semantic terminal title" passed after 0.006 seconds.
 ◇ Test "Dynamic non-builtin tool preserves presentation descriptors across entire event and transcript pipeline" started.
-✔ Test "Dynamic non-builtin tool preserves presentation descriptors across entire event and transcript pipeline" passed after 0.012 seconds.
+✔ Test "Dynamic non-builtin tool preserves presentation descriptors across entire event and transcript pipeline" passed after 0.018 seconds.
 ◇ Test "Scripting tool presentation descriptors survive into Chat presentation bridge" started.
-✔ Test "Scripting tool presentation descriptors survive into Chat presentation bridge" passed after 0.014 seconds.
+✔ Test "Scripting tool presentation descriptors survive into Chat presentation bridge" passed after 0.001 seconds.
 ◇ Test "Built-in canonical tools continue to resolve presentation via fallback when explicit is absent" started.
 ✔ Test "Built-in canonical tools continue to resolve presentation via fallback when explicit is absent" passed after 0.001 seconds.
 ◇ Test "Canonical presentation metadata takes precedence over generic fallbacks and heuristics" started.
 ✔ Test "Canonical presentation metadata takes precedence over generic fallbacks and heuristics" passed after 0.001 seconds.
-✔ Suite "Chat canonical presentation survival" passed after 0.031 seconds.
+✔ Suite "Chat canonical presentation survival" passed after 0.026 seconds.
 ◇ Suite "Embedded Result Resolver and Engine Adapters Tests" started.
 ◇ Test "Resolver dispatches to injected Swift test double" started.
-✔ Test "Resolver dispatches to injected Swift test double" passed after 0.010 seconds.
+✔ Test "Resolver dispatches to injected Swift test double" passed after 0.001 seconds.
 ◇ Test "Resolver dispatches to injected ScriptUI, NativeScript and Expo test doubles" started.
 ✔ Test "Resolver dispatches to injected ScriptUI, NativeScript and Expo test doubles" passed after 0.001 seconds.
 ◇ Test "Resolver returns nil for unknown handler enabling fallback" started.
@@ -318,7 +574,7 @@ Test Suite 'Selected tests' passed at 2026-10-07 16:37:40.462.
 ◇ Test "Session lifecycle correctly executes onTearDown handler" started.
 ✔ Test "Session lifecycle correctly executes onTearDown handler" passed after 0.001 seconds.
 ◇ Test "EmbeddedResultPayload preserves payload, reference, title, and metadata" started.
-✔ Test "EmbeddedResultPayload preserves payload, reference, title, and metadata" passed after 0.001 seconds.
+✔ Test "EmbeddedResultPayload preserves payload, reference, title, and metadata" passed after 0.003 seconds.
 ◇ Test "BoundedToolResultStore enforces capacity bounds and provides slices" started.
 ✔ Test "BoundedToolResultStore enforces capacity bounds and provides slices" passed after 0.001 seconds.
 ◇ Test "BoundedToolResultStore hard bound rejection returns nil and preserves existing data" started.
@@ -326,9 +582,9 @@ Test Suite 'Selected tests' passed at 2026-10-07 16:37:40.462.
 ◇ Test "BoundedToolResultStore supports Unicode UTF-8 multi-byte pagination without truncation" started.
 ✔ Test "BoundedToolResultStore supports Unicode UTF-8 multi-byte pagination without truncation" passed after 0.001 seconds.
 ◇ Test "ResultStore entries expire and clear upon session run finish" started.
-✔ Test "ResultStore entries expire and clear upon session run finish" passed after 0.001 seconds.
+✔ Test "ResultStore entries expire and clear upon session run finish" passed after 0.020 seconds.
 ◇ Test "Swift embedded adapter strictly resolves custom view and never embeds full app" started.
-✔ Test "Swift embedded adapter strictly resolves custom view and never embeds full app" passed after 0.003 seconds.
+✔ Test "Swift embedded adapter strictly resolves custom view and never embeds full app" passed after 0.004 seconds.
 ◇ Test "ScriptUI, NativeScript and Expo adapters return nil for undeclared handlers" started.
 ✔ Test "ScriptUI, NativeScript and Expo adapters return nil for undeclared handlers" passed after 0.001 seconds.
 ◇ Test "Resolver uses explicit owner identity and never falls back to toolName guessing" started.
@@ -336,22 +592,22 @@ Test Suite 'Selected tests' passed at 2026-10-07 16:37:40.462.
 ◇ Test "ChatPresentationBridge resolves multiple valid expansions and validates expandedHandler" started.
 ✔ Test "ChatPresentationBridge resolves multiple valid expansions and validates expandedHandler" passed after 0.001 seconds.
 ◇ Test "HanlinEmbeddedContentAction and HanlinLaunchRequest preserve canonical structure" started.
-✔ Test "HanlinEmbeddedContentAction and HanlinLaunchRequest preserve canonical structure" passed after 0.001 seconds.
+✔ Test "HanlinEmbeddedContentAction and HanlinLaunchRequest preserve canonical structure" passed after 0.034 seconds.
 ◇ Test "HanlinEmbeddedContentAction pipeline correctly bridges from payload to transcript item and handles callback dispatch" started.
 ✔ Test "HanlinEmbeddedContentAction pipeline correctly bridges from payload to transcript item and handles callback dispatch" passed after 0.001 seconds.
 ◇ Test "ScriptUI application session receives structured EmbeddedInput when launched via embeddedResult context" started.
-✔ Test "ScriptUI application session receives structured EmbeddedInput when launched via embeddedResult context" passed after 0.240 seconds.
-✔ Suite "Embedded Result Resolver and Engine Adapters Tests" passed after 0.323 seconds.
+✔ Test "ScriptUI application session receives structured EmbeddedInput when launched via embeddedResult context" passed after 0.027 seconds.
+✔ Suite "Embedded Result Resolver and Engine Adapters Tests" passed after 0.097 seconds.
 ◇ Suite "Foundation JSON shadow adapter" started.
 ◇ Test "Null, booleans, integers, and floating point retain their domains" started.
-✔ Test "Null, booleans, integers, and floating point retain their domains" passed after 0.001 seconds.
+✔ Test "Null, booleans, integers, and floating point retain their domains" passed after 0.003 seconds.
 ◇ Test "Negative zero preserves its exact binary64 bit pattern" started.
 ✔ Test "Negative zero preserves its exact binary64 bit pattern" passed after 0.001 seconds.
 ◇ Test "Nested collections and UTF-8-distinct keys remain distinct" started.
-✔ Test "Nested collections and UTF-8-distinct keys remain distinct" passed after 0.007 seconds.
+✔ Test "Nested collections and UTF-8-distinct keys remain distinct" passed after 0.006 seconds.
 ◇ Test "Lossy or unsupported Foundation values fail explicitly" started.
-✔ Test "Lossy or unsupported Foundation values fail explicitly" passed after 0.045 seconds.
-✔ Suite "Foundation JSON shadow adapter" passed after 0.055 seconds.
+✔ Test "Lossy or unsupported Foundation values fail explicitly" passed after 0.107 seconds.
+✔ Suite "Foundation JSON shadow adapter" passed after 0.118 seconds.
 ◇ Suite "Scripting Assistant configured provider adapter" started.
 ◇ Test "Converts Scripting required flags into provider JSON Schema" started.
 ✔ Test "Converts Scripting required flags into provider JSON Schema" passed after 0.001 seconds.
@@ -360,57 +616,247 @@ Test Suite 'Selected tests' passed at 2026-10-07 16:37:40.462.
 ◇ Test "Accepts bounded JSON and strips provider markdown fences" started.
 ✔ Test "Accepts bounded JSON and strips provider markdown fences" passed after 0.001 seconds.
 ✔ Suite "Scripting Assistant configured provider adapter" passed after 0.001 seconds.
+◇ Suite "Script Package production installation E2E" started.
+◇ Test "Exports, imports, approves, installs, restores, launches, and renders through production" started.
+HANLIN_IMPORT_PACKAGE_STARTED: url=/Users/runner/Library/Developer/CoreSimulator/Devices/D2B249EB-2AC1-445A-BE5C-E80D6FBCCDF5/data/Containers/Data/Application/2D607991-F2CC-49CF-B21A-DAC39C09EB69/tmp/hanlin-production-package-e2e-e2a93bec-33ae-496a-8dad-5481be75c4f7/production-e2e.scripting
+2026-10-08 23:52:44.384546+0000 AI_Hanlin[69883:419832] [ScriptPackageImport] phase=manifest-resolution root=ProductionE2E manifest=script.json format=scripting version=1.0.0
+HANLIN_IMPORT_PACKAGE_SUCCESS: canInstall=true entrypoints=1
+HANLIN_INSTALL_PREVIEW_STARTED: canInstall=true
+2026-10-08 23:52:44.387320+0000 AI_Hanlin[69883:416341] [ScriptPackageInstall] install phase=capability-validation missing=storage
+HANLIN_INSTALL_PREVIEW_STARTED: canInstall=true
+2026-10-08 23:52:45.154316+0000 AI_Hanlin[69883:416341] [BackgroundTask] Background Task 13 ("CoreData: Spotlight Indexing"), was created over 30 seconds ago. In applications running in the background, this creates a risk of termination. Remember to call UIApplication.endBackgroundTask(_:) for your task in a timely manner to avoid this.
+HANLIN_IMPORT_PACKAGE_STARTED: url=/Users/runner/Library/Developer/CoreSimulator/Devices/D2B249EB-2AC1-445A-BE5C-E80D6FBCCDF5/data/Containers/Data/Application/2D607991-F2CC-49CF-B21A-DAC39C09EB69/tmp/hanlin-production-package-e2e-e2a93bec-33ae-496a-8dad-5481be75c4f7/production-e2e-second.scripting
+2026-10-08 23:52:47.292725+0000 AI_Hanlin[69883:420853] [ScriptPackageImport] phase=manifest-resolution root=ProductionE2ESecond manifest=script.json format=scripting version=1.0.0
+HANLIN_IMPORT_PACKAGE_SUCCESS: canInstall=true entrypoints=1
+HANLIN_INSTALL_PREVIEW_STARTED: canInstall=true
+2026-10-08 23:52:49.710810+0000 AI_Hanlin[69883:422336] [ScriptArtifactStore] phase=artifact-manifest-resolution expected=/Users/runner/Library/Developer/CoreSimulator/Devices/D2B249EB-2AC1-445A-BE5C-E80D6FBCCDF5/data/Containers/Data/Application/2D607991-F2CC-49CF-B21A-DAC39C09EB69/tmp/hanlin-production-package-e2e-e2a93bec-33ae-496a-8dad-5481be75c4f7/Platform/Installed/packages/install-script-143cd217f3257853d86178e9/generations/1/artifact-manifest.json parentExists=true standardized=/Users/runner/Library/Developer/CoreSimulator/Devices/D2B249EB-2AC1-445A-BE5C-E80D6FBCCDF5/data/Containers/Data/Application/2D607991-F2CC-49CF-B21A-DAC39C09EB69/tmp/hanlin-production-package-e2e-e2a93bec-33ae-496a-8dad-5481be75c4f7/Platform/Installed/packages/install-script-143cd217f3257853d86178e9/generations/1/artifact-manifest.json symlinkResolved=/Users/runner/Library/Developer/CoreSimulator/Devices/D2B249EB-2AC1-445A-BE5C-E80D6FBCCDF5/data/Containers/Data/Application/2D607991-F2CC-49CF-B21A-DAC39C09EB69/tmp/hanlin-production-package-e2e-e2a93bec-33ae-496a-8dad-5481be75c4f7/Platform/Installed/packages/install-script-143cd217f3257853d86178e9/generations/1/artifact-manifest.json discovered=compiled,generation.json,source
+2026-10-08 23:52:49.721715+0000 AI_Hanlin[69883:416341] [ScriptPackageInstall] extension-refresh package=install-script-143cd217f3257853d86178e9 phase=artifact-resolution error=artifactManifestMissing
+2026-10-08 23:52:49.771679+0000 AI_Hanlin[69883:420853] [ScriptArtifactStore] phase=artifact-manifest-resolution expected=/Users/runner/Library/Developer/CoreSimulator/Devices/D2B249EB-2AC1-445A-BE5C-E80D6FBCCDF5/data/Containers/Data/Application/2D607991-F2CC-49CF-B21A-DAC39C09EB69/tmp/hanlin-production-package-e2e-e2a93bec-33ae-496a-8dad-5481be75c4f7/Platform/Installed/packages/install-script-143cd217f3257853d86178e9/generations/1/artifact-manifest.json parentExists=true standardized=/Users/runner/Library/Developer/CoreSimulator/Devices/D2B249EB-2AC1-445A-BE5C-E80D6FBCCDF5/data/Containers/Data/Application/2D607991-F2CC-49CF-B21A-DAC39C09EB69/tmp/hanlin-production-package-e2e-e2a93bec-33ae-496a-8dad-5481be75c4f7/Platform/Installed/packages/install-script-143cd217f3257853d86178e9/generations/1/artifact-manifest.json symlinkResolved=/Users/runner/Library/Developer/CoreSimulator/Devices/D2B249EB-2AC1-445A-BE5C-E80D6FBCCDF5/data/Containers/Data/Application/2D607991-F2CC-49CF-B21A-DAC39C09EB69/tmp/hanlin-production-package-e2e-e2a93bec-33ae-496a-8dad-5481be75c4f7/Platform/Installed/packages/install-script-143cd217f3257853d86178e9/generations/1/artifact-manifest.json discovered=compiled,generation.json,source
+2026-10-08 23:52:49.772033+0000 AI_Hanlin[69883:416341] [ScriptPackageInstall] extension-refresh package=install-script-143cd217f3257853d86178e9 phase=artifact-resolution error=artifactManifestMissing
+✔ Test "Exports, imports, approves, installs, restores, launches, and renders through production" passed after 5.530 seconds.
+◇ Test "Re-entrant launch on active application ID is a no-op preserving session and model identity" started.
+HANLIN_IMPORT_PACKAGE_STARTED: url=/Users/runner/Library/Developer/CoreSimulator/Devices/D2B249EB-2AC1-445A-BE5C-E80D6FBCCDF5/data/Containers/Data/Application/2D607991-F2CC-49CF-B21A-DAC39C09EB69/tmp/HanlinReEntrancyTest-2E9EBB1A-D91F-4115-A6F3-E01EEB25EEB3/reentrancy.scripting
+2026-10-08 23:52:49.835170+0000 AI_Hanlin[69883:420853] [ScriptPackageImport] phase=manifest-resolution root=Source manifest=script.json format=scripting version=1.0.0
+HANLIN_IMPORT_PACKAGE_SUCCESS: canInstall=true entrypoints=1
+HANLIN_INSTALL_PREVIEW_STARTED: canInstall=true
+✔ Test "Re-entrant launch on active application ID is a no-op preserving session and model identity" passed after 2.179 seconds.
+✔ Suite "Script Package production installation E2E" passed after 7.711 seconds.
 ◇ Suite "Legacy Tool Canonical Migration Tests" started.
 ◇ Test "LegacyToolCanonicalAdapter matches exact buildMemoryTools source truth (24 tools)" started.
-✔ Test "LegacyToolCanonicalAdapter matches exact buildMemoryTools source truth (24 tools)" passed after 0.006 seconds.
+✔ Test "LegacyToolCanonicalAdapter matches exact buildMemoryTools source truth (24 tools)" passed after 0.016 seconds.
 ◇ Test "Category toggles correctly filter legacy tool sources" started.
-✔ Test "Category toggles correctly filter legacy tool sources" passed after 0.007 seconds.
+✔ Test "Category toggles correctly filter legacy tool sources" passed after 0.014 seconds.
 ◇ Test "Canonical authority indexes all 24 legacy sources and routes backend correctly" started.
-✔ Test "Canonical authority indexes all 24 legacy sources and routes backend correctly" passed after 0.004 seconds.
+✔ Test "Canonical authority indexes all 24 legacy sources and routes backend correctly" passed after 0.010 seconds.
 ◇ Test "PreparedTools searches legacy tools by keyword and filters schemas by exposed aliases" started.
-✔ Test "PreparedTools searches legacy tools by keyword and filters schemas by exposed aliases" passed after 0.006 seconds.
+✔ Test "PreparedTools searches legacy tools by keyword and filters schemas by exposed aliases" passed after 0.011 seconds.
 ◇ Test "Legacy tool canonical execution cutover routes to legacy executor and fails truthfully when unconfigured" started.
-✔ Test "Legacy tool canonical execution cutover routes to legacy executor and fails truthfully when unconfigured" passed after 0.004 seconds.
-✔ Suite "Legacy Tool Canonical Migration Tests" passed after 0.042 seconds.
+✔ Test "Legacy tool canonical execution cutover routes to legacy executor and fails truthfully when unconfigured" passed after 0.005 seconds.
+✔ Suite "Legacy Tool Canonical Migration Tests" passed after 0.059 seconds.
+◇ Suite "Master Scenario Semantic Acceptance Tests" started.
+◇ Test "CHAT-24: Stop generation while a model/tool run is active cancels the run, returns composer to idle, and avoids stale output" started.
+✔ Test "CHAT-24: Stop generation while a model/tool run is active cancels the run, returns composer to idle, and avoids stale output" passed after 0.011 seconds.
+◇ Test "SH-03: Removing framework/symbol for one command in fixture package marks it unavailable with precise dependency reporting while other commands continue" started.
+✔ Test "SH-03: Removing framework/symbol for one command in fixture package marks it unavailable with precise dependency reporting while other commands continue" passed after 0.001 seconds.
+◇ Test "SH-05: program=grep arguments=['alpha','sample.txt'] produces two alpha lines without classifying alpha as required path" started.
+✔ Test "SH-05: program=grep arguments=['alpha','sample.txt'] produces two alpha lines without classifying alpha as required path" passed after 0.005 seconds.
+◇ Test "CMD-04: program=curl arguments=['${FIXTURE_BASE}/ok.json'] produces JSON with marker=HANLIN_OK, answer=42, exitCode=0" started.
+✔ Test "CMD-04: program=curl arguments=['${FIXTURE_BASE}/ok.json'] produces JSON with marker=HANLIN_OK, answer=42, exitCode=0" passed after 0.002 seconds.
+◇ Test "ZIP-04: Foundation URL aliases of /var and /private/var in same temp directory resolve to identical destination without false escape" started.
+✔ Test "ZIP-04: Foundation URL aliases of /var and /private/var in same temp directory resolve to identical destination without false escape" passed after 0.003 seconds.
+◇ Test "ZIP-07: Skill import with LICENSE, assets/data.bin, sample.xlsx, source.swift, module.wasm installs without unsupportedFileType error and all bytes are accessible" started.
+✔ Test "ZIP-07: Skill import with LICENSE, assets/data.bin, sample.xlsx, source.swift, module.wasm installs without unsupportedFileType error and all bytes are accessible" passed after 0.048 seconds.
+◇ Test "ZIP-11: Internal relative paths ./references/a.md and references/x/../a.md normalize correctly inside package without blanket rejection" started.
+✔ Test "ZIP-11: Internal relative paths ./references/a.md and references/x/../a.md normalize correctly inside package without blanket rejection" passed after 0.009 seconds.
+◇ Test "COREAI-06: GGUF/LLM.swift local provider streams and cancels cleanly after Core AI provider integration" started.
+✔ Test "COREAI-06: GGUF/LLM.swift local provider streams and cancels cleanly after Core AI provider integration" passed after 0.001 seconds.
+✔ Suite "Master Scenario Semantic Acceptance Tests" passed after 0.082 seconds.
+◇ Suite "Production Provider Conformance Tests (APIManager Integration)" started.
+◇ Test "OpenAI native production route: smoke with tool call continuation and terminal success" started.
+2026-10-08 23:52:52.135554+0000 AI_Hanlin[69883:420853] [error] CoreData: warning: CDCS state transition: Disabled → Initializing (index spotlight_com.itorah.chavrusachat_BED604DE-8278-45B7-BD4召回记忆关键词：4-97FF73DF5EB7)
+ Run conformance conversation.
+CoreData: warning: CDCS state transition: Disabled → Initializing (index spotlight_com.itorah.chavrusachat_BED604DE-8278-45B7-BD44-97FF73DF5EB7)
+2026-10-08 23:52:52.221536+0000 AI_Hanlin[69883:416341] [error] CoreData: warning: CDCS state transition: Initializing → FatalError (index spotlight_com.itorah.chavrusachat_BED604DE-8278-45B7-BD44-97FF73DF5EB7)
+CoreData: warning: CDCS state transition: Initializing → FatalError (index spotlight_com.itorah.chavrusachat_BED604DE-8278-45B7-BD44-97FF73DF5EB7)
+✔ Test "OpenAI native production route: smoke with tool call continuation and terminal success" passed after 0.099 seconds.
+◇ Test "P01: Skills dynamic tool exposure and tool execution through production loop" started.
+2026-10-08 23:52:52.231111+0000 AI_Hanlin[69883:422336] [error] CoreData: warning: CDCS state transition: Disabled → Initializing (index spotlight_com.itorah.chavrusachat_DE9490AE-D5F2-416E-8F48-5D657C7D42E7)
+CoreData: warning: CDCS state transition: Disabled → Initializing (index spotlight_com.itorah.chavrusachat_DE9490AE-D5F2-416E-8F48-5D657C7D42E7)
+召回记忆关键词： Run conformance conversation.
+2026-10-08 23:52:52.378802+0000 AI_Hanlin[69883:416341] [error] CoreData: warning: CDCS state transition: Initializing → FatalError (index spotlight_com.itorah.chavrusachat_DE9490AE-D5F2-416E-8F48-5D657C7D42E7)
+CoreData: warning: CDCS state transition: Initializing → FatalError (index spotlight_com.itorah.chavrusachat_DE9490AE-D5F2-416E-8F48-5D657C7D42E7)
+✔ Test "P01: Skills dynamic tool exposure and tool execution through production loop" passed after 0.156 seconds.
+◇ Test "P02: Non-fatal tool failure recovers and completes in same turn" started.
+2026-10-08 23:52:52.392340+0000 AI_Hanlin[69883:422344] [error] CoreData: warning: CDCS state transition: Disabled → Initializing (index spotlight_com.itorah.chavrusachat_E99BAF7F-7820-448C-AA76-1DD704D1EF07)
+CoreData: warning: CDCS state transition: Disabled → Initializing (index spotlight_com.itorah.chavrusachat_E99BAF7F-7820-448C-AA76-1DD704D1EF07)
+召回记忆关键词： Run conformance conversation.
+2026-10-08 23:52:52.554949+0000 AI_Hanlin[69883:416341] [error] CoreData: warning: CDCS state transition: Initializing → FatalError (index spotlight_com.itorah.chavrusachat_E99BAF7F-7820-448C-AA76-1DD704D1EF07)
+CoreData: warning: CDCS state transition: Initializing → FatalError (index spotlight_com.itorah.chavrusachat_E99BAF7F-7820-448C-AA76-1DD704D1EF07)
+✔ Test "P02: Non-fatal tool failure recovers and completes in same turn" passed after 0.176 seconds.
+◇ Test "P03: 5-step sequential production tool chain with per-round request validation" started.
+2026-10-08 23:52:52.562690+0000 AI_Hanlin[69883:422345] [error] CoreData: warning: CDCS state transition: Disabled → Initializing (index spotlight_com.itorah.chavrusachat_543A1145-CD0F-4DAE-8CD9-DE8AE8F03D2D)
+CoreData: warning: CDCS state transition: Disabled → Initializing (index spotlight_com.itorah.chavrusachat_543A1145-CD0F-4DAE-8CD9-DE8AE8F03D2D)
+召回记忆关键词： Run conformance conversation.
+2026-10-08 23:52:52.777636+0000 AI_Hanlin[69883:416341] [error] CoreData: warning: CDCS state transition: Initializing → FatalError (index spotlight_com.itorah.chavrusachat_543A1145-CD0F-4DAE-8CD9-DE8AE8F03D2D)
+CoreData: warning: CDCS state transition: Initializing → FatalError (index spotlight_com.itorah.chavrusachat_543A1145-CD0F-4DAE-8CD9-DE8AE8F03D2D)
+✔ Test "P03: 5-step sequential production tool chain with per-round request validation" passed after 0.222 seconds.
+◇ Test "P04: Parallel tools in single model step through production loop" started.
+2026-10-08 23:52:52.784290+0000 AI_Hanlin[69883:423405] [error] CoreData: warning: CDCS state transition: Disabled → Initializing (index spotlight_com.itorah.chavrusachat_90753B2A-3399-4A9E-8DD5-E7D3F59EF459)
+CoreData: warning: CDCS state transition: Disabled → Initializing (index spotlight_com.itorah.chavrusachat_90753B2A-3399-4A9E-8DD5-E7D3F59EF459)
+召回记忆关键词： Run conformance conversation.
+2026-10-08 23:52:52.861753+0000 AI_Hanlin[69883:416341] [error] CoreData: warning: CDCS state transition: Initializing → FatalError (index spotlight_com.itorah.chavrusachat_90753B2A-3399-4A9E-8DD5-E7D3F59EF459)
+CoreData: warning: CDCS state transition: Initializing → FatalError (index spotlight_com.itorah.chavrusachat_90753B2A-3399-4A9E-8DD5-E7D3F59EF459)
+✔ Test "P04: Parallel tools in single model step through production loop" passed after 0.084 seconds.
+◇ Test "P05: Production reasoning and tool loop for OpenAI-compatible" started.
+2026-10-08 23:52:52.869938+0000 AI_Hanlin[69883:423460] [error] CoreData: warning: CDCS state transition: Disabled → Initializing (index spotlight_com.itorah.chavrusachat_3029BB8C-54C6-4F9E-8233-21B9C0346D51)
+CoreData: warning: CDCS state transition: Disabled → Initializing (index spotlight_com.itorah.chavrusachat_3029BB8C-54C6-4F9E-8233-21B9C0346D51)
+召回记忆关键词： Run conformance conversation.
+2026-10-08 23:52:52.948577+0000 AI_Hanlin[69883:416341] [error] CoreData: warning: CDCS state transition: Initializing → FatalError (index spotlight_com.itorah.chavrusachat_3029BB8C-54C6-4F9E-8233-21B9C0346D51)
+CoreData: warning: CDCS state transition: Initializing → FatalError (index spotlight_com.itorah.chavrusachat_3029BB8C-54C6-4F9E-8233-21B9C0346D51)
+✔ Test "P05: Production reasoning and tool loop for OpenAI-compatible" passed after 0.086 seconds.
+◇ Test "P05: Production reasoning and tool loop for Anthropic native" started.
+2026-10-08 23:52:52.957089+0000 AI_Hanlin[69883:423397] [error] CoreData: warning: CDCS state transition: Disabled → Initializing (index spotlight_com.itorah.chavrusachat_5C85BB36-E99B-443B-8261-FB35335B9032)
+CoreData: warning: CDCS state transition: Disabled → Initializing (index spotlight_com.itorah.chavrusachat_5C85BB36-E99B-443B-8261-FB35335B9032)
+召回记忆关键词： Run conformance conversation.
+AI SDK Warning System: To turn off warning logging, set the AI_SDK_LOG_WARNINGS global to false.
+AI SDK Warning: The feature "temperature" is not supported - temperature is not supported when thinking is enabled
+AI SDK Warning: The feature "topP" is not supported - topP is not supported when thinking is enabled
+AI SDK Warning: The feature "temperature" is not supported - temperature is not supported when thinking is enabled
+AI SDK Warning: The feature "topP" is not supported - topP is not supported when thinking is enabled
+2026-10-08 23:52:53.074781+0000 AI_Hanlin[69883:416341] [error] CoreData: warning: CDCS state transition: Initializing → FatalError (index spotlight_com.itorah.chavrusachat_5C85BB36-E99B-443B-8261-FB35335B9032)
+CoreData: warning: CDCS state transition: Initializing → FatalError (index spotlight_com.itorah.chavrusachat_5C85BB36-E99B-443B-8261-FB35335B9032)
+✔ Test "P05: Production reasoning and tool loop for Anthropic native" passed after 0.125 seconds.
+◇ Test "P05: Production reasoning and tool loop for Google native" started.
+2026-10-08 23:52:53.083099+0000 AI_Hanlin[69883:423486] [error] CoreData: warning: CDCS state transition: Disabled → Initializing (index spotlight_com.itorah.chavrusachat_32A57A23-FAE9-4AE4-ACD2-758513F4B958)
+CoreData: warning: CDCS state transition: Disabled → Initializing (index spotlight_com.itorah.chavrusachat_32A57A23-FAE9-4AE4-ACD2-758513F4B958)
+召回记忆关键词： Run conformance conversation.
+2026-10-08 23:52:53.157075+0000 AI_Hanlin[69883:416341] [error] CoreData: warning: CDCS state transition: Initializing → FatalError (index spotlight_com.itorah.chavrusachat_32A57A23-FAE9-4AE4-ACD2-758513F4B958)
+CoreData: warning: CDCS state transition: Initializing → FatalError (index spotlight_com.itorah.chavrusachat_32A57A23-FAE9-4AE4-ACD2-758513F4B958)
+✔ Test "P05: Production reasoning and tool loop for Google native" passed after 0.082 seconds.
+◇ Test "P05: Production reasoning and tool loop for OpenRouter with exact structural equality" started.
+2026-10-08 23:52:53.163099+0000 AI_Hanlin[69883:423485] [error] CoreData: warning: CDCS state transition: Disabled → Initializing (index spotlight_com.itorah.chavrusachat_4570C7BE-9DD1-4992-B6ED-FB73E8701CE3)
+CoreData: warning: CDCS state transition: Disabled → Initializing (index spotlight_com.itorah.chavrusachat_4570C7BE-9DD1-4992-B6ED-FB73E8701CE3)
+召回记忆关键词： Run conformance conversation.
+2026-10-08 23:52:53.235333+0000 AI_Hanlin[69883:416341] [error] CoreData: warning: CDCS state transition: Initializing → FatalError (index spotlight_com.itorah.chavrusachat_4570C7BE-9DD1-4992-B6ED-FB73E8701CE3)
+CoreData: warning: CDCS state transition: Initializing → FatalError (index spotlight_com.itorah.chavrusachat_4570C7BE-9DD1-4992-B6ED-FB73E8701CE3)
+✔ Test "P05: Production reasoning and tool loop for OpenRouter with exact structural equality" passed after 0.078 seconds.
+◇ Test "P06: 20-step production tool loop with per-round request validation" started.
+2026-10-08 23:52:53.243572+0000 AI_Hanlin[69883:423542] [error] CoreData: warning: CDCS state transition: Disabled → Initializing (index spotlight_com.itorah.chavrusachat_CC9FEC4B-8E53-493F-87C6-1676EBB75BEA)
+CoreData: warning: CDCS state transition: Disabled → Initializing (index spotlight_com.itorah.chavrusachat_CC9FEC4B-8E53-493F-87C6-1676EBB75BEA)
+召回记忆关键词： Run conformance conversation.
+2026-10-08 23:52:54.126485+0000 AI_Hanlin[69883:416341] [error] CoreData: warning: CDCS state transition: Initializing → FatalError (index spotlight_com.itorah.chavrusachat_CC9FEC4B-8E53-493F-87C6-1676EBB75BEA)
+CoreData: warning: CDCS state transition: Initializing → FatalError (index spotlight_com.itorah.chavrusachat_CC9FEC4B-8E53-493F-87C6-1676EBB75BEA)
+✔ Test "P06: 20-step production tool loop with per-round request validation" passed after 0.890 seconds.
+◇ Test "P07: Provider abrupt close failure surfaces error without completing" started.
+2026-10-08 23:52:54.139079+0000 AI_Hanlin[69883:422327] [error] CoreData: warning: CDCS state transition: Disabled → Initializing (index spotlight_com.itorah.chavrusachat_09F903DC-7178-4E74-A825-4262401CA3F2)
+CoreData: warning: CDCS state transition: Disabled → Initializing (index spotlight_com.itorah.chavrusachat_09F903DC-7178-4E74-A825-4262401CA3F2)
+召回记忆关键词： Hi
+2026-10-08 23:52:54.174093+0000 AI_Hanlin[69883:423552] [Default] Task <865928BD-3393-45DE-99C5-E37439B4045D>.<1> finished with error [-1005] Error Domain=NSURLErrorDomain Code=-1005 "(null)" UserInfo={_NSURLErrorRelatedURLSessionTaskErrorKey=(
+    "LocalDataTask <865928BD-3393-45DE-99C5-E37439B4045D>.<1>"
+), _NSURLErrorFailingURLSessionTaskErrorKey=LocalDataTask <865928BD-3393-45DE-99C5-E37439B4045D>.<1>}
+2026-10-08 23:52:56.221705+0000 AI_Hanlin[69883:423510] [Default] Task <41633FD0-2C58-46F9-9ECC-3C003BD18726>.<2> finished with error [-1011] Error Domain=NSURLErrorDomain Code=-1011 "No scripted response remaining for round 1" UserInfo={_NSURLErrorRelatedURLSessionTaskErrorKey=(
+    "LocalDataTask <41633FD0-2C58-46F9-9ECC-3C003BD18726>.<2>"
+), NSLocalizedDescription=No scripted response remaining for round 1, _NSURLErrorFailingURLSessionTaskErrorKey=LocalDataTask <41633FD0-2C58-46F9-9ECC-3C003BD18726>.<2>}
+streamText error: AI_RetryError: Failed after 2 attempts with non-retryable error: 'No scripted response remaining for round 1'
+Caused by: Error Domain=NSURLErrorDomain Code=-1011 "No scripted response remaining for round 1" UserInfo={_NSURLErrorRelatedURLSessionTaskErrorKey=(
+    "LocalDataTask <41633FD0-2C58-46F9-9ECC-3C003BD18726>.<2>"
+), NSLocalizedDescription=No scripted response remaining for round 1, _NSURLErrorFailingURLSessionTaskErrorKey=LocalDataTask <41633FD0-2C58-46F9-9ECC-3C003BD18726>.<2>}
+2026-10-08 23:52:56.323054+0000 AI_Hanlin[69883:416341] [error] CoreData: warning: CDCS state transition: Initializing → FatalError (index spotlight_com.itorah.chavrusachat_09F903DC-7178-4E74-A825-4262401CA3F2)
+CoreData: warning: CDCS state transition: Initializing → FatalError (index spotlight_com.itorah.chavrusachat_09F903DC-7178-4E74-A825-4262401CA3F2)
+✔ Test "P07: Provider abrupt close failure surfaces error without completing" passed after 2.197 seconds.
+◇ Test "P08: Provider HTTP 200 with finish_reason='other' and 0 content is characterized" started.
+2026-10-08 23:52:56.332667+0000 AI_Hanlin[69883:423552] [error] CoreData: warning: CDCS state transition: Disabled → Initializing (index spotlight_com.itorah.chavrusachat_A4491A34-8BA1-4996-B507-9AF9E31CE73A)
+CoreData: warning: CDCS state transition: Disabled → Initializing (index spotlight_com.itorah.chavrusachat_A4491A34-8BA1-4996-B507-9AF9E31CE73A)
+召回记忆关键词： Run conformance conversation.
+streamText error: emptyProviderResponse(attempts: 2)
+2026-10-08 23:52:56.439670+0000 AI_Hanlin[69883:416341] [error] CoreData: warning: CDCS state transition: Initializing → FatalError (index spotlight_com.itorah.chavrusachat_A4491A34-8BA1-4996-B507-9AF9E31CE73A)
+CoreData: warning: CDCS state transition: Initializing → FatalError (index spotlight_com.itorah.chavrusachat_A4491A34-8BA1-4996-B507-9AF9E31CE73A)
+✔ Test "P08: Provider HTTP 200 with finish_reason='other' and 0 content is characterized" passed after 0.115 seconds.
+◇ Test "P09: Provider stream cancellation cancels active request without late events or mutation" started.
+2026-10-08 23:52:56.449798+0000 AI_Hanlin[69883:423413] [error] CoreData: warning: CDCS state transition: Disabled → Initializing (index spotlight_com.itorah.chavrusachat_A5EFDC47-D15A-4D48-94E6-FAAEB071BA6F)
+CoreData: warning: CDCS state transition: Disabled → Initializing (index spotlight_com.itorah.chavrusachat_A5EFDC47-D15A-4D48-94E6-FAAEB071BA6F)
+召回记忆关键词： Cancel test
+2026-10-08 23:52:56.563679+0000 AI_Hanlin[69883:416341] [error] CoreData: warning: CDCS state transition: Initializing → FatalError (index spotlight_com.itorah.chavrusachat_A5EFDC47-D15A-4D48-94E6-FAAEB071BA6F)
+CoreData: warning: CDCS state transition: Initializing → FatalError (index spotlight_com.itorah.chavrusachat_A5EFDC47-D15A-4D48-94E6-FAAEB071BA6F)
+✔ Test "P09: Provider stream cancellation cancels active request without late events or mutation" passed after 0.124 seconds.
+◇ Test "P10: Cancellation during running tool cancels run and suppresses late output" started.
+2026-10-08 23:52:56.573786+0000 AI_Hanlin[69883:423510] [error] CoreData: warning: CDCS state transition: Disabled → Initializing (index spotlight_com.itorah.chavrusachat_E8979441-32E2-424D-ACFC-A89C00ABEADD)
+CoreData: warning: CDCS state transition: Disabled → Initializing (index spotlight_com.itorah.chavrusachat_E8979441-32E2-424D-ACFC-A89C00ABEADD)
+召回记忆关键词： Run delayed
+2026-10-08 23:52:56.631446+0000 AI_Hanlin[69883:416341] [error] CoreData: warning: CDCS state transition: Initializing → FatalError (index spotlight_com.itorah.chavrusachat_E8979441-32E2-424D-ACFC-A89C00ABEADD)
+CoreData: warning: CDCS state transition: Initializing → FatalError (index spotlight_com.itorah.chavrusachat_E8979441-32E2-424D-ACFC-A89C00ABEADD)
+✔ Test "P10: Cancellation during running tool cancels run and suppresses late output" passed after 0.066 seconds.
+◇ Test "P11: Run B supersedes Run A on the same APIManager" started.
+2026-10-08 23:52:56.639237+0000 AI_Hanlin[69883:423932] [error] CoreData: warning: CDCS state transition: Disabled → Initializing (index spotlight_com.itorah.chavrusachat_D0D6CB96-5AE7-4789-8114-8E815C05CA47)
+CoreData: warning: CDCS state transition: Disabled → Initializing (index spotlight_com.itorah.chavrusachat_D0D6CB96-5AE7-4789-8114-8E815C05CA47)
+召回记忆关键词： Start A
+召回记忆关键词： Start B
+2026-10-08 23:52:56.829518+0000 AI_Hanlin[69883:416341] [error] CoreData: warning: CDCS state transition: Initializing → FatalError (index spotlight_com.itorah.chavrusachat_D0D6CB96-5AE7-4789-8114-8E815C05CA47)
+CoreData: warning: CDCS state transition: Initializing → FatalError (index spotlight_com.itorah.chavrusachat_D0D6CB96-5AE7-4789-8114-8E815C05CA47)
+✔ Test "P11: Run B supersedes Run A on the same APIManager" passed after 0.197 seconds.
+◇ Test "P12A: Real application second turn history preserves user and assistant visible text" started.
+2026-10-08 23:52:56.839930+0000 AI_Hanlin[69883:419832] [error] CoreData: warning: CDCS state transition: Disabled → Initializing (index spotlight_com.itorah.chavrusachat_8A207805-7715-43D6-8875-D0AEEF3F8464)
+CoreData: warning: CDCS state transition: Disabled → Initializing (index spotlight_com.itorah.chavrusachat_8A207805-7715-43D6-8875-D0AEEF3F8464)
+召回记忆关键词： Run conformance conversation.
+召回记忆关键词： What was the previous result?
+2026-10-08 23:52:56.965897+0000 AI_Hanlin[69883:416341] [error] CoreData: warning: CDCS state transition: Initializing → FatalError (index spotlight_com.itorah.chavrusachat_8A207805-7715-43D6-8875-D0AEEF3F8464)
+CoreData: warning: CDCS state transition: Initializing → FatalError (index spotlight_com.itorah.chavrusachat_8A207805-7715-43D6-8875-D0AEEF3F8464)
+✔ Test "P12A: Real application second turn history preserves user and assistant visible text" passed after 0.136 seconds.
+◇ Test "Section 19: Dynamic Provider Inventory derived from getKeyList() and getModelList()" started.
+✔ Test "Section 19: Dynamic Provider Inventory derived from getKeyList() and getModelList()" passed after 0.009 seconds.
+◇ Test "Section 20: Characterize APIType.openAIResponse as dormant and unreachable in user configuration" started.
+✔ Test "Section 20: Characterize APIType.openAIResponse as dormant and unreachable in user configuration" passed after 0.001 seconds.
+✔ Suite "Production Provider Conformance Tests (APIManager Integration)" passed after 4.854 seconds.
 ◇ Suite "Production System Skills Verification" started.
 ◇ Test "Code skill prioritizes execute_local_python_code and drops execute_remote_python_code" started.
 ✔ Test "Code skill prioritizes execute_local_python_code and drops execute_remote_python_code" passed after 0.001 seconds.
 ◇ Test "Code skill prefers local python only" started.
 ✔ Test "Code skill prefers local python only" passed after 0.001 seconds.
 ◇ Test "All system skills have valid descriptors and tool integrity" started.
-✔ Test "All system skills have valid descriptors and tool integrity" passed after 0.011 seconds.
+✔ Test "All system skills have valid descriptors and tool integrity" passed after 0.001 seconds.
 ◇ Test "Production system skill aliases resolve against actual canonical authority" started.
-✔ Test "Production system skill aliases resolve against actual canonical authority" passed after 0.049 seconds.
+✔ Test "Production system skill aliases resolve against actual canonical authority" passed after 0.012 seconds.
 ◇ Test "Disabled domain disappears from skill index" started.
-✔ Test "Disabled domain disappears from skill index" passed after 0.002 seconds.
+✔ Test "Disabled domain disappears from skill index" passed after 0.001 seconds.
 ◇ Test "Canonical tools remain discoverable by exact alias" started.
-✔ Test "Canonical tools remain discoverable by exact alias" passed after 0.005 seconds.
+✔ Test "Canonical tools remain discoverable by exact alias" passed after 0.007 seconds.
 ◇ Test "Catalog collision requires explicit override" started.
-✔ Test "Catalog collision requires explicit override" passed after 0.001 seconds.
+✔ Test "Catalog collision requires explicit override" passed after 0.002 seconds.
 ◇ Test "Package skill refresh tracks current generation" started.
-HANLIN_IMPORT_PACKAGE_STARTED: url=/Users/runner/Library/Developer/CoreSimulator/Devices/C7C9EECC-EE9F-4407-8D79-E3307A01AD3F/data/Containers/Data/Application/B9C45B0E-2BC3-4572-BF37-298814CE9BAC/tmp/PackageGenTest-8A7D4844-EFF8-49E5-9811-B15158AF6B6A/gen-skill.scripting
-2026-10-07 16:37:41.709733+0000 AI_Hanlin[16534:295752] [ScriptPackageImport] phase=manifest-resolution root=Source manifest=script.json format=scripting version=1.0.0
+HANLIN_IMPORT_PACKAGE_STARTED: url=/Users/runner/Library/Developer/CoreSimulator/Devices/D2B249EB-2AC1-445A-BE5C-E80D6FBCCDF5/data/Containers/Data/Application/2D607991-F2CC-49CF-B21A-DAC39C09EB69/tmp/PackageGenTest-1D588344-D088-41A5-8975-631868C66BB4/gen-skill.scripting
+2026-10-08 23:52:57.080282+0000 AI_Hanlin[69883:423942] [ScriptPackageImport] phase=manifest-resolution root=Source manifest=script.json format=scripting version=1.0.0
 HANLIN_IMPORT_PACKAGE_SUCCESS: canInstall=true entrypoints=1
 HANLIN_INSTALL_PREVIEW_STARTED: canInstall=true
-HANLIN_IMPORT_PACKAGE_STARTED: url=/Users/runner/Library/Developer/CoreSimulator/Devices/C7C9EECC-EE9F-4407-8D79-E3307A01AD3F/data/Containers/Data/Application/B9C45B0E-2BC3-4572-BF37-298814CE9BAC/tmp/PackageGenTest-8A7D4844-EFF8-49E5-9811-B15158AF6B6A/gen-skill-v2.scripting
-2026-10-07 16:37:50.677307+0000 AI_Hanlin[16534:295751] [ScriptPackageImport] phase=manifest-resolution root=Source manifest=script.json format=scripting version=1.0.0
+HANLIN_IMPORT_PACKAGE_STARTED: url=/Users/runner/Library/Developer/CoreSimulator/Devices/D2B249EB-2AC1-445A-BE5C-E80D6FBCCDF5/data/Containers/Data/Application/2D607991-F2CC-49CF-B21A-DAC39C09EB69/tmp/PackageGenTest-1D588344-D088-41A5-8975-631868C66BB4/gen-skill-v2.scripting
+2026-10-08 23:53:00.469239+0000 AI_Hanlin[69883:423935] [ScriptPackageImport] phase=manifest-resolution root=Source manifest=script.json format=scripting version=1.0.0
 HANLIN_IMPORT_PACKAGE_SUCCESS: canInstall=true entrypoints=1
 HANLIN_INSTALL_PREVIEW_STARTED: canInstall=true
-✔ Test "Package skill refresh tracks current generation" passed after 10.769 seconds.
+2026-10-08 23:53:03.156828+0000 AI_Hanlin[69883:416341] [BackgroundTask] Background Task 24 ("CoreData: Spotlight Indexing"), was created over 30 seconds ago. In applications running in the background, this creates a risk of termination. Remember to call UIApplication.endBackgroundTask(_:) for your task in a timely manner to avoid this.
+✔ Test "Package skill refresh tracks current generation" passed after 6.389 seconds.
 ◇ Test "Package disable and uninstall remove skill immediately" started.
-HANLIN_IMPORT_PACKAGE_STARTED: url=/Users/runner/Library/Developer/CoreSimulator/Devices/C7C9EECC-EE9F-4407-8D79-E3307A01AD3F/data/Containers/Data/Application/B9C45B0E-2BC3-4572-BF37-298814CE9BAC/tmp/PackageLifecycleTest-1E6258D7-2FBE-4E0C-A5D5-05D12C699F15/lifecycle-skill.scripting
-2026-10-07 16:37:52.462334+0000 AI_Hanlin[16534:295813] [ScriptPackageImport] phase=manifest-resolution root=Source manifest=script.json format=scripting version=1.0.0
+HANLIN_IMPORT_PACKAGE_STARTED: url=/Users/runner/Library/Developer/CoreSimulator/Devices/D2B249EB-2AC1-445A-BE5C-E80D6FBCCDF5/data/Containers/Data/Application/2D607991-F2CC-49CF-B21A-DAC39C09EB69/tmp/PackageLifecycleTest-07551057-5134-4F69-8F1B-3C5703E9E699/lifecycle-skill.scripting
+2026-10-08 23:53:03.443361+0000 AI_Hanlin[69883:423543] [ScriptPackageImport] phase=manifest-resolution root=Source manifest=script.json format=scripting version=1.0.0
 HANLIN_IMPORT_PACKAGE_SUCCESS: canInstall=true entrypoints=1
 HANLIN_INSTALL_PREVIEW_STARTED: canInstall=true
-✔ Test "Package disable and uninstall remove skill immediately" passed after 1.876 seconds.
+✔ Test "Package disable and uninstall remove skill immediately" passed after 2.163 seconds.
 ◇ Test "Same tier unrelated sources cannot silently shadow each other" started.
 ✔ Test "Same tier unrelated sources cannot silently shadow each other" passed after 0.001 seconds.
 ◇ Test "Store refresh preserves disabled production domains" started.
-✔ Test "Store refresh preserves disabled production domains" passed after 0.001 seconds.
-✔ Suite "Production System Skills Verification" passed after 12.721 seconds.
+✔ Test "Store refresh preserves disabled production domains" passed after 0.002 seconds.
+✔ Suite "Production System Skills Verification" passed after 8.592 seconds.
+◇ Suite "Runtime Package Acceptance" started.
+◇ Test "Real npm packages install, import through Node and TypeScript, persist, and uninstall" started.
+✔ Test "Real npm packages install, import through Node and TypeScript, persist, and uninstall" passed after 8.874 seconds.
+◇ Test "npm invalid package and version fail without registry contamination" started.
+✔ Test "npm invalid package and version fail without registry contamination" passed after 0.093 seconds.
+◇ Test "Real pure-Python dependency graph installs, imports, persists, and uninstalls" started.
+✔ Test "Real pure-Python dependency graph installs, imports, persists, and uninstalls" passed after 2.307 seconds.
+◇ Test "Python manager explains native wheels and rejects invalid releases" started.
+✔ Test "Python manager explains native wheels and rejects invalid releases" passed after 0.063 seconds.
+✔ Suite "Runtime Package Acceptance" passed after 11.341 seconds.
 ◇ Suite "Runtime Tool Contracts" started.
 ◇ Test preparedSchemasHaveUniqueAliasesRoutesAndValidObjectContracts() started.
-✔ Test preparedSchemasHaveUniqueAliasesRoutesAndValidObjectContracts() passed after 0.010 seconds.
+✔ Test preparedSchemasHaveUniqueAliasesRoutesAndValidObjectContracts() passed after 0.011 seconds.
 ◇ Test localAndRemotePythonAreUnambiguous() started.
 ✔ Test localAndRemotePythonAreUnambiguous() passed after 0.001 seconds.
 ◇ Test shellSchemaIsStructurallyConstrained() started.
@@ -418,64 +864,64 @@ HANLIN_INSTALL_PREVIEW_STARTED: canInstall=true
 ◇ Test runtimeSchemasAdvertiseOnlyHandledParameters() started.
 ✔ Test runtimeSchemasAdvertiseOnlyHandledParameters() passed after 0.001 seconds.
 ◇ Test runtimeToolsRejectMalformedArgumentsSemantically() started.
-✔ Test runtimeToolsRejectMalformedArgumentsSemantically() passed after 0.026 seconds.
+✔ Test runtimeToolsRejectMalformedArgumentsSemantically() passed after 0.001 seconds.
 ◇ Test strictJSONScalarsDistinguishOneFromTrue() started.
-✔ Test strictJSONScalarsDistinguishOneFromTrue() passed after 0.036 seconds.
+✔ Test strictJSONScalarsDistinguishOneFromTrue() passed after 0.030 seconds.
 ◇ Test javaScriptCoreExpressionValueReachesModel() started.
-✔ Test javaScriptCoreExpressionValueReachesModel() passed after 0.015 seconds.
+✔ Test javaScriptCoreExpressionValueReachesModel() passed after 0.005 seconds.
 ◇ Test diagnosticsCountSemanticFailureInsideCompletedRun() started.
-✔ Test diagnosticsCountSemanticFailureInsideCompletedRun() passed after 0.038 seconds.
+✔ Test diagnosticsCountSemanticFailureInsideCompletedRun() passed after 0.021 seconds.
 ◇ Test diagnosticsTerminalStateIsIdempotent() started.
-✔ Test diagnosticsTerminalStateIsIdempotent() passed after 0.023 seconds.
+✔ Test diagnosticsTerminalStateIsIdempotent() passed after 0.032 seconds.
 ◇ Test diagnosticsRecordsStepMetadataWithoutSecrets() started.
-✔ Test diagnosticsRecordsStepMetadataWithoutSecrets() passed after 0.009 seconds.
-✔ Suite "Runtime Tool Contracts" passed after 0.162 seconds.
+✔ Test diagnosticsRecordsStepMetadataWithoutSecrets() passed after 0.012 seconds.
+✔ Suite "Runtime Tool Contracts" passed after 0.118 seconds.
 ◇ Suite "Canonical Scripting tool authority" started.
 ◇ Test "Projects Script-only tools with stable provider-qualified identity" started.
 ✔ Test "Projects Script-only tools with stable provider-qualified identity" passed after 0.001 seconds.
 ◇ Test "Preserves Native and MCP precedence across all Script collision shapes" started.
-✔ Test "Preserves Native and MCP precedence across all Script collision shapes" passed after 0.001 seconds.
+✔ Test "Preserves Native and MCP precedence across all Script collision shapes" passed after 0.003 seconds.
 ◇ Test "Rejects duplicate Script logical IDs and wrong-provider routes" started.
 ✔ Test "Rejects duplicate Script logical IDs and wrong-provider routes" passed after 0.001 seconds.
 ◇ Test "Prepared dispatch selects Script exactly once with no fallback" started.
 ✔ Test "Prepared dispatch selects Script exactly once with no fallback" passed after 0.001 seconds.
-✔ Suite "Canonical Scripting tool authority" passed after 0.003 seconds.
+✔ Suite "Canonical Scripting tool authority" passed after 0.007 seconds.
 ◇ Suite "Skill Store, Markdown Parser, and Importer Tests" started.
 ◇ Test "SkillMarkdownParser parses frontmatter and serializes roundtrip" started.
-✔ Test "SkillMarkdownParser parses frontmatter and serializes roundtrip" passed after 0.002 seconds.
+✔ Test "SkillMarkdownParser parses frontmatter and serializes roundtrip" passed after 0.001 seconds.
 ◇ Test "SkillStore manages custom skill lifecycle and state" started.
-✔ Test "SkillStore manages custom skill lifecycle and state" passed after 0.021 seconds.
+✔ Test "SkillStore manages custom skill lifecycle and state" passed after 0.024 seconds.
 ◇ Test "SkillStore override takes precedence and resets cleanly" started.
-✔ Test "SkillStore override takes precedence and resets cleanly" passed after 0.005 seconds.
+✔ Test "SkillStore override takes precedence and resets cleanly" passed after 0.011 seconds.
 ◇ Test "SkillStore safeResourceURL rejects path traversal, drive prefixes, and escape attempts" started.
-✔ Test "SkillStore safeResourceURL rejects path traversal, drive prefixes, and escape attempts" passed after 0.004 seconds.
+✔ Test "SkillStore safeResourceURL rejects path traversal, drive prefixes, and escape attempts" passed after 0.009 seconds.
 ◇ Test "SkillImporter rejects non-HTTPS URLs" started.
-✔ Test "SkillImporter rejects non-HTTPS URLs" passed after 0.009 seconds.
+✔ Test "SkillImporter rejects non-HTTPS URLs" passed after 0.018 seconds.
 ◇ Test "Direct markdown SKILL.md file installs successfully into store" started.
-✔ Test "Direct markdown SKILL.md file installs successfully into store" passed after 0.008 seconds.
+✔ Test "Direct markdown SKILL.md file installs successfully into store" passed after 0.011 seconds.
 ◇ Test "Failed replacement preserves previously installed skill atomically" started.
-✔ Test "Failed replacement preserves previously installed skill atomically" passed after 0.013 seconds.
+✔ Test "Failed replacement preserves previously installed skill atomically" passed after 0.021 seconds.
 ◇ Test "HanlinArchivePolicy inspectSkillArchive validates valid archives without script.json" started.
 ✔ Test "HanlinArchivePolicy inspectSkillArchive validates valid archives without script.json" passed after 0.001 seconds.
 ◇ Test "HanlinArchivePolicy inspectSkillArchive rejects archive security threats" started.
-✔ Test "HanlinArchivePolicy inspectSkillArchive rejects archive security threats" passed after 0.002 seconds.
+✔ Test "HanlinArchivePolicy inspectSkillArchive rejects archive security threats" passed after 0.008 seconds.
 ◇ Test "Resource reading requires loaded skill and respects bounds" started.
-✔ Test "Resource reading requires loaded skill and respects bounds" passed after 0.019 seconds.
+✔ Test "Resource reading requires loaded skill and respects bounds" passed after 0.032 seconds.
 ◇ Test "SkillStore and ReadSkillResourceTool reject symlink escaping root" started.
-✔ Test "SkillStore and ReadSkillResourceTool reject symlink escaping root" passed after 0.006 seconds.
+✔ Test "SkillStore and ReadSkillResourceTool reject symlink escaping root" passed after 0.008 seconds.
 ◇ Test "Imported Python script can be read as text and is not executed during installation" started.
-✔ Test "Imported Python script can be read as text and is not executed during installation" passed after 0.023 seconds.
+✔ Test "Imported Python script can be read as text and is not executed during installation" passed after 0.032 seconds.
 ◇ Test "BoundedStreamDownloader enforces network limits and rejects non-HTTPS or oversize payloads" started.
-✔ Test "BoundedStreamDownloader enforces network limits and rejects non-HTTPS or oversize payloads" passed after 0.075 seconds.
+✔ Test "BoundedStreamDownloader enforces network limits and rejects non-HTTPS or oversize payloads" passed after 0.038 seconds.
 ◇ Test "Temporary staging directory cleans up on success and failure" started.
-✔ Test "Temporary staging directory cleans up on success and failure" passed after 0.001 seconds.
+✔ Test "Temporary staging directory cleans up on success and failure" passed after 0.002 seconds.
 ◇ Test "Skill editor rejects unknown preferred tool alias" started.
 ✔ Test "Skill editor rejects unknown preferred tool alias" passed after 0.001 seconds.
-✔ Suite "Skill Store, Markdown Parser, and Importer Tests" passed after 0.197 seconds.
-✔ Test run with 121 tests in 14 suites passed after 14.178 seconds.
-2026-10-07 16:37:55.735 xcodebuild[4974:262362] [MT] IDETestOperationsObserverDebug: 67.195 elapsed -- Testing started completed.
-2026-10-07 16:37:55.735 xcodebuild[4974:262362] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
-2026-10-07 16:37:55.735 xcodebuild[4974:262362] [MT] IDETestOperationsObserverDebug: 67.195 sec, +67.195 sec -- end
+✔ Suite "Skill Store, Markdown Parser, and Importer Tests" passed after 0.223 seconds.
+✔ Test run with 176 tests in 20 suites passed after 67.116 seconds.
+2026-10-08 23:53:18.946 xcodebuild[56588:382081] [MT] IDETestOperationsObserverDebug: 140.157 elapsed -- Testing started completed.
+2026-10-08 23:53:18.946 xcodebuild[56588:382081] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-10-08 23:53:18.946 xcodebuild[56588:382081] [MT] IDETestOperationsObserverDebug: 140.157 sec, +140.157 sec -- end
 
 Test session results, code coverage, and logs:
 	/Users/runner/work/hanlin-ai/hanlin-ai/simulator-logs/DownstreamTestsResult.xcresult

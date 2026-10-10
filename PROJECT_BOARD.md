@@ -26,10 +26,10 @@ Potential improvements, features, optimizations, or architectural ideas.
 
 ## Done
 
-- [x] Hanlin Final Closure & Authoritative Evidence Pipeline
-  - Implemented: 2026-10-07
-  - Commit: Current HEAD
-  - Notes: Ingested authoritative 493 MASTER specification (`BF76406CEE...`). Archived Pass 3 results safely. Diagnosed and fixed all 6 real product/test defects in Swift. Truthful Apple local providers (Foundation Models & Core AI) availability and test seams implemented. Complete rewrite of `Scripts/generate_acceptance_results.mjs` with zero synthetic fallback pass, full evidence artifact checksum verification, negative self-tests, and derived requirements matrix (R01–R47). All 44 Node host tests, Cablate MCP installation, and unit tests passing. Chat UI strictly frozen.
+- [x] Hanlin Final Closure & Authoritative Semantic Evidence Pipeline
+  - Implemented: 2026-10-11
+  - Commit/Run: Implementation `9acb412e30de92f51e88ad05be43d315f85df3e4` / Evidence Run `d13c29a6c1a4184c20b280cef51d3319c094b202` (GitHub Actions Runs `37857022894` & `37852056379`)
+  - Notes: Ingested authoritative 493 MASTER specification (`BF76406CEE...`). Extracted authentic `simulator-downstream-unit-test-results.json` from CI Run `37857022894` (21 suites, 184 tests, 184 passed, 0 failed). Separated 6 historical XCTest regression fixes (`REG-*`) from MASTER scenario IDs and implemented dedicated semantic acceptance tests (`MasterScenarioSemanticAcceptanceTests.swift`) for `CHAT-24`, `SH-03`, `SH-05`, `CMD-04`, `ZIP-04`, `ZIP-07`, `ZIP-11`, and `COREAI-06`. Implemented production `FoundationModels` session backend (`R45`) and truthful Path B dependency/fixture reporting for Core AI (`R46`). Rebuilt `scenario-evidence-map.json` and `Scripts/generate_acceptance_results.mjs` with explicit verifier kinds, strict layer enforcement (`D` never satisfied by simulator), and 10 semantic negative self-tests (all passing in `--mode=gate`). Chat UI strictly frozen.
 - [x] Pass 3 Apple Verification & Final Evidence Completion
   - Implemented: 2026-10-07
   - Commit/Run: `0c0025b` / GitHub Actions run `37587829849`
