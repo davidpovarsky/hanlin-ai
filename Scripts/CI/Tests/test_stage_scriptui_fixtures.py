@@ -77,11 +77,15 @@ class StageScriptUIFixturesTests(unittest.TestCase):
             self.assertTrue((app_docs / "HanlinScriptUIValid.scripting").exists())
             self.assertTrue((app_docs / "HanlinScriptUIMalformed.scripting").exists())
             self.assertTrue((app_docs / "HanlinScriptUIAppB.scripting").exists())
+            self.assertTrue((app_docs / "ExpoSwiftUIProbeA.hanlinExpo").exists())
+            self.assertTrue((app_docs / "ExpoSwiftUIProbeB.hanlinExpo").exists())
+            self.assertTrue((app_docs / "ExpoSwiftUIMalformed.hanlinExpo").exists())
 
             # Verify files staged in Files container Documents
             files_docs = mock_files_container / "Documents"
             self.assertTrue(files_docs.exists())
             self.assertTrue((files_docs / "HanlinScriptUIValid.scripting").exists())
+            self.assertTrue((files_docs / "ExpoSwiftUIProbeA.hanlinExpo").exists())
 
 
 if __name__ == "__main__":

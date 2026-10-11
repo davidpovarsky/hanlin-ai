@@ -139,12 +139,14 @@ COLLECTOR_UI_SUITES = {
     "AI_HLYUITests/HanlinRuntimeInstallationUITests/testRuntimeCenterEmbeddedRuntimesSmokeAndReadiness",
     "AI_HLYUITests/HanlinRuntimeCommandAcceptanceUITests",
     "AI_HLYUITests/AgentRuntimeConversationUITests",
+    "AI_HLYUITests/HanlinSkillCenterUITests",
 }
 
 COLLECTOR_BUILD_UI_SUITES = {
     "AI_HLYUITests/HanlinRuntimeInstallationUITests",
     "AI_HLYUITests/HanlinRuntimeCommandAcceptanceUITests",
     "AI_HLYUITests/AgentRuntimeConversationUITests",
+    "AI_HLYUITests/HanlinSkillCenterUITests",
 }
 
 
@@ -755,6 +757,8 @@ def plan_affected_validation(
         full_validation
         or ("AI_HLYUITests/HanlinScriptUIProductionE2ETests" in affected_ui_suites)
         or ("HanlinScriptUIProductionE2ETests" in simulator_ui_filter_value)
+        or ("AI_HLYUITests/HanlinExpoProductionE2ETests" in affected_ui_suites)
+        or ("HanlinExpoProductionE2ETests" in simulator_ui_filter_value)
         or ("HanlinUIPerformanceUITests" in simulator_ui_filter_value)
     )
 

@@ -289,19 +289,16 @@ public struct HanlinArchivePolicy: Sendable {
             if Self.hasDrivePrefix(path) {
                 findings.append(finding(.drivePrefix, path, "Windows drive-prefixed paths are forbidden."))
             }
-            let components = path.split(separator: "/", omittingEmptySubsequences: false)
-            if components.contains("..") {
-                findings.append(finding(.parentTraversal, path, "Parent traversal is forbidden."))
-            }
-            let canonicalComponents = path.hasSuffix("/") ? components.dropLast() : components[...]
-            if canonicalComponents.contains(where: { $0.isEmpty || $0 == "." }) {
+            let canonicalPath = Self.normalizedRelativePath(path)
+            if canonicalPath == nil {
                 findings.append(finding(
                     .parentTraversal,
                     path,
-                    "Empty and current-directory path components are forbidden."
+                    "Parent traversal or malformed relative path is forbidden."
                 ))
             }
-            let effectiveComponents = components.filter { !$0.isEmpty && $0 != "." }
+            let resolvedPath = canonicalPath ?? path
+            let effectiveComponents = resolvedPath.split(separator: "/").map(String.init)
             maximumDepth = max(maximumDepth, effectiveComponents.count)
             if effectiveComponents.count > limits.maximumDepth {
                 findings.append(finding(.depthLimit, path, "Archive nesting depth exceeds policy."))
@@ -331,29 +328,29 @@ public struct HanlinArchivePolicy: Sendable {
                 }
             }
 
-            let unicodeKey = path.precomposedStringWithCanonicalMapping
+            let unicodeKey = resolvedPath.precomposedStringWithCanonicalMapping
             if let existing = canonicalPaths[unicodeKey] {
                 findings.append(finding(
                     .unicodeCollision,
                     path,
-                    existing == path
+                    existing == resolvedPath
                         ? "Archive contains a duplicate path."
                         : "Path collides with '\(existing)' after Unicode normalization."
                 ))
             } else {
-                canonicalPaths[unicodeKey] = path
+                canonicalPaths[unicodeKey] = resolvedPath
             }
             let caseKey = unicodeKey.lowercased(with: Locale(identifier: "en_US_POSIX"))
-            if let existing = caseFoldedPaths[caseKey], existing != path {
+            if let existing = caseFoldedPaths[caseKey], existing != resolvedPath {
                 findings.append(finding(
                     .caseCollision,
                     path,
                     "Path collides with '\(existing)' on a case-insensitive file system."
                 ))
             } else {
-                caseFoldedPaths[caseKey] = path
+                caseFoldedPaths[caseKey] = resolvedPath
             }
-            normalizedPaths.append(path)
+            normalizedPaths.append(resolvedPath)
         }
 
         if fileCount > limits.maximumFiles {
@@ -419,6 +416,9 @@ public struct HanlinArchivePolicy: Sendable {
 
     public static func normalizedRelativePath(_ value: String) -> String? {
         var path = value.replacingOccurrences(of: "\\", with: "/")
+        while path.hasPrefix("./") {
+            path.removeFirst(2)
+        }
         if path.hasSuffix("/") {
             path.removeLast()
         }
@@ -429,12 +429,26 @@ public struct HanlinArchivePolicy: Sendable {
         else {
             return nil
         }
-        let components = path.split(separator: "/", omittingEmptySubsequences: false)
-        guard !components.contains(".."), !components.contains(where: { $0.isEmpty }) else {
-            return nil
+        let rawComponents = path.split(separator: "/", omittingEmptySubsequences: false)
+        var stack: [String] = []
+        for component in rawComponents {
+            if component.isEmpty {
+                return nil
+            }
+            if component == "." {
+                continue
+            }
+            if component == ".." {
+                guard !stack.isEmpty else {
+                    return nil
+                }
+                stack.removeLast()
+            } else {
+                stack.append(String(component))
+            }
         }
-        let normalized = components.filter { $0 != "." }.joined(separator: "/")
-        return normalized.isEmpty ? nil : normalized.precomposedStringWithCanonicalMapping
+        guard !stack.isEmpty else { return nil }
+        return stack.joined(separator: "/").precomposedStringWithCanonicalMapping
     }
 
     private static func wrapperDirectory(for manifestPath: String) -> String? {

@@ -247,12 +247,9 @@ public final class HanlinSkillCatalog {
                         guard let currentPackage = currentPlatform.installedPackages.first(where: { $0.record.packageID == packageID && $0.enabled }) else {
                             return nil
                         }
-                        let clean = relPath.replacingOccurrences(of: "\\", with: "/").trimmingCharacters(in: CharacterSet(charactersIn: "/ "))
-                        guard !clean.isEmpty, !clean.contains("\0"), !clean.hasPrefix("/") else {
-                            return nil
-                        }
-                        let components = clean.split(separator: "/")
-                        guard !components.contains(".."), !components.contains(".") else {
+                        let rawTrimmed = relPath.replacingOccurrences(of: "\\", with: "/").trimmingCharacters(in: .whitespacesAndNewlines)
+                        guard !rawTrimmed.isEmpty, !rawTrimmed.contains("\0"), !rawTrimmed.hasPrefix("/"),
+                              let clean = SkillStore.normalizeRelativePath(rawTrimmed) else {
                             return nil
                         }
                         return currentPlatform.resolveResourceURL(packageID: currentPackage.record.packageID, relativePath: clean)

@@ -80,6 +80,24 @@ class ShellAcceptanceValidationTests(unittest.TestCase):
         with self.assertRaisesRegex(AcceptanceValidationError, "workspace escape"):
             validate_acceptance(payload)
 
+    def test_dynamic_catalog_superset_passes(self) -> None:
+        payload = copy.deepcopy(valid_payload())
+        for field in ("dictionaryCommands", "registeredCommands", "executableCommands", "rawCommandValues"):
+            payload["registration"][field].append("extra_tool")
+        payload["registration"]["rawCommandsCount"] = len(payload["registration"]["rawCommandValues"])
+        payload["smoke"]["testedCommands"].append("extra_tool")
+        payload["smoke"]["commandResults"].append(
+            {
+                "command": "extra_tool",
+                "exitCode": 0,
+                "representativeOutput": "ok",
+                "passed": True,
+                "failure": None,
+            }
+        )
+        summary = validate_acceptance(payload)
+        self.assertEqual(summary["commandCount"], 24)
+
 
 if __name__ == "__main__":
     unittest.main()

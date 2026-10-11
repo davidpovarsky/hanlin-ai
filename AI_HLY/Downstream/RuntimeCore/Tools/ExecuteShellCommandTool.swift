@@ -3,9 +3,11 @@ import Foundation
 struct ExecuteShellCommandTool: NativeTool {
     let name = "execute_shell_command"
     private let hostContext: HanlinHostCallContext?
+    private let shellServiceOverride: ShellRuntimeService?
 
-    init(hostContext: HanlinHostCallContext? = nil) {
+    init(hostContext: HanlinHostCallContext? = nil, shellServiceOverride: ShellRuntimeService? = nil) {
         self.hostContext = hostContext
+        self.shellServiceOverride = shellServiceOverride
     }
 
     var catalogEntry: NativeToolCatalogEntry {
@@ -59,13 +61,23 @@ struct ExecuteShellCommandTool: NativeTool {
                         description: "program is not in the approved ios_system catalog"
                     )
                 }
-                result = try await AgentHostServicesAdapter.executeShell(
-                    program: program,
-                    arguments: argv,
-                    environment: environment,
-                    allowNetwork: allowNetwork,
-                    context: hostContext
-                )
+                if let shellServiceOverride {
+                    let workspace = await shellServiceOverride.fileLayout.workspaceURL(for: .shell)
+                    result = try await shellServiceOverride.execute(
+                        tokens: [program] + argv,
+                        workspace: workspace,
+                        environment: environment,
+                        allowNetwork: allowNetwork
+                    )
+                } else {
+                    result = try await AgentHostServicesAdapter.executeShell(
+                        program: program,
+                        arguments: argv,
+                        environment: environment,
+                        allowNetwork: allowNetwork,
+                        context: hostContext
+                    )
+                }
             } else {
                 guard argv.isEmpty else {
                     throw NativeToolJSON.JSONError.invalidValue(
@@ -73,12 +85,22 @@ struct ExecuteShellCommandTool: NativeTool {
                         description: "arguments cannot accompany the command string form"
                     )
                 }
-                result = try await AgentHostServicesAdapter.executeLegacyShell(
-                    command: legacyCommand ?? "",
-                    environment: environment,
-                    allowNetwork: allowNetwork,
-                    context: hostContext
-                )
+                if let shellServiceOverride {
+                    let workspace = await shellServiceOverride.fileLayout.workspaceURL(for: .shell)
+                    result = try await shellServiceOverride.execute(
+                        command: legacyCommand ?? "",
+                        workspace: workspace,
+                        environment: environment,
+                        allowNetwork: allowNetwork
+                    )
+                } else {
+                    result = try await AgentHostServicesAdapter.executeLegacyShell(
+                        command: legacyCommand ?? "",
+                        environment: environment,
+                        allowNetwork: allowNetwork,
+                        context: hostContext
+                    )
+                }
             }
             return RuntimeToolSupport.result(
                 result,

@@ -92,6 +92,7 @@ class APIManager {
     private var latestToolProgressSummary: String?
     private var agentDiagnosticsRecorder: AgentDiagnosticsRecorder?
     private var dataIndex: Int?
+    var localLLMDriverOverride: ((_ modelPath: String, _ systemPrompt: String, _ history: [Chat], _ topP: Float, _ temp: Float, _ maxTokenCount: Int32) -> LocalLLMStreamDriver?)?
 
     private func captureSearchQuery(_ value: String) {
         let trimmed = value.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -1539,15 +1540,22 @@ class APIManager {
                     }
                     
                     // 初始化 LLM.swift 本地模型及参数调节
-                    guard let llm = LLM(
-                        from: URL(fileURLWithPath: modelPath),
-                        template: .chatML(finalSystemMessage),
-                        history: chats,
-                        topP: Float(topp),
-                        temp: Float(tem),
-                        maxTokenCount: Int32(maxtokens),
-                    ) else {
-                        throw NSError(domain: "LocalLLMInit", code: -1, userInfo: [NSLocalizedDescriptionKey: "本地 LLM 初始化失败"])
+                    let driver: LocalLLMStreamDriver
+                    if let overrideFactory = self.localLLMDriverOverride,
+                       let overriddenDriver = overrideFactory(modelPath, finalSystemMessage, chats, Float(topp), Float(tem), Int32(maxtokens)) {
+                        driver = overriddenDriver
+                    } else {
+                        guard let llm = LLM(
+                            from: URL(fileURLWithPath: modelPath),
+                            template: .chatML(finalSystemMessage),
+                            history: chats,
+                            topP: Float(topp),
+                            temp: Float(tem),
+                            maxTokenCount: Int32(maxtokens),
+                        ) else {
+                            throw NSError(domain: "LocalLLMInit", code: -1, userInfo: [NSLocalizedDescriptionKey: "本地 LLM 初始化失败"])
+                        }
+                        driver = LocalLLMStreamDriver(llm)
                     }
                     
                     // 输出状态：等待模型响应
@@ -1560,10 +1568,10 @@ class APIManager {
                     var prefixStripped = false
                     var buffer = ""
                     // 调用流式接口逐 token 返回结果
-                    await LocalLLMStreamingAdapter.consume(llm, prompt: currentInput) { delta in
+                    await LocalLLMStreamingAdapter.consume(driver: driver, prompt: currentInput) { delta in
                             
                             if self.isCancelled {
-                                llm.stop()
+                                driver.stop()
                                 continuation.finish()
                                 self.isCancelled = false
                                 return false
@@ -1599,12 +1607,12 @@ class APIManager {
                             // 检测累积输出中是否出现停止标记
                             if accumulatedOutput.contains("im_end") {
                                 // 检测到停止标记后调用停止方法，让底层模型尽快结束生成
-                                llm.stop()
+                                driver.stop()
                                 return false
                             }
                             if accumulatedOutput.contains("im_start") {
                                 // 检测到停止标记后调用停止方法，让底层模型尽快结束生成
-                                llm.stop()
+                                driver.stop()
                                 return false
                             }
                             return true

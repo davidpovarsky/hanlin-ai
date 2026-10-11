@@ -47,15 +47,21 @@ actor ShellRuntimeService {
     ]
 
     let fileLayout: RuntimeFileLayout
+    let commandDictionaryURL: URL?
     var snapshotValue = RuntimeSnapshot.stopped(.shell)
     let diagnosticLog: ShellRuntimeDiagnosticLog
 
-    init(fileLayout: RuntimeFileLayout = .default) {
+    init(fileLayout: RuntimeFileLayout = .default, commandDictionaryURL: URL? = nil) {
         self.fileLayout = fileLayout
+        self.commandDictionaryURL = commandDictionaryURL
         diagnosticLog = ShellRuntimeDiagnosticLog(fileLayout: fileLayout)
     }
 
     func snapshot() -> RuntimeSnapshot { snapshotValue }
+
+    func commandDependencyDiagnostics() throws -> [String: IOSSystemCommandDependencyDiagnostic] {
+        try IOSSystemRunner.evaluateCommandDependencies(dictionaryURL: commandDictionaryURL)
+    }
 
     func healthCheck() throws -> RuntimeSnapshot {
         try fileLayout.prepareIfNeeded()
@@ -201,6 +207,23 @@ actor ShellRuntimeService {
         guard let name = tokens.first, let capability = Self.capabilities.first(where: { $0.name == name }) else {
             throw RuntimeCoreError.invalidRequest("The requested command is not in the verified ios_system catalog.")
         }
+        if let commandDictionaryURL {
+            let diagnostics = try IOSSystemRunner.evaluateCommandDependencies(dictionaryURL: commandDictionaryURL)
+            guard let status = diagnostics[name] else {
+                throw RuntimeCoreError.invalidRequest("Command '\(name)' is not present in the configured command dictionary.")
+            }
+            if !status.isAvailable {
+                let reason = status.missingDependencyReason ?? "Missing dependency (\(status.framework)/\(status.symbol)) for command '\(name)'."
+                try diagnosticLog.record(
+                    "shell_command_dependency_missing",
+                    category: ShellHealthCategory.commandNotExecutable.rawValue,
+                    message: reason,
+                    command: name,
+                    missingCommands: [name]
+                )
+                throw RuntimeCoreError.invalidRequest("Command '\(name)' is unavailable: \(reason)")
+            }
+        }
         let isOfflineCurlVersion = tokens == ["curl", "--version"]
         if capability.requiresNetwork && !allowNetwork && !isOfflineCurlVersion {
             throw RuntimeCoreError.invalidRequest("This command requires explicit network permission.")
@@ -326,7 +349,9 @@ actor ShellRuntimeService {
     private func validateArguments(_ arguments: ArraySlice<String>, command: String) throws {
         for argument in arguments where !argument.hasPrefix("-") {
             if command == "curl", let url = URL(string: argument), let scheme = url.scheme?.lowercased() {
-                guard scheme == "https", url.host != nil else {
+                let host = url.host?.lowercased()
+                let isLoopbackHTTP = scheme == "http" && (host == "127.0.0.1" || host == "localhost" || host == "::1")
+                guard (scheme == "https" && host != nil) || isLoopbackHTTP else {
                     throw RuntimeCoreError.invalidRequest("curl accepts HTTPS URLs only.")
                 }
                 continue

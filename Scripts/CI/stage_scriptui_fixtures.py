@@ -59,13 +59,22 @@ def stage_fixtures(
     runner=subprocess.run,
 ) -> dict:
     root = Path(__file__).resolve().parents[2]
-    fix_dir = fixtures_dir or (root / "AI_HLYUITests" / "Fixtures")
+    repo_fixtures_dir = root / "AI_HLYUITests" / "Fixtures"
+    fix_dir = fixtures_dir or repo_fixtures_dir
 
     # 1. Ensure fixtures exist and are deterministic
-    generated = create_fixtures(fix_dir)
+    generated = list(create_fixtures(fix_dir))
+    if fix_dir != repo_fixtures_dir and repo_fixtures_dir.exists():
+        for expo_src in sorted(repo_fixtures_dir.glob("*.hanlinExpo")):
+            expo_dst = fix_dir / expo_src.name
+            if not expo_dst.exists():
+                shutil.copy2(expo_src, expo_dst)
+    for expo_file in sorted(fix_dir.glob("*.hanlinExpo")):
+        if expo_file.name not in generated:
+            generated.append(expo_file.name)
 
     logs: List[str] = [
-        f"Staging ScriptUI fixtures for simulator: {simulator_udid}",
+        f"Staging ScriptUI and Expo fixtures for simulator: {simulator_udid}",
         f"Fixtures directory: {fix_dir}",
     ]
 

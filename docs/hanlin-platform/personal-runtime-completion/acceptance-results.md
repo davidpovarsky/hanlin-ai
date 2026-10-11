@@ -1,10 +1,10 @@
 # Hanlin Personal Runtime Completion — Authoritative Acceptance Results
 
-**Execution Timestamp:** `2026-10-10T22:26:24.777Z`  
+**Execution Timestamp:** `2026-10-11T15:57:32.604Z`  
 **Implementation SHA:** `9acb412e30de92f51e88ad05be43d315f85df3e4`  
 **Evidence Run SHA:** `d13c29a6c1a4184c20b280cef51d3319c094b202`  
-**Report SHA:** `9855d86f89730c01d9d0d2141cb7447d7b7c8cc7`  
-**Branch:** `codex/agent-skills-embedded-results` (Dirty working tree: `false`)  
+**Report SHA:** `8f24983dc4e62cc52250858f0870826a3bc5f073`  
+**Branch:** `codex/agent-skills-embedded-results` (Dirty working tree: `true`)  
 **Authoritative Specification SHA-256:** `bf76406cee09800635933f6d61c64e3632c243b2ee2c037df5d969d8e3be07f4`  
 **Pipeline Schema:** `2.1.0` (Strict Fail-Closed Semantic Validation)
 

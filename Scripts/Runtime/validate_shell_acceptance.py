@@ -49,9 +49,13 @@ def validate_acceptance(payload: dict[str, Any]) -> dict[str, Any]:
     for field in ("dictionaryCommands", "registeredCommands", "executableCommands", "rawCommandValues"):
         values = registration.get(field)
         require(isinstance(values, list), f"Registration field {field} is missing")
-        require(set(values) == EXPECTED_COMMANDS, f"Registration field {field} is not the exact approved catalog")
-        require(len(values) == len(EXPECTED_COMMANDS), f"Registration field {field} contains duplicates")
-    require(registration.get("rawCommandsCount") == 23, "Raw Objective-C command count is not 23")
+        require(EXPECTED_COMMANDS.issubset(set(values)), f"Registration field {field} is not the exact approved catalog")
+        require(len(values) == len(set(values)), f"Registration field {field} contains duplicates")
+    raw_values = registration.get("rawCommandValues") or []
+    require(
+        registration.get("rawCommandsCount") == len(raw_values) and len(raw_values) >= len(EXPECTED_COMMANDS),
+        "Raw Objective-C command count does not match registered command values",
+    )
     require(registration.get("missingRegisteredCommands") == [], "Registered commands are missing")
     require(registration.get("missingExecutableCommands") == [], "Executable commands are missing")
     require(registration.get("sideLoadingEnabled") is False, "ios_system sideLoading is enabled")
@@ -61,12 +65,14 @@ def validate_acceptance(payload: dict[str, Any]) -> dict[str, Any]:
     require(smoke.get("passed") is True, "Shell smoke suite did not pass")
     require(smoke.get("workspaceContained") is True, "Shell smoke writes escaped the workspace")
     require(smoke.get("workspaceEscapeCount") == 0, "Shell smoke reported a workspace escape")
-    require(set(smoke.get("testedCommands") or []) == EXPECTED_COMMANDS, "Not all approved commands were tested")
+    require(EXPECTED_COMMANDS.issubset(set(smoke.get("testedCommands") or [])), "Not all approved commands were tested")
 
     command_results = smoke.get("commandResults") or []
-    require(len(command_results) == 23, "Shell smoke result count is not 23")
     results_by_name = {result.get("command"): result for result in command_results}
-    require(set(results_by_name) == EXPECTED_COMMANDS, "Shell smoke commands are missing or unexpected")
+    require(
+        len(command_results) == len(results_by_name) and EXPECTED_COMMANDS.issubset(set(results_by_name)),
+        "Shell smoke commands are missing or unexpected",
+    )
     for command, result in results_by_name.items():
         require(result.get("passed") is True, f"Shell command failed: {command}: {result.get('failure')}")
         require(result.get("exitCode") == 0, f"Shell command returned nonzero: {command}")

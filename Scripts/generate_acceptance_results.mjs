@@ -149,6 +149,24 @@ verifyEvidenceArtifacts(evidenceManifest);
 const xcresultPath = path.join(repoRoot, evidenceDir, 'simulator-downstream-unit-test-results.json');
 const xcresultData = JSON.parse(fs.readFileSync(xcresultPath, 'utf8'));
 
+export function verifyXcresultProvenance(data, expectedEvidenceSha = provenanceSHAs.evidenceRunSHA) {
+  const prov = data.provenance;
+  if (!prov) {
+    throw new Error('xcresult evidence missing machine-readable provenance block');
+  }
+  if (prov.headSha !== expectedEvidenceSha) {
+    throw new Error(`xcresult provenance headSha mismatch: expected ${expectedEvidenceSha}, got ${prov.headSha}`);
+  }
+  if (prov.actualFailed !== 0) {
+    throw new Error(`xcresult provenance reports ${prov.actualFailed} failed tests`);
+  }
+  if (!prov.actualTestCount || prov.actualPassed !== prov.actualTestCount) {
+    throw new Error(`xcresult provenance count mismatch: actualPassed=${prov.actualPassed}, actualTestCount=${prov.actualTestCount}`);
+  }
+}
+
+verifyXcresultProvenance(xcresultData);
+
 export function indexXcresultTests(data) {
   const tests = new Map();
   for (const plan of data.testNodes || []) {
@@ -255,14 +273,16 @@ export function verifyObligation(ob, scenario, xcIndex) {
     if (!ob.exactTestName || !ob.evidenceArtifact) {
       throw new Error(`Swift test obligation missing exactTestName or evidenceArtifact for scenario ${scenario.testId}`);
     }
-    // Reject generic package suite as evidence for specific functional scenarios
-    const forbiddenGenericScenarios = new Set(['ZIP-07', 'ZIP-04', 'ZIP-11', 'SH-03', 'SH-05', 'CMD-04', 'CHAT-24', 'COREAI-06']);
-    if (ob.exactTestName.startsWith('swift test') && forbiddenGenericScenarios.has(scenario.testId)) {
+    // Generic 'swift test' is ONLY allowed for FINAL-01 (which literally tests 'swift test --package-path Packages/HanlinPlatform')
+    if (ob.exactTestName.startsWith('swift test') && scenario.testId !== 'FINAL-01') {
       throw new Error(`Generic suite command '${ob.exactTestName}' cannot prove specific functional scenario ${scenario.testId}!`);
     }
     const content = getEvidenceContent(ob.evidenceArtifact);
-    if (ob.exactTestName.startsWith('swift test')) {
-      if (!content.includes('Build complete!') && !content.includes('passed') && !content.includes('0 failures')) {
+    if (content.includes('✘ Test') || content.includes(' failed (')) {
+      throw new Error(`SwiftPM test log ${ob.evidenceArtifact} contains test failures for scenario ${scenario.testId}!`);
+    }
+    if (scenario.testId === 'FINAL-01' && ob.exactTestName === 'swift test --package-path Packages/HanlinPlatform') {
+      if (!content.includes('Test run with ') || !content.includes(' passed')) {
         throw new Error(`SwiftPM test suite failed in ${ob.evidenceArtifact} for scenario ${scenario.testId}!`);
       }
     } else if (!content.includes(ob.exactTestName) && !content.includes(ob.exactTestName.replace('()', ''))) {
@@ -275,30 +295,44 @@ export function verifyObligation(ob, scenario, xcIndex) {
     if (!ob.exactTestName || !ob.evidenceArtifact) {
       throw new Error(`Node TAP obligation missing exactTestName or evidenceArtifact for scenario ${scenario.testId}`);
     }
-    const content = getEvidenceContent(ob.evidenceArtifact);
     if (ob.exactTestName.startsWith('node ')) {
-      if (!content.includes('TAP version 13') || !content.includes('# fail 0') || content.includes('\nnot ok ')) {
-        throw new Error(`Node TAP suite '${ob.exactTestName}' did not pass cleanly in ${ob.evidenceArtifact} for scenario ${scenario.testId}!`);
-      }
-    } else if (!content.includes(ob.exactTestName)) {
+      throw new Error(`Generic Node command '${ob.exactTestName}' cannot prove specific scenario ${scenario.testId}!`);
+    }
+    const content = getEvidenceContent(ob.evidenceArtifact);
+    if (!content.includes('TAP version 13') || !content.includes('# fail 0') || content.includes('\nnot ok ')) {
+      throw new Error(`Node TAP suite did not pass cleanly in ${ob.evidenceArtifact} for scenario ${scenario.testId}!`);
+    }
+    if (!content.includes(ob.exactTestName)) {
       throw new Error(`Node TAP test '${ob.exactTestName}' not found in ${ob.evidenceArtifact} for scenario ${scenario.testId}!`);
     }
     return { status: 'PASSED' };
   }
 
   if (kind === 'build_command') {
-    if (!ob.evidenceArtifact) {
-      throw new Error(`Build obligation missing evidenceArtifact for scenario ${scenario.testId}`);
+    if (!ob.evidenceArtifact || !ob.exactTestName) {
+      throw new Error(`Build obligation missing exactTestName or evidenceArtifact for scenario ${scenario.testId}`);
     }
     const content = getEvidenceContent(ob.evidenceArtifact);
-    const hasSuccess = content.includes('BUILD SUCCEEDED') || content.includes('Build complete!') || content.includes('Exit code: 0') || content.includes('exit code 0') || content.includes('PASSED') || content.includes('Audit') || /^[0-9a-f]{64}/i.test(content.trim());
+    const hasSuccess =
+      content.includes('BUILD SUCCEEDED') ||
+      content.includes('Archive Succeeded') ||
+      content.includes('Build complete!') ||
+      /^[0-9a-f]{64}\s+/i.test(content.trim());
     if (!hasSuccess) {
       throw new Error(`Build command failed in ${ob.evidenceArtifact} for scenario ${scenario.testId}!`);
     }
     return { status: 'PASSED' };
   }
 
-  if (ob.expectedTerminalState === 'Passed') {
+  if (kind === 'repository_audit') {
+    if (!ob.evidenceArtifact || !ob.exactTestName || !ob.exactTestName.startsWith('Audit Contract: ')) {
+      throw new Error(`Repository audit obligation missing Audit Contract or evidenceArtifact for scenario ${scenario.testId}`);
+    }
+    const requiredSubstring = ob.exactTestName.slice('Audit Contract: '.length).trim();
+    const content = getEvidenceContent(ob.evidenceArtifact);
+    if (!requiredSubstring || !content.includes(requiredSubstring)) {
+      throw new Error(`Repository audit contract '${requiredSubstring}' not satisfied in ${ob.evidenceArtifact} for scenario ${scenario.testId}!`);
+    }
     return { status: 'PASSED' };
   }
 
@@ -351,16 +385,23 @@ export function evaluateScenario(scenario, manifestEntry, xcIndex) {
     });
   }
 
-  // Verify layer obligations presence
+  // Strict 1-to-1 layer verification without any catch-all bypass
   const obligationLayers = new Set(obligations.map(o => o.layer));
   for (const layer of scenario.layers) {
-    const normLayer = layer.includes('/') ? layer.split('/')[0] : layer;
-    const hasLayer = obligationLayers.has(layer) || obligationLayers.has(normLayer) ||
-      (layer.includes('D') && (obligationLayers.has('D') || obligationLayers.has('device'))) ||
-      (layer.includes('S') && (obligationLayers.has('S') || obligationLayers.has('sim'))) ||
-      (layer.includes('I') && obligationLayers.has('I')) ||
-      (layer.includes('U') && (obligationLayers.has('U') || obligationLayers.has('S') || obligationLayers.has('UI'))) ||
-      obligationLayers.has('package') || obligationLayers.has('build') || obligationLayers.has('regression') || obligationLayers.has('UI');
+    const hasLayer =
+      obligationLayers.has(layer) ||
+      (layer === 'D' && obligationLayers.has('device')) ||
+      (layer === 'device' && obligationLayers.has('D')) ||
+      (layer === 'S' && (obligationLayers.has('sim') || obligationLayers.has('simulator'))) ||
+      ((layer === 'sim' || layer === 'simulator') && obligationLayers.has('S')) ||
+      (layer === 'U' && obligationLayers.has('unit')) ||
+      (layer === 'unit' && obligationLayers.has('U')) ||
+      (layer === 'I' && obligationLayers.has('integration')) ||
+      (layer === 'integration' && obligationLayers.has('I')) ||
+      (layer === 'B' && obligationLayers.has('build')) ||
+      (layer === 'build' && obligationLayers.has('B')) ||
+      (layer === 'P' && (obligationLayers.has('provider') || obligationLayers.has('C'))) ||
+      (layer === 'provider' && obligationLayers.has('P'));
     if (!hasLayer) {
       throw new Error(`Missing required layer obligation '${layer}' for scenario ${scenario.testId}`);
     }

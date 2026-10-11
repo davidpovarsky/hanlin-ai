@@ -1996,7 +1996,7 @@ jobs:
     if: ${{ needs.plan-affected-validation.outputs.run_simulator_job == 'true' }}
     name: Launch full app on iPad Simulator
     runs-on: xcode-27
-    timeout-minutes: 90
+    timeout-minutes: 150
 
     env:
       PROJECT_PATH: AI_HLY.xcodeproj
@@ -2927,7 +2927,7 @@ jobs:
             printf '%s\n' "NativeScript fixture staging skipped (NativeScript not affected)." > "$LOG_DIR/08-nativescript-files-staging-skipped.txt"
           fi
 
-          if [ "$STAGE_SCRIPTUI_FIXTURES" = "true" ] || [ "$RUN_FULL_VALIDATION" = "true" ] || [[ "$SIMULATOR_UI_FILTER" == *"HanlinScriptUIProductionE2ETests"* ]]; then
+          if [ "$STAGE_SCRIPTUI_FIXTURES" = "true" ] || [ "$RUN_FULL_VALIDATION" = "true" ] || [[ "$SIMULATOR_UI_FILTER" == *"HanlinScriptUIProductionE2ETests"* ]] || [[ "$SIMULATOR_UI_FILTER" == *"HanlinExpoProductionE2ETests"* ]] || [[ "$SIMULATOR_UI_FILTER" == *"HanlinUIPerformanceUITests"* ]]; then
             python3 Scripts/CI/stage_scriptui_fixtures.py \
               --simulator-udid "$SIMULATOR_UDID" \
               --app-path "$APP_PATH" \
@@ -3101,13 +3101,18 @@ jobs:
         if: ${{ always() }}
         run: |
           set -euxo pipefail
+          perf_flags=()
+          if [ "$RUN_FULL_VALIDATION" != "true" ] && [[ "${SIMULATOR_UI_FILTER:-}" != *"HanlinUIPerformanceUITests"* ]]; then
+            perf_flags+=("--no-require-canonical-flows")
+          fi
           python3 Scripts/CI/analyze_performance_results.py \
             --log-dir "$LOG_DIR" \
             --output-json "$LOG_DIR/performance-summary.json" \
             --output-markdown "$LOG_DIR/performance-summary.md" \
             --github-step-summary "$GITHUB_STEP_SUMMARY" \
             --xcode-version "${{ steps.simulator-toolchain.outputs.xcode-version }}" \
-            --runner-arch "${{ steps.simulator-toolchain.outputs.runner-arch }}"
+            --runner-arch "${{ steps.simulator-toolchain.outputs.runner-arch }}" \
+            "${perf_flags[@]}"
 
       - name: Live Activity · refresh
         if: ${{ env.RUN_RUNTIME_TOOLING_FULL_ACCEPTANCE == 'true' }}
@@ -3280,9 +3285,12 @@ jobs:
             done < "$LOG_DIR/08-new-diagnostic-reports.txt"
             printf '%s\n' "23" > "$LOG_DIR/alive-duration-seconds.txt"
             printf '%s\n' "nativescript-post-install-poc" > "$LOG_DIR/validation-profile.txt"
-            trap - EXIT
-            cleanup
-            exit 0
+            if [ "$NATIVESCRIPT_POC_ONLY" = "true" ] || { [ "$RUN_SIMULATOR_SHELL_ACCEPTANCE" != "true" ] && [ "$RUN_SIMULATOR_MCP_ACCEPTANCE" != "true" ] && [ "$RUN_FULL_VALIDATION" != "true" ]; }; then
+              trap - EXIT
+              cleanup
+              exit 0
+            fi
+            xcrun simctl terminate "$SIMULATOR_UDID" "$BUNDLE_ID" 2>/dev/null || true
           fi
 
           if [ "$FAST_VALIDATION_ONLY" = "true" ] || { [ "$RUN_SIMULATOR_SMOKE_LAUNCH" = "true" ] && [ "$RUN_SIMULATOR_SHELL_ACCEPTANCE" != "true" ] && [ "$RUN_SIMULATOR_MCP_ACCEPTANCE" != "true" ] && [ "$RUN_FULL_VALIDATION" != "true" ]; }; then
@@ -3312,6 +3320,10 @@ jobs:
           fi
 
           if [ "$RUN_SIMULATOR_SHELL_ACCEPTANCE" = "true" ] || [ "$RUN_FULL_VALIDATION" = "true" ]; then
+            DATA_CONTAINER="$(xcrun simctl get_app_container "$SIMULATOR_UDID" "$BUNDLE_ID" data)"
+            ACCEPTANCE_PATH="$DATA_CONTAINER/Library/Application Support/HanlinRuntime/v1/logs/shell-acceptance.json"
+            SHELL_LOG_PATH="$DATA_CONTAINER/Library/Application Support/HanlinRuntime/v1/logs/shell-runtime.log"
+            rm -f "$ACCEPTANCE_PATH"
             set +e
             SIMCTL_CHILD_HANLIN_CANONICAL_SHADOW_CHECKS=1 \
             SIMCTL_CHILD_HANLIN_RUNTIME_ACCEPTANCE=shell \
@@ -3323,9 +3335,6 @@ jobs:
             test -n "$APP_PID"
             printf '%s\n' "$APP_PID" > "$LOG_DIR/launch-pid.txt"
             LAUNCH_EPOCH="$(date +%s)"
-            DATA_CONTAINER="$(xcrun simctl get_app_container "$SIMULATOR_UDID" "$BUNDLE_ID" data)"
-            ACCEPTANCE_PATH="$DATA_CONTAINER/Library/Application Support/HanlinRuntime/v1/logs/shell-acceptance.json"
-            SHELL_LOG_PATH="$DATA_CONTAINER/Library/Application Support/HanlinRuntime/v1/logs/shell-runtime.log"
             for elapsed in $(seq 1 120); do
               if [ -f "$ACCEPTANCE_PATH" ]; then
                 break

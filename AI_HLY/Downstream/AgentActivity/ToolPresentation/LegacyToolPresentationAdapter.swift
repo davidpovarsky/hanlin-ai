@@ -24,7 +24,7 @@ enum LegacyToolPresentationAdapter {
             resultDisplayPolicy: hasResult ? .modelControlled : .never,
             canonicalEmbeddedPresentation: normalized == "create_web_view"
                 ? HanlinEmbeddedPresentationDescriptor(
-                    handler: "legacy_web_view",
+                    handler: "legacy.web:legacy_web_view",
                     sizing: HanlinEmbeddedSizingPreference(preset: .regular),
                     expansion: HanlinExpansionDescriptor(supportedModes: [.sheet, .fullScreen])
                 )

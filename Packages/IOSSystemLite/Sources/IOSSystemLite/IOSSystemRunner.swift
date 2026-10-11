@@ -1,3 +1,4 @@
+import Darwin
 import Foundation
 import Synchronization
 import ios_system
@@ -67,6 +68,28 @@ public struct IOSSystemRegistrationReport: Codable, Sendable {
     public let rawCommandValues: [String]
     public let sideLoadingEnabled: Bool
     public let initializeEnvironmentCallCount: Int
+}
+
+public struct IOSSystemCommandDependencyDiagnostic: Codable, Equatable, Sendable {
+    public let command: String
+    public let framework: String
+    public let symbol: String
+    public let isAvailable: Bool
+    public let missingDependencyReason: String?
+
+    public init(
+        command: String,
+        framework: String,
+        symbol: String,
+        isAvailable: Bool,
+        missingDependencyReason: String?
+    ) {
+        self.command = command
+        self.framework = framework
+        self.symbol = symbol
+        self.isAvailable = isAvailable
+        self.missingDependencyReason = missingDependencyReason
+    }
 }
 
 public enum IOSSystemRunner {
@@ -144,6 +167,107 @@ public enum IOSSystemRunner {
             )
         }
         return report.executableCommands
+    }
+
+    public static func evaluateCommandDependencies(
+        dictionaryURL: URL? = nil
+    ) throws -> [String: IOSSystemCommandDependencyDiagnostic] {
+        let targetURL: URL
+        if let dictionaryURL {
+            targetURL = dictionaryURL
+        } else {
+            targetURL = try requiredResource(
+                named: "commandDictionary",
+                in: Bundle.module,
+                code: "module_command_dictionary_missing"
+            )
+        }
+        let commands = try parseCommandDictionary(at: targetURL)
+        let rtldDefault = UnsafeMutableRawPointer(bitPattern: -2)
+        var diagnostics: [String: IOSSystemCommandDependencyDiagnostic] = [:]
+        for (command, metadata) in commands {
+            let framework = metadata[0].trimmingCharacters(in: .whitespacesAndNewlines)
+            let symbol = metadata[1].trimmingCharacters(in: .whitespacesAndNewlines)
+            if framework.isEmpty {
+                diagnostics[command] = IOSSystemCommandDependencyDiagnostic(
+                    command: command,
+                    framework: framework,
+                    symbol: symbol,
+                    isAvailable: false,
+                    missingDependencyReason: "Command '\(command)' is missing a required framework declaration."
+                )
+                continue
+            }
+            if symbol.isEmpty {
+                diagnostics[command] = IOSSystemCommandDependencyDiagnostic(
+                    command: command,
+                    framework: framework,
+                    symbol: symbol,
+                    isAvailable: false,
+                    missingDependencyReason: "Command '\(command)' in framework '\(framework)' is missing an entry-point symbol."
+                )
+                continue
+            }
+            if framework == "SELF" {
+                let resolved = symbol.withCString { cSymbol in
+                    dlsym(rtldDefault, cSymbol)
+                }
+                if resolved != nil {
+                    diagnostics[command] = IOSSystemCommandDependencyDiagnostic(
+                        command: command,
+                        framework: framework,
+                        symbol: symbol,
+                        isAvailable: true,
+                        missingDependencyReason: nil
+                    )
+                } else {
+                    diagnostics[command] = IOSSystemCommandDependencyDiagnostic(
+                        command: command,
+                        framework: framework,
+                        symbol: symbol,
+                        isAvailable: false,
+                        missingDependencyReason: "Missing entry-point symbol '\(symbol)' in framework '\(framework)' for command '\(command)'."
+                    )
+                }
+            } else {
+                let frameworkPath = Bundle.main.privateFrameworksPath.map { "\($0)/\(framework).framework/\(framework)" } ?? "\(framework).framework/\(framework)"
+                let handle = frameworkPath.withCString { cPath in
+                    dlopen(cPath, RTLD_LAZY | RTLD_LOCAL)
+                }
+                guard let handle else {
+                    diagnostics[command] = IOSSystemCommandDependencyDiagnostic(
+                        command: command,
+                        framework: framework,
+                        symbol: symbol,
+                        isAvailable: false,
+                        missingDependencyReason: "Missing framework '\(framework)' (required symbol '\(symbol)') for command '\(command)'."
+                    )
+                    continue
+                }
+                defer { dlclose(handle) }
+                let resolved = symbol.withCString { cSymbol in
+                    dlsym(handle, cSymbol)
+                }
+                if resolved != nil {
+                    diagnostics[command] = IOSSystemCommandDependencyDiagnostic(
+                        command: command,
+                        framework: framework,
+                        symbol: symbol,
+                        isAvailable: true,
+                        missingDependencyReason: nil
+                    )
+                } else {
+                    diagnostics[command] = IOSSystemCommandDependencyDiagnostic(
+                        command: command,
+                        framework: framework,
+                        symbol: symbol,
+                        isAvailable: false,
+                        missingDependencyReason: "Missing entry-point symbol '\(symbol)' in framework '\(framework)' for command '\(command)'."
+                    )
+                }
+            }
+        }
+        return diagnostics
     }
 
     public static func execute(

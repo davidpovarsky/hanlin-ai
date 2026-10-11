@@ -1,6 +1,35 @@
 import Foundation
 @preconcurrency import LLM
 
+@MainActor
+struct LocalLLMStreamDriver {
+    let setUpdate: (@escaping @Sendable (String?) -> Void) -> Void
+    let respond: @MainActor (String) async -> Void
+    let stop: @MainActor () -> Void
+
+    init(_ llm: LLM) {
+        self.setUpdate = { callback in
+            llm.update = callback
+        }
+        self.respond = { prompt in
+            await llm.respond(to: prompt)
+        }
+        self.stop = {
+            llm.stop()
+        }
+    }
+
+    init(
+        setUpdate: @escaping (@escaping @Sendable (String?) -> Void) -> Void,
+        respond: @escaping @MainActor (String) async -> Void,
+        stop: @escaping @MainActor () -> Void
+    ) {
+        self.setUpdate = setUpdate
+        self.respond = respond
+        self.stop = stop
+    }
+}
+
 /// Keeps the legacy LLM.swift 1.x callback at a Sendable boundary while all
 /// mutable stream processing remains serialized on the app's main actor.
 @MainActor
@@ -10,8 +39,16 @@ enum LocalLLMStreamingAdapter {
         prompt: String,
         onDelta: (String) -> Bool
     ) async {
+        await consume(driver: LocalLLMStreamDriver(llm), prompt: prompt, onDelta: onDelta)
+    }
+
+    static func consume(
+        driver: LocalLLMStreamDriver,
+        prompt: String,
+        onDelta: (String) -> Bool
+    ) async {
         let (stream, continuation) = AsyncStream.makeStream(of: String.self)
-        llm.update = { @Sendable delta in
+        driver.setUpdate { @Sendable delta in
             if let delta {
                 continuation.yield(delta)
             } else {
@@ -20,14 +57,14 @@ enum LocalLLMStreamingAdapter {
         }
 
         let generation = Task { @MainActor in
-            await llm.respond(to: prompt)
+            await driver.respond(prompt)
             continuation.finish()
         }
         for await delta in stream where !onDelta(delta) {
-            llm.stop()
+            driver.stop()
             break
         }
         await generation.value
-        llm.update = { _ in }
+        driver.setUpdate { _ in }
     }
 }

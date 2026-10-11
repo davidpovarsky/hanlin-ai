@@ -28,6 +28,7 @@ extension APIManager {
         var executionEvidenceItems: [AgentEvidenceItem] = []
         var executionReturnedError = false
         var executionDiagnostics = NativeToolExecutionDiagnostics()
+        var executionEmbeddedPayload: HanlinEmbeddedResultPayload? = nil
         let toolCallID = context.toolCallID ?? name
 
         switch functionName {
@@ -669,6 +670,11 @@ extension APIManager {
 
                                                     if !htmlString.isEmpty, htmlString != "Unknown" {
                                                         self.htmlContent = htmlString
+                                                        executionEmbeddedPayload = HanlinEmbeddedResultPayload(
+                                                            payload: .object(["html": .string(htmlString)]),
+                                                            title: currentLanguagePrefix ? "网页预览" : "Web Preview",
+                                                            ownerID: "legacy.web"
+                                                        )
                                                         toolResult = currentLanguagePrefix ?
                                                         "成功渲染网页，现在用户可以看到网页内容及网页的源代码了。" :
                                                         "The webpage has been successfully rendered, and users can now see both the webpage content and its source code."
@@ -989,7 +995,8 @@ extension APIManager {
             modelText: toolResult,
             userText: toolResultFront,
             outcome: executionOutcome,
-            diagnostics: executionDiagnostics
+            diagnostics: executionDiagnostics,
+            embeddedPayload: executionEmbeddedPayload
         )
     }
 }

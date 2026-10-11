@@ -62,15 +62,16 @@ public enum ReadSkillResourceTool {
             return "Error: Skill '\(args.skill_id)' is not currently loaded. Call load_skill first."
         }
 
-        let cleanPath = args.relative_path.replacingOccurrences(of: "\\", with: "/").trimmingCharacters(in: CharacterSet(charactersIn: "/ "))
-        guard !cleanPath.isEmpty,
-              !cleanPath.hasPrefix("/"),
-              !cleanPath.contains("\0") else {
+        let rawTrimmed = args.relative_path
+            .replacingOccurrences(of: "\\", with: "/")
+            .trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !rawTrimmed.isEmpty,
+              !rawTrimmed.hasPrefix("/"),
+              !rawTrimmed.contains("\0") else {
             return "Error: Invalid resource path '\(args.relative_path)'."
         }
 
-        let components = cleanPath.split(separator: "/")
-        if components.contains("..") || components.contains(".") {
+        guard let cleanPath = SkillStore.normalizeRelativePath(rawTrimmed) else {
             return "Error: Directory traversal is not permitted in resource paths."
         }
 

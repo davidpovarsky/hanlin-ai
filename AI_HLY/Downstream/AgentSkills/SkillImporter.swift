@@ -236,7 +236,8 @@ public final class SkillImporter: @unchecked Sendable {
 
                 // Find skill root: either wrapper directory containing SKILL.md or extractedRoot
                 let skillMDEntry = skillMarkdownEntries[0]
-                let normSkillMDPath = skillMDEntry.path.replacingOccurrences(of: "\\", with: "/")
+                let normSkillMDPath = HanlinArchivePolicy.normalizedRelativePath(skillMDEntry.path)
+                    ?? skillMDEntry.path.replacingOccurrences(of: "\\", with: "/")
                 let skillMDDest = extractedRoot.appendingPathComponent(normSkillMDPath)
                 let skillRoot = skillMDDest.deletingLastPathComponent()
 
@@ -339,9 +340,9 @@ public final class SkillImporter: @unchecked Sendable {
         return record.descriptor
     }
 
-    // MARK: - Private Helpers
+    // MARK: - Containment & Private Helpers
 
-    private static func isContained(_ url: URL, in parent: URL) -> Bool {
+    public static func isContained(_ url: URL, in parent: URL) -> Bool {
         let canonParent = parent.resolvingSymlinksInPath().standardizedFileURL.path
         let parentPath = canonParent.hasSuffix("/") && canonParent.count > 1
             ? String(canonParent.dropLast())

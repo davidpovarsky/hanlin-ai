@@ -200,3 +200,28 @@ All 7 contradictions documented in the prompt have been thoroughly repaired:
 5. **Python 500MB cap:** Removed hardcoded cap; added streaming SHA-256 calculation over 64KB buffers.
 6. **Chat UI frozen claim:** UI freeze honored (zero edits to ChatView components); functional acceptance statuses reclassified honestly as `NOT_RUN_PLATFORM` or `NOT_RUN_DEVICE`.
 7. **Apple Foundation Models / Core AI:** Implemented full production adapters `AppleFoundationModelsProvider.swift` and `CoreAILanguageModelProvider.swift` with test suite `AppleLocalProvidersTests.swift`.
+
+---
+
+## 4. Real Semantic Closure Audit (Final Rescue Pass)
+
+1. **Replaced All 8 Imitation Tests in `AI_HLYTests/MasterScenarioSemanticAcceptanceTests.swift` with Real Production-Path Tests:**
+   - `CHAT-24`: Calls `APIManager.sendStreamRequest` and `APIManager.cancelCurrentRequest()` via `localLLMDriverOverride`, asserting `isGenerating == false` and that no post-cancel token appends.
+   - `SH-03`: Evaluates real `dlsym` symbol diagnostics via `IOSSystemRunner.evaluateCommandDependencies(dictionaryURL:)` and `ShellRuntimeService(fileLayout:commandDictionaryURL:)`, proving missing symbols disable only the affected command with exact dependency reporting while valid commands execute normally.
+   - `SH-05`: Executes `grep alpha sample.txt` through `ExecuteShellCommandTool` / `ShellRuntimeService` and asserts stdout has exactly two matching lines and `exitCode == 0`.
+   - `CMD-04`: Runs a loopback `NWListener` HTTP fixture server and executes `curl ${FIXTURE_BASE}/ok.json` through `ExecuteShellCommandTool` / `ShellRuntimeService` (after allowing loopback `http://127.0.0.1` / `localhost` in `validateArguments`), asserting `marker == "HANLIN_OK"`, `answer == 42`, and `exitCode == 0`.
+   - `ZIP-04`: Exercises `SkillImporter.isContained(_:in:)` and `SkillImporter.importSkillArchive` when the destination root uses a symlinked alias path (`/var` vs `/private/var`).
+   - `ZIP-07`: Imports a multi-directory skill ZIP containing `.py`, `.md`, `.json`, `.csv`, `.png`, `.wasm`, `.bin`, `.ttf`, and `LICENSE` via `SkillImporter` and verifies byte-for-byte survival.
+   - `ZIP-11`: Normalizes `./references/a.md` and `references/x/../a.md` in `HanlinArchivePolicy`, `SkillImporter`, `ReadSkillResourceTool`, and `HanlinSkillCatalog` while still rejecting root-escaping `../outside.txt`.
+   - `COREAI-06`: Exercises `APIManager.sendStreamRequest` (`company == "LOCAL"`) through `processLocalModel` and `LocalLLMStreamingAdapter.consume`, verifying streaming chunks and cancellation.
+2. **Aligned `SH-01` Validator (`Scripts/Runtime/validate_shell_acceptance.py`):**
+   - Removed the obsolete hardcoded `len(commands) != 23` clamp while preserving required command coverage verification.
+3. **Full-Validation CI & UI Test Fixes:**
+   - Fixed `Scripts/CI/stage_scriptui_fixtures.py` (`resolve_Destination_root`) to resolve `HanlinMiniAppDataStore` Application Support paths when `SIMULATOR_HOST_HOME` is under `Containers/Data/Application/<UUID>`.
+   - Fixed `LegacyToolPresentationAdapter.swift` (`handler: "legacy.web:legacy_web_view"`) and `APIManager+LegacyTools.swift` (`executionEmbeddedPayload` with `ownerID: "legacy.web"`) so `AgentSkillsEmbeddedResultsUITests` renders `Acceptance Embedded Card Surface`.
+   - Updated `.github/workflows/build-ios26-unsigned-ipa.yml` (`timeout-minutes: 180` and explicit `full_validation=true` execution of `Packages/HanlinPlatform` and all MiniApp packages).
+4. **Hardened Fail-Closed Acceptance Generator (`Scripts/generate_acceptance_results.mjs`) & `scenario-evidence-map.json`:**
+   - Removed `if (ob.expectedTerminalState === 'Passed') return { status: 'PASSED' };` and the layer normalization bypass.
+   - Added `verifyXcresultProvenance` and explicit `swift_test`, `node_tap`, `build_command`, and `repository_audit` verifiers.
+   - Replaced all generic `swift test` (except `FINAL-01`) and `node --test` obligations with exact test names across all 493 MASTER scenarios.
+
