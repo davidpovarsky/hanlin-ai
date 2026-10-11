@@ -237,12 +237,13 @@ struct MasterScenarioSemanticAcceptanceTests {
         defer { try? FileManager.default.removeItem(at: modelFileURL) }
 
         let apiManager = APIManager(context: context)
-        let coordinator = AgentRunCoordinator()
-        var autoFollow = AutoFollowController()
-        let controller = MockLocalLLMController()
-
         let groupID = UUID()
         let runID = UUID()
+        let coordinator = AgentRunCoordinator(groupID: groupID, providerID: "LOCAL", modelID: modelName)
+        var eventAdapter = HanlinStreamEventAdapter(runID: coordinator.runID)
+        let autoFollow = ChatAutoFollowController()
+        let controller = MockLocalLLMController()
+
         var didCancelDuringFirstToken = false
 
         apiManager.localLLMDriverOverride = { _, _, _, _, _, _ in
@@ -253,10 +254,10 @@ struct MasterScenarioSemanticAcceptanceTests {
             }
         }
 
-        coordinator.beginRun(groupID: groupID)
-        autoFollow.beginGeneration(groupID: groupID)
-        #expect(coordinator.activeRun?.status == .running)
-        #expect(autoFollow.isGenerating)
+        autoFollow.beginRun()
+        autoFollow.userInteractionBegan()
+        #expect(coordinator.run.status == .running)
+        #expect(autoFollow.state.isUserInteracting)
 
         let stream = try await apiManager.sendStreamRequest(
             messages: [
@@ -291,39 +292,38 @@ struct MasterScenarioSemanticAcceptanceTests {
         )
 
         #expect(AgentRunLifecycleCoordinator.shared.isCurrentRun(runID))
-        #expect(AgentRunLifecycleCoordinator.shared.currentState == .running)
+        #expect(AgentRunLifecycleCoordinator.shared.activeRunID == runID)
 
         var renderedText = ""
         for try await chunk in stream {
-            coordinator.consume(HanlinStreamEventAdapter.events(from: chunk))
+            coordinator.consume(eventAdapter.events(from: chunk))
             if let content = chunk.content, !content.isEmpty {
                 renderedText += content
                 // Execute the exact production stop-generation path while the model run is active
                 apiManager.cancelCurrentRequest()
-                coordinator.finishRun()
-                autoFollow.endGeneration()
+                coordinator.cancel()
+                autoFollow.runEnded()
                 await apiManager.completeAgentDiagnostics(status: "cancelled")
                 controller.emitLateTokenAndFinish(" Stale token that should not append")
             }
         }
 
         #expect(didCancelDuringFirstToken)
-        #expect(AgentRunLifecycleCoordinator.shared.currentState == .cancelled)
+        #expect(AgentRunLifecycleCoordinator.shared.activeRunID == nil)
         #expect(!AgentRunLifecycleCoordinator.shared.isCurrentRun(runID))
-        #expect(coordinator.activeRun == nil)
-        #expect(!autoFollow.isGenerating)
+        #expect(coordinator.run.status == .cancelled)
+        #expect(!autoFollow.state.isUserInteracting)
         #expect(renderedText == "First token")
         #expect(!renderedText.contains("Stale token"))
 
-        // Even if a late StreamData chunk arrives after finishRun(), AgentRunCoordinator drops it without reactivating
+        // Even if a late StreamData chunk arrives after cancel(), AgentRunCoordinator drops it without reactivating
         let lateChunk = StreamData(
             content: "Stale token that should not append",
-            operationalState: "Late state",
-            agentEvents: [.assistantAnswerStarted]
+            operationalState: "Late state"
         )
-        coordinator.consume(HanlinStreamEventAdapter.events(from: lateChunk))
-        #expect(coordinator.activeRun == nil)
-        #expect(!autoFollow.isGenerating)
+        coordinator.consume(eventAdapter.events(from: lateChunk))
+        #expect(coordinator.run.status == .cancelled)
+        #expect(!autoFollow.state.isUserInteracting)
     }
 
     @Test("SH-03: Removing framework/symbol for one command in fixture package marks it unavailable with precise dependency reporting while other commands continue")
@@ -332,7 +332,7 @@ struct MasterScenarioSemanticAcceptanceTests {
         let basePlistURL = URL(fileURLWithPath: registration.mainDictionaryPath)
         let rawPlistData = try Data(contentsOf: basePlistURL)
         let rawObject = try PropertyListSerialization.propertyList(from: rawPlistData, options: [], format: nil)
-        var baseDictionary = try #require(rawObject as? [String: [String]])
+        let baseDictionary = try #require(rawObject as? [String: [String]])
 
         let tempDir = FileManager.default.temporaryDirectory.appendingPathComponent("sh03_fixture_\(UUID().uuidString)")
         try FileManager.default.createDirectory(at: tempDir, withIntermediateDirectories: true)
@@ -348,7 +348,7 @@ struct MasterScenarioSemanticAcceptanceTests {
         try modifiedData.write(to: fixturePlistURL, options: .atomic)
 
         // Probe dependencies through production IOSSystemRunner & ShellRuntimeService
-        let layout = RuntimeFileLayout(baseDirectory: tempDir.appendingPathComponent("runtime"))
+        let layout = RuntimeFileLayout(root: tempDir.appendingPathComponent("runtime"))
         let fixtureShell = ShellRuntimeService(fileLayout: layout, commandDictionaryURL: fixturePlistURL)
         let diagnostics = try await fixtureShell.commandDependencyDiagnostics()
 
@@ -374,7 +374,7 @@ struct MasterScenarioSemanticAcceptanceTests {
 
         // Prepare a real file in the fixture shell workspace
         try layout.prepareIfNeeded()
-        let workspace = layout.workspaceURL(for: .shell)
+        let workspace = try layout.workspace(client: .tools, identifier: "execute_shell_command")
         try Data("line one\nline two\n".utf8).write(to: workspace.appendingPathComponent("probe.txt"), options: .atomic)
 
         let shellTool = ExecuteShellCommandTool(shellServiceOverride: fixtureShell)
@@ -413,7 +413,11 @@ struct MasterScenarioSemanticAcceptanceTests {
     func sh05GrepAlphaExactTwoLinesWithoutPathRequirement() async throws {
         let core = AppRuntimeCore.shared
         _ = try await core.ensureStarted(.shell)
-        let workspace = core.fileLayout.workspaceURL(for: .shell)
+        let hostContext = AgentHostServicesAdapter.makeContext()
+        let workspace = try RuntimeFileLayout.default.workspace(
+            client: .executions,
+            identifier: hostContext.runtimeWorkspaceIdentifier
+        )
         try FileManager.default.createDirectory(at: workspace, withIntermediateDirectories: true)
 
         let sampleFile = workspace.appendingPathComponent("sample.txt")
@@ -440,7 +444,7 @@ struct MasterScenarioSemanticAcceptanceTests {
         #expect(directLines == ["alpha line 1", "alpha line 2"])
 
         // 2. Execution through production ExecuteShellCommandTool
-        let tool = ExecuteShellCommandTool()
+        let tool = ExecuteShellCommandTool(hostContext: hostContext)
         let toolResult = await tool.execute(
             argumentsJSON: #"{"program":"grep","arguments":["alpha","sample.txt"],"allow_network":false}"#,
             context: NativeToolExecutionContext(userText: "grep alpha sample.txt")
@@ -463,7 +467,11 @@ struct MasterScenarioSemanticAcceptanceTests {
 
         let core = AppRuntimeCore.shared
         _ = try await core.ensureStarted(.shell)
-        let workspace = core.fileLayout.workspaceURL(for: .shell)
+        let hostContext = AgentHostServicesAdapter.makeContext()
+        let workspace = try RuntimeFileLayout.default.workspace(
+            client: .executions,
+            identifier: hostContext.runtimeWorkspaceIdentifier
+        )
 
         // 1. Execute real curl through ShellRuntimeService
         let directResult = try await core.shell.execute(

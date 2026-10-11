@@ -62,7 +62,7 @@ struct ExecuteShellCommandTool: NativeTool {
                     )
                 }
                 if let shellServiceOverride {
-                    let workspace = await shellServiceOverride.fileLayout.workspaceURL(for: .shell)
+                    let workspace = try shellServiceOverride.fileLayout.workspace(client: .tools, identifier: name)
                     result = try await shellServiceOverride.execute(
                         tokens: [program] + argv,
                         workspace: workspace,
@@ -86,7 +86,7 @@ struct ExecuteShellCommandTool: NativeTool {
                     )
                 }
                 if let shellServiceOverride {
-                    let workspace = await shellServiceOverride.fileLayout.workspaceURL(for: .shell)
+                    let workspace = try shellServiceOverride.fileLayout.workspace(client: .tools, identifier: name)
                     result = try await shellServiceOverride.execute(
                         command: legacyCommand ?? "",
                         workspace: workspace,
