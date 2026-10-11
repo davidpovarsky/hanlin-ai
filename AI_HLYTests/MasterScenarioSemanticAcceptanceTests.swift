@@ -327,11 +327,12 @@ struct MasterScenarioSemanticAcceptanceTests {
     }
 
     @Test("SH-03: Removing framework/symbol for one command in fixture package marks it unavailable with precise dependency reporting while other commands continue")
+    @MainActor
     func sh03MissingFrameworkReportsUnavailableWithDependencies() async throws {
         let registration = try IOSSystemRunner.registrationReport()
         let basePlistURL = URL(fileURLWithPath: registration.mainDictionaryPath)
         let rawPlistData = try Data(contentsOf: basePlistURL)
-        let rawObject = try PropertyListSerialization.propertyList(from: rawPlistData, options: [], format: nil)
+        let rawObject = try PropertyListSerialization.propertyList(from: rawPlistData, format: nil)
         let baseDictionary = try #require(rawObject as? [String: [String]])
 
         let tempDir = FileManager.default.temporaryDirectory.appendingPathComponent("sh03_fixture_\(UUID().uuidString)")
@@ -378,7 +379,7 @@ struct MasterScenarioSemanticAcceptanceTests {
         try Data("line one\nline two\n".utf8).write(to: workspace.appendingPathComponent("probe.txt"), options: .atomic)
 
         let shellTool = ExecuteShellCommandTool(shellServiceOverride: fixtureShell)
-        let toolContext = NativeToolExecutionContext(userText: "SH-03 dependency isolation test")
+        let toolContext = NativeToolExecutionContext(localeIdentifier: "en_US")
 
         // Invoking the broken command (`grep`) through ExecuteShellCommandTool fails with precise dependency reporting
         let grepToolResult = await shellTool.execute(
@@ -410,6 +411,7 @@ struct MasterScenarioSemanticAcceptanceTests {
     }
 
     @Test("SH-05: program=grep arguments=['alpha','sample.txt'] executes via production ShellRuntimeService and ExecuteShellCommandTool producing exact two alpha lines")
+    @MainActor
     func sh05GrepAlphaExactTwoLinesWithoutPathRequirement() async throws {
         let core = AppRuntimeCore.shared
         _ = try await core.ensureStarted(.shell)
@@ -447,7 +449,7 @@ struct MasterScenarioSemanticAcceptanceTests {
         let tool = ExecuteShellCommandTool(hostContext: hostContext)
         let toolResult = await tool.execute(
             argumentsJSON: #"{"program":"grep","arguments":["alpha","sample.txt"],"allow_network":false}"#,
-            context: NativeToolExecutionContext(userText: "grep alpha sample.txt")
+            context: NativeToolExecutionContext(localeIdentifier: "en_US")
         )
         #expect(!toolResult.isError)
         #expect(toolResult.output.contains("alpha line 1"))
@@ -457,6 +459,7 @@ struct MasterScenarioSemanticAcceptanceTests {
     }
 
     @Test("CMD-04: program=curl arguments=['${FIXTURE_BASE}/ok.json'] executes real ios_system curl against loopback fixture server returning marker=HANLIN_OK, answer=42, exitCode=0")
+    @MainActor
     func cmd04CurlFixtureBaseReturnsExpectedJSONAndZeroExitCode() async throws {
         let expectedJSON = #"{"marker":"HANLIN_OK","answer":42}"#
         let server = try LoopbackHTTPFixtureServer(responseBody: expectedJSON)
@@ -491,10 +494,10 @@ struct MasterScenarioSemanticAcceptanceTests {
         let server2 = try LoopbackHTTPFixtureServer(responseBody: expectedJSON)
         defer { server2.stop() }
         let okURL2 = "http://127.0.0.1:\(server2.port)/ok.json"
-        let tool = ExecuteShellCommandTool()
+        let tool = ExecuteShellCommandTool(hostContext: hostContext)
         let toolResult = await tool.execute(
             argumentsJSON: #"{"program":"curl","arguments":["-sS","\#(okURL2)"],"allow_network":true}"#,
-            context: NativeToolExecutionContext(userText: "curl ok.json")
+            context: NativeToolExecutionContext(localeIdentifier: "en_US")
         )
         #expect(!toolResult.isError)
         #expect(toolResult.output.contains("HANLIN_OK"))
@@ -503,13 +506,13 @@ struct MasterScenarioSemanticAcceptanceTests {
         // 3. Verify negative policy checks: network disabled & non-loopback HTTP forbidden
         let deniedNoNetwork = await tool.execute(
             argumentsJSON: #"{"program":"curl","arguments":["\#(okURL2)"],"allow_network":false}"#,
-            context: NativeToolExecutionContext(userText: "curl without network")
+            context: NativeToolExecutionContext(localeIdentifier: "en_US")
         )
         #expect(deniedNoNetwork.isError)
 
         let deniedRemoteHTTP = await tool.execute(
             argumentsJSON: #"{"program":"curl","arguments":["http://example.invalid/ok.json"],"allow_network":true}"#,
-            context: NativeToolExecutionContext(userText: "curl remote http")
+            context: NativeToolExecutionContext(localeIdentifier: "en_US")
         )
         #expect(deniedRemoteHTTP.isError)
     }
@@ -664,7 +667,7 @@ struct MasterScenarioSemanticAcceptanceTests {
         // Also verify ReadSkillResourceTool can read source.swift and report binary metadata for sample.xlsx
         HanlinSkillCatalog.shared.refreshFromStore()
         let session = AssistantCapabilitySession()
-        session.markSkillLoaded(descriptor.id)
+        session.recordSkillLoaded(id: descriptor.id, instructionText: descriptor.name)
         let swiftReadOutput = await ReadSkillResourceTool.execute(
             argumentsJSON: #"{"skill_id":"\#(descriptor.id.rawValue)","relative_path":"source.swift"}"#,
             session: session
@@ -730,7 +733,7 @@ struct MasterScenarioSemanticAcceptanceTests {
         // 3. Execute production ReadSkillResourceTool with both ./references/a.md and references/x/../a.md
         HanlinSkillCatalog.shared.refreshFromStore()
         let session = AssistantCapabilitySession()
-        session.markSkillLoaded(descriptor.id)
+        session.recordSkillLoaded(id: descriptor.id, instructionText: descriptor.name)
 
         let readDotSlash = await ReadSkillResourceTool.execute(
             argumentsJSON: #"{"skill_id":"\#(descriptor.id.rawValue)","relative_path":"./references/a.md"}"#,
@@ -875,8 +878,10 @@ struct MasterScenarioSemanticAcceptanceTests {
         #expect(cancelledChunks == ["First token"])
         #expect(controller.stopCallCount >= 1)
 
-        // 3. Verify CoreAILanguageModelProvider coexistence and availability reporting
-        let coreAIReport = await CoreAILanguageModelProvider.shared.availabilityReport()
-        #expect(coreAIReport.providerID == "apple-coreai-local")
+        // 3. Verify CoreAILanguageModelProvider coexistence alongside GGUF/LLM.swift
+        let coreAIDescriptor = CoreAIModelDescriptor(modelPath: modelFileURL, modelName: modelName, format: "aimodel", isSpecialized: true)
+        await #expect(throws: CoreAIModelError.self) {
+            try await CoreAILanguageModelProvider.shared.generate(descriptor: coreAIDescriptor, prompt: "Test") { _ in true }
+        }
     }
 }
