@@ -332,7 +332,11 @@ struct MasterScenarioSemanticAcceptanceTests {
         let registration = try IOSSystemRunner.registrationReport()
         let basePlistURL = URL(fileURLWithPath: registration.mainDictionaryPath)
         let rawPlistData = try Data(contentsOf: basePlistURL)
-        let rawObject = try PropertyListSerialization.propertyList(from: rawPlistData, format: nil)
+        let rawObject = try PropertyListSerialization.propertyList(
+            from: rawPlistData,
+            options: PropertyListSerialization.ReadOptions(0),
+            format: nil
+        )
         let baseDictionary = try #require(rawObject as? [String: [String]])
 
         let tempDir = FileManager.default.temporaryDirectory.appendingPathComponent("sh03_fixture_\(UUID().uuidString)")
@@ -387,8 +391,8 @@ struct MasterScenarioSemanticAcceptanceTests {
             context: toolContext
         )
         #expect(grepToolResult.isError)
-        #expect(grepToolResult.output.contains("Command 'grep' is unavailable"))
-        #expect(grepToolResult.output.contains("RemovedGrepFramework"))
+        #expect(grepToolResult.modelText.contains("Command 'grep' is unavailable"))
+        #expect(grepToolResult.modelText.contains("RemovedGrepFramework"))
 
         // Invoking unaffected commands (`cat` and `wc`) through the same ExecuteShellCommandTool & ShellRuntimeService succeeds
         let catToolResult = await shellTool.execute(
@@ -396,8 +400,8 @@ struct MasterScenarioSemanticAcceptanceTests {
             context: toolContext
         )
         #expect(!catToolResult.isError)
-        #expect(catToolResult.output.contains("line one"))
-        #expect(catToolResult.output.contains("line two"))
+        #expect(catToolResult.modelText.contains("line one"))
+        #expect(catToolResult.modelText.contains("line two"))
 
         let wcResult = try await fixtureShell.execute(
             tokens: ["wc", "-l", "probe.txt"],
@@ -452,10 +456,10 @@ struct MasterScenarioSemanticAcceptanceTests {
             context: NativeToolExecutionContext(localeIdentifier: "en_US")
         )
         #expect(!toolResult.isError)
-        #expect(toolResult.output.contains("alpha line 1"))
-        #expect(toolResult.output.contains("alpha line 2"))
-        #expect(!toolResult.output.contains("beta line"))
-        #expect(!toolResult.output.contains("gamma line"))
+        #expect(toolResult.modelText.contains("alpha line 1"))
+        #expect(toolResult.modelText.contains("alpha line 2"))
+        #expect(!toolResult.modelText.contains("beta line"))
+        #expect(!toolResult.modelText.contains("gamma line"))
     }
 
     @Test("CMD-04: program=curl arguments=['${FIXTURE_BASE}/ok.json'] executes real ios_system curl against loopback fixture server returning marker=HANLIN_OK, answer=42, exitCode=0")
@@ -500,8 +504,8 @@ struct MasterScenarioSemanticAcceptanceTests {
             context: NativeToolExecutionContext(localeIdentifier: "en_US")
         )
         #expect(!toolResult.isError)
-        #expect(toolResult.output.contains("HANLIN_OK"))
-        #expect(toolResult.output.contains("42"))
+        #expect(toolResult.modelText.contains("HANLIN_OK"))
+        #expect(toolResult.modelText.contains("42"))
 
         // 3. Verify negative policy checks: network disabled & non-loopback HTTP forbidden
         let deniedNoNetwork = await tool.execute(
@@ -667,7 +671,7 @@ struct MasterScenarioSemanticAcceptanceTests {
         // Also verify ReadSkillResourceTool can read source.swift and report binary metadata for sample.xlsx
         HanlinSkillCatalog.shared.refreshFromStore()
         let session = AssistantCapabilitySession()
-        session.recordSkillLoaded(id: descriptor.id, instructionText: descriptor.name)
+        session.recordSkillLoaded(id: descriptor.id, instructionText: descriptor.title.description)
         let swiftReadOutput = await ReadSkillResourceTool.execute(
             argumentsJSON: #"{"skill_id":"\#(descriptor.id.rawValue)","relative_path":"source.swift"}"#,
             session: session
@@ -733,7 +737,7 @@ struct MasterScenarioSemanticAcceptanceTests {
         // 3. Execute production ReadSkillResourceTool with both ./references/a.md and references/x/../a.md
         HanlinSkillCatalog.shared.refreshFromStore()
         let session = AssistantCapabilitySession()
-        session.recordSkillLoaded(id: descriptor.id, instructionText: descriptor.name)
+        session.recordSkillLoaded(id: descriptor.id, instructionText: descriptor.title.description)
 
         let readDotSlash = await ReadSkillResourceTool.execute(
             argumentsJSON: #"{"skill_id":"\#(descriptor.id.rawValue)","relative_path":"./references/a.md"}"#,
