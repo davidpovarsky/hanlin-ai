@@ -671,7 +671,7 @@ struct MasterScenarioSemanticAcceptanceTests {
         // Also verify ReadSkillResourceTool can read source.swift and report binary metadata for sample.xlsx
         HanlinSkillCatalog.shared.refreshFromStore()
         let session = AssistantCapabilitySession()
-        session.recordSkillLoaded(id: descriptor.id, instructionText: descriptor.title.description)
+        session.recordSkillLoaded(id: descriptor.id, instructionText: descriptor.title.preferredValue())
         let swiftReadOutput = await ReadSkillResourceTool.execute(
             argumentsJSON: #"{"skill_id":"\#(descriptor.id.rawValue)","relative_path":"source.swift"}"#,
             session: session
@@ -737,7 +737,7 @@ struct MasterScenarioSemanticAcceptanceTests {
         // 3. Execute production ReadSkillResourceTool with both ./references/a.md and references/x/../a.md
         HanlinSkillCatalog.shared.refreshFromStore()
         let session = AssistantCapabilitySession()
-        session.recordSkillLoaded(id: descriptor.id, instructionText: descriptor.title.description)
+        session.recordSkillLoaded(id: descriptor.id, instructionText: descriptor.title.preferredValue())
 
         let readDotSlash = await ReadSkillResourceTool.execute(
             argumentsJSON: #"{"skill_id":"\#(descriptor.id.rawValue)","relative_path":"./references/a.md"}"#,
