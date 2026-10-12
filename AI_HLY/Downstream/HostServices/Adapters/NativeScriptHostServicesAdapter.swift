@@ -247,14 +247,14 @@ public final class NativeScriptHostServicesAdapter: NSObject, @unchecked Sendabl
         payloadJSON: String,
         completion: @escaping (String?, String?) -> Void
     ) {
+        nonisolated(unsafe) let safeCompletion = completion
         guard let caller = context.appID else {
             DispatchQueue.main.async {
-                completion(nil, "Unauthorized: No active Mini App session context.")
+                safeCompletion(nil, "Unauthorized: No active Mini App session context.")
             }
             return
         }
         let ctx = context
-        nonisolated(unsafe) let safeCompletion = completion
         Task {
             do {
                 let canonical = HanlinHostCapabilityAuthority.canonicalCapabilityID(capability)
