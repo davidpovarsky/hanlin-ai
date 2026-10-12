@@ -603,7 +603,7 @@ def plan_affected_validation(
 
         sim_config = "Release" if "HanlinNativeScriptProductionE2ETests" in exact_test_selector else "Debug"
         step_outputs["simulator_configuration"] = sim_config
-        step_outputs["simulator_build_for_testing_args"] = f"-configuration {sim_config} -only-testing:{exact_test_selector}"
+        step_outputs["simulator_build_for_testing_args"] = f"-only-testing:{exact_test_selector}"
 
         skipped_expensive: Dict[str, str] = {
             item["name"]: f"suppressed by exact_test_selector '{exact_test_selector}'"

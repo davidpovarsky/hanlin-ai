@@ -678,7 +678,8 @@ class AffectedValidationPlannerTests(unittest.TestCase):
         self.assertFalse(plan.step_outputs["run_ipa_packaging"])
         self.assertFalse(plan.step_outputs["run_runtimecore_bundle"])
         self.assertEqual(plan.step_outputs["simulator_configuration"], "Release")
-        self.assertIn(f"-only-testing:{selector}", plan.step_outputs["simulator_build_for_testing_args"])
+        self.assertEqual(plan.step_outputs["simulator_build_for_testing_args"], f"-only-testing:{selector}")
+        self.assertNotIn("-configuration", plan.step_outputs["simulator_build_for_testing_args"])
 
     def test_exact_test_selector_routes_only_selected_unit_method(self) -> None:
         selector = "AI_HLYTests/HanlinUnifiedHostServicesTests/capabilityCheckWithPackageIdentityAndContextFallback"
@@ -698,6 +699,8 @@ class AffectedValidationPlannerTests(unittest.TestCase):
         self.assertFalse(plan.step_outputs["run_device_build"])
         self.assertFalse(plan.step_outputs["run_ipa_packaging"])
         self.assertEqual(plan.step_outputs["simulator_configuration"], "Debug")
+        self.assertEqual(plan.step_outputs["simulator_build_for_testing_args"], f"-only-testing:{selector}")
+        self.assertNotIn("-configuration", plan.step_outputs["simulator_build_for_testing_args"])
 
     def test_exact_test_selector_rejects_malformed_input(self) -> None:
         with self.assertRaises(planner.RoutingError) as ctx:

@@ -2538,7 +2538,16 @@ jobs:
           if [ "$has_tests" = "true" ] && [ "${{ inputs.nativescript_poc_only }}" != "true" ]; then
             if [ -n "$SIMULATOR_BUILD_FOR_TESTING_ARGS" ]; then
               # shellcheck disable=SC2086
+              skip_next=false
               for arg in $SIMULATOR_BUILD_FOR_TESTING_ARGS; do
+                if [ "$skip_next" = "true" ]; then
+                  skip_next=false
+                  continue
+                fi
+                if [ "$arg" = "-configuration" ]; then
+                  skip_next=true
+                  continue
+                fi
                 testing_scope_flags+=("$arg")
               done
             elif [ "$RUN_FULL_VALIDATION" = "true" ]; then
@@ -2731,7 +2740,16 @@ jobs:
           if [ "$has_tests" = "true" ] && [ "${{ inputs.nativescript_poc_only }}" != "true" ]; then
             build_actions=(build-for-testing)
             if [ -n "$SIMULATOR_BUILD_FOR_TESTING_ARGS" ]; then
+              skip_next=false
               for arg in $SIMULATOR_BUILD_FOR_TESTING_ARGS; do
+                if [ "$skip_next" = "true" ]; then
+                  skip_next=false
+                  continue
+                fi
+                if [ "$arg" = "-configuration" ]; then
+                  skip_next=true
+                  continue
+                fi
                 testing_scope_flags+=("$arg")
               done
             fi
