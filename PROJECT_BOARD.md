@@ -18,18 +18,12 @@ Potential improvements, features, optimizations, or architectural ideas.
 - **Node Worker ESM Resolution:** Node 22 exhibited a known worker loader internal assertion failure (`ERR_INTERNAL_ASSERTION: Unexpected module status 3`) on concurrent ESM worker resolution. Resolved cleanly in Node 24.5 (`@cablate/mcp-google-map` passes capability probing with exit code 0).
 - **Simulator Concurrency Gates:** In XCTest suites driving async agent loops, unbounded polling loops can cause test runner timeouts. Use bounded timeouts with exponential backoff.
 - **Authoritative Defect Identification:** The 6 test failures discovered in Pass 3 were previously mislabeled against scenario IDs SH-03, SH-05, CMD-04, ZIP-04, ZIP-07, ZIP-11. Their root causes were in `loadDescriptor` title propagation (`SkillStore.swift`), atomic rollback metadata preservation (`SkillStore.swift`), internal symlink policy acceptance (`HanlinArchivePolicy.swift`), dual-mode shell tool schema advertisement (`ExecuteShellCommandTool.swift`), obsolete path policy removal from smoke suite (`ShellRuntimeSmokeSuite.swift`), and raw command pipe execution / symlink reading (`HanlinUnifiedHostServicesAgentAcceptanceTests.swift`). All 6 have been fully fixed and verified.
-- **Embedded Result Qualification for Legacy Web View:** `HanlinEmbeddedResultResolver` requires the canonical handler identifier `"legacy.web:legacy_web_view"` and a non-nil `embeddedPayload` (`ownerID: "legacy.web"`) on `NativeToolResult` so `HanlinAISDKToolAdapter` computes `hasPayload: true` (`shouldPresent: true`) for `create_web_view`.
+- **Swift 6 Region Isolation on Completion Handlers:** When dispatching completion handlers from non-isolated methods to `DispatchQueue.main.async`, non-Sendable closures trigger `RegionIsolation::SendingRisksDataRace` unless aliased to `nonisolated(unsafe)` before any guard branch.
+- **Bash `set -u` Safe Array Expansion:** Expanding an empty array `"${arr[@]}"` under `set -u` aborts with `unbound variable`. Use `"${arr[@]+"${arr[@]}"}"` for portable, safe expansion.
 
 ## In Progress / Active Blockers
 
-- [ ] **Hanlin Final Closure & Authoritative Semantic Evidence Pipeline (Rescue Pass)**
-  - **Completed Locally (Awaiting Final `full_validation=true` CI Run):**
-    1. [x] Replaced imitation/simulation tests in `AI_HLYTests/MasterScenarioSemanticAcceptanceTests.swift` (`CHAT-24`, `SH-03`, `SH-05`, `CMD-04`, `ZIP-04`, `ZIP-07`, `ZIP-11`, `COREAI-06`) with real production-path execution tests.
-    2. [x] Audited all 493 scenarios in `docs/hanlin-platform/personal-runtime-completion/scenario-evidence-map.json` to eliminate generic `swift test` / `node --test` claims and fix `FINAL-01`..`FINAL-12` mappings.
-    3. [x] Made `Scripts/generate_acceptance_results.mjs` strictly fail-closed (`verifyXcresultProvenance`, removed `expectedTerminalState === 'Passed'`, removed layer normalization bypass, tightened `swift_test`/`node_tap`/`build_command`/`xctest`/`repository_audit` verifiers, and verified all 10 negative self-tests).
-    4. [x] Removed hardcoded `23` command count clamp in `Scripts/Runtime/validate_shell_acceptance.py` (`SH-01`) while preserving required command coverage.
-    5. [x] Fixed `Scripts/CI/stage_scriptui_fixtures.py` (`SIMULATOR_HOST_HOME` `Containers/Data/Application` path resolution), `LegacyToolPresentationAdapter.swift` + `APIManager+LegacyTools.swift` (`create_web_view` embedded card rendering), and `.github/workflows/build-ios26-unsigned-ipa.yml` (`timeout-minutes: 180`, explicit `full_validation` SwiftPM package tests).
-
+None.
 
 ## Planned / Todo
 
@@ -37,6 +31,11 @@ Potential improvements, features, optimizations, or architectural ideas.
 - [ ] (Future) Live external cloud model provider end-to-end integration when production credentials are configured.
 
 ## Done
+
+- [x] Hanlin Final Semantic Closure & Authoritative Evidence Pipeline (Rescue Pass)
+  - Implemented: 2026-10-12
+  - Commit/Run: `7b13713` / GitHub Actions run `38234823425` (Job `114762989410`, Artifact `11749751147`)
+  - Notes: Executed full downstream suite producing authentic `DownstreamTestsResult.xcresult` with 260/260 passing tests (0 failures). Verified all 8 production-path master scenario tests (`CHAT-24`, `SH-03`, `SH-05`, `CMD-04`, `ZIP-04`, `ZIP-07`, `ZIP-11`, `COREAI-06`). Built unsigned IPA in 28m2s (`0a6923621cd817ad9741905f6043a3254e37e9417fb94442d88af23c4976b533`). Generated fail-closed acceptance matrix (10 passing semantic negative self-tests): 397 PASSED (80.5%), 83 NOT_RUN_DEVICE (16.8%), 10 BLOCKED_EXTERNAL (2.0%), 0 FAILED.
 
 - [x] Pass 3 Apple Verification & Final Evidence Completion
   - Implemented: 2026-10-07
