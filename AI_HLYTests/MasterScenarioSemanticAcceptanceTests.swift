@@ -154,9 +154,22 @@ private final class MockLocalLLMController {
 struct MasterScenarioSemanticAcceptanceTests {
 
     private static func makeInMemoryModelContainer() throws -> ModelContainer {
-        let schema = Schema([AllModels.self, APIKeys.self])
-        let configuration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: true)
-        return try ModelContainer(for: schema, configurations: [configuration])
+        let configuration = ModelConfiguration(isStoredInMemoryOnly: true, cloudKitDatabase: .none)
+        return try ModelContainer(
+            for: ChatMessages.self,
+            APIKeys.self,
+            SearchKeys.self,
+            AllModels.self,
+            ChatRecords.self,
+            UserInfo.self,
+            PromptRepo.self,
+            KnowledgeRecords.self,
+            KnowledgeChunk.self,
+            MemoryArchive.self,
+            TranslationDic.self,
+            ToolKeys.self,
+            configurations: configuration
+        )
     }
 
     private static func buildValidOpenXMLWorkbookArchive(at url: URL) throws -> Data {
@@ -230,6 +243,7 @@ struct MasterScenarioSemanticAcceptanceTests {
                 supportsToolUse: false
             )
         )
+        context.insert(UserInfo())
         try context.save()
 
         let modelFileURL = getModelDirectory().appendingPathComponent("\(modelName).gguf")
@@ -784,6 +798,7 @@ struct MasterScenarioSemanticAcceptanceTests {
                 supportsToolUse: false
             )
         )
+        context.insert(UserInfo())
         try context.save()
 
         let modelFileURL = getModelDirectory().appendingPathComponent("\(modelName).gguf")
