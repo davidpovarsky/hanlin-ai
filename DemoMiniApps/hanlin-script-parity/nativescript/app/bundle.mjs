@@ -4,7 +4,19 @@
 
 console.log("[HanlinScriptParity] Initializing bundle...");
 
-const bridge = typeof HanlinNativeServicesBridge !== "undefined" ? HanlinNativeServicesBridge : null;
+if (typeof HanlinNativeServicesBridge === "undefined" && typeof NSClassFromString === "function") {
+  try {
+    const cls = NSClassFromString("HanlinNativeServicesBridge");
+    if (cls) {
+      if (typeof globalThis !== "undefined") globalThis.HanlinNativeServicesBridge = cls;
+      if (typeof global !== "undefined") global.HanlinNativeServicesBridge = cls;
+    }
+  } catch (e) {}
+}
+
+const bridge = (typeof HanlinNativeServicesBridge !== "undefined" && HanlinNativeServicesBridge)
+  || (typeof NSClassFromString === "function" ? NSClassFromString("HanlinNativeServicesBridge") : null)
+  || (typeof objc_getClass === "function" ? objc_getClass("HanlinNativeServicesBridge") : null);
 const environment = NSProcessInfo.processInfo.environment;
 const executionMode = environment.objectForKey("HANLIN_EXECUTION_MODE");
 const isHeadlessAction = executionMode && executionMode.toString() === "headless-action";
