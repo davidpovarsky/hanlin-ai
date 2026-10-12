@@ -818,6 +818,7 @@
 /* Begin PBXShellScriptBuildPhase section */
 		A10000000000000000000051 /* Generate NativeScript metadata */ = {
 			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
 			files = (
 			);

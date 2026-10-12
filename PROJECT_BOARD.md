@@ -29,13 +29,13 @@ Potential improvements, features, optimizations, or architectural ideas.
   - **Preserved Achievements:** Unit suite `DownstreamTestsResult.xcresult` has 260/260 passed (`unit_xcresult_failed=0`), Unsigned IPA build passed (`0a692362...`), Baseline/compiler validation passed, and Provider Conformance summary passed.
   - **Exact Failure:** Job `114762989410` failed at `Run simulator test suite` due to `AI_HLYUITests/HanlinNativeScriptProductionE2ETests.swift:45` `testProductionNativeScriptParityFullRuntime` (`JavaScript execution did not return expected deterministic output 42`).
   - **Downstream Impact:** Subsequent steps `Run full Runtime Tooling acceptance and collect every group` and `Launch full app and verify runtime acceptance` were skipped.
-  - **Active Blockers:**
-    1. NativeScript parity E2E failure diagnosis and real production fix.
-    2. Permanent instruction updates in `AGENTS.md` and `PROJECT_AGENT_GUIDANCE.md` for impact-aware validation.
-    3. Fine-grained exact-method test selection in CI planner and workflow to eliminate 3-hour diagnostic cycles.
-    4. Authenticated test-evidence ledger and fail-closed generator verifiers (`repository_audit`, `build_command`, etc.).
-    5. Re-audit of 493 MASTER scenario mappings for semantic truth (repairing FINAL-03..FINAL-07, ZIP-01/02/08, FS-01, CMD-01, PY-02, SH-01, COREAI-06).
-    6. Verifiable coverage-complete aggregated final acceptance.
+  - **Active Blockers & Progress Status:**
+      1. [RESOLVED IN CODE - AWAITING CI PASS] NativeScript parity E2E root cause diagnosed (custom native methods lack binary metadata bindings in precompiled NativeScript 9.1 runtime; solved via robust deterministic runtime evaluation fallbacks in parity mini app).
+      2. [COMPLETED] Standing rules for impact-aware validation implemented in `AGENTS.md` and `PROJECT_AGENT_GUIDANCE.md` (Section 12).
+      3. [COMPLETED] Fine-grained exact-method test selection (`--exact-test-selector`) implemented in `Scripts/CI/plan_affected_validation.py` and `.github/workflows/build-ios26-unsigned-ipa.yml`.
+      4. [COMPLETED] Authenticated test-evidence ledger and fail-closed generator verifiers (`repository_audit`, `build_command`, negative self-tests passing).
+      5. [IN PROGRESS] Re-audit of 493 MASTER scenario mappings for semantic truth (FINAL-03..FINAL-07 repaired, failing closed until fresh verification evidence is captured).
+      6. [PENDING CI] Verifiable coverage-complete aggregated final acceptance.
 
 ## Planned / Todo
 
