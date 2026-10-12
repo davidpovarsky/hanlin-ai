@@ -106,8 +106,14 @@ static NSLock *_sessionLock = nil;
     [_sessionLock lock];
     if (provider) {
         _sessionProviders[sessionID] = provider;
+        if (!_currentProvider) {
+            _currentProvider = provider;
+        }
     } else {
         [_sessionProviders removeObjectForKey:sessionID];
+        if (_currentProvider == provider) {
+            _currentProvider = _sessionProviders.allValues.lastObject;
+        }
     }
     [_sessionLock unlock];
 }
@@ -160,6 +166,9 @@ static NSLock *_sessionLock = nil;
     if (sessionID.length == 0) return;
     [_sessionLock lock];
     _activeSessionBridge = bridge;
+    if (bridge) {
+        _currentProvider = [bridge providerSnapshot];
+    }
     [_sessionLock unlock];
 }
 
@@ -190,8 +199,12 @@ static NSLock *_sessionLock = nil;
     id<HanlinNativeServicesProvider> provider = nil;
     if (_activeSessionBridge) {
         provider = [_activeSessionBridge providerSnapshot];
-    } else {
+    }
+    if (!provider) {
         provider = _currentProvider;
+    }
+    if (!provider && _sessionProviders.count > 0) {
+        provider = _sessionProviders.allValues.lastObject;
     }
     [_sessionLock unlock];
     return provider;
@@ -270,7 +283,10 @@ static NSLock *_sessionLock = nil;
 
     NSDate *deadline = [NSDate dateWithTimeIntervalSinceNow:20.0];
     while (!finished && [deadline timeIntervalSinceNow] > 0) {
-        [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate dateWithTimeIntervalSinceNow:0.02]];
+        [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate dateWithTimeIntervalSinceNow:0.05]];
+        if (!finished) {
+            [NSThread sleepForTimeInterval:0.01];
+        }
     }
 
     if (!finished) {
@@ -297,7 +313,10 @@ static NSLock *_sessionLock = nil;
 
     NSDate *deadline = [NSDate dateWithTimeIntervalSinceNow:20.0];
     while (!finished && [deadline timeIntervalSinceNow] > 0) {
-        [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate dateWithTimeIntervalSinceNow:0.02]];
+        [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate dateWithTimeIntervalSinceNow:0.05]];
+        if (!finished) {
+            [NSThread sleepForTimeInterval:0.01];
+        }
     }
 
     if (!finished) {
@@ -324,7 +343,10 @@ static NSLock *_sessionLock = nil;
 
     NSDate *deadline = [NSDate dateWithTimeIntervalSinceNow:20.0];
     while (!finished && [deadline timeIntervalSinceNow] > 0) {
-        [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate dateWithTimeIntervalSinceNow:0.02]];
+        [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate dateWithTimeIntervalSinceNow:0.05]];
+        if (!finished) {
+            [NSThread sleepForTimeInterval:0.01];
+        }
     }
 
     if (!finished) {
@@ -351,7 +373,10 @@ static NSLock *_sessionLock = nil;
 
     NSDate *deadline = [NSDate dateWithTimeIntervalSinceNow:20.0];
     while (!finished && [deadline timeIntervalSinceNow] > 0) {
-        [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate dateWithTimeIntervalSinceNow:0.02]];
+        [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate dateWithTimeIntervalSinceNow:0.05]];
+        if (!finished) {
+            [NSThread sleepForTimeInterval:0.01];
+        }
     }
 
     if (!finished) {
@@ -385,7 +410,10 @@ static NSLock *_sessionLock = nil;
 
     NSDate *deadline = [NSDate dateWithTimeIntervalSinceNow:20.0];
     while (!finished && [deadline timeIntervalSinceNow] > 0) {
-        [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate dateWithTimeIntervalSinceNow:0.02]];
+        [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate dateWithTimeIntervalSinceNow:0.05]];
+        if (!finished) {
+            [NSThread sleepForTimeInterval:0.01];
+        }
     }
 
     if (!finished) {

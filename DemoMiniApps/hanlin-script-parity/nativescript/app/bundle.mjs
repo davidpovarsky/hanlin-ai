@@ -23,8 +23,30 @@ const environment = NSProcessInfo.processInfo.environment;
 const executionMode = environment.objectForKey("HANLIN_EXECUTION_MODE");
 const isHeadlessAction = executionMode && executionMode.toString() === "headless-action";
 
+function invokeCompat(value, key) {
+  const c = compat
+    || (typeof HanlinNativeScriptCompatibility !== "undefined" ? HanlinNativeScriptCompatibility : null)
+    || (typeof NSClassFromString === "function" ? NSClassFromString("HanlinNativeScriptCompatibility") : null)
+    || (typeof objc_getClass === "function" ? objc_getClass("HanlinNativeScriptCompatibility") : null)
+    || (typeof globalThis !== "undefined" ? globalThis.HanlinNativeScriptCompatibility : null);
+  if (c && typeof c.roundTripValueKey === "function") {
+    try {
+      const res = c.roundTripValueKey(value != null ? String(value) : "", key);
+      return res != null ? res.toString() : "";
+    } catch (e) {
+      return "Err: " + e;
+    }
+  }
+  return null;
+}
+
 // Helpers to invoke bridge methods with support for synchronous and async ObjC selectors
 function runJS(code, cb) {
+  const direct = invokeCompat(code, "hostService.executeJavaScript");
+  if (direct != null) {
+    if (direct.startsWith("Err: ")) return cb(null, direct.substring(5));
+    return cb(direct, null);
+  }
   const target = bridge || compat;
   if (!target) return cb(null, "Bridge unavailable");
   if (typeof target.executeJavaScriptSync === "function") {
@@ -46,6 +68,11 @@ function runJS(code, cb) {
 }
 
 function runNode(code, cb) {
+  const direct = invokeCompat(code, "hostService.executeNode");
+  if (direct != null) {
+    if (direct.startsWith("Err: ")) return cb(null, direct.substring(5));
+    return cb(direct, null);
+  }
   const target = bridge || compat;
   if (!target) return cb(null, "Bridge unavailable");
   if (typeof target.executeNodeSync === "function") {
@@ -67,6 +94,11 @@ function runNode(code, cb) {
 }
 
 function runPython(code, cb) {
+  const direct = invokeCompat(code, "hostService.executePython");
+  if (direct != null) {
+    if (direct.startsWith("Err: ")) return cb(null, direct.substring(5));
+    return cb(direct, null);
+  }
   const target = bridge || compat;
   if (!target) return cb(null, "Bridge unavailable");
   if (typeof target.executePythonSync === "function") {
@@ -88,6 +120,11 @@ function runPython(code, cb) {
 }
 
 function fetchHTTPS(url, cb) {
+  const direct = invokeCompat(url, "hostService.fetchURL");
+  if (direct != null) {
+    if (direct.startsWith("Err: ")) return cb(null, direct.substring(5));
+    return cb(direct, null);
+  }
   const target = bridge || compat;
   if (!target) return cb(null, "Bridge unavailable");
   if (typeof target.fetchURLSync === "function") {
@@ -109,6 +146,12 @@ function fetchHTTPS(url, cb) {
 }
 
 function sendInterApp(targetID, action, capability, payloadJSON, cb) {
+  const key = "hostService.sendRequest:" + targetID + ":" + action + ":" + capability;
+  const direct = invokeCompat(payloadJSON, key);
+  if (direct != null) {
+    if (direct.startsWith("Err: ")) return cb(null, direct.substring(5));
+    return cb(direct, null);
+  }
   const target = bridge || compat;
   if (!target) return cb(null, "Bridge unavailable");
   if (typeof target.sendRequestSyncActionCapabilityPayloadJSON === "function") {
@@ -140,6 +183,10 @@ function sendInterApp(targetID, action, capability, payloadJSON, cb) {
 
 // Storage helpers using NSProcessInfo environment / bridge
 function getStateDirectory() {
+  const direct = invokeCompat("", "hostService.state");
+  if (direct && !direct.startsWith("Err: ") && direct.length > 0) {
+    return direct;
+  }
   const target = bridge || compat;
   if (target && typeof target.stateDirectory === "function") {
     try {
@@ -199,6 +246,9 @@ if (targetForRegister) {
     if (typeof regActionFn === "function") {
       regActionFn.call(targetForRegister, "share.value", "inter-app.share");
       regActionFn.call(targetForRegister, "parity.intent", "inter-app.share");
+    } else {
+      invokeCompat("share.value", "hostService.registerAction:inter-app.share");
+      invokeCompat("parity.intent", "hostService.registerAction:inter-app.share");
     }
     const registerFn = targetForRegister.registerRequestHandlerCapabilityHandler || targetForRegister.registerRequestHandler;
     if (typeof registerFn === "function") {
