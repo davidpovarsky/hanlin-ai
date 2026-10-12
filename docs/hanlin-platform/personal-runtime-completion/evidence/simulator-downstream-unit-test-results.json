@@ -2,7 +2,7 @@
   "devices": [
     {
       "architecture": "arm64",
-      "deviceId": "D2B249EB-2AC1-445A-BE5C-E80D6FBCCDF5",
+      "deviceId": "C7C9EECC-EE9F-4407-8D79-E3307A01AD3F",
       "deviceName": "iPad mini (A17 Pro)",
       "modelName": "iPad mini (A17 Pro)",
       "osBuildNumber": "24A434",
@@ -18,8 +18,8 @@
             {
               "children": [
                 {
-                  "duration": "0.23s",
-                  "durationInSeconds": 0.2312690019607544,
+                  "duration": "0.081s",
+                  "durationInSeconds": 0.08134305477142334,
                   "name": "testFlow10_InstalledPackageProviderExecutionPerformance()",
                   "nodeIdentifier": "HanlinRuntimePerformanceTests/testFlow10_InstalledPackageProviderExecutionPerformance()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinRuntimePerformanceTests/testFlow10_InstalledPackageProviderExecutionPerformance",
@@ -27,8 +27,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "11s",
-                  "durationInSeconds": 11.917888045310974,
+                  "duration": "9s",
+                  "durationInSeconds": 9.272785902023315,
                   "name": "testFlow4_JavaScriptCoreInitializationPerformance()",
                   "nodeIdentifier": "HanlinRuntimePerformanceTests/testFlow4_JavaScriptCoreInitializationPerformance()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinRuntimePerformanceTests/testFlow4_JavaScriptCoreInitializationPerformance",
@@ -36,8 +36,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.16s",
-                  "durationInSeconds": 0.16211092472076416,
+                  "duration": "0.072s",
+                  "durationInSeconds": 0.07235598564147949,
                   "name": "testFlow5_JavaScriptCoreDeterministicExecutionPerformance()",
                   "nodeIdentifier": "HanlinRuntimePerformanceTests/testFlow5_JavaScriptCoreDeterministicExecutionPerformance()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinRuntimePerformanceTests/testFlow5_JavaScriptCoreDeterministicExecutionPerformance",
@@ -45,8 +45,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.027s",
-                  "durationInSeconds": 0.02656996250152588,
+                  "duration": "0.017s",
+                  "durationInSeconds": 0.01666104793548584,
                   "name": "testFlow6_QuickJSInitializationPerformance()",
                   "nodeIdentifier": "HanlinRuntimePerformanceTests/testFlow6_QuickJSInitializationPerformance()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinRuntimePerformanceTests/testFlow6_QuickJSInitializationPerformance",
@@ -54,8 +54,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.24s",
-                  "durationInSeconds": 0.24413394927978516,
+                  "duration": "0.012s",
+                  "durationInSeconds": 0.012350082397460938,
                   "name": "testFlow7_QuickJSDeterministicExecutionPerformance()",
                   "nodeIdentifier": "HanlinRuntimePerformanceTests/testFlow7_QuickJSDeterministicExecutionPerformance()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinRuntimePerformanceTests/testFlow7_QuickJSDeterministicExecutionPerformance",
@@ -63,8 +63,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.025s",
-                  "durationInSeconds": 0.02455604076385498,
+                  "duration": "0.018s",
+                  "durationInSeconds": 0.017556071281433105,
                   "name": "testFlow8_MultiEngineRuntimeSwitchPerformance()",
                   "nodeIdentifier": "HanlinRuntimePerformanceTests/testFlow8_MultiEngineRuntimeSwitchPerformance()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinRuntimePerformanceTests/testFlow8_MultiEngineRuntimeSwitchPerformance",
@@ -72,8 +72,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.11s",
-                  "durationInSeconds": 0.1111830472946167,
+                  "duration": "0.051s",
+                  "durationInSeconds": 0.05084490776062012,
                   "name": "testFlow9_DeterministicPackageStoreImportPerformance()",
                   "nodeIdentifier": "HanlinRuntimePerformanceTests/testFlow9_DeterministicPackageStoreImportPerformance()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinRuntimePerformanceTests/testFlow9_DeterministicPackageStoreImportPerformance",
@@ -81,8 +81,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.38s",
-                  "durationInSeconds": 0.3849400281906128,
+                  "duration": "0.26s",
+                  "durationInSeconds": 0.2610769271850586,
                   "name": "testRuntimeMemoryStabilityUnderRepeatedExecutionCycles()",
                   "nodeIdentifier": "HanlinRuntimePerformanceTests/testRuntimeMemoryStabilityUnderRepeatedExecutionCycles()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinRuntimePerformanceTests/testRuntimeMemoryStabilityUnderRepeatedExecutionCycles",
@@ -98,8 +98,8 @@
             {
               "children": [
                 {
-                  "duration": "17s",
-                  "durationInSeconds": 17.297818899154663,
+                  "duration": "12s",
+                  "durationInSeconds": 12.817944049835205,
                   "name": "Conversation A runs the complete runtime chain through the production loop",
                   "nodeIdentifier": "AgentRuntimeConversationAcceptanceTests/successfulRuntimeChain()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentRuntimeConversationAcceptanceTests/successfulRuntimeChain()",
@@ -107,8 +107,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.51s",
-                  "durationInSeconds": 0.5080060958862305,
+                  "duration": "0.36s",
+                  "durationInSeconds": 0.3616218566894531,
                   "name": "Conversation B records one failed tool and recovers in the same completed run",
                   "nodeIdentifier": "AgentRuntimeConversationAcceptanceTests/recoversAfterRejectedShellCall()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentRuntimeConversationAcceptanceTests/recoversAfterRejectedShellCall()",
@@ -116,8 +116,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "13s",
-                  "durationInSeconds": 13.995256185531616,
+                  "duration": "12s",
+                  "durationInSeconds": 12.03743314743042,
                   "name": "Conversation C preserves every advertised runtime parameter",
                   "nodeIdentifier": "AgentRuntimeConversationAcceptanceTests/runtimeParameters()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentRuntimeConversationAcceptanceTests/runtimeParameters()",
@@ -125,8 +125,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.49s",
-                  "durationInSeconds": 0.4854581356048584,
+                  "duration": "0.45s",
+                  "durationInSeconds": 0.4493272304534912,
                   "name": "Malformed calls fail semantically and a later corrected call still completes",
                   "nodeIdentifier": "AgentRuntimeConversationAcceptanceTests/malformedCallsRecover()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentRuntimeConversationAcceptanceTests/malformedCallsRecover()",
@@ -134,8 +134,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.19s",
-                  "durationInSeconds": 0.19158577919006348,
+                  "duration": "0.22s",
+                  "durationInSeconds": 0.21685385704040527,
                   "name": "Production code skill loads local python and completes in the same user turn without extra nudge",
                   "nodeIdentifier": "AgentRuntimeConversationAcceptanceTests/productionCodeSkillLocalPythonCompletesSameUserTurn()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentRuntimeConversationAcceptanceTests/productionCodeSkillLocalPythonCompletesSameUserTurn()",
@@ -143,8 +143,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.2s",
-                  "durationInSeconds": 0.20374608039855957,
+                  "duration": "0.29s",
+                  "durationInSeconds": 0.29457712173461914,
                   "name": "Production tool failure renders error card and recovers in same turn",
                   "nodeIdentifier": "AgentRuntimeConversationAcceptanceTests/productionToolFailureRecoversAndAnswersSameTurn()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentRuntimeConversationAcceptanceTests/productionToolFailureRecoversAndAnswersSameTurn()",
@@ -152,8 +152,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.073s",
-                  "durationInSeconds": 0.0733788013458252,
+                  "duration": "0.079s",
+                  "durationInSeconds": 0.07932710647583008,
                   "name": "Cancellation during agent run cancels coordinator and marks run cancelled",
                   "nodeIdentifier": "AgentRuntimeConversationAcceptanceTests/cancelDuringAgentWorkStopsAllLaterToolExecution()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentRuntimeConversationAcceptanceTests/cancelDuringAgentWorkStopsAllLaterToolExecution()",
@@ -161,8 +161,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.22s",
-                  "durationInSeconds": 0.21750903129577637,
+                  "duration": "0.13s",
+                  "durationInSeconds": 0.12796497344970703,
                   "name": "Starting a new run cancels old run without ghost work",
                   "nodeIdentifier": "AgentRuntimeConversationAcceptanceTests/startingNewRunCancelsOldRunWithoutGhostWork()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentRuntimeConversationAcceptanceTests/startingNewRunCancelsOldRunWithoutGhostWork()",
@@ -170,8 +170,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.016s",
-                  "durationInSeconds": 0.015659093856811523,
+                  "duration": "0.0085s",
+                  "durationInSeconds": 0.008482933044433594,
                   "name": "Terminal diagnostics are immutable and reject late mutations across all mutation methods",
                   "nodeIdentifier": "AgentRuntimeConversationAcceptanceTests/terminalDiagnosticsAreImmutable()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentRuntimeConversationAcceptanceTests/terminalDiagnosticsAreImmutable()",
@@ -179,8 +179,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.046s",
-                  "durationInSeconds": 0.045908212661743164,
+                  "duration": "0.053s",
+                  "durationInSeconds": 0.05264711380004883,
                   "name": "Unexpected SDK stream end without terminal event marks diagnostics as failed and throws error",
                   "nodeIdentifier": "AgentRuntimeConversationAcceptanceTests/unexpectedSDKStreamEndIsFailureNotCompleted()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentRuntimeConversationAcceptanceTests/unexpectedSDKStreamEndIsFailureNotCompleted()",
@@ -188,8 +188,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.17s",
-                  "durationInSeconds": 0.17224574089050293,
+                  "duration": "0.19s",
+                  "durationInSeconds": 0.1868600845336914,
                   "name": "Round order uses exact SDK step numbers starting at zero",
                   "nodeIdentifier": "AgentRuntimeConversationAcceptanceTests/roundOrderUsesExactSDKStepNumbers()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentRuntimeConversationAcceptanceTests/roundOrderUsesExactSDKStepNumbers()",
@@ -197,8 +197,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.089s",
-                  "durationInSeconds": 0.08859801292419434,
+                  "duration": "0.09s",
+                  "durationInSeconds": 0.08967709541320801,
                   "name": "Diagnostics capture actual continuation request body and headers",
                   "nodeIdentifier": "AgentRuntimeConversationAcceptanceTests/diagnosticsCaptureActualContinuationRequest()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentRuntimeConversationAcceptanceTests/diagnosticsCaptureActualContinuationRequest()",
@@ -215,7 +215,7 @@
               "children": [
                 {
                   "duration": "0.00028s",
-                  "durationInSeconds": 0.0002770423889160156,
+                  "durationInSeconds": 0.0002808570861816406,
                   "name": "Skill Catalog registration and instruction resolution",
                   "nodeIdentifier": "AgentSkillsExposureTests/skillCatalogRegistration()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentSkillsExposureTests/skillCatalogRegistration()",
@@ -223,8 +223,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.00017s",
-                  "durationInSeconds": 0.0001709461212158203,
+                  "duration": "0.00013s",
+                  "durationInSeconds": 0.00012993812561035156,
                   "name": "Skill Index prompt generation produces compact markdown index",
                   "nodeIdentifier": "AgentSkillsExposureTests/skillIndexPrompt()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentSkillsExposureTests/skillIndexPrompt()",
@@ -232,8 +232,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.00047s",
-                  "durationInSeconds": 0.00046515464782714844,
+                  "duration": "0.00088s",
+                  "durationInSeconds": 0.0008771419525146484,
                   "name": "Tool exposure planner enforces byte budget and defers overflow tools",
                   "nodeIdentifier": "AgentSkillsExposureTests/toolExposurePlannerBudget()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentSkillsExposureTests/toolExposurePlannerBudget()",
@@ -241,8 +241,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.00013s",
-                  "durationInSeconds": 0.00013303756713867188,
+                  "duration": "0.00025s",
+                  "durationInSeconds": 0.00025391578674316406,
                   "name": "AssistantCapabilitySession isolates turns and manages tool exposure",
                   "nodeIdentifier": "AgentSkillsExposureTests/capabilitySessionIsolation()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentSkillsExposureTests/capabilitySessionIsolation()",
@@ -250,8 +250,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.00065s",
-                  "durationInSeconds": 0.0006539821624755859,
+                  "duration": "0.0002s",
+                  "durationInSeconds": 0.00019598007202148438,
                   "name": "LoadSkillTool execution loads instructions, exposes tools and reports deferred",
                   "nodeIdentifier": "AgentSkillsExposureTests/loadSkillToolExecution()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentSkillsExposureTests/loadSkillToolExecution()",
@@ -259,8 +259,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.0029s",
-                  "durationInSeconds": 0.0029070377349853516,
+                  "duration": "0.0019s",
+                  "durationInSeconds": 0.0019412040710449219,
                   "name": "ToolSearchTool searches metadata, exposes matching tools and formats response",
                   "nodeIdentifier": "AgentSkillsExposureTests/toolSearchToolExecution()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentSkillsExposureTests/toolSearchToolExecution()",
@@ -268,8 +268,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.0021s",
-                  "durationInSeconds": 0.002087831497192383,
+                  "duration": "0.0023s",
+                  "durationInSeconds": 0.002257823944091797,
                   "name": "ReadToolResultTool supports offset and limit pagination over BoundedToolResultStore",
                   "nodeIdentifier": "AgentSkillsExposureTests/readToolResultToolPagination()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentSkillsExposureTests/readToolResultToolPagination()",
@@ -277,8 +277,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.0014s",
-                  "durationInSeconds": 0.001432180404663086,
+                  "duration": "0.0018s",
+                  "durationInSeconds": 0.0018489360809326172,
                   "name": "Production Skill catalog synchronizes system and canonical skills without acceptance bootstrap",
                   "nodeIdentifier": "AgentSkillsExposureTests/productionSkillCatalogSynchronization()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentSkillsExposureTests/productionSkillCatalogSynchronization()",
@@ -286,8 +286,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.00029s",
-                  "durationInSeconds": 0.0002887248992919922,
+                  "duration": "0.00018s",
+                  "durationInSeconds": 0.00017786026000976562,
                   "name": "LoadSkill propagates instructions and tool hints into session context",
                   "nodeIdentifier": "AgentSkillsExposureTests/loadSkillInstructionContextPropagation()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentSkillsExposureTests/loadSkillInstructionContextPropagation()",
@@ -295,8 +295,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.026s",
-                  "durationInSeconds": 0.02550792694091797,
+                  "duration": "0.018s",
+                  "durationInSeconds": 0.018212080001831055,
                   "name": "Full SDK flow: load_skill -> active tools change -> canonical tool call -> native continuation -> final answer",
                   "nodeIdentifier": "AgentSkillsExposureTests/fullSDKSkillToToolFlow()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentSkillsExposureTests/fullSDKSkillToToolFlow()",
@@ -312,8 +312,8 @@
             {
               "children": [
                 {
-                  "duration": "0.13s",
-                  "durationInSeconds": 0.12655901908874512,
+                  "duration": "0.16s",
+                  "durationInSeconds": 0.16237998008728027,
                   "name": "AppleFoundationModelCapability reports typed state without crashing",
                   "nodeIdentifier": "AppleLocalProvidersTests/testCapabilityDetection()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AppleLocalProvidersTests/testCapabilityDetection()",
@@ -321,8 +321,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.00046s",
-                  "durationInSeconds": 0.00045990943908691406,
+                  "duration": "0.0011s",
+                  "durationInSeconds": 0.001130819320678711,
                   "name": "AppleFoundationModelsProvider throws typed unavailable on non-compatible host",
                   "nodeIdentifier": "AppleLocalProvidersTests/testFoundationModelProviderUnavailable()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AppleLocalProvidersTests/testFoundationModelProviderUnavailable()",
@@ -330,8 +330,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.00099s",
-                  "durationInSeconds": 0.0009942054748535156,
+                  "duration": "0.0028s",
+                  "durationInSeconds": 0.002796173095703125,
                   "name": "AppleFoundationModelsProvider rejects images when model does not support multimodal",
                   "nodeIdentifier": "AppleLocalProvidersTests/testFoundationModelProviderRejectsImagesWhenNonMultimodal()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AppleLocalProvidersTests/testFoundationModelProviderRejectsImagesWhenNonMultimodal()",
@@ -339,8 +339,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.00035s",
-                  "durationInSeconds": 0.00034880638122558594,
+                  "duration": "0.00038s",
+                  "durationInSeconds": 0.0003838539123535156,
                   "name": "AppleFoundationModelsProvider streams tokens in order via injected backend",
                   "nodeIdentifier": "AppleLocalProvidersTests/testFoundationModelProviderStreamingViaBackend()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AppleLocalProvidersTests/testFoundationModelProviderStreamingViaBackend()",
@@ -348,8 +348,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.00024s",
-                  "durationInSeconds": 0.00023698806762695312,
+                  "duration": "0.00022s",
+                  "durationInSeconds": 0.00021600723266601562,
                   "name": "CoreAI provider rejects non-existent model file",
                   "nodeIdentifier": "AppleLocalProvidersTests/testCoreAINonExistentFile()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AppleLocalProvidersTests/testCoreAINonExistentFile()",
@@ -357,8 +357,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.0019s",
-                  "durationInSeconds": 0.0019321441650390625,
+                  "duration": "0.01s",
+                  "durationInSeconds": 0.01003718376159668,
                   "name": "CoreAI provider rejects invalid file format",
                   "nodeIdentifier": "AppleLocalProvidersTests/testCoreAIInvalidFormat()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AppleLocalProvidersTests/testCoreAIInvalidFormat()",
@@ -366,8 +366,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.0011s",
-                  "durationInSeconds": 0.0011410713195800781,
+                  "duration": "0.002s",
+                  "durationInSeconds": 0.0019512176513671875,
                   "name": "CoreAI provider rejects empty model file container",
                   "nodeIdentifier": "AppleLocalProvidersTests/testCoreAIEmptyModelFileRejected()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AppleLocalProvidersTests/testCoreAIEmptyModelFileRejected()",
@@ -375,8 +375,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.0014s",
-                  "durationInSeconds": 0.0013611316680908203,
+                  "duration": "0.0024s",
+                  "durationInSeconds": 0.002446889877319336,
                   "name": "CoreAI provider requires official dependency and reports blockedDependency on valid container",
                   "nodeIdentifier": "AppleLocalProvidersTests/testCoreAIGenerateThrowsBlockedDependency()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AppleLocalProvidersTests/testCoreAIGenerateThrowsBlockedDependency()",
@@ -392,8 +392,8 @@
             {
               "children": [
                 {
-                  "duration": "0.044s",
-                  "durationInSeconds": 0.0435481071472168,
+                  "duration": "0.049s",
+                  "durationInSeconds": 0.04850316047668457,
                   "name": "Native app projection is stable and rejects invalid identity",
                   "nodeIdentifier": "CanonicalAdapterTests/nativeApplicationProjection()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/CanonicalAdapterTests/nativeApplicationProjection()",
@@ -401,8 +401,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.00053s",
-                  "durationInSeconds": 0.0005321502685546875,
+                  "duration": "0.00023s",
+                  "durationInSeconds": 0.00022721290588378906,
                   "name": "ChatCard entry point projects to canonical embeddedResult",
                   "nodeIdentifier": "CanonicalAdapterTests/chatCardProjectsToEmbeddedResult()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/CanonicalAdapterTests/chatCardProjectsToEmbeddedResult()",
@@ -410,8 +410,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.0084s",
-                  "durationInSeconds": 0.00838923454284668,
+                  "duration": "0.008s",
+                  "durationInSeconds": 0.007998943328857422,
                   "name": "Built-in canonical registrations validate cleanly and discover",
                   "nodeIdentifier": "CanonicalAdapterTests/builtinCanonicalRegistrations()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/CanonicalAdapterTests/builtinCanonicalRegistrations()",
@@ -419,8 +419,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.00029s",
-                  "durationInSeconds": 0.0002918243408203125,
+                  "duration": "0.00019s",
+                  "durationInSeconds": 0.0001881122589111328,
                   "name": "NativeBuiltinRuntimeBinding resolves canonical tool IDs and card handlers",
                   "nodeIdentifier": "CanonicalAdapterTests/builtinRuntimeBindings()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/CanonicalAdapterTests/builtinRuntimeBindings()",
@@ -428,8 +428,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.00089s",
-                  "durationInSeconds": 0.0008943080902099609,
+                  "duration": "0.00035s",
+                  "durationInSeconds": 0.0003540515899658203,
                   "name": "Native app modules derive manifest and capabilities from canonical descriptor",
                   "nodeIdentifier": "CanonicalAdapterTests/appModulesDeriveFromCanonicalDescriptor()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/CanonicalAdapterTests/appModulesDeriveFromCanonicalDescriptor()",
@@ -437,8 +437,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.00037s",
-                  "durationInSeconds": 0.000370025634765625,
+                  "duration": "0.00018s",
+                  "durationInSeconds": 0.00017905235290527344,
                   "name": "Native capability projection maps every supported capability and reports explicit diagnostics for unsupported IDs",
                   "nodeIdentifier": "CanonicalAdapterTests/capabilityProjectionMappingAndDiagnostics()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/CanonicalAdapterTests/capabilityProjectionMappingAndDiagnostics()",
@@ -446,8 +446,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.00019s",
-                  "durationInSeconds": 0.000186920166015625,
+                  "duration": "0.00018s",
+                  "durationInSeconds": 0.00018215179443359375,
                   "name": "Unsupported canonical capability survives module capability projection as diagnostic",
                   "nodeIdentifier": "CanonicalAdapterTests/moduleCapabilityProjectionPreservesDiagnostics()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/CanonicalAdapterTests/moduleCapabilityProjectionPreservesDiagnostics()",
@@ -455,8 +455,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.00075s",
-                  "durationInSeconds": 0.0007488727569580078,
+                  "duration": "0.0013s",
+                  "durationInSeconds": 0.0012879371643066406,
                   "name": "Registry-level capability aggregation preserves diagnostics from canonical modules",
                   "nodeIdentifier": "CanonicalAdapterTests/registryCapabilityAggregationPreservesDiagnostics()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/CanonicalAdapterTests/registryCapabilityAggregationPreservesDiagnostics()",
@@ -464,8 +464,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.00017s",
-                  "durationInSeconds": 0.00017189979553222656,
+                  "duration": "0.00012s",
+                  "durationInSeconds": 0.00011897087097167969,
                   "name": "Supported capabilities project normally with domain, reason, and optionality",
                   "nodeIdentifier": "CanonicalAdapterTests/supportedCapabilitiesProjectWithMetadata()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/CanonicalAdapterTests/supportedCapabilitiesProjectWithMetadata()",
@@ -473,8 +473,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.00013s",
-                  "durationInSeconds": 0.000125885009765625,
+                  "duration": "0.000093s",
+                  "durationInSeconds": 0.00009298324584960938,
                   "name": "Canonical capability projection is non-lossy and partitions declarations without silent drops",
                   "nodeIdentifier": "CanonicalAdapterTests/canonicalCapabilityProjectionPartitioning()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/CanonicalAdapterTests/canonicalCapabilityProjectionPartitioning()",
@@ -482,8 +482,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.019s",
-                  "durationInSeconds": 0.018824100494384766,
+                  "duration": "0.011s",
+                  "durationInSeconds": 0.01100611686706543,
                   "name": "Native tool projection preserves qualified identity and rejects schema mismatch",
                   "nodeIdentifier": "CanonicalAdapterTests/nativeToolProjection()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/CanonicalAdapterTests/nativeToolProjection()",
@@ -491,8 +491,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.0007s",
-                  "durationInSeconds": 0.0007047653198242188,
+                  "duration": "0.00027s",
+                  "durationInSeconds": 0.00027179718017578125,
                   "name": "MCP projections preserve provider, tool, schema, alias, and runtime state",
                   "nodeIdentifier": "CanonicalAdapterTests/mcpProjection()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/CanonicalAdapterTests/mcpProjection()",
@@ -500,8 +500,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.015s",
-                  "durationInSeconds": 0.014945030212402344,
+                  "duration": "0.011s",
+                  "durationInSeconds": 0.011138916015625,
                   "name": "MCP projection rejects duplicate secret names and malformed schemas",
                   "nodeIdentifier": "CanonicalAdapterTests/mcpRejections()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/CanonicalAdapterTests/mcpRejections()",
@@ -509,8 +509,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.0065s",
-                  "durationInSeconds": 0.006522178649902344,
+                  "duration": "0.0043s",
+                  "durationInSeconds": 0.004311084747314453,
                   "name": "RuntimeCore projection is deterministic and does not invent integer provenance",
                   "nodeIdentifier": "CanonicalAdapterTests/runtimeCoreProjection()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/CanonicalAdapterTests/runtimeCoreProjection()",
@@ -526,8 +526,8 @@
             {
               "children": [
                 {
-                  "duration": "0.00052s",
-                  "durationInSeconds": 0.0005240440368652344,
+                  "duration": "0.00091s",
+                  "durationInSeconds": 0.0009098052978515625,
                   "name": "Compiled package exposure registry derives Widget and App Intent from canonical descriptor",
                   "nodeIdentifier": "CanonicalMiniAppIntegrationTests/compiledExposures()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/CanonicalMiniAppIntegrationTests/compiledExposures()",
@@ -535,8 +535,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.0042s",
-                  "durationInSeconds": 0.00416111946105957,
+                  "duration": "0.005s",
+                  "durationInSeconds": 0.004999637603759766,
                   "name": "HanlinScript replacement keeps stable canonical data identity",
                   "nodeIdentifier": "CanonicalMiniAppIntegrationTests/stableUpdateIdentity()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/CanonicalMiniAppIntegrationTests/stableUpdateIdentity()",
@@ -544,8 +544,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.00044s",
-                  "durationInSeconds": 0.0004432201385498047,
+                  "duration": "0.00021s",
+                  "durationInSeconds": 0.0002110004425048828,
                   "name": "Canonical catalog discovers Swift built-in parity app and groups engines accurately",
                   "nodeIdentifier": "CanonicalMiniAppIntegrationTests/catalogEngineGrouping()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/CanonicalMiniAppIntegrationTests/catalogEngineGrouping()",
@@ -553,8 +553,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.071s",
-                  "durationInSeconds": 0.07092118263244629,
+                  "duration": "0.05s",
+                  "durationInSeconds": 0.05012631416320801,
                   "name": "Native services bridge exposes Python version and executes JavaScript returning 42",
                   "nodeIdentifier": "CanonicalMiniAppIntegrationTests/nativeServicesExecution()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/CanonicalMiniAppIntegrationTests/nativeServicesExecution()",
@@ -562,8 +562,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.021s",
-                  "durationInSeconds": 0.02083730697631836,
+                  "duration": "0.022s",
+                  "durationInSeconds": 0.02196979522705078,
                   "name": "Inter-app request broker allows authorized cross-engine request flow and enforces bidirectional capabilities",
                   "nodeIdentifier": "CanonicalMiniAppIntegrationTests/interAppRequestBrokering()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/CanonicalMiniAppIntegrationTests/interAppRequestBrokering()",
@@ -571,8 +571,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.00023s",
-                  "durationInSeconds": 0.0002281665802001953,
+                  "duration": "0.00033s",
+                  "durationInSeconds": 0.00033164024353027344,
                   "name": "Caller identity spoofing is rejected by host-bound broker",
                   "nodeIdentifier": "CanonicalMiniAppIntegrationTests/callerIdentitySpoofingRejected()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/CanonicalMiniAppIntegrationTests/callerIdentitySpoofingRejected()",
@@ -580,8 +580,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.022s",
-                  "durationInSeconds": 0.022377967834472656,
+                  "duration": "0.013s",
+                  "durationInSeconds": 0.013427972793579102,
                   "name": "Private storage rejects path traversal and escapes from container root",
                   "nodeIdentifier": "CanonicalMiniAppIntegrationTests/privateStoragePathTraversalRejected()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/CanonicalMiniAppIntegrationTests/privateStoragePathTraversalRejected()",
@@ -589,8 +589,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.00042s",
-                  "durationInSeconds": 0.0004229545593261719,
+                  "duration": "0.00037s",
+                  "durationInSeconds": 0.0003676414489746094,
                   "name": "Per-entrypoint isolation on hybrid package prevents runtime leakage across sibling entrypoints",
                   "nodeIdentifier": "CanonicalMiniAppIntegrationTests/perEntrypointIsolationHybrid()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/CanonicalMiniAppIntegrationTests/perEntrypointIsolationHybrid()",
@@ -598,8 +598,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.00018s",
-                  "durationInSeconds": 0.0001838207244873047,
+                  "duration": "0.00025s",
+                  "durationInSeconds": 0.00024509429931640625,
                   "name": "All 4 compiled mini app providers are registered and provide canonical descriptors",
                   "nodeIdentifier": "CanonicalMiniAppIntegrationTests/allCompiledProvidersRegistered()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/CanonicalMiniAppIntegrationTests/allCompiledProvidersRegistered()",
@@ -607,8 +607,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.0002s",
-                  "durationInSeconds": 0.00020313262939453125,
+                  "duration": "0.00022s",
+                  "durationInSeconds": 0.0002200603485107422,
                   "name": "Per-entrypoint resolution with hybrid descriptors maps foreground and background engines",
                   "nodeIdentifier": "CanonicalMiniAppIntegrationTests/perEntrypointResolutionHybrid()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/CanonicalMiniAppIntegrationTests/perEntrypointResolutionHybrid()",
@@ -617,7 +617,7 @@
                 },
                 {
                   "duration": "0.0036s",
-                  "durationInSeconds": 0.0035817623138427734,
+                  "durationInSeconds": 0.0035669803619384766,
                   "name": "HanlinNativeServicesBridge enforces active container isolation and capability gating",
                   "nodeIdentifier": "CanonicalMiniAppIntegrationTests/bridgeContainerAndCapabilityGating()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/CanonicalMiniAppIntegrationTests/bridgeContainerAndCapabilityGating()",
@@ -633,8 +633,8 @@
             {
               "children": [
                 {
-                  "duration": "0.00078s",
-                  "durationInSeconds": 0.0007762908935546875,
+                  "duration": "0.00073s",
+                  "durationInSeconds": 0.0007321834564208984,
                   "name": "Pure comparison reports pass, warning, mismatch, and deterministic order",
                   "nodeIdentifier": "CanonicalShadowCoordinatorTests/reportStatusesAndOrdering()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/CanonicalShadowCoordinatorTests/reportStatusesAndOrdering()",
@@ -642,8 +642,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.00015s",
-                  "durationInSeconds": 0.0001537799835205078,
+                  "duration": "0.000068s",
+                  "durationInSeconds": 0.00006794929504394531,
                   "name": "Skipped domains are explicit and summary equality is timestamp-free",
                   "nodeIdentifier": "CanonicalShadowCoordinatorTests/skippedDomains()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/CanonicalShadowCoordinatorTests/skippedDomains()",
@@ -651,8 +651,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.0073s",
-                  "durationInSeconds": 0.007337093353271484,
+                  "duration": "0.0043s",
+                  "durationInSeconds": 0.0042722225189208984,
                   "name": "All observable adapter domains project without execution or network access",
                   "nodeIdentifier": "CanonicalShadowCoordinatorTests/allObservableDomains()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/CanonicalShadowCoordinatorTests/allObservableDomains()",
@@ -660,8 +660,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.00042s",
-                  "durationInSeconds": 0.000415802001953125,
+                  "duration": "0.00041s",
+                  "durationInSeconds": 0.00040602684020996094,
                   "name": "Combined tool parity rejects collisions, missing targets, and orphan routes",
                   "nodeIdentifier": "CanonicalShadowCoordinatorTests/combinedToolRouteFailures()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/CanonicalShadowCoordinatorTests/combinedToolRouteFailures()",
@@ -669,8 +669,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.011s",
-                  "durationInSeconds": 0.01129460334777832,
+                  "duration": "0.0077s",
+                  "durationInSeconds": 0.0076808929443359375,
                   "name": "Structured diagnostics exclude source secrets and arbitrary payloads",
                   "nodeIdentifier": "CanonicalShadowCoordinatorTests/reportRedaction()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/CanonicalShadowCoordinatorTests/reportRedaction()",
@@ -686,8 +686,8 @@
             {
               "children": [
                 {
-                  "duration": "0.00067s",
-                  "durationInSeconds": 0.0006690025329589844,
+                  "duration": "0.0006s",
+                  "durationInSeconds": 0.0006031990051269531,
                   "name": "Builds one canonical catalog with closed backend routes",
                   "nodeIdentifier": "CanonicalToolAuthorityTests/combinedCatalogAndRoutes()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/CanonicalToolAuthorityTests/combinedCatalogAndRoutes()",
@@ -695,8 +695,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.00052s",
-                  "durationInSeconds": 0.0005180835723876953,
+                  "duration": "0.00038s",
+                  "durationInSeconds": 0.0003829002380371094,
                   "name": "Supports empty, Native-only, and MCP-only catalogs",
                   "nodeIdentifier": "CanonicalToolAuthorityTests/catalogShapes()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/CanonicalToolAuthorityTests/catalogShapes()",
@@ -705,7 +705,7 @@
                 },
                 {
                   "duration": "0.0016s",
-                  "durationInSeconds": 0.001603841781616211,
+                  "durationInSeconds": 0.0015990734100341797,
                   "name": "Catalog and aliases are deterministic across discovery order",
                   "nodeIdentifier": "CanonicalToolAuthorityTests/deterministicDiscoveryOrder()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/CanonicalToolAuthorityTests/deterministicDiscoveryOrder()",
@@ -713,8 +713,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.00074s",
-                  "durationInSeconds": 0.0007350444793701172,
+                  "duration": "0.00066s",
+                  "durationInSeconds": 0.000659942626953125,
                   "name": "Native keeps a colliding alias and MCP receives a stable suffix",
                   "nodeIdentifier": "CanonicalToolAuthorityTests/nativeFirstCollisionPolicy()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/CanonicalToolAuthorityTests/nativeFirstCollisionPolicy()",
@@ -722,8 +722,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.019s",
-                  "durationInSeconds": 0.018746137619018555,
+                  "duration": "0.017s",
+                  "durationInSeconds": 0.017359018325805664,
                   "name": "Rejects duplicate logical tools and invalid model schemas",
                   "nodeIdentifier": "CanonicalToolAuthorityTests/rejectsInvalidAuthorityInputs()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/CanonicalToolAuthorityTests/rejectsInvalidAuthorityInputs()",
@@ -731,8 +731,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.00046s",
-                  "durationInSeconds": 0.00045609474182128906,
+                  "duration": "0.00035s",
+                  "durationInSeconds": 0.00034689903259277344,
                   "name": "Preserves model schema content except for canonical alias allocation",
                   "nodeIdentifier": "CanonicalToolAuthorityTests/preservesModelSchemas()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/CanonicalToolAuthorityTests/preservesModelSchemas()",
@@ -740,8 +740,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.0009s",
-                  "durationInSeconds": 0.0008957386016845703,
+                  "duration": "0.00061s",
+                  "durationInSeconds": 0.0006110668182373047,
                   "name": "Matches the legacy model-facing schemas when no collision exists",
                   "nodeIdentifier": "CanonicalToolAuthorityTests/legacyModelFacingParity()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/CanonicalToolAuthorityTests/legacyModelFacingParity()",
@@ -749,8 +749,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.00087s",
-                  "durationInSeconds": 0.0008680820465087891,
+                  "duration": "0.001s",
+                  "durationInSeconds": 0.0010030269622802734,
                   "name": "Backend route index rejects missing, orphaned, duplicate, stale, and wrong-provider routes",
                   "nodeIdentifier": "CanonicalToolAuthorityTests/backendRouteIndexValidation()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/CanonicalToolAuthorityTests/backendRouteIndexValidation()",
@@ -758,8 +758,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.00059s",
-                  "durationInSeconds": 0.0005910396575927734,
+                  "duration": "0.00055s",
+                  "durationInSeconds": 0.0005452632904052734,
                   "name": "Canonical dispatch invokes exactly one selected backend and no fallback",
                   "nodeIdentifier": "CanonicalToolAuthorityTests/exactDispatch()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/CanonicalToolAuthorityTests/exactDispatch()",
@@ -767,8 +767,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.0005s",
-                  "durationInSeconds": 0.0005030632019042969,
+                  "duration": "0.00098s",
+                  "durationInSeconds": 0.0009837150573730469,
                   "name": "Canonical dispatch preserves an execution error exactly once",
                   "nodeIdentifier": "CanonicalToolAuthorityTests/executionErrorPropagatesOnce()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/CanonicalToolAuthorityTests/executionErrorPropagatesOnce()",
@@ -776,8 +776,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.00055s",
-                  "durationInSeconds": 0.0005450248718261719,
+                  "duration": "0.00065s",
+                  "durationInSeconds": 0.0006530284881591797,
                   "name": "Display labels and discovery aliases do not define logical identity",
                   "nodeIdentifier": "CanonicalToolAuthorityTests/identityIndependence()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/CanonicalToolAuthorityTests/identityIndependence()",
@@ -793,8 +793,8 @@
             {
               "children": [
                 {
-                  "duration": "0.006s",
-                  "durationInSeconds": 0.006001949310302734,
+                  "duration": "0.015s",
+                  "durationInSeconds": 0.015100240707397461,
                   "name": "Failed activity preserves the semantic terminal title",
                   "nodeIdentifier": "ChatCanonicalPresentationSurvivalTests/failedActivityTitle()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ChatCanonicalPresentationSurvivalTests/failedActivityTitle()",
@@ -802,8 +802,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.019s",
-                  "durationInSeconds": 0.018551111221313477,
+                  "duration": "0.012s",
+                  "durationInSeconds": 0.012127876281738281,
                   "name": "Dynamic non-builtin tool preserves presentation descriptors across entire event and transcript pipeline",
                   "nodeIdentifier": "ChatCanonicalPresentationSurvivalTests/dynamicToolPresentationSurvival()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ChatCanonicalPresentationSurvivalTests/dynamicToolPresentationSurvival()",
@@ -811,8 +811,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.00038s",
-                  "durationInSeconds": 0.00037789344787597656,
+                  "duration": "0.0004s",
+                  "durationInSeconds": 0.0004038810729980469,
                   "name": "Scripting tool presentation descriptors survive into Chat presentation bridge",
                   "nodeIdentifier": "ChatCanonicalPresentationSurvivalTests/scriptingToolPresentationSurvival()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ChatCanonicalPresentationSurvivalTests/scriptingToolPresentationSurvival()",
@@ -820,8 +820,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.000099s",
-                  "durationInSeconds": 0.00009894371032714844,
+                  "duration": "0.000081s",
+                  "durationInSeconds": 0.00008082389831542969,
                   "name": "Built-in canonical tools continue to resolve presentation via fallback when explicit is absent",
                   "nodeIdentifier": "ChatCanonicalPresentationSurvivalTests/builtinCanonicalToolsFallback()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ChatCanonicalPresentationSurvivalTests/builtinCanonicalToolsFallback()",
@@ -829,8 +829,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.000074s",
-                  "durationInSeconds": 0.00007390975952148438,
+                  "duration": "0.000082s",
+                  "durationInSeconds": 0.00008225440979003906,
                   "name": "Canonical presentation metadata takes precedence over generic fallbacks and heuristics",
                   "nodeIdentifier": "ChatCanonicalPresentationSurvivalTests/canonicalMetadataPrecedence()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ChatCanonicalPresentationSurvivalTests/canonicalMetadataPrecedence()",
@@ -846,8 +846,8 @@
             {
               "children": [
                 {
-                  "duration": "0.00035s",
-                  "durationInSeconds": 0.0003497600555419922,
+                  "duration": "0.00052s",
+                  "durationInSeconds": 0.0005161762237548828,
                   "name": "Resolver dispatches to injected Swift test double",
                   "nodeIdentifier": "EmbeddedResultResolverTests/resolverDispatchesToSwift()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/EmbeddedResultResolverTests/resolverDispatchesToSwift()",
@@ -855,8 +855,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.00016s",
-                  "durationInSeconds": 0.00015616416931152344,
+                  "duration": "0.00015s",
+                  "durationInSeconds": 0.0001518726348876953,
                   "name": "Resolver dispatches to injected ScriptUI, NativeScript and Expo test doubles",
                   "nodeIdentifier": "EmbeddedResultResolverTests/resolverDispatchesToScriptingEngines()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/EmbeddedResultResolverTests/resolverDispatchesToScriptingEngines()",
@@ -864,8 +864,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.00018s",
-                  "durationInSeconds": 0.0001819133758544922,
+                  "duration": "0.00029s",
+                  "durationInSeconds": 0.0002930164337158203,
                   "name": "Resolver returns nil for unknown handler enabling fallback",
                   "nodeIdentifier": "EmbeddedResultResolverTests/resolverFallbackOnUnknown()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/EmbeddedResultResolverTests/resolverFallbackOnUnknown()",
@@ -873,8 +873,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.0001s",
-                  "durationInSeconds": 0.00010418891906738281,
+                  "duration": "0.00015s",
+                  "durationInSeconds": 0.00015091896057128906,
                   "name": "Session lifecycle correctly executes onTearDown handler",
                   "nodeIdentifier": "EmbeddedResultResolverTests/sessionLifecycleTearDown()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/EmbeddedResultResolverTests/sessionLifecycleTearDown()",
@@ -882,8 +882,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.00022s",
-                  "durationInSeconds": 0.00022292137145996094,
+                  "duration": "0.00012s",
+                  "durationInSeconds": 0.0001220703125,
                   "name": "EmbeddedResultPayload preserves payload, reference, title, and metadata",
                   "nodeIdentifier": "EmbeddedResultResolverTests/payloadPreservation()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/EmbeddedResultResolverTests/payloadPreservation()",
@@ -891,8 +891,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.00046s",
-                  "durationInSeconds": 0.0004639625549316406,
+                  "duration": "0.00076s",
+                  "durationInSeconds": 0.0007641315460205078,
                   "name": "BoundedToolResultStore enforces capacity bounds and provides slices",
                   "nodeIdentifier": "EmbeddedResultResolverTests/boundedResultStoreCapacity()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/EmbeddedResultResolverTests/boundedResultStoreCapacity()",
@@ -900,8 +900,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.00026s",
-                  "durationInSeconds": 0.00025582313537597656,
+                  "duration": "0.00012s",
+                  "durationInSeconds": 0.00011706352233886719,
                   "name": "BoundedToolResultStore hard bound rejection returns nil and preserves existing data",
                   "nodeIdentifier": "EmbeddedResultResolverTests/boundedResultStoreHardBoundRejection()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/EmbeddedResultResolverTests/boundedResultStoreHardBoundRejection()",
@@ -909,8 +909,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.00017s",
-                  "durationInSeconds": 0.0001709461212158203,
+                  "duration": "0.00012s",
+                  "durationInSeconds": 0.0001227855682373047,
                   "name": "BoundedToolResultStore supports Unicode UTF-8 multi-byte pagination without truncation",
                   "nodeIdentifier": "EmbeddedResultResolverTests/resultStoreUnicodePagination()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/EmbeddedResultResolverTests/resultStoreUnicodePagination()",
@@ -918,8 +918,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.00028s",
-                  "durationInSeconds": 0.0002760887145996094,
+                  "duration": "0.00011s",
+                  "durationInSeconds": 0.0001087188720703125,
                   "name": "ResultStore entries expire and clear upon session run finish",
                   "nodeIdentifier": "EmbeddedResultResolverTests/resultStoreSessionCleanup()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/EmbeddedResultResolverTests/resultStoreSessionCleanup()",
@@ -927,8 +927,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.0047s",
-                  "durationInSeconds": 0.004703998565673828,
+                  "duration": "0.0038s",
+                  "durationInSeconds": 0.003838062286376953,
                   "name": "Swift embedded adapter strictly resolves custom view and never embeds full app",
                   "nodeIdentifier": "EmbeddedResultResolverTests/swiftAdapterStrictResolution()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/EmbeddedResultResolverTests/swiftAdapterStrictResolution()",
@@ -936,8 +936,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.00034s",
-                  "durationInSeconds": 0.0003380775451660156,
+                  "duration": "0.00061s",
+                  "durationInSeconds": 0.0006067752838134766,
                   "name": "ScriptUI, NativeScript and Expo adapters return nil for undeclared handlers",
                   "nodeIdentifier": "EmbeddedResultResolverTests/scriptingAdaptersStrictResolution()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/EmbeddedResultResolverTests/scriptingAdaptersStrictResolution()",
@@ -945,8 +945,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.000098s",
-                  "durationInSeconds": 0.00009799003601074219,
+                  "duration": "0.00013s",
+                  "durationInSeconds": 0.0001289844512939453,
                   "name": "Resolver uses explicit owner identity and never falls back to toolName guessing",
                   "nodeIdentifier": "EmbeddedResultResolverTests/resolverOwnerIdentityRouting()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/EmbeddedResultResolverTests/resolverOwnerIdentityRouting()",
@@ -954,8 +954,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.00009s",
-                  "durationInSeconds": 0.00008988380432128906,
+                  "duration": "0.00012s",
+                  "durationInSeconds": 0.00011610984802246094,
                   "name": "ChatPresentationBridge resolves multiple valid expansions and validates expandedHandler",
                   "nodeIdentifier": "EmbeddedResultResolverTests/chatPresentationBridgeMultiExpansions()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/EmbeddedResultResolverTests/chatPresentationBridgeMultiExpansions()",
@@ -963,8 +963,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.00086s",
-                  "durationInSeconds": 0.0008618831634521484,
+                  "duration": "0.0002s",
+                  "durationInSeconds": 0.00020003318786621094,
                   "name": "HanlinEmbeddedContentAction and HanlinLaunchRequest preserve canonical structure",
                   "nodeIdentifier": "EmbeddedResultResolverTests/contentActionsAndLaunchRequestStructure()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/EmbeddedResultResolverTests/contentActionsAndLaunchRequestStructure()",
@@ -972,8 +972,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.00018s",
-                  "durationInSeconds": 0.0001838207244873047,
+                  "duration": "0.00014s",
+                  "durationInSeconds": 0.00014209747314453125,
                   "name": "HanlinEmbeddedContentAction pipeline correctly bridges from payload to transcript item and handles callback dispatch",
                   "nodeIdentifier": "EmbeddedResultResolverTests/contentActionsPipelineAndDispatch()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/EmbeddedResultResolverTests/contentActionsPipelineAndDispatch()",
@@ -981,8 +981,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.028s",
-                  "durationInSeconds": 0.0276029109954834,
+                  "duration": "0.019s",
+                  "durationInSeconds": 0.019349098205566406,
                   "name": "ScriptUI application session receives structured EmbeddedInput when launched via embeddedResult context",
                   "nodeIdentifier": "EmbeddedResultResolverTests/scriptUIEmbeddedInputContext()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/EmbeddedResultResolverTests/scriptUIEmbeddedInputContext()",
@@ -998,8 +998,8 @@
             {
               "children": [
                 {
-                  "duration": "0.0038s",
-                  "durationInSeconds": 0.003828287124633789,
+                  "duration": "0.0027s",
+                  "durationInSeconds": 0.002652883529663086,
                   "name": "Null, booleans, integers, and floating point retain their domains",
                   "nodeIdentifier": "FoundationJSONShadowAdapterTests/primitiveDomains()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/FoundationJSONShadowAdapterTests/primitiveDomains()",
@@ -1007,8 +1007,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.00002s",
-                  "durationInSeconds": 0.00002002716064453125,
+                  "duration": "0.000026s",
+                  "durationInSeconds": 0.00002574920654296875,
                   "name": "Negative zero preserves its exact binary64 bit pattern",
                   "nodeIdentifier": "FoundationJSONShadowAdapterTests/negativeZero()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/FoundationJSONShadowAdapterTests/negativeZero()",
@@ -1016,8 +1016,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.0065s",
-                  "durationInSeconds": 0.0065097808837890625,
+                  "duration": "0.013s",
+                  "durationInSeconds": 0.012618780136108398,
                   "name": "Nested collections and UTF-8-distinct keys remain distinct",
                   "nodeIdentifier": "FoundationJSONShadowAdapterTests/nestedCollectionsAndUnicodeKeys()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/FoundationJSONShadowAdapterTests/nestedCollectionsAndUnicodeKeys()",
@@ -1025,8 +1025,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.11s",
-                  "durationInSeconds": 0.10734200477600098,
+                  "duration": "0.096s",
+                  "durationInSeconds": 0.0957648754119873,
                   "name": "Lossy or unsupported Foundation values fail explicitly",
                   "nodeIdentifier": "FoundationJSONShadowAdapterTests/rejectsUnsupportedValues()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/FoundationJSONShadowAdapterTests/rejectsUnsupportedValues()",
@@ -1042,8 +1042,8 @@
             {
               "children": [
                 {
-                  "duration": "0.0002s",
-                  "durationInSeconds": 0.00019812583923339844,
+                  "duration": "0.00031s",
+                  "durationInSeconds": 0.00030803680419921875,
                   "name": "Converts Scripting required flags into provider JSON Schema",
                   "nodeIdentifier": "HanlinScriptingAssistantProviderAdapterTests/schemaConversion()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinScriptingAssistantProviderAdapterTests/schemaConversion()",
@@ -1051,8 +1051,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.00018s",
-                  "durationInSeconds": 0.0001819133758544922,
+                  "duration": "0.000089s",
+                  "durationInSeconds": 0.00008916854858398438,
                   "name": "Maps text, reasoning, and usage from Chat Completions SSE objects",
                   "nodeIdentifier": "HanlinScriptingAssistantProviderAdapterTests/streamChunks()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinScriptingAssistantProviderAdapterTests/streamChunks()",
@@ -1060,8 +1060,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.00037s",
-                  "durationInSeconds": 0.0003650188446044922,
+                  "duration": "0.00019s",
+                  "durationInSeconds": 0.0001850128173828125,
                   "name": "Accepts bounded JSON and strips provider markdown fences",
                   "nodeIdentifier": "HanlinScriptingAssistantProviderAdapterTests/structuredContent()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinScriptingAssistantProviderAdapterTests/structuredContent()",
@@ -1077,8 +1077,78 @@
             {
               "children": [
                 {
+                  "duration": "0.0008s",
+                  "durationInSeconds": 0.0008018016815185547,
+                  "name": "Routes structured AssistantTool parts to model and native user presentation",
+                  "nodeIdentifier": "HanlinScriptingAcceptanceTests/structuredAssistantToolResult()",
+                  "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinScriptingAcceptanceTests/structuredAssistantToolResult()",
+                  "nodeType": "Test Case",
+                  "result": "Passed"
+                },
+                {
+                  "duration": "0.024s",
+                  "durationInSeconds": 0.023653745651245117,
+                  "name": "Loads, projects, routes, and executes the TypeScript fixture",
+                  "nodeIdentifier": "HanlinScriptingAcceptanceTests/executableVerticalSlice()",
+                  "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinScriptingAcceptanceTests/executableVerticalSlice()",
+                  "nodeType": "Test Case",
+                  "result": "Passed"
+                },
+                {
+                  "duration": "0.0067s",
+                  "durationInSeconds": 0.006672859191894531,
+                  "name": "Rejects malformed packages before provider availability",
+                  "nodeIdentifier": "HanlinScriptingAcceptanceTests/malformedPackageIsUnavailable()",
+                  "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinScriptingAcceptanceTests/malformedPackageIsUnavailable()",
+                  "nodeType": "Test Case",
+                  "result": "Passed"
+                },
+                {
+                  "duration": "0.0097s",
+                  "durationInSeconds": 0.009701013565063477,
+                  "name": "Binds provider availability to manifest and artifact integrity",
+                  "nodeIdentifier": "HanlinScriptingAcceptanceTests/integrityTamperingIsUnavailable()",
+                  "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinScriptingAcceptanceTests/integrityTamperingIsUnavailable()",
+                  "nodeType": "Test Case",
+                  "result": "Passed"
+                }
+              ],
+              "name": "Hanlin Scripting Phase 2A acceptance",
+              "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinScriptingAcceptanceTests",
+              "nodeType": "Test Suite",
+              "result": "Passed"
+            },
+            {
+              "children": [
+                {
+                  "duration": "4s",
+                  "durationInSeconds": 4.985458135604858,
+                  "name": "Compiles every supported raw corpus package through NodeMobile and the real bundler",
+                  "nodeIdentifier": "HanlinScriptingProductionCompilerAcceptanceTests/supportedCorpus()",
+                  "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinScriptingProductionCompilerAcceptanceTests/supportedCorpus()",
+                  "nodeType": "Test Case",
+                  "result": "Passed"
+                },
+                {
                   "duration": "5s",
-                  "durationInSeconds": 5.529939889907837,
+                  "durationInSeconds": 5.198939085006714,
+                  "name": "Rejects mistyped Scripting and DOM APIs without weakening strict checking",
+                  "nodeIdentifier": "HanlinScriptingProductionCompilerAcceptanceTests/strictFailures()",
+                  "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinScriptingProductionCompilerAcceptanceTests/strictFailures()",
+                  "nodeType": "Test Case",
+                  "result": "Passed"
+                }
+              ],
+              "name": "Scripting production compiler acceptance",
+              "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinScriptingProductionCompilerAcceptanceTests",
+              "nodeType": "Test Suite",
+              "result": "Passed"
+            },
+            {
+              "children": [
+                {
+                  "duration": "5s",
+                  "durationInSeconds": 5.4395740032196045,
                   "name": "Exports, imports, approves, installs, restores, launches, and renders through production",
                   "nodeIdentifier": "HanlinScriptPackageProductionE2ETests/productionPackageFlow()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinScriptPackageProductionE2ETests/productionPackageFlow()",
@@ -1087,7 +1157,7 @@
                 },
                 {
                   "duration": "2s",
-                  "durationInSeconds": 2.1794509887695312,
+                  "durationInSeconds": 2.1992321014404297,
                   "name": "Re-entrant launch on active application ID is a no-op preserving session and model identity",
                   "nodeIdentifier": "HanlinScriptPackageProductionE2ETests/launchActiveApplicationIDIsNoOp()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinScriptPackageProductionE2ETests/launchActiveApplicationIDIsNoOp()",
@@ -1103,8 +1173,702 @@
             {
               "children": [
                 {
+                  "duration": "20s",
+                  "durationInSeconds": 20.97715401649475,
+                  "name": "Exact external ZIP keeps its active artifact across a cold platform restoration",
+                  "nodeIdentifier": "HanlinScriptPackagePhysicalIPadRegressionTests/exactExternalArchiveColdRestoration()",
+                  "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinScriptPackagePhysicalIPadRegressionTests/exactExternalArchiveColdRestoration()",
+                  "nodeType": "Test Case",
+                  "result": "Passed"
+                }
+              ],
+              "name": "Physical iPad Script App restart regression",
+              "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinScriptPackagePhysicalIPadRegressionTests",
+              "nodeType": "Test Suite",
+              "result": "Passed"
+            },
+            {
+              "children": [
+                {
+                  "duration": "0.004s",
+                  "durationInSeconds": 0.004040956497192383,
+                  "name": "Keeps a persistent isolated context and exposes no privileged globals",
+                  "nodeIdentifier": "HanlinJavaScriptCoreEngineTests/persistentContextAndDefaultDeny()",
+                  "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinJavaScriptCoreEngineTests/persistentContextAndDefaultDeny()",
+                  "nodeType": "Test Case",
+                  "result": "Passed"
+                },
+                {
+                  "duration": "0.0065s",
+                  "durationInSeconds": 0.006504058837890625,
+                  "name": "Implements AssistantTool call state, progress replacement, cancellation, and reuse",
+                  "nodeIdentifier": "HanlinJavaScriptCoreEngineTests/assistantToolLifecycle()",
+                  "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinJavaScriptCoreEngineTests/assistantToolLifecycle()",
+                  "nodeType": "Test Case",
+                  "result": "Passed"
+                },
+                {
+                  "duration": "0.027s",
+                  "durationInSeconds": 0.0267789363861084,
+                  "name": "Disposal resumes a pending JavaScriptCore invocation",
+                  "nodeIdentifier": "HanlinJavaScriptCoreEngineTests/disposalResumesPendingInvocation()",
+                  "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinJavaScriptCoreEngineTests/disposalResumesPendingInvocation()",
+                  "nodeType": "Test Case",
+                  "result": "Passed"
+                }
+              ],
+              "name": "Scripting JavaScriptCore compatibility engine",
+              "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinJavaScriptCoreEngineTests",
+              "nodeType": "Test Suite",
+              "result": "Passed"
+            },
+            {
+              "children": [
+                {
+                  "duration": "0.022s",
+                  "durationInSeconds": 0.022420883178710938,
+                  "name": "Renders multi-component ScriptUI and reconciles stateful events",
+                  "nodeIdentifier": "HanlinScriptingApplicationRuntimeTests/interactiveScriptUI()",
+                  "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinScriptingApplicationRuntimeTests/interactiveScriptUI()",
+                  "nodeType": "Test Case",
+                  "result": "Passed"
+                },
+                {
+                  "duration": "0.097s",
+                  "durationInSeconds": 0.09675288200378418,
+                  "name": "Denies package storage when the capability is not granted",
+                  "nodeIdentifier": "HanlinScriptingApplicationRuntimeTests/deniedStorage()",
+                  "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinScriptingApplicationRuntimeTests/deniedStorage()",
+                  "nodeType": "Test Case",
+                  "result": "Passed"
+                },
+                {
+                  "duration": "0.051s",
+                  "durationInSeconds": 0.0514988899230957,
+                  "name": "Bridges Path, binary Data, Storage, and package-scoped FileManager to native services",
+                  "nodeIdentifier": "HanlinScriptingApplicationRuntimeTests/nativeFoundationServices()",
+                  "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinScriptingApplicationRuntimeTests/nativeFoundationServices()",
+                  "nodeType": "Test Case",
+                  "result": "Passed"
+                },
+                {
+                  "duration": "0.014s",
+                  "durationInSeconds": 0.014045953750610352,
+                  "name": "Enforces files capability before package filesystem access",
+                  "nodeIdentifier": "HanlinScriptingApplicationRuntimeTests/deniedFiles()",
+                  "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinScriptingApplicationRuntimeTests/deniedFiles()",
+                  "nodeType": "Test Case",
+                  "result": "Passed"
+                },
+                {
                   "duration": "0.017s",
-                  "durationInSeconds": 0.016513824462890625,
+                  "durationInSeconds": 0.01681685447692871,
+                  "name": "Resolves fetch and FileManager promises through the native callback bridge",
+                  "nodeIdentifier": "HanlinScriptingApplicationRuntimeTests/asynchronousNativeCallbacks()",
+                  "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinScriptingApplicationRuntimeTests/asynchronousNativeCallbacks()",
+                  "nodeType": "Test Case",
+                  "result": "Passed"
+                }
+              ],
+              "name": "Installed Scripting application runtime",
+              "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinScriptingApplicationRuntimeTests",
+              "nodeType": "Test Suite",
+              "result": "Passed"
+            },
+            {
+              "children": [
+                {
+                  "duration": "0.093s",
+                  "durationInSeconds": 0.09281706809997559,
+                  "name": "NodeMobile worker registers and invokes multiple typed tools",
+                  "nodeIdentifier": "HanlinTrustedWorkerRouteTests/nodeWorkerInvocation()",
+                  "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinTrustedWorkerRouteTests/nodeWorkerInvocation()",
+                  "nodeType": "Test Case",
+                  "result": "Passed"
+                },
+                {
+                  "duration": "0.0087s",
+                  "durationInSeconds": 0.008675098419189453,
+                  "name": "Python worker exposes the scripting compatibility module",
+                  "nodeIdentifier": "HanlinTrustedWorkerRouteTests/pythonWorkerInvocation()",
+                  "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinTrustedWorkerRouteTests/pythonWorkerInvocation()",
+                  "nodeType": "Test Case",
+                  "result": "Passed"
+                }
+              ],
+              "name": "Trusted Scripting worker routes",
+              "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinTrustedWorkerRouteTests",
+              "nodeType": "Test Suite",
+              "result": "Passed"
+            },
+            {
+              "children": [
+                {
+                  "duration": "0.0061s",
+                  "durationInSeconds": 0.006083965301513672,
+                  "name": "Preserves canonical number, negative-zero, Unicode-key, and nested semantics",
+                  "nodeIdentifier": "HanlinQuickJSEngineTests/canonicalBridgeSemantics()",
+                  "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinQuickJSEngineTests/canonicalBridgeSemantics()",
+                  "nodeType": "Test Case",
+                  "result": "Passed"
+                },
+                {
+                  "duration": "0.0019s",
+                  "durationInSeconds": 0.0018897056579589844,
+                  "name": "Keeps package globals isolated and supports repeated session state",
+                  "nodeIdentifier": "HanlinQuickJSEngineTests/packageIsolationAndRepeatedExecution()",
+                  "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinQuickJSEngineTests/packageIsolationAndRepeatedExecution()",
+                  "nodeType": "Test Case",
+                  "result": "Passed"
+                },
+                {
+                  "duration": "0.0014s",
+                  "durationInSeconds": 0.0014328956604003906,
+                  "name": "Routes multiple registered tools and preserves structured results",
+                  "nodeIdentifier": "HanlinQuickJSEngineTests/multipleToolsAndStructuredResults()",
+                  "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinQuickJSEngineTests/multipleToolsAndStructuredResults()",
+                  "nodeType": "Test Case",
+                  "result": "Passed"
+                },
+                {
+                  "duration": "0.0024s",
+                  "durationInSeconds": 0.0024461746215820312,
+                  "name": "Exposes no ambient host capabilities",
+                  "nodeIdentifier": "HanlinQuickJSEngineTests/defaultDenyHostSurface()",
+                  "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinQuickJSEngineTests/defaultDenyHostSurface()",
+                  "nodeType": "Test Case",
+                  "result": "Passed"
+                },
+                {
+                  "duration": "0.0032s",
+                  "durationInSeconds": 0.003228902816772461,
+                  "name": "Converts exceptions, unsupported values, cycles, and binary input to typed failures",
+                  "nodeIdentifier": "HanlinQuickJSEngineTests/typedBridgeAndRuntimeFailures()",
+                  "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinQuickJSEngineTests/typedBridgeAndRuntimeFailures()",
+                  "nodeType": "Test Case",
+                  "result": "Passed"
+                },
+                {
+                  "duration": "0.021s",
+                  "durationInSeconds": 0.021106958389282227,
+                  "name": "Maps engine timeout to the typed timeout failure",
+                  "nodeIdentifier": "HanlinQuickJSEngineTests/executionTimeout()",
+                  "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinQuickJSEngineTests/executionTimeout()",
+                  "nodeType": "Test Case",
+                  "result": "Passed"
+                },
+                {
+                  "duration": "0.026s",
+                  "durationInSeconds": 0.025993824005126953,
+                  "name": "Maps QuickJS null OOM recovery to the typed memory limit",
+                  "nodeIdentifier": "HanlinQuickJSEngineTests/memoryLimit()",
+                  "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinQuickJSEngineTests/memoryLimit()",
+                  "nodeType": "Test Case",
+                  "result": "Passed"
+                },
+                {
+                  "duration": "0.0012s",
+                  "durationInSeconds": 0.0011568069458007812,
+                  "name": "Maps the locked QuickJS stack message to the typed stack limit",
+                  "nodeIdentifier": "HanlinQuickJSEngineTests/stackLimit()",
+                  "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinQuickJSEngineTests/stackLimit()",
+                  "nodeType": "Test Case",
+                  "result": "Passed"
+                },
+                {
+                  "duration": "0.0013s",
+                  "durationInSeconds": 0.001291036605834961,
+                  "name": "Rejects results larger than the configured output limit",
+                  "nodeIdentifier": "HanlinQuickJSEngineTests/outputLimit()",
+                  "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinQuickJSEngineTests/outputLimit()",
+                  "nodeType": "Test Case",
+                  "result": "Passed"
+                },
+                {
+                  "duration": "0.0011s",
+                  "durationInSeconds": 0.0011239051818847656,
+                  "name": "Cancellation takes precedence over the execution deadline",
+                  "nodeIdentifier": "HanlinQuickJSEngineTests/cancellation()",
+                  "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinQuickJSEngineTests/cancellation()",
+                  "nodeType": "Test Case",
+                  "result": "Passed"
+                },
+                {
+                  "duration": "0.0015s",
+                  "durationInSeconds": 0.001477956771850586,
+                  "name": "Disposed sessions reject subsequent invocations",
+                  "nodeIdentifier": "HanlinQuickJSEngineTests/disposal()",
+                  "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinQuickJSEngineTests/disposal()",
+                  "nodeType": "Test Case",
+                  "result": "Passed"
+                }
+              ],
+              "name": "Isolated QuickJS engine",
+              "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinQuickJSEngineTests",
+              "nodeType": "Test Suite",
+              "result": "Passed"
+            },
+            {
+              "children": [
+                {
+                  "duration": "0.00027s",
+                  "durationInSeconds": 0.0002739429473876953,
+                  "name": "agentContextCreation()",
+                  "nodeIdentifier": "HanlinUnifiedHostServicesAgentAcceptanceTests/agentContextCreation()",
+                  "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinUnifiedHostServicesAgentAcceptanceTests/agentContextCreation()",
+                  "nodeType": "Test Case",
+                  "result": "Passed"
+                },
+                {
+                  "duration": "0.00022s",
+                  "durationInSeconds": 0.00021791458129882812,
+                  "name": "agentAdapterMakesContextWithAllCapabilities()",
+                  "nodeIdentifier": "HanlinUnifiedHostServicesAgentAcceptanceTests/agentAdapterMakesContextWithAllCapabilities()",
+                  "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinUnifiedHostServicesAgentAcceptanceTests/agentAdapterMakesContextWithAllCapabilities()",
+                  "nodeType": "Test Case",
+                  "result": "Passed"
+                },
+                {
+                  "duration": "0.00049s",
+                  "durationInSeconds": 0.0004858970642089844,
+                  "name": "agentContextSessionIDsAreUnique()",
+                  "nodeIdentifier": "HanlinUnifiedHostServicesAgentAcceptanceTests/agentContextSessionIDsAreUnique()",
+                  "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinUnifiedHostServicesAgentAcceptanceTests/agentContextSessionIDsAreUnique()",
+                  "nodeType": "Test Case",
+                  "result": "Passed"
+                },
+                {
+                  "duration": "0.0021s",
+                  "durationInSeconds": 0.002122163772583008,
+                  "name": "runtimeBrokerAutoStartsStoppedRuntime()",
+                  "nodeIdentifier": "HanlinUnifiedHostServicesAgentAcceptanceTests/runtimeBrokerAutoStartsStoppedRuntime()",
+                  "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinUnifiedHostServicesAgentAcceptanceTests/runtimeBrokerAutoStartsStoppedRuntime()",
+                  "nodeType": "Test Case",
+                  "result": "Passed"
+                },
+                {
+                  "duration": "0.0019s",
+                  "durationInSeconds": 0.0018877983093261719,
+                  "name": "runtimeBrokerRejectsDisabledRuntime()",
+                  "nodeIdentifier": "HanlinUnifiedHostServicesAgentAcceptanceTests/runtimeBrokerRejectsDisabledRuntime()",
+                  "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinUnifiedHostServicesAgentAcceptanceTests/runtimeBrokerRejectsDisabledRuntime()",
+                  "nodeType": "Test Case",
+                  "result": "Passed"
+                },
+                {
+                  "duration": "0.004s",
+                  "durationInSeconds": 0.004036903381347656,
+                  "name": "agentToolExecutesJavaScriptCore()",
+                  "nodeIdentifier": "HanlinUnifiedHostServicesAgentAcceptanceTests/agentToolExecutesJavaScriptCore()",
+                  "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinUnifiedHostServicesAgentAcceptanceTests/agentToolExecutesJavaScriptCore()",
+                  "nodeType": "Test Case",
+                  "result": "Passed"
+                },
+                {
+                  "duration": "0.054s",
+                  "durationInSeconds": 0.05387306213378906,
+                  "name": "agentToolExecutesNode()",
+                  "nodeIdentifier": "HanlinUnifiedHostServicesAgentAcceptanceTests/agentToolExecutesNode()",
+                  "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinUnifiedHostServicesAgentAcceptanceTests/agentToolExecutesNode()",
+                  "nodeType": "Test Case",
+                  "result": "Passed"
+                },
+                {
+                  "duration": "0.005s",
+                  "durationInSeconds": 0.004963874816894531,
+                  "name": "agentToolExecutesPython()",
+                  "nodeIdentifier": "HanlinUnifiedHostServicesAgentAcceptanceTests/agentToolExecutesPython()",
+                  "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinUnifiedHostServicesAgentAcceptanceTests/agentToolExecutesPython()",
+                  "nodeType": "Test Case",
+                  "result": "Passed"
+                },
+                {
+                  "duration": "5s",
+                  "durationInSeconds": 5.80521297454834,
+                  "name": "agentToolExecutesTypeScript()",
+                  "nodeIdentifier": "HanlinUnifiedHostServicesAgentAcceptanceTests/agentToolExecutesTypeScript()",
+                  "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinUnifiedHostServicesAgentAcceptanceTests/agentToolExecutesTypeScript()",
+                  "nodeType": "Test Case",
+                  "result": "Passed"
+                },
+                {
+                  "duration": "0.26s",
+                  "durationInSeconds": 0.26431989669799805,
+                  "name": "agentToolExecutesShell()",
+                  "nodeIdentifier": "HanlinUnifiedHostServicesAgentAcceptanceTests/agentToolExecutesShell()",
+                  "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinUnifiedHostServicesAgentAcceptanceTests/agentToolExecutesShell()",
+                  "nodeType": "Test Case",
+                  "result": "Passed"
+                },
+                {
+                  "duration": "5s",
+                  "durationInSeconds": 5.976463079452515,
+                  "name": "shellAllApprovedCommandsAndPolicies()",
+                  "nodeIdentifier": "HanlinUnifiedHostServicesAgentAcceptanceTests/shellAllApprovedCommandsAndPolicies()",
+                  "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinUnifiedHostServicesAgentAcceptanceTests/shellAllApprovedCommandsAndPolicies()",
+                  "nodeType": "Test Case",
+                  "result": "Passed"
+                },
+                {
+                  "duration": "0.015s",
+                  "durationInSeconds": 0.015134334564208984,
+                  "name": "agentToolRespectsDisabledRuntimeToggle()",
+                  "nodeIdentifier": "HanlinUnifiedHostServicesAgentAcceptanceTests/agentToolRespectsDisabledRuntimeToggle()",
+                  "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinUnifiedHostServicesAgentAcceptanceTests/agentToolRespectsDisabledRuntimeToggle()",
+                  "nodeType": "Test Case",
+                  "result": "Passed"
+                },
+                {
+                  "duration": "1s",
+                  "durationInSeconds": 1.2133750915527344,
+                  "name": "pythonFullContract()",
+                  "nodeIdentifier": "HanlinUnifiedHostServicesAgentAcceptanceTests/pythonFullContract()",
+                  "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinUnifiedHostServicesAgentAcceptanceTests/pythonFullContract()",
+                  "nodeType": "Test Case",
+                  "result": "Passed"
+                },
+                {
+                  "duration": "1s",
+                  "durationInSeconds": 1.4487478733062744,
+                  "name": "javaScriptBackendsFullContract()",
+                  "nodeIdentifier": "HanlinUnifiedHostServicesAgentAcceptanceTests/javaScriptBackendsFullContract()",
+                  "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinUnifiedHostServicesAgentAcceptanceTests/javaScriptBackendsFullContract()",
+                  "nodeType": "Test Case",
+                  "result": "Passed"
+                },
+                {
+                  "duration": "34s",
+                  "durationInSeconds": 34.69802904129028,
+                  "name": "typeScriptFullContract()",
+                  "nodeIdentifier": "HanlinUnifiedHostServicesAgentAcceptanceTests/typeScriptFullContract()",
+                  "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinUnifiedHostServicesAgentAcceptanceTests/typeScriptFullContract()",
+                  "nodeType": "Test Case",
+                  "result": "Passed"
+                },
+                {
+                  "duration": "0.48s",
+                  "durationInSeconds": 0.4837360382080078,
+                  "name": "shellRejectionMatrix()",
+                  "nodeIdentifier": "HanlinUnifiedHostServicesAgentAcceptanceTests/shellRejectionMatrix()",
+                  "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinUnifiedHostServicesAgentAcceptanceTests/shellRejectionMatrix()",
+                  "nodeType": "Test Case",
+                  "result": "Passed"
+                },
+                {
+                  "duration": "0.025s",
+                  "durationInSeconds": 0.024997949600219727,
+                  "name": "runtimeCapabilityLiveRevokeAndRegrantUsesSameSession()",
+                  "nodeIdentifier": "HanlinUnifiedHostServicesAgentAcceptanceTests/runtimeCapabilityLiveRevokeAndRegrantUsesSameSession()",
+                  "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinUnifiedHostServicesAgentAcceptanceTests/runtimeCapabilityLiveRevokeAndRegrantUsesSameSession()",
+                  "nodeType": "Test Case",
+                  "result": "Passed"
+                }
+              ],
+              "name": "Agent Host Services Acceptance",
+              "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinUnifiedHostServicesAgentAcceptanceTests",
+              "nodeType": "Test Suite",
+              "result": "Passed"
+            },
+            {
+              "children": [
+                {
+                  "duration": "0.24s",
+                  "durationInSeconds": 0.2406299114227295,
+                  "name": "runtimeBrokerAutoStartsStoppedRuntime()",
+                  "nodeIdentifier": "HanlinUnifiedHostServicesE2ETests/runtimeBrokerAutoStartsStoppedRuntime()",
+                  "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinUnifiedHostServicesE2ETests/runtimeBrokerAutoStartsStoppedRuntime()",
+                  "nodeType": "Test Case",
+                  "result": "Passed"
+                },
+                {
+                  "duration": "0.0014s",
+                  "durationInSeconds": 0.0014371871948242188,
+                  "name": "runtimeBrokerRespectsAvailabilityToggle()",
+                  "nodeIdentifier": "HanlinUnifiedHostServicesE2ETests/runtimeBrokerRespectsAvailabilityToggle()",
+                  "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinUnifiedHostServicesE2ETests/runtimeBrokerRespectsAvailabilityToggle()",
+                  "nodeType": "Test Case",
+                  "result": "Passed"
+                },
+                {
+                  "duration": "0.0029s",
+                  "durationInSeconds": 0.002949953079223633,
+                  "name": "capabilityAuthorityGrantRevokePersists()",
+                  "nodeIdentifier": "HanlinUnifiedHostServicesE2ETests/capabilityAuthorityGrantRevokePersists()",
+                  "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinUnifiedHostServicesE2ETests/capabilityAuthorityGrantRevokePersists()",
+                  "nodeType": "Test Case",
+                  "result": "Passed"
+                },
+                {
+                  "duration": "0.038s",
+                  "durationInSeconds": 0.038445234298706055,
+                  "name": "packageStoreGrantPrecedenceAndLiveRevocation()",
+                  "nodeIdentifier": "HanlinUnifiedHostServicesE2ETests/packageStoreGrantPrecedenceAndLiveRevocation()",
+                  "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinUnifiedHostServicesE2ETests/packageStoreGrantPrecedenceAndLiveRevocation()",
+                  "nodeType": "Test Case",
+                  "result": "Passed"
+                },
+                {
+                  "duration": "0.01s",
+                  "durationInSeconds": 0.010312080383300781,
+                  "name": "crossCallerConcurrency()",
+                  "nodeIdentifier": "HanlinUnifiedHostServicesE2ETests/crossCallerConcurrency()",
+                  "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinUnifiedHostServicesE2ETests/crossCallerConcurrency()",
+                  "nodeType": "Test Case",
+                  "result": "Passed"
+                },
+                {
+                  "duration": "0.016s",
+                  "durationInSeconds": 0.016484975814819336,
+                  "name": "storageIsolationBetweenApps()",
+                  "nodeIdentifier": "HanlinUnifiedHostServicesE2ETests/storageIsolationBetweenApps()",
+                  "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinUnifiedHostServicesE2ETests/storageIsolationBetweenApps()",
+                  "nodeType": "Test Case",
+                  "result": "Passed"
+                },
+                {
+                  "duration": "0.0019s",
+                  "durationInSeconds": 0.00186920166015625,
+                  "name": "fileCapabilityRequired()",
+                  "nodeIdentifier": "HanlinUnifiedHostServicesE2ETests/fileCapabilityRequired()",
+                  "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinUnifiedHostServicesE2ETests/fileCapabilityRequired()",
+                  "nodeType": "Test Case",
+                  "result": "Passed"
+                },
+                {
+                  "duration": "0.045s",
+                  "durationInSeconds": 0.04547595977783203,
+                  "name": "fileScopesOverwriteDeleteSharedGateAndSymlinkProtection()",
+                  "nodeIdentifier": "HanlinUnifiedHostServicesE2ETests/fileScopesOverwriteDeleteSharedGateAndSymlinkProtection()",
+                  "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinUnifiedHostServicesE2ETests/fileScopesOverwriteDeleteSharedGateAndSymlinkProtection()",
+                  "nodeType": "Test Case",
+                  "result": "Passed"
+                },
+                {
+                  "duration": "0.045s",
+                  "durationInSeconds": 0.04543900489807129,
+                  "name": "sqliteScopeAndTraversalRejection()",
+                  "nodeIdentifier": "HanlinUnifiedHostServicesE2ETests/sqliteScopeAndTraversalRejection()",
+                  "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinUnifiedHostServicesE2ETests/sqliteScopeAndTraversalRejection()",
+                  "nodeType": "Test Case",
+                  "result": "Passed"
+                },
+                {
+                  "duration": "0.094s",
+                  "durationInSeconds": 0.0936880111694336,
+                  "name": "sqliteTransactionsTypesConcurrencyAndScopeIsolation()",
+                  "nodeIdentifier": "HanlinUnifiedHostServicesE2ETests/sqliteTransactionsTypesConcurrencyAndScopeIsolation()",
+                  "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinUnifiedHostServicesE2ETests/sqliteTransactionsTypesConcurrencyAndScopeIsolation()",
+                  "nodeType": "Test Case",
+                  "result": "Passed"
+                },
+                {
+                  "duration": "0.00036s",
+                  "durationInSeconds": 0.0003561973571777344,
+                  "name": "nativeScriptSessionsResolveExactlyAndTeardownIndependently()",
+                  "nodeIdentifier": "HanlinUnifiedHostServicesE2ETests/nativeScriptSessionsResolveExactlyAndTeardownIndependently()",
+                  "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinUnifiedHostServicesE2ETests/nativeScriptSessionsResolveExactlyAndTeardownIndependently()",
+                  "nodeType": "Test Case",
+                  "result": "Passed"
+                },
+                {
+                  "duration": "0.0017s",
+                  "durationInSeconds": 0.0017008781433105469,
+                  "name": "nativeScriptActiveBridgeIsolationAndNoGlobalLeakage()",
+                  "nodeIdentifier": "HanlinUnifiedHostServicesE2ETests/nativeScriptActiveBridgeIsolationAndNoGlobalLeakage()",
+                  "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinUnifiedHostServicesE2ETests/nativeScriptActiveBridgeIsolationAndNoGlobalLeakage()",
+                  "nodeType": "Test Case",
+                  "result": "Passed"
+                },
+                {
+                  "duration": "0.28s",
+                  "durationInSeconds": 0.2810781002044678,
+                  "name": "nativeScriptRuntimeRealLaunchFixtureAndTeardown()",
+                  "nodeIdentifier": "HanlinUnifiedHostServicesE2ETests/nativeScriptRuntimeRealLaunchFixtureAndTeardown()",
+                  "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinUnifiedHostServicesE2ETests/nativeScriptRuntimeRealLaunchFixtureAndTeardown()",
+                  "nodeType": "Test Case",
+                  "result": "Passed"
+                },
+                {
+                  "duration": "0.0018s",
+                  "durationInSeconds": 0.001821756362915039,
+                  "name": "expoAppContextsResolveExactlyAndTeardownIndependently()",
+                  "nodeIdentifier": "HanlinUnifiedHostServicesE2ETests/expoAppContextsResolveExactlyAndTeardownIndependently()",
+                  "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinUnifiedHostServicesE2ETests/expoAppContextsResolveExactlyAndTeardownIndependently()",
+                  "nodeType": "Test Case",
+                  "result": "Passed"
+                }
+              ],
+              "name": "Unified Host Services E2E",
+              "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinUnifiedHostServicesE2ETests",
+              "nodeType": "Test Suite",
+              "result": "Passed"
+            },
+            {
+              "children": [
+                {
+                  "duration": "0.00011s",
+                  "durationInSeconds": 0.00011301040649414062,
+                  "name": "agentContextHasAllCapabilities()",
+                  "nodeIdentifier": "HanlinUnifiedHostServicesTests/agentContextHasAllCapabilities()",
+                  "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinUnifiedHostServicesTests/agentContextHasAllCapabilities()",
+                  "nodeType": "Test Case",
+                  "result": "Passed"
+                },
+                {
+                  "duration": "0.000025s",
+                  "durationInSeconds": 0.000025033950805664062,
+                  "name": "miniAppContextScopesCapabilities()",
+                  "nodeIdentifier": "HanlinUnifiedHostServicesTests/miniAppContextScopesCapabilities()",
+                  "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinUnifiedHostServicesTests/miniAppContextScopesCapabilities()",
+                  "nodeType": "Test Case",
+                  "result": "Passed"
+                },
+                {
+                  "duration": "0.000024s",
+                  "durationInSeconds": 0.000024080276489257812,
+                  "name": "miniAppContextDerivesWorkspaceIdentifier()",
+                  "nodeIdentifier": "HanlinUnifiedHostServicesTests/miniAppContextDerivesWorkspaceIdentifier()",
+                  "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinUnifiedHostServicesTests/miniAppContextDerivesWorkspaceIdentifier()",
+                  "nodeType": "Test Case",
+                  "result": "Passed"
+                },
+                {
+                  "duration": "0.000069s",
+                  "durationInSeconds": 0.00006914138793945312,
+                  "name": "legacyAliasResolution()",
+                  "nodeIdentifier": "HanlinUnifiedHostServicesTests/legacyAliasResolution()",
+                  "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinUnifiedHostServicesTests/legacyAliasResolution()",
+                  "nodeType": "Test Case",
+                  "result": "Passed"
+                },
+                {
+                  "duration": "0.00014s",
+                  "durationInSeconds": 0.00014281272888183594,
+                  "name": "allKnownCapabilitiesHaveMetadata()",
+                  "nodeIdentifier": "HanlinUnifiedHostServicesTests/allKnownCapabilitiesHaveMetadata()",
+                  "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinUnifiedHostServicesTests/allKnownCapabilitiesHaveMetadata()",
+                  "nodeType": "Test Case",
+                  "result": "Passed"
+                },
+                {
+                  "duration": "0.00003s",
+                  "durationInSeconds": 0.000029802322387695312,
+                  "name": "capabilityCheckWithAllWildcard()",
+                  "nodeIdentifier": "HanlinUnifiedHostServicesTests/capabilityCheckWithAllWildcard()",
+                  "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinUnifiedHostServicesTests/capabilityCheckWithAllWildcard()",
+                  "nodeType": "Test Case",
+                  "result": "Passed"
+                },
+                {
+                  "duration": "0.001s",
+                  "durationInSeconds": 0.001004934310913086,
+                  "name": "capabilityCheckDeniesUngranted()",
+                  "nodeIdentifier": "HanlinUnifiedHostServicesTests/capabilityCheckDeniesUngranted()",
+                  "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinUnifiedHostServicesTests/capabilityCheckDeniesUngranted()",
+                  "nodeType": "Test Case",
+                  "result": "Passed"
+                },
+                {
+                  "duration": "0.003s",
+                  "durationInSeconds": 0.0030007362365722656,
+                  "name": "liveCapabilityGrantAndRevokeTakesImmediateEffect()",
+                  "nodeIdentifier": "HanlinUnifiedHostServicesTests/liveCapabilityGrantAndRevokeTakesImmediateEffect()",
+                  "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinUnifiedHostServicesTests/liveCapabilityGrantAndRevokeTakesImmediateEffect()",
+                  "nodeType": "Test Case",
+                  "result": "Passed"
+                },
+                {
+                  "duration": "0.000043s",
+                  "durationInSeconds": 0.00004315376281738281,
+                  "name": "runtimesStoppedByDefaultOnFreshLaunch()",
+                  "nodeIdentifier": "HanlinUnifiedHostServicesTests/runtimesStoppedByDefaultOnFreshLaunch()",
+                  "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinUnifiedHostServicesTests/runtimesStoppedByDefaultOnFreshLaunch()",
+                  "nodeType": "Test Case",
+                  "result": "Passed"
+                },
+                {
+                  "duration": "0.00004s",
+                  "durationInSeconds": 0.00004029273986816406,
+                  "name": "runtimeAvailabilityStateUpdates()",
+                  "nodeIdentifier": "HanlinUnifiedHostServicesTests/runtimeAvailabilityStateUpdates()",
+                  "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinUnifiedHostServicesTests/runtimeAvailabilityStateUpdates()",
+                  "nodeType": "Test Case",
+                  "result": "Passed"
+                },
+                {
+                  "duration": "0.000033s",
+                  "durationInSeconds": 0.000032901763916015625,
+                  "name": "typeScriptDependencyWarning()",
+                  "nodeIdentifier": "HanlinUnifiedHostServicesTests/typeScriptDependencyWarning()",
+                  "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinUnifiedHostServicesTests/typeScriptDependencyWarning()",
+                  "nodeType": "Test Case",
+                  "result": "Passed"
+                },
+                {
+                  "duration": "0.0002s",
+                  "durationInSeconds": 0.0002048015594482422,
+                  "name": "allErrorCasesHaveDescription()",
+                  "nodeIdentifier": "HanlinUnifiedHostServicesTests/allErrorCasesHaveDescription()",
+                  "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinUnifiedHostServicesTests/allErrorCasesHaveDescription()",
+                  "nodeType": "Test Case",
+                  "result": "Passed"
+                },
+                {
+                  "duration": "0.000094s",
+                  "durationInSeconds": 0.00009393692016601562,
+                  "name": "scriptingJSCEngineExists()",
+                  "nodeIdentifier": "HanlinUnifiedHostServicesTests/scriptingJSCEngineExists()",
+                  "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinUnifiedHostServicesTests/scriptingJSCEngineExists()",
+                  "nodeType": "Test Case",
+                  "result": "Passed"
+                },
+                {
+                  "duration": "0.00076s",
+                  "durationInSeconds": 0.0007588863372802734,
+                  "name": "brokerRejectsUngrantedCapability()",
+                  "nodeIdentifier": "HanlinUnifiedHostServicesTests/brokerRejectsUngrantedCapability()",
+                  "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinUnifiedHostServicesTests/brokerRejectsUngrantedCapability()",
+                  "nodeType": "Test Case",
+                  "result": "Passed"
+                },
+                {
+                  "duration": "0.000029s",
+                  "durationInSeconds": 0.000028848648071289062,
+                  "name": "brokerAllowsWildcardCapability()",
+                  "nodeIdentifier": "HanlinUnifiedHostServicesTests/brokerAllowsWildcardCapability()",
+                  "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinUnifiedHostServicesTests/brokerAllowsWildcardCapability()",
+                  "nodeType": "Test Case",
+                  "result": "Passed"
+                },
+                {
+                  "duration": "0.00013s",
+                  "durationInSeconds": 0.00013303756713867188,
+                  "name": "fileServiceRejectsTraversal()",
+                  "nodeIdentifier": "HanlinUnifiedHostServicesTests/fileServiceRejectsTraversal()",
+                  "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinUnifiedHostServicesTests/fileServiceRejectsTraversal()",
+                  "nodeType": "Test Case",
+                  "result": "Passed"
+                },
+                {
+                  "duration": "0.000023s",
+                  "durationInSeconds": 0.00002288818359375,
+                  "name": "fileServiceAcceptsSafePaths()",
+                  "nodeIdentifier": "HanlinUnifiedHostServicesTests/fileServiceAcceptsSafePaths()",
+                  "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinUnifiedHostServicesTests/fileServiceAcceptsSafePaths()",
+                  "nodeType": "Test Case",
+                  "result": "Passed"
+                }
+              ],
+              "name": "Unified Host Services",
+              "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinUnifiedHostServicesTests",
+              "nodeType": "Test Suite",
+              "result": "Passed"
+            },
+            {
+              "children": [
+                {
+                  "duration": "0.0074s",
+                  "durationInSeconds": 0.007440090179443359,
                   "name": "LegacyToolCanonicalAdapter matches exact buildMemoryTools source truth (24 tools)",
                   "nodeIdentifier": "LegacyToolMigrationTests/legacyAdapterMatchesSourceTruth()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/LegacyToolMigrationTests/legacyAdapterMatchesSourceTruth()",
@@ -1112,8 +1876,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.014s",
-                  "durationInSeconds": 0.014140844345092773,
+                  "duration": "0.0082s",
+                  "durationInSeconds": 0.008220195770263672,
                   "name": "Category toggles correctly filter legacy tool sources",
                   "nodeIdentifier": "LegacyToolMigrationTests/legacyAdapterCategoryFiltering()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/LegacyToolMigrationTests/legacyAdapterCategoryFiltering()",
@@ -1121,8 +1885,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.01s",
-                  "durationInSeconds": 0.010364055633544922,
+                  "duration": "0.005s",
+                  "durationInSeconds": 0.005029916763305664,
                   "name": "Canonical authority indexes all 24 legacy sources and routes backend correctly",
                   "nodeIdentifier": "LegacyToolMigrationTests/canonicalAuthorityLegacyIndexing()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/LegacyToolMigrationTests/canonicalAuthorityLegacyIndexing()",
@@ -1130,8 +1894,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.011s",
-                  "durationInSeconds": 0.0113067626953125,
+                  "duration": "0.0076s",
+                  "durationInSeconds": 0.007620096206665039,
                   "name": "PreparedTools searches legacy tools by keyword and filters schemas by exposed aliases",
                   "nodeIdentifier": "LegacyToolMigrationTests/preparedToolsSearchAndSchemaFiltering()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/LegacyToolMigrationTests/preparedToolsSearchAndSchemaFiltering()",
@@ -1139,8 +1903,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.005s",
-                  "durationInSeconds": 0.005031108856201172,
+                  "duration": "0.0049s",
+                  "durationInSeconds": 0.004873037338256836,
                   "name": "Legacy tool canonical execution cutover routes to legacy executor and fails truthfully when unconfigured",
                   "nodeIdentifier": "LegacyToolMigrationTests/legacyToolCanonicalExecutionCutover()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/LegacyToolMigrationTests/legacyToolCanonicalExecutionCutover()",
@@ -1156,17 +1920,17 @@
             {
               "children": [
                 {
-                  "duration": "0.011s",
-                  "durationInSeconds": 0.01145482063293457,
-                  "name": "CHAT-24: Stop generation while a model/tool run is active cancels the run, returns composer to idle, and avoids stale output",
+                  "duration": "0.056s",
+                  "durationInSeconds": 0.055606842041015625,
+                  "name": "CHAT-24: Stop generation while a model/tool run is active cancels the Hanlin run, returns composer to idle, and prevents stale output",
                   "nodeIdentifier": "MasterScenarioSemanticAcceptanceTests/chat24StopGenerationCancelsRunAndReturnsIdle()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/MasterScenarioSemanticAcceptanceTests/chat24StopGenerationCancelsRunAndReturnsIdle()",
                   "nodeType": "Test Case",
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.000054s",
-                  "durationInSeconds": 0.000053882598876953125,
+                  "duration": "0.76s",
+                  "durationInSeconds": 0.763312816619873,
                   "name": "SH-03: Removing framework/symbol for one command in fixture package marks it unavailable with precise dependency reporting while other commands continue",
                   "nodeIdentifier": "MasterScenarioSemanticAcceptanceTests/sh03MissingFrameworkReportsUnavailableWithDependencies()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/MasterScenarioSemanticAcceptanceTests/sh03MissingFrameworkReportsUnavailableWithDependencies()",
@@ -1174,54 +1938,54 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.005s",
-                  "durationInSeconds": 0.0050318241119384766,
-                  "name": "SH-05: program=grep arguments=['alpha','sample.txt'] produces two alpha lines without classifying alpha as required path",
+                  "duration": "0.49s",
+                  "durationInSeconds": 0.4936046600341797,
+                  "name": "SH-05: program=grep arguments=['alpha','sample.txt'] executes via production ShellRuntimeService and ExecuteShellCommandTool producing exact two alpha lines",
                   "nodeIdentifier": "MasterScenarioSemanticAcceptanceTests/sh05GrepAlphaExactTwoLinesWithoutPathRequirement()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/MasterScenarioSemanticAcceptanceTests/sh05GrepAlphaExactTwoLinesWithoutPathRequirement()",
                   "nodeType": "Test Case",
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.0019s",
-                  "durationInSeconds": 0.0019481182098388672,
-                  "name": "CMD-04: program=curl arguments=['${FIXTURE_BASE}/ok.json'] produces JSON with marker=HANLIN_OK, answer=42, exitCode=0",
+                  "duration": "0.5s",
+                  "durationInSeconds": 0.4986898899078369,
+                  "name": "CMD-04: program=curl arguments=['${FIXTURE_BASE}/ok.json'] executes real ios_system curl against loopback fixture server returning marker=HANLIN_OK, answer=42, exitCode=0",
                   "nodeIdentifier": "MasterScenarioSemanticAcceptanceTests/cmd04CurlFixtureBaseReturnsExpectedJSONAndZeroExitCode()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/MasterScenarioSemanticAcceptanceTests/cmd04CurlFixtureBaseReturnsExpectedJSONAndZeroExitCode()",
                   "nodeType": "Test Case",
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.0031s",
-                  "durationInSeconds": 0.0031309127807617188,
-                  "name": "ZIP-04: Foundation URL aliases of /var and /private/var in same temp directory resolve to identical destination without false escape",
+                  "duration": "0.039s",
+                  "durationInSeconds": 0.039286136627197266,
+                  "name": "ZIP-04: Foundation URL aliases of /var and /private/var in same temp directory resolve to identical destination in SkillImporter and SkillStore without false escape",
                   "nodeIdentifier": "MasterScenarioSemanticAcceptanceTests/zip04FoundationVarAndPrivateVarAliasesResolveWithoutFalseEscape()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/MasterScenarioSemanticAcceptanceTests/zip04FoundationVarAndPrivateVarAliasesResolveWithoutFalseEscape()",
                   "nodeType": "Test Case",
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.048s",
-                  "durationInSeconds": 0.04847574234008789,
-                  "name": "ZIP-07: Skill import with LICENSE, assets/data.bin, sample.xlsx, source.swift, module.wasm installs without unsupportedFileType error and all bytes are accessible",
+                  "duration": "0.052s",
+                  "durationInSeconds": 0.052371978759765625,
+                  "name": "ZIP-07: Skill import with LICENSE, assets/data.bin, valid OpenXML sample.xlsx, source.swift, module.wasm installs without unsupportedFileType error and all bytes are accessible",
                   "nodeIdentifier": "MasterScenarioSemanticAcceptanceTests/zip07SkillImportPreservesAllAssetFilesByteForByte()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/MasterScenarioSemanticAcceptanceTests/zip07SkillImportPreservesAllAssetFilesByteForByte()",
                   "nodeType": "Test Case",
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.0097s",
-                  "durationInSeconds": 0.00972604751586914,
-                  "name": "ZIP-11: Internal relative paths ./references/a.md and references/x/../a.md normalize correctly inside package without blanket rejection",
+                  "duration": "0.024s",
+                  "durationInSeconds": 0.0244293212890625,
+                  "name": "ZIP-11: Internal relative paths ./references/a.md and references/x/../a.md normalize correctly across HanlinArchivePolicy, SkillImporter, SkillStore, and ReadSkillResourceTool",
                   "nodeIdentifier": "MasterScenarioSemanticAcceptanceTests/zip11InternalRelativePathsResolveWithoutBlanketRejection()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/MasterScenarioSemanticAcceptanceTests/zip11InternalRelativePathsResolveWithoutBlanketRejection()",
                   "nodeType": "Test Case",
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.00014s",
-                  "durationInSeconds": 0.00014209747314453125,
-                  "name": "COREAI-06: GGUF/LLM.swift local provider streams and cancels cleanly after Core AI provider integration",
+                  "duration": "0.067s",
+                  "durationInSeconds": 0.0666959285736084,
+                  "name": "COREAI-06: GGUF/LLM.swift local provider streams and cancels cleanly via APIManager and LocalLLMStreamingAdapter alongside CoreAILanguageModelProvider",
                   "nodeIdentifier": "MasterScenarioSemanticAcceptanceTests/coreai06GGUFLLMStreamingAndCancellationRegression()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/MasterScenarioSemanticAcceptanceTests/coreai06GGUFLLMStreamingAndCancellationRegression()",
                   "nodeType": "Test Case",
@@ -1236,8 +2000,8 @@
             {
               "children": [
                 {
-                  "duration": "0.099s",
-                  "durationInSeconds": 0.09904599189758301,
+                  "duration": "0.085s",
+                  "durationInSeconds": 0.08545589447021484,
                   "name": "OpenAI native production route: smoke with tool call continuation and terminal success",
                   "nodeIdentifier": "ProductionProviderConformanceTests/testOpenAINativeProductionAPIManagerSmoke()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ProductionProviderConformanceTests/testOpenAINativeProductionAPIManagerSmoke()",
@@ -1245,8 +2009,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.16s",
-                  "durationInSeconds": 0.1561439037322998,
+                  "duration": "0.15s",
+                  "durationInSeconds": 0.14967584609985352,
                   "name": "P01: Skills dynamic tool exposure and tool execution through production loop",
                   "nodeIdentifier": "ProductionProviderConformanceTests/testP01SkillsExposureAndExecution()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ProductionProviderConformanceTests/testP01SkillsExposureAndExecution()",
@@ -1254,8 +2018,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.18s",
-                  "durationInSeconds": 0.17589616775512695,
+                  "duration": "0.11s",
+                  "durationInSeconds": 0.10802793502807617,
                   "name": "P02: Non-fatal tool failure recovers and completes in same turn",
                   "nodeIdentifier": "ProductionProviderConformanceTests/testP02FailureRecovery()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ProductionProviderConformanceTests/testP02FailureRecovery()",
@@ -1263,8 +2027,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.22s",
-                  "durationInSeconds": 0.22246980667114258,
+                  "duration": "0.28s",
+                  "durationInSeconds": 0.279613733291626,
                   "name": "P03: 5-step sequential production tool chain with per-round request validation",
                   "nodeIdentifier": "ProductionProviderConformanceTests/testP03FiveStepSequentialTools()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ProductionProviderConformanceTests/testP03FiveStepSequentialTools()",
@@ -1272,8 +2036,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.084s",
-                  "durationInSeconds": 0.08420491218566895,
+                  "duration": "0.093s",
+                  "durationInSeconds": 0.09263300895690918,
                   "name": "P04: Parallel tools in single model step through production loop",
                   "nodeIdentifier": "ProductionProviderConformanceTests/testP04ParallelTools()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ProductionProviderConformanceTests/testP04ParallelTools()",
@@ -1281,8 +2045,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.086s",
-                  "durationInSeconds": 0.08648109436035156,
+                  "duration": "0.078s",
+                  "durationInSeconds": 0.07836508750915527,
                   "name": "P05: Production reasoning and tool loop for OpenAI-compatible",
                   "nodeIdentifier": "ProductionProviderConformanceTests/testP05ReasoningToolLoopOpenAICompatible()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ProductionProviderConformanceTests/testP05ReasoningToolLoopOpenAICompatible()",
@@ -1290,8 +2054,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.13s",
-                  "durationInSeconds": 0.12552285194396973,
+                  "duration": "0.14s",
+                  "durationInSeconds": 0.1358039379119873,
                   "name": "P05: Production reasoning and tool loop for Anthropic native",
                   "nodeIdentifier": "ProductionProviderConformanceTests/testP05ReasoningToolLoopAnthropic()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ProductionProviderConformanceTests/testP05ReasoningToolLoopAnthropic()",
@@ -1299,8 +2063,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.082s",
-                  "durationInSeconds": 0.0820913314819336,
+                  "duration": "0.11s",
+                  "durationInSeconds": 0.10951709747314453,
                   "name": "P05: Production reasoning and tool loop for Google native",
                   "nodeIdentifier": "ProductionProviderConformanceTests/testP05ReasoningToolLoopGoogle()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ProductionProviderConformanceTests/testP05ReasoningToolLoopGoogle()",
@@ -1308,8 +2072,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.078s",
-                  "durationInSeconds": 0.07843899726867676,
+                  "duration": "0.091s",
+                  "durationInSeconds": 0.09118795394897461,
                   "name": "P05: Production reasoning and tool loop for OpenRouter with exact structural equality",
                   "nodeIdentifier": "ProductionProviderConformanceTests/testP05ReasoningToolLoopOpenRouter()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ProductionProviderConformanceTests/testP05ReasoningToolLoopOpenRouter()",
@@ -1317,8 +2081,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.89s",
-                  "durationInSeconds": 0.8905389308929443,
+                  "duration": "0.96s",
+                  "durationInSeconds": 0.9562249183654785,
                   "name": "P06: 20-step production tool loop with per-round request validation",
                   "nodeIdentifier": "ProductionProviderConformanceTests/testP06TwentyStepProductionLoop()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ProductionProviderConformanceTests/testP06TwentyStepProductionLoop()",
@@ -1327,7 +2091,7 @@
                 },
                 {
                   "duration": "2s",
-                  "durationInSeconds": 2.1969568729400635,
+                  "durationInSeconds": 2.170248031616211,
                   "name": "P07: Provider abrupt close failure surfaces error without completing",
                   "nodeIdentifier": "ProductionProviderConformanceTests/testP07AbruptCloseFailure()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ProductionProviderConformanceTests/testP07AbruptCloseFailure()",
@@ -1335,8 +2099,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.12s",
-                  "durationInSeconds": 0.11530685424804688,
+                  "duration": "0.11s",
+                  "durationInSeconds": 0.10738301277160645,
                   "name": "P08: Provider HTTP 200 with finish_reason='other' and 0 content is characterized",
                   "nodeIdentifier": "ProductionProviderConformanceTests/testP08FinishOtherNoContent()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ProductionProviderConformanceTests/testP08FinishOtherNoContent()",
@@ -1344,8 +2108,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.12s",
-                  "durationInSeconds": 0.12455487251281738,
+                  "duration": "0.13s",
+                  "durationInSeconds": 0.13159704208374023,
                   "name": "P09: Provider stream cancellation cancels active request without late events or mutation",
                   "nodeIdentifier": "ProductionProviderConformanceTests/testP09CancelProviderStream()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ProductionProviderConformanceTests/testP09CancelProviderStream()",
@@ -1353,8 +2117,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.067s",
-                  "durationInSeconds": 0.06657290458679199,
+                  "duration": "0.13s",
+                  "durationInSeconds": 0.12845325469970703,
                   "name": "P10: Cancellation during running tool cancels run and suppresses late output",
                   "nodeIdentifier": "ProductionProviderConformanceTests/testP10CancelRunningTool()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ProductionProviderConformanceTests/testP10CancelRunningTool()",
@@ -1362,8 +2126,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.2s",
-                  "durationInSeconds": 0.19737601280212402,
+                  "duration": "0.17s",
+                  "durationInSeconds": 0.17472505569458008,
                   "name": "P11: Run B supersedes Run A on the same APIManager",
                   "nodeIdentifier": "ProductionProviderConformanceTests/testP11OverlappingRunBSupercedesA()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ProductionProviderConformanceTests/testP11OverlappingRunBSupercedesA()",
@@ -1371,8 +2135,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.14s",
-                  "durationInSeconds": 0.13617610931396484,
+                  "duration": "0.15s",
+                  "durationInSeconds": 0.1498241424560547,
                   "name": "P12A: Real application second turn history preserves user and assistant visible text",
                   "nodeIdentifier": "ProductionProviderConformanceTests/testP12ARealApplicationSecondTurnHistory()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ProductionProviderConformanceTests/testP12ARealApplicationSecondTurnHistory()",
@@ -1380,8 +2144,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.0094s",
-                  "durationInSeconds": 0.009402990341186523,
+                  "duration": "0.0065s",
+                  "durationInSeconds": 0.006454944610595703,
                   "name": "Section 19: Dynamic Provider Inventory derived from getKeyList() and getModelList()",
                   "nodeIdentifier": "ProductionProviderConformanceTests/testDynamicProviderInventory()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ProductionProviderConformanceTests/testDynamicProviderInventory()",
@@ -1389,8 +2153,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.00078s",
-                  "durationInSeconds": 0.0007848739624023438,
+                  "duration": "0.00037s",
+                  "durationInSeconds": 0.0003719329833984375,
                   "name": "Section 20: Characterize APIType.openAIResponse as dormant and unreachable in user configuration",
                   "nodeIdentifier": "ProductionProviderConformanceTests/testOpenAIResponseDormancyCharacterization()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ProductionProviderConformanceTests/testOpenAIResponseDormancyCharacterization()",
@@ -1406,8 +2170,8 @@
             {
               "children": [
                 {
-                  "duration": "0.00077s",
-                  "durationInSeconds": 0.0007748603820800781,
+                  "duration": "0.0009s",
+                  "durationInSeconds": 0.0008990764617919922,
                   "name": "Code skill prioritizes execute_local_python_code and drops execute_remote_python_code",
                   "nodeIdentifier": "ProductionSystemSkillsTests/productionCodeSkillPrefersLocalPythonAndDropsRemote()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ProductionSystemSkillsTests/productionCodeSkillPrefersLocalPythonAndDropsRemote()",
@@ -1415,8 +2179,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.00036s",
-                  "durationInSeconds": 0.00036215782165527344,
+                  "duration": "0.00019s",
+                  "durationInSeconds": 0.00019407272338867188,
                   "name": "Code skill prefers local python only",
                   "nodeIdentifier": "ProductionSystemSkillsTests/codeSkillPrefersLocalPythonOnly()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ProductionSystemSkillsTests/codeSkillPrefersLocalPythonOnly()",
@@ -1424,8 +2188,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.00059s",
-                  "durationInSeconds": 0.0005900859832763672,
+                  "duration": "0.00036s",
+                  "durationInSeconds": 0.00035691261291503906,
                   "name": "All system skills have valid descriptors and tool integrity",
                   "nodeIdentifier": "ProductionSystemSkillsTests/systemSkillsDescriptionsAndToolIntegrity()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ProductionSystemSkillsTests/systemSkillsDescriptionsAndToolIntegrity()",
@@ -1433,8 +2197,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.012s",
-                  "durationInSeconds": 0.012249946594238281,
+                  "duration": "0.0096s",
+                  "durationInSeconds": 0.009642362594604492,
                   "name": "Production system skill aliases resolve against actual canonical authority",
                   "nodeIdentifier": "ProductionSystemSkillsTests/productionSystemSkillAliasesResolveAgainstActualCanonicalAuthority()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ProductionSystemSkillsTests/productionSystemSkillAliasesResolveAgainstActualCanonicalAuthority()",
@@ -1442,8 +2206,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.00098s",
-                  "durationInSeconds": 0.0009772777557373047,
+                  "duration": "0.0011s",
+                  "durationInSeconds": 0.0010712146759033203,
                   "name": "Disabled domain disappears from skill index",
                   "nodeIdentifier": "ProductionSystemSkillsTests/disabledDomainDisappearsFromSkillIndex()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ProductionSystemSkillsTests/disabledDomainDisappearsFromSkillIndex()",
@@ -1451,8 +2215,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.0077s",
-                  "durationInSeconds": 0.007655143737792969,
+                  "duration": "0.01s",
+                  "durationInSeconds": 0.01009225845336914,
                   "name": "Canonical tools remain discoverable by exact alias",
                   "nodeIdentifier": "ProductionSystemSkillsTests/canonicalToolsRemainDiscoverableByExactAlias()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ProductionSystemSkillsTests/canonicalToolsRemainDiscoverableByExactAlias()",
@@ -1460,8 +2224,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.0027s",
-                  "durationInSeconds": 0.0026710033416748047,
+                  "duration": "0.0029s",
+                  "durationInSeconds": 0.00290679931640625,
                   "name": "Catalog collision requires explicit override",
                   "nodeIdentifier": "ProductionSystemSkillsTests/catalogCollisionRequiresExplicitOverride()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ProductionSystemSkillsTests/catalogCollisionRequiresExplicitOverride()",
@@ -1469,8 +2233,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "6s",
-                  "durationInSeconds": 6.3883280754089355,
+                  "duration": "4s",
+                  "durationInSeconds": 4.6345179080963135,
                   "name": "Package skill refresh tracks current generation",
                   "nodeIdentifier": "ProductionSystemSkillsTests/packageSkillRefreshTracksCurrentGeneration()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ProductionSystemSkillsTests/packageSkillRefreshTracksCurrentGeneration()",
@@ -1478,8 +2242,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "2s",
-                  "durationInSeconds": 2.163400173187256,
+                  "duration": "1s",
+                  "durationInSeconds": 1.982093095779419,
                   "name": "Package disable and uninstall remove skill immediately",
                   "nodeIdentifier": "ProductionSystemSkillsTests/packageDisableAndUninstallRemoveSkillImmediately()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ProductionSystemSkillsTests/packageDisableAndUninstallRemoveSkillImmediately()",
@@ -1487,8 +2251,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.0014s",
-                  "durationInSeconds": 0.0014450550079345703,
+                  "duration": "0.00062s",
+                  "durationInSeconds": 0.0006201267242431641,
                   "name": "Same tier unrelated sources cannot silently shadow each other",
                   "nodeIdentifier": "ProductionSystemSkillsTests/sameTierUnrelatedSourcesCannotSilentlyShadow()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ProductionSystemSkillsTests/sameTierUnrelatedSourcesCannotSilentlyShadow()",
@@ -1496,8 +2260,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.0024s",
-                  "durationInSeconds": 0.002351045608520508,
+                  "duration": "0.00086s",
+                  "durationInSeconds": 0.0008640289306640625,
                   "name": "Store refresh preserves disabled production domains",
                   "nodeIdentifier": "ProductionSystemSkillsTests/storeRefreshPreservesDisabledProductionDomains()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ProductionSystemSkillsTests/storeRefreshPreservesDisabledProductionDomains()",
@@ -1513,8 +2277,8 @@
             {
               "children": [
                 {
-                  "duration": "8s",
-                  "durationInSeconds": 8.873813152313232,
+                  "duration": "7s",
+                  "durationInSeconds": 7.030627965927124,
                   "name": "Real npm packages install, import through Node and TypeScript, persist, and uninstall",
                   "nodeIdentifier": "RuntimePackageAcceptanceTests/npmInstallImportPersistenceAndUninstall()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/RuntimePackageAcceptanceTests/npmInstallImportPersistenceAndUninstall()",
@@ -1522,8 +2286,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.094s",
-                  "durationInSeconds": 0.09351992607116699,
+                  "duration": "0.08s",
+                  "durationInSeconds": 0.07973027229309082,
                   "name": "npm invalid package and version fail without registry contamination",
                   "nodeIdentifier": "RuntimePackageAcceptanceTests/npmInvalidInputsRollback()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/RuntimePackageAcceptanceTests/npmInvalidInputsRollback()",
@@ -1532,7 +2296,7 @@
                 },
                 {
                   "duration": "2s",
-                  "durationInSeconds": 2.307623863220215,
+                  "durationInSeconds": 2.1662001609802246,
                   "name": "Real pure-Python dependency graph installs, imports, persists, and uninstalls",
                   "nodeIdentifier": "RuntimePackageAcceptanceTests/pythonInstallDependencyImportPersistenceAndUninstall()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/RuntimePackageAcceptanceTests/pythonInstallDependencyImportPersistenceAndUninstall()",
@@ -1540,8 +2304,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.063s",
-                  "durationInSeconds": 0.06297612190246582,
+                  "duration": "0.065s",
+                  "durationInSeconds": 0.06506609916687012,
                   "name": "Python manager explains native wheels and rejects invalid releases",
                   "nodeIdentifier": "RuntimePackageAcceptanceTests/pythonUnsupportedAndInvalidInputs()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/RuntimePackageAcceptanceTests/pythonUnsupportedAndInvalidInputs()",
@@ -1557,8 +2321,8 @@
             {
               "children": [
                 {
-                  "duration": "0.011s",
-                  "durationInSeconds": 0.011204957962036133,
+                  "duration": "0.0069s",
+                  "durationInSeconds": 0.006922006607055664,
                   "name": "preparedSchemasHaveUniqueAliasesRoutesAndValidObjectContracts()",
                   "nodeIdentifier": "RuntimeToolContractTests/preparedSchemasHaveUniqueAliasesRoutesAndValidObjectContracts()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/RuntimeToolContractTests/preparedSchemasHaveUniqueAliasesRoutesAndValidObjectContracts()",
@@ -1566,8 +2330,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.0005s",
-                  "durationInSeconds": 0.0004961490631103516,
+                  "duration": "0.0014s",
+                  "durationInSeconds": 0.001413106918334961,
                   "name": "localAndRemotePythonAreUnambiguous()",
                   "nodeIdentifier": "RuntimeToolContractTests/localAndRemotePythonAreUnambiguous()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/RuntimeToolContractTests/localAndRemotePythonAreUnambiguous()",
@@ -1575,8 +2339,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.00039s",
-                  "durationInSeconds": 0.00039005279541015625,
+                  "duration": "0.00078s",
+                  "durationInSeconds": 0.0007801055908203125,
                   "name": "shellSchemaIsStructurallyConstrained()",
                   "nodeIdentifier": "RuntimeToolContractTests/shellSchemaIsStructurallyConstrained()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/RuntimeToolContractTests/shellSchemaIsStructurallyConstrained()",
@@ -1584,8 +2348,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.00049s",
-                  "durationInSeconds": 0.0004928112030029297,
+                  "duration": "0.0014s",
+                  "durationInSeconds": 0.0013570785522460938,
                   "name": "runtimeSchemasAdvertiseOnlyHandledParameters()",
                   "nodeIdentifier": "RuntimeToolContractTests/runtimeSchemasAdvertiseOnlyHandledParameters()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/RuntimeToolContractTests/runtimeSchemasAdvertiseOnlyHandledParameters()",
@@ -1593,8 +2357,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.0019s",
-                  "durationInSeconds": 0.0018792152404785156,
+                  "duration": "0.0026s",
+                  "durationInSeconds": 0.0026040077209472656,
                   "name": "runtimeToolsRejectMalformedArgumentsSemantically()",
                   "nodeIdentifier": "RuntimeToolContractTests/runtimeToolsRejectMalformedArgumentsSemantically()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/RuntimeToolContractTests/runtimeToolsRejectMalformedArgumentsSemantically()",
@@ -1603,7 +2367,7 @@
                 },
                 {
                   "duration": "0.03s",
-                  "durationInSeconds": 0.030081987380981445,
+                  "durationInSeconds": 0.029767751693725586,
                   "name": "strictJSONScalarsDistinguishOneFromTrue()",
                   "nodeIdentifier": "RuntimeToolContractTests/strictJSONScalarsDistinguishOneFromTrue()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/RuntimeToolContractTests/strictJSONScalarsDistinguishOneFromTrue()",
@@ -1611,8 +2375,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.0056s",
-                  "durationInSeconds": 0.005584239959716797,
+                  "duration": "0.007s",
+                  "durationInSeconds": 0.007023811340332031,
                   "name": "javaScriptCoreExpressionValueReachesModel()",
                   "nodeIdentifier": "RuntimeToolContractTests/javaScriptCoreExpressionValueReachesModel()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/RuntimeToolContractTests/javaScriptCoreExpressionValueReachesModel()",
@@ -1620,8 +2384,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.021s",
-                  "durationInSeconds": 0.020900726318359375,
+                  "duration": "0.024s",
+                  "durationInSeconds": 0.02388310432434082,
                   "name": "diagnosticsCountSemanticFailureInsideCompletedRun()",
                   "nodeIdentifier": "RuntimeToolContractTests/diagnosticsCountSemanticFailureInsideCompletedRun()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/RuntimeToolContractTests/diagnosticsCountSemanticFailureInsideCompletedRun()",
@@ -1630,7 +2394,7 @@
                 },
                 {
                   "duration": "0.032s",
-                  "durationInSeconds": 0.03211379051208496,
+                  "durationInSeconds": 0.03155374526977539,
                   "name": "diagnosticsTerminalStateIsIdempotent()",
                   "nodeIdentifier": "RuntimeToolContractTests/diagnosticsTerminalStateIsIdempotent()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/RuntimeToolContractTests/diagnosticsTerminalStateIsIdempotent()",
@@ -1638,8 +2402,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.012s",
-                  "durationInSeconds": 0.012234687805175781,
+                  "duration": "0.013s",
+                  "durationInSeconds": 0.012903928756713867,
                   "name": "diagnosticsRecordsStepMetadataWithoutSecrets()",
                   "nodeIdentifier": "RuntimeToolContractTests/diagnosticsRecordsStepMetadataWithoutSecrets()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/RuntimeToolContractTests/diagnosticsRecordsStepMetadataWithoutSecrets()",
@@ -1655,8 +2419,8 @@
             {
               "children": [
                 {
-                  "duration": "0.0013s",
-                  "durationInSeconds": 0.001300811767578125,
+                  "duration": "0.001s",
+                  "durationInSeconds": 0.0009992122650146484,
                   "name": "Projects Script-only tools with stable provider-qualified identity",
                   "nodeIdentifier": "ScriptingCanonicalAuthorityTests/scriptOnlyCatalog()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ScriptingCanonicalAuthorityTests/scriptOnlyCatalog()",
@@ -1664,8 +2428,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.0029s",
-                  "durationInSeconds": 0.0029077529907226562,
+                  "duration": "0.0014s",
+                  "durationInSeconds": 0.0013649463653564453,
                   "name": "Preserves Native and MCP precedence across all Script collision shapes",
                   "nodeIdentifier": "ScriptingCanonicalAuthorityTests/threeProviderCollisionPolicy()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ScriptingCanonicalAuthorityTests/threeProviderCollisionPolicy()",
@@ -1673,8 +2437,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.00049s",
-                  "durationInSeconds": 0.0004889965057373047,
+                  "duration": "0.00042s",
+                  "durationInSeconds": 0.0004200935363769531,
                   "name": "Rejects duplicate Script logical IDs and wrong-provider routes",
                   "nodeIdentifier": "ScriptingCanonicalAuthorityTests/rejectsInvalidScriptAuthorityInputs()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ScriptingCanonicalAuthorityTests/rejectsInvalidScriptAuthorityInputs()",
@@ -1682,8 +2446,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.0012s",
-                  "durationInSeconds": 0.001216888427734375,
+                  "duration": "0.00051s",
+                  "durationInSeconds": 0.0005147457122802734,
                   "name": "Prepared dispatch selects Script exactly once with no fallback",
                   "nodeIdentifier": "ScriptingCanonicalAuthorityTests/exactScriptDispatch()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ScriptingCanonicalAuthorityTests/exactScriptDispatch()",
@@ -1699,8 +2463,8 @@
             {
               "children": [
                 {
-                  "duration": "0.00035s",
-                  "durationInSeconds": 0.0003459453582763672,
+                  "duration": "0.00027s",
+                  "durationInSeconds": 0.0002658367156982422,
                   "name": "SkillMarkdownParser parses frontmatter and serializes roundtrip",
                   "nodeIdentifier": "SkillStoreAndImportTests/markdownParserRoundtrip()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/SkillStoreAndImportTests/markdownParserRoundtrip()",
@@ -1708,8 +2472,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.024s",
-                  "durationInSeconds": 0.023810148239135742,
+                  "duration": "0.021s",
+                  "durationInSeconds": 0.02078986167907715,
                   "name": "SkillStore manages custom skill lifecycle and state",
                   "nodeIdentifier": "SkillStoreAndImportTests/customSkillLifecycle()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/SkillStoreAndImportTests/customSkillLifecycle()",
@@ -1717,8 +2481,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.011s",
-                  "durationInSeconds": 0.010961055755615234,
+                  "duration": "0.0083s",
+                  "durationInSeconds": 0.008271932601928711,
                   "name": "SkillStore override takes precedence and resets cleanly",
                   "nodeIdentifier": "SkillStoreAndImportTests/overridePrecedenceAndReset()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/SkillStoreAndImportTests/overridePrecedenceAndReset()",
@@ -1726,8 +2490,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.0091s",
-                  "durationInSeconds": 0.009141206741333008,
+                  "duration": "0.0082s",
+                  "durationInSeconds": 0.008181095123291016,
                   "name": "SkillStore safeResourceURL rejects path traversal, drive prefixes, and escape attempts",
                   "nodeIdentifier": "SkillStoreAndImportTests/pathTraversalRejected()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/SkillStoreAndImportTests/pathTraversalRejected()",
@@ -1735,8 +2499,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.018s",
-                  "durationInSeconds": 0.01788806915283203,
+                  "duration": "0.014s",
+                  "durationInSeconds": 0.013767004013061523,
                   "name": "SkillImporter rejects non-HTTPS URLs",
                   "nodeIdentifier": "SkillStoreAndImportTests/rejectsNonHTTPSURL()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/SkillStoreAndImportTests/rejectsNonHTTPSURL()",
@@ -1745,7 +2509,7 @@
                 },
                 {
                   "duration": "0.011s",
-                  "durationInSeconds": 0.010823965072631836,
+                  "durationInSeconds": 0.01117706298828125,
                   "name": "Direct markdown SKILL.md file installs successfully into store",
                   "nodeIdentifier": "SkillStoreAndImportTests/directMarkdownSkillInstallsSuccessfully()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/SkillStoreAndImportTests/directMarkdownSkillInstallsSuccessfully()",
@@ -1753,8 +2517,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.022s",
-                  "durationInSeconds": 0.021847963333129883,
+                  "duration": "0.018s",
+                  "durationInSeconds": 0.017940998077392578,
                   "name": "Failed replacement preserves previously installed skill atomically",
                   "nodeIdentifier": "SkillStoreAndImportTests/failedReplacementPreservesPreviouslyInstalledSkill()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/SkillStoreAndImportTests/failedReplacementPreservesPreviouslyInstalledSkill()",
@@ -1762,8 +2526,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.0013s",
-                  "durationInSeconds": 0.0013451576232910156,
+                  "duration": "0.00045s",
+                  "durationInSeconds": 0.0004458427429199219,
                   "name": "HanlinArchivePolicy inspectSkillArchive validates valid archives without script.json",
                   "nodeIdentifier": "SkillStoreAndImportTests/archivePolicyAllowsSkillWithoutScriptJSON()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/SkillStoreAndImportTests/archivePolicyAllowsSkillWithoutScriptJSON()",
@@ -1771,8 +2535,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.0086s",
-                  "durationInSeconds": 0.008561134338378906,
+                  "duration": "0.0063s",
+                  "durationInSeconds": 0.006253957748413086,
                   "name": "HanlinArchivePolicy inspectSkillArchive rejects archive security threats",
                   "nodeIdentifier": "SkillStoreAndImportTests/archivePolicyRejectsSecurityThreats()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/SkillStoreAndImportTests/archivePolicyRejectsSecurityThreats()",
@@ -1780,8 +2544,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.032s",
-                  "durationInSeconds": 0.032258033752441406,
+                  "duration": "0.027s",
+                  "durationInSeconds": 0.026973962783813477,
                   "name": "Resource reading requires loaded skill and respects bounds",
                   "nodeIdentifier": "SkillStoreAndImportTests/resourceReadingContract()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/SkillStoreAndImportTests/resourceReadingContract()",
@@ -1789,8 +2553,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.0084s",
-                  "durationInSeconds": 0.008401870727539062,
+                  "duration": "0.0086s",
+                  "durationInSeconds": 0.008626937866210938,
                   "name": "SkillStore and ReadSkillResourceTool reject symlink escaping root",
                   "nodeIdentifier": "SkillStoreAndImportTests/resourceReadingSymlinkEscapeRejected()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/SkillStoreAndImportTests/resourceReadingSymlinkEscapeRejected()",
@@ -1798,8 +2562,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.033s",
-                  "durationInSeconds": 0.03254199028015137,
+                  "duration": "0.022s",
+                  "durationInSeconds": 0.02168416976928711,
                   "name": "Imported Python script can be read as text and is not executed during installation",
                   "nodeIdentifier": "SkillStoreAndImportTests/importedPythonScriptCanBeReadButIsNotExecutedDuringInstall()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/SkillStoreAndImportTests/importedPythonScriptCanBeReadButIsNotExecutedDuringInstall()",
@@ -1807,8 +2571,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.038s",
-                  "durationInSeconds": 0.03785395622253418,
+                  "duration": "0.031s",
+                  "durationInSeconds": 0.03097677230834961,
                   "name": "BoundedStreamDownloader enforces network limits and rejects non-HTTPS or oversize payloads",
                   "nodeIdentifier": "SkillStoreAndImportTests/boundedDownloaderEnforcesNetworkLimits()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/SkillStoreAndImportTests/boundedDownloaderEnforcesNetworkLimits()",
@@ -1816,8 +2580,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.002s",
-                  "durationInSeconds": 0.0020301342010498047,
+                  "duration": "0.0007s",
+                  "durationInSeconds": 0.0006990432739257812,
                   "name": "Temporary staging directory cleans up on success and failure",
                   "nodeIdentifier": "SkillStoreAndImportTests/tempStagingCleansUpOnSuccessAndFailure()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/SkillStoreAndImportTests/tempStagingCleansUpOnSuccessAndFailure()",
@@ -1825,8 +2589,8 @@
                   "result": "Passed"
                 },
                 {
-                  "duration": "0.00019s",
-                  "durationInSeconds": 0.0001850128173828125,
+                  "duration": "0.00021s",
+                  "durationInSeconds": 0.0002110004425048828,
                   "name": "Skill editor rejects unknown preferred tool alias",
                   "nodeIdentifier": "SkillStoreAndImportTests/skillEditorRejectsUnknownPreferredToolAlias()",
                   "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/SkillStoreAndImportTests/skillEditorRejectsUnknownPreferredToolAlias()",
@@ -1858,13 +2622,13 @@
     }
   ],
   "provenance": {
-    "workflowRunId": 37857022894,
-    "jobId": 113583636541,
-    "headSha": "d13c29a6c1a4184c20b280cef51d3319c094b202",
-    "artifactId": 11586528396,
+    "workflowRunId": 38234823425,
+    "jobId": 114762989410,
+    "headSha": "0095b6441e8968d4200e8cd8acf42f61b46b7c59",
+    "artifactId": 11749751147,
     "xcresultPath": "DownstreamTestsResult.xcresult",
-    "actualTestCount": 184,
-    "actualPassed": 184,
+    "actualTestCount": 260,
+    "actualPassed": 260,
     "actualFailed": 0
   }
 }
