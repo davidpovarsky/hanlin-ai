@@ -123,7 +123,7 @@ struct ListView: View {
             if horizontalSizeClass == .regular {
                 NavigationSplitView {
                     content
-                        .navigationTitle(String(localized: "对话"))
+                        .navigationTitle("ChavrusaChat")
                         .toolbar {
                             ToolbarItem(placement: .navigationBarTrailing) {
                                 Button {

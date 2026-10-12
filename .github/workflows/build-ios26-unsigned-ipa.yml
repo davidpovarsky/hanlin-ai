@@ -3112,7 +3112,7 @@ jobs:
             --github-step-summary "$GITHUB_STEP_SUMMARY" \
             --xcode-version "${{ steps.simulator-toolchain.outputs.xcode-version }}" \
             --runner-arch "${{ steps.simulator-toolchain.outputs.runner-arch }}" \
-            "${perf_flags[@]}"
+            "${perf_flags[@]+"${perf_flags[@]}"}"
 
       - name: Live Activity · refresh
         if: ${{ env.RUN_RUNTIME_TOOLING_FULL_ACCEPTANCE == 'true' }}

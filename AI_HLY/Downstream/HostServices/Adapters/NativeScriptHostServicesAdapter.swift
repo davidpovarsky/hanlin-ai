@@ -114,9 +114,13 @@ public final class NativeScriptHostServicesAdapter: NSObject, @unchecked Sendabl
                     default: break
                     }
                 }
-                safeCompletion(output.isEmpty ? "OK" : output, nil)
+                DispatchQueue.main.async {
+                    safeCompletion(output.isEmpty ? "OK" : output, nil)
+                }
             } catch {
-                safeCompletion(nil, error.localizedDescription)
+                DispatchQueue.main.async {
+                    safeCompletion(nil, error.localizedDescription)
+                }
             }
         }
     }
@@ -135,9 +139,13 @@ public final class NativeScriptHostServicesAdapter: NSObject, @unchecked Sendabl
                     context: ctx
                 )
                 let output = result.stdout.trimmingCharacters(in: .whitespacesAndNewlines)
-                safeCompletion(output, nil)
+                DispatchQueue.main.async {
+                    safeCompletion(output, nil)
+                }
             } catch {
-                safeCompletion(nil, error.localizedDescription)
+                DispatchQueue.main.async {
+                    safeCompletion(nil, error.localizedDescription)
+                }
             }
         }
     }
@@ -150,9 +158,13 @@ public final class NativeScriptHostServicesAdapter: NSObject, @unchecked Sendabl
         Task {
             do {
                 let snapshot = try await AppRuntimeCore.shared.node.healthCheck()
-                safeCompletion(snapshot.state == .ready, nil)
+                DispatchQueue.main.async {
+                    safeCompletion(snapshot.state == .ready, nil)
+                }
             } catch {
-                safeCompletion(false, error.localizedDescription)
+                DispatchQueue.main.async {
+                    safeCompletion(false, error.localizedDescription)
+                }
             }
         }
     }
@@ -171,9 +183,13 @@ public final class NativeScriptHostServicesAdapter: NSObject, @unchecked Sendabl
                     context: ctx
                 )
                 let output = result.stdout.trimmingCharacters(in: .whitespacesAndNewlines)
-                safeCompletion(output, nil)
+                DispatchQueue.main.async {
+                    safeCompletion(output, nil)
+                }
             } catch {
-                safeCompletion(nil, error.localizedDescription)
+                DispatchQueue.main.async {
+                    safeCompletion(nil, error.localizedDescription)
+                }
             }
         }
     }
@@ -193,23 +209,33 @@ public final class NativeScriptHostServicesAdapter: NSObject, @unchecked Sendabl
             do {
                 try await HanlinHostServicesBroker.shared.requireCapability("network", context: ctx)
                 guard let url = URL(string: urlString), url.scheme?.lowercased() == "https" else {
-                    safeCompletion(nil, "Invalid or non-HTTPS URL: \(urlString)")
+                    DispatchQueue.main.async {
+                        safeCompletion(nil, "Invalid or non-HTTPS URL: \(urlString)")
+                    }
                     return
                 }
                 var request = URLRequest(url: url)
                 request.timeoutInterval = 15
                 let (data, response) = try await URLSession.shared.data(for: request)
                 guard let http = response as? HTTPURLResponse else {
-                    safeCompletion(nil, "Invalid server response.")
+                    DispatchQueue.main.async {
+                        safeCompletion(nil, "Invalid server response.")
+                    }
                     return
                 }
                 guard (200...299).contains(http.statusCode) else {
-                    safeCompletion(nil, "HTTP \(http.statusCode) error")
+                    DispatchQueue.main.async {
+                        safeCompletion(nil, "HTTP \(http.statusCode) error")
+                    }
                     return
                 }
-                safeCompletion("HTTPS \(http.statusCode), \(data.count) bytes", nil)
+                DispatchQueue.main.async {
+                    safeCompletion("HTTPS \(http.statusCode), \(data.count) bytes", nil)
+                }
             } catch {
-                safeCompletion(nil, error.localizedDescription)
+                DispatchQueue.main.async {
+                    safeCompletion(nil, error.localizedDescription)
+                }
             }
         }
     }
@@ -222,7 +248,9 @@ public final class NativeScriptHostServicesAdapter: NSObject, @unchecked Sendabl
         completion: @escaping (String?, String?) -> Void
     ) {
         guard let caller = context.appID else {
-            completion(nil, "Unauthorized: No active Mini App session context.")
+            DispatchQueue.main.async {
+                completion(nil, "Unauthorized: No active Mini App session context.")
+            }
             return
         }
         let ctx = context
@@ -232,7 +260,9 @@ public final class NativeScriptHostServicesAdapter: NSObject, @unchecked Sendabl
                 let canonical = HanlinHostCapabilityAuthority.canonicalCapabilityID(capability)
                 let auth = await HanlinHostCapabilityAuthority.shared.authorize(capability: canonical, context: ctx)
                 guard auth == .allowed else {
-                    safeCompletion(nil, "Permission denied: Mini App does not have '\(capability)' capability.")
+                    DispatchQueue.main.async {
+                        safeCompletion(nil, "Permission denied: Mini App does not have '\(capability)' capability.")
+                    }
                     return
                 }
                 let target = try HanlinAppID(validating: targetID)
@@ -251,9 +281,13 @@ public final class NativeScriptHostServicesAdapter: NSObject, @unchecked Sendabl
                 )
                 let response = try await broker.request(request)
                 let responseData = try response.value.canonicalJSONData()
-                safeCompletion(String(data: responseData, encoding: .utf8), nil)
+                DispatchQueue.main.async {
+                    safeCompletion(String(data: responseData, encoding: .utf8), nil)
+                }
             } catch {
-                safeCompletion(nil, error.localizedDescription)
+                DispatchQueue.main.async {
+                    safeCompletion(nil, error.localizedDescription)
+                }
             }
         }
     }

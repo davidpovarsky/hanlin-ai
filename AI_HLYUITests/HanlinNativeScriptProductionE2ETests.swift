@@ -22,6 +22,10 @@ final class HanlinNativeScriptProductionE2ETests: XCTestCase {
         app.launch()
     }
 
+    override func tearDownWithError() throws {
+        app.terminate()
+    }
+
     func testProductionNativeScriptParityFullRuntime() throws {
         openApps()
         importAndInstall(archive: "hanlin-script-parity")
