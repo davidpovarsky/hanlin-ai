@@ -63,6 +63,11 @@ on:
         required: false
         default: ''
         type: string
+      exact_test_selector:
+        description: Explicitly run a single exact XCTest method or suite selector (e.g. AI_HLYUITests/HanlinNativeScriptProductionE2ETests/testProductionNativeScriptParityFullRuntime)
+        required: false
+        default: ''
+        type: string
   push:
     branches:
       - main
@@ -112,6 +117,7 @@ jobs:
       base_sha: ${{ steps.plan.outputs.base_sha }}
       head_sha: ${{ steps.plan.outputs.head_sha }}
       changed_files_count: ${{ steps.plan.outputs.changed_files_count }}
+      exact_test_selector: ${{ steps.plan.outputs.exact_test_selector }}
     steps:
       - name: Live Activity · refresh
         uses: davidpovarsky/github-automation/live-refresh@main
@@ -183,6 +189,9 @@ jobs:
           fi
           if [ "${{ inputs.simulator_e2e_only }}" = "true" ]; then
             args+=(--simulator-e2e-only)
+          fi
+          if [ -n "${{ inputs.exact_test_selector }}" ]; then
+            args+=(--exact-test-selector "${{ inputs.exact_test_selector }}")
           fi
 
           python3 Scripts/CI/plan_affected_validation.py "${args[@]}"
@@ -3043,9 +3052,9 @@ jobs:
               set -e
               test_duration_seconds="$(( $(date +%s) - nativescript_e2e_started_at ))"
               echo "$test_duration_seconds" > "$LOG_DIR/08-nativescript-production-ui-tests-duration-seconds.txt"
-              log_window_minutes=$(( (test_duration_seconds + 600) / 60 ))
-              if [ "$log_window_minutes" -lt 60 ]; then
-                log_window_minutes=60
+              log_window_minutes=$(( (test_duration_seconds + 120) / 60 ))
+              if [ "$log_window_minutes" -lt 5 ]; then
+                log_window_minutes=5
               fi
               xcrun simctl boot "$SIMULATOR_UDID" 2>/dev/null || true
               xcrun simctl spawn "$SIMULATOR_UDID" log show \
@@ -3060,7 +3069,7 @@ jobs:
                 if [[ "$SIMULATOR_UI_FILTER" == *"HanlinNativeScriptProductionE2ETests"* ]] || [[ "$SIMULATOR_UI_FILTER" == *"HanlinUIPerformanceUITests"* ]] || [ -z "$SIMULATOR_UI_FILTER" ]; then
                   grep -Fq 'HANLIN_NS_INITIALIZED_EXTERNAL_ROOT' "$LOG_DIR/08-nativescript-production.log"
                   grep -Eq 'HANLIN_NS_INITIALIZED_EXTERNAL_ROOT path=.*/Library/Application Support/' "$LOG_DIR/08-nativescript-production.log"
-                  if [ -z "$SIMULATOR_UI_FILTER" ] || [[ "$SIMULATOR_UI_FILTER" == *"HanlinNativeScriptProductionE2ETests"* ]] || [[ "$SIMULATOR_UI_FILTER" == *"testProductionSwiftUIInteractionCoreRegressionAndLifecycle"* ]]; then
+                  if [ -z "$SIMULATOR_UI_FILTER" ] || [[ "$SIMULATOR_UI_FILTER" == *"testProductionSwiftUIInteractionCoreRegressionAndLifecycle"* ]] || { [[ "$SIMULATOR_UI_FILTER" == *"HanlinNativeScriptProductionE2ETests"* ]] && [[ "$SIMULATOR_UI_FILTER" != *"testProductionNativeScriptParityFullRuntime"* ]]; }; then
                     grep -Fq 'HANLIN_NS_FIXTURE_STARTED' "$LOG_DIR/08-nativescript-production.log"
                     grep -Fq 'HANLIN_NS_NATIVE_API_OK' "$LOG_DIR/08-nativescript-production.log"
                     grep -Fq 'HANLIN_NS_SCRIPTING_ADAPTER_OK' "$LOG_DIR/08-nativescript-production.log"

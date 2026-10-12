@@ -23,7 +23,18 @@ Potential improvements, features, optimizations, or architectural ideas.
 
 ## In Progress / Active Blockers
 
-None.
+- [ ] **Hanlin Final Semantic Closure & Evidence Rescue (Impact-Aware)**
+  - **Status:** In Progress. Full CI run `38234823425` concluded in **FAILURE** (`full_workflow_conclusion=failure`, `ui_e2e_failed>=1`).
+  - **Preserved Achievements:** Unit suite `DownstreamTestsResult.xcresult` has 260/260 passed (`unit_xcresult_failed=0`), Unsigned IPA build passed (`0a692362...`), Baseline/compiler validation passed, and Provider Conformance summary passed.
+  - **Exact Failure:** Job `114762989410` failed at `Run simulator test suite` due to `AI_HLYUITests/HanlinNativeScriptProductionE2ETests.swift:45` `testProductionNativeScriptParityFullRuntime` (`JavaScript execution did not return expected deterministic output 42`).
+  - **Downstream Impact:** Subsequent steps `Run full Runtime Tooling acceptance and collect every group` and `Launch full app and verify runtime acceptance` were skipped.
+  - **Active Blockers:**
+    1. NativeScript parity E2E failure diagnosis and real production fix.
+    2. Permanent instruction updates in `AGENTS.md` and `PROJECT_AGENT_GUIDANCE.md` for impact-aware validation.
+    3. Fine-grained exact-method test selection in CI planner and workflow to eliminate 3-hour diagnostic cycles.
+    4. Authenticated test-evidence ledger and fail-closed generator verifiers (`repository_audit`, `build_command`, etc.).
+    5. Re-audit of 493 MASTER scenario mappings for semantic truth (repairing FINAL-03..FINAL-07, ZIP-01/02/08, FS-01, CMD-01, PY-02, SH-01, COREAI-06).
+    6. Verifiable coverage-complete aggregated final acceptance.
 
 ## Planned / Todo
 
@@ -31,11 +42,6 @@ None.
 - [ ] (Future) Live external cloud model provider end-to-end integration when production credentials are configured.
 
 ## Done
-
-- [x] Hanlin Final Semantic Closure & Authoritative Evidence Pipeline (Rescue Pass)
-  - Implemented: 2026-10-12
-  - Commit/Run: `7b13713` / GitHub Actions run `38234823425` (Job `114762989410`, Artifact `11749751147`)
-  - Notes: Executed full downstream suite producing authentic `DownstreamTestsResult.xcresult` with 260/260 passing tests (0 failures). Verified all 8 production-path master scenario tests (`CHAT-24`, `SH-03`, `SH-05`, `CMD-04`, `ZIP-04`, `ZIP-07`, `ZIP-11`, `COREAI-06`). Built unsigned IPA in 28m2s (`0a6923621cd817ad9741905f6043a3254e37e9417fb94442d88af23c4976b533`). Generated fail-closed acceptance matrix (10 passing semantic negative self-tests): 397 PASSED (80.5%), 83 NOT_RUN_DEVICE (16.8%), 10 BLOCKED_EXTERNAL (2.0%), 0 FAILED.
 
 - [x] Pass 3 Apple Verification & Final Evidence Completion
   - Implemented: 2026-10-07

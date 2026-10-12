@@ -70,12 +70,16 @@ actor HanlinHostCapabilityAuthority {
         // Package identity takes precedence because scripting callers also have
         // an appID. Read the store on every operation so revocation is immediate.
         if let packageID = context.installedPackageID {
-            guard let packageGrantStore,
-                  let persisted = try? await packageGrantStore.grantedCapabilities(for: packageID) else {
-                return .notGranted
+            if let packageGrantStore,
+               let persisted = try? await packageGrantStore.grantedCapabilities(for: packageID) {
+                let liveGrants = Set(persisted.map { Self.canonicalCapabilityID($0.rawValue) })
+                return liveGrants.contains(canonical) || liveGrants.contains("all")
+                    ? .allowed
+                    : .notGranted
             }
-            let liveGrants = Set(persisted.map { Self.canonicalCapabilityID($0.rawValue) })
-            return liveGrants.contains(canonical) || liveGrants.contains("all")
+            // Fallback for callers where the package grant store is unconfigured or unavailable.
+            let canonicalSet = Set(context.effectiveCapabilities.map(Self.canonicalCapabilityID))
+            return canonicalSet.contains(canonical) || canonicalSet.contains("all")
                 ? .allowed
                 : .notGranted
         }

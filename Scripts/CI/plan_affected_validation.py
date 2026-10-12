@@ -17,6 +17,7 @@ import fnmatch
 import json
 import os
 import pathlib
+import re
 import subprocess
 import sys
 from typing import Any, Dict, List, Optional, Set, Tuple
@@ -490,6 +491,7 @@ def plan_affected_validation(
     full_validation: bool = False,
     target_group: Optional[str] = None,
     manual_modes: Optional[Dict[str, bool]] = None,
+    exact_test_selector: Optional[str] = None,
 ) -> ValidationPlan:
     """Compute the affected validation plan from changed files and mapping rules."""
     manual_modes = manual_modes or {}
@@ -532,6 +534,95 @@ def plan_affected_validation(
     explicit_overrides: List[str] = []
     selected_groups: Dict[str, List[str]] = collections.defaultdict(list)
     affected_components: Dict[str, List[str]] = collections.defaultdict(list)
+
+    # EXACT TEST SELECTOR GUARD & ROUTING
+    if exact_test_selector:
+        exact_test_selector = exact_test_selector.strip()
+        if not re.match(r"^[A-Za-z0-9_]+/[A-Za-z0-9_]+(/[A-Za-z0-9_]+)?$", exact_test_selector):
+            raise RoutingError(
+                f"Invalid exact-test-selector format: '{exact_test_selector}'. "
+                "Expected <Bundle>/<Suite>[/<Method>] with alphanumeric and underscore characters."
+            )
+        if full_validation:
+            raise RoutingError("Contradictory options: --exact-test-selector cannot be combined with --full-validation")
+
+        is_ui = exact_test_selector.startswith("AI_HLYUITests/")
+        is_unit = exact_test_selector.startswith("AI_HLYTests/")
+        if not is_ui and not is_unit:
+            raise RoutingError(
+                f"Unrecognized test bundle in selector: '{exact_test_selector}'. "
+                "Must start with 'AI_HLYTests/' or 'AI_HLYUITests/'."
+            )
+
+        explicit_overrides.append(f"exact_test_selector={exact_test_selector}")
+        selected_groups.clear()
+
+        step_outputs: Dict[str, Any] = {
+            "run_full_validation": False,
+            "run_phase1": False,
+            "run_ci_router": False,
+            "run_scripting_reference": False,
+            "run_scripting_compiler": False,
+            "run_platform_contracts": False,
+            "run_nativescript_dependencies": False,
+            "run_nativescript_runtime": False,
+            "run_runtimecore_bundle": False,
+            "run_runtimecore_host": False,
+            "run_device_build": False,
+            "run_ipa_packaging": False,
+            "run_simulator_job": True,
+            "run_simulator_unit": is_unit,
+            "simulator_unit_filter": exact_test_selector if is_unit else "",
+            "run_simulator_scripting_acceptance": False,
+            "run_simulator_targeted_ui": is_ui,
+            "simulator_ui_filter": exact_test_selector if is_ui else "",
+            "stage_scriptui_fixtures": ("ScriptUI" in exact_test_selector or "Expo" in exact_test_selector),
+            "run_simulator_shell_acceptance": False,
+            "run_simulator_mcp_acceptance": False,
+            "run_simulator_smoke_launch": False,
+            "run_simulator_nativescript_poc": False,
+            "run_runtime_tooling_full_acceptance": False,
+            "exact_test_selector": exact_test_selector,
+            "base_sha": base_sha,
+            "head_sha": head_sha,
+            "changed_files_count": len(changed_files),
+        }
+
+        if is_ui:
+            selected_groups["simulator_targeted_ui"].append(f"exact selector: {exact_test_selector}")
+            if "HanlinNativeScriptProductionE2ETests" in exact_test_selector:
+                selected_groups["nativescript_runtime"].append("required for NativeScript UI tests")
+                selected_groups["nativescript_dependencies"].append("required for NativeScript UI tests")
+                step_outputs["run_nativescript_dependencies"] = True
+                step_outputs["run_nativescript_runtime"] = True
+                step_outputs["run_phase1"] = True
+        else:
+            selected_groups["app_unit_tests"].append(f"exact selector: {exact_test_selector}")
+
+        step_outputs["selected_groups"] = ",".join(sorted(selected_groups.keys()))
+
+        sim_config = "Release" if "HanlinNativeScriptProductionE2ETests" in exact_test_selector else "Debug"
+        step_outputs["simulator_configuration"] = sim_config
+        step_outputs["simulator_build_for_testing_args"] = f"-configuration {sim_config} -only-testing:{exact_test_selector}"
+
+        skipped_expensive: Dict[str, str] = {
+            item["name"]: f"suppressed by exact_test_selector '{exact_test_selector}'"
+            for item in expensive_items
+        }
+
+        return ValidationPlan(
+            base_sha=base_sha,
+            head_sha=head_sha,
+            event_name=event_name,
+            changed_files=changed_files,
+            no_impact_files=no_impact_files,
+            affected_components={},
+            selected_groups=dict(selected_groups),
+            skipped_expensive_groups=skipped_expensive,
+            step_outputs=step_outputs,
+            is_full_validation=False,
+            explicit_overrides=explicit_overrides,
+        )
 
     # If full_validation is explicitly requested:
     if full_validation:
@@ -1109,6 +1200,10 @@ def main() -> int:
         default=False,
     )
     parser.add_argument(
+        "--exact-test-selector",
+        help="Explicitly run a single exact XCTest method or suite selector (e.g. AI_HLYUITests/HanlinNativeScriptProductionE2ETests/testProductionNativeScriptParityFullRuntime)",
+    )
+    parser.add_argument(
         "--json-output",
         help="Path to write the resulting plan JSON",
     )
@@ -1176,6 +1271,7 @@ def main() -> int:
             full_validation=args.full_validation,
             target_group=args.target_group,
             manual_modes=manual_modes,
+            exact_test_selector=args.exact_test_selector,
         )
     except UnmappedPathsError as err:
         err_msg = [

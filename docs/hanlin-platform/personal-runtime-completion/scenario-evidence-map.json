@@ -228,20 +228,13 @@
       "obligations": [
         {
           "layer": "I",
-          "testTarget": "HanlinPlatform",
-          "exactTestName": "Rejects links, normalization collisions, bombs, and hidden encrypted entries",
-          "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/evidence/phase1-swift-test.log",
-          "expectedTerminalState": "Passed",
-          "verifierKind": "swift_test"
+          "status": "NOT_RUN",
+          "reason": "Previous mapping tested security-threat rejection; positive import of root ZIP with SKILL.md, hanlin.json, and agents/openai.yaml needs dedicated functional test."
         },
         {
           "layer": "S",
-          "testTarget": "AI_HLYTests",
-          "testSuite": "SkillStoreAndImportTests",
-          "exactTestName": "SkillStoreAndImportTests/failedReplacementPreservesPreviouslyInstalledSkill()",
-          "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/evidence/simulator-downstream-unit-test-results.json",
-          "expectedTerminalState": "Passed",
-          "verifierKind": "xctest"
+          "status": "NOT_RUN",
+          "reason": "Previous mapping tested rollback on failed replacement; positive import of root ZIP with preview/install/refresh/relaunch needs dedicated functional test."
         },
         {
           "layer": "D",
@@ -266,20 +259,13 @@
       "obligations": [
         {
           "layer": "I",
-          "testTarget": "HanlinPlatform",
-          "exactTestName": "Stages, validates, extracts, and decodes without executing source",
-          "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/evidence/phase1-swift-test.log",
-          "expectedTerminalState": "Passed",
-          "verifierKind": "swift_test"
+          "status": "NOT_RUN",
+          "reason": "Previous mapping tested archive staging without execution; equivalent wrapped ZIP under fixture-runtime/ needs dedicated functional test."
         },
         {
           "layer": "S",
-          "testTarget": "AI_HLYTests",
-          "testSuite": "SkillStoreAndImportTests",
-          "exactTestName": "SkillStoreAndImportTests/resourceReadingSymlinkEscapeRejected()",
-          "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/evidence/simulator-downstream-unit-test-results.json",
-          "expectedTerminalState": "Passed",
-          "verifierKind": "xctest"
+          "status": "NOT_RUN",
+          "reason": "Previous mapping tested symlink escape rejection; equivalent wrapped ZIP import needs dedicated functional test."
         },
         {
           "layer": "D",
@@ -456,20 +442,13 @@
       "obligations": [
         {
           "layer": "I",
-          "testTarget": "HanlinPlatform",
-          "exactTestName": "appDescriptorRejectsUnsafeResourcePaths()",
-          "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/evidence/phase1-swift-test.log",
-          "expectedTerminalState": "Passed",
-          "verifierKind": "swift_test"
+          "status": "NOT_RUN",
+          "reason": "Previous mapping tested unsafe resource paths; large archive (>25MiB, expanded >64MiB) with end marker needs dedicated functional test."
         },
         {
           "layer": "S",
-          "testTarget": "AI_HLYTests",
-          "testSuite": "SkillStoreAndImportTests",
-          "exactTestName": "SkillStoreAndImportTests/directMarkdownSkillInstallsSuccessfully()",
-          "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/evidence/simulator-downstream-unit-test-results.json",
-          "expectedTerminalState": "Passed",
-          "verifierKind": "xctest"
+          "status": "NOT_RUN",
+          "reason": "Previous mapping tested direct Markdown skill install; large archive memory bounds and cancellation need dedicated functional test."
         }
       ]
     },
@@ -2448,20 +2427,13 @@
       "obligations": [
         {
           "layer": "I",
-          "testTarget": "HanlinPlatform",
-          "exactTestName": "Storage and VFS are package-namespaced, bounded, and traversal-safe",
-          "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/evidence/phase1-swift-test.log",
-          "expectedTerminalState": "Passed",
-          "verifierKind": "swift_test"
+          "status": "NOT_RUN",
+          "reason": "Previous mapping tested namespaced VFS security; 3-runtimes interoperability (Python write, Node append, Shell read) needs dedicated functional test."
         },
         {
           "layer": "S",
-          "testTarget": "AI_HLYTests",
-          "testSuite": "CanonicalAdapterTests",
-          "exactTestName": "CanonicalMiniAppIntegrationTests/privateStoragePathTraversalRejected()",
-          "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/evidence/simulator-downstream-unit-test-results.json",
-          "expectedTerminalState": "Passed",
-          "verifierKind": "xctest"
+          "status": "NOT_RUN",
+          "reason": "Previous mapping tested path traversal rejection; shared workspace/cwd across Python, Node, and Shell needs dedicated functional test."
         },
         {
           "layer": "D",
@@ -3045,20 +3017,13 @@
       "obligations": [
         {
           "layer": "I",
-          "testTarget": "HanlinPlatform",
-          "exactTestName": "Invalid and extra arguments reach Hanlin executor and return non-fatal error",
-          "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/evidence/phase1-swift-test.log",
-          "expectedTerminalState": "Passed",
-          "verifierKind": "swift_test"
+          "status": "NOT_RUN",
+          "reason": "Previous mapping tested argument handling; dynamic command catalog reconciliation without exact-23 assertion needs dedicated functional test."
         },
         {
           "layer": "S",
-          "testTarget": "AI_HLYTests",
-          "testSuite": "RuntimeToolContractTests",
-          "exactTestName": "RuntimeToolContractTests/shellSchemaIsStructurallyConstrained()",
-          "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/evidence/simulator-downstream-unit-test-results.json",
-          "expectedTerminalState": "Passed",
-          "verifierKind": "xctest"
+          "status": "NOT_RUN",
+          "reason": "Previous mapping tested shell schema constraints; dynamic command catalog reconciliation without exact-23 assertion needs dedicated functional test."
         },
         {
           "layer": "D",
@@ -4396,20 +4361,13 @@
       "obligations": [
         {
           "layer": "I",
-          "testTarget": "HanlinPlatform",
-          "exactTestName": "Invalid and extra arguments reach Hanlin executor and return non-fatal error",
-          "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/evidence/phase1-swift-test.log",
-          "expectedTerminalState": "Passed",
-          "verifierKind": "swift_test"
+          "status": "NOT_RUN",
+          "reason": "Previous mapping tested extra argument non-fatal error; awk '{print $1}' sample.txt output execution needs dedicated functional test."
         },
         {
           "layer": "S",
-          "testTarget": "AI_HLYTests",
-          "testSuite": "RuntimeToolContractTests",
-          "exactTestName": "RuntimeToolContractTests/runtimeSchemasAdvertiseOnlyHandledParameters()",
-          "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/evidence/simulator-downstream-unit-test-results.json",
-          "expectedTerminalState": "Passed",
-          "verifierKind": "xctest"
+          "status": "NOT_RUN",
+          "reason": "Previous mapping tested schema parameter advertising; awk program execution and exit code 0 need dedicated functional test."
         },
         {
           "layer": "D",
@@ -5755,20 +5713,13 @@
       "obligations": [
         {
           "layer": "I",
-          "testTarget": "HanlinPlatform",
-          "exactTestName": "S03: Production skill activation: load_skill exposes python dynamically",
-          "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/evidence/phase1-swift-test.log",
-          "expectedTerminalState": "Passed",
-          "verifierKind": "swift_test"
+          "status": "NOT_RUN",
+          "reason": "Previous mapping tested dynamic python tool exposure; package distribution name differing from import name needs dedicated functional test."
         },
         {
           "layer": "S",
-          "testTarget": "AI_HLYTests",
-          "testSuite": "CanonicalAdapterTests",
-          "exactTestName": "RuntimePackageAcceptanceTests/pythonUnsupportedAndInvalidInputs()",
-          "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/evidence/simulator-downstream-unit-test-results.json",
-          "expectedTerminalState": "Passed",
-          "verifierKind": "xctest"
+          "status": "NOT_RUN",
+          "reason": "Previous mapping tested unsupported input rejection; package distribution name differing from import name needs dedicated functional test."
         }
       ]
     },
@@ -12625,12 +12576,9 @@
       "obligations": [
         {
           "layer": "regression",
-          "verifierKind": "xctest",
-          "testTarget": "AI_HLYTests",
-          "testSuite": "MasterScenarioSemanticAcceptanceTests",
-          "exactTestName": "MasterScenarioSemanticAcceptanceTests/coreai06GGUFLLMStreamingAndCancellationRegression()",
-          "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/evidence/simulator-downstream-unit-test-results.json",
-          "expectedTerminalState": "Passed"
+          "verifierKind": "input_fixture",
+          "status": "BLOCKED_INPUT_MODEL_FIXTURE",
+          "reason": "Actual LLM.swift GGUF model load/decode requires redistributable model fixture; adapter smoke regression verified via MockLocalLLMController in MasterScenarioSemanticAcceptanceTests."
         }
       ]
     },
@@ -13682,11 +13630,8 @@
       "obligations": [
         {
           "layer": "build",
-          "testTarget": "ReleaseCompilerAndPackager",
-          "exactTestName": "xcodebuild archive",
-          "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/evidence/build-ios26-summary.txt",
-          "expectedTerminalState": "Passed",
-          "verifierKind": "build_command"
+          "status": "NOT_RUN",
+          "reason": "Fresh iPadOS 27 build-for-testing pending on final implementation SHA; Oct 7 archive summary cannot be substituted."
         }
       ]
     },
@@ -13703,12 +13648,14 @@
       "obligations": [
         {
           "layer": "simulator",
-          "testTarget": "AI_HLYTests",
-          "testSuite": "CanonicalAdapterTests",
-          "exactTestName": "SkillStoreAndImportTests/customSkillLifecycle()",
+          "verifierKind": "reused_verified_pass",
+          "status": "REUSED_VERIFIED_PASS",
+          "evidenceOriginRunId": "38234823425",
+          "evidenceOriginSHA": "771b2d0fa3b827103a891cf2c1a63cbf99532fe5",
+          "unaffectedProof": "verified_clean_dependency_closure",
           "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/evidence/simulator-downstream-unit-test-results.json",
-          "expectedTerminalState": "Passed",
-          "verifierKind": "xctest"
+          "totalPassedTests": 260,
+          "reason": "260 passed downstream unit and integration tests authentic in run 38234823425; unaffected by NativeScript capability fix."
         }
       ]
     },
@@ -13725,12 +13672,12 @@
       "obligations": [
         {
           "layer": "UI",
-          "testTarget": "AI_HLYTests",
-          "testSuite": "CanonicalAdapterTests",
-          "exactTestName": "MasterScenarioSemanticAcceptanceTests/chat24StopGenerationCancelsRunAndReturnsIdle()",
-          "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/evidence/simulator-downstream-unit-test-results.json",
-          "expectedTerminalState": "Passed",
-          "verifierKind": "xctest"
+          "verifierKind": "xctest_ui",
+          "testTarget": "AI_HLYUITests",
+          "testSuite": "HanlinNativeScriptProductionE2ETests",
+          "exactTestName": "HanlinNativeScriptProductionE2ETests/testProductionNativeScriptParityFullRuntime",
+          "status": "FAILED",
+          "reason": "Failed at line 45: label did not contain 'JS: 42' in CI run 38234823425 job 114762989410."
         }
       ]
     },
@@ -13747,11 +13694,8 @@
       "obligations": [
         {
           "layer": "CI",
-          "testTarget": "RepositoryAudit",
-          "exactTestName": "Audit Contract: MASTER",
-          "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/correction-audit.md",
-          "expectedTerminalState": "Passed",
-          "verifierKind": "repository_audit"
+          "status": "NOT_RUN",
+          "reason": "Awaiting focused NativeScript parity validation dispatch."
         }
       ]
     },
@@ -13768,11 +13712,11 @@
       "obligations": [
         {
           "layer": "CI",
-          "testTarget": "RepositoryAudit",
-          "exactTestName": "Audit Contract: MASTER",
-          "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/correction-audit.md",
-          "expectedTerminalState": "Passed",
-          "verifierKind": "repository_audit"
+          "verifierKind": "ci_workflow",
+          "workflowRunId": "38234823425",
+          "workflowConclusion": "failure",
+          "status": "FAILED",
+          "reason": "GitHub Actions run 38234823425 failed in job 114762989410 (testProductionNativeScriptParityFullRuntime:45); downstream runtime tooling acceptance was skipped."
         }
       ]
     },

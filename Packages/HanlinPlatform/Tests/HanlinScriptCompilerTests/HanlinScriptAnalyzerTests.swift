@@ -248,6 +248,22 @@ struct HanlinScriptAnalyzerTests {
         #expect(preview.findings.contains { $0.message.contains("eval") })
     }
 
+    @Test("Extracts declared capabilities from script.json manifest")
+    func declaredCapabilitiesInManifest() throws {
+        let fixture = try package(files: [
+            "script.json": #"{"name":"NativeScript Parity Fixture","version":"1.0.0","entry":"nativescript/app/bundle.mjs","hanlinRuntime":"hanlin-nativescript","capabilities":["storage","network","node","python","javascript","inter-app.share"]}"#,
+            "nativescript/app/bundle.mjs": "export default 42;"
+        ])
+        defer { try? FileManager.default.removeItem(at: fixture.stagingRoot) }
+        let preview = try HanlinScriptAnalyzer(inventory: .init(
+            baselineID: "fixture",
+            baselineDigest: String(repeating: "b", count: 64),
+            symbols: []
+        )).analyze(fixture)
+        let requestedIDs = Set(preview.requestedCapabilities.map(\.capabilityID.rawValue))
+        #expect(requestedIDs == ["storage", "network", "node", "python", "javascript", "inter-app.share"])
+    }
+
     private func package(files: [String: String]) throws -> HanlinStagedPackage {
         let root = FileManager.default.temporaryDirectory.appending(
             path: "hanlin-analyzer-tests-\(UUID().uuidString.lowercased())",

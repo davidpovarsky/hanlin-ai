@@ -1,10 +1,10 @@
 # Hanlin Personal Runtime Completion — Authoritative Acceptance Results
 
-**Execution Timestamp:** `2026-10-12T13:53:05.885Z`  
+**Execution Timestamp:** `2026-10-12T16:21:34.069Z`  
 **Implementation SHA:** `0095b6441e8968d4200e8cd8acf42f61b46b7c59`  
 **Evidence Run SHA:** `0095b6441e8968d4200e8cd8acf42f61b46b7c59`  
-**Report SHA:** `64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100`  
-**Branch:** `codex/agent-skills-embedded-results` (Dirty working tree: `false`)  
+**Report SHA:** `4ac91863cd4ebc1baeee335483db3d7437a264fa`  
+**Branch:** `codex/agent-skills-embedded-results` (Dirty working tree: `true`)  
 **Authoritative Specification SHA-256:** `bf76406cee09800635933f6d61c64e3632c243b2ee2c037df5d969d8e3be07f4`  
 **Pipeline Schema:** `2.1.0` (Strict Fail-Closed Semantic Validation)
 
@@ -14,19 +14,19 @@
 
 | Status | Count | Percentage | Definition |
 |---|---|---|---|
-| **PASSED** | 397 | 80.5% | Verified with semantic executable assertion and evidence checksum. |
-| **NOT_RUN_DEVICE** (PROVEN_SIMULATOR) | 83 | 16.8% | Proven on iOS Simulator / integration; awaiting physical Apple hardware. |
+| **PASSED** | 389 | 78.9% | Verified with semantic executable assertion and evidence checksum. |
+| **REUSED_VERIFIED_PASS** | 1 | 0.2% | Authentically verified passing test reused under strict provenance and clean dependency closure. |
+| **NOT_RUN** | 9 | 1.8% | Awaiting dedicated execution or verification. |
+| **NOT_RUN_DEVICE** (PROVEN_SIMULATOR) | 78 | 15.8% | Proven on iOS Simulator / integration; awaiting physical Apple hardware. |
 | **BLOCKED_EXTERNAL** | 10 | 2.0% | Requires external LLM provider API credentials or live public internet in sandbox. |
 | **BLOCKED_DEPENDENCY** | 2 | 0.4% | Official external Swift package dependency is unpinned. |
-| **BLOCKED_INPUT_MODEL_FIXTURE** | 1 | 0.2% | Redistributable on-device model fixture is not bundled. |
-| **FAILED** | 0 | 0.0% | Real test or runtime failure. |
+| **BLOCKED_INPUT_MODEL_FIXTURE** | 2 | 0.4% | Redistributable on-device model fixture is not bundled. |
+| **FAILED** | 2 | 0.4% | Real test or runtime failure. |
 | **TOTAL** | **493** | **100.0%** | Exact authoritative 493 MASTER scenario set. |
 
 ---
 
 ## 2. Independent Regression Contracts (Formerly Misassigned to MASTER IDs)
-
-The 6 historical XCTest fixes are tracked under independent regression contract identifiers, leaving all 493 MASTER IDs strictly aligned with the authoritative specification:
 
 | Regression Contract | Description | Implementing XCTest Method | Status |
 |---|---|---|---|
@@ -50,7 +50,7 @@ The 6 historical XCTest fixes are tracked under independent regression contract 
 | **ZIP-04** | Foundation /var and /private/var URL aliases resolve to same destination without false escape | `MasterScenarioSemanticAcceptanceTests.zip04FoundationVarAndPrivateVarAliasesResolveWithoutFalseEscape` | **PASSED (Sim) / NOT_RUN_DEVICE** |
 | **ZIP-07** | Skill import with LICENSE, assets/data.bin, sample.xlsx, source.swift, module.wasm installs byte-for-byte | `MasterScenarioSemanticAcceptanceTests.zip07SkillImportPreservesAllAssetFilesByteForByte` | **PASSED** |
 | **ZIP-11** | Internal relative paths ./references/a.md and references/x/../a.md normalize without blanket rejection | `MasterScenarioSemanticAcceptanceTests.zip11InternalRelativePathsResolveWithoutBlanketRejection` | **PASSED** |
-| **COREAI-06** | GGUF/LLM.swift local provider streams and cancels cleanly after Core AI provider integration | `MasterScenarioSemanticAcceptanceTests.coreai06GGUFLLMStreamingAndCancellationRegression` | **PASSED** |
+| **COREAI-06** | GGUF/LLM.swift local provider streams and cancels cleanly after Core AI provider integration | `MasterScenarioSemanticAcceptanceTests.coreai06GGUFLLMStreamingAndCancellationRegression` | **BLOCKED_INPUT_MODEL_FIXTURE (Adapter smoke verified)** |
 | **FINAL-01** | `swift test --package-path Packages/HanlinPlatform` under Xcode 27 toolchain | Authentic `phase1-swift-test.log` execution | **PASSED** |
 
 ---
@@ -64,53 +64,53 @@ The 6 historical XCTest fixes are tracked under independent regression contract 
 
 ## 5. Requirements Matrix Summary (R01 – R47)
 
-- **R01:** `PROVEN_SIMULATOR` (17 passed, 1 device-pending, 0 external-blocked, 0 dependency-blocked, 0 fixture-blocked, 0 failed)
-- **R02:** `PROVEN_SIMULATOR` (27 passed, 8 device-pending, 0 external-blocked, 0 dependency-blocked, 0 fixture-blocked, 0 failed)
-- **R03:** `PROVEN_SIMULATOR` (25 passed, 2 device-pending, 0 external-blocked, 0 dependency-blocked, 0 fixture-blocked, 0 failed)
-- **R04:** `PROVEN_SIMULATOR` (19 passed, 2 device-pending, 0 external-blocked, 0 dependency-blocked, 0 fixture-blocked, 0 failed)
-- **R05:** `PROVEN_SIMULATOR` (33 passed, 1 device-pending, 8 external-blocked, 0 dependency-blocked, 0 fixture-blocked, 0 failed)
-- **R06:** `PROVEN_SIMULATOR` (44 passed, 11 device-pending, 3 external-blocked, 0 dependency-blocked, 0 fixture-blocked, 0 failed)
-- **R07:** `PROVEN_SIMULATOR` (16 passed, 1 device-pending, 1 external-blocked, 0 dependency-blocked, 0 fixture-blocked, 0 failed)
-- **R08:** `PROVEN_SIMULATOR` (21 passed, 3 device-pending, 1 external-blocked, 0 dependency-blocked, 0 fixture-blocked, 0 failed)
-- **R09:** `PROVEN_SIMULATOR` (19 passed, 6 device-pending, 0 external-blocked, 0 dependency-blocked, 0 fixture-blocked, 0 failed)
-- **R10:** `PROVEN_SIMULATOR` (19 passed, 1 device-pending, 0 external-blocked, 0 dependency-blocked, 0 fixture-blocked, 0 failed)
-- **R11:** `PROVEN_SIMULATOR` (30 passed, 28 device-pending, 1 external-blocked, 0 dependency-blocked, 0 fixture-blocked, 0 failed)
-- **R12:** `PROVEN_SIMULATOR` (19 passed, 4 device-pending, 1 external-blocked, 0 dependency-blocked, 0 fixture-blocked, 0 failed)
-- **R13:** `PROVEN_SIMULATOR` (17 passed, 5 device-pending, 0 external-blocked, 0 dependency-blocked, 0 fixture-blocked, 0 failed)
-- **R14:** `PROVEN_SIMULATOR` (25 passed, 3 device-pending, 0 external-blocked, 0 dependency-blocked, 0 fixture-blocked, 0 failed)
-- **R15:** `PROVEN_SIMULATOR` (28 passed, 4 device-pending, 0 external-blocked, 0 dependency-blocked, 0 fixture-blocked, 0 failed)
-- **R16:** `PROVEN_SIMULATOR` (18 passed, 3 device-pending, 2 external-blocked, 0 dependency-blocked, 0 fixture-blocked, 0 failed)
-- **R17:** `PROVEN_SIMULATOR` (21 passed, 3 device-pending, 0 external-blocked, 0 dependency-blocked, 0 fixture-blocked, 0 failed)
-- **R18:** `PROVEN_SIMULATOR` (31 passed, 2 device-pending, 0 external-blocked, 0 dependency-blocked, 0 fixture-blocked, 0 failed)
-- **R19:** `PROVEN_SIMULATOR` (15 passed, 1 device-pending, 0 external-blocked, 0 dependency-blocked, 0 fixture-blocked, 0 failed)
-- **R20:** `PROVEN_SIMULATOR` (13 passed, 6 device-pending, 0 external-blocked, 0 dependency-blocked, 0 fixture-blocked, 0 failed)
-- **R21:** `PROVEN_SIMULATOR` (15 passed, 3 device-pending, 0 external-blocked, 0 dependency-blocked, 0 fixture-blocked, 0 failed)
-- **R22:** `PROVEN_SIMULATOR` (42 passed, 4 device-pending, 0 external-blocked, 0 dependency-blocked, 0 fixture-blocked, 0 failed)
-- **R23:** `PROVEN_SIMULATOR` (47 passed, 34 device-pending, 1 external-blocked, 0 dependency-blocked, 0 fixture-blocked, 0 failed)
-- **R24:** `PROVEN_SIMULATOR` (21 passed, 2 device-pending, 2 external-blocked, 0 dependency-blocked, 0 fixture-blocked, 0 failed)
-- **R25:** `PROVEN_SIMULATOR` (21 passed, 2 device-pending, 0 external-blocked, 0 dependency-blocked, 0 fixture-blocked, 0 failed)
-- **R26:** `PROVEN_SIMULATOR` (14 passed, 2 device-pending, 0 external-blocked, 0 dependency-blocked, 0 fixture-blocked, 0 failed)
-- **R27:** `PROVEN_SIMULATOR` (29 passed, 1 device-pending, 0 external-blocked, 0 dependency-blocked, 0 fixture-blocked, 0 failed)
-- **R28:** `PROVEN_SIMULATOR` (16 passed, 1 device-pending, 0 external-blocked, 0 dependency-blocked, 0 fixture-blocked, 0 failed)
-- **R29:** `PROVEN_SIMULATOR` (19 passed, 1 device-pending, 0 external-blocked, 0 dependency-blocked, 0 fixture-blocked, 0 failed)
-- **R30:** `PROVEN_SIMULATOR` (48 passed, 3 device-pending, 0 external-blocked, 0 dependency-blocked, 0 fixture-blocked, 0 failed)
-- **R31:** `PROVEN_SIMULATOR` (21 passed, 1 device-pending, 0 external-blocked, 0 dependency-blocked, 0 fixture-blocked, 0 failed)
-- **R32:** `PROVEN_SIMULATOR` (30 passed, 4 device-pending, 0 external-blocked, 0 dependency-blocked, 0 fixture-blocked, 0 failed)
-- **R33:** `PROVEN_SIMULATOR` (20 passed, 1 device-pending, 0 external-blocked, 0 dependency-blocked, 0 fixture-blocked, 0 failed)
-- **R34:** `PROVEN_SIMULATOR` (18 passed, 1 device-pending, 0 external-blocked, 0 dependency-blocked, 0 fixture-blocked, 0 failed)
-- **R35:** `PROVEN_SIMULATOR` (12 passed, 1 device-pending, 0 external-blocked, 0 dependency-blocked, 0 fixture-blocked, 0 failed)
-- **R36:** `PROVEN_SIMULATOR` (15 passed, 1 device-pending, 0 external-blocked, 0 dependency-blocked, 0 fixture-blocked, 0 failed)
-- **R37:** `PROVEN_SIMULATOR` (14 passed, 3 device-pending, 0 external-blocked, 0 dependency-blocked, 0 fixture-blocked, 0 failed)
-- **R38:** `PROVEN_SIMULATOR` (15 passed, 1 device-pending, 0 external-blocked, 0 dependency-blocked, 0 fixture-blocked, 0 failed)
-- **R39:** `PROVEN_SIMULATOR` (17 passed, 1 device-pending, 0 external-blocked, 0 dependency-blocked, 0 fixture-blocked, 0 failed)
-- **R40:** `PROVEN_SIMULATOR` (12 passed, 1 device-pending, 0 external-blocked, 0 dependency-blocked, 0 fixture-blocked, 0 failed)
-- **R41:** `PROVEN_SIMULATOR` (21 passed, 1 device-pending, 0 external-blocked, 0 dependency-blocked, 0 fixture-blocked, 0 failed)
-- **R42:** `PROVEN_SIMULATOR` (15 passed, 1 device-pending, 0 external-blocked, 0 dependency-blocked, 0 fixture-blocked, 0 failed)
-- **R43:** `PROVEN_SIMULATOR` (17 passed, 1 device-pending, 0 external-blocked, 0 dependency-blocked, 0 fixture-blocked, 0 failed)
-- **R44:** `PROVEN_SIMULATOR` (15 passed, 1 device-pending, 0 external-blocked, 0 dependency-blocked, 0 fixture-blocked, 0 failed)
-- **R45:** `PROVEN_SIMULATOR` (16 passed, 4 device-pending, 0 external-blocked, 0 dependency-blocked, 0 fixture-blocked, 0 failed)
-- **R46:** `BLOCKED_DEPENDENCY` (12 passed, 3 device-pending, 0 external-blocked, 2 dependency-blocked, 1 fixture-blocked, 0 failed)
-- **R47:** `PROVEN_SIMULATOR` (15 passed, 1 device-pending, 0 external-blocked, 0 dependency-blocked, 0 fixture-blocked, 0 failed)
+- **R01:** `FAILED` (12 passed, 1 reused-pass, 2 not-run, 1 device-pending, 0 external-blocked, 0 dependency-blocked, 0 fixture-blocked, 2 failed)
+- **R02:** `FAILED` (21 passed, 1 reused-pass, 5 not-run, 6 device-pending, 0 external-blocked, 0 dependency-blocked, 0 fixture-blocked, 2 failed)
+- **R03:** `FAILED` (20 passed, 1 reused-pass, 2 not-run, 2 device-pending, 0 external-blocked, 0 dependency-blocked, 0 fixture-blocked, 2 failed)
+- **R04:** `FAILED` (14 passed, 1 reused-pass, 2 not-run, 2 device-pending, 0 external-blocked, 0 dependency-blocked, 0 fixture-blocked, 2 failed)
+- **R05:** `FAILED` (28 passed, 1 reused-pass, 2 not-run, 1 device-pending, 8 external-blocked, 0 dependency-blocked, 0 fixture-blocked, 2 failed)
+- **R06:** `FAILED` (39 passed, 1 reused-pass, 2 not-run, 11 device-pending, 3 external-blocked, 0 dependency-blocked, 0 fixture-blocked, 2 failed)
+- **R07:** `FAILED` (11 passed, 1 reused-pass, 2 not-run, 1 device-pending, 1 external-blocked, 0 dependency-blocked, 0 fixture-blocked, 2 failed)
+- **R08:** `FAILED` (16 passed, 1 reused-pass, 2 not-run, 3 device-pending, 1 external-blocked, 0 dependency-blocked, 0 fixture-blocked, 2 failed)
+- **R09:** `FAILED` (14 passed, 1 reused-pass, 3 not-run, 5 device-pending, 0 external-blocked, 0 dependency-blocked, 0 fixture-blocked, 2 failed)
+- **R10:** `FAILED` (14 passed, 1 reused-pass, 2 not-run, 1 device-pending, 0 external-blocked, 0 dependency-blocked, 0 fixture-blocked, 2 failed)
+- **R11:** `FAILED` (25 passed, 1 reused-pass, 4 not-run, 26 device-pending, 1 external-blocked, 0 dependency-blocked, 0 fixture-blocked, 2 failed)
+- **R12:** `FAILED` (14 passed, 1 reused-pass, 2 not-run, 4 device-pending, 1 external-blocked, 0 dependency-blocked, 0 fixture-blocked, 2 failed)
+- **R13:** `FAILED` (12 passed, 1 reused-pass, 2 not-run, 5 device-pending, 0 external-blocked, 0 dependency-blocked, 0 fixture-blocked, 2 failed)
+- **R14:** `FAILED` (20 passed, 1 reused-pass, 2 not-run, 3 device-pending, 0 external-blocked, 0 dependency-blocked, 0 fixture-blocked, 2 failed)
+- **R15:** `FAILED` (22 passed, 1 reused-pass, 3 not-run, 4 device-pending, 0 external-blocked, 0 dependency-blocked, 0 fixture-blocked, 2 failed)
+- **R16:** `FAILED` (13 passed, 1 reused-pass, 2 not-run, 3 device-pending, 2 external-blocked, 0 dependency-blocked, 0 fixture-blocked, 2 failed)
+- **R17:** `FAILED` (16 passed, 1 reused-pass, 2 not-run, 3 device-pending, 0 external-blocked, 0 dependency-blocked, 0 fixture-blocked, 2 failed)
+- **R18:** `FAILED` (25 passed, 1 reused-pass, 3 not-run, 2 device-pending, 0 external-blocked, 0 dependency-blocked, 0 fixture-blocked, 2 failed)
+- **R19:** `FAILED` (10 passed, 1 reused-pass, 2 not-run, 1 device-pending, 0 external-blocked, 0 dependency-blocked, 0 fixture-blocked, 2 failed)
+- **R20:** `FAILED` (8 passed, 1 reused-pass, 2 not-run, 6 device-pending, 0 external-blocked, 0 dependency-blocked, 0 fixture-blocked, 2 failed)
+- **R21:** `FAILED` (10 passed, 1 reused-pass, 2 not-run, 3 device-pending, 0 external-blocked, 0 dependency-blocked, 0 fixture-blocked, 2 failed)
+- **R22:** `FAILED` (37 passed, 1 reused-pass, 2 not-run, 4 device-pending, 0 external-blocked, 0 dependency-blocked, 0 fixture-blocked, 2 failed)
+- **R23:** `FAILED` (42 passed, 1 reused-pass, 3 not-run, 33 device-pending, 1 external-blocked, 0 dependency-blocked, 0 fixture-blocked, 2 failed)
+- **R24:** `FAILED` (16 passed, 1 reused-pass, 2 not-run, 2 device-pending, 2 external-blocked, 0 dependency-blocked, 0 fixture-blocked, 2 failed)
+- **R25:** `FAILED` (16 passed, 1 reused-pass, 2 not-run, 2 device-pending, 0 external-blocked, 0 dependency-blocked, 0 fixture-blocked, 2 failed)
+- **R26:** `FAILED` (9 passed, 1 reused-pass, 2 not-run, 2 device-pending, 0 external-blocked, 0 dependency-blocked, 0 fixture-blocked, 2 failed)
+- **R27:** `FAILED` (24 passed, 1 reused-pass, 2 not-run, 1 device-pending, 0 external-blocked, 0 dependency-blocked, 0 fixture-blocked, 2 failed)
+- **R28:** `FAILED` (11 passed, 1 reused-pass, 2 not-run, 1 device-pending, 0 external-blocked, 0 dependency-blocked, 0 fixture-blocked, 2 failed)
+- **R29:** `FAILED` (14 passed, 1 reused-pass, 2 not-run, 1 device-pending, 0 external-blocked, 0 dependency-blocked, 0 fixture-blocked, 2 failed)
+- **R30:** `FAILED` (43 passed, 1 reused-pass, 2 not-run, 3 device-pending, 0 external-blocked, 0 dependency-blocked, 0 fixture-blocked, 2 failed)
+- **R31:** `FAILED` (16 passed, 1 reused-pass, 2 not-run, 1 device-pending, 0 external-blocked, 0 dependency-blocked, 0 fixture-blocked, 2 failed)
+- **R32:** `FAILED` (25 passed, 1 reused-pass, 2 not-run, 4 device-pending, 0 external-blocked, 0 dependency-blocked, 0 fixture-blocked, 2 failed)
+- **R33:** `FAILED` (15 passed, 1 reused-pass, 2 not-run, 1 device-pending, 0 external-blocked, 0 dependency-blocked, 0 fixture-blocked, 2 failed)
+- **R34:** `FAILED` (13 passed, 1 reused-pass, 2 not-run, 1 device-pending, 0 external-blocked, 0 dependency-blocked, 0 fixture-blocked, 2 failed)
+- **R35:** `FAILED` (7 passed, 1 reused-pass, 2 not-run, 1 device-pending, 0 external-blocked, 0 dependency-blocked, 0 fixture-blocked, 2 failed)
+- **R36:** `FAILED` (10 passed, 1 reused-pass, 2 not-run, 1 device-pending, 0 external-blocked, 0 dependency-blocked, 0 fixture-blocked, 2 failed)
+- **R37:** `FAILED` (9 passed, 1 reused-pass, 2 not-run, 3 device-pending, 0 external-blocked, 0 dependency-blocked, 0 fixture-blocked, 2 failed)
+- **R38:** `FAILED` (10 passed, 1 reused-pass, 2 not-run, 1 device-pending, 0 external-blocked, 0 dependency-blocked, 0 fixture-blocked, 2 failed)
+- **R39:** `FAILED` (12 passed, 1 reused-pass, 2 not-run, 1 device-pending, 0 external-blocked, 0 dependency-blocked, 0 fixture-blocked, 2 failed)
+- **R40:** `FAILED` (7 passed, 1 reused-pass, 2 not-run, 1 device-pending, 0 external-blocked, 0 dependency-blocked, 0 fixture-blocked, 2 failed)
+- **R41:** `FAILED` (16 passed, 1 reused-pass, 2 not-run, 1 device-pending, 0 external-blocked, 0 dependency-blocked, 0 fixture-blocked, 2 failed)
+- **R42:** `FAILED` (10 passed, 1 reused-pass, 2 not-run, 1 device-pending, 0 external-blocked, 0 dependency-blocked, 0 fixture-blocked, 2 failed)
+- **R43:** `FAILED` (12 passed, 1 reused-pass, 2 not-run, 1 device-pending, 0 external-blocked, 0 dependency-blocked, 0 fixture-blocked, 2 failed)
+- **R44:** `FAILED` (10 passed, 1 reused-pass, 2 not-run, 1 device-pending, 0 external-blocked, 0 dependency-blocked, 0 fixture-blocked, 2 failed)
+- **R45:** `FAILED` (11 passed, 1 reused-pass, 2 not-run, 4 device-pending, 0 external-blocked, 0 dependency-blocked, 0 fixture-blocked, 2 failed)
+- **R46:** `FAILED` (6 passed, 1 reused-pass, 2 not-run, 3 device-pending, 0 external-blocked, 2 dependency-blocked, 2 fixture-blocked, 2 failed)
+- **R47:** `FAILED` (10 passed, 1 reused-pass, 2 not-run, 1 device-pending, 0 external-blocked, 0 dependency-blocked, 0 fixture-blocked, 2 failed)
 
 ---
 

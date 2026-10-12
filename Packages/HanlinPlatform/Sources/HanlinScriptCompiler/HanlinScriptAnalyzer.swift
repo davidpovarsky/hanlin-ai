@@ -151,6 +151,13 @@ public struct HanlinScriptAnalyzer: Sendable {
         }
 
         var capabilities: [HanlinCapabilityID: HanlinCapabilityRequest] = [:]
+        for declaredCapability in package.manifest.declaredCapabilities {
+            capabilities[declaredCapability] = .init(
+                capabilityID: declaredCapability,
+                required: true,
+                purpose: "Declared in package manifest."
+            )
+        }
         for symbol in importedSymbols.sorted() {
             guard let record = symbols[symbol] else {
                 findings.append(.init(

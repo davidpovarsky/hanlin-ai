@@ -209,6 +209,18 @@ public struct HanlinScriptingManifest: Codable, Hashable, Sendable {
         self.unknownFields = unknownFields
     }
 
+    public var declaredCapabilities: [HanlinCapabilityID] {
+        if let field = unknownFields["capabilities"], case let .array(values) = field {
+            return values.compactMap { val in
+                if case let .string(str) = val {
+                    return try? HanlinCapabilityID(validating: str)
+                }
+                return nil
+            }
+        }
+        return []
+    }
+
     private static let knownKeys: Set<String> = [
         "name", "version", "description", "localizedNames",
         "localizedDescriptions", "author", "contributors", "icon",

@@ -659,6 +659,71 @@ class AffectedValidationPlannerTests(unittest.TestCase):
         self.assertIn("app_unit_tests", plan.selected_groups)
         self.assertNotIn("runtime_tooling_full_acceptance", plan.selected_groups)
 
+    def test_exact_test_selector_routes_only_selected_ui_method(self) -> None:
+        selector = "AI_HLYUITests/HanlinNativeScriptProductionE2ETests/testProductionNativeScriptParityFullRuntime"
+        plan = planner.plan_affected_validation(
+            mapping_config=self.mapping_config,
+            changed_files=["PROJECT_BOARD.md"],
+            base_sha="abc1234567890",
+            head_sha="def9876543210",
+            event_name="workflow_dispatch",
+            exact_test_selector=selector,
+        )
+        self.assertTrue(plan.step_outputs["run_simulator_job"])
+        self.assertTrue(plan.step_outputs["run_simulator_targeted_ui"])
+        self.assertFalse(plan.step_outputs["run_simulator_unit"])
+        self.assertEqual(plan.step_outputs["simulator_ui_filter"], selector)
+        self.assertEqual(plan.step_outputs["simulator_unit_filter"], "")
+        self.assertFalse(plan.step_outputs["run_device_build"])
+        self.assertFalse(plan.step_outputs["run_ipa_packaging"])
+        self.assertFalse(plan.step_outputs["run_runtimecore_bundle"])
+        self.assertEqual(plan.step_outputs["simulator_configuration"], "Release")
+        self.assertIn(f"-only-testing:{selector}", plan.step_outputs["simulator_build_for_testing_args"])
+
+    def test_exact_test_selector_routes_only_selected_unit_method(self) -> None:
+        selector = "AI_HLYTests/HanlinUnifiedHostServicesTests/capabilityCheckWithPackageIdentityAndContextFallback"
+        plan = planner.plan_affected_validation(
+            mapping_config=self.mapping_config,
+            changed_files=["PROJECT_BOARD.md"],
+            base_sha="abc1234567890",
+            head_sha="def9876543210",
+            event_name="workflow_dispatch",
+            exact_test_selector=selector,
+        )
+        self.assertTrue(plan.step_outputs["run_simulator_job"])
+        self.assertTrue(plan.step_outputs["run_simulator_unit"])
+        self.assertFalse(plan.step_outputs["run_simulator_targeted_ui"])
+        self.assertEqual(plan.step_outputs["simulator_unit_filter"], selector)
+        self.assertEqual(plan.step_outputs["simulator_ui_filter"], "")
+        self.assertFalse(plan.step_outputs["run_device_build"])
+        self.assertFalse(plan.step_outputs["run_ipa_packaging"])
+        self.assertEqual(plan.step_outputs["simulator_configuration"], "Debug")
+
+    def test_exact_test_selector_rejects_malformed_input(self) -> None:
+        with self.assertRaises(planner.RoutingError) as ctx:
+            planner.plan_affected_validation(
+                mapping_config=self.mapping_config,
+                changed_files=["PROJECT_BOARD.md"],
+                base_sha="abc1234567890",
+                head_sha="def9876543210",
+                event_name="workflow_dispatch",
+                exact_test_selector="AI_HLYUITests/HanlinNativeScriptProductionE2ETests; rm -rf /",
+            )
+        self.assertIn("Invalid exact-test-selector format", str(ctx.exception))
+
+    def test_exact_test_selector_rejects_contradictory_full_validation(self) -> None:
+        with self.assertRaises(planner.RoutingError) as ctx:
+            planner.plan_affected_validation(
+                mapping_config=self.mapping_config,
+                changed_files=["PROJECT_BOARD.md"],
+                base_sha="abc1234567890",
+                head_sha="def9876543210",
+                event_name="workflow_dispatch",
+                full_validation=True,
+                exact_test_selector="AI_HLYUITests/HanlinNativeScriptProductionE2ETests/testProductionNativeScriptParityFullRuntime",
+            )
+        self.assertIn("Contradictory options", str(ctx.exception))
+
 
 if __name__ == "__main__":
     unittest.main()

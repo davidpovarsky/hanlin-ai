@@ -253,4 +253,22 @@ struct HanlinUnifiedHostServicesTests {
         try HanlinFileService.validatePath("db.sqlite")
         try HanlinFileService.validatePath("nested/path/to/file.txt")
     }
+
+    @Test func capabilityCheckWithPackageIdentityAndContextFallback() async throws {
+        let appID = try HanlinAppID(validating: "package-app")
+        let packageID = try HanlinInstalledPackageID(validating: "install-package-app")
+        let authority = HanlinHostCapabilityAuthority.shared
+
+        let context = HanlinHostCallContext.forMiniApp(
+            appID: appID,
+            installedPackageID: packageID,
+            origin: .nativeModule,
+            capabilities: ["javascript", "node"],
+            canPresentUI: true
+        )
+        let r1 = await authority.authorize(capability: "runtime.javascript", context: context)
+        #expect(r1 == .allowed)
+        let r2 = await authority.authorize(capability: "runtime.python", context: context)
+        #expect(r2 == .notGranted)
+    }
 }

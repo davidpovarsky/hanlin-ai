@@ -227,7 +227,21 @@ Required behavior:
 - If the watcher is interrupted by a tool timeout or connection failure, resume or reattach to the same watcher/session when possible. Start a new watcher only when the original process can no longer be resumed; never fall back to frequent model-driven polling.
 - `--exit-status` is mandatory so a failed or cancelled workflow wakes the model with a nonzero result instead of appearing successful.
 
-## 12. Existing instruction and workflow files
+## 12. Impact-Aware Validation and Authentic Evidence Reuse
+
+This project enforces a strict, fail-closed impact-aware test selection and evidence reuse policy across all development and CI operations:
+
+1. **Default plan before running:** Every authorized validation starts with a manifest of requested obligations, affected files, dependency graph, invalidated tests, eligible-to-reuse tests, missing results, final source SHA, runner/platform, and expected CI groups. State exactly why each group will execute or be reused. Normal editing mode still does not authorize CI.
+2. **Strict reuse rule:** A test previously passed only if an authentic raw machine result proves that exact case actually executed and passed (including the original run's legitimate completion and bundle provenance). Validity requires matching test source/assertions/harness, invoked functionality, transitive implementation/runtime dependencies, generated resources, fixtures, configuration, lockfiles, entitlements where relevant, toolchain SDK/Xcode/Swift/compiler flags, simulator OS/device/architecture, and environment-sensitive behavior. Track full SHA range **from the test's last valid execution** to final implementation SHA. Files containing documentation alone need not invalidate code tests **unless** consumed by build/runtime/test logic. Never treat a passing test name in a log as proof.
+3. **Fail-closed invalidation:** Invalidate and rerun when directly/indirectly affected, newly required, impacted by shared startup/bridges/registries, changed test or fixtures, changed compiler/runtime/CI execution semantics, missing verifiable original artifacts, mismatched environment/fingerprints, flaky/expired or time-sensitive acceptance, unclear dependency lineage, an actual previous failure, or a mandatory fresh-execution requirement. Treat ambiguous links as unknown, not PASS. A `cache hit` or unchanged filename alone is not validation evidence.
+4. **Authoritative statuses:** Use separate `EXECUTED_PASS`, `REUSED_VERIFIED_PASS`, `FAILED`, `NOT_RUN`, `NEEDS_TEST`, `INVALIDATED`, and `BLOCKED` (or equivalent explicit fields preserving all distinctions). Aggregated requirement `PASSED` is permissible only when every required semantic assertion is proven by an eligible executed/reused pass and no higher-priority failed/blocking evidence remains. A test-case pass cannot automatically imply suite-, simulator-, workflow-, or scenario-level success.
+5. **Final acceptance:** Prefer a **coverage-complete aggregated acceptance** on the final SHA: run affected/failed/invalidated/unknown obligations, reuse proven unaffected obligations, and execute required fresh holistic cross-component checks. A final report must include both executed and reused lists/counts and raw provenance; a `REUSED_VERIFIED_PASS` must never be described as freshly executed. If a frozen/authoritative MASTER contract still explicitly requires physical same-run execution, do not silently reinterpret or claim its gate passed: make a transparent **versioned contract amendment** implementing the user's explicitly requested reuse policy, while preserving behavioral coverage and traceability; where an amendment is disallowed, leave the gate **OPEN** and identify the exact conflict rather than faking success.
+6. **No reduction of assurance:** Do not bypass tests, alter desired outputs/assertions, weaken coverage, lower required benchmark sample counts/thresholds, skip smoke/integration gates that actually changed, or recast mock fixtures as real engine execution. Reuse is a positive proof of unaffectedness, not blanket permission to skip.
+7. **Persistent proof and audit:** Maintain durable records across commits and CI runs, with exact test/scenario identifier, expected behavior, test method, previous execution SHA/run/job/artifact, raw result and hash, impacted-source fingerprint, dependency closure, fixture and runner/toolchain fingerprint, last validated status, invalidation cause, and final target SHA. Reused entries point at their original raw artifacts; do not copy them and rewrite the origin as the latest SHA.
+8. **Efficiency rules:** Use precise method-level filtered runs for debugging; avoid Release/device IPA and all performance suites in ordinary unrelated iterations; reuse compatible compiler caches; isolate test groups where safe; gather bounded, structured diagnostics; publish per-step/per-suite wall time and candidate waste. Keep required final coverage intact. A long/expensive full suite is not the default just because one test failed.
+9. **CI permission remains unchanged:** No builds, CI dispatch, archive, distribution, automatic triggers, or background monitor without the owner's explicit permission. Once dispatched, use a single event-driven watcher and inspect results rather than frequent polling.
+
+## 13. Existing instruction and workflow files
 
 Before creating any of the following, check whether an equivalent already exists:
 
@@ -247,7 +261,7 @@ If one exists:
 - do not overwrite secrets, signing configuration, scheme names, paths, or custom commands;
 - summarize what was retained, added, changed, or removed.
 
-## 13. Completion and honesty
+## 14. Completion and honesty
 
 After substantial work, report briefly:
 
@@ -271,11 +285,11 @@ Never claim:
 
 unless that exact claim was verified.
 
-## 14. User preference
+## 15. User preference
 
 The user wants modern, advanced, clean Swift and SwiftUI code, targets current stable Apple platforms only, does not want backward compatibility, works from Windows, and uses manually requested GitHub Actions for Apple-platform compilation and verification.
 
-## 15. Hanlin NativeScript and MiniApp scripts
+## 16. Hanlin NativeScript and MiniApp scripts
 
 When building, modifying, or packaging NativeScript MiniApps and scripts for Hanlin:
 - Consult the full agent and developer guide: [`docs/hanlin-nativescript-guide.md`](file:///c:/Users/DAVID/Code/hanlin-ai/docs/hanlin-nativescript-guide.md).

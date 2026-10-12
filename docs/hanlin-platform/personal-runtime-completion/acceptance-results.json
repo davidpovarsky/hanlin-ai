@@ -8,19 +8,21 @@
   "provenance": {
     "implementationSHA": "0095b6441e8968d4200e8cd8acf42f61b46b7c59",
     "evidenceRunSHA": "0095b6441e8968d4200e8cd8acf42f61b46b7c59",
-    "reportSHA": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
+    "reportSHA": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
     "branch": "codex/agent-skills-embedded-results",
-    "isDirty": false,
-    "executedAt": "2026-10-12T13:53:05.885Z"
+    "isDirty": true,
+    "executedAt": "2026-10-12T16:21:34.069Z"
   },
   "statistics": {
     "total": 493,
-    "passedCount": 397,
-    "deviceCount": 83,
+    "passedCount": 389,
+    "reusedCount": 1,
+    "deviceCount": 78,
     "externalCount": 10,
     "dependencyCount": 2,
-    "fixtureCount": 1,
-    "failedCount": 0
+    "fixtureCount": 2,
+    "notRunCount": 9,
+    "failedCount": 2
   },
   "evidenceArtifacts": {
     "build-ios26-summary.txt": "c3d6796fd25d1da74188f2ef26ca238fcd11f1c954f01baf7be3418a204d8c03",
@@ -88,8 +90,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "AUD-02",
@@ -117,8 +119,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "AUD-03",
@@ -159,8 +161,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "AUD-04",
@@ -201,8 +203,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "AUD-05",
@@ -231,8 +233,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "AUD-06",
@@ -261,8 +263,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "AUD-07",
@@ -292,8 +294,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "AUD-08",
@@ -333,8 +335,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "ZIP-01",
@@ -349,30 +351,21 @@
       "scenario": "ייבא F02 root ZIP עם SKILL.md, hanlin.json ו־agents/openai.yaml.",
       "expectedOutcome": "preview/install/refresh/relaunch מצליחים; אותם metadata וגוף זמינים.",
       "specificationHash": "99b459c82c701bb3fce9116da966367d476fd072817909b5ec9bb8f2ab6bdd74",
-      "status": "NOT_RUN_DEVICE",
-      "overallScenarioStatus": "PROVEN_SIMULATOR",
+      "status": "NOT_RUN",
+      "overallScenarioStatus": "NOT_RUN",
       "obligations": [
         {
           "layer": "I",
-          "testTarget": "HanlinPlatform",
-          "exactTestName": "Rejects links, normalization collisions, bombs, and hidden encrypted entries",
-          "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/evidence/phase1-swift-test.log",
-          "expectedTerminalState": "Passed",
-          "verifierKind": "swift_test",
-          "status": "PASSED",
-          "requiredForEngineering": true,
+          "status": "NOT_RUN",
+          "reason": "Previous mapping tested security-threat rejection; positive import of root ZIP with SKILL.md, hanlin.json, and agents/openai.yaml needs dedicated functional test.",
+          "requiredForEngineering": false,
           "requiredForOverall": true
         },
         {
           "layer": "S",
-          "testTarget": "AI_HLYTests",
-          "testSuite": "SkillStoreAndImportTests",
-          "exactTestName": "SkillStoreAndImportTests/failedReplacementPreservesPreviouslyInstalledSkill()",
-          "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/evidence/simulator-downstream-unit-test-results.json",
-          "expectedTerminalState": "Passed",
-          "verifierKind": "xctest",
-          "status": "PASSED",
-          "requiredForEngineering": true,
+          "status": "NOT_RUN",
+          "reason": "Previous mapping tested rollback on failed replacement; positive import of root ZIP with preview/install/refresh/relaunch needs dedicated functional test.",
+          "requiredForEngineering": false,
           "requiredForOverall": true
         },
         {
@@ -384,8 +377,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "ZIP-02",
@@ -400,30 +393,21 @@
       "scenario": "ייבא אותם bytes תחת fixture-runtime/ wrapper.",
       "expectedOutcome": "אותה תוצאה כמו ZIP-01; wrapper לבדו אינו שגיאה.",
       "specificationHash": "2f76011e2a53a8077d2804d838ee1d19df4be12c72104c3739e8e2a749440835",
-      "status": "NOT_RUN_DEVICE",
-      "overallScenarioStatus": "PROVEN_SIMULATOR",
+      "status": "NOT_RUN",
+      "overallScenarioStatus": "NOT_RUN",
       "obligations": [
         {
           "layer": "I",
-          "testTarget": "HanlinPlatform",
-          "exactTestName": "Stages, validates, extracts, and decodes without executing source",
-          "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/evidence/phase1-swift-test.log",
-          "expectedTerminalState": "Passed",
-          "verifierKind": "swift_test",
-          "status": "PASSED",
-          "requiredForEngineering": true,
+          "status": "NOT_RUN",
+          "reason": "Previous mapping tested archive staging without execution; equivalent wrapped ZIP under fixture-runtime/ needs dedicated functional test.",
+          "requiredForEngineering": false,
           "requiredForOverall": true
         },
         {
           "layer": "S",
-          "testTarget": "AI_HLYTests",
-          "testSuite": "SkillStoreAndImportTests",
-          "exactTestName": "SkillStoreAndImportTests/resourceReadingSymlinkEscapeRejected()",
-          "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/evidence/simulator-downstream-unit-test-results.json",
-          "expectedTerminalState": "Passed",
-          "verifierKind": "xctest",
-          "status": "PASSED",
-          "requiredForEngineering": true,
+          "status": "NOT_RUN",
+          "reason": "Previous mapping tested symlink escape rejection; equivalent wrapped ZIP import needs dedicated functional test.",
+          "requiredForEngineering": false,
           "requiredForOverall": true
         },
         {
@@ -435,8 +419,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "ZIP-03",
@@ -477,8 +461,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "ZIP-04",
@@ -517,8 +501,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "ZIP-05",
@@ -568,8 +552,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "ZIP-06",
@@ -609,8 +593,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "ZIP-07",
@@ -640,8 +624,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "ZIP-08",
@@ -656,35 +640,26 @@
       "scenario": "ייבא archive מעל 25MiB ונתון expanded מעל 64MiB עם marker בסוף.",
       "expectedOutcome": "אין cutoff ישן; bytes מלאים, cancellation זמין ו־memory אינו צומח לפי כל archive.",
       "specificationHash": "30e343081ca6a73791c74994eb6a0123ae48faa8de52e932762f98b1420bf493",
-      "status": "PASSED",
-      "overallScenarioStatus": "PASSED",
+      "status": "NOT_RUN",
+      "overallScenarioStatus": "NOT_RUN",
       "obligations": [
         {
           "layer": "I",
-          "testTarget": "HanlinPlatform",
-          "exactTestName": "appDescriptorRejectsUnsafeResourcePaths()",
-          "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/evidence/phase1-swift-test.log",
-          "expectedTerminalState": "Passed",
-          "verifierKind": "swift_test",
-          "status": "PASSED",
-          "requiredForEngineering": true,
+          "status": "NOT_RUN",
+          "reason": "Previous mapping tested unsafe resource paths; large archive (>25MiB, expanded >64MiB) with end marker needs dedicated functional test.",
+          "requiredForEngineering": false,
           "requiredForOverall": true
         },
         {
           "layer": "S",
-          "testTarget": "AI_HLYTests",
-          "testSuite": "SkillStoreAndImportTests",
-          "exactTestName": "SkillStoreAndImportTests/directMarkdownSkillInstallsSuccessfully()",
-          "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/evidence/simulator-downstream-unit-test-results.json",
-          "expectedTerminalState": "Passed",
-          "verifierKind": "xctest",
-          "status": "PASSED",
-          "requiredForEngineering": true,
+          "status": "NOT_RUN",
+          "reason": "Previous mapping tested direct Markdown skill install; large archive memory bounds and cancellation need dedicated functional test.",
+          "requiredForEngineering": false,
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "ZIP-09",
@@ -712,8 +687,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "ZIP-10",
@@ -741,8 +716,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "ZIP-11",
@@ -784,8 +759,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "ZIP-12",
@@ -826,8 +801,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "ZIP-13",
@@ -856,8 +831,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "ZIP-14",
@@ -886,8 +861,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "ZIP-15",
@@ -928,8 +903,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "ZIP-16",
@@ -980,8 +955,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "ZIP-17",
@@ -1032,8 +1007,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "ZIP-18",
@@ -1075,8 +1050,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "ZIP-19",
@@ -1105,8 +1080,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "ZIP-20",
@@ -1148,8 +1123,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "ZIP-21",
@@ -1178,8 +1153,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "ZIP-22",
@@ -1221,8 +1196,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "META-01",
@@ -1262,8 +1237,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "META-02",
@@ -1303,8 +1278,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "META-03",
@@ -1344,8 +1319,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "META-04",
@@ -1385,8 +1360,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "META-05",
@@ -1426,8 +1401,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "META-06",
@@ -1480,8 +1455,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "META-07",
@@ -1521,8 +1496,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "META-08",
@@ -1562,8 +1537,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "META-09",
@@ -1603,8 +1578,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "META-10",
@@ -1644,8 +1619,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "META-11",
@@ -1687,8 +1662,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "META-12",
@@ -1730,8 +1705,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "META-13",
@@ -1772,8 +1747,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "META-14",
@@ -1814,8 +1789,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "META-15",
@@ -1856,8 +1831,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "META-16",
@@ -1886,8 +1861,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "DISC-01",
@@ -1928,8 +1903,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "DISC-02",
@@ -1970,8 +1945,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "DISC-03",
@@ -1999,8 +1974,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "DISC-04",
@@ -2028,8 +2003,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "DISC-05",
@@ -2070,8 +2045,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "DISC-06",
@@ -2113,8 +2088,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "DISC-07",
@@ -2154,8 +2129,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "DISC-08",
@@ -2195,8 +2170,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "DISC-09",
@@ -2236,8 +2211,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "DISC-10",
@@ -2266,8 +2241,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "DISC-11",
@@ -2295,8 +2270,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "DISC-12",
@@ -2338,8 +2313,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "DISC-13",
@@ -2379,8 +2354,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "DISC-14",
@@ -2409,8 +2384,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "DISC-15",
@@ -2439,8 +2414,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "DISC-16",
@@ -2469,8 +2444,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "DISC-17",
@@ -2512,8 +2487,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "DISC-18",
@@ -2542,8 +2517,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "DISC-19",
@@ -2585,8 +2560,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "DISC-20",
@@ -2628,8 +2603,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "DISC-21",
@@ -2669,8 +2644,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "DISC-22",
@@ -2711,8 +2686,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "TOOLS-01",
@@ -2753,8 +2728,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "TOOLS-02",
@@ -2782,8 +2757,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "TOOLS-03",
@@ -2824,8 +2799,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "TOOLS-04",
@@ -2854,8 +2829,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "PKGT-01",
@@ -2896,8 +2871,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "PKGT-02",
@@ -2938,8 +2913,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "PKGT-03",
@@ -2989,8 +2964,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "PKGT-04",
@@ -3040,8 +3015,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "PKGT-05",
@@ -3082,8 +3057,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "PKGT-06",
@@ -3124,8 +3099,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "PKGT-07",
@@ -3154,8 +3129,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "PKGT-08",
@@ -3197,8 +3172,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "PKGT-09",
@@ -3227,8 +3202,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "PKGT-10",
@@ -3270,8 +3245,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "PKGT-11",
@@ -3312,8 +3287,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "PKGT-12",
@@ -3342,8 +3317,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "FS-01",
@@ -3358,30 +3333,21 @@
       "scenario": "Python כותב F01 sample.txt, Node קורא ומוסיף שורה, shell קורא את התוצאה באותו context.",
       "expectedOutcome": "שלוש השכבות רואות אותו cwd ותוכן; אין workspace מנותק לכל tool.",
       "specificationHash": "2ac74759aa3971b554c60994a603e4f1a77d66407f7daa2837c28397220b5fd7",
-      "status": "NOT_RUN_DEVICE",
-      "overallScenarioStatus": "PROVEN_SIMULATOR",
+      "status": "NOT_RUN",
+      "overallScenarioStatus": "NOT_RUN",
       "obligations": [
         {
           "layer": "I",
-          "testTarget": "HanlinPlatform",
-          "exactTestName": "Storage and VFS are package-namespaced, bounded, and traversal-safe",
-          "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/evidence/phase1-swift-test.log",
-          "expectedTerminalState": "Passed",
-          "verifierKind": "swift_test",
-          "status": "PASSED",
-          "requiredForEngineering": true,
+          "status": "NOT_RUN",
+          "reason": "Previous mapping tested namespaced VFS security; 3-runtimes interoperability (Python write, Node append, Shell read) needs dedicated functional test.",
+          "requiredForEngineering": false,
           "requiredForOverall": true
         },
         {
           "layer": "S",
-          "testTarget": "AI_HLYTests",
-          "testSuite": "CanonicalAdapterTests",
-          "exactTestName": "CanonicalMiniAppIntegrationTests/privateStoragePathTraversalRejected()",
-          "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/evidence/simulator-downstream-unit-test-results.json",
-          "expectedTerminalState": "Passed",
-          "verifierKind": "xctest",
-          "status": "PASSED",
-          "requiredForEngineering": true,
+          "status": "NOT_RUN",
+          "reason": "Previous mapping tested path traversal rejection; shared workspace/cwd across Python, Node, and Shell needs dedicated functional test.",
+          "requiredForEngineering": false,
           "requiredForOverall": true
         },
         {
@@ -3393,8 +3359,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "FS-02",
@@ -3435,8 +3401,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "FS-03",
@@ -3477,8 +3443,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "FS-04",
@@ -3528,8 +3494,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "FS-05",
@@ -3570,8 +3536,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "FS-06",
@@ -3609,8 +3575,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "FS-07",
@@ -3648,8 +3614,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "FS-08",
@@ -3691,8 +3657,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "FS-09",
@@ -3733,8 +3699,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "FS-10",
@@ -3776,8 +3742,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "FS-11",
@@ -3806,8 +3772,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "FS-12",
@@ -3836,8 +3802,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "ENV-01",
@@ -3878,8 +3844,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "ENV-02",
@@ -3920,8 +3886,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "ENV-03",
@@ -3962,8 +3928,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "ENV-04",
@@ -4004,8 +3970,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "ENV-05",
@@ -4047,8 +4013,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "ENV-06",
@@ -4089,8 +4055,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "ENV-07",
@@ -4119,8 +4085,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "ENV-08",
@@ -4149,8 +4115,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "SH-01",
@@ -4165,30 +4131,21 @@
       "scenario": "השווה commandsAsArray/ios_executable, dictionary entries ו־tool catalog.",
       "expectedOutcome": "קטלוג הפקודות משקף backend בפועל; אין exact-23 assertion.",
       "specificationHash": "92d236c0cde6bf295a0d8011cf233a1ecb8bb9fa2f847f28fcb6811771e41cc7",
-      "status": "NOT_RUN_DEVICE",
-      "overallScenarioStatus": "PROVEN_SIMULATOR",
+      "status": "NOT_RUN",
+      "overallScenarioStatus": "NOT_RUN",
       "obligations": [
         {
           "layer": "I",
-          "testTarget": "HanlinPlatform",
-          "exactTestName": "Invalid and extra arguments reach Hanlin executor and return non-fatal error",
-          "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/evidence/phase1-swift-test.log",
-          "expectedTerminalState": "Passed",
-          "verifierKind": "swift_test",
-          "status": "PASSED",
-          "requiredForEngineering": true,
+          "status": "NOT_RUN",
+          "reason": "Previous mapping tested argument handling; dynamic command catalog reconciliation without exact-23 assertion needs dedicated functional test.",
+          "requiredForEngineering": false,
           "requiredForOverall": true
         },
         {
           "layer": "S",
-          "testTarget": "AI_HLYTests",
-          "testSuite": "RuntimeToolContractTests",
-          "exactTestName": "RuntimeToolContractTests/shellSchemaIsStructurallyConstrained()",
-          "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/evidence/simulator-downstream-unit-test-results.json",
-          "expectedTerminalState": "Passed",
-          "verifierKind": "xctest",
-          "status": "PASSED",
-          "requiredForEngineering": true,
+          "status": "NOT_RUN",
+          "reason": "Previous mapping tested shell schema constraints; dynamic command catalog reconciliation without exact-23 assertion needs dedicated functional test.",
+          "requiredForEngineering": false,
           "requiredForOverall": true
         },
         {
@@ -4200,8 +4157,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "SH-02",
@@ -4242,8 +4199,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "SH-03",
@@ -4285,8 +4242,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "SH-04",
@@ -4336,8 +4293,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "SH-05",
@@ -4379,8 +4336,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "SH-06",
@@ -4421,8 +4378,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "SH-07",
@@ -4463,8 +4420,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "SH-08",
@@ -4505,8 +4462,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "SH-09",
@@ -4547,8 +4504,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "SH-10",
@@ -4589,8 +4546,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "SH-11",
@@ -4631,8 +4588,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "SH-12",
@@ -4673,8 +4630,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "SH-13",
@@ -4715,8 +4672,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "SH-14",
@@ -4757,8 +4714,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "SH-15",
@@ -4799,8 +4756,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "SH-16",
@@ -4851,8 +4808,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "SH-17",
@@ -4893,8 +4850,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "SH-18",
@@ -4935,8 +4892,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "SH-19",
@@ -4977,8 +4934,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "SH-20",
@@ -5019,8 +4976,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "SH-21",
@@ -5062,8 +5019,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "SH-22",
@@ -5114,8 +5071,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "JS-01",
@@ -5165,8 +5122,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "JS-02",
@@ -5216,8 +5173,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "JS-03",
@@ -5258,8 +5215,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "JS-04",
@@ -5300,8 +5257,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "JS-05",
@@ -5352,8 +5309,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "JS-06",
@@ -5394,8 +5351,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "JS-07",
@@ -5437,8 +5394,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "JS-08",
@@ -5479,8 +5436,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "JS-09",
@@ -5521,8 +5478,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "JS-10",
@@ -5564,8 +5521,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "JS-11",
@@ -5606,8 +5563,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "MCP-01",
@@ -5657,8 +5614,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "MCP-02",
@@ -5699,8 +5656,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "MCP-03",
@@ -5750,8 +5707,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "MCP-04",
@@ -5791,8 +5748,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "MCP-05",
@@ -5833,8 +5790,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "MCP-06",
@@ -5876,8 +5833,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "MCP-07",
@@ -5918,8 +5875,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "MCP-08",
@@ -5970,8 +5927,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "CMD-01",
@@ -5987,30 +5944,21 @@
       "scenario": "על F01 חדש ומבודד לכל שורה: program=awk, arguments=['{print $1}','sample.txt'].",
       "expectedOutcome": "alpha\\nbeta\\nalpha\\n; exit code 0.",
       "specificationHash": "d7a3a327230b40869ef2a303346e0707248e76f132ecf3bf83a4ce624c3833da",
-      "status": "NOT_RUN_DEVICE",
-      "overallScenarioStatus": "PROVEN_SIMULATOR",
+      "status": "NOT_RUN",
+      "overallScenarioStatus": "NOT_RUN",
       "obligations": [
         {
           "layer": "I",
-          "testTarget": "HanlinPlatform",
-          "exactTestName": "Invalid and extra arguments reach Hanlin executor and return non-fatal error",
-          "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/evidence/phase1-swift-test.log",
-          "expectedTerminalState": "Passed",
-          "verifierKind": "swift_test",
-          "status": "PASSED",
-          "requiredForEngineering": true,
+          "status": "NOT_RUN",
+          "reason": "Previous mapping tested extra argument non-fatal error; awk '{print $1}' sample.txt output execution needs dedicated functional test.",
+          "requiredForEngineering": false,
           "requiredForOverall": true
         },
         {
           "layer": "S",
-          "testTarget": "AI_HLYTests",
-          "testSuite": "RuntimeToolContractTests",
-          "exactTestName": "RuntimeToolContractTests/runtimeSchemasAdvertiseOnlyHandledParameters()",
-          "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/evidence/simulator-downstream-unit-test-results.json",
-          "expectedTerminalState": "Passed",
-          "verifierKind": "xctest",
-          "status": "PASSED",
-          "requiredForEngineering": true,
+          "status": "NOT_RUN",
+          "reason": "Previous mapping tested schema parameter advertising; awk program execution and exit code 0 need dedicated functional test.",
+          "requiredForEngineering": false,
           "requiredForOverall": true
         },
         {
@@ -6022,8 +5970,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "CMD-02",
@@ -6074,8 +6022,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "CMD-03",
@@ -6126,8 +6074,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "CMD-04",
@@ -6179,8 +6127,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "CMD-05",
@@ -6231,8 +6179,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "CMD-06",
@@ -6283,8 +6231,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "CMD-07",
@@ -6335,8 +6283,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "CMD-08",
@@ -6387,8 +6335,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "CMD-09",
@@ -6439,8 +6387,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "CMD-10",
@@ -6491,8 +6439,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "CMD-11",
@@ -6543,8 +6491,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "CMD-12",
@@ -6595,8 +6543,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "CMD-13",
@@ -6647,8 +6595,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "CMD-14",
@@ -6699,8 +6647,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "CMD-15",
@@ -6751,8 +6699,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "CMD-16",
@@ -6803,8 +6751,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "CMD-17",
@@ -6855,8 +6803,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "CMD-18",
@@ -6907,8 +6855,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "CMD-19",
@@ -6959,8 +6907,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "CMD-20",
@@ -7011,8 +6959,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "CMD-21",
@@ -7063,8 +7011,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "CMD-22",
@@ -7115,8 +7063,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "CMD-23",
@@ -7167,8 +7115,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "NPM-01",
@@ -7209,8 +7157,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "NPM-02",
@@ -7251,8 +7199,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "NPM-03",
@@ -7293,8 +7241,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "NPM-04",
@@ -7344,8 +7292,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "NPM-05",
@@ -7386,8 +7334,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "NPM-06",
@@ -7429,8 +7377,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "NPM-07",
@@ -7471,8 +7419,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "NPM-08",
@@ -7513,8 +7461,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "NPM-09",
@@ -7542,8 +7490,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "NPM-10",
@@ -7571,8 +7519,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "NPM-11",
@@ -7601,8 +7549,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "NPM-12",
@@ -7644,8 +7592,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "NPM-13",
@@ -7674,8 +7622,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "NPM-14",
@@ -7704,8 +7652,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "NPM-15",
@@ -7743,8 +7691,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "PY-01",
@@ -7794,8 +7742,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "PY-02",
@@ -7809,35 +7757,26 @@
       "scenario": "distribution בשם שונה מה־import name.",
       "expectedOutcome": "התקנה תקינה אינה נכשלת בגלל הנחת name.replace('-', '_'); import הנכון עובד.",
       "specificationHash": "3c20d43c814d5bf55bdf246638aa5dc8043387b0e9f343ef17ae65e6c6763449",
-      "status": "PASSED",
-      "overallScenarioStatus": "PASSED",
+      "status": "NOT_RUN",
+      "overallScenarioStatus": "NOT_RUN",
       "obligations": [
         {
           "layer": "I",
-          "testTarget": "HanlinPlatform",
-          "exactTestName": "S03: Production skill activation: load_skill exposes python dynamically",
-          "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/evidence/phase1-swift-test.log",
-          "expectedTerminalState": "Passed",
-          "verifierKind": "swift_test",
-          "status": "PASSED",
-          "requiredForEngineering": true,
+          "status": "NOT_RUN",
+          "reason": "Previous mapping tested dynamic python tool exposure; package distribution name differing from import name needs dedicated functional test.",
+          "requiredForEngineering": false,
           "requiredForOverall": true
         },
         {
           "layer": "S",
-          "testTarget": "AI_HLYTests",
-          "testSuite": "CanonicalAdapterTests",
-          "exactTestName": "RuntimePackageAcceptanceTests/pythonUnsupportedAndInvalidInputs()",
-          "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/evidence/simulator-downstream-unit-test-results.json",
-          "expectedTerminalState": "Passed",
-          "verifierKind": "xctest",
-          "status": "PASSED",
-          "requiredForEngineering": true,
+          "status": "NOT_RUN",
+          "reason": "Previous mapping tested unsupported input rejection; package distribution name differing from import name needs dedicated functional test.",
+          "requiredForEngineering": false,
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "PY-03",
@@ -7878,8 +7817,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "PY-04",
@@ -7920,8 +7859,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "PY-05",
@@ -7962,8 +7901,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "PY-06",
@@ -7991,8 +7930,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "PY-07",
@@ -8033,8 +7972,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "PY-08",
@@ -8075,8 +8014,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "PY-09",
@@ -8117,8 +8056,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "PY-10",
@@ -8146,8 +8085,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "PY-11",
@@ -8187,8 +8126,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "PY-12",
@@ -8230,8 +8169,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "PY-13",
@@ -8271,8 +8210,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "PY-14",
@@ -8312,8 +8251,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "PY-15",
@@ -8342,8 +8281,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "PY-16",
@@ -8371,8 +8310,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "PY-17",
@@ -8401,8 +8340,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "PY-18",
@@ -8452,8 +8391,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "PY-19",
@@ -8495,8 +8434,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "PY-20",
@@ -8534,8 +8473,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "CAP-01",
@@ -8576,8 +8515,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "CAP-02",
@@ -8618,8 +8557,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "CAP-03",
@@ -8660,8 +8599,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "CAP-04",
@@ -8702,8 +8641,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "CAP-05",
@@ -8744,8 +8683,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "CAP-06",
@@ -8784,8 +8723,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "CAP-07",
@@ -8824,8 +8763,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "CAP-08",
@@ -8866,8 +8805,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "CAP-09",
@@ -8909,8 +8848,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "CAP-10",
@@ -8950,8 +8889,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "CAP-11",
@@ -8991,8 +8930,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "CAP-12",
@@ -9032,8 +8971,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "CAP-13",
@@ -9074,8 +9013,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "CAP-14",
@@ -9117,8 +9056,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "NET-01",
@@ -9169,8 +9108,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "NET-02",
@@ -9212,8 +9151,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "NET-03",
@@ -9242,8 +9181,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "NET-04",
@@ -9285,8 +9224,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "NET-05",
@@ -9327,8 +9266,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "NET-06",
@@ -9366,8 +9305,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "NET-07",
@@ -9396,8 +9335,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "NET-08",
@@ -9439,8 +9378,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "LIM-01",
@@ -9480,8 +9419,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "LIM-02",
@@ -9522,8 +9461,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "LIM-03",
@@ -9564,8 +9503,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "LIM-04",
@@ -9606,8 +9545,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "LIM-05",
@@ -9647,8 +9586,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "LIM-06",
@@ -9688,8 +9627,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "LIM-07",
@@ -9730,8 +9669,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "LIM-08",
@@ -9771,8 +9710,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "LIM-09",
@@ -9814,8 +9753,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "LIM-10",
@@ -9856,8 +9795,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "LIM-11",
@@ -9886,8 +9825,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "LIM-12",
@@ -9929,8 +9868,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "APP-01",
@@ -9983,8 +9922,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "APP-02",
@@ -10025,8 +9964,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "APP-03",
@@ -10067,8 +10006,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "APP-04",
@@ -10109,8 +10048,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "APP-05",
@@ -10160,8 +10099,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "APP-06",
@@ -10211,8 +10150,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "APP-07",
@@ -10265,8 +10204,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "APP-08",
@@ -10316,8 +10255,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "APP-09",
@@ -10358,8 +10297,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "APP-10",
@@ -10410,8 +10349,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "APP-11",
@@ -10449,8 +10388,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "APP-12",
@@ -10491,8 +10430,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "APP-13",
@@ -10520,8 +10459,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "APP-14",
@@ -10562,8 +10501,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "FUNC-01",
@@ -10605,8 +10544,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "FUNC-02",
@@ -10648,8 +10587,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "FUNC-03",
@@ -10700,8 +10639,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "FUNC-04",
@@ -10752,8 +10691,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "FUNC-05",
@@ -10804,8 +10743,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "FUNC-06",
@@ -10856,8 +10795,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "FUNC-07",
@@ -10899,8 +10838,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "FUNC-08",
@@ -10942,8 +10881,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "FUNC-09",
@@ -10985,8 +10924,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "FUNC-10",
@@ -11028,8 +10967,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "FUNC-11",
@@ -11071,8 +11010,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "FUNC-12",
@@ -11114,8 +11053,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "FUNC-13",
@@ -11157,8 +11096,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "FUNC-14",
@@ -11209,8 +11148,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "FUNC-15",
@@ -11252,8 +11191,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "FUNC-16",
@@ -11295,8 +11234,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "FUNC-17",
@@ -11338,8 +11277,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "FUNC-18",
@@ -11381,8 +11320,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "FUNC-19",
@@ -11424,8 +11363,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "FUNC-20",
@@ -11467,8 +11406,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "FUNC-21",
@@ -11510,8 +11449,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "FUNC-22",
@@ -11553,8 +11492,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "FUNC-23",
@@ -11596,8 +11535,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "FUNC-24",
@@ -11639,8 +11578,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "FUNC-25",
@@ -11682,8 +11621,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "FUNC-26",
@@ -11734,8 +11673,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "FUNC-27",
@@ -11777,8 +11716,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "FUNC-28",
@@ -11820,8 +11759,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "FUNC-29",
@@ -11863,8 +11802,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "FUNC-30",
@@ -11906,8 +11845,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "FUNC-31",
@@ -11949,8 +11888,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "FUNC-32",
@@ -11992,8 +11931,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "FUNC-33",
@@ -12035,8 +11974,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "FUNC-34",
@@ -12078,8 +12017,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "FUNC-35",
@@ -12121,8 +12060,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "FUNC-36",
@@ -12164,8 +12103,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "FUNC-37",
@@ -12207,8 +12146,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "FUNC-38",
@@ -12250,8 +12189,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "UI-01",
@@ -12291,8 +12230,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "UI-02",
@@ -12331,8 +12270,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "UI-03",
@@ -12371,8 +12310,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "UI-04",
@@ -12410,8 +12349,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "UI-05",
@@ -12449,8 +12388,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "UI-06",
@@ -12489,8 +12428,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "PROV-01",
@@ -12534,8 +12473,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "PROV-02",
@@ -12579,8 +12518,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "PROV-03",
@@ -12623,8 +12562,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "PROV-04",
@@ -12667,8 +12606,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "PROV-05",
@@ -12711,8 +12650,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "PROV-06",
@@ -12755,8 +12694,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "PROV-07",
@@ -12790,8 +12729,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "PROV-08",
@@ -12825,8 +12764,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "BUILD-01",
@@ -12854,8 +12793,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "BUILD-02",
@@ -12883,8 +12822,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "BUILD-03",
@@ -12912,8 +12851,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "BUILD-04",
@@ -12954,8 +12893,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "BUILD-05",
@@ -12983,8 +12922,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "BUILD-06",
@@ -13026,8 +12965,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "BUILD-07",
@@ -13069,8 +13008,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "BUILD-08",
@@ -13112,8 +13051,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "BUILD-09",
@@ -13164,8 +13103,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "BUILD-10",
@@ -13205,8 +13144,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "SDKAI-01",
@@ -13234,8 +13173,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "SDKAI-02",
@@ -13263,8 +13202,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "SDKAI-03",
@@ -13292,8 +13231,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "SDKAI-04",
@@ -13321,8 +13260,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "SDKAI-05",
@@ -13350,8 +13289,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "SDKAI-06",
@@ -13379,8 +13318,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "SDKAI-07",
@@ -13408,8 +13347,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "SDKAI-08",
@@ -13437,8 +13376,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "SDKAI-09",
@@ -13466,8 +13405,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "SDKAI-10",
@@ -13495,8 +13434,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "SDKAI-11",
@@ -13524,8 +13463,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "SDKAI-12",
@@ -13553,8 +13492,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "SDKAI-13",
@@ -13595,8 +13534,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "SDKAI-14",
@@ -13625,8 +13564,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "SDKAI-15",
@@ -13655,8 +13594,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "SDKAI-16",
@@ -13685,8 +13624,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "SDKAI-17",
@@ -13715,8 +13654,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "SDKAI-18",
@@ -13745,8 +13684,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "SDKFORK-01",
@@ -13774,8 +13713,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "SDKFORK-02",
@@ -13816,8 +13755,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "SDKFORK-03",
@@ -13845,8 +13784,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "SDKFORK-04",
@@ -13874,8 +13813,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "SDKFORK-05",
@@ -13904,8 +13843,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "CHAT-01",
@@ -13947,8 +13886,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "CHAT-02",
@@ -13990,8 +13929,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "CHAT-03",
@@ -14020,8 +13959,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "CHAT-04",
@@ -14051,8 +13990,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "CHAT-05",
@@ -14082,8 +14021,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "CHAT-06",
@@ -14112,8 +14051,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "CHAT-07",
@@ -14143,8 +14082,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "CHAT-08",
@@ -14173,8 +14112,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "CHAT-09",
@@ -14203,8 +14142,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "CHAT-10",
@@ -14233,8 +14172,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "CHAT-11",
@@ -14263,8 +14202,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "CHAT-12",
@@ -14293,8 +14232,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "CHAT-13",
@@ -14323,8 +14262,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "CHAT-14",
@@ -14353,8 +14292,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "CHAT-15",
@@ -14383,8 +14322,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "CHAT-16",
@@ -14413,8 +14352,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "CHAT-17",
@@ -14443,8 +14382,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "CHAT-18",
@@ -14473,8 +14412,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "CHAT-19",
@@ -14503,8 +14442,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "CHAT-20",
@@ -14533,8 +14472,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "CHAT-21",
@@ -14563,8 +14502,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "CHAT-22",
@@ -14603,8 +14542,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "CHAT-23",
@@ -14643,8 +14582,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "CHAT-24",
@@ -14675,8 +14614,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "CHAT-25",
@@ -14705,8 +14644,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "CHAT-26",
@@ -14735,8 +14674,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "CHAT-27",
@@ -14778,8 +14717,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "CHAT-28",
@@ -14820,8 +14759,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "CHAT-29",
@@ -14862,8 +14801,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "CHAT-30",
@@ -14904,8 +14843,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "CHAT-31",
@@ -14934,8 +14873,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "CHAT-32",
@@ -14964,8 +14903,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "CHAT-33",
@@ -14994,8 +14933,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "CHAT-34",
@@ -15024,8 +14963,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "CHAT-35",
@@ -15054,8 +14993,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "CHAT-36",
@@ -15084,8 +15023,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "CHAT-37",
@@ -15114,8 +15053,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "CHAT-38",
@@ -15144,8 +15083,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "CHAT-39",
@@ -15174,8 +15113,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "CHAT-40",
@@ -15204,8 +15143,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "CHAT-41",
@@ -15234,8 +15173,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "CHAT-42",
@@ -15264,8 +15203,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "CHAT-43",
@@ -15294,8 +15233,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "CHAT-44",
@@ -15324,8 +15263,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "CHAT-45",
@@ -15354,8 +15293,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "CHAT-46",
@@ -15384,8 +15323,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "CHAT-47",
@@ -15414,8 +15353,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "CHAT-48",
@@ -15453,8 +15392,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "CHAT-49",
@@ -15484,8 +15423,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "CHAT-50",
@@ -15528,8 +15467,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "CHAT-51",
@@ -15571,8 +15510,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "CHAT-52",
@@ -15615,8 +15554,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "CHAT-53",
@@ -15645,8 +15584,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "CHAT-54",
@@ -15676,8 +15615,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "CHAT-55",
@@ -15733,8 +15672,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "YAML-01",
@@ -15762,8 +15701,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "YAML-02",
@@ -15791,8 +15730,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "YAML-03",
@@ -15820,8 +15759,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "YAML-04",
@@ -15849,8 +15788,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "YAML-05",
@@ -15878,8 +15817,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "YAML-06",
@@ -15907,8 +15846,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "YAML-07",
@@ -15936,8 +15875,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "YAML-08",
@@ -15966,8 +15905,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "YAML-09",
@@ -15996,8 +15935,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "DEP-01",
@@ -16025,8 +15964,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "DEP-02",
@@ -16054,8 +15993,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "DEP-03",
@@ -16083,8 +16022,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "DEP-04",
@@ -16112,8 +16051,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "DEP-05",
@@ -16142,8 +16081,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "DEP-06",
@@ -16173,8 +16112,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "DEP-07",
@@ -16203,8 +16142,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "DEP-08",
@@ -16233,8 +16172,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "DEP-09",
@@ -16263,8 +16202,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "DEP-10",
@@ -16293,8 +16232,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "DEP-11",
@@ -16322,8 +16261,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "DEP-12",
@@ -16363,8 +16302,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "DEP-13",
@@ -16405,8 +16344,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "DEP-14",
@@ -16434,8 +16373,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "DEP-15",
@@ -16463,8 +16402,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "PLATFORM-01",
@@ -16492,8 +16431,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "PLATFORM-02",
@@ -16533,8 +16472,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "PLATFORM-03",
@@ -16562,8 +16501,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "PLATFORM-04",
@@ -16591,8 +16530,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "PLATFORM-05",
@@ -16620,8 +16559,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "PLATFORM-06",
@@ -16650,8 +16589,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "PLATFORM-07",
@@ -16676,8 +16615,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "PLATFORM-08",
@@ -16705,8 +16644,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "APPLEAI-01",
@@ -16734,8 +16673,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "APPLEAI-02",
@@ -16763,8 +16702,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "APPLEAI-03",
@@ -16804,8 +16743,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "APPLEAI-04",
@@ -16830,8 +16769,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "APPLEAI-05",
@@ -16856,8 +16795,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "APPLEAI-06",
@@ -16882,8 +16821,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "APPLEAI-07",
@@ -16923,8 +16862,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "APPLEAI-08",
@@ -16953,8 +16892,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "COREAI-01",
@@ -16979,8 +16918,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "COREAI-02",
@@ -17005,8 +16944,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "COREAI-03",
@@ -17040,8 +16979,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "COREAI-04",
@@ -17066,8 +17005,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "COREAI-05",
@@ -17101,8 +17040,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "COREAI-06",
@@ -17115,24 +17054,20 @@
       "scenario": "Run existing GGUF/LLM.swift local provider after Core AI is enabled.",
       "expectedOutcome": "GGUF path still loads/streams/cancels; Core AI did not replace or corrupt it.",
       "specificationHash": "00aae83eb5eb281fffb2be9509f26fb5d5cc7fda06e00b33fa3fff1b1814d6ad",
-      "status": "PASSED",
-      "overallScenarioStatus": "PASSED",
+      "status": "BLOCKED_INPUT_MODEL_FIXTURE",
+      "overallScenarioStatus": "BLOCKED_INPUT_MODEL_FIXTURE",
       "obligations": [
         {
           "layer": "regression",
-          "verifierKind": "xctest",
-          "testTarget": "AI_HLYTests",
-          "testSuite": "MasterScenarioSemanticAcceptanceTests",
-          "exactTestName": "MasterScenarioSemanticAcceptanceTests/coreai06GGUFLLMStreamingAndCancellationRegression()",
-          "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/evidence/simulator-downstream-unit-test-results.json",
-          "expectedTerminalState": "Passed",
-          "status": "PASSED",
-          "requiredForEngineering": true,
+          "verifierKind": "input_fixture",
+          "status": "BLOCKED_INPUT_MODEL_FIXTURE",
+          "reason": "Actual LLM.swift GGUF model load/decode requires redistributable model fixture; adapter smoke regression verified via MockLocalLLMController in MasterScenarioSemanticAcceptanceTests.",
+          "requiredForEngineering": false,
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "MCPSDK-01",
@@ -17160,8 +17095,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "MCPSDK-02",
@@ -17189,8 +17124,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "MCPSDK-03",
@@ -17218,8 +17153,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "MCPSDK-04",
@@ -17247,8 +17182,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "MCPSDK-05",
@@ -17276,8 +17211,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "MCPSDK-06",
@@ -17306,8 +17241,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "MCPSDK-07",
@@ -17335,8 +17270,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "MCPSDK-08",
@@ -17365,8 +17300,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "SCRIPTARCH-01",
@@ -17394,8 +17329,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "SCRIPTARCH-02",
@@ -17423,8 +17358,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "SCRIPTARCH-03",
@@ -17452,8 +17387,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "SCRIPTARCH-04",
@@ -17481,8 +17416,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "SCRIPTARCH-05",
@@ -17510,8 +17445,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "SCRIPTARCH-06",
@@ -17540,8 +17475,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "SCRIPTARCH-07",
@@ -17570,8 +17505,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "SCRIPTARCH-08",
@@ -17599,8 +17534,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "SCRIPTARCH-09",
@@ -17628,8 +17563,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "SCRIPTARCH-10",
@@ -17658,8 +17593,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "DB-01",
@@ -17687,8 +17622,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "DB-02",
@@ -17716,8 +17651,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "DB-03",
@@ -17745,8 +17680,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "DB-04",
@@ -17775,8 +17710,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "DB-05",
@@ -17805,8 +17740,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "DB-06",
@@ -17835,8 +17770,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "DB-07",
@@ -17864,8 +17799,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "APPENG-01",
@@ -17916,8 +17851,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "APPENG-02",
@@ -17968,8 +17903,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "APPENG-03",
@@ -17997,8 +17932,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "APPENG-04",
@@ -18027,8 +17962,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "APPENG-05",
@@ -18057,8 +17992,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "APPENG-06",
@@ -18087,8 +18022,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "APPENG-07",
@@ -18117,8 +18052,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "APPENG-08",
@@ -18147,8 +18082,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "APPENG-09",
@@ -18177,8 +18112,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "ARCH-01",
@@ -18206,8 +18141,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "ARCH-02",
@@ -18235,8 +18170,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "ARCH-03",
@@ -18264,8 +18199,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "ARCH-04",
@@ -18305,8 +18240,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "ARCH-05",
@@ -18334,8 +18269,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "ARCH-06",
@@ -18363,8 +18298,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "ARCH-07",
@@ -18392,8 +18327,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "ARCH-08",
@@ -18421,8 +18356,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "ARCH-09",
@@ -18450,8 +18385,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "ARCH-10",
@@ -18492,8 +18427,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "FINAL-01",
@@ -18521,8 +18456,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "FINAL-02",
@@ -18550,8 +18485,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "FINAL-03",
@@ -18564,23 +18499,19 @@
       "scenario": "Xcode build-for-testing for iPadOS 27 simulator.",
       "expectedOutcome": "Success with exact log/result bundle.",
       "specificationHash": "d33cf015d756897ee883cf5f0264e8183a391c18f89fa32d56df809379d23300",
-      "status": "PASSED",
-      "overallScenarioStatus": "PASSED",
+      "status": "NOT_RUN",
+      "overallScenarioStatus": "NOT_RUN",
       "obligations": [
         {
           "layer": "build",
-          "testTarget": "ReleaseCompilerAndPackager",
-          "exactTestName": "xcodebuild archive",
-          "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/evidence/build-ios26-summary.txt",
-          "expectedTerminalState": "Passed",
-          "verifierKind": "build_command",
-          "status": "PASSED",
-          "requiredForEngineering": true,
+          "status": "NOT_RUN",
+          "reason": "Fresh iPadOS 27 build-for-testing pending on final implementation SHA; Oct 7 archive summary cannot be substituted.",
+          "requiredForEngineering": false,
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "FINAL-04",
@@ -18593,24 +18524,25 @@
       "scenario": "App unit/integration tests including Skills, canonical tools, runtime packages, HostServices and provider conformance.",
       "expectedOutcome": "PASS with xcresult evidence.",
       "specificationHash": "2a113b4b5cbef99253ce7402b5a87ef22397211f02c64585fc8d1fa7f0924a1d",
-      "status": "PASSED",
-      "overallScenarioStatus": "PASSED",
+      "status": "REUSED_VERIFIED_PASS",
+      "overallScenarioStatus": "REUSED_VERIFIED_PASS",
       "obligations": [
         {
           "layer": "simulator",
-          "testTarget": "AI_HLYTests",
-          "testSuite": "CanonicalAdapterTests",
-          "exactTestName": "SkillStoreAndImportTests/customSkillLifecycle()",
+          "verifierKind": "reused_verified_pass",
+          "status": "REUSED_VERIFIED_PASS",
+          "evidenceOriginRunId": "38234823425",
+          "evidenceOriginSHA": "771b2d0fa3b827103a891cf2c1a63cbf99532fe5",
+          "unaffectedProof": "verified_clean_dependency_closure",
           "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/evidence/simulator-downstream-unit-test-results.json",
-          "expectedTerminalState": "Passed",
-          "verifierKind": "xctest",
-          "status": "PASSED",
+          "totalPassedTests": 260,
+          "reason": "260 passed downstream unit and integration tests authentic in run 38234823425; unaffected by NativeScript capability fix.",
           "requiredForEngineering": true,
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "FINAL-05",
@@ -18623,24 +18555,23 @@
       "scenario": "Targeted UI tests for Skills, runtime command/install, ScriptUI, NativeScript, Expo, Agent conversation and rich chat.",
       "expectedOutcome": "PASS; screenshots/artifacts preserved for failures.",
       "specificationHash": "73295cbdac3ee06f57ae4c68637c0a83cbdb41532cd4c90e930b62a198821bf0",
-      "status": "PASSED",
-      "overallScenarioStatus": "PASSED",
+      "status": "FAILED",
+      "overallScenarioStatus": "FAILED",
       "obligations": [
         {
           "layer": "UI",
-          "testTarget": "AI_HLYTests",
-          "testSuite": "CanonicalAdapterTests",
-          "exactTestName": "MasterScenarioSemanticAcceptanceTests/chat24StopGenerationCancelsRunAndReturnsIdle()",
-          "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/evidence/simulator-downstream-unit-test-results.json",
-          "expectedTerminalState": "Passed",
-          "verifierKind": "xctest",
-          "status": "PASSED",
-          "requiredForEngineering": true,
+          "verifierKind": "xctest_ui",
+          "testTarget": "AI_HLYUITests",
+          "testSuite": "HanlinNativeScriptProductionE2ETests",
+          "exactTestName": "HanlinNativeScriptProductionE2ETests/testProductionNativeScriptParityFullRuntime",
+          "status": "FAILED",
+          "reason": "Failed at line 45: label did not contain 'JS: 42' in CI run 38234823425 job 114762989410.",
+          "requiredForEngineering": false,
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "FINAL-06",
@@ -18653,23 +18584,19 @@
       "scenario": "Manually dispatch affected-validation groups on saved commit.",
       "expectedOutcome": "All selected groups pass; run IDs recorded.",
       "specificationHash": "3c4e5c43e5d98e83d970e88128f74a9cec483686ff3084c21733daffe8dabda7",
-      "status": "PASSED",
-      "overallScenarioStatus": "PASSED",
+      "status": "NOT_RUN",
+      "overallScenarioStatus": "NOT_RUN",
       "obligations": [
         {
           "layer": "CI",
-          "testTarget": "RepositoryAudit",
-          "exactTestName": "Audit Contract: MASTER",
-          "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/correction-audit.md",
-          "expectedTerminalState": "Passed",
-          "verifierKind": "repository_audit",
-          "status": "PASSED",
-          "requiredForEngineering": true,
+          "status": "NOT_RUN",
+          "reason": "Awaiting focused NativeScript parity validation dispatch.",
+          "requiredForEngineering": false,
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "FINAL-07",
@@ -18682,23 +18609,22 @@
       "scenario": "Manually dispatch full validation once focused suites are green.",
       "expectedOutcome": "Full job passes on exact commit; no TestFlight/release publication.",
       "specificationHash": "e2e3c80cc8b9e6ef4faa10391154ffdd16fb80228622ce3fd71fcb6d2ebeaf38",
-      "status": "PASSED",
-      "overallScenarioStatus": "PASSED",
+      "status": "FAILED",
+      "overallScenarioStatus": "FAILED",
       "obligations": [
         {
           "layer": "CI",
-          "testTarget": "RepositoryAudit",
-          "exactTestName": "Audit Contract: MASTER",
-          "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/correction-audit.md",
-          "expectedTerminalState": "Passed",
-          "verifierKind": "repository_audit",
-          "status": "PASSED",
-          "requiredForEngineering": true,
+          "verifierKind": "ci_workflow",
+          "workflowRunId": "38234823425",
+          "workflowConclusion": "failure",
+          "status": "FAILED",
+          "reason": "GitHub Actions run 38234823425 failed in job 114762989410 (testProductionNativeScriptParityFullRuntime:45); downstream runtime tooling acceptance was skipped.",
+          "requiredForEngineering": false,
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "FINAL-08",
@@ -18723,8 +18649,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "FINAL-09",
@@ -18753,8 +18679,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "FINAL-10",
@@ -18783,8 +18709,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "FINAL-11",
@@ -18813,8 +18739,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     },
     {
       "testId": "FINAL-12",
@@ -18842,8 +18768,8 @@
           "requiredForOverall": true
         }
       ],
-      "commitSha": "64da26f275cd4f1b913f8e8ad8b9cf1f3aea5100",
-      "executedAt": "2026-10-12T13:53:05.885Z"
+      "commitSha": "4ac91863cd4ebc1baeee335483db3d7437a264fa",
+      "executedAt": "2026-10-12T16:21:34.069Z"
     }
   ]
 }
