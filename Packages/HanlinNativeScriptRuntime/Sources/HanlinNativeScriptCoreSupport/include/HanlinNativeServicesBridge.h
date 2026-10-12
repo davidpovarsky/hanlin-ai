@@ -104,6 +104,17 @@ typedef void (^HanlinBridgeRequestHandlerBlock)(NSString *caller, NSString *payl
                     capability:(NSString *)capability
                        handler:(HanlinBridgeRequestHandlerBlock)handler;
 
+// Synchronous invocation helpers callable directly from JavaScript / Objective-C without metadata
++ (nullable NSString *)executeJavaScriptSync:(NSString *)source;
++ (nullable NSString *)executeNodeSync:(NSString *)source;
++ (nullable NSString *)executePythonSync:(NSString *)source;
++ (nullable NSString *)fetchURLSync:(NSString *)urlString;
++ (nullable NSString *)sendRequestSync:(NSString *)targetID
+                                action:(NSString *)action
+                            capability:(NSString *)capability
+                           payloadJSON:(NSString *)payloadJSON;
++ (void)registerAction:(NSString *)action capability:(NSString *)capability;
+
 @end
 
 /// Prepares a one-time bootstrap token for a registered session.

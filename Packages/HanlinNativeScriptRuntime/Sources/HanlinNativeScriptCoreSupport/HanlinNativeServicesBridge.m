@@ -255,6 +255,159 @@ static NSLock *_sessionLock = nil;
     [provider registerRequestHandler:action capability:capability handler:handler];
 }
 
++ (nullable NSString *)executeJavaScriptSync:(NSString *)source {
+    id<HanlinNativeServicesProvider> provider = [self currentProvider];
+    if (!provider) { return @"Err: Host service provider not registered."; }
+    __block NSString *resultStr = nil;
+    __block NSString *errorStr = nil;
+    __block BOOL finished = NO;
+
+    [self executeJavaScript:source completion:^(NSString * _Nullable res, NSString * _Nullable err) {
+        resultStr = res;
+        errorStr = err;
+        finished = YES;
+    }];
+
+    NSDate *deadline = [NSDate dateWithTimeIntervalSinceNow:20.0];
+    while (!finished && [deadline timeIntervalSinceNow] > 0) {
+        [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate dateWithTimeIntervalSinceNow:0.02]];
+    }
+
+    if (!finished) {
+        return @"Err: Execution timed out after 20s";
+    }
+    if (errorStr.length > 0) {
+        return [NSString stringWithFormat:@"Err: %@", errorStr];
+    }
+    return resultStr ?: @"";
+}
+
++ (nullable NSString *)executeNodeSync:(NSString *)source {
+    id<HanlinNativeServicesProvider> provider = [self currentProvider];
+    if (!provider) { return @"Err: Host service provider not registered."; }
+    __block NSString *resultStr = nil;
+    __block NSString *errorStr = nil;
+    __block BOOL finished = NO;
+
+    [self executeNode:source completion:^(NSString * _Nullable res, NSString * _Nullable err) {
+        resultStr = res;
+        errorStr = err;
+        finished = YES;
+    }];
+
+    NSDate *deadline = [NSDate dateWithTimeIntervalSinceNow:20.0];
+    while (!finished && [deadline timeIntervalSinceNow] > 0) {
+        [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate dateWithTimeIntervalSinceNow:0.02]];
+    }
+
+    if (!finished) {
+        return @"Err: Execution timed out after 20s";
+    }
+    if (errorStr.length > 0) {
+        return [NSString stringWithFormat:@"Err: %@", errorStr];
+    }
+    return resultStr ?: @"";
+}
+
++ (nullable NSString *)executePythonSync:(NSString *)source {
+    id<HanlinNativeServicesProvider> provider = [self currentProvider];
+    if (!provider) { return @"Err: Host service provider not registered."; }
+    __block NSString *resultStr = nil;
+    __block NSString *errorStr = nil;
+    __block BOOL finished = NO;
+
+    [self executePython:source completion:^(NSString * _Nullable res, NSString * _Nullable err) {
+        resultStr = res;
+        errorStr = err;
+        finished = YES;
+    }];
+
+    NSDate *deadline = [NSDate dateWithTimeIntervalSinceNow:20.0];
+    while (!finished && [deadline timeIntervalSinceNow] > 0) {
+        [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate dateWithTimeIntervalSinceNow:0.02]];
+    }
+
+    if (!finished) {
+        return @"Err: Execution timed out after 20s";
+    }
+    if (errorStr.length > 0) {
+        return [NSString stringWithFormat:@"Err: %@", errorStr];
+    }
+    return resultStr ?: @"";
+}
+
++ (nullable NSString *)fetchURLSync:(NSString *)urlString {
+    id<HanlinNativeServicesProvider> provider = [self currentProvider];
+    if (!provider) { return @"Err: Host service provider not registered."; }
+    __block NSString *resultStr = nil;
+    __block NSString *errorStr = nil;
+    __block BOOL finished = NO;
+
+    [self fetchURL:urlString completion:^(NSString * _Nullable res, NSString * _Nullable err) {
+        resultStr = res;
+        errorStr = err;
+        finished = YES;
+    }];
+
+    NSDate *deadline = [NSDate dateWithTimeIntervalSinceNow:20.0];
+    while (!finished && [deadline timeIntervalSinceNow] > 0) {
+        [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate dateWithTimeIntervalSinceNow:0.02]];
+    }
+
+    if (!finished) {
+        return @"Err: Execution timed out after 20s";
+    }
+    if (errorStr.length > 0) {
+        return [NSString stringWithFormat:@"Err: %@", errorStr];
+    }
+    return resultStr ?: @"";
+}
+
++ (nullable NSString *)sendRequestSync:(NSString *)targetID
+                                action:(NSString *)action
+                            capability:(NSString *)capability
+                           payloadJSON:(NSString *)payloadJSON {
+    id<HanlinNativeServicesProvider> provider = [self currentProvider];
+    if (!provider) { return @"Err: Host service provider not registered."; }
+    __block NSString *resultStr = nil;
+    __block NSString *errorStr = nil;
+    __block BOOL finished = NO;
+
+    [self sendRequest:targetID
+               action:action
+           capability:capability
+          payloadJSON:payloadJSON
+           completion:^(NSString * _Nullable res, NSString * _Nullable err) {
+        resultStr = res;
+        errorStr = err;
+        finished = YES;
+    }];
+
+    NSDate *deadline = [NSDate dateWithTimeIntervalSinceNow:20.0];
+    while (!finished && [deadline timeIntervalSinceNow] > 0) {
+        [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate dateWithTimeIntervalSinceNow:0.02]];
+    }
+
+    if (!finished) {
+        return @"Err: Execution timed out after 20s";
+    }
+    if (errorStr.length > 0) {
+        return [NSString stringWithFormat:@"Err: %@", errorStr];
+    }
+    return resultStr ?: @"";
+}
+
++ (void)registerAction:(NSString *)action capability:(NSString *)capability {
+    id<HanlinNativeServicesProvider> provider = [self currentProvider];
+    if (!provider) {
+        NSLog(@"[HanlinNativeServicesBridge] Cannot register action: provider not registered.");
+        return;
+    }
+    [provider registerRequestHandler:action capability:capability handler:^(NSString *caller, NSString *payload, HanlinBridgeStringResultBlock reply) {
+        if (reply) reply(@"{}", nil);
+    }];
+}
+
 @end
 
 /// Internal host-only entry point used by the NativeScript runtime wrapper.

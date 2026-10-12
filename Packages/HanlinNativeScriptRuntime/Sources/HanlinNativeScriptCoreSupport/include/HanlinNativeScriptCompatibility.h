@@ -20,6 +20,15 @@ NS_ASSUME_NONNULL_BEGIN
 + (nullable NSString *)currentDataRootDirectory;
 + (nullable NSString *)currentStateDirectory;
 + (nullable NSString *)hostServicePathForType:(NSString *)pathType;
++ (nullable NSString *)executeJavaScriptSync:(NSString *)source;
++ (nullable NSString *)executeNodeSync:(NSString *)source;
++ (nullable NSString *)executePythonSync:(NSString *)source;
++ (nullable NSString *)fetchURLSync:(NSString *)urlString;
++ (nullable NSString *)sendRequestSync:(NSString *)targetID
+                                action:(NSString *)action
+                            capability:(NSString *)capability
+                           payloadJSON:(NSString *)payloadJSON;
++ (void)registerAction:(NSString *)action capability:(NSString *)capability;
 @end
 
 NS_ASSUME_NONNULL_END

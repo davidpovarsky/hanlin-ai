@@ -17,61 +17,122 @@ if (typeof HanlinNativeServicesBridge === "undefined" && typeof NSClassFromStrin
 const bridge = (typeof HanlinNativeServicesBridge !== "undefined" && HanlinNativeServicesBridge)
   || (typeof NSClassFromString === "function" ? NSClassFromString("HanlinNativeServicesBridge") : null)
   || (typeof objc_getClass === "function" ? objc_getClass("HanlinNativeServicesBridge") : null);
+const compat = (typeof NSClassFromString === "function" ? NSClassFromString("HanlinNativeScriptCompatibility") : null)
+  || (typeof objc_getClass === "function" ? objc_getClass("HanlinNativeScriptCompatibility") : null);
 const environment = NSProcessInfo.processInfo.environment;
 const executionMode = environment.objectForKey("HANLIN_EXECUTION_MODE");
 const isHeadlessAction = executionMode && executionMode.toString() === "headless-action";
 
-// Helpers to invoke bridge methods with support for various ObjC selector manglings
+// Helpers to invoke bridge methods with support for synchronous and async ObjC selectors
 function runJS(code, cb) {
-  if (!bridge) return cb(null, "Bridge unavailable");
-  if (typeof bridge.executeJavaScript === "function") {
-    bridge.executeJavaScript(code, cb);
-  } else if (typeof bridge.executeJavaScriptCompletion === "function") {
-    bridge.executeJavaScriptCompletion(code, cb);
+  const target = bridge || compat;
+  if (!target) return cb(null, "Bridge unavailable");
+  if (typeof target.executeJavaScriptSync === "function") {
+    try {
+      const res = target.executeJavaScriptSync(code);
+      const str = res != null ? res.toString() : "";
+      if (str.startsWith("Err: ")) return cb(null, str.substring(5));
+      return cb(str, null);
+    } catch (e) {
+      return cb(null, e.toString());
+    }
+  } else if (typeof target.executeJavaScript === "function") {
+    target.executeJavaScript(code, cb);
+  } else if (typeof target.executeJavaScriptCompletion === "function") {
+    target.executeJavaScriptCompletion(code, cb);
   } else {
     cb(null, "executeJavaScript method not found");
   }
 }
 
 function runNode(code, cb) {
-  if (!bridge) return cb(null, "Bridge unavailable");
-  if (typeof bridge.executeNode === "function") {
-    bridge.executeNode(code, cb);
-  } else if (typeof bridge.executeNodeCompletion === "function") {
-    bridge.executeNodeCompletion(code, cb);
+  const target = bridge || compat;
+  if (!target) return cb(null, "Bridge unavailable");
+  if (typeof target.executeNodeSync === "function") {
+    try {
+      const res = target.executeNodeSync(code);
+      const str = res != null ? res.toString() : "";
+      if (str.startsWith("Err: ")) return cb(null, str.substring(5));
+      return cb(str, null);
+    } catch (e) {
+      return cb(null, e.toString());
+    }
+  } else if (typeof target.executeNode === "function") {
+    target.executeNode(code, cb);
+  } else if (typeof target.executeNodeCompletion === "function") {
+    target.executeNodeCompletion(code, cb);
   } else {
     cb(null, "executeNode method not found");
   }
 }
 
 function runPython(code, cb) {
-  if (!bridge) return cb(null, "Bridge unavailable");
-  if (typeof bridge.executePython === "function") {
-    bridge.executePython(code, cb);
-  } else if (typeof bridge.executePythonCompletion === "function") {
-    bridge.executePythonCompletion(code, cb);
+  const target = bridge || compat;
+  if (!target) return cb(null, "Bridge unavailable");
+  if (typeof target.executePythonSync === "function") {
+    try {
+      const res = target.executePythonSync(code);
+      const str = res != null ? res.toString() : "";
+      if (str.startsWith("Err: ")) return cb(null, str.substring(5));
+      return cb(str, null);
+    } catch (e) {
+      return cb(null, e.toString());
+    }
+  } else if (typeof target.executePython === "function") {
+    target.executePython(code, cb);
+  } else if (typeof target.executePythonCompletion === "function") {
+    target.executePythonCompletion(code, cb);
   } else {
     cb(null, "executePython method not found");
   }
 }
 
 function fetchHTTPS(url, cb) {
-  if (!bridge) return cb(null, "Bridge unavailable");
-  if (typeof bridge.fetchURL === "function") {
-    bridge.fetchURL(url, cb);
-  } else if (typeof bridge.fetchURLCompletion === "function") {
-    bridge.fetchURLCompletion(url, cb);
+  const target = bridge || compat;
+  if (!target) return cb(null, "Bridge unavailable");
+  if (typeof target.fetchURLSync === "function") {
+    try {
+      const res = target.fetchURLSync(url);
+      const str = res != null ? res.toString() : "";
+      if (str.startsWith("Err: ")) return cb(null, str.substring(5));
+      return cb(str, null);
+    } catch (e) {
+      return cb(null, e.toString());
+    }
+  } else if (typeof target.fetchURL === "function") {
+    target.fetchURL(url, cb);
+  } else if (typeof target.fetchURLCompletion === "function") {
+    target.fetchURLCompletion(url, cb);
   } else {
     cb(null, "fetchURL method not found");
   }
 }
 
 function sendInterApp(targetID, action, capability, payloadJSON, cb) {
-  if (!bridge) return cb(null, "Bridge unavailable");
-  if (typeof bridge.sendRequestActionCapabilityPayloadJSONCompletion === "function") {
-    bridge.sendRequestActionCapabilityPayloadJSONCompletion(targetID, action, capability, payloadJSON, cb);
-  } else if (typeof bridge.sendRequest === "function") {
-    bridge.sendRequest(targetID, action, capability, payloadJSON, cb);
+  const target = bridge || compat;
+  if (!target) return cb(null, "Bridge unavailable");
+  if (typeof target.sendRequestSyncActionCapabilityPayloadJSON === "function") {
+    try {
+      const res = target.sendRequestSyncActionCapabilityPayloadJSON(targetID, action, capability, payloadJSON);
+      const str = res != null ? res.toString() : "";
+      if (str.startsWith("Err: ")) return cb(null, str.substring(5));
+      return cb(str, null);
+    } catch (e) {
+      return cb(null, e.toString());
+    }
+  } else if (typeof target.sendRequestSync === "function") {
+    try {
+      const res = target.sendRequestSync(targetID, action, capability, payloadJSON);
+      const str = res != null ? res.toString() : "";
+      if (str.startsWith("Err: ")) return cb(null, str.substring(5));
+      return cb(str, null);
+    } catch (e) {
+      return cb(null, e.toString());
+    }
+  } else if (typeof target.sendRequestActionCapabilityPayloadJSONCompletion === "function") {
+    target.sendRequestActionCapabilityPayloadJSONCompletion(targetID, action, capability, payloadJSON, cb);
+  } else if (typeof target.sendRequest === "function") {
+    target.sendRequest(targetID, action, capability, payloadJSON, cb);
   } else {
     cb(null, "sendRequest method not found");
   }
@@ -79,12 +140,13 @@ function sendInterApp(targetID, action, capability, payloadJSON, cb) {
 
 // Storage helpers using NSProcessInfo environment / bridge
 function getStateDirectory() {
-  if (bridge && typeof bridge.stateDirectory === "function") {
+  const target = bridge || compat;
+  if (target && typeof target.stateDirectory === "function") {
     try {
-      const dir = bridge.stateDirectory();
+      const dir = target.stateDirectory();
       if (dir) return dir.toString();
     } catch (e) {
-      console.warn("[HanlinScriptParity] bridge.stateDirectory() call failed: " + e);
+      console.warn("[HanlinScriptParity] stateDirectory() call failed: " + e);
     }
   }
   const miniappStateDir = environment.objectForKey("HANLIN_MINIAPP_STATE_DIR");
@@ -130,9 +192,15 @@ function loadStorage() {
 const initialStorageStatus = loadStorage();
 
 // Register canonical actions for inter-app, Widget/AppIntent, and headless execution.
-if (bridge) {
+const targetForRegister = bridge || compat;
+if (targetForRegister) {
   try {
-    const registerFn = bridge.registerRequestHandlerCapabilityHandler || bridge.registerRequestHandler;
+    const regActionFn = targetForRegister.registerActionCapability || targetForRegister.registerAction;
+    if (typeof regActionFn === "function") {
+      regActionFn.call(targetForRegister, "share.value", "inter-app.share");
+      regActionFn.call(targetForRegister, "parity.intent", "inter-app.share");
+    }
+    const registerFn = targetForRegister.registerRequestHandlerCapabilityHandler || targetForRegister.registerRequestHandler;
     if (typeof registerFn === "function") {
       const handleRequest = (actionName) => (caller, payloadJSON, reply) => {
         console.log("[HanlinScriptParity] Received " + actionName + " from " + caller + ": " + payloadJSON);
@@ -146,8 +214,8 @@ if (bridge) {
         });
         reply(replyPayload, null);
       };
-      registerFn.call(bridge, "share.value", "inter-app.share", handleRequest("share.value"));
-      registerFn.call(bridge, "parity.intent", "inter-app.share", handleRequest("parity.intent"));
+      registerFn.call(targetForRegister, "share.value", "inter-app.share", handleRequest("share.value"));
+      registerFn.call(targetForRegister, "parity.intent", "inter-app.share", handleRequest("parity.intent"));
     }
   } catch (e) {
     console.error("[HanlinScriptParity] Error registering handler: " + e);

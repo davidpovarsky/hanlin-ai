@@ -158,4 +158,34 @@ static NSInteger _latestEventCount = 0;
     return nil;
 }
 
++ (nullable NSString *)executeJavaScriptSync:(NSString *)source {
+    return [HanlinNativeServicesBridge executeJavaScriptSync:source];
+}
+
++ (nullable NSString *)executeNodeSync:(NSString *)source {
+    return [HanlinNativeServicesBridge executeNodeSync:source];
+}
+
++ (nullable NSString *)executePythonSync:(NSString *)source {
+    return [HanlinNativeServicesBridge executePythonSync:source];
+}
+
++ (nullable NSString *)fetchURLSync:(NSString *)urlString {
+    return [HanlinNativeServicesBridge fetchURLSync:urlString];
+}
+
++ (nullable NSString *)sendRequestSync:(NSString *)targetID
+                                action:(NSString *)action
+                            capability:(NSString *)capability
+                           payloadJSON:(NSString *)payloadJSON {
+    return [HanlinNativeServicesBridge sendRequestSync:targetID
+                                                action:action
+                                            capability:capability
+                                           payloadJSON:payloadJSON];
+}
+
++ (void)registerAction:(NSString *)action capability:(NSString *)capability {
+    [HanlinNativeServicesBridge registerAction:action capability:capability];
+}
+
 @end
