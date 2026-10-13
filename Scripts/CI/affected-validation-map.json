@@ -14,28 +14,54 @@
     "recovery-state-before.txt",
     "cherry_icon.png",
     "logo_3_0.png",
-    "package-lock.json",
-    "Scripts/Audit/**",
-    "Vendor/**",
-    "provider-conformance-summary.json",
-    "capability-invariants.json",
-    "capability-invariants.md",
-    "Scripts/*.mjs",
-    "Scripts/**/*.mjs",
-    "scripts/**",
-    "**/Package.resolved"
+    "capability-invariants.md"
   ],
   "components": {
     "ci_router": {
-      "description": "CI workflows, actions, and planning scripts",
+      "description": "CI workflows, actions, acceptance pipeline and planning scripts",
       "patterns": [
         ".github/**",
-        "Scripts/CI/**"
+        "Scripts/CI/**",
+        "Scripts/generate_acceptance_results.mjs",
+        "Scripts/Audit/**",
+        "Scripts/*.mjs",
+        "scripts/**",
+        "capability-invariants.json",
+        "provider-conformance-summary.json"
       ],
       "direct_validation_groups": [
         "ci_router"
       ],
       "consumers": []
+    },
+    "package_dependencies": {
+      "description": "Package manifests, lockfiles, and resolved dependency snapshots",
+      "patterns": [
+        "package-lock.json",
+        "**/package-lock.json",
+        "Package.resolved",
+        "**/Package.resolved"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "consumers": [
+        "nativescript_dependencies",
+        "runtimecore_bundle",
+        "platform_contracts"
+      ]
+    },
+    "vendor_dependencies": {
+      "description": "Vendor libraries and upstream dependencies",
+      "patterns": [
+        "Vendor/**"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "consumers": [
+        "platform_contracts"
+      ]
     },
     "runtime_tooling_acceptance": {
       "description": "Full Runtime, package, Host Services, Mini App, Agent, and UI acceptance collector",

@@ -728,6 +728,89 @@ class AffectedValidationPlannerTests(unittest.TestCase):
         self.assertIn("Contradictory options", str(ctx.exception))
 
 
+class TestDependencyLedgerTests(unittest.TestCase):
+    def setUp(self) -> None:
+        self.ledger = planner.TestDependencyLedger(Path(__file__).parents[2])
+
+    def test_ledger_rejects_non_passing_status(self) -> None:
+        res = self.ledger.evaluate_test_reuse(
+            test_id="TEST-01",
+            suite_or_name="HanlinNativeScriptProductionE2ETests",
+            origin_sha="0095b6441e8968d4200e8cd8acf42f61b46b7c59",
+            target_sha="0095b6441e8968d4200e8cd8acf42f61b46b7c59",
+            original_status="Failed",
+        )
+        self.assertEqual(res["decision"], "INVALIDATE")
+        self.assertIn("not passing", res["reason"])
+
+    def test_ledger_accepts_identical_origin_and_target_sha(self) -> None:
+        head_sha = planner.run_git(["rev-parse", "HEAD"], cwd=self.ledger.repo_root)
+        res = self.ledger.evaluate_test_reuse(
+            test_id="TEST-01",
+            suite_or_name="HanlinNativeScriptProductionE2ETests",
+            origin_sha=head_sha,
+            target_sha=head_sha,
+            original_status="Passed",
+        )
+        self.assertEqual(res["decision"], "REUSE_VERIFIED")
+        self.assertIn("matches target SHA exactly", res["reason"])
+
+    def test_ledger_invalidates_on_changed_shared_dependency(self) -> None:
+        # Simulate diff with Package.resolved
+        with unittest.mock.patch.object(planner, "get_changed_files", return_value=["Package.resolved"]):
+            with unittest.mock.patch.object(planner, "git_commit_exists", return_value=True):
+                with unittest.mock.patch("subprocess.run") as mock_run:
+                    mock_run.return_value.returncode = 0
+                    res = self.ledger.evaluate_test_reuse(
+                        test_id="TEST-01",
+                        suite_or_name="HanlinNativeScriptProductionE2ETests",
+                        origin_sha="1111111111111111111111111111111111111111",
+                        target_sha="2222222222222222222222222222222222222222",
+                        original_status="Passed",
+                    )
+                    self.assertEqual(res["decision"], "INVALIDATE")
+                    self.assertIn("Global shared dependency changed", res["reason"])
+
+    def test_ledger_invalidates_on_changed_test_specific_dependency(self) -> None:
+        # Simulate diff with NativeScript bridge
+        with unittest.mock.patch.object(
+            planner,
+            "get_changed_files",
+            return_value=["Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptCoreSupport/HanlinNativeServicesBridge.m"],
+        ):
+            with unittest.mock.patch.object(planner, "git_commit_exists", return_value=True):
+                with unittest.mock.patch("subprocess.run") as mock_run:
+                    mock_run.return_value.returncode = 0
+                    res = self.ledger.evaluate_test_reuse(
+                        test_id="TEST-01",
+                        suite_or_name="HanlinNativeScriptProductionE2ETests",
+                        origin_sha="1111111111111111111111111111111111111111",
+                        target_sha="2222222222222222222222222222222222222222",
+                        original_status="Passed",
+                    )
+                    self.assertEqual(res["decision"], "INVALIDATE")
+                    self.assertIn("Test-specific dependency changed", res["reason"])
+
+    def test_ledger_accepts_docs_only_commit(self) -> None:
+        with unittest.mock.patch.object(
+            planner,
+            "get_changed_files",
+            return_value=["README.md", "docs/architecture.md"],
+        ):
+            with unittest.mock.patch.object(planner, "git_commit_exists", return_value=True):
+                with unittest.mock.patch("subprocess.run") as mock_run:
+                    mock_run.return_value.returncode = 0
+                    res = self.ledger.evaluate_test_reuse(
+                        test_id="TEST-01",
+                        suite_or_name="HanlinNativeScriptProductionE2ETests",
+                        origin_sha="1111111111111111111111111111111111111111",
+                        target_sha="2222222222222222222222222222222222222222",
+                        original_status="Passed",
+                    )
+                    self.assertEqual(res["decision"], "REUSE_VERIFIED")
+                    self.assertIn("Verified clean dependency closure", res["reason"])
+
+
 if __name__ == "__main__":
     unittest.main()
 

@@ -1115,6 +1115,179 @@ def plan_affected_validation(
     )
 
 
+class TestDependencyLedger:
+    """Dependency-aware per-test ledger computing authentic evidence reuse eligibility."""
+
+    GLOBAL_SHARED_DEPENDENCIES = [
+        "Package.resolved",
+        "**/Package.resolved",
+        "package-lock.json",
+        "**/package-lock.json",
+        "AI_HLY.xcodeproj/**",
+        "AI-HLY-Info.plist",
+        "AI_HLY/AI_HLY.entitlements",
+        "Config.xcconfig*",
+    ]
+
+    TEST_DEPENDENCY_PATTERNS: Dict[str, List[str]] = {
+        "HanlinNativeScriptProductionE2ETests": [
+            "DemoMiniApps/hanlin-script-parity/**",
+            "DemoMiniApps/hanlin-script-parity.hanlinNativeScript",
+            "Packages/HanlinNativeScriptRuntime/**",
+            "AI_HLY/Downstream/NativeScript/**",
+            "AI_HLY/Downstream/HostServices/**",
+            "AI_HLYUITests/HanlinNativeScriptProductionE2ETests.swift",
+        ],
+        "HanlinScriptUIProductionE2ETests": [
+            "AI_HLY/Downstream/ScriptUI/**",
+            "Packages/HanlinScriptCompiler/**",
+            "AI_HLYUITests/HanlinScriptUIProductionE2ETests.swift",
+        ],
+        "HanlinExpoProductionE2ETests": [
+            "AI_HLY/Downstream/Expo/**",
+            "AI_HLYUITests/HanlinExpoProductionE2ETests.swift",
+        ],
+        "HanlinSkillCenterUITests": [
+            "AI_HLY/Downstream/Skills/**",
+            "AI_HLYUITests/HanlinSkillCenterUITests.swift",
+        ],
+        "HanlinRuntimeInstallationUITests": [
+            "AI_HLY/Downstream/RuntimeCore/Python/**",
+            "AI_HLY/Downstream/RuntimeCore/Node/**",
+            "AI_HLYUITests/HanlinRuntimeInstallationUITests.swift",
+        ],
+        "HanlinRuntimeCommandAcceptanceUITests": [
+            "AI_HLY/Downstream/RuntimeCore/Shell/**",
+            "AI_HLYUITests/HanlinRuntimeCommandAcceptanceUITests.swift",
+        ],
+        "AgentRuntimeConversationUITests": [
+            "AI_HLY/Downstream/Agent/**",
+            "AI_HLYUITests/AgentRuntimeConversationUITests.swift",
+        ],
+        "MasterScenarioSemanticAcceptanceTests": [
+            "AI_HLYTests/MasterScenarioSemanticAcceptanceTests.swift",
+            "AI_HLY/Downstream/HostServices/**",
+            "AI_HLY/Downstream/RuntimeCore/**",
+            "Packages/IOSSystemLite/**",
+        ],
+        "SkillStoreAndImportTests": [
+            "AI_HLY/Downstream/Skills/**",
+            "AI_HLYTests/SkillStoreAndImportTests.swift",
+        ],
+        "RuntimeToolContractTests": [
+            "AI_HLY/Downstream/RuntimeCore/Tools/**",
+            "AI_HLYTests/RuntimeToolContractTests.swift",
+        ],
+        "HanlinUnifiedHostServicesAgentAcceptanceTests": [
+            "AI_HLY/Downstream/HostServices/**",
+            "AI_HLYTests/HanlinUnifiedHostServicesAgentAcceptanceTests.swift",
+        ],
+        "ProductionProviderConformanceTests": [
+            "AI_HLYTests/ProviderConformance/**",
+            "AI_HLY/Downstream/HostServices/Capabilities/**",
+        ],
+    }
+
+    def __init__(self, repo_root: pathlib.Path) -> None:
+        self.repo_root = repo_root
+
+    def evaluate_test_reuse(
+        self,
+        test_id: str,
+        suite_or_name: str,
+        origin_sha: str,
+        target_sha: str,
+        original_status: str = "Passed",
+    ) -> Dict[str, Any]:
+        """Evaluate if an authentic prior test execution can be reused at target_sha."""
+        if original_status.lower() != "passed":
+            return {
+                "decision": "INVALIDATE",
+                "reason": f"Original execution status '{original_status}' was not passing.",
+                "changed_dependencies": [],
+            }
+
+        if not git_commit_exists(origin_sha, self.repo_root):
+            return {
+                "decision": "INVALIDATE",
+                "reason": f"Origin commit {origin_sha} cannot be verified in repository.",
+                "changed_dependencies": [],
+            }
+
+        if not git_commit_exists(target_sha, self.repo_root):
+            return {
+                "decision": "INVALIDATE",
+                "reason": f"Target commit {target_sha} cannot be verified in repository.",
+                "changed_dependencies": [],
+            }
+
+        if origin_sha == target_sha:
+            return {
+                "decision": "REUSE_VERIFIED",
+                "reason": "Origin SHA matches target SHA exactly.",
+                "changed_dependencies": [],
+            }
+
+        # Check reachability / ancestry
+        try:
+            is_ancestor = subprocess.run(
+                ["git", "merge-base", "--is-ancestor", origin_sha, target_sha],
+                cwd=self.repo_root,
+                capture_output=True,
+            ).returncode == 0
+        except Exception:
+            is_ancestor = False
+
+        if not is_ancestor:
+            return {
+                "decision": "INVALIDATE",
+                "reason": f"Origin commit {origin_sha} is not an ancestor of target {target_sha}.",
+                "changed_dependencies": [],
+            }
+
+        # Enumerate all changed files between origin and target
+        diff_files = get_changed_files(self.repo_root, origin_sha, target_sha)
+
+        # 1. Global shared dependencies
+        global_hits = [
+            f for f in diff_files
+            if any(match_pattern(f, pat) for pat in self.GLOBAL_SHARED_DEPENDENCIES)
+        ]
+        if global_hits:
+            return {
+                "decision": "INVALIDATE",
+                "reason": f"Global shared dependency changed: {', '.join(global_hits[:3])}",
+                "changed_dependencies": global_hits,
+            }
+
+        # 2. Test-specific patterns
+        dep_patterns = list(self.TEST_DEPENDENCY_PATTERNS.get(suite_or_name, []))
+        for key, patterns in self.TEST_DEPENDENCY_PATTERNS.items():
+            if key in suite_or_name:
+                dep_patterns.extend(patterns)
+
+        # Fallback: if suite unknown, check if suite name appears in file path
+        if not dep_patterns:
+            dep_patterns = [f"**/*{suite_or_name}*"]
+
+        specific_hits = [
+            f for f in diff_files
+            if any(match_pattern(f, pat) for pat in dep_patterns)
+        ]
+        if specific_hits:
+            return {
+                "decision": "INVALIDATE",
+                "reason": f"Test-specific dependency changed: {', '.join(specific_hits[:3])}",
+                "changed_dependencies": specific_hits,
+            }
+
+        return {
+            "decision": "REUSE_VERIFIED",
+            "reason": f"Verified clean dependency closure across {len(diff_files)} changed files from {origin_sha[:10]} to {target_sha[:10]}.",
+            "changed_dependencies": [],
+        }
+
+
 def write_github_output(outputs: Dict[str, Any], output_path: str) -> None:
     """Write outputs to GitHub Actions output environment file."""
     with open(output_path, "a", encoding="utf-8") as f:
