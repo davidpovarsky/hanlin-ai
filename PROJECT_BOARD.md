@@ -24,21 +24,32 @@ Potential improvements, features, optimizations, or architectural ideas.
 
 ## In Progress / Active Blockers
 
-- [ ] **Hanlin Pass 4: Real Runtime Truth, Evidence Integrity & Impact-Aware Acceptance**
-  - **Status:** In Progress (Stages B, C, and D Implementation Completed; Awaiting Authorized CI Verification).
-  - **Historical Runs:**
-      - Run `38234823425`: Full CI failed (`workflowConclusion=failure`, `testProductionNativeScriptParityFullRuntime` failed).
-      - Run `38317896632`: Focused CI succeeded (`workflowConclusion=success`, commit `31cba5e`), but parity test passed via synthetic fallbacks in `bundle.mjs`. Multi-runtime parity (Node/Python/Network/Inter-App) now has authentic proofs without fallbacks.
-  - **Completed Workstreams:**
-      1. [COMPLETED] NativeScript Parity Truth: Eliminated all synthetic JavaScript fallbacks (`Function(...)`, literal `"246"`, `"123"`, `"HTTPS 200"`, local inter-app JSON). Wrapped label updates on main thread. Added genuine Node (`process.versions.node`) and CPython (`sys.version_info`) runtime proofs. Fixed `HanlinNativeServicesBridge.m` session provider leak and converted sync loops to non-blocking `runMode:beforeDate:`. Guard unit tests pass cleanly.
-      2. [COMPLETED] Evidence Integrity & Generator: Overhauled `Scripts/generate_acceptance_results.mjs` with strict CLI flag handling (rejects unsupported flags, supports `--verify-self-test` and `--self-test` alias). Decoupled untrusted declarative claims from raw evidence. Added dynamic Git provenance derivation. Implemented 18 adversarial verifier tests (`NEG-01`–`NEG-15`) and positive checks (`POS-01`–`POS-03`) passing deterministically in an isolated sandbox without mutating canonical results.
-      3. [COMPLETED] Impact-Aware Validation Engine: Implemented `TestDependencyLedger` in `Scripts/CI/plan_affected_validation.py`. Narrowed `no_impact_patterns` in `Scripts/CI/affected-validation-map.json` by removing lockfiles, vendor dependencies, and runtime `.mjs` scripts. Unit test suite passes with 95 tests.
-      4. [COMPLETED] Missing Engineering Scenarios Implementation: Implemented authentic tests for `ZIP-01`, `ZIP-02`, `ZIP-08`, `FS-01`, `SH-01`, `CMD-01`, and `PY-02` in `AI_HLYTests/MasterScenarioSemanticAcceptanceTests.swift`. Removed artificial 25MB local import cutoff in `SkillImporter.swift`.
-      5. [COMPLETED] Versioned Execution Policy Addendum: Authored `docs/hanlin-platform/personal-runtime-completion/versioned-execution-policy-addendum-pass4.md` defining strict mathematical evidence reuse and transparent handling of `FINAL-07`.
+## In Progress / Active Blockers
+
+- [ ] **Hanlin Pass 4.1: Fail-Closed Evidence Integrity, Real Runtime Proofs & Semantic MASTER Repair**
+  - **Status:** Local Implementation & Tooling Verification Completed; Remote Apple CI Dispatch Pending Explicit Owner Command.
+  - **Historical Runs & Baseline:**
+      - Run `38234823425`: Failed overall; 235 unit tests verified clean and reusable via `TestDependencyLedger`; 25 tests in `MasterScenarioSemanticAcceptanceTests` affected and pending focused execution.
+      - Run `38317896632`: Focused run with synthetic legacy NativeScript evidence; invalidated.
+  - **Completed PASS 4.1 Workstreams:**
+      1. [COMPLETED] NativeScript Bridge & Dynamic Parity Nonces: Eliminated all synthetic JS fallbacks and fixed literals (`"246"`, `"123"`, `"HTTPS 200"`). Implemented dynamic `HANLIN_PARITY_CHALLENGE` roundtrip verification across JSC, Node, Python, HostServices HTTPS, and MiniApp routing. In `HanlinNativeServicesBridge.m`, eliminated session provider fallback leak, cleared provider/bridges upon unregistration, eliminated placeholder `reply(@"{}", nil)` on production paths, and constrained synchronous execution to safe, bounded executors without main-thread deadlocks. Rebuilt `.hanlinNativeScript` archive byte-for-byte; verified with `test_nativescript_parity_fixture.py` (4/4 passed).
+      2. [COMPLETED] Verifier & Acceptance Engine Hardening: Overhauled `Scripts/generate_acceptance_results.mjs`. Fixed `NEG-11` (synthetic fallback rejection with active injection) and `NEG-12` (isolated subprocess CLI test). All 18 adversarial self-tests and positive controls pass deterministically. Collision-safe `xcresult` indexing implemented. Integrated `verifyDependencyClosure` with `TestDependencyLedger` CLI.
+      3. [COMPLETED] Dependency Ledger & Routing Engine: In `Scripts/CI/plan_affected_validation.py` and `affected-validation-map.json`, unknown suites fail closed (`INVALIDATE`). Narrowed `no_impact_patterns` (removed blanket `docs/**`); added consumed documents (`scenario-evidence-map.json`, `authoritative-master-spec.md`, contract audit schemas) to `ci_router`. Exposed `--evaluate-reuse` CLI. All 58 tests in `test_affected_validation.py` pass cleanly.
+      4. [COMPLETED] Skills Streaming & Configurable PyPI: Implemented bounded 64KB streaming `FileHandle` SHA-256 and atomic staging in `SkillImporter.swift`. Added configurable `pypiBaseURL` in `PythonPackageManager.swift` for loopback test server support.
+      5. [COMPLETED] Authentic Semantic Tests (`MasterScenarioSemanticAcceptanceTests.swift`): Implemented `fs01PythonNodeShellSharedWorkspace` (exact multi-engine workspace output + negative context isolation), `sh01DynamicCommandsReconciliationWithoutExact23`, `cmd01AwkExecutionWithPrintArgvSampleText`, `py02DistributionNameDiffersFromImportName` (authentic wheel installed with `.dist-info` and disk import), `zip01`, `zip02`, `zip08` (>25 MiB compressed on disk, >64 MiB expanded, end marker, cancellation), and dedicated methods for `final09`, `final10`, `final11`, `final12`.
+      6. [COMPLETED] 493 MASTER Scenario Semantic Coverage Audit: Created `Scripts/Audit/audit_semantic_coverage.mjs`. Remapped `FINAL-01`–`FINAL-12`, `APPENG-03/04/05`, `SCRIPTARCH-04/05`. Replaced 29 `build_command` generic archive references with explicit repository audits and truthfully scoped pending obligations. Generated `semantic-coverage-audit.json` and `.md`.
+      7. [COMPLETED] Execution Policy Addendum: Updated `docs/hanlin-platform/personal-runtime-completion/versioned-execution-policy-addendum-pass4.md` with PASS 4.1 specifications (`EPA-2026-10-13-PASS4.1`).
+      8. [COMPLETED] Frozen Chat UI Invariant: Verified exact zero diff relative to `37ba73ba876fad72a3156052751c1b6a89bf825c` across all 4 chat files.
+  - **Current Status Disposition (493 Scenarios):**
+      - `REUSED_VERIFIED_PASS`: 377 (76.5%) — authentically proven unchanged passes from prior runs with verified clean closures.
+      - `NOT_RUN / NEEDS_TEST`: 24 (4.9%) — pending operator-authorized focused Apple CI.
+      - `NOT_RUN_DEVICE`: 78 (15.8%) — physical Apple hardware / Apple Intelligence obligations.
+      - `BLOCKED_EXTERNAL`: 10 (2.0%) — live cloud provider credentials.
+      - `BLOCKED_DEPENDENCY`: 2 (0.4%) — unpinned upstream dependency.
+      - `BLOCKED_INPUT_MODEL_FIXTURE`: 2 (0.4%) — unbundled model weights.
+      - `FAILED`: 0.
   - **Open Gates:**
-      - Targeted Xcode/macOS CI execution of NativeScript parity and newly added unit tests.
-      - Physical device obligations (78 Layer D cases) remain device-pending (`NOT_RUN_DEVICE`).
-      - External API credentials (10 cases) and unpinned Core AI dependency (2 cases) remain accurately blocked (`BLOCKED_EXTERNAL`, `BLOCKED_DEPENDENCY`, `BLOCKED_INPUT_MODEL_FIXTURE`).
+      - Targeted Apple CI execution on target commit for affected groups (`nativescript_runtime`, `MasterScenarioSemanticAcceptanceTests`, missing `FINAL-05` UI families, and iPadOS 27 simulator `build-for-testing`). CI dispatch remains strictly pending explicit operator authorization.
 
 ## Planned / Todo
 

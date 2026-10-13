@@ -59,14 +59,48 @@ Evidence reports must distinguish:
 
 ---
 
-## 4. Final Gate Reconciliation (`FINAL-01` through `FINAL-07`)
+## 4. Final Gate Reconciliation (`FINAL-01` through `FINAL-12`)
 
 - **`FINAL-01` (HanlinPlatform swift-test):** Authentic Phase 1 execution preserved if package sources and toolchain are unchanged.
-- **`FINAL-02` (RuntimeCore npm-test):** Genuine Node host TAP execution preserved if runtime and lockfiles are unchanged.
-- **`FINAL-03` (iPadOS 27 build-for-testing):** Requires real `build-for-testing` evidence targeting iPadOS 27 simulator. Stale iOS 26 archive cannot satisfy this gate.
-- **`FINAL-04` (App Unit/Integration):** Reusable under audited per-test dependency ledger with origin SHA `0095b6441e8968d4200e8cd8acf42f61b46b7c59` (run `38234823425`).
-- **`FINAL-05` (Targeted UI 7 Families):** Requires complete inventory across all 7 UI families: Skills, runtime command/install, ScriptUI, NativeScript, Expo, Agent conversation, and rich chat.
-- **`FINAL-06` (Affected Validation Groups):** Authentically satisfied by focused GitHub Actions run `38317896632` where all selected groups concluded `success`.
-- **`FINAL-07` (Full CI Validation):** 
-  - *Aggregated Verification Status:* Certified when all component obligations are proven either by fresh execution or audited `REUSED_VERIFIED_PASS`.
-  - *Literal Single-Run Clause:* If governance strictly requires a single physical unbroken GitHub Actions run executing all 493 suites simultaneously, the literal original `FINAL-07` clause remains open pending full dispatch, with this conflict transparently documented.
+- **`FINAL-02` (RuntimeCore npm-test):** Genuine Node host TAP execution (`direct-blocked may import child_process without executing it` and ESM Hebrew execution) preserved as long as RuntimeCore sources and lockfiles are unchanged.
+- **`FINAL-03` (iPadOS 27 build-for-testing):** Requires real `build-for-testing` evidence targeting iPadOS 27 simulator on final implementation commit. Stale iOS 26 archive cannot satisfy this gate (`NOT_RUN` pending operator CI run).
+- **`FINAL-04` (App Unit/Integration):** Broken down into individual case ledger decisions rather than a single bulk pass. 235 tests verified clean and reusable; 25 tests in `MasterScenarioSemanticAcceptanceTests` affected and pending focused execution.
+- **`FINAL-05` (Targeted UI 7 Families):** Requires complete inventory across all 7 UI families: Skills, runtime command/install, ScriptUI, NativeScript, Expo, Agent conversation, and rich chat. Legacy synthetic NativeScript evidence invalidated; all families marked `NOT_RUN` pending focused UI runs.
+- **`FINAL-06` (Affected Validation Groups):** Requires successful manual GitHub Actions execution on target code with selected validation groups (`NOT_RUN` pending operator CI run).
+- **`FINAL-07` (Full CI Validation):**
+  - *Aggregated Verification Status:* Engineering coverage certified when all component obligations are proven either by fresh execution or audited `REUSED_VERIFIED_PASS`.
+  - *Literal Single-Run Clause:* If governance strictly requires a single physical unbroken GitHub Actions run executing all 493 suites simultaneously on the exact target commit, the literal original `FINAL-07` clause remains `NOT_RUN` pending explicit owner dispatch.
+- **`FINAL-08` (Physical Device Acceptance):** Truthfully classified as `NOT_RUN_DEVICE` awaiting physical Apple hardware (`LIM-04`).
+- **`FINAL-09` (Live Provider Discovery & Tool Execution):** Dedicated semantic test `final09LiveToolDiscoveryAndExecution` in `MasterScenarioSemanticAcceptanceTests`.
+- **`FINAL-10` (Cold State Restoration & Reset):** Dedicated semantic test `final10ColdRelaunchStateRestorationAndToolReset`.
+- **`FINAL-11` (Cancellation & Immediate Clean Run):** Dedicated semantic test `final11CancellationAndImmediateNextRunCleanliness`.
+- **`FINAL-12` (Invariant & Tool Cross-Join):** Dedicated semantic test `final12InvariantsAndToolsCrossJoinAudit`.
+
+---
+
+## 5. Pass 4.1 Remediation Specifications (`EPA-2026-10-13-PASS4.1`)
+
+1. **Per-Case Reuse from Partially Failed Workflows:**
+   - GitHub Actions run `38234823425` failed overall at workflow level, but contains valid, completed unit test execution steps.
+   - Tests from this run may be reused **case by case** via `TestDependencyLedger` if and only if:
+     - The case completed with status `Passed` in raw machine-readable `xcresulttool` index.
+     - The case's entire transitive dependency closure (source, tests, fixtures, lockfiles, project settings) is demonstrably unmodified between `0095b6441e8968d4200e8cd8acf42f61b46b7c59` and target `HEAD`.
+     - No newer failed execution exists at descendant commits.
+   - Unknown suite mappings fail closed (`INVALIDATE`), never defaulting to blanket reuse.
+
+2. **Authentic NativeScript Parity Proofs vs Synthetic Fallbacks:**
+   - All synthetic fallback mechanisms (e.g. `Function(...)` evaluation returning fixed `"246"` or `"123"`) are strictly forbidden.
+   - Proof of runtime parity requires a dynamic, unpredictable challenge nonce (`HANLIN_PARITY_CHALLENGE`) passed into the runtime and verified across JavaScriptCore, embedded Node.js, embedded Python, HostServices HTTPS, and inter-app mini-app routing.
+   - NativeScript bridge providers are strictly bound to active sessions (`registerProvider:forSessionID:`); global fallbacks and placeholder replies (`reply(@"{}", nil)`) on active production paths are eliminated.
+   - Bridge synchronous synchronization avoids deceptive "nonblocking" labels; nested run loop waiting is contained to safe, bounded execution without main-thread deadlocks.
+
+3. **Streaming Skills Archive Import:**
+   - Archives >25 MiB compressed on disk and >64 MiB expanded (`ZIP-08`) must be inspected and extracted using bounded 64KB streaming I/O (`FileHandle`), preventing full in-memory duplication and guaranteeing atomic cleanup on cancellation or failure.
+
+4. **Pure Python Wheel Installation (`PY-02`):**
+   - Fabricated `sys.modules` injection is strictly prohibited. `PY-02` must exercise the real `PythonPackageManager` installation pipeline with on-disk `.dist-info` verification, authentic pure-Python wheel extraction, and isolated interpreter import from the installed disk location.
+
+5. **Report Provenance & Immutability:**
+   - Acceptance reports must accurately report distinct `sourceImplementationSHA`, `testExecutionSHA`, `evidenceRunSHA`, and `reportSHA`.
+   - Reused tests must not be falsely stamped as having executed on target HEAD.
+   - Gate evaluation (`--mode=gate`) must fail closed (exit code 1) whenever mandatory obligations are not met, preventing false-green assertions.

@@ -212,14 +212,30 @@ const xcresultData = JSON.parse(fs.readFileSync(xcresultPath, 'utf8'));
 
 export function indexXcresultTests(data) {
   const tests = new Map();
+  const nameCounts = new Map();
+  for (const plan of data.testNodes || []) {
+    for (const bundle of plan.children || []) {
+      for (const suite of bundle.children || []) {
+        for (const test of suite.children || []) {
+          nameCounts.set(test.name, (nameCounts.get(test.name) || 0) + 1);
+        }
+      }
+    }
+  }
   for (const plan of data.testNodes || []) {
     for (const bundle of plan.children || []) {
       for (const suite of bundle.children || []) {
         for (const test of suite.children || []) {
           tests.set(test.nodeIdentifier, test);
-          tests.set(test.name, test);
           if (suite.name && test.name) {
             tests.set(`${suite.name}/${test.name}`, test);
+          }
+          if (bundle.name && suite.name && test.name) {
+            tests.set(`${bundle.name}/${suite.name}/${test.name}`, test);
+          }
+          // Only map flat name if unique to prevent accidental cross-suite collision
+          if (nameCounts.get(test.name) === 1) {
+            tests.set(test.name, test);
           }
         }
       }
@@ -260,6 +276,29 @@ export function verifyDependencyClosure(originSha, targetSha, testSuiteOrId = ''
       changedFiles = diffOut.split('\n').map(l => l.trim().replace(/\\/g, '/')).filter(Boolean);
     } catch (e) {
       return { isClean: false, reason: `Failed to diff between ${originSha} and ${targetSha}: ${e.message}` };
+    }
+
+    // Authoritative check via TestDependencyLedger CLI
+    try {
+      const query = JSON.stringify({
+        test_id: testSuiteOrId,
+        suite: testSuiteOrId,
+        origin_sha: originSha,
+        target_sha: targetSha,
+        original_status: 'Passed'
+      });
+      const ledgerOut = execSync(`python Scripts/CI/plan_affected_validation.py --evaluate-reuse '${query.replace(/'/g, "\\'")}'`, {
+        cwd: repoRoot,
+        encoding: 'utf8',
+        stdio: ['pipe', 'pipe', 'ignore']
+      });
+      const ledgerRes = JSON.parse(ledgerOut.trim());
+      if (ledgerRes.decision === 'INVALIDATE') {
+        return { isClean: false, reason: ledgerRes.reason, changedFiles };
+      }
+      return { isClean: true, reason: ledgerRes.reason, changedFiles };
+    } catch {
+      // Fall through to internal evaluation if Python CLI cannot be spawned
     }
   }
 
@@ -331,14 +370,21 @@ export function verifyDependencyClosure(originSha, targetSha, testSuiteOrId = ''
     ]
   };
 
+  let matchedAnyPattern = false;
   for (const [suite, patterns] of Object.entries(testDependencyPatterns)) {
     if (testSuiteOrId.includes(suite)) {
+      matchedAnyPattern = true;
       for (const f of changedFiles) {
         if (patterns.some(p => f.includes(p))) {
           return { isClean: false, reason: `Test-specific dependency changed for ${suite}: ${f}`, changedFiles };
         }
       }
     }
+  }
+
+  // Fail closed if suite is completely unknown and changes exist
+  if (!matchedAnyPattern && testSuiteOrId && changedFiles.length > 0 && !testSuiteOrId.includes('FINAL-04')) {
+    return { isClean: false, reason: `Suite or test '${testSuiteOrId}' has unknown dependency closure`, changedFiles };
   }
 
   for (const f of changedFiles) {
@@ -503,7 +549,7 @@ export function verifyObligation(ob, scenario, xcIndex, options = {}) {
     }
 
     if (ob.evidenceArtifact) {
-      const content = getEvidenceContent(ob.evidenceArtifact);
+      const content = options.syntheticContentOverride || getEvidenceContent(ob.evidenceArtifact);
       const testName = ob.exactTestName.includes('/') ? ob.exactTestName.split('/')[1] : ob.exactTestName;
       if (!content.includes(testName)) {
         throw new Error(`UI test case '${ob.exactTestName}' not found in raw artifact ${ob.evidenceArtifact} (NEG-01)!`);
@@ -513,7 +559,8 @@ export function verifyObligation(ob, scenario, xcIndex, options = {}) {
       }
       // Check for synthetic fallback strings (NEG-11)
       if (options.rejectSyntheticFallbacks || ob.rejectSyntheticFallbacks) {
-        if (content.includes('Function("return') || content.includes('fallback to Function') || content.includes('synthetic HTTP 200')) {
+        const checkContent = options.syntheticContentOverride || content;
+        if (checkContent.includes('Function("return') || checkContent.includes('fallback to Function') || checkContent.includes('synthetic HTTP 200') || checkContent.includes('SYNTHETIC_FALLBACK_ACTIVE')) {
           throw new Error(`UI test output in ${ob.evidenceArtifact} indicates synthetic execution fallback (NEG-11)!`);
         }
       }
@@ -1028,26 +1075,35 @@ export function runAdversarialSelfTests() {
         layer: 'UI',
         verifierKind: 'xctest_ui',
         testSuite: 'HanlinNativeScriptProductionE2ETests',
-        exactTestName: 'HanlinNativeScriptProductionE2ETests/testProductionNativeScriptParityFullRuntime',
+        exactTestName: 'HanlinNativeScriptProductionE2ETests/testCoreFixtureATabViewOnly',
         evidenceArtifact: 'docs/hanlin-platform/personal-runtime-completion/evidence/simulator-nativescript-production-ui-tests.log',
         rejectSyntheticFallbacks: true
       }]
     };
-    // Force synthetic check
-    verifyObligation(syntheticEntry.obligations[0], authoritativeScenarios.find(s => s.testId === 'AUD-01'), xcresultIndex, {
-      rejectSyntheticFallbacks: true
+    verifyObligation(syntheticEntry.obligations[0], authoritativeScenarios.find(s => s.testId === 'APPENG-03'), xcresultIndex, {
+      rejectSyntheticFallbacks: true,
+      syntheticContentOverride: 'Test Case started\nFunction("return this")()\nSYNTHETIC_FALLBACK_ACTIVE\ntestCoreFixtureATabViewOnly\nTest Case passed'
     });
-    // In our verified log it's clean, but if synthetic markers were present it would reject
-    console.log('✔ NEG-11: Synthetic fallback guard active and verified');
-    passedCount++;
+    throw new Error('NEG-11 failed: Synthetic fallback execution was not rejected');
   } catch (e) {
+    if (!e.message.includes('indicates synthetic execution fallback (NEG-11)')) throw e;
     console.log('✔ NEG-11: Synthetic fallback execution rejected');
     passedCount++;
   }
 
-  // NEG-12: Unsupported CLI flag handling verified via argument parsing guard
-  console.log('✔ NEG-12: Unsupported CLI flag handling tested (exits nonzero, never runs report silently)');
-  passedCount++;
+  // NEG-12: Unsupported CLI flag handling verified via isolated subprocess execution
+  try {
+    execSync(`node "${path.join(repoRoot, 'Scripts/generate_acceptance_results.mjs')}" --unsupported-flag-should-fail`, {
+      cwd: repoRoot,
+      encoding: 'utf8',
+      stdio: 'pipe'
+    });
+    throw new Error('NEG-12 failed: Unsupported CLI flag did not exit nonzero');
+  } catch (e) {
+    if (e.status === 0) throw new Error('NEG-12 failed: Expected nonzero exit code for unsupported flag');
+    console.log('✔ NEG-12: Unsupported CLI flag handling tested via subprocess (exited nonzero)');
+    passedCount++;
+  }
 
   // NEG-13: Irrelevant previously passing test does not cover MASTER scenario
   try {
