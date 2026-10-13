@@ -13676,8 +13676,10 @@
           "testTarget": "AI_HLYUITests",
           "testSuite": "HanlinNativeScriptProductionE2ETests",
           "exactTestName": "HanlinNativeScriptProductionE2ETests/testProductionNativeScriptParityFullRuntime",
-          "status": "FAILED",
-          "reason": "Failed at line 45: label did not contain 'JS: 42' in CI run 38234823425 job 114762989410."
+          "workflowRunId": "38317896632",
+          "workflowJobId": "115038921332",
+          "status": "PASSED",
+          "reason": "Executed and passed in 106.184s in GitHub Actions run 38317896632 job 115038921332 with zero failures."
         }
       ]
     },
@@ -13694,8 +13696,11 @@
       "obligations": [
         {
           "layer": "CI",
-          "status": "NOT_RUN",
-          "reason": "Awaiting focused NativeScript parity validation dispatch."
+          "verifierKind": "ci_workflow",
+          "workflowRunId": "38317896632",
+          "workflowConclusion": "success",
+          "status": "PASSED",
+          "reason": "Manually dispatched affected validation on commit 31cba5e via --exact-test-selector AI_HLYUITests/HanlinNativeScriptProductionE2ETests/testProductionNativeScriptParityFullRuntime; all selected groups passed with workflow conclusion 'success'."
         }
       ]
     },
@@ -13716,7 +13721,7 @@
           "workflowRunId": "38234823425",
           "workflowConclusion": "failure",
           "status": "FAILED",
-          "reason": "GitHub Actions run 38234823425 failed in job 114762989410 (testProductionNativeScriptParityFullRuntime:45); downstream runtime tooling acceptance was skipped."
+          "reason": "Prior full run 38234823425 concluded failure; focused parity fix passed in run 38317896632; unamended literal single-run contract requires fresh full-suite execution or explicit versioned amendment to certify aggregated closure."
         }
       ]
     },
