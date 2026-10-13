@@ -46,14 +46,14 @@ Use the shared `apple-devtools` toolkit whenever exact Apple API/SDK facts, comp
 - Use official Apple documentation, release notes, samples, and WWDC material for semantics and recommended behavior.
 - Do not guess an Apple API signature, availability, deprecation state, entitlement, or capability when it can be verified quickly.
 - If `apple-devtools` is unavailable in the current environment, consult its repository/instructions rather than recreating duplicate tooling.
-- Read-only SDK/API verification through `apple-devtools` may be used when needed. Do not trigger project CI, full builds/tests, archives, TestFlight/App Store actions, or change project workflows merely for routine editing unless the user explicitly requests those operations.
+- Read-only SDK/API verification through `apple-devtools` may be used when needed. Project CI, builds/tests, archives, and IPA generation may be dispatched when necessary for validation and verification, without requiring advance per-run authorization, while avoiding wasteful or routine-only reruns.
 
 ## GitHub Actions
 
-- Project CI, builds, tests, audits, archives, IPA generation, and distribution run only on explicit user request.
+- Project CI, builds, tests, audits, archives, and IPA generation may be dispatched whenever necessary for verification, validation, or completing tasks, without requiring advance explicit authorization for each run. Distribution and external release publication continue to run only on explicit user request.
 - Do not add or broaden automatic `push`, `pull_request`, scheduled, or other workflow triggers without explicit permission.
 - Prefer focused manual workflows when available.
-- After an authorized workflow is dispatched, prefer one long-lived watcher instead of repeated polling:
+- After a workflow is dispatched, prefer one long-lived watcher instead of repeated polling:
 
 ```bash
 gh run watch <run-id> --exit-status --compact --interval 30
@@ -63,7 +63,7 @@ After it exits, inspect final metadata once and fetch detailed logs/artifacts on
 
 ## Impact-aware validation and authentic evidence reuse
 
-- **Impact-aware validation; no redundant test reruns.** Before each explicitly authorized build/test/CI operation, identify changed files and their complete dependency/consumer impact, then consult authenticated prior test evidence. Never rerun an already-passing test solely because of a newer commit, an unrelated failure, or final acceptance. Reuse a prior pass **only** if exact test identity, test/assertion semantics, fixtures, runtime inputs, relevant source/transitive dependencies, toolchain, environment, platform, and required evidence freshness are demonstrably unchanged and its original run/test really passed. Check the full commit range from each test's **own** evidence SHA to target HEAD, not merely HEAD's immediate parent. Reexecute failed, missing, affected, stale, invalidated, and uncertain tests. Unknown dependency impact means **rerun**, not assumed reuse. Do not substitute unit passes for failed UI/integration/performance obligations. Final acceptance may aggregate authentic unchanged passes and freshly executed affected tests **only when the versioned acceptance contract explicitly permits it**; do not falsely report that reused tests executed in the final run. Keep `EXECUTED_PASS`, `REUSED_VERIFIED_PASS`, `FAILED`, `NOT_RUN`, and `BLOCKED` separate, and never report full-CI success when a required gate fails or is skipped. Preserve required coverage. Trigger CI only when explicitly authorized; prefer exact filtered `-only-testing` runs and one event-driven watcher. Measure CI duration and diagnose expensive test/setup/log phases before widening scope.
+- **Impact-aware validation; no redundant test reruns.** Before each build/test/CI operation, identify changed files and their complete dependency/consumer impact, then consult authenticated prior test evidence. Never rerun an already-passing test solely because of a newer commit, an unrelated failure, or final acceptance. Reuse a prior pass **only** if exact test identity, test/assertion semantics, fixtures, runtime inputs, relevant source/transitive dependencies, toolchain, environment, platform, and required evidence freshness are demonstrably unchanged and its original run/test really passed. Check the full commit range from each test's **own** evidence SHA to target HEAD, not merely HEAD's immediate parent. Reexecute failed, missing, affected, stale, invalidated, and uncertain tests. Unknown dependency impact means **rerun**, not assumed reuse. Do not substitute unit passes for failed UI/integration/performance obligations. Final acceptance may aggregate authentic unchanged passes and freshly executed affected tests **only when the versioned acceptance contract explicitly permits it**; do not falsely report that reused tests executed in the final run. Keep `EXECUTED_PASS`, `REUSED_VERIFIED_PASS`, `FAILED`, `NOT_RUN`, and `BLOCKED` separate, and never report full-CI success when a required gate fails or is skipped. Preserve required coverage. Prefer exact filtered `-only-testing` runs and one event-driven watcher. Measure CI duration and diagnose expensive test/setup/log phases before widening scope.
 
 ## Living Project Board
 
