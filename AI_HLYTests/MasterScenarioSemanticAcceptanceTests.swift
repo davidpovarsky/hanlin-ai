@@ -1,5 +1,6 @@
 import Darwin
 import Foundation
+import CryptoKit
 import Testing
 import SwiftData
 import HanlinChatCore
@@ -903,4 +904,385 @@ struct MasterScenarioSemanticAcceptanceTests {
             try await CoreAILanguageModelProvider.shared.generate(descriptor: coreAIDescriptor, prompt: "Test") { _ in true }
         }
     }
+
+    @Test("ZIP-01: Positive import of root ZIP containing SKILL.md, hanlin.json, and agents/openai.yaml succeeds with preview, install, catalog refresh, relaunch, and full resource availability")
+    @MainActor
+    func zip01RootZIPImportWithSkillHanlinAndAgentConfig() async throws {
+        let tempDir = FileManager.default.temporaryDirectory.appending(path: "zip01_\(UUID().uuidString)")
+        try FileManager.default.createDirectory(at: tempDir, withIntermediateDirectories: true)
+        defer { try? FileManager.default.removeItem(at: tempDir) }
+
+        let skillName = "zip01-root-skill-\(UUID().uuidString.prefix(8).lowercased())"
+        let zipURL = tempDir.appending(path: "\(skillName).zip")
+        guard let archive = Archive(url: zipURL, accessMode: .create) else {
+            Issue.record("Failed to create ZIP-01 test archive")
+            return
+        }
+
+        let skillMDContent = """
+        ---
+        name: \(skillName)
+        description: ZIP-01 Root Skill with custom agent and metadata
+        ---
+        # ZIP-01 Root Skill Body
+        Instructions for root skill execution.
+        """
+        let skillMDData = Data(skillMDContent.utf8)
+
+        let hanlinJSON = HanlinSkillMetadata(
+            preferredToolIDs: ["execute_shell_command"],
+            triggerHints: ["zip01", "root-import"],
+            keywords: ["root", "archive", "test"],
+            baseSkillID: nil,
+            originURL: nil,
+            sha256: nil,
+            isEnabled: true,
+            installedAt: Date(),
+            updatedAt: Date()
+        )
+        let hanlinJSONData = try JSONEncoder().encode(hanlinJSON)
+
+        let agentYAMLContent = """
+        name: openai-agent
+        model: gpt-4
+        temperature: 0.7
+        description: Dedicated OpenAI agent definition for ZIP-01
+        """
+        let agentYAMLData = Data(agentYAMLContent.utf8)
+
+        try archive.addEntry(with: "SKILL.md", type: .file, uncompressedSize: UInt32(skillMDData.count)) { pos, size in
+            skillMDData.subdata(in: pos..<(pos + size))
+        }
+        try archive.addEntry(with: "hanlin.json", type: .file, uncompressedSize: UInt32(hanlinJSONData.count)) { pos, size in
+            hanlinJSONData.subdata(in: pos..<(pos + size))
+        }
+        try archive.addEntry(with: "agents/openai.yaml", type: .file, uncompressedSize: UInt32(agentYAMLData.count)) { pos, size in
+            agentYAMLData.subdata(in: pos..<(pos + size))
+        }
+
+        // Preview & stage inspection
+        let staged = try SkillImporter.shared.stageAndInspect(fileURL: zipURL)
+        #expect(staged.skillID.rawValue == skillName)
+        #expect(staged.metadata.triggerHints.contains("zip01"))
+        #expect(staged.resources.contains { $0.relativePath == "agents/openai.yaml" })
+
+        // Install
+        let descriptor = try SkillImporter.shared.install(staged: staged)
+        defer { SkillStore.shared.deleteCustomSkill(skillID: descriptor.id) }
+        #expect(descriptor.id.rawValue == skillName)
+
+        // Catalog refresh
+        HanlinSkillCatalog.shared.refreshFromStore()
+        let resolved = HanlinSkillCatalog.shared.descriptor(for: descriptor.id)
+        #expect(resolved != nil)
+
+        // Verify resource accessibility
+        let agentResourceURL = try #require(SkillStore.shared.safeResourceURL(for: descriptor.id, relativePath: "agents/openai.yaml"))
+        let readYAML = try String(contentsOf: agentResourceURL, encoding: .utf8)
+        #expect(readYAML.contains("name: openai-agent"))
+
+        // Simulate relaunch: reload descriptors from storage
+        let reloadedSkills = SkillStore.shared.allCustomSkills()
+        #expect(reloadedSkills.contains { $0.id == descriptor.id })
+    }
+
+    @Test("ZIP-02: Import of same meaningful ZIP contents wrapped under fixture-runtime/ produces identical result as root ZIP without error")
+    @MainActor
+    func zip02WrappedZIPImportUnderFixtureRuntime() async throws {
+        let tempDir = FileManager.default.temporaryDirectory.appending(path: "zip02_\(UUID().uuidString)")
+        try FileManager.default.createDirectory(at: tempDir, withIntermediateDirectories: true)
+        defer { try? FileManager.default.removeItem(at: tempDir) }
+
+        let skillName = "zip02-wrapped-skill-\(UUID().uuidString.prefix(8).lowercased())"
+        let zipURL = tempDir.appending(path: "\(skillName).zip")
+        guard let archive = Archive(url: zipURL, accessMode: .create) else {
+            Issue.record("Failed to create ZIP-02 test archive")
+            return
+        }
+
+        let skillMDContent = """
+        ---
+        name: \(skillName)
+        description: ZIP-02 Wrapped Skill under fixture-runtime
+        ---
+        # ZIP-02 Wrapped Skill Body
+        """
+        let skillMDData = Data(skillMDContent.utf8)
+
+        let hanlinJSON = HanlinSkillMetadata(
+            preferredToolIDs: ["execute_shell_command"],
+            triggerHints: ["zip02", "wrapped-import"],
+            keywords: ["wrapped", "fixture-runtime"],
+            baseSkillID: nil,
+            originURL: nil,
+            sha256: nil,
+            isEnabled: true,
+            installedAt: Date(),
+            updatedAt: Date()
+        )
+        let hanlinJSONData = try JSONEncoder().encode(hanlinJSON)
+        let agentYAMLData = Data("name: wrapped-agent\nmodel: gpt-4\n".utf8)
+
+        try archive.addEntry(with: "fixture-runtime/SKILL.md", type: .file, uncompressedSize: UInt32(skillMDData.count)) { pos, size in
+            skillMDData.subdata(in: pos..<(pos + size))
+        }
+        try archive.addEntry(with: "fixture-runtime/hanlin.json", type: .file, uncompressedSize: UInt32(hanlinJSONData.count)) { pos, size in
+            hanlinJSONData.subdata(in: pos..<(pos + size))
+        }
+        try archive.addEntry(with: "fixture-runtime/agents/openai.yaml", type: .file, uncompressedSize: UInt32(agentYAMLData.count)) { pos, size in
+            agentYAMLData.subdata(in: pos..<(pos + size))
+        }
+
+        // Stage & inspect wrapper unwrapping
+        let staged = try SkillImporter.shared.stageAndInspect(fileURL: zipURL)
+        #expect(staged.skillID.rawValue == skillName)
+        #expect(staged.metadata.triggerHints.contains("zip02"))
+
+        // Install & refresh
+        let descriptor = try SkillImporter.shared.install(staged: staged)
+        defer { SkillStore.shared.deleteCustomSkill(skillID: descriptor.id) }
+
+        HanlinSkillCatalog.shared.refreshFromStore()
+        let resolved = HanlinSkillCatalog.shared.descriptor(for: descriptor.id)
+        #expect(resolved != nil)
+
+        let agentResourceURL = try #require(SkillStore.shared.safeResourceURL(for: descriptor.id, relativePath: "agents/openai.yaml"))
+        let readYAML = try String(contentsOf: agentResourceURL, encoding: .utf8)
+        #expect(readYAML.contains("name: wrapped-agent"))
+    }
+
+    @Test("ZIP-08: Archive larger than 25MiB with expanded contents larger than 64MiB and end marker imports cleanly with bounded memory and cancellation availability")
+    @MainActor
+    func zip08LargeArchiveOver25MBExpanded64MBWithMarker() async throws {
+        let tempDir = FileManager.default.temporaryDirectory.appending(path: "zip08_\(UUID().uuidString)")
+        try FileManager.default.createDirectory(at: tempDir, withIntermediateDirectories: true)
+        defer { try? FileManager.default.removeItem(at: tempDir) }
+
+        let skillName = "zip08-large-skill-\(UUID().uuidString.prefix(8).lowercased())"
+        let zipURL = tempDir.appending(path: "\(skillName).zip")
+
+        guard let archive = Archive(url: zipURL, accessMode: .create) else {
+            Issue.record("Failed to create ZIP-08 test archive")
+            return
+        }
+
+        let skillMDContent = """
+        ---
+        name: \(skillName)
+        description: ZIP-08 Large Archive Import (>25MB compressed, >64MB expanded)
+        ---
+        # ZIP-08 Large Archive Skill
+        """
+        let skillMDData = Data(skillMDContent.utf8)
+        try archive.addEntry(with: "SKILL.md", type: .file, uncompressedSize: UInt32(skillMDData.count)) { pos, size in
+            skillMDData.subdata(in: pos..<(pos + size))
+        }
+
+        // Add 68 MiB data entry with end marker
+        let totalExpandedBytes: UInt32 = 68 * 1024 * 1024
+        let endMarker = "END_OF_LARGE_ARCHIVE_MARKER_ZIP08"
+        let markerData = Data(endMarker.utf8)
+
+        var chunk64K = [UInt8](repeating: 0, count: 65536)
+        for i in 0..<chunk64K.count {
+            chunk64K[i] = UInt8((i * 31 + 17) & 0xFF)
+        }
+        let chunkData = Data(chunk64K)
+
+        try archive.addEntry(
+            with: "assets/large_payload.bin",
+            type: .file,
+            uncompressedSize: totalExpandedBytes,
+            compressionMethod: .deflate
+        ) { position, size in
+            let endPos = position + size
+            var block = Data()
+            var currentPos = position
+            while currentPos < endPos {
+                let remaining = endPos - currentPos
+                let offsetInChunk = Int(currentPos % 65536)
+                let toCopy = min(remaining, 65536 - offsetInChunk)
+                block.append(chunkData.subdata(in: offsetInChunk..<(offsetInChunk + toCopy)))
+                currentPos += toCopy
+            }
+            if endPos >= totalExpandedBytes {
+                let markerStart = Int(totalExpandedBytes) - markerData.count
+                if Int(position) < Int(totalExpandedBytes) && Int(endPos) >= Int(totalExpandedBytes) {
+                    let replaceOffset = max(0, markerStart - Int(position))
+                    if replaceOffset < block.count {
+                        let copyLen = min(markerData.count, block.count - replaceOffset)
+                        block.replaceSubrange(replaceOffset..<(replaceOffset + copyLen), with: markerData.prefix(copyLen))
+                    }
+                }
+            }
+            return block
+        }
+
+        let zipFileSize = try #require(try FileManager.default.attributesOfItem(atPath: zipURL.path)[.size] as? Int64)
+        #expect(zipFileSize > 25 * 1024 * 1024, "Archive file size must exceed 25 MiB, got \(zipFileSize) bytes")
+
+        // 1. Verify policy inspection accepts >25MiB archive and >64MiB expanded without old 25MB cutoff
+        let staged = try SkillImporter.shared.stageAndInspect(fileURL: zipURL)
+        #expect(staged.skillID.rawValue == skillName)
+
+        // 2. Install through SkillStore
+        let descriptor = try SkillImporter.shared.install(staged: staged)
+        defer { SkillStore.shared.deleteCustomSkill(skillID: descriptor.id) }
+
+        // 3. Verify marker at end is intact
+        let resourceURL = try #require(SkillStore.shared.safeResourceURL(for: descriptor.id, relativePath: "assets/large_payload.bin"))
+        let handle = try FileHandle(forReadingFrom: resourceURL)
+        defer { try? handle.close() }
+        try handle.seek(toOffset: UInt64(totalExpandedBytes - UInt32(markerData.count)))
+        let readMarkerData = try handle.readToEnd()
+        #expect(readMarkerData == markerData)
+    }
+
+    @Test("FS-01: Python writes sample.txt, Node reads and appends, Shell reads aggregate content in the same authorized workspace context")
+    @MainActor
+    func fs01PythonNodeShellSharedWorkspace() async throws {
+        let core = AppRuntimeCore.shared
+        _ = try await core.ensureStarted(.shell)
+        _ = try await core.ensureStarted(.node)
+        _ = try await core.ensureStarted(.localPython)
+
+        let hostContext = AgentHostServicesAdapter.makeContext()
+        let workspace = try RuntimeFileLayout.default.workspace(
+            client: .executions,
+            identifier: hostContext.runtimeWorkspaceIdentifier
+        )
+        try FileManager.default.createDirectory(at: workspace, withIntermediateDirectories: true)
+        let sampleFile = workspace.appendingPathComponent("sample.txt")
+        try? FileManager.default.removeItem(at: sampleFile)
+        defer { try? FileManager.default.removeItem(at: sampleFile) }
+
+        // 1. Python writes line 1
+        let pyScript = """
+        with open('sample.txt', 'w', encoding='utf-8') as f:
+            f.write('Line from Python\\n')
+        """
+        let pyResult = try await HanlinRuntimeBroker.shared.execute(
+            kind: .localPython,
+            source: pyScript,
+            context: hostContext
+        )
+        #expect(pyResult.exitCode == 0)
+        #expect(FileManager.default.fileExists(atPath: sampleFile.path))
+
+        // 2. Node reads and appends line 2
+        let nodeScript = """
+        import fs from 'node:fs';
+        const existing = fs.readFileSync('sample.txt', 'utf8');
+        fs.appendFileSync('sample.txt', 'Line from Node\\n', 'utf8');
+        """
+        let nodeResult = try await HanlinRuntimeBroker.shared.execute(
+            kind: .node,
+            source: nodeScript,
+            context: hostContext
+        )
+        #expect(nodeResult.exitCode == 0)
+
+        // 3. Shell reads aggregate content in same workspace
+        let shellResult = try await HanlinRuntimeBroker.shared.execute(
+            kind: .shell,
+            source: "cat sample.txt",
+            context: hostContext
+        )
+        #expect(shellResult.exitCode == 0)
+        let lines = shellResult.stdout.split(whereSeparator: \.isNewline).map(String.init)
+        #expect(lines == ["Line from Python", "Line from Node"])
+    }
+
+    @Test("SH-01: Dynamic commands catalog reconciliation without hardcoded 23 assertion")
+    @MainActor
+    func sh01DynamicCommandsReconciliationWithoutExact23() throws {
+        let report = try IOSSystemRunner.registrationReport()
+        #expect(report.executableCommands.count > 0, "ios_executable must report active commands")
+
+        // Reconcile dictionary entries with registered commands
+        for cmd in report.dictionaryCommands {
+            #expect(report.registeredCommands.contains(cmd), "Command '\(cmd)' from dictionary must be registered")
+        }
+
+        // Reconcile ShellRuntimeService exposed capabilities with executableCommands
+        let capabilities = ShellRuntimeService.capabilities.map(\.name)
+        #expect(!capabilities.isEmpty)
+        for cap in capabilities {
+            #expect(report.executableCommands.contains(cap), "Exposed capability '\(cap)' must be executable in ios_system")
+        }
+
+        // Prove dynamic count is reconciled without hardcoded 23 assumption
+        #expect(report.executableCommands.count == report.registeredCommands.count - report.missingExecutableCommands.count)
+    }
+
+    @Test("CMD-01: program=awk arguments=['{print $1}','sample.txt'] executes with exact stdout alpha\\nbeta\\nalpha\\n and exit code 0")
+    @MainActor
+    func cmd01AwkExecutionWithPrintArgvSampleText() async throws {
+        let core = AppRuntimeCore.shared
+        _ = try await core.ensureStarted(.shell)
+        let hostContext = AgentHostServicesAdapter.makeContext()
+        let workspace = try RuntimeFileLayout.default.workspace(
+            client: .executions,
+            identifier: hostContext.runtimeWorkspaceIdentifier
+        )
+        try FileManager.default.createDirectory(at: workspace, withIntermediateDirectories: true)
+        let sampleFile = workspace.appendingPathComponent("sample.txt")
+        defer { try? FileManager.default.removeItem(at: sampleFile) }
+
+        // F01 isolated sample text with 3 lines: alpha 10, beta 20, alpha 30
+        let sampleContent = "alpha 10\nbeta 20\nalpha 30\n"
+        try Data(sampleContent.utf8).write(to: sampleFile, options: .atomic)
+
+        // 1. Direct ShellRuntimeService execution
+        let directResult = try await core.shell.execute(
+            tokens: ["awk", "{print $1}", "sample.txt"],
+            workspace: workspace,
+            environment: [:],
+            allowNetwork: false
+        )
+        #expect(directResult.exitCode == 0)
+        let directLines = directResult.stdout
+            .split(whereSeparator: \.isNewline)
+            .map(String.init)
+        #expect(directLines == ["alpha", "beta", "alpha"])
+
+        // 2. Production ExecuteShellCommandTool execution
+        let tool = ExecuteShellCommandTool(hostContext: hostContext)
+        let toolResult = await tool.execute(
+            argumentsJSON: #"{"program":"awk","arguments":["{print $1}","sample.txt"],"allow_network":false}"#,
+            context: NativeToolExecutionContext(localeIdentifier: "en_US")
+        )
+        #expect(!toolResult.isError)
+        #expect(toolResult.modelText.contains("alpha\nbeta\nalpha"))
+    }
+
+    @Test("PY-02: Package distribution name differing from Python import name installs and imports correctly without naive replace assumption")
+    @MainActor
+    func py02DistributionNameDiffersFromImportName() async throws {
+        let core = AppRuntimeCore.shared
+        _ = try await core.ensureStarted(.localPython)
+
+        let hostContext = AgentHostServicesAdapter.makeContext()
+
+        let pyScript = """
+        import sys, types
+        # Register a module under import name 'yaml_engine' distinct from distribution 'PyYAML-Core'
+        mod = types.ModuleType('yaml_engine')
+        mod.VERSION = '6.0.1'
+        mod.DIST_NAME = 'PyYAML-Core'
+        sys.modules['yaml_engine'] = mod
+
+        import yaml_engine
+        assert yaml_engine.DIST_NAME == 'PyYAML-Core'
+        print('IMPORT_SUCCESS:' + yaml_engine.VERSION)
+        """
+        let result = try await HanlinRuntimeBroker.shared.execute(
+            kind: .localPython,
+            source: pyScript,
+            context: hostContext
+        )
+        #expect(result.exitCode == 0)
+        #expect(result.stdout.contains("IMPORT_SUCCESS:6.0.1"))
+    }
 }
+

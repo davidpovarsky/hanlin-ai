@@ -108,7 +108,8 @@ public final class SkillImporter: @unchecked Sendable {
 
         do {
             let data = try Data(contentsOf: fileURL, options: .mappedIfSafe)
-            guard Int64(data.count) <= Self.maxDownloadBytes else {
+            let maxLimit: Int64 = (originURL != nil) ? Self.maxDownloadBytes : (256 * 1_048_576)
+            guard Int64(data.count) <= maxLimit else {
                 throw SkillImportError.downloadExceedsLimit(Int64(data.count))
             }
 
