@@ -93,6 +93,7 @@ actor PythonPackageManager {
     }
 
     let maximumWheelSizeBytes: Int64?
+    let pypiBaseURL: URL
 
     private let fileLayout: RuntimeFileLayout
     private let python: PythonRuntimeService
@@ -102,11 +103,13 @@ actor PythonPackageManager {
     init(
         fileLayout: RuntimeFileLayout = .default,
         python: PythonRuntimeService,
-        maximumWheelSizeBytes: Int64? = nil
+        maximumWheelSizeBytes: Int64? = nil,
+        pypiBaseURL: URL = URL(string: "https://pypi.org")!
     ) {
         self.fileLayout = fileLayout
         self.python = python
         self.maximumWheelSizeBytes = maximumWheelSizeBytes
+        self.pypiBaseURL = pypiBaseURL
     }
 
     func installed() throws -> [PythonPackageRecord] {
@@ -335,7 +338,8 @@ actor PythonPackageManager {
             throw RuntimeCoreError.invalidIdentifier
         }
         let suffix = version.map { "/\($0)" } ?? ""
-        guard let url = URL(string: "https://pypi.org/pypi/\(normalized)\(suffix)/json") else {
+        let baseStr = pypiBaseURL.absoluteString.hasSuffix("/") ? String(pypiBaseURL.absoluteString.dropLast()) : pypiBaseURL.absoluteString
+        guard let url = URL(string: "\(baseStr)/pypi/\(normalized)\(suffix)/json") else {
             throw RuntimeCoreError.invalidIdentifier
         }
         let (data, response) = try await URLSession.shared.data(from: url)

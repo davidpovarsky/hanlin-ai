@@ -107,15 +107,24 @@ public final class SkillImporter: @unchecked Sendable {
         try fileManager.createDirectory(at: stagingDir, withIntermediateDirectories: true)
 
         do {
-            let data = try Data(contentsOf: fileURL, options: .mappedIfSafe)
+            let fileAttrs = try fileManager.attributesOfItem(atPath: fileURL.path)
+            let fileSize = (fileAttrs[.size] as? NSNumber)?.int64Value ?? 0
             let maxLimit: Int64 = (originURL != nil) ? Self.maxDownloadBytes : (256 * 1_048_576)
-            guard Int64(data.count) <= maxLimit else {
-                throw SkillImportError.downloadExceedsLimit(Int64(data.count))
+            guard fileSize <= maxLimit else {
+                throw SkillImportError.downloadExceedsLimit(fileSize)
             }
 
-            let sha256 = SHA256.hash(data: data).map { String(format: "%02x", $0) }.joined()
+            // Stream SHA-256 calculation in bounded 64KB buffers to avoid loading large archives into memory
+            var hasher = SHA256()
+            let fileHandle = try FileHandle(forReadingFrom: fileURL)
+            defer { try? fileHandle.close() }
+            while let chunk = try fileHandle.read(upToCount: 65536), !chunk.isEmpty {
+                hasher.update(data: chunk)
+            }
+            let sha256 = hasher.finalize().map { String(format: "%02x", $0) }.joined()
 
             if ext == "md" {
+                let data = try Data(contentsOf: fileURL, options: .mappedIfSafe)
                 guard let content = String(data: data, encoding: .utf8) else {
                     throw SkillImportError.invalidFrontmatter("File is not valid UTF-8 text.")
                 }
@@ -159,9 +168,9 @@ public final class SkillImporter: @unchecked Sendable {
                     originURL: originURL
                 )
             } else {
-                // ZIP handling
+                // ZIP handling: stream file copy directly, avoiding duplicating compressed payload in memory
                 let stagedArchiveURL = stagingDir.appendingPathComponent("archive.zip")
-                try data.write(to: stagedArchiveURL)
+                try fileManager.copyItem(at: fileURL, to: stagedArchiveURL)
 
                 let extractedRoot = stagingDir.appendingPathComponent("extracted", isDirectory: true)
                 try fileManager.createDirectory(at: extractedRoot, withIntermediateDirectories: true)
@@ -192,7 +201,7 @@ public final class SkillImporter: @unchecked Sendable {
                 let inspection = policy.inspectSkillArchive(
                     entries: entryMetadatas,
                     centralDirectoryEntryCount: zipEntries.count,
-                    archiveBytes: Int64(data.count)
+                    archiveBytes: fileSize
                 )
 
                 guard inspection.isInstallable else {

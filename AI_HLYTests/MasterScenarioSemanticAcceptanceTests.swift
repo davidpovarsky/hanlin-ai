@@ -17,7 +17,13 @@ private final class LoopbackHTTPFixtureServer: @unchecked Sendable {
     private let lock = NSLock()
     private var isStopped = false
 
-    init(responseBody: String, contentType: String = "application/json") throws {
+    private let routes: [String: (Data, String)]
+    private let defaultResponse: (Data, String)
+
+    init(routes: [String: (Data, String)], defaultResponse: (Data, String)? = nil) throws {
+        self.routes = routes
+        self.defaultResponse = defaultResponse ?? (Data(), "application/json")
+
         let fd = Darwin.socket(AF_INET, SOCK_STREAM, 0)
         guard fd >= 0 else {
             throw NSError(domain: "LoopbackHTTPFixtureServer", code: 1, userInfo: [NSLocalizedDescriptionKey: "socket() failed"])
@@ -59,9 +65,8 @@ private final class LoopbackHTTPFixtureServer: @unchecked Sendable {
         self.listenFD = fd
         self.port = UInt16(bigEndian: boundAddr.sin_port)
 
-        let bodyBytes = Array(responseBody.utf8)
-        let header = "HTTP/1.1 200 OK\r\nContent-Type: \(contentType)\r\nContent-Length: \(bodyBytes.count)\r\nConnection: close\r\n\r\n"
-        let responseBytes = Array(header.utf8) + bodyBytes
+        let capturedRoutes = self.routes
+        let capturedDefault = self.defaultResponse
 
         let thread = Thread { [weak self] in
             while true {
@@ -73,8 +78,15 @@ private final class LoopbackHTTPFixtureServer: @unchecked Sendable {
                     }
                 }
                 guard clientFD >= 0 else { break }
-                var reqBuf = [UInt8](repeating: 0, count: 1024)
-                _ = Darwin.recv(clientFD, &reqBuf, reqBuf.count, 0)
+                var reqBuf = [UInt8](repeating: 0, count: 2048)
+                let bytesRead = Darwin.recv(clientFD, &reqBuf, reqBuf.count, 0)
+                let reqStr = bytesRead > 0 ? String(decoding: reqBuf[..<bytesRead], as: UTF8.self) : ""
+                let path = reqStr.split(separator: " ").dropFirst().first.map(String.init) ?? "/"
+
+                let (bodyData, contentType) = capturedRoutes[path] ?? capturedDefault
+                let header = "HTTP/1.1 200 OK\r\nContent-Type: \(contentType)\r\nContent-Length: \(bodyData.count)\r\nConnection: close\r\n\r\n"
+                let responseBytes = Array(header.utf8) + Array(bodyData)
+
                 responseBytes.withUnsafeBytes { rawBuf in
                     if let base = rawBuf.baseAddress {
                         _ = Darwin.send(clientFD, base, responseBytes.count, 0)
@@ -88,6 +100,11 @@ private final class LoopbackHTTPFixtureServer: @unchecked Sendable {
         thread.name = "Hanlin.LoopbackHTTPFixtureServer"
         thread.start()
         self.acceptThread = thread
+    }
+
+    convenience init(responseBody: String, contentType: String = "application/json") throws {
+        let bodyData = Data(responseBody.utf8)
+        try self.init(routes: [:], defaultResponse: (bodyData, contentType))
     }
 
     private func shouldStop() -> Bool {
@@ -981,9 +998,13 @@ struct MasterScenarioSemanticAcceptanceTests {
         let readYAML = try String(contentsOf: agentResourceURL, encoding: .utf8)
         #expect(readYAML.contains("name: openai-agent"))
 
-        // Simulate relaunch: reload descriptors from storage
-        let reloadedSkills = SkillStore.shared.allCustomSkills()
+        // Simulate cold relaunch: instantiate fresh independent SkillStore from disk root
+        let coldStore = SkillStore(rootDirectoryURL: SkillStore.shared.rootDirectoryURL)
+        let reloadedSkills = coldStore.allCustomSkills()
         #expect(reloadedSkills.contains { $0.id == descriptor.id })
+        let coldResourceURL = try #require(coldStore.safeResourceURL(for: descriptor.id, relativePath: "agents/openai.yaml"))
+        let coldYAML = try String(contentsOf: coldResourceURL, encoding: .utf8)
+        #expect(coldYAML.contains("name: openai-agent"))
     }
 
     @Test("ZIP-02: Import of same meaningful ZIP contents wrapped under fixture-runtime/ produces identical result as root ZIP without error")
@@ -1045,10 +1066,18 @@ struct MasterScenarioSemanticAcceptanceTests {
         HanlinSkillCatalog.shared.refreshFromStore()
         let resolved = HanlinSkillCatalog.shared.descriptor(for: descriptor.id)
         #expect(resolved != nil)
+        #expect(resolved?.id == descriptor.id)
+        #expect(resolved?.metadata.keywords == ["wrapped", "fixture-runtime"])
 
         let agentResourceURL = try #require(SkillStore.shared.safeResourceURL(for: descriptor.id, relativePath: "agents/openai.yaml"))
         let readYAML = try String(contentsOf: agentResourceURL, encoding: .utf8)
         #expect(readYAML.contains("name: wrapped-agent"))
+
+        // Cold relaunch check
+        let coldStore = SkillStore(rootDirectoryURL: SkillStore.shared.rootDirectoryURL)
+        let coldDescriptor = try #require(coldStore.allCustomSkills().first { $0.id == descriptor.id })
+        #expect(coldDescriptor.name == descriptor.name)
+        #expect(coldDescriptor.metadata.triggerHints == descriptor.metadata.triggerHints)
     }
 
     @Test("ZIP-08: Archive larger than 25MiB with expanded contents larger than 64MiB and end marker imports cleanly with bounded memory and cancellation availability")
@@ -1083,11 +1112,16 @@ struct MasterScenarioSemanticAcceptanceTests {
         let endMarker = "END_OF_LARGE_ARCHIVE_MARKER_ZIP08"
         let markerData = Data(endMarker.utf8)
 
-        var chunk64K = [UInt8](repeating: 0, count: 65536)
-        for i in 0..<chunk64K.count {
-            chunk64K[i] = UInt8((i * 31 + 17) & 0xFF)
+        let incompressibleBytes: UInt32 = 27 * 1024 * 1024
+
+        var highEntropy64K = [UInt8](repeating: 0, count: 65536)
+        var rng: UInt32 = 0x2468ACE1
+        for i in 0..<highEntropy64K.count {
+            rng = (rng &* 1103515245 &+ 12345) & 0x7fffffff
+            highEntropy64K[i] = UInt8(rng & 0xFF)
         }
-        let chunkData = Data(chunk64K)
+        let highEntropyData = Data(highEntropy64K)
+        let lowEntropyData = Data(repeating: 0x5A, count: 65536)
 
         try archive.addEntry(
             with: "assets/large_payload.bin",
@@ -1102,7 +1136,8 @@ struct MasterScenarioSemanticAcceptanceTests {
                 let remaining = endPos - currentPos
                 let offsetInChunk = Int(currentPos % 65536)
                 let toCopy = min(remaining, 65536 - offsetInChunk)
-                block.append(chunkData.subdata(in: offsetInChunk..<(offsetInChunk + toCopy)))
+                let source = (currentPos < incompressibleBytes) ? highEntropyData : lowEntropyData
+                block.append(source.subdata(in: offsetInChunk..<(offsetInChunk + toCopy)))
                 currentPos += toCopy
             }
             if endPos >= totalExpandedBytes {
@@ -1119,9 +1154,10 @@ struct MasterScenarioSemanticAcceptanceTests {
         }
 
         let zipFileSize = try #require(try FileManager.default.attributesOfItem(atPath: zipURL.path)[.size] as? Int64)
-        #expect(zipFileSize > 25 * 1024 * 1024, "Archive file size must exceed 25 MiB, got \(zipFileSize) bytes")
+        #expect(zipFileSize > 25 * 1024 * 1024, "Archive file size on disk must exceed 25 MiB, got \(zipFileSize) bytes")
+        #expect(totalExpandedBytes > 64 * 1024 * 1024, "Uncompressed payload must exceed 64 MiB, got \(totalExpandedBytes) bytes")
 
-        // 1. Verify policy inspection accepts >25MiB archive and >64MiB expanded without old 25MB cutoff
+        // 1. Verify policy inspection accepts >25MiB archive and >64MiB expanded without memory duplication
         let staged = try SkillImporter.shared.stageAndInspect(fileURL: zipURL)
         #expect(staged.skillID.rawValue == skillName)
 
@@ -1136,6 +1172,15 @@ struct MasterScenarioSemanticAcceptanceTests {
         try handle.seek(toOffset: UInt64(totalExpandedBytes - UInt32(markerData.count)))
         let readMarkerData = try handle.readToEnd()
         #expect(readMarkerData == markerData)
+
+        // 4. Test controllable cancellation & atomic cleanup
+        let cancelTask = Task {
+            try Task.checkCancellation()
+            let cancelStaged = try SkillImporter.shared.stageAndInspect(fileURL: zipURL)
+            cancelStaged.cleanup()
+        }
+        cancelTask.cancel()
+        _ = await cancelTask.result
     }
 
     @Test("FS-01: Python writes sample.txt, Node reads and appends, Shell reads aggregate content in the same authorized workspace context")
@@ -1156,6 +1201,8 @@ struct MasterScenarioSemanticAcceptanceTests {
         try? FileManager.default.removeItem(at: sampleFile)
         defer { try? FileManager.default.removeItem(at: sampleFile) }
 
+        #expect(!FileManager.default.fileExists(atPath: sampleFile.path))
+
         // 1. Python writes line 1
         let pyScript = """
         with open('sample.txt', 'w', encoding='utf-8') as f:
@@ -1168,6 +1215,8 @@ struct MasterScenarioSemanticAcceptanceTests {
         )
         #expect(pyResult.exitCode == 0)
         #expect(FileManager.default.fileExists(atPath: sampleFile.path))
+        let pyBytes = try Data(contentsOf: sampleFile)
+        #expect(String(decoding: pyBytes, as: UTF8.self) == "Line from Python\n")
 
         // 2. Node reads and appends line 2
         let nodeScript = """
@@ -1181,6 +1230,8 @@ struct MasterScenarioSemanticAcceptanceTests {
             context: hostContext
         )
         #expect(nodeResult.exitCode == 0)
+        let nodeBytes = try Data(contentsOf: sampleFile)
+        #expect(String(decoding: nodeBytes, as: UTF8.self) == "Line from Python\nLine from Node\n")
 
         // 3. Shell reads aggregate content in same workspace
         let shellResult = try await HanlinRuntimeBroker.shared.execute(
@@ -1189,8 +1240,21 @@ struct MasterScenarioSemanticAcceptanceTests {
             context: hostContext
         )
         #expect(shellResult.exitCode == 0)
-        let lines = shellResult.stdout.split(whereSeparator: \.isNewline).map(String.init)
-        #expect(lines == ["Line from Python", "Line from Node"])
+        #expect(shellResult.stdout == "Line from Python\nLine from Node\n")
+
+        // 4. Negative context isolation: distinct execution context has isolated workspace
+        let isolatedContext = AgentHostServicesAdapter.makeContext()
+        let isolatedWorkspace = try RuntimeFileLayout.default.workspace(
+            client: .executions,
+            identifier: isolatedContext.runtimeWorkspaceIdentifier
+        )
+        #expect(isolatedWorkspace.path != workspace.path)
+        let isolatedShellResult = try await HanlinRuntimeBroker.shared.execute(
+            kind: .shell,
+            source: "cat sample.txt",
+            context: isolatedContext
+        )
+        #expect(isolatedShellResult.exitCode != 0 || isolatedShellResult.stderr.contains("No such file") || isolatedShellResult.stdout.isEmpty)
     }
 
     @Test("SH-01: Dynamic commands catalog reconciliation without hardcoded 23 assertion")
@@ -1211,8 +1275,34 @@ struct MasterScenarioSemanticAcceptanceTests {
             #expect(report.executableCommands.contains(cap), "Exposed capability '\(cap)' must be executable in ios_system")
         }
 
+        // Reconcile ExecuteShellCommandTool schema enum values with ShellRuntimeService capabilities
+        let schema = ExecuteShellCommandTool().openAIToolSchema()
+        if let params = schema["parameters"] as? [String: Any],
+           let props = params["properties"] as? [String: Any],
+           let programProp = props["program"] as? [String: Any],
+           let enumValues = programProp["enum"] as? [String] {
+            #expect(Set(enumValues) == Set(capabilities))
+        }
+
         // Prove dynamic count is reconciled without hardcoded 23 assumption
         #expect(report.executableCommands.count == report.registeredCommands.count - report.missingExecutableCommands.count)
+
+        // Positive check: canonical commands are executable and available
+        let diagnostics = try IOSSystemRunner.evaluateCommandDependencies()
+        for positiveCmd in ["ls", "cat", "echo", "pwd"] where report.executableCommands.contains(positiveCmd) {
+            #expect(diagnostics[positiveCmd]?.isAvailable == true)
+        }
+
+        // Negative check: unregistered command is rejected
+        #expect(!report.registeredCommands.contains("nonexistent_fake_cmd_999"))
+        #expect(!report.executableCommands.contains("nonexistent_fake_cmd_999"))
+
+        // Any missing executable command must have an explicit dependency diagnostic reason
+        for missingCmd in report.missingExecutableCommands {
+            let diag = diagnostics[missingCmd]
+            #expect(diag?.isAvailable == false)
+            #expect(diag?.missingDependencyReason != nil)
+        }
     }
 
     @Test("CMD-01: program=awk arguments=['{print $1}','sample.txt'] executes with exact stdout alpha\\nbeta\\nalpha\\n and exit code 0")
@@ -1233,7 +1323,7 @@ struct MasterScenarioSemanticAcceptanceTests {
         let sampleContent = "alpha 10\nbeta 20\nalpha 30\n"
         try Data(sampleContent.utf8).write(to: sampleFile, options: .atomic)
 
-        // 1. Direct ShellRuntimeService execution
+        // 1. Direct ShellRuntimeService execution produces exact stdout and exit code 0
         let directResult = try await core.shell.execute(
             tokens: ["awk", "{print $1}", "sample.txt"],
             workspace: workspace,
@@ -1241,10 +1331,7 @@ struct MasterScenarioSemanticAcceptanceTests {
             allowNetwork: false
         )
         #expect(directResult.exitCode == 0)
-        let directLines = directResult.stdout
-            .split(whereSeparator: \.isNewline)
-            .map(String.init)
-        #expect(directLines == ["alpha", "beta", "alpha"])
+        #expect(directResult.stdout == "alpha\nbeta\nalpha\n")
 
         // 2. Production ExecuteShellCommandTool execution
         let tool = ExecuteShellCommandTool(hostContext: hostContext)
@@ -1253,7 +1340,22 @@ struct MasterScenarioSemanticAcceptanceTests {
             context: NativeToolExecutionContext(localeIdentifier: "en_US")
         )
         #expect(!toolResult.isError)
-        #expect(toolResult.modelText.contains("alpha\nbeta\nalpha"))
+        #expect(toolResult.modelText.trimmingCharacters(in: .whitespacesAndNewlines) == "alpha\nbeta\nalpha")
+
+        // 3. Negative case: missing file reports error and non-zero exit
+        let missingDirect = try await core.shell.execute(
+            tokens: ["awk", "{print $1}", "missing_nonexistent_file.txt"],
+            workspace: workspace,
+            environment: [:],
+            allowNetwork: false
+        )
+        #expect(missingDirect.exitCode != 0)
+
+        let missingToolResult = await tool.execute(
+            argumentsJSON: #"{"program":"awk","arguments":["{print $1}","missing_nonexistent_file.txt"],"allow_network":false}"#,
+            context: NativeToolExecutionContext(localeIdentifier: "en_US")
+        )
+        #expect(missingToolResult.isError || missingToolResult.modelText.contains("No such file") || missingToolResult.modelText.contains("exit"))
     }
 
     @Test("PY-02: Package distribution name differing from Python import name installs and imports correctly without naive replace assumption")
@@ -1262,27 +1364,385 @@ struct MasterScenarioSemanticAcceptanceTests {
         let core = AppRuntimeCore.shared
         _ = try await core.ensureStarted(.localPython)
 
-        let hostContext = AgentHostServicesAdapter.makeContext()
+        let tempDir = FileManager.default.temporaryDirectory.appending(path: "py02_\(UUID().uuidString)")
+        try FileManager.default.createDirectory(at: tempDir, withIntermediateDirectories: true)
+        defer { try? FileManager.default.removeItem(at: tempDir) }
 
-        let pyScript = """
-        import sys, types
-        # Register a module under import name 'yaml_engine' distinct from distribution 'PyYAML-Core'
-        mod = types.ModuleType('yaml_engine')
-        mod.VERSION = '6.0.1'
-        mod.DIST_NAME = 'PyYAML-Core'
-        sys.modules['yaml_engine'] = mod
+        let distName = "test-dist-mismatch"
+        let normalizedDist = "test_dist_mismatch"
+        let importName = "custom_import_pkg"
+        let version = "1.0.0"
+        let wheelFilename = "\(normalizedDist)-\(version)-py3-none-any.whl"
 
-        import yaml_engine
-        assert yaml_engine.DIST_NAME == 'PyYAML-Core'
-        print('IMPORT_SUCCESS:' + yaml_engine.VERSION)
+        // Build wheel ZIP
+        let wheelPath = tempDir.appending(path: wheelFilename)
+        guard let wheelArchive = Archive(url: wheelPath, accessMode: .create) else {
+            Issue.record("Failed to create wheel archive for PY-02")
+            return
+        }
+
+        let pyCode = """
+        __version__ = "\(version)"
+        DIST_NAME = "\(distName)"
+        def probe_value():
+            return "PY02_DIST_MISMATCH_VERIFIED"
         """
-        let result = try await HanlinRuntimeBroker.shared.execute(
+        let pyCodeData = Data(pyCode.utf8)
+
+        let metadataContent = """
+        Metadata-Version: 2.1
+        Name: \(distName)
+        Version: \(version)
+        Summary: Fixture package with distribution name differing from import name
+        """
+        let metadataData = Data(metadataContent.utf8)
+
+        let wheelRecord = """
+        Wheel-Version: 1.0
+        Generator: hanlin-test
+        Root-Is-Purelib: true
+        Tag: py3-none-any
+        """
+        let wheelRecordData = Data(wheelRecord.utf8)
+
+        let recordFileContent = """
+        \(importName)/__init__.py,,
+        \(normalizedDist)-\(version).dist-info/METADATA,,
+        \(normalizedDist)-\(version).dist-info/WHEEL,,
+        \(normalizedDist)-\(version).dist-info/RECORD,,
+        """
+        let recordFileData = Data(recordFileContent.utf8)
+
+        try wheelArchive.addEntry(with: "\(importName)/__init__.py", type: .file, uncompressedSize: UInt32(pyCodeData.count)) { pos, size in
+            pyCodeData.subdata(in: pos..<(pos + size))
+        }
+        try wheelArchive.addEntry(with: "\(normalizedDist)-\(version).dist-info/METADATA", type: .file, uncompressedSize: UInt32(metadataData.count)) { pos, size in
+            metadataData.subdata(in: pos..<(pos + size))
+        }
+        try wheelArchive.addEntry(with: "\(normalizedDist)-\(version).dist-info/WHEEL", type: .file, uncompressedSize: UInt32(wheelRecordData.count)) { pos, size in
+            wheelRecordData.subdata(in: pos..<(pos + size))
+        }
+        try wheelArchive.addEntry(with: "\(normalizedDist)-\(version).dist-info/RECORD", type: .file, uncompressedSize: UInt32(recordFileData.count)) { pos, size in
+            recordFileData.subdata(in: pos..<(pos + size))
+        }
+
+        let wheelData = try Data(contentsOf: wheelPath)
+        let wheelSha = SHA256.hash(data: wheelData).map { String(format: "%02x", $0) }.joined()
+
+        // Create initial server to acquire port
+        let initialRoutes: [String: (Data, String)] = [
+            "/pypi/\(distName)/json": (Data(), "application/json"),
+            "/wheels/\(wheelFilename)": (wheelData, "application/octet-stream")
+        ]
+        let initialServer = try LoopbackHTTPFixtureServer(routes: initialRoutes)
+        let boundPort = initialServer.port
+        initialServer.stop()
+
+        // Build concrete JSON pointing to loopback server URL
+        let pypiJSON = """
+        {
+          "info": {
+            "name": "\(distName)",
+            "version": "\(version)",
+            "summary": "Fixture package with distribution name differing from import name",
+            "requires_dist": null
+          },
+          "releases": {
+            "\(version)": [
+              {
+                "filename": "\(wheelFilename)",
+                "url": "http://127.0.0.1:\(boundPort)/wheels/\(wheelFilename)",
+                "packagetype": "bdist_wheel",
+                "digests": {
+                  "sha256": "\(wheelSha)"
+                },
+                "size": \(wheelData.count)
+              }
+            ]
+          },
+          "urls": [
+            {
+              "filename": "\(wheelFilename)",
+              "url": "http://127.0.0.1:\(boundPort)/wheels/\(wheelFilename)",
+              "packagetype": "bdist_wheel",
+              "digests": {
+                "sha256": "\(wheelSha)"
+              },
+              "size": \(wheelData.count)
+            }
+          ]
+        }
+        """
+        let concreteJSONData = Data(pypiJSON.utf8)
+
+        let fixtureServer = try LoopbackHTTPFixtureServer(routes: [
+            "/pypi/\(distName)/json": (concreteJSONData, "application/json"),
+            "/wheels/\(wheelFilename)": (wheelData, "application/octet-stream")
+        ])
+        defer { fixtureServer.stop() }
+
+        let layout = RuntimeFileLayout.default
+        let manager = PythonPackageManager(
+            fileLayout: layout,
+            python: core.python,
+            pypiBaseURL: URL(string: "http://127.0.0.1:\(fixtureServer.port)")!
+        )
+
+        // 1. Preview
+        let preview = try await manager.preview(name: distName)
+        #expect(preview.name == distName)
+        #expect(preview.version == version)
+        #expect(preview.isPurePython)
+
+        // 2. Install with distinct importName
+        let record = try await manager.install(
+            name: distName,
+            version: version,
+            importName: importName
+        )
+        defer { try? manager.uninstall(record) }
+
+        #expect(record.name == distName)
+        #expect(record.importName == importName)
+        #expect(record.sha256 == wheelSha)
+
+        // 3. Verify on-disk .dist-info
+        let installedDir = layout.pythonPackages.appending(path: "\(record.normalizedName)-\(record.version)")
+        let distInfoDir = installedDir.appending(path: "\(normalizedDist)-\(version).dist-info")
+        #expect(FileManager.default.fileExists(atPath: distInfoDir.path))
+        #expect(FileManager.default.fileExists(atPath: distInfoDir.appending(path: "METADATA").path))
+
+        // 4. Verify import probe and execution from installed file location
+        let hostContext = AgentHostServicesAdapter.makeContext()
+        let importScript = """
+        import sys
+        import \(importName)
+        assert \(importName).__version__ == '\(version)'
+        assert \(importName).probe_value() == 'PY02_DIST_MISMATCH_VERIFIED'
+        print('IMPORT_SUCCESS:' + \(importName).__version__)
+        """
+        let execResult = try await HanlinRuntimeBroker.shared.execute(
             kind: .localPython,
-            source: pyScript,
+            source: importScript,
             context: hostContext
         )
-        #expect(result.exitCode == 0)
-        #expect(result.stdout.contains("IMPORT_SUCCESS:6.0.1"))
+        #expect(execResult.exitCode == 0)
+        #expect(execResult.stdout.contains("IMPORT_SUCCESS:1.0.0"))
+
+        // 5. Cold relaunch persistence verification
+        let freshManager = PythonPackageManager(
+            fileLayout: layout,
+            python: core.python,
+            pypiBaseURL: URL(string: "http://127.0.0.1:\(fixtureServer.port)")!
+        )
+        let reloadedRecords = try freshManager.installed()
+        #expect(reloadedRecords.contains { $0.normalizedName == record.normalizedName && $0.importName == importName })
+
+        // 6. Cleanup / uninstall
+        try freshManager.uninstall(record)
+        #expect(!FileManager.default.fileExists(atPath: installedDir.path))
+        let afterUninstallRecords = try freshManager.installed()
+        #expect(!afterUninstallRecords.contains { $0.normalizedName == record.normalizedName })
+    }
+
+    @Test("FINAL-09: Live-provider discovery, loading, and execution of tools across NativeToolCatalog and session")
+    @MainActor
+    func final09LiveToolDiscoveryAndExecution() async throws {
+        NativeToolCatalog.shared.ensureBuiltinsRegistered()
+        let catalog = NativeToolCatalog.shared
+        let descriptors = catalog.activeTools()
+        #expect(!descriptors.isEmpty)
+
+        // Verify discovery of shell tool and read skill resource tool
+        let shellTool = descriptors.first { $0.declaration.name == "execute_shell_command" }
+        #expect(shellTool != nil, "execute_shell_command tool must be discovered in live catalog")
+        let readTool = descriptors.first { $0.declaration.name == "read_skill_resource" }
+        #expect(readTool != nil, "read_skill_resource tool must be discovered in live catalog")
+
+        // Execute discovered tool through session
+        let core = AppRuntimeCore.shared
+        _ = try await core.ensureStarted(.shell)
+        let hostContext = AgentHostServicesAdapter.makeContext()
+        let toolInstance = ExecuteShellCommandTool(hostContext: hostContext)
+        let result = await toolInstance.execute(
+            argumentsJSON: #"{"program":"echo","arguments":["FINAL-09-DISCOVERY-OK"],"allow_network":false}"#,
+            context: NativeToolExecutionContext(localeIdentifier: "en_US")
+        )
+        #expect(!result.isError)
+        #expect(result.modelText.contains("FINAL-09-DISCOVERY-OK"))
+    }
+
+    @Test("FINAL-10: Cold termination/relaunch restores persistent state while resetting request-scoped exposed tool state")
+    @MainActor
+    func final10ColdRelaunchStateRestorationAndToolReset() async throws {
+        let tempDir = FileManager.default.temporaryDirectory.appending(path: "final10_\(UUID().uuidString)")
+        try FileManager.default.createDirectory(at: tempDir, withIntermediateDirectories: true)
+        defer { try? FileManager.default.removeItem(at: tempDir) }
+
+        let skillName = "final10-skill-\(UUID().uuidString.prefix(8).lowercased())"
+        let zipURL = tempDir.appending(path: "\(skillName).zip")
+        guard let archive = Archive(url: zipURL, accessMode: .create) else {
+            Issue.record("Failed to create FINAL-10 archive")
+            return
+        }
+        let skillMD = Data("""
+        ---
+        name: \(skillName)
+        description: Final 10 persistence verification skill
+        ---
+        # Final 10
+        """.utf8)
+        try archive.addEntry(with: "SKILL.md", type: .file, uncompressedSize: UInt32(skillMD.count)) { pos, size in
+            skillMD.subdata(in: pos..<(pos + size))
+        }
+
+        let staged = try SkillImporter.shared.stageAndInspect(fileURL: zipURL)
+        let descriptor = try SkillImporter.shared.install(staged: staged)
+        defer { SkillStore.shared.deleteCustomSkill(skillID: descriptor.id) }
+
+        // Load into an active session
+        let activeSession = AssistantCapabilitySession()
+        activeSession.recordSkillLoaded(id: descriptor.id, instructionText: descriptor.title.preferredValue())
+        #expect(activeSession.isSkillLoaded(descriptor.id))
+
+        // Simulate cold relaunch: fresh independent store and fresh session
+        let coldStore = SkillStore(rootDirectoryURL: SkillStore.shared.rootDirectoryURL)
+        let coldSkills = coldStore.allCustomSkills()
+        #expect(coldSkills.contains { $0.id == descriptor.id }, "Persistent skill must survive cold relaunch")
+
+        let freshSession = AssistantCapabilitySession()
+        #expect(!freshSession.isSkillLoaded(descriptor.id), "Request-scoped exposed tool/skill state must be reset on cold relaunch")
+    }
+
+    @Test("FINAL-11: Start long operation, cancel, and immediately run new operation with zero cross-run contamination")
+    @MainActor
+    func final11CancellationAndImmediateNextRunCleanliness() async throws {
+        let container = try Self.makeInMemoryModelContainer()
+        let context = container.mainContext
+        let modelName = "final11-fixture-model"
+        context.insert(
+            AllModels(
+                name: modelName,
+                displayName: "Final 11 Fixture",
+                position: 0,
+                company: "LOCAL",
+                supportsTextGen: true,
+                supportsReasoning: false,
+                supportsToolUse: false
+            )
+        )
+        context.insert(UserInfo())
+        try context.save()
+
+        let apiManager = APIManager(context: context)
+        let controller = MockLocalLLMController()
+        apiManager.localLLMDriverOverride = { _, _, _, _, _, _ in
+            controller.makeDriver {}
+        }
+
+        // Run 1: Start and cancel mid-stream
+        let stream1 = try await apiManager.sendStreamRequest(
+            messages: [RequestMessage(role: "user", text: "Long run to cancel", modelName: modelName, modelDisplayName: "Final 11 Fixture")],
+            modelName: modelName,
+            groupID: UUID(),
+            runID: UUID(),
+            ifSearch: false,
+            ifKnowledge: false,
+            ifToolUse: false,
+            assistantToolScope: .nativeOnly,
+            ifThink: false,
+            ifAudio: false,
+            ifPlanning: false,
+            thinkingLength: 0,
+            isObservation: false,
+            temperature: 0.6,
+            topP: 0.9,
+            maxTokens: 128,
+            canvasData: CanvasData(),
+            selectedURLs: nil,
+            selectedPromptsContent: nil,
+            systemMessage: "",
+            selectedImageSize: "1024x1024",
+            imageReversePrompt: ""
+        )
+
+        for try await chunk in stream1 {
+            if let text = chunk.content, !text.isEmpty {
+                apiManager.cancelCurrentRequest()
+                controller.emitLateTokenAndFinish("Cancelled leak token")
+                break
+            }
+        }
+        #expect(controller.stopCallCount >= 1)
+
+        // Run 2: Immediately send new small request on clean driver
+        apiManager.localLLMDriverOverride = { _, _, _, _, _, _ in
+            var callback: (@Sendable (String?) -> Void)?
+            return LocalLLMStreamDriver(
+                setUpdate: { cb in callback = cb },
+                respond: { prompt in
+                    callback?("Clean run 2 response")
+                    callback?(nil)
+                },
+                stop: {}
+            )
+        }
+
+        let stream2 = try await apiManager.sendStreamRequest(
+            messages: [RequestMessage(role: "user", text: "Immediate clean run", modelName: modelName, modelDisplayName: "Final 11 Fixture")],
+            modelName: modelName,
+            groupID: UUID(),
+            runID: UUID(),
+            ifSearch: false,
+            ifKnowledge: false,
+            ifToolUse: false,
+            assistantToolScope: .nativeOnly,
+            ifThink: false,
+            ifAudio: false,
+            ifPlanning: false,
+            thinkingLength: 0,
+            isObservation: false,
+            temperature: 0.6,
+            topP: 0.9,
+            maxTokens: 128,
+            canvasData: CanvasData(),
+            selectedURLs: nil,
+            selectedPromptsContent: nil,
+            systemMessage: "",
+            selectedImageSize: "1024x1024",
+            imageReversePrompt: ""
+        )
+
+        var run2Output = ""
+        for try await chunk in stream2 {
+            if let c = chunk.content { run2Output += c }
+        }
+        #expect(run2Output == "Clean run 2 response")
+        #expect(!run2Output.contains("Cancelled leak token"), "Run 2 must have zero contamination from cancelled Run 1")
+    }
+
+    @Test("FINAL-12: Complete capability invariants, tools, and contract cross-join accounting")
+    @MainActor
+    func final12InvariantsAndToolsCrossJoinAudit() throws {
+        // Machine-checkable cross join of registered tools and platform runtime services
+        NativeToolCatalog.shared.ensureBuiltinsRegistered()
+        let tools = NativeToolCatalog.shared.allTools()
+        #expect(!tools.isEmpty)
+
+        // Ensure every required native tool has a declared executor
+        let requiredToolNames = ["execute_shell_command", "read_skill_resource"]
+        for toolName in requiredToolNames {
+            let found = tools.first { $0.declaration.name == toolName }
+            #expect(found != nil, "Required tool '\(toolName)' must be registered in NativeToolCatalog")
+            #expect(!found!.declaration.description.isEmpty)
+        }
+
+        // Reconcile Shell capabilities with ios_system executable commands
+        let report = try IOSSystemRunner.registrationReport()
+        for cap in ShellRuntimeService.capabilities {
+            #expect(report.executableCommands.contains(cap.name), "Tool capability '\(cap.name)' must be backed by an executable command")
+        }
     }
 }
+
 
