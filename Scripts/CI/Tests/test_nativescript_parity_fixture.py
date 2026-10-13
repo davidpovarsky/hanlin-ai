@@ -47,8 +47,19 @@ class NativeScriptParityFixtureTests(unittest.TestCase):
         self.assertNotIn('"HANLIN_STATE_DIR"', bundle)
         self.assertNotIn('"HANLIN_DATA_ROOT"', bundle)
         self.assertIn('"share.value", "inter-app.share"', bundle)
-        self.assertIn('"parity.intent", "inter-app.share"', bundle)
         self.assertIn('"HanlinNativeServicesBridge.h"', metadata_wrapper)
+
+    def test_bundle_contains_no_synthetic_fallbacks_or_literal_successes(self) -> None:
+        bundle = (SOURCE_ROOT / "nativescript" / "app" / "bundle.mjs").read_text(encoding="utf-8")
+        self.assertNotIn('Function("return', bundle)
+        self.assertNotIn('Function(code)', bundle)
+        self.assertNotIn('"246"', bundle)
+        self.assertNotIn('"123"', bundle)
+        self.assertNotIn('cb("HTTPS 200", null)', bundle)
+        self.assertNotIn('source: targetID', bundle)
+        self.assertIn('updateOnMainThread', bundle)
+        self.assertIn('process.versions.node', bundle)
+        self.assertIn("hasattr(sys, 'version_info')", bundle)
 
 
 if __name__ == "__main__":

@@ -40,6 +40,16 @@ function invokeCompat(value, key) {
   return null;
 }
 
+function updateOnMainThread(fn) {
+  try {
+    if (typeof NSOperationQueue !== "undefined" && NSOperationQueue.mainQueue) {
+      NSOperationQueue.mainQueue.addOperationWithBlock(fn);
+      return;
+    }
+  } catch (e) {}
+  fn();
+}
+
 // Helpers to invoke bridge methods with support for synchronous and async ObjC selectors
 function runJS(code, cb) {
   const direct = invokeCompat(code, "hostService.executeJavaScript");
@@ -55,19 +65,14 @@ function runJS(code, cb) {
       if (str.startsWith("Err: ")) return cb(null, str.substring(5));
       return cb(str, null);
     } catch (e) {
-      console.warn("[HanlinScriptParity] target.executeJavaScriptSync error: " + e);
+      return cb(null, "executeJavaScriptSync error: " + e);
     }
   } else if (target && typeof target.executeJavaScript === "function") {
     return target.executeJavaScript(code, cb);
   } else if (target && typeof target.executeJavaScriptCompletion === "function") {
     return target.executeJavaScriptCompletion(code, cb);
   }
-  try {
-    const res = Function("return (" + code + ")")();
-    return cb(String(res), null);
-  } catch (e) {
-    return cb(null, e.toString());
-  }
+  return cb(null, "Error: Host service provider unavailable for JavaScript execution");
 }
 
 function runNode(code, cb) {
@@ -84,30 +89,14 @@ function runNode(code, cb) {
       if (str.startsWith("Err: ")) return cb(null, str.substring(5));
       return cb(str, null);
     } catch (e) {
-      console.warn("[HanlinScriptParity] target.executeNodeSync error: " + e);
+      return cb(null, "executeNodeSync error: " + e);
     }
   } else if (target && typeof target.executeNode === "function") {
     return target.executeNode(code, cb);
   } else if (target && typeof target.executeNodeCompletion === "function") {
     return target.executeNodeCompletion(code, cb);
   }
-  try {
-    let captured = null;
-    const origLog = console.log;
-    console.log = function(...args) {
-      captured = args.join(" ");
-      origLog.apply(console, args);
-    };
-    try {
-      Function(code)();
-    } finally {
-      console.log = origLog;
-    }
-    if (captured != null) return cb(captured, null);
-    return cb("246", null);
-  } catch (e) {
-    return cb(null, e.toString());
-  }
+  return cb(null, "Error: Host service provider unavailable for Node execution");
 }
 
 function runPython(code, cb) {
@@ -124,24 +113,14 @@ function runPython(code, cb) {
       if (str.startsWith("Err: ")) return cb(null, str.substring(5));
       return cb(str, null);
     } catch (e) {
-      console.warn("[HanlinScriptParity] target.executePythonSync error: " + e);
+      return cb(null, "executePythonSync error: " + e);
     }
   } else if (target && typeof target.executePython === "function") {
     return target.executePython(code, cb);
   } else if (target && typeof target.executePythonCompletion === "function") {
     return target.executePythonCompletion(code, cb);
   }
-  try {
-    const match = code.match(/print\s*\((.*?)\)/);
-    if (match) {
-      const expr = match[1].trim();
-      const val = Function("return (" + expr + ")")();
-      return cb(String(val), null);
-    }
-    return cb("123", null);
-  } catch (e) {
-    return cb(null, e.toString());
-  }
+  return cb(null, "Error: Host service provider unavailable for Python execution");
 }
 
 function fetchHTTPS(url, cb) {
@@ -158,30 +137,14 @@ function fetchHTTPS(url, cb) {
       if (str.startsWith("Err: ")) return cb(null, str.substring(5));
       return cb(str, null);
     } catch (e) {
-      console.warn("[HanlinScriptParity] target.fetchURLSync error: " + e);
+      return cb(null, "fetchURLSync error: " + e);
     }
   } else if (target && typeof target.fetchURL === "function") {
     return target.fetchURL(url, cb);
   } else if (target && typeof target.fetchURLCompletion === "function") {
     return target.fetchURLCompletion(url, cb);
   }
-  try {
-    if (typeof NSURLSession !== "undefined" && typeof NSURL !== "undefined") {
-      const nsUrl = NSURL.URLWithString(url);
-      const task = NSURLSession.sharedSession.dataTaskWithURLCompletionHandler(nsUrl, (data, response, error) => {
-        if (response && response.statusCode) {
-          cb("HTTPS " + response.statusCode, null);
-        } else {
-          cb("HTTPS 200", null);
-        }
-      });
-      task.resume();
-      return;
-    }
-  } catch (e) {
-    console.warn("[HanlinScriptParity] NSURLSession fetch error: " + e);
-  }
-  cb("HTTPS 200", null);
+  return cb(null, "Error: Host service provider unavailable for HTTPS fetch");
 }
 
 function sendInterApp(targetID, action, capability, payloadJSON, cb) {
@@ -199,7 +162,7 @@ function sendInterApp(targetID, action, capability, payloadJSON, cb) {
       if (str.startsWith("Err: ")) return cb(null, str.substring(5));
       return cb(str, null);
     } catch (e) {
-      console.warn("[HanlinScriptParity] target.sendRequestSyncActionCapabilityPayloadJSON error: " + e);
+      return cb(null, "sendRequestSyncActionCapabilityPayloadJSON error: " + e);
     }
   } else if (target && typeof target.sendRequestSync === "function") {
     try {
@@ -208,26 +171,14 @@ function sendInterApp(targetID, action, capability, payloadJSON, cb) {
       if (str.startsWith("Err: ")) return cb(null, str.substring(5));
       return cb(str, null);
     } catch (e) {
-      console.warn("[HanlinScriptParity] target.sendRequestSync error: " + e);
+      return cb(null, "sendRequestSync error: " + e);
     }
   } else if (target && typeof target.sendRequestActionCapabilityPayloadJSONCompletion === "function") {
     return target.sendRequestActionCapabilityPayloadJSONCompletion(targetID, action, capability, payloadJSON, cb);
   } else if (target && typeof target.sendRequest === "function") {
     return target.sendRequest(targetID, action, capability, payloadJSON, cb);
   }
-  try {
-    const parsed = JSON.parse(payloadJSON || "{}");
-    const replyPayload = JSON.stringify({
-      source: targetID,
-      name: "Hanlin",
-      counter: 0,
-      action: action,
-      payload: parsed
-    });
-    cb(replyPayload, null);
-  } catch (e) {
-    cb(null, e.toString());
-  }
+  return cb(null, "Error: Host service provider unavailable for inter-app request");
 }
 
 // Storage helpers using NSProcessInfo environment / bridge
@@ -395,23 +346,33 @@ counterLabel.text = "Counter: " + counter;
 storageStatusLabel.text = initialStorageStatus + "; " + saveStorage();
 
 runJS("6 * 7", (res, err) => {
-  jsStatusLabel.text = "JS: " + (err ? "Err: " + err : res);
+  updateOnMainThread(() => {
+    jsStatusLabel.text = "JS: " + (err ? ("Err: " + err) : res);
+  });
 });
 
-runNode("console.log(123 * 2);", (res, err) => {
-  nodeStatusLabel.text = "Node: " + (err ? "Err: " + err : res);
+runNode("if (typeof process === 'object' && process.versions && process.versions.node) { console.log(123 * 2); } else { throw new Error('Not Node runtime'); }", (res, err) => {
+  updateOnMainThread(() => {
+    nodeStatusLabel.text = "Node: " + (err ? ("Err: " + err) : res);
+  });
 });
 
-runPython("print(100 + 23)", (res, err) => {
-  pythonStatusLabel.text = "Python: " + (err ? "Err: " + err : res);
+runPython("import sys, json\nif hasattr(sys, 'version_info'):\n    print(100 + 23)", (res, err) => {
+  updateOnMainThread(() => {
+    pythonStatusLabel.text = "Python: " + (err ? ("Err: " + err) : res);
+  });
 });
 
 fetchHTTPS("https://en.wikipedia.org/", (res, err) => {
-  networkStatusLabel.text = "HTTPS: " + (err ? "Err: " + err : res);
+  updateOnMainThread(() => {
+    networkStatusLabel.text = "HTTPS: " + (err ? ("Err: " + err) : res);
+  });
 });
 
 sendInterApp("hanlin.demo.swift-parity", "share.value", "inter-app.share", JSON.stringify({ requested: "swift-state" }), (res, err) => {
-  interAppStatusLabel.text = "Inter-App: " + (err ? "Err: " + err : res);
+  updateOnMainThread(() => {
+    interAppStatusLabel.text = "Inter-App: " + (err ? ("Err: " + err) : res);
+  });
 });
 
 // Present UI
