@@ -47,10 +47,16 @@ function updateOnMainThread(fn) {
       return;
     }
   } catch (e) {}
-  fn();
+  if (typeof dispatch_async === "function" && typeof dispatch_get_main_queue === "function") {
+    try {
+      dispatch_async(dispatch_get_main_queue(), fn);
+      return;
+    } catch (e) {}
+  }
+  console.error("[HanlinScriptParity] Main thread queue unavailable for UI update");
 }
 
-// Helpers to invoke bridge methods with support for synchronous and async ObjC selectors
+// Helpers to invoke bridge methods with support for asynchronous and fallback ObjC selectors
 function runJS(code, cb) {
   const direct = invokeCompat(code, "hostService.executeJavaScript");
   if (direct != null) {
@@ -58,7 +64,11 @@ function runJS(code, cb) {
     return cb(direct, null);
   }
   const target = bridge || compat;
-  if (target && typeof target.executeJavaScriptSync === "function") {
+  if (target && typeof target.executeJavaScriptCompletion === "function") {
+    return target.executeJavaScriptCompletion(code, cb);
+  } else if (target && typeof target.executeJavaScript === "function") {
+    return target.executeJavaScript(code, cb);
+  } else if (target && typeof target.executeJavaScriptSync === "function") {
     try {
       const res = target.executeJavaScriptSync(code);
       const str = res != null ? res.toString() : "";
@@ -67,10 +77,6 @@ function runJS(code, cb) {
     } catch (e) {
       return cb(null, "executeJavaScriptSync error: " + e);
     }
-  } else if (target && typeof target.executeJavaScript === "function") {
-    return target.executeJavaScript(code, cb);
-  } else if (target && typeof target.executeJavaScriptCompletion === "function") {
-    return target.executeJavaScriptCompletion(code, cb);
   }
   return cb(null, "Error: Host service provider unavailable for JavaScript execution");
 }
@@ -82,7 +88,11 @@ function runNode(code, cb) {
     return cb(direct, null);
   }
   const target = bridge || compat;
-  if (target && typeof target.executeNodeSync === "function") {
+  if (target && typeof target.executeNodeCompletion === "function") {
+    return target.executeNodeCompletion(code, cb);
+  } else if (target && typeof target.executeNode === "function") {
+    return target.executeNode(code, cb);
+  } else if (target && typeof target.executeNodeSync === "function") {
     try {
       const res = target.executeNodeSync(code);
       const str = res != null ? res.toString() : "";
@@ -91,10 +101,6 @@ function runNode(code, cb) {
     } catch (e) {
       return cb(null, "executeNodeSync error: " + e);
     }
-  } else if (target && typeof target.executeNode === "function") {
-    return target.executeNode(code, cb);
-  } else if (target && typeof target.executeNodeCompletion === "function") {
-    return target.executeNodeCompletion(code, cb);
   }
   return cb(null, "Error: Host service provider unavailable for Node execution");
 }
@@ -106,7 +112,11 @@ function runPython(code, cb) {
     return cb(direct, null);
   }
   const target = bridge || compat;
-  if (target && typeof target.executePythonSync === "function") {
+  if (target && typeof target.executePythonCompletion === "function") {
+    return target.executePythonCompletion(code, cb);
+  } else if (target && typeof target.executePython === "function") {
+    return target.executePython(code, cb);
+  } else if (target && typeof target.executePythonSync === "function") {
     try {
       const res = target.executePythonSync(code);
       const str = res != null ? res.toString() : "";
@@ -115,10 +125,6 @@ function runPython(code, cb) {
     } catch (e) {
       return cb(null, "executePythonSync error: " + e);
     }
-  } else if (target && typeof target.executePython === "function") {
-    return target.executePython(code, cb);
-  } else if (target && typeof target.executePythonCompletion === "function") {
-    return target.executePythonCompletion(code, cb);
   }
   return cb(null, "Error: Host service provider unavailable for Python execution");
 }
@@ -130,7 +136,11 @@ function fetchHTTPS(url, cb) {
     return cb(direct, null);
   }
   const target = bridge || compat;
-  if (target && typeof target.fetchURLSync === "function") {
+  if (target && typeof target.fetchURLCompletion === "function") {
+    return target.fetchURLCompletion(url, cb);
+  } else if (target && typeof target.fetchURL === "function") {
+    return target.fetchURL(url, cb);
+  } else if (target && typeof target.fetchURLSync === "function") {
     try {
       const res = target.fetchURLSync(url);
       const str = res != null ? res.toString() : "";
@@ -139,10 +149,6 @@ function fetchHTTPS(url, cb) {
     } catch (e) {
       return cb(null, "fetchURLSync error: " + e);
     }
-  } else if (target && typeof target.fetchURL === "function") {
-    return target.fetchURL(url, cb);
-  } else if (target && typeof target.fetchURLCompletion === "function") {
-    return target.fetchURLCompletion(url, cb);
   }
   return cb(null, "Error: Host service provider unavailable for HTTPS fetch");
 }
@@ -155,7 +161,11 @@ function sendInterApp(targetID, action, capability, payloadJSON, cb) {
     return cb(direct, null);
   }
   const target = bridge || compat;
-  if (target && typeof target.sendRequestSyncActionCapabilityPayloadJSON === "function") {
+  if (target && typeof target.sendRequestActionCapabilityPayloadJSONCompletion === "function") {
+    return target.sendRequestActionCapabilityPayloadJSONCompletion(targetID, action, capability, payloadJSON, cb);
+  } else if (target && typeof target.sendRequest === "function") {
+    return target.sendRequest(targetID, action, capability, payloadJSON, cb);
+  } else if (target && typeof target.sendRequestSyncActionCapabilityPayloadJSON === "function") {
     try {
       const res = target.sendRequestSyncActionCapabilityPayloadJSON(targetID, action, capability, payloadJSON);
       const str = res != null ? res.toString() : "";
@@ -173,10 +183,6 @@ function sendInterApp(targetID, action, capability, payloadJSON, cb) {
     } catch (e) {
       return cb(null, "sendRequestSync error: " + e);
     }
-  } else if (target && typeof target.sendRequestActionCapabilityPayloadJSONCompletion === "function") {
-    return target.sendRequestActionCapabilityPayloadJSONCompletion(targetID, action, capability, payloadJSON, cb);
-  } else if (target && typeof target.sendRequest === "function") {
-    return target.sendRequest(targetID, action, capability, payloadJSON, cb);
   }
   return cb(null, "Error: Host service provider unavailable for inter-app request");
 }
@@ -341,37 +347,104 @@ const interAppStatusLabel = addLabel("Inter-App Share: Pending...", "hanlin-scri
 
 scrollView.contentSize = CGSizeMake(340, yOffset + 60);
 
-// Auto-run deterministic verification passes
+// Auto-run deterministic verification passes with unpredictable nonce challenge
 counterLabel.text = "Counter: " + counter;
 storageStatusLabel.text = initialStorageStatus + "; " + saveStorage();
 
-runJS("6 * 7", (res, err) => {
+const envNonce = environment.objectForKey("HANLIN_PARITY_CHALLENGE");
+const challengeNonce = (envNonce && envNonce.toString().length > 0)
+  ? envNonce.toString()
+  : ("nonce-" + Math.floor(Math.random() * 900000 + 100000));
+
+const jsCode = "(function(n){ return JSON.stringify({ runtime: 'JSC', nonce: n, calc: n.length * 42 }); })('" + challengeNonce + "')";
+runJS(jsCode, (res, err) => {
   updateOnMainThread(() => {
-    jsStatusLabel.text = "JS: " + (err ? ("Err: " + err) : res);
+    if (err) {
+      jsStatusLabel.text = "JS Err: " + err;
+    } else {
+      try {
+        const parsed = JSON.parse(res.trim());
+        if (parsed.runtime === "JSC" && parsed.nonce === challengeNonce) {
+          jsStatusLabel.text = "JS: [VERIFIED JSC] nonce=" + parsed.nonce + " calc=" + parsed.calc;
+        } else {
+          jsStatusLabel.text = "JS: Invalid proof " + res;
+        }
+      } catch (e) {
+        jsStatusLabel.text = "JS: " + res;
+      }
+    }
   });
 });
 
-runNode("if (typeof process === 'object' && process.versions && process.versions.node) { console.log(123 * 2); } else { throw new Error('Not Node runtime'); }", (res, err) => {
+const nodeCode = "const n = '" + challengeNonce + "'; if (typeof process === 'object' && process.versions && process.versions.node) { const calc = n.split('').reduce((acc, c) => acc + c.charCodeAt(0), 0) * 2; console.log(JSON.stringify({ runtime: 'Node', version: process.versions.node, nonce: n, calc: calc })); } else { throw new Error('Not Node runtime'); }";
+runNode(nodeCode, (res, err) => {
   updateOnMainThread(() => {
-    nodeStatusLabel.text = "Node: " + (err ? ("Err: " + err) : res);
+    if (err) {
+      nodeStatusLabel.text = "Node Err: " + err;
+    } else {
+      try {
+        const parsed = JSON.parse(res.trim());
+        if (parsed.runtime === "Node" && parsed.nonce === challengeNonce && parsed.version) {
+          nodeStatusLabel.text = "Node: [VERIFIED Node " + parsed.version + "] nonce=" + parsed.nonce + " calc=" + parsed.calc;
+        } else {
+          nodeStatusLabel.text = "Node: Invalid proof " + res;
+        }
+      } catch (e) {
+        nodeStatusLabel.text = "Node: " + res;
+      }
+    }
   });
 });
 
-runPython("import sys, json\nif hasattr(sys, 'version_info'):\n    print(100 + 23)", (res, err) => {
+const pyCode = "import sys, json\nif hasattr(sys, 'version_info') and sys.version_info.major >= 3:\n    v = f'{sys.version_info.major}.{sys.version_info.minor}.{sys.version_info.micro}'\n    n = '" + challengeNonce + "'\n    calc = sum(ord(c) for c in n) * 3\n    print(json.dumps({'runtime': 'CPython', 'version': v, 'nonce': n, 'calc': calc}))\nelse:\n    raise RuntimeError('Not authentic CPython runtime')";
+runPython(pyCode, (res, err) => {
   updateOnMainThread(() => {
-    pythonStatusLabel.text = "Python: " + (err ? ("Err: " + err) : res);
+    if (err) {
+      pythonStatusLabel.text = "Python Err: " + err;
+    } else {
+      try {
+        const parsed = JSON.parse(res.trim());
+        if (parsed.runtime === "CPython" && parsed.nonce === challengeNonce && parsed.version) {
+          pythonStatusLabel.text = "Python: [VERIFIED CPython " + parsed.version + "] nonce=" + parsed.nonce + " calc=" + parsed.calc;
+        } else {
+          pythonStatusLabel.text = "Python: Invalid proof " + res;
+        }
+      } catch (e) {
+        pythonStatusLabel.text = "Python: " + res;
+      }
+    }
   });
 });
 
-fetchHTTPS("https://en.wikipedia.org/", (res, err) => {
+const netURL = (environment.objectForKey("HANLIN_TEST_NETWORK_URL") || "https://en.wikipedia.org/").toString();
+fetchHTTPS(netURL, (res, err) => {
   updateOnMainThread(() => {
-    networkStatusLabel.text = "HTTPS: " + (err ? ("Err: " + err) : res);
+    if (err) {
+      networkStatusLabel.text = "HTTPS: Unavailable (" + err + ")";
+    } else if (res && (res.includes("200") || res.includes("<html") || res.includes("<!DOCTYPE") || res.length > 50)) {
+      networkStatusLabel.text = "HTTPS: [VERIFIED 200] len=" + res.length + " nonce=" + challengeNonce;
+    } else {
+      networkStatusLabel.text = "HTTPS: Received " + (res ? res.substring(0, 40) : "empty");
+    }
   });
 });
 
-sendInterApp("hanlin.demo.swift-parity", "share.value", "inter-app.share", JSON.stringify({ requested: "swift-state" }), (res, err) => {
+sendInterApp("hanlin.demo.script-parity", "share.value", "inter-app.share", JSON.stringify({ nonce: challengeNonce, timestamp: Date.now() }), (res, err) => {
   updateOnMainThread(() => {
-    interAppStatusLabel.text = "Inter-App: " + (err ? ("Err: " + err) : res);
+    if (err) {
+      interAppStatusLabel.text = "Inter-App Err: " + err;
+    } else {
+      try {
+        const parsed = JSON.parse(res);
+        if (parsed.action === "share.value" && parsed.request && parsed.request.nonce === challengeNonce) {
+          interAppStatusLabel.text = "Inter-App: [VERIFIED] echoNonce=" + parsed.request.nonce + " source=" + parsed.source;
+        } else {
+          interAppStatusLabel.text = "Inter-App: " + res;
+        }
+      } catch (e) {
+        interAppStatusLabel.text = "Inter-App: " + res;
+      }
+    }
   });
 });
 

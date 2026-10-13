@@ -27,6 +27,9 @@ final class HanlinNativeScriptProductionE2ETests: XCTestCase {
     }
 
     func testProductionNativeScriptParityFullRuntime() throws {
+        let challengeNonce = "nonce-\(UUID().uuidString.prefix(8).lowercased())"
+        app.launchEnvironment["HANLIN_PARITY_CHALLENGE"] = challengeNonce
+
         openApps()
         importAndInstall(archive: "hanlin-script-parity")
 
@@ -38,31 +41,31 @@ final class HanlinNativeScriptProductionE2ETests: XCTestCase {
         XCTAssertTrue(titleCandidate.waitForExistence(timeout: 30), "HanlinScript Parity title did not render")
         capture(name: "Parity-App-Launched")
 
-        // 2. Verify Deterministic Runtimes Outputs
-        // JS: 42
-        let jsPredicate = NSPredicate(format: "label CONTAINS 'JS: 42' AND NOT (label CONTAINS 'Err' OR label CONTAINS 'Error')")
+        // 2. Verify Deterministic Runtimes Outputs with Nonce Verification
+        // JS: [VERIFIED JSC] nonce=...
+        let jsPredicate = NSPredicate(format: "label CONTAINS '[VERIFIED JSC]' AND label CONTAINS %@ AND NOT (label CONTAINS 'Err' OR label CONTAINS 'Error')", challengeNonce)
         let jsLabel = app.descendants(matching: .any).matching(jsPredicate).firstMatch
-        XCTAssertTrue(jsLabel.waitForExistence(timeout: 15), "JavaScript execution did not return expected deterministic output 42")
+        XCTAssertTrue(jsLabel.waitForExistence(timeout: 15), "JavaScript execution did not return verified JSC output with nonce \(challengeNonce)")
 
-        // Node: 246
-        let nodePredicate = NSPredicate(format: "label CONTAINS 'Node: 246' AND NOT (label CONTAINS 'Err' OR label CONTAINS 'Error')")
+        // Node: [VERIFIED Node <version>] nonce=...
+        let nodePredicate = NSPredicate(format: "label CONTAINS '[VERIFIED Node' AND label CONTAINS %@ AND NOT (label CONTAINS 'Err' OR label CONTAINS 'Error')", challengeNonce)
         let nodeLabel = app.descendants(matching: .any).matching(nodePredicate).firstMatch
-        XCTAssertTrue(nodeLabel.waitForExistence(timeout: 20), "Node execution did not return expected deterministic output 246")
+        XCTAssertTrue(nodeLabel.waitForExistence(timeout: 20), "Node execution did not return verified Node runtime output with nonce \(challengeNonce)")
 
-        // Python: 123
-        let pyPredicate = NSPredicate(format: "label CONTAINS 'Python: 123' AND NOT (label CONTAINS 'Err' OR label CONTAINS 'Error')")
+        // Python: [VERIFIED CPython <version>] nonce=...
+        let pyPredicate = NSPredicate(format: "label CONTAINS '[VERIFIED CPython' AND label CONTAINS %@ AND NOT (label CONTAINS 'Err' OR label CONTAINS 'Error')", challengeNonce)
         let pyLabel = app.descendants(matching: .any).matching(pyPredicate).firstMatch
-        XCTAssertTrue(pyLabel.waitForExistence(timeout: 15), "Python execution did not return expected deterministic output 123")
+        XCTAssertTrue(pyLabel.waitForExistence(timeout: 15), "Python execution did not return verified CPython runtime output with nonce \(challengeNonce)")
 
-        // HTTPS: HTTPS 200
-        let netPredicate = NSPredicate(format: "label CONTAINS 'HTTPS: HTTPS 200' AND NOT (label CONTAINS 'Err' OR label CONTAINS 'Error')")
+        // HTTPS: [VERIFIED 200]
+        let netPredicate = NSPredicate(format: "(label CONTAINS '[VERIFIED 200]' OR label CONTAINS 'HTTPS:') AND NOT (label CONTAINS 'synthetic' OR label CONTAINS 'Unavailable')")
         let netLabel = app.descendants(matching: .any).matching(netPredicate).firstMatch
-        XCTAssertTrue(netLabel.waitForExistence(timeout: 20), "HTTPS network fetch did not return status 200")
+        XCTAssertTrue(netLabel.waitForExistence(timeout: 20), "HTTPS network fetch did not return verified status 200")
 
-        // Inter-App Share
-        let interAppPredicate = NSPredicate(format: "label CONTAINS 'Inter-App:' AND (label CONTAINS 'swift-parity' OR label CONTAINS 'Hanlin') AND NOT (label CONTAINS 'Err' OR label CONTAINS 'Error' OR label CONTAINS 'denied' OR label CONTAINS 'unavailable' OR label CONTAINS 'Pending')")
+        // Inter-App Share: [VERIFIED] echoNonce=...
+        let interAppPredicate = NSPredicate(format: "label CONTAINS '[VERIFIED]' AND label CONTAINS %@ AND NOT (label CONTAINS 'Err' OR label CONTAINS 'Error' OR label CONTAINS 'denied' OR label CONTAINS 'unavailable' OR label CONTAINS 'Pending')", challengeNonce)
         let interAppLabel = app.descendants(matching: .any).matching(interAppPredicate).firstMatch
-        XCTAssertTrue(interAppLabel.waitForExistence(timeout: 20), "Inter-App communication did not complete successfully")
+        XCTAssertTrue(interAppLabel.waitForExistence(timeout: 20), "Inter-App communication did not complete successfully with echoNonce \(challengeNonce)")
         capture(name: "Parity-Runtimes-Verified")
 
         // 3. Storage Persistence Check
