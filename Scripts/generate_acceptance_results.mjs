@@ -266,7 +266,6 @@ export function verifyDependencyClosure(originSha, targetSha, testSuiteOrId = ''
   const globalSharedDependencies = [
     'Package.resolved',
     'package-lock.json',
-    'AI_HLY.xcodeproj',
     'AI-HLY-Info.plist',
     'AI_HLY/AI_HLY.entitlements',
     'Config.xcconfig'

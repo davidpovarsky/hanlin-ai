@@ -229,12 +229,20 @@
         {
           "layer": "I",
           "status": "NOT_RUN",
-          "reason": "Previous mapping tested security-threat rejection; positive import of root ZIP with SKILL.md, hanlin.json, and agents/openai.yaml needs dedicated functional test."
+          "reason": "Dedicated semantic test implemented in MasterScenarioSemanticAcceptanceTests.zip01RootZIPImportWithSkillHanlinAndAgentConfig(); pending simulator run.",
+          "testTarget": "AI_HLYTests",
+          "testSuite": "MasterScenarioSemanticAcceptanceTests",
+          "exactTestName": "MasterScenarioSemanticAcceptanceTests/zip01RootZIPImportWithSkillHanlinAndAgentConfig()",
+          "verifierKind": "xctest"
         },
         {
           "layer": "S",
           "status": "NOT_RUN",
-          "reason": "Previous mapping tested rollback on failed replacement; positive import of root ZIP with preview/install/refresh/relaunch needs dedicated functional test."
+          "reason": "Dedicated semantic test implemented in MasterScenarioSemanticAcceptanceTests.zip01RootZIPImportWithSkillHanlinAndAgentConfig(); pending simulator run.",
+          "testTarget": "AI_HLYTests",
+          "testSuite": "MasterScenarioSemanticAcceptanceTests",
+          "exactTestName": "MasterScenarioSemanticAcceptanceTests/zip01RootZIPImportWithSkillHanlinAndAgentConfig()",
+          "verifierKind": "xctest"
         },
         {
           "layer": "D",
@@ -260,12 +268,20 @@
         {
           "layer": "I",
           "status": "NOT_RUN",
-          "reason": "Previous mapping tested archive staging without execution; equivalent wrapped ZIP under fixture-runtime/ needs dedicated functional test."
+          "reason": "Dedicated semantic test implemented in MasterScenarioSemanticAcceptanceTests.zip02WrappedZIPImportUnderFixtureRuntime(); pending simulator run.",
+          "testTarget": "AI_HLYTests",
+          "testSuite": "MasterScenarioSemanticAcceptanceTests",
+          "exactTestName": "MasterScenarioSemanticAcceptanceTests/zip02WrappedZIPImportUnderFixtureRuntime()",
+          "verifierKind": "xctest"
         },
         {
           "layer": "S",
           "status": "NOT_RUN",
-          "reason": "Previous mapping tested symlink escape rejection; equivalent wrapped ZIP import needs dedicated functional test."
+          "reason": "Dedicated semantic test implemented in MasterScenarioSemanticAcceptanceTests.zip02WrappedZIPImportUnderFixtureRuntime(); pending simulator run.",
+          "testTarget": "AI_HLYTests",
+          "testSuite": "MasterScenarioSemanticAcceptanceTests",
+          "exactTestName": "MasterScenarioSemanticAcceptanceTests/zip02WrappedZIPImportUnderFixtureRuntime()",
+          "verifierKind": "xctest"
         },
         {
           "layer": "D",
@@ -443,12 +459,20 @@
         {
           "layer": "I",
           "status": "NOT_RUN",
-          "reason": "Previous mapping tested unsafe resource paths; large archive (>25MiB, expanded >64MiB) with end marker needs dedicated functional test."
+          "reason": "Dedicated semantic test implemented in MasterScenarioSemanticAcceptanceTests.zip08LargeArchiveOver25MBExpanded64MBWithMarker(); pending simulator run.",
+          "testTarget": "AI_HLYTests",
+          "testSuite": "MasterScenarioSemanticAcceptanceTests",
+          "exactTestName": "MasterScenarioSemanticAcceptanceTests/zip08LargeArchiveOver25MBExpanded64MBWithMarker()",
+          "verifierKind": "xctest"
         },
         {
           "layer": "S",
           "status": "NOT_RUN",
-          "reason": "Previous mapping tested direct Markdown skill install; large archive memory bounds and cancellation need dedicated functional test."
+          "reason": "Dedicated semantic test implemented in MasterScenarioSemanticAcceptanceTests.zip08LargeArchiveOver25MBExpanded64MBWithMarker(); pending simulator run.",
+          "testTarget": "AI_HLYTests",
+          "testSuite": "MasterScenarioSemanticAcceptanceTests",
+          "exactTestName": "MasterScenarioSemanticAcceptanceTests/zip08LargeArchiveOver25MBExpanded64MBWithMarker()",
+          "verifierKind": "xctest"
         }
       ]
     },
@@ -2428,12 +2452,20 @@
         {
           "layer": "I",
           "status": "NOT_RUN",
-          "reason": "Previous mapping tested namespaced VFS security; 3-runtimes interoperability (Python write, Node append, Shell read) needs dedicated functional test."
+          "reason": "Dedicated semantic test implemented in MasterScenarioSemanticAcceptanceTests.fs01PythonNodeShellSharedWorkspace(); pending simulator run.",
+          "testTarget": "AI_HLYTests",
+          "testSuite": "MasterScenarioSemanticAcceptanceTests",
+          "exactTestName": "MasterScenarioSemanticAcceptanceTests/fs01PythonNodeShellSharedWorkspace()",
+          "verifierKind": "xctest"
         },
         {
           "layer": "S",
           "status": "NOT_RUN",
-          "reason": "Previous mapping tested path traversal rejection; shared workspace/cwd across Python, Node, and Shell needs dedicated functional test."
+          "reason": "Dedicated semantic test implemented in MasterScenarioSemanticAcceptanceTests.fs01PythonNodeShellSharedWorkspace(); pending simulator run.",
+          "testTarget": "AI_HLYTests",
+          "testSuite": "MasterScenarioSemanticAcceptanceTests",
+          "exactTestName": "MasterScenarioSemanticAcceptanceTests/fs01PythonNodeShellSharedWorkspace()",
+          "verifierKind": "xctest"
         },
         {
           "layer": "D",
@@ -3018,12 +3050,20 @@
         {
           "layer": "I",
           "status": "NOT_RUN",
-          "reason": "Previous mapping tested argument handling; dynamic command catalog reconciliation without exact-23 assertion needs dedicated functional test."
+          "reason": "Dedicated semantic test implemented in MasterScenarioSemanticAcceptanceTests.sh01DynamicCommandsReconciliationWithoutExact23(); pending simulator run.",
+          "testTarget": "AI_HLYTests",
+          "testSuite": "MasterScenarioSemanticAcceptanceTests",
+          "exactTestName": "MasterScenarioSemanticAcceptanceTests/sh01DynamicCommandsReconciliationWithoutExact23()",
+          "verifierKind": "xctest"
         },
         {
           "layer": "S",
           "status": "NOT_RUN",
-          "reason": "Previous mapping tested shell schema constraints; dynamic command catalog reconciliation without exact-23 assertion needs dedicated functional test."
+          "reason": "Dedicated semantic test implemented in MasterScenarioSemanticAcceptanceTests.sh01DynamicCommandsReconciliationWithoutExact23(); pending simulator run.",
+          "testTarget": "AI_HLYTests",
+          "testSuite": "MasterScenarioSemanticAcceptanceTests",
+          "exactTestName": "MasterScenarioSemanticAcceptanceTests/sh01DynamicCommandsReconciliationWithoutExact23()",
+          "verifierKind": "xctest"
         },
         {
           "layer": "D",
@@ -4362,12 +4402,20 @@
         {
           "layer": "I",
           "status": "NOT_RUN",
-          "reason": "Previous mapping tested extra argument non-fatal error; awk '{print $1}' sample.txt output execution needs dedicated functional test."
+          "reason": "Dedicated semantic test implemented in MasterScenarioSemanticAcceptanceTests.cmd01AwkExecutionWithPrintArgvSampleText(); pending simulator run.",
+          "testTarget": "AI_HLYTests",
+          "testSuite": "MasterScenarioSemanticAcceptanceTests",
+          "exactTestName": "MasterScenarioSemanticAcceptanceTests/cmd01AwkExecutionWithPrintArgvSampleText()",
+          "verifierKind": "xctest"
         },
         {
           "layer": "S",
           "status": "NOT_RUN",
-          "reason": "Previous mapping tested schema parameter advertising; awk program execution and exit code 0 need dedicated functional test."
+          "reason": "Dedicated semantic test implemented in MasterScenarioSemanticAcceptanceTests.cmd01AwkExecutionWithPrintArgvSampleText(); pending simulator run.",
+          "testTarget": "AI_HLYTests",
+          "testSuite": "MasterScenarioSemanticAcceptanceTests",
+          "exactTestName": "MasterScenarioSemanticAcceptanceTests/cmd01AwkExecutionWithPrintArgvSampleText()",
+          "verifierKind": "xctest"
         },
         {
           "layer": "D",
@@ -5714,12 +5762,20 @@
         {
           "layer": "I",
           "status": "NOT_RUN",
-          "reason": "Previous mapping tested dynamic python tool exposure; package distribution name differing from import name needs dedicated functional test."
+          "reason": "Dedicated semantic test implemented in MasterScenarioSemanticAcceptanceTests.py02DistributionNameDiffersFromImportName(); pending simulator run.",
+          "testTarget": "AI_HLYTests",
+          "testSuite": "MasterScenarioSemanticAcceptanceTests",
+          "exactTestName": "MasterScenarioSemanticAcceptanceTests/py02DistributionNameDiffersFromImportName()",
+          "verifierKind": "xctest"
         },
         {
           "layer": "S",
           "status": "NOT_RUN",
-          "reason": "Previous mapping tested unsupported input rejection; package distribution name differing from import name needs dedicated functional test."
+          "reason": "Dedicated semantic test implemented in MasterScenarioSemanticAcceptanceTests.py02DistributionNameDiffersFromImportName(); pending simulator run.",
+          "testTarget": "AI_HLYTests",
+          "testSuite": "MasterScenarioSemanticAcceptanceTests",
+          "exactTestName": "MasterScenarioSemanticAcceptanceTests/py02DistributionNameDiffersFromImportName()",
+          "verifierKind": "xctest"
         }
       ]
     },
@@ -13651,11 +13707,11 @@
           "verifierKind": "reused_verified_pass",
           "status": "REUSED_VERIFIED_PASS",
           "evidenceOriginRunId": "38234823425",
-          "evidenceOriginSHA": "771b2d0fa3b827103a891cf2c1a63cbf99532fe5",
+          "evidenceOriginSHA": "0095b6441e8968d4200e8cd8acf42f61b46b7c59",
           "unaffectedProof": "verified_clean_dependency_closure",
           "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/evidence/simulator-downstream-unit-test-results.json",
           "totalPassedTests": 260,
-          "reason": "260 passed downstream unit and integration tests authentic in run 38234823425; unaffected by NativeScript capability fix."
+          "reason": "260 passed downstream unit and integration tests authentic in run 38234823425 (commit 0095b6441e8968d4200e8cd8acf42f61b46b7c59); unaffected by NativeScript capability fix."
         }
       ]
     },
@@ -13672,6 +13728,7 @@
       "obligations": [
         {
           "layer": "UI",
+          "uiFamily": "nativescript",
           "verifierKind": "xctest_ui",
           "testTarget": "AI_HLYUITests",
           "testSuite": "HanlinNativeScriptProductionE2ETests",
@@ -13680,6 +13737,66 @@
           "workflowJobId": "115038921332",
           "status": "PASSED",
           "reason": "Executed and passed in 106.184s in GitHub Actions run 38317896632 job 115038921332 with zero failures."
+        },
+        {
+          "layer": "UI",
+          "uiFamily": "skills",
+          "verifierKind": "xctest_ui",
+          "testTarget": "AI_HLYUITests",
+          "testSuite": "HanlinSkillCenterUITests",
+          "exactTestName": "HanlinSkillCenterUITests/testSkillCenterCatalogAndInstallationFlow()",
+          "status": "NOT_RUN",
+          "reason": "Skills UI suite pending focused or aggregate execution on final implementation commit."
+        },
+        {
+          "layer": "UI",
+          "uiFamily": "commands_install",
+          "verifierKind": "xctest_ui",
+          "testTarget": "AI_HLYUITests",
+          "testSuite": "HanlinRuntimeInstallationUITests",
+          "exactTestName": "HanlinRuntimeInstallationUITests/testMCPServerInstallationUIWorkflowAndFailure()",
+          "status": "NOT_RUN",
+          "reason": "Runtime installation UI suite pending focused or aggregate execution on final implementation commit."
+        },
+        {
+          "layer": "UI",
+          "uiFamily": "script_ui",
+          "verifierKind": "xctest_ui",
+          "testTarget": "AI_HLYUITests",
+          "testSuite": "HanlinScriptUIProductionE2ETests",
+          "exactTestName": "HanlinScriptUIProductionE2ETests/testScriptUIRenderingAndInteraction()",
+          "status": "NOT_RUN",
+          "reason": "ScriptUI suite pending focused or aggregate execution on final implementation commit."
+        },
+        {
+          "layer": "UI",
+          "uiFamily": "expo",
+          "verifierKind": "xctest_ui",
+          "testTarget": "AI_HLYUITests",
+          "testSuite": "HanlinExpoProductionE2ETests",
+          "exactTestName": "HanlinExpoProductionE2ETests/testProductionExpoSwiftUIProbeEndToEnd()",
+          "status": "NOT_RUN",
+          "reason": "Expo production UI suite pending focused or aggregate execution on final implementation commit."
+        },
+        {
+          "layer": "UI",
+          "uiFamily": "agent_conversations",
+          "verifierKind": "xctest_ui",
+          "testTarget": "AI_HLYUITests",
+          "testSuite": "AgentRuntimeConversationUITests",
+          "exactTestName": "AgentRuntimeConversationUITests/testAgentRuntimeConversationStreamFlow()",
+          "status": "NOT_RUN",
+          "reason": "Agent conversation UI suite pending focused or aggregate execution on final implementation commit."
+        },
+        {
+          "layer": "UI",
+          "uiFamily": "rich_chat",
+          "verifierKind": "xctest_ui",
+          "testTarget": "AI_HLYUITests",
+          "testSuite": "HanlinPrimaryNavigationSmokeUITests",
+          "exactTestName": "HanlinPrimaryNavigationSmokeUITests/testPrimaryNavigationTabsAndRichChat()",
+          "status": "NOT_RUN",
+          "reason": "Navigation and rich chat UI suite pending focused or aggregate execution on final implementation commit."
         }
       ]
     },
