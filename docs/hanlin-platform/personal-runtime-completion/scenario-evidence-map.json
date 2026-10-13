@@ -26,10 +26,10 @@
         {
           "layer": "B",
           "testTarget": "ReleaseCompilerAndPackager",
-          "exactTestName": "xcodebuild archive",
-          "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/evidence/build-ios26-summary.txt",
+          "exactTestName": "Audit Contract: AUD-01",
+          "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/correction-audit.md",
           "expectedTerminalState": "Passed",
-          "verifierKind": "build_command"
+          "verifierKind": "repository_audit"
         }
       ]
     },
@@ -109,10 +109,10 @@
         {
           "layer": "B",
           "testTarget": "ReleaseCompilerAndPackager",
-          "exactTestName": "xcodebuild archive",
-          "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/evidence/build-ios26-summary.txt",
+          "exactTestName": "Audit Contract: AUD-04",
+          "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/correction-audit.md",
           "expectedTerminalState": "Passed",
-          "verifierKind": "build_command"
+          "verifierKind": "repository_audit"
         }
       ]
     },
@@ -176,10 +176,10 @@
         {
           "layer": "B",
           "testTarget": "ReleaseCompilerAndPackager",
-          "exactTestName": "xcodebuild archive",
-          "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/evidence/build-ios26-summary.txt",
+          "exactTestName": "Audit Contract: AUD-07",
+          "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/correction-audit.md",
           "expectedTerminalState": "Passed",
-          "verifierKind": "build_command"
+          "verifierKind": "repository_audit"
         }
       ]
     },
@@ -206,10 +206,10 @@
         {
           "layer": "B",
           "testTarget": "ReleaseCompilerAndPackager",
-          "exactTestName": "xcodebuild archive",
-          "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/evidence/build-ios26-summary.txt",
+          "exactTestName": "Audit Contract: AUD-08",
+          "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/correction-audit.md",
           "expectedTerminalState": "Passed",
-          "verifierKind": "build_command"
+          "verifierKind": "repository_audit"
         }
       ]
     },
@@ -229,7 +229,7 @@
         {
           "layer": "I",
           "status": "NOT_RUN",
-          "reason": "Dedicated semantic test implemented in MasterScenarioSemanticAcceptanceTests.zip01RootZIPImportWithSkillHanlinAndAgentConfig(); pending simulator run.",
+          "reason": "Semantically hardened on target HEAD; pending focused test execution.",
           "testTarget": "AI_HLYTests",
           "testSuite": "MasterScenarioSemanticAcceptanceTests",
           "exactTestName": "MasterScenarioSemanticAcceptanceTests/zip01RootZIPImportWithSkillHanlinAndAgentConfig()",
@@ -238,7 +238,7 @@
         {
           "layer": "S",
           "status": "NOT_RUN",
-          "reason": "Dedicated semantic test implemented in MasterScenarioSemanticAcceptanceTests.zip01RootZIPImportWithSkillHanlinAndAgentConfig(); pending simulator run.",
+          "reason": "Semantically hardened on target HEAD; pending focused test execution.",
           "testTarget": "AI_HLYTests",
           "testSuite": "MasterScenarioSemanticAcceptanceTests",
           "exactTestName": "MasterScenarioSemanticAcceptanceTests/zip01RootZIPImportWithSkillHanlinAndAgentConfig()",
@@ -246,8 +246,8 @@
         },
         {
           "layer": "D",
-          "status": "NOT_RUN_DEVICE",
-          "reason": "Requires physical Apple iOS device connected with active Apple Developer provisioning profile (LIM-04).",
+          "status": "NOT_RUN",
+          "reason": "Semantically hardened on target HEAD; pending focused test execution.",
           "verifierKind": "device"
         }
       ]
@@ -268,7 +268,7 @@
         {
           "layer": "I",
           "status": "NOT_RUN",
-          "reason": "Dedicated semantic test implemented in MasterScenarioSemanticAcceptanceTests.zip02WrappedZIPImportUnderFixtureRuntime(); pending simulator run.",
+          "reason": "Semantically hardened on target HEAD; pending focused test execution.",
           "testTarget": "AI_HLYTests",
           "testSuite": "MasterScenarioSemanticAcceptanceTests",
           "exactTestName": "MasterScenarioSemanticAcceptanceTests/zip02WrappedZIPImportUnderFixtureRuntime()",
@@ -277,7 +277,7 @@
         {
           "layer": "S",
           "status": "NOT_RUN",
-          "reason": "Dedicated semantic test implemented in MasterScenarioSemanticAcceptanceTests.zip02WrappedZIPImportUnderFixtureRuntime(); pending simulator run.",
+          "reason": "Semantically hardened on target HEAD; pending focused test execution.",
           "testTarget": "AI_HLYTests",
           "testSuite": "MasterScenarioSemanticAcceptanceTests",
           "exactTestName": "MasterScenarioSemanticAcceptanceTests/zip02WrappedZIPImportUnderFixtureRuntime()",
@@ -285,8 +285,8 @@
         },
         {
           "layer": "D",
-          "status": "NOT_RUN_DEVICE",
-          "reason": "Requires physical Apple iOS device connected with active Apple Developer provisioning profile (LIM-04).",
+          "status": "NOT_RUN",
+          "reason": "Semantically hardened on target HEAD; pending focused test execution.",
           "verifierKind": "device"
         }
       ]
@@ -459,7 +459,7 @@
         {
           "layer": "I",
           "status": "NOT_RUN",
-          "reason": "Dedicated semantic test implemented in MasterScenarioSemanticAcceptanceTests.zip08LargeArchiveOver25MBExpanded64MBWithMarker(); pending simulator run.",
+          "reason": "Semantically hardened on target HEAD; pending focused test execution.",
           "testTarget": "AI_HLYTests",
           "testSuite": "MasterScenarioSemanticAcceptanceTests",
           "exactTestName": "MasterScenarioSemanticAcceptanceTests/zip08LargeArchiveOver25MBExpanded64MBWithMarker()",
@@ -468,7 +468,7 @@
         {
           "layer": "S",
           "status": "NOT_RUN",
-          "reason": "Dedicated semantic test implemented in MasterScenarioSemanticAcceptanceTests.zip08LargeArchiveOver25MBExpanded64MBWithMarker(); pending simulator run.",
+          "reason": "Semantically hardened on target HEAD; pending focused test execution.",
           "testTarget": "AI_HLYTests",
           "testSuite": "MasterScenarioSemanticAcceptanceTests",
           "exactTestName": "MasterScenarioSemanticAcceptanceTests/zip08LargeArchiveOver25MBExpanded64MBWithMarker()",
@@ -2452,7 +2452,7 @@
         {
           "layer": "I",
           "status": "NOT_RUN",
-          "reason": "Dedicated semantic test implemented in MasterScenarioSemanticAcceptanceTests.fs01PythonNodeShellSharedWorkspace(); pending simulator run.",
+          "reason": "Semantically hardened on target HEAD; pending focused test execution.",
           "testTarget": "AI_HLYTests",
           "testSuite": "MasterScenarioSemanticAcceptanceTests",
           "exactTestName": "MasterScenarioSemanticAcceptanceTests/fs01PythonNodeShellSharedWorkspace()",
@@ -2461,7 +2461,7 @@
         {
           "layer": "S",
           "status": "NOT_RUN",
-          "reason": "Dedicated semantic test implemented in MasterScenarioSemanticAcceptanceTests.fs01PythonNodeShellSharedWorkspace(); pending simulator run.",
+          "reason": "Semantically hardened on target HEAD; pending focused test execution.",
           "testTarget": "AI_HLYTests",
           "testSuite": "MasterScenarioSemanticAcceptanceTests",
           "exactTestName": "MasterScenarioSemanticAcceptanceTests/fs01PythonNodeShellSharedWorkspace()",
@@ -2469,8 +2469,8 @@
         },
         {
           "layer": "D",
-          "status": "NOT_RUN_DEVICE",
-          "reason": "Requires physical Apple iOS device connected with active Apple Developer provisioning profile (LIM-04).",
+          "status": "NOT_RUN",
+          "reason": "Semantically hardened on target HEAD; pending focused test execution.",
           "verifierKind": "device"
         }
       ]
@@ -3050,7 +3050,7 @@
         {
           "layer": "I",
           "status": "NOT_RUN",
-          "reason": "Dedicated semantic test implemented in MasterScenarioSemanticAcceptanceTests.sh01DynamicCommandsReconciliationWithoutExact23(); pending simulator run.",
+          "reason": "Semantically hardened on target HEAD; pending focused test execution.",
           "testTarget": "AI_HLYTests",
           "testSuite": "MasterScenarioSemanticAcceptanceTests",
           "exactTestName": "MasterScenarioSemanticAcceptanceTests/sh01DynamicCommandsReconciliationWithoutExact23()",
@@ -3059,7 +3059,7 @@
         {
           "layer": "S",
           "status": "NOT_RUN",
-          "reason": "Dedicated semantic test implemented in MasterScenarioSemanticAcceptanceTests.sh01DynamicCommandsReconciliationWithoutExact23(); pending simulator run.",
+          "reason": "Semantically hardened on target HEAD; pending focused test execution.",
           "testTarget": "AI_HLYTests",
           "testSuite": "MasterScenarioSemanticAcceptanceTests",
           "exactTestName": "MasterScenarioSemanticAcceptanceTests/sh01DynamicCommandsReconciliationWithoutExact23()",
@@ -3067,8 +3067,8 @@
         },
         {
           "layer": "D",
-          "status": "NOT_RUN_DEVICE",
-          "reason": "Requires physical Apple iOS device connected with active Apple Developer provisioning profile (LIM-04).",
+          "status": "NOT_RUN",
+          "reason": "Semantically hardened on target HEAD; pending focused test execution.",
           "verifierKind": "device"
         }
       ]
@@ -4402,7 +4402,7 @@
         {
           "layer": "I",
           "status": "NOT_RUN",
-          "reason": "Dedicated semantic test implemented in MasterScenarioSemanticAcceptanceTests.cmd01AwkExecutionWithPrintArgvSampleText(); pending simulator run.",
+          "reason": "Semantically hardened on target HEAD; pending focused test execution.",
           "testTarget": "AI_HLYTests",
           "testSuite": "MasterScenarioSemanticAcceptanceTests",
           "exactTestName": "MasterScenarioSemanticAcceptanceTests/cmd01AwkExecutionWithPrintArgvSampleText()",
@@ -4411,7 +4411,7 @@
         {
           "layer": "S",
           "status": "NOT_RUN",
-          "reason": "Dedicated semantic test implemented in MasterScenarioSemanticAcceptanceTests.cmd01AwkExecutionWithPrintArgvSampleText(); pending simulator run.",
+          "reason": "Semantically hardened on target HEAD; pending focused test execution.",
           "testTarget": "AI_HLYTests",
           "testSuite": "MasterScenarioSemanticAcceptanceTests",
           "exactTestName": "MasterScenarioSemanticAcceptanceTests/cmd01AwkExecutionWithPrintArgvSampleText()",
@@ -4419,8 +4419,8 @@
         },
         {
           "layer": "D",
-          "status": "NOT_RUN_DEVICE",
-          "reason": "Requires physical Apple iOS device connected with active Apple Developer provisioning profile (LIM-04).",
+          "status": "NOT_RUN",
+          "reason": "Semantically hardened on target HEAD; pending focused test execution.",
           "verifierKind": "device"
         }
       ]
@@ -5762,7 +5762,7 @@
         {
           "layer": "I",
           "status": "NOT_RUN",
-          "reason": "Dedicated semantic test implemented in MasterScenarioSemanticAcceptanceTests.py02DistributionNameDiffersFromImportName(); pending simulator run.",
+          "reason": "Semantically hardened on target HEAD; pending focused test execution.",
           "testTarget": "AI_HLYTests",
           "testSuite": "MasterScenarioSemanticAcceptanceTests",
           "exactTestName": "MasterScenarioSemanticAcceptanceTests/py02DistributionNameDiffersFromImportName()",
@@ -5771,7 +5771,7 @@
         {
           "layer": "S",
           "status": "NOT_RUN",
-          "reason": "Dedicated semantic test implemented in MasterScenarioSemanticAcceptanceTests.py02DistributionNameDiffersFromImportName(); pending simulator run.",
+          "reason": "Semantically hardened on target HEAD; pending focused test execution.",
           "testTarget": "AI_HLYTests",
           "testSuite": "MasterScenarioSemanticAcceptanceTests",
           "exactTestName": "MasterScenarioSemanticAcceptanceTests/py02DistributionNameDiffersFromImportName()",
@@ -9563,7 +9563,9 @@
           "exactTestName": "xcodebuild archive",
           "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/evidence/build-ios26-summary.txt",
           "expectedTerminalState": "Passed",
-          "verifierKind": "build_command"
+          "verifierKind": "build_command",
+          "status": "NOT_RUN",
+          "reason": "Xcode build pending explicit operator CI dispatch."
         },
         {
           "layer": "S",
@@ -9593,7 +9595,9 @@
           "exactTestName": "xcodebuild archive",
           "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/evidence/build-ios26-summary.txt",
           "expectedTerminalState": "Passed",
-          "verifierKind": "build_command"
+          "verifierKind": "build_command",
+          "status": "NOT_RUN",
+          "reason": "Xcode build pending explicit operator CI dispatch."
         }
       ]
     },
@@ -9755,10 +9759,10 @@
         {
           "layer": "B",
           "testTarget": "ReleaseCompilerAndPackager",
-          "exactTestName": "xcodebuild archive",
-          "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/evidence/build-ios26-summary.txt",
+          "exactTestName": "Audit Contract: BUILD-10",
+          "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/correction-audit.md",
           "expectedTerminalState": "Passed",
-          "verifierKind": "build_command"
+          "verifierKind": "repository_audit"
         }
       ]
     },
@@ -10932,10 +10936,10 @@
         {
           "layer": "B",
           "testTarget": "ReleaseCompilerAndPackager",
-          "exactTestName": "xcodebuild archive",
-          "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/evidence/build-ios26-summary.txt",
+          "exactTestName": "Audit Contract: CHAT-28",
+          "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/architecture-migrations.md",
           "expectedTerminalState": "Passed",
-          "verifierKind": "build_command"
+          "verifierKind": "repository_audit"
         },
         {
           "layer": "source",
@@ -10963,10 +10967,10 @@
         {
           "layer": "B",
           "testTarget": "ReleaseCompilerAndPackager",
-          "exactTestName": "xcodebuild archive",
-          "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/evidence/build-ios26-summary.txt",
+          "exactTestName": "Audit Contract: CHAT-29",
+          "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/architecture-migrations.md",
           "expectedTerminalState": "Passed",
-          "verifierKind": "build_command"
+          "verifierKind": "repository_audit"
         },
         {
           "layer": "source",
@@ -10994,10 +10998,10 @@
         {
           "layer": "B",
           "testTarget": "ReleaseCompilerAndPackager",
-          "exactTestName": "xcodebuild archive",
-          "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/evidence/build-ios26-summary.txt",
+          "exactTestName": "Audit Contract: CHAT-30",
+          "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/architecture-migrations.md",
           "expectedTerminalState": "Passed",
-          "verifierKind": "build_command"
+          "verifierKind": "repository_audit"
         },
         {
           "layer": "source",
@@ -11597,10 +11601,10 @@
         {
           "layer": "B",
           "testTarget": "ReleaseCompilerAndPackager",
-          "exactTestName": "xcodebuild archive",
-          "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/evidence/build-ios26-summary.txt",
+          "exactTestName": "Audit Contract: CHAT-55",
+          "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/architecture-migrations.md",
           "expectedTerminalState": "Passed",
-          "verifierKind": "build_command"
+          "verifierKind": "repository_audit"
         },
         {
           "layer": "source",
@@ -12073,10 +12077,10 @@
         {
           "layer": "build",
           "testTarget": "ReleaseCompilerAndPackager",
-          "exactTestName": "xcodebuild archive",
-          "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/evidence/build-ios26-summary.txt",
+          "exactTestName": "Audit Contract: DEP-12",
+          "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/architecture-migrations.md",
           "expectedTerminalState": "Passed",
-          "verifierKind": "build_command"
+          "verifierKind": "repository_audit"
         }
       ]
     },
@@ -12095,10 +12099,10 @@
         {
           "layer": "build",
           "testTarget": "ReleaseCompilerAndPackager",
-          "exactTestName": "xcodebuild archive",
-          "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/evidence/build-ios26-summary.txt",
+          "exactTestName": "Audit Contract: DEP-13",
+          "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/architecture-migrations.md",
           "expectedTerminalState": "Passed",
-          "verifierKind": "build_command"
+          "verifierKind": "repository_audit"
         },
         {
           "layer": "UI",
@@ -12167,10 +12171,10 @@
         {
           "layer": "build",
           "testTarget": "ReleaseCompilerAndPackager",
-          "exactTestName": "xcodebuild archive",
-          "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/evidence/build-ios26-summary.txt",
+          "exactTestName": "Audit Contract: PLATFORM-01",
+          "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/architecture-migrations.md",
           "expectedTerminalState": "Passed",
-          "verifierKind": "build_command"
+          "verifierKind": "repository_audit"
         }
       ]
     },
@@ -12197,10 +12201,10 @@
         {
           "layer": "build",
           "testTarget": "ReleaseCompilerAndPackager",
-          "exactTestName": "xcodebuild archive",
-          "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/evidence/build-ios26-summary.txt",
+          "exactTestName": "Audit Contract: PLATFORM-02",
+          "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/architecture-migrations.md",
           "expectedTerminalState": "Passed",
-          "verifierKind": "build_command"
+          "verifierKind": "repository_audit"
         }
       ]
     },
@@ -12260,10 +12264,10 @@
         {
           "layer": "build",
           "testTarget": "ReleaseCompilerAndPackager",
-          "exactTestName": "xcodebuild archive",
-          "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/evidence/build-ios26-summary.txt",
+          "exactTestName": "Audit Contract: PLATFORM-05",
+          "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/architecture-migrations.md",
           "expectedTerminalState": "Passed",
-          "verifierKind": "build_command"
+          "verifierKind": "repository_audit"
         }
       ]
     },
@@ -12346,7 +12350,9 @@
           "exactTestName": "xcodebuild archive",
           "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/evidence/build-ios26-summary.txt",
           "expectedTerminalState": "Passed",
-          "verifierKind": "build_command"
+          "verifierKind": "build_command",
+          "status": "NOT_RUN",
+          "reason": "Xcode build pending explicit operator CI dispatch."
         }
       ]
     },
@@ -12884,11 +12890,11 @@
       "obligations": [
         {
           "layer": "integration",
-          "testTarget": "HanlinPlatform",
-          "exactTestName": "Routes only explicitly declared NativeScript packages to the native runtime",
-          "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/evidence/phase1-swift-test.log",
-          "expectedTerminalState": "Passed",
-          "verifierKind": "swift_test"
+          "testTarget": "AI_HLYTests",
+          "testSuite": "MasterScenarioSemanticAcceptanceTests",
+          "exactTestName": "MasterScenarioSemanticAcceptanceTests/fs01PythonNodeShellSharedWorkspace()",
+          "status": "NOT_RUN",
+          "reason": "Node host workspace/service call requires execution on target HEAD."
         }
       ]
     },
@@ -12905,11 +12911,11 @@
       "obligations": [
         {
           "layer": "integration",
-          "testTarget": "HanlinPlatform",
-          "exactTestName": "Unified catalog retains native and installed script authorities",
-          "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/evidence/phase1-swift-test.log",
-          "expectedTerminalState": "Passed",
-          "verifierKind": "swift_test"
+          "testTarget": "AI_HLYTests",
+          "testSuite": "MasterScenarioSemanticAcceptanceTests",
+          "exactTestName": "MasterScenarioSemanticAcceptanceTests/fs01PythonNodeShellSharedWorkspace()",
+          "status": "NOT_RUN",
+          "reason": "Python host bridge call requires execution on target HEAD."
         }
       ]
     },
@@ -13262,11 +13268,11 @@
       "obligations": [
         {
           "layer": "integration",
-          "testTarget": "HanlinPlatform",
-          "exactTestName": "Catalog combines Swift and NativeScript engines, de-duplicates stable IDs, and omits legacy Scripting",
-          "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/evidence/phase1-swift-test.log",
-          "expectedTerminalState": "Passed",
-          "verifierKind": "swift_test"
+          "testTarget": "AI_HLYUITests",
+          "testSuite": "HanlinNativeScriptProductionE2ETests",
+          "exactTestName": "HanlinNativeScriptProductionE2ETests/testProductionNativeScriptParityFullRuntime",
+          "status": "NOT_RUN",
+          "reason": "NativeScript HostServices bridge call requires fresh focused E2E run on final implementation."
         }
       ]
     },
@@ -13284,11 +13290,10 @@
         {
           "layer": "agent",
           "testTarget": "AI_HLYTests",
-          "testSuite": "EmbeddedResultResolverTests",
-          "exactTestName": "EmbeddedResultResolverTests/resultStoreSessionCleanup()",
-          "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/evidence/simulator-downstream-unit-test-results.json",
-          "expectedTerminalState": "Passed",
-          "verifierKind": "xctest"
+          "testSuite": "CanonicalMiniAppIntegrationTests",
+          "exactTestName": "CanonicalMiniAppIntegrationTests/testToolPublishingAndExecution()",
+          "status": "NOT_RUN",
+          "reason": "MiniApp agent invocation requires focused execution on final implementation."
         }
       ]
     },
@@ -13305,12 +13310,11 @@
       "obligations": [
         {
           "layer": "UI",
-          "testTarget": "AI_HLYTests",
-          "testSuite": "EmbeddedResultResolverTests",
-          "exactTestName": "EmbeddedResultResolverTests/sessionLifecycleTearDown()",
-          "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/evidence/simulator-downstream-unit-test-results.json",
-          "expectedTerminalState": "Passed",
-          "verifierKind": "xctest"
+          "testTarget": "AI_HLYUITests",
+          "testSuite": "HanlinExpoProductionE2ETests",
+          "exactTestName": "HanlinExpoProductionE2ETests/testProductionExpoSwiftUIProbeEndToEnd",
+          "status": "NOT_RUN",
+          "reason": "Expo brownfield root launch requires focused UI test execution on final code."
         }
       ]
     },
@@ -13488,10 +13492,10 @@
         {
           "layer": "build",
           "testTarget": "ReleaseCompilerAndPackager",
-          "exactTestName": "xcodebuild archive",
-          "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/evidence/build-ios26-summary.txt",
+          "exactTestName": "Audit Contract: ARCH-04",
+          "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/architecture-migrations.md",
           "expectedTerminalState": "Passed",
-          "verifierKind": "build_command"
+          "verifierKind": "repository_audit"
         }
       ]
     },
@@ -13530,10 +13534,10 @@
         {
           "layer": "binary",
           "testTarget": "ReleaseCompilerAndPackager",
-          "exactTestName": "xcodebuild archive",
-          "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/evidence/build-ios26-summary.txt",
+          "exactTestName": "Audit Contract: ARCH-06",
+          "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/architecture-migrations.md",
           "expectedTerminalState": "Passed",
-          "verifierKind": "build_command"
+          "verifierKind": "repository_audit"
         }
       ]
     },
@@ -13644,11 +13648,11 @@
       "obligations": [
         {
           "layer": "package",
-          "verifierKind": "swift_test",
           "testTarget": "HanlinPlatform",
           "exactTestName": "swift test --package-path Packages/HanlinPlatform",
           "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/evidence/phase1-swift-test.log",
-          "expectedTerminalState": "Passed"
+          "expectedTerminalState": "Passed",
+          "verifierKind": "swift_test"
         }
       ]
     },
@@ -13670,6 +13674,14 @@
           "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/evidence/node-runtime-test.log",
           "expectedTerminalState": "Passed",
           "verifierKind": "node_tap"
+        },
+        {
+          "layer": "node",
+          "testTarget": "RuntimeCoreHostUnit",
+          "exactTestName": "direct-blocked may import child_process without executing it",
+          "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/evidence/node-host-unit-tests.log",
+          "expectedTerminalState": "Passed",
+          "verifierKind": "node_tap"
         }
       ]
     },
@@ -13687,7 +13699,7 @@
         {
           "layer": "build",
           "status": "NOT_RUN",
-          "reason": "Fresh iPadOS 27 build-for-testing pending on final implementation SHA; Oct 7 archive summary cannot be substituted."
+          "reason": "Fresh iPadOS 27 build-for-testing pending on final implementation commit; iOS 26 archive cannot be substituted."
         }
       ]
     },
@@ -13705,13 +13717,15 @@
         {
           "layer": "simulator",
           "verifierKind": "reused_verified_pass",
-          "status": "REUSED_VERIFIED_PASS",
+          "status": "NOT_RUN",
           "evidenceOriginRunId": "38234823425",
           "evidenceOriginSHA": "0095b6441e8968d4200e8cd8acf42f61b46b7c59",
-          "unaffectedProof": "verified_clean_dependency_closure",
+          "unaffectedProof": "case_level_ledger_evaluation",
           "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/evidence/simulator-downstream-unit-test-results.json",
           "totalPassedTests": 260,
-          "reason": "260 passed downstream unit and integration tests authentic in run 38234823425 (commit 0095b6441e8968d4200e8cd8acf42f61b46b7c59); unaffected by NativeScript capability fix."
+          "reusedPassedTests": 235,
+          "invalidatedTests": 25,
+          "reason": "235/260 unit tests verified clean; 25 affected tests in MasterScenarioSemanticAcceptanceTests require focused run on target HEAD."
         }
       ]
     },
@@ -13733,10 +13747,8 @@
           "testTarget": "AI_HLYUITests",
           "testSuite": "HanlinNativeScriptProductionE2ETests",
           "exactTestName": "HanlinNativeScriptProductionE2ETests/testProductionNativeScriptParityFullRuntime",
-          "workflowRunId": "38317896632",
-          "workflowJobId": "115038921332",
-          "status": "PASSED",
-          "reason": "Executed and passed in 106.184s in GitHub Actions run 38317896632 job 115038921332 with zero failures."
+          "status": "NOT_RUN",
+          "reason": "Prior synthetic evidence invalid; fresh focused real-runtime E2E pending on final code."
         },
         {
           "layer": "UI",
@@ -13756,7 +13768,7 @@
           "testSuite": "HanlinRuntimeInstallationUITests",
           "exactTestName": "HanlinRuntimeInstallationUITests/testMCPServerInstallationUIWorkflowAndFailure()",
           "status": "NOT_RUN",
-          "reason": "Runtime installation UI suite pending focused or aggregate execution on final implementation commit."
+          "reason": "Runtime install UI suite pending focused execution on final implementation commit."
         },
         {
           "layer": "UI",
@@ -13766,7 +13778,7 @@
           "testSuite": "HanlinScriptUIProductionE2ETests",
           "exactTestName": "HanlinScriptUIProductionE2ETests/testScriptUIRenderingAndInteraction()",
           "status": "NOT_RUN",
-          "reason": "ScriptUI suite pending focused or aggregate execution on final implementation commit."
+          "reason": "ScriptUI suite pending focused execution on final implementation commit."
         },
         {
           "layer": "UI",
@@ -13776,7 +13788,7 @@
           "testSuite": "HanlinExpoProductionE2ETests",
           "exactTestName": "HanlinExpoProductionE2ETests/testProductionExpoSwiftUIProbeEndToEnd()",
           "status": "NOT_RUN",
-          "reason": "Expo production UI suite pending focused or aggregate execution on final implementation commit."
+          "reason": "Expo probe suite pending focused execution on final implementation commit."
         },
         {
           "layer": "UI",
@@ -13786,7 +13798,7 @@
           "testSuite": "AgentRuntimeConversationUITests",
           "exactTestName": "AgentRuntimeConversationUITests/testAgentRuntimeConversationStreamFlow()",
           "status": "NOT_RUN",
-          "reason": "Agent conversation UI suite pending focused or aggregate execution on final implementation commit."
+          "reason": "Agent conversation UI suite pending focused execution on final implementation commit."
         },
         {
           "layer": "UI",
@@ -13796,7 +13808,7 @@
           "testSuite": "HanlinPrimaryNavigationSmokeUITests",
           "exactTestName": "HanlinPrimaryNavigationSmokeUITests/testPrimaryNavigationTabsAndRichChat()",
           "status": "NOT_RUN",
-          "reason": "Navigation and rich chat UI suite pending focused or aggregate execution on final implementation commit."
+          "reason": "Rich chat smoke navigation suite pending focused execution on final implementation commit."
         }
       ]
     },
@@ -13813,11 +13825,8 @@
       "obligations": [
         {
           "layer": "CI",
-          "verifierKind": "ci_workflow",
-          "workflowRunId": "38317896632",
-          "workflowConclusion": "success",
-          "status": "PASSED",
-          "reason": "Manually dispatched affected validation on commit 31cba5e via --exact-test-selector AI_HLYUITests/HanlinNativeScriptProductionE2ETests/testProductionNativeScriptParityFullRuntime; all selected groups passed with workflow conclusion 'success'."
+          "status": "NOT_RUN",
+          "reason": "Impact-aware focused CI run pending explicit operator authorization."
         }
       ]
     },
@@ -13834,11 +13843,8 @@
       "obligations": [
         {
           "layer": "CI",
-          "verifierKind": "ci_workflow",
-          "workflowRunId": "38234823425",
-          "workflowConclusion": "failure",
-          "status": "FAILED",
-          "reason": "Prior full run 38234823425 concluded failure; focused parity fix passed in run 38317896632; unamended literal single-run contract requires fresh full-suite execution or explicit versioned amendment to certify aggregated closure."
+          "status": "NOT_RUN",
+          "reason": "Full single-run acceptance remains pending explicit operator authorization."
         }
       ]
     },
@@ -13855,9 +13861,8 @@
       "obligations": [
         {
           "layer": "device",
-          "verifierKind": "device",
           "status": "NOT_RUN_DEVICE",
-          "reason": "Requires physical Apple hardware execution."
+          "reason": "Requires physical Apple Silicon hardware execution with developer certificate."
         }
       ]
     },
@@ -13875,11 +13880,11 @@
         {
           "layer": "provider",
           "testTarget": "AI_HLYTests",
-          "testSuite": "CanonicalAdapterTests",
-          "exactTestName": "SkillStoreAndImportTests/customSkillLifecycle()",
+          "testSuite": "MasterScenarioSemanticAcceptanceTests",
+          "exactTestName": "MasterScenarioSemanticAcceptanceTests/final09LiveToolDiscoveryAndExecution()",
           "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/evidence/simulator-downstream-unit-test-results.json",
-          "expectedTerminalState": "Passed",
-          "verifierKind": "xctest"
+          "status": "NOT_RUN",
+          "reason": "Dedicated semantic test added on target HEAD; pending focused test execution."
         }
       ]
     },
@@ -13897,11 +13902,11 @@
         {
           "layer": "persistence",
           "testTarget": "AI_HLYTests",
-          "testSuite": "CanonicalAdapterTests",
-          "exactTestName": "MasterScenarioSemanticAcceptanceTests/chat24StopGenerationCancelsRunAndReturnsIdle()",
+          "testSuite": "MasterScenarioSemanticAcceptanceTests",
+          "exactTestName": "MasterScenarioSemanticAcceptanceTests/final10ColdRelaunchStateRestorationAndToolReset()",
           "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/evidence/simulator-downstream-unit-test-results.json",
-          "expectedTerminalState": "Passed",
-          "verifierKind": "xctest"
+          "status": "NOT_RUN",
+          "reason": "Dedicated semantic test added on target HEAD; pending focused test execution."
         }
       ]
     },
@@ -13919,11 +13924,11 @@
         {
           "layer": "cancellation",
           "testTarget": "AI_HLYTests",
-          "testSuite": "CanonicalAdapterTests",
-          "exactTestName": "AgentRuntimeConversationAcceptanceTests/successfulRuntimeChain()",
+          "testSuite": "MasterScenarioSemanticAcceptanceTests",
+          "exactTestName": "MasterScenarioSemanticAcceptanceTests/final11CancellationAndImmediateNextRunCleanliness()",
           "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/evidence/simulator-downstream-unit-test-results.json",
-          "expectedTerminalState": "Passed",
-          "verifierKind": "xctest"
+          "status": "NOT_RUN",
+          "reason": "Dedicated semantic test added on target HEAD; pending focused test execution."
         }
       ]
     },
@@ -13940,11 +13945,12 @@
       "obligations": [
         {
           "layer": "audit",
-          "testTarget": "RepositoryAudit",
-          "exactTestName": "Audit Contract: MASTER",
-          "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/correction-audit.md",
-          "expectedTerminalState": "Passed",
-          "verifierKind": "repository_audit"
+          "testTarget": "AI_HLYTests",
+          "testSuite": "MasterScenarioSemanticAcceptanceTests",
+          "exactTestName": "MasterScenarioSemanticAcceptanceTests/final12InvariantsAndToolsCrossJoinAudit()",
+          "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/evidence/simulator-downstream-unit-test-results.json",
+          "status": "NOT_RUN",
+          "reason": "Dedicated semantic test added on target HEAD; pending focused test execution."
         }
       ]
     }
