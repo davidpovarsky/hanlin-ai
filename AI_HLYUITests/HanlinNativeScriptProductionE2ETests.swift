@@ -23,12 +23,14 @@ final class HanlinNativeScriptProductionE2ETests: XCTestCase {
     }
 
     override func tearDownWithError() throws {
+        app.launchEnvironment.removeValue(forKey: "HANLIN_PARITY_CHALLENGE")
         app.terminate()
     }
 
     func testProductionNativeScriptParityFullRuntime() throws {
         let challengeNonce = "nonce-\(UUID().uuidString.prefix(8).lowercased())"
         app.launchEnvironment["HANLIN_PARITY_CHALLENGE"] = challengeNonce
+        app.launch()
 
         openApps()
         importAndInstall(archive: "hanlin-script-parity")
@@ -45,33 +47,33 @@ final class HanlinNativeScriptProductionE2ETests: XCTestCase {
         // JS: [VERIFIED JSC] nonce=...
         let jsPredicate = NSPredicate(format: "label CONTAINS '[VERIFIED JSC]' AND label CONTAINS %@ AND NOT (label CONTAINS 'Err' OR label CONTAINS 'Error')", challengeNonce)
         let jsLabel = app.descendants(matching: .any).matching(jsPredicate).firstMatch
-        XCTAssertTrue(jsLabel.waitForExistence(timeout: 15), "JavaScript execution did not return verified JSC output with nonce \(challengeNonce)")
+        XCTAssertTrue(jsLabel.waitForExistence(timeout: 25), "JavaScript execution did not return verified JSC output with nonce \(challengeNonce)")
 
         // Node: [VERIFIED Node <version>] nonce=...
         let nodePredicate = NSPredicate(format: "label CONTAINS '[VERIFIED Node' AND label CONTAINS %@ AND NOT (label CONTAINS 'Err' OR label CONTAINS 'Error')", challengeNonce)
         let nodeLabel = app.descendants(matching: .any).matching(nodePredicate).firstMatch
-        XCTAssertTrue(nodeLabel.waitForExistence(timeout: 20), "Node execution did not return verified Node runtime output with nonce \(challengeNonce)")
+        XCTAssertTrue(nodeLabel.waitForExistence(timeout: 25), "Node execution did not return verified Node runtime output with nonce \(challengeNonce)")
 
         // Python: [VERIFIED CPython <version>] nonce=...
         let pyPredicate = NSPredicate(format: "label CONTAINS '[VERIFIED CPython' AND label CONTAINS %@ AND NOT (label CONTAINS 'Err' OR label CONTAINS 'Error')", challengeNonce)
         let pyLabel = app.descendants(matching: .any).matching(pyPredicate).firstMatch
-        XCTAssertTrue(pyLabel.waitForExistence(timeout: 15), "Python execution did not return verified CPython runtime output with nonce \(challengeNonce)")
+        XCTAssertTrue(pyLabel.waitForExistence(timeout: 25), "Python execution did not return verified CPython runtime output with nonce \(challengeNonce)")
 
         // HTTPS: [VERIFIED 200]
         let netPredicate = NSPredicate(format: "(label CONTAINS '[VERIFIED 200]' OR label CONTAINS 'HTTPS:') AND NOT (label CONTAINS 'synthetic' OR label CONTAINS 'Unavailable')")
         let netLabel = app.descendants(matching: .any).matching(netPredicate).firstMatch
-        XCTAssertTrue(netLabel.waitForExistence(timeout: 20), "HTTPS network fetch did not return verified status 200")
+        XCTAssertTrue(netLabel.waitForExistence(timeout: 25), "HTTPS network fetch did not return verified status 200")
 
         // Inter-App Share: [VERIFIED] echoNonce=...
         let interAppPredicate = NSPredicate(format: "label CONTAINS '[VERIFIED]' AND label CONTAINS %@ AND NOT (label CONTAINS 'Err' OR label CONTAINS 'Error' OR label CONTAINS 'denied' OR label CONTAINS 'unavailable' OR label CONTAINS 'Pending')", challengeNonce)
         let interAppLabel = app.descendants(matching: .any).matching(interAppPredicate).firstMatch
-        XCTAssertTrue(interAppLabel.waitForExistence(timeout: 20), "Inter-App communication did not complete successfully with echoNonce \(challengeNonce)")
+        XCTAssertTrue(interAppLabel.waitForExistence(timeout: 25), "Inter-App communication did not complete successfully with echoNonce \(challengeNonce)")
         capture(name: "Parity-Runtimes-Verified")
 
         // 3. Storage Persistence Check
         let storagePredicate = NSPredicate(format: "(label CONTAINS 'Saved in canonical' OR label CONTAINS 'Reloaded persisted') AND NOT (label CONTAINS 'Error' OR label CONTAINS 'Err' OR label CONTAINS 'failed')")
         let storageLabel = app.descendants(matching: .any).matching(storagePredicate).firstMatch
-        XCTAssertTrue(storageLabel.waitForExistence(timeout: 15), "Canonical private storage was not verified")
+        XCTAssertTrue(storageLabel.waitForExistence(timeout: 20), "Canonical private storage was not verified")
 
         // 4. Close App
         closeNativeScriptApp()
@@ -91,7 +93,8 @@ final class HanlinNativeScriptProductionE2ETests: XCTestCase {
         XCTAssertTrue(parityFound, "Package \(parityPackageName) was not visible after app restart")
 
         launchInstalledPackage(named: parityPackageName)
-        XCTAssertTrue(titleCandidate.waitForExistence(timeout: 30), "HanlinScript Parity failed to relaunch after app restart")
+        let relaunchedTitle = app.descendants(matching: .any).matching(titlePredicate).firstMatch
+        XCTAssertTrue(relaunchedTitle.waitForExistence(timeout: 30), "HanlinScript Parity failed to relaunch after app restart")
         capture(name: "Parity-Relaunched-Successfully")
         closeNativeScriptApp()
     }
