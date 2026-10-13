@@ -2,9 +2,14 @@
   "version": 1,
   "description": "Declarative component and validation mapping for affected-test CI routing",
   "no_impact_patterns": [
-    "*.md",
-    "**/*.md",
-    "docs/**",
+    "README.md",
+    "AGENTS.md",
+    "PROJECT_AGENT_GUIDANCE.md",
+    "PROJECT_BOARD.md",
+    "docs/architecture.md",
+    "docs/notes/**",
+    "docs/prose/**",
+    "docs/guides/**",
     ".gitignore",
     ".gitattributes",
     "LICENSE*",
@@ -27,7 +32,12 @@
         "Scripts/*.mjs",
         "scripts/**",
         "capability-invariants.json",
-        "provider-conformance-summary.json"
+        "provider-conformance-summary.json",
+        "docs/hanlin-platform/personal-runtime-completion/scenario-evidence-map.json",
+        "docs/hanlin-platform/personal-runtime-completion/authoritative-master-spec.md",
+        "docs/hanlin-platform/personal-runtime-completion/*.json",
+        "docs/hanlin-platform/contract-audit/**",
+        "docs/hanlin-platform/personal-runtime-completion/evidence/**"
       ],
       "direct_validation_groups": [
         "ci_router"

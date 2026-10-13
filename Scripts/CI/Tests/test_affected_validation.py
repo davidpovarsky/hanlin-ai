@@ -5,6 +5,7 @@ import json
 from pathlib import Path
 import tempfile
 import unittest
+import unittest.mock
 
 SCRIPT_PATH = Path(__file__).parents[1] / "plan_affected_validation.py"
 MAP_PATH = Path(__file__).parents[1] / "affected-validation-map.json"
@@ -809,6 +810,57 @@ class TestDependencyLedgerTests(unittest.TestCase):
                     )
                     self.assertEqual(res["decision"], "REUSE_VERIFIED")
                     self.assertIn("Verified clean dependency closure", res["reason"])
+
+    def test_ledger_fails_closed_on_unknown_suite(self) -> None:
+        with unittest.mock.patch.object(planner, "get_changed_files", return_value=["some_source.swift"]):
+            with unittest.mock.patch.object(planner, "git_commit_exists", return_value=True):
+                with unittest.mock.patch("subprocess.run") as mock_run:
+                    mock_run.return_value.returncode = 0
+                    res = self.ledger.evaluate_test_reuse(
+                        test_id="UNKNOWN-01",
+                        suite_or_name="CompletelyUnknownTestSuite",
+                        origin_sha="1111111111111111111111111111111111111111",
+                        target_sha="2222222222222222222222222222222222222222",
+                        original_status="Passed",
+                    )
+                    self.assertEqual(res["decision"], "INVALIDATE")
+                    self.assertIn("unknown dependency closure", res["reason"])
+
+    def test_consumed_docs_not_treated_as_no_impact(self) -> None:
+        consumed_files = [
+            "docs/hanlin-platform/personal-runtime-completion/scenario-evidence-map.json",
+            "docs/hanlin-platform/personal-runtime-completion/authoritative-master-spec.md",
+        ]
+        with open(MAP_PATH, "r", encoding="utf-8") as f:
+            mapping_config = json.load(f)
+        plan = planner.plan_affected_validation(
+            mapping_config=mapping_config,
+            changed_files=consumed_files,
+            base_sha="abc1234567890",
+            head_sha="def9876543210",
+            event_name="workflow_dispatch",
+        )
+        self.assertIn("ci_router", plan.affected_components)
+        self.assertNotIn(consumed_files[0], plan.no_impact_files)
+        self.assertNotIn(consumed_files[1], plan.no_impact_files)
+
+    def test_evaluate_reuse_cli_roundtrip(self) -> None:
+        import subprocess, sys
+        query = {
+            "test_id": "TEST-01",
+            "suite": "HanlinNativeScriptProductionE2ETests",
+            "origin_sha": "0095b6441e8968d4200e8cd8acf42f61b46b7c59",
+            "target_sha": "0095b6441e8968d4200e8cd8acf42f61b46b7c59",
+            "original_status": "Passed",
+        }
+        res = subprocess.run(
+            [sys.executable, str(SCRIPT_PATH), "--evaluate-reuse", json.dumps(query)],
+            capture_output=True,
+            text=True,
+            check=True,
+        )
+        data = json.loads(res.stdout)
+        self.assertEqual(data["decision"], "REUSE_VERIFIED")
 
 
 if __name__ == "__main__":

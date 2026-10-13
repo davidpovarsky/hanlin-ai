@@ -510,18 +510,18 @@ def plan_affected_validation(
 
     # Map every changed file
     for file_path in changed_files:
-        is_no_impact = any(
-            match_pattern(file_path, pat) for pat in no_impact_patterns
-        )
-        if is_no_impact:
-            no_impact_files.append(file_path)
-
         matched_components: List[str] = []
         for comp_name, comp_info in components.items():
             patterns: List[str] = comp_info.get("patterns", [])
             if any(match_pattern(file_path, pat) for pat in patterns):
                 matched_components.append(comp_name)
                 file_to_components[file_path].append(comp_name)
+
+        is_no_impact = any(
+            match_pattern(file_path, pat) for pat in no_impact_patterns
+        )
+        if is_no_impact and not matched_components:
+            no_impact_files.append(file_path)
 
         if not is_no_impact and not matched_components:
             unmapped_files.append(file_path)
@@ -1164,6 +1164,18 @@ class TestDependencyLedger:
             "AI_HLY/Downstream/Agent/**",
             "AI_HLYUITests/AgentRuntimeConversationUITests.swift",
         ],
+        "AgentSkillsEmbeddedResultsUITests": [
+            "AI_HLY/Downstream/AgentSkills/**",
+            "AI_HLYUITests/AgentSkillsEmbeddedResultsUITests.swift",
+        ],
+        "HanlinPrimaryNavigationSmokeUITests": [
+            "AI_HLY/Downstream/**",
+            "AI_HLYUITests/HanlinPrimaryNavigationSmokeUITests.swift",
+        ],
+        "HanlinUIPerformanceUITests": [
+            "AI_HLY/Downstream/**",
+            "AI_HLYUITests/HanlinUIPerformanceUITests.swift",
+        ],
         "MasterScenarioSemanticAcceptanceTests": [
             "AI_HLYTests/MasterScenarioSemanticAcceptanceTests.swift",
             "AI_HLY/Downstream/HostServices/**",
@@ -1182,9 +1194,93 @@ class TestDependencyLedger:
             "AI_HLY/Downstream/HostServices/**",
             "AI_HLYTests/HanlinUnifiedHostServicesAgentAcceptanceTests.swift",
         ],
+        "HanlinUnifiedHostServicesE2ETests": [
+            "AI_HLY/Downstream/HostServices/**",
+            "AI_HLYTests/HanlinUnifiedHostServicesE2ETests.swift",
+        ],
+        "HanlinUnifiedHostServicesTests": [
+            "AI_HLY/Downstream/HostServices/**",
+            "AI_HLYTests/HanlinUnifiedHostServicesTests.swift",
+        ],
         "ProductionProviderConformanceTests": [
             "AI_HLYTests/ProviderConformance/**",
             "AI_HLY/Downstream/HostServices/Capabilities/**",
+        ],
+        "AgentRuntimeConversationAcceptanceTests": [
+            "AI_HLY/Downstream/Agent/**",
+            "AI_HLY/Downstream/HostServices/**",
+            "AI_HLYTests/AgentRuntimeConversationAcceptanceTests.swift",
+        ],
+        "AgentSkillsExposureTests": [
+            "AI_HLY/Downstream/Skills/**",
+            "AI_HLY/Downstream/AgentSkills/**",
+            "AI_HLYTests/AgentSkillsExposureTests.swift",
+        ],
+        "AppleLocalProvidersTests": [
+            "AI_HLY/Downstream/RuntimeCore/AppleAI/**",
+            "AI_HLYTests/AppleLocalProvidersTests.swift",
+        ],
+        "CanonicalAdapterTests": [
+            "AI_HLY/Downstream/**",
+            "AI_HLYTests/CanonicalAdapterTests.swift",
+        ],
+        "CanonicalMiniAppIntegrationTests": [
+            "AI_HLY/Downstream/MiniApps/**",
+            "AI_HLY/Downstream/NativeScript/**",
+            "Packages/HanlinNativeScriptRuntime/**",
+            "AI_HLYTests/CanonicalMiniAppIntegrationTests.swift",
+        ],
+        "CanonicalShadowCoordinatorTests": [
+            "AI_HLY/Downstream/**",
+            "AI_HLYTests/CanonicalShadowCoordinatorTests.swift",
+        ],
+        "CanonicalToolAuthorityTests": [
+            "AI_HLY/Downstream/RuntimeCore/Tools/**",
+            "AI_HLYTests/CanonicalToolAuthorityTests.swift",
+        ],
+        "ChatCanonicalPresentationSurvivalTests": [
+            "AI_HLY/Downstream/ChatPresentation/**",
+            "AI_HLYTests/ChatCanonicalPresentationSurvivalTests.swift",
+        ],
+        "EmbeddedResultResolverTests": [
+            "AI_HLY/Downstream/MiniApps/**",
+            "AI_HLYTests/EmbeddedResultResolverTests.swift",
+        ],
+        "FoundationJSONShadowAdapterTests": [
+            "AI_HLY/Downstream/**",
+            "AI_HLYTests/FoundationJSONShadowAdapterTests.swift",
+        ],
+        "HanlinRuntimePerformanceTests": [
+            "AI_HLY/Downstream/RuntimeCore/**",
+            "AI_HLYTests/HanlinRuntimePerformanceTests.swift",
+        ],
+        "HanlinScriptingAssistantProviderAdapterTests": [
+            "AI_HLY/Downstream/ScriptUI/**",
+            "Packages/HanlinScriptCompiler/**",
+            "AI_HLYTests/HanlinScriptingAssistantProviderAdapterTests.swift",
+        ],
+        "HanlinScriptingRuntimeTests": [
+            "AI_HLY/Downstream/RuntimeCore/**",
+            "Packages/HanlinScriptCompiler/**",
+            "AI_HLYTests/HanlinScriptingRuntimeTests.swift",
+        ],
+        "LegacyToolMigrationTests": [
+            "AI_HLY/Downstream/RuntimeCore/Tools/**",
+            "AI_HLYTests/LegacyToolMigrationTests.swift",
+        ],
+        "ProductionSystemSkillsTests": [
+            "AI_HLY/Downstream/Skills/**",
+            "AI_HLYTests/ProductionSystemSkillsTests.swift",
+        ],
+        "RuntimePackageAcceptanceTests": [
+            "AI_HLY/Downstream/RuntimeCore/Python/**",
+            "AI_HLY/Downstream/RuntimeCore/Node/**",
+            "AI_HLYTests/RuntimePackageAcceptanceTests.swift",
+        ],
+        "ScriptingCanonicalAuthorityTests": [
+            "AI_HLY/Downstream/ScriptUI/**",
+            "Packages/HanlinScriptCompiler/**",
+            "AI_HLYTests/ScriptingCanonicalAuthorityTests.swift",
         ],
     }
 
@@ -1266,9 +1362,13 @@ class TestDependencyLedger:
             if key in suite_or_name:
                 dep_patterns.extend(patterns)
 
-        # Fallback: if suite unknown, check if suite name appears in file path
+        # Fail closed on unknown suite or test
         if not dep_patterns:
-            dep_patterns = [f"**/*{suite_or_name}*"]
+            return {
+                "decision": "INVALIDATE",
+                "reason": f"Suite or test '{suite_or_name}' has unknown dependency closure in TestDependencyLedger.",
+                "changed_dependencies": [],
+            }
 
         specific_hits = [
             f for f in diff_files
@@ -1377,6 +1477,10 @@ def main() -> int:
         help="Explicitly run a single exact XCTest method or suite selector (e.g. AI_HLYUITests/HanlinNativeScriptProductionE2ETests/testProductionNativeScriptParityFullRuntime)",
     )
     parser.add_argument(
+        "--evaluate-reuse",
+        help="Evaluate test reuse using TestDependencyLedger. Takes a JSON string or path to JSON file with query or list of queries.",
+    )
+    parser.add_argument(
         "--json-output",
         help="Path to write the resulting plan JSON",
     )
@@ -1393,6 +1497,36 @@ def main() -> int:
 
     args = parser.parse_args()
     repo_root = pathlib.Path(args.repository).resolve()
+
+    if args.evaluate_reuse:
+        ledger = TestDependencyLedger(repo_root)
+        raw_input = args.evaluate_reuse.strip()
+        if pathlib.Path(raw_input).exists():
+            with open(raw_input, "r", encoding="utf-8") as f:
+                query_data = json.load(f)
+        else:
+            query_data = json.loads(raw_input)
+
+        def _evaluate_single(q: Dict[str, Any]) -> Dict[str, Any]:
+            return ledger.evaluate_test_reuse(
+                test_id=q.get("test_id", ""),
+                suite_or_name=q.get("suite", q.get("test_suite", q.get("exact_test_name", ""))),
+                origin_sha=q.get("origin_sha", ""),
+                target_sha=q.get("target_sha", ""),
+                original_status=q.get("original_status", "Passed"),
+            )
+
+        if isinstance(query_data, list):
+            eval_results = [_evaluate_single(item) for item in query_data]
+        else:
+            eval_results = _evaluate_single(query_data)
+
+        output_str = json.dumps(eval_results, indent=2)
+        if args.json_output:
+            with open(args.json_output, "w", encoding="utf-8") as f:
+                f.write(output_str + "\n")
+        print(output_str)
+        return 0
 
     map_path = (
         pathlib.Path(args.map)
