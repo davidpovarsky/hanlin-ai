@@ -1535,13 +1535,13 @@ struct MasterScenarioSemanticAcceptanceTests {
             python: core.python,
             pypiBaseURL: URL(string: "http://127.0.0.1:\(fixtureServer.port)")!
         )
-        let reloadedRecords = try freshManager.installed()
+        let reloadedRecords = try await freshManager.installed()
         #expect(reloadedRecords.contains { $0.normalizedName == record.normalizedName && $0.importName == importName })
 
         // 6. Cleanup / uninstall
-        try freshManager.uninstall(record)
+        try await freshManager.uninstall(record)
         #expect(!FileManager.default.fileExists(atPath: installedDir.path))
-        let afterUninstallRecords = try freshManager.installed()
+        let afterUninstallRecords = try await freshManager.installed()
         #expect(!afterUninstallRecords.contains { $0.normalizedName == record.normalizedName })
     }
 
@@ -1550,13 +1550,13 @@ struct MasterScenarioSemanticAcceptanceTests {
     func final09LiveToolDiscoveryAndExecution() async throws {
         NativeToolCatalog.shared.ensureBuiltinsRegistered()
         let catalog = NativeToolCatalog.shared
-        let descriptors = catalog.activeTools()
-        #expect(!descriptors.isEmpty)
+        let entries = catalog.allEntries()
+        #expect(!entries.isEmpty)
 
         // Verify discovery of shell tool and read skill resource tool
-        let shellTool = descriptors.first { $0.declaration.name == "execute_shell_command" }
+        let shellTool = entries.first { $0.name == "execute_shell_command" }
         #expect(shellTool != nil, "execute_shell_command tool must be discovered in live catalog")
-        let readTool = descriptors.first { $0.declaration.name == "read_skill_resource" }
+        let readTool = entries.first { $0.name == "read_skill_resource" }
         #expect(readTool != nil, "read_skill_resource tool must be discovered in live catalog")
 
         // Execute discovered tool through session
@@ -1607,7 +1607,7 @@ struct MasterScenarioSemanticAcceptanceTests {
 
         // Simulate cold relaunch: fresh independent store and fresh session
         let coldStore = SkillStore(rootDirectoryURL: SkillStore.shared.rootDirectoryURL)
-        let coldSkills = coldStore.allCustomSkills()
+        let coldSkills = coldStore.allCustomSkillDescriptors()
         #expect(coldSkills.contains { $0.id == descriptor.id }, "Persistent skill must survive cold relaunch")
 
         let freshSession = AssistantCapabilitySession()
@@ -1726,15 +1726,15 @@ struct MasterScenarioSemanticAcceptanceTests {
     func final12InvariantsAndToolsCrossJoinAudit() throws {
         // Machine-checkable cross join of registered tools and platform runtime services
         NativeToolCatalog.shared.ensureBuiltinsRegistered()
-        let tools = NativeToolCatalog.shared.allTools()
+        let tools = NativeToolCatalog.shared.allEntries()
         #expect(!tools.isEmpty)
 
         // Ensure every required native tool has a declared executor
         let requiredToolNames = ["execute_shell_command", "read_skill_resource"]
         for toolName in requiredToolNames {
-            let found = tools.first { $0.declaration.name == toolName }
+            let found = tools.first { $0.name == toolName }
             #expect(found != nil, "Required tool '\(toolName)' must be registered in NativeToolCatalog")
-            #expect(!found!.declaration.description.isEmpty)
+            #expect(!found!.summary.isEmpty)
         }
 
         // Reconcile Shell capabilities with ios_system executable commands
