@@ -990,7 +990,7 @@ struct MasterScenarioSemanticAcceptanceTests {
 
         // Catalog refresh
         HanlinSkillCatalog.shared.refreshFromStore()
-        let resolved = HanlinSkillCatalog.shared.descriptor(for: descriptor.id)
+        let resolved = HanlinSkillCatalog.shared.resolve(id: descriptor.id)
         #expect(resolved != nil)
 
         // Verify resource accessibility
@@ -1000,7 +1000,7 @@ struct MasterScenarioSemanticAcceptanceTests {
 
         // Simulate cold relaunch: instantiate fresh independent SkillStore from disk root
         let coldStore = SkillStore(rootDirectoryURL: SkillStore.shared.rootDirectoryURL)
-        let reloadedSkills = coldStore.allCustomSkills()
+        let reloadedSkills = coldStore.allCustomSkillDescriptors()
         #expect(reloadedSkills.contains { $0.id == descriptor.id })
         let coldResourceURL = try #require(coldStore.safeResourceURL(for: descriptor.id, relativePath: "agents/openai.yaml"))
         let coldYAML = try String(contentsOf: coldResourceURL, encoding: .utf8)
@@ -1064,10 +1064,10 @@ struct MasterScenarioSemanticAcceptanceTests {
         defer { SkillStore.shared.deleteCustomSkill(skillID: descriptor.id) }
 
         HanlinSkillCatalog.shared.refreshFromStore()
-        let resolved = HanlinSkillCatalog.shared.descriptor(for: descriptor.id)
+        let resolved = HanlinSkillCatalog.shared.resolve(id: descriptor.id)
         #expect(resolved != nil)
         #expect(resolved?.id == descriptor.id)
-        #expect(resolved?.metadata.keywords == ["wrapped", "fixture-runtime"])
+        #expect(resolved?.keywords == ["wrapped", "fixture-runtime"])
 
         let agentResourceURL = try #require(SkillStore.shared.safeResourceURL(for: descriptor.id, relativePath: "agents/openai.yaml"))
         let readYAML = try String(contentsOf: agentResourceURL, encoding: .utf8)
@@ -1075,9 +1075,9 @@ struct MasterScenarioSemanticAcceptanceTests {
 
         // Cold relaunch check
         let coldStore = SkillStore(rootDirectoryURL: SkillStore.shared.rootDirectoryURL)
-        let coldDescriptor = try #require(coldStore.allCustomSkills().first { $0.id == descriptor.id })
-        #expect(coldDescriptor.name == descriptor.name)
-        #expect(coldDescriptor.metadata.triggerHints == descriptor.metadata.triggerHints)
+        let coldDescriptor = try #require(coldStore.allCustomSkillDescriptors().first { $0.id == descriptor.id })
+        #expect(coldDescriptor.id == descriptor.id)
+        #expect(coldDescriptor.triggerHints == descriptor.triggerHints)
     }
 
     @Test("ZIP-08: Archive larger than 25MiB with expanded contents larger than 64MiB and end marker imports cleanly with bounded memory and cancellation availability")
@@ -1500,7 +1500,6 @@ struct MasterScenarioSemanticAcceptanceTests {
             version: version,
             importName: importName
         )
-        defer { try? manager.uninstall(record) }
 
         #expect(record.name == distName)
         #expect(record.importName == importName)
