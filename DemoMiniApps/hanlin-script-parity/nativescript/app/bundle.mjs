@@ -109,6 +109,9 @@ function invokeObjC(target, selName, arg1, arg2) {
     try {
       const sel = selFromString(selName);
       if (sel) {
+        if (typeof target.respondsToSelector === "function" && !target.respondsToSelector(sel)) {
+          return undefined;
+        }
         if (arg2 !== undefined && typeof target.performSelectorWithObjectWithObject === "function") {
           return target.performSelectorWithObjectWithObject(sel, arg1, arg2);
         }

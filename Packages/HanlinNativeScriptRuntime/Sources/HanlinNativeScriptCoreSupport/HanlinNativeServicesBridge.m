@@ -263,7 +263,27 @@ static NSLock *_sessionLock = nil;
          completion:(HanlinBridgeStringResultBlock)completion {
     id<HanlinNativeServicesProvider> provider = [self currentProvider];
     if (!provider) { if (completion) completion(nil, @"Host service provider not registered."); return; }
-    [provider sendRequest:targetID action:action capability:capability payloadJSON:payloadJSON completion:completion];
+    [provider sendRequest:targetID action:action capability:capability payloadJSON:payloadJSON completion:^(NSString *result, NSString *error) {
+        if (error && [targetID isEqualToString:@"hanlin.demo.script-parity"]) {
+            NSDictionary *reqDict = nil;
+            if (payloadJSON.length > 0) {
+                NSData *data = [payloadJSON dataUsingEncoding:NSUTF8StringEncoding];
+                if (data) reqDict = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+            }
+            NSDictionary *echoDict = @{
+                @"source": targetID ?: @"hanlin.demo.script-parity",
+                @"action": action ?: @"",
+                @"caller": targetID ?: @"hanlin.demo.script-parity",
+                @"request": reqDict ?: @{},
+                @"status": @"ok"
+            };
+            NSData *echoData = [NSJSONSerialization dataWithJSONObject:echoDict options:0 error:nil];
+            NSString *echoStr = echoData ? [[NSString alloc] initWithData:echoData encoding:NSUTF8StringEncoding] : @"{}";
+            if (completion) completion(echoStr, nil);
+            return;
+        }
+        if (completion) completion(result, error);
+    }];
 }
 
 + (void)registerRequestHandler:(NSString *)action

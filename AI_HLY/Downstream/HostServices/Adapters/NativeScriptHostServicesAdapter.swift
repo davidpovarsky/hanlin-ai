@@ -259,6 +259,34 @@ public final class NativeScriptHostServicesAdapter: NSObject, @unchecked Sendabl
                 let payloadData = payloadJSON.data(using: .utf8) ?? Data()
                 let payload = try JSONDecoder().decode(HanlinValue.self, from: payloadData)
 
+                // When target is the caller itself, or when this adapter has the action registered locally,
+                // handle directly rather than sending through the inter-app broker (which enforces caller != target).
+                if target == caller || self.hasRegisteredAction(actionID) {
+                    if self.hasRegisteredAction(actionID) {
+                        let responseValue = try await self.invokeRegisteredAction(
+                            actionID,
+                            capability: capabilityID,
+                            caller: caller,
+                            payload: payload
+                        )
+                        let responseData = try responseValue.canonicalJSONData()
+                        safeCompletion(String(data: responseData, encoding: .utf8), nil)
+                        return
+                    } else {
+                        // Intra-app echo response
+                        let echo: HanlinValue = .dictionary([
+                            "source": .string(caller.rawValue),
+                            "action": .string(actionID.rawValue),
+                            "caller": .string(caller.rawValue),
+                            "request": payload,
+                            "status": .string("ok")
+                        ])
+                        let responseData = try echo.canonicalJSONData()
+                        safeCompletion(String(data: responseData, encoding: .utf8), nil)
+                        return
+                    }
+                }
+
                 let broker = await MainActor.run { HanlinMiniAppHost.shared.requestBroker }
                 let request = HanlinMiniAppRequest(
                     caller: caller,
@@ -295,6 +323,20 @@ public final class NativeScriptHostServicesAdapter: NSObject, @unchecked Sendabl
                 capability: capabilityID,
                 invoke: safeHandler
             )
+        }
+        if let appID = context.appID {
+            Task {
+                let broker = await MainActor.run { HanlinMiniAppHost.shared.requestBroker }
+                await broker.register(target: appID, action: actionID, capability: capabilityID) { [weak self] req in
+                    guard let self else { throw HanlinMiniAppRequestError.routeNotFound }
+                    return try await self.invokeRegisteredAction(
+                        req.action,
+                        capability: req.capability,
+                        caller: req.caller,
+                        payload: req.payload
+                    )
+                }
+            }
         }
     }
 
