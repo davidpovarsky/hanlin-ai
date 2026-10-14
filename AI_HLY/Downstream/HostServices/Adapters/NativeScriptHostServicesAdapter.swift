@@ -114,13 +114,9 @@ public final class NativeScriptHostServicesAdapter: NSObject, @unchecked Sendabl
                     default: break
                     }
                 }
-                DispatchQueue.main.async {
-                    safeCompletion(output.isEmpty ? "OK" : output, nil)
-                }
+                safeCompletion(output.isEmpty ? "OK" : output, nil)
             } catch {
-                DispatchQueue.main.async {
-                    safeCompletion(nil, error.localizedDescription)
-                }
+                safeCompletion(nil, error.localizedDescription)
             }
         }
     }
@@ -138,14 +134,19 @@ public final class NativeScriptHostServicesAdapter: NSObject, @unchecked Sendabl
                     source: source,
                     context: ctx
                 )
-                let output = result.stdout.trimmingCharacters(in: .whitespacesAndNewlines)
-                DispatchQueue.main.async {
-                    safeCompletion(output, nil)
+                var output = result.stdout.trimmingCharacters(in: .whitespacesAndNewlines)
+                if output.isEmpty, let val = result.value {
+                    switch val {
+                    case let .string(s): output = s
+                    case let .number(n): output = n.truncatingRemainder(dividingBy: 1) == 0 ? String(Int64(n)) : String(n)
+                    case let .boolean(b): output = String(b)
+                    case .null: output = "null"
+                    default: break
+                    }
                 }
+                safeCompletion(output, nil)
             } catch {
-                DispatchQueue.main.async {
-                    safeCompletion(nil, error.localizedDescription)
-                }
+                safeCompletion(nil, error.localizedDescription)
             }
         }
     }
@@ -158,13 +159,9 @@ public final class NativeScriptHostServicesAdapter: NSObject, @unchecked Sendabl
         Task {
             do {
                 let snapshot = try await AppRuntimeCore.shared.node.healthCheck()
-                DispatchQueue.main.async {
-                    safeCompletion(snapshot.state == .ready, nil)
-                }
+                safeCompletion(snapshot.state == .ready, nil)
             } catch {
-                DispatchQueue.main.async {
-                    safeCompletion(false, error.localizedDescription)
-                }
+                safeCompletion(false, error.localizedDescription)
             }
         }
     }
@@ -182,14 +179,19 @@ public final class NativeScriptHostServicesAdapter: NSObject, @unchecked Sendabl
                     source: source,
                     context: ctx
                 )
-                let output = result.stdout.trimmingCharacters(in: .whitespacesAndNewlines)
-                DispatchQueue.main.async {
-                    safeCompletion(output, nil)
+                var output = result.stdout.trimmingCharacters(in: .whitespacesAndNewlines)
+                if output.isEmpty, let val = result.value {
+                    switch val {
+                    case let .string(s): output = s
+                    case let .number(n): output = n.truncatingRemainder(dividingBy: 1) == 0 ? String(Int64(n)) : String(n)
+                    case let .boolean(b): output = String(b)
+                    case .null: output = "null"
+                    default: break
+                    }
                 }
+                safeCompletion(output, nil)
             } catch {
-                DispatchQueue.main.async {
-                    safeCompletion(nil, error.localizedDescription)
-                }
+                safeCompletion(nil, error.localizedDescription)
             }
         }
     }
@@ -209,33 +211,23 @@ public final class NativeScriptHostServicesAdapter: NSObject, @unchecked Sendabl
             do {
                 try await HanlinHostServicesBroker.shared.requireCapability("network", context: ctx)
                 guard let url = URL(string: urlString), url.scheme?.lowercased() == "https" else {
-                    DispatchQueue.main.async {
-                        safeCompletion(nil, "Invalid or non-HTTPS URL: \(urlString)")
-                    }
+                    safeCompletion(nil, "Invalid or non-HTTPS URL: \(urlString)")
                     return
                 }
                 var request = URLRequest(url: url)
                 request.timeoutInterval = 15
                 let (data, response) = try await URLSession.shared.data(for: request)
                 guard let http = response as? HTTPURLResponse else {
-                    DispatchQueue.main.async {
-                        safeCompletion(nil, "Invalid server response.")
-                    }
+                    safeCompletion(nil, "Invalid server response.")
                     return
                 }
                 guard (200...299).contains(http.statusCode) else {
-                    DispatchQueue.main.async {
-                        safeCompletion(nil, "HTTP \(http.statusCode) error")
-                    }
+                    safeCompletion(nil, "HTTP \(http.statusCode) error")
                     return
                 }
-                DispatchQueue.main.async {
-                    safeCompletion("HTTPS \(http.statusCode), \(data.count) bytes", nil)
-                }
+                safeCompletion("HTTPS \(http.statusCode), \(data.count) bytes", nil)
             } catch {
-                DispatchQueue.main.async {
-                    safeCompletion(nil, error.localizedDescription)
-                }
+                safeCompletion(nil, error.localizedDescription)
             }
         }
     }
@@ -249,9 +241,7 @@ public final class NativeScriptHostServicesAdapter: NSObject, @unchecked Sendabl
     ) {
         nonisolated(unsafe) let safeCompletion = completion
         guard let caller = context.appID else {
-            DispatchQueue.main.async {
-                safeCompletion(nil, "Unauthorized: No active Mini App session context.")
-            }
+            safeCompletion(nil, "Unauthorized: No active Mini App session context.")
             return
         }
         let ctx = context
@@ -260,9 +250,7 @@ public final class NativeScriptHostServicesAdapter: NSObject, @unchecked Sendabl
                 let canonical = HanlinHostCapabilityAuthority.canonicalCapabilityID(capability)
                 let auth = await HanlinHostCapabilityAuthority.shared.authorize(capability: canonical, context: ctx)
                 guard auth == .allowed else {
-                    DispatchQueue.main.async {
-                        safeCompletion(nil, "Permission denied: Mini App does not have '\(capability)' capability.")
-                    }
+                    safeCompletion(nil, "Permission denied: Mini App does not have '\(capability)' capability.")
                     return
                 }
                 let target = try HanlinAppID(validating: targetID)
@@ -281,13 +269,9 @@ public final class NativeScriptHostServicesAdapter: NSObject, @unchecked Sendabl
                 )
                 let response = try await broker.request(request)
                 let responseData = try response.value.canonicalJSONData()
-                DispatchQueue.main.async {
-                    safeCompletion(String(data: responseData, encoding: .utf8), nil)
-                }
+                safeCompletion(String(data: responseData, encoding: .utf8), nil)
             } catch {
-                DispatchQueue.main.async {
-                    safeCompletion(nil, error.localizedDescription)
-                }
+                safeCompletion(nil, error.localizedDescription)
             }
         }
     }

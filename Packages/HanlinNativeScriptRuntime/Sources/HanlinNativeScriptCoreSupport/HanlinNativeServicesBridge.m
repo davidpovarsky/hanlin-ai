@@ -305,7 +305,7 @@ static NSString *HanlinExecuteSyncWithTimeout(NSTimeInterval timeoutSeconds, Han
         NSDate *deadline = [NSDate dateWithTimeIntervalSinceNow:timeoutSeconds];
         while (!finished && [deadline timeIntervalSinceNow] > 0) {
             @autoreleasepool {
-                [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate dateWithTimeIntervalSinceNow:0.01]];
+                CFRunLoopRunInMode(kCFRunLoopDefaultMode, 0.02, false);
             }
         }
         if (!finished) {
