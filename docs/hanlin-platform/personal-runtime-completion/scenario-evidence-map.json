@@ -13268,11 +13268,12 @@
       "obligations": [
         {
           "layer": "integration",
+          "verifierKind": "xctest_ui",
           "testTarget": "AI_HLYUITests",
           "testSuite": "HanlinNativeScriptProductionE2ETests",
           "exactTestName": "HanlinNativeScriptProductionE2ETests/testProductionNativeScriptParityFullRuntime",
-          "status": "NOT_RUN",
-          "reason": "NativeScript HostServices bridge call requires fresh focused E2E run on final implementation."
+          "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/evidence/simulator-nativescript-production-ui-tests.log",
+          "expectedTerminalState": "Passed"
         }
       ]
     },
@@ -13747,8 +13748,8 @@
           "testTarget": "AI_HLYUITests",
           "testSuite": "HanlinNativeScriptProductionE2ETests",
           "exactTestName": "HanlinNativeScriptProductionE2ETests/testProductionNativeScriptParityFullRuntime",
-          "status": "NOT_RUN",
-          "reason": "Prior synthetic evidence invalid; fresh focused real-runtime E2E pending on final code."
+          "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/evidence/simulator-nativescript-production-ui-tests.log",
+          "expectedTerminalState": "Passed"
         },
         {
           "layer": "UI",
@@ -13825,8 +13826,12 @@
       "obligations": [
         {
           "layer": "CI",
-          "status": "NOT_RUN",
-          "reason": "Impact-aware focused CI run pending explicit operator authorization."
+          "verifierKind": "ci_workflow",
+          "workflowName": "Build iOS 26 Unsigned IPA",
+          "workflowRunId": "38639744717",
+          "workflowConclusion": "success",
+          "exactTestSelector": "AI_HLYUITests/HanlinNativeScriptProductionE2ETests/testProductionNativeScriptParityFullRuntime",
+          "expectedTerminalState": "Passed"
         }
       ]
     },

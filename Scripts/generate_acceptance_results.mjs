@@ -91,6 +91,17 @@ export const knownWorkflowRuns = {
     exactTestSelector: 'AI_HLYUITests/HanlinNativeScriptProductionE2ETests/testProductionNativeScriptParityFullRuntime',
     collectorStepExecuted: false, // Step 51 skipped
     collectorStepPassed: false
+  },
+  '38639744717': {
+    runId: '38639744717',
+    headSha: '72d18d3e4a9f0bd0eed7c53c291a1ade8bd9c24e',
+    workflowName: 'Build iOS 26 Unsigned IPA',
+    conclusion: 'success',
+    selectedJobId: '116112078848',
+    selectedJobPassed: true,
+    exactTestSelector: 'AI_HLYUITests/HanlinNativeScriptProductionE2ETests/testProductionNativeScriptParityFullRuntime',
+    collectorStepExecuted: true,
+    collectorStepPassed: true
   }
 };
 
@@ -180,11 +191,11 @@ export const evidenceManifest = {
   'phase1-ios-device-build.log': 'b3ec2bc98043ead3ca73723125c20675a47bb834696ad51f38cc429bb59f9964',
   'phase1-ios-simulator-build.log': 'b4382602e771f0bb14f514760a6a02df3d15be9769a525cf8d49d49d4eec0884',
   'phase1-swift-test.log': '8a46ccbc1b8d76cf423d87d012b50a5b7676bcffac12beaad60e7042938123ec',
-  'provider-conformance-summary.json': 'ece2f0d66506ada58d9f4adfdda62f215404693e7bedcd1a7d0bc54464355c36',
+  'provider-conformance-summary.json': '11b6d44f1f4c7cf8e02be6af30d25f70dbe3c3f44441671c27c18d46ded28192',
   'server-everything-integration.log': '60eb0a057a29e747cdacdc870b0ffe9b124455a49e2afc3c54cb7bf66ffe03f9',
   'simulator-downstream-unit-test-results.json': 'c40508883c8099e7f439289f3df8a3fbfbeaeeb55b57b3e8af0cc10243bc849b',
   'simulator-downstream-unit-tests.log': '5fe338d42c9264cb1cabf1ba8a547078cc3dbe93d8b389ad0f5d0e411a50d83b',
-  'simulator-nativescript-production-ui-tests.log': '0a726bc8acaf4e35b0334a59f1eb961ce54f8523ba4674f52bf856ae6d952a27',
+  'simulator-nativescript-production-ui-tests.log': 'f801fd667ff28469394fd910f52bc089a6280a47521e08cabff5a790b23d94ec',
   'simulator-scripting-acceptance.log': '080deac239275e0d0c3cca7296b6ded5503527e8de7554f383d196207f5e422a'
 };
 
