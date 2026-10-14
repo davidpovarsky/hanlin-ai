@@ -9,6 +9,7 @@ const repoRoot = path.resolve(__dirname, '../..');
 
 const masterSpecPath = path.join(repoRoot, 'docs/hanlin-platform/personal-runtime-completion/authoritative-master-spec.md');
 const mapPath = path.join(repoRoot, 'docs/hanlin-platform/personal-runtime-completion/scenario-evidence-map.json');
+const acceptanceJsonPath = path.join(repoRoot, 'docs/hanlin-platform/personal-runtime-completion/acceptance-results.json');
 const auditJsonPath = path.join(repoRoot, 'docs/hanlin-platform/personal-runtime-completion/semantic-coverage-audit.json');
 const auditMdPath = path.join(repoRoot, 'docs/hanlin-platform/personal-runtime-completion/semantic-coverage-audit.md');
 
@@ -38,23 +39,27 @@ if (masterScenarios.length !== 493) {
   throw new Error(`Expected 493 MASTER scenarios, found ${masterScenarios.length}`);
 }
 
-// 2. Read scenario-evidence-map.json
+// 2. Read scenario-evidence-map.json and canonical acceptance results
 const rawMapData = JSON.parse(fs.readFileSync(mapPath, 'utf8'));
 const scenariosMap = rawMapData.scenarios || rawMapData;
+const canonicalResults = fs.existsSync(acceptanceJsonPath)
+  ? JSON.parse(fs.readFileSync(acceptanceJsonPath, 'utf8')).results
+  : [];
+const canonicalMap = new Map(canonicalResults.map(r => [r.testId, r]));
 
 // Audit and repair each scenario
 const auditedLedger = [];
 const e2eObligations = [
   { id: 'E2E-A', name: 'Skill Import & Package Policy Removal', target: 'AI_HLY/Downstream/AgentSkills/SkillImporter.swift', disposition: 'NEEDS_TEST', note: 'Streaming 64KB staging and /var alias support implemented; pending focused Apple run.' },
   { id: 'E2E-B', name: 'Agent Package Management & Accessible Filesystem (Python/Node/Shell)', target: 'AI_HLY/Downstream/RuntimeCore', disposition: 'NEEDS_TEST', note: 'Shared workspace and wheel install verified locally in unit tests; pending focused Apple run.' },
-  { id: 'E2E-C', name: 'Skill-Driven Progressive Discovery (load_skill / tool_search)', target: 'NativeToolCatalog / HanlinAISDKToolAdapter', disposition: 'REUSED_VERIFIED_PASS', note: 'Verified by CanonicalToolAuthorityTests and ToolSearchTool tests.' },
-  { id: 'E2E-D', name: 'Personal Data & System Services / Capabilities Simplification', target: 'HanlinHostCapabilityAuthority', disposition: 'REUSED_VERIFIED_PASS', note: 'Verified by HanlinUnifiedHostServicesAgentAcceptanceTests.' },
-  { id: 'E2E-E', name: 'Scripting Analyzer & Bundler', target: 'HanlinScriptCompiler', disposition: 'REUSED_VERIFIED_PASS', note: 'Verified by HanlinScriptingBundlerTests in HanlinPlatform.' },
-  { id: 'E2E-F', name: 'Limits, Streaming & Cancellation', target: 'APIManager / APIManagerStreamSession', disposition: 'REUSED_VERIFIED_PASS', note: 'Verified by APIManagerStreamingTests and MockLocalLLMController.' },
-  { id: 'E2E-G', name: 'Remote AI/Provider Loop Consolidation', target: 'HanlinAISDKAgentEngine', disposition: 'REUSED_VERIFIED_PASS', note: 'Consolidated text/tool execution verified.' },
+  { id: 'E2E-C', name: 'Skill-Driven Progressive Discovery (load_skill / tool_search)', target: 'NativeToolCatalog / HanlinAISDKToolAdapter', disposition: 'NEEDS_TEST', note: 'Unit tool tests verified; full multi-turn integrated discovery flow pending focused run.' },
+  { id: 'E2E-D', name: 'Personal Data & System Services / Capabilities Simplification', target: 'HanlinHostCapabilityAuthority', disposition: 'NEEDS_TEST', note: 'Unified host service bridge implemented; full integrated multi-session agent test pending.' },
+  { id: 'E2E-E', name: 'Scripting Analyzer & Bundler', target: 'HanlinScriptCompiler', disposition: 'NEEDS_TEST', note: 'Script compiler unit tests pass; integrated MiniApp packaging/execution pending focused run.' },
+  { id: 'E2E-F', name: 'Limits, Streaming & Cancellation', target: 'APIManager / APIManagerStreamSession', disposition: 'NEEDS_TEST', note: 'Mock LLM controller verified; real runtime model cancellation pending focused Apple run.' },
+  { id: 'E2E-G', name: 'Remote AI/Provider Loop Consolidation', target: 'HanlinAISDKAgentEngine', disposition: 'NEEDS_TEST', note: 'Consolidated text/tool execution verified at unit level; full provider loop pending focused run.' },
   { id: 'E2E-H', name: 'Shared cwd across Python, Node, Shell with package tools', target: 'HanlinRuntimeBroker / RuntimeFileLayout', disposition: 'NEEDS_TEST', note: 'FS-01 multi-engine shared workspace test implemented; pending focused Apple run.' },
-  { id: 'E2E-I', name: 'npm/MCP Installation & Single MCP Protocol Stack', target: 'NodePackageManager / MCPClientSession', disposition: 'REUSED_VERIFIED_PASS', note: 'MCP protocol stack verified in Phase 1 test suite.' },
-  { id: 'E2E-J', name: 'NativeScript & Expo MiniApps', target: 'HanlinNativeScriptRuntime / HanlinExpoRuntime', disposition: 'NEEDS_TEST', note: 'Bridge session clearing and challenge nonce proofs implemented; pending focused Apple run.' },
+  { id: 'E2E-I', name: 'npm/MCP Installation & Single MCP Protocol Stack', target: 'NodePackageManager / MCPClientSession', disposition: 'NEEDS_TEST', note: 'MCP protocol stack verified in Phase 1; end-to-end multi-turn client loop pending.' },
+  { id: 'E2E-J', name: 'NativeScript & Expo MiniApps', target: 'HanlinNativeScriptRuntime / HanlinExpoRuntime', disposition: 'NEEDS_TEST', note: 'Bridge session isolation hardened; focused E2E test pending execution on final code.' },
 ];
 
 for (const master of masterScenarios) {
@@ -62,7 +67,7 @@ for (const master of masterScenarios) {
   const current = scenariosMap[id] || { testId: id, requirements: [master.requirement], layers: master.layers, scenario: master.scenario, expectedOutcome: master.expectedOutcome, obligations: [] };
 
   let obligations = current.obligations || [];
-  let auditedDisposition = 'REUSED_VERIFIED_PASS';
+  let auditedDisposition = 'NOT_RUN';
   let auditNote = '';
 
   // Apply semantic corrections
@@ -75,7 +80,7 @@ for (const master of masterScenarios) {
       expectedTerminalState: 'Passed',
       verifierKind: 'swift_test'
     }];
-    auditedDisposition = 'REUSED_VERIFIED_PASS';
+    auditedDisposition = 'PASSED';
     auditNote = 'Authentic Phase 1 swift test execution on HanlinPlatform passed cleanly.';
   } else if (id === 'FINAL-02') {
     obligations = [
@@ -96,7 +101,7 @@ for (const master of masterScenarios) {
         verifierKind: 'node_tap'
       }
     ];
-    auditedDisposition = 'REUSED_VERIFIED_PASS';
+    auditedDisposition = 'PASSED';
     auditNote = 'Both runtime and unit integration TAP suites authentic and passed.';
   } else if (id === 'FINAL-03') {
     obligations = [{
@@ -361,6 +366,14 @@ for (const master of masterScenarios) {
         auditedDisposition = 'BLOCKED_INPUT_MODEL_FIXTURE';
       } else if (ob.status === 'FAILED') {
         auditedDisposition = 'FAILED';
+      } else if (ob.status === 'REUSED_VERIFIED_PASS') {
+        auditedDisposition = 'REUSED_VERIFIED_PASS';
+      }
+    }
+    if (auditedDisposition === 'NOT_RUN') {
+      const canonical = canonicalMap.get(id);
+      if (canonical && canonical.status) {
+        auditedDisposition = canonical.status;
       }
     }
   }

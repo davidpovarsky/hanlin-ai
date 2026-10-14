@@ -1,6 +1,6 @@
 {
   "schemaVersion": "2.2.0",
-  "generatedAt": "2026-10-13T19:05:37.597Z",
+  "generatedAt": "2026-10-14T22:58:29.868Z",
   "masterSpecSha256": "bf76406cee09800635933f6d61c64e3632c243b2ee2c037df5d969d8e3be07f4",
   "totalScenarios": 493,
   "scenarios": [
@@ -30,7 +30,7 @@
           "verifierKind": "repository_audit"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -51,7 +51,7 @@
           "verifierKind": "repository_audit"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -80,7 +80,7 @@
           "verifierKind": "repository_audit"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -109,7 +109,7 @@
           "verifierKind": "repository_audit"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -130,7 +130,7 @@
           "verifierKind": "repository_audit"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -151,7 +151,7 @@
           "verifierKind": "repository_audit"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -172,7 +172,7 @@
           "verifierKind": "repository_audit"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -201,7 +201,7 @@
           "verifierKind": "repository_audit"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -305,7 +305,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -398,7 +398,7 @@
           "verifierKind": "swift_test"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -420,7 +420,7 @@
           "expectedTerminalState": "Passed"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -472,7 +472,7 @@
           "verifierKind": "swift_test"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -493,7 +493,7 @@
           "verifierKind": "swift_test"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -524,7 +524,7 @@
           "expectedTerminalState": "Passed"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -554,7 +554,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -575,7 +575,7 @@
           "verifierKind": "swift_test"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -596,7 +596,7 @@
           "verifierKind": "swift_test"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -626,7 +626,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -728,7 +728,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -749,7 +749,7 @@
           "verifierKind": "swift_test"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -779,7 +779,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -800,7 +800,7 @@
           "verifierKind": "swift_test"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -830,7 +830,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -859,7 +859,7 @@
           "verifierKind": "swift_test"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -888,7 +888,7 @@
           "verifierKind": "swift_test"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -917,7 +917,7 @@
           "verifierKind": "swift_test"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -946,7 +946,7 @@
           "verifierKind": "swift_test"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -975,7 +975,7 @@
           "verifierKind": "swift_test"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -1013,7 +1013,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -1042,7 +1042,7 @@
           "verifierKind": "swift_test"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -1071,7 +1071,7 @@
           "verifierKind": "swift_test"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -1100,7 +1100,7 @@
           "verifierKind": "swift_test"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -1129,7 +1129,7 @@
           "verifierKind": "swift_test"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -1159,7 +1159,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -1189,7 +1189,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -1219,7 +1219,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -1249,7 +1249,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -1279,7 +1279,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -1300,7 +1300,7 @@
           "verifierKind": "swift_test"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -1330,7 +1330,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -1360,7 +1360,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -1381,7 +1381,7 @@
           "verifierKind": "swift_test"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -1402,7 +1402,7 @@
           "verifierKind": "swift_test"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -1432,7 +1432,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -1462,7 +1462,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -1491,7 +1491,7 @@
           "verifierKind": "swift_test"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -1520,7 +1520,7 @@
           "verifierKind": "swift_test"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -1549,7 +1549,7 @@
           "verifierKind": "swift_test"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -1570,7 +1570,7 @@
           "verifierKind": "swift_test"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -1591,7 +1591,7 @@
           "verifierKind": "swift_test"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -1621,7 +1621,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -1650,7 +1650,7 @@
           "verifierKind": "build_command"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -1671,7 +1671,7 @@
           "verifierKind": "swift_test"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -1692,7 +1692,7 @@
           "verifierKind": "swift_test"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -1713,7 +1713,7 @@
           "verifierKind": "swift_test"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -1743,7 +1743,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -1764,7 +1764,7 @@
           "verifierKind": "swift_test"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -1794,7 +1794,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -1824,7 +1824,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -1853,7 +1853,7 @@
           "verifierKind": "swift_test"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -1883,7 +1883,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -1913,7 +1913,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -1934,7 +1934,7 @@
           "verifierKind": "swift_test"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -1964,7 +1964,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -1985,7 +1985,7 @@
           "verifierKind": "swift_test"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -2015,7 +2015,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -2045,7 +2045,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -2147,7 +2147,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -2177,7 +2177,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -2198,7 +2198,7 @@
           "verifierKind": "swift_test"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -2228,7 +2228,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -2249,7 +2249,7 @@
           "verifierKind": "swift_test"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -2279,7 +2279,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -2309,7 +2309,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -2330,7 +2330,7 @@
           "verifierKind": "swift_test"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -2397,7 +2397,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -2427,7 +2427,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -2493,7 +2493,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -2579,7 +2579,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -2609,7 +2609,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -2639,7 +2639,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -2660,7 +2660,7 @@
           "verifierKind": "swift_test"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -2681,7 +2681,7 @@
           "verifierKind": "swift_test"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -2711,7 +2711,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -2741,7 +2741,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -2771,7 +2771,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -2801,7 +2801,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -2831,7 +2831,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -2861,7 +2861,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -2882,7 +2882,7 @@
           "verifierKind": "swift_test"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -2903,7 +2903,7 @@
           "verifierKind": "swift_test"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -2970,7 +2970,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -3001,7 +3001,7 @@
           "expectedTerminalState": "Passed"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -3068,7 +3068,7 @@
           "expectedTerminalState": "Passed"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -3098,7 +3098,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -3128,7 +3128,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -3158,7 +3158,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -3188,7 +3188,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -3218,7 +3218,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -3248,7 +3248,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -3278,7 +3278,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -3308,7 +3308,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -3338,7 +3338,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -3368,7 +3368,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -3434,7 +3434,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -3464,7 +3464,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -3494,7 +3494,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -3524,7 +3524,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -3554,7 +3554,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -3692,7 +3692,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -3722,7 +3722,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -3788,7 +3788,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -3818,7 +3818,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -3848,7 +3848,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -3878,7 +3878,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -3908,7 +3908,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -3938,7 +3938,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -4004,7 +4004,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -4069,7 +4069,7 @@
           "verifierKind": "build_command"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -4099,7 +4099,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -4129,7 +4129,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -4159,7 +4159,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -5055,7 +5055,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -5085,7 +5085,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -5115,7 +5115,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -5181,7 +5181,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -5211,7 +5211,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -5241,7 +5241,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -5271,7 +5271,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -5292,7 +5292,7 @@
           "verifierKind": "node_tap"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -5313,7 +5313,7 @@
           "verifierKind": "node_tap"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -5334,7 +5334,7 @@
           "verifierKind": "node_tap"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -5364,7 +5364,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -5385,7 +5385,7 @@
           "verifierKind": "node_tap"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -5406,7 +5406,7 @@
           "verifierKind": "node_tap"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -5531,7 +5531,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -5561,7 +5561,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -5591,7 +5591,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -5612,7 +5612,7 @@
           "verifierKind": "swift_test"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -5642,7 +5642,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -5672,7 +5672,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -5702,7 +5702,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -5723,7 +5723,7 @@
           "verifierKind": "swift_test"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -5752,7 +5752,7 @@
           "verifierKind": "swift_test"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -5782,7 +5782,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -5811,7 +5811,7 @@
           "verifierKind": "swift_test"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -5840,7 +5840,7 @@
           "verifierKind": "swift_test"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -5861,7 +5861,7 @@
           "verifierKind": "swift_test"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -5882,7 +5882,7 @@
           "verifierKind": "swift_test"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -5903,7 +5903,7 @@
           "verifierKind": "swift_test"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -5969,7 +5969,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -6027,7 +6027,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -6057,7 +6057,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -6087,7 +6087,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -6117,7 +6117,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -6147,7 +6147,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -6233,7 +6233,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -6263,7 +6263,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -6292,7 +6292,7 @@
           "verifierKind": "swift_test"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -6321,7 +6321,7 @@
           "verifierKind": "swift_test"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -6350,7 +6350,7 @@
           "verifierKind": "swift_test"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -6379,7 +6379,7 @@
           "verifierKind": "swift_test"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -6409,7 +6409,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -6498,7 +6498,7 @@
           "verifierKind": "swift_test"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -6528,7 +6528,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -6558,7 +6558,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -6607,7 +6607,7 @@
           "verifierKind": "swift_test"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -6637,7 +6637,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -6666,7 +6666,7 @@
           "verifierKind": "swift_test"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -6696,7 +6696,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -6726,7 +6726,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -6756,7 +6756,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -6785,7 +6785,7 @@
           "verifierKind": "swift_test"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -6814,7 +6814,7 @@
           "verifierKind": "swift_test"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -6844,7 +6844,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -6873,7 +6873,7 @@
           "verifierKind": "swift_test"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -6903,7 +6903,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -6933,7 +6933,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -6954,7 +6954,7 @@
           "verifierKind": "swift_test"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -6984,7 +6984,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -7022,7 +7022,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -7052,7 +7052,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -7082,7 +7082,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -7112,7 +7112,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -7222,7 +7222,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -7288,7 +7288,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -7382,7 +7382,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -7403,7 +7403,7 @@
           "verifierKind": "swift_test"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -7433,7 +7433,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -7463,7 +7463,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -7493,7 +7493,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -7667,7 +7667,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -7697,7 +7697,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -7727,7 +7727,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -7757,7 +7757,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -7787,7 +7787,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -7817,7 +7817,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -7847,7 +7847,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -7913,7 +7913,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -7943,7 +7943,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -7973,7 +7973,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -8003,7 +8003,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -8033,7 +8033,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -8063,7 +8063,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -8093,7 +8093,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -8123,7 +8123,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -8153,7 +8153,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -8183,7 +8183,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -8213,7 +8213,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -8279,7 +8279,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -8309,7 +8309,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -8339,7 +8339,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -8369,7 +8369,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -8399,7 +8399,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -8429,7 +8429,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -8459,7 +8459,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -8489,7 +8489,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -8519,7 +8519,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -8549,7 +8549,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -8579,7 +8579,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -8609,7 +8609,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -9034,7 +9034,7 @@
           "verifierKind": "build_command"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -9055,7 +9055,7 @@
           "verifierKind": "build_command"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -9076,7 +9076,7 @@
           "verifierKind": "build_command"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -9161,7 +9161,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -9191,7 +9191,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -9221,7 +9221,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -9286,7 +9286,7 @@
           "verifierKind": "repository_audit"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -9307,7 +9307,7 @@
           "verifierKind": "swift_test"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -9328,7 +9328,7 @@
           "verifierKind": "swift_test"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -9349,7 +9349,7 @@
           "verifierKind": "swift_test"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -9370,7 +9370,7 @@
           "verifierKind": "swift_test"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -9391,7 +9391,7 @@
           "verifierKind": "swift_test"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -9412,7 +9412,7 @@
           "verifierKind": "swift_test"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -9433,7 +9433,7 @@
           "verifierKind": "swift_test"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -9454,7 +9454,7 @@
           "verifierKind": "swift_test"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -9475,7 +9475,7 @@
           "verifierKind": "swift_test"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -9496,7 +9496,7 @@
           "verifierKind": "swift_test"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -9517,7 +9517,7 @@
           "verifierKind": "swift_test"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -9538,7 +9538,7 @@
           "verifierKind": "swift_test"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -9567,7 +9567,7 @@
           "verifierKind": "build_command"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -9589,7 +9589,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -9611,7 +9611,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -9633,7 +9633,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -9655,7 +9655,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -9677,7 +9677,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -9698,7 +9698,7 @@
           "verifierKind": "repository_audit"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -9728,7 +9728,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -9749,7 +9749,7 @@
           "verifierKind": "swift_test"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -9770,7 +9770,7 @@
           "verifierKind": "swift_test"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -9791,7 +9791,7 @@
           "verifierKind": "repository_audit"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -9821,7 +9821,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -9851,7 +9851,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -9873,7 +9873,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -9895,7 +9895,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -9917,7 +9917,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -9939,7 +9939,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -9961,7 +9961,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -9983,7 +9983,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -10005,7 +10005,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -10027,7 +10027,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -10049,7 +10049,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -10071,7 +10071,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -10093,7 +10093,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -10115,7 +10115,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -10137,7 +10137,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -10159,7 +10159,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -10181,7 +10181,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -10203,7 +10203,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -10225,7 +10225,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -10247,7 +10247,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -10269,7 +10269,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -10347,7 +10347,7 @@
           "expectedTerminalState": "Passed"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -10369,7 +10369,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -10391,7 +10391,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -10422,7 +10422,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -10451,7 +10451,7 @@
           "verifierKind": "repository_audit"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -10480,7 +10480,7 @@
           "verifierKind": "repository_audit"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -10509,7 +10509,7 @@
           "verifierKind": "repository_audit"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -10531,7 +10531,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -10553,7 +10553,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -10575,7 +10575,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -10597,7 +10597,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -10619,7 +10619,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -10641,7 +10641,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -10663,7 +10663,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -10685,7 +10685,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -10707,7 +10707,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -10729,7 +10729,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -10751,7 +10751,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -10773,7 +10773,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -10795,7 +10795,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -10817,7 +10817,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -10839,7 +10839,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -10861,7 +10861,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -10883,7 +10883,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -10933,7 +10933,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -10963,7 +10963,7 @@
           "verifierKind": "swift_test"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -10993,7 +10993,7 @@
           "verifierKind": "swift_test"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -11024,7 +11024,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -11046,7 +11046,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -11068,7 +11068,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -11106,7 +11106,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -11127,7 +11127,7 @@
           "verifierKind": "swift_test"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -11148,7 +11148,7 @@
           "verifierKind": "swift_test"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -11169,7 +11169,7 @@
           "verifierKind": "swift_test"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -11190,7 +11190,7 @@
           "verifierKind": "swift_test"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -11211,7 +11211,7 @@
           "verifierKind": "swift_test"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -11232,7 +11232,7 @@
           "verifierKind": "swift_test"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -11253,7 +11253,7 @@
           "verifierKind": "swift_test"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -11275,7 +11275,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -11297,7 +11297,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -11318,7 +11318,7 @@
           "verifierKind": "swift_test"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -11339,7 +11339,7 @@
           "verifierKind": "swift_test"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -11360,7 +11360,7 @@
           "verifierKind": "swift_test"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -11381,7 +11381,7 @@
           "verifierKind": "swift_test"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -11403,7 +11403,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -11425,7 +11425,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -11447,7 +11447,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -11469,7 +11469,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -11491,7 +11491,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -11513,7 +11513,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -11534,7 +11534,7 @@
           "verifierKind": "swift_test"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -11563,7 +11563,7 @@
           "verifierKind": "repository_audit"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -11593,7 +11593,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -11614,7 +11614,7 @@
           "verifierKind": "repository_audit"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -11635,7 +11635,7 @@
           "verifierKind": "repository_audit"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -11656,7 +11656,7 @@
           "verifierKind": "repository_audit"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -11685,7 +11685,7 @@
           "verifierKind": "repository_audit"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -11706,7 +11706,7 @@
           "verifierKind": "swift_test"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -11727,7 +11727,7 @@
           "verifierKind": "swift_test"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -11748,7 +11748,7 @@
           "verifierKind": "repository_audit"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -11770,7 +11770,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -11810,7 +11810,7 @@
           "verifierKind": "repository_audit"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -11854,7 +11854,7 @@
           "verifierKind": "swift_test"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -11883,7 +11883,7 @@
           "verifierKind": "swift_test"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -11969,7 +11969,7 @@
           "verifierKind": "repository_audit"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -11991,7 +11991,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -12138,7 +12138,7 @@
           "verifierKind": "node_tap"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -12159,7 +12159,7 @@
           "verifierKind": "node_tap"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -12180,7 +12180,7 @@
           "verifierKind": "node_tap"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -12201,7 +12201,7 @@
           "verifierKind": "node_tap"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -12222,7 +12222,7 @@
           "verifierKind": "node_tap"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -12244,7 +12244,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -12265,7 +12265,7 @@
           "verifierKind": "repository_audit"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -12287,7 +12287,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -12308,7 +12308,7 @@
           "verifierKind": "repository_audit"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -12329,7 +12329,7 @@
           "verifierKind": "swift_test"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -12350,7 +12350,7 @@
           "verifierKind": "swift_test"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -12414,7 +12414,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -12436,7 +12436,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -12457,7 +12457,7 @@
           "verifierKind": "swift_test"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -12478,7 +12478,7 @@
           "verifierKind": "repository_audit"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -12500,7 +12500,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -12521,7 +12521,7 @@
           "verifierKind": "repository_audit"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -12542,7 +12542,7 @@
           "verifierKind": "repository_audit"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -12563,7 +12563,7 @@
           "verifierKind": "repository_audit"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -12585,7 +12585,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -12607,7 +12607,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -12629,7 +12629,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -12650,7 +12650,7 @@
           "verifierKind": "repository_audit"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -12809,7 +12809,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -12831,7 +12831,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -12853,7 +12853,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -12875,7 +12875,7 @@
           "verifierKind": "xctest"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -12896,7 +12896,7 @@
           "verifierKind": "repository_audit"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -12917,7 +12917,7 @@
           "verifierKind": "repository_audit"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -12938,7 +12938,7 @@
           "verifierKind": "repository_audit"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -12967,7 +12967,7 @@
           "verifierKind": "repository_audit"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -12988,7 +12988,7 @@
           "verifierKind": "swift_test"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -13009,7 +13009,7 @@
           "verifierKind": "repository_audit"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -13030,7 +13030,7 @@
           "verifierKind": "repository_audit"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -13051,7 +13051,7 @@
           "verifierKind": "repository_audit"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -13072,7 +13072,7 @@
           "verifierKind": "repository_audit"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -13101,7 +13101,7 @@
           "verifierKind": "repository_audit"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": ""
     },
     {
@@ -13122,7 +13122,7 @@
           "verifierKind": "swift_test"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": "Authentic Phase 1 swift test execution on HanlinPlatform passed cleanly."
     },
     {
@@ -13151,7 +13151,7 @@
           "verifierKind": "node_tap"
         }
       ],
-      "disposition": "REUSED_VERIFIED_PASS",
+      "disposition": "PASSED",
       "note": "Both runtime and unit integration TAP suites authentic and passed."
     },
     {
@@ -13443,36 +13443,36 @@
       "id": "E2E-C",
       "name": "Skill-Driven Progressive Discovery (load_skill / tool_search)",
       "target": "NativeToolCatalog / HanlinAISDKToolAdapter",
-      "disposition": "REUSED_VERIFIED_PASS",
-      "note": "Verified by CanonicalToolAuthorityTests and ToolSearchTool tests."
+      "disposition": "NEEDS_TEST",
+      "note": "Unit tool tests verified; full multi-turn integrated discovery flow pending focused run."
     },
     {
       "id": "E2E-D",
       "name": "Personal Data & System Services / Capabilities Simplification",
       "target": "HanlinHostCapabilityAuthority",
-      "disposition": "REUSED_VERIFIED_PASS",
-      "note": "Verified by HanlinUnifiedHostServicesAgentAcceptanceTests."
+      "disposition": "NEEDS_TEST",
+      "note": "Unified host service bridge implemented; full integrated multi-session agent test pending."
     },
     {
       "id": "E2E-E",
       "name": "Scripting Analyzer & Bundler",
       "target": "HanlinScriptCompiler",
-      "disposition": "REUSED_VERIFIED_PASS",
-      "note": "Verified by HanlinScriptingBundlerTests in HanlinPlatform."
+      "disposition": "NEEDS_TEST",
+      "note": "Script compiler unit tests pass; integrated MiniApp packaging/execution pending focused run."
     },
     {
       "id": "E2E-F",
       "name": "Limits, Streaming & Cancellation",
       "target": "APIManager / APIManagerStreamSession",
-      "disposition": "REUSED_VERIFIED_PASS",
-      "note": "Verified by APIManagerStreamingTests and MockLocalLLMController."
+      "disposition": "NEEDS_TEST",
+      "note": "Mock LLM controller verified; real runtime model cancellation pending focused Apple run."
     },
     {
       "id": "E2E-G",
       "name": "Remote AI/Provider Loop Consolidation",
       "target": "HanlinAISDKAgentEngine",
-      "disposition": "REUSED_VERIFIED_PASS",
-      "note": "Consolidated text/tool execution verified."
+      "disposition": "NEEDS_TEST",
+      "note": "Consolidated text/tool execution verified at unit level; full provider loop pending focused run."
     },
     {
       "id": "E2E-H",
@@ -13485,15 +13485,15 @@
       "id": "E2E-I",
       "name": "npm/MCP Installation & Single MCP Protocol Stack",
       "target": "NodePackageManager / MCPClientSession",
-      "disposition": "REUSED_VERIFIED_PASS",
-      "note": "MCP protocol stack verified in Phase 1 test suite."
+      "disposition": "NEEDS_TEST",
+      "note": "MCP protocol stack verified in Phase 1; end-to-end multi-turn client loop pending."
     },
     {
       "id": "E2E-J",
       "name": "NativeScript & Expo MiniApps",
       "target": "HanlinNativeScriptRuntime / HanlinExpoRuntime",
       "disposition": "NEEDS_TEST",
-      "note": "Bridge session clearing and challenge nonce proofs implemented; pending focused Apple run."
+      "note": "Bridge session isolation hardened; focused E2E test pending execution on final code."
     }
   ]
 }

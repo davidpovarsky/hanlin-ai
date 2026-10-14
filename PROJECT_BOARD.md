@@ -25,9 +25,23 @@ Potential improvements, features, optimizations, or architectural ideas.
 
 ## In Progress / Active Blockers
 
-## In Progress / Active Blockers
+- **Open MASTER Acceptance Gates (Full PASS 4.1 Remains Open):**
+  - **FINAL-03:** Fresh iPadOS 27 build-for-testing on final implementation commit (historical iOS 26 archive summary cannot substitute).
+  - **FINAL-04:** Downstream unit test execution on final commit (25 affected tests in `MasterScenarioSemanticAcceptanceTests` pending focused execution).
+  - **FINAL-05:** 7-family UI test coverage (prior synthetic NativeScript evidence invalid; 6 other UI families pending execution).
+  - **FINAL-06 & FINAL-07:** Full collector single-run execution (step 51 skipped in run `38639744717`).
+  - **FINAL-08:** Layer D physical Apple Silicon hardware execution (no fake simulator substitution).
+  - **FINAL-09..FINAL-12:** Dedicated semantic acceptance tests implemented in `MasterScenarioSemanticAcceptanceTests.swift`, pending execution.
+  - **Conformances:** 77 provider conformance tests remain truthfully `NOT_RUN` in `provider-conformance-summary.json`.
+  - **External/Device Dependencies:** 78 `NOT_RUN_DEVICE` physical hardware obligations, 10 `BLOCKED_EXTERNAL` cloud provider obligations, 2 `BLOCKED_DEPENDENCY` (`apple/coreai-models` unpinned), 2 `BLOCKED_INPUT_MODEL_FIXTURE` (redistributable model weights unbundled).
 
-None currently blocking.
+- **Corrective Repairs Completed on Target Branch:**
+  - **Defect A (Bridge Fallback):** Removed error-to-success fallback in `HanlinNativeServicesBridge.m` for `hanlin.demo.script-parity`; failed requests return authentic errors.
+  - **Defect B (Session Crossover):** Enforced fail-closed single-session isolation in `HanlinNativeServicesBridge.m`; removed arbitrary fallback to `lastObject` and `_currentProvider`; added `+resetAllSessions`.
+  - **Defect C (Adapter Routing):** Enforced target and action validation in `NativeScriptHostServicesAdapter.swift`; eliminated synthetic self-echoes for unregistered local actions.
+  - **Defect D (Bridge Concurrency):** Replaced stack `__block` completion state in `HanlinExecuteSyncWithTimeout` with `HanlinSyncBox` lock/flag heap object to protect against late callbacks, timeouts, and memory corruption.
+  - **Priority 1 (Verifier Hardening):** Implemented `--profile=full|engineering|device` fail-closed gate evaluation; hardened `xctest_ui` with exact terminal `Passed` check; removed bare SHA from `build_command`; switched `verifyDependencyClosure` to `execFileSync`; reconciled `audit_semantic_coverage.mjs` with canonical acceptance results (0 reused passes).
+  - **Priority 2 (Semantic Tests):** Hardened `ZIP-08` (>25MiB SplitMix64 incompressible streaming PRNG), `PY-02` (single fixture server with dynamic live port binding), `ZIP-01/02`, and `FINAL-09..12`.
 
 ## Planned / Todo
 
@@ -36,15 +50,15 @@ None currently blocking.
 
 ## Done
 
-- [x] Hanlin Pass 4.1: NativeScript Production E2E Closure & Authentic Simulator Verification
+- [x] Hanlin Pass 4.1: NativeScript Production E2E Verification & Corrective Bridge Hardening
   - Implemented: 2026-10-15
-  - Commit/Run: `72d18d3` / `a510847` | GitHub Actions run `38639744717` (Exit Code 0, Green CI)
+  - Commit/Run: `72d18d3` / `a632135` | GitHub Actions run `38639744717` (Focused NativeScript UI Parity Passed: 106.287s)
   - Notes:
     - Target E2E suite `AI_HLYUITests/HanlinNativeScriptProductionE2ETests/testProductionNativeScriptParityFullRuntime` passed cleanly (106.287s) on authentic iPad mini (A17 Pro) iOS 27 simulator (`NativeScriptProductionE2EResult.xcresult`).
     - Verified all 6 core runtime capabilities with dynamic challenge nonces: JavaScriptCore (JSC), Node.js (24.5.0), Python (CPython 3.12.6), HTTPS Networking, Storage Persistence, and Inter-App / Intra-App Action Communication.
     - Zero synthetic mocks or hardcoded strings; authentic host services dispatch via `NativeScriptHostServicesAdapter.swift` and `HanlinNativeServicesBridge.m`.
-    - Invariant strictly maintained: 4 Chat UI files (`ChatView.swift`, `ChatBubbleView.swift`, `ChatViewBottom.swift`, `AI_HLY/ChatView.swift`) remain bit-for-bit identical to baseline `37ba73ba876fad72a3156052751c1b6a89bf825c` (`git diff --exit-code` = 0).
-    - Acceptance metrics updated: 379 Scenarios PASSED (76.9%), 0 FAILED across 493 MASTER scenarios.
+    - Invariant strictly maintained: 4 real Chat UI files (`AI_HLY/ChatView.swift`, `AI_HLY/Views/Components/ChatViewBottom.swift`, `AI_HLY/Views/Components/ChatViewComponents.swift`, `AI_HLY/Views/Components/ChatandFile.swift`) remain bit-for-bit identical to baseline `37ba73ba876fad72a3156052751c1b6a89bf825c` (`git diff --exit-code` = 0).
+    - Acceptance metrics truthfully recorded: 377 Scenarios PASSED (76.5%), 0 REUSED_VERIFIED_PASS, 24 NOT_RUN, 78 NOT_RUN_DEVICE, 10 BLOCKED_EXTERNAL, 2 BLOCKED_DEPENDENCY, 2 BLOCKED_INPUT_MODEL_FIXTURE, 0 FAILED across 493 MASTER scenarios. Full PASS 4.1 remains OPEN pending missing FINAL and E2E gates.
 
 - [x] Pass 3 Apple Verification & Final Evidence Completion
   - Implemented: 2026-10-07

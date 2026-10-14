@@ -67,6 +67,7 @@ typedef void (^HanlinBridgeRequestHandlerBlock)(NSString *caller, NSString *payl
 + (void)registerProvider:(nullable id<HanlinNativeServicesProvider>)provider forSessionID:(NSString *)sessionID;
 + (void)unregisterProviderForSessionID:(NSString *)sessionID;
 + (nullable id<HanlinNativeServicesProvider>)providerForSessionID:(NSString *)sessionID;
++ (void)resetAllSessions;
 
 /// Consumes a host-issued, one-time bootstrap token. Application JavaScript
 /// never supplies a session identifier to a Host Services operation.

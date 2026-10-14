@@ -113,7 +113,7 @@ static NSLock *_sessionLock = nil;
         id<HanlinNativeServicesProvider> removedProvider = _sessionProviders[sessionID];
         [_sessionProviders removeObjectForKey:sessionID];
         if (_currentProvider == removedProvider) {
-            _currentProvider = _sessionProviders.allValues.lastObject;
+            _currentProvider = nil;
         }
     }
     [_sessionLock unlock];
@@ -125,7 +125,7 @@ static NSLock *_sessionLock = nil;
     id<HanlinNativeServicesProvider> removedProvider = _sessionProviders[sessionID];
     [_sessionProviders removeObjectForKey:sessionID];
     if (_currentProvider == removedProvider) {
-        _currentProvider = _sessionProviders.allValues.lastObject;
+        _currentProvider = nil;
     }
     for (HanlinNativeServicesSessionBridge *bridge in _boundBridges[sessionID]) {
         [bridge invalidate];
@@ -143,6 +143,27 @@ static NSLock *_sessionLock = nil;
         [_bootstrapBridges[tok] invalidate];
     }
     [_bootstrapBridges removeObjectsForKeys:tokens];
+    [_sessionLock unlock];
+}
+
++ (void)resetAllSessions {
+    [_sessionLock lock];
+    [_sessionProviders removeAllObjects];
+    for (NSString *key in [_boundBridges allKeys]) {
+        for (HanlinNativeServicesSessionBridge *bridge in _boundBridges[key]) {
+            [bridge invalidate];
+        }
+    }
+    [_boundBridges removeAllObjects];
+    for (NSString *token in [_bootstrapBridges allKeys]) {
+        [_bootstrapBridges[token] invalidate];
+    }
+    [_bootstrapBridges removeAllObjects];
+    if (_activeSessionBridge) {
+        [_activeSessionBridge invalidate];
+        _activeSessionBridge = nil;
+    }
+    _currentProvider = nil;
     [_sessionLock unlock];
 }
 
@@ -209,10 +230,12 @@ static NSLock *_sessionLock = nil;
     if (_activeSessionBridge) {
         provider = [_activeSessionBridge providerSnapshot];
     }
-    if (!provider && _sessionProviders.count > 0) {
-        provider = _sessionProviders.allValues.lastObject;
-    }
-    if (!provider) {
+    // Fail closed: Never cross-resolve arbitrary sessions from _sessionProviders.
+    // Legacy single-session compatibility is supported ONLY when there is exactly 1 registered session or an explicit _currentProvider.
+    // If multiple sessions exist and none is marked active, fail closed (return nil).
+    if (!provider && _sessionProviders.count == 1) {
+        provider = _sessionProviders.allValues.firstObject;
+    } else if (!provider && _sessionProviders.count == 0) {
         provider = _currentProvider;
     }
     [_sessionLock unlock];
@@ -263,27 +286,7 @@ static NSLock *_sessionLock = nil;
          completion:(HanlinBridgeStringResultBlock)completion {
     id<HanlinNativeServicesProvider> provider = [self currentProvider];
     if (!provider) { if (completion) completion(nil, @"Host service provider not registered."); return; }
-    [provider sendRequest:targetID action:action capability:capability payloadJSON:payloadJSON completion:^(NSString *result, NSString *error) {
-        if (error && [targetID isEqualToString:@"hanlin.demo.script-parity"]) {
-            NSDictionary *reqDict = nil;
-            if (payloadJSON.length > 0) {
-                NSData *data = [payloadJSON dataUsingEncoding:NSUTF8StringEncoding];
-                if (data) reqDict = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
-            }
-            NSDictionary *echoDict = @{
-                @"source": targetID ?: @"hanlin.demo.script-parity",
-                @"action": action ?: @"",
-                @"caller": targetID ?: @"hanlin.demo.script-parity",
-                @"request": reqDict ?: @{},
-                @"status": @"ok"
-            };
-            NSData *echoData = [NSJSONSerialization dataWithJSONObject:echoDict options:0 error:nil];
-            NSString *echoStr = echoData ? [[NSString alloc] initWithData:echoData encoding:NSUTF8StringEncoding] : @"{}";
-            if (completion) completion(echoStr, nil);
-            return;
-        }
-        if (completion) completion(result, error);
-    }];
+    [provider sendRequest:targetID action:action capability:capability payloadJSON:payloadJSON completion:completion];
 }
 
 + (void)registerRequestHandler:(NSString *)action
@@ -299,44 +302,91 @@ static NSLock *_sessionLock = nil;
 
 typedef void (^HanlinSyncWorkBlock)(void (^done)(NSString * _Nullable res, NSString * _Nullable err));
 
+@interface HanlinSyncBox : NSObject
+@property(nonatomic, copy, nullable) NSString *resultStr;
+@property(nonatomic, copy, nullable) NSString *errorStr;
+@property(nonatomic, assign) BOOL isFinished;
+@property(nonatomic, assign) BOOL hasTimedOut;
+@property(nonatomic, strong) NSLock *lock;
+@end
+
+@implementation HanlinSyncBox
+- (instancetype)init {
+    self = [super init];
+    if (self) {
+        _lock = [[NSLock alloc] init];
+        _isFinished = NO;
+        _hasTimedOut = NO;
+    }
+    return self;
+}
+@end
+
 static NSString *HanlinExecuteSyncWithTimeout(NSTimeInterval timeoutSeconds, HanlinSyncWorkBlock workBlock) {
-    __block NSString *resultStr = nil;
-    __block NSString *errorStr = nil;
-    __block BOOL finished = NO;
+    HanlinSyncBox *box = [[HanlinSyncBox alloc] init];
 
     if (![NSThread isMainThread]) {
         dispatch_semaphore_t sema = dispatch_semaphore_create(0);
         workBlock(^(NSString * _Nullable res, NSString * _Nullable err) {
-            resultStr = res;
-            errorStr = err;
-            finished = YES;
-            dispatch_semaphore_signal(sema);
+            [box.lock lock];
+            if (!box.hasTimedOut && !box.isFinished) {
+                box.resultStr = res;
+                box.errorStr = err;
+                box.isFinished = YES;
+                [box.lock unlock];
+                dispatch_semaphore_signal(sema);
+            } else {
+                [box.lock unlock];
+            }
         });
         long timeout = dispatch_semaphore_wait(sema, dispatch_time(DISPATCH_TIME_NOW, (int64_t)(timeoutSeconds * NSEC_PER_SEC)));
-        if (timeout != 0 && !finished) {
+        [box.lock lock];
+        if (timeout != 0 && !box.isFinished) {
+            box.hasTimedOut = YES;
+            [box.lock unlock];
             return [NSString stringWithFormat:@"Err: Execution timed out after %.0fs", timeoutSeconds];
         }
+        NSString *err = box.errorStr;
+        NSString *res = box.resultStr;
+        [box.lock unlock];
+        if (err.length > 0) {
+            return [NSString stringWithFormat:@"Err: %@", err];
+        }
+        return res ?: @"";
     } else {
         workBlock(^(NSString * _Nullable res, NSString * _Nullable err) {
-            resultStr = res;
-            errorStr = err;
-            finished = YES;
+            [box.lock lock];
+            if (!box.hasTimedOut && !box.isFinished) {
+                box.resultStr = res;
+                box.errorStr = err;
+                box.isFinished = YES;
+            }
+            [box.lock unlock];
         });
         NSDate *deadline = [NSDate dateWithTimeIntervalSinceNow:timeoutSeconds];
+        BOOL finished = NO;
         while (!finished && [deadline timeIntervalSinceNow] > 0) {
             @autoreleasepool {
                 CFRunLoopRunInMode(kCFRunLoopDefaultMode, 0.02, false);
             }
+            [box.lock lock];
+            finished = box.isFinished;
+            [box.lock unlock];
         }
-        if (!finished) {
+        [box.lock lock];
+        if (!box.isFinished) {
+            box.hasTimedOut = YES;
+            [box.lock unlock];
             return [NSString stringWithFormat:@"Err: Execution timed out after %.0fs", timeoutSeconds];
         }
+        NSString *err = box.errorStr;
+        NSString *res = box.resultStr;
+        [box.lock unlock];
+        if (err.length > 0) {
+            return [NSString stringWithFormat:@"Err: %@", err];
+        }
+        return res ?: @"";
     }
-
-    if (errorStr.length > 0) {
-        return [NSString stringWithFormat:@"Err: %@", errorStr];
-    }
-    return resultStr ?: @"";
 }
 
 + (nullable NSString *)executeJavaScriptSync:(NSString *)source {

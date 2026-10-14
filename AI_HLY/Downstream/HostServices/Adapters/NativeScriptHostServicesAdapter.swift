@@ -259,25 +259,21 @@ public final class NativeScriptHostServicesAdapter: NSObject, @unchecked Sendabl
                 let payloadData = payloadJSON.data(using: .utf8) ?? Data()
                 let payload = try JSONDecoder().decode(HanlinValue.self, from: payloadData)
 
-                // When target is the caller itself, or when this adapter has the action registered locally,
-                // handle directly rather than sending through the inter-app broker (which enforces caller != target).
-                if target == caller || self.hasRegisteredAction(actionID) {
-                    if self.hasRegisteredAction(actionID) {
-                        let responseValue = try await self.invokeRegisteredAction(
-                            actionID,
-                            capability: capabilityID,
-                            caller: caller,
-                            payload: payload
-                        )
-                        let responseData = try responseValue.canonicalJSONData()
-                        safeCompletion(String(data: responseData, encoding: .utf8), nil)
-                        return
-                    } else {
-                        // Intra-app echo response
-                        let echoJSON = "{\"source\":\"\(caller.rawValue)\",\"action\":\"\(actionID.rawValue)\",\"caller\":\"\(caller.rawValue)\",\"request\":\(payloadJSON),\"status\":\"ok\"}"
-                        safeCompletion(echoJSON, nil)
-                        return
+                // When target is the caller itself, handle directly via locally registered actions.
+                // An unregistered action MUST fail closed with routeNotFound (never synthesize a self-echo!).
+                if target == caller {
+                    guard self.hasRegisteredAction(actionID) else {
+                        throw HanlinMiniAppRequestError.routeNotFound
                     }
+                    let responseValue = try await self.invokeRegisteredAction(
+                        actionID,
+                        capability: capabilityID,
+                        caller: caller,
+                        payload: payload
+                    )
+                    let responseData = try responseValue.canonicalJSONData()
+                    safeCompletion(String(data: responseData, encoding: .utf8), nil)
+                    return
                 }
 
                 let broker = await MainActor.run { HanlinMiniAppHost.shared.requestBroker }

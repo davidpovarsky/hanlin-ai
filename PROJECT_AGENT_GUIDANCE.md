@@ -123,24 +123,22 @@ Hanlin is an independently maintained derivative of CherryHQ/hanlin-ai. Upstream
 
 ## 8. Normal editing mode
 
-Normal editing mode is the default.
+Normal editing mode is the default for drafting, inspecting, and refactoring.
 
 In this mode:
 
 - inspect, reason about, and edit the repository;
-- use static checks available in the current environment;
-- do not trigger GitHub Actions;
+- use portable static and local checks available in the current environment first;
+- avoid wasteful or routine-only CI runs;
 - do not create commits merely to trigger CI;
-- do not start remote builds;
-- do not wait for CI;
-- do not claim Xcode compilation succeeded;
-- briefly state that Xcode verification remains pending when relevant.
+- do not claim Xcode compilation or runtime correctness succeeded until actually verified;
+- briefly state that platform verification remains pending when relevant.
 
-A request to write, fix, update, refactor, or add a feature is not permission to run CI.
+Routine editing does not warrant CI runs. However, under the owner's controlling authorization, project CI, builds, tests, archives, and IPA generation may be dispatched whenever necessary for verification, validation, or completing tasks, without requiring advance per-run approval.
 
-## 9. Explicit verification mode
+## 9. Verification mode
 
-Enter verification mode only when the user explicitly asks to:
+Verification mode is entered whenever necessary for validating implementation correctness, checking impacted obligations, verifying Apple-platform compilation/tests, or when the user explicitly requests verification:
 
 - build;
 - compile;
@@ -200,16 +198,16 @@ Do not add third-party audit tools or alter CI without explicit permission. When
 
 ## 11. GitHub Actions policy
 
-- CI, builds, audits, and IPA generation run only on explicit user request.
+- Project CI, builds, tests, audits, archives, and unsigned IPA generation may be dispatched whenever necessary for verification, validation, or completing tasks, without requiring advance explicit authorization for each run. Distribution and external release publication continue to run only on explicit user request.
 - Do not add or expand `push`, `pull_request`, scheduled, or automatic triggers without explicit permission.
-- Prefer manual `workflow_dispatch`.
+- Prefer focused manual `workflow_dispatch`.
 - Do not hide warnings solely to obtain a green build.
 - Do not change signing, certificates, provisioning, bundle identifiers, entitlements, or deployment settings without explaining the need.
 - A successful build does not prove runtime correctness, UI correctness, memory safety, or behavior on a physical device.
 
 ### Event-driven run monitoring
 
-After an explicitly authorized GitHub Actions run has been dispatched, monitor it with one long-lived watcher command that exits only when the run completes. Do not repeatedly wake the model to poll the run status.
+After a GitHub Actions run has been dispatched, monitor it with one long-lived watcher command that exits only when the run completes. Do not repeatedly wake the model to poll the run status.
 
 Preferred command:
 
@@ -231,7 +229,7 @@ Required behavior:
 
 This project enforces a strict, fail-closed impact-aware test selection and evidence reuse policy across all development and CI operations:
 
-1. **Default plan before running:** Every authorized validation starts with a manifest of requested obligations, affected files, dependency graph, invalidated tests, eligible-to-reuse tests, missing results, final source SHA, runner/platform, and expected CI groups. State exactly why each group will execute or be reused. Normal editing mode still does not authorize CI.
+1. **Default plan before running:** Every validation operation starts with a manifest of requested obligations, affected files, dependency graph, invalidated tests, eligible-to-reuse tests, missing results, final source SHA, runner/platform, and expected CI groups. State exactly why each group will execute or be reused. Avoid routine or wasteful retesting.
 2. **Strict reuse rule:** A test previously passed only if an authentic raw machine result proves that exact case actually executed and passed (including the original run's legitimate completion and bundle provenance). Validity requires matching test source/assertions/harness, invoked functionality, transitive implementation/runtime dependencies, generated resources, fixtures, configuration, lockfiles, entitlements where relevant, toolchain SDK/Xcode/Swift/compiler flags, simulator OS/device/architecture, and environment-sensitive behavior. Track full SHA range **from the test's last valid execution** to final implementation SHA. Files containing documentation alone need not invalidate code tests **unless** consumed by build/runtime/test logic. Never treat a passing test name in a log as proof.
 3. **Fail-closed invalidation:** Invalidate and rerun when directly/indirectly affected, newly required, impacted by shared startup/bridges/registries, changed test or fixtures, changed compiler/runtime/CI execution semantics, missing verifiable original artifacts, mismatched environment/fingerprints, flaky/expired or time-sensitive acceptance, unclear dependency lineage, an actual previous failure, or a mandatory fresh-execution requirement. Treat ambiguous links as unknown, not PASS. A `cache hit` or unchanged filename alone is not validation evidence.
 4. **Authoritative statuses:** Use separate `EXECUTED_PASS`, `REUSED_VERIFIED_PASS`, `FAILED`, `NOT_RUN`, `NEEDS_TEST`, `INVALIDATED`, and `BLOCKED` (or equivalent explicit fields preserving all distinctions). Aggregated requirement `PASSED` is permissible only when every required semantic assertion is proven by an eligible executed/reused pass and no higher-priority failed/blocking evidence remains. A test-case pass cannot automatically imply suite-, simulator-, workflow-, or scenario-level success.
@@ -239,7 +237,7 @@ This project enforces a strict, fail-closed impact-aware test selection and evid
 6. **No reduction of assurance:** Do not bypass tests, alter desired outputs/assertions, weaken coverage, lower required benchmark sample counts/thresholds, skip smoke/integration gates that actually changed, or recast mock fixtures as real engine execution. Reuse is a positive proof of unaffectedness, not blanket permission to skip.
 7. **Persistent proof and audit:** Maintain durable records across commits and CI runs, with exact test/scenario identifier, expected behavior, test method, previous execution SHA/run/job/artifact, raw result and hash, impacted-source fingerprint, dependency closure, fixture and runner/toolchain fingerprint, last validated status, invalidation cause, and final target SHA. Reused entries point at their original raw artifacts; do not copy them and rewrite the origin as the latest SHA.
 8. **Efficiency rules:** Use precise method-level filtered runs for debugging; avoid Release/device IPA and all performance suites in ordinary unrelated iterations; reuse compatible compiler caches; isolate test groups where safe; gather bounded, structured diagnostics; publish per-step/per-suite wall time and candidate waste. Keep required final coverage intact. A long/expensive full suite is not the default just because one test failed.
-9. **CI permission remains unchanged:** No builds, CI dispatch, archive, distribution, automatic triggers, or background monitor without the owner's explicit permission. Once dispatched, use a single event-driven watcher and inspect results rather than frequent polling.
+9. **Impact-aware authorization:** Under the owner's controlling policy, advance approval is not required for necessary validation CI, focused builds, tests, or archives. Automatic workflow triggers and external release publication remain strictly prohibited without explicit user request. Once dispatched, use a single event-driven watcher and inspect results rather than frequent polling.
 
 ## 13. Existing instruction and workflow files
 
@@ -287,7 +285,7 @@ unless that exact claim was verified.
 
 ## 15. User preference
 
-The user wants modern, advanced, clean Swift and SwiftUI code, targets current stable Apple platforms only, does not want backward compatibility, works from Windows, and uses manually requested GitHub Actions for Apple-platform compilation and verification.
+The user wants modern, advanced, clean Swift and SwiftUI code, targets current stable Apple platforms only, does not want backward compatibility, works from Windows, and uses autonomously dispatched necessary GitHub Actions and Apple-devtools for Apple-platform compilation and verification under the owner-authorized impact-aware CI policy.
 
 ## 16. Hanlin NativeScript and MiniApp scripts
 

@@ -1,7 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'crypto';
-import { execSync } from 'node:child_process';
+import { execSync, execFileSync } from 'node:child_process';
 
 const repoRoot = process.cwd();
 const specPath = path.join(repoRoot, 'docs/hanlin-platform/personal-runtime-completion/authoritative-master-spec.md');
@@ -26,6 +26,14 @@ for (const arg of args) {
     }
     continue;
   }
+  if (arg.startsWith('--profile=')) {
+    const val = arg.split('=')[1];
+    if (val !== 'full' && val !== 'engineering' && val !== 'device') {
+      console.error(`Error: Invalid --profile '${val}'. Expected 'full', 'engineering', or 'device'.`);
+      process.exit(1);
+    }
+    continue;
+  }
   if (!validFlags.has(arg)) {
     console.error(`Error: Unknown or unsupported CLI flag: ${arg}`);
     process.exit(1);
@@ -38,8 +46,11 @@ Usage: node Scripts/generate_acceptance_results.mjs [options]
 
 Options:
   --mode=report         Generate markdown and JSON acceptance artifacts (default)
-  --mode=gate           Run in gate mode: exit nonzero if any failed scenarios
-  --verify-self-test    Run all 15 adversarial verifier self-tests and positive checks in disposable sandbox
+  --mode=gate           Run in gate mode: fail-closed evaluation against specified profile
+  --profile=full        Gate profile requiring all 493 MASTER scenarios (default for gate)
+  --profile=engineering Gate profile requiring all non-device, non-external engineering obligations
+  --profile=device      Gate profile evaluating device obligations
+  --verify-self-test    Run all adversarial verifier self-tests and positive checks in disposable sandbox
   --self-test           Alias for --verify-self-test
   --help                Show this help message
 `);
@@ -47,6 +58,7 @@ Options:
 }
 
 const mode = args.find(a => a.startsWith('--mode='))?.split('=')[1] || 'report';
+const profile = args.find(a => a.startsWith('--profile='))?.split('=')[1] || 'full';
 const isSelfTest = args.includes('--verify-self-test') || args.includes('--self-test');
 
 // ==========================================
@@ -100,17 +112,18 @@ export const knownWorkflowRuns = {
     selectedJobId: '116112078848',
     selectedJobPassed: true,
     exactTestSelector: 'AI_HLYUITests/HanlinNativeScriptProductionE2ETests/testProductionNativeScriptParityFullRuntime',
-    collectorStepExecuted: true,
-    collectorStepPassed: true
+    collectorStepExecuted: false, // Step 51 was SKIPPED in run 38639744717
+    collectorStepPassed: false
   }
 };
 
-// Dynamic Provenance - Never hardcoded
+// Truthful per-evidence and report provenance
 export const provenanceSHAs = {
-  sourceImplementationSHA: gitMeta.commitSha,
-  testExecutionSHA: gitMeta.commitSha,
-  evidenceRunSHA: gitMeta.commitSha,
+  sourceImplementationSHA: '72d18d3e4a9f0bd0eed7c53c291a1ade8bd9c24e',
+  testExecutionSHA: '72d18d3e4a9f0bd0eed7c53c291a1ade8bd9c24e',
+  evidenceRunSHA: '38639744717',
   reportSHA: gitMeta.commitSha,
+  workingTreeFingerprint: gitMeta.commitSha + (gitMeta.isDirty ? '-dirty' : ''),
   contractVersion: '2.2.0-pass4'
 };
 
@@ -298,18 +311,23 @@ export function verifyDependencyClosure(originSha, targetSha, testSuiteOrId = ''
         target_sha: targetSha,
         original_status: 'Passed'
       });
-      const ledgerOut = execSync(`python Scripts/CI/plan_affected_validation.py --evaluate-reuse '${query.replace(/'/g, "\\'")}'`, {
+      const pythonExe = process.platform === 'win32' ? 'python' : 'python3';
+      const ledgerOut = execFileSync(pythonExe, [
+        path.join(repoRoot, 'Scripts/CI/plan_affected_validation.py'),
+        '--evaluate-reuse',
+        query
+      ], {
         cwd: repoRoot,
         encoding: 'utf8',
-        stdio: ['pipe', 'pipe', 'ignore']
+        stdio: ['pipe', 'pipe', 'pipe']
       });
       const ledgerRes = JSON.parse(ledgerOut.trim());
       if (ledgerRes.decision === 'INVALIDATE') {
         return { isClean: false, reason: ledgerRes.reason, changedFiles };
       }
       return { isClean: true, reason: ledgerRes.reason, changedFiles };
-    } catch {
-      // Fall through to internal evaluation if Python CLI cannot be spawned
+    } catch (e) {
+      return { isClean: false, reason: `Authoritative dependency ledger failed: ${e.message}`, changedFiles };
     }
   }
 
@@ -561,19 +579,39 @@ export function verifyObligation(ob, scenario, xcIndex, options = {}) {
 
     if (ob.evidenceArtifact) {
       const content = options.syntheticContentOverride || getEvidenceContent(ob.evidenceArtifact);
-      const testName = ob.exactTestName.includes('/') ? ob.exactTestName.split('/')[1] : ob.exactTestName;
+      const testName = ob.exactTestName.includes('/') ? ob.exactTestName.split('/').pop() : ob.exactTestName;
       if (!content.includes(testName)) {
         throw new Error(`UI test case '${ob.exactTestName}' not found in raw artifact ${ob.evidenceArtifact} (NEG-01)!`);
       }
       if (content.includes(`Test Case '-[AI_HLYUITests.${testName}]' failed`) || content.includes(`Test Case '-[AI_HLYUITests.${testName}()' failed`)) {
         throw new Error(`UI test case '${ob.exactTestName}' failed in ${ob.evidenceArtifact}!`);
       }
+      if (content.includes('Executed 0 tests') || content.includes('0 selected tests')) {
+        throw new Error(`UI test log in ${ob.evidenceArtifact} executed 0 tests!`);
+      }
+
       // Check for synthetic fallback strings (NEG-11)
       if (options.rejectSyntheticFallbacks || ob.rejectSyntheticFallbacks) {
         const checkContent = options.syntheticContentOverride || content;
         if (checkContent.includes('Function("return') || checkContent.includes('fallback to Function') || checkContent.includes('synthetic HTTP 200') || checkContent.includes('SYNTHETIC_FALLBACK_ACTIVE')) {
           throw new Error(`UI test output in ${ob.evidenceArtifact} indicates synthetic execution fallback (NEG-11)!`);
         }
+      }
+
+      // Exact terminal state 'passed' check
+      const passPatterns = [
+        `Test Case '-[AI_HLYUITests.${testName}]' passed`,
+        `Test Case '-[AI_HLYUITests.${testName}()' passed`,
+        `Test Case '-[AI_HLYUITests.HanlinNativeScriptProductionE2ETests ${testName}]' passed`,
+        `Test Case '-[AI_HLYUITests.${ob.testSuite || ''} ${testName}]' passed`,
+        'Test Case passed'
+      ];
+      const hasPassed = passPatterns.some(p => content.includes(p)) ||
+        new RegExp(`Test Case '-\\[AI_HLYUITests\\.[^\\s]+ ${testName}\\]' passed`).test(content) ||
+        new RegExp(`Test Case '-\\[AI_HLYUITests\\.${testName}[^\\]]*\\]' passed`).test(content);
+
+      if (!hasPassed) {
+        throw new Error(`UI test case '${ob.exactTestName}' did not achieve verified 'Passed' terminal state in ${ob.evidenceArtifact}!`);
       }
     } else if (ob.workflowRunId) {
       const runInfo = knownWorkflowRuns[ob.workflowRunId];
@@ -656,10 +694,11 @@ export function verifyObligation(ob, scenario, xcIndex, options = {}) {
     }
     const content = getEvidenceContent(ob.evidenceArtifact);
     const hasSuccess =
+      content.includes('** BUILD SUCCEEDED **') ||
       content.includes('BUILD SUCCEEDED') ||
+      content.includes('** ARCHIVE SUCCEEDED **') ||
       content.includes('Archive Succeeded') ||
-      content.includes('Build complete!') ||
-      /^[0-9a-f]{64}\s+/i.test(content.trim());
+      content.includes('Build complete!');
     if (!hasSuccess) {
       throw new Error(`Build command failed in ${ob.evidenceArtifact} for scenario ${scenario.testId}!`);
     }
@@ -684,10 +723,21 @@ export function verifyObligation(ob, scenario, xcIndex, options = {}) {
         if (!parsed || typeof parsed !== 'object') {
           throw new Error(`Invalid JSON in ${ob.evidenceArtifact}`);
         }
+        if (ob.expectedKey && !(ob.expectedKey in parsed)) {
+          throw new Error(`Audit artifact ${ob.evidenceArtifact} missing expected key '${ob.expectedKey}'`);
+        }
+        if (Array.isArray(ob.expectedFields)) {
+          for (const f of ob.expectedFields) {
+            if (!(f in parsed)) throw new Error(`Audit artifact ${ob.evidenceArtifact} missing required field '${f}'`);
+          }
+        }
         return { status: 'PASSED' };
       } catch (e) {
         throw new Error(`Invalid JSON audit artifact in ${ob.evidenceArtifact}: ${e.message}`);
       }
+    }
+    if (ob.expectedPattern && !new RegExp(ob.expectedPattern).test(content)) {
+      throw new Error(`Audit artifact ${ob.evidenceArtifact} did not match expected pattern: ${ob.expectedPattern}`);
     }
     return { status: 'PASSED' };
   }
@@ -808,12 +858,27 @@ export function evaluateScenario(scenario, manifestEntry, xcIndex, options = {})
     scenarioStatus = 'PASSED';
   }
 
+  // Derive authentic evidence commit SHA
+  let evidenceCommitSha = '72d18d3e4a9f0bd0eed7c53c291a1ade8bd9c24e';
+  for (const ob of obligations) {
+    if (ob.evidenceOriginSHA) {
+      evidenceCommitSha = ob.evidenceOriginSHA;
+      break;
+    }
+    if (ob.workflowRunId && knownWorkflowRuns[ob.workflowRunId]?.headSha) {
+      evidenceCommitSha = knownWorkflowRuns[ob.workflowRunId].headSha;
+      break;
+    }
+  }
+
   return {
     ...scenario,
     status: scenarioStatus,
     overallScenarioStatus: overallStatus,
     obligations: evaluatedObligations,
-    commitSha: gitMeta.commitSha,
+    evidenceCommitSha,
+    commitSha: evidenceCommitSha,
+    reportCommitSha: gitMeta.commitSha,
     executedAt: executionTime
   };
 }
@@ -821,6 +886,36 @@ export function evaluateScenario(scenario, manifestEntry, xcIndex, options = {})
 // ==========================================
 // 8. Gate & Summary Validation
 // ==========================================
+export function evaluateGateCompliance(scenarioResults, stats, profile = 'full') {
+  const violations = [];
+
+  if (stats.failedCount > 0) {
+    violations.push(`${stats.failedCount} scenario(s) FAILED`);
+  }
+
+  if (profile === 'full') {
+    if (stats.notRunCount > 0) violations.push(`${stats.notRunCount} scenario(s) NOT_RUN`);
+    if (stats.deviceCount > 0) violations.push(`${stats.deviceCount} scenario(s) NOT_RUN_DEVICE`);
+    if (stats.externalCount > 0) violations.push(`${stats.externalCount} scenario(s) BLOCKED_EXTERNAL`);
+    if (stats.dependencyCount > 0) violations.push(`${stats.dependencyCount} scenario(s) BLOCKED_DEPENDENCY`);
+    if (stats.fixtureCount > 0) violations.push(`${stats.fixtureCount} scenario(s) BLOCKED_INPUT_MODEL_FIXTURE`);
+  } else if (profile === 'engineering') {
+    if (stats.notRunCount > 0) violations.push(`${stats.notRunCount} scenario(s) NOT_RUN`);
+    for (const id of ['FINAL-01', 'FINAL-02', 'FINAL-03', 'FINAL-04', 'FINAL-05', 'FINAL-06', 'FINAL-07']) {
+      const sc = scenarioResults.find(s => s.testId === id);
+      if (sc && sc.status !== 'PASSED' && sc.status !== 'REUSED_VERIFIED_PASS') {
+        violations.push(`Mandatory engineering gate ${id} is not satisfied (status: ${sc.status})`);
+      }
+    }
+  } else if (profile === 'device') {
+    if (stats.deviceCount > 0) violations.push(`${stats.deviceCount} physical device scenario(s) pending`);
+  }
+
+  return {
+    passed: violations.length === 0,
+    violations
+  };
+}
 export function validateResults(results) {
   if (results.length !== 493) {
     throw new Error(`Gate Failure: Expected exactly 493 MASTER scenarios, got ${results.length}`);
@@ -1239,6 +1334,100 @@ export function runAdversarialSelfTests() {
     passedCount++;
   }
 
+  // NEG-16: Full gate profile fails closed when NOT_RUN scenarios exist (e.g. 22 NOT_RUN)
+  {
+    const mockStats = { total: 493, passedCount: 379, reusedCount: 0, notRunCount: 22, deviceCount: 78, externalCount: 10, dependencyCount: 2, fixtureCount: 2, failedCount: 0 };
+    const gateRes = evaluateGateCompliance([], mockStats, 'full');
+    if (gateRes.passed) {
+      throw new Error('NEG-16 failed: Full gate profile must fail closed when 22 NOT_RUN scenarios exist');
+    }
+    if (!gateRes.violations.some(v => v.includes('22 scenario(s) NOT_RUN'))) {
+      throw new Error('NEG-16 failed: Expected violation for NOT_RUN scenarios');
+    }
+    console.log('✔ NEG-16: Full gate profile fails closed on 22 NOT_RUN scenarios');
+    passedCount++;
+  }
+
+  // NEG-17: Engineering gate profile fails closed when mandatory FINAL engineering gates are NOT_RUN
+  {
+    const mockScenarios = [
+      { testId: 'FINAL-01', status: 'PASSED' },
+      { testId: 'FINAL-02', status: 'PASSED' },
+      { testId: 'FINAL-03', status: 'NOT_RUN' }
+    ];
+    const mockStats = { total: 493, passedCount: 379, reusedCount: 0, notRunCount: 22, deviceCount: 78, externalCount: 10, dependencyCount: 2, fixtureCount: 2, failedCount: 0 };
+    const gateRes = evaluateGateCompliance(mockScenarios, mockStats, 'engineering');
+    if (gateRes.passed) {
+      throw new Error('NEG-17 failed: Engineering gate profile must fail closed when mandatory FINAL-03 is NOT_RUN');
+    }
+    if (!gateRes.violations.some(v => v.includes('FINAL-03'))) {
+      throw new Error('NEG-17 failed: Expected violation for FINAL-03');
+    }
+    console.log('✔ NEG-17: Engineering gate profile fails closed on unmet mandatory FINAL-03');
+    passedCount++;
+  }
+
+  // NEG-18: UI test case without verified terminal 'passed' state is rejected
+  try {
+    const unpassedEntry = {
+      obligations: [{
+        layer: 'UI',
+        verifierKind: 'xctest_ui',
+        testSuite: 'HanlinNativeScriptProductionE2ETests',
+        exactTestName: 'HanlinNativeScriptProductionE2ETests/testCoreFixtureATabViewOnly',
+        evidenceArtifact: 'docs/hanlin-platform/personal-runtime-completion/evidence/simulator-nativescript-production-ui-tests.log'
+      }]
+    };
+    verifyObligation(unpassedEntry.obligations[0], authoritativeScenarios.find(s => s.testId === 'APPENG-03'), xcresultIndex, {
+      syntheticContentOverride: "Test Suite 'Selected tests' started.\nTest Case '-[AI_HLYUITests.HanlinNativeScriptProductionE2ETests testCoreFixtureATabViewOnly]' started.\nSome log output without terminal passed marker\nTest Suite 'Selected tests' finished."
+    });
+    throw new Error('NEG-18 failed: UI test case without terminal passed state was not rejected');
+  } catch (e) {
+    if (!e.message.includes("did not achieve verified 'Passed' terminal state")) throw e;
+    console.log("✔ NEG-18: UI test case without verified terminal 'Passed' state rejected");
+    passedCount++;
+  }
+
+  // NEG-19: UI test log with 0 selected tests or executed 0 tests is rejected
+  try {
+    const zeroTestEntry = {
+      obligations: [{
+        layer: 'UI',
+        verifierKind: 'xctest_ui',
+        testSuite: 'HanlinNativeScriptProductionE2ETests',
+        exactTestName: 'HanlinNativeScriptProductionE2ETests/testCoreFixtureATabViewOnly',
+        evidenceArtifact: 'docs/hanlin-platform/personal-runtime-completion/evidence/simulator-nativescript-production-ui-tests.log'
+      }]
+    };
+    verifyObligation(zeroTestEntry.obligations[0], authoritativeScenarios.find(s => s.testId === 'APPENG-03'), xcresultIndex, {
+      syntheticContentOverride: "Test Suite 'Selected tests' started.\nTest Case '-[AI_HLYUITests.HanlinNativeScriptProductionE2ETests testCoreFixtureATabViewOnly]' passed\nExecuted 0 tests, with 0 failures\n0 selected tests"
+    });
+    throw new Error('NEG-19 failed: UI test log with 0 executed tests was not rejected');
+  } catch (e) {
+    if (!e.message.includes('executed 0 tests')) throw e;
+    console.log('✔ NEG-19: UI test log with 0 executed / selected tests rejected');
+    passedCount++;
+  }
+
+  // NEG-20: Bare 64-character SHA in build_command evidence rejected as insufficient
+  try {
+    const bareShaEntry = {
+      obligations: [{
+        layer: 'build',
+        verifierKind: 'build_command',
+        testTarget: 'ReleaseCompilerAndPackager',
+        exactTestName: 'xcodebuild build',
+        evidenceArtifact: 'docs/hanlin-platform/personal-runtime-completion/evidence/ipa-sha256.txt'
+      }]
+    };
+    verifyObligation(bareShaEntry.obligations[0], authoritativeScenarios.find(s => s.testId === 'BUILD-01'), xcresultIndex);
+    throw new Error('NEG-20 failed: Bare 64-character SHA was not rejected for build_command');
+  } catch (e) {
+    if (!e.message.includes('Build command failed') && !e.message.includes('did not prove terminal success')) throw e;
+    console.log('✔ NEG-20: Bare 64-character SHA in build_command evidence rejected');
+    passedCount++;
+  }
+
   console.log(`========================================`);
   console.log(`All ${passedCount} adversarial verifier self-tests & positive checks PASSED cleanly!`);
   console.log(`Self-test execution finished without mutating canonical acceptance artifacts.`);
@@ -1455,6 +1644,15 @@ console.log(`Blocked (Fixture):  ${stats.fixtureCount} (${((stats.fixtureCount /
 console.log(`Failed:             ${stats.failedCount}`);
 console.log(`========================================`);
 
-if (mode === 'gate' && stats.failedCount > 0) {
-  process.exit(1);
+if (mode === 'gate') {
+  const gateResult = evaluateGateCompliance(scenarioResults, stats, profile);
+  if (!gateResult.passed) {
+    console.error(`\n❌ Gate evaluation failed for profile '${profile}':`);
+    for (const v of gateResult.violations) {
+      console.error(`  - ${v}`);
+    }
+    process.exit(1);
+  } else {
+    console.log(`\n✔ Gate evaluation PASSED for profile '${profile}'`);
+  }
 }
