@@ -4,31 +4,43 @@
 
 console.log("[HanlinScriptParity] Initializing bundle...");
 
-if (typeof HanlinNativeServicesBridge === "undefined" && typeof NSClassFromString === "function") {
-  try {
-    const cls = NSClassFromString("HanlinNativeServicesBridge");
-    if (cls) {
-      if (typeof globalThis !== "undefined") globalThis.HanlinNativeServicesBridge = cls;
-      if (typeof global !== "undefined") global.HanlinNativeServicesBridge = cls;
-    }
-  } catch (e) {}
+function resolveBridge() {
+  if (typeof HanlinNativeServicesBridge !== "undefined" && HanlinNativeServicesBridge) return HanlinNativeServicesBridge;
+  if (typeof globalThis !== "undefined" && globalThis.HanlinNativeServicesBridge) return globalThis.HanlinNativeServicesBridge;
+  if (typeof global !== "undefined" && global.HanlinNativeServicesBridge) return global.HanlinNativeServicesBridge;
+  if (typeof NSClassFromString === "function") {
+    try { const c = NSClassFromString("HanlinNativeServicesBridge"); if (c) return c; } catch (e) {}
+  }
+  if (typeof objc_getClass === "function") {
+    try { const c = objc_getClass("HanlinNativeServicesBridge"); if (c) return c; } catch (e) {}
+  }
+  return null;
 }
 
-const bridge = (typeof HanlinNativeServicesBridge !== "undefined" && HanlinNativeServicesBridge)
-  || (typeof NSClassFromString === "function" ? NSClassFromString("HanlinNativeServicesBridge") : null)
-  || (typeof objc_getClass === "function" ? objc_getClass("HanlinNativeServicesBridge") : null);
-const compat = (typeof NSClassFromString === "function" ? NSClassFromString("HanlinNativeScriptCompatibility") : null)
-  || (typeof objc_getClass === "function" ? objc_getClass("HanlinNativeScriptCompatibility") : null);
+function resolveCompat() {
+  if (typeof HanlinNativeScriptCompatibility !== "undefined" && HanlinNativeScriptCompatibility) return HanlinNativeScriptCompatibility;
+  if (typeof globalThis !== "undefined" && globalThis.HanlinNativeScriptCompatibility) return globalThis.HanlinNativeScriptCompatibility;
+  if (typeof global !== "undefined" && global.HanlinNativeScriptCompatibility) return global.HanlinNativeScriptCompatibility;
+  if (typeof NSClassFromString === "function") {
+    try { const c = NSClassFromString("HanlinNativeScriptCompatibility"); if (c) return c; } catch (e) {}
+  }
+  if (typeof objc_getClass === "function") {
+    try { const c = objc_getClass("HanlinNativeScriptCompatibility"); if (c) return c; } catch (e) {}
+  }
+  return null;
+}
+
+const bridge = resolveBridge();
+const compat = resolveCompat();
 const environment = NSProcessInfo.processInfo.environment;
 const executionMode = environment.objectForKey("HANLIN_EXECUTION_MODE");
 const isHeadlessAction = executionMode && executionMode.toString() === "headless-action";
 
 function invokeCompat(value, key) {
   const c = compat
-    || (typeof HanlinNativeScriptCompatibility !== "undefined" ? HanlinNativeScriptCompatibility : null)
-    || (typeof NSClassFromString === "function" ? NSClassFromString("HanlinNativeScriptCompatibility") : null)
-    || (typeof objc_getClass === "function" ? objc_getClass("HanlinNativeScriptCompatibility") : null)
-    || (typeof globalThis !== "undefined" ? globalThis.HanlinNativeScriptCompatibility : null);
+    || resolveCompat()
+    || bridge
+    || resolveBridge();
   if (c && typeof c.roundTripValueKey === "function") {
     try {
       const res = c.roundTripValueKey(value != null ? String(value) : "", key);
@@ -63,7 +75,7 @@ function runJS(code, cb) {
     if (direct.startsWith("Err: ")) return cb(null, direct.substring(5));
     return cb(direct, null);
   }
-  const target = bridge || compat;
+  const target = bridge || compat || resolveBridge() || resolveCompat();
   if (target && typeof target.executeJavaScriptCompletion === "function") {
     return target.executeJavaScriptCompletion(code, cb);
   } else if (target && typeof target.executeJavaScript === "function") {
@@ -87,7 +99,7 @@ function runNode(code, cb) {
     if (direct.startsWith("Err: ")) return cb(null, direct.substring(5));
     return cb(direct, null);
   }
-  const target = bridge || compat;
+  const target = bridge || compat || resolveBridge() || resolveCompat();
   if (target && typeof target.executeNodeCompletion === "function") {
     return target.executeNodeCompletion(code, cb);
   } else if (target && typeof target.executeNode === "function") {
@@ -111,7 +123,7 @@ function runPython(code, cb) {
     if (direct.startsWith("Err: ")) return cb(null, direct.substring(5));
     return cb(direct, null);
   }
-  const target = bridge || compat;
+  const target = bridge || compat || resolveBridge() || resolveCompat();
   if (target && typeof target.executePythonCompletion === "function") {
     return target.executePythonCompletion(code, cb);
   } else if (target && typeof target.executePython === "function") {
@@ -135,7 +147,7 @@ function fetchHTTPS(url, cb) {
     if (direct.startsWith("Err: ")) return cb(null, direct.substring(5));
     return cb(direct, null);
   }
-  const target = bridge || compat;
+  const target = bridge || compat || resolveBridge() || resolveCompat();
   if (target && typeof target.fetchURLCompletion === "function") {
     return target.fetchURLCompletion(url, cb);
   } else if (target && typeof target.fetchURL === "function") {
@@ -160,7 +172,7 @@ function sendInterApp(targetID, action, capability, payloadJSON, cb) {
     if (direct.startsWith("Err: ")) return cb(null, direct.substring(5));
     return cb(direct, null);
   }
-  const target = bridge || compat;
+  const target = bridge || compat || resolveBridge() || resolveCompat();
   if (target && typeof target.sendRequestActionCapabilityPayloadJSONCompletion === "function") {
     return target.sendRequestActionCapabilityPayloadJSONCompletion(targetID, action, capability, payloadJSON, cb);
   } else if (target && typeof target.sendRequest === "function") {
@@ -245,7 +257,7 @@ function loadStorage() {
 const initialStorageStatus = loadStorage();
 
 // Register canonical actions for inter-app, Widget/AppIntent, and headless execution.
-const targetForRegister = bridge || compat;
+const targetForRegister = bridge || compat || resolveBridge() || resolveCompat();
 if (targetForRegister) {
   try {
     const regActionFn = targetForRegister.registerActionCapability || targetForRegister.registerAction;

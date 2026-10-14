@@ -100,107 +100,106 @@ public final class HanlinNativeServicesHostProvider: NSObject, @unchecked Sendab
         HanlinNativeServicesBridge.register(nil)
     }
 
+    private func resolvedProvider() -> (any HanlinNativeServicesProvider)? {
+        lock.lock()
+        let adapter = activeAdapter
+        lock.unlock()
+        if let adapter {
+            return adapter
+        }
+        if let current = HanlinNativeServicesBridge.currentProvider(), (current as AnyObject) !== self {
+            return current
+        }
+        return nil
+    }
+
     // MARK: - HanlinNativeServicesProvider Conformance
 
     public func dataRootDirectory() -> String? {
         lock.lock()
-        defer { lock.unlock() }
-        return overrideDirs?.data ?? activeAdapter?.dataRootDirectory()
+        let override = overrideDirs?.data
+        lock.unlock()
+        return override ?? resolvedProvider()?.dataRootDirectory()
     }
 
     public func stateDirectory() -> String? {
         lock.lock()
-        defer { lock.unlock() }
-        return overrideDirs?.state ?? activeAdapter?.stateDirectory()
+        let override = overrideDirs?.state
+        lock.unlock()
+        return override ?? resolvedProvider()?.stateDirectory()
     }
 
     public func documentsDirectory() -> String? {
         lock.lock()
-        defer { lock.unlock() }
-        return overrideDirs?.docs ?? activeAdapter?.documentsDirectory()
+        let override = overrideDirs?.docs
+        lock.unlock()
+        return override ?? resolvedProvider()?.documentsDirectory()
     }
 
     public func cacheDirectory() -> String? {
         lock.lock()
-        defer { lock.unlock() }
-        return overrideDirs?.cache ?? activeAdapter?.cacheDirectory()
+        let override = overrideDirs?.cache
+        lock.unlock()
+        return override ?? resolvedProvider()?.cacheDirectory()
     }
 
     public func executeJavaScript(
         _ source: String,
         completion: @escaping (String?, String?) -> Void
     ) {
-        lock.lock()
-        let adapter = activeAdapter
-        lock.unlock()
-        guard let adapter else {
+        guard let provider = resolvedProvider() else {
             completion(nil, "Unauthorized: No active Mini App session context.")
             return
         }
-        adapter.executeJavaScript(source, completion: completion)
+        provider.executeJavaScript(source, completion: completion)
     }
 
     public func executeNode(
         _ source: String,
         completion: @escaping (String?, String?) -> Void
     ) {
-        lock.lock()
-        let adapter = activeAdapter
-        lock.unlock()
-        guard let adapter else {
+        guard let provider = resolvedProvider() else {
             completion(nil, "Unauthorized: No active Mini App session context.")
             return
         }
-        adapter.executeNode(source, completion: completion)
+        provider.executeNode(source, completion: completion)
     }
 
     @objc(nodeHealthCheckWithCompletion:)
     public func nodeHealthCheck(
         completion: @escaping (Bool, String?) -> Void
     ) {
-        lock.lock()
-        let adapter = activeAdapter
-        lock.unlock()
-        guard let adapter else {
+        guard let provider = resolvedProvider() else {
             completion(false, "Unauthorized: No active Mini App session context.")
             return
         }
-        adapter.nodeHealthCheck(completion: completion)
+        provider.nodeHealthCheck(completion: completion)
     }
 
     public func executePython(
         _ source: String,
         completion: @escaping (String?, String?) -> Void
     ) {
-        lock.lock()
-        let adapter = activeAdapter
-        lock.unlock()
-        guard let adapter else {
+        guard let provider = resolvedProvider() else {
             completion(nil, "Unauthorized: No active Mini App session context.")
             return
         }
-        adapter.executePython(source, completion: completion)
+        provider.executePython(source, completion: completion)
     }
 
     public func pythonVersion() -> String? {
-        lock.lock()
-        let adapter = activeAdapter
-        lock.unlock()
-        return adapter?.pythonVersion() ?? (try? PythonRuntimeBridge.version())
+        resolvedProvider()?.pythonVersion() ?? (try? PythonRuntimeBridge.version())
     }
 
     public func fetchURL(
         _ urlString: String,
         completion: @escaping (String?, String?) -> Void
     ) {
-        lock.lock()
-        let adapter = activeAdapter
-        lock.unlock()
-        guard let adapter else {
+        guard let provider = resolvedProvider() else {
             completion(nil, "Unauthorized: No active Mini App session context.")
             return
         }
-        adapter.fetchURL(urlString, completion: completion)
+        provider.fetchURL(urlString, completion: completion)
     }
 
     public func sendRequest(
@@ -210,14 +209,11 @@ public final class HanlinNativeServicesHostProvider: NSObject, @unchecked Sendab
         payloadJSON: String,
         completion: @escaping (String?, String?) -> Void
     ) {
-        lock.lock()
-        let adapter = activeAdapter
-        lock.unlock()
-        guard let adapter else {
+        guard let provider = resolvedProvider() else {
             completion(nil, "Unauthorized: No active Mini App session context.")
             return
         }
-        adapter.sendRequest(targetID, action: action, capability: capability, payloadJSON: payloadJSON, completion: completion)
+        provider.sendRequest(targetID, action: action, capability: capability, payloadJSON: payloadJSON, completion: completion)
     }
 
     public func registerRequestHandler(
@@ -225,14 +221,11 @@ public final class HanlinNativeServicesHostProvider: NSObject, @unchecked Sendab
         capability: String,
         handler: @escaping (String, String, @escaping (String?, String?) -> Void) -> Void
     ) {
-        lock.lock()
-        let adapter = activeAdapter
-        lock.unlock()
-        guard let adapter else {
+        guard let provider = resolvedProvider() else {
             return
         }
         nonisolated(unsafe) let safeHandler = handler
-        adapter.registerRequestHandler(action, capability: capability, handler: safeHandler)
+        provider.registerRequestHandler(action, capability: capability, handler: safeHandler)
     }
 
     @MainActor

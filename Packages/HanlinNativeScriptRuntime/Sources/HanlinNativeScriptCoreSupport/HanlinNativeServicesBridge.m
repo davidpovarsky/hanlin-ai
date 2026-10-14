@@ -106,14 +106,14 @@ static NSLock *_sessionLock = nil;
     [_sessionLock lock];
     if (provider) {
         _sessionProviders[sessionID] = provider;
-        if (!_currentProvider) {
+        if (!_currentProvider || [_currentProvider isKindOfClass:NSClassFromString(@"HanlinNativeServicesHostProvider")]) {
             _currentProvider = provider;
         }
     } else {
         id<HanlinNativeServicesProvider> removedProvider = _sessionProviders[sessionID];
         [_sessionProviders removeObjectForKey:sessionID];
         if (_currentProvider == removedProvider) {
-            _currentProvider = nil;
+            _currentProvider = _sessionProviders.allValues.lastObject;
         }
     }
     [_sessionLock unlock];
@@ -125,7 +125,7 @@ static NSLock *_sessionLock = nil;
     id<HanlinNativeServicesProvider> removedProvider = _sessionProviders[sessionID];
     [_sessionProviders removeObjectForKey:sessionID];
     if (_currentProvider == removedProvider) {
-        _currentProvider = nil;
+        _currentProvider = _sessionProviders.allValues.lastObject;
     }
     for (HanlinNativeServicesSessionBridge *bridge in _boundBridges[sessionID]) {
         [bridge invalidate];
@@ -209,7 +209,10 @@ static NSLock *_sessionLock = nil;
     if (_activeSessionBridge) {
         provider = [_activeSessionBridge providerSnapshot];
     }
-    if (!provider && !_activeSessionBridge) {
+    if (!provider && _sessionProviders.count > 0) {
+        provider = _sessionProviders.allValues.lastObject;
+    }
+    if (!provider) {
         provider = _currentProvider;
     }
     [_sessionLock unlock];

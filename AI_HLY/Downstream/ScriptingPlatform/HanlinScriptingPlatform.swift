@@ -456,7 +456,16 @@ final class HanlinScriptingPlatform {
                     grantedCapabilities: Set(package.grantedCapabilities.map(\.rawValue)),
                     sessionID: sessionID
                 )
+                HanlinNativeServicesHostProvider.setActiveContainer(
+                    appID: appID.rawValue,
+                    dataRoot: dataRootStr,
+                    stateDir: stateDirStr,
+                    docsDir: docsDirStr,
+                    cacheDir: cacheDirStr,
+                    grantedCapabilities: package.grantedCapabilities.map(\.rawValue)
+                )
                 HanlinNativeServicesBridge.register(adapter, forSessionID: sessionID)
+                HanlinNativeServicesBridge.register(adapter)
 
                 let session = try HanlinNativeScriptSession(
                     applicationRoot: entrypointURL.deletingLastPathComponent(),
@@ -610,13 +619,14 @@ final class HanlinScriptingPlatform {
         if nativeScriptSession != nil {
             NSLog("HANLIN_NS_PRODUCTION_SHUTDOWN_OK")
         }
-        nativeScriptSession?.shutdown()
         if let session = nativeScriptSession {
             HanlinNativeServicesBridge.unregisterProvider(forSessionID: session.sessionID)
         }
+        HanlinNativeServicesBridge.register(nil)
+        HanlinNativeServicesHostProvider.clearActiveContainer()
+        nativeScriptSession?.shutdown()
         nativeScriptSession = nil
         nativeScriptHostServices = nil
-        HanlinNativeServicesHostProvider.clearActiveContainer()
         if expoSession != nil {
             NSLog("HANLIN_EXPO_PRODUCTION_SHUTDOWN_OK")
         }
