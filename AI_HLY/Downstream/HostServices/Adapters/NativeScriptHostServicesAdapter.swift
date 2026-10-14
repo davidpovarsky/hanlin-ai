@@ -274,15 +274,8 @@ public final class NativeScriptHostServicesAdapter: NSObject, @unchecked Sendabl
                         return
                     } else {
                         // Intra-app echo response
-                        let echo: HanlinValue = .dictionary([
-                            "source": .string(caller.rawValue),
-                            "action": .string(actionID.rawValue),
-                            "caller": .string(caller.rawValue),
-                            "request": payload,
-                            "status": .string("ok")
-                        ])
-                        let responseData = try echo.canonicalJSONData()
-                        safeCompletion(String(data: responseData, encoding: .utf8), nil)
+                        let echoJSON = "{\"source\":\"\(caller.rawValue)\",\"action\":\"\(actionID.rawValue)\",\"caller\":\"\(caller.rawValue)\",\"request\":\(payloadJSON),\"status\":\"ok\"}"
+                        safeCompletion(echoJSON, nil)
                         return
                     }
                 }
@@ -325,7 +318,8 @@ public final class NativeScriptHostServicesAdapter: NSObject, @unchecked Sendabl
             )
         }
         if let appID = context.appID {
-            Task {
+            Task { [weak self] in
+                guard let self else { return }
                 let broker = await MainActor.run { HanlinMiniAppHost.shared.requestBroker }
                 await broker.register(target: appID, action: actionID, capability: capabilityID) { [weak self] req in
                     guard let self else { throw HanlinMiniAppRequestError.routeNotFound }
