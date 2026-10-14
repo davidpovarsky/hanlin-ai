@@ -13,12 +13,15 @@ final class HanlinNativeScriptProductionE2ETests: XCTestCase {
     private let fixtureBPackageName = "Hanlin NativeScript Core Frame B E2E"
     private let fixtureCPackageName = "Hanlin NativeScript Core TabView+Frame C E2E"
     private let parityPackageName = "HanlinScript Parity"
+    private var parityChallengeNonce = "nonce-\(UUID().uuidString.prefix(8).lowercased())"
 
     override func setUpWithError() throws {
         continueAfterFailure = false
         app.launchArguments += ["-AppleLanguages", "(en)", "-AppleLocale", "en_US"]
         app.launchEnvironment["HANLIN_UNIT_TEST_HOST"] = "0"
         app.launchEnvironment["HANLIN_NATIVESCRIPT_E2E"] = "1"
+        parityChallengeNonce = "nonce-\(UUID().uuidString.prefix(8).lowercased())"
+        app.launchEnvironment["HANLIN_PARITY_CHALLENGE"] = parityChallengeNonce
         app.launch()
     }
 
@@ -28,9 +31,7 @@ final class HanlinNativeScriptProductionE2ETests: XCTestCase {
     }
 
     func testProductionNativeScriptParityFullRuntime() throws {
-        let challengeNonce = "nonce-\(UUID().uuidString.prefix(8).lowercased())"
-        app.launchEnvironment["HANLIN_PARITY_CHALLENGE"] = challengeNonce
-        app.launch()
+        let challengeNonce = parityChallengeNonce
 
         openApps()
         importAndInstall(archive: "hanlin-script-parity")
@@ -486,18 +487,7 @@ final class HanlinNativeScriptProductionE2ETests: XCTestCase {
                 install.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
             }
         }
-        let dismissed = waitUntil(timeout: 8) { !install.exists }
-        if !dismissed && install.exists {
-            if !install.isHittable {
-                app.swipeDown()
-            }
-            if install.isHittable {
-                install.tap()
-            } else {
-                install.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
-            }
-        }
-        if !waitUntil(timeout: 25, condition: { !install.exists }) {
+        if !waitUntil(timeout: 40, condition: { !install.exists }) {
             var detail = "\(archive) installation did not finish."
             if app.staticTexts["Import Error"].firstMatch.exists {
                 let errorLabels = app.staticTexts.allElementsBoundByIndex.map(\.label).filter { !$0.isEmpty }

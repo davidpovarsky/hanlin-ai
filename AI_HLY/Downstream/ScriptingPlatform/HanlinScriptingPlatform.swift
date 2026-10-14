@@ -227,6 +227,7 @@ final class HanlinScriptingPlatform {
     }
 
     func installPreview() async {
+        guard activity != .installing else { return }
         print("HANLIN_INSTALL_PREVIEW_STARTED: canInstall=\(preview?.canInstall ?? false)")
         guard let preview, preview.canInstall, let stagedPackage,
               let store, let bundler, let stagingRoot else {
@@ -323,6 +324,7 @@ final class HanlinScriptingPlatform {
             discardPreview()
             activity = .idle
         } catch {
+            print("HANLIN_INSTALL_PREVIEW_FAILED: \(error)")
             activity = .failed(Self.safeMessage(error))
         }
     }
