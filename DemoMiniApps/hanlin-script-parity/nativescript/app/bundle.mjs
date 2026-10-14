@@ -4,34 +4,72 @@
 
 console.log("[HanlinScriptParity] Initializing bundle...");
 
+const g = typeof globalThis !== "undefined" ? globalThis : (typeof global !== "undefined" ? global : this);
+
+function resolveClass(name) {
+  if (g) {
+    try {
+      if (typeof g.NSClassFromString === "function") {
+        const cls = g.NSClassFromString(name);
+        if (cls) return cls;
+      }
+    } catch (e) {}
+    try {
+      if (typeof g.objc_getClass === "function") {
+        const cls = g.objc_getClass(name);
+        if (cls) return cls;
+      }
+    } catch (e) {}
+    if (g[name]) return g[name];
+  }
+  if (typeof global !== "undefined" && global) {
+    try {
+      if (typeof global.NSClassFromString === "function") {
+        const cls = global.NSClassFromString(name);
+        if (cls) return cls;
+      }
+    } catch (e) {}
+    try {
+      if (typeof global.objc_getClass === "function") {
+        const cls = global.objc_getClass(name);
+        if (cls) return cls;
+      }
+    } catch (e) {}
+    if (global[name]) return global[name];
+  }
+  try {
+    if (typeof NSClassFromString === "function") {
+      const cls = NSClassFromString(name);
+      if (cls) return cls;
+    }
+  } catch (e) {}
+  try {
+    if (typeof objc_getClass === "function") {
+      const cls = objc_getClass(name);
+      if (cls) return cls;
+    }
+  } catch (e) {}
+  try {
+    if (name === "HanlinNativeServicesBridge" && typeof HanlinNativeServicesBridge !== "undefined" && HanlinNativeServicesBridge) return HanlinNativeServicesBridge;
+    if (name === "HanlinNativeScriptCompatibility" && typeof HanlinNativeScriptCompatibility !== "undefined" && HanlinNativeScriptCompatibility) return HanlinNativeScriptCompatibility;
+  } catch (e) {}
+  return null;
+}
+
 function resolveBridge() {
   if (typeof HanlinNativeServicesBridge !== "undefined" && HanlinNativeServicesBridge) return HanlinNativeServicesBridge;
-  if (typeof globalThis !== "undefined" && globalThis.HanlinNativeServicesBridge) return globalThis.HanlinNativeServicesBridge;
-  if (typeof global !== "undefined" && global.HanlinNativeServicesBridge) return global.HanlinNativeServicesBridge;
-  if (typeof NSClassFromString === "function") {
-    try { const c = NSClassFromString("HanlinNativeServicesBridge"); if (c) return c; } catch (e) {}
-  }
-  if (typeof objc_getClass === "function") {
-    try { const c = objc_getClass("HanlinNativeServicesBridge"); if (c) return c; } catch (e) {}
-  }
-  return null;
+  return resolveClass("HanlinNativeServicesBridge");
 }
 
 function resolveCompat() {
   if (typeof HanlinNativeScriptCompatibility !== "undefined" && HanlinNativeScriptCompatibility) return HanlinNativeScriptCompatibility;
-  if (typeof globalThis !== "undefined" && globalThis.HanlinNativeScriptCompatibility) return globalThis.HanlinNativeScriptCompatibility;
-  if (typeof global !== "undefined" && global.HanlinNativeScriptCompatibility) return global.HanlinNativeScriptCompatibility;
-  if (typeof NSClassFromString === "function") {
-    try { const c = NSClassFromString("HanlinNativeScriptCompatibility"); if (c) return c; } catch (e) {}
-  }
-  if (typeof objc_getClass === "function") {
-    try { const c = objc_getClass("HanlinNativeScriptCompatibility"); if (c) return c; } catch (e) {}
-  }
-  return null;
+  return resolveClass("HanlinNativeScriptCompatibility");
 }
 
 const bridge = resolveBridge();
 const compat = resolveCompat();
+console.log("[HanlinScriptParity] Bridge resolution: bridge=" + (bridge ? "found" : "null") + " compat=" + (compat ? "found" : "null") + " g.NSClassFromString=" + (g && typeof g.NSClassFromString));
+
 const environment = NSProcessInfo.processInfo.environment;
 const executionMode = environment.objectForKey("HANLIN_EXECUTION_MODE");
 const isHeadlessAction = executionMode && executionMode.toString() === "headless-action";
@@ -41,12 +79,82 @@ function invokeCompat(value, key) {
     || resolveCompat()
     || bridge
     || resolveBridge();
-  if (c && typeof c.roundTripValueKey === "function") {
-    try {
-      const res = c.roundTripValueKey(value != null ? String(value) : "", key);
-      return res != null ? res.toString() : "";
-    } catch (e) {
-      return "Err: " + e;
+  if (c) {
+    if (typeof c.roundTripValueKey === "function") {
+      try {
+        const res = c.roundTripValueKey(value != null ? String(value) : "", key);
+        return res != null ? res.toString() : "";
+      } catch (e) {
+        return "Err: " + e;
+      }
+    }
+    if (key === "hostService.executeJavaScript" && typeof c.executeJavaScriptSync === "function") {
+      try {
+        const res = c.executeJavaScriptSync(value != null ? String(value) : "");
+        return res != null ? res.toString() : "";
+      } catch (e) {
+        return "Err: " + e;
+      }
+    }
+    if (key === "hostService.executeNode" && typeof c.executeNodeSync === "function") {
+      try {
+        const res = c.executeNodeSync(value != null ? String(value) : "");
+        return res != null ? res.toString() : "";
+      } catch (e) {
+        return "Err: " + e;
+      }
+    }
+    if (key === "hostService.executePython" && typeof c.executePythonSync === "function") {
+      try {
+        const res = c.executePythonSync(value != null ? String(value) : "");
+        return res != null ? res.toString() : "";
+      } catch (e) {
+        return "Err: " + e;
+      }
+    }
+    if (key === "hostService.fetchURL" && typeof c.fetchURLSync === "function") {
+      try {
+        const res = c.fetchURLSync(value != null ? String(value) : "");
+        return res != null ? res.toString() : "";
+      } catch (e) {
+        return "Err: " + e;
+      }
+    }
+    if (key.startsWith("hostService.sendRequest:") && typeof c.sendRequestSyncActionCapabilityPayloadJSON === "function") {
+      try {
+        const parts = key.split(":");
+        const targetID = parts[1] || "";
+        const action = parts[2] || "";
+        const capability = parts[3] || "";
+        const res = c.sendRequestSyncActionCapabilityPayloadJSON(targetID, action, capability, value != null ? String(value) : "");
+        return res != null ? res.toString() : "";
+      } catch (e) {
+        return "Err: " + e;
+      }
+    }
+    if (key.startsWith("hostService.sendRequest:") && typeof c.sendRequestSync === "function") {
+      try {
+        const parts = key.split(":");
+        const targetID = parts[1] || "";
+        const action = parts[2] || "";
+        const capability = parts[3] || "";
+        const res = c.sendRequestSync(targetID, action, capability, value != null ? String(value) : "");
+        return res != null ? res.toString() : "";
+      } catch (e) {
+        return "Err: " + e;
+      }
+    }
+    if (key === "hostService.state" && typeof c.stateDirectory === "function") {
+      try {
+        const res = c.stateDirectory();
+        return res != null ? res.toString() : "";
+      } catch (e) {}
+    }
+    if (key === "hostService.dataRoot" && typeof c.dataRootDirectory === "function") {
+      try {
+        const res = c.dataRootDirectory();
+        return res != null ? res.toString() : "";
+      } catch (e) {}
     }
   }
   return null;
