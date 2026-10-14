@@ -74,87 +74,117 @@ const environment = NSProcessInfo.processInfo.environment;
 const executionMode = environment.objectForKey("HANLIN_EXECUTION_MODE");
 const isHeadlessAction = executionMode && executionMode.toString() === "headless-action";
 
+function invokeObjC(target, selName, arg1, arg2) {
+  if (!target) return undefined;
+  const gRef = typeof globalThis !== "undefined" ? globalThis : (typeof global !== "undefined" ? global : this);
+
+  // 1. Direct camelCase method (e.g., roundTripValueKey, executeJavaScriptSync)
+  const jsName = selName.replace(/:([a-z0-9_])/gi, (_, ch) => ch.toUpperCase()).replace(/:/g, '');
+  if (typeof target[jsName] === "function") {
+    try {
+      if (arg2 !== undefined) return target[jsName](arg1, arg2);
+      if (arg1 !== undefined) return target[jsName](arg1);
+      return target[jsName]();
+    } catch (e) {
+      console.warn("[HanlinScriptParity] invokeObjC direct method " + jsName + " failed: " + e);
+    }
+  }
+
+  // 2. Direct exact selector name (target["roundTripValue:key:"])
+  if (typeof target[selName] === "function") {
+    try {
+      if (arg2 !== undefined) return target[selName](arg1, arg2);
+      if (arg1 !== undefined) return target[selName](arg1);
+      return target[selName]();
+    } catch (e) {
+      console.warn("[HanlinScriptParity] invokeObjC selector property " + selName + " failed: " + e);
+    }
+  }
+
+  // 3. Dynamic Objective-C dispatch via performSelector
+  const selFromString = (gRef && typeof gRef.NSSelectorFromString === "function")
+    ? gRef.NSSelectorFromString
+    : (typeof NSSelectorFromString === "function" ? NSSelectorFromString : null);
+
+  if (selFromString) {
+    try {
+      const sel = selFromString(selName);
+      if (sel) {
+        if (arg2 !== undefined && typeof target.performSelectorWithObjectWithObject === "function") {
+          return target.performSelectorWithObjectWithObject(sel, arg1, arg2);
+        }
+        if (arg1 !== undefined && typeof target.performSelectorWithObject === "function") {
+          return target.performSelectorWithObject(sel, arg1);
+        }
+        if (typeof target.performSelector === "function") {
+          return target.performSelector(sel);
+        }
+      }
+    } catch (e) {
+      console.warn("[HanlinScriptParity] invokeObjC performSelector " + selName + " failed: " + e);
+    }
+  }
+
+  return undefined;
+}
+
 function invokeCompat(value, key) {
-  const c = compat
-    || resolveCompat()
-    || bridge
-    || resolveBridge();
-  if (c) {
-    if (typeof c.roundTripValueKey === "function") {
-      try {
-        const res = c.roundTripValueKey(value != null ? String(value) : "", key);
-        return res != null ? res.toString() : "";
-      } catch (e) {
-        return "Err: " + e;
+  const targets = [
+    compat,
+    resolveCompat(),
+    bridge,
+    resolveBridge()
+  ].filter(Boolean);
+
+  for (const c of targets) {
+    // 1. Try roundTripValue:key:
+    const roundTripRes = invokeObjC(c, "roundTripValue:key:", value != null ? String(value) : "", key);
+    if (roundTripRes !== undefined && roundTripRes !== null) {
+      return roundTripRes.toString();
+    }
+
+    // 2. Direct selector fallbacks
+    if (key === "hostService.executeJavaScript") {
+      const res = invokeObjC(c, "executeJavaScriptSync:", value != null ? String(value) : "");
+      if (res !== undefined && res !== null) return res.toString();
+    }
+    if (key === "hostService.executeNode") {
+      const res = invokeObjC(c, "executeNodeSync:", value != null ? String(value) : "");
+      if (res !== undefined && res !== null) return res.toString();
+    }
+    if (key === "hostService.executePython") {
+      const res = invokeObjC(c, "executePythonSync:", value != null ? String(value) : "");
+      if (res !== undefined && res !== null) return res.toString();
+    }
+    if (key === "hostService.fetchURL") {
+      const res = invokeObjC(c, "fetchURLSync:", value != null ? String(value) : "");
+      if (res !== undefined && res !== null) return res.toString();
+    }
+    if (key.startsWith("hostService.sendRequest:")) {
+      const parts = key.split(":");
+      const targetID = parts[1] || "";
+      const action = parts[2] || "";
+      const capability = parts[3] || "";
+      if (typeof c.sendRequestSyncActionCapabilityPayloadJSON === "function") {
+        try {
+          const res = c.sendRequestSyncActionCapabilityPayloadJSON(targetID, action, capability, value != null ? String(value) : "");
+          if (res != null) return res.toString();
+        } catch (e) {}
+      }
+      if (typeof c.sendRequestSync === "function") {
+        try {
+          const res = c.sendRequestSync(targetID, action, capability, value != null ? String(value) : "");
+          if (res != null) return res.toString();
+        } catch (e) {}
       }
     }
-    if (key === "hostService.executeJavaScript" && typeof c.executeJavaScriptSync === "function") {
-      try {
-        const res = c.executeJavaScriptSync(value != null ? String(value) : "");
-        return res != null ? res.toString() : "";
-      } catch (e) {
-        return "Err: " + e;
-      }
+    if (key === "hostService.state") {
+      const res = invokeObjC(c, "stateDirectory") || invokeObjC(c, "currentStateDirectory");
+      if (res !== undefined && res !== null) return res.toString();
     }
-    if (key === "hostService.executeNode" && typeof c.executeNodeSync === "function") {
-      try {
-        const res = c.executeNodeSync(value != null ? String(value) : "");
-        return res != null ? res.toString() : "";
-      } catch (e) {
-        return "Err: " + e;
-      }
-    }
-    if (key === "hostService.executePython" && typeof c.executePythonSync === "function") {
-      try {
-        const res = c.executePythonSync(value != null ? String(value) : "");
-        return res != null ? res.toString() : "";
-      } catch (e) {
-        return "Err: " + e;
-      }
-    }
-    if (key === "hostService.fetchURL" && typeof c.fetchURLSync === "function") {
-      try {
-        const res = c.fetchURLSync(value != null ? String(value) : "");
-        return res != null ? res.toString() : "";
-      } catch (e) {
-        return "Err: " + e;
-      }
-    }
-    if (key.startsWith("hostService.sendRequest:") && typeof c.sendRequestSyncActionCapabilityPayloadJSON === "function") {
-      try {
-        const parts = key.split(":");
-        const targetID = parts[1] || "";
-        const action = parts[2] || "";
-        const capability = parts[3] || "";
-        const res = c.sendRequestSyncActionCapabilityPayloadJSON(targetID, action, capability, value != null ? String(value) : "");
-        return res != null ? res.toString() : "";
-      } catch (e) {
-        return "Err: " + e;
-      }
-    }
-    if (key.startsWith("hostService.sendRequest:") && typeof c.sendRequestSync === "function") {
-      try {
-        const parts = key.split(":");
-        const targetID = parts[1] || "";
-        const action = parts[2] || "";
-        const capability = parts[3] || "";
-        const res = c.sendRequestSync(targetID, action, capability, value != null ? String(value) : "");
-        return res != null ? res.toString() : "";
-      } catch (e) {
-        return "Err: " + e;
-      }
-    }
-    if (key === "hostService.state" && typeof c.stateDirectory === "function") {
-      try {
-        const res = c.stateDirectory();
-        return res != null ? res.toString() : "";
-      } catch (e) {}
-    }
-    if (key === "hostService.dataRoot" && typeof c.dataRootDirectory === "function") {
-      try {
-        const res = c.dataRootDirectory();
-        return res != null ? res.toString() : "";
-      } catch (e) {}
+    if (key === "hostService.dataRoot") {
+      const res = invokeObjC(c, "dataRootDirectory") || invokeObjC(c, "currentDataRootDirectory");
+      if (res !== undefined && res !== null) return res.toString();
     }
   }
   return null;
@@ -183,19 +213,19 @@ function runJS(code, cb) {
     if (direct.startsWith("Err: ")) return cb(null, direct.substring(5));
     return cb(direct, null);
   }
-  const target = bridge || compat || resolveBridge() || resolveCompat();
-  if (target && typeof target.executeJavaScriptCompletion === "function") {
-    return target.executeJavaScriptCompletion(code, cb);
-  } else if (target && typeof target.executeJavaScript === "function") {
-    return target.executeJavaScript(code, cb);
-  } else if (target && typeof target.executeJavaScriptSync === "function") {
-    try {
-      const res = target.executeJavaScriptSync(code);
-      const str = res != null ? res.toString() : "";
+  const targets = [bridge, compat, resolveBridge(), resolveCompat()].filter(Boolean);
+  for (const target of targets) {
+    if (typeof target.executeJavaScriptCompletion === "function") {
+      return target.executeJavaScriptCompletion(code, cb);
+    }
+    if (typeof target.executeJavaScript === "function") {
+      return target.executeJavaScript(code, cb);
+    }
+    const syncRes = invokeObjC(target, "executeJavaScriptSync:", code);
+    if (syncRes !== undefined && syncRes !== null) {
+      const str = syncRes.toString();
       if (str.startsWith("Err: ")) return cb(null, str.substring(5));
       return cb(str, null);
-    } catch (e) {
-      return cb(null, "executeJavaScriptSync error: " + e);
     }
   }
   return cb(null, "Error: Host service provider unavailable for JavaScript execution");
@@ -207,19 +237,19 @@ function runNode(code, cb) {
     if (direct.startsWith("Err: ")) return cb(null, direct.substring(5));
     return cb(direct, null);
   }
-  const target = bridge || compat || resolveBridge() || resolveCompat();
-  if (target && typeof target.executeNodeCompletion === "function") {
-    return target.executeNodeCompletion(code, cb);
-  } else if (target && typeof target.executeNode === "function") {
-    return target.executeNode(code, cb);
-  } else if (target && typeof target.executeNodeSync === "function") {
-    try {
-      const res = target.executeNodeSync(code);
-      const str = res != null ? res.toString() : "";
+  const targets = [bridge, compat, resolveBridge(), resolveCompat()].filter(Boolean);
+  for (const target of targets) {
+    if (typeof target.executeNodeCompletion === "function") {
+      return target.executeNodeCompletion(code, cb);
+    }
+    if (typeof target.executeNode === "function") {
+      return target.executeNode(code, cb);
+    }
+    const syncRes = invokeObjC(target, "executeNodeSync:", code);
+    if (syncRes !== undefined && syncRes !== null) {
+      const str = syncRes.toString();
       if (str.startsWith("Err: ")) return cb(null, str.substring(5));
       return cb(str, null);
-    } catch (e) {
-      return cb(null, "executeNodeSync error: " + e);
     }
   }
   return cb(null, "Error: Host service provider unavailable for Node execution");
@@ -231,19 +261,19 @@ function runPython(code, cb) {
     if (direct.startsWith("Err: ")) return cb(null, direct.substring(5));
     return cb(direct, null);
   }
-  const target = bridge || compat || resolveBridge() || resolveCompat();
-  if (target && typeof target.executePythonCompletion === "function") {
-    return target.executePythonCompletion(code, cb);
-  } else if (target && typeof target.executePython === "function") {
-    return target.executePython(code, cb);
-  } else if (target && typeof target.executePythonSync === "function") {
-    try {
-      const res = target.executePythonSync(code);
-      const str = res != null ? res.toString() : "";
+  const targets = [bridge, compat, resolveBridge(), resolveCompat()].filter(Boolean);
+  for (const target of targets) {
+    if (typeof target.executePythonCompletion === "function") {
+      return target.executePythonCompletion(code, cb);
+    }
+    if (typeof target.executePython === "function") {
+      return target.executePython(code, cb);
+    }
+    const syncRes = invokeObjC(target, "executePythonSync:", code);
+    if (syncRes !== undefined && syncRes !== null) {
+      const str = syncRes.toString();
       if (str.startsWith("Err: ")) return cb(null, str.substring(5));
       return cb(str, null);
-    } catch (e) {
-      return cb(null, "executePythonSync error: " + e);
     }
   }
   return cb(null, "Error: Host service provider unavailable for Python execution");
@@ -255,19 +285,19 @@ function fetchHTTPS(url, cb) {
     if (direct.startsWith("Err: ")) return cb(null, direct.substring(5));
     return cb(direct, null);
   }
-  const target = bridge || compat || resolveBridge() || resolveCompat();
-  if (target && typeof target.fetchURLCompletion === "function") {
-    return target.fetchURLCompletion(url, cb);
-  } else if (target && typeof target.fetchURL === "function") {
-    return target.fetchURL(url, cb);
-  } else if (target && typeof target.fetchURLSync === "function") {
-    try {
-      const res = target.fetchURLSync(url);
-      const str = res != null ? res.toString() : "";
+  const targets = [bridge, compat, resolveBridge(), resolveCompat()].filter(Boolean);
+  for (const target of targets) {
+    if (typeof target.fetchURLCompletion === "function") {
+      return target.fetchURLCompletion(url, cb);
+    }
+    if (typeof target.fetchURL === "function") {
+      return target.fetchURL(url, cb);
+    }
+    const syncRes = invokeObjC(target, "fetchURLSync:", url);
+    if (syncRes !== undefined && syncRes !== null) {
+      const str = syncRes.toString();
       if (str.startsWith("Err: ")) return cb(null, str.substring(5));
       return cb(str, null);
-    } catch (e) {
-      return cb(null, "fetchURLSync error: " + e);
     }
   }
   return cb(null, "Error: Host service provider unavailable for HTTPS fetch");
@@ -280,28 +310,41 @@ function sendInterApp(targetID, action, capability, payloadJSON, cb) {
     if (direct.startsWith("Err: ")) return cb(null, direct.substring(5));
     return cb(direct, null);
   }
-  const target = bridge || compat || resolveBridge() || resolveCompat();
-  if (target && typeof target.sendRequestActionCapabilityPayloadJSONCompletion === "function") {
-    return target.sendRequestActionCapabilityPayloadJSONCompletion(targetID, action, capability, payloadJSON, cb);
-  } else if (target && typeof target.sendRequest === "function") {
-    return target.sendRequest(targetID, action, capability, payloadJSON, cb);
-  } else if (target && typeof target.sendRequestSyncActionCapabilityPayloadJSON === "function") {
-    try {
-      const res = target.sendRequestSyncActionCapabilityPayloadJSON(targetID, action, capability, payloadJSON);
-      const str = res != null ? res.toString() : "";
-      if (str.startsWith("Err: ")) return cb(null, str.substring(5));
-      return cb(str, null);
-    } catch (e) {
-      return cb(null, "sendRequestSyncActionCapabilityPayloadJSON error: " + e);
+  const jsonKey = "hostService.sendRequest";
+  const jsonVal = JSON.stringify({ targetID: targetID, action: action, capability: capability, payloadJSON: payloadJSON });
+  const directJSON = invokeCompat(jsonVal, jsonKey);
+  if (directJSON != null) {
+    if (directJSON.startsWith("Err: ")) return cb(null, directJSON.substring(5));
+    return cb(directJSON, null);
+  }
+
+  const targets = [bridge, compat, resolveBridge(), resolveCompat()].filter(Boolean);
+  for (const target of targets) {
+    if (typeof target.sendRequestActionCapabilityPayloadJSONCompletion === "function") {
+      return target.sendRequestActionCapabilityPayloadJSONCompletion(targetID, action, capability, payloadJSON, cb);
     }
-  } else if (target && typeof target.sendRequestSync === "function") {
-    try {
-      const res = target.sendRequestSync(targetID, action, capability, payloadJSON);
-      const str = res != null ? res.toString() : "";
-      if (str.startsWith("Err: ")) return cb(null, str.substring(5));
-      return cb(str, null);
-    } catch (e) {
-      return cb(null, "sendRequestSync error: " + e);
+    if (typeof target.sendRequest === "function") {
+      return target.sendRequest(targetID, action, capability, payloadJSON, cb);
+    }
+    if (typeof target.sendRequestSyncActionCapabilityPayloadJSON === "function") {
+      try {
+        const res = target.sendRequestSyncActionCapabilityPayloadJSON(targetID, action, capability, payloadJSON);
+        if (res != null) {
+          const str = res.toString();
+          if (str.startsWith("Err: ")) return cb(null, str.substring(5));
+          return cb(str, null);
+        }
+      } catch (e) {}
+    }
+    if (typeof target.sendRequestSync === "function") {
+      try {
+        const res = target.sendRequestSync(targetID, action, capability, payloadJSON);
+        if (res != null) {
+          const str = res.toString();
+          if (str.startsWith("Err: ")) return cb(null, str.substring(5));
+          return cb(str, null);
+        }
+      } catch (e) {}
     }
   }
   return cb(null, "Error: Host service provider unavailable for inter-app request");
@@ -373,6 +416,8 @@ if (targetForRegister) {
       regActionFn.call(targetForRegister, "share.value", "inter-app.share");
       regActionFn.call(targetForRegister, "parity.intent", "inter-app.share");
     } else {
+      invokeObjC(targetForRegister, "registerAction:capability:", "share.value", "inter-app.share");
+      invokeObjC(targetForRegister, "registerAction:capability:", "parity.intent", "inter-app.share");
       invokeCompat("share.value", "hostService.registerAction:inter-app.share");
       invokeCompat("parity.intent", "hostService.registerAction:inter-app.share");
     }

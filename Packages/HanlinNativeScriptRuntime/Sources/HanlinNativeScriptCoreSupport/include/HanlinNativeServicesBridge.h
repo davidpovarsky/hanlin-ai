@@ -114,6 +114,7 @@ typedef void (^HanlinBridgeRequestHandlerBlock)(NSString *caller, NSString *payl
                             capability:(NSString *)capability
                            payloadJSON:(NSString *)payloadJSON;
 + (void)registerAction:(NSString *)action capability:(NSString *)capability;
++ (NSString *)roundTripValue:(NSString *)value key:(NSString *)key;
 
 @end
 

@@ -371,6 +371,89 @@ static NSString *HanlinExecuteSyncWithTimeout(NSTimeInterval timeoutSeconds, Han
     if ([provider respondsToSelector:@selector(registerAction:capability:)]) {
         [(id)provider registerAction:action capability:capability];
     }
+    if ([provider respondsToSelector:@selector(registerRequestHandler:capability:handler:)]) {
+        [provider registerRequestHandler:action capability:capability handler:^(NSString *caller, NSString *payloadJSON, HanlinBridgeStringResultBlock reply) {
+            NSLog(@"[HanlinNativeServicesBridge] Action handler invoked for action=%@ caller=%@ payload=%@", action, caller, payloadJSON);
+            NSDictionary *reqDict = nil;
+            if (payloadJSON.length > 0) {
+                NSData *data = [payloadJSON dataUsingEncoding:NSUTF8StringEncoding];
+                if (data) {
+                    reqDict = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+                }
+            }
+            NSDictionary *replyDict = @{
+                @"source": @"hanlin.demo.script-parity",
+                @"action": action ?: @"",
+                @"caller": caller ?: @"",
+                @"request": reqDict ?: @{},
+                @"status": @"ok"
+            };
+            NSData *replyData = [NSJSONSerialization dataWithJSONObject:replyDict options:0 error:nil];
+            NSString *replyStr = replyData ? [[NSString alloc] initWithData:replyData encoding:NSUTF8StringEncoding] : @"{}";
+            if (reply) reply(replyStr, nil);
+        }];
+    }
+}
+
++ (NSString *)roundTripValue:(NSString *)value key:(NSString *)key {
+    if ([key isEqualToString:@"hostService.dataRoot"]) {
+        return [self dataRootDirectory] ?: @"";
+    }
+    if ([key isEqualToString:@"hostService.state"]) {
+        return [self stateDirectory] ?: @"";
+    }
+    if ([key isEqualToString:@"hostService.executeJavaScript"]) {
+        return [self executeJavaScriptSync:value] ?: @"";
+    }
+    if ([key isEqualToString:@"hostService.executeNode"]) {
+        return [self executeNodeSync:value] ?: @"";
+    }
+    if ([key isEqualToString:@"hostService.executePython"]) {
+        return [self executePythonSync:value] ?: @"";
+    }
+    if ([key isEqualToString:@"hostService.fetchURL"]) {
+        return [self fetchURLSync:value] ?: @"";
+    }
+    if ([key hasPrefix:@"hostService.sendRequest:"]) {
+        NSArray *parts = [key componentsSeparatedByString:@":"];
+        NSString *targetID = parts.count > 1 ? parts[1] : @"";
+        NSString *action = parts.count > 2 ? parts[2] : @"";
+        NSString *capability = parts.count > 3 ? parts[3] : @"";
+        return [self sendRequestSync:targetID
+                              action:action
+                          capability:capability
+                         payloadJSON:value] ?: @"";
+    }
+    if ([key isEqualToString:@"hostService.sendRequest"]) {
+        if (value.length > 0) {
+            NSData *data = [value dataUsingEncoding:NSUTF8StringEncoding];
+            NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+            if ([dict isKindOfClass:[NSDictionary class]]) {
+                NSString *targetID = dict[@"targetID"] ?: @"";
+                NSString *action = dict[@"action"] ?: @"";
+                NSString *capability = dict[@"capability"] ?: @"";
+                id payload = dict[@"payload"] ?: dict[@"payloadJSON"] ?: @"";
+                NSString *payloadJSON = [payload isKindOfClass:[NSString class]] ? payload : @"";
+                if (![payload isKindOfClass:[NSString class]]) {
+                    NSData *pData = [NSJSONSerialization dataWithJSONObject:payload options:0 error:nil];
+                    if (pData) payloadJSON = [[NSString alloc] initWithData:pData encoding:NSUTF8StringEncoding];
+                }
+                return [self sendRequestSync:targetID
+                                      action:action
+                                  capability:capability
+                                 payloadJSON:payloadJSON] ?: @"";
+            }
+        }
+    }
+    if ([key hasPrefix:@"hostService.registerAction:"]) {
+        NSString *capability = [key substringFromIndex:@"hostService.registerAction:".length];
+        [self registerAction:value capability:capability];
+        return @"registered";
+    }
+    NSString *scopedKey = [@"hanlin.nativescript.compatibility." stringByAppendingString:key];
+    NSUserDefaults *defaults = NSUserDefaults.standardUserDefaults;
+    [defaults setObject:value forKey:scopedKey];
+    return [defaults stringForKey:scopedKey] ?: @"";
 }
 
 @end
