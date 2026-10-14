@@ -456,6 +456,88 @@ static NSString *HanlinExecuteSyncWithTimeout(NSTimeInterval timeoutSeconds, Han
     return [defaults stringForKey:scopedKey] ?: @"";
 }
 
+static HanlinNativeServicesBridge *_sharedBridgeInstance = nil;
+
++ (instancetype)sharedBridge {
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        _sharedBridgeInstance = [[HanlinNativeServicesBridge alloc] init];
+    });
+    return _sharedBridgeInstance;
+}
+
+- (nullable NSString *)dataRootDirectory { return [self.class dataRootDirectory]; }
+- (nullable NSString *)stateDirectory { return [self.class stateDirectory]; }
+- (nullable NSString *)documentsDirectory { return [self.class documentsDirectory]; }
+- (nullable NSString *)cacheDirectory { return [self.class cacheDirectory]; }
+
+- (void)executeJavaScript:(NSString *)source completion:(HanlinBridgeStringResultBlock)completion {
+    [self.class executeJavaScript:source completion:completion];
+}
+
+- (void)executeNode:(NSString *)source completion:(HanlinBridgeStringResultBlock)completion {
+    [self.class executeNode:source completion:completion];
+}
+
+- (void)nodeHealthCheckWithCompletion:(HanlinBridgeBoolResultBlock)completion {
+    [self.class nodeHealthCheckWithCompletion:completion];
+}
+
+- (void)executePython:(NSString *)source completion:(HanlinBridgeStringResultBlock)completion {
+    [self.class executePython:source completion:completion];
+}
+
+- (nullable NSString *)pythonVersion { return [self.class pythonVersion]; }
+
+- (void)fetchURL:(NSString *)urlString completion:(HanlinBridgeStringResultBlock)completion {
+    [self.class fetchURL:urlString completion:completion];
+}
+
+- (void)sendRequest:(NSString *)targetID
+             action:(NSString *)action
+         capability:(NSString *)capability
+        payloadJSON:(NSString *)payloadJSON
+         completion:(HanlinBridgeStringResultBlock)completion {
+    [self.class sendRequest:targetID action:action capability:capability payloadJSON:payloadJSON completion:completion];
+}
+
+- (void)registerRequestHandler:(NSString *)action
+                    capability:(NSString *)capability
+                       handler:(HanlinBridgeRequestHandlerBlock)handler {
+    [self.class registerRequestHandler:action capability:capability handler:handler];
+}
+
+- (nullable NSString *)executeJavaScriptSync:(NSString *)source {
+    return [self.class executeJavaScriptSync:source];
+}
+
+- (nullable NSString *)executeNodeSync:(NSString *)source {
+    return [self.class executeNodeSync:source];
+}
+
+- (nullable NSString *)executePythonSync:(NSString *)source {
+    return [self.class executePythonSync:source];
+}
+
+- (nullable NSString *)fetchURLSync:(NSString *)urlString {
+    return [self.class fetchURLSync:urlString];
+}
+
+- (nullable NSString *)sendRequestSync:(NSString *)targetID
+                                action:(NSString *)action
+                            capability:(NSString *)capability
+                           payloadJSON:(NSString *)payloadJSON {
+    return [self.class sendRequestSync:targetID action:action capability:capability payloadJSON:payloadJSON];
+}
+
+- (void)registerAction:(NSString *)action capability:(NSString *)capability {
+    [self.class registerAction:action capability:capability];
+}
+
+- (NSString *)roundTripValue:(NSString *)value key:(NSString *)key {
+    return [self.class roundTripValue:value key:key];
+}
+
 @end
 
 /// Internal host-only entry point used by the NativeScript runtime wrapper.

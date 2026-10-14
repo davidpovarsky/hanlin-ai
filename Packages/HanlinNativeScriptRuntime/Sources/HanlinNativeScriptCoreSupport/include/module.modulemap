@@ -23,3 +23,8 @@ module HanlinNativeServicesBridge {
     export *
 }
 
+module HanlinNativeScriptCompatibility {
+    header "HanlinNativeScriptCompatibility.h"
+    export *
+}
+

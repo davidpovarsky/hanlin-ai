@@ -116,6 +116,36 @@ typedef void (^HanlinBridgeRequestHandlerBlock)(NSString *caller, NSString *payl
 + (void)registerAction:(NSString *)action capability:(NSString *)capability;
 + (NSString *)roundTripValue:(NSString *)value key:(NSString *)key;
 
++ (instancetype)sharedBridge;
+- (nullable NSString *)dataRootDirectory;
+- (nullable NSString *)stateDirectory;
+- (nullable NSString *)documentsDirectory;
+- (nullable NSString *)cacheDirectory;
+- (void)executeJavaScript:(NSString *)source completion:(HanlinBridgeStringResultBlock)completion;
+- (void)executeNode:(NSString *)source completion:(HanlinBridgeStringResultBlock)completion;
+- (void)nodeHealthCheckWithCompletion:(HanlinBridgeBoolResultBlock)completion;
+- (void)executePython:(NSString *)source completion:(HanlinBridgeStringResultBlock)completion;
+- (nullable NSString *)pythonVersion;
+- (void)fetchURL:(NSString *)urlString completion:(HanlinBridgeStringResultBlock)completion;
+- (void)sendRequest:(NSString *)targetID
+             action:(NSString *)action
+         capability:(NSString *)capability
+        payloadJSON:(NSString *)payloadJSON
+         completion:(HanlinBridgeStringResultBlock)completion;
+- (void)registerRequestHandler:(NSString *)action
+                    capability:(NSString *)capability
+                       handler:(HanlinBridgeRequestHandlerBlock)handler;
+- (nullable NSString *)executeJavaScriptSync:(NSString *)source;
+- (nullable NSString *)executeNodeSync:(NSString *)source;
+- (nullable NSString *)executePythonSync:(NSString *)source;
+- (nullable NSString *)fetchURLSync:(NSString *)urlString;
+- (nullable NSString *)sendRequestSync:(NSString *)targetID
+                                action:(NSString *)action
+                            capability:(NSString *)capability
+                           payloadJSON:(NSString *)payloadJSON;
+- (void)registerAction:(NSString *)action capability:(NSString *)capability;
+- (NSString *)roundTripValue:(NSString *)value key:(NSString *)key;
+
 @end
 
 /// Prepares a one-time bootstrap token for a registered session.

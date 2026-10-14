@@ -29,6 +29,23 @@ NS_ASSUME_NONNULL_BEGIN
                             capability:(NSString *)capability
                            payloadJSON:(NSString *)payloadJSON;
 + (void)registerAction:(NSString *)action capability:(NSString *)capability;
+
++ (instancetype)sharedCompatibility;
+
+- (NSString *)roundTripValue:(NSString *)value key:(NSString *)key;
+- (nullable NSString *)currentDataRootDirectory;
+- (nullable NSString *)currentStateDirectory;
+- (nullable NSString *)dataRootDirectory;
+- (nullable NSString *)stateDirectory;
+- (nullable NSString *)executeJavaScriptSync:(NSString *)source;
+- (nullable NSString *)executeNodeSync:(NSString *)source;
+- (nullable NSString *)executePythonSync:(NSString *)source;
+- (nullable NSString *)fetchURLSync:(NSString *)urlString;
+- (nullable NSString *)sendRequestSync:(NSString *)targetID
+                                action:(NSString *)action
+                            capability:(NSString *)capability
+                           payloadJSON:(NSString *)payloadJSON;
+- (void)registerAction:(NSString *)action capability:(NSString *)capability;
 @end
 
 NS_ASSUME_NONNULL_END

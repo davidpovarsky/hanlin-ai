@@ -236,4 +236,61 @@ static NSInteger _latestEventCount = 0;
     [HanlinNativeServicesBridge registerAction:action capability:capability];
 }
 
+static HanlinNativeScriptCompatibility *_sharedCompatInstance = nil;
+
++ (instancetype)sharedCompatibility {
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        _sharedCompatInstance = [[HanlinNativeScriptCompatibility alloc] init];
+    });
+    return _sharedCompatInstance;
+}
+
+- (NSString *)roundTripValue:(NSString *)value key:(NSString *)key {
+    return [self.class roundTripValue:value key:key];
+}
+
+- (nullable NSString *)currentDataRootDirectory {
+    return [self.class currentDataRootDirectory];
+}
+
+- (nullable NSString *)currentStateDirectory {
+    return [self.class currentStateDirectory];
+}
+
+- (nullable NSString *)dataRootDirectory {
+    return [self.class currentDataRootDirectory];
+}
+
+- (nullable NSString *)stateDirectory {
+    return [self.class currentStateDirectory];
+}
+
+- (nullable NSString *)executeJavaScriptSync:(NSString *)source {
+    return [self.class executeJavaScriptSync:source];
+}
+
+- (nullable NSString *)executeNodeSync:(NSString *)source {
+    return [self.class executeNodeSync:source];
+}
+
+- (nullable NSString *)executePythonSync:(NSString *)source {
+    return [self.class executePythonSync:source];
+}
+
+- (nullable NSString *)fetchURLSync:(NSString *)urlString {
+    return [self.class fetchURLSync:urlString];
+}
+
+- (nullable NSString *)sendRequestSync:(NSString *)targetID
+                                action:(NSString *)action
+                            capability:(NSString *)capability
+                           payloadJSON:(NSString *)payloadJSON {
+    return [self.class sendRequestSync:targetID action:action capability:capability payloadJSON:payloadJSON];
+}
+
+- (void)registerAction:(NSString *)action capability:(NSString *)capability {
+    [self.class registerAction:action capability:capability];
+}
+
 @end

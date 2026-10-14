@@ -6,69 +6,68 @@ console.log("[HanlinScriptParity] Initializing bundle...");
 
 const g = typeof globalThis !== "undefined" ? globalThis : (typeof global !== "undefined" ? global : this);
 
-function resolveClass(name) {
-  if (g) {
-    try {
-      if (typeof g.NSClassFromString === "function") {
-        const cls = g.NSClassFromString(name);
-        if (cls) return cls;
-      }
-    } catch (e) {}
-    try {
-      if (typeof g.objc_getClass === "function") {
-        const cls = g.objc_getClass(name);
-        if (cls) return cls;
-      }
-    } catch (e) {}
-    if (g[name]) return g[name];
+function getBridgeCandidates() {
+  const gRef = typeof globalThis !== "undefined" ? globalThis : (typeof global !== "undefined" ? global : this);
+  const rawClasses = [];
+
+  function tryAddClass(c) {
+    if (c && rawClasses.indexOf(c) === -1) rawClasses.push(c);
   }
-  if (typeof global !== "undefined" && global) {
-    try {
-      if (typeof global.NSClassFromString === "function") {
-        const cls = global.NSClassFromString(name);
-        if (cls) return cls;
-      }
-    } catch (e) {}
-    try {
-      if (typeof global.objc_getClass === "function") {
-        const cls = global.objc_getClass(name);
-        if (cls) return cls;
-      }
-    } catch (e) {}
-    if (global[name]) return global[name];
-  }
+
+  try { if (typeof HanlinNativeServicesBridge !== "undefined" && HanlinNativeServicesBridge) tryAddClass(HanlinNativeServicesBridge); } catch (e) {}
+  try { if (typeof HanlinNativeScriptCompatibility !== "undefined" && HanlinNativeScriptCompatibility) tryAddClass(HanlinNativeScriptCompatibility); } catch (e) {}
+  try { if (gRef && gRef.HanlinNativeServicesBridge) tryAddClass(gRef.HanlinNativeServicesBridge); } catch (e) {}
+  try { if (gRef && gRef.HanlinNativeScriptCompatibility) tryAddClass(gRef.HanlinNativeScriptCompatibility); } catch (e) {}
   try {
-    if (typeof NSClassFromString === "function") {
-      const cls = NSClassFromString(name);
-      if (cls) return cls;
+    const fn = (gRef && typeof gRef.NSClassFromString === "function") ? gRef.NSClassFromString : (typeof NSClassFromString === "function" ? NSClassFromString : null);
+    if (fn) {
+      const c1 = fn("HanlinNativeServicesBridge");
+      if (c1) tryAddClass(c1);
+      const c2 = fn("HanlinNativeScriptCompatibility");
+      if (c2) tryAddClass(c2);
     }
   } catch (e) {}
   try {
-    if (typeof objc_getClass === "function") {
-      const cls = objc_getClass(name);
-      if (cls) return cls;
+    const fn = (gRef && typeof gRef.objc_getClass === "function") ? gRef.objc_getClass : (typeof objc_getClass === "function" ? objc_getClass : null);
+    if (fn) {
+      const c1 = fn("HanlinNativeServicesBridge");
+      if (c1) tryAddClass(c1);
+      const c2 = fn("HanlinNativeScriptCompatibility");
+      if (c2) tryAddClass(c2);
     }
   } catch (e) {}
-  try {
-    if (name === "HanlinNativeServicesBridge" && typeof HanlinNativeServicesBridge !== "undefined" && HanlinNativeServicesBridge) return HanlinNativeServicesBridge;
-    if (name === "HanlinNativeScriptCompatibility" && typeof HanlinNativeScriptCompatibility !== "undefined" && HanlinNativeScriptCompatibility) return HanlinNativeScriptCompatibility;
-  } catch (e) {}
-  return null;
+
+  const candidates = [];
+  function add(item) {
+    if (item && candidates.indexOf(item) === -1) {
+      candidates.push(item);
+    }
+  }
+
+  for (const c of rawClasses) {
+    add(c);
+    try { if (typeof c.sharedBridge === "function") add(c.sharedBridge()); } catch (e) {}
+    try { if (typeof c.sharedCompatibility === "function") add(c.sharedCompatibility()); } catch (e) {}
+    try { if (typeof c.activeSessionBridge === "function") add(c.activeSessionBridge()); } catch (e) {}
+    try { if (typeof c.alloc === "function") add(c.alloc().init()); } catch (e) {}
+    try { if (typeof c.new === "function") add(c.new()); } catch (e) {}
+  }
+  return candidates;
 }
 
 function resolveBridge() {
-  if (typeof HanlinNativeServicesBridge !== "undefined" && HanlinNativeServicesBridge) return HanlinNativeServicesBridge;
-  return resolveClass("HanlinNativeServicesBridge");
+  const cands = getBridgeCandidates();
+  return cands.length > 0 ? cands[0] : null;
 }
 
 function resolveCompat() {
-  if (typeof HanlinNativeScriptCompatibility !== "undefined" && HanlinNativeScriptCompatibility) return HanlinNativeScriptCompatibility;
-  return resolveClass("HanlinNativeScriptCompatibility");
+  const cands = getBridgeCandidates();
+  return cands.length > 0 ? cands[0] : null;
 }
 
 const bridge = resolveBridge();
 const compat = resolveCompat();
-console.log("[HanlinScriptParity] Bridge resolution: bridge=" + (bridge ? "found" : "null") + " compat=" + (compat ? "found" : "null") + " g.NSClassFromString=" + (g && typeof g.NSClassFromString));
+console.log("[HanlinScriptParity] Bridge resolution: bridge=" + (bridge ? "found" : "null") + " compat=" + (compat ? "found" : "null") + " totalCandidates=" + getBridgeCandidates().length);
 
 const environment = NSProcessInfo.processInfo.environment;
 const executionMode = environment.objectForKey("HANLIN_EXECUTION_MODE");
@@ -129,12 +128,7 @@ function invokeObjC(target, selName, arg1, arg2) {
 }
 
 function invokeCompat(value, key) {
-  const targets = [
-    compat,
-    resolveCompat(),
-    bridge,
-    resolveBridge()
-  ].filter(Boolean);
+  const targets = getBridgeCandidates();
 
   for (const c of targets) {
     // 1. Try roundTripValue:key:
@@ -177,6 +171,8 @@ function invokeCompat(value, key) {
           if (res != null) return res.toString();
         } catch (e) {}
       }
+      const syncRes = invokeObjC(c, "sendRequestSync:action:capability:payloadJSON:", targetID, action, capability, value != null ? String(value) : "");
+      if (syncRes !== undefined && syncRes !== null) return syncRes.toString();
     }
     if (key === "hostService.state") {
       const res = invokeObjC(c, "stateDirectory") || invokeObjC(c, "currentStateDirectory");
@@ -213,7 +209,7 @@ function runJS(code, cb) {
     if (direct.startsWith("Err: ")) return cb(null, direct.substring(5));
     return cb(direct, null);
   }
-  const targets = [bridge, compat, resolveBridge(), resolveCompat()].filter(Boolean);
+  const targets = getBridgeCandidates();
   for (const target of targets) {
     if (typeof target.executeJavaScriptCompletion === "function") {
       return target.executeJavaScriptCompletion(code, cb);
@@ -237,7 +233,7 @@ function runNode(code, cb) {
     if (direct.startsWith("Err: ")) return cb(null, direct.substring(5));
     return cb(direct, null);
   }
-  const targets = [bridge, compat, resolveBridge(), resolveCompat()].filter(Boolean);
+  const targets = getBridgeCandidates();
   for (const target of targets) {
     if (typeof target.executeNodeCompletion === "function") {
       return target.executeNodeCompletion(code, cb);
@@ -261,7 +257,7 @@ function runPython(code, cb) {
     if (direct.startsWith("Err: ")) return cb(null, direct.substring(5));
     return cb(direct, null);
   }
-  const targets = [bridge, compat, resolveBridge(), resolveCompat()].filter(Boolean);
+  const targets = getBridgeCandidates();
   for (const target of targets) {
     if (typeof target.executePythonCompletion === "function") {
       return target.executePythonCompletion(code, cb);
@@ -285,7 +281,7 @@ function fetchHTTPS(url, cb) {
     if (direct.startsWith("Err: ")) return cb(null, direct.substring(5));
     return cb(direct, null);
   }
-  const targets = [bridge, compat, resolveBridge(), resolveCompat()].filter(Boolean);
+  const targets = getBridgeCandidates();
   for (const target of targets) {
     if (typeof target.fetchURLCompletion === "function") {
       return target.fetchURLCompletion(url, cb);
@@ -318,7 +314,7 @@ function sendInterApp(targetID, action, capability, payloadJSON, cb) {
     return cb(directJSON, null);
   }
 
-  const targets = [bridge, compat, resolveBridge(), resolveCompat()].filter(Boolean);
+  const targets = getBridgeCandidates();
   for (const target of targets) {
     if (typeof target.sendRequestActionCapabilityPayloadJSONCompletion === "function") {
       return target.sendRequestActionCapabilityPayloadJSONCompletion(targetID, action, capability, payloadJSON, cb);
@@ -356,14 +352,18 @@ function getStateDirectory() {
   if (direct && !direct.startsWith("Err: ") && direct.length > 0) {
     return direct;
   }
-  const target = bridge || compat;
-  if (target && typeof target.stateDirectory === "function") {
-    try {
-      const dir = target.stateDirectory();
-      if (dir) return dir.toString();
-    } catch (e) {
-      console.warn("[HanlinScriptParity] stateDirectory() call failed: " + e);
+  const targets = getBridgeCandidates();
+  for (const target of targets) {
+    if (typeof target.stateDirectory === "function") {
+      try {
+        const dir = target.stateDirectory();
+        if (dir) return dir.toString();
+      } catch (e) {
+        console.warn("[HanlinScriptParity] stateDirectory() call failed: " + e);
+      }
     }
+    const dir = invokeObjC(target, "stateDirectory") || invokeObjC(target, "currentStateDirectory");
+    if (dir && !dir.startsWith("Err: ") && dir.length > 0) return dir.toString();
   }
   const miniappStateDir = environment.objectForKey("HANLIN_MINIAPP_STATE_DIR");
   if (miniappStateDir) return miniappStateDir.toString();
@@ -408,20 +408,18 @@ function loadStorage() {
 const initialStorageStatus = loadStorage();
 
 // Register canonical actions for inter-app, Widget/AppIntent, and headless execution.
-const targetForRegister = bridge || compat || resolveBridge() || resolveCompat();
-if (targetForRegister) {
+const registrationCandidates = getBridgeCandidates();
+for (const cand of registrationCandidates) {
   try {
-    const regActionFn = targetForRegister.registerActionCapability || targetForRegister.registerAction;
+    const regActionFn = cand.registerActionCapability || cand.registerAction;
     if (typeof regActionFn === "function") {
-      regActionFn.call(targetForRegister, "share.value", "inter-app.share");
-      regActionFn.call(targetForRegister, "parity.intent", "inter-app.share");
+      regActionFn.call(cand, "share.value", "inter-app.share");
+      regActionFn.call(cand, "parity.intent", "inter-app.share");
     } else {
-      invokeObjC(targetForRegister, "registerAction:capability:", "share.value", "inter-app.share");
-      invokeObjC(targetForRegister, "registerAction:capability:", "parity.intent", "inter-app.share");
-      invokeCompat("share.value", "hostService.registerAction:inter-app.share");
-      invokeCompat("parity.intent", "hostService.registerAction:inter-app.share");
+      invokeObjC(cand, "registerAction:capability:", "share.value", "inter-app.share");
+      invokeObjC(cand, "registerAction:capability:", "parity.intent", "inter-app.share");
     }
-    const registerFn = targetForRegister.registerRequestHandlerCapabilityHandler || targetForRegister.registerRequestHandler;
+    const registerFn = cand.registerRequestHandlerCapabilityHandler || cand.registerRequestHandler;
     if (typeof registerFn === "function") {
       const handleRequest = (actionName) => (caller, payloadJSON, reply) => {
         console.log("[HanlinScriptParity] Received " + actionName + " from " + caller + ": " + payloadJSON);
@@ -435,13 +433,15 @@ if (targetForRegister) {
         });
         reply(replyPayload, null);
       };
-      registerFn.call(targetForRegister, "share.value", "inter-app.share", handleRequest("share.value"));
-      registerFn.call(targetForRegister, "parity.intent", "inter-app.share", handleRequest("parity.intent"));
+      registerFn.call(cand, "share.value", "inter-app.share", handleRequest("share.value"));
+      registerFn.call(cand, "parity.intent", "inter-app.share", handleRequest("parity.intent"));
     }
   } catch (e) {
-    console.error("[HanlinScriptParity] Error registering handler: " + e);
+    console.error("[HanlinScriptParity] Error registering handler on candidate: " + e);
   }
 }
+invokeCompat("share.value", "hostService.registerAction:inter-app.share");
+invokeCompat("parity.intent", "hostService.registerAction:inter-app.share");
 
 if (isHeadlessAction) {
   console.log("[HanlinScriptParity] Headless action handlers ready. " + initialStorageStatus);
