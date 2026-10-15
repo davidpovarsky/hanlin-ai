@@ -8,5 +8,8 @@
   },
   "description": "Proof of concept demonstrating dynamic Expo / React Native runtime rendering native Apple SwiftUI through Expo UI.",
   "icon": "sparkles",
-  "color": "#4A90E2"
+  "color": "#4A90E2",
+  "capabilities": [
+    "storage"
+  ]
 }

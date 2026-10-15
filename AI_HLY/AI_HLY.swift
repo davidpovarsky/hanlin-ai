@@ -10,6 +10,7 @@ import Foundation
 import HanlinExpoRuntime
 import SwiftData
 import SwiftUI
+import TorahLibraryKit
 
 // MARK: - 安全数组访问扩展
 extension Collection {
@@ -121,6 +122,11 @@ struct MyApp: App {
                 .onOpenURL { url in
                     if url.host == "openVisionView" {
                         deepLinkTarget = "vision"
+                    } else if url.host == "study", let link = TorahStudyDeepLink.parse(url: url) {
+                        NotificationCenter.default.post(
+                            name: Notification.Name("TorahStudyDeepLinkNotification"),
+                            object: link
+                        )
                     }
                 }
         }

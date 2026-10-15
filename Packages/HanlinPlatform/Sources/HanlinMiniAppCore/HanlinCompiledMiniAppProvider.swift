@@ -16,19 +16,22 @@ public struct HanlinMiniAppHostContext: Sendable {
     public let requestBroker: HanlinMiniAppRequestBroker
     public let network: @Sendable (URL) async throws -> String
     public let dismiss: @MainActor @Sendable () -> Void
+    public let requestWidgetRefresh: (@MainActor @Sendable () -> Void)?
 
     public init(
         appID: HanlinAppID,
         storage: HanlinMiniAppStorageContext,
         requestBroker: HanlinMiniAppRequestBroker,
         network: @escaping @Sendable (URL) async throws -> String,
-        dismiss: @escaping @MainActor @Sendable () -> Void = {}
+        dismiss: @escaping @MainActor @Sendable () -> Void = {},
+        requestWidgetRefresh: (@MainActor @Sendable () -> Void)? = nil
     ) {
         self.appID = appID
         self.storage = storage
         self.requestBroker = requestBroker
         self.network = network
         self.dismiss = dismiss
+        self.requestWidgetRefresh = requestWidgetRefresh
     }
 }
 

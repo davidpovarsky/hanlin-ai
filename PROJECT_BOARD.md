@@ -56,6 +56,17 @@ Potential improvements, features, optimizations, or architectural ideas.
 
 ## Done
 
+- [x] Hanlin Pass 4.2: Expo & NativeScript Widget Foundation, Swift Parity MiniApp & Torah Photo Study Integration (§1–§6)
+  - Implemented: 2026-10-15
+  - Notes:
+    - §1: Expo Import & Exposure Verification: Filtered entrypoints to allow single foreground app alongside supported exposures (widgets, intents); fail-closed validation for unknown kinds. Verified 4-fixture test matrix in `HanlinScriptAnalyzerTests`.
+    - §2 & §5: Real Widget & Intent Dispatch Pipeline: Bound `HanlinHostServicesModule` strictly to `AppContext`; implemented `publishExpoWidget` in `ExpoHostServicesAdapter` with size (<256KiB) and depth (<32) validation; wired `publishExpoWidget` and `refreshExtensionSnapshot` in `HanlinScriptingPlatform`; added 5-minute minimum timeline cadence in `HanlinWidgetTimelineProvider`; updated `HanlinScriptExtensionStore` protection to `.completeFileProtectionUntilFirstUserAuthentication`; added declarative probe widget in `Fixtures/ExpoSwiftUIProbe`.
+    - §3: Swift Parity MiniApp & Exposures: Implemented `SwiftParityMiniAppExposures` (`widget`, `performIntent`, `decodeState`, `PersistedState`) in `HanlinParityMiniApp`; connected `onWidgetRefreshRequested`; wired `CompiledMiniAppExposureRegistry` with async error propagation and `requestWidgetRefresh` callback; added `swiftParityStateTransitions` integration test in `CanonicalMiniAppIntegrationTests`.
+    - §4: NativeScript MiniApp Widget Foundation: Enforced authentic `source/widget.json` and `source/translation.json` in `refreshExtensionSnapshot` with per-provider isolation.
+    - §6: Torah Photo Study Integration: Restored `TorahLibraryKit` package, `AI_HLY/Downstream/TorahStudy`, skills, acceptance scripts, and fixture matrix from `origin/feat/torah-photo-study`; integrated `TorahLibraryKit` across all 5 sections of `AI_HLY.xcodeproj/project.pbxproj`; registered `LSApplicationQueriesSchemes` with `maktabah` and allowed `chavrusachat` deep links; registered `ExecuteSkillResourceTool` and 7 Torah native tools in `NativeToolCatalog+RuntimeTools`; hardened `ExecuteSkillResourceTool` with canonical sandbox normalization (`safeResourceURL`); hardened `TorahStudyNativeTools` with strict sandbox and size validation; mapped orientation and inverted SwiftUI coordinates in `TorahOCRService`; added toolbar viewfinder button and capture view sheet in `NativeAppsHubView`; added `.inline` instruction support to `HanlinSkillCatalog`.
+    - Acceptance & Verification: 8/8 unit tests in `TorahLibraryKitTests` executed and passed cleanly via Swift Testing on native SQLite corpus; acceptance runner executed 260 tests (119 PASS, 141 BLOCKED on physical iPad camera/macOS simulator, 0 FAIL, 0 NOT_RUN); evidence validation passed 100% against schema and calibration/holdout splits; zero diff strictly preserved on all 4 Chat UI files (`AI_HLY/ChatView.swift`, `AI_HLY/Views/Components/ChatViewBottom.swift`, `AI_HLY/Views/Components/ChatViewComponents.swift`, `AI_HLY/Views/Components/ChatandFile.swift`).
+
+
 - [x] Hanlin Pass 4.1 Post-505149a: Untagged JSON Bridging & Full NativeScript Production E2E Suite Pass
   - Implemented: 2026-10-15
   - Commit/Run: `12c6d86` / GitHub Actions run `38673780536` (All 10 E2E tests passed: 1h11m19s)

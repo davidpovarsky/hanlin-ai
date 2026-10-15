@@ -118,8 +118,12 @@ final class HanlinScriptingPlatform {
             try FileManager.default.createDirectory(at: staging, withIntermediateDirectories: true)
             let installed = platformRoot.appending(path: "Installed", directoryHint: .isDirectory)
             store = try HanlinAtomicScriptStore(root: installed)
-            installedRoot = installed
-            extensionStore = try? HanlinScriptExtensionStore()
+            do {
+                extensionStore = try HanlinScriptExtensionStore()
+            } catch {
+                Self.logger.warning("extension_unavailable: App Group extension store unavailable: \(Self.safeMessage(error), privacy: .public)")
+                extensionStore = nil
+            }
             stagingRoot = staging
         } catch {
             stagingRoot = nil
@@ -802,7 +806,62 @@ final class HanlinScriptingPlatform {
         }
     }
 
-    private func refreshExtensionSnapshot() async throws {
+    struct ExpoWidgetPersistedExposure: Codable, Sendable {
+        let validUntil: Date?
+        let root: HanlinScriptUINode
+    }
+
+    @MainActor
+    func publishExpoWidget(
+        installedPackageID: HanlinInstalledPackageID,
+        appID: HanlinAppID,
+        entrypointID: String,
+        family: String,
+        root: HanlinScriptUINode,
+        validUntil: Date?
+    ) async throws {
+        guard let package = installedPackages.first(where: {
+            $0.record.installedPackageID == installedPackageID && ($0.appID == appID || $0.record.packageID.rawValue == appID.rawValue)
+        }), package.enabled else {
+            throw HanlinHostServiceError.invalidRequest("Package is not installed or enabled: \(installedPackageID.rawValue)")
+        }
+
+        guard let entrypoint = package.entrypoints.first(where: {
+            $0.runtimeProfile == .hanlinExpo && $0.kind == .widget && $0.id == entrypointID
+        }) else {
+            throw HanlinHostServiceError.invalidRequest("No matching Expo widget entrypoint: \(entrypointID)")
+        }
+
+        let requiredCaps = Set(entrypoint.requiredCapabilities.filter(\.required).map(\.capabilityID))
+        let grantedCaps = Set(package.grantedCapabilities)
+        guard requiredCaps.isSubset(of: grantedCaps) else {
+            throw HanlinHostServiceError.unauthorized("Required capabilities not granted for widget entrypoint")
+        }
+
+        let allowedFamilies = ["systemSmall", "systemMedium", "systemLarge", "systemExtraLarge"]
+        guard allowedFamilies.contains(family) else {
+            throw HanlinHostServiceError.invalidRequest("Invalid widget family: \(family)")
+        }
+
+        guard root.maxDepth <= 32 else {
+            throw HanlinHostServiceError.invalidRequest("Widget UI tree exceeds maximum depth limit of 32")
+        }
+
+        let exposure = ExpoWidgetPersistedExposure(validUntil: validUntil, root: root)
+        let data = try JSONEncoder().encode(exposure)
+        guard data.count <= 256 * 1024 else {
+            throw HanlinHostServiceError.invalidRequest("Widget UI payload exceeds maximum size limit of 256KiB")
+        }
+
+        let storeRoot = try HanlinMiniAppDataStore.applicationSupportRoot()
+        let dataStore = try HanlinMiniAppDataStore(root: storeRoot)
+        let relativePath = "widget-exposures/gen_\(package.record.activeGeneration)_\(entrypointID)_\(family).json"
+        try await dataStore.write(data, appID: appID, area: .state, path: relativePath)
+
+        try await refreshExtensionSnapshot()
+    }
+
+    func refreshExtensionSnapshot() async throws {
         guard let store, let extensionStore else { return }
         let storageCapability = try HanlinCapabilityID(validating: "storage")
         let filesCapability = try HanlinCapabilityID(validating: "files")
@@ -818,47 +877,22 @@ final class HanlinScriptingPlatform {
 
                 // Translation UI Discovery
                 let translationEntrypoints = package.entrypoints.filter { $0.kind == .translationUI }
-                let manifestDeclaredTranslationUI: Bool = {
-                    if let exposures = package.manifest?.unknownFields["supportedExposures"] ?? package.manifest?.unknownFields["exposures"],
-                       case let .array(items) = exposures {
-                        return items.contains { item in
-                            if case let .string(str) = item {
-                                return str == "translation_ui" || str == "translationUI"
-                            }
-                            return false
-                        }
+                for entrypoint in translationEntrypoints {
+                    let required = Set(entrypoint.requiredCapabilities.filter(\.required).map(\.capabilityID))
+                    guard required.isSubset(of: granted) else { continue }
+                    let fileURL = artifactRoot.appending(path: entrypoint.sourcePath)
+                    guard entrypoint.sourcePath.hasSuffix(".json"),
+                          let data = try? Data(contentsOf: fileURL),
+                          let rootNode = try? JSONDecoder().decode(HanlinScriptUINode.self, from: data) else {
+                        Self.logger.info("translation-ui entrypoint \(entrypoint.sourcePath) is non-JSON or unparseable; skipping generic fallback")
+                        continue
                     }
-                    return false
-                }()
-                let translationURL = artifactRoot.appending(path: "translation.json")
-                let translationAltURL = artifactRoot.appending(path: "translation_ui.json")
-                let hasTranslationFile = FileManager.default.fileExists(atPath: translationURL.path(percentEncoded: false))
-                    || FileManager.default.fileExists(atPath: translationAltURL.path(percentEncoded: false))
-
-                if !translationEntrypoints.isEmpty || manifestDeclaredTranslationUI || hasTranslationFile {
-                    let entrypointID = translationEntrypoints.first?.id ?? "translationUI"
                     let identity = HanlinScriptExtensionIdentity(
                         installedPackageID: package.record.installedPackageID,
                         packageID: package.record.packageID,
                         generation: package.record.activeGeneration,
-                        entrypointID: entrypointID
+                        entrypointID: entrypoint.id
                     )
-                    let activeURL = FileManager.default.fileExists(atPath: translationURL.path(percentEncoded: false)) ? translationURL : translationAltURL
-                    let rootNode: HanlinScriptUINode
-                    if let data = try? Data(contentsOf: activeURL),
-                       let decoded = try? JSONDecoder().decode(HanlinScriptUINode.self, from: data) {
-                        rootNode = decoded
-                    } else {
-                        rootNode = .init(
-                            kind: .vStack,
-                            properties: ["spacing": .number(10), "alignment": .string("leading")],
-                            children: [
-                                .init(kind: .text, properties: ["content": .string(displayName), "font": .string("headline")]),
-                                .init(kind: .text, properties: ["content": .string("{{selectedText}}"), "font": .string("body")]),
-                                .init(kind: .text, properties: ["content": .string("Character Count: {{selectedTextLength}}"), "font": .string("caption"), "foreground": .string("secondary")])
-                            ]
-                        )
-                    }
                     let summary = package.manifest?.description ?? "Hanlin Script Translation Mini App"
                     let iconSymbol = package.manifest?.unknownFields["icon"].flatMap {
                         if case let .string(s) = $0 { return s } else { return nil }
@@ -878,13 +912,13 @@ final class HanlinScriptingPlatform {
                         iconSymbol: iconSymbol,
                         accentHex: accentHex,
                         isBeta: isBeta,
-                        entrypointID: entrypointID,
+                        entrypointID: entrypoint.id,
                         rootNode: rootNode
                     ))
                 }
 
                 let extensionEntrypoints = package.entrypoints.filter {
-                    ($0.runtimeProfile == .scriptingJSC || $0.runtimeProfile == .hanlinNativeScript)
+                    ($0.runtimeProfile == .scriptingJSC || $0.runtimeProfile == .hanlinNativeScript || $0.runtimeProfile == .hanlinExpo)
                         && ($0.kind == .widget || $0.kind == .appIntent)
                 }
                 guard !extensionEntrypoints.isEmpty else { continue }
@@ -902,19 +936,11 @@ final class HanlinScriptingPlatform {
                     if entrypoint.runtimeProfile == .hanlinNativeScript {
                         if entrypoint.kind == .widget {
                             let widgetURL = artifactRoot.appending(path: entrypoint.sourcePath)
-                            let rootNode: HanlinScriptUINode
-                            if let data = try? Data(contentsOf: widgetURL),
-                               let decoded = try? JSONDecoder().decode(HanlinScriptUINode.self, from: data) {
-                                rootNode = decoded
-                            } else {
-                                rootNode = .init(
-                                    kind: .vStack,
-                                    properties: ["spacing": .number(8)],
-                                    children: [
-                                        .init(kind: .text, properties: ["content": .string(displayName), "font": .string("headline")]),
-                                        .init(kind: .text, properties: ["content": .string("NativeScript Widget"), "font": .string("caption")])
-                                    ]
-                                )
+                            guard entrypoint.sourcePath.hasSuffix(".json"),
+                                  let data = try? Data(contentsOf: widgetURL),
+                                  let rootNode = try? JSONDecoder().decode(HanlinScriptUINode.self, from: data) else {
+                                Self.logger.info("NativeScript widget entrypoint \(entrypoint.sourcePath) missing or invalid JSON; skipping")
+                                continue
                             }
                             for family in ["systemSmall", "systemMedium", "systemLarge", "systemExtraLarge"] {
                                 widgets.append(.init(
@@ -936,14 +962,16 @@ final class HanlinScriptingPlatform {
                                 ))
                             }
                         } else {
-                            // Check for canonical action in intent.json or package actions
                             var actionIDs: [(id: String, title: String)] = []
-                            let intentURL = artifactRoot.appending(path: "intent.json", directoryHint: .notDirectory)
-                            if let intentData = try? Data(contentsOf: intentURL),
+                            let intentURL = artifactRoot.appending(path: entrypoint.sourcePath)
+                            if entrypoint.sourcePath.hasSuffix(".json"),
+                               let intentData = try? Data(contentsOf: intentURL),
                                let intentJSON = try? JSONSerialization.jsonObject(with: intentData) as? [String: Any] {
-                                let action = (intentJSON["action"] as? String) ?? (intentJSON["name"] as? String) ?? "defaultAction"
+                                let action = (intentJSON["action"] as? String) ?? (intentJSON["name"] as? String)
                                 let title = (intentJSON["title"] as? String) ?? displayName
-                                actionIDs.append((id: action, title: title))
+                                if let action {
+                                    actionIDs.append((id: action, title: title))
+                                }
                             }
                             if let actionsField = package.manifest?.unknownFields["actions"],
                                case let .array(actionsList) = actionsField {
@@ -959,12 +987,58 @@ final class HanlinScriptingPlatform {
                                     }
                                 }
                             }
-                            if actionIDs.isEmpty {
-                                let intentName = entrypoint.id.isEmpty ? "defaultAction" : entrypoint.id
-                                actionIDs.append((id: intentName, title: displayName))
-                            }
                             for item in actionIDs {
                                 intentEntities.append(.init(identity: identity, id: item.id, displayName: item.title))
+                            }
+                        }
+                        continue
+                    }
+
+                    if entrypoint.runtimeProfile == .hanlinExpo {
+                        if entrypoint.kind == .widget {
+                            if entrypoint.sourcePath.hasSuffix(".json") {
+                                let widgetURL = artifactRoot.appending(path: entrypoint.sourcePath)
+                                if let data = try? Data(contentsOf: widgetURL),
+                                   let rootNode = try? JSONDecoder().decode(HanlinScriptUINode.self, from: data) {
+                                    for family in ["systemSmall", "systemMedium", "systemLarge", "systemExtraLarge"] {
+                                        widgets.append(.init(
+                                            identity: identity,
+                                            displayName: displayName,
+                                            family: family,
+                                            actionIdentity: nil,
+                                            validUntil: .now.addingTimeInterval(900),
+                                            root: rootNode
+                                        ))
+                                    }
+                                }
+                            } else {
+                                let storeRoot = try HanlinMiniAppDataStore.applicationSupportRoot()
+                                let dataStore = try HanlinMiniAppDataStore(root: storeRoot)
+                                let targetAppID = package.appID ?? (try? HanlinAppID(validating: package.record.packageID.rawValue))!
+                                for family in ["systemSmall", "systemMedium", "systemLarge", "systemExtraLarge"] {
+                                    let path = "widget-exposures/gen_\(package.record.activeGeneration)_\(entrypoint.id)_\(family).json"
+                                    if let data = try? await dataStore.read(appID: targetAppID, area: .state, path: path) {
+                                        if let exposure = try? JSONDecoder().decode(ExpoWidgetPersistedExposure.self, from: data) {
+                                            widgets.append(.init(
+                                                identity: identity,
+                                                displayName: displayName,
+                                                family: family,
+                                                actionIdentity: nil,
+                                                validUntil: exposure.validUntil ?? .now.addingTimeInterval(900),
+                                                root: exposure.root
+                                            ))
+                                        } else if let rootNode = try? JSONDecoder().decode(HanlinScriptUINode.self, from: data) {
+                                            widgets.append(.init(
+                                                identity: identity,
+                                                displayName: displayName,
+                                                family: family,
+                                                actionIdentity: nil,
+                                                validUntil: .now.addingTimeInterval(900),
+                                                root: rootNode
+                                            ))
+                                        }
+                                    }
+                                }
                             }
                         }
                         continue
@@ -1050,31 +1124,47 @@ final class HanlinScriptingPlatform {
                     .map(provider.identity(entrypoint:))
                 let displayName = descriptor.name.preferredValue(forLocale: Locale.current.identifier)
                 for family in ["systemSmall", "systemMedium", "systemLarge", "systemExtraLarge"] {
-                    widgets.append(.init(
-                        identity: widgetIdentity,
-                        displayName: displayName,
-                        family: family,
-                        actionIdentity: intentIdentity,
-                        validUntil: .now.addingTimeInterval(900),
-                        root: provider.widget(family)
-                    ))
+                    do {
+                        let rootNode = try await provider.widget(family)
+                        widgets.append(.init(
+                            identity: widgetIdentity,
+                            displayName: displayName,
+                            family: family,
+                            actionIdentity: intentIdentity,
+                            validUntil: .now.addingTimeInterval(900),
+                            root: rootNode
+                        ))
+                    } catch {
+                        Self.logger.info("Widget provider \(provider.descriptor.id.rawValue) did not produce widget for \(family): \(Self.safeMessage(error))")
+                    }
                 }
             }
             if let intentEntrypoint = descriptor.entryPoints.first(where: { $0.kind == .appIntentBridge }) {
-                let identity = try provider.identity(entrypoint: intentEntrypoint)
-                intentEntities.append(contentsOf: provider.intentNames.map {
-                    .init(identity: identity, id: $0, displayName: $0)
-                })
+                if !provider.intentNames.isEmpty {
+                    let identity = try provider.identity(entrypoint: intentEntrypoint)
+                    intentEntities.append(contentsOf: provider.intentNames.map {
+                        .init(identity: identity, id: $0, displayName: $0)
+                    })
+                }
             }
         }
 
-        try extensionStore.save(.init(
+        let newSnapshot = HanlinScriptExtensionSnapshot(
+            schemaVersion: 1,
             generatedAt: .now,
             widgets: widgets,
             intentEntities: intentEntities,
             translationApps: translationApps
-        ))
-        WidgetCenter.shared.reloadTimelines(ofKind: "com.hanlin.scripting.widget")
+        )
+        let previousSnapshot = try? extensionStore.load()
+        let hasChanged = previousSnapshot?.widgets != widgets
+            || previousSnapshot?.intentEntities != intentEntities
+            || previousSnapshot?.translationApps != translationApps
+
+        try extensionStore.save(newSnapshot)
+        if hasChanged {
+            WidgetCenter.shared.reloadTimelines(ofKind: "com.hanlin.scripting.widget")
+        }
         await publishCompactAgentConfig()
     }
 
@@ -1155,12 +1245,30 @@ final class HanlinScriptingPlatform {
         guard let store else { return }
         for command in pendingResumeCommands {
             let identity = command.invocation.identity
-            if let provider = CompiledMiniAppExposureRegistry.provider(packageID: identity.packageID),
-               let actionName = command.invocation.entityID {
-                _ = try provider.performIntent(actionName, command.invocation.parameters)
-                try extensionStore?.acknowledge(command.id)
-                pendingResumeCommands.removeAll { $0.id == command.id }
-                WidgetCenter.shared.reloadTimelines(ofKind: "com.hanlin.scripting.widget")
+            if let provider = CompiledMiniAppExposureRegistry.provider(packageID: identity.packageID) {
+                guard let actionName = command.invocation.entityID,
+                      let expectedInstalledID = try? provider.installedPackageID,
+                      identity.installedPackageID == expectedInstalledID,
+                      identity.generation == 0,
+                      let intentEntrypoint = provider.descriptor.entryPoints.first(where: { $0.kind == .appIntentBridge }),
+                      identity.entrypointID == intentEntrypoint.handler,
+                      provider.intentNames.contains(actionName) else {
+                    Self.logger.error("Rejected invalid compiled AppIntent command \(command.id, privacy: .public): identity=\(identity.packageID.rawValue, privacy: .public)")
+                    try? extensionStore?.acknowledge(command.id)
+                    pendingResumeCommands.removeAll { $0.id == command.id }
+                    continue
+                }
+
+                do {
+                    _ = try await provider.performIntent(actionName, command.invocation.parameters)
+                    try extensionStore?.acknowledge(command.id)
+                    pendingResumeCommands.removeAll { $0.id == command.id }
+                    WidgetCenter.shared.reloadTimelines(ofKind: "com.hanlin.scripting.widget")
+                } catch {
+                    Self.logger.error("Failed to execute compiled AppIntent \(actionName, privacy: .public): \(Self.safeMessage(error), privacy: .public)")
+                    try? extensionStore?.acknowledge(command.id)
+                    pendingResumeCommands.removeAll { $0.id == command.id }
+                }
                 continue
             }
             guard let package = installedPackages.first(where: {
@@ -1170,7 +1278,12 @@ final class HanlinScriptingPlatform {
                     && $0.enabled
             }), let entrypoint = package.entrypoints.first(where: {
                 $0.id == identity.entrypointID && $0.kind == .appIntent
-            }), let actionName = command.invocation.entityID else { continue }
+            }), let actionName = command.invocation.entityID else {
+                Self.logger.error("Unknown or disabled package/entrypoint for resume command: \(identity.packageID.rawValue, privacy: .public)")
+                try? extensionStore?.acknowledge(command.id)
+                pendingResumeCommands.removeAll { $0.id == command.id }
+                continue
+            }
 
             if entrypoint.runtimeProfile == .hanlinNativeScript {
                 let targetID = (try? HanlinAppID(validating: package.manifest?.hanlinAppID ?? identity.packageID.rawValue))
@@ -1180,6 +1293,8 @@ final class HanlinScriptingPlatform {
                       let declaredAction = descriptor.actions.first(where: { $0.id == actionID }),
                       let requiredCapability = declaredAction.capabilities.first else {
                     Self.logger.error("Invalid NativeScript AppIntent target or action: \(actionName, privacy: .public)")
+                    try? extensionStore?.acknowledge(command.id)
+                    pendingResumeCommands.removeAll { $0.id == command.id }
                     continue
                 }
 
@@ -1198,40 +1313,61 @@ final class HanlinScriptingPlatform {
                     WidgetCenter.shared.reloadTimelines(ofKind: "com.hanlin.scripting.widget")
                 } catch {
                     Self.logger.error("Failed to dispatch NativeScript AppIntent \(actionName, privacy: .public): \(Self.safeMessage(error), privacy: .public)")
+                    try? extensionStore?.acknowledge(command.id)
+                    pendingResumeCommands.removeAll { $0.id == command.id }
                 }
                 continue
             }
+
+            if entrypoint.runtimeProfile == .hanlinExpo {
+                Self.logger.error("EXPO_APP_INTENT_UNSUPPORTED: Expo App Intents are not supported in resume command execution for package \(package.record.packageID.rawValue, privacy: .public)")
+                try? extensionStore?.acknowledge(command.id)
+                pendingResumeCommands.removeAll { $0.id == command.id }
+                continue
+            }
+
             let required = Set(entrypoint.requiredCapabilities.filter(\.required).map(\.capabilityID))
             let granted = Set(package.grantedCapabilities)
-            guard required.isSubset(of: granted) else { continue }
+            guard required.isSubset(of: granted) else {
+                Self.logger.error("Missing required capabilities for AppIntent: \(actionName, privacy: .public)")
+                try? extensionStore?.acknowledge(command.id)
+                pendingResumeCommands.removeAll { $0.id == command.id }
+                continue
+            }
             let storageCapability = try HanlinCapabilityID(validating: "storage")
             let filesCapability = try HanlinCapabilityID(validating: "files")
             let artifactRoot = try await store.activeArtifactURL(for: identity.installedPackageID)
             let compiledPath = try Self.compiledPath(for: entrypoint.sourcePath)
             let compiledURL = artifactRoot.appending(path: compiledPath, directoryHint: .notDirectory)
             let program = try String(contentsOf: compiledURL, encoding: .utf8)
-            let requestedWidgetReload = try await {
-                let session = try HanlinScriptingApplicationSession(
-                    installedPackageID: identity.installedPackageID,
-                    program: program,
-                    filename: compiledPath,
-                    entrypointContext: .appIntentRegistration,
-                    storageAllowed: granted.contains(storageCapability),
-                    filesAllowed: granted.contains(filesCapability),
-                    packageSourceDirectory: artifactRoot.appending(path: "source", directoryHint: .isDirectory)
-                )
-                defer { session.dispose() }
-                _ = try await session.invokeAppIntent(
-                    name: actionName,
-                    parameters: command.invocation.parameters
-                )
-                return session.requestedWidgetReload
-            }()
-            try extensionStore?.acknowledge(command.id)
-            pendingResumeCommands.removeAll { $0.id == command.id }
-            if requestedWidgetReload {
-                try await refreshExtensionSnapshot()
-                WidgetCenter.shared.reloadTimelines(ofKind: "com.hanlin.scripting.widget")
+            do {
+                let requestedWidgetReload = try await {
+                    let session = try HanlinScriptingApplicationSession(
+                        installedPackageID: identity.installedPackageID,
+                        program: program,
+                        filename: compiledPath,
+                        entrypointContext: .appIntentRegistration,
+                        storageAllowed: granted.contains(storageCapability),
+                        filesAllowed: granted.contains(filesCapability),
+                        packageSourceDirectory: artifactRoot.appending(path: "source", directoryHint: .isDirectory)
+                    )
+                    defer { session.dispose() }
+                    _ = try await session.invokeAppIntent(
+                        name: actionName,
+                        parameters: command.invocation.parameters
+                    )
+                    return session.requestedWidgetReload
+                }()
+                try extensionStore?.acknowledge(command.id)
+                pendingResumeCommands.removeAll { $0.id == command.id }
+                if requestedWidgetReload {
+                    try await refreshExtensionSnapshot()
+                    WidgetCenter.shared.reloadTimelines(ofKind: "com.hanlin.scripting.widget")
+                }
+            } catch {
+                Self.logger.error("Failed to execute JSC AppIntent \(actionName, privacy: .public): \(Self.safeMessage(error), privacy: .public)")
+                try? extensionStore?.acknowledge(command.id)
+                pendingResumeCommands.removeAll { $0.id == command.id }
             }
         }
     }

@@ -378,13 +378,32 @@ public struct HanlinScriptAnalyzer: Sendable {
         entrypoints: [HanlinPackageEntrypointDescriptor],
         findings: inout [HanlinCompatibilityFinding]
     ) {
-        guard entrypoints.count == 1, let entrypoint = entrypoints.first, entrypoint.kind == .app else {
+        let appEntrypoints = entrypoints.filter { $0.kind == .app }
+        guard appEntrypoints.count == 1, let entrypoint = appEntrypoints.first else {
             findings.append(.init(
                 state: .unsupported,
                 severity: .error,
-                message: "An Expo package must declare exactly one foreground app entrypoint."
+                message: "Expo requires exactly one foreground app entrypoint; additional supported exposures are allowed."
             ))
             return
+        }
+        for candidate in entrypoints where candidate.kind != .app {
+            switch candidate.kind {
+            case .widget:
+                findings.append(.init(
+                    state: .supported,
+                    severity: .information,
+                    sourcePath: candidate.sourcePath,
+                    message: "Expo widget exposure '\(candidate.sourcePath)' is supported via host services bridge."
+                ))
+            default:
+                findings.append(.init(
+                    state: .unsupported,
+                    severity: .error,
+                    sourcePath: candidate.sourcePath,
+                    message: "Expo exposure '\(candidate.kind.rawValue)' is unsupported because no native executor is available."
+                ))
+            }
         }
         let entryDir = URL(filePath: entrypoint.sourcePath).deletingLastPathComponent().relativePath
         let candidateA = entryDir.isEmpty || entryDir == "." ? "package.json" : "\(entryDir)/package.json"

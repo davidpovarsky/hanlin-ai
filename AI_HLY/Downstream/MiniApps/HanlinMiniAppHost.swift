@@ -180,7 +180,13 @@ final class HanlinMiniAppHost {
             appID: item.id,
             storage: HanlinMiniAppStorageContext(appID: item.id, store: store),
             requestBroker: broker,
-            network: Self.fetchStatus
+            network: Self.fetchStatus,
+            dismiss: {},
+            requestWidgetRefresh: {
+                Task { @MainActor in
+                    try? await HanlinScriptingPlatform.shared.refreshExtensionSnapshot()
+                }
+            }
         )
         return SwiftDestination(
             appID: item.id,

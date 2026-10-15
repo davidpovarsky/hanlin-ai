@@ -2,6 +2,7 @@ import Foundation
 import HanlinPlatformContracts
 import HanlinMiniAppCore
 import HanlinExpoRuntime
+import HanlinScriptUI
 
 /// Host services adapter for Expo/React Native Mini Apps.
 /// Bridges Expo native modules into Unified Host Services and Capability Authority.
@@ -110,6 +111,22 @@ public final class ExpoHostServicesAdapter: NSObject, @unchecked Sendable, Hanli
                 context: context
             )
             return try Self.encode(["files": files])
+
+        case "widgets.publish":
+            guard let installedPackageID = context.installedPackageID,
+                  let appID = context.appID else {
+                throw HanlinHostServiceError.invalidRequest("widgets.publish requires authenticated package and app context")
+            }
+            let request = try JSONDecoder().decode(WidgetPublishRequest.self, from: payloadData)
+            try await HanlinScriptingPlatform.shared.publishExpoWidget(
+                installedPackageID: installedPackageID,
+                appID: appID,
+                entrypointID: request.entrypointID,
+                family: request.family,
+                root: request.root,
+                validUntil: request.validUntil
+            )
+            return "{\"ok\":true}"
 
         default:
             throw HanlinHostServiceError.invalidRequest("Unknown Expo Host Services operation: \(operation)")
@@ -240,4 +257,11 @@ private struct FileWriteRequest: Decodable {
 
 private struct FileListRequest: Decodable {
     let area: String
+}
+
+private struct WidgetPublishRequest: Decodable {
+    let entrypointID: String
+    let family: String
+    let root: HanlinScriptUINode
+    let validUntil: Date?
 }

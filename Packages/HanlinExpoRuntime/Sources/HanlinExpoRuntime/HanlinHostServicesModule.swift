@@ -16,10 +16,8 @@ public final class HanlinHostServicesModule: Module, @unchecked Sendable {
 
         AsyncFunction("hasCapability") { [weak self, weak moduleAppContext] (capability: String) -> Bool in
             NSLog("%@", "HANLIN_EXPO_HOSTSERVICES_INVOKE method=hasCapability capability=\(capability)")
-            let context = self?.appContext ?? moduleAppContext
-            let provider = (context != nil ? HanlinExpoHostServicesBridge.provider(forAppContext: context!) : nil)
-                ?? HanlinExpoHostServicesBridge.currentProvider
-            guard let provider else {
+            guard let context = self?.appContext ?? moduleAppContext,
+                  let provider = HanlinExpoHostServicesBridge.provider(forAppContext: context) else {
                 NSLog("%@", "HANLIN_EXPO_HOSTSERVICES_ERROR method=hasCapability: missing provider")
                 throw Self.missingProviderError()
             }
@@ -28,10 +26,8 @@ public final class HanlinHostServicesModule: Module, @unchecked Sendable {
 
         AsyncFunction("invoke") { [weak self, weak moduleAppContext] (operation: String, payloadJSON: String) -> String in
             NSLog("%@", "HANLIN_EXPO_HOSTSERVICES_INVOKE method=invoke operation=\(operation)")
-            let context = self?.appContext ?? moduleAppContext
-            let provider = (context != nil ? HanlinExpoHostServicesBridge.provider(forAppContext: context!) : nil)
-                ?? HanlinExpoHostServicesBridge.currentProvider
-            guard let provider else {
+            guard let context = self?.appContext ?? moduleAppContext,
+                  let provider = HanlinExpoHostServicesBridge.provider(forAppContext: context) else {
                 NSLog("%@", "HANLIN_EXPO_HOSTSERVICES_ERROR method=invoke: missing provider")
                 throw Self.missingProviderError()
             }
@@ -45,10 +41,8 @@ public final class HanlinHostServicesModule: Module, @unchecked Sendable {
 
         AsyncFunction("executeRuntime") { [weak self, weak moduleAppContext] (kind: String, source: String) -> String in
             NSLog("%@", "HANLIN_EXPO_HOSTSERVICES_INVOKE method=executeRuntime kind=\(kind)")
-            let context = self?.appContext ?? moduleAppContext
-            let provider = (context != nil ? HanlinExpoHostServicesBridge.provider(forAppContext: context!) : nil)
-                ?? HanlinExpoHostServicesBridge.currentProvider
-            guard let provider else {
+            guard let context = self?.appContext ?? moduleAppContext,
+                  let provider = HanlinExpoHostServicesBridge.provider(forAppContext: context) else {
                 NSLog("%@", "HANLIN_EXPO_HOSTSERVICES_ERROR method=executeRuntime: missing provider")
                 throw Self.missingProviderError()
             }
@@ -62,10 +56,8 @@ public final class HanlinHostServicesModule: Module, @unchecked Sendable {
 
         AsyncFunction("executeNode") { [weak self, weak moduleAppContext] (source: String) -> String in
             NSLog("%@", "HANLIN_EXPO_HOSTSERVICES_INVOKE method=executeNode")
-            let context = self?.appContext ?? moduleAppContext
-            let provider = (context != nil ? HanlinExpoHostServicesBridge.provider(forAppContext: context!) : nil)
-                ?? HanlinExpoHostServicesBridge.currentProvider
-            guard let provider else {
+            guard let context = self?.appContext ?? moduleAppContext,
+                  let provider = HanlinExpoHostServicesBridge.provider(forAppContext: context) else {
                 NSLog("%@", "HANLIN_EXPO_HOSTSERVICES_ERROR method=executeNode: missing provider")
                 throw Self.missingProviderError()
             }
@@ -79,10 +71,8 @@ public final class HanlinHostServicesModule: Module, @unchecked Sendable {
 
         AsyncFunction("executePython") { [weak self, weak moduleAppContext] (source: String) -> String in
             NSLog("%@", "HANLIN_EXPO_HOSTSERVICES_INVOKE method=executePython")
-            let context = self?.appContext ?? moduleAppContext
-            let provider = (context != nil ? HanlinExpoHostServicesBridge.provider(forAppContext: context!) : nil)
-                ?? HanlinExpoHostServicesBridge.currentProvider
-            guard let provider else {
+            guard let context = self?.appContext ?? moduleAppContext,
+                  let provider = HanlinExpoHostServicesBridge.provider(forAppContext: context) else {
                 NSLog("%@", "HANLIN_EXPO_HOSTSERVICES_ERROR method=executePython: missing provider")
                 throw Self.missingProviderError()
             }
@@ -96,10 +86,8 @@ public final class HanlinHostServicesModule: Module, @unchecked Sendable {
 
         AsyncFunction("readFile") { [weak self, weak moduleAppContext] (path: String, area: String) -> String in
             NSLog("%@", "HANLIN_EXPO_HOSTSERVICES_INVOKE method=readFile path=\(path) area=\(area)")
-            let context = self?.appContext ?? moduleAppContext
-            let provider = (context != nil ? HanlinExpoHostServicesBridge.provider(forAppContext: context!) : nil)
-                ?? HanlinExpoHostServicesBridge.currentProvider
-            guard let provider else {
+            guard let context = self?.appContext ?? moduleAppContext,
+                  let provider = HanlinExpoHostServicesBridge.provider(forAppContext: context) else {
                 NSLog("%@", "HANLIN_EXPO_HOSTSERVICES_ERROR method=readFile: missing provider")
                 throw Self.missingProviderError()
             }
@@ -113,10 +101,8 @@ public final class HanlinHostServicesModule: Module, @unchecked Sendable {
 
         AsyncFunction("writeFile") { [weak self, weak moduleAppContext] (path: String, content: String, area: String) in
             NSLog("%@", "HANLIN_EXPO_HOSTSERVICES_INVOKE method=writeFile path=\(path) area=\(area)")
-            let context = self?.appContext ?? moduleAppContext
-            let provider = (context != nil ? HanlinExpoHostServicesBridge.provider(forAppContext: context!) : nil)
-                ?? HanlinExpoHostServicesBridge.currentProvider
-            guard let provider else {
+            guard let context = self?.appContext ?? moduleAppContext,
+                  let provider = HanlinExpoHostServicesBridge.provider(forAppContext: context) else {
                 NSLog("%@", "HANLIN_EXPO_HOSTSERVICES_ERROR method=writeFile: missing provider")
                 throw Self.missingProviderError()
             }
@@ -130,10 +116,8 @@ public final class HanlinHostServicesModule: Module, @unchecked Sendable {
 
         AsyncFunction("executeSQLite") { [weak self, weak moduleAppContext] (sql: String, params: [String]?) -> String in
             NSLog("%@", "HANLIN_EXPO_HOSTSERVICES_INVOKE method=executeSQLite sql=\(sql)")
-            let context = self?.appContext ?? moduleAppContext
-            let provider = (context != nil ? HanlinExpoHostServicesBridge.provider(forAppContext: context!) : nil)
-                ?? HanlinExpoHostServicesBridge.currentProvider
-            guard let provider else {
+            guard let context = self?.appContext ?? moduleAppContext,
+                  let provider = HanlinExpoHostServicesBridge.provider(forAppContext: context) else {
                 NSLog("%@", "HANLIN_EXPO_HOSTSERVICES_ERROR method=executeSQLite: missing provider")
                 throw Self.missingProviderError()
             }
@@ -147,10 +131,8 @@ public final class HanlinHostServicesModule: Module, @unchecked Sendable {
 
         AsyncFunction("fetchURL") { [weak self, weak moduleAppContext] (urlString: String) -> String in
             NSLog("%@", "HANLIN_EXPO_HOSTSERVICES_INVOKE method=fetchURL url=\(urlString)")
-            let context = self?.appContext ?? moduleAppContext
-            let provider = (context != nil ? HanlinExpoHostServicesBridge.provider(forAppContext: context!) : nil)
-                ?? HanlinExpoHostServicesBridge.currentProvider
-            guard let provider else {
+            guard let context = self?.appContext ?? moduleAppContext,
+                  let provider = HanlinExpoHostServicesBridge.provider(forAppContext: context) else {
                 NSLog("%@", "HANLIN_EXPO_HOSTSERVICES_ERROR method=fetchURL: missing provider")
                 throw Self.missingProviderError()
             }

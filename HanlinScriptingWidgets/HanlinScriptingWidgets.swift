@@ -90,8 +90,11 @@ struct HanlinWidgetTimelineProvider: AppIntentTimelineProvider {
         in context: Context
     ) async -> Timeline<HanlinWidgetEntry> {
         let selected = selectedSnapshot(configuration, family: context.family)
-        let refresh = max(selected?.validUntil ?? Date.now.addingTimeInterval(900), .now)
-        return Timeline(entries: [.init(date: .now, snapshot: selected)], policy: .after(refresh))
+        let now = Date.now
+        let minRefresh = now.addingTimeInterval(300)
+        let targetRefresh = selected?.validUntil ?? now.addingTimeInterval(900)
+        let refresh = max(targetRefresh, minRefresh)
+        return Timeline(entries: [.init(date: now, snapshot: selected)], policy: .after(refresh))
     }
 
     private func selectedSnapshot(

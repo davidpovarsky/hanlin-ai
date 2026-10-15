@@ -10,6 +10,7 @@ struct NativeAppsHubView: View {
     @State private var searchText = ""
     @State private var isEditingApps = false
     @State private var showsAddSheet = false
+    @State private var showsTorahCapture = false
     @State private var scriptingPlatform = HanlinScriptingPlatform.shared
     @State private var miniAppHost = HanlinMiniAppHost.shared
     @State private var swiftDestination: HanlinMiniAppHost.SwiftDestination?
@@ -39,15 +40,24 @@ struct NativeAppsHubView: View {
             .searchable(text: $searchText, prompt: "Search Apps")
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button { showsAddSheet = true } label: {
-                        Label("Add App", systemImage: "plus")
+                    HStack(spacing: 12) {
+                        Button { showsTorahCapture = true } label: {
+                            Label("לימוד מצילום", systemImage: "camera.viewfinder")
+                        }
+                        .accessibilityIdentifier("hanlin-apps-torah-capture")
+                        Button { showsAddSheet = true } label: {
+                            Label("Add App", systemImage: "plus")
+                        }
+                        .accessibilityIdentifier("hanlin-apps-add")
+                        .accessibilityLabel("hanlin-apps-add")
                     }
-                    .accessibilityIdentifier("hanlin-apps-add")
-                    .accessibilityLabel("hanlin-apps-add")
                 }
                 ToolbarItem(placement: .topBarLeading) {
                     Button(isEditingApps ? "Done" : "Edit") { isEditingApps.toggle() }
                 }
+            }
+            .sheet(isPresented: $showsTorahCapture) {
+                TorahPhotoStudyCaptureView()
             }
             .overlay {
                 if !searchText.isEmpty && filteredItems.isEmpty {

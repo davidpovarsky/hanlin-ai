@@ -67,7 +67,7 @@ public struct HanlinScriptExtensionStore: Sendable {
             throw HanlinScriptExtensionStoreError.snapshotTooLarge
         }
         try FileManager.default.createDirectory(at: root, withIntermediateDirectories: true)
-        try data.write(to: snapshotURL, options: [.atomic, .completeFileProtection])
+        try data.write(to: snapshotURL, options: [.atomic, .completeFileProtectionUntilFirstUserAuthentication])
     }
 
     public func enqueue(_ command: HanlinScriptResumeCommand) throws {
@@ -86,7 +86,7 @@ public struct HanlinScriptExtensionStore: Sendable {
         }
         try data.write(
             to: commandRoot.appending(path: "\(command.id.uuidString.lowercased()).json"),
-            options: [.atomic, .completeFileProtection]
+            options: [.atomic, .completeFileProtectionUntilFirstUserAuthentication]
         )
     }
 

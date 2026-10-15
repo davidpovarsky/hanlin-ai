@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, View } from 'react-native';
 import {
   Host,
@@ -19,7 +19,9 @@ import {
   ViewThatFits,
   EditButton,
   EmptyView,
+  hostServices,
 } from '@hanlin/expo-ui';
+import { renderWidget } from './widget';
 import {
   navigationTitle,
   padding,
@@ -71,6 +73,29 @@ export default function App({ variant = 'A' }: AppProps) {
   const [showNikkud, setShowNikkud] = useState<boolean>(true);
   const [toolbarActionCount, setToolbarActionCount] = useState<number>(0);
   const [editorText, setEditorText] = useState<string>('SwiftUI bridge text');
+  const [counter, setCounter] = useState<number>(7);
+
+  const publishCurrentWidget = async (cnt: number) => {
+    try {
+      const widgetState = { counter: cnt, title: 'Expo SwiftUI Probe' };
+      for (const family of ['systemSmall', 'systemMedium', 'systemLarge', 'systemExtraLarge']) {
+        const root = renderWidget(widgetState, family);
+        await hostServices.publishWidget('widget', family, root);
+      }
+    } catch (e) {
+      console.warn('Failed to publish widget:', e);
+    }
+  };
+
+  useEffect(() => {
+    publishCurrentWidget(counter);
+  }, []);
+
+  const handleIncrement = () => {
+    const next = counter + 1;
+    setCounter(next);
+    publishCurrentWidget(next);
+  };
 
   const currentBook = TORAH_BOOKS.find((b) => b.id === selectedBookId) ?? TORAH_BOOKS[0];
 
@@ -181,6 +206,11 @@ export default function App({ variant = 'A' }: AppProps) {
                       <Button
                         label="הגדרות"
                         onPress={() => setShowSettingsSheet(true)}
+                      />
+                      <Button
+                        testID="IncrementCounterButton"
+                        label={`Widget Counter: ${counter}`}
+                        onPress={handleIncrement}
                       />
                     </HStack>
 

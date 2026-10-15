@@ -16,7 +16,8 @@ let package = Package(
             name: "HanlinParityMiniApp",
             dependencies: [
                 .product(name: "HanlinPlatformContracts", package: "HanlinPlatform"),
-                .product(name: "HanlinMiniAppCore", package: "HanlinPlatform")
+                .product(name: "HanlinMiniAppCore", package: "HanlinPlatform"),
+                .product(name: "HanlinScriptUI", package: "HanlinPlatform")
             ]
         ),
         .testTarget(

@@ -64,4 +64,26 @@ export const hostServices = {
   async listFiles(area: HanlinDataArea = 'data'): Promise<string[]> {
     return (await invoke<{ files: string[] }>('files.list', { area })).files;
   },
+
+  publishWidget(
+    entrypointID: string,
+    family: string,
+    root: unknown,
+    validUntil?: string | number | Date
+  ): Promise<{ ok: true }> {
+    let validUntilISO: string | undefined;
+    if (validUntil instanceof Date) {
+      validUntilISO = validUntil.toISOString();
+    } else if (typeof validUntil === 'number') {
+      validUntilISO = new Date(validUntil).toISOString();
+    } else if (typeof validUntil === 'string') {
+      validUntilISO = validUntil;
+    }
+    return invoke('widgets.publish', {
+      entrypointID,
+      family,
+      root,
+      validUntil: validUntilISO,
+    });
+  },
 } as const;

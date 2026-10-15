@@ -72,6 +72,9 @@ public struct HanlinScriptUINode: Codable, Hashable, Sendable {
         self.children = children
     }
 
+    public var maxDepth: Int {
+        1 + (children.map(\.maxDepth).max() ?? 0)
+    }
 }
 
 public struct HanlinScriptUIPath: Codable, Hashable, Sendable {

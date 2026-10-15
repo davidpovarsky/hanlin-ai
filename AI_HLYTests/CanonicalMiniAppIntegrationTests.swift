@@ -15,13 +15,48 @@ struct CanonicalMiniAppIntegrationTests {
 
     @MainActor
     @Test("Compiled package exposure registry derives Widget and App Intent from canonical descriptor")
-    func compiledExposures() throws {
+    func compiledExposures() async throws {
         let provider = try #require(CompiledMiniAppExposureRegistry.all.first)
         #expect(provider.descriptor.supportedExposures.contains(.widget))
-        #expect(provider.descriptor.supportedExposures.contains(.appIntent))
-        #expect(provider.widget("systemMedium").kind == .vStack)
-        let result = try provider.performIntent(provider.intentNames[0], .object(["request": .string("state")]))
+        #expect(provider.descriptor.supportedExposures.contains(.appIntentBridge))
+        let node = try await provider.widget("systemMedium")
+        #expect(node.kind == .vStack)
+        let result = try await provider.performIntent(provider.intentNames[0], .object(["request": .string("state")]))
         #expect(result != .null)
+    }
+
+    @MainActor
+    @Test("Swift parity state transitions from 7 to 8 reflected in widget and intent")
+    func swiftParityStateTransitions() async throws {
+        let storeRoot = try HanlinMiniAppDataStore.applicationSupportRoot()
+        let dataStore = try HanlinMiniAppDataStore(root: storeRoot)
+        let appID = try HanlinAppID(validating: "hanlin.demo.swift-parity")
+
+        let state7 = Data(#"{"counter": 7, "name": "ParityTest"}"#.utf8)
+        try await dataStore.write(state7, appID: appID, area: .state, path: "parity.json")
+
+        let provider = try #require(CompiledMiniAppExposureRegistry.provider(packageID: try HanlinPackageID(validating: "hanlin.demo.swift-parity")))
+        let node7 = try await provider.widget("systemSmall")
+        #expect(node7.children.contains { $0.properties["content"] == .string("Counter: 7") })
+
+        let state8 = Data(#"{"counter": 8, "name": "ParityTest"}"#.utf8)
+        try await dataStore.write(state8, appID: appID, area: .state, path: "parity.json")
+
+        let node8 = try await provider.widget("systemSmall")
+        #expect(node8.children.contains { $0.properties["content"] == .string("Counter: 8") })
+
+        let intentRes = try await provider.performIntent("ReadSwiftParityState", .null)
+        if case .object(let dict) = intentRes {
+            #expect(dict["counter"] == .integer(8))
+            #expect(dict["name"] == .string("ParityTest"))
+        } else {
+            Issue.record("Expected object from ReadSwiftParityState")
+        }
+
+        // Unknown intent throws
+        await #expect(throws: Error.self) {
+            try await provider.performIntent("UnknownIntent", .null)
+        }
     }
 
     @MainActor

@@ -30,6 +30,7 @@ async function buildVariant(variant) {
 
   await writeFile(resolve(buildDir, 'package.json'), `${JSON.stringify(packageJSON, null, 2)}\n`);
   await writeFile(resolve(buildDir, 'script.json'), `${JSON.stringify(scriptJSON, null, 2)}\n`);
+  await cp(resolve(probeSrcRoot, 'widget.tsx'), resolve(buildDir, 'widget.tsx'));
 
   // Create .hanlinExpo zip archive with deterministic forward slashes
   const targetZip = resolve(probeSrcRoot, `ExpoSwiftUIProbe${variant}.hanlinExpo`);

@@ -1,6 +1,7 @@
 import Foundation
 import HanlinMiniAppCore
 import HanlinPlatformContracts
+import HanlinScriptUI
 #if canImport(Observation)
 import Observation
 #endif
@@ -51,6 +52,52 @@ public struct SwiftParityMiniAppRegistration: HanlinStaticMiniAppRegistration, S
     }
 }
 
+// MARK: - Exposures
+
+public enum SwiftParityMiniAppExposures {
+    public struct PersistedState: Codable, Sendable, Equatable {
+        public let counter: Int
+        public let name: String
+
+        public init(counter: Int, name: String) {
+            self.counter = counter
+            self.name = name
+        }
+    }
+
+    public static func decodeState(from persistedData: Data?) throws -> PersistedState {
+        guard let persistedData, !persistedData.isEmpty else {
+            return PersistedState(counter: 0, name: "Hanlin")
+        }
+        return try JSONDecoder().decode(PersistedState.self, from: persistedData)
+    }
+
+    public static func widget(family: String, persistedData: Data?) throws -> HanlinScriptUINode {
+        let state = try decodeState(from: persistedData)
+        return .init(
+            kind: .vStack,
+            properties: ["spacing": .number(8)],
+            children: [
+                .init(kind: .text, properties: ["content": .string(state.name), "font": .string("headline")]),
+                .init(kind: .text, properties: ["content": .string("Counter: \(state.counter)"), "font": .string("body")]),
+                .init(kind: .text, properties: ["content": .string("Swift Parity · \(family)"), "font": .string("caption")])
+            ]
+        )
+    }
+
+    public static func performIntent(name: String, parameters: HanlinValue, persistedData: Data?) throws -> HanlinValue {
+        guard name == "ReadSwiftParityState" else {
+            throw HanlinHostServiceError.invalidRequest("Unsupported intent: \(name)")
+        }
+        let state = try decodeState(from: persistedData)
+        return .object([
+            "appID": .string("hanlin.demo.swift-parity"),
+            "name": .string(state.name),
+            "counter": .integer(Int64(state.counter))
+        ])
+    }
+}
+
 // MARK: - Provider
 
 public struct SwiftParityMiniAppProvider: HanlinCompiledMiniAppProvider, Sendable {
@@ -69,7 +116,8 @@ public struct SwiftParityMiniAppProvider: HanlinCompiledMiniAppProvider, Sendabl
             SwiftParityMiniAppView(
                 storage: context.storage,
                 requestBroker: context.requestBroker,
-                network: context.network
+                network: context.network,
+                onWidgetRefreshRequested: context.requestWidgetRefresh
             )
         })
     }
@@ -85,9 +133,15 @@ public struct SwiftParityMiniAppView: View {
     public init(
         storage: HanlinMiniAppStorageContext,
         requestBroker: HanlinMiniAppRequestBroker,
-        network: @escaping @Sendable (URL) async throws -> String
+        network: @escaping @Sendable (URL) async throws -> String,
+        onWidgetRefreshRequested: (@MainActor @Sendable () -> Void)? = nil
     ) {
-        _model = State(initialValue: Model(storage: storage, requestBroker: requestBroker, network: network))
+        _model = State(initialValue: Model(
+            storage: storage,
+            requestBroker: requestBroker,
+            network: network,
+            onWidgetRefreshRequested: onWidgetRefreshRequested
+        ))
     }
 
     public var body: some View {
@@ -139,15 +193,18 @@ private final class Model {
     private let storage: HanlinMiniAppStorageContext
     private let requestBroker: HanlinMiniAppRequestBroker
     private let network: @Sendable (URL) async throws -> String
+    private let onWidgetRefreshRequested: (@MainActor @Sendable () -> Void)?
 
     init(
         storage: HanlinMiniAppStorageContext,
         requestBroker: HanlinMiniAppRequestBroker,
-        network: @escaping @Sendable (URL) async throws -> String
+        network: @escaping @Sendable (URL) async throws -> String,
+        onWidgetRefreshRequested: (@MainActor @Sendable () -> Void)? = nil
     ) {
         self.storage = storage
         self.requestBroker = requestBroker
         self.network = network
+        self.onWidgetRefreshRequested = onWidgetRefreshRequested
     }
 
     func activate() async {
@@ -158,10 +215,8 @@ private final class Model {
             capability: Self.capability
         ) { request in
             guard request.caller == Self.scriptID else { throw HanlinMiniAppRequestError.unauthorized }
-            guard let data = try await store.read(area: .state, path: "parity.json") else {
-                return .object(["name": .string("Hanlin"), "counter": .integer(0)])
-            }
-            let state = try JSONDecoder().decode(PersistedState.self, from: data)
+            let data = try await store.read(area: .state, path: "parity.json")
+            let state = try SwiftParityMiniAppExposures.decodeState(from: data)
             return .object(["name": .string(state.name), "counter": .integer(Int64(state.counter))])
         }
         await reload()
@@ -169,13 +224,14 @@ private final class Model {
 
     func save() async {
         do {
-            let value = PersistedState(counter: counter, name: name)
+            let value = SwiftParityMiniAppExposures.PersistedState(counter: counter, name: name)
             try await storage.write(
                 JSONEncoder().encode(value),
                 area: .state,
                 path: "parity.json"
             )
             storageStatus = "Saved in canonical private container"
+            onWidgetRefreshRequested?()
         } catch {
             storageStatus = "Save failed: \(error.localizedDescription)"
         }
@@ -187,7 +243,7 @@ private final class Model {
                 storageStatus = "No saved value yet"
                 return
             }
-            let value = try JSONDecoder().decode(PersistedState.self, from: data)
+            let value = try SwiftParityMiniAppExposures.decodeState(from: data)
             counter = value.counter
             name = value.name
             storageStatus = "Reloaded persisted value"
@@ -223,10 +279,5 @@ private final class Model {
             sharingStatus = "Request denied/unavailable: \(error.localizedDescription)"
         }
     }
-}
-
-private struct PersistedState: Codable, Sendable {
-    let counter: Int
-    let name: String
 }
 #endif

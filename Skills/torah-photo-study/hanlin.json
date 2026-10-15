@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "id": "torah-photo-study",
+  "name": "torah-photo-study",
+  "title": "Torah Photo Study",
+  "version": "1.0.0",
+  "description": "Study photographed Torah and rabbinic texts with verified source identification and enrichment.",
+  "author": "Hanlin AI",
+  "tools": [
+    "torah_ocr_excerpt",
+    "torah_identify_excerpt",
+    "torah_search_text",
+    "torah_get_section",
+    "torah_get_links",
+    "torah_get_topics",
+    "torah_open_source"
+  ],
+  "permissions": [
+    "camera.read",
+    "library.read",
+    "network.remote_ocr"
+  ],
+  "entrypoint": "SKILL.md"
+}

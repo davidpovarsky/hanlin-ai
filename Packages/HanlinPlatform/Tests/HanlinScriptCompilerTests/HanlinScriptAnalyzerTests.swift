@@ -264,6 +264,82 @@ struct HanlinScriptAnalyzerTests {
         #expect(requestedIDs == ["storage", "network", "node", "python", "javascript", "inter-app.share"])
     }
 
+    @Test("Expo import evaluates foreground app and multi-exposure support fail-closed")
+    func expoMultiExposureMatrix() throws {
+        let analyzer = HanlinScriptAnalyzer(inventory: .init(
+            baselineID: "fixture",
+            baselineDigest: String(repeating: "f", count: 64),
+            symbols: []
+        ))
+
+        // 1. App only (PASS)
+        let appOnly = try package(files: [
+            "script.json": #"{"name":"Expo App Only","version":"1.0.0","entry":"expo/app/bundle.js","hanlinRuntime":"hanlin-expo"}"#,
+            "expo/app/bundle.js": "console.log('app')",
+            "expo/app/package.json": #"{"name":"fixture","main":"bundle.js","hanlinRuntime":"hanlin-expo","hanlinExpo":{"runtimeVersion":"58.0.3","bridgeVersion":"3.0.0","plugins":{"@hanlin/expo-ui":"1.0.0"}}}"#
+        ])
+        defer { try? FileManager.default.removeItem(at: appOnly.stagingRoot) }
+        let appOnlyPreview = try analyzer.analyze(appOnly)
+        #expect(appOnlyPreview.canInstall)
+        #expect(appOnlyPreview.entrypoints.count == 1)
+        #expect(appOnlyPreview.entrypoints.first?.kind == .app)
+        #expect(appOnlyPreview.entrypoints.first?.runtimeProfile == .hanlinExpo)
+        #expect(appOnlyPreview.entrypoints.first?.sourcePath == "expo/app/bundle.js")
+
+        // 2. App + widget.tsx (PASS)
+        let appAndWidget = try package(files: [
+            "script.json": #"{"name":"Expo App And Widget","version":"1.0.0","entry":"expo/app/bundle.js","hanlinRuntime":"hanlin-expo"}"#,
+            "expo/app/bundle.js": "console.log('app')",
+            "expo/app/package.json": #"{"name":"fixture","main":"bundle.js","hanlinRuntime":"hanlin-expo","hanlinExpo":{"runtimeVersion":"58.0.3","bridgeVersion":"3.0.0","plugins":{"@hanlin/expo-ui":"1.0.0"}}}"#,
+            "widget.tsx": "export const renderWidget = () => ({});"
+        ])
+        defer { try? FileManager.default.removeItem(at: appAndWidget.stagingRoot) }
+        let appAndWidgetPreview = try analyzer.analyze(appAndWidget)
+        #expect(appAndWidgetPreview.canInstall)
+        #expect(appAndWidgetPreview.entrypoints.count == 2)
+        let kinds = Set(appAndWidgetPreview.entrypoints.map(\.kind))
+        #expect(kinds == [.app, .widget])
+        #expect(appAndWidgetPreview.entrypoints.allSatisfy { $0.runtimeProfile == .hanlinExpo })
+        let widgetEntry = appAndWidgetPreview.entrypoints.first { $0.kind == .widget }
+        #expect(widgetEntry?.sourcePath == "widget.tsx")
+
+        // 3. App + widget.tsx + app_intents.tsx (All discovered, but canInstall == false because no native executor)
+        let appWidgetIntents = try package(files: [
+            "script.json": #"{"name":"Expo App Widget Intents","version":"1.0.0","entry":"expo/app/bundle.js","hanlinRuntime":"hanlin-expo"}"#,
+            "expo/app/bundle.js": "console.log('app')",
+            "expo/app/package.json": #"{"name":"fixture","main":"bundle.js","hanlinRuntime":"hanlin-expo","hanlinExpo":{"runtimeVersion":"58.0.3","bridgeVersion":"3.0.0","plugins":{"@hanlin/expo-ui":"1.0.0"}}}"#,
+            "widget.tsx": "export const renderWidget = () => ({});",
+            "app_intents.tsx": "export const performIntent = () => ({});"
+        ])
+        defer { try? FileManager.default.removeItem(at: appWidgetIntents.stagingRoot) }
+        let appWidgetIntentsPreview = try analyzer.analyze(appWidgetIntents)
+        #expect(!appWidgetIntentsPreview.canInstall)
+        #expect(appWidgetIntentsPreview.entrypoints.count == 3)
+        let allKinds = Set(appWidgetIntentsPreview.entrypoints.map(\.kind))
+        #expect(allKinds == [.app, .widget, .appIntent])
+        #expect(appWidgetIntentsPreview.entrypoints.allSatisfy { $0.runtimeProfile == .hanlinExpo })
+        let intentEntry = appWidgetIntentsPreview.entrypoints.first { $0.kind == .appIntent }
+        #expect(intentEntry?.sourcePath == "app_intents.tsx")
+        #expect(appWidgetIntentsPreview.findings.contains {
+            $0.severity == .error && $0.message.contains("appIntent") && $0.message.contains("unsupported")
+        })
+
+        // 4. Widget only (FAIL: no foreground app)
+        let widgetOnly = try package(files: [
+            "script.json": #"{"name":"Expo Widget Only","version":"1.0.0","hanlinRuntime":"hanlin-expo"}"#,
+            "widget.tsx": "export const renderWidget = () => ({});"
+        ])
+        defer { try? FileManager.default.removeItem(at: widgetOnly.stagingRoot) }
+        let widgetOnlyPreview = try analyzer.analyze(widgetOnly)
+        #expect(!widgetOnlyPreview.canInstall)
+        #expect(widgetOnlyPreview.entrypoints.count == 1)
+        #expect(widgetOnlyPreview.entrypoints.first?.kind == .widget)
+        #expect(widgetOnlyPreview.entrypoints.first?.runtimeProfile == .hanlinExpo)
+        #expect(widgetOnlyPreview.findings.contains {
+            $0.severity == .error && $0.message.contains("Expo requires exactly one foreground app entrypoint")
+        })
+    }
+
     private func package(files: [String: String]) throws -> HanlinStagedPackage {
         let root = FileManager.default.temporaryDirectory.appending(
             path: "hanlin-analyzer-tests-\(UUID().uuidString.lowercased())",
