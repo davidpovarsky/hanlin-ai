@@ -119,6 +119,7 @@ public final class SkillImporter: @unchecked Sendable {
             let fileHandle = try FileHandle(forReadingFrom: fileURL)
             defer { try? fileHandle.close() }
             while let chunk = try fileHandle.read(upToCount: 65536), !chunk.isEmpty {
+                try Task.checkCancellation()
                 hasher.update(data: chunk)
             }
             let sha256 = hasher.finalize().map { String(format: "%02x", $0) }.joined()
@@ -229,6 +230,7 @@ public final class SkillImporter: @unchecked Sendable {
 
                 // Extract all non-ignored entries safely
                 for entry in zipEntries where !ignored.contains(entry.path) {
+                    try Task.checkCancellation()
                     guard let normalized = HanlinArchivePolicy.normalizedRelativePath(entry.path) else {
                         throw SkillImportError.archiveInspectionFailed(["Archive entry normalization failed: \(entry.path)"])
                     }

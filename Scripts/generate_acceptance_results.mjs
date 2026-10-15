@@ -121,6 +121,7 @@ export const knownWorkflowRuns = {
 export const provenanceSHAs = {
   sourceImplementationSHA: '72d18d3e4a9f0bd0eed7c53c291a1ade8bd9c24e',
   testExecutionSHA: '72d18d3e4a9f0bd0eed7c53c291a1ade8bd9c24e',
+  evidenceOriginRunId: '38639744717',
   evidenceRunSHA: '38639744717',
   reportSHA: gitMeta.commitSha,
   workingTreeFingerprint: gitMeta.commitSha + (gitMeta.isDirty ? '-dirty' : ''),
@@ -288,7 +289,7 @@ export function getEvidenceContent(artifactName) {
 // ==========================================
 // 5. Dependency Closure Verification Engine
 // ==========================================
-export function verifyDependencyClosure(originSha, targetSha, testSuiteOrId = '', changedFilesOverride = null) {
+export function verifyDependencyClosure(originSha, targetSha, testSuiteOrId = '', changedFilesOverride = null, ledgerOverride = null) {
   let changedFiles;
   if (changedFilesOverride) {
     changedFiles = changedFilesOverride;
@@ -302,30 +303,35 @@ export function verifyDependencyClosure(originSha, targetSha, testSuiteOrId = ''
       return { isClean: false, reason: `Failed to diff between ${originSha} and ${targetSha}: ${e.message}` };
     }
 
-    // Authoritative check via TestDependencyLedger CLI
+    // Authoritative check via TestDependencyLedger CLI or override
     try {
-      const query = JSON.stringify({
-        test_id: testSuiteOrId,
-        suite: testSuiteOrId,
-        origin_sha: originSha,
-        target_sha: targetSha,
-        original_status: 'Passed'
-      });
-      const pythonExe = process.platform === 'win32' ? 'python' : 'python3';
-      const ledgerOut = execFileSync(pythonExe, [
-        path.join(repoRoot, 'Scripts/CI/plan_affected_validation.py'),
-        '--evaluate-reuse',
-        query
-      ], {
-        cwd: repoRoot,
-        encoding: 'utf8',
-        stdio: ['pipe', 'pipe', 'pipe']
-      });
-      const ledgerRes = JSON.parse(ledgerOut.trim());
-      if (ledgerRes.decision === 'INVALIDATE') {
-        return { isClean: false, reason: ledgerRes.reason, changedFiles };
+      let ledgerRes;
+      if (ledgerOverride) {
+        ledgerRes = ledgerOverride;
+      } else {
+        const query = JSON.stringify({
+          test_id: testSuiteOrId,
+          suite: testSuiteOrId,
+          origin_sha: originSha,
+          target_sha: targetSha,
+          original_status: 'Passed'
+        });
+        const pythonExe = process.platform === 'win32' ? 'python' : 'python3';
+        const ledgerOut = execFileSync(pythonExe, [
+          path.join(repoRoot, 'Scripts/CI/plan_affected_validation.py'),
+          '--evaluate-reuse',
+          query
+        ], {
+          cwd: repoRoot,
+          encoding: 'utf8',
+          stdio: ['pipe', 'pipe', 'pipe']
+        });
+        ledgerRes = JSON.parse(ledgerOut.trim());
       }
-      return { isClean: true, reason: ledgerRes.reason, changedFiles };
+      if (ledgerRes && ledgerRes.decision === 'REUSE_VERIFIED') {
+        return { isClean: true, reason: ledgerRes.reason, changedFiles };
+      }
+      return { isClean: false, reason: ledgerRes?.reason || `TestDependencyLedger refused reuse with decision: '${ledgerRes?.decision || 'missing'}'`, changedFiles };
     } catch (e) {
       return { isClean: false, reason: `Authoritative dependency ledger failed: ${e.message}`, changedFiles };
     }
@@ -580,12 +586,19 @@ export function verifyObligation(ob, scenario, xcIndex, options = {}) {
     if (ob.evidenceArtifact) {
       const content = options.syntheticContentOverride || getEvidenceContent(ob.evidenceArtifact);
       const testName = ob.exactTestName.includes('/') ? ob.exactTestName.split('/').pop() : ob.exactTestName;
-      if (!content.includes(testName)) {
+      const cleanTestName = testName.replace(/\(\)$/, '');
+      const testSuite = ob.testSuite || (ob.exactTestName.includes('/') ? ob.exactTestName.split('/')[0] : '');
+      const testBundle = ob.testTarget || 'AI_HLYUITests';
+
+      const escBundle = testBundle.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      const escSuite = testSuite ? testSuite.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') : '[^\\s\\]]+';
+      const escMethod = cleanTestName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
+      if (!content.includes(cleanTestName)) {
         throw new Error(`UI test case '${ob.exactTestName}' not found in raw artifact ${ob.evidenceArtifact} (NEG-01)!`);
       }
-      if (content.includes(`Test Case '-[AI_HLYUITests.${testName}]' failed`) || content.includes(`Test Case '-[AI_HLYUITests.${testName}()' failed`)) {
-        throw new Error(`UI test case '${ob.exactTestName}' failed in ${ob.evidenceArtifact}!`);
-      }
+
+      // Check executed 0 tests (NEG-19)
       if (content.includes('Executed 0 tests') || content.includes('0 selected tests')) {
         throw new Error(`UI test log in ${ob.evidenceArtifact} executed 0 tests!`);
       }
@@ -598,19 +611,21 @@ export function verifyObligation(ob, scenario, xcIndex, options = {}) {
         }
       }
 
-      // Exact terminal state 'passed' check
-      const passPatterns = [
-        `Test Case '-[AI_HLYUITests.${testName}]' passed`,
-        `Test Case '-[AI_HLYUITests.${testName}()' passed`,
-        `Test Case '-[AI_HLYUITests.HanlinNativeScriptProductionE2ETests ${testName}]' passed`,
-        `Test Case '-[AI_HLYUITests.${ob.testSuite || ''} ${testName}]' passed`,
-        'Test Case passed'
-      ];
-      const hasPassed = passPatterns.some(p => content.includes(p)) ||
-        new RegExp(`Test Case '-\\[AI_HLYUITests\\.[^\\s]+ ${testName}\\]' passed`).test(content) ||
-        new RegExp(`Test Case '-\\[AI_HLYUITests\\.${testName}[^\\]]*\\]' passed`).test(content);
+      // Require exact test START line
+      const startRegex = new RegExp(`Test Case '-\\[(?:${escBundle}\\.)?${escSuite}\\s+${escMethod}(?:\\(\\))?\\]' started\\.`);
+      if (!startRegex.test(content)) {
+        throw new Error(`UI test case '${ob.exactTestName}' start line not found in ${ob.evidenceArtifact}!`);
+      }
 
-      if (!hasPassed) {
+      // Reject if target FAIL line exists
+      const failRegex = new RegExp(`Test Case '-\\[(?:${escBundle}\\.)?${escSuite}\\s+${escMethod}(?:\\(\\))?\\]' failed`);
+      if (failRegex.test(content)) {
+        throw new Error(`UI test case '${ob.exactTestName}' failed in ${ob.evidenceArtifact}!`);
+      }
+
+      // Anchored exact regex matching for terminal 'passed' state
+      const passRegex = new RegExp(`Test Case '-\\[(?:${escBundle}\\.)?${escSuite}\\s+${escMethod}(?:\\(\\))?\\]' passed(?:\\s+\\([0-9.]+\\s+seconds\\))?\\.?`);
+      if (!passRegex.test(content)) {
         throw new Error(`UI test case '${ob.exactTestName}' did not achieve verified 'Passed' terminal state in ${ob.evidenceArtifact}!`);
       }
     } else if (ob.workflowRunId) {
@@ -705,7 +720,7 @@ export function verifyObligation(ob, scenario, xcIndex, options = {}) {
     return { status: 'PASSED' };
   }
 
-  // REPOSITORY AUDIT VERIFIER
+  // REPOSITORY AUDIT VERIFIER (NEG-23)
   if (kind === 'repository_audit') {
     if (scenario.testId === 'FINAL-07' || scenario.testId === 'FINAL-06') {
       throw new Error(`Semantic mismatch: Scenario ${scenario.testId} cannot be proven by word-matching repository audit! Requires structured workflow metadata.`);
@@ -713,6 +728,11 @@ export function verifyObligation(ob, scenario, xcIndex, options = {}) {
     if (!ob.evidenceArtifact) {
       throw new Error(`Repository audit obligation missing evidenceArtifact for scenario ${scenario.testId}`);
     }
+    const hasAssertion = Boolean(ob.expectedKey || (Array.isArray(ob.expectedFields) && ob.expectedFields.length > 0) || ob.expectedPattern);
+    if (!hasAssertion) {
+      throw new Error(`Repository audit obligation in scenario ${scenario.testId} lacks structured assertion (expectedKey, expectedFields, or expectedPattern)!`);
+    }
+
     const content = getEvidenceContent(ob.evidenceArtifact);
     if (!content || content.trim().length === 0) {
       throw new Error(`Repository audit evidence artifact ${ob.evidenceArtifact} is empty for scenario ${scenario.testId}`);
@@ -858,25 +878,49 @@ export function evaluateScenario(scenario, manifestEntry, xcIndex, options = {})
     scenarioStatus = 'PASSED';
   }
 
-  // Derive authentic evidence commit SHA
+  // Derive authentic evidence commit SHA and origin run ID
   let evidenceCommitSha = '72d18d3e4a9f0bd0eed7c53c291a1ade8bd9c24e';
+  let originRunId = null;
   for (const ob of obligations) {
     if (ob.evidenceOriginSHA) {
       evidenceCommitSha = ob.evidenceOriginSHA;
-      break;
     }
-    if (ob.workflowRunId && knownWorkflowRuns[ob.workflowRunId]?.headSha) {
-      evidenceCommitSha = knownWorkflowRuns[ob.workflowRunId].headSha;
-      break;
+    if (ob.evidenceOriginRunId) {
+      originRunId = ob.evidenceOriginRunId;
+    }
+    if (ob.workflowRunId) {
+      originRunId = ob.workflowRunId;
+      if (knownWorkflowRuns[ob.workflowRunId]?.headSha) {
+        evidenceCommitSha = knownWorkflowRuns[ob.workflowRunId].headSha;
+      }
     }
   }
+
+  const provenanceEvaluatedObligations = evaluatedObligations.map(ob => ({
+    ...ob,
+    evidenceOriginSHA: ob.evidenceOriginSHA || (ob.workflowRunId && knownWorkflowRuns[ob.workflowRunId]?.headSha) || (ob.verifierKind === 'repository_audit' ? gitMeta.commitSha : '72d18d3e4a9f0bd0eed7c53c291a1ade8bd9c24e'),
+    evidenceOriginRunId: ob.evidenceOriginRunId || ob.workflowRunId || (ob.verifierKind === 'reused_verified_pass' ? '38639744717' : null),
+    testExecutionSHA: ob.testExecutionSHA || (ob.workflowRunId && knownWorkflowRuns[ob.workflowRunId]?.headSha) || '72d18d3e4a9f0bd0eed7c53c291a1ade8bd9c24e',
+    provenanceType: ob.provenanceType || (
+      ob.status === 'REUSED_VERIFIED_PASS' ? 'REUSED_CI' :
+      ob.verifierKind === 'ci_workflow' ? 'WORKFLOW_CI' :
+      ob.verifierKind === 'repository_audit' ? 'DOCS_AUDIT' :
+      ob.status === 'NOT_RUN_DEVICE' ? 'DEVICE_PENDING' :
+      ob.status === 'BLOCKED_EXTERNAL' ? 'EXTERNAL_BLOCKED' :
+      ob.status === 'BLOCKED_DEPENDENCY' ? 'DEPENDENCY_BLOCKED' :
+      ob.status === 'BLOCKED_INPUT_MODEL_FIXTURE' ? 'FIXTURE_BLOCKED' :
+      ob.status === 'NOT_RUN' ? 'NOT_RUN' : 'LOCAL_VERIFIED'
+    )
+  }));
 
   return {
     ...scenario,
     status: scenarioStatus,
     overallScenarioStatus: overallStatus,
-    obligations: evaluatedObligations,
+    obligations: provenanceEvaluatedObligations,
     evidenceCommitSha,
+    evidenceOriginRunId: originRunId,
+    testExecutionSHA: provenanceSHAs.testExecutionSHA,
     commitSha: evidenceCommitSha,
     reportCommitSha: gitMeta.commitSha,
     executedAt: executionTime
@@ -901,6 +945,8 @@ export function evaluateGateCompliance(scenarioResults, stats, profile = 'full')
     if (stats.fixtureCount > 0) violations.push(`${stats.fixtureCount} scenario(s) BLOCKED_INPUT_MODEL_FIXTURE`);
   } else if (profile === 'engineering') {
     if (stats.notRunCount > 0) violations.push(`${stats.notRunCount} scenario(s) NOT_RUN`);
+    if (stats.dependencyCount > 2) violations.push(`${stats.dependencyCount} scenario(s) BLOCKED_DEPENDENCY (expected <= 2)`);
+    if (stats.fixtureCount > 2) violations.push(`${stats.fixtureCount} scenario(s) BLOCKED_INPUT_MODEL_FIXTURE (expected <= 2)`);
     for (const id of ['FINAL-01', 'FINAL-02', 'FINAL-03', 'FINAL-04', 'FINAL-05', 'FINAL-06', 'FINAL-07']) {
       const sc = scenarioResults.find(s => s.testId === id);
       if (sc && sc.status !== 'PASSED' && sc.status !== 'REUSED_VERIFIED_PASS') {
@@ -1425,6 +1471,70 @@ export function runAdversarialSelfTests() {
   } catch (e) {
     if (!e.message.includes('Build command failed') && !e.message.includes('did not prove terminal success')) throw e;
     console.log('✔ NEG-20: Bare 64-character SHA in build_command evidence rejected');
+    passedCount++;
+  }
+
+  // NEG-21: Generic 'Test Case passed' bypass without anchored test regex is rejected
+  try {
+    const bypassEntry = {
+      obligations: [{
+        layer: 'UI',
+        verifierKind: 'xctest_ui',
+        testSuite: 'HanlinNativeScriptProductionE2ETests',
+        exactTestName: 'HanlinNativeScriptProductionE2ETests/testCoreFixtureATabViewOnly',
+        evidenceArtifact: 'docs/hanlin-platform/personal-runtime-completion/evidence/simulator-nativescript-production-ui-tests.log'
+      }]
+    };
+    verifyObligation(bypassEntry.obligations[0], authoritativeScenarios.find(s => s.testId === 'APPENG-03'), xcresultIndex, {
+      syntheticContentOverride: "Test Suite 'Selected tests' started.\nTest Case '-[AI_HLYUITests.HanlinNativeScriptProductionE2ETests testCoreFixtureATabViewOnly]' started.\nUnrelated text: Test Case passed\nTest Suite finished."
+    });
+    throw new Error("NEG-21 failed: Generic 'Test Case passed' bypass was not rejected");
+  } catch (e) {
+    if (!e.message.includes("did not achieve verified 'Passed' terminal state") && !e.message.includes("start line not found")) throw e;
+    console.log("✔ NEG-21: Generic 'Test Case passed' bypass rejected by anchored regex");
+    passedCount++;
+  }
+
+  // NEG-22: Malformed or non-REUSE_VERIFIED ledger decision in verifyDependencyClosure is rejected
+  {
+    const malformedLedgerRes = verifyDependencyClosure(
+      '0095b6441e8968d4200e8cd8acf42f61b46b7c59',
+      '31cba5e9ece53802011b6aba663404d07e1cbc5a',
+      'HanlinNativeScriptProductionE2ETests',
+      null,
+      { decision: 'UNKNOWN', reason: 'Unrecognized decision state' }
+    );
+    if (malformedLedgerRes.isClean) {
+      throw new Error('NEG-22 failed: Non-REUSE_VERIFIED decision (UNKNOWN) must be rejected');
+    }
+    const emptyLedgerRes = verifyDependencyClosure(
+      '0095b6441e8968d4200e8cd8acf42f61b46b7c59',
+      '31cba5e9ece53802011b6aba663404d07e1cbc5a',
+      'HanlinNativeScriptProductionE2ETests',
+      null,
+      {}
+    );
+    if (emptyLedgerRes.isClean) {
+      throw new Error('NEG-22 failed: Empty ledger response must be rejected');
+    }
+    console.log('✔ NEG-22: Malformed or non-REUSE_VERIFIED ledger decision rejected fail-closed');
+    passedCount++;
+  }
+
+  // NEG-23: Assertionless repository_audit obligation is rejected fail-closed
+  try {
+    const unassertedEntry = {
+      obligations: [{
+        layer: 'docs',
+        verifierKind: 'repository_audit',
+        evidenceArtifact: 'docs/hanlin-platform/personal-runtime-completion/grdb-evaluation.md'
+      }]
+    };
+    verifyObligation(unassertedEntry.obligations[0], authoritativeScenarios.find(s => s.testId === 'DB-01'), xcresultIndex);
+    throw new Error('NEG-23 failed: Assertionless repository_audit obligation must be rejected');
+  } catch (e) {
+    if (!e.message.includes('lacks structured assertion')) throw e;
+    console.log('✔ NEG-23: Assertionless repository_audit obligation rejected fail-closed');
     passedCount++;
   }
 

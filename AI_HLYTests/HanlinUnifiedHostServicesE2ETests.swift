@@ -561,6 +561,292 @@ struct HanlinUnifiedHostServicesE2ETests {
         #expect(HanlinNativeServicesBridge.currentProvider() == nil)
     }
 
+    @Test func nativeScriptOneLegitimatelyActiveRegisteredSession() throws {
+        HanlinNativeServicesBridge.resetAllSessions()
+        defer { HanlinNativeServicesBridge.resetAllSessions() }
+
+        let appID = try HanlinAppID(validating: "miniapp-valid-single")
+        let sessionID = "session-valid-single"
+        let ns = NativeScriptHostServicesAdapter(appID: appID, grantedCapabilities: ["javascript"], sessionID: sessionID)
+
+        HanlinNativeServicesBridge.register(ns, forSessionID: sessionID)
+        let token = try #require(HanlinNativeServicesPrepareSessionBootstrap(sessionID))
+        let bridge = try #require(HanlinNativeServicesBridge.claimSessionBridge(withToken: token))
+
+        HanlinNativeServicesBridge.setActiveSession(bridge, forSessionID: sessionID)
+        #expect(HanlinNativeServicesBridge.activeSessionBridge() === bridge)
+        #expect(HanlinNativeServicesBridge.currentProvider() === ns)
+        #expect(HanlinNativeServicesBridge.dataRootDirectory() == ns.dataRootDirectory())
+        #expect(HanlinNativeServicesBridge.stateDirectory() == ns.stateDirectory())
+    }
+
+    @Test func nativeScriptTwoConcurrentRegisteredSessionsStrictIsolation() throws {
+        HanlinNativeServicesBridge.resetAllSessions()
+        defer { HanlinNativeServicesBridge.resetAllSessions() }
+
+        let app1 = try HanlinAppID(validating: "miniapp-concurrent-1")
+        let app2 = try HanlinAppID(validating: "miniapp-concurrent-2")
+        let session1 = "session-conc-1"
+        let session2 = "session-conc-2"
+
+        let ns1 = NativeScriptHostServicesAdapter(appID: app1, grantedCapabilities: ["javascript"], sessionID: session1)
+        let ns2 = NativeScriptHostServicesAdapter(appID: app2, grantedCapabilities: ["network"], sessionID: session2)
+
+        HanlinNativeServicesBridge.register(ns1, forSessionID: session1)
+        HanlinNativeServicesBridge.register(ns2, forSessionID: session2)
+
+        let token1 = try #require(HanlinNativeServicesPrepareSessionBootstrap(session1))
+        let token2 = try #require(HanlinNativeServicesPrepareSessionBootstrap(session2))
+
+        let bridge1 = try #require(HanlinNativeServicesBridge.claimSessionBridge(withToken: token1))
+        let bridge2 = try #require(HanlinNativeServicesBridge.claimSessionBridge(withToken: token2))
+
+        #expect(bridge1.dataRootDirectory()?.contains("miniapp-concurrent-1") == true)
+        #expect(bridge2.dataRootDirectory()?.contains("miniapp-concurrent-2") == true)
+        #expect(bridge1.dataRootDirectory() != bridge2.dataRootDirectory())
+
+        // Active session binding switches context explicitly without leaking
+        HanlinNativeServicesBridge.setActiveSession(bridge1, forSessionID: session1)
+        #expect(HanlinNativeServicesBridge.currentProvider() === ns1)
+        #expect(HanlinNativeServicesBridge.dataRootDirectory()?.contains("miniapp-concurrent-1") == true)
+
+        HanlinNativeServicesBridge.setActiveSession(bridge2, forSessionID: session2)
+        #expect(HanlinNativeServicesBridge.currentProvider() === ns2)
+        #expect(HanlinNativeServicesBridge.dataRootDirectory()?.contains("miniapp-concurrent-2") == true)
+    }
+
+    @Test func nativeScriptActiveSessionClearedWhileAnotherRemainsFailsStaleCaller() throws {
+        HanlinNativeServicesBridge.resetAllSessions()
+        defer { HanlinNativeServicesBridge.resetAllSessions() }
+
+        let app1 = try HanlinAppID(validating: "miniapp-stale-1")
+        let app2 = try HanlinAppID(validating: "miniapp-stale-2")
+        let session1 = "session-stale-1"
+        let session2 = "session-stale-2"
+
+        let ns1 = NativeScriptHostServicesAdapter(appID: app1, grantedCapabilities: ["javascript"], sessionID: session1)
+        let ns2 = NativeScriptHostServicesAdapter(appID: app2, grantedCapabilities: ["javascript"], sessionID: session2)
+
+        HanlinNativeServicesBridge.register(ns1, forSessionID: session1)
+        HanlinNativeServicesBridge.register(ns2, forSessionID: session2)
+
+        let token1 = try #require(HanlinNativeServicesPrepareSessionBootstrap(session1))
+        let bridge1 = try #require(HanlinNativeServicesBridge.claimSessionBridge(withToken: token1))
+
+        HanlinNativeServicesBridge.setActiveSession(bridge1, forSessionID: session1)
+        #expect(HanlinNativeServicesBridge.currentProvider() === ns1)
+
+        // Clear active session 1
+        HanlinNativeServicesBridge.clearActiveSessionBridge(forSessionID: session1)
+        #expect(HanlinNativeServicesBridge.activeSessionBridge() == nil)
+
+        // Fail closed: Even though session 2 is still registered, stale calls fail and do NOT route to session 2
+        #expect(HanlinNativeServicesBridge.currentProvider() == nil)
+        #expect(HanlinNativeServicesBridge.dataRootDirectory() == nil)
+        let res = HanlinNativeServicesBridge.executeJavaScriptSync("1+1")
+        #expect(res?.contains("Err: Host service provider not registered.") == true)
+    }
+
+    @Test func nativeScriptNoActiveSessionWithStaleGlobalProviderFailsUnauthorizedRequest() throws {
+        HanlinNativeServicesBridge.resetAllSessions()
+        defer { HanlinNativeServicesBridge.resetAllSessions() }
+
+        let appLegacy = try HanlinAppID(validating: "miniapp-stale-legacy")
+        let legacyAdapter = NativeScriptHostServicesAdapter(appID: appLegacy, grantedCapabilities: ["javascript"], sessionID: "session-stale-legacy")
+
+        // Register global legacy provider
+        HanlinNativeServicesBridge.register(legacyAdapter)
+        #expect(HanlinNativeServicesBridge.activeSessionBridge() == nil)
+
+        // Unauthorized request must fail closed — no implicit global fallback
+        #expect(HanlinNativeServicesBridge.currentProvider() == nil)
+        #expect(HanlinNativeServicesBridge.dataRootDirectory() == nil)
+        let syncRes = HanlinNativeServicesBridge.sendRequestSync("target", action: "test", capability: "cap", payloadJSON: "{}")
+        #expect(syncRes?.contains("Err: Host service provider not registered.") == true)
+    }
+
+    @Test func nativeScriptNegativeAuthCasesFailWithGenuineErrors() async throws {
+        HanlinNativeServicesBridge.resetAllSessions()
+        defer { HanlinNativeServicesBridge.resetAllSessions() }
+
+        let appID = try HanlinAppID(validating: "miniapp-neg-auth")
+        let sessionID = "session-neg-auth"
+        let adapter = NativeScriptHostServicesAdapter(
+            appID: appID,
+            grantedCapabilities: ["app.action"],
+            sessionID: sessionID
+        )
+        HanlinNativeServicesBridge.register(adapter, forSessionID: sessionID)
+
+        // 1. Unknown bootstrap token fails
+        let unknownBridge = HanlinNativeServicesBridge.claimSessionBridge(withToken: "invalid-token-\(UUID().uuidString)")
+        #expect(unknownBridge == nil)
+
+        // 2. Consumed bootstrap token cannot be reused
+        let token = try #require(HanlinNativeServicesPrepareSessionBootstrap(sessionID))
+        let bridge = try #require(HanlinNativeServicesBridge.claimSessionBridge(withToken: token))
+        #expect(bridge != nil)
+        let reusedClaim = HanlinNativeServicesBridge.claimSessionBridge(withToken: token)
+        #expect(reusedClaim == nil, "Bootstrap token must be one-time consumable")
+
+        // 3. Unregistered action fails closed with error (not synthetic success)
+        let unregResult: (String?, String?) = await withCheckedContinuation { continuation in
+            adapter.sendRequest(appID.rawValue, action: "unregistered.action", capability: "app.action", payloadJSON: "{}") { res, err in
+                continuation.resume(returning: (res, err))
+            }
+        }
+        #expect(unregResult.0 == nil)
+        #expect(unregResult.1 != nil)
+
+        // 4. Capability mismatch fails
+        adapter.registerRequestHandler("mismatched.action", capability: "required.cap") { caller, payload, reply in
+            reply("OK", nil)
+        }
+        let mismatchResult: (String?, String?) = await withCheckedContinuation { continuation in
+            adapter.sendRequest(appID.rawValue, action: "mismatched.action", capability: "wrong.cap", payloadJSON: "{}") { res, err in
+                continuation.resume(returning: (res, err))
+            }
+        }
+        #expect(mismatchResult.0 == nil)
+        #expect(mismatchResult.1 != nil)
+
+        // 5. Unknown remote destination fails with error
+        let unknownRemoteResult: (String?, String?) = await withCheckedContinuation { continuation in
+            adapter.sendRequest("unknown.remote.target", action: "ping", capability: "app.action", payloadJSON: "{}") { res, err in
+                continuation.resume(returning: (res, err))
+            }
+        }
+        #expect(unknownRemoteResult.0 == nil)
+        #expect(unknownRemoteResult.1 != nil)
+    }
+
+    @Test func nativeScriptSessionRemovalAndResetAllSessionsInvalidateBridges() throws {
+        HanlinNativeServicesBridge.resetAllSessions()
+        defer { HanlinNativeServicesBridge.resetAllSessions() }
+
+        let appID = try HanlinAppID(validating: "miniapp-invalidation")
+        let sessionID = "session-invalidation"
+        let adapter = NativeScriptHostServicesAdapter(appID: appID, grantedCapabilities: ["javascript"], sessionID: sessionID)
+
+        HanlinNativeServicesBridge.register(adapter, forSessionID: sessionID)
+        let token = try #require(HanlinNativeServicesPrepareSessionBootstrap(sessionID))
+        let bridge = try #require(HanlinNativeServicesBridge.claimSessionBridge(withToken: token))
+        HanlinNativeServicesBridge.setActiveSession(bridge, forSessionID: sessionID)
+
+        // Reset all sessions
+        HanlinNativeServicesBridge.resetAllSessions()
+
+        #expect(HanlinNativeServicesBridge.activeSessionBridge() == nil)
+        #expect(HanlinNativeServicesBridge.currentProvider() == nil)
+        #expect(HanlinNativeServicesBridge.provider(forSessionID: sessionID) == nil)
+
+        // Captured bridge must be invalidated
+        var callbackError: String?
+        bridge.executeJavaScript("1+1") { result, error in
+            callbackError = error
+        }
+        #expect(callbackError?.contains("NativeScript Host Services session is no longer active.") == true)
+    }
+
+    @Test func nativeScriptTimedOutSyncExecutionLateCallbackSafety() throws {
+        HanlinNativeServicesBridge.resetAllSessions()
+        defer { HanlinNativeServicesBridge.resetAllSessions() }
+
+        final class SlowMockProvider: NSObject, HanlinNativeServicesProvider {
+            func dataRootDirectory() -> String? { nil }
+            func stateDirectory() -> String? { nil }
+            func documentsDirectory() -> String? { nil }
+            func cacheDirectory() -> String? { nil }
+            func executeJavaScript(_ source: String, completion: HanlinBridgeStringResultBlock? = nil) {
+                DispatchQueue.global().asyncAfter(deadline: .now() + 0.1) {
+                    completion?("LateResult", nil)
+                }
+            }
+            func executeNode(_ source: String, completion: HanlinBridgeStringResultBlock? = nil) { completion?(nil, nil) }
+            func nodeHealthCheck(completion: HanlinBridgeBoolResultBlock? = nil) { completion?(true, nil) }
+            func executePython(_ source: String, completion: HanlinBridgeStringResultBlock? = nil) { completion?(nil, nil) }
+            func pythonVersion() -> String? { "3.12.6" }
+            func fetchURL(_ urlString: String, completion: HanlinBridgeStringResultBlock? = nil) { completion?(nil, nil) }
+            func sendRequest(_ targetID: String, action: String, capability: String, payloadJSON: String, completion: HanlinBridgeStringResultBlock? = nil) { completion?(nil, nil) }
+            func registerRequestHandler(_ action: String, capability: String, handler: HanlinBridgeRequestHandlerBlock? = nil) {}
+        }
+
+        let slowProvider = SlowMockProvider()
+        let sessionID = "session-slow"
+        HanlinNativeServicesBridge.register(slowProvider, forSessionID: sessionID)
+        let token = try #require(HanlinNativeServicesPrepareSessionBootstrap(sessionID))
+        let bridge = try #require(HanlinNativeServicesBridge.claimSessionBridge(withToken: token))
+        HanlinNativeServicesBridge.setActiveSession(bridge, forSessionID: sessionID)
+
+        let syncRes = HanlinNativeServicesBridge.executeJavaScriptSync("fast")
+        #expect(syncRes != nil)
+        Thread.sleep(forTimeInterval: 0.15)
+
+        let fastProvider = NativeScriptHostServicesAdapter(
+            appID: try HanlinAppID(validating: "miniapp-fast"),
+            grantedCapabilities: ["javascript"],
+            sessionID: "session-fast"
+        )
+        HanlinNativeServicesBridge.register(fastProvider, forSessionID: "session-fast")
+        let fastToken = try #require(HanlinNativeServicesPrepareSessionBootstrap("session-fast"))
+        let fastBridge = try #require(HanlinNativeServicesBridge.claimSessionBridge(withToken: fastToken))
+        HanlinNativeServicesBridge.setActiveSession(fastBridge, forSessionID: "session-fast")
+
+        #expect(HanlinNativeServicesBridge.currentProvider() === fastProvider)
+    }
+
+    @Test func nativeScriptLocalAndRemoteRequestWorksAfterCleanupAndReregistration() async throws {
+        HanlinNativeServicesBridge.resetAllSessions()
+        defer { HanlinNativeServicesBridge.resetAllSessions() }
+
+        let appID = try HanlinAppID(validating: "miniapp-rereg")
+        let sessionID = "session-rereg-1"
+        let adapter1 = NativeScriptHostServicesAdapter(
+            appID: appID,
+            grantedCapabilities: ["app.action"],
+            sessionID: sessionID
+        )
+        adapter1.registerRequestHandler("echo.action", capability: "app.action") { caller, payload, reply in
+            reply("{\"status\":\"success-run1\"}", nil)
+        }
+        HanlinNativeServicesBridge.register(adapter1, forSessionID: sessionID)
+        let token1 = try #require(HanlinNativeServicesPrepareSessionBootstrap(sessionID))
+        let bridge1 = try #require(HanlinNativeServicesBridge.claimSessionBridge(withToken: token1))
+        HanlinNativeServicesBridge.setActiveSession(bridge1, forSessionID: sessionID)
+
+        let reply1: (String?, String?) = await withCheckedContinuation { continuation in
+            adapter1.sendRequest(appID.rawValue, action: "echo.action", capability: "app.action", payloadJSON: "{}") { res, err in
+                continuation.resume(returning: (res, err))
+            }
+        }
+        #expect(reply1.0?.contains("success-run1") == true)
+
+        // Clean up
+        HanlinNativeServicesBridge.resetAllSessions()
+
+        // Re-registration
+        let sessionID2 = "session-rereg-2"
+        let adapter2 = NativeScriptHostServicesAdapter(
+            appID: appID,
+            grantedCapabilities: ["app.action"],
+            sessionID: sessionID2
+        )
+        adapter2.registerRequestHandler("echo.action", capability: "app.action") { caller, payload, reply in
+            reply("{\"status\":\"success-run2\"}", nil)
+        }
+        HanlinNativeServicesBridge.register(adapter2, forSessionID: sessionID2)
+        let token2 = try #require(HanlinNativeServicesPrepareSessionBootstrap(sessionID2))
+        let bridge2 = try #require(HanlinNativeServicesBridge.claimSessionBridge(withToken: token2))
+        HanlinNativeServicesBridge.setActiveSession(bridge2, forSessionID: sessionID2)
+
+        let reply2: (String?, String?) = await withCheckedContinuation { continuation in
+            adapter2.sendRequest(appID.rawValue, action: "echo.action", capability: "app.action", payloadJSON: "{}") { res, err in
+                continuation.resume(returning: (res, err))
+            }
+        }
+        #expect(reply2.0?.contains("success-run2") == true)
+    }
+
     @Test @MainActor func nativeScriptRuntimeRealLaunchFixtureAndTeardown() throws {
         let appID1 = try HanlinAppID(validating: "ns-fixture-app-1")
         let sessionID1 = "ns-session-" + UUID().uuidString.lowercased()

@@ -21,7 +21,8 @@
           "exactTestName": "Audit Contract: MASTER",
           "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/correction-audit.md",
           "expectedTerminalState": "Passed",
-          "verifierKind": "repository_audit"
+          "verifierKind": "repository_audit",
+          "expectedPattern": "independent-fork repository policy"
         },
         {
           "layer": "B",
@@ -29,7 +30,8 @@
           "exactTestName": "Audit Contract: AUD-01",
           "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/correction-audit.md",
           "expectedTerminalState": "Passed",
-          "verifierKind": "repository_audit"
+          "verifierKind": "repository_audit",
+          "expectedPattern": "capability invariants"
         }
       ]
     },
@@ -50,7 +52,8 @@
           "exactTestName": "Audit Contract: MASTER",
           "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/correction-audit.md",
           "expectedTerminalState": "Passed",
-          "verifierKind": "repository_audit"
+          "verifierKind": "repository_audit",
+          "expectedPattern": "independent-fork"
         }
       ]
     },
@@ -73,7 +76,8 @@
           "exactTestName": "Audit Contract: restrictions",
           "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/restriction-inventory.json",
           "expectedTerminalState": "Passed",
-          "verifierKind": "repository_audit"
+          "verifierKind": "repository_audit",
+          "expectedKey": "restrictions"
         },
         {
           "layer": "I",
@@ -81,7 +85,10 @@
           "exactTestName": "Audit Contract: restrictions",
           "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/restriction-inventory.json",
           "expectedTerminalState": "Passed",
-          "verifierKind": "repository_audit"
+          "verifierKind": "repository_audit",
+          "expectedFields": [
+            "restrictions"
+          ]
         }
       ]
     },
@@ -104,7 +111,8 @@
           "exactTestName": "Audit Contract: restrictions",
           "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/restriction-inventory.json",
           "expectedTerminalState": "Passed",
-          "verifierKind": "repository_audit"
+          "verifierKind": "repository_audit",
+          "expectedKey": "restrictions"
         },
         {
           "layer": "B",
@@ -112,7 +120,8 @@
           "exactTestName": "Audit Contract: AUD-04",
           "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/correction-audit.md",
           "expectedTerminalState": "Passed",
-          "verifierKind": "repository_audit"
+          "verifierKind": "repository_audit",
+          "expectedPattern": "Feature-by-Feature Audit Ledger"
         }
       ]
     },
@@ -134,7 +143,8 @@
           "exactTestName": "Audit Contract: restrictions",
           "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/restriction-inventory.json",
           "expectedTerminalState": "Passed",
-          "verifierKind": "repository_audit"
+          "verifierKind": "repository_audit",
+          "expectedKey": "restrictions"
         }
       ]
     },
@@ -156,7 +166,8 @@
           "exactTestName": "Audit Contract: restrictions",
           "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/restriction-inventory.json",
           "expectedTerminalState": "Passed",
-          "verifierKind": "repository_audit"
+          "verifierKind": "repository_audit",
+          "expectedKey": "restrictions"
         }
       ]
     },
@@ -179,7 +190,8 @@
           "exactTestName": "Audit Contract: AUD-07",
           "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/correction-audit.md",
           "expectedTerminalState": "Passed",
-          "verifierKind": "repository_audit"
+          "verifierKind": "repository_audit",
+          "expectedPattern": "NativeToolCatalog"
         }
       ]
     },
@@ -201,7 +213,8 @@
           "exactTestName": "Audit Contract: tools",
           "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/tool-inventory.json",
           "expectedTerminalState": "Passed",
-          "verifierKind": "repository_audit"
+          "verifierKind": "repository_audit",
+          "expectedKey": "tools"
         },
         {
           "layer": "B",
@@ -209,7 +222,8 @@
           "exactTestName": "Audit Contract: AUD-08",
           "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/correction-audit.md",
           "expectedTerminalState": "Passed",
-          "verifierKind": "repository_audit"
+          "verifierKind": "repository_audit",
+          "expectedPattern": "ToolSearchTool"
         }
       ]
     },
@@ -9762,7 +9776,8 @@
           "exactTestName": "Audit Contract: BUILD-10",
           "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/correction-audit.md",
           "expectedTerminalState": "Passed",
-          "verifierKind": "repository_audit"
+          "verifierKind": "repository_audit",
+          "expectedPattern": "Summary of Corrections Performed"
         }
       ]
     },
@@ -10037,7 +10052,8 @@
           "exactTestName": "Audit Contract: Swift AI SDK",
           "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/architecture-migrations.md",
           "expectedTerminalState": "Passed",
-          "verifierKind": "repository_audit"
+          "verifierKind": "repository_audit",
+          "expectedPattern": "Swift AI SDK"
         },
         {
           "layer": "build",
@@ -10176,7 +10192,8 @@
           "exactTestName": "Audit Contract: Swift AI SDK",
           "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/architecture-migrations.md",
           "expectedTerminalState": "Passed",
-          "verifierKind": "repository_audit"
+          "verifierKind": "repository_audit",
+          "expectedPattern": "Hanlin Architecture Migrations"
         }
       ]
     },
@@ -10271,7 +10288,8 @@
           "exactTestName": "Audit Contract: Swift AI SDK",
           "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/architecture-migrations.md",
           "expectedTerminalState": "Passed",
-          "verifierKind": "repository_audit"
+          "verifierKind": "repository_audit",
+          "expectedPattern": "Consolidation Record"
         }
       ]
     },
@@ -10939,7 +10957,8 @@
           "exactTestName": "Audit Contract: CHAT-28",
           "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/architecture-migrations.md",
           "expectedTerminalState": "Passed",
-          "verifierKind": "repository_audit"
+          "verifierKind": "repository_audit",
+          "expectedPattern": "Absolute Freeze of Existing Hanlin Chat UI"
         },
         {
           "layer": "source",
@@ -10947,7 +10966,8 @@
           "exactTestName": "Audit Contract: Chat",
           "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/architecture-migrations.md",
           "expectedTerminalState": "Passed",
-          "verifierKind": "repository_audit"
+          "verifierKind": "repository_audit",
+          "expectedPattern": "ChatView"
         }
       ]
     },
@@ -10970,7 +10990,8 @@
           "exactTestName": "Audit Contract: CHAT-29",
           "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/architecture-migrations.md",
           "expectedTerminalState": "Passed",
-          "verifierKind": "repository_audit"
+          "verifierKind": "repository_audit",
+          "expectedPattern": "Absolute Freeze"
         },
         {
           "layer": "source",
@@ -10978,7 +10999,8 @@
           "exactTestName": "Audit Contract: Chat",
           "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/architecture-migrations.md",
           "expectedTerminalState": "Passed",
-          "verifierKind": "repository_audit"
+          "verifierKind": "repository_audit",
+          "expectedPattern": "MASTER-4"
         }
       ]
     },
@@ -11001,7 +11023,8 @@
           "exactTestName": "Audit Contract: CHAT-30",
           "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/architecture-migrations.md",
           "expectedTerminalState": "Passed",
-          "verifierKind": "repository_audit"
+          "verifierKind": "repository_audit",
+          "expectedPattern": "Existing Hanlin Chat UI"
         },
         {
           "layer": "source",
@@ -11009,7 +11032,8 @@
           "exactTestName": "Audit Contract: Chat",
           "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/architecture-migrations.md",
           "expectedTerminalState": "Passed",
-          "verifierKind": "repository_audit"
+          "verifierKind": "repository_audit",
+          "expectedPattern": "R30, R31, R32"
         }
       ]
     },
@@ -11604,7 +11628,8 @@
           "exactTestName": "Audit Contract: CHAT-55",
           "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/architecture-migrations.md",
           "expectedTerminalState": "Passed",
-          "verifierKind": "repository_audit"
+          "verifierKind": "repository_audit",
+          "expectedPattern": "Absolute Freeze of Existing Hanlin Chat UI"
         },
         {
           "layer": "source",
@@ -11612,7 +11637,8 @@
           "exactTestName": "Audit Contract: Chat",
           "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/architecture-migrations.md",
           "expectedTerminalState": "Passed",
-          "verifierKind": "repository_audit"
+          "verifierKind": "repository_audit",
+          "expectedPattern": "Chat UI"
         },
         {
           "layer": "UI",
@@ -12080,7 +12106,8 @@
           "exactTestName": "Audit Contract: DEP-12",
           "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/architecture-migrations.md",
           "expectedTerminalState": "Passed",
-          "verifierKind": "repository_audit"
+          "verifierKind": "repository_audit",
+          "expectedPattern": "Platform Modernization"
         }
       ]
     },
@@ -12102,7 +12129,8 @@
           "exactTestName": "Audit Contract: DEP-13",
           "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/architecture-migrations.md",
           "expectedTerminalState": "Passed",
-          "verifierKind": "repository_audit"
+          "verifierKind": "repository_audit",
+          "expectedPattern": "iOS 27"
         },
         {
           "layer": "UI",
@@ -12132,7 +12160,8 @@
           "exactTestName": "Audit Contract: XCRemoteSwiftPackageReference",
           "evidenceArtifact": "AI_HLY.xcodeproj/project.pbxproj",
           "expectedTerminalState": "Passed",
-          "verifierKind": "repository_audit"
+          "verifierKind": "repository_audit",
+          "expectedPattern": "PBXProject"
         }
       ]
     },
@@ -12153,7 +12182,8 @@
           "exactTestName": "Audit Contract: XCRemoteSwiftPackageReference",
           "evidenceArtifact": "AI_HLY.xcodeproj/project.pbxproj",
           "expectedTerminalState": "Passed",
-          "verifierKind": "repository_audit"
+          "verifierKind": "repository_audit",
+          "expectedPattern": "XCRemoteSwiftPackageReference"
         }
       ]
     },
@@ -12172,9 +12202,10 @@
           "layer": "build",
           "testTarget": "ReleaseCompilerAndPackager",
           "exactTestName": "Audit Contract: PLATFORM-01",
-          "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/architecture-migrations.md",
+          "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/evidence/phase1-ios-simulator-build.log",
           "expectedTerminalState": "Passed",
-          "verifierKind": "repository_audit"
+          "verifierKind": "repository_audit",
+          "expectedPattern": "Xcode_27\\.app"
         }
       ]
     },
@@ -12196,7 +12227,8 @@
           "exactTestName": "Audit Contract: Xcode 27",
           "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/architecture-migrations.md",
           "expectedTerminalState": "Passed",
-          "verifierKind": "repository_audit"
+          "verifierKind": "repository_audit",
+          "expectedPattern": "Platform Modernization to Stable Xcode 27 / iOS 27"
         },
         {
           "layer": "build",
@@ -12204,7 +12236,8 @@
           "exactTestName": "Audit Contract: PLATFORM-02",
           "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/architecture-migrations.md",
           "expectedTerminalState": "Passed",
-          "verifierKind": "repository_audit"
+          "verifierKind": "repository_audit",
+          "expectedPattern": "iOS 27"
         }
       ]
     },
@@ -12265,9 +12298,10 @@
           "layer": "build",
           "testTarget": "ReleaseCompilerAndPackager",
           "exactTestName": "Audit Contract: PLATFORM-05",
-          "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/architecture-migrations.md",
+          "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/evidence/phase1-ios-simulator-build.log",
           "expectedTerminalState": "Passed",
-          "verifierKind": "repository_audit"
+          "verifierKind": "repository_audit",
+          "expectedPattern": "SWIFT_STRICT_CONCURRENCY=complete"
         }
       ]
     },
@@ -12329,7 +12363,8 @@
           "exactTestName": "Audit Contract: Xcode 27",
           "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/architecture-migrations.md",
           "expectedTerminalState": "Passed",
-          "verifierKind": "repository_audit"
+          "verifierKind": "repository_audit",
+          "expectedPattern": "Xcode 27"
         }
       ]
     },
@@ -12482,7 +12517,8 @@
           "exactTestName": "Audit Contract: SystemLanguageModel",
           "evidenceArtifact": "AI_HLY/Downstream/Compatibility/AppleFoundationModelsProvider.swift",
           "expectedTerminalState": "Passed",
-          "verifierKind": "repository_audit"
+          "verifierKind": "repository_audit",
+          "expectedPattern": "SystemLanguageModel"
         },
         {
           "layer": "source",
@@ -12490,7 +12526,8 @@
           "exactTestName": "Audit Contract: SystemLanguageModel",
           "evidenceArtifact": "AI_HLY/Downstream/Compatibility/AppleFoundationModelsProvider.swift",
           "expectedTerminalState": "Passed",
-          "verifierKind": "repository_audit"
+          "verifierKind": "repository_audit",
+          "expectedPattern": "streamResponse"
         }
       ]
     },
@@ -12788,7 +12825,8 @@
           "exactTestName": "Audit Contract: MCP",
           "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/architecture-migrations.md",
           "expectedTerminalState": "Passed",
-          "verifierKind": "repository_audit"
+          "verifierKind": "repository_audit",
+          "expectedPattern": "Single MCP Protocol Stack Authority"
         }
       ]
     },
@@ -12831,7 +12869,8 @@
           "exactTestName": "Audit Contract: SkillImporter.swift",
           "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/architecture-migrations.md",
           "expectedTerminalState": "Passed",
-          "verifierKind": "repository_audit"
+          "verifierKind": "repository_audit",
+          "expectedPattern": "Progressive Discovery"
         }
       ]
     },
@@ -13001,7 +13040,8 @@
           "exactTestName": "Audit Contract: SkillImporter.swift",
           "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/architecture-migrations.md",
           "expectedTerminalState": "Passed",
-          "verifierKind": "repository_audit"
+          "verifierKind": "repository_audit",
+          "expectedPattern": "Runtime & Package Policy De-restriction"
         }
       ]
     },
@@ -13044,7 +13084,8 @@
           "exactTestName": "Audit Contract: KEEP",
           "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/grdb-evaluation.md",
           "expectedTerminalState": "Passed",
-          "verifierKind": "repository_audit"
+          "verifierKind": "repository_audit",
+          "expectedPattern": "HanlinSQLiteService"
         }
       ]
     },
@@ -13065,7 +13106,8 @@
           "exactTestName": "Audit Contract: KEEP",
           "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/grdb-evaluation.md",
           "expectedTerminalState": "Passed",
-          "verifierKind": "repository_audit"
+          "verifierKind": "repository_audit",
+          "expectedPattern": "positional"
         }
       ]
     },
@@ -13086,7 +13128,8 @@
           "exactTestName": "Audit Contract: KEEP",
           "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/grdb-evaluation.md",
           "expectedTerminalState": "Passed",
-          "verifierKind": "repository_audit"
+          "verifierKind": "repository_audit",
+          "expectedPattern": "transactions"
         }
       ]
     },
@@ -13173,7 +13216,8 @@
           "exactTestName": "Audit Contract: KEEP",
           "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/grdb-evaluation.md",
           "expectedTerminalState": "Passed",
-          "verifierKind": "repository_audit"
+          "verifierKind": "repository_audit",
+          "expectedPattern": "KEEP"
         }
       ]
     },
@@ -13423,7 +13467,8 @@
           "exactTestName": "Audit Contract: Hanlin",
           "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/architecture-migrations.md",
           "expectedTerminalState": "Passed",
-          "verifierKind": "repository_audit"
+          "verifierKind": "repository_audit",
+          "expectedPattern": "Executive Summary"
         }
       ]
     },
@@ -13444,7 +13489,8 @@
           "exactTestName": "Audit Contract: Hanlin",
           "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/architecture-migrations.md",
           "expectedTerminalState": "Passed",
-          "verifierKind": "repository_audit"
+          "verifierKind": "repository_audit",
+          "expectedPattern": "Migration Ledger"
         }
       ]
     },
@@ -13465,7 +13511,8 @@
           "exactTestName": "Audit Contract: Hanlin",
           "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/architecture-migrations.md",
           "expectedTerminalState": "Passed",
-          "verifierKind": "repository_audit"
+          "verifierKind": "repository_audit",
+          "expectedPattern": "Consolidation"
         }
       ]
     },
@@ -13487,7 +13534,8 @@
           "exactTestName": "Audit Contract: Hanlin",
           "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/architecture-migrations.md",
           "expectedTerminalState": "Passed",
-          "verifierKind": "repository_audit"
+          "verifierKind": "repository_audit",
+          "expectedPattern": "Consolidation"
         },
         {
           "layer": "build",
@@ -13495,7 +13543,8 @@
           "exactTestName": "Audit Contract: ARCH-04",
           "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/architecture-migrations.md",
           "expectedTerminalState": "Passed",
-          "verifierKind": "repository_audit"
+          "verifierKind": "repository_audit",
+          "expectedPattern": "Single MCP"
         }
       ]
     },
@@ -13537,7 +13586,8 @@
           "exactTestName": "Audit Contract: ARCH-06",
           "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/architecture-migrations.md",
           "expectedTerminalState": "Passed",
-          "verifierKind": "repository_audit"
+          "verifierKind": "repository_audit",
+          "expectedPattern": "Architecture Migrations"
         }
       ]
     },
@@ -13558,7 +13608,8 @@
           "exactTestName": "Audit Contract: Hanlin",
           "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/architecture-migrations.md",
           "expectedTerminalState": "Passed",
-          "verifierKind": "repository_audit"
+          "verifierKind": "repository_audit",
+          "expectedPattern": "Progressive Discovery"
         }
       ]
     },
@@ -13579,7 +13630,8 @@
           "exactTestName": "Audit Contract: Hanlin",
           "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/architecture-migrations.md",
           "expectedTerminalState": "Passed",
-          "verifierKind": "repository_audit"
+          "verifierKind": "repository_audit",
+          "expectedPattern": "Absolute Freeze of Existing Hanlin Chat UI"
         }
       ]
     },
@@ -13600,7 +13652,8 @@
           "exactTestName": "Audit Contract: Hanlin",
           "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/architecture-migrations.md",
           "expectedTerminalState": "Passed",
-          "verifierKind": "repository_audit"
+          "verifierKind": "repository_audit",
+          "expectedPattern": "Single MCP Protocol Stack Authority"
         }
       ]
     },
@@ -13623,7 +13676,8 @@
           "exactTestName": "Audit Contract: Hanlin",
           "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/architecture-migrations.md",
           "expectedTerminalState": "Passed",
-          "verifierKind": "repository_audit"
+          "verifierKind": "repository_audit",
+          "expectedPattern": "Migration Ledger"
         },
         {
           "layer": "automation",
@@ -13631,7 +13685,8 @@
           "exactTestName": "Audit Contract: Hanlin",
           "evidenceArtifact": "docs/hanlin-platform/personal-runtime-completion/architecture-migrations.md",
           "expectedTerminalState": "Passed",
-          "verifierKind": "repository_audit"
+          "verifierKind": "repository_audit",
+          "expectedPattern": "Consolidation"
         }
       ]
     },

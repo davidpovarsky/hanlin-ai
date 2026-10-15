@@ -80,6 +80,7 @@ typedef void (^HanlinBridgeRequestHandlerBlock)(NSString *caller, NSString *payl
 
 // Legacy single-session fallback. Modern sessions use the bound bridge above.
 + (void)registerProvider:(nullable id<HanlinNativeServicesProvider>)provider;
++ (nullable id<HanlinNativeServicesProvider>)legacyProvider;
 + (nullable id<HanlinNativeServicesProvider>)currentProvider;
 
 // Class methods callable directly from JavaScript / Objective-C

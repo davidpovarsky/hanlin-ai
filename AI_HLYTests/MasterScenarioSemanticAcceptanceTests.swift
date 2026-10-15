@@ -1267,13 +1267,20 @@ struct MasterScenarioSemanticAcceptanceTests {
 
         // 4. Test controllable cancellation & atomic cleanup: ensure cancellation during underway staging cleans up
         let cancelTask = Task {
-            let cancelStaged = try SkillImporter.shared.stageAndInspect(fileURL: zipURL)
             try Task.checkCancellation()
-            cancelStaged.cleanup()
+            return try SkillImporter.shared.stageAndInspect(fileURL: zipURL)
         }
         cancelTask.cancel()
-        _ = await cancelTask.result
+        do {
+            _ = try await cancelTask.value
+            Issue.record("Expected CancellationError when task is cancelled during staging")
+        } catch is CancellationError {
+            // Expected CancellationError
+        } catch {
+            Issue.record("Expected CancellationError, got: \(error)")
+        }
         #expect(!SkillStore.shared.allCustomSkillDescriptors().contains { $0.id.rawValue == "\(skillName)-cancelled" })
+        #expect(!SkillStore.shared.allCustomSkillDescriptors().contains { $0.id.rawValue == skillName })
     }
 
     @Test("FS-01: Python writes sample.txt, Node reads and appends, Shell reads aggregate content in the same authorized workspace context")
@@ -1717,10 +1724,23 @@ struct MasterScenarioSemanticAcceptanceTests {
         let freshSession = AssistantCapabilitySession()
         #expect(!freshSession.isSkillLoaded(descriptor.id), "Request-scoped exposed tool/skill state must be reset on cold reload")
 
-        // Also verify installed Python packages directory persists in layout
+        // Also verify installed Python packages and files survive cold relaunch in layout
         let layout = RuntimeFileLayout.default
         let packagesDir = layout.pythonPackages
-        #expect(FileManager.default.fileExists(atPath: packagesDir.path), "Python packages root directory must persist")
+        try FileManager.default.createDirectory(at: packagesDir, withIntermediateDirectories: true)
+        let markerDir = packagesDir.appendingPathComponent("final10_pkg.dist-info")
+        try FileManager.default.createDirectory(at: markerDir, withIntermediateDirectories: true)
+        let markerFile = markerDir.appendingPathComponent("RECORD")
+        try "final10_record_content".write(to: markerFile, atomically: true, encoding: .utf8)
+        defer { try? FileManager.default.removeItem(at: markerDir) }
+
+        // Cold relaunch layout instance:
+        let coldLayout = RuntimeFileLayout(documentsDirectory: layout.documentsDirectory)
+        let coldPackagesDir = coldLayout.pythonPackages
+        let coldMarkerFile = coldPackagesDir.appendingPathComponent("final10_pkg.dist-info/RECORD")
+        #expect(FileManager.default.fileExists(atPath: coldMarkerFile.path), "Installed package files must survive cold relaunch")
+        let readContent = try? String(contentsOf: coldMarkerFile, encoding: .utf8)
+        #expect(readContent == "final10_record_content")
     }
 
     @Test("FINAL-11: Start long operation, cancel, and immediately run new operation with zero cross-run contamination")
@@ -1840,8 +1860,17 @@ struct MasterScenarioSemanticAcceptanceTests {
             )
         }
         try await Task.sleep(nanoseconds: 50_000_000) // 50ms
+        let startCancel = Date()
         longTask.cancel()
-        _ = await longTask.result
+        let result = await longTask.result
+        let stopLatency = Date().timeIntervalSince(startCancel)
+        #expect(stopLatency < 2.0, "Process cancellation stop latency must be bounded under 2.0s, was \(stopLatency)s")
+        switch result {
+        case .failure(let error):
+            #expect(error is CancellationError || (error as NSError).domain == NSCocoaErrorDomain)
+        case .success:
+            break
+        }
 
         // Immediately execute fresh small operation on runtime broker
         let cleanContext = AgentHostServicesAdapter.makeContext()
@@ -1882,58 +1911,84 @@ struct MasterScenarioSemanticAcceptanceTests {
         let invariantsURL = repoRoot.appendingPathComponent("capability-invariants.json")
         let toolInventoryURL = repoRoot.appendingPathComponent("docs/hanlin-platform/personal-runtime-completion/tool-inventory.json")
 
-        if FileManager.default.fileExists(atPath: invariantsURL.path),
-           FileManager.default.fileExists(atPath: toolInventoryURL.path) {
-            let invData = try Data(contentsOf: invariantsURL)
-            let toolData = try Data(contentsOf: toolInventoryURL)
-
-            struct InvariantsManifest: Decodable {
-                struct Inv: Decodable {
-                    let id: String
-                    let testIDs: [String]
-                }
-                let invariants: [Inv]
+        var resolvedInvariantsURL: URL? = FileManager.default.fileExists(atPath: invariantsURL.path) ? invariantsURL : nil
+        if resolvedInvariantsURL == nil {
+            let cwd = URL(fileURLWithPath: FileManager.default.currentDirectoryPath)
+            let alt = cwd.appendingPathComponent("capability-invariants.json")
+            if FileManager.default.fileExists(atPath: alt.path) {
+                resolvedInvariantsURL = alt
             }
+        }
+        let invURL = try #require(resolvedInvariantsURL, "capability-invariants.json fixture file must exist; cannot silently skip cross-join audit")
 
-            struct ToolManifest: Decodable {
-                struct Entry: Decodable {
-                    let logicalID: String
-                    let alias: String
-                    let executor: String
-                    let testIDs: [String]
-                }
-                let tools: [Entry]
+        var resolvedToolInventoryURL: URL? = FileManager.default.fileExists(atPath: toolInventoryURL.path) ? toolInventoryURL : nil
+        if resolvedToolInventoryURL == nil {
+            let cwd = URL(fileURLWithPath: FileManager.default.currentDirectoryPath)
+            let alt = cwd.appendingPathComponent("docs/hanlin-platform/personal-runtime-completion/tool-inventory.json")
+            if FileManager.default.fileExists(atPath: alt.path) {
+                resolvedToolInventoryURL = alt
             }
+        }
+        let tInvURL = try #require(resolvedToolInventoryURL, "tool-inventory.json fixture file must exist; cannot silently skip cross-join audit")
 
-            let invManifest = try JSONDecoder().decode(InvariantsManifest.self, from: invData)
-            let toolManifest = try JSONDecoder().decode(ToolManifest.self, from: toolData)
+        let invData = try Data(contentsOf: invURL)
+        let toolData = try Data(contentsOf: tInvURL)
 
-            #expect(!invManifest.invariants.isEmpty, "capability-invariants.json must not be empty")
-            #expect(!toolManifest.tools.isEmpty, "tool-inventory.json must not be empty")
-
-            // Verify all inventory tools have registered executors
-            let registeredNames = Set(tools.map { $0.name })
-            var missingExecutors: [String] = []
-            for t in toolManifest.tools {
-                if !registeredNames.contains(t.alias) && !registeredNames.contains(t.logicalID) {
-                    missingExecutors.append("\(t.logicalID) (\(t.alias))")
-                }
+        struct InvariantsManifest: Decodable {
+            struct Inv: Decodable {
+                let id: String
+                let testIDs: [String]
             }
-            #expect(missingExecutors.isEmpty, "Tools without registered catalog entries: \(missingExecutors)")
+            let invariants: [Inv]
+        }
 
-            // Cross-join test IDs
-            var orphanTestIDs: [String] = []
-            for inv in invManifest.invariants {
-                for tid in inv.testIDs {
-                    if tid.isEmpty { orphanTestIDs.append("\(inv.id): empty testId") }
-                }
+        struct ToolManifest: Decodable {
+            struct Entry: Decodable {
+                let logicalID: String
+                let alias: String
+                let executor: String
+                let testIDs: [String]
             }
-            for t in toolManifest.tools {
-                for tid in t.testIDs {
-                    if tid.isEmpty { orphanTestIDs.append("\(t.logicalID): empty testId") }
-                }
+            let tools: [Entry]
+        }
+
+        let invManifest = try JSONDecoder().decode(InvariantsManifest.self, from: invData)
+        let toolManifest = try JSONDecoder().decode(ToolManifest.self, from: toolData)
+
+        #expect(!invManifest.invariants.isEmpty, "capability-invariants.json must not be empty")
+        #expect(!toolManifest.tools.isEmpty, "tool-inventory.json must not be empty")
+
+        // Verify all inventory tools have registered executors
+        let registeredNames = Set(tools.map { $0.name })
+        var missingExecutors: [String] = []
+        for t in toolManifest.tools {
+            if !registeredNames.contains(t.alias) && !registeredNames.contains(t.logicalID) {
+                missingExecutors.append("\(t.logicalID) (\(t.alias))")
             }
-            #expect(orphanTestIDs.isEmpty, "Orphan or empty testIDs in invariants/tools join: \(orphanTestIDs)")
+        }
+        #expect(missingExecutors.isEmpty, "Tools without registered catalog entries: \(missingExecutors)")
+
+        // Cross-join test IDs
+        var orphanTestIDs: [String] = []
+        var allReferencedTestIDs = Set<String>()
+        for inv in invManifest.invariants {
+            for tid in inv.testIDs {
+                if tid.isEmpty { orphanTestIDs.append("\(inv.id): empty testId") }
+                allReferencedTestIDs.insert(tid)
+            }
+        }
+        for t in toolManifest.tools {
+            for tid in t.testIDs {
+                if tid.isEmpty { orphanTestIDs.append("\(t.logicalID): empty testId") }
+                allReferencedTestIDs.insert(tid)
+            }
+        }
+        #expect(orphanTestIDs.isEmpty, "Orphan or empty testIDs in invariants/tools join: \(orphanTestIDs)")
+
+        // Validate presence of key scenario clusters across MASTER and E2E suites
+        let sampleRequiredClusters = ["SDKAI-01", "FINAL-01", "E2E-A", "E2E-G"]
+        for cluster in sampleRequiredClusters {
+            #expect(allReferencedTestIDs.contains(cluster), "Cross-join accounting must include \(cluster)")
         }
     }
 }
