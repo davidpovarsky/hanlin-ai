@@ -1,11 +1,11 @@
 {
   "schemaVersion": "2.2.0",
-  "generatedAt": "2026-10-15T00:43:09.413Z",
+  "generatedAt": "2026-10-15T01:16:20.125Z",
   "provenance": {
     "sourceImplementationSHA": "72d18d3e4a9f0bd0eed7c53c291a1ade8bd9c24e",
     "testExecutionSHA": "72d18d3e4a9f0bd0eed7c53c291a1ade8bd9c24e",
     "evidenceRunSHA": "38639744717",
-    "reportSHA": "505149a9dd8d8b6a9ed557b7fe265b68b4bef7aa",
+    "reportSHA": "b543ad33e4168e52cacb467a27b44ffab6aedaf8",
     "contractVersion": "2.2.0-pass4"
   },
   "totalRequirements": 47,

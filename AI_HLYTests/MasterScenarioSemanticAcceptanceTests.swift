@@ -1220,7 +1220,7 @@ struct MasterScenarioSemanticAcceptanceTests {
                 guard let base = rawBuf.baseAddress else { return }
                 let ptr = base.assumingMemoryBound(to: UInt8.self)
                 for i in 0..<size {
-                    let currentBytePos = position + UInt32(i)
+                    let currentBytePos = UInt32(position + i)
                     if currentBytePos < incompressibleBytes {
                         var z = UInt64(currentBytePos) &+ 0x9e3779b97f4a7c15
                         z = (z ^ (z >> 30)) &* 0xbf58476d1ce4e5b9
@@ -1735,7 +1735,7 @@ struct MasterScenarioSemanticAcceptanceTests {
         defer { try? FileManager.default.removeItem(at: markerDir) }
 
         // Cold relaunch layout instance:
-        let coldLayout = RuntimeFileLayout(documentsDirectory: layout.documentsDirectory)
+        let coldLayout = RuntimeFileLayout(root: layout.root)
         let coldPackagesDir = coldLayout.pythonPackages
         let coldMarkerFile = coldPackagesDir.appendingPathComponent("final10_pkg.dist-info/RECORD")
         #expect(FileManager.default.fileExists(atPath: coldMarkerFile.path), "Installed package files must survive cold relaunch")

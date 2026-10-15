@@ -846,11 +846,16 @@ class TestDependencyLedgerTests(unittest.TestCase):
 
     def test_evaluate_reuse_cli_roundtrip(self) -> None:
         import subprocess, sys
+        repo_root = Path(__file__).parents[3]
+        try:
+            current_sha = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=str(repo_root)).decode().strip()
+        except Exception:
+            current_sha = "0095b6441e8968d4200e8cd8acf42f61b46b7c59"
         query = {
             "test_id": "TEST-01",
             "suite": "HanlinNativeScriptProductionE2ETests",
-            "origin_sha": "0095b6441e8968d4200e8cd8acf42f61b46b7c59",
-            "target_sha": "0095b6441e8968d4200e8cd8acf42f61b46b7c59",
+            "origin_sha": current_sha,
+            "target_sha": current_sha,
             "original_status": "Passed",
         }
         res = subprocess.run(
