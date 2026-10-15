@@ -835,7 +835,7 @@ final class HanlinScriptingPlatform {
         let requiredCaps = Set(entrypoint.requiredCapabilities.filter(\.required).map(\.capabilityID))
         let grantedCaps = Set(package.grantedCapabilities)
         guard requiredCaps.isSubset(of: grantedCaps) else {
-            throw HanlinHostServiceError.unauthorized("Required capabilities not granted for widget entrypoint")
+            throw HanlinHostServiceError.capabilityNotGranted("Required capabilities not granted for widget entrypoint")
         }
 
         let allowedFamilies = ["systemSmall", "systemMedium", "systemLarge", "systemExtraLarge"]

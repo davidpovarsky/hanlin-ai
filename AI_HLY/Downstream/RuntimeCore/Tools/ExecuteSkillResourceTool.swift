@@ -52,7 +52,7 @@ struct ExecuteSkillResourceTool: NativeTool {
 
             guard let skillID = try? HanlinSkillID(validating: skillIDRaw) else {
                 return RuntimeToolSupport.failure(
-                    HanlinHostServiceError.invalidArguments("Invalid skill ID: \(skillIDRaw)"),
+                    HanlinHostServiceError.invalidRequest("Invalid skill ID: \(skillIDRaw)"),
                     title: "Invalid Skill ID"
                 )
             }
@@ -62,7 +62,7 @@ struct ExecuteSkillResourceTool: NativeTool {
                   !relPath.hasPrefix("/"),
                   !relPath.contains("\0") else {
                 return RuntimeToolSupport.failure(
-                    HanlinHostServiceError.invalidArguments("Invalid resource path '\(relPath)': absolute paths and null bytes are rejected."),
+                    HanlinHostServiceError.invalidRequest("Invalid resource path '\(relPath)': absolute paths and null bytes are rejected."),
                     title: "Invalid Path"
                 )
             }
@@ -71,7 +71,7 @@ struct ExecuteSkillResourceTool: NativeTool {
             let components = cleanPath.split(separator: "/")
             if components.contains("..") || components.contains(".") {
                 return RuntimeToolSupport.failure(
-                    HanlinHostServiceError.invalidArguments("Directory traversal is not permitted."),
+                    HanlinHostServiceError.invalidRequest("Directory traversal is not permitted."),
                     title: "Security Violation"
                 )
             }
@@ -81,7 +81,7 @@ struct ExecuteSkillResourceTool: NativeTool {
                 SkillStore.shared.safeResourceURL(for: skillID, relativePath: cleanPath)
             }) else {
                 return RuntimeToolSupport.failure(
-                    HanlinHostServiceError.invalidArguments("Script '\(cleanPath)' not found in skill '\(skillIDRaw)' or path is outside package root."),
+                    HanlinHostServiceError.invalidRequest("Script '\(cleanPath)' not found in skill '\(skillIDRaw)' or path is outside package root."),
                     title: "Resource Not Found"
                 )
             }
@@ -89,14 +89,14 @@ struct ExecuteSkillResourceTool: NativeTool {
             let resourceValues = try? resourceURL.resourceValues(forKeys: [.isSymbolicLinkKey])
             if resourceValues?.isSymbolicLink == true {
                 return RuntimeToolSupport.failure(
-                    HanlinHostServiceError.invalidArguments("Symbolic links are not permitted."),
+                    HanlinHostServiceError.invalidRequest("Symbolic links are not permitted."),
                     title: "Security Violation"
                 )
             }
 
             guard FileManager.default.fileExists(atPath: resourceURL.path) else {
                 return RuntimeToolSupport.failure(
-                    HanlinHostServiceError.invalidArguments("Script file does not exist at '\(cleanPath)'."),
+                    HanlinHostServiceError.invalidRequest("Script file does not exist at '\(cleanPath)'."),
                     title: "File Not Found"
                 )
             }
@@ -104,7 +104,7 @@ struct ExecuteSkillResourceTool: NativeTool {
             // Read script content
             guard let scriptContent = try? String(contentsOf: resourceURL, encoding: .utf8) else {
                 return RuntimeToolSupport.failure(
-                    HanlinHostServiceError.invalidArguments("Unable to read script content as UTF-8."),
+                    HanlinHostServiceError.invalidRequest("Unable to read script content as UTF-8."),
                     title: "Read Error"
                 )
             }
@@ -121,7 +121,7 @@ struct ExecuteSkillResourceTool: NativeTool {
                 runtimeKind = .typeScript
             default:
                 return RuntimeToolSupport.failure(
-                    HanlinHostServiceError.invalidArguments("Unsupported script file extension '.\(ext)'. Only .py, .js, and .ts are executable."),
+                    HanlinHostServiceError.invalidRequest("Unsupported script file extension '.\(ext)'. Only .py, .js, and .ts are executable."),
                     title: "Unsupported Runtime"
                 )
             }
