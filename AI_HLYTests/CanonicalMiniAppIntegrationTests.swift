@@ -18,7 +18,7 @@ struct CanonicalMiniAppIntegrationTests {
     func compiledExposures() async throws {
         let provider = try #require(CompiledMiniAppExposureRegistry.all.first)
         #expect(provider.descriptor.supportedExposures.contains(.widget))
-        #expect(provider.descriptor.supportedExposures.contains(.appIntentBridge))
+        #expect(provider.descriptor.supportedExposures.contains(.appIntent))
         let node = try await provider.widget("systemMedium")
         #expect(node.kind == .vStack)
         let result = try await provider.performIntent(provider.intentNames[0], .object(["request": .string("state")]))

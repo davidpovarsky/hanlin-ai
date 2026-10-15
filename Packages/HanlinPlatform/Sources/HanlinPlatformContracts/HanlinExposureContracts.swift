@@ -38,6 +38,7 @@ extension HanlinExposureKind {
     public static let liveActivity: Self = "live_activity"
     public static let controlWidget: Self = "control_widget"
     public static let appIntent: Self = "app_intent"
+    public static let appIntentBridge: Self = "app_intent"
     public static let spotlight: Self = "spotlight"
     public static let shareExtension: Self = "share_extension"
     public static let translationUI: Self = "translation_ui"
