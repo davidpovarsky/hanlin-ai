@@ -232,6 +232,44 @@ public final class NativeScriptHostServicesAdapter: NSObject, @unchecked Sendabl
         }
     }
 
+    // MARK: - JSON Value Bridging
+
+    private static func decodeJSONPayload(_ payloadJSON: String) throws -> HanlinValue {
+        let trimmed = payloadJSON.trimmingCharacters(in: .whitespacesAndNewlines)
+        if trimmed.isEmpty || trimmed == "{}" {
+            return .object([:])
+        }
+        guard let data = trimmed.data(using: .utf8) else {
+            return .object([:])
+        }
+        // First try standard untagged JSON via HanlinJSONValue
+        if let jsonVal = try? HanlinJSONValue.decodeCanonicalJSON(data),
+           let hanlinVal = try? HanlinValue(jsonValue: jsonVal) {
+            return hanlinVal
+        }
+        // Then try tagged JSON representation
+        if let taggedVal = try? HanlinValue.decodeCanonicalJSON(data) {
+            return taggedVal
+        }
+        if let decodedVal = try? JSONDecoder().decode(HanlinValue.self, from: data) {
+            return decodedVal
+        }
+        // Fall back to attempting parse with full diagnostic throw
+        let jsonVal = try HanlinJSONValue.decodeCanonicalJSON(data)
+        return try HanlinValue(jsonValue: jsonVal)
+    }
+
+    private static func serializeUntaggedJSON(_ value: HanlinValue) throws -> String {
+        if let jsonVal = try? value.jsonValue() {
+            let data = try jsonVal.canonicalJSONData()
+            if let str = String(data: data, encoding: .utf8) {
+                return str
+            }
+        }
+        let fallbackData = try value.canonicalJSONData()
+        return String(data: fallbackData, encoding: .utf8) ?? "{}"
+    }
+
     public func sendRequest(
         _ targetID: String,
         action: String,
@@ -256,8 +294,7 @@ public final class NativeScriptHostServicesAdapter: NSObject, @unchecked Sendabl
                 let target = try HanlinAppID(validating: targetID)
                 let actionID = try HanlinActionID(validating: action)
                 let capabilityID = try HanlinCapabilityID(validating: canonical)
-                let payloadData = payloadJSON.data(using: .utf8) ?? Data()
-                let payload = try JSONDecoder().decode(HanlinValue.self, from: payloadData)
+                let payload = try Self.decodeJSONPayload(payloadJSON)
 
                 // When target is the caller itself, handle directly via locally registered actions.
                 // An unregistered action MUST fail closed with routeNotFound (never synthesize a self-echo!).
@@ -271,8 +308,8 @@ public final class NativeScriptHostServicesAdapter: NSObject, @unchecked Sendabl
                         caller: caller,
                         payload: payload
                     )
-                    let responseData = try responseValue.canonicalJSONData()
-                    safeCompletion(String(data: responseData, encoding: .utf8), nil)
+                    let responseString = try Self.serializeUntaggedJSON(responseValue)
+                    safeCompletion(responseString, nil)
                     return
                 }
 
@@ -285,8 +322,8 @@ public final class NativeScriptHostServicesAdapter: NSObject, @unchecked Sendabl
                     payload: payload
                 )
                 let response = try await broker.request(request)
-                let responseData = try response.value.canonicalJSONData()
-                safeCompletion(String(data: responseData, encoding: .utf8), nil)
+                let responseString = try Self.serializeUntaggedJSON(response.value)
+                safeCompletion(responseString, nil)
             } catch {
                 safeCompletion(nil, error.localizedDescription)
             }
@@ -355,7 +392,7 @@ public final class NativeScriptHostServicesAdapter: NSObject, @unchecked Sendabl
             return registration.invoke
         }
 
-        let payloadJSON = try String(data: payload.canonicalJSONData(), encoding: .utf8) ?? "{}"
+        let payloadJSON = try Self.serializeUntaggedJSON(payload)
         return try await withCheckedThrowingContinuation { continuation in
             invokeHandler(caller.rawValue, payloadJSON) { responseJSON, errorString in
                 if let errorString {
@@ -364,10 +401,13 @@ public final class NativeScriptHostServicesAdapter: NSObject, @unchecked Sendabl
                         code: 1,
                         userInfo: [NSLocalizedDescriptionKey: errorString]
                     ))
-                } else if let responseJSON,
-                          let data = responseJSON.data(using: .utf8),
-                          let value = try? JSONDecoder().decode(HanlinValue.self, from: data) {
-                    continuation.resume(returning: value)
+                } else if let responseJSON {
+                    do {
+                        let value = try Self.decodeJSONPayload(responseJSON)
+                        continuation.resume(returning: value)
+                    } catch {
+                        continuation.resume(returning: .null)
+                    }
                 } else {
                     continuation.resume(returning: .null)
                 }
