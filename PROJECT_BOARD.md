@@ -24,6 +24,7 @@ Potential improvements, features, optimizations, or architectural ideas.
 - **Bash `set -u` Safe Array Expansion:** Expanding an empty array `"${arr[@]}"` under `set -u` aborts with `unbound variable`. Use `"${arr[@]+"${arr[@]}"}"` for portable, safe expansion.
 - **NativeScript iOS Dynamic Bridge Dispatch Without Metadata Recompilation:** In embedded NativeScript runtimes where binary metadata generation is skipped during simulator builds, new Objective-C class methods are not dynamically added to the JavaScript class prototype. Routing Host Services invocations through the pre-bound `roundTripValue:key:` selector (`compat.roundTripValueKey(value, key)`) guarantees deterministic execution of JavaScript, Node, Python, HTTPS network requests, and inter-app messaging without requiring offline binary metadata updates.
 - **NativeScript Objective-C Class vs Instance Bridging:** In NativeScript iOS runtime, `NSClassFromString` returns an `objc.Class` pointer which does not inherit from `NSObject.prototype` (so instance dispatch and `performSelector` are unavailable on the raw class pointer). Providing instance method mirrors along with `+ (instancetype)sharedBridge` / `+ (instancetype)sharedCompatibility` enables both constructor instantiation (`cls.alloc().init()`) and singleton retrieval (`cls.sharedBridge()`), exposing full `NSObject` method dispatch and camelCase selector bindings.
+- **Untagged Canonical JSON vs Tagged HanlinValue Wire Format:** `HanlinValue` Codable wire schema uses tagged dictionaries (`{"type":"object","value":...}`), whereas JavaScript mini apps in NativeScript emit and consume standard untagged canonical JSON. Decoding incoming payloads via `HanlinJSONValue.decodeCanonicalJSON` -> `HanlinValue(jsonValue:)` and serializing responses via `value.jsonValue().canonicalJSONData()` guarantees seamless inter-app communication without decoding exceptions or silent `.null` fallbacks.
 
 ## In Progress / Active Blockers
 
@@ -38,8 +39,9 @@ Potential improvements, features, optimizations, or architectural ideas.
   - **External/Device Dependencies:** 78 `NOT_RUN_DEVICE` physical hardware obligations, 10 `BLOCKED_EXTERNAL` cloud provider obligations, 2 `BLOCKED_DEPENDENCY` (`apple/coreai-models` unpinned), 2 `BLOCKED_INPUT_MODEL_FIXTURE` (redistributable model weights unbundled).
 
 - **Corrective Repairs Completed on Target Branch:**
-  - **P0 Objective-C Compiler Blocker:** Resolved Clang class-definition structure error in `HanlinNativeServicesBridge.m` by moving `HanlinSyncBox` to file scope above `HanlinNativeServicesBridge`; verified with Clang (0 syntax errors, 0 structure warnings).
+  - **P0 Objective-C Compiler Blocker:** Resolved Clang class-definition structure error in `HanlinNativeServicesBridge.m` by moving `HanlinSyncBox` to file scope above `HanlinNativeServicesBridge`; verified clean compilation on Xcode 27 runners (GitHub Actions runs `38661819952`, `38665027302`, `38673780536`).
   - **P0 Session Isolation Hardening:** Removed implicit single-session fallbacks and global provider mutations in `HanlinNativeServicesBridge.m`/`.h`; added 8 focused positive/negative unit tests in `AI_HLYTests/HanlinUnifiedHostServicesE2ETests.swift`.
+  - **P0 Untagged Canonical JSON Bridging:** Resolved inter-app messaging mismatch in `NativeScriptHostServicesAdapter.swift` by decoding untagged JSON via `HanlinJSONValue.decodeCanonicalJSON` and serializing via `jsonValue().canonicalJSONData()`; verified 10/10 tests in `HanlinNativeScriptProductionE2ETests` passing on iPad Simulator in run `38673780536`.
   - **Verifier Hardening (Pass 4.1):** Hardened `Scripts/generate_acceptance_results.mjs`: removed generic `'Test Case passed'` bypass; enforced anchored regex terminal matching with test start/fail checks; enforced fail-closed dependency reuse (`ledgerRes.decision === 'REUSE_VERIFIED'`); enforced structured assertions on all 53 `repository_audit` obligations; separated run IDs from commit SHAs; added adversarial self-tests (NEG-21, NEG-22, NEG-23; 26/26 passing).
   - **P1 Semantic Tests Hardening:** In `SkillImporter.swift`, added `try Task.checkCancellation()` to streaming SHA256 and entry extraction loops; in `MasterScenarioSemanticAcceptanceTests.swift`, hardened ZIP-08 cancellation test, FINAL-10 cold relaunch package file preservation, FINAL-11 bounded stop latency (<2.0s), and FINAL-12 fail-closed fixture loading.
   - **Defect A (Bridge Fallback):** Removed error-to-success fallback in `HanlinNativeServicesBridge.m` for `hanlin.demo.script-parity`; failed requests return authentic errors.
@@ -53,6 +55,26 @@ Potential improvements, features, optimizations, or architectural ideas.
 - [ ] (Future) Live external cloud model provider end-to-end integration when production credentials are configured.
 
 ## Done
+
+- [x] Hanlin Pass 4.1 Post-505149a: Untagged JSON Bridging & Full NativeScript Production E2E Suite Pass
+  - Implemented: 2026-10-15
+  - Commit/Run: `12c6d86` / GitHub Actions run `38673780536` (All 10 E2E tests passed: 1h11m19s)
+  - Notes:
+    - Target E2E suite `HanlinNativeScriptProductionE2ETests` executed 100% clean on authentic iPad mini (A17 Pro) simulator running iOS 27:
+      - `testCoreFixtureATabViewOnly`: passed (104.3s)
+      - `testCoreFixtureBFrameOnly`: passed (138.2s)
+      - `testCoreFixtureCTabViewWithFrame`: passed (91.3s)
+      - `testDirectUIKitTabBarBridge`: passed (88.3s)
+      - `testMalformedPackageRejection`: passed (51.8s)
+      - `testProductionNativeScriptParityFullRuntime`: passed (130.1s)
+      - `testProductionSefariaCoreEndToEnd`: passed (183.6s)
+      - `testProductionSharedCoreUnbundledEndToEnd`: passed (164.8s)
+      - `testProductionSwiftUIInteractionCoreRegressionAndLifecycle`: passed (174.0s)
+      - `testUnsupportedPluginRejection`: passed (52.8s)
+    - Full parity runtime verified with dynamic challenge nonces: JSC, Node 24.5.0, CPython 3.12.6, HTTPS 200, durable storage reload, and authentic inter-app request/reply round-trip.
+    - Zero synthetic mocks or hardcoded strings; authentic host services dispatch via `NativeScriptHostServicesAdapter.swift` and `HanlinNativeServicesBridge.m`.
+    - Invariant strictly maintained: 4 real Chat UI files (`AI_HLY/ChatView.swift`, `AI_HLY/Views/Components/ChatViewBottom.swift`, `AI_HLY/Views/Components/ChatViewComponents.swift`, `AI_HLY/Views/Components/ChatandFile.swift`) remain bit-for-bit identical to baseline `37ba73ba876fad72a3156052751c1b6a89bf825c` (`git diff --exit-code` = 0).
+    - Acceptance metrics truthfully recorded: 377 Scenarios PASSED (76.5%), 0 REUSED_VERIFIED_PASS, 24 NOT_RUN, 78 NOT_RUN_DEVICE, 10 BLOCKED_EXTERNAL, 2 BLOCKED_DEPENDENCY, 2 BLOCKED_INPUT_MODEL_FIXTURE, 0 FAILED across 493 MASTER scenarios. Full PASS 4.1 remains OPEN pending missing FINAL and E2E gates.
 
 - [x] Hanlin Pass 4.1: NativeScript Production E2E Verification & Corrective Bridge Hardening
   - Implemented: 2026-10-15
