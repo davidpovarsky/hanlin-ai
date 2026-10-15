@@ -88,7 +88,7 @@ struct TorahOCRExcerptTool: NativeTool {
                   !handle.contains(":"),
                   !handle.contains("\0") else {
                 return RuntimeToolSupport.failure(
-                    HanlinHostServiceError.invalidArguments("Invalid attachment handle: arbitrary paths, URL schemes, and directory traversal are prohibited."),
+                    HanlinHostServiceError.invalidRequest("Invalid attachment handle: arbitrary paths, URL schemes, and directory traversal are prohibited."),
                     title: "Security Violation"
                 )
             }
@@ -97,7 +97,7 @@ struct TorahOCRExcerptTool: NativeTool {
             let handleComponents = cleanHandle.split(separator: "/")
             if handleComponents.contains("..") || handleComponents.contains(".") {
                 return RuntimeToolSupport.failure(
-                    HanlinHostServiceError.invalidArguments("Directory traversal is not permitted."),
+                    HanlinHostServiceError.invalidRequest("Directory traversal is not permitted."),
                     title: "Security Violation"
                 )
             }
@@ -105,7 +105,7 @@ struct TorahOCRExcerptTool: NativeTool {
             // Resolve real image data strictly within sandboxed application attachments directory
             guard let appSupport = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first else {
                 return RuntimeToolSupport.failure(
-                    HanlinHostServiceError.invalidArguments("Application Support directory unavailable."),
+                    HanlinHostServiceError.invalidRequest("Application Support directory unavailable."),
                     title: "Storage Error"
                 )
             }
@@ -117,7 +117,7 @@ struct TorahOCRExcerptTool: NativeTool {
 
             guard resolvedCandidate.path.hasPrefix(basePathWithSlash) else {
                 return RuntimeToolSupport.failure(
-                    HanlinHostServiceError.invalidArguments("Attachment handle escapes attachments sandbox: '\(handle)'."),
+                    HanlinHostServiceError.invalidRequest("Attachment handle escapes attachments sandbox: '\(handle)'."),
                     title: "Security Violation"
                 )
             }
@@ -125,14 +125,14 @@ struct TorahOCRExcerptTool: NativeTool {
             let resourceValues = try? candidate.resourceValues(forKeys: [.isSymbolicLinkKey, .fileSizeKey])
             if resourceValues?.isSymbolicLink == true {
                 return RuntimeToolSupport.failure(
-                    HanlinHostServiceError.invalidArguments("Symbolic links are not permitted for attachments."),
+                    HanlinHostServiceError.invalidRequest("Symbolic links are not permitted for attachments."),
                     title: "Security Violation"
                 )
             }
 
             guard FileManager.default.fileExists(atPath: candidate.path) else {
                 return RuntimeToolSupport.failure(
-                    HanlinHostServiceError.invalidArguments("Attachment handle '\(handle)' not found in chat sandbox."),
+                    HanlinHostServiceError.invalidRequest("Attachment handle '\(handle)' not found in chat sandbox."),
                     title: "Attachment Not Found"
                 )
             }
@@ -140,7 +140,7 @@ struct TorahOCRExcerptTool: NativeTool {
             let size = resourceValues?.fileSize ?? 0
             guard size <= 20 * 1024 * 1024 else {
                 return RuntimeToolSupport.failure(
-                    HanlinHostServiceError.invalidArguments("Attachment exceeds maximum allowed image size of 20MB."),
+                    HanlinHostServiceError.invalidRequest("Attachment exceeds maximum allowed image size of 20MB."),
                     title: "Attachment Too Large"
                 )
             }
@@ -174,7 +174,7 @@ struct TorahOCRExcerptTool: NativeTool {
 
             guard !rawText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
                 return RuntimeToolSupport.failure(
-                    HanlinHostServiceError.invalidArguments("Local OCR produced empty text for attachment '\(handle)'."),
+                    HanlinHostServiceError.invalidRequest("Local OCR produced empty text for attachment '\(handle)'."),
                     title: "OCR Produced No Text"
                 )
             }
@@ -263,7 +263,7 @@ struct TorahIdentifyExcerptTool: NativeTool {
             if let evID = arguments["evidence_id"] as? String {
                 guard let stored = await TorahEvidenceStore.shared.retrieve(evidenceID: evID) else {
                     return RuntimeToolSupport.failure(
-                        HanlinHostServiceError.invalidArguments("Evidence ID '\(evID)' not found or expired."),
+                        HanlinHostServiceError.invalidRequest("Evidence ID '\(evID)' not found or expired."),
                         title: "Evidence Not Found"
                     )
                 }
@@ -272,7 +272,7 @@ struct TorahIdentifyExcerptTool: NativeTool {
                 rawText = explicit
             } else {
                 return RuntimeToolSupport.failure(
-                    HanlinHostServiceError.invalidArguments("Either 'evidence_id' or 'text' must be provided."),
+                    HanlinHostServiceError.invalidRequest("Either 'evidence_id' or 'text' must be provided."),
                     title: "Missing Input"
                 )
             }
@@ -280,7 +280,7 @@ struct TorahIdentifyExcerptTool: NativeTool {
             let trimmed = rawText.trimmingCharacters(in: .whitespacesAndNewlines)
             guard !trimmed.isEmpty else {
                 return RuntimeToolSupport.failure(
-                    HanlinHostServiceError.invalidArguments("Transcription text is empty."),
+                    HanlinHostServiceError.invalidRequest("Transcription text is empty."),
                     title: "Empty Transcription"
                 )
             }
@@ -489,12 +489,6 @@ struct TorahGetSectionTool: NativeTool {
             }
 
             let studySource = try await TorahLibraryCoordinator.shared.getSection(locator: locator)
-            guard let studySource else {
-                return RuntimeToolSupport.failure(
-                    HanlinHostServiceError.invalidArguments("Section text not available for locator '\(locStr)'."),
-                    title: "Section Not Available"
-                )
-            }
             let text = studySource.primaryText
             let version = studySource.versionMetadata.versionTitle
 
