@@ -85,9 +85,19 @@ public enum SwiftParityMiniAppExposures {
         )
     }
 
+    public enum IntentError: Error, LocalizedError, Sendable {
+        case unsupportedIntent(String)
+        public var errorDescription: String? {
+            switch self {
+            case .unsupportedIntent(let name):
+                return "Unsupported intent: \(name)"
+            }
+        }
+    }
+
     public static func performIntent(name: String, parameters: HanlinValue, persistedData: Data?) throws -> HanlinValue {
         guard name == "ReadSwiftParityState" else {
-            throw HanlinHostServiceError.invalidRequest("Unsupported intent: \(name)")
+            throw IntentError.unsupportedIntent(name)
         }
         let state = try decodeState(from: persistedData)
         return .object([
