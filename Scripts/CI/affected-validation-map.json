@@ -19,7 +19,8 @@
     "recovery-state-before.txt",
     "cherry_icon.png",
     "logo_3_0.png",
-    "capability-invariants.md"
+    "capability-invariants.md",
+    "test-results.jsonl"
   ],
   "components": {
     "ci_router": {
@@ -43,6 +44,22 @@
         "ci_router"
       ],
       "consumers": []
+    },
+    "torah_photo_study": {
+      "description": "Torah Photo Study engine, native tools, TorahLibraryKit package, skills, and fixtures",
+      "patterns": [
+        "AI_HLY/Downstream/TorahStudy/**",
+        "Packages/TorahLibraryKit/**",
+        "Skills/**",
+        "Tests/Fixtures/TorahPhotoStudy/**",
+        "Scripts/Acceptance/**"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "consumers": [
+        "app_core"
+      ]
     },
     "package_dependencies": {
       "description": "Package manifests, lockfiles, and resolved dependency snapshots",
