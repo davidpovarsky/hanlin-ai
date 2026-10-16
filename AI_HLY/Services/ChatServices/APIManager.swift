@@ -1501,8 +1501,9 @@ class APIManager {
                     // 输出状态：加载本地模型
                     continuation.yield(StreamData(operationalState: isChinese ? "加载本地模型" : "Loading local models"))
                     
-                    // 获取本地模型路径（确保 getLocalModelPath 返回非 nil）
-                    guard let modelPath = getLocalModelPath(for: modelInfo.name ?? "Unknown") else {
+                    // 获取本地模型路径（确保 getLocalModelPath 返回非 nil，或在测试重写 driver 时允许使用 mock 路径）
+                    let resolvedModelPath = getLocalModelPath(for: modelInfo.name ?? "Unknown") ?? (self.localLLMDriverOverride != nil ? (modelInfo.name ?? "mock_model") : nil)
+                    guard let modelPath = resolvedModelPath else {
                         throw NSError(domain: "LocalModel", code: -1, userInfo: [NSLocalizedDescriptionKey: "模型路径无效"])
                     }
                     

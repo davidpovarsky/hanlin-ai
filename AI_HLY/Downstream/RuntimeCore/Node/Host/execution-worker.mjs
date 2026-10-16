@@ -2,10 +2,14 @@ import { parentPort, workerData } from 'node:worker_threads';
 import { pathToFileURL } from 'node:url';
 import { createRequire } from 'node:module';
 
-const { entryPoint, moduleKind, arguments: argv, environment, maximumOutputBytes } = workerData;
+const { entryPoint, workspace, moduleKind, arguments: argv, environment, maximumOutputBytes } = workerData;
 let stdout = '';
 let stderr = '';
 let outputWasTruncated = false;
+
+if (workspace) {
+  try { process.chdir(workspace); } catch {}
+}
 
 for (const [name, value] of Object.entries(environment ?? {})) process.env[name] = String(value);
 process.argv = ['node', entryPoint, ...(argv ?? []).map(String)];

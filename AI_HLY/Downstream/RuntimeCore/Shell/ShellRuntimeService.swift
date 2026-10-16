@@ -25,6 +25,7 @@ actor ShellRuntimeService {
         .init(name: "cat", summary: "Read workspace files.", requiresNetwork: false),
         .init(name: "cp", summary: "Copy workspace files.", requiresNetwork: false),
         .init(name: "curl", summary: "Transfer data over HTTPS when network access is approved.", requiresNetwork: true),
+        .init(name: "echo", summary: "Print text to standard output.", requiresNetwork: false),
         .init(name: "grep", summary: "Search text in workspace files.", requiresNetwork: false),
         .init(name: "head", summary: "Read the beginning of workspace files.", requiresNetwork: false),
         .init(name: "ln", summary: "Create links inside the workspace.", requiresNetwork: false),

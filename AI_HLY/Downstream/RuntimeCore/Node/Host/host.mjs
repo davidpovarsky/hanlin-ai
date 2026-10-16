@@ -325,6 +325,7 @@ async function executeJavaScript(body) {
     const worker = new Worker(executionWorkerURL, {
       workerData: {
         entryPoint,
+        workspace,
         moduleKind: body.moduleKind,
         arguments: Array.isArray(body.arguments) ? body.arguments : [],
         environment: validatedEnvironment(body.environment),

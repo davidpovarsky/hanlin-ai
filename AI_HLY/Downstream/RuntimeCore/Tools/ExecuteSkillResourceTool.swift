@@ -2,7 +2,11 @@ import Foundation
 import HanlinPlatformContracts
 
 struct ExecuteSkillResourceTool: NativeTool {
-    let name = "execute_skill_resource"
+    let name: String
+
+    init(name: String = "execute_skill_resource") {
+        self.name = name
+    }
 
     var catalogEntry: NativeToolCatalogEntry {
         .init(

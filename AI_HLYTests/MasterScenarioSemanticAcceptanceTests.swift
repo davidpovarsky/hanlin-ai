@@ -1264,6 +1264,7 @@ struct MasterScenarioSemanticAcceptanceTests {
         try handle.seek(toOffset: UInt64(totalExpandedBytes - UInt32(markerData.count)))
         let readMarkerData = try handle.readToEnd()
         #expect(readMarkerData == markerData)
+        SkillStore.shared.deleteCustomSkill(skillID: descriptor.id)
 
         // 4. Test controllable cancellation & atomic cleanup: ensure cancellation during underway staging cleans up
         let cancelTask = Task {
@@ -1531,7 +1532,7 @@ struct MasterScenarioSemanticAcceptanceTests {
 
         // Build single live loopback server with dynamic port injection
         let fixtureServer = try LoopbackHTTPFixtureServer { path, port in
-            if path == "/pypi/\(distName)/json" {
+            if path == "/pypi/\(distName)/json" || path == "/pypi/\(distName)/\(version)/json" || (path.hasPrefix("/pypi/\(distName)") && path.hasSuffix("/json")) {
                 let pypiJSON = """
                 {
                   "info": {
