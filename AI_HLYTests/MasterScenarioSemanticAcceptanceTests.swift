@@ -1856,7 +1856,7 @@ struct MasterScenarioSemanticAcceptanceTests {
             let hostContext = AgentHostServicesAdapter.makeContext()
             return try await HanlinRuntimeBroker.shared.execute(
                 kind: .node,
-                source: "await new Promise(r => setTimeout(r, 5000));",
+                source: "await new Promise(r => setTimeout(r, 2000));",
                 context: hostContext
             )
         }

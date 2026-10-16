@@ -123,7 +123,16 @@ const server = http.createServer(async (request, response) => {
     const executionCancel = url.pathname.match(/^\/v1\/executions\/([0-9a-f-]+)\/cancel$/i);
     if (request.method === 'POST' && executionCancel) {
       const state = executions.get(executionCancel[1].toLowerCase());
-      if (state) { state.cancelled = true; await state.worker.terminate(); }
+      if (state) {
+        state.cancelled = true;
+        if (state.terminateWorker) {
+          await state.terminateWorker();
+        } else if (state.worker) {
+          try {
+            await Promise.race([state.worker.terminate(), new Promise(r => setTimeout(r, 1000))]);
+          } catch {}
+        }
+      }
       return json(response, 200, { cancelled: Boolean(state) });
     }
     if (request.method === 'POST' && url.pathname === '/v1/typescript/compile') {
@@ -320,7 +329,7 @@ async function executeJavaScript(body) {
   const maximumOutputBytes = Math.min(Math.max(Number(body.maximumOutputBytes) || 1_048_576, 1024), 8 * 1024 * 1024);
   const timeoutMilliseconds = Math.min(Math.max(Number(body.timeoutMilliseconds) || 30_000, 1000), 300_000);
   const started = Date.now();
-  const state = { worker: null, cancelled: false };
+  const state = { worker: null, cancelled: false, terminateWorker: null };
   const result = await new Promise(resolve => {
     const worker = new Worker(executionWorkerURL, {
       workerData: {
@@ -333,11 +342,20 @@ async function executeJavaScript(body) {
       },
     });
     state.worker = worker;
+    let terminated = false;
+    const terminateWorker = async () => {
+      if (terminated) return;
+      terminated = true;
+      try {
+        await Promise.race([worker.terminate(), new Promise(r => setTimeout(r, 1000))]);
+      } catch {}
+    };
+    state.terminateWorker = terminateWorker;
     executions.set(id, state);
     let settled = false;
     const finish = value => { if (!settled) { settled = true; clearTimeout(timer); resolve(value); } };
     const timer = setTimeout(async () => {
-      await worker.terminate();
+      await terminateWorker();
       finish({ executionID: id, stdout: '', stderr: 'Execution timed out.\n', value: null, exitCode: null, didTimeOut: true, wasCancelled: false, outputWasTruncated: false });
     }, timeoutMilliseconds);
     worker.once('message', message => finish({
@@ -357,8 +375,10 @@ async function executeJavaScript(body) {
   // A worker posts its result before Node has necessarily completed module-loader
   // teardown. Wait for termination before removing the module root so concurrent
   // filesystem cleanup cannot surface as EBADF/ENOENT from the loader.
-  await state.worker?.terminate();
-  await fs.rm(executionRoot, { recursive: true, force: true });
+  if (state.terminateWorker) {
+    await state.terminateWorker();
+  }
+  await fs.rm(executionRoot, { recursive: true, force: true }).catch(() => {});
   result.durationMilliseconds = Date.now() - started;
   return result;
 }
