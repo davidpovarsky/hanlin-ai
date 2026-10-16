@@ -8,7 +8,29 @@ let stderr = '';
 let outputWasTruncated = false;
 
 if (workspace) {
-  try { process.chdir(workspace); } catch {}
+  process.cwd = () => workspace;
+  try {
+    const fs = await import('node:fs');
+    const path = await import('node:path');
+    const resolvePath = p => (typeof p === 'string' && !path.isAbsolute(p)) ? path.resolve(workspace, p) : p;
+    for (const mod of [fs.default || fs, fs.promises]) {
+      if (!mod) continue;
+      for (const fn of [
+        'readFile', 'readFileSync', 'writeFile', 'writeFileSync',
+        'appendFile', 'appendFileSync', 'stat', 'statSync',
+        'access', 'accessSync', 'open', 'openSync', 'readdir', 'readdirSync',
+        'unlink', 'unlinkSync', 'rm', 'rmSync', 'mkdir', 'mkdirSync',
+        'existsSync', 'copyFile', 'copyFileSync', 'createReadStream', 'createWriteStream'
+      ]) {
+        const orig = mod[fn];
+        if (typeof orig === 'function') {
+          mod[fn] = function(first, ...args) {
+            return orig.call(this, resolvePath(first), ...args);
+          };
+        }
+      }
+    }
+  } catch {}
 }
 
 for (const [name, value] of Object.entries(environment ?? {})) process.env[name] = String(value);

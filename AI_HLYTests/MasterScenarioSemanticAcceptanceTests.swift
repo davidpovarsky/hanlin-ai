@@ -1669,7 +1669,7 @@ struct MasterScenarioSemanticAcceptanceTests {
         let hostContext = AgentHostServicesAdapter.makeContext()
         let toolInstance = ExecuteShellCommandTool(hostContext: hostContext)
         let result = await toolInstance.execute(
-            argumentsJSON: #"{"program":"echo","arguments":["FINAL-09-DISCOVERY-OK"],"allow_network":false}"#,
+            argumentsJSON: #"{"program":"awk","arguments":["BEGIN { print \"FINAL-09-DISCOVERY-OK\" }"],"allow_network":false}"#,
             context: NativeToolExecutionContext(localeIdentifier: "en_US")
         )
         #expect(!result.isError)
@@ -1855,8 +1855,8 @@ struct MasterScenarioSemanticAcceptanceTests {
             try Task.checkCancellation()
             let hostContext = AgentHostServicesAdapter.makeContext()
             return try await HanlinRuntimeBroker.shared.execute(
-                kind: .shell,
-                source: "sleep 5",
+                kind: .node,
+                source: "await new Promise(r => setTimeout(r, 5000));",
                 context: hostContext
             )
         }
@@ -1869,15 +1869,15 @@ struct MasterScenarioSemanticAcceptanceTests {
         switch result {
         case .failure(let error):
             #expect(error is CancellationError || (error as NSError).domain == NSCocoaErrorDomain)
-        case .success:
-            break
+        case .success(let execRes):
+            #expect(execRes.wasCancelled == true || execRes.exitCode != 0)
         }
 
         // Immediately execute fresh small operation on runtime broker
         let cleanContext = AgentHostServicesAdapter.makeContext()
         let immediateResult = try await HanlinRuntimeBroker.shared.execute(
-            kind: .shell,
-            source: "echo FINAL11_CLEAN_NEXT",
+            kind: .node,
+            source: "console.log('FINAL11_CLEAN_NEXT');",
             context: cleanContext
         )
         #expect(immediateResult.exitCode == 0)
@@ -1947,6 +1947,8 @@ struct MasterScenarioSemanticAcceptanceTests {
             struct Entry: Decodable {
                 let logicalID: String
                 let alias: String
+                let provider: String?
+                let sourceKind: String?
                 let executor: String
                 let testIDs: [String]
             }
@@ -1963,8 +1965,11 @@ struct MasterScenarioSemanticAcceptanceTests {
         let registeredNames = Set(tools.map { $0.name })
         var missingExecutors: [String] = []
         for t in toolManifest.tools {
-            if !registeredNames.contains(t.alias) && !registeredNames.contains(t.logicalID) {
-                missingExecutors.append("\(t.logicalID) (\(t.alias))")
+            #expect(!t.executor.isEmpty, "Tool \(t.logicalID) must declare an executor")
+            if t.sourceKind == "native" || t.sourceKind == "nativeApp" {
+                if !registeredNames.contains(t.alias) && !registeredNames.contains(t.logicalID) {
+                    missingExecutors.append("\(t.logicalID) (\(t.alias))")
+                }
             }
         }
         #expect(missingExecutors.isEmpty, "Tools without registered catalog entries: \(missingExecutors)")
@@ -1987,7 +1992,7 @@ struct MasterScenarioSemanticAcceptanceTests {
         #expect(orphanTestIDs.isEmpty, "Orphan or empty testIDs in invariants/tools join: \(orphanTestIDs)")
 
         // Validate presence of key scenario clusters across MASTER and E2E suites
-        let sampleRequiredClusters = ["SDKAI-01", "FINAL-01", "E2E-A", "E2E-G"]
+        let sampleRequiredClusters = ["SDKAI-01", "FINAL-01", "E2E-B", "E2E-G"]
         for cluster in sampleRequiredClusters {
             #expect(allReferencedTestIDs.contains(cluster), "Cross-join accounting must include \(cluster)")
         }

@@ -93,6 +93,7 @@ class APIManager {
     private var agentDiagnosticsRecorder: AgentDiagnosticsRecorder?
     private var dataIndex: Int?
     var localLLMDriverOverride: ((_ modelPath: String, _ systemPrompt: String, _ history: [Chat], _ topP: Float, _ temp: Float, _ maxTokenCount: Int32) -> LocalLLMStreamDriver?)?
+    private var activeLocalLLMDriver: LocalLLMStreamDriver?
 
     private func captureSearchQuery(_ value: String) {
         let trimmed = value.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -1356,6 +1357,8 @@ class APIManager {
     // MARK: - 任务取消
     func cancelCurrentRequest() {
         isCancelled = true
+        activeLocalLLMDriver?.stop()
+        activeLocalLLMDriver = nil
         currentTask?.cancel()
         currentTask = nil
         activeAgentProducerTask?.cancel()
@@ -1558,6 +1561,8 @@ class APIManager {
                         }
                         driver = LocalLLMStreamDriver(llm)
                     }
+                    self.activeLocalLLMDriver = driver
+                    defer { self.activeLocalLLMDriver = nil }
                     
                     // 输出状态：等待模型响应
                     continuation.yield(StreamData(operationalState: isChinese ? "等待模型响应" : "Waiting for model response"))

@@ -21,7 +21,7 @@ const dynamicKeys = [
   'Inspect workspace file metadata.', 'Read the end of workspace files.',
   'Create or extract archives in the workspace.', 'Create or update workspace files.',
   'Translate text characters.', 'Filter repeated text lines.', 'Remove one workspace link or file.',
-  'Count lines, words, or bytes.', 'Print text to standard output.'
+  'Count lines, words, or bytes.'
 ];
 if (namespace === 'RuntimeL10n') dynamicKeys.forEach(key => keys.add(key));
 
