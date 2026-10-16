@@ -40,20 +40,20 @@ struct NativeAppsHubView: View {
             .searchable(text: $searchText, prompt: "Search Apps")
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
-                    HStack(spacing: 12) {
-                        Button { showsTorahCapture = true } label: {
-                            Label("לימוד מצילום", systemImage: "camera.viewfinder")
-                        }
-                        .accessibilityIdentifier("hanlin-apps-torah-capture")
-                        Button { showsAddSheet = true } label: {
-                            Label("Add App", systemImage: "plus")
-                        }
-                        .accessibilityIdentifier("hanlin-apps-add")
-                        .accessibilityLabel("hanlin-apps-add")
+                    Button { showsAddSheet = true } label: {
+                        Label("Add App", systemImage: "plus")
                     }
+                    .accessibilityIdentifier("hanlin-apps-add")
+                    .accessibilityLabel("hanlin-apps-add")
                 }
                 ToolbarItem(placement: .topBarLeading) {
                     Button(isEditingApps ? "Done" : "Edit") { isEditingApps.toggle() }
+                }
+                ToolbarItem(placement: .topBarLeading) {
+                    Button { showsTorahCapture = true } label: {
+                        Label("לימוד מצילום", systemImage: "camera.viewfinder")
+                    }
+                    .accessibilityIdentifier("hanlin-apps-torah-capture")
                 }
             }
             .sheet(isPresented: $showsTorahCapture) {

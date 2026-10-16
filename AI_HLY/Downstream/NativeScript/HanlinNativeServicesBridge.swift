@@ -85,6 +85,10 @@ public final class HanlinNativeServicesHostProvider: NSObject, @unchecked Sendab
 
         HanlinNativeServicesBridge.register(adapter, forSessionID: appID)
         HanlinNativeServicesBridge.register(adapter)
+        if let token = HanlinNativeServicesPrepareSessionBootstrap(appID),
+           let bridge = HanlinNativeServicesBridge.claimSessionBridge(withToken: token) {
+            HanlinNativeServicesBridge.setActiveSessionBridge(bridge, forSessionID: appID)
+        }
     }
 
     public static func clearActiveContainer() {
@@ -95,6 +99,7 @@ public final class HanlinNativeServicesHostProvider: NSObject, @unchecked Sendab
         shared.lock.unlock()
 
         if let oldAppID {
+            HanlinNativeServicesBridge.clearActiveSessionBridge(forSessionID: oldAppID)
             HanlinNativeServicesBridge.unregisterProvider(forSessionID: oldAppID)
         }
         HanlinNativeServicesBridge.register(nil)
@@ -298,6 +303,10 @@ extension HanlinNativeServicesBridge {
 
     public static func registerHostProvider() {
         HanlinNativeServicesBridge.register(HanlinNativeServicesHostProvider.shared)
+    }
+
+    public static func pythonVersion() -> String? {
+        currentProvider()?.pythonVersion() ?? (try? PythonRuntimeBridge.version())
     }
 
     public static func sendRequest(
