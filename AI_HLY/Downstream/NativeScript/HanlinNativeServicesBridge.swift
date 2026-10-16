@@ -305,10 +305,6 @@ extension HanlinNativeServicesBridge {
         HanlinNativeServicesBridge.register(HanlinNativeServicesHostProvider.shared)
     }
 
-    public static func pythonVersion() -> String? {
-        currentProvider()?.pythonVersion() ?? (try? PythonRuntimeBridge.version())
-    }
-
     public static func sendRequest(
         targetID: String,
         action: String,

@@ -345,7 +345,10 @@ static NSString *HanlinExecuteSyncWithTimeout(NSTimeInterval timeoutSeconds, Han
     [provider executePython:source completion:completion];
 }
 
-+ (nullable NSString *)pythonVersion { return [[self currentProvider] pythonVersion]; }
++ (nullable NSString *)pythonVersion {
+    id<HanlinNativeServicesProvider> provider = [self currentProvider] ?: [self legacyProvider];
+    return [provider pythonVersion];
+}
 
 + (void)fetchURL:(NSString *)urlString completion:(HanlinBridgeStringResultBlock)completion {
     id<HanlinNativeServicesProvider> provider = [self currentProvider];
