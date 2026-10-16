@@ -1868,12 +1868,16 @@ struct MasterScenarioSemanticAcceptanceTests {
         #expect(stopLatency < 2.0, "Process cancellation stop latency must be bounded under 2.0s, was \(stopLatency)s")
         switch result {
         case .failure(let error):
-            let isCancelled = error is CancellationError
+            var isCancelled = error is CancellationError
                 || (error as? URLError)?.code == .cancelled
                 || (error as NSError).domain == NSURLErrorDomain
                 || (error as NSError).domain == NSCocoaErrorDomain
-                || (error as? HanlinHostServiceError) == .cancelled
-                || (error as? RuntimeCoreError) == .executionCancelled
+            if let hostError = error as? HanlinHostServiceError, case .cancelled = hostError {
+                isCancelled = true
+            }
+            if let runtimeError = error as? RuntimeCoreError, case .executionCancelled = runtimeError {
+                isCancelled = true
+            }
             #expect(isCancelled, "Process cancellation error must be a recognized cancellation error, got: \(error)")
         case .success(let execRes):
             #expect(execRes.wasCancelled == true || execRes.exitCode != 0)
