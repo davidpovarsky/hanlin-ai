@@ -87,7 +87,7 @@ public final class HanlinNativeServicesHostProvider: NSObject, @unchecked Sendab
         HanlinNativeServicesBridge.register(adapter)
         if let token = HanlinNativeServicesPrepareSessionBootstrap(appID),
            let bridge = HanlinNativeServicesBridge.claimSessionBridge(withToken: token) {
-            HanlinNativeServicesBridge.setActiveSessionBridge(bridge, forSessionID: appID)
+            HanlinNativeServicesBridge.setActiveSession(bridge, forSessionID: appID)
         }
     }
 
